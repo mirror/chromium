@@ -505,19 +505,6 @@ void NetworkQualityEstimator::RecordAccuracyAfterMainFrame(
         "NQE.Accuracy.EffectiveConnectionType", estimated_observed_diff,
         measuring_duration, recent_effective_connection_type);
   }
-
-  // Add histogram to evaluate the accuracy of the external estimate provider.
-  if (external_estimate_provider_quality_.http_rtt() !=
-          nqe::internal::InvalidRTT() &&
-      recent_http_rtt != nqe::internal::InvalidRTT()) {
-    const int estimated_observed_diff_milliseconds =
-        external_estimate_provider_quality_.http_rtt().InMilliseconds() -
-        recent_http_rtt.InMilliseconds();
-
-    RecordRTTAccuracy("NQE.ExternalEstimateProvider.RTT.Accuracy",
-                      estimated_observed_diff_milliseconds, measuring_duration,
-                      recent_http_rtt);
-  }
 }
 
 void NetworkQualityEstimator::NotifyRequestCompleted(const URLRequest& request,
@@ -1622,29 +1609,21 @@ void NetworkQualityEstimator::OnUpdatedEstimateAvailable(
   RecordExternalEstimateProviderMetrics(
       EXTERNAL_ESTIMATE_PROVIDER_STATUS_CALLBACK);
 
-  external_estimate_provider_quality_ = nqe::internal::NetworkQuality();
-
   if (rtt > base::TimeDelta()) {
     RecordExternalEstimateProviderMetrics(
         EXTERNAL_ESTIMATE_PROVIDER_STATUS_RTT_AVAILABLE);
-    UMA_HISTOGRAM_TIMES("NQE.ExternalEstimateProvider.RTT", rtt);
     Observation rtt_observation(
         rtt.InMilliseconds(), tick_clock_->NowTicks(), signal_strength_,
         NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_EXTERNAL_ESTIMATE);
-    external_estimate_provider_quality_.set_http_rtt(rtt);
     AddAndNotifyObserversOfRTT(rtt_observation);
   }
 
   if (downstream_throughput_kbps > 0) {
     RecordExternalEstimateProviderMetrics(
         EXTERNAL_ESTIMATE_PROVIDER_STATUS_DOWNLINK_BANDWIDTH_AVAILABLE);
-    UMA_HISTOGRAM_COUNTS_1M("NQE.ExternalEstimateProvider.DownlinkBandwidth",
-                            downstream_throughput_kbps);
     Observation throughput_observation(
         downstream_throughput_kbps, tick_clock_->NowTicks(), signal_strength_,
         NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_EXTERNAL_ESTIMATE);
-    external_estimate_provider_quality_.set_downstream_throughput_kbps(
-        downstream_throughput_kbps);
     AddAndNotifyObserversOfThroughput(throughput_observation);
   }
 }

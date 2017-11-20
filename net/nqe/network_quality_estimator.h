@@ -593,10 +593,6 @@ class NET_EXPORT NetworkQualityEstimator
   nqe::internal::NetworkQuality estimated_quality_at_last_main_frame_;
   EffectiveConnectionType effective_connection_type_at_last_main_frame_;
 
-  // Estimated network quality obtained from external estimate provider when the
-  // external estimate provider was last queried.
-  nqe::internal::NetworkQuality external_estimate_provider_quality_;
-
   // ExternalEstimateProvider that provides network quality using operating
   // system APIs. May be NULL.
   const std::unique_ptr<ExternalEstimateProvider> external_estimate_provider_;

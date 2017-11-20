@@ -1512,9 +1512,6 @@ TEST(NetworkQualityEstimatorTest, TestExternalEstimateProvider) {
       "NQE.ExternalEstimateProviderStatus",
       6 /* EXTERNAL_ESTIMATE_PROVIDER_STATUS_DOWNLINK_BANDWIDTH_AVAILABLE */,
       1);
-  histogram_tester.ExpectUniqueSample("NQE.ExternalEstimateProvider.RTT", 1, 1);
-  histogram_tester.ExpectUniqueSample(
-      "NQE.ExternalEstimateProvider.DownlinkBandwidth", 100, 1);
   histogram_tester.ExpectBucketCount(
       "NQE.RTT.ObservationSource",
       NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_EXTERNAL_ESTIMATE, 1);
@@ -2554,17 +2551,6 @@ TEST(NetworkQualityEstimatorTest, MAYBE_RecordAccuracy) {
           rtt_diff, 1);
       histogram_tester.ExpectTotalCount(
           "NQE.Accuracy.TransportRTT.EstimatedObservedDiff." +
-              rtt_sign_suffix_with_zero_samples + "." + interval_value +
-              ".300_620",
-          0);
-
-      histogram_tester.ExpectUniqueSample(
-          "NQE.ExternalEstimateProvider.RTT.Accuracy.EstimatedObservedDiff." +
-              rtt_sign_suffix_with_one_sample + "." + interval_value +
-              ".300_620",
-          rtt_diff, 1);
-      histogram_tester.ExpectTotalCount(
-          "NQE.ExternalEstimateProvider.RTT.Accuracy.EstimatedObservedDiff." +
               rtt_sign_suffix_with_zero_samples + "." + interval_value +
               ".300_620",
           0);
