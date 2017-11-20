@@ -1059,6 +1059,10 @@ class ContextMenuFilter : public content::BrowserMessageFilter {
 
 WebContents* GetEmbedderForGuest(content::WebContents* guest);
 
+// Returns true if out-of-process NetworkService is enabled and the browser is
+// not running on Android or --single-process mode.
+bool HasOutOfProcessNetworkService();
+
 }  // namespace content
 
 #endif  // CONTENT_PUBLIC_TEST_BROWSER_TEST_UTILS_H_
