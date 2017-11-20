@@ -370,7 +370,6 @@ crbug.com/646528 compositing/lots-of-img-layers-with-opacity.html [ Slow ]
 crbug.com/646528 virtual/spv175/compositing/lots-of-img-layers-with-opacity.html [ Slow ]
 
 # SwiftShader slow tests
-crbug.com/726075 [ Win Linux ] animations/svg/animated-filter-svg-element.html [ Slow ]
 crbug.com/726075 [ Win Linux ] compositing/culling/filter-occlusion-blur.html [ Slow ]
 crbug.com/726075 [ Win Linux ] virtual/spv175/compositing/culling/filter-occlusion-blur.html [ Slow ]
 crbug.com/726075 [ Win Linux ] compositing/masks/mask-with-added-filters.html [ Slow ]
@@ -437,7 +436,6 @@ crbug.com/726075 [ Win Linux ] virtual/gpu/fast/canvas/canvas-scale-drawImage-sh
 crbug.com/726075 [ Win Linux ] virtual/gpu/fast/canvas/canvas-scale-strokePath-shadow.html [ Slow ]
 crbug.com/726075 [ Win Linux ] virtual/gpu/fast/canvas/canvas-shadow-source-in.html [ Slow ]
 crbug.com/726075 [ Win Linux ] virtual/gpu/fast/canvas/canvas-strokePath-alpha-shadow.html [ Slow ]
-crbug.com/726075 [ Win Linux ] virtual/threaded/animations/svg/animated-filter-svg-element.html [ Slow ]
 
 crbug.com/726075 [ Linux ] media/color-profile-video-seek-filter.html [ Slow ]
 crbug.com/726075 [ Linux ] shapedetection/detection-HTMLVideoElement.html [ Slow ]
