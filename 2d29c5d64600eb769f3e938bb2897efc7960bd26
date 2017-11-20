@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "4bae7ead_521c7a6a",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-20T11:49:24Z",
+      "side": 1,
+      "message": "Is this file specific to ChromeOS? Should it be moved in a ChromeOS subdirectory, and maybe renamed to something more specific?",
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1447853_f158bd1f",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-20T11:49:24Z",
+      "side": 1,
+      "message": "Just curious: How does this even compile on other platforms that ChromeOS? Is it generally allowed by DEPS to include chromeos files from everywhere?",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06dd7d44_d58d82f4",
         "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
         "patchSetId": 19
@@ -105,6 +145,30 @@
       "writtenOn": "2017-11-20T10:23:38Z",
       "side": 1,
       "message": "s/account_consistency_required_by_profile_/is_mirror_enabled_",
+      "range": {
+        "startLine": 129,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7303a01_5925835b",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-20T11:49:24Z",
+      "side": 1,
+      "message": "It is not clear to me what is the goal here:\n1) use the whole mirror feature for child accounts (including the AccountReconcilor, ...)\nIn this case, this CL does not do enough. You should conceptually change all the places in the code where IsAccountConsistencyMirrorEnabled() is called.\n\n2) or only use the ChromeConnected header subfeature of Mirror in another context (child accounts).\nIn this case, we should cleanly split that header as a standalone feature, which then can be used both by Mirror and child accounts.",
+      "parentUuid": "ae2a3e4d_08e86e6a",
       "range": {
         "startLine": 129,
         "startChar": 12,
