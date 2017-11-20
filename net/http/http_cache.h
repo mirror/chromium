@@ -477,10 +477,23 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   // already.
   void ProcessAddToEntryQueue(ActiveEntry* entry);
 
-  // Returns true if the transaction can join other transactions for writing to
-  // the cache simultaneously. It is only supported for GET requests and
-  // non-range requests.
-  bool CanTransactionJoinExistingWriters(Transaction* transaction);
+  // Used for histograms.
+  enum ParallelWritingPattern {
+    // Not yet finished headers phase or was the only writer when it started
+    // writing.
+    NONE,
+    JOIN_PARALLEL_WRITING,
+    COULD_NOT_JOIN_RANGE,
+    COULD_NOT_JOIN_METHOD_OTHER_THAN_GET,
+    COULD_NOT_JOIN_READ_ONLY,
+    PARALLEL_WRITING_MAX
+  };
+
+  // Returns if the transaction can join other transactions for writing to
+  // the cache simultaneously. It is only supported for non-Read only,
+  // GET requests which are not range requests.
+  ParallelWritingPattern CanTransactionJoinExistingWriters(
+      Transaction* transaction);
 
   // Invoked when a transaction that has already completed the response headers
   // phase can resume reading/writing the response body. It will invoke the IO
@@ -489,7 +502,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   void ProcessDoneHeadersQueue(ActiveEntry* entry);
 
   // Adds a transaction to writers.
-  void AddTransactionToWriters(ActiveEntry* entry, Transaction* transaction);
+  void AddTransactionToWriters(ActiveEntry* entry,
+                               Transaction* transaction,
+                               bool is_exclusive);
 
   // Returns true if this transaction can write headers to the entry.
   bool CanTransactionWriteResponseHeaders(ActiveEntry* entry,

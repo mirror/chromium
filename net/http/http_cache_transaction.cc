@@ -179,6 +179,7 @@ HttpCache::Transaction::Transaction(RequestPriority priority, HttpCache* cache)
       validation_cause_(VALIDATION_CAUSE_UNDEFINED),
       cant_conditionalize_zero_freshness_from_memhint_(false),
       recorded_histograms_(false),
+      parallel_writing_pattern_(ParallelWritingPattern::NONE),
       moved_network_transaction_to_writers_(false),
       websocket_handshake_stream_base_create_helper_(NULL),
       in_do_loop_(false),
@@ -3244,6 +3245,9 @@ void HttpCache::Transaction::RecordHistograms() {
       cache_->mode() != NORMAL || method_ != "GET") {
     return;
   }
+
+  UMA_HISTOGRAM_ENUMERATION("HttpCache.ParallelWritingPattern",
+                            parallel_writing_pattern_, PARALLEL_WRITING_MAX);
 
   bool validation_request =
       cache_entry_status_ == CacheEntryStatus::ENTRY_VALIDATED ||

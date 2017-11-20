@@ -28333,6 +28333,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="HttpCache.ParallelWritingPattern"
+    enum="HttpCacheParallelWritingPattern">
+  <owner>shivanisha@chromium.org</owner>
+  <summary>
+    For each request that joins a cached entry which is already being written to
+    by another request(s), the decision whether this request is able to join
+    entry writing or should wait.
+  </summary>
+</histogram>
+
 <histogram name="HttpCache.Pattern" enum="HttpCachePattern">
   <owner>gavinp@chromium.org</owner>
   <owner>jkarlin@chromium.org</owner>

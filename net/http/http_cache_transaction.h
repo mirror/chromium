@@ -190,6 +190,12 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // entry has finished writing.
   void WriteModeTransactionAboutToBecomeReader();
 
+  // Invoked when HttpCache decides whether this transaction can join parallel
+  // writing.
+  void SetParallelWritingPatternForMetrics(ParallelWritingPattern pattern) {
+    parallel_writing_pattern_ = pattern;
+  }
+
  private:
   static const size_t kNumValidationHeaders = 2;
   // Helper struct to pair a header name with its value, for
@@ -624,6 +630,7 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   base::TimeDelta stale_entry_age_;
   bool cant_conditionalize_zero_freshness_from_memhint_;
   bool recorded_histograms_;
+  ParallelWritingPattern parallel_writing_pattern_;
 
   NetworkTransactionInfo network_transaction_info_;
 
