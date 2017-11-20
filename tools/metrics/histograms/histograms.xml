@@ -40044,6 +40044,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.Certificate.RootCertUsage.Request" enum="NetRootCerts">
+  <owner>rsleevi@chromium.org</owner>
+  <summary>
+    The SHA-256 hash of the subjectPublicKeyInfo of the most-specific trust
+    anchor encountered in a successfully-verified certificate chain, during
+    verification time. The associated root certificate can be looked up using
+    https://crt.sh/?spkisha256= .
+  </summary>
+</histogram>
+
+<histogram name="Net.Certificate.RootCertUsage.Verify" enum="NetRootCerts">
+  <owner>rsleevi@chromium.org</owner>
+  <summary>
+    The SHA-256 hash of the subjectPublicKeyInfo of the most-specific trust
+    anchor encountered in a successfully-verified certificate chain, during
+    verification time. The associated root certificate can be looked up using
+    https://crt.sh/?spkisha256= .
+  </summary>
+</histogram>
+
 <histogram name="Net.Certificate.SHA1.MainFrame" enum="SHA1Status">
   <obsolete>
     Deprecated 06/2017 as SHA-1 was successfully disabled in 01/2017.
