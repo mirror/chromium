@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a13aad9_74cb8c98",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-20T09:33:22Z",
+      "side": 1,
+      "message": "Wait, how is the ownership model going to work here? If PublicIpAddressGeolocationProvider has a StrongBindingSet, then this class shouldn\u0027t have any knowledge of the bindings. My suspicion is that you\u0027re doing it this way because of the need for line 30. Note that StrongBindingSet has a ReportBadMessage() method that can be called during message dispatch to close the binding that the message being dispatched was received from. My suggestion would be to expose that from PublicIpAddressGeolocationProvider via a callback that this class takes in. Then PublicIpAddressGeolocationProvider has a StrongBindingSet and this class has no knowledge of the bindings whatsoever. Does that make sense?",
+      "revId": "5caca7765fc4e479df081b57c54132fbd1ca1003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55af158e_b164d01a",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-20T09:33:22Z",
+      "side": 1,
+      "message": "Is this used now?",
+      "revId": "5caca7765fc4e479df081b57c54132fbd1ca1003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
