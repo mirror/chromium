@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d67105f_723a4a9e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-20T16:40:46Z",
+      "side": 1,
+      "message": "I should\u0027ve noted that the intended meaning of the |pending_commit_| flag is \"if it\u0027s true, then a commit is definitely going to happen\".\nLooks like we can get here as follows: a provisional load fails in blink, the call goes to RenderFrameImpl::DidFailProvisionalLoadInternal, it calls SendFailedProvisionalLoad which sends the IPC message and early returns at [1] because ContentRendererClient::ShouldSuppressErrorPage returns true. In this case no commit is pending.\n\n[1] https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?type\u003dcs\u0026l\u003d2659",
+      "parentUuid": "ff3bf4a0_e85845d6",
+      "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "936c95de_7a847073",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T14:26:27Z",
       "side": 1,
       "message": "This seems wrong. The case where |navigation_handle_| is non-null is when we get a same-document navigation commit before the cross-document one. However, we do still expect the cross-document navigation to commit in that case.",
+      "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656396c9_d1fe0e00",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-20T16:40:46Z",
+      "side": 1,
+      "message": "We can as well have a same-document navigation sent to the renderer after a cross-document one, can\u0027t we? In this case the second navigation will be rejected silently.",
+      "parentUuid": "936c95de_7a847073",
       "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
