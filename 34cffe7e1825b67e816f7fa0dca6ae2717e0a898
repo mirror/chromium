@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "638baaab_cac2a5f4",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-20T16:01:00Z",
+      "side": 1,
+      "message": "Can you also mention that on \u0027upgrade\u0027 |continer_instance_id| should remain empty and the empty string should be passed to the |callback|?",
+      "revId": "34cffe7e1825b67e816f7fa0dca6ae2717e0a898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
