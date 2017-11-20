@@ -119,6 +119,11 @@ int BrokerProcess::Stat(const char* pathname, struct stat* sb) const {
   return broker_client_->Stat(pathname, sb);
 }
 
+int BrokerProcess::Rename(const char* oldpath, const char* newpath) const {
+  RAW_CHECK(initialized_);
+  return broker_client_->Rename(oldpath, newpath);
+}
+
 // static
 intptr_t BrokerProcess::SIGSYS_Handler(const sandbox::arch_seccomp_data& args,
                                        void* aux_broker_process) {
@@ -158,6 +163,10 @@ intptr_t BrokerProcess::SIGSYS_Handler(const sandbox::arch_seccomp_data& args,
       return broker_process->Stat(reinterpret_cast<const char*>(args.args[0]),
                                   reinterpret_cast<struct stat*>(args.args[1]));
 #endif
+    case __NR_rename:
+      return broker_process->Rename(
+          reinterpret_cast<const char*>(args.args[0]),
+          reinterpret_cast<const char*>(args.args[1]));
     default:
       RAW_CHECK(false);
       return -ENOSYS;
