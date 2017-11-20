@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33c06149_59ba5001",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-20T13:38:12Z",
+      "side": 1,
+      "message": "Can you add a comment \"// Remove and reinsert so that the document position isn\u0027t changed by the second remove and reinsert\"?",
+      "range": {
+        "startLine": 154,
+        "startChar": 17,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "7a39c67ffeabf4a47e13c5320081a638ff7422ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ac74ae_b85cf1c7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-20T13:38:12Z",
+      "side": 1,
+      "message": "OK, so now I think there\u0027s just one thing missing, and that\u0027s to assert that it\u0027s centered before the (second) call to remove(), to show that it\u0027s really the remove+reinsert that is the cause of the change. Using assert_not_equals might be OK, if that would hold for any viewport resolution.",
+      "range": {
+        "startLine": 165,
+        "startChar": 18,
+        "endLine": 165,
+        "endChar": 22
+      },
+      "revId": "7a39c67ffeabf4a47e13c5320081a638ff7422ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
