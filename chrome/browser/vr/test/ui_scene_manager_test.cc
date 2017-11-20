@@ -87,7 +87,6 @@ bool UiSceneManagerTest::IsVisible(UiElementName name) const {
 
 void UiSceneManagerTest::SetIncognito(bool incognito) {
   model_->incognito = incognito;
-  manager_->SetIncognito(incognito);
 }
 
 void UiSceneManagerTest::VerifyElementsVisible(

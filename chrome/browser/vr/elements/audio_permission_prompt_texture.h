@@ -38,6 +38,9 @@ class AudioPermissionPromptTexture : public UiTexture {
   float ToPixels(float meters) const;
   gfx::PointF PercentToPixels(const gfx::PointF& percent) const;
 
+  // FIX-BEFORE-SUBMITTING, create crbug and link.
+  void OnSetColorScheme() override;
+
   gfx::RectF secondary_button_rect_;
   gfx::RectF primary_button_rect_;
   gfx::SizeF size_;

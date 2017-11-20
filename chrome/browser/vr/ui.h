@@ -96,6 +96,8 @@ class Ui : public BrowserUiInterface {
 
   Model* model_for_test() { return model_.get(); }
 
+  void Dump();
+
  private:
   UiBrowserInterface* browser_;
 

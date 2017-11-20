@@ -7,7 +7,6 @@
 #include "base/macros.h"
 #include "base/numerics/ranges.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/rect.h"
@@ -117,16 +116,6 @@ void VerifyButtonColor(Button* button,
 
 }  // namespace
 
-TEST_F(UiSceneManagerTest, ExitPresentAndFullscreenOnAppButtonClick) {
-  MakeManager(kNotInCct, kInWebVr);
-
-  // Clicking app button should trigger to exit presentation.
-  EXPECT_CALL(*browser_, ExitPresent());
-  // And also trigger exit fullscreen.
-  EXPECT_CALL(*browser_, ExitFullscreen());
-  manager_->OnAppButtonClicked();
-}
-
 TEST_F(UiSceneManagerTest, ToastStateTransitions) {
   // Tests toast not showing when directly entering VR though WebVR
   // presentation.
@@ -138,27 +127,31 @@ TEST_F(UiSceneManagerTest, ToastStateTransitions) {
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
-  manager_->SetFullscreen(true);
+  model_->fullscreen = true;
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
-  manager_->SetWebVrMode(true, true);
+  model_->web_vr_mode = true;
+  model_->web_vr_show_toast = true;
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToastViewportAware));
 
-  manager_->SetWebVrMode(false, false);
+  model_->web_vr_mode = false;
+  model_->web_vr_show_toast = false;
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
-  manager_->SetFullscreen(false);
+  model_->fullscreen = false;
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
-  manager_->SetWebVrMode(true, false);
+  model_->web_vr_mode = true;
+  model_->web_vr_show_toast = false;
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
-  manager_->SetWebVrMode(false, true);
+  model_->web_vr_mode = false;
+  model_->web_vr_show_toast = false;
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 }
@@ -167,19 +160,21 @@ TEST_F(UiSceneManagerTest, ToastTransience) {
   MakeManager(kNotInCct, kNotInWebVr);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
-  manager_->SetFullscreen(true);
+  model_->fullscreen = true;
   EXPECT_TRUE(AnimateBy(MsToDelta(10)));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
   EXPECT_TRUE(AnimateBy(base::TimeDelta::FromSecondsD(kToastTimeoutSeconds)));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
-  manager_->SetWebVrMode(true, true);
+  model_->web_vr_mode = true;
+  model_->web_vr_show_toast = true;
   EXPECT_TRUE(AnimateBy(MsToDelta(10)));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToastViewportAware));
   EXPECT_TRUE(AnimateBy(base::TimeDelta::FromSecondsD(kToastTimeoutSeconds)));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
-  manager_->SetWebVrMode(false, false);
+  model_->web_vr_mode = false;
+  model_->web_vr_show_toast = false;
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 }
 
@@ -193,23 +188,24 @@ TEST_F(UiSceneManagerTest, CloseButtonVisibleInCctFullscreen) {
   EXPECT_FALSE(IsVisible(kCloseButton));
 
   // Button should be visible in fullscreen and hidden when leaving fullscreen.
-  manager_->SetFullscreen(true);
+  model_->fullscreen = true;
   EXPECT_TRUE(IsVisible(kCloseButton));
-  manager_->SetFullscreen(false);
+  model_->fullscreen = false;
   EXPECT_FALSE(IsVisible(kCloseButton));
 
   // Button should not be visible when in WebVR.
   MakeManager(kInCct, kInWebVr);
   EXPECT_FALSE(IsVisible(kCloseButton));
-  manager_->SetWebVrMode(false, false);
+  model_->web_vr_mode = false;
+  model_->web_vr_show_toast = false;
   EXPECT_TRUE(IsVisible(kCloseButton));
 
   // Button should be visible in Cct across transistions in fullscreen.
   MakeManager(kInCct, kNotInWebVr);
   EXPECT_TRUE(IsVisible(kCloseButton));
-  manager_->SetFullscreen(true);
+  model_->fullscreen = true;
   EXPECT_TRUE(IsVisible(kCloseButton));
-  manager_->SetFullscreen(false);
+  model_->fullscreen = false;
   EXPECT_TRUE(IsVisible(kCloseButton));
 }
 
@@ -219,37 +215,36 @@ TEST_F(UiSceneManagerTest, UiUpdatesForIncognito) {
   // Hold onto the background color to make sure it changes.
   SkColor initial_background = SK_ColorBLACK;
   GetBackgroundColor(&initial_background);
-  manager_->SetFullscreen(true);
+  model_->fullscreen = true;
 
   // Make sure background has changed for fullscreen.
   SkColor fullscreen_background = SK_ColorBLACK;
   GetBackgroundColor(&fullscreen_background);
   EXPECT_NE(initial_background, fullscreen_background);
 
-  SetIncognito(true);
-
+  model_->incognito = true;
   // Make sure background has changed for incognito.
   SkColor incognito_background = SK_ColorBLACK;
   GetBackgroundColor(&incognito_background);
   EXPECT_NE(fullscreen_background, incognito_background);
   EXPECT_NE(initial_background, incognito_background);
 
-  SetIncognito(false);
+  model_->incognito = false;
   SkColor no_longer_incognito_background = SK_ColorBLACK;
   GetBackgroundColor(&no_longer_incognito_background);
   EXPECT_EQ(fullscreen_background, no_longer_incognito_background);
 
-  manager_->SetFullscreen(false);
+  model_->fullscreen = false;
   SkColor no_longer_fullscreen_background = SK_ColorBLACK;
   GetBackgroundColor(&no_longer_fullscreen_background);
   EXPECT_EQ(initial_background, no_longer_fullscreen_background);
 
-  SetIncognito(true);
+  model_->incognito = true;
   SkColor incognito_again_background = SK_ColorBLACK;
   GetBackgroundColor(&incognito_again_background);
   EXPECT_EQ(incognito_background, incognito_again_background);
 
-  SetIncognito(false);
+  model_->incognito = false;
   SkColor no_longer_incognito_again_background = SK_ColorBLACK;
   GetBackgroundColor(&no_longer_incognito_again_background);
   EXPECT_EQ(initial_background, no_longer_incognito_again_background);
@@ -261,7 +256,7 @@ TEST_F(UiSceneManagerTest, VoiceSearchHiddenInIncognito) {
   EXPECT_TRUE(OnBeginFrame());
   EXPECT_TRUE(IsVisible(kVoiceSearchButton));
 
-  SetIncognito(true);
+  model_->incognito = true;
   EXPECT_TRUE(OnBeginFrame());
   EXPECT_FALSE(IsVisible(kVoiceSearchButton));
 }
@@ -288,8 +283,9 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
   VerifyElementsVisible("Initial", initial_elements);
 
   // Enter WebVR with autopresentation.
-  manager_->SetWebVrMode(true, false);
-  manager_->OnWebVrFrameAvailable();
+  model_->web_vr_mode = true;
+  model_->web_vr_show_toast = false;
+  model_->web_vr_timeout_state = kWebVrNoTimeoutPending;
   // The splash screen should go away.
   AnimateBy(base::TimeDelta::FromSecondsD(kSplashScreenMinDurationSeconds +
                                           kSmallDelaySeconds));
