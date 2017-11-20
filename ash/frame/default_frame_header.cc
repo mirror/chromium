@@ -75,12 +75,10 @@ DefaultFrameHeader::DefaultFrameHeader(
     views::Widget* frame,
     views::View* header_view,
     FrameCaptionButtonContainerView* caption_button_container,
-    FrameCaptionButton* back_button,
     mojom::WindowStyle window_style)
     : window_style_(window_style),
       frame_(frame),
       view_(header_view),
-      back_button_(back_button),
       left_header_view_(nullptr),
       active_frame_color_(kDefaultFrameColor),
       inactive_frame_color_(kDefaultFrameColor),
@@ -246,14 +244,6 @@ const gfx::FontList& DefaultFrameHeader::GetTitleFontList() {
       new gfx::FontList(views::NativeWidgetAura::GetWindowTitleFontList());
   ANNOTATE_LEAKING_OBJECT_PTR(title_font_list);
   return *title_font_list;
-}
-
-void DefaultFrameHeader::UpdateLeftHeaderView(views::View* left_header_view) {
-  left_header_view_ = left_header_view;
-}
-
-void DefaultFrameHeader::UpdateBackButton(FrameCaptionButton* button) {
-  back_button_ = button;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
