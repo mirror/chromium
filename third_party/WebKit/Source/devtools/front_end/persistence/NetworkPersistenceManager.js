@@ -108,6 +108,17 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     return this.projectForDomain(Persistence.NetworkPersistenceManager.inspectedPageDomain());
   }
 
+  /**
+   * @param {!Persistence.IsolatedFileSystem} fileSystem
+   * @return {?Persistence.FileSystemWorkspaceBinding.FileSystem}
+   */
+  projectForFileSystem(fileSystem) {
+    if (!this._domainForFileSystemMap.has(fileSystem.path()))
+      return null;
+    return /** @type {?Persistence.FileSystemWorkspaceBinding.FileSystem} */ (
+        this._workspace.project(Persistence.FileSystemWorkspaceBinding.projectId(fileSystem.path())));
+  }
+
   _enabledChanged() {
     if (this._enabledSetting.get()) {
       this._eventDescriptors = [
