@@ -22,6 +22,30 @@
       "revId": "44283bc6e6b18a51def204351c27389e010da1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a49e05f_a1d7aa73",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-20T18:18:11Z",
+      "side": 1,
+      "message": "It seems like we call -layoutOmnibox in various places, so this should be safe.  I have no obvious objection to this.",
+      "parentUuid": "db77149e_92fca620",
+      "range": {
+        "startLine": 2416,
+        "startChar": 27,
+        "endLine": 2416,
+        "endChar": 0
+      },
+      "revId": "44283bc6e6b18a51def204351c27389e010da1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
