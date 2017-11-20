@@ -699,9 +699,21 @@ LayoutBoxModelObject* LayoutObject::EnclosingBoxModelObject() const {
 }
 
 LayoutBlockFlow* LayoutObject::EnclosingNGBlockFlow() const {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return nullptr;
   LayoutBox* box = EnclosingBox();
   DCHECK(box);
   return box->IsLayoutNGMixin() ? ToLayoutBlockFlow(box) : nullptr;
+}
+
+const NGPhysicalBoxFragment* LayoutObject::EnclosingBlockFlowFragement() const {
+  DCHECK(IsInline() || IsText());
+  LayoutBlockFlow* const block_flow = EnclosingNGBlockFlow();
+  if (!block_flow)
+    return nullptr;
+  const NGPhysicalBoxFragment* box_fragment = block_flow->CurrentFragment();
+  DCHECK(box_fragment) << "|block_flow| should have a fragment of this node.";
+  return box_fragment;
 }
 
 LayoutBox* LayoutObject::EnclosingScrollableBox() const {

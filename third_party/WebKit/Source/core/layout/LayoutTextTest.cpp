@@ -306,6 +306,31 @@ TEST_P(ParameterizedLayoutTextTest, IsBeforeAfterNonCollapsedLineWrapSpace) {
   EXPECT_TRUE(GetLayoutTextById("space")->IsAfterNonCollapsedCharacter(1));
 }
 
+TEST_P(ParameterizedLayoutTextTest, GetUpperLeftCorner) {
+  LoadAhem();
+  SetBasicBody(
+      "<style>"
+      "div {"
+      "  font-family:Ahem;"
+      "  font-size: 13px;"
+      "  line-height: 19px;"
+      "  padding: 3px;"
+      "}"
+      "</style>"
+      "<div id=sample>abc<br>xyz</div>");
+  const Element& sample = *GetDocument().getElementById("sample");
+  // TODO(layout-dev): We should make LayoutNG version of GetUpperLeftCorner()
+  // to return same value of legacy version.
+  EXPECT_EQ(LayoutNGEnabled() ? FloatPoint(3, 9) : FloatPoint(3, 6),
+            ToLayoutText(sample.firstChild()->GetLayoutObject())
+                ->GetUpperLeftCorner()
+                .value());
+  EXPECT_EQ(LayoutNGEnabled() ? FloatPoint(3, 28) : FloatPoint(3, 25),
+            ToLayoutText(sample.lastChild()->GetLayoutObject())
+                ->GetUpperLeftCorner()
+                .value());
+}
+
 TEST_P(ParameterizedLayoutTextTest, IsBeforeAfterNonCollapsedCharacterBR) {
   SetBasicBody("<br>");
   EXPECT_TRUE(GetBasicText()->IsBeforeNonCollapsedCharacter(0));
