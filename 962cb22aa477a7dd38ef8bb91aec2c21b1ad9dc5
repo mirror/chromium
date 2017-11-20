@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de54ab64_8a919281",
+        "filename": "ash/app_list/model/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T18:30:15Z",
+      "side": 1,
+      "message": "I\u0027m curious why you are creating a separate BUILD.gn here. Will this code depend upon other parts of ash?",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 29
+      },
+      "revId": "962cb22aa477a7dd38ef8bb91aec2c21b1ad9dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
