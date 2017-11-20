@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35c5d0ad_74561432",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-20T19:24:19Z",
+      "side": 1,
+      "message": "I\u0027d like to be able to regenerate the bulk of this file with try-flag, which doesn\u0027t understand flakiness yet.  Could you move these lines to the bottom under a comment like:\n\n  # Tests known to be flaky",
+      "range": {
+        "startLine": 49,
+        "startChar": 80,
+        "endLine": 49,
+        "endChar": 85
+      },
+      "revId": "429e63a462f34ab341266ccdee6ff837869c8f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
