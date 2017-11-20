@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97591e47_cfbc9b09",
+        "filename": "ui/content_accelerators/accelerator_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-20T23:45:08Z",
+      "side": 1,
+      "message": "I tried using the helper from ui/events/blink but got linker errors about undefined symbols; we may need to set a UI_BASE_EXPORT on the API to address that - WDYT?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "c73164d464e834e263bd7471ace3b0162f614289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
