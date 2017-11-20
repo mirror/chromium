@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "727cd90b_dcd5eb88",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-20T05:06:09Z",
+      "side": 1,
+      "message": "Thanks for fixing this!",
+      "revId": "79704960a767bd2c220b1a0c2441afd32dbe9726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
