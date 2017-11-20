@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d6f6da6_aacd01af",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-20T18:02:47Z",
+      "side": 1,
+      "message": "Nit: Please remove this check, as it\u0027s no longer needed.",
+      "range": {
+        "startLine": 370,
+        "startChar": 6,
+        "endLine": 370,
+        "endChar": 15
+      },
+      "revId": "ca8ce92024a30487518771be0e33af120596428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
