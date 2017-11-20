@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "411f1363_7e49c42e",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-20T06:23:59Z",
+      "side": 1,
+      "message": "Could you split patch introducing ComputeInlineBoxPositionForAtomicInline\nand ForBlockFlow so that patch is smaller?",
+      "revId": "5cbd777882e61fad7fb98fc395549fbf3aaf0c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
