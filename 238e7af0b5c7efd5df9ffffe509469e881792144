@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d25235f6_cfac4a6a",
+        "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "I think identifying something as a \"helper object\" is useful, since it implies (for example) that the helper doesn\u0027t own objects, and will be used by some other object in a particular way. I suppose \"object\" is superfluous.",
+      "parentUuid": "78732b20_d76eecd9",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f10bebe_9d36faf6",
         "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6840ace6_7deac0d9",
+        "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f10bebe_9d36faf6",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ba01f1_32c3e13a",
         "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
         "patchSetId": 9
@@ -62,6 +110,24 @@
       "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796f5292_07b82852",
+        "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Per your comment below, I\u0027ve just made this \"should become a child of the base view controller.\"",
+      "parentUuid": "a2ba01f1_32c3e13a",
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c2ce2841_e112bb4f",
+        "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb28154_8f1dc77f",
+      "range": {
+        "startLine": 31,
+        "startChar": 41,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cae31b8_36913322",
         "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
         "patchSetId": 9
@@ -108,6 +198,30 @@
       "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55977cf0_87e3fc6d",
+        "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cae31b8_36913322",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "f48d22de_671304ec",
+        "filename": "ios/chrome/browser/ui/presenters/contained_presenter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Made the earlier language likewise succinct.",
+      "parentUuid": "3a063fdb_4b43d305",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 67
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "901dca4d_b5f3d52c",
         "filename": "ios/chrome/browser/ui/presenters/contained_presenter_delegate.h",
         "patchSetId": 9
@@ -148,6 +286,24 @@
       "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c96883c_9933923d",
+        "filename": "ios/chrome/browser/ui/presenters/contained_presenter_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901dca4d_b5f3d52c",
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "b02a56ee_32388d51",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Rewritten to not be specific to language selection as well.",
+      "parentUuid": "d57a15c6_f7032ff6",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "669e1aec_b644c76c",
         "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container.mm",
         "patchSetId": 9
@@ -194,6 +374,30 @@
       "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f38647c_261e5089",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Yes, contents\u0027s view\u0027s safe layout guide is set automatically and accounts for status bars, etc. That\u0027s one of the benefits of making the language selector a view controller. The system UI components (UIToolbar and UIPicker) used for the language selector are safe-area aware, so it all Just Works.",
+      "parentUuid": "669e1aec_b644c76c",
+      "range": {
+        "startLine": 63,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 26
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "9ad344b3_ff575e06",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Because we want the constraints to be applied and the presented VC\u0027s view to actually be positioned before any animation happens. If it\u0027s still at CGRectZero and the animation starts before a layout pass begins, the view will expand from the upper left instead of just moving up from below.\n\nAdded a comment to explain this.",
+      "parentUuid": "660263dc_69735ede",
+      "range": {
+        "startLine": 69,
+        "startChar": 48,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb787192_1c62b62f",
         "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container.mm",
         "patchSetId": 9
@@ -240,6 +468,30 @@
       "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0351099f_7dccf5fb",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb787192_1c62b62f",
+      "range": {
+        "startLine": 96,
+        "startChar": 31,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "06e4c39f_30baa2ec",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae16090b_512070e5",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13f5f3de_7eb5d52b",
         "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container_unittest.mm",
         "patchSetId": 9
@@ -283,6 +559,24 @@
     },
     {
       "key": {
+        "uuid": "0c00d048_7328e52b",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f5f3de_7eb5d52b",
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a27adb13_96403736",
         "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container_unittest.mm",
         "patchSetId": 9
@@ -297,6 +591,24 @@
       "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccd24e0_fce065e9",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Nope, it not being in the init list is a relic from a previous version where there was a superclass for generic ContainedPresenter tests. Fixed.",
+      "parentUuid": "a27adb13_96403736",
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -323,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "7ad81a17_d4ba94ec",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Under ARC, yes -- we only need scoped_nsobject for public member variables that may also be used in non-ARC code.",
+      "parentUuid": "4994abb3_962052dd",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f71464_511f3849",
         "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container_unittest.mm",
         "patchSetId": 9
@@ -337,6 +673,24 @@
       "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c5ff35_4e9ae1a7",
+        "filename": "ios/chrome/browser/ui/presenters/vertical_animation_container_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f71464_511f3849",
+      "revId": "238e7af0b5c7efd5df9ffffe509469e881792144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

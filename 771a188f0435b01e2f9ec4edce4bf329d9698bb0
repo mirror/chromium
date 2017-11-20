@@ -315,6 +315,30 @@
     },
     {
       "key": {
+        "uuid": "e05b1e0c_b858b853",
+        "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-20T13:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "633efdfb_dacb1b18",
+      "range": {
+        "startLine": 22,
+        "startChar": 76,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "771a188f0435b01e2f9ec4edce4bf329d9698bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c43f9c8_f11d3406",
         "filename": "ios/chrome/browser/ui/translate/language_selection_coordinator.mm",
         "patchSetId": 10
