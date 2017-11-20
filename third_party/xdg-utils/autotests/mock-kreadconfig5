@@ -1,0 +1,36 @@
+#!/bin/sh
+set -e
+
+abort() {
+    echo "mock-kreadconfig5: $*" >&2
+    exit 1
+}
+
+group=
+key=
+while [ -n "$1" ]; do
+    case "$1" in
+        --file)
+            [ "$2" = emaildefaults ] ||
+                abort "expected: --file emaildefaults, got: --file $2"
+            ;;
+        --group)
+            group="$2"
+            ;;
+        --key)
+            key="$2"
+            ;;
+        *)
+            abort "unknown argument: $1"
+            ;;
+    esac
+    shift 2
+done
+
+if [ "$group" = Defaults ] && [ "$key" = Profile ]; then
+    echo DefProf
+elif [ "$group" = PROFILE_DefProf ] && [ "$key" = EmailClient ]; then
+    echo "thunderbird %u"
+else
+    abort "unknown group $group with key $key"
+fi
