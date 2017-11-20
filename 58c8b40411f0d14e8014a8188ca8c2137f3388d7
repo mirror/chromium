@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1880fe6f_881fdc69",
+        "filename": "chrome/test/data/webui/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-20T21:24:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "fb3665a9_941edcaa",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d506187a_ce62835f",
         "filename": "chrome/test/data/webui/discards/discards_test.js",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d44f1f73_e9decf99",
+        "filename": "chrome/test/data/webui/discards/discards_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-20T21:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d506187a_ce62835f",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "affffa1e_387ebe02",
         "filename": "chrome/test/data/webui/discards/discards_test.js",
         "patchSetId": 8
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "1105d383_41f833ed",
+        "filename": "chrome/test/data/webui/discards/discards_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-20T21:24:11Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t trying to do full page level tests. Rather, I just wanted testing of the helper methods as running the page doesn\u0027t give you good coverage of the potential input space for these functions.\n\nTesting functionality is quite easy by actually running the page, and it might be a little overkill to do full content tests given that it\u0027s a debugging only page.",
+      "parentUuid": "affffa1e_387ebe02",
+      "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f366fc1b_3e87343e",
         "filename": "chrome/test/data/webui/discards/discards_test.js",
         "patchSetId": 8
@@ -79,6 +145,24 @@
       "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c9d26a_ad6c4854",
+        "filename": "chrome/test/data/webui/discards/discards_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-20T21:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f366fc1b_3e87343e",
+      "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
