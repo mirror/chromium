@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5e1447c_b02fadbd",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-20T17:17:56Z",
+      "side": 1,
+      "message": "This was intentional.  I originally called the new unit test target \"common\" to differentiate it from device or Android-specific unittests, but in hindsight it was probably unnecessary.  Unless we plan to have more than one suite of pixel tests (or perf tests), I think this is better.  Would you like the perf target renamed?",
+      "parentUuid": "616f9fad_b7dd66d2",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 19
+      },
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c45217d3_8da757a8",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
