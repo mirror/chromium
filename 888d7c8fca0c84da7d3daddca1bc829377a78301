@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0cc578b4_d0e9a556",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-20T20:26:19Z",
+      "side": 1,
+      "message": "Done as discussed offline.",
+      "parentUuid": "e10c8532_85e0a2e1",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 19
+      },
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c45217d3_8da757a8",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
@@ -117,6 +141,30 @@
       "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d0a3f3_3044ed28",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-20T20:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d225e10_46110cc3",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 6
+      },
+      "revId": "888d7c8fca0c84da7d3daddca1bc829377a78301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
