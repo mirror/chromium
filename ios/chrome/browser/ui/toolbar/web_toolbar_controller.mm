@@ -1324,6 +1324,10 @@ using ios::material::TimingFunction;
                                                                  animated:YES
                                                                completion:nil];
                                  }];
+      UIAccessibilityPostNotification(
+          UIAccessibilityAnnouncementNotification,
+          l10n_util::GetNSString(
+              IDS_IOS_PAGE_LOADED_ACCESSIBILITY_ANNOUNCEMENT));
     }
     CGFloat delay = _unitTesting ? 0 : kLoadCompleteHideProgressBarDelay;
     [self performSelector:@selector(hideProgressBarAndTakeSnapshot)
