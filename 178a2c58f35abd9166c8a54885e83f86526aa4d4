@@ -16,6 +16,24 @@
       "revId": "178a2c58f35abd9166c8a54885e83f86526aa4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbeab64_9cf776d6",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-20T15:58:22Z",
+      "side": 1,
+      "message": "It is simply a label to the left and under the progress bar. You can see a picture of it here:\nhttps://blogs.msdn.microsoft.com/tiles_and_toasts/2017/02/01/progress-ui-and-data-binding-inside-toast-notifications-windows-10-creators-update/\n\nIt feels a bit weird to me that this is mandatory, but what do I know. :)",
+      "parentUuid": "2b3249e8_142df012",
+      "revId": "178a2c58f35abd9166c8a54885e83f86526aa4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
