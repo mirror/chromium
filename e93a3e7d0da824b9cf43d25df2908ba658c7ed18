@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "61d3dc39_bbee1048",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-20T19:24:44Z",
+      "side": 1,
+      "message": "Thank you for the pointer.  It certainly makes sense for a genuine feature, but I wonder if you really think that this CL is for introducing a new feature as opposed to fixing a bug (given your findings in the bug). \nWell, this bug has been present for several years (blame should go to me) so that taking a couple of more releases to launch wouldn\u0027t make a big difference. \n\nOTOH, additional code/time overhead to take \u0027feature launch procedures\u0027 seems unnecessary for this particular issue. (and, I was hoping to hop on this CL to get rid of a local ICU patch for \u0027full-stop\u0027 handling). \n\nGiven that Jongdeok has already gone through a number of iterations to put this behind a flag, this CL may go ahead as it is.",
+      "parentUuid": "8f4b67a2_ec8ada63",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "e93a3e7d0da824b9cf43d25df2908ba658c7ed18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffbf7eb_69286ca0",
         "filename": "components/omnibox/browser/tailored_word_break_iterator.cc",
         "patchSetId": 15
@@ -202,6 +226,30 @@
       "side": 1,
       "message": "\u003e Why do we need this code duplication between if-block and else-block? Doesn\u0027t the following work? Am I missing something? \n\u003e \n\u003e std::unique_ptr\u003cbase::i18n::BreakIterator\u003e iter;\n\u003e \n\u003e if (force_break_on_underscore) \n\u003e   iter.reset(new Tailored....(lower_terms[i], ...BREAK_WORD));\n\u003e else\n\u003e   iter.reset(new base::i18n::BreakIterator(.....));\n\nWe had this structure in an earlier version of this patchset.  However, to do this kind of structure, with |iter| defined as of type BreakIterator, would require the appropriate BreakIterator functions be declared virtual.  Virtual calls have some overhead, and there are a lot of uses of BreakIterator in chromium code.  I thought this was a reasonable structure to use temporarily (while we evaluate this behavioral change) rather than introduce a possible performance slowdown in chrome.",
       "parentUuid": "f2bca91d_6e5c2839",
+      "range": {
+        "startLine": 749,
+        "startChar": 1,
+        "endLine": 776,
+        "endChar": 0
+      },
+      "revId": "e93a3e7d0da824b9cf43d25df2908ba658c7ed18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc306cc0_82d8645d",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-20T19:24:44Z",
+      "side": 1,
+      "message": "Ok. That finally answers my question a week ago why \u0027virtual\u0027 declaration was removed. :-) \n\nAs I wrote in another comment, I believe this is a bug fix rather than a \u0027new feature\u0027. As such, I\u0027d not put this behind a flag and take it through a feature launch process. Then, all of these would be moot. \n\nAnd, even if we want to go through a feature launch process, I\u0027m not sure if we\u0027re gaining much from not using virtual, but perhaps taking a precaution is not bad.  (btw, underlying icu::BreakIterator uses virtual, too; this is not to say introducing yet another layer of virtual would be unconditionally justified. )",
+      "parentUuid": "fec9d0d6_824d7fcc",
       "range": {
         "startLine": 749,
         "startChar": 1,
