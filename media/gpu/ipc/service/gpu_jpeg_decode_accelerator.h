@@ -35,6 +35,7 @@ class GpuJpegDecodeAccelerator : public mojom::GpuJpegDecodeAccelerator,
                    JpegDecodeAccelerator::Error error) override;
 
  private:
+  using DecodeCallbackMap = std::unordered_map<int32_t, DecodeCallback>;
   // This constructor internally calls
   // GpuJpegDecodeAcceleratorFactoryProvider::GetAcceleratorFactories() to
   // fill |accelerator_factory_functions_|.
@@ -47,6 +48,14 @@ class GpuJpegDecodeAccelerator : public mojom::GpuJpegDecodeAccelerator,
               mojo::ScopedSharedBufferHandle output_handle,
               uint32_t output_buffer_size,
               DecodeCallback callback) override;
+  void DecodeWithFD(int32_t buffer_id,
+                    mojo::ScopedHandle input_fd,
+                    uint32_t input_buffer_size,
+                    int32_t coded_size_width,
+                    int32_t coded_size_height,
+                    mojo::ScopedHandle output_fd,
+                    uint32_t output_buffer_size,
+                    DecodeWithFDCallback callback) override;
   void Uninitialize() override;
 
   void NotifyDecodeStatus(int32_t bitstream_buffer_id,
@@ -56,7 +65,8 @@ class GpuJpegDecodeAccelerator : public mojom::GpuJpegDecodeAccelerator,
       GpuJpegDecodeAcceleratorFactoryProvider::CreateAcceleratorCB>
       accelerator_factory_functions_;
 
-  DecodeCallback decode_cb_;
+  // A map from bitstream_buffer_id to DecodeCallback.
+  DecodeCallbackMap decode_cb_map_;
 
   std::unique_ptr<JpegDecodeAccelerator> accelerator_;
 
