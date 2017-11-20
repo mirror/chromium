@@ -312,15 +312,6 @@ int32_t WebrtcAudioModule::StereoRecording(bool* enabled) const {
   return -1;
 }
 
-int32_t WebrtcAudioModule::SetRecordingChannel(const ChannelType channel) {
-  return 0;
-}
-
-int32_t WebrtcAudioModule::RecordingChannel(ChannelType* channel) const {
-  NOTREACHED();
-  return -1;
-}
-
 int32_t WebrtcAudioModule::PlayoutDelay(uint16_t* delay_ms) const {
   *delay_ms = 0;
   return 0;
