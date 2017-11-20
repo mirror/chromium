@@ -2027,6 +2027,47 @@ EVENT_TYPE(QUIC_CONNECTION_MIGRATION_FAILURE)
 //  }
 EVENT_TYPE(QUIC_CONNECTION_MIGRATION_SUCCESS)
 
+// Records that QUIC connectivity probing is triggered.
+// Identified by network id.
+//  {
+//     "network": <ID of the network being probed>
+//     "initial_timeout_ms": <Initial timeout in milliseconds>
+//  }
+EVENT_TYPE(QUIC_CONNECTION_CONNECTIVITY_PROBING_TRIGGERED)
+
+// Records that QUIC connectivity probing succeeds.
+//  {
+//     "network": <ID of the network being probed>
+//  }
+EVENT_TYPE(QUIC_CONNECTION_CONNECTIVITY_PROBING_SUCCEEDED)
+
+// Records that QUIC connectivity probing fails.
+//  {
+//     "network": <ID of the network being probed>
+//  }
+EVENT_TYPE(QUIC_CONNECTION_CONNECTIVITY_PROBING_FAILED)
+
+// Records that QUIC connectivity probing fails.
+//  {
+//     "network": <ID of the network being probed>
+//  }
+EVENT_TYPE(QUIC_CONNECTION_CONNECTIVITY_PROBING_CANCELLED)
+
+// Records that a QUIC connectivity probing packet has been sent.
+//  {
+//     "network": <ID of the network being probed>
+//     "retry_count": <Number of trials>
+//  }
+EVENT_TYPE(QUIC_CONNECTION_CONNECTIVITY_PROBING_PACKET_SENT)
+
+// Records that a QUIC connectivity probing packet has been received.
+//  {
+//     "network": <ID of the network being probed>
+//     "self_address": <Self address on the probed path>
+//     "peer_address": <Peer address on the probed path>
+//  }
+EVENT_TYPE(QUIC_CONNECTION_CONNECTIVITY_PROBING_PACKET_RECEIVED)
+
 // ------------------------------------------------------------------------
 // HttpStreamParser
 // ------------------------------------------------------------------------

@@ -4,12 +4,39 @@
 
 #include "net/quic/chromium/quic_connectivity_probing_manager.h"
 
+#include "base/strings/string_number_conversions.h"
+#include "base/values.h"
+#include "net/log/net_log.h"
+
 namespace net {
 
 namespace {
 
 // Default to 2 seconds timeout as the maximum timeout.
 const int64_t kMaxProbingTimeoutMs = 2000;
+
+std::unique_ptr<base::Value> NetLogQuicConnectivityProbingTriggerCallback(
+    NetworkChangeNotifier::NetworkHandle network,
+    base::TimeDelta initial_timeout,
+    NetLogCaptureMode capture_mode) {
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetString("network", base::Int64ToString(network));
+  dict->SetString("initial_timeout_ms",
+                  base::Int64ToString(initial_timeout.InMilliseconds()));
+  return std::move(dict);
+}
+
+std::unique_ptr<base::Value> NetLogQuicConnectivityProbingResponseCallback(
+    NetworkChangeNotifier::NetworkHandle network,
+    IPEndPoint* self_address,
+    QuicSocketAddress* peer_address,
+    NetLogCaptureMode capture_mode) {
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetString("network", base::Int64ToString(network));
+  dict->SetString("self address", self_address->ToString());
+  dict->SetString("peer address", peer_address->ToString());
+  return std::move(dict);
+}
 
 }  // namespace
 
@@ -55,6 +82,11 @@ void QuicConnectivityProbingManager::CancelProbing(
 }
 
 void QuicConnectivityProbingManager::CancelProbingIfAny() {
+  if (network_ != NetworkChangeNotifier::kInvalidNetworkHandle) {
+    net_log_.AddEvent(
+        NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_CANCELLED,
+        NetLog::Int64Callback("network", network_));
+  }
   network_ = NetworkChangeNotifier::kInvalidNetworkHandle;
   peer_address_ = QuicSocketAddress();
   socket_.reset();
@@ -71,7 +103,8 @@ void QuicConnectivityProbingManager::StartProbing(
     std::unique_ptr<DatagramClientSocket> socket,
     std::unique_ptr<QuicChromiumPacketWriter> writer,
     std::unique_ptr<QuicChromiumPacketReader> reader,
-    base::TimeDelta initial_timeout) {
+    base::TimeDelta initial_timeout,
+    const NetLogWithSource& net_log) {
   DCHECK_NE(network, NetworkChangeNotifier::kInvalidNetworkHandle);
   if (network == network_ &&
       network_ != NetworkChangeNotifier::kInvalidNetworkHandle &&
@@ -86,11 +119,17 @@ void QuicConnectivityProbingManager::StartProbing(
   peer_address_ = peer_address;
   socket_ = std::move(socket);
   writer_ = std::move(writer);
+  net_log_ = net_log;
+
   // |this| will listen to all socket write events for the probing
   // packet writer.
   writer_->set_delegate(this);
   reader_ = std::move(reader);
   initial_timeout_ = initial_timeout;
+  net_log_.AddEvent(
+      NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_TRIGGERED,
+      base::Bind(&NetLogQuicConnectivityProbingTriggerCallback, network_,
+                 initial_timeout_));
 
   reader_->StartReading();
   SendConnectivityProbingPacket(initial_timeout_);
@@ -120,6 +159,11 @@ void QuicConnectivityProbingManager::OnConnectivityProbingReceived(
     return;
   }
 
+  net_log_.AddEvent(
+      NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_PACKET_RECEIVED,
+      base::Bind(&NetLogQuicConnectivityProbingResponseCallback, network_,
+                 &local_address, &peer_address_));
+
   // TODO(zhongyi): add metrics collection.
   // Notify the delegate that the probe succeeds and reset everything.
   delegate_->OnProbeNetworkSucceeded(network_, self_address, std::move(socket_),
@@ -129,6 +173,9 @@ void QuicConnectivityProbingManager::OnConnectivityProbingReceived(
 
 void QuicConnectivityProbingManager::SendConnectivityProbingPacket(
     base::TimeDelta timeout) {
+  net_log_.AddEvent(
+      NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_PACKET_SENT,
+      NetLog::Int64Callback("sent_count", retry_count_));
   delegate_->OnSendConnectivityProbingPacket(writer_.get(), peer_address_);
   retransmit_timer_.Start(
       FROM_HERE, timeout,

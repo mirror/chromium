@@ -1605,6 +1605,10 @@ void QuicChromiumClientSession::OnProbeNetworkSucceeded(
   DCHECK(writer);
   DCHECK(reader);
 
+  net_log_.AddEvent(
+      NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_SUCCEEDED,
+      NetLog::Int64Callback("network", network));
+
   // Set |this| to listen on socket write events on the packet writer
   // that was used for probing.
   writer->set_delegate(this);
@@ -1632,6 +1636,9 @@ void QuicChromiumClientSession::OnProbeNetworkSucceeded(
 
 void QuicChromiumClientSession::OnProbeNetworkFailed(
     NetworkChangeNotifier::NetworkHandle network) {
+  net_log_.AddEvent(
+      NetLogEventType::QUIC_CONNECTION_CONNECTIVITY_PROBING_FAILED,
+      NetLog::Int64Callback("network", network));
   // Probing failure for default network can be ignored.
   DVLOG(1) << "Connectivity probing failed on NetworkHandle " << network;
   DVLOG_IF(1, network == default_network_ &&
@@ -2016,7 +2023,8 @@ ProbingResult QuicChromiumClientSession::StartProbeNetwork(
   probing_manager_.StartProbing(
       network, QuicSocketAddress(QuicSocketAddressImpl(peer_address)),
       std::move(probing_socket), std::move(probing_writer),
-      std::move(probing_reader), base::TimeDelta::FromMilliseconds(timeout_ms));
+      std::move(probing_reader), base::TimeDelta::FromMilliseconds(timeout_ms),
+      net_log_);
   return ProbingResult::PENDING;
 }
 

@@ -68,7 +68,8 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager
                     std::unique_ptr<DatagramClientSocket> socket,
                     std::unique_ptr<QuicChromiumPacketWriter> writer,
                     std::unique_ptr<QuicChromiumPacketReader> reader,
-                    base::TimeDelta initial_timeout);
+                    base::TimeDelta initial_timeout,
+                    const NetLogWithSource& net_log);
 
   // Cancels undergoing probing if the current |network_| being probed is the
   // same as |network|.
@@ -102,6 +103,7 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager
   void NotifyDelegateProbeFailed();
 
   Delegate* delegate_;  // Unowned, must outlive |this|.
+  NetLogWithSource net_log_;
 
   // Current network that is under probing, resets to
   // NetworkChangeNotifier::kInvalidNetwork when probing results has been
