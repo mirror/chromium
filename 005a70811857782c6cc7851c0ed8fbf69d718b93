@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a414a730_0e181626",
+        "filename": "third_party/WebKit/Source/core/dom/NodeTraversal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-20T11:58:48Z",
+      "side": 1,
+      "message": "As I understand, functions that you mentioned earlier like InclusiveAncestorsOf, do a const_cast inside.\nSo I tried to use the same approach here.",
+      "revId": "005a70811857782c6cc7851c0ed8fbf69d718b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
