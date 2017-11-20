@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "33c6fc2e_6c889a4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T06:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ce42cf5_bff681cc",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb9753f8_fc82f9ff",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 5
