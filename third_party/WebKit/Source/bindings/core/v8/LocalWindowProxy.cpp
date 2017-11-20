@@ -232,7 +232,7 @@ void LocalWindowProxy::CreateContext() {
     // in some cases, e.g. loading XML files.
     if (context.IsEmpty()) {
       v8::Local<v8::ObjectTemplate> global_template =
-          V8Window::domTemplate(isolate, *world_)->InstanceTemplate();
+          V8Window::domTemplate(isolate, World())->InstanceTemplate();
       CHECK(!global_template.IsEmpty());
       context = v8::Context::New(isolate, &extension_configuration,
                                  global_template, global_proxy);
@@ -292,6 +292,12 @@ void LocalWindowProxy::SetupWindowPrototypeChain() {
   CHECK(!window_properties.IsEmpty());
   V8DOMWrapper::SetNativeInfo(GetIsolate(), window_properties,
                               wrapper_type_info, window);
+
+  // Install conditional features on the global object.
+  wrapper_type_info->InstallConditionalFeatures(
+      context, World(), window_wrapper, v8::Local<v8::Object>(),
+      v8::Local<v8::Function>(),
+      wrapper_type_info->domTemplate(GetIsolate(), World()));
 
   // TODO(keishi): Remove installPagePopupController and implement
   // PagePopupController in another way.
