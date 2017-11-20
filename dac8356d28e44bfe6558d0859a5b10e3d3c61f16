@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58dd59aa_eae55831",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-20T20:36:24Z",
+      "side": 1,
+      "message": "What does \"technical field\" mean?",
+      "range": {
+        "startLine": 267,
+        "startChar": 72,
+        "endLine": 268,
+        "endChar": 26
+      },
+      "revId": "dac8356d28e44bfe6558d0859a5b10e3d3c61f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b39819_d8330332",
+        "filename": "components/autofill/core/common/autofill_regex_constants.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-20T20:36:24Z",
+      "side": 1,
+      "message": "Isn\u0027t this already in another CL ?",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 30
+      },
+      "revId": "dac8356d28e44bfe6558d0859a5b10e3d3c61f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
