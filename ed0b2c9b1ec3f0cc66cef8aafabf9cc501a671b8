@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b6ae96_55ba8810",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2090,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T00:19:28Z",
+      "side": 1,
+      "message": "nit: This sentence can be deleted.",
+      "range": {
+        "startLine": 2090,
+        "startChar": 129,
+        "endLine": 2090,
+        "endChar": 175
+      },
+      "revId": "ed0b2c9b1ec3f0cc66cef8aafabf9cc501a671b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
