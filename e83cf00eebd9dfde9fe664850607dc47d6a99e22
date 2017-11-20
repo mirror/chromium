@@ -22,6 +22,30 @@
       "revId": "e83cf00eebd9dfde9fe664850607dc47d6a99e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465cbe76_5e9306da",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-20T11:00:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36bd1f6a_53967dc8",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "e83cf00eebd9dfde9fe664850607dc47d6a99e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
