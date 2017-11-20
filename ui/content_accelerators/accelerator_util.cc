@@ -13,6 +13,7 @@ namespace ui {
 
 namespace {
 
+// TODO(crbug.com/787137): Use the helper from ui/events/blink here.
 int GetModifiersFromNativeWebKeyboardEvent(
     const content::NativeWebKeyboardEvent& event) {
   int modifiers = ui::EF_NONE;
@@ -22,6 +23,8 @@ int GetModifiersFromNativeWebKeyboardEvent(
     modifiers |= ui::EF_CONTROL_DOWN;
   if (event.GetModifiers() & content::NativeWebKeyboardEvent::kAltKey)
     modifiers |= ui::EF_ALT_DOWN;
+  if (event.GetModifiers() & content::NativeWebKeyboardEvent::kAltGrKey)
+    modifiers |= ui::EF_ALTGR_DOWN;
 #if defined(OS_MACOSX) || defined(OS_CHROMEOS)
   if (event.GetModifiers() & content::NativeWebKeyboardEvent::kMetaKey)
     modifiers |= ui::EF_COMMAND_DOWN;
