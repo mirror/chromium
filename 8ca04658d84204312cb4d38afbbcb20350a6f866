@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89f90b12_a9dc9b16",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-20T09:10:56Z",
+      "side": 1,
+      "message": "Funny comment, but unfortunately will perpetuate confusion in new grads...",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "8ca04658d84204312cb4d38afbbcb20350a6f866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ed3da5_77574379",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-20T09:10:56Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be more accurate to do kEndOfText + kPageSize +2 - ((kEndOfText+2) % kPageSize)?\n\nIf my math is correct here, if kEndOfText is at 4095 bytes, you\u0027ll say that the end of text is at 4096 bytes, when really it extends into the next page (4097 bytes) and so you should set the last page as ending at 8192 bytes so that you touch the second page.\n\nOr, if as seems likely, you don\u0027t actually care about touching the page that the two bytes spills off into, your comment is inaccurate, and you just want to send end_page to the end of the page that (the start of) kEndOfText is on.",
+      "range": {
+        "startLine": 94,
+        "startChar": 33,
+        "endLine": 94,
+        "endChar": 42
+      },
+      "revId": "8ca04658d84204312cb4d38afbbcb20350a6f866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
