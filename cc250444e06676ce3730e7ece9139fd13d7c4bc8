@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ccbc5a4c_89b5273c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T21:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f794ecc_4892f738",
+      "revId": "cc250444e06676ce3730e7ece9139fd13d7c4bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b104c12a_319e0437",
         "filename": "content/browser/generic_sensor_browsertest.cc",
         "patchSetId": 20
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-20T19:19:42Z",
       "side": 1,
       "message": "This one needs the same NavigationObserver that waits for 3 commits, right?",
+      "revId": "cc250444e06676ce3730e7ece9139fd13d7c4bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24e777c_b8ff8f12",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T21:53:42Z",
+      "side": 1,
+      "message": "This one actually only needs to wait 2 commits. I think the reason is that in ambient_light_sensor_cross_origin_iframe_test.html, the\n\u003cbody onLoad\u003d\"start()\"\u003e\nthrows an exception and the page immediately navigates to #pass, so the iframe page is not counted as navigation, only the main frame and the #pass page.\n\nI tried changing the html to be:\n\u003cbody onLoad\u003d\"setTimeout(start, 200)\"\u003e\nand it does need to wait 3 commits.\n\nSo I changed the ambient_light_sensor_cross_origin_iframe_test.html to use setTimeout() and also added TestNavigationObserver and comments here.",
+      "parentUuid": "b104c12a_319e0437",
       "revId": "cc250444e06676ce3730e7ece9139fd13d7c4bc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

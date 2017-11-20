@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "8ea6c3ea_9d874170",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T21:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1c2dbb5_fb36e03d",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "315f00d8_a21847f6",
         "filename": "content/browser/generic_sensor_browsertest.cc",
         "patchSetId": 19
