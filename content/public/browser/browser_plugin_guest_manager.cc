@@ -18,6 +18,12 @@ bool BrowserPluginGuestManager::ForEachGuest(
   return false;
 }
 
+bool BrowserPluginGuestManager::ForEachGuest(
+    const WebContents* embedder_web_contents,
+    const ConstGuestCallback& callback) {
+  return false;
+}
+
 WebContents* BrowserPluginGuestManager::GetFullPageGuest(
     WebContents* embedder_web_contents) {
   return nullptr;

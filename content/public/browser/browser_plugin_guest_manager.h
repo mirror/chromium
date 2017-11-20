@@ -27,8 +27,11 @@ class CONTENT_EXPORT BrowserPluginGuestManager {
   // calling |callback| for each. If one of the callbacks returns true, then
   // the iteration exits early.
   typedef base::Callback<bool(WebContents*)> GuestCallback;
+  typedef base::Callback<bool(const WebContents*)> ConstGuestCallback;
   virtual bool ForEachGuest(WebContents* embedder_web_contents,
                             const GuestCallback& callback);
+  virtual bool ForEachGuest(const WebContents* embedder_web_contents,
+                            const ConstGuestCallback& callback);
 
   // Returns the "full page" guest if there is one. That is, if there is a
   // single BrowserPlugin in the given embedder which takes up the full page,

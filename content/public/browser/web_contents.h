@@ -736,7 +736,7 @@ class WebContents : public PageNavigator,
   virtual void StopFinding(StopFindAction action) = 0;
 
   // Returns true if audio has recently been audible from the WebContents.
-  virtual bool WasRecentlyAudible() = 0;
+  virtual bool WasRecentlyAudible() const = 0;
 
   // Returns true if audio has been audible from the WebContents since the last
   // navigation.
