@@ -63,11 +63,16 @@ class SANDBOX_EXPORT BrokerProcess {
   // doesn't support execute permissions.
   // It's similar to the access() system call and will return -errno on errors.
   int Access(const char* pathname, int mode) const;
+
   // Can be used in place of open(). Will be async signal safe.
   // The implementation only supports certain white listed flags and will
   // return -EPERM on other flags.
   // It's similar to the open() system call and will return -errno on errors.
   int Open(const char* pathname, int flags) const;
+
+  // Can be used in place of stat(). Will be async signal safe.
+  // It's similar to the stat() system call and will return -errno on errors.
+  int Stat(const char* pathname, struct stat* sb) const;
 
   int broker_pid() const { return broker_pid_; }
 
