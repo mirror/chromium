@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
+#include "chrome/browser/component_updater/cros_component_installer.h"
 #include "chrome/browser/data_use_measurement/data_use_web_contents_observer.h"
 #include "chrome/browser/extensions/api/chrome_device_permissions_prompt.h"
 #include "chrome/browser/extensions/api/declarative_content/chrome_content_rules_registry.h"
@@ -46,6 +47,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/extensions/api/file_handlers/non_native_file_system_delegate_chromeos.h"
+#include "chrome/browser/extensions/api/media_perception_private/media_perception_cros_component_delegate_chromeos.h"
 #include "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.h"
 #include "chrome/browser/extensions/clipboard_extension_helper_chromeos.h"
 #endif
@@ -219,6 +221,15 @@ ChromeExtensionsAPIClient::GetNonNativeFileSystemDelegate() {
         base::MakeUnique<NonNativeFileSystemDelegateChromeOS>();
   }
   return non_native_file_system_delegate_.get();
+}
+
+MediaPerceptionCrOSComponentDelegate*
+ChromeExtensionsAPIClient::GetMediaPerceptionCrOSComponentDelegate() {
+  if (!media_perception_cros_component_delegate_) {
+    media_perception_cros_component_delegate_ =
+        std::make_unique<MediaPerceptionCrOSComponentDelegateChromeOS>();
+  }
+  return media_perception_cros_component_delegate_.get();
 }
 
 void ChromeExtensionsAPIClient::SaveImageDataToClipboard(
