@@ -16,6 +16,24 @@
       "revId": "80027b64b446dfa7706da11afc7326e30eb3258f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7969f4cb_9f50980f",
+        "filename": "ios/web/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-20T10:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e93bdf3_964d5612",
+      "revId": "80027b64b446dfa7706da11afc7326e30eb3258f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
