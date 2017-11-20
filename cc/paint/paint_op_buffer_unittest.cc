@@ -952,8 +952,7 @@ std::vector<float> test_floats = {0.f,
                                   2384.981971f,
                                   0.0001f,
                                   std::numeric_limits<float>::min(),
-                                  std::numeric_limits<float>::max(),
-                                  std::numeric_limits<float>::infinity()};
+                                  std::numeric_limits<float>::max()};
 
 std::vector<uint8_t> test_uint8s = {
     0, 255, 128, 10, 45,
@@ -1696,6 +1695,7 @@ TEST_P(PaintOpSerializationTest, SmokeTest) {
        DeserializerIterator(output_.get(), serializer.TotalBytesWritten())) {
     SCOPED_TRACE(base::StringPrintf(
         "%s #%zu", PaintOpTypeToString(GetParamType()).c_str(), i));
+    ASSERT_EQ(!*iter, !base_written);
     EXPECT_EQ(**iter, *base_written);
     ++iter;
     ++i;
