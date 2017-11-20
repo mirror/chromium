@@ -239,7 +239,8 @@ base::LazyInstance<ProfileLaunchObserver>::DestructorAtExit
 void DumpBrowserHistograms(const base::FilePath& output_file) {
   base::AssertBlockingAllowed();
 
-  std::string output_string(base::StatisticsRecorder::ToJSON(std::string()));
+  std::string output_string(
+      base::StatisticsRecorder::ToJSON(false /* lossy */));
   base::WriteFile(output_file, output_string.data(),
                   static_cast<int>(output_string.size()));
 }

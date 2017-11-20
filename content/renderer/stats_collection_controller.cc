@@ -121,7 +121,7 @@ std::string StatsCollectionController::GetHistogram(
   if (!histogram) {
     output = "{}";
   } else {
-    histogram->WriteJSON(&output);
+    histogram->WriteJSON(&output, false /* lossy */);
   }
   return output;
 }

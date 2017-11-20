@@ -4169,7 +4169,7 @@ void RenderProcessHostImpl::GetBrowserHistogram(
   if (!histogram) {
     histogram_json = "{}";
   } else {
-    histogram->WriteJSON(&histogram_json);
+    histogram->WriteJSON(&histogram_json, false /* lossy */);
   }
   std::move(callback).Run(histogram_json);
 }
