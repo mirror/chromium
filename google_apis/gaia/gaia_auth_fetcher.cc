@@ -51,6 +51,7 @@ static bool CookiePartsContains(const std::vector<std::string>& parts,
 bool ExtractOAuth2TokenPairResponse(const std::string& data,
                                     std::string* refresh_token,
                                     std::string* access_token,
+                                    std::string* id_token,
                                     int* expires_in_secs) {
   DCHECK(access_token);
   DCHECK(expires_in_secs);
@@ -62,6 +63,8 @@ bool ExtractOAuth2TokenPairResponse(const std::string& data,
   base::DictionaryValue* dict =
         static_cast<base::DictionaryValue*>(value.get());
 
+  VLOG(1) << "TESTING **** " << data;
+
   if (!dict->GetStringWithoutPathExpansion("access_token", access_token) ||
       !dict->GetIntegerWithoutPathExpansion("expires_in", expires_in_secs)) {
     return false;
@@ -70,6 +73,10 @@ bool ExtractOAuth2TokenPairResponse(const std::string& data,
   // Refresh token may not be required.
   if (refresh_token) {
     if (!dict->GetStringWithoutPathExpansion("refresh_token", refresh_token))
+      return false;
+
+    // Extract ID token as well when obtaining refresh token.
+    if (!dict->GetStringWithoutPathExpansion("id_token", id_token))
       return false;
   }
   return true;
@@ -1030,18 +1037,20 @@ void GaiaAuthFetcher::OnOAuth2TokenPairFetched(
     int response_code) {
   std::string refresh_token;
   std::string access_token;
+  std::string id_token;
   int expires_in_secs = 0;
 
   bool success = false;
   if (status.is_success() && response_code == net::HTTP_OK) {
       success = ExtractOAuth2TokenPairResponse(data, &refresh_token,
-                                               &access_token, &expires_in_secs);
+                                               &access_token, &id_token,
+                                               &expires_in_secs);
   }
 
   if (success) {
     consumer_->OnClientOAuthSuccess(
         GaiaAuthConsumer::ClientOAuthResult(refresh_token, access_token,
-                                            expires_in_secs));
+                                            id_token, expires_in_secs));
   } else {
     consumer_->OnClientOAuthFailure(GenerateAuthError(data, status));
   }
@@ -1169,13 +1178,14 @@ void GaiaAuthFetcher::OnGetTokenResponseFetched(
   if (status.is_success() && response_code == net::HTTP_OK) {
     VLOG(1) << "GetTokenResponse successful!";
     success = ExtractOAuth2TokenPairResponse(data, NULL,
-                                             &access_token, &expires_in_secs);
+                                             &access_token, NULL,
+                                             &expires_in_secs);
   }
 
   if (success) {
     consumer_->OnGetTokenResponseSuccess(
         GaiaAuthConsumer::ClientOAuthResult(std::string(), access_token,
-                                            expires_in_secs));
+                                            std::string(), expires_in_secs));
   } else {
     consumer_->OnGetTokenResponseError(GenerateAuthError(data, status));
   }
