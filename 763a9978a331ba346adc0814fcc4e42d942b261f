@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "083f5ff2_bcdbdace",
+        "filename": "content/browser/service_worker/service_worker_context_core.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T00:28:50Z",
+      "side": 1,
+      "message": "remove \"issued\"",
+      "range": {
+        "startLine": 207,
+        "startChar": 23,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "763a9978a331ba346adc0814fcc4e42d942b261f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030126e2_afcc5620",
+        "filename": "content/browser/service_worker/service_worker_context_core.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T00:28:50Z",
+      "side": 1,
+      "message": "\"The Status is populated as\" -\u003e \"The status code is\"",
+      "revId": "763a9978a331ba346adc0814fcc4e42d942b261f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
