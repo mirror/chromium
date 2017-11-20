@@ -1,6 +1,8 @@
 # Tight rules since this will move to services/network. See README.
 include_rules = [
   "+components/network_session_configurator",
+  # Prefs are used as a key:value store for networking-related data (Like which
+  # servers support QUIC), not to store actual preferences.
   "+components/prefs",
   "-content",
   "+content/common/content_export.h",
