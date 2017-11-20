@@ -375,7 +375,8 @@ void HTMLInputElement::InitializeTypeInParsing() {
   String default_value = FastGetAttribute(valueAttr);
   if (input_type_->GetValueMode() == ValueMode::kValue)
     non_attribute_value_ = SanitizeValue(default_value);
-  EnsureUserAgentShadowRoot();
+  if (input_type_view_->NeedsShadowSubtree())
+    EnsureUserAgentShadowRoot();
 
   SetNeedsWillValidateCheck();
 
@@ -429,7 +430,10 @@ void HTMLInputElement::UpdateType() {
 
   input_type_ = new_type;
   input_type_view_ = input_type_->CreateView();
-  input_type_view_->CreateShadowSubtree();
+  if (input_type_view_->NeedsShadowSubtree() && !UserAgentShadowRoot())
+    EnsureUserAgentShadowRoot();
+  else
+    input_type_view_->CreateShadowSubtree();
 
   SetNeedsWillValidateCheck();
 
