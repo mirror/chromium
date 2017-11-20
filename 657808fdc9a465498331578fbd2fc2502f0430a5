@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "65df31e9_351f38be",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-20T08:43:04Z",
+      "side": 1,
+      "message": "Sorry, I am not sure why we still need this check? We already did it in ServiceWorkerDispatcherHost::OnCountFeature, and then version-\u003eCountFeature and come here.",
+      "parentUuid": "7e65063e_2b93be3d",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "878284ea_2088b40d",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 10
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-20T06:28:59Z",
       "side": 1,
       "message": "DCHECK_LT(feature, NumFeatures)",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f0829e_1275117b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-20T08:43:04Z",
+      "side": 1,
+      "message": "Same question as before, are the |used_features| of version should less than NumFeatures?",
+      "parentUuid": "878284ea_2088b40d",
       "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
