@@ -129,6 +129,30 @@
     },
     {
       "key": {
+        "uuid": "517ddb35_65f69b1b",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-20T21:12:13Z",
+      "side": 1,
+      "message": "I agree that there\u0027s value in having the main metric reflect the true rates we care about.\n\nHowever, I don\u0027t think we should make this change without seeing its effects first - so the 1 milestone suggestion sgtm. When we make the switch, I think we should also preserve the field we add here - so that the full signal is still available. e.g. that field could be named crach_count_with_gmscore_update - or similar - and in 1 milestone we can go from that being included in crash_count (as is now) to it being excluded.",
+      "parentUuid": "81fd2ec7_70150ca7",
+      "range": {
+        "startLine": 484,
+        "startChar": 77,
+        "endLine": 484,
+        "endChar": 0
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80130a9d_34bfc230",
         "filename": "components/metrics/metrics_state_manager.h",
         "patchSetId": 4
