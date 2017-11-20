@@ -70,6 +70,30 @@
       "revId": "052b26853559e3e89e82fbc8184eb54e51159bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df238f0_8e28cee2",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-20T14:24:31Z",
+      "side": 1,
+      "message": "No, |type| sent with OnNetworkChanged is sent as CONNECTION_NONE immediately prior to online signals, during this time IsOffline() would be false.",
+      "parentUuid": "00aaecd1_7cc302f0",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "052b26853559e3e89e82fbc8184eb54e51159bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
