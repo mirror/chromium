@@ -1229,7 +1229,9 @@ using ios::material::TimingFunction;
                    }
                    completion:nil];
 
-  if (CGRectEqualToRect([_locationBarView frame], newOmniboxFrame))
+  CGRect materialBackgroundFrame = RectShiftedDownForStatusBar(newOmniboxFrame);
+  if (CGRectEqualToRect([_locationBarView frame], newOmniboxFrame) &&
+      CGRectEqualToRect([_omniboxBackground frame], materialBackgroundFrame))
     return;
 
   // Hide the clear and voice search buttons during omniBox frame animations.
@@ -1242,7 +1244,6 @@ using ios::material::TimingFunction;
   [_locationBarView.textField leftView].frame =
       [_locationBarView.textField leftViewRectForBounds:newOmniboxFrame];
 
-  CGRect materialBackgroundFrame = RectShiftedDownForStatusBar(newOmniboxFrame);
 
   // Extreme jank happens during initial layout if an animation is invoked. Not
   // certain why. o_O
@@ -2411,6 +2412,8 @@ using ios::material::TimingFunction;
   [super viewSafeAreaInsetsDidChange];
   if (!IsIPadIdiom()) {
     if (IsSafeAreaCompatibleToolbarEnabled()) {
+      // Re-layout toolbar and omnibox.
+      [self layoutOmnibox];
       // The clipping view's height is supposed to match the toolbar's height.
       // The clipping view can't match the toolbar's height with autoresizing
       // masks because the clipping view is not a direct child of the toolbar.
