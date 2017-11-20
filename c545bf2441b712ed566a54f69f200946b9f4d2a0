@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9611182_5e190210",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:58:45Z",
+      "side": 1,
+      "message": "As discussed offline, both of these are now FILL for the wrapper view around |title_| :)",
+      "parentUuid": "b65b1260_2046ca72",
+      "range": {
+        "startLine": 128,
+        "startChar": 68,
+        "endLine": 128,
+        "endChar": 72
+      },
+      "revId": "c545bf2441b712ed566a54f69f200946b9f4d2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6701a231_f0f21584",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "c545bf2441b712ed566a54f69f200946b9f4d2a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85a2cdb_7c4e6366",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6701a231_f0f21584",
+      "revId": "c545bf2441b712ed566a54f69f200946b9f4d2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "12f665a9_a47e2d45",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6881e653_fe7e42bb",
+      "revId": "c545bf2441b712ed566a54f69f200946b9f4d2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c77da9_839caf54",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 9
@@ -73,6 +133,24 @@
       "revId": "c545bf2441b712ed566a54f69f200946b9f4d2a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed49185_95890c4e",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-20T02:58:45Z",
+      "side": 1,
+      "message": "N/A as discussed offline (this works regardless)",
+      "parentUuid": "86c77da9_839caf54",
+      "revId": "c545bf2441b712ed566a54f69f200946b9f4d2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
