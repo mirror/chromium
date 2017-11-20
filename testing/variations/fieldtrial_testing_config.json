@@ -3017,28 +3017,6 @@
             ]
         }
     ],
-    "SRTExperimentalEngineTrial": [
-        {
-            "platforms": [
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "NewCleaner_Launch",
-                    "params": {
-                        "download_group": "stable/eset",
-                        "experiment_group_for_reporting": "Experiment2",
-                        "tag": "stable_eset"
-                    },
-                    "enable_features": [
-                        "DownloadCleanupToolByBitness",
-                        "ExperimentalSwReporterEngine",
-                        "ExperimentalSwReporterEngineOnAllArchitectures"
-                    ]
-                }
-            ]
-        }
-    ],
     "SRTPromptFieldTrial": [
         {
             "platforms": [
