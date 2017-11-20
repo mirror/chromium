@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd3b99d_0c76e4b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-20T18:07:05Z",
+      "side": 1,
+      "message": "Also add the bug number for the flaky test bug?",
+      "revId": "aa183061a5f7e2b9adac77c683e10aaa3110ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
