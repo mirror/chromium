@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c2f44b_25892433",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-20T20:58:33Z",
+      "side": 1,
+      "message": "Sorry for the rebase step in between.",
+      "revId": "db0f8a1522b747b5bc58eca2a0bd802b773f2e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
