@@ -5,6 +5,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 
 #include "base/strings/string_number_conversions.h"
+#include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gl/dc_renderer_layer_params.h"
@@ -4626,6 +4627,26 @@ error::Error GLES2DecoderPassthroughImpl::DoWindowRectanglesEXT(
     const volatile GLint* box) {
   std::vector<GLint> box_copy(box, box + (n * 4));
   api()->glWindowRectanglesEXTFn(mode, n, box_copy.data());
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoInsertGpuFenceINTERNAL(
+    GLuint gpu_fence_id) {
+  GetGpuFenceManager()->CreateNewGpuFence(gpu_fence_id);
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoWaitGpuFenceCHROMIUM(
+    GLuint gpu_fence_id) {
+  DCHECK(GetGpuFenceManager()->IsValidGpuFence(gpu_fence_id));
+  GetGpuFenceManager()->WaitGpuFence(gpu_fence_id);
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoDestroyGpuFenceCHROMIUM(
+    GLuint gpu_fence_id) {
+  DCHECK(GetGpuFenceManager()->IsValidGpuFence(gpu_fence_id));
+  GetGpuFenceManager()->RemoveGpuFence(gpu_fence_id);
   return error::kNoError;
 }
 

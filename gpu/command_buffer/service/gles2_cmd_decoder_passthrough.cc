@@ -9,6 +9,7 @@
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/feature_info.h"
 #include "gpu/command_buffer/service/gl_utils.h"
+#include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
 #include "ui/gl/gl_version_info.h"
 
@@ -579,6 +580,8 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   // Create GPU Tracer for timing values.
   gpu_tracer_.reset(new GPUTracer(this));
 
+  gpu_fence_manager_.reset(new GpuFenceManager());
+
   auto result =
       group_->Initialize(this, attrib_helper.context_type, disallowed_features);
   if (result != gpu::ContextResult::kSuccess) {
@@ -892,6 +895,11 @@ void GLES2DecoderPassthroughImpl::Destroy(bool have_context) {
     available_color_texture->Destroy(have_context);
   }
   available_color_textures_.clear();
+
+  if (gpu_fence_manager_.get()) {
+    gpu_fence_manager_->Destroy(have_context);
+    gpu_fence_manager_.reset();
+  }
 
   // Destroy the GPU Tracer which may own some in process GPU Timings.
   if (gpu_tracer_) {
@@ -1233,6 +1241,10 @@ size_t GLES2DecoderPassthroughImpl::GetCreatedBackTextureCountForTest() {
 
 gpu::gles2::QueryManager* GLES2DecoderPassthroughImpl::GetQueryManager() {
   return nullptr;
+}
+
+gpu::gles2::GpuFenceManager* GLES2DecoderPassthroughImpl::GetGpuFenceManager() {
+  return gpu_fence_manager_.get();
 }
 
 gpu::gles2::FramebufferManager*

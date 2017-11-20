@@ -4658,6 +4658,36 @@ _FUNCTION_INFO = {
     'extension_flag': 'ext_window_rectangles',
     'es3': True,
   },
+  'InsertGpuFenceCHROMIUM': {
+    'type': 'NoCommand',
+    'impl_func': False,
+    'cmd_args': 'void',
+    'result': ['GLuint'],
+    'extension': 'CHROMIUM_fence',
+  },
+  'InsertGpuFenceINTERNAL': {
+    'decoder_func': 'DoInsertGpuFenceINTERNAL',
+    'cmd_args': 'GLuint gpu_fence_id',
+    'extension': 'CHROMIUM_fence',
+    'internal': True,
+  },
+  'InsertClientGpuFenceCHROMIUM': {
+    'type': 'NoCommand',
+    'impl_func': False,
+    'cmd_args': 'ClientGpuFence source',
+    'result': ['GLuint'],
+    'extension': 'CHROMIUM_fence',
+  },
+  'WaitGpuFenceCHROMIUM': {
+    'decoder_func': 'DoWaitGpuFenceCHROMIUM',
+    'cmd_args': 'GLuint gpu_fence_id',
+    'extension': 'CHROMIUM_fence',
+  },
+  'DestroyGpuFenceCHROMIUM': {
+    'decoder_func': 'DoDestroyGpuFenceCHROMIUM',
+    'cmd_args': 'GLuint gpu_fence_id',
+    'extension': 'CHROMIUM_fence',
+  },
 }
 
 
