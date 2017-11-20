@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "170b1802_20c26a01",
+        "filename": "third_party/WebKit/Source/core/dom/events/DOMWindowEventQueue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-11-20T06:42:39Z",
+      "side": 0,
+      "message": "The \u002716\u0027 was being \nignored: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/heap/HeapAllocator.h?l\u003d407\u0026rcl\u003def7bf5399fdd7594540c5d96c62775a027784534",
+      "revId": "63fb985082428d44bf55f0e006811980f402e906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
