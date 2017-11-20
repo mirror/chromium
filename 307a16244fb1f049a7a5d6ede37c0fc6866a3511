@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0701ab1b_2b1f5f84",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-20T06:58:57Z",
+      "side": 0,
+      "message": "Moved this logic into the renderer instead, by putting it in the callback method.",
+      "revId": "307a16244fb1f049a7a5d6ede37c0fc6866a3511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f29ad98a_89a0df02",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-20T06:58:57Z",
+      "side": 1,
+      "message": "Expanded StorageQuotaParams, since it feels like it should be an internal type just used for calling the quota service. Maybe I should make it a mojo struct?",
+      "revId": "312487b04470a5a56a850be9a632be4cc0d5b971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481aa5b5_6362b38c",
+        "filename": "content/browser/quota_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-20T06:58:57Z",
+      "side": 1,
+      "message": "Oops, ignore this - removed in new patchset",
+      "revId": "312487b04470a5a56a850be9a632be4cc0d5b971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
