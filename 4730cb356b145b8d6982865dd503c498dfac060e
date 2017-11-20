@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e974f01_da1af0a5",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T22:26:48Z",
+      "side": 1,
+      "message": "The name was originally kDataReductionProxyServerAlternative, and I think kDataReductionProxyExperiment1 is easily confused with the flag name above.",
+      "parentUuid": "8d543bcc_1f60c5d9",
+      "range": {
+        "startLine": 277,
+        "startChar": 37,
+        "endLine": 277,
+        "endChar": 74
+      },
+      "revId": "4730cb356b145b8d6982865dd503c498dfac060e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "208db549_3c05dff9",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4730cb356b145b8d6982865dd503c498dfac060e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4808108e_bb5b27dd",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T22:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "208db549_3c05dff9",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 43
+      },
+      "revId": "4730cb356b145b8d6982865dd503c498dfac060e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +164,30 @@
       "revId": "4730cb356b145b8d6982865dd503c498dfac060e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c8295b_7946d725",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T22:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12ce8d8b_b64161fa",
+      "range": {
+        "startLine": 23,
+        "startChar": 54,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "4730cb356b145b8d6982865dd503c498dfac060e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
