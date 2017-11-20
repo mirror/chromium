@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "426d7b22_465285b3",
+        "filename": "components/payments/content/manifest_verifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-20T21:47:20Z",
+      "side": 1,
+      "message": "not related question: GURL.spec() might add backslash to the original string, could this be a potential bug?",
+      "range": {
+        "startLine": 47,
+        "startChar": 51,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "4a9c480b1640f2582bd17ea9bbcdc06d2e69be30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
