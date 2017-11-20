@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c06ad4ca_b07d98f3",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T23:38:06Z",
+      "side": 1,
+      "message": "So I was looking at the code and my recent changes and I think that this will do what you want:\n\nif (!this.guid || networkIds.indexOf(this.guid) !\u003d -1)\n  return;\nthis.networkPropertiesReveived_ \u003d false;  // Disables active network UI\nif (this.isArcVpn_(this.networkProperties)) {\n  this.guid \u003d \u0027\u0027;\n  this.close_();\n}\n\nSetting the guid to \u0027\u0027 should prevent any further calls from attempting to close the detail page.\n\nFeel free to add that here or add it in a follow up (the latter might be better to keep the changes isolate,d but I don\u0027t feel strongly).",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ff539f_3fdf4633",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 19
