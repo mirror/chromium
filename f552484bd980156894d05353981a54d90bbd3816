@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddf26d68_98a23be3",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-20T05:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ebef3d_ab2763d4",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e66508_cfaadff7",
         "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fc3ba18a_3be1211a",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-20T05:57:41Z",
+      "side": 1,
+      "message": "We try to get a new style here always post reattach to make sure that the ComputedStyle we have isn\u0027t stale.",
+      "parentUuid": "21e66508_cfaadff7",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "041331c3_92e8687f",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-17T15:52:20Z",
       "side": 1,
       "message": "Why did this change? Would this style previously always be calculated from AttachLayoutTree()?",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0124833f_6bb5e873",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-20T05:57:41Z",
+      "side": 1,
+      "message": "This gets called in through needsStyleRecalc and we may not have a layoutObject at this stage. So we changed this to get the ComputedStyle the generic catch-all way GetComputedStyle.",
+      "parentUuid": "041331c3_92e8687f",
       "revId": "f552484bd980156894d05353981a54d90bbd3816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
