@@ -5,8 +5,11 @@ include_rules = [
   "+ios/web",
   "+mojo/public",
   "+net",
+
+  # Needed to embed the ServiceManager in //ios/web.
   "+services/catalog",
   "+services/service_manager",
+
   "+ui",
 
   # For tests.
