@@ -526,7 +526,8 @@ RenderViewImpl::RenderViewImpl(CompositorDependencies* compositor_deps,
                    params.initial_size.screen_info,
                    params.swapped_out,
                    params.hidden,
-                   params.never_visible),
+                   params.never_visible,
+                   base::ThreadTaskRunnerHandle::Get()),
       webkit_preferences_(params.web_preferences),
       send_content_state_immediately_(false),
       send_preferred_size_changes_(false),
@@ -1438,8 +1439,10 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
 }
 
 WebWidget* RenderViewImpl::CreatePopupMenu(blink::WebPopupType popup_type) {
-  RenderWidget* widget = RenderWidget::CreateForPopup(this, compositor_deps_,
-                                                      popup_type, screen_info_);
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+      main_render_frame_->GetTaskRunner(blink::TaskType::kUnthrottled);
+  RenderWidget* widget = RenderWidget::CreateForPopup(
+      this, compositor_deps_, popup_type, screen_info_, task_runner);
   if (!widget)
     return nullptr;
   if (screen_metrics_emulator_) {

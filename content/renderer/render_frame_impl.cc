@@ -1099,7 +1099,8 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
       WebString::FromUTF8(replicated_state.name),
       replicated_state.frame_policy.sandbox_flags);
   render_frame->render_widget_ = RenderWidget::CreateForFrame(
-      widget_routing_id, hidden, screen_info, compositor_deps, web_frame);
+      widget_routing_id, hidden, screen_info, compositor_deps, web_frame,
+      render_frame->GetTaskRunner(blink::TaskType::kUnthrottled));
   // TODO(avi): This DCHECK is to track cleanup for https://crbug.com/545684
   DCHECK_EQ(render_view->GetWidget(), render_frame->render_widget_)
       << "Main frame is no longer reusing the RenderView as its widget! "
@@ -1190,7 +1191,8 @@ void RenderFrameImpl::CreateFrame(
   if (widget_params.routing_id != MSG_ROUTING_NONE) {
     render_frame->render_widget_ = RenderWidget::CreateForFrame(
         widget_params.routing_id, widget_params.hidden,
-        render_frame->render_view_->screen_info(), compositor_deps, web_frame);
+        render_frame->render_view_->screen_info(), compositor_deps, web_frame,
+        render_frame->GetTaskRunner(blink::TaskType::kUnthrottled));
     // TODO(avi): The main frame re-uses the RenderViewImpl as its widget, so
     // avoid double-registering the frame as an observer.
     // https://crbug.com/545684
