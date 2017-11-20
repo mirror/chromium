@@ -12,6 +12,10 @@ import("//testing/test.gni")
 component("services") {
   output_name = "media_mojo_services"
   sources = [
+    "gpu_jpeg_decode_accelerator.cc",
+    "gpu_jpeg_decode_accelerator.h",
+    "gpu_jpeg_decode_accelerator_factory_provider.cc",
+    "gpu_jpeg_decode_accelerator_factory_provider.h",
     "gpu_mojo_media_client.cc",
     "gpu_mojo_media_client.h",
     "interface_factory_impl.cc",
