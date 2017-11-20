@@ -133,6 +133,9 @@ class MockRenderProcessHost : public RenderProcessHost {
   bool IsKeepAliveRefCountDisabled() override;
   void PurgeAndSuspend() override;
   void Resume() override;
+  void SetCurrentTimeOverride(
+      const base::Time& time,
+      const base::Optional<std::string>& timezone) override;
   mojom::Renderer* GetRendererInterface() override;
   resource_coordinator::ProcessResourceCoordinator*
   GetProcessResourceCoordinator() override;
