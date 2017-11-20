@@ -94,6 +94,7 @@ void ExplainCertificateSecurity(
     content::SecurityStyleExplanations* security_style_explanations) {
   if (security_info.sha1_in_chain) {
     content::SecurityStyleExplanation explanation(
+        l10n_util::GetStringUTF8(IDS_CERTIFICATE_TITLE),
         l10n_util::GetStringUTF8(IDS_SHA1),
         l10n_util::GetStringUTF8(IDS_SHA1_DESCRIPTION),
         security_info.certificate,
@@ -110,6 +111,7 @@ void ExplainCertificateSecurity(
   if (security_info.cert_missing_subject_alt_name) {
     security_style_explanations->insecure_explanations.push_back(
         content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_CERTIFICATE_TITLE),
             l10n_util::GetStringUTF8(IDS_SUBJECT_ALT_NAME_MISSING),
             l10n_util::GetStringUTF8(IDS_SUBJECT_ALT_NAME_MISSING_DESCRIPTION),
             security_info.certificate,
@@ -125,6 +127,7 @@ void ExplainCertificateSecurity(
         net::MapCertStatusToNetError(security_info.cert_status)));
 
     content::SecurityStyleExplanation explanation(
+        l10n_util::GetStringUTF8(IDS_CERTIFICATE_TITLE),
         l10n_util::GetStringUTF8(IDS_CERTIFICATE_CHAIN_ERROR),
         l10n_util::GetStringFUTF8(
             IDS_CERTIFICATE_CHAIN_ERROR_DESCRIPTION_FORMAT, error_string),
@@ -156,6 +159,7 @@ void ExplainCertificateSecurity(
     if (!security_info.sha1_in_chain) {
       security_style_explanations->secure_explanations.push_back(
           content::SecurityStyleExplanation(
+              l10n_util::GetStringUTF8(IDS_CERTIFICATE_TITLE),
               l10n_util::GetStringUTF8(IDS_VALID_SERVER_CERTIFICATE),
               l10n_util::GetStringFUTF8(
                   IDS_VALID_SERVER_CERTIFICATE_DESCRIPTION, issuer_name),
@@ -168,6 +172,7 @@ void ExplainCertificateSecurity(
   if (security_info.pkp_bypassed) {
     security_style_explanations->info_explanations.push_back(
         content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_CERTIFICATE_TITLE),
             l10n_util::GetStringUTF8(IDS_PRIVATE_KEY_PINNING_BYPASSED),
             l10n_util::GetStringUTF8(
                 IDS_PRIVATE_KEY_PINNING_BYPASSED_DESCRIPTION)));
@@ -221,7 +226,8 @@ void ExplainConnectionSecurity(
   if (security_info.obsolete_ssl_status == net::OBSOLETE_SSL_NONE) {
     security_style_explanations->secure_explanations.push_back(
         content::SecurityStyleExplanation(
-            l10n_util::GetStringUTF8(IDS_STRONG_SSL_SUMMARY),
+            l10n_util::GetStringUTF8(IDS_SSL_CONNECTION_TITLE),
+            l10n_util::GetStringFUTF8(IDS_STRONG_SSL_SUMMARY, protocol_name),
             l10n_util::GetStringFUTF8(IDS_STRONG_SSL_DESCRIPTION, protocol_name,
                                       key_exchange_name, cipher_name)));
     return;
@@ -250,6 +256,7 @@ void ExplainConnectionSecurity(
 
   security_style_explanations->info_explanations.push_back(
       content::SecurityStyleExplanation(
+          l10n_util::GetStringUTF8(IDS_SSL_CONNECTION_TITLE),
           l10n_util::GetStringUTF8(IDS_OBSOLETE_SSL_SUMMARY),
           base::UTF16ToUTF8(
               l10n_util::GetStringFUTF16(IDS_OBSOLETE_SSL_DESCRIPTION,
@@ -277,6 +284,7 @@ void ExplainContentSecurity(
     add_secure_explanation = false;
     security_style_explanations->insecure_explanations.push_back(
         content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_TITLE),
             l10n_util::GetStringUTF8(IDS_MIXED_ACTIVE_CONTENT_SUMMARY),
             l10n_util::GetStringUTF8(IDS_MIXED_ACTIVE_CONTENT_DESCRIPTION),
             nullptr, blink::WebMixedContentContextType::kBlockable));
@@ -291,6 +299,7 @@ void ExplainContentSecurity(
     add_secure_explanation = false;
     security_style_explanations->neutral_explanations.push_back(
         content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_TITLE),
             l10n_util::GetStringUTF8(IDS_MIXED_PASSIVE_CONTENT_SUMMARY),
             l10n_util::GetStringUTF8(IDS_MIXED_PASSIVE_CONTENT_DESCRIPTION),
             nullptr, blink::WebMixedContentContextType::kOptionallyBlockable));
@@ -302,6 +311,7 @@ void ExplainContentSecurity(
     add_secure_explanation = false;
     security_style_explanations->neutral_explanations.push_back(
         content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_TITLE),
             l10n_util::GetStringUTF8(IDS_NON_SECURE_FORM_SUMMARY),
             l10n_util::GetStringUTF8(IDS_NON_SECURE_FORM_DESCRIPTION)));
   }
@@ -325,6 +335,7 @@ void ExplainContentSecurity(
       add_secure_explanation = false;
       security_style_explanations->insecure_explanations.push_back(
           content::SecurityStyleExplanation(
+              l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_TITLE),
               l10n_util::GetStringUTF8(IDS_CERT_ERROR_ACTIVE_CONTENT_SUMMARY),
               l10n_util::GetStringUTF8(
                   IDS_CERT_ERROR_ACTIVE_CONTENT_DESCRIPTION)));
@@ -339,6 +350,7 @@ void ExplainContentSecurity(
       add_secure_explanation = false;
       security_style_explanations->neutral_explanations.push_back(
           content::SecurityStyleExplanation(
+              l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_TITLE),
               l10n_util::GetStringUTF8(IDS_CERT_ERROR_PASSIVE_CONTENT_SUMMARY),
               l10n_util::GetStringUTF8(
                   IDS_CERT_ERROR_PASSIVE_CONTENT_DESCRIPTION)));
@@ -349,6 +361,7 @@ void ExplainContentSecurity(
     DCHECK(security_info.scheme_is_cryptographic);
     security_style_explanations->secure_explanations.push_back(
         content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_TITLE),
             l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_SUMMARY),
             l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_DESCRIPTION)));
   }
