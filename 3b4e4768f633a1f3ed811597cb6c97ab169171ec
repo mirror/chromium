@@ -53,6 +53,46 @@
     },
     {
       "key": {
+        "uuid": "58661b4a_ffc40c0f",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-20T21:29:32Z",
+      "side": 1,
+      "message": "Nits:\nonTransact -\u003e onTransact()\nnotifyNotification -\u003e notifyNotification()\n\nThe bananas make it easier to identify that the comment refers to a method",
+      "range": {
+        "startLine": 57,
+        "startChar": 64,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "3b4e4768f633a1f3ed811597cb6c97ab169171ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556c43ae_7566edb2",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-20T21:29:32Z",
+      "side": 1,
+      "message": "Is it possible for |mIBinderDelegate| to be null?",
+      "revId": "3b4e4768f633a1f3ed811597cb6c97ab169171ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "306fd897_1642a7e4",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
         "patchSetId": 9
