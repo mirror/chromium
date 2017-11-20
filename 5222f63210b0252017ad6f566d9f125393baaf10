@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dfc0ff6_e23a22fa",
+        "filename": "components/viz/common/quads/yuv_video_draw_quad.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-20T21:53:42Z",
+      "side": 0,
+      "message": "I\u0027ll be removing this in a separate patch (since that path is a bit more subtle).",
+      "revId": "5222f63210b0252017ad6f566d9f125393baaf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
