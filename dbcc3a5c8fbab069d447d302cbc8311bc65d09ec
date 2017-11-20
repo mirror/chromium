@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c82e53_cbdcdcc6",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-20T18:34:58Z",
+      "side": 1,
+      "message": "nit: Unnecessary () ?",
+      "range": {
+        "startLine": 247,
+        "startChar": 7,
+        "endLine": 247,
+        "endChar": 8
+      },
+      "revId": "dbcc3a5c8fbab069d447d302cbc8311bc65d09ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf09c00_aba79b35",
+        "filename": "chrome/browser/chromeos/policy/unaffiliated_arc_allowed_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-20T18:34:58Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer a newline before this :-)",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 6
+      },
+      "revId": "dbcc3a5c8fbab069d447d302cbc8311bc65d09ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e153e0f8_ff6c1408",
+        "filename": "chrome/browser/chromeos/policy/unaffiliated_arc_allowed_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-20T18:34:58Z",
+      "side": 1,
+      "message": "What does this name mean?",
+      "range": {
+        "startLine": 114,
+        "startChar": 51,
+        "endLine": 114,
+        "endChar": 72
+      },
+      "revId": "dbcc3a5c8fbab069d447d302cbc8311bc65d09ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707972ca_b1ae693b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10618,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-20T18:34:58Z",
+      "side": 1,
+      "message": "Is there a reason why we\u0027re using this?\nThis means that the \"true\" default gets generated into SetEnterpriseUsersDefaults[1] by components/policy/tools/generate_policy_source.py, which is then called by UserCloudPolicyManager, DeviceLocalAccountPolicyProvider and ActiveDirectoryPolicyManager.\n\nIn short, it\u0027s a pretty obscure mechanism which looks like it\u0027s documenting the default, but is actually applying a client-side default (so the code never sees a \"not-set\" value) to user policy IIUC.\nAs it doesn\u0027t look like it works on device policy and you have proper handling for the not-set case, I\u0027d propose that we remove this line.\n\n[1] https://cs.chromium.org/chromium/src/out/Debug/gen/components/policy/policy_constants.cc?q\u003dSetEnterpriseUsersDefaults\u0026sq\u003dpackage:chromium\u0026l\u003d942\u0026ct\u003drc\u0026cd\u003d2\u0026dr\u003dCSs",
+      "range": {
+        "startLine": 10618,
+        "startChar": 7,
+        "endLine": 10618,
+        "endChar": 35
+      },
+      "revId": "dbcc3a5c8fbab069d447d302cbc8311bc65d09ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
