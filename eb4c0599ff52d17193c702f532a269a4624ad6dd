@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb19664e_a85ec341",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-20T23:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195c1c92_a5c3e3ff",
+      "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e322c99_bb7c6ddc",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-20T22:27:23Z",
       "side": 1,
       "message": "Is there a bug for this work?",
+      "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebb9ed1_c4037240",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-20T23:00:09Z",
+      "side": 1,
+      "message": "No, should I make one?",
+      "parentUuid": "3e322c99_bb7c6ddc",
       "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a1af2da5_1eb7d8b6",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-20T23:00:09Z",
+      "side": 1,
+      "message": "HTMLMediaElement calls it during SetWebLayer, so we don\u0027t need to call it.\n\nTo be noted, we are iterating on this portion of the code, and OnWebLayerUpdated may be used when we start handling resize/rotation. For now we are focusing on a base case path though.",
+      "parentUuid": "521ff9c5_719a9341",
+      "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb4a16cd_0a579f6b",
         "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196e5bc8_a9db37ab",
+        "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-20T23:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb4a16cd_0a579f6b",
+      "revId": "eb4c0599ff52d17193c702f532a269a4624ad6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
