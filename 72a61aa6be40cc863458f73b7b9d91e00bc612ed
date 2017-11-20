@@ -71,6 +71,46 @@
     },
     {
       "key": {
+        "uuid": "2da8a84c_3ce481b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T20:24:24Z",
+      "side": 1,
+      "message": "It might be easier to reformulate this into a helper method to extract the dNSName and iPAddress SANs.\n\nI think we should also display iPAddress (which we do on other platforms), and that may be easier to iterate through the results here",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72500150_cd45557b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T20:24:24Z",
+      "side": 1,
+      "message": "Does this need to be localized? (I can see arguments either way - but note we do localize strings like \u0027cn\u0027)\n\nThe string is IDS_CERT_GENERAL_NAME_DNS_NAME (and IDS_CERT_GENERAL_NAME_IP_ADDRESS) - and we do handle the other forms as well on Linux, macOS, and Windows - although I can certainly understand why we\u0027d omit from Android.",
+      "range": {
+        "startLine": 200,
+        "startChar": 55,
+        "endLine": 200,
+        "endChar": 63
+      },
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64dd52c4_f5d4f547",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
         "patchSetId": 2
@@ -82,6 +122,40 @@
       "writtenOn": "2017-11-20T18:18:22Z",
       "side": 1,
       "message": "I would try to make the try/catch block more narrow, I assume this can happen in x509.getSubjectAlternativeNames()? Putting try-catch around that only makes it more obvious where the error is likely to happen and what the output would be in case of exception.",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770162e1_7318881d",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T20:24:24Z",
+      "side": 1,
+      "message": "IDS_CERT_DETAILS_EXTENSIONS",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1497454d_e8efd77e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-20T20:24:24Z",
+      "side": 1,
+      "message": "IDS_CERT_X509_SUBJECT_ALT_NAME",
       "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
