@@ -29,6 +29,7 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_style.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_button_updater.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
@@ -60,6 +61,7 @@
 @implementation ToolbarCoordinator
 @synthesize delegate = _delegate;
 @synthesize browserState = _browserState;
+@synthesize buttonUpdater = _buttonUpdater;
 @synthesize dispatcher = _dispatcher;
 @synthesize locationBarView = _locationBarView;
 @synthesize mediator = _mediator;
