@@ -29,6 +29,9 @@ import ninja_parser
 import nm
 import path_util
 
+sys.path.insert(1, os.path.join(path_util.SRC_ROOT, 'tools', 'grit'))
+from grit.format import data_pack
+
 
 # Effect of _MAX_SAME_NAME_ALIAS_COUNT (as of Oct 2017, with min_pss = max):
 # 1: shared .text symbols = 1772874 bytes, file size = 9.43MiB (645476 symbols).
@@ -585,9 +588,10 @@ def CreateMetadata(map_path, elf_path, apk_path, tool_prefix, output_directory):
   return metadata
 
 
-def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
-                   normalize_names=True, track_string_literals=True):
-  """Creates a SizeInfo.
+def CreateSectionSizesAndSymbols(
+    map_path, elf_path, tool_prefix, output_directory, normalize_names=True,
+    track_string_literals=True):
+  """Creates sections sizes and symbols for a SizeInfo.
 
   Args:
     map_path: Path to the linker .map(.gz) file to parse.
@@ -723,13 +727,83 @@ def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
     _NormalizeNames(raw_symbols)
 
   logging.info('Processed %d symbols', len(raw_symbols))
-  size_info = models.SizeInfo(section_sizes, raw_symbols)
+  return section_sizes, raw_symbols
 
-  if logging.getLogger().isEnabledFor(logging.INFO):
-    for line in describe.DescribeSizeInfoCoverage(size_info):
-      logging.info(line)
-  logging.info('Recorded info for %d symbols', len(size_info.raw_symbols))
-  return size_info
+
+def _GetPakFileSymbols(pak_file, pak_data, info):
+  symbols = {}
+  contents = data_pack.ReadDataPackFromString(pak_data)
+  total = 12 + 6  # Header size plus extra offset
+  # Compute alias map
+  resource_ids = sorted(contents.resources)
+  id_by_data = {contents.resources[k]: k for k in reversed(resource_ids)}
+  alias_map = {k: id_by_data[v] for k, v in contents.resources.iteritems()
+               if id_by_data[v] != k}
+  section_name = '.pak.nontranslated'
+  # Longest locale pak is es-419.pak
+  if len(os.path.basename(pak_file.filename)) <= 9:
+    section_name = '.pak.translations'
+  for resource_id, payload in contents.resources.iteritems():
+    name = info[resource_id]
+    source = info[name]
+    if resource_id in alias_map:
+      continue  # Skip aliases until next iteration
+    else:
+      size = len(payload) + 6  # (1 32-bit int, 1 16-bit int)
+      if name not in symbols:
+        symbols[name] = {
+          'size': 0,
+          'section_name': section_name,
+          'source': source,
+          'object': pak_file.filename,
+          'aliases': [name],
+        }
+      symbols[name]['size'] += size
+      total += size
+  for resource_id, payload in contents.resources.iteritems():
+    name = info[resource_id]
+    source = info[name]
+    if resource_id in alias_map:
+      size = 4  # (2 16-bit ints)
+      original_name = info[alias_map[resource_id]]
+      symbols[original_name]['aliases'].append(name)
+      symbols[original_name]['size'] += size
+      total += size
+  assert pak_file.file_size == total, 'Bytes in pak file not accounted for'
+  return symbols
+
+
+def AddApkInfo(section_sizes, raw_symbols, apk_path, output_directory):
+  with zipfile.ZipFile(apk_path) as z:
+    pak_files = [f for f in z.infolist()
+                 if f.filename.endswith('.pak') and f.file_size > 0]
+    apk_info_name = os.path.basename(apk_path) + '.pak.info'
+    pak_info_path = os.path.join(output_directory, 'size-info', apk_info_name)
+    with open(pak_info_path, 'r') as info_file:
+      info = {}
+      for line in info_file.readlines():
+        name, res_id, path = line.split(',')
+        info[int(res_id)] = name
+        info[name] = path.strip()
+
+    pak_symbols = {}
+    for pak_file in pak_files:
+      new_symbols = _GetPakFileSymbols(pak_file, z.read(pak_file), info)
+      for name, data in new_symbols.iteritems():
+        if name not in pak_symbols:
+          pak_symbols[name] = data
+        else:
+          pak_symbols[name]['size'] += data['size']
+          pak_symbols[name]['aliases'].extend(data['aliases'])
+
+  for name, data in pak_symbols.iteritems():
+    full_name = '{}: {}'.format(data['source'], name)
+    if data['section_name'] not in section_sizes:
+      section_sizes[data['section_name']] = 0
+    section_sizes[data['section_name']] += data['size']
+    raw_symbols.append(models.Symbol(
+      data['section_name'], data['size'], full_name=full_name, name=name,
+      source_path=data['source'], object_path=data['object']))
 
 
 def _DetectGitRevision(directory):
@@ -888,9 +962,19 @@ def Run(args, parser):
     apk_elf_result = concurrent.ForkAndCall(
         _ElfInfoFromApk, (apk_path, apk_so_path, tool_prefix))
 
-  size_info = CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
-                             normalize_names=False,
-                             track_string_literals=args.track_string_literals)
+  section_sizes, raw_symbols = CreateSectionSizesAndSymbols(
+      map_path, elf_path, tool_prefix, output_directory, normalize_names=False,
+      track_string_literals=args.track_string_literals)
+
+  if apk_path:
+    AddApkInfo(section_sizes, raw_symbols, apk_path, output_directory)
+
+  size_info = models.SizeInfo(section_sizes, raw_symbols)
+
+  if logging.getLogger().isEnabledFor(logging.INFO):
+    for line in describe.DescribeSizeInfoCoverage(size_info):
+      logging.info(line)
+  logging.info('Recorded info for %d symbols', len(size_info.raw_symbols))
 
   if metadata:
     size_info.metadata = metadata
@@ -918,6 +1002,12 @@ def Run(args, parser):
         else:
           size_info.section_sizes['%s (unpacked)' % packed_section_name] = (
               unstripped_section_sizes.get(packed_section_name))
+
+      # Add back missing sections for the apk (e.g. .pak.*).
+      for k, v in unstripped_section_sizes.iteritems():
+        if (k in models.SECTION_NAME_TO_SECTION and
+            k not in size_info.section_sizes):
+          size_info.section_sizes[k] = v
 
   logging.info('Recording metadata: \n  %s',
                '\n  '.join(describe.DescribeMetadata(size_info.metadata)))

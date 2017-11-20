@@ -53,6 +53,8 @@ SECTION_NAME_TO_SECTION = {
     '.data': 'd',
     '.data.rel.ro.local': 'R',
     '.data.rel.ro': 'R',
+    '.pak.nontranslated': 'P',
+    '.pak.translations': 'p',
     '.rodata': 'r',
     '.text': 't',
     SECTION_NAME_MULTIPLE: '*',
@@ -64,6 +66,8 @@ SECTION_TO_SECTION_NAME = collections.OrderedDict((
     ('R', '.data.rel.ro'),
     ('d', '.data'),
     ('b', '.bss'),
+    ('p', '.pak.translations'),
+    ('P', '.pak.nontranslated'),
 ))
 
 
@@ -181,15 +185,7 @@ class BaseSymbol(object):
 
   @property
   def section(self):
-    """Returns the one-letter section.
-
-    Mappings:
-      'b': '.bss'
-      'd': '.data'
-      'R': '.data.rel.ro'
-      'r': '.rodata'
-      't': '.text'
-    """
+    """Returns the one-letter section."""
     # Fallback to section_name if there is no short-form defined.
     return SECTION_NAME_TO_SECTION.get(self.section_name, self.section_name)
 

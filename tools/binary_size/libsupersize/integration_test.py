@@ -104,8 +104,10 @@ class IntegrationTest(unittest.TestCase):
     if not IntegrationTest.cached_size_info[i]:
       elf_path = _TEST_ELF_PATH if use_elf else None
       output_directory = _TEST_OUTPUT_DIR if use_output_directory else None
-      IntegrationTest.cached_size_info[i] = archive.CreateSizeInfo(
+      section_sizes, raw_symbols = archive.CreateSectionSizesAndSymbols(
           _TEST_MAP_PATH, elf_path, _TEST_TOOL_PREFIX, output_directory)
+      IntegrationTest.cached_size_info[i] = models.SizeInfo(
+          section_sizes, raw_symbols)
       if use_elf:
         with _AddMocksToPath():
           IntegrationTest.cached_size_info[i].metadata = archive.CreateMetadata(

@@ -464,6 +464,8 @@ class DescriberText(Describer):
 def DescribeSizeInfoCoverage(size_info):
   """Yields lines describing how accurate |size_info| is."""
   for section, section_name in models.SECTION_TO_SECTION_NAME.iteritems():
+    if section_name not in size_info.section_sizes:
+      continue
     expected_size = size_info.section_sizes[section_name]
 
     in_section = size_info.raw_symbols.WhereInSection(section_name)
