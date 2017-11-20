@@ -58962,6 +58962,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PasswordManager.UsernameDetectionMethod"
+    enum="UsernameDetectionMethod">
+  <owner>kolos@chromium.org</owner>
+  <summary>Measures what method was used for username field detection.</summary>
+</histogram>
+
 <histogram name="PasswordManager.UserStoredPasswordWithInvalidSSLCert"
     enum="Boolean">
   <obsolete>
