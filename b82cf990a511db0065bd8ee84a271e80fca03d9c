@@ -34,6 +34,24 @@
       "revId": "b82cf990a511db0065bd8ee84a271e80fca03d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c183110_66117eb2",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T18:55:48Z",
+      "side": 1,
+      "message": "\u003e nit: how about unverified_sync_tokens.push_back(to_return.back().sync_token.GetData())?\n\nPointers into vectors aren\u0027t much better, when the vector reallocs they are invalid.\n\n\u003e nit: in any case, can you add a comment warning against using the to_return stack variable?\n\nokie",
+      "parentUuid": "8ef32d40_d77c84cc",
+      "revId": "b82cf990a511db0065bd8ee84a271e80fca03d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
