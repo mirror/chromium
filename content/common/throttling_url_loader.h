@@ -65,6 +65,14 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner =
           base::ThreadTaskRunnerHandle::Get());
 
+  // Create a ThrottlingURLLoader that will continue a load that has already
+  // reached the OnResponseStarted step.
+  static std::unique_ptr<ThrottlingURLLoader>
+  InterceptLoadingAfterResponseStarted(
+      mojom::URLLoaderPtrInfo url_loader,
+      mojom::URLLoaderClientRequest url_loader_client,
+      mojom::URLLoaderClient* forwarding_client);
+
   ~ThrottlingURLLoader() override;
 
   void FollowRedirect();
@@ -72,6 +80,11 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
 
   // Disconnects the client connection and releases the URLLoader.
   void DisconnectClient();
+
+  // Disconnect the forwarding URLLoaderClient and the URLLoader. Move the
+  // datapipe endpoints into |url_loader_client| and |url_loader|.
+  void UnBind(mojom::URLLoaderPtrInfo* url_loader,
+              mojom::URLLoaderClientRequest* url_loader_client);
 
   // Sets the forwarding client to receive all subsequent notifications.
   void set_forwarding_client(mojom::URLLoaderClient* client) {
