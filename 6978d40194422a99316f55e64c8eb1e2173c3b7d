@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6014a1f5_08f85ef1",
+        "filename": "ios/chrome/browser/metrics/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "Please use FakeNavigationContext instead. NavigationContextImpl is private class.",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 47
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f099582_d51ce67c",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "STABILITY_METRIC_EVENT_TYPE_SAME_DOCUMENT_NAVIGATION or use class enum",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f0b793_29bcb7f6",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "nit: Does it have to be a class constant? Should this be a global extern constant instead?",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64725b6d_0bee08a8",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "Is this really else? I think it is possible to have same document navigation to chrome:// URL. Also comments for this enum says \"Not all events are mutually exclusive.\"",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 11
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cabb20_e18cece3",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "const ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72a39df_2878b01e",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9bc1a0_35cc517f",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "nit: prefs_ can be protected per Style Guide.\n\nhttps://google.github.io/styleguide/cppguide.html#Access_Control",
+      "range": {
+        "startLine": 31,
+        "startChar": 28,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcd573e_ef34f0d2",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "Please add comments",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50b61a6_fe9a3aa8",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "EXPECT macro logs the line number, which is only useful if expect is used inside test function. Do you want to return count instead and move EXPECT_EQ call to test functions?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddc83fe_58a183ce",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T17:20:20Z",
+      "side": 1,
+      "message": "Could you please add comments for all test methods",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
