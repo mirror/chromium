@@ -33,6 +33,24 @@
       "revId": "4d4570f161ed375b8c95c0a2e96cd62470b56852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d006e9_91312bce",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-20T21:10:25Z",
+      "side": 1,
+      "message": "How do you handle multiple callers to the API. Or are you guaranteeing there will always be only one caller to the API?",
+      "parentUuid": "2867f3d9_2051d862",
+      "revId": "4d4570f161ed375b8c95c0a2e96cd62470b56852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
