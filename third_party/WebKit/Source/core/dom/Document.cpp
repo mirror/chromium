@@ -3133,6 +3133,29 @@ Element* Document::ViewportDefiningElement(
   return root_element;
 }
 
+Document* Document::open(LocalDOMWindow* calling_window,
+                         const AtomicString& type,
+                         const AtomicString& replace,
+                         ExceptionState& exception_state) {
+  open(calling_window->document(), exception_state);
+  return this;
+}
+
+DOMWindow* Document::open(LocalDOMWindow* calling_window,
+                          const AtomicString& url,
+                          const AtomicString& name,
+                          const AtomicString& features,
+                          ExceptionState& exception_state) {
+  if (!domWindow()) {
+    exception_state.ThrowDOMException(kInvalidAccessError,
+                                      "The document has no window associated.");
+    return nullptr;
+  }
+  AtomicString frame_name = name.IsEmpty() ? "_blank" : name;
+  return domWindow()->open(url, frame_name, features, domWindow(),
+                           calling_window, exception_state);
+}
+
 void Document::close(ExceptionState& exception_state) {
   // FIXME: We should follow the specification more closely:
   //        http://www.whatwg.org/specs/web-apps/current-work/#dom-document-close

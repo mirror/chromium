@@ -117,8 +117,8 @@ typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;
     [ImplementedAs=currentScriptForBinding] readonly attribute HTMLOrSVGScriptElement? currentScript;
 
     // dynamic markup insertion
-    // FIXME: There are two open() methods in the spec.
-    [Custom, CEReactions, CustomElementCallbacks, RaisesException, MeasureAs=DocumentOpen] void open();
+    [CallWith=EnteredWindow, CustomElementCallbacks, ImplementedAs=open, RaisesException] Document open(optional DOMString type = "text/html", optional DOMString replace = "");
+    [CallWith=EnteredWindow, CustomElementCallbacks, ImplementedAs=open, RaisesException] DOMWindow open(DOMString url, DOMString name, DOMString features);
     [CEReactions, RaisesException] void close();
     [CallWith=EnteredWindow, CEReactions, CustomElementCallbacks, RaisesException] void write(DOMString... text);
     [CallWith=EnteredWindow, CEReactions, CustomElementCallbacks, RaisesException] void writeln(DOMString... text);
