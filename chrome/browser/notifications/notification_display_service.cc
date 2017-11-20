@@ -72,11 +72,8 @@ void NotificationDisplayService::ProcessNotificationOperation(
     const base::Optional<base::string16>& reply,
     const base::Optional<bool>& by_user) {
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  DCHECK(handler);
-  if (!handler) {
-    LOG(ERROR) << "Unable to find a handler for " << notification_type;
-    return;
-  }
+  DCHECK_EQ(NotificationCommon::TRANSIENT == notification_Type, !handler);
+
   switch (operation) {
     case NotificationCommon::CLICK:
       handler->OnClick(profile_, origin, notification_id, action_index, reply);
