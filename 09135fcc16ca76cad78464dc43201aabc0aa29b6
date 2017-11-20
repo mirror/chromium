@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59bfdfaf_d8fd412e",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-20T06:39:20Z",
+      "side": 1,
+      "message": "What do you meant this should never happen? This is for comparing a CSSProperty to a CSSPropertyID. I have used it in this change in various places.",
+      "parentUuid": "b6251a38_6eaa35e8",
+      "revId": "09135fcc16ca76cad78464dc43201aabc0aa29b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15cbbb78_b38d7257",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-20T02:35:47Z",
       "side": 1,
       "message": "What does this mean? I know there\u0027s a lot of vague TODOs in the codebase, but I think we should strive for including better details, e.g. what, how, when and/or why: https://big.corp.google.com/~jmcmaster/testing/2017/07/episode-486-todos-and-todonts.html",
+      "revId": "09135fcc16ca76cad78464dc43201aabc0aa29b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0fe436_cc8b9390",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-20T06:39:20Z",
+      "side": 1,
+      "message": "Sorry, I intended to fix this as part of this change, not as a follow-up. I just forgot. Thanks.",
+      "parentUuid": "15cbbb78_b38d7257",
       "revId": "09135fcc16ca76cad78464dc43201aabc0aa29b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
