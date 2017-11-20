@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ddc7375f_e2f2b6ab",
+        "filename": "third_party/WebKit/LayoutTests/media/video-error-networkState.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-20T20:07:14Z",
+      "side": 1,
+      "message": "I have no idea, and the crash rate is low enough that it\u0027s probably not a serious concern. The basic outline of the test might indeed make sense as a cross-browser test, though.",
+      "parentUuid": "7c1139f2_51ffbc15",
+      "revId": "6d3bb418812ee8dc3242469ce78c9803eb24b7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "822e48fd_9912095d",
         "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-20T18:59:53Z",
       "side": 1,
       "message": "What\u0027s the `ready_state_maximum_` we reach in your test case?",
+      "revId": "6d3bb418812ee8dc3242469ce78c9803eb24b7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82127f23_8f28342f",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-20T20:07:14Z",
+      "side": 1,
+      "message": "Turns out that it\u0027s kHaveMetadata, because |ready_state_maximum_| isn\u0027t actually the maximum. Fixed.",
+      "parentUuid": "822e48fd_9912095d",
       "revId": "6d3bb418812ee8dc3242469ce78c9803eb24b7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
