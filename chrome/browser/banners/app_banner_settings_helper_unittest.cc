@@ -192,33 +192,21 @@ TEST_F(AppBannerSettingsHelperTest, ShouldNotShowAfterShowing) {
                 web_contents(), url, kTestPackageName, reference_time));
 }
 
-TEST_F(AppBannerSettingsHelperTest, ShouldNotShowAfterAdding) {
+TEST_F(AppBannerSettingsHelperTest, ReportsWhetherSiteWasEverAdded) {
   GURL url(kTestURL);
-  SiteEngagementService* service = SiteEngagementService::Get(profile());
+  base::Time one_year_ago = GetReferenceTime() - base::TimeDelta::FromDays(366);
 
-  base::Time reference_time = GetReferenceTime();
-  base::Time one_year_ago = reference_time - base::TimeDelta::FromDays(366);
+  EXPECT_FALSE(AppBannerSettingsHelper::HasBeenInstalled(web_contents(), url,
+                                                         kTestPackageName));
 
-  // By default the banner should not be shown.
-  EXPECT_FALSE(
-      AppBannerSettingsHelper::HasSufficientEngagement(service->GetScore(url)));
-
-  // Add engagement such that the banner should show.
-  service->ResetBaseScoreForURL(url, 4);
-  EXPECT_TRUE(
-      AppBannerSettingsHelper::HasSufficientEngagement(service->GetScore(url)));
-  EXPECT_EQ(NO_ERROR_DETECTED,
-            AppBannerSettingsHelper::ShouldShowBanner(
-                web_contents(), url, kTestPackageName, reference_time));
-
-  // Add the site a long time ago. It should not be shown.
+  // Add the site a long time ago.
   AppBannerSettingsHelper::RecordBannerEvent(
       web_contents(), url, kTestPackageName,
       AppBannerSettingsHelper::APP_BANNER_EVENT_DID_ADD_TO_HOMESCREEN,
       one_year_ago);
-  EXPECT_EQ(ALREADY_INSTALLED,
-            AppBannerSettingsHelper::ShouldShowBanner(
-                web_contents(), url, kTestPackageName, reference_time));
+
+  EXPECT_TRUE(AppBannerSettingsHelper::HasBeenInstalled(web_contents(), url,
+                                                        kTestPackageName));
 }
 
 TEST_F(AppBannerSettingsHelperTest, OperatesOnOrigins) {
