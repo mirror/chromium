@@ -87,6 +87,24 @@
       "revId": "df93071be3d9e1fc687222033ea7e639da810b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb1b5f5_fb33569c",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-20T12:53:07Z",
+      "side": 1,
+      "message": "moved to BeginNavigationParams",
+      "parentUuid": "b13821aa_314cb1aa",
+      "revId": "df93071be3d9e1fc687222033ea7e639da810b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
