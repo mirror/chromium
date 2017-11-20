@@ -6,44 +6,104 @@
 
 #include <utility>
 
-#include "chrome/grit/generated_resources.h"
-#include "content/public/browser/browser_thread.h"
-#include "ui/base/l10n/l10n_util.h"
+#include "base/bind.h"
+#include "base/strings/stringprintf.h"
+#include "services/data_decoder/public/cpp/safe_xml_parser.h"
+#include "url/gurl.h"
 
 namespace media_router {
 
-SafeDialDeviceDescriptionParser::SafeDialDeviceDescriptionParser() {}
+namespace {
 
-SafeDialDeviceDescriptionParser::~SafeDialDeviceDescriptionParser() {}
+// If a friendly name does not exist, falls back to use model name + last 4
+// digits of the UUID as the friendly name.
+std::string ComputeFriendlyName(const std::string& unique_id,
+                                const std::string& model_name) {
+  if (model_name.empty() || unique_id.length() < 4)
+    return std::string();
 
-void SafeDialDeviceDescriptionParser::Start(
-    const std::string& xml_text,
-    const DeviceDescriptionCallback& callback) {
-  DVLOG(2) << "Start parsing device description...";
-  DCHECK(thread_checker_.CalledOnValidThread());
+  std::string trimmed_unique_id = unique_id.substr(unique_id.length() - 4);
+  return base::StringPrintf("%s [%s]", model_name.c_str(),
+                            trimmed_unique_id.c_str());
+}
 
-  DCHECK(callback);
+void NotifyParsingError(DialDeviceDescriptionParserCallback callback,
+                        DialDeviceDescriptionParsingError error) {
+  std::move(callback).Run(ParsedDialDeviceDescription(), error);
+}
 
-  if (!utility_process_mojo_client_) {
-    DVLOG(2) << "Start utility process in background...";
-    utility_process_mojo_client_ =
-        base::MakeUnique<content::UtilityProcessMojoClient<
-            chrome::mojom::DialDeviceDescriptionParser>>(
-            l10n_util::GetStringUTF16(
-                IDS_UTILITY_PROCESS_DIAL_DEVICE_DESCRIPTION_PARSER_NAME));
-
-    utility_process_mojo_client_->set_error_callback(
-        base::Bind(callback, nullptr,
-                   chrome::mojom::DialParsingError::UTILITY_PROCESS_ERROR));
-
-    // This starts utility process in the background.
-    utility_process_mojo_client_->Start();
+void OnXmlParsingDone(DialDeviceDescriptionParserCallback callback,
+                      const GURL& app_url,
+                      std::unique_ptr<base::Value> value,
+                      const base::Optional<std::string>& error) {
+  if (!value || !value->is_dict()) {
+    std::move(callback).Run(ParsedDialDeviceDescription(),
+                            DialDeviceDescriptionParsingError::kInvalidXml);
+    return;
   }
 
-  // This call is queued up until the Mojo message pipe has been established to
-  // the service running in the utility process.
-  utility_process_mojo_client_->service()->ParseDialDeviceDescription(xml_text,
-                                                                      callback);
+  bool unique_device = true;
+  const base::Value* device_element = data_decoder::FindXmlElementPath(
+      *value, {"root", "device"}, &unique_device);
+  if (!device_element) {
+    NotifyParsingError(std::move(callback),
+                       DialDeviceDescriptionParsingError::kInvalidXml);
+    return;
+  }
+  DCHECK(unique_device);
+
+  ParsedDialDeviceDescription device_description;
+  constexpr std::array<const char* const, 4> kNodeNames{
+      {"UDN", "friendlyName", "modelName", "deviceType"}};
+  constexpr std::array<DialDeviceDescriptionParsingError, 4> kParsingErrors{
+      {DialDeviceDescriptionParsingError::kFailedToReadUdn,
+       DialDeviceDescriptionParsingError::kFailedToReadFriendlyName,
+       DialDeviceDescriptionParsingError::kFailedToReadModelName,
+       DialDeviceDescriptionParsingError::kFailedToReadDeviceType}};
+  std::array<std::string*, 4> kFields{
+      {&device_description.unique_id, &device_description.friendly_name,
+       &device_description.model_name, &device_description.device_type}};
+
+  for (size_t i = 0; i < kNodeNames.size(); i++) {
+    const base::Value* value = data_decoder::GetXmlElementChildWithName(
+        *device_element, kNodeNames[i]);
+    if (value) {
+      DCHECK_EQ(1, data_decoder::GetXmlElementChildrenCount(*device_element,
+                                                            kNodeNames[i]));
+      bool result = data_decoder::GetXmlElementText(*value, kFields[i]);
+      if (!result) {
+        NotifyParsingError(std::move(callback), kParsingErrors[i]);
+        return;
+      }
+    }
+  }
+
+  if (device_description.friendly_name.empty()) {
+    device_description.friendly_name = ComputeFriendlyName(
+        device_description.unique_id, device_description.model_name);
+  }
+
+  device_description.app_url = app_url;
+
+  std::move(callback).Run(device_description,
+                          DialDeviceDescriptionParsingError::kNone);
+}
+
+}  // namespace
+
+void SafelyParseDialDeviceDescription(
+    service_manager::Connector* connector,
+    const std::string& xml_text,
+    const GURL& app_url,
+    const std::string& group_id,
+    DialDeviceDescriptionParserCallback callback) {
+  DVLOG(2) << "Parsing device description...";
+  DCHECK(callback);
+
+  data_decoder::ParseXml(
+      connector, xml_text,
+      base::BindOnce(&OnXmlParsingDone, std::move(callback), app_url),
+      group_id);
 }
 
 }  // namespace media_router
