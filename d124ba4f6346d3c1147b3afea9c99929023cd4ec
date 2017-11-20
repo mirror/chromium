@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "892c367c_ca87d526",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "nit: this is not a simple getter. Call it \"Compute\" or \"Analyze\" or \"Collect\"",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af89a95e_8a2e5c12",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "nit: call this \"symbols_by_name\" so to self-document what the keys are.",
+      "range": {
+        "startLine": 734,
+        "startChar": 2,
+        "endLine": 734,
+        "endChar": 9
+      },
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1ceac8_c6aada9b",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "It would be more correct to check id(r1) \u003d\u003d id(r2). This will tell you that they are the same and aliased, rather than just \"they are the same\"",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26210c0_6d4231b1",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "nit: make these constants in models.py",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777a59e6_8aa44e84",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "Can you create Symbol objects here instead?",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa128633_33c57a3b",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "This field isn\u0027t used? I think delete it.\n\nIf we do want to fully track aliases using symbols, we\u0027ll need to re-work locale strings to not sum up across languages, since an alias in one locale is not necessarily one in another.",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facb3127_9b4ffc67",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "no need to do this in a separate loop if you instead iterate via:\n\nfor resource_id in sorted(contents.resources):\n\nAliases are guaranteed to be for lower ids.",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3fbb9c_cde09341",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "nit: also log the delta (I\u0027m sure this will come up eventually)",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c11a90_f27055ee",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "Do we have 0-length .pak files? Maybe remove that part?",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfaaef0_25af0b09",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "a bit confusing to use the same dict for both. Would be better to use two dicts, or even create a small class.",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64728a33_dca4beda",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "Move this into AddApkInfo()? Otherwise, change AddApkInfo() -\u003e AddPakSymbolsAndSections",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293b35e8_9e902602",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "Rather than adding it back, it would be better to only add the pak sections in the first place after this logic runs.",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b7b65a_84607412",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T20:53:13Z",
+      "side": 1,
+      "message": "nit: Add a comment about when this happens. (Or even better, make it work for .pak)",
+      "revId": "d124ba4f6346d3c1147b3afea9c99929023cd4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
