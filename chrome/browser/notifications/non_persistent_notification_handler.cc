@@ -4,6 +4,7 @@
 
 #include "chrome/browser/notifications/non_persistent_notification_handler.h"
 
+#include "base/callback.h"
 #include "base/strings/nullable_string16.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "content/public/browser/notification_event_dispatcher.h"
@@ -22,9 +23,12 @@ void NonPersistentNotificationHandler::OnClose(
     Profile* profile,
     const GURL& origin,
     const std::string& notification_id,
-    bool by_user) {
+    bool by_user,
+    base::OnceClosure completed_closure) {
   content::NotificationEventDispatcher::GetInstance()
       ->DispatchNonPersistentCloseEvent(notification_id);
+
+  // XXX: Run |completed_closure|.
 }
 
 void NonPersistentNotificationHandler::OnClick(
@@ -32,7 +36,8 @@ void NonPersistentNotificationHandler::OnClick(
     const GURL& origin,
     const std::string& notification_id,
     const base::Optional<int>& action_index,
-    const base::Optional<base::string16>& reply) {
+    const base::Optional<base::string16>& reply,
+    base::OnceClosure completed_closure) {
   // Non persistent notifications don't allow buttons or replies.
   // https://notifications.spec.whatwg.org/#create-a-notification
   DCHECK(!action_index.has_value());
@@ -40,6 +45,8 @@ void NonPersistentNotificationHandler::OnClick(
 
   content::NotificationEventDispatcher::GetInstance()
       ->DispatchNonPersistentClickEvent(notification_id);
+
+  // XXX: Run |completed_closure|.
 }
 
 void NonPersistentNotificationHandler::OpenSettings(Profile* profile) {

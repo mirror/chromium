@@ -6,6 +6,8 @@
 
 #include <algorithm>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/profiles/profile.h"
 
@@ -90,7 +92,8 @@ void StubNotificationDisplayService::RemoveNotification(
       iter->notification.delegate()->Close(by_user);
     } else {
       handler->OnClose(profile_, iter->notification.origin_url(),
-                       notification_id, by_user);
+                       notification_id, by_user,
+                       base::BindOnce(&base::DoNothing));
     }
   }
 
@@ -106,7 +109,8 @@ void StubNotificationDisplayService::RemoveAllNotifications(
     if (iter->type == notification_type) {
       if (handler) {
         handler->OnClose(profile_, iter->notification.origin_url(),
-                         iter->notification.id(), by_user);
+                         iter->notification.id(), by_user,
+                         base::BindOnce(&base::DoNothing));
       } else {
         iter->notification.delegate()->Close(by_user);
       }
