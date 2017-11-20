@@ -55,6 +55,7 @@ class AudioBuffer;
 class AudioBufferSourceNode;
 class AudioContextOptions;
 class AudioListener;
+class AudioWorklet;
 class AudioWorkletMessagingProxy;
 class BiquadFilterNode;
 class ChannelMergerNode;
@@ -334,9 +335,14 @@ class MODULES_EXPORT BaseAudioContext
   // gesture while the AudioContext requires a user gesture.
   void MaybeRecordStartAttempt();
 
+  // AudioWorklet IDL
+  AudioWorklet* audioWorklet() const;
+
+  // Callback from audioWorklet.addModule() to BaseAudioContext.
+  void WorkletMessagingProxyCreated();
+
   void SetWorkletMessagingProxy(AudioWorkletMessagingProxy*);
-  AudioWorkletMessagingProxy* WorkletMessagingProxy();
-  bool HasWorkletMessagingProxy() const;
+  AudioWorkletMessagingProxy* GetWorkletMessagingProxy();
 
   // TODO(crbug.com/764396): Remove this when fixed.
   virtual void CountValueSetterConflict(bool does_conflict){};
@@ -518,7 +524,7 @@ class MODULES_EXPORT BaseAudioContext
   Optional<AutoplayStatus> autoplay_status_;
   AudioIOPosition output_position_;
 
-  bool has_worklet_messaging_proxy_ = false;
+  Member<AudioWorklet> audio_worklet_;
   Member<AudioWorkletMessagingProxy> worklet_messaging_proxy_;
 };
 

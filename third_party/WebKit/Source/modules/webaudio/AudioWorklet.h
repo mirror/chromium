@@ -13,34 +13,31 @@ namespace blink {
 
 class AudioWorkletMessagingProxy;
 class BaseAudioContext;
-class LocalFrame;
 
 class MODULES_EXPORT AudioWorklet final : public Worklet {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(AudioWorklet);
   WTF_MAKE_NONCOPYABLE(AudioWorklet);
 
  public:
-  static AudioWorklet* Create(LocalFrame*);
-  ~AudioWorklet() override;
+  static AudioWorklet* Create(BaseAudioContext*);
 
-  void RegisterContext(BaseAudioContext*);
-  void UnregisterContext(BaseAudioContext*);
+  ~AudioWorklet();
 
-  AudioWorkletMessagingProxy* FindAvailableMessagingProxy();
+  // This can return nullptr if audioWorklet.addModule() has not invoked yet.
+  AudioWorkletMessagingProxy* GetWorkletMessagingProxy();
 
-  virtual void Trace(blink::Visitor*);
+  // Implements Worklet
+  void Trace(blink::Visitor*) override;
 
  private:
-  explicit AudioWorklet(LocalFrame*);
+  explicit AudioWorklet(BaseAudioContext*);
 
-  // Implements Worklet.
+  // Implements Worklet
   bool NeedsToCreateGlobalScope() final;
   WorkletGlobalScopeProxy* CreateGlobalScope() final;
 
-  bool IsWorkletMessagingProxyCreated() const;
-
-  // AudioWorklet keeps the reference of all active BaseAudioContexts, so it
-  // can notify the contexts when a script is loaded in AudioWorkletGlobalScope.
-  HeapHashSet<Member<BaseAudioContext>> contexts_;
+  Member<BaseAudioContext> context_;
 };
 
 }  // namespace blink

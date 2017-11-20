@@ -277,7 +277,7 @@ AudioWorkletNode* AudioWorkletNode::Create(
     }
   }
 
-  if (!context->HasWorkletMessagingProxy()) {
+  if (!context->GetWorkletMessagingProxy()) {
     exception_state.ThrowDOMException(
         kInvalidStateError,
         "AudioWorkletNode cannot be created: AudioWorklet does not have a "
@@ -286,7 +286,7 @@ AudioWorkletNode* AudioWorkletNode::Create(
     return nullptr;
   }
 
-  AudioWorkletMessagingProxy* proxy = context->WorkletMessagingProxy();
+  AudioWorkletMessagingProxy* proxy = context->GetWorkletMessagingProxy();
 
   if (!proxy->IsProcessorRegistered(name)) {
     exception_state.ThrowDOMException(
