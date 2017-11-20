@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4656411_e7cefa3a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-20T02:00:52Z",
+      "side": 1,
+      "message": "You can do this DCHECK because you call layout update now.",
+      "revId": "bbe6115773feba6dfcb5da1c03c97b918fcb038d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
