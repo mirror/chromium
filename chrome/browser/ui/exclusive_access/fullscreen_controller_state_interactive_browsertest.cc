@@ -51,8 +51,13 @@ Browser* FullscreenControllerStateInteractiveTest::GetBrowser() {
 // would not be exposed by traversing to each state via TransitionToState().
 // TransitionToState() always takes the same path even when multiple paths
 // exist.
+#if defined(OS_WIN)
+#define MAYBE_TransitionsForEachState TransitionsForEachState
+#else
+#define MAYBE_TransitionsForEachState DISABLED_TransitionsForEachState
+#endif
 IN_PROC_BROWSER_TEST_F(FullscreenControllerStateInteractiveTest,
-                       DISABLED_TransitionsForEachState) {
+                       MAYBE_TransitionsForEachState) {
   // A tab is needed for tab fullscreen.
   AddTabAtIndex(0, GURL(url::kAboutBlankURL), ui::PAGE_TRANSITION_TYPED);
   TestTransitionsForEachState();
@@ -65,6 +70,17 @@ IN_PROC_BROWSER_TEST_F(FullscreenControllerStateInteractiveTest,
 // An "empty" test is included as part of each "TEST_EVENT" because it makes
 // running the entire test suite less flaky on MacOS. All of the tests pass
 // when run individually.
+#if defined(OS_WIN)
+#define TEST_EVENT(state, event)                                            \
+  IN_PROC_BROWSER_TEST_F(FullscreenControllerStateInteractiveTest,          \
+                         state##__##event##__Empty) {}                      \
+  IN_PROC_BROWSER_TEST_F(FullscreenControllerStateInteractiveTest,          \
+                         state##__##event) {                                \
+    AddTabAtIndex(0, GURL(url::kAboutBlankURL), ui::PAGE_TRANSITION_TYPED); \
+    ASSERT_NO_FATAL_FAILURE(TestStateAndEvent(state, event))                \
+        << GetAndClearDebugLog();                                           \
+  }
+#else  // defined(OS_WIN)
 #define TEST_EVENT(state, event)                                   \
   IN_PROC_BROWSER_TEST_F(FullscreenControllerStateInteractiveTest, \
                          DISABLED_##state##__##event##__Empty) {}  \
@@ -75,8 +91,9 @@ IN_PROC_BROWSER_TEST_F(FullscreenControllerStateInteractiveTest,
     ASSERT_NO_FATAL_FAILURE(TestStateAndEvent(state, event))       \
         << GetAndClearDebugLog();                                  \
   }
-    // Progress of tests can be examined by inserting the following line:
-    // LOG(INFO) << GetAndClearDebugLog(); }
+#endif  // defined(OS_WIN)
+        // Progress of tests can be examined by inserting the following line:
+        // LOG(INFO) << GetAndClearDebugLog(); }
 
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller_state_tests.h"
 

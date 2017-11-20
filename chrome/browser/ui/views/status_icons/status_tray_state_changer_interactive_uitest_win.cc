@@ -84,9 +84,7 @@ class StatusTrayStateChangerWinTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(StatusTrayStateChangerWinTest);
 };
 
-// Test is disabled due to multiple COM initialization errors.  See
-// http//crbug.com/367199 for details.
-TEST_F(StatusTrayStateChangerWinTest, DISABLED_Setup) {
+TEST_F(StatusTrayStateChangerWinTest, Setup) {
   // This tests the code path that will read the NOTIFYITEM data structure for
   // use in future tests.
   std::unique_ptr<NOTIFYITEM> notify_item = SetupAndGetCurrentNotifyItem();
@@ -121,9 +119,7 @@ TEST_F(StatusTrayStateChangerWinTest, DISABLED_ComApiTest) {
   EXPECT_EQ(notify_item->preference, current_preference);
 }
 
-// Test is disabled due to multiple COM initialization errors.  See
-// http//crbug.com/367199 for details.
-TEST_F(StatusTrayStateChangerWinTest, DISABLED_TraySizeApiTest) {
+TEST_F(StatusTrayStateChangerWinTest, TraySizeApiTest) {
   // Used to reset operating system state afterwards.
   std::unique_ptr<NOTIFYITEM> notify_item = SetupAndGetCurrentNotifyItem();
   // We can't actually run this test if we're already showing the icon.
