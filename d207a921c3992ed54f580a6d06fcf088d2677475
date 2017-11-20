@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "774ab314_e5202eca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-20T23:12:21Z",
+      "side": 1,
+      "message": "I think you can say rather \"introduce enterprise policies to allow setting Site Isolation flags in enterprise environments.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "d207a921c3992ed54f580a6d06fcf088d2677475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416687d2_cb86115d",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-20T23:12:21Z",
+      "side": 1,
+      "message": "Remove the empty line. Usually related policies come right after each other.",
+      "revId": "d207a921c3992ed54f580a6d06fcf088d2677475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435fc9e8_9910a40d",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-20T23:12:21Z",
+      "side": 1,
+      "message": "remove this part for now as it will be failing if tests specify this flag all the time. If you want to have this covered reinstate your browser test and just verify that the local_state contains what you put in the policy.",
+      "range": {
+        "startLine": 887,
+        "startChar": 4,
+        "endLine": 889,
+        "endChar": 5
+      },
+      "revId": "d207a921c3992ed54f580a6d06fcf088d2677475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
