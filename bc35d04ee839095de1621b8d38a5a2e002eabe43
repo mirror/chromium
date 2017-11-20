@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4538cdc0_5c1ffa0c",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T15:06:26Z",
+      "side": 0,
+      "message": "Hm... can we do something like this?\n\nChange LazyInitialize to something like:\n\nemplate \u003ctypename Task, typename CallbackForTask\u003e\nbool ServiceWorkerStorage::LazyInitialize(Task task, CallbackForTask* callback) {\n  switch (state_) {\n    case INITIALIZED:\n      return true;\n    case DISABLED:\n      return false;\n    case INITIALIZING: \n      pending_tasks_.push_back(base::BindOnce(std::move(task), std::move(*callback)));\n      return false;\n    case UNINITIALIZED:\n      pending_tasks_.push_back(base::BindOnce(std::move(task), std::move(*callback)));\n      // Fall-through.\n  } \n    \n  state_ \u003d INITIALIZING;\n  ...\n  return false;\n}\n\nAnd call LazyInitialize this way:\n\nif (!LazyInitialize(\n        base::BindOnce(\u0026ServiceWorkerStorage::FindRegistrationForPattern,\n                       weak_factory_.GetWeakPtr(), scope),\n        \u0026callback)) {\n   if (state_ !\u003d INITIALIZING) {\n      ...\n   }\n   return;\n}\nDCHECK(callback);  // Make sure callback is not taken here.\n....",
+      "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
