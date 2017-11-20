@@ -387,6 +387,29 @@
     },
     {
       "key": {
+        "uuid": "8ab13da1_9e0de408",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T19:05:07Z",
+      "side": 1,
+      "message": "Also, is there an easy way to check the SetUID logic?",
+      "range": {
+        "startLine": 95,
+        "startChar": 25,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e381dae_be1d6b53",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
