@@ -33,6 +33,12 @@ namespace {
 // informed that the session is about to expire.
 const int kExpiringSoonThresholdInMinutes = 5;
 
+// A notification is shown to the user only if the remaining session time falls
+// under this threshold. e.g. If the user has several days left in their
+// session, there is no use displaying a notification right now.
+const base::TimeDelta kNotificationThreshold =
+    base::TimeDelta::FromSeconds(60 * 60);  // 60 minutes
+
 // Use 500ms interval for updates to notification and tray bubble to reduce the
 // likelihood of a user-visible skip in high load situations (as might happen
 // with 1000ms).
@@ -140,8 +146,10 @@ void TraySessionLengthLimit::UpdateNotification() {
         kNotificationId, false /* by_user */);
   }
 
-  // For LIMIT_NONE, there's nothing more to do.
-  if (limit_state_ == LIMIT_NONE) {
+  // If the session is unlimited or if the remaining time is too far off into
+  // the future, there is nothing more to do.
+  if (limit_state_ == LIMIT_NONE ||
+      remaining_session_time_ > kNotificationThreshold) {
     last_limit_state_ = limit_state_;
     return;
   }

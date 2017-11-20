@@ -23,6 +23,8 @@ class TraySessionLengthLimitTest : public AshTestBase {
   ~TraySessionLengthLimitTest() override = default;
 
  protected:
+  static const int kNotificationThresholdInMinutes = 60;
+
   LabelTrayView* GetSessionLengthLimitTrayView() {
     return SystemTrayTestApi(GetPrimarySystemTray())
         .tray_session_length_limit()
@@ -130,6 +132,25 @@ TEST_F(TraySessionLengthLimitTest, Notification) {
   EXPECT_FALSE(GetNotification());
 }
 
+TEST_F(TraySessionLengthLimitTest, FarOffNotificationNotVisible) {
+  // Test that notification is not shown if the session end time is far off into
+  // the future, but an item should be present in system tray bubble.
+
+  // Notification should be absent.
+  EXPECT_FALSE(GetNotification());
+  UpdateSessionLengthLimitInMin(kNotificationThresholdInMinutes + 10);
+  EXPECT_FALSE(GetNotification());
+
+  // However, an item should be present in the system tray bubble.
+  SystemTray* system_tray = GetPrimarySystemTray();
+  system_tray->ShowDefaultView(BUBBLE_CREATE_NEW, false /* show_by_click */);
+  ASSERT_TRUE(GetSessionLengthLimitTrayView());
+  EXPECT_TRUE(GetSessionLengthLimitTrayView()->visible());
+  system_tray->CloseBubble();
+
+  RemoveNotification();
+}
+
 TEST_F(TraySessionLengthLimitTest, RemoveNotification) {
   // Limit is 15 min.
   UpdateSessionLengthLimitInMin(15);
@@ -181,6 +202,25 @@ TEST_F(TraySessionLengthLimitLoginTest, NotificationShownAfterLogin) {
   // Notification is shown after login.
   CreateUserSessions(1);
   EXPECT_TRUE(GetNotification());
+
+  RemoveNotification();
+}
+
+TEST_F(TraySessionLengthLimitLoginTest, FarOffNotificationHiddenAfterLogin) {
+  // Test that notification is not shown if the session end time is far off into
+  // the future, but an item should be present in system tray bubble.
+
+  // Notification should be absent.
+  UpdateSessionLengthLimitInMin(kNotificationThresholdInMinutes + 10);
+  CreateUserSessions(1);
+  EXPECT_FALSE(GetNotification());
+
+  // However, an item should be present in the system tray bubble.
+  SystemTray* system_tray = GetPrimarySystemTray();
+  system_tray->ShowDefaultView(BUBBLE_CREATE_NEW, false /* show_by_click */);
+  ASSERT_TRUE(GetSessionLengthLimitTrayView());
+  EXPECT_TRUE(GetSessionLengthLimitTrayView()->visible());
+  system_tray->CloseBubble();
 
   RemoveNotification();
 }
