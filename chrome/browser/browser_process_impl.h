@@ -161,6 +161,7 @@ class BrowserProcessImpl : public BrowserProcess,
       override;
   physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() override;
   prefs::InProcessPrefServiceFactory* pref_service_factory() const override;
+  tabs::TabsTracker* GetTabsTracker() override;
 
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
@@ -363,6 +364,11 @@ class BrowserProcessImpl : public BrowserProcess,
       physical_web_data_source_;
 
   std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory_;
+
+// TODO(michaelpg): use feature flag instead
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  std::unique_ptr<tabs::TabsTracker> tabs_tracker_;
+#endif
 
   SEQUENCE_CHECKER(sequence_checker_);
 

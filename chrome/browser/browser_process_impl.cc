@@ -176,6 +176,7 @@
 
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
 #include "chrome/browser/resource_coordinator/tab_manager.h"
+#include "chrome/browser/tabs/tabs_tracker.h"
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
@@ -849,6 +850,17 @@ BrowserProcessImpl::GetPhysicalWebDataSource() {
 prefs::InProcessPrefServiceFactory* BrowserProcessImpl::pref_service_factory()
     const {
   return pref_service_factory_.get();
+}
+
+tabs::TabsTracker* BrowserProcessImpl::GetTabsTracker() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  if (!tabs_tracker_)
+    tabs_tracker_ = std::make_unique<tabs::TabsTracker>();
+  return tabs_tracker_.get();
+#else
+  return nullptr;
+#endif
 }
 
 // static
