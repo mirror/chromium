@@ -187,6 +187,9 @@ void RunCallbackOnIO(GpuProcessHost::GpuProcessKind kind,
 }
 
 #if defined(USE_OZONE)
+// XXX(sad): The right fix here is blocked on the ozone-mojo refactor work.
+// See note below where SendGpuProcessMessage() usage is commented out.
+#if 0
 // The ozone platform use this callback to send IPC messages to the gpu process.
 void SendGpuProcessMessage(base::WeakPtr<GpuProcessHost> host,
                            IPC::Message* message) {
@@ -195,6 +198,7 @@ void SendGpuProcessMessage(base::WeakPtr<GpuProcessHost> host,
   else
     delete message;
 }
+#endif
 
 void RouteMessageToOzoneOnUI(const IPC::Message& message) {
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
@@ -627,7 +631,8 @@ bool GpuProcessHost::Init() {
                                   std::move(host_proxy),
                                   activity_flags_.CloneHandle());
 
-#if defined(USE_OZONE)
+// XXX(sad): The right fix here is blocked on the ozone-mojo refactor work.
+#if 0  // defined(USE_OZONE)
   // Ozone needs to send the primary DRM device to GPU process as early as
   // possible to ensure the latter always has a valid device. crbug.com/608839
   ui::OzonePlatform::GetInstance()
