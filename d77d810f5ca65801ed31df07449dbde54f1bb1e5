@@ -69,6 +69,24 @@
       "revId": "d77d810f5ca65801ed31df07449dbde54f1bb1e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2470365c_45a767a8",
+        "filename": "gin/public/v8_platform.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-20T11:54:44Z",
+      "side": 1,
+      "message": "hum, I think it\u0027s worse to pass around double/string compared to just converting at the boundary to V8.\n\nI\u0027d prefer base::Time and icu::TimeZone to be passed around inside chromium",
+      "parentUuid": "e621addc_cf823ad9",
+      "revId": "d77d810f5ca65801ed31df07449dbde54f1bb1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
