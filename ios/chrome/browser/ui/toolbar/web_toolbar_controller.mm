@@ -276,6 +276,9 @@ using ios::material::TimingFunction;
                                         font:[MDCTypography subheadFont]
                                    textColor:textColor
                                    tintColor:tintColor];
+  [_locationBarView
+      setContentCompressionResistancePriority:UILayoutPriorityDefaultLow
+                                      forAxis:UILayoutConstraintAxisHorizontal];
 
   // Disable default drop interactions on the omnibox.
   // TODO(crbug.com/739903): Handle drop events once Chrome iOS is built with

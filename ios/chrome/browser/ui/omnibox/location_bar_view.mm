@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/omnibox/location_bar_view.h"
 
 #import "ios/chrome/browser/ui/animation_util.h"
+#import "ios/chrome/browser/ui/omnibox/clipping_textfield_container.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -56,6 +57,10 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
 // When the |leadingButton| is not hidden, this is a constraint that links the
 // leading edge of the button to self leading edge. Used for animations.
 @property(nonatomic, strong) NSLayoutConstraint* leadingButtonLeadingConstraint;
+// The textfield container. The |textField| is contained in it, and its frame
+// should not be managed directly, instead the location bar uses this container.
+// This is required to achieve desired text clipping of long URLs.
+@property(nonatomic, strong) ClippingTextFieldContainer* textFieldContainer;
 @end
 
 @implementation LocationBarView
@@ -64,6 +69,7 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
 @synthesize leadingTextfieldConstraint = _leadingTextfieldConstraint;
 @synthesize incognito = _incognito;
 @synthesize leadingButtonLeadingConstraint = _leadingButtonLeadingConstraint;
+@synthesize textFieldContainer = _textFieldContainer;
 
 - (instancetype)initWithFrame:(CGRect)frame
                          font:(UIFont*)font
@@ -75,19 +81,28 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
                                                        font:font
                                                   textColor:textColor
                                                   tintColor:tintColor];
-    [self addSubview:_textField];
+    _textFieldContainer = [[ClippingTextFieldContainer alloc]
+        initWithClippingTextField:_textField];
 
-    _leadingTextfieldConstraint =
-        [_textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+    [self addSubview:_textFieldContainer];
+
+    _leadingTextfieldConstraint = [_textFieldContainer.leadingAnchor
+        constraintEqualToAnchor:self.leadingAnchor];
 
     [NSLayoutConstraint activateConstraints:@[
-      [_textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-      [_textField.topAnchor constraintEqualToAnchor:self.topAnchor],
-      [_textField.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+      [_textFieldContainer.trailingAnchor
+          constraintEqualToAnchor:self.trailingAnchor],
+      [_textFieldContainer.topAnchor constraintEqualToAnchor:self.topAnchor],
+      [_textFieldContainer.bottomAnchor
+          constraintEqualToAnchor:self.bottomAnchor],
       _leadingTextfieldConstraint,
     ]];
 
-    _textField.translatesAutoresizingMaskIntoConstraints = NO;
+    _textFieldContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [_textFieldContainer
+        setContentCompressionResistancePriority:UILayoutPriorityDefaultLow
+                                        forAxis:
+                                            UILayoutConstraintAxisHorizontal];
   }
   return self;
 }
@@ -114,7 +129,7 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
       [_leadingButton.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
       self.leadingButtonLeadingConstraint,
       [self.leadingButton.trailingAnchor
-          constraintEqualToAnchor:self.textField.leadingAnchor],
+          constraintEqualToAnchor:self.textFieldContainer.leadingAnchor],
     ]];
   }
 }
