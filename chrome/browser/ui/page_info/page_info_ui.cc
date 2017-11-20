@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/permissions/permission_manager.h"
 #include "chrome/browser/permissions/permission_result.h"
@@ -21,18 +22,18 @@
 #include "chrome/grit/theme_resources.h"
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/vector_icons/vector_icons.h"
 #include "ppapi/features/features.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/image/image.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "url/gurl.h"
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/android_theme_resources.h"
 #else
-#include "chrome/app/vector_icons/vector_icons.h"
 #include "ui/gfx/color_palette.h"
-#include "ui/gfx/paint_vector_icon.h"
 #endif
 
 #if defined(SAFE_BROWSING_DB_LOCAL)
@@ -99,45 +100,56 @@ static_assert(arraysize(kPermissionButtonTextIDDefaultSetting) ==
 struct PermissionsUIInfo {
   ContentSettingsType type;
   int string_id;
-  int blocked_icon_id;
-  int allowed_icon_id;
+  const gfx::VectorIcon* block_icon;
+  const gfx::VectorIcon* allow_icon;
+  // TODO(patricialor): Delete these PNG icons when Harmony is default.
+  int legacy_block_icon_id;
+  int legacy_allow_icon_id;
 };
 
 const PermissionsUIInfo kPermissionsUIInfo[] = {
-    {CONTENT_SETTINGS_TYPE_COOKIES, 0, IDR_BLOCKED_COOKIES,
-     IDR_ACCESSED_COOKIES},
-    {CONTENT_SETTINGS_TYPE_IMAGES, IDS_PAGE_INFO_TYPE_IMAGES,
-     IDR_BLOCKED_IMAGES, IDR_ALLOWED_IMAGES},
+    {CONTENT_SETTINGS_TYPE_COOKIES, 0, &gfx::kNoneIcon, &gfx::kNoneIcon,
+     IDR_BLOCKED_COOKIES, IDR_ACCESSED_COOKIES},
+    {CONTENT_SETTINGS_TYPE_IMAGES, IDS_PAGE_INFO_TYPE_IMAGES, &gfx::kNoneIcon,
+     &kImageIcon, IDR_BLOCKED_IMAGES, IDR_ALLOWED_IMAGES},
     {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_PAGE_INFO_TYPE_JAVASCRIPT,
-     IDR_BLOCKED_JAVASCRIPT, IDR_ALLOWED_JAVASCRIPT},
-    {CONTENT_SETTINGS_TYPE_POPUPS, IDS_PAGE_INFO_TYPE_POPUPS,
-     IDR_BLOCKED_POPUPS, IDR_ALLOWED_POPUPS},
+     &gfx::kNoneIcon, &kCodeIcon, IDR_BLOCKED_JAVASCRIPT,
+     IDR_ALLOWED_JAVASCRIPT},
+    {CONTENT_SETTINGS_TYPE_POPUPS, IDS_PAGE_INFO_TYPE_POPUPS, &gfx::kNoneIcon,
+     &gfx::kNoneIcon, IDR_BLOCKED_POPUPS, IDR_ALLOWED_POPUPS},
 #if BUILDFLAG(ENABLE_PLUGINS)
-    {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_PAGE_INFO_TYPE_FLASH,
-     IDR_BLOCKED_PLUGINS, IDR_ALLOWED_PLUGINS},
+    {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_PAGE_INFO_TYPE_FLASH, &gfx::kNoneIcon,
+     &gfx::kNoneIcon, IDR_BLOCKED_PLUGINS, IDR_ALLOWED_PLUGINS},
 #endif
     {CONTENT_SETTINGS_TYPE_GEOLOCATION, IDS_PAGE_INFO_TYPE_LOCATION,
-     IDR_BLOCKED_LOCATION, IDR_ALLOWED_LOCATION},
+     &gfx::kNoneIcon, &vector_icons::kLocationOnIcon, IDR_BLOCKED_LOCATION,
+     IDR_ALLOWED_LOCATION},
     {CONTENT_SETTINGS_TYPE_NOTIFICATIONS, IDS_PAGE_INFO_TYPE_NOTIFICATIONS,
+     &vector_icons::kNotificationsOffIcon, &vector_icons::kNotificationsIcon,
      IDR_BLOCKED_NOTIFICATION, IDR_ALLOWED_NOTIFICATION},
     {CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC, IDS_PAGE_INFO_TYPE_MIC,
-     IDR_BLOCKED_MIC, IDR_ALLOWED_MIC},
+     &gfx::kNoneIcon, &vector_icons::kMicrophoneIcon, IDR_BLOCKED_MIC,
+     IDR_ALLOWED_MIC},
     {CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA, IDS_PAGE_INFO_TYPE_CAMERA,
-     IDR_BLOCKED_CAMERA, IDR_ALLOWED_CAMERA},
+     &gfx::kNoneIcon, &vector_icons::kVideocamIcon, IDR_BLOCKED_CAMERA,
+     IDR_ALLOWED_CAMERA},
     {CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS,
-     IDS_AUTOMATIC_DOWNLOADS_TAB_LABEL, IDR_BLOCKED_DOWNLOADS,
-     IDR_ALLOWED_DOWNLOADS},
+     IDS_AUTOMATIC_DOWNLOADS_TAB_LABEL, &gfx::kNoneIcon, &gfx::kNoneIcon,
+     IDR_BLOCKED_DOWNLOADS, IDR_ALLOWED_DOWNLOADS},
     {CONTENT_SETTINGS_TYPE_MIDI_SYSEX, IDS_PAGE_INFO_TYPE_MIDI_SYSEX,
-     IDR_BLOCKED_MIDI_SYSEX, IDR_ALLOWED_MIDI_SYSEX},
+     &gfx::kNoneIcon, &gfx::kNoneIcon, IDR_BLOCKED_MIDI_SYSEX,
+     IDR_ALLOWED_MIDI_SYSEX},
     {CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC, IDS_PAGE_INFO_TYPE_BACKGROUND_SYNC,
-     IDR_BLOCKED_BACKGROUND_SYNC, IDR_ALLOWED_BACKGROUND_SYNC},
+     &gfx::kNoneIcon, &gfx::kNoneIcon, IDR_BLOCKED_BACKGROUND_SYNC,
+     IDR_ALLOWED_BACKGROUND_SYNC},
     // Autoplay is Android-only at the moment, and the Page Info popup on
     // Android ignores these block/allow icon pairs, so we can specify 0 there.
-    {CONTENT_SETTINGS_TYPE_AUTOPLAY, IDS_PAGE_INFO_TYPE_AUTOPLAY, 0, 0},
-    {CONTENT_SETTINGS_TYPE_ADS, IDS_PAGE_INFO_TYPE_ADS, IDR_BLOCKED_ADS,
-     IDR_ALLOWED_ADS},
-    {CONTENT_SETTINGS_TYPE_SOUND, IDS_PAGE_INFO_TYPE_SOUND, IDR_BLOCKED_SOUND,
-     IDR_ALLOWED_SOUND},
+    {CONTENT_SETTINGS_TYPE_AUTOPLAY, IDS_PAGE_INFO_TYPE_AUTOPLAY,
+     &gfx::kNoneIcon, &gfx::kNoneIcon, 0, 0},
+    {CONTENT_SETTINGS_TYPE_ADS, IDS_PAGE_INFO_TYPE_ADS, &gfx::kNoneIcon,
+     &gfx::kNoneIcon, IDR_BLOCKED_ADS, IDR_ALLOWED_ADS},
+    {CONTENT_SETTINGS_TYPE_SOUND, IDS_PAGE_INFO_TYPE_SOUND, &gfx::kNoneIcon,
+     &gfx::kNoneIcon, IDR_BLOCKED_SOUND, IDR_ALLOWED_SOUND},
 };
 
 std::unique_ptr<PageInfoUI::SecurityDescription> CreateSecurityDescription(
@@ -315,18 +327,6 @@ base::string16 PageInfoUI::PermissionActionToUIString(
 }
 
 // static
-int PageInfoUI::GetPermissionIconID(ContentSettingsType type,
-                                    ContentSetting setting) {
-  bool use_blocked = (setting == CONTENT_SETTING_BLOCK);
-  for (const PermissionsUIInfo& info : kPermissionsUIInfo) {
-    if (info.type == type)
-      return use_blocked ? info.blocked_icon_id : info.allowed_icon_id;
-  }
-  NOTREACHED();
-  return 0;
-}
-
-// static
 base::string16 PageInfoUI::PermissionDecisionReasonToUIString(
     Profile* profile,
     const PageInfoUI::PermissionInfo& permission,
@@ -374,29 +374,11 @@ SkColor PageInfoUI::GetPermissionDecisionTextColor() {
 }
 
 // static
-const gfx::Image& PageInfoUI::GetPermissionIcon(const PermissionInfo& info) {
-  ContentSetting setting = info.setting;
-  if (setting == CONTENT_SETTING_DEFAULT)
-    setting = info.default_setting;
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  return rb.GetNativeImageNamed(GetPermissionIconID(info.type, setting));
-}
-
-// static
 base::string16 PageInfoUI::ChosenObjectToUIString(
     const ChosenObjectInfo& object) {
   base::string16 name;
   object.object->GetString(object.ui_info.ui_name_key, &name);
   return name;
-}
-
-// static
-const gfx::Image& PageInfoUI::GetChosenObjectIcon(
-    const ChosenObjectInfo& object,
-    bool deleted) {
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  return rb.GetNativeImageNamed(deleted ? object.ui_info.blocked_icon_id
-                                        : object.ui_info.allowed_icon_id);
 }
 
 #if defined(OS_ANDROID)
@@ -458,6 +440,55 @@ int PageInfoUI::GetConnectionIconID(PageInfo::SiteConnectionStatus status) {
   return resource_id;
 }
 #else  // !defined(OS_ANDROID)
+// static
+const gfx::ImageSkia PageInfoUI::GetPermissionIcon(const PermissionInfo& info) {
+  ContentSetting setting = info.setting;
+  if (setting == CONTENT_SETTING_DEFAULT)
+    setting = info.default_setting;
+
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    bool use_blocked = (setting == CONTENT_SETTING_BLOCK);
+    const gfx::VectorIcon* vector = &gfx::kNoneIcon;
+    for (const PermissionsUIInfo& ui_info : kPermissionsUIInfo) {
+      if (ui_info.type == info.type)
+        vector = use_blocked ? ui_info.block_icon : ui_info.allow_icon;
+    }
+    return gfx::CreateVectorIcon(*vector, 16, SkColorSetARGB(138, 0, 0, 0));
+  }
+  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  return rb.GetNativeImageNamed(GetPermissionIconIDLegacy(info.type, setting))
+      .AsImageSkia();
+}
+
+// static
+int PageInfoUI::GetPermissionIconIDLegacy(ContentSettingsType type,
+                                          ContentSetting setting) {
+  bool use_blocked = (setting == CONTENT_SETTING_BLOCK);
+  for (const PermissionsUIInfo& info : kPermissionsUIInfo) {
+    if (info.type == type)
+      return use_blocked ? info.legacy_block_icon_id
+                         : info.legacy_allow_icon_id;
+  }
+  NOTREACHED();
+  return 0;
+}
+
+// static
+const gfx::ImageSkia PageInfoUI::GetChosenObjectIcon(
+    const ChosenObjectInfo& object,
+    bool deleted) {
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    const gfx::VectorIcon* icon =
+        deleted ? object.ui_info.block_icon : object.ui_info.allow_icon;
+    return gfx::CreateVectorIcon(*icon, 16, gfx::kChromeIconGrey);
+  }
+  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  return rb
+      .GetNativeImageNamed(deleted ? object.ui_info.legacy_block_icon_id
+                                   : object.ui_info.legacy_allow_icon_id)
+      .AsImageSkia();
+}
+
 // static
 const gfx::ImageSkia PageInfoUI::GetCertificateIcon() {
   return gfx::CreateVectorIcon(kCertificateIcon, 16, gfx::kChromeIconGrey);
