@@ -7908,7 +7908,7 @@ interface webkitURL
     attribute frames
     attribute gamepadController
     attribute internals
-    attribute layoutTestController
+    attribute testRunner
     attribute length
     attribute location
     attribute opener
