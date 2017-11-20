@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80488b42_8d0b0bcc",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3136,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T12:31:53Z",
+      "side": 1,
+      "message": "s/calling_window/entered_window/",
+      "range": {
+        "startLine": 3136,
+        "startChar": 41,
+        "endLine": 3136,
+        "endChar": 55
+      },
+      "revId": "e68839be148a1785669a0dedb7c4b2b9e52c04d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb3bb08_94df58e9",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3155,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T12:31:53Z",
+      "side": 1,
+      "message": "This was a current window before this patch.  Please don\u0027t change it.",
+      "range": {
+        "startLine": 3155,
+        "startChar": 54,
+        "endLine": 3155,
+        "endChar": 65
+      },
+      "revId": "e68839be148a1785669a0dedb7c4b2b9e52c04d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85807044_13f36fc2",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T12:31:53Z",
+      "side": 1,
+      "message": "s/calling_window/entered_window/",
+      "range": {
+        "startLine": 600,
+        "startChar": 33,
+        "endLine": 600,
+        "endChar": 47
+      },
+      "revId": "e68839be148a1785669a0dedb7c4b2b9e52c04d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df47ea0_ab52d51a",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T12:31:53Z",
+      "side": 1,
+      "message": "Could you add a link to\nhttps://html.spec.whatwg.org/multipage/dom.html#documents\n?\n\nThere are DOM and HTML specs and both of them related to this interface definition.  open() is actually defined in HTML.",
+      "revId": "e68839be148a1785669a0dedb7c4b2b9e52c04d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2619eb_0c609f24",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T12:31:53Z",
+      "side": 1,
+      "message": "nit: No need.",
+      "range": {
+        "startLine": 120,
+        "startChar": 53,
+        "endLine": 120,
+        "endChar": 72
+      },
+      "revId": "e68839be148a1785669a0dedb7c4b2b9e52c04d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0524272_42b1a312",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T12:31:53Z",
+      "side": 1,
+      "message": "You dropped [CEReactions], but it\u0027s necessary.  Please add it back.\n\nAlso, do not drop [MeasureAs\u003dDocumentOpen], too.",
+      "range": {
+        "startLine": 120,
+        "startChar": 29,
+        "endLine": 120,
+        "endChar": 52
+      },
+      "revId": "e68839be148a1785669a0dedb7c4b2b9e52c04d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8da230_f5008e3c",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T12:31:53Z",
+      "side": 1,
+      "message": "nit: No need.",
+      "range": {
+        "startLine": 121,
+        "startChar": 53,
+        "endLine": 121,
+        "endChar": 72
+      },
+      "revId": "e68839be148a1785669a0dedb7c4b2b9e52c04d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7aa151a_9ef4dfa9",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T12:31:53Z",
+      "side": 1,
+      "message": "https://html.spec.whatwg.org/multipage/dom.html#the-document-object\nThe spec says that we don\u0027t need [CustomElementCallbacks] for this version.\n\nHowever, please do not drop [MeasureAs\u003dDocumentOpen].",
+      "range": {
+        "startLine": 121,
+        "startChar": 29,
+        "endLine": 121,
+        "endChar": 52
+      },
+      "revId": "e68839be148a1785669a0dedb7c4b2b9e52c04d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
