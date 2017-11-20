@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "473f4a8d_e6cff772",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-20T18:02:35Z",
+      "side": 1,
+      "message": "You can use SequencedTaskRunner::DeleteSoon() for this. Also, can you add a comment to explain why we delete the profile asynchronously (in contrast to below)?",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 64
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f365a8_5d977830",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-20T18:02:35Z",
+      "side": 1,
+      "message": "BrowserList::AddObserver() is a static method.",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 41
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d418ff_b1d09aa8",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-20T18:02:35Z",
+      "side": 1,
+      "message": "Nit: It might be a bit easier to just make these non-movable and pass them in std::unique_ptrs\u003c\u003e.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8959833b_00d77025",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-20T18:02:35Z",
+      "side": 1,
+      "message": "This is base::OnceClosure.",
+      "range": {
+        "startLine": 33,
+        "startChar": 30,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ffe146_b3080f68",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-20T18:02:35Z",
+      "side": 1,
+      "message": "Urr... I don\u0027t think there is a guarantee that different instances of profiles are going to have different addresses. In general, I don\u0027t think it\u0027s possible to write tests that fully guard against use-after-free (and/or, that is what ASAN is for).",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9529bcdd_643b008f",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-20T18:02:35Z",
+      "side": 1,
+      "message": "Oh hey, if offscreen tabs are now also using IndependentOTRProfileManager, we could actually make this check something like `profile_-\u003eGetOriginalProfile()-\u003eGetOffTheRecordProfile \u003d\u003d profile_` (i.e. only the profile directly here if it is the one incognito profile associated with the original one), so only callers of profile_-\u003eGetOriginalProfile() have to know about the special lifetime handling.",
+      "range": {
+        "startLine": 536,
+        "startChar": 28,
+        "endLine": 536,
+        "endChar": 64
+      },
+      "revId": "3fa23c8546f20838c646f56bef20a6c6e7822668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
