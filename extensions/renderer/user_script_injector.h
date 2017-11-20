@@ -40,6 +40,7 @@ class UserScriptInjector : public ScriptInjector,
   UserScript::InjectionType script_type() const override;
   bool ShouldExecuteInMainWorld() const override;
   bool IsUserGesture() const override;
+  UserScript::CSSOrigin css_origin() const override;
   bool ExpectsResults() const override;
   bool ShouldInjectJs(
       UserScript::RunLocation run_location,

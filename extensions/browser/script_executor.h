@@ -101,6 +101,7 @@ class ScriptExecutor {
                      const GURL& webview_src,
                      const GURL& file_url,
                      bool user_gesture,
+                     UserScript::CSSOrigin css_origin,
                      ResultType result_type,
                      const ExecuteScriptCallback& callback);
 
