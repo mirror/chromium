@@ -34,6 +34,7 @@ PACKAGE_FILTER = [
     "libcups.so",
     "libdbus-1.so",
     "libdl.so",
+    "libdconf.so",
     "libexpat.so",
     "libfontconfig.so",
     "libgcc_s.so",
