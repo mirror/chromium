@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5f13dcb8_b9d5c481",
+        "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-20T19:02:08Z",
+      "side": 1,
+      "message": "I tried it and it caused issues for tests: https://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.android%2Fandroid_n5x_swarming_rel%2F308723%2F%2B%2Frecipes%2Fsteps%2Fwebview_instrumentation_test_apk__with_patch__on_Android%2F0%2Fstdout",
+      "parentUuid": "4c68cb0b_fccf4615",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 26
+      },
+      "revId": "6fd187e80c677306e9326ee715c927844495329e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfe89756_4167b2ee",
         "filename": "base/android/java/src/org/chromium/base/ApplicationStatus.java",
         "patchSetId": 12
