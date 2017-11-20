@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2132e41e_096ee734",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-20T20:07:15Z",
+      "side": 1,
+      "message": "nit: You should be able to test foo \u003d\u003d\u003d undefined or foo !\u003d\u003d undefined rather than testing typeof foo \u003d\u003d\u003d/!\u003d\u003d \"undefined\"",
+      "revId": "cf2139bbc8f9582bcb9777d0533cc744c1e440cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
