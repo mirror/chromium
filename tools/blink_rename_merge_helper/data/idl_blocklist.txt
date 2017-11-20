@@ -683,7 +683,6 @@ Coordinates:::speed:::1
 Credential:::id:::0
 CredentialsContainer:::get:::1
 CredentialsContainer:::get:::2
-CredentialsContainer:::requireUserMediation:::1
 CredentialsContainer:::store:::2
 Credential:::type:::0
 Crypto:::getRandomValues:::2
