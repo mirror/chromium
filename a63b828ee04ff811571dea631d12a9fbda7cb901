@@ -52,6 +52,24 @@
       "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3ea525_c826817a",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-20T09:49:00Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we miss out on animations et.c then? (Otherwise it would be possible, although it\u0027s difficult to speculate as to the relative costs.)",
+      "parentUuid": "cc09772b_d9b650f6",
+      "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
