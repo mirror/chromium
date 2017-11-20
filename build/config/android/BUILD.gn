@@ -52,21 +52,28 @@ config("compiler") {
     abi_target = "arm-linux-androideabi"
   } else if (current_cpu == "x86") {
     abi_target = "i686-linux-androideabi"
+    cflags += [ "-isystem$android_ndk_root/sysroot/usr/include/i686-linux-androideabi" ]
   } else if (current_cpu == "arm64") {
     abi_target = "aarch64-linux-android"
+    cflags += [ "-isystem$android_ndk_root/sysroot/usr/include/aarch64-linux-androideabi" ]
   } else if (current_cpu == "x64") {
     # Place holder for x64 support, not tested.
     # TODO: Enable clang support for Android x64. http://crbug.com/539781
     abi_target = "x86_64-linux-androideabi"
+    cflags += [ "-isystem$android_ndk_root/sysroot/usr/include/x86_64-linux-androideabi" ]
   } else if (current_cpu == "mipsel") {
     abi_target = "mipsel-linux-android"
+    cflags += [ "-isystem$android_ndk_root/sysroot/usr/include/mipsel-linux-androideabi" ]
   } else if (current_cpu == "mips64el") {
     # Place holder for mips64 support, not tested.
     abi_target = "mips64el-linux-androideabi"
+    cflags += [ "-isystem$android_ndk_root/sysroot/usr/include/mips64el-linux-androideabi" ]
   } else {
     assert(false, "Architecture not supported")
   }
   cflags += [ "--target=$abi_target" ]
+  cflags += [ "-isystem" + rebase_path("$android_ndk_root/sysroot/usr/include/$abi_target", root_build_dir) ]
+  cflags += ["-D__ANDROID_API__=$android_sdk_version"]
   ldflags += [ "--target=$abi_target" ]
 
   # Assign any flags set for the C compiler to asmflags so that they are sent
