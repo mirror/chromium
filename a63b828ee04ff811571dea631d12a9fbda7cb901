@@ -16,6 +16,24 @@
       "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e39918d_a98b59b3",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-20T09:27:16Z",
+      "side": 1,
+      "message": "Maybe we need a different/split predicate then, because for certain SVG elements we do want this (and IIUC this one reason for this change.)\n\nI.e see https://svgwg.org/svg2-draft/pservers.html#Introduction (last paragraph in that section)",
+      "parentUuid": "fb5e9668_faaab495",
+      "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
