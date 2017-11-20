@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "09748402_48fae7fe",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-20T08:42:06Z",
+      "side": 1,
+      "message": "|delegate_| must remain valid until CloseStream is called, and CloseStream closes the binding/resets the pointer.",
+      "parentUuid": "2174205b_b2d5b4f9",
+      "revId": "1fb73a080e7954b2a8e2280398e247679220f286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1c17cd9_4218059b",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 2
