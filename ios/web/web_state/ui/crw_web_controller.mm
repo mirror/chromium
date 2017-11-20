@@ -4476,6 +4476,13 @@ registerLoadRequestForURL:(const GURL&)requestURL
     didCommitNavigation:(WKNavigation*)navigation {
   GURL webViewURL = net::GURLWithNSURL(webView.URL);
 
+  if (webViewURL.is_empty()) {
+    // It is possible for |webView.URL| to be nil, in which case
+    // webView.backForwardList.currentItem.URL will return the right committed
+    // URL (crbug.com/784480).
+    webViewURL = net::GURLWithNSURL(webView.backForwardList.currentItem.URL);
+  }
+
   // If this is a placeholder navigation or if |navigation| has been previous
   // aborted, return without modifying the navigation states. The latter case
   // seems to happen due to asychronous nature of WKWebView; sometimes
