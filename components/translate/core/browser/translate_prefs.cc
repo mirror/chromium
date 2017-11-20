@@ -175,8 +175,17 @@ TranslatePrefs::TranslatePrefs(PrefService* user_prefs,
 #endif
 }
 
-bool TranslatePrefs::IsEnabled() const {
-  return prefs_->GetBoolean(prefs::kEnableTranslate);
+bool TranslatePrefs::IsOfferTranslateEnabled() const {
+  return prefs_->GetBoolean(prefs::kOfferTranslateEnabled);
+}
+
+bool TranslatePrefs::IsTranslateAllowedByPolicy() const {
+  const PrefService::Preference* const pref =
+      prefs_->FindPreference(prefs::kOfferTranslateEnabled);
+  DCHECK(pref);
+  DCHECK(pref->GetValue()->is_bool());
+
+  return pref->GetValue()->GetBool() || !pref->IsManaged();
 }
 
 void TranslatePrefs::SetCountry(const std::string& country) {
@@ -349,6 +358,7 @@ void TranslatePrefs::RearrangeLanguage(
 
 // static
 void TranslatePrefs::GetLanguageInfoList(
+    bool translate_allowed,
     const std::string& app_locale,
     std::vector<TranslateLanguageInfo>* language_list) {
   DCHECK(language_list != nullptr);
@@ -391,7 +401,7 @@ void TranslatePrefs::GetLanguageInfoList(
   // Get the list of translatable languages and convert to a set.
   std::vector<std::string> translate_languages;
   translate::TranslateDownloadManager::GetSupportedLanguages(
-      &translate_languages);
+      translate_allowed, &translate_languages);
   const std::set<std::string> translate_language_set(
       translate_languages.begin(), translate_languages.end());
 
