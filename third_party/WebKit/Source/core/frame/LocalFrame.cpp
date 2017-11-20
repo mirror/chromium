@@ -453,6 +453,14 @@ void LocalFrame::DidChangeVisibilityState() {
   Frame::DidChangeVisibilityState();
 }
 
+void LocalFrame::DidPause() {
+  DCHECK(RuntimeEnabledFeatures::PageLifecycleEnabled());
+  if (GetDocument())
+    GetDocument()->DidPause();
+
+  Frame::DidPause();
+}
+
 void LocalFrame::SetIsInert(bool inert) {
   is_inert_ = inert;
   PropagateInertToChildFrames();
