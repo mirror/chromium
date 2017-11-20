@@ -10,6 +10,8 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_hints.h"
 #include "net/base/net_errors.h"
+#include "net/http/transport_security_state.h"
+#include "net/url_request/url_request_context.h"
 
 namespace predictors {
 
@@ -209,8 +211,10 @@ void PreconnectManager::FinishPreresolve(const PreresolveJob& job,
   PreresolveInfo* info = job.info;
   bool need_preconnect =
       found && job.need_preconnect && (!info || !info->was_canceled);
-  if (need_preconnect)
-    PreconnectUrl(job.url, info ? info->url : GURL(), job.allow_credentials);
+  if (need_preconnect) {
+    PreconnectUrl(GetHSTSRedirect(job.url), info ? info->url : GURL(),
+                  job.allow_credentials);
+  }
   if (info && found)
     info->stats->requests_stats.emplace_back(job.url, cached, need_preconnect);
 }
@@ -226,6 +230,24 @@ void PreconnectManager::AllPreresolvesForUrlFinished(PreresolveInfo* info) {
       base::BindOnce(&Delegate::PreconnectFinished, delegate_,
                      std::move(info->stats)));
   preresolve_info_.erase(it);
+}
+
+GURL PreconnectManager::GetHSTSRedirect(const GURL& url) const {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (!url.SchemeIs(url::kHttpScheme))
+    return url;
+
+  auto* transport_security_state =
+      context_getter_->GetURLRequestContext()->transport_security_state();
+  if (!transport_security_state)
+    return url;
+
+  if (!transport_security_state->ShouldUpgradeToSSL(url.host()))
+    return url;
+
+  GURL::Replacements replacements;
+  replacements.SetSchemeStr(url::kHttpsScheme);
+  return url.ReplaceComponents(replacements);
 }
 
 }  // namespace predictors

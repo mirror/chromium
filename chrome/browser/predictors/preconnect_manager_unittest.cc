@@ -313,4 +313,22 @@ TEST_F(PreconnectManagerTest, TestDetachedRequestHasHigherPriority) {
   base::RunLoop().RunUntilIdle();
 }
 
+TEST_F(PreconnectManagerTest, TestHSTSRedirectRespectedForPreconnect) {
+  net::TransportSecurityState transport_security_state;
+  transport_security_state.AddHSTS(
+      "google.com", base::Time::Now() + base::TimeDelta::FromDays(1000), false);
+  context_getter_->GetURLRequestContext()->set_transport_security_state(
+      &transport_security_state);
+
+  GURL url("http://google.com/search");
+  bool allow_credentials = false;
+
+  EXPECT_CALL(*preconnect_manager_, PreresolveUrl(GURL("http://google.com"), _))
+      .WillOnce(Return(net::OK));
+  EXPECT_CALL(*preconnect_manager_, PreconnectUrl(GURL("https://google.com"),
+                                                  GURL(), allow_credentials));
+  preconnect_manager_->StartPreconnectUrl(url, allow_credentials);
+  base::RunLoop().RunUntilIdle();
+}
+
 }  // namespace predictors

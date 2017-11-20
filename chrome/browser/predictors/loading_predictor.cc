@@ -95,14 +95,10 @@ void LoadingPredictor::PrepareForPageLoad(const GURL& url,
     has_preconnect_prediction =
         resource_prefetch_predictor_->PredictPreconnectOrigins(url,
                                                                &prediction);
-    // For all but NAVIGATION hint origins it makes sense to preconnect to the
-    // |url| even if the predictor has no prediction. In the NAVIGATION case
-    // it makes less sense because the connection will follow shortly after
-    // the hint with a higher priority.
-    if (origin != HintOrigin::NAVIGATION) {
-      has_preconnect_prediction =
-          AddInitialUrlToPreconnectPrediction(url, &prediction);
-    }
+    // Try to preconnect to the |url| even if the predictor has no
+    // prediction.
+    has_preconnect_prediction =
+        AddInitialUrlToPreconnectPrediction(url, &prediction);
     if (has_preconnect_prediction &&
         config_.IsPreconnectEnabledForOrigin(profile_, origin)) {
       MaybeAddPreconnect(url, prediction.preconnect_origins,

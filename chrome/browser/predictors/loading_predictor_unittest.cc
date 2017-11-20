@@ -31,7 +31,9 @@ namespace {
 // First two are prefetchable, last one is not (see SetUp()).
 const char kUrl[] = "http://www.google.com/cats";
 const char kUrl2[] = "http://www.google.com/dogs";
-const char kUrl3[] = "https://unknown.website/catsanddogs";
+const char kUrl3[] =
+    "file://unknown.website/catsanddogs";  // Non http(s) scheme to avoid
+                                           // preconnect to the main frame.
 
 class MockPreconnectManager : public PreconnectManager {
  public:
@@ -312,15 +314,6 @@ TEST_F(LoadingPredictorPreconnectTest, TestAddInitialUrlToEmptyPrediction) {
       *mock_preconnect_manager_,
       Start(main_frame_url, std::vector<GURL>({GURL("http://search.com")}),
             std::vector<GURL>()));
-  predictor_->PrepareForPageLoad(main_frame_url, HintOrigin::EXTERNAL);
-}
-
-// Checks that the predictor doesn't preconnect to an initial origin in the case
-// of NAVIGATION hint.
-TEST_F(LoadingPredictorPreconnectTest, TestAddInitialUrlForNavigationHint) {
-  GURL main_frame_url("http://search.com/kittens");
-  EXPECT_CALL(*mock_predictor_, PredictPreconnectOrigins(main_frame_url, _))
-      .WillOnce(Return(false));
   predictor_->PrepareForPageLoad(main_frame_url, HintOrigin::NAVIGATION);
 }
 
