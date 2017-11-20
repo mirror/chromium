@@ -111,6 +111,9 @@ class CORE_EXPORT WebFrameWidgetBase
   // Image decode functionality.
   void RequestDecode(const PaintImage&, WTF::Function<void(bool)> callback);
 
+  WebInputEventResult HandleSyntheticWheelFromTouchpadPinchEvent(
+      const WebGestureEvent& pinch_event);
+
   virtual void Trace(blink::Visitor*);
 
  protected:

@@ -94,6 +94,8 @@ class CONTENT_EXPORT CrossProcessFrameConnector
       gfx::PointF* transformed_point) override;
   void ForwardProcessAckedTouchEvent(const TouchEventWithLatencyInfo& touch,
                                      InputEventAckState ack_result) override;
+  void OnPinchEventAckFromChild(const blink::WebGestureEvent& event,
+                                InputEventAckState ack_result) override;
   void BubbleScrollEvent(const blink::WebGestureEvent& event) override;
   bool HasFocus() override;
   void FocusRootView() override;

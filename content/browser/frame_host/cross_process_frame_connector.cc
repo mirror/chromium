@@ -201,6 +201,21 @@ void CrossProcessFrameConnector::ForwardProcessAckedTouchEvent(
     main_view->ProcessAckedTouchEvent(touch, ack_result);
 }
 
+void CrossProcessFrameConnector::OnPinchEventAckFromChild(
+    const blink::WebGestureEvent& event,
+    InputEventAckState ack_result) {
+  auto* root_view = GetRootRenderWidgetHostView();
+  if (!root_view)
+    return;
+
+  auto* event_router =
+      RenderWidgetHostImpl::From(root_view->GetRenderWidgetHost())
+          ->delegate()
+          ->GetInputEventRouter();
+
+  event_router->OnPinchEventAckFromChild(root_view, view_, event, ack_result);
+}
+
 void CrossProcessFrameConnector::BubbleScrollEvent(
     const blink::WebGestureEvent& event) {
   DCHECK((view_->wheel_scroll_latching_enabled() &&

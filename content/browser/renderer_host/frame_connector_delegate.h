@@ -111,6 +111,10 @@ class CONTENT_EXPORT FrameConnectorDelegate {
       const TouchEventWithLatencyInfo& touch,
       InputEventAckState ack_result) {}
 
+  // TODO explain
+  virtual void OnPinchEventAckFromChild(const blink::WebGestureEvent& event,
+                                        InputEventAckState ack_result) {}
+
   // Gesture events with unused scroll deltas must be bubbled to ancestors
   // who may consume the delta.
   virtual void BubbleScrollEvent(const blink::WebGestureEvent& event) {}

@@ -32,6 +32,18 @@ class WebGestureEvent : public WebInputEvent {
     kLastPhase = kMomentumPhase,
   };
 
+  // Restrict handling of the event to a specific thread.
+  // TODO the idea is that an event is being handled across multiple renderers
+  // so perhaps it would be better to express this in terms of which stage
+  // of handling the current renderer is expected to do (js handlers only,
+  // default action only) instead of which thread should handle.
+  enum TargetThread {
+    kAnyThread = 0,
+    kMainThread,
+    kCompositorThread,
+    kLastThread = kCompositorThread,
+  };
+
   // TODO(mustaq): Make these coordinates private & fractional, as in
   // WebMouseEvent.h .
   int x;
@@ -156,6 +168,10 @@ class WebGestureEvent : public WebInputEvent {
       // as a part of fling boost events sequence.
       bool prevent_boosting;
     } fling_cancel;
+
+    struct {
+      TargetThread target_thread;
+    } pinch_begin;
 
     struct {
       bool zoom_disabled;
