@@ -25,6 +25,8 @@
 #import "ios/web/public/test/http_server/http_server_util.h"
 #include "url/gurl.h"
 
+#include "ios/web/public/test/http_server/infinite_pending_response_provider.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -70,79 +72,6 @@ id<GREYMatcher> ProgressViewWithProgress(CGFloat progress) {
   return [[GREYElementMatcherBlock alloc] initWithMatchesBlock:matches
                                               descriptionBlock:describe];
 }
-
-// Response provider that serves the page which never finishes loading.
-// TODO(crbug.com/638674): Evaluate if this can move to shared code.
-class InfinitePendingResponseProvider : public HtmlResponseProvider {
- public:
-  explicit InfinitePendingResponseProvider(const GURL& url)
-      : url_(url),
-        aborted_(false),
-        terminated_(false),
-        condition_variable_(&lock_) {}
-  ~InfinitePendingResponseProvider() override {
-    GREYAssert(terminated_, @"Request was not aborted.");
-  }
-
-  // Interrupt the current infinite request.
-  // Must be called before the object is destroyed.
-  void Abort() {
-    {
-      base::AutoLock auto_lock(lock_);
-      aborted_.store(true, std::memory_order_release);
-      condition_variable_.Signal();
-    }
-
-    base::test::ios::WaitUntilCondition(
-        ^{
-          base::AutoLock auto_lock(lock_);
-          return terminated_.load(std::memory_order_release);
-        },
-        false, base::TimeDelta::FromSeconds(10));
-  }
-
-  // HtmlResponseProvider overrides:
-  bool CanHandleRequest(const Request& request) override {
-    return request.url == url_ ||
-           request.url == GetInfinitePendingResponseUrl();
-  }
-  void GetResponseHeadersAndBody(
-      const Request& request,
-      scoped_refptr<net::HttpResponseHeaders>* headers,
-      std::string* response_body) override {
-    *headers = GetDefaultResponseHeaders();
-    if (request.url == url_) {
-      *response_body =
-          base::StringPrintf("<p>%s</p><img src='%s'/>", kPageText,
-                             GetInfinitePendingResponseUrl().spec().c_str());
-    } else {
-      *response_body = base::StringPrintf("<p>%s</p>", kPageText);
-      {
-        base::AutoLock auto_lock(lock_);
-        while (!aborted_.load(std::memory_order_release))
-          condition_variable_.Wait();
-        terminated_.store(true, std::memory_order_release);
-      }
-    }
-  }
-
- private:
-  // Returns a url for which this response provider will never reply.
-  GURL GetInfinitePendingResponseUrl() const {
-    GURL::Replacements replacements;
-    replacements.SetPathStr("resource");
-    return url_.GetOrigin().ReplaceComponents(replacements);
-  }
-
-  // Main page URL that never finish loading.
-  GURL url_;
-
-  // Everything below is protected by lock_.
-  mutable base::Lock lock_;
-  std::atomic_bool aborted_;
-  std::atomic_bool terminated_;
-  base::ConditionVariable condition_variable_;
-};
 
 }  // namespace
 
