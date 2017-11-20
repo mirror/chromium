@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3b28cff_fcebd3b3",
+        "filename": "chromeos/dbus/fake_upstart_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:36:58Z",
+      "side": 1,
+      "message": "const std::vector\u003cstd::string\u003e\u0026 /* upstart_env */,",
+      "revId": "8943c95a8871ab8f89d0efa1f66383486b39d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5b35cc_bc39d0f5",
+        "filename": "chromeos/dbus/fake_upstart_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:36:58Z",
+      "side": 1,
+      "message": "Since the real implementation invokes |callback| asyncronously, we should do the same in the fake. (This can catch incorrect assumptions in the UI).",
+      "revId": "8943c95a8871ab8f89d0efa1f66383486b39d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6cadaa_8759764b",
+        "filename": "chromeos/dbus/upstart_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:36:58Z",
+      "side": 1,
+      "message": "(true /* wait for response */);",
+      "revId": "8943c95a8871ab8f89d0efa1f66383486b39d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5f3e96_01920e27",
+        "filename": "chromeos/dbus/upstart_client.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:36:58Z",
+      "side": 1,
+      "message": "s/ and getting a callback on completion.// - We don\u0027t document |callback| elsewhere and its use is clear and consistent with other useage so mentioning it here is just confusing.",
+      "revId": "8943c95a8871ab8f89d0efa1f66383486b39d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
