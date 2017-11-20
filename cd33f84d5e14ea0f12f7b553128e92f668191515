@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "dfc7b17a_4229df5c",
+        "filename": "ios/chrome/browser/browser_state/browser_state_services_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-20T10:57:38Z",
+      "side": 1,
+      "message": "I don\u0027t really understand why there is a need to pass the identity_manager ownership, but not the stack local variable.\n\nAs there is a WaitForCallback(), the only case when the stack local IdentityManagerPtr can have a shorter lifetime than the callback is when the condition timeout. But if this happen, then the -testConnectionToIdentityService method will return, and the local variable will be destroyed, thus get_primary_account_info_callback_called_flag will be invalid and dereferencing it in the callback will be undefined behavior.\n\nSo, either the ownership of the bool should also be passed to this function, or more simply, just use the fact that the manager is stack local and will be destroyed after the WaitForCallback timeout. If this happens, then we\u0027ll destroy the mojom object. I don\u0027t know whether the mojo binding support an object being destroyed while a method is pending on it (but given then methods are asynchronous, I would hope this is the case).\n\nSo, my recommendation are to either:\n-   remove identity_manager parameter, or\n-   convert get_primary_account_info_callback_called_flag to std::unique_ptr\u003cbool\u003e",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 55
+      },
+      "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f71d32_e5ded42c",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-20T10:57:38Z",
+      "side": 1,
+      "message": "Is this the pattern that is going to be used for all services? Add a method to create the instance to chrome_browser_state_impl.cc? Isn\u0027t this is a step back from KeyedServices?\n\nCan we at least move this to a free function in another file and add a TODO so that we refactor this to avoid having ChromeBrowserStateImpl depends on all services?",
+      "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cda4508_eb74012e",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-20T10:57:38Z",
+      "side": 1,
+      "message": "This does not have to be a member method, instead it could be a free function taking an ios::ChromeBrowserState*.",
+      "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a3f0687_1c4495b4",
         "filename": "ios/chrome/browser/chrome_browser_manifest_overlay.json",
         "patchSetId": 4
