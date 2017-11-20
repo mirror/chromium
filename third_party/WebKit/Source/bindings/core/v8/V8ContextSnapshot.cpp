@@ -207,8 +207,8 @@ void V8ContextSnapshot::InstallConditionalFeatures(
                                           .As<v8::Object>();
     V8Window::install_runtime_enabled_features_function_(
         isolate, world, window_wrapper, prototype, interface);
-    type->InstallConditionalFeatures(context, world, window_wrapper, prototype,
-                                     interface,
+    type->InstallConditionalFeatures(context, world, v8::Local<v8::Object>(),
+                                     prototype, interface,
                                      type->domTemplate(isolate, world));
     InstallOriginTrialFeatures(type, script_state, prototype, interface);
   }
