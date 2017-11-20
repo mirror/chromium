@@ -4,12 +4,6 @@
 
 #include "ui/events/event.h"
 
-#if defined(USE_X11)
-#include <X11/extensions/XInput2.h>
-#include <X11/keysym.h>
-#include <X11/Xlib.h>
-#endif
-
 #include <cmath>
 #include <cstring>
 #include <utility>
@@ -32,7 +26,8 @@
 #include "ui/gfx/transform_util.h"
 
 #if defined(USE_X11)
-#include "ui/events/keycodes/keyboard_code_conversion_x.h"  // nogncheck
+#include "ui/events/keycodes/keyboard_code_conversion_x.h"
+#include "ui/gfx/x/x11.h"
 #elif defined(USE_OZONE)
 #include "ui/events/ozone/layout/keyboard_layout_engine.h"  // nogncheck
 #include "ui/events/ozone/layout/keyboard_layout_engine_manager.h"  // nogncheck
