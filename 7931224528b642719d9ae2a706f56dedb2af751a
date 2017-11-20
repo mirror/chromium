@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "404520ca_bd8e5ee0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-20T16:15:55Z",
+      "side": 1,
+      "message": "nit: Correction here please. Both [1] and [2] are same.",
+      "range": {
+        "startLine": 19,
+        "startChar": 104,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "7931224528b642719d9ae2a706f56dedb2af751a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
