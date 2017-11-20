@@ -13,6 +13,7 @@
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/security_state/core/security_state.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "ui/gfx/vector_icon_types.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -124,8 +125,11 @@ class PageInfo : public TabSpecificContentSettings::SiteDataObserver,
   struct ChooserUIInfo {
     ContentSettingsType content_settings_type;
     ChooserContextBase* (*get_context)(Profile*);
-    int blocked_icon_id;
-    int allowed_icon_id;
+    const gfx::VectorIcon* block_icon;
+    const gfx::VectorIcon* allow_icon;
+    // TODO(patricialor): Delete legacy icons when Harmony is default.
+    int legacy_block_icon_id;
+    int legacy_allow_icon_id;
     int label_string_id;
     int delete_tooltip_string_id;
     const char* ui_name_key;
