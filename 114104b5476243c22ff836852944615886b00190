@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0f154a9_d9370452",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-20T07:37:05Z",
+      "side": 1,
+      "message": "XMLHttpReques -\u003e XMLHttpRequest",
+      "revId": "114104b5476243c22ff836852944615886b00190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5521b0c2_0474ebc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-20T07:37:05Z",
+      "side": 1,
+      "message": "Please add links to the following commits for reference.\n\nhttps://github.com/whatwg/xhr/commit/cea2b9e1187921453434bc245208660edefa4c58\nhttps://github.com/whatwg/xhr/commit/cbbc56ab2dc5049eb59c69f760038d62b3439cca",
+      "revId": "114104b5476243c22ff836852944615886b00190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
