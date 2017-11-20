@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56dd0c54_eb11a953",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-20T19:28:06Z",
+      "side": 1,
+      "message": "nit: I would call this something like TIME_SINCE_BACKGROUNDED_DELAY_IN_MINS_PARAM or something that works in the name of the feature this param is being used for",
+      "range": {
+        "startLine": 227,
+        "startChar": 32,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "f8dd892cc20da75fc99b442e5096cdfe683a9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5438554b_332ad860",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-20T19:28:06Z",
+      "side": 1,
+      "message": "Since the time check is higher up now, maybe we should just inline bottomSheet.setSheetState() \u0026 return true instead of having a separate maybeSetSheetStateToHalfOnStartup().\n\nIf you don\u0027t want to inline it, then the time determined above should be used in maybeSetSheetStateToHalfOnStartup() and we should return whatever that method returns rather than false.",
+      "range": {
+        "startLine": 995,
+        "startChar": 12,
+        "endLine": 996,
+        "endChar": 25
+      },
+      "revId": "f8dd892cc20da75fc99b442e5096cdfe683a9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
