@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "915441ee_ccddebe3",
+        "filename": "components/omnibox/browser/history_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-20T16:45:20Z",
+      "side": 1,
+      "message": "End sentence with \u0027.\u0027.",
+      "revId": "1233214aa5ae1e8636d8194220429851a4971b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea19de7_c64181e2",
+        "filename": "components/omnibox/browser/history_quick_provider_performance_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-20T16:45:20Z",
+      "side": 1,
+      "message": "How about updating this to use MakeUnique as well since you updated the other unittest files?",
+      "revId": "1233214aa5ae1e8636d8194220429851a4971b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
