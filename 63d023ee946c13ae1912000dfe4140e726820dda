@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79f2132f_cfffec1e",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T21:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "928999a4_b6eb7a15",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 58
+      },
+      "revId": "63d023ee946c13ae1912000dfe4140e726820dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab95153d_434aff78",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "63d023ee946c13ae1912000dfe4140e726820dda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c01195_4bcdc383",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-20T21:38:38Z",
+      "side": 1,
+      "message": "Can\u0027t because we are reassigning ui_nqe_service for each test, but it is DISALLOWED_COPY_AND_ASSIGN.",
+      "parentUuid": "ab95153d_434aff78",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 72
+      },
+      "revId": "63d023ee946c13ae1912000dfe4140e726820dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
