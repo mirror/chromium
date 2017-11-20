@@ -173,8 +173,6 @@ class SupportsWeakPtrBase {
   // conversion will only compile if there is exists a Base which inherits
   // from SupportsWeakPtr<Base>. See base::AsWeakPtr() below for a helper
   // function that makes calling this easier.
-  //
-  // Precondition: t != nullptr
   template<typename Derived>
   static WeakPtr<Derived> StaticAsWeakPtr(Derived* t) {
     static_assert(
@@ -189,6 +187,8 @@ class SupportsWeakPtrBase {
   // static_cast the Base* to a Derived*.
   template <typename Derived, typename Base>
   static WeakPtr<Derived> AsWeakPtrImpl(SupportsWeakPtr<Base>* t) {
+    if (!t)
+      return nullptr;
     WeakPtr<Base> ptr = t->AsWeakPtr();
     return WeakPtr<Derived>(
         ptr.ref_, static_cast<Derived*>(reinterpret_cast<Base*>(ptr.ptr_)));
