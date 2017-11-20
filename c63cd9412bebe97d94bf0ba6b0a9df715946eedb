@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee304ae0_f3f69e50",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T18:43:26Z",
+      "side": 1,
+      "message": "Bug filed:\nhttps://crbug.com/787019\n\nDone.",
+      "parentUuid": "0569b817_84ef6a3b",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddce9dfb_04cdb86a",
         "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
         "patchSetId": 19
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0338d13a_3f199fca",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T18:43:26Z",
+      "side": 1,
+      "message": "Removed this line. Thanks!\n\nDone.",
+      "parentUuid": "2dd39c72_0f2112da",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c892c78_e1858847",
         "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
         "patchSetId": 19
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "9023b921_cbb8bb66",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T18:43:26Z",
+      "side": 1,
+      "message": "Yes, I think it is the same reason as some of the tests above have NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 2).",
+      "parentUuid": "1c892c78_e1858847",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "315f00d8_a21847f6",
         "filename": "content/browser/generic_sensor_browsertest.cc",
         "patchSetId": 19
@@ -82,6 +136,24 @@
       "writtenOn": "2017-11-20T01:49:42Z",
       "side": 1,
       "message": "nit: same here",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22fbc1b1_b86dc1df",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T18:43:26Z",
+      "side": 1,
+      "message": "Removed this line.\n\nDone.",
+      "parentUuid": "315f00d8_a21847f6",
       "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +189,24 @@
       "side": 1,
       "message": "\u003e nit: this is a bit confusing because of the double negative. How about just calling pass() here and fail() in the catch() and then EXPECTing a result of \"fail\"?\n\nI would argue it\u0027s better as is, maybe with a comment like \"The Generic Sensor API is expected to throw an exception for cross-origin frames.\"  I\u0027ve seen this pattern in other tests.  (I would find flipping the meaning of pass() and fail() confusing.)",
       "parentUuid": "c11c62f4_5a5767a0",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258d5c32_e7271657",
+        "filename": "content/test/data/generic_sensor/ambient_light_sensor_cross_origin_iframe_test.html",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T18:43:26Z",
+      "side": 1,
+      "message": "Added comment.\n\nDone.",
+      "parentUuid": "29b1f0a1_78a7f513",
       "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
