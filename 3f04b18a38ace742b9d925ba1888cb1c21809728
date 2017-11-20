@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f818a28a_e80de373",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-20T19:01:59Z",
+      "side": 1,
+      "message": "nit:  // Owned by caller.\n\nOr move it below the comment (and change callee to caller. i think we missed that ages ago!).",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 72,
+        "endChar": 48
+      },
+      "revId": "3f04b18a38ace742b9d925ba1888cb1c21809728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
