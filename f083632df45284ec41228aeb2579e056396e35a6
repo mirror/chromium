@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "c626d361_61c1c8d8",
+        "filename": "content/public/common/resource_request_body.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T05:45:48Z",
+      "side": 1,
+      "message": "I think splitting this into two is probably the right call; there will be cases we don\u0027t need or can\u0027t attach base::File, we can pass null base::File in that case but it\u0027d make the code harder to use.",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37be02a_19fe71a0",
+        "filename": "content/public/common/resource_request_body.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T05:45:48Z",
+      "side": 1,
+      "message": "Given that the file can be modified by anyone this could be invalid when it\u0027s being read, should we slightly loosen this, say, \u0027it is expected that the range is...\u0027 ?",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2740725d_2d648134",
         "filename": "storage/common/data_element.h",
         "patchSetId": 3
@@ -102,6 +136,23 @@
       "side": 1,
       "message": "Mostly accurate from a blob point of view, although TYPE_BLOB is only used for blobs in the old IPC codepath. It\u0027s not used anymore for blobs in the mojo codepath.",
       "parentUuid": "387ac17f_fab837fa",
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037d23f8_cd19735a",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T05:45:48Z",
+      "side": 1,
+      "message": "... and TYPE_RAW_FILE.",
       "revId": "f083632df45284ec41228aeb2579e056396e35a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
