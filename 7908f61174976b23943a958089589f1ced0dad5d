@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f234ca2_1eec26d9",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-20T22:06:01Z",
+      "side": 1,
+      "message": "optional nit: |expected_output_data_size|? Maybe also add a comment that this output data is not expected to be returned to the client side?",
+      "range": {
+        "startLine": 89,
+        "startChar": 32,
+        "endLine": 89,
+        "endChar": 52
+      },
+      "revId": "7908f61174976b23943a958089589f1ced0dad5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb8d243_6a72e427",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-20T22:06:01Z",
+      "side": 1,
+      "message": "audio/video or media?",
+      "range": {
+        "startLine": 103,
+        "startChar": 57,
+        "endLine": 103,
+        "endChar": 62
+      },
+      "revId": "7908f61174976b23943a958089589f1ced0dad5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b7a6a8_014b9345",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-20T22:06:01Z",
+      "side": 1,
+      "message": "optional nit: just |private_data| might be good enough, or |private_input_data| to be consistent with |private_output_data|? But it\u0027s up to you.",
+      "range": {
+        "startLine": 108,
+        "startChar": 34,
+        "endLine": 108,
+        "endChar": 61
+      },
+      "revId": "7908f61174976b23943a958089589f1ced0dad5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
