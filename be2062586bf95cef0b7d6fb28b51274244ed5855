@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "7b735cea_e9903f8a",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-20T05:25:08Z",
+      "side": 1,
+      "message": "This plan SGTM. :)",
+      "parentUuid": "4c4e0b32_78c3bc38",
+      "range": {
+        "startLine": 113,
+        "startChar": 31,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9d0fbc7_a91ef07c",
         "filename": "chrome/browser/banners/app_banner_settings_helper.h",
         "patchSetId": 2
