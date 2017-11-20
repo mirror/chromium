@@ -34,6 +34,24 @@
       "revId": "eddec791796fda3d98d650204849e21cec7921c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cc86e0_072b4165",
+        "filename": "chromeos/dbus/cras_audio_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T18:58:31Z",
+      "side": 1,
+      "message": "Got it. Thanks!",
+      "parentUuid": "70618059_b81ab671",
+      "revId": "eddec791796fda3d98d650204849e21cec7921c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
