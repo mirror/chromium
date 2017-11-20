@@ -157,6 +157,7 @@
 #include "components/variations/variations_http_header_provider.h"
 #include "components/variations/variations_switches.h"
 #include "components/version_info/version_info.h"
+#include "content/browser/child_process_security_policy_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -1157,6 +1158,30 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   // initialization is handled in PreMainMessageLoopRunImpl since it posts
   // tasks.
   SetupFieldTrials();
+
+  if (g_browser_process->local_state()->GetBoolean(prefs::kSitePerProcess)) {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kSitePerProcess);
+  }
+
+  if (g_browser_process->local_state()->HasPrefPath(prefs::kIsolateOrigins)) {
+#if defined(OS_WIN)
+    const auto value =
+        base::UTF8ToUTF16(g_browser_process->local_state()->GetString(prefs::kIsolateOrigins);
+#elif defined(OS_POSIX)
+    // No need to make a copy since we're not doing a conversion.
+    const auto& value =
+        g_browser_process->local_state()->GetString(prefs::kIsolateOrigins);
+#else
+#error Unsupported platform.
+#endif
+    base::CommandLine::ForCurrentProcess()->AppendSwitchNative(
+        switches::kIsolateOrigins,
+        value);
+  }
+  auto* policy = content::ChildProcessSecurityPolicyImpl::GetInstance();
+  policy->AddIsolatedOriginsFromCommandLine(
+      parsed_command_line_.GetSwitchValueASCII(switches::kIsolateOrigins));
 
   // ChromeOS needs ui::ResourceBundle::InitSharedInstance to be called before
   // this.
