@@ -976,7 +976,7 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
 
   SpdyPingId next_ping_id() const { return next_ping_id_; }
 
-  base::TimeTicks last_activity_time() const { return last_activity_time_; }
+  base::TimeTicks last_read_time() const { return last_read_time_; }
 
   bool check_ping_status_pending() const { return check_ping_status_pending_; }
 
@@ -1108,7 +1108,7 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   base::TimeTicks last_ping_sent_time_;
 
   // This is the last time we had activity in the session.
-  base::TimeTicks last_activity_time_;
+  base::TimeTicks last_read_time_;
 
   // This is the length of the last compressed frame.
   size_t last_compressed_frame_len_;
