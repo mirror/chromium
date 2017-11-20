@@ -6,6 +6,7 @@ package org.chromium.content_shell_apk;
 
 import android.content.Context;
 
+import org.chromium.base.ApplicationStatus;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.PathUtils;
@@ -26,6 +27,7 @@ public class ContentShellApplication extends ContentApplication {
         super.attachBaseContext(base);
         ContextUtils.initApplicationContext(this);
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
+        ApplicationStatus.initialize(this);
     }
 
     @SuppressFBWarnings("DMI_HARDCODED_ABSOLUTE_FILENAME")
@@ -36,4 +38,8 @@ public class ContentShellApplication extends ContentApplication {
         }
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
 }
