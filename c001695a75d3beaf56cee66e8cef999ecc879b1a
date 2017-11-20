@@ -305,6 +305,30 @@
       "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c71e2a_845e83ba",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T22:56:51Z",
+      "side": 1,
+      "message": "I believe it is meaningful to test that -[CRWAutofillSuggestion fillSuggestion:completionHandler:] correctly extracted properties from CWVAutofillSuggestion and passed those properties to correct received. WDYT?",
+      "parentUuid": "fc8c74f4_301d17c8",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
