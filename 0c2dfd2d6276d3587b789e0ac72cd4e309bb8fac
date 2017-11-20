@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58303469_186d60d5",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:47:29Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "range": {
+        "startLine": 163,
+        "startChar": 4,
+        "endLine": 163,
+        "endChar": 21
+      },
+      "revId": "0c2dfd2d6276d3587b789e0ac72cd4e309bb8fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7879c06a_5088101e",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:47:29Z",
+      "side": 1,
+      "message": "Is it possible for |_webStateObserver| to be nil?",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 25
+      },
+      "revId": "0c2dfd2d6276d3587b789e0ac72cd4e309bb8fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
