@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d9ac0fbe_07e1fddf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-20T12:37:23Z",
+      "side": 1,
+      "message": "Sure, if this is the only test with that problematic assumption, and it\u0027s too much work to figure out how to rewrite it, then excluding it from this CL and keeping it in LayoutTests would be fine.\n\nGoing just by the test description, it sounds like maybe you could assert_equals(getComputedStyle(dialog).top, \u0027auto\u0027) before showModal, and then assert_not_equals after. That way you don\u0027t have to assert the exact values.",
+      "parentUuid": "5cf29c75_4f9243f2",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "49dcab69d2b62e2ebec8afc8fcbc41d7957302f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a79e904_d67e8c6f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Before dialog.remove(), \"dialog\" is child of body element. It is added in reset().\nSo in this test, it is not added into same place.",
       "parentUuid": "5a79e904_d67e8c6f",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 10
+      },
+      "revId": "49dcab69d2b62e2ebec8afc8fcbc41d7957302f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b16e28e_c389e03f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-20T12:37:23Z",
+      "side": 1,
+      "message": "Hmm, that seems weird, adding it to a different place makes the test change more than the test name suggests, and the test might pass for the wrong reasons. Can you try making it such that the dialog is removed and inserted into exactly the same place?",
+      "parentUuid": "47e10eb3_8100d4f0",
       "range": {
         "startLine": 156,
         "startChar": 4,
