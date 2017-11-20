@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16026058_28e44f29",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-20T13:59:06Z",
+      "side": 1,
+      "message": "Nit: You can probably have add a method\nboolean callMethodViaReflection(String methodName, Class[] params) {}\nand call it from delegateOnTransactMethod() and delegateNotifyNotification()",
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73f3c8f_73662338",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-20T13:59:06Z",
+      "side": 1,
+      "message": "I think that you can get away with only doing\n\ntry {\n} catch (Exception e) {\n}",
+      "revId": "f6ff1a07ace2058d8f8477db3261b24b9dfafb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
