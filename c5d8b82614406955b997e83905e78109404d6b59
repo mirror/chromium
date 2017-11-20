@@ -16,6 +16,24 @@
       "revId": "c5d8b82614406955b997e83905e78109404d6b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f7df36_852acf70",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-20T20:58:02Z",
+      "side": 1,
+      "message": "Mostly...I am hitting this one issue with devices that don\u0027t store bonding info (specifically, the playbulb), but that almost seems like a distinct issue.\nhttps://stackoverflow.com/questions/34686888/windows-10-iot-bluetooth-le/36780872#36780872",
+      "parentUuid": "35e390fd_06979a8a",
+      "revId": "c5d8b82614406955b997e83905e78109404d6b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
