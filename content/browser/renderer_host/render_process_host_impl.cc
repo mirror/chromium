@@ -1772,9 +1772,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
 
   AddFilter(new TraceMessageFilter(GetID()));
   AddFilter(new ResolveProxyMsgHelper(request_context.get()));
-  AddFilter(new QuotaDispatcherHost(
-      GetID(), storage_partition_impl_->GetQuotaManager(),
-      GetContentClient()->browser()->CreateQuotaPermissionContext()));
 
   scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
       static_cast<ServiceWorkerContextWrapper*>(
@@ -1909,6 +1906,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
+
+  registry->AddInterface(base::Bind(
+      QuotaDispatcherHost::Create, GetID(),
+      base::RetainedRef(storage_partition_impl_->GetQuotaManager()),
+      GetContentClient()->browser()->CreateQuotaPermissionContext()));
 
   registry->AddInterface(
       base::Bind(&CreateReportingServiceProxy, storage_partition_impl_));
