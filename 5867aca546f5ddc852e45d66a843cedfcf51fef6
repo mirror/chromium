@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71176a84_341b79d8",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T19:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4afa2e45_d24ad06d",
+      "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "375f998e_a8b9f40d",
         "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-18T01:50:29Z",
       "side": 1,
       "message": "Why not just have a method that actually simulates sending this data, instead of populating a member at the beginning of the test and sending that.\n\nThis would make a bit more sense if you are simulating multiple IPCs but I don\u0027t think you are here.",
+      "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdfffa4b_bdc3a13f",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T19:10:18Z",
+      "side": 1,
+      "message": "Was following an existing pattern so trying to decide which way to go. The main advantage seems to be in using the member variable in the validation method (basically aids having both the creation and validation in helper methods instead of in the test case method).\nThe other main approach I see seems to be to put the creation and validation in the test cases themselves. So I could do that or I could return the timing object rather from a renamed ResetTest to be used as parameters - but doesn\u0027t seem that beneficial over using the test class member. \n\nI\u0027m inclined to leave as is. Please let me know if I seem to be missing something here or you have strong opinion.",
+      "parentUuid": "375f998e_a8b9f40d",
       "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "71d5c51e_702c920e",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T19:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ae6c849_8db62cf8",
+      "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a815f3b3_748bc087",
         "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329a8103_97feecb2",
+        "filename": "chrome/browser/page_load_metrics/observers/noscript_preview_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T19:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a815f3b3_748bc087",
+      "revId": "5867aca546f5ddc852e45d66a843cedfcf51fef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
