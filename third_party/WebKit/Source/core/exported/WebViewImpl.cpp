@@ -2172,50 +2172,21 @@ void WebViewImpl::SetFocus(bool enable) {
   }
 }
 
-// TODO(ekaramad):This method is almost duplicated in WebFrameWidgetImpl as
-// well. This code needs to be refactored  (http://crbug.com/629721).
 bool WebViewImpl::SelectionBounds(WebRect& anchor, WebRect& focus) const {
   const Frame* frame = FocusedCoreFrame();
   if (!frame || !frame->IsLocalFrame())
     return false;
-
   const LocalFrame* local_frame = ToLocalFrame(frame);
   if (!local_frame)
     return false;
-  FrameSelection& selection = local_frame->Selection();
-  if (!selection.IsAvailable() || selection.GetSelectionInDOMTree().IsNone())
+
+  IntRect anchor_rect;
+  IntRect focus_rect;
+  if (!local_frame->ComputeSelectionBounds(anchor_rect, focus_rect))
     return false;
 
-  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  local_frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-  if (selection.ComputeVisibleSelectionInDOMTree().IsNone()) {
-    // plugins/mouse-capture-inside-shadow.html reaches here.
-    return false;
-  }
-
-  DocumentLifecycle::DisallowTransitionScope disallow_transition(
-      local_frame->GetDocument()->Lifecycle());
-
-  if (selection.ComputeVisibleSelectionInDOMTree().IsCaret()) {
-    anchor = focus = selection.AbsoluteCaretBounds();
-  } else {
-    const EphemeralRange selected_range =
-        selection.ComputeVisibleSelectionInDOMTree()
-            .ToNormalizedEphemeralRange();
-    if (selected_range.IsNull())
-      return false;
-    anchor = local_frame->GetEditor().FirstRectForRange(
-        EphemeralRange(selected_range.StartPosition()));
-    focus = local_frame->GetEditor().FirstRectForRange(
-        EphemeralRange(selected_range.EndPosition()));
-  }
-
-  anchor = local_frame->View()->ContentsToViewport(anchor);
-  focus = local_frame->View()->ContentsToViewport(focus);
-
-  if (!selection.ComputeVisibleSelectionInDOMTree().IsBaseFirst())
-    std::swap(anchor, focus);
+  anchor = local_frame->View()->ContentsToViewport(anchor_rect);
+  focus = local_frame->View()->ContentsToViewport(focus_rect);
   return true;
 }
 

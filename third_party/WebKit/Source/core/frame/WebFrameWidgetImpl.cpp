@@ -581,52 +581,21 @@ WebColor WebFrameWidgetImpl::BackgroundColor() const {
   return view->DocumentBackgroundColor().Rgb();
 }
 
-// TODO(ekaramad):This method is almost duplicated in WebViewImpl as well. This
-// code needs to be refactored  (http://crbug.com/629721).
 bool WebFrameWidgetImpl::SelectionBounds(WebRect& anchor,
                                          WebRect& focus) const {
   const LocalFrame* local_frame = FocusedLocalFrameInWidget();
   if (!local_frame)
     return false;
 
-  FrameSelection& selection = local_frame->Selection();
-  if (!selection.IsAvailable() || selection.GetSelectionInDOMTree().IsNone())
+  IntRect anchor_rect;
+  IntRect focus_rect;
+  if (!local_frame->ComputeSelectionBounds(anchor_rect, focus_rect))
     return false;
-
-  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  local_frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-  DocumentLifecycle::DisallowTransitionScope disallow_transition(
-      local_frame->GetDocument()->Lifecycle());
-
-  if (selection.ComputeVisibleSelectionInDOMTree().IsNone())
-    return false;
-
-  if (selection.ComputeVisibleSelectionInDOMTree().IsCaret()) {
-    anchor = focus = selection.AbsoluteCaretBounds();
-  } else {
-    const EphemeralRange selected_range =
-        selection.ComputeVisibleSelectionInDOMTree()
-            .ToNormalizedEphemeralRange();
-    if (selected_range.IsNull())
-      return false;
-    anchor = local_frame->GetEditor().FirstRectForRange(
-        EphemeralRange(selected_range.StartPosition()));
-    focus = local_frame->GetEditor().FirstRectForRange(
-        EphemeralRange(selected_range.EndPosition()));
-  }
 
   // FIXME: This doesn't apply page scale. This should probably be contents to
   // viewport. crbug.com/459293.
-  IntRect scaled_anchor(local_frame->View()->ContentsToRootFrame(anchor));
-  IntRect scaled_focus(local_frame->View()->ContentsToRootFrame(focus));
-
-  anchor = scaled_anchor;
-  focus = scaled_focus;
-
-  if (!selection.ComputeVisibleSelectionInDOMTree().IsBaseFirst())
-    std::swap(anchor, focus);
+  anchor = local_frame->View()->ContentsToRootFrame(anchor_rect);
+  focus = local_frame->View()->ContentsToRootFrame(focus_rect);
   return true;
 }
 

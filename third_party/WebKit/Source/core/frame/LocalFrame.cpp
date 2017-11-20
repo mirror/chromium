@@ -44,6 +44,7 @@
 #include "core/editing/Editor.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/ime/InputMethodController.h"
 #include "core/editing/serializers/Serialization.h"
@@ -647,6 +648,41 @@ String LocalFrame::SelectedTextForClipboard() const {
     return g_empty_string;
   DCHECK(!GetDocument()->NeedsLayoutTreeUpdate());
   return Selection().SelectedTextForClipboard();
+}
+
+bool LocalFrame::ComputeSelectionBounds(IntRect& anchor, IntRect& focus) const {
+  FrameSelection& selection = Selection();
+  if (!selection.IsAvailable() || selection.GetSelectionInDOMTree().IsNone())
+    return false;
+
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  if (selection.ComputeVisibleSelectionInDOMTree().IsNone()) {
+    // plugins/mouse-capture-inside-shadow.html reaches here.
+    return false;
+  }
+
+  DocumentLifecycle::DisallowTransitionScope disallow_transition(
+      GetDocument()->Lifecycle());
+
+  if (selection.ComputeVisibleSelectionInDOMTree().IsCaret()) {
+    anchor = focus = selection.AbsoluteCaretBounds();
+  } else {
+    const EphemeralRange selected_range =
+        selection.ComputeVisibleSelectionInDOMTree()
+            .ToNormalizedEphemeralRange();
+    if (selected_range.IsNull())
+      return false;
+    anchor = GetEditor().FirstRectForRange(
+        EphemeralRange(selected_range.StartPosition()));
+    focus = GetEditor().FirstRectForRange(
+        EphemeralRange(selected_range.EndPosition()));
+  }
+
+  if (!selection.ComputeVisibleSelectionInDOMTree().IsBaseFirst())
+    std::swap(anchor, focus);
+  return true;
 }
 
 PositionWithAffinity LocalFrame::PositionForPoint(
