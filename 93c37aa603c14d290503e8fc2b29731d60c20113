@@ -579,6 +579,30 @@
     },
     {
       "key": {
+        "uuid": "d9b3c337_13ae89c4",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-20T05:36:40Z",
+      "side": 1,
+      "message": "Nope, the SWRegistrationObject binding is bound only once, when we create the WebSWRegistrationImpl instance using CreateForServiceWorker{GlobalScope,Client} functions. \nhttps://cs.chromium.org/chromium/src/content/renderer/service_worker/web_service_worker_registration_impl.cc?rcl\u003df4c9799eec11b7b044b24bdc708ae68093e774f0\u0026l\u003d206\n\nRe-attach may only rebind SWRegistrationObjectHost ptr at https://cs.chromium.org/chromium/src/content/renderer/service_worker/web_service_worker_registration_impl.cc?rcl\u003df4c9799eec11b7b044b24bdc708ae68093e774f0\u0026l\u003d105.",
+      "parentUuid": "0421861e_34ccc7ae",
+      "range": {
+        "startLine": 508,
+        "startChar": 20,
+        "endLine": 508,
+        "endChar": 72
+      },
+      "revId": "93c37aa603c14d290503e8fc2b29731d60c20113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8abe1ada_0bcdec04",
         "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
         "patchSetId": 5
