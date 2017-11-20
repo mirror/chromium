@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cacffc22_831a089d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-20T20:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56dd0c54_eb11a953",
+      "range": {
+        "startLine": 227,
+        "startChar": 32,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "f8dd892cc20da75fc99b442e5096cdfe683a9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5438554b_332ad860",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f8dd892cc20da75fc99b442e5096cdfe683a9da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79929fb5_59cc565f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-20T20:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5438554b_332ad860",
+      "range": {
+        "startLine": 995,
+        "startChar": 12,
+        "endLine": 996,
+        "endChar": 25
+      },
+      "revId": "f8dd892cc20da75fc99b442e5096cdfe683a9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
