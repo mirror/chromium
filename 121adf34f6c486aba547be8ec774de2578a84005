@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d822626f_d1b119e6",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-20T05:36:28Z",
+      "side": 1,
+      "message": "It seems if ShouldAlwaysUseDirectionalSelection() is true, we don\u0027t\nneed to check diff of |is_directional_|.\n\nI\u0027m not sure why CL[1] causes http://crbug.com/785147\n\n[1] http://crrev.com/c/595427 Get rid of redundant call of SetIsDirectional() in SelectionController::SetNonDirectionalSelectionIfNeeded()",
+      "revId": "121adf34f6c486aba547be8ec774de2578a84005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe75793_fb051c6a",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
         "patchSetId": 20
