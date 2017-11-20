@@ -1,0 +1,481 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "660916da_f93aeb46",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "This seems concerning.  Are we guaranteed this will match the UNSET_UID constant in the C header file?",
+      "range": {
+        "startLine": 383,
+        "startChar": 32,
+        "endLine": 383,
+        "endChar": 42
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ba00e5_f2726bf9",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "Can we use clearThreadStatsUid() instead?",
+      "range": {
+        "startLine": 432,
+        "startChar": 12,
+        "endLine": 432,
+        "endChar": 26
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7abcd5_9ce4fa9b",
+        "filename": "net/socket/socket_tag.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "--(c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5087cf88_8325ece1",
+        "filename": "net/socket/socket_tag.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "How do you see this working on non-Android platforms?  Having them around but not Applying them?  Not even instantiating them?\n\nIt seems to me like either:\n1)  We should never create these on non-Android platforms, which implies this should be in the constructor.\n2)  We should make them do nothing on non-Android platforms, but use them just as we would on Android, which would imply we don\u0027t want this CHECK.",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87dbe686_eed99f14",
+        "filename": "net/socket/socket_tag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "nit:  No (c) in new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 21,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e121707_bba40537",
+        "filename": "net/socket/socket_tag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "maybe TrafficStats -\u003e Android TrafficStats (To try and make it a little clearer this is a standard Android thing)",
+      "range": {
+        "startLine": 21,
+        "startChar": 55,
+        "endLine": 21,
+        "endChar": 67
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5961d60_9c9024d8",
+        "filename": "net/socket/socket_tag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "maybe traffic_stats_tag_?",
+      "range": {
+        "startLine": 58,
+        "startChar": 15,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd2aa25_40e5c95b",
+        "filename": "net/socket/socket_tag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "Maybe a comment along the lines of \"Copy and assign are allowed\"?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce922af6_b343a8ca",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "-(c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6359a9c_b1cc8cc4",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "inttypes?  I think we generally include \u003cstdint.h\u003e for int32_t and friends?",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 18
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e657f2_3d201f37",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "GetTaggedBytes",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d68bde_156b559a",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "include \u003cstring\u003e",
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcbe71c_259f149c",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "This API is amazingly intuitive!  :)",
+      "range": {
+        "startLine": 49,
+        "startChar": 50,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612c5d9a_b580e2d5",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "Why is this 3 and not 4?  We\u0027re reading 4 values, right?",
+      "range": {
+        "startLine": 51,
+        "startChar": 17,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25ff4b6_bfc965e6",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "nit:  Define one value per line (Admittedly, that\u0027s no longer part of the Google style guide, but it\u0027s still the predominant style in net/)",
+      "range": {
+        "startLine": 67,
+        "startChar": 19,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95a8e6a_d6e7356e",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "Is there a reason for this particular subset of checks?",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e087f445_733d5dea",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(s00 \u003d\u003d s11)?",
+      "range": {
+        "startLine": 82,
+        "startChar": 19,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e381dae_be1d6b53",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "Calculate",
+      "range": {
+        "startLine": 101,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 23
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f8625a_1fea8a16",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "const char kRequest?",
+      "range": {
+        "startLine": 124,
+        "startChar": 23,
+        "endLine": 124,
+        "endChar": 27
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015e9344_4d34c739",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "Suggest just using strlen.",
+      "range": {
+        "startLine": 125,
+        "startChar": 59,
+        "endLine": 125,
+        "endChar": 65
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da4bbc3_26af6a1c",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T18:58:44Z",
+      "side": 1,
+      "message": "Restore tag_val1, send data, and verify it increases again?  (May have to modify request to be sent in two chunks, or not include the full request)",
+      "range": {
+        "startLine": 127,
+        "startChar": 25,
+        "endLine": 127,
+        "endChar": 0
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
