@@ -273,6 +273,29 @@
     },
     {
       "key": {
+        "uuid": "c0c5b677_b318a774",
+        "filename": "content/browser/download/download_item_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Download",
+      "range": {
+        "startLine": 767,
+        "startChar": 9,
+        "endLine": 767,
+        "endChar": 16
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69063866_88f78a57",
         "filename": "content/browser/download/download_stats.cc",
         "patchSetId": 6

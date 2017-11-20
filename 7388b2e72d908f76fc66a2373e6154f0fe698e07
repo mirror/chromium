@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac6a73dc_b0100301",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Can we just do this inside the if block and remove the -1 component?",
+      "range": {
+        "startLine": 1458,
+        "startChar": 4,
+        "endLine": 1458,
+        "endChar": 58
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2dd5f1b_c39555af",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Do this down near the other block of code I think.",
+      "range": {
+        "startLine": 1842,
+        "startChar": 2,
+        "endLine": 1842,
+        "endChar": 72
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecdf4f6_86eb5048",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "You could also make this base::Optional\u003c\u003e if you wanted to only expose it if we have the total bytes.  Then we\u0027d have a single API call.",
+      "range": {
+        "startLine": 1972,
+        "startChar": 8,
+        "endLine": 1972,
+        "endChar": 27
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4b52ec_1282e0a2",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2246,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Might as well do this down below too?",
+      "range": {
+        "startLine": 2246,
+        "startChar": 2,
+        "endLine": 2246,
+        "endChar": 72
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bf6ec8_87de85e2",
+        "filename": "content/browser/download/download_stats.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Comment about what this returns?",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 3
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8f69ca_b927f4c2",
+        "filename": "content/browser/download/download_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Did we remove this from the string?  I\u0027d check other files/chromium.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae2e931_b1aa8b23",
+        "filename": "content/browser/download/download_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T22:32:23Z",
+      "side": 1,
+      "message": "Might make sense to make this an interface so we can mock it and set expectations in tests.  That way we can validate that we\u0027re properly calling out to UKM when certain download events happen.\n\nAn alternative would be mocking out the UkmRecorder, although I don\u0027t know if that\u0027s possible with their API (haven\u0027t looked).",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "7388b2e72d908f76fc66a2373e6154f0fe698e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
