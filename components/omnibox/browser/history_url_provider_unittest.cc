@@ -299,7 +299,7 @@ void HistoryURLProviderTest::OnProviderUpdate(bool updated_matches) {
 }
 
 bool HistoryURLProviderTest::SetUpImpl(bool create_history_db) {
-  client_.reset(new FakeAutocompleteProviderClient(create_history_db));
+  client_ = std::make_unique<FakeAutocompleteProviderClient>(create_history_db);
   if (!client_->GetHistoryService())
     return false;
   autocomplete_ = new HistoryURLProvider(client_.get(), this);
