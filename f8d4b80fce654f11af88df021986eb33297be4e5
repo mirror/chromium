@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "311fb08d_ac669fcd",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:46:47Z",
+      "side": 1,
+      "message": "This should be befor \u0027internet-shared_css.html\u0027",
+      "revId": "f8d4b80fce654f11af88df021986eb33297be4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472ae349_d645f3d3",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:46:47Z",
+      "side": 1,
+      "message": "!! isn\u0027t needed in if statements, only when setting a variable or returning a value.",
+      "revId": "f8d4b80fce654f11af88df021986eb33297be4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1d9779_df23d8b8",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:46:47Z",
+      "side": 1,
+      "message": "We should set a local property \u0027browser_proxy_\u0027 and use that. That allows us to easily replace the proxy in tests.",
+      "revId": "f8d4b80fce654f11af88df021986eb33297be4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0fb1e9_8a0c8748",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:46:47Z",
+      "side": 1,
+      "message": "We should also set a \u0027browser_proxy_\u0027 property here.",
+      "revId": "f8d4b80fce654f11af88df021986eb33297be4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7fad56_6294f661",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:46:47Z",
+      "side": 1,
+      "message": "\u0027browserProxy_\u0027",
+      "revId": "f8d4b80fce654f11af88df021986eb33297be4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
