@@ -264,6 +264,16 @@ static bool NeedsSVGLocalToBorderBoxTransform(const LayoutObject& object) {
   return object.IsSVGRoot();
 }
 
+static bool NeedsScrollbarPaintOffset(const LayoutObject& object) {
+  if (!object.IsBoxModelObject())
+    return false;
+  if (auto* area = ToLayoutBoxModelObject(object).GetScrollableArea()) {
+    if (area->HorizontalScrollbar() || area->VerticalScrollbar())
+      return true;
+  }
+  return false;
+}
+
 static bool NeedsPaintOffsetTranslation(const LayoutObject& object) {
   if (!object.IsBoxModelObject())
     return false;
@@ -278,6 +288,8 @@ static bool NeedsPaintOffsetTranslation(const LayoutObject& object) {
                                   kGlobalPaintFlattenCompositingLayers)) {
     return true;
   }
+  if (NeedsScrollbarPaintOffset(object))
+    return true;
   if (NeedsScrollOrScrollTranslation(object))
     return true;
   if (NeedsSVGLocalToBorderBoxTransform(object))
@@ -889,16 +901,6 @@ void PaintPropertyTreeBuilder::UpdateLocalBorderBoxContext(
   }
 }
 
-static bool NeedsScrollbarPaintOffset(const LayoutObject& object) {
-  if (!object.IsBoxModelObject())
-    return false;
-  if (auto* area = ToLayoutBoxModelObject(object).GetScrollableArea()) {
-    if (area->HorizontalScrollbar() || area->VerticalScrollbar())
-      return true;
-  }
-  return false;
-}
-
 // TODO(trchen): Remove this once we bake the paint offset into frameRect.
 void PaintPropertyTreeBuilder::UpdateScrollbarPaintOffset(
     const LayoutObject& object,
@@ -913,6 +915,7 @@ void PaintPropertyTreeBuilder::UpdateScrollbarPaintOffset(
         RoundedIntPoint(context.current.paint_offset);
     auto paint_offset = TransformationMatrix().Translate(
         rounded_paint_offset.X(), rounded_paint_offset.Y());
+    DCHECK(rounded_paint_offset == IntPoint());
     auto result = properties.UpdateScrollbarPaintOffset(
         context.current.transform, paint_offset, FloatPoint3D());
     force_subtree_update |= result.NewNodeCreated();
