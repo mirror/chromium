@@ -68,6 +68,29 @@
       "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8038c25b_ea2830e8",
+        "filename": "ui/arc/notification/arc_notification_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-20T02:00:34Z",
+      "side": 1,
+      "message": "nit: could you mention the case that the rect is not specified by Android?",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 73
+      },
+      "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
