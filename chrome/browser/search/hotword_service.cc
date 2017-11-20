@@ -25,7 +25,8 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/pending_extension_manager.h"
 #include "chrome/browser/extensions/updater/extension_updater.h"
-#include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/notifications/notification_common.h"
+#include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/plugins/plugin_prefs.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -213,7 +214,7 @@ namespace hotword_internal {
 // String passed to indicate the training state has changed.
 const char kHotwordTrainingEnabled[] = "hotword_training_enabled";
 // Id of the hotword notification.
-const char kHotwordNotificationId[] = "hotword";
+const char kHotwordNotificationId[] = "chrome://hotword";
 // Notifier id for the hotword notification.
 const char kHotwordNotifierId[] = "hotword.notification";
 }  // namespace hotword_internal
@@ -249,9 +250,9 @@ class HotwordNotificationDelegate
 
     // Close the notification after it's been clicked on to remove it
     // from the notification tray.
-    g_browser_process->notification_ui_manager()->CancelById(
-        hotword_internal::kHotwordNotificationId,
-        NotificationUIManager::GetProfileID(profile_));
+    NotificationDisplayService::GetForProfile(profile_)->Close(
+        NotificationCommon::TRANSIENT,
+        hotword_internal::kHotwordNotificationId);
   }
 
  private:
@@ -442,7 +443,8 @@ void HotwordService::ShowHotwordNotification() {
                                  hotword_internal::kHotwordNotifierId),
       data, new HotwordNotificationDelegate(profile_));
 
-  g_browser_process->notification_ui_manager()->Add(notification, profile_);
+  NotificationDisplayService::GetForProfile(profile_)->Display(
+      NotificationCommon::TRANSIENT, notification);
   profile_->GetPrefs()->SetBoolean(
       prefs::kHotwordAlwaysOnNotificationSeen, true);
 }
@@ -679,9 +681,8 @@ void HotwordService::OptIntoHotwording(
     const LaunchMode& launch_mode) {
   // If the notification is in the notification tray, remove it (since the user
   // is manually opting in to hotwording, they do not need the promotion).
-  g_browser_process->notification_ui_manager()->CancelById(
-      hotword_internal::kHotwordNotificationId,
-      NotificationUIManager::GetProfileID(profile_));
+  NotificationDisplayService::GetForProfile(profile_)->Close(
+      NotificationCommon::TRANSIENT, hotword_internal::kHotwordNotificationId);
 
   // First determine if we actually need to launch the app, or can just enable
   // the pref. If Audio History has already been enabled, and we already have
