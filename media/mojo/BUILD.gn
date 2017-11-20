@@ -137,3 +137,23 @@ test("media_mojo_unittests") {
     "//mojo/edk/test:run_all_unittests",
   ]
 }
+
+test("video_decode_accelerator_service_unittest") {
+  sources = [
+    "services/gpu_jpeg_decode_accelerator_unittest.cc",
+  ]
+
+  deps = [
+    "//base",
+    "//base/test:test_support",
+    "//media/mojo/clients",
+    "//media/mojo/common",
+    "//media/mojo/interfaces",
+    "//media/mojo/services",
+    "//media/test:run_all_unittests",
+    "//services/metrics/public/cpp:ukm_builders",
+    "//testing/gtest",
+    "//ui/gfx:test_support",
+    "//ui/gfx/geometry",
+  ]
+}
