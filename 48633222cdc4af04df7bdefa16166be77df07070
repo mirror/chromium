@@ -16,6 +16,24 @@
       "revId": "48633222cdc4af04df7bdefa16166be77df07070",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac395040_6e037405",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-20T03:04:35Z",
+      "side": 0,
+      "message": "I dug around and found this: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d118801\n\nAs far as I\u0027m aware, we have no more translucent titlebars on ash so this is fine.",
+      "parentUuid": "1ff21818_8ee6592d",
+      "revId": "48633222cdc4af04df7bdefa16166be77df07070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fdba34f4_9c0c6356",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-20T03:04:35Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s just a setter, which is done in the initializer list now. I\u0027m actually a bit concerned about it since the documentation is untrue. It says that \"Passing |nullptr| removes the view.\" but it\u0027s just a setter.\n\nI\u0027ll investigate and submit a follow-up patch to either rename the method to set_back_button and set_left_header_view, or call it appropriately.",
+      "parentUuid": "c782f24f_d0488d94",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b28cf955_acd6f36d",
         "filename": "ash/frame/default_frame_header.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b01d2b5_f0f02a06",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-20T03:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28cf955_acd6f36d",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3198a8ac_9f812df9",
+        "filename": "ash/frame/default_frame_header.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-20T03:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8398e924_b442cd0d",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6df889e_10350d58",
         "filename": "ash/frame/frame_header_util.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd8061c_f76e1422",
+        "filename": "ash/frame/frame_header_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-20T03:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6df889e_10350d58",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b4ffe75b_88ab54ae",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-20T03:04:35Z",
+      "side": 1,
+      "message": "wrt being out of sync, this is... maybe solved by just adding the app and domain to Browser::GetWindowTitle() later. Which means I don\u0027t want to be using that here.",
+      "parentUuid": "92923f7a_6392e246",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3632591d_5b5159e6",
         "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-17T06:28:53Z",
       "side": 1,
       "message": "(title_bounds.width() - app_and_domain_width) can be negative - perhaps worth a note (Size::set_width will handle it for you). E.g. ... \"the space remaining after rendering the app and domain (which may be negative and be clamped to 0).\"",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3b5933_8be1e56e",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-20T03:04:35Z",
+      "side": 1,
+      "message": "Noted.",
+      "parentUuid": "3632591d_5b5159e6",
       "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -153,6 +261,24 @@
       "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b84fdae_01a10ae0",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-20T03:04:35Z",
+      "side": 1,
+      "message": "Done. clang-format doesn\u0027t seem to add them actually.",
+      "parentUuid": "15a335af_32c8aba8",
+      "revId": "58b1093582deb1dfeee6ce85b33d441fb875c8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
