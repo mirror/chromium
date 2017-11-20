@@ -7,6 +7,7 @@
 
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/viz_resource_format_export.h"
+#include "gpu/command_buffer/common/raster_texture_format.h"
 #include "third_party/skia/include/core/SkImageInfo.h"
 #include "third_party/skia/include/gpu/GrTypes.h"
 #include "ui/gfx/buffer_types.h"
@@ -36,6 +37,9 @@ VIZ_RESOURCE_FORMAT_EXPORT bool DoesResourceFormatSupportAlpha(
 VIZ_RESOURCE_FORMAT_EXPORT unsigned int TextureStorageFormat(
     ResourceFormat format);
 VIZ_RESOURCE_FORMAT_EXPORT GrPixelConfig ToGrPixelConfig(ResourceFormat format);
+
+VIZ_RESOURCE_FORMAT_EXPORT gpu::raster::TextureFormat ToRasterTextureFormat(
+    ResourceFormat format);
 
 }  // namespace viz
 
