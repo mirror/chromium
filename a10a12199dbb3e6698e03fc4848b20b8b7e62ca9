@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a09b1d2a_260ab557",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-20T17:21:41Z",
+      "side": 1,
+      "message": "imported some changes from https://chromium-review.googlesource.com/c/chromium/src/+/755523",
+      "range": {
+        "startLine": 1145,
+        "startChar": 96,
+        "endLine": 1145,
+        "endChar": 100
+      },
+      "revId": "a10a12199dbb3e6698e03fc4848b20b8b7e62ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

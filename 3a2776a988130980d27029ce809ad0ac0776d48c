@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64485cf_42e60d70",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarAppearanceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-20T17:21:41Z",
+      "side": 0,
+      "message": "Not really testable currently, besides extending the infobar and intercepting the link click event, but since it\u0027s called directly it\u0027s kind of pointless.\nAn option is to define a native call to show the infobar, but I\u0027m not sure it\u0027s worth adding new test-only binding and build targets for that...",
+      "range": {
+        "startLine": 118,
+        "startChar": 33,
+        "endLine": 118,
+        "endChar": 49
+      },
+      "revId": "3a2776a988130980d27029ce809ad0ac0776d48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
