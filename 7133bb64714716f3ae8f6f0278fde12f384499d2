@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eba94fe_a4dc4d17",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-20T01:58:29Z",
+      "side": 1,
+      "message": "Since only LayoutNGMixin has NGInlineNodeData containing offset mapping,\n could you type so other than just LayoutBlockFlow which doesn\u0027t have NGInlineNodeData?",
+      "revId": "7133bb64714716f3ae8f6f0278fde12f384499d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
