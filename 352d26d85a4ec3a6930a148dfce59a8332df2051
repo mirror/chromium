@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e5fe162_e875fe76",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-20T22:25:44Z",
+      "side": 1,
+      "message": "This was helpful for debugging where something became invalid.",
+      "revId": "352d26d85a4ec3a6930a148dfce59a8332df2051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095d6267_36e3990f",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-20T22:25:44Z",
+      "side": 1,
+      "message": "This makes this function consistent with the reader.",
+      "revId": "352d26d85a4ec3a6930a148dfce59a8332df2051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
