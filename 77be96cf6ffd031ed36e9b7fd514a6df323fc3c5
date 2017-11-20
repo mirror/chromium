@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ec9862eb_7ccd9b68",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-20T13:31:49Z",
+      "side": 1,
+      "message": "That\u0027s a good point! Though, I\u0027m not sure comfortable changing the code to make `IsMediaSessionEnabled()` a boolean as these checks will be removed at some point. Technically, it would be a no-op to always consider media session to be enabled even if not used as the audio focus is actually the behaviour change. We just want to save cycles when possible.\n\nI guess the alternative approach is to create two sets of tests: MediaSessionControllersManagerTest and MediaSessionControllersOffTest. The latter could inherit from the former, only run on non-Android/non-ChromeOS and disable the flags. The former would enable the flags for non-Android/non-ChromeOS. I know it\u0027s painful but in general it\u0027s better to have the tests bend backwards instead of changing the code.",
+      "parentUuid": "6b0d96c7_f2c4f810",
+      "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a81e7d76_1f6c6c17",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 1
@@ -139,6 +157,24 @@
       "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1750216f_d3069c5d",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-20T13:31:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4f1f6ec2_4ca96bc1",
+      "revId": "77be96cf6ffd031ed36e9b7fd514a6df323fc3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
