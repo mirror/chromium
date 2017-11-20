@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "572d6d7b_82217d50",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-20T12:58:56Z",
+      "side": 1,
+      "message": "Under what circumstances could it be stale?",
+      "parentUuid": "fc3ba18a_3be1211a",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "041331c3_92e8687f",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "This gets called in through needsStyleRecalc and we may not have a layoutObject at this stage. So we changed this to get the ComputedStyle the generic catch-all way GetComputedStyle.",
       "parentUuid": "041331c3_92e8687f",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ae3a9e_372f9783",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-20T12:58:56Z",
+      "side": 1,
+      "message": "Right, this will now happen during style recalc for a sub-tree being attached, in which case we won\u0027t have a LayoutObject yet, while it might have one after RebuildLayoutTree.",
+      "parentUuid": "0124833f_6bb5e873",
       "revId": "f552484bd980156894d05353981a54d90bbd3816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
