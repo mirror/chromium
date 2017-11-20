@@ -234,7 +234,7 @@ Polymer({
 
     /**
      * The model for any password related action menus or dialogs.
-     * @private {?chrome.passwordsPrivate.PasswordUiEntry}
+     * @private {?PasswordListItemElement}
      */
     activePassword: Object,
 
@@ -373,6 +373,10 @@ Polymer({
     this.showPasswordEditDialog_ = false;
     cr.ui.focusWithoutInk(assert(this.activeDialogAnchor_));
     this.activeDialogAnchor_ = null;
+
+    // Trigger a re-evaluation of the activePassword as the visibility state of
+    // the password might have changed.
+    this.activePassword.notifyPath('item.password');
   },
 
   /**
@@ -407,7 +411,7 @@ Polymer({
    * @private
    */
   onMenuRemovePasswordTap_: function() {
-    this.passwordManager_.removeSavedPassword(this.activePassword.index);
+    this.passwordManager_.removeSavedPassword(this.activePassword.item.index);
     this.fire('iron-announce', {text: this.$.undoLabel.textContent});
     this.$.undoToast.show();
     /** @type {CrActionMenuElement} */ (this.$.menu).close();
@@ -444,8 +448,7 @@ Polymer({
     var target = /** @type {!HTMLElement} */ (event.detail.target);
 
     this.activePassword =
-        /** @type {!chrome.passwordsPrivate.PasswordUiEntry} */ (
-            event.detail.item);
+        /** @type {!PasswordListItemElement} */ (event.detail.listItem);
     menu.showAt(target);
     this.activeDialogAnchor_ = target;
   },
@@ -501,7 +504,7 @@ Polymer({
   showPassword_: function(event) {
     this.passwordManager_.getPlaintextPassword(
         /** @type {!number} */ (event.detail.item.index), item => {
-          event.detail.password = item.plaintextPassword;
+          event.detail.set('item.password', item.plaintextPassword);
         });
   },
 
