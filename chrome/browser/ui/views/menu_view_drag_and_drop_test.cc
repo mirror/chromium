@@ -4,6 +4,7 @@
 
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/ui/views/menu_test_base.h"
 #include "chrome/test/base/interactive_test_utils.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
@@ -343,9 +344,13 @@ void MenuViewDragAndDropTestTestInMenuDrag::Step4() {
 // to stay open.
 // Disabled on all platforms for being flaky. Tracked in:
 // TODO(erg): Fix DND tests on linux_aura. http://crbug.com/163931.
-// Windows: http://crbug.com/401226.
 // TODO(tapted): De-flake and run on Mac. http://crbug.com/449058.
-VIEW_TEST(MenuViewDragAndDropTestTestInMenuDrag, DISABLED_TestInMenuDrag)
+#if defined(OS_WIN)
+#define MAYBE_TestInMenuDrag TestInMenuDrag
+#else
+#define MAYBE_TestInMenuDrag DISABLED_TestInMenuDrag
+#endif
+VIEW_TEST(MenuViewDragAndDropTestTestInMenuDrag, MAYBE_TestInMenuDrag)
 
 class MenuViewDragAndDropTestNestedDrag : public MenuViewDragAndDropTest {
  public:
@@ -445,10 +450,15 @@ void MenuViewDragAndDropTestNestedDrag::Step4() {
 // after the drag.
 // Disabled on all platforms for being flaky. Tracked in:
 // TODO(erg): Fix DND tests on linux_aura. http://crbug.com/163931.
-// Windows: http://crbug.com/401226.
 // TODO(tapted): De-flake and run on Mac. http://crbug.com/449058.
+#if defined(OS_WIN)
+#define MAYBE_MenuViewDragAndDropNestedDrag MenuViewDragAndDropNestedDrag
+#else
+#define MAYBE_MenuViewDragAndDropNestedDrag \
+  DISABLED_MenuViewDragAndDropNestedDrag
+#endif
 VIEW_TEST(MenuViewDragAndDropTestNestedDrag,
-          DISABLED_MenuViewDragAndDropNestedDrag)
+          MAYBE_MenuViewDragAndDropNestedDrag)
 
 class MenuViewDragAndDropForDropStayOpen : public MenuViewDragAndDropTest {
  public:
