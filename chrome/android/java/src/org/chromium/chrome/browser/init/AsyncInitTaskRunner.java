@@ -19,6 +19,7 @@ import org.chromium.components.variations.firstrun.VariationsSeedFetcher;
 import org.chromium.content.browser.ChildProcessLauncherHelper;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Runs asynchronous startup task that need to be run before the native side is
@@ -30,6 +31,10 @@ public abstract class AsyncInitTaskRunner {
     private boolean mFetchingVariations;
     private boolean mLibraryLoaded;
 
+    // Dedicated executor for doing this background work. This is intended for work that is critical
+    // to start-up performance but not main thread so we have to strike a balance between background
+    // work and startup-sensitive work.
+    private Executor mDedicatedExecutor;
     private LoadTask mLoadTask;
     private FetchSeedTask mFetchSeedTask;
 
@@ -42,6 +47,8 @@ public abstract class AsyncInitTaskRunner {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
+                // Boost the thread from Background Priority (10) to -1.
+                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE);
                 LibraryLoader libraryLoader = LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER);
                 libraryLoader.ensureInitialized();
                 // The prefetch is done after the library load for two reasons:
@@ -138,7 +145,8 @@ public abstract class AsyncInitTaskRunner {
 
     @VisibleForTesting
     protected Executor getExecutor() {
-        return AsyncTask.THREAD_POOL_EXECUTOR;
+        if (mDedicatedExecutor == null) mDedicatedExecutor = Executors.newSingleThreadExecutor();
+        return mDedicatedExecutor;
     }
 
     /**
