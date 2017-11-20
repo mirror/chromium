@@ -34,6 +34,24 @@
       "revId": "c4aaf3c88787d0e2ac87553a9234c39fed156e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b1759b_bf97c4d3",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-20T08:05:32Z",
+      "side": 1,
+      "message": "ok, LGTM.",
+      "parentUuid": "cda2e0ba_ef8d7c30",
+      "revId": "c4aaf3c88787d0e2ac87553a9234c39fed156e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
