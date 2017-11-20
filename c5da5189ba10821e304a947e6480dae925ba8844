@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50e09843_5e4d64ed",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-20T19:56:00Z",
+      "side": 1,
+      "message": "I guess this is tangential, but I have a question here. How does this work if Chrome\u0027s been restarted? It seems like the data won\u0027t be cached so this just drops the action on the floor. I thought the purpose of NDS was to be able to handle that case. Seems like this is handled on mac. Is it just a TODO on Linux?",
+      "range": {
+        "startLine": 772,
+        "startChar": 29,
+        "endLine": 772,
+        "endChar": 59
+      },
+      "revId": "c5da5189ba10821e304a947e6480dae925ba8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
