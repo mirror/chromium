@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45de70e0_84dcdb28",
+        "filename": "tools/code_coverage/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-20T17:14:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66a510ba_4e54fb06",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 8
+      },
+      "revId": "9ad6ea1bb88618e53d86dccf2bc945e079eea327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1226581_4998108d",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T22:01:19Z",
       "side": 1,
       "message": "Let\u0027s have a function that helps to understand whether we should pass this argument or not, as discussed in another comment",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 58
+      },
+      "revId": "9ad6ea1bb88618e53d86dccf2bc945e079eea327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059ffc9b_f65dadbb",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-20T17:14:39Z",
+      "side": 1,
+      "message": "sg, done.",
+      "parentUuid": "d1226581_4998108d",
       "range": {
         "startLine": 227,
         "startChar": 18,

@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "b6f7d6e6_d9b3ec3b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-20T17:14:39Z",
+      "side": 1,
+      "message": "sounds reasonable, I\u0027ve filed a separate bug for this: crbug.com/786577.",
+      "parentUuid": "97268e54_43c80df4",
+      "range": {
+        "startLine": 135,
+        "startChar": 32,
+        "endLine": 135,
+        "endChar": 36
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05014100_15e2a9f3",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 2
@@ -214,6 +238,30 @@
       "side": 1,
       "message": "Very fair points, and as per today\u0027s meeting it seems that we want to have this in the script.",
       "parentUuid": "7cf17ae1_c9285f42",
+      "range": {
+        "startLine": 179,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 17
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fe878e1_cdef4b04",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-20T17:14:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "607ee376_20b26257",
       "range": {
         "startLine": 179,
         "startChar": 4,
@@ -297,6 +345,30 @@
     },
     {
       "key": {
+        "uuid": "b4943068_dc27a4cf",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-20T17:14:39Z",
+      "side": 1,
+      "message": "good point! I\u0027ll move the checks to there.",
+      "parentUuid": "745e847a_d2c4bca7",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 22
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cbefedc_ee4bc10f",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 2
@@ -356,6 +428,30 @@
       "side": 1,
       "message": "Agreed on your suggestion. Thanks for clarifications regarding iOS case!\n\n\"--test-launcher-jobs\u003d1\" is not needed for fuzzers and actually kinda breaks them, as libFuzzer ignores all the arguments after that one.\n\nThough good point regarding automatically adding that argument to the tests. I cannot think of anything better then some helper function that understands whether we are going to run a unittest or anything else.\n\nWe might invoke `gn refs \u003cbuild_dir\u003e \"testing/gtest\"` in that helper function, e.g.:\n\n  $ gn refs out/test/ \"testing/gtest\" | egrep \":zlib_uncompress_fuzzer\"\n  $ gn refs out/test/ \"testing/gtest\" | egrep \":crypto_unittests\"\n  //crypto:crypto_unittests\n\n\nto understand whether we are running a test or something else",
       "parentUuid": "bd71dc72_8e9b0ed9",
+      "range": {
+        "startLine": 366,
+        "startChar": 27,
+        "endLine": 366,
+        "endChar": 34
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305edd28_43b17f3b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-20T17:14:39Z",
+      "side": 1,
+      "message": "That\u0027s a very good idea! Thanks!",
+      "parentUuid": "41cc6bc7_65e996fb",
       "range": {
         "startLine": 366,
         "startChar": 27,
