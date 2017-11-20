@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6850bcac_3134e7cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-20T21:37:08Z",
+      "side": 1,
+      "message": "Can we do this in shutdownVr? If nothing as successfully handled this before VR is exited for any reason, we should report failure.",
+      "range": {
+        "startLine": 1448,
+        "startChar": 20,
+        "endLine": 1448,
+        "endChar": 47
+      },
+      "revId": "c74a2618948283f2c04d1c7c65814a96233a0e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
