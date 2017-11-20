@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb056bbc_5dfed6f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-20T05:50:45Z",
+      "side": 1,
+      "message": "it would be helpful to add a small comment here explaining the motivation",
+      "revId": "b83d0c814baaa403191469b2da25de6e860aa209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
