@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a7ee0dd_1b64f835",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-20T19:10:08Z",
+      "side": 1,
+      "message": "What I dislike about this approach is that it assumes that an XEventDispatcher would be associated with a ui::PlatformEventDispatcher, which happens to be the case for the specific issue, but is implicit in the API. Can we make it more explicit? e.g. there could be an XEventDispatcher::GetPlatformEventDispatcher() method, which we would automatically add as a platform-event dispatcher in AddXEventDispatcher(). That way, there\u0027s a more explicit/direct association between the two.",
+      "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57576068_3c8a4eca",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-20T19:10:08Z",
+      "side": 1,
+      "message": "How about WillDispatchXEvent() and DidDispatchXEvent()?",
+      "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
