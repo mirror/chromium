@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a41650a_0bbc4514",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-20T22:07:50Z",
+      "side": 1,
+      "message": "can names.get(0) be null? there\u0027s potential for NPE here",
+      "range": {
+        "startLine": 267,
+        "startChar": 34,
+        "endLine": 267,
+        "endChar": 35
+      },
+      "revId": "26bee1b19f445a75cd75fc80a5a888859566be2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
