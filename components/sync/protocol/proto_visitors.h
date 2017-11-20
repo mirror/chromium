@@ -892,6 +892,15 @@ VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::Translation& proto) {
   VISIT_ENUM(interaction);
 }
 
+VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::UserConsent& proto) {
+  VISIT(feature);
+  VISIT_REP(consent_grd_ids);
+  VISIT_REP(placeholder_replacements);
+  VISIT(version);
+  VISIT(locale);
+  VISIT_ENUM(status);
+}
+
 VISIT_PROTO_FIELDS(const sync_pb::TypeHint& proto) {
   VISIT(data_type_id);
   VISIT(has_valid_hint);
