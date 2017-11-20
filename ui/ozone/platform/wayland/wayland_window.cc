@@ -142,25 +142,55 @@ void WaylandWindow::ReleaseCapture() {
 }
 
 void WaylandWindow::ToggleFullscreen() {
-  NOTIMPLEMENTED();
+  DCHECK(xdg_surface_);
+
+  if (!IsFullscreen())
+    xdg_surface_->SetFullscreen();
+  else
+    xdg_surface_->UnSetFullscreen();
+  connection_->ScheduleFlush();
 }
 
 void WaylandWindow::Maximize() {
+  if (IsMaximized())
+    return;
+
   DCHECK(xdg_surface_);
+
+  if (IsFullscreen())
+    ToggleFullscreen();
+
   xdg_surface_->SetMaximized();
   connection_->ScheduleFlush();
 }
 
 void WaylandWindow::Minimize() {
+  if (IsMinimized())
+    return;
+
   DCHECK(xdg_surface_);
   xdg_surface_->SetMinimized();
   connection_->ScheduleFlush();
+  // We manually set is_minimized_ to true as long as Wayland does not send
+  // minimized or restored from minimized state changes.
+  is_minimized_ = true;
 }
 
 void WaylandWindow::Restore() {
-  DCHECK(xdg_surface_);
-  xdg_surface_->UnSetMaximized();
-  connection_->ScheduleFlush();
+  if (!xdg_surface_)
+    return;
+
+  // Unfullscreen the window if it is fullscreen.
+  if (IsFullscreen())
+    ToggleFullscreen();
+
+  if (IsMaximized()) {
+    xdg_surface_->UnSetMaximized();
+    connection_->ScheduleFlush();
+  }
+  // We manually reset is_minimized_ as long as Wayland does not send minimized
+  // or restored from minimized state changes.
+  is_minimized_ = false;
 }
 
 void WaylandWindow::SetCursor(PlatformCursor cursor) {
@@ -207,13 +237,20 @@ uint32_t WaylandWindow::DispatchEvent(const PlatformEvent& native_event) {
   return POST_DISPATCH_STOP_PROPAGATION;
 }
 
-void WaylandWindow::HandleSurfaceConfigure(int32_t width, int32_t height) {
+void WaylandWindow::HandleSurfaceConfigure(int32_t width,
+                                           int32_t height,
+                                           bool is_maximized,
+                                           bool is_fullscreen) {
   // Width or height set 0 means that we should decide on width and height by
   // ourselves, but we don't want to set to anything else. Use previous size.
   if (width == 0 || height == 0) {
     width = GetBounds().width();
     height = GetBounds().height();
   }
+
+  ResetWindowStates();
+  is_maximized_ = is_maximized;
+  is_fullscreen_ = is_fullscreen;
 
   // Rather than call SetBounds here for every configure event, just save the
   // most recent bounds, and have WaylandConnection call ApplyPendingBounds
@@ -224,6 +261,23 @@ void WaylandWindow::HandleSurfaceConfigure(int32_t width, int32_t height) {
 
 void WaylandWindow::OnCloseRequest() {
   NOTIMPLEMENTED();
+}
+
+bool WaylandWindow::IsMinimized() const {
+  return is_minimized_;
+}
+
+bool WaylandWindow::IsMaximized() const {
+  return is_maximized_;
+}
+
+bool WaylandWindow::IsFullscreen() const {
+  return is_fullscreen_;
+}
+
+void WaylandWindow::ResetWindowStates() {
+  is_maximized_ = false;
+  is_fullscreen_ = false;
 }
 
 }  // namespace ui

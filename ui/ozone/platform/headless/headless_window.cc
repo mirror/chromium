@@ -65,4 +65,16 @@ PlatformImeController* HeadlessWindow::GetPlatformImeController() {
   return nullptr;
 }
 
+bool HeadlessWindow::IsMinimized() const {
+  return false;
+}
+
+bool HeadlessWindow::IsMaximized() const {
+  return false;
+}
+
+bool HeadlessWindow::IsFullscreen() const {
+  return false;
+}
+
 }  // namespace ui

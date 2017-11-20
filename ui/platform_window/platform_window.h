@@ -62,6 +62,11 @@ class PlatformWindow {
   // The PlatformImeController is owned by the PlatformWindow, the ownership is
   // not transferred.
   virtual PlatformImeController* GetPlatformImeController() = 0;
+
+  // Tells if the window is minimized, maximizer or fullscreened.
+  virtual bool IsMinimized() const = 0;
+  virtual bool IsMaximized() const = 0;
+  virtual bool IsFullscreen() const = 0;
 };
 
 }  // namespace ui
