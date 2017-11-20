@@ -94,6 +94,30 @@
       "revId": "30e41b2b4de6d1653bcd2d8a0a2caff7b5681d5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d51d74_8b83ca2d",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-11-20T04:18:58Z",
+      "side": 1,
+      "message": "I referred https://chromium-review.googlesource.com/c/chromium/src/+/611670/7/chrome/browser/intranet_redirect_detector.cc \nand returing if ConnectionType is CONNECTION_NONE.",
+      "parentUuid": "6f0a77d8_442532db",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 58
+      },
+      "revId": "30e41b2b4de6d1653bcd2d8a0a2caff7b5681d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "052b26853559e3e89e82fbc8184eb54e51159bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549c0c96_d8de56df",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-11-20T04:18:58Z",
+      "side": 1,
+      "message": "I referred https://chromium-review.googlesource.com/c/chromium/src/+/611670/7/chrome/browser/intranet_redirect_detector.cc \nand returing if ConnectionType is CONNECTION_NONE.\n\nPaul -\u003e\u003e\nWhen the device goes offline, should we update the network interface list?  If so, perhaps we should add \"\u0026\u0026 !net::NetworkChangeNotifier::IsOffline()\" to this if-condition.\n\n  -\u003e I would request someone to confirm to update the network interface list if device goes offline.",
+      "parentUuid": "aca94966_0c60d3eb",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "052b26853559e3e89e82fbc8184eb54e51159bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
