@@ -17,8 +17,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/local_discovery/service_discovery_shared_client.h"
-#include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/printing/cloud_print/privet_device_lister_impl.h"
 #include "chrome/browser/printing/cloud_print/privet_http_asynchronous_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -294,14 +294,14 @@ void PrivetNotificationService::AddNotification(
 
   NotificationDisplayService::GetForProfile(
       Profile::FromBrowserContext(profile_))
-      ->Display(NotificationCommon::TRANSIENT, notification);
+      ->Display(NotificationHandler::Type::TRANSIENT, notification);
 }
 
 void PrivetNotificationService::PrivetRemoveNotification() {
   ReportPrivetUmaEvent(PRIVET_NOTIFICATION_CANCELED);
   NotificationDisplayService::GetForProfile(
       Profile::FromBrowserContext(profile_))
-      ->Close(NotificationCommon::TRANSIENT, kPrivetNotificationID);
+      ->Close(NotificationHandler::Type::TRANSIENT, kPrivetNotificationID);
 }
 
 void PrivetNotificationService::Start() {
@@ -408,7 +408,7 @@ void PrivetNotificationDelegate::DisableNotifications() {
 
 void PrivetNotificationDelegate::CloseNotification() {
   NotificationDisplayService::GetForProfile(profile_)->Close(
-      NotificationCommon::TRANSIENT, kPrivetNotificationID);
+      NotificationHandler::Type::TRANSIENT, kPrivetNotificationID);
 }
 
 }  // namespace cloud_print
