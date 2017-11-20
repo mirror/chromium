@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b108dc21_21c42645",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T15:40:29Z",
+      "side": 1,
+      "message": "use MediaStreamDispatcherHost::GenerateStream() or, at least, MSDH::GenerateStream()",
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0af7fa_b0f28aae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T15:40:29Z",
+      "side": 1,
+      "message": "Also mention the drive-by fixes in this CL",
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f430e6e_151add2e",
+        "filename": "content/browser/renderer_host/media/media_stream_requester.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T15:40:29Z",
+      "side": 1,
+      "message": "This comment is now obsolete, so remove it.\nAlso add a TODO to remove this class, which no longer requests anything.\nIn a follow-up CL we can remove the class and just pass a device_stopped_callback to MediaStreamManager instead of a weak pointer to a requester.",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ff876d_08d670c5",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T15:40:29Z",
+      "side": 1,
+      "message": "Doesn\u0027t the test work without this?",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 24
+      },
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7815ec04_1b0343dc",
+        "filename": "content/renderer/media/user_media_processor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T15:40:29Z",
+      "side": 1,
+      "message": "Don\u0027t friend the class if it\u0027s just to set |dispatcher_host_|.\nAdd a set_media_stream_dispatcher_host_for_testing() setter instead.",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 38
+      },
+      "revId": "e69f3c0386548a6ee807e3ff669c97b78d7edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
