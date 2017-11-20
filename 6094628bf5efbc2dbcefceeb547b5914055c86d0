@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98033ec3_9d8eafe2",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T18:52:28Z",
+      "side": 1,
+      "message": "This should be unnecessary; ConnectionStateChanged should be sufficient. If you want to leave it in I don\u0027t have any objections, but if there is a scenario where this triggers a default network change but ConnectionStateChanged does not, I would be curious to know about it.",
+      "revId": "6094628bf5efbc2dbcefceeb547b5914055c86d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
