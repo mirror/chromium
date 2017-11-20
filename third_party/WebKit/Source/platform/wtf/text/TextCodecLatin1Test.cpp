@@ -18,22 +18,22 @@ TEST(TextCodecLatin1Test, QuestionMarksAndSurrogates) {
   {
     const LChar testCase[] = {0xd1, 0x16, 0x86};
     size_t testCaseSize = WTF_ARRAY_LENGTH(testCase);
-    CString result = codec->Encode(testCase, testCaseSize,
-                                   WTF::kQuestionMarksForUnencodables);
-    EXPECT_STREQ("\xd1\x16?", result.data());
+    CString result =
+        codec->Encode(testCase, testCaseSize, WTF::kEntitiesForUnencodables);
+    EXPECT_STREQ("\xd1\x16&#134;", result.data());
   }
   {
     const UChar testCase[] = {0xd9f0, 0xdcd9};
     size_t testCaseSize = WTF_ARRAY_LENGTH(testCase);
-    CString result = codec->Encode(testCase, testCaseSize,
-                                   WTF::kQuestionMarksForUnencodables);
-    EXPECT_STREQ("?", result.data());
+    CString result =
+        codec->Encode(testCase, testCaseSize, WTF::kEntitiesForUnencodables);
+    EXPECT_STREQ("&#573657;", result.data());
   }
   {
     const UChar testCase[] = {0xd9f0, 0xdcd9, 0xd9f0, 0xdcd9};
     size_t testCaseSize = WTF_ARRAY_LENGTH(testCase);
-    CString result = codec->Encode(testCase, testCaseSize,
-                                   WTF::kQuestionMarksForUnencodables);
-    EXPECT_STREQ("??", result.data());
+    CString result =
+        codec->Encode(testCase, testCaseSize, WTF::kEntitiesForUnencodables);
+    EXPECT_STREQ("&#573657;&#573657;", result.data());
   }
 }
