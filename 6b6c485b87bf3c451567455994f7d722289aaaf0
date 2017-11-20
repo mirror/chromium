@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f31eab20_4beec74c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T04:47:05Z",
+      "side": 1,
+      "message": "No strong opinions here, but I think we might be taking choice away from developers if we went that route.\n\nIf we use the array, developers can choose to keep their navigations in the same context. If they want to open another app they can use target\u003d_blank or window.open() if they don\u0027t they can just keep using target\u003d_self links.\n\nIf we pick the most specific app, developers no longer have this option. Both target\u003d_self links and target\u003d_blank links will open the more specific app.",
+      "parentUuid": "b3593d22_1d994dd4",
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93badc81_d7defd78",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 4

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b06e96d2_d77932bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T04:47:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ebf833e_79210908",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8e5c7b8_683d6abd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-20T02:56:34Z",
       "side": 1,
       "message": "These lines seem too long.",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f8f5c6_e93c49d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T04:47:05Z",
+      "side": 1,
+      "message": "They do! But the longest one is 87 characters long. I was under the impression that 100 was the max, do you know of any docs that say otherwise? I know the upload message has a 72 characters long line.",
+      "parentUuid": "e8e5c7b8_683d6abd",
       "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "05a90a18_3fea7777",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T04:47:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb9753f8_fc82f9ff",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72bbf8dc_410fff9c",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 5
@@ -79,6 +139,30 @@
       "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8ee285_be6d95da",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T04:47:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72bbf8dc_410fff9c",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "d49c93d8_63761369",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T04:47:05Z",
+      "side": 1,
+      "message": "Thanks for the suggestion!",
+      "parentUuid": "73165ba0_954d723d",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e9d2630_172785ba",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 5
@@ -140,6 +242,30 @@
     },
     {
       "key": {
+        "uuid": "93317bba_d27c36f1",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T04:47:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e9d2630_172785ba",
+      "range": {
+        "startLine": 136,
+        "startChar": 47,
+        "endLine": 136,
+        "endChar": 70
+      },
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8009afe_b702c473",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 5
@@ -160,6 +286,30 @@
       "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2718aa53_440662a4",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T04:47:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8009afe_b702c473",
+      "range": {
+        "startLine": 137,
+        "startChar": 43,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
