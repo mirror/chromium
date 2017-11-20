@@ -115,6 +115,13 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
     options.initiator_info.position = module_request.GetReferrerPosition();
   }
 
+  // Step 5. "... referrer is referrer, ..." [spec text]
+  if (!module_request.GetReferrer().IsNull()) {
+    resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
+        module_request.GetReferrerPolicy(), module_request.Url(),
+        module_request.GetReferrer()));
+  }
+
   // Note: |options| should not be modified after here.
   FetchParameters fetch_params(resource_request, options);
 
@@ -134,12 +141,6 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   fetch_params.SetCrossOriginAccessControl(
       modulator_->GetSecurityOriginForFetch(), options_.CredentialsMode());
 
-  // Step 5. "... referrer is referrer, ..." [spec text]
-  if (!module_request.GetReferrer().IsNull()) {
-    resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
-        module_request.GetReferrerPolicy(), module_request.Url(),
-        module_request.GetReferrer()));
-  }
   // Step 5. "... and client is fetch client settings object." [spec text]
   // -> set by ResourceFetcher
 

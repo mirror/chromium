@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>html-script-module-crossOrigin-root-WithCORS</title>
+<meta name="referrer" content="same-origin">
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script type="module">
+
+import { referrer as referrer_same } from "./resources/referrer-checker.py";
+
+import { referrer as referrer_remote } from "http://{{domains[www2]}}:{{ports[http][0]}}/html/semantics/scripting-1/the-script-element/module/resources/referrer-checker.py?pipe=header(Access-Control-Allow-Origin,*)"
+
+import { referrer as referrer_same_same } from "./resources/import-referrer-checker.js?pipe=sub&origin=http://{{host}}:{{ports[http][0]}}";
+
+import { referrer as referrer_same_remote } from "./resources/import-referrer-checker.js?pipe=sub&origin=http://{{domains[www1]}}:{{ports[http][0]}}";
+
+import { referrer as referrer_remote_remote } from "http://{{domains[www1]}}:{{ports[http][0]}}/html/semantics/scripting-1/the-script-element/module/resources/import-referrer-checker.js?pipe=sub|header(Access-Control-Allow-Origin,*)&origin=http://{{domains[www1]}}:{{ports[http][0]}}";
+
+test(t => {
+  const origin = "http://{{host}}:{{ports[http][0]}}";
+  const path = "/html/semantics/scripting-1/the-script-element/module";
+
+  assert_equals(referrer_same, location.href);
+  assert_equals(referrer_remote, "");
+  assert_equals(
+      referrer_same_same,
+      `${origin}${path}/resources/import-referrer-checker.js` +
+      `?pipe=sub&origin=${origin}`);
+  assert_equals(referrer_same_remote, "");
+  assert_equals(referrer_remote_remote, "");
+  t.done();
+});
+
+</script>
+</body>
+</html>
