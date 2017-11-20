@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "340d4c29_6f3b9f7f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T08:31:32Z",
+      "side": 1,
+      "message": "nit: no need of empty line here",
+      "revId": "72376ed13c2fdbd38bdd5e14e016d6341c4c8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4261ac2a_786cfd20",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T08:31:32Z",
+      "side": 1,
+      "message": "nit: Please also document that either one of body_data or a pair of url_loader and url_loader_client should be non-null. (Assuming that when both are null this struct itself shouldn\u0027t be created)",
+      "revId": "72376ed13c2fdbd38bdd5e14e016d6341c4c8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
