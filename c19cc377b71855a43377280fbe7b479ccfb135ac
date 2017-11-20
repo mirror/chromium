@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39cace45_c334c4b3",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-20T05:49:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e3862ae_26a2f6c6",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "511f1858_e0545bac",
         "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
         "patchSetId": 7
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "138f89fc_81c7460d",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-20T05:49:33Z",
+      "side": 1,
+      "message": "I\u0027m currently doing:\n\n  EXPECT_EQ(\n    expectations[i].isolated,\n    content::SiteInstanceImpl::DoesSiteRequireDedicatedProcess(context, GURL(expectations[i].url)));\n\nbut that fails in the same way as `client.ShouldUseProcessPerSite` does (always returns false, even when I expect to return true).\n\nIs that not what you mean? Or am I holding it wrong. :)",
+      "parentUuid": "874a7316_b764d39e",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3361edeb_a13226ef",
         "filename": "chrome/common/pref_names.h",
         "patchSetId": 7
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "16cdb23a_8e4833eb",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-20T05:49:33Z",
+      "side": 1,
+      "message": "I don\u0027t see any particular order. I put these 2 in their own block at the end, and in the .cc file too.",
+      "parentUuid": "3361edeb_a13226ef",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e20746b_d8c53e75",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 7
@@ -100,6 +154,30 @@
       "writtenOn": "2017-11-20T04:55:33Z",
       "side": 1,
       "message": "nit: In this case, it\u0027s actually an origin.  For example, it\u0027s possible to list https://mail.google.com and isolate that without the rest of google.com.  (That may break scripting for sites that modify document.domain, but it allows a finer granularity here.)\n\nIt\u0027s also worth pointing out that any origins listed here for isolation will include any suborigins, such as https://foo.example.com.\n\nThere\u0027s more documentation at ChildProcessSecurityPolicyImpl::AddIsolatedOrigin, though I\u0027m not sure if that\u0027s a good thing to point to here or not.",
+      "range": {
+        "startLine": 10623,
+        "startChar": 50,
+        "endLine": 10623,
+        "endChar": 55
+      },
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d8ef4c_41419430",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 10623,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-20T05:49:33Z",
+      "side": 1,
+      "message": "Sites -\u003e origins, and I added an explanation without using the term \"suborigin\", which I think means something different that what you mean here, which I take to be \"origins named by subdomains of the named domain\".\n\nI tried to pithily restate what\u0027s stated in the comments for AddIsolatedOrigin. See what you think.",
+      "parentUuid": "6e20746b_d8c53e75",
       "range": {
         "startLine": 10623,
         "startChar": 50,
