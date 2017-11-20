@@ -4,9 +4,14 @@
 
 #include "base/macros.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/chromeos/login/helper.h"
+#include "chrome/browser/chromeos/login/signin_partition_manager.h"
+#include "chrome/browser/chromeos/login/signin_partition_manager_factory.h"
 #include "chrome/browser/chromeos/login/test/oobe_base_test.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_display.h"
 #include "chromeos/chromeos_switches.h"
+#include "components/guest_view/browser/guest_view_manager.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "media/base/media_switches.h"
@@ -45,6 +50,39 @@ class WebviewLoginTest : public OobeBaseTest {
     JsExpect("$('gaia-navigation').closeVisible");
     JsExpect("!$('gaia-navigation').refreshVisible");
     JsExpect("$('signin-frame').src.indexOf('#challengepassword') != -1");
+  }
+
+  bool WebViewVisited(content::BrowserContext* browser_context,
+                      content::StoragePartition* expected_storage_partition,
+                      bool* out_found,
+                      content::WebContents* guest_contents) {
+    content::StoragePartition* guest_storage_partition =
+        content::BrowserContext::GetStoragePartition(
+            browser_context, guest_contents->GetSiteInstance());
+    if (guest_storage_partition == expected_storage_partition)
+      *out_found = true;
+
+    // Returns true if found - this will exit the iteration early.
+    return *out_found;
+  }
+
+  // Returns true if a webview on the login UI's main WebContents is currently
+  // displaying a WebContents associated with |storage_partition|.
+  bool IsWebviewWithStoragePartitionDisplayed(
+      content::StoragePartition* storage_partition) {
+    bool is_displayed;
+
+    content::WebContents* web_contents = GetLoginUI()->GetWebContents();
+    content::BrowserContext* browser_context =
+        web_contents->GetBrowserContext();
+    guest_view::GuestViewManager* guest_view_manager =
+        guest_view::GuestViewManager::FromBrowserContext(browser_context);
+    guest_view_manager->ForEachGuest(
+        web_contents,
+        base::Bind(&WebviewLoginTest::WebViewVisited, base::Unretained(this),
+                   browser_context, storage_partition, &is_displayed));
+
+    return is_displayed;
   }
 
  private:
@@ -131,6 +169,62 @@ IN_PROC_BROWSER_TEST_F(WebviewLoginTest, EmailPrefill) {
   JS().ExecuteAsync("Oobe.showSigninUI('user@example.com')");
   WaitForGaiaPageReload();
   EXPECT_EQ(fake_gaia_->prefilled_email(), "user@example.com");
+}
+
+IN_PROC_BROWSER_TEST_F(WebviewLoginTest, StoragePartitionHandling) {
+  WaitForGaiaPageLoad();
+
+  // Start with identifer page.
+  ExpectIdentifierPage();
+
+  // WebContents of the embedding frame
+  content::WebContents* web_contents = GetLoginUI()->GetWebContents();
+  content::BrowserContext* browser_context = web_contents->GetBrowserContext();
+
+  std::string signin_frame_partition_name_1;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractString(
+      web_contents->GetMainFrame(),
+      "window.domAutomationController.send($('signin-frame').partition);",
+      &signin_frame_partition_name_1));
+  content::StoragePartition* signin_frame_partition_1 =
+      login::GetSigninPartition();
+
+  EXPECT_FALSE(signin_frame_partition_name_1.empty());
+  EXPECT_EQ(login::SigninPartitionManagerFactory::GetForBrowserContext(
+                browser_context)
+                ->GetCurrentStoragePartitionName(),
+            signin_frame_partition_name_1);
+  EXPECT_TRUE(IsWebviewWithStoragePartitionDisplayed(signin_frame_partition_1));
+
+  // Press the back button at a sign-in screen without pre-existing users to
+  // start a new sign-in attempt.
+  JS().Evaluate("$('signin-back-button').fire('tap')");
+  WaitForGaiaPageReload();
+  // Expect that we got back to the identifier page, as there are no known users
+  // so the sign-in screen will not display user pods.
+  ExpectIdentifierPage();
+
+  std::string signin_frame_partition_name_2;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractString(
+      web_contents->GetMainFrame(),
+      "window.domAutomationController.send($('signin-frame').partition);",
+      &signin_frame_partition_name_2));
+  content::StoragePartition* signin_frame_partition_2 =
+      login::GetSigninPartition();
+
+  EXPECT_FALSE(signin_frame_partition_name_2.empty());
+  EXPECT_EQ(login::SigninPartitionManagerFactory::GetForBrowserContext(
+                browser_context)
+                ->GetCurrentStoragePartitionName(),
+            signin_frame_partition_name_2);
+  EXPECT_TRUE(IsWebviewWithStoragePartitionDisplayed(signin_frame_partition_2));
+
+  // Make sure that the partitions differ and that the old one is not in use
+  // anymore.
+  EXPECT_NE(signin_frame_partition_name_1, signin_frame_partition_name_2);
+  EXPECT_NE(signin_frame_partition_1, signin_frame_partition_2);
+  EXPECT_FALSE(
+      IsWebviewWithStoragePartitionDisplayed(signin_frame_partition_1));
 }
 
 // Tests that requesting webcam access from the login screen works correctly.
