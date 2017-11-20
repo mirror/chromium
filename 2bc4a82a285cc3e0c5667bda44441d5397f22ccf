@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f741f515_60a3da1a",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:09:51Z",
+      "side": 1,
+      "message": "We probably need a bit more checking here.  Should this be int if the variable type is int64_t?",
+      "range": {
+        "startLine": 86,
+        "startChar": 44,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "2bc4a82a285cc3e0c5667bda44441d5397f22ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009ca8fc_6fd1c124",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:09:51Z",
+      "side": 1,
+      "message": "Will we still post twice?  If is_initialized_ isn\u0027t true yet, another call with post another ReadEntriesFromFile.  Do we want the concept of \"initializing\" so we don\u0027t re-request the data?",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 21
+      },
+      "revId": "2bc4a82a285cc3e0c5667bda44441d5397f22ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb884f80_eb8fdaf5",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:09:51Z",
+      "side": 1,
+      "message": "Maybe move this into the PostTask?  Just a nit either way is fine.",
+      "range": {
+        "startLine": 161,
+        "startChar": 20,
+        "endLine": 161,
+        "endChar": 44
+      },
+      "revId": "2bc4a82a285cc3e0c5667bda44441d5397f22ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fe1584_50168890",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:09:51Z",
+      "side": 1,
+      "message": "history_db_initialized_ |\u003d history_db_init;\nhistory_db_initialized_ |\u003d history_db_initialized_;\n\nThis will probably change if you go to enum.",
+      "range": {
+        "startLine": 839,
+        "startChar": 2,
+        "endLine": 841,
+        "endChar": 63
+      },
+      "revId": "2bc4a82a285cc3e0c5667bda44441d5397f22ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8fa7f5e_c3c38ce4",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:09:51Z",
+      "side": 1,
+      "message": "initialized",
+      "range": {
+        "startLine": 843,
+        "startChar": 30,
+        "endLine": 843,
+        "endChar": 40
+      },
+      "revId": "2bc4a82a285cc3e0c5667bda44441d5397f22ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b4f289_04143078",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:09:51Z",
+      "side": 1,
+      "message": "initialized",
+      "range": {
+        "startLine": 844,
+        "startChar": 15,
+        "endLine": 844,
+        "endChar": 25
+      },
+      "revId": "2bc4a82a285cc3e0c5667bda44441d5397f22ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3127e9df_f82a9b22",
+        "filename": "content/browser/download/download_manager_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:09:51Z",
+      "side": 1,
+      "message": "Would it make more sense to have an enum with the component?  e.g.\n\nenum DownloadDependency {\n  HISTORY_DB \u003d 0,\n  IN_PROGRESS_CACHE \u003d 1,\n}\n\nThen it\u0027d look like:\nPostInitialization(DownloadDependency dependency);",
+      "range": {
+        "startLine": 108,
+        "startChar": 26,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "2bc4a82a285cc3e0c5667bda44441d5397f22ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
