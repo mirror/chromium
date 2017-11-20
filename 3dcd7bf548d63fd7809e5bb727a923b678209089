@@ -46,6 +46,30 @@
       "revId": "3dcd7bf548d63fd7809e5bb727a923b678209089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d5e6ae_cb7e069e",
+        "filename": "chrome/browser/ui/webui/signin/inline_login_handler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:31:54Z",
+      "side": 1,
+      "message": "I think that would be useful as it would allow us to understand how many of the sign-ins are forced. Would that be too hard to implement?",
+      "parentUuid": "e090710e_8ec8753b",
+      "range": {
+        "startLine": 564,
+        "startChar": 26,
+        "endLine": 564,
+        "endChar": 0
+      },
+      "revId": "3dcd7bf548d63fd7809e5bb727a923b678209089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
