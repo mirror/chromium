@@ -106,6 +106,24 @@
       "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07a011c_51d00e4a",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-20T15:41:26Z",
+      "side": 1,
+      "message": "So the issue, IIUC, is we\u0027re bundling SVG stop and HTML option/optgroup together, and forcing a style calc for both categories when it is only needed for the former.\n\nI\u0027ve updated the CL to split the SVG check into a separate predicate, and use that for controlling style calc here.  Is the new version more acceptable?",
+      "parentUuid": "bcbfc6fa_24670470",
+      "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
