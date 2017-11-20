@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "9eacc13a_a646085d",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "Chrome needs this behavior, or has to emulate it using virtual contexts (or explicit synchronization, but it doesn\u0027t do that today) to ensure security.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3657c5_d4fb4960",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "Be careful, \"stream\" is an overloaded term here, and so this is not really true.\n\nAn IPC channel has multiple \"streams\", each of which has multiple command buffers. Command buffers in the same share group must be in the same stream. A stream is the granularity of scheduling.\n\nMultiple command buffers within the same stream can use an ordering barrier to order their commands, but command buffers in different streams need a sync token. If the 2 streams are on the same IPC channel (i.e. same client process), they can use unverified sync tokens, but if they are on different channels, the token needs to be verified.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d786a00f_4c944926",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "note: this is on Mac, which guarantees that glFlush is sufficient to ensure ordering.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fb1987_e8928ea6",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "GLX effectively ensures this. On Windows we use ANGLE, which also uses a single D3D device underneath all contexts, ensuring strong ordering.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c0b3cc9_97766fba",
         "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
         "patchSetId": 46
@@ -25,6 +93,125 @@
     },
     {
       "key": {
+        "uuid": "6f460ad0_63af0d17",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "Where is this id destroyed? Shouldn\u0027t DestroyGpuFenceCHROMIUM do that?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101329cf_053fd5ea",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "If we fix DestroyGpuFenceCHROMIUM, we have to be careful around reuse, though, otherwise with the following sequence:\n\nGLuint fence \u003d gl-\u003eInsertGpuFenceCHROMIUM();\ngl-\u003eDestroyGpuFenceCHROMIUM(fence);\n// ...\nGLuint fence \u003d gl-\u003eInsertClientGpuFenceCHROMIUM(client_fence);\n\nThe value for fence could be reused, and the SendGpuFence might arrive to the service before DestroyGpuFenceCHROMIUM is handled, which will not behave as you would expect.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1e294e_b870ce42",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "This sends an IPC out-of-order. Which means you could pick up the handle from a previous fence that used the same id. I think you should instead do a shallow flush to ensure IPC ordering, which would eliminate a bunch of the complex/problematic tracking code on the service side - the request for the handle would always arrive after the fence is created.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f6881a_03979661",
+        "filename": "gpu/command_buffer/common/gles2_cmd_format.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "Did you mean gpu fence ids to be shared across context groups? This is inconsistent with the fact that the GLES2DecoderImpl owns the GpuFenceManager - it should be owned by the ContextGroup instead. Alternatively, move kGpuFences to IdNamespaces below.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8ea916_75d62d47",
+        "filename": "gpu/command_buffer/common/gles2_cmd_format.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "typo: \"kGpuFences should equal 6\"",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a23b93_f615a8c9",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 5156,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "This DCHECK is not valid, because a compromised renderer could send arbitrary ids.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69966bed_3d6e4202",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 5161,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e83746b7_6a22ebd9",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
         "patchSetId": 46
@@ -42,6 +229,244 @@
         "endLine": 4634,
         "endChar": 19
       },
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c7ddd4_1041a8bd",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "It sounds like all the new commands need to be gated on gl::GLFence::IsGpuFenceSupported().\n\nThe best/normal way to do this is:\n- add a bool to FeatureFlags\n- use \u0027extension_flag\u0027 in  gpu/command_buffer/build_gles2_cmd_buffer.py\n- set the bool as appropriate from FeatureInfo::InitializeFeatures. Also add the extension string when enabling\n- (optional, but recommended): add a bool to gpu::Capabilities (don\u0027t forget to add it to gpu/ipc/common/gpu_command_buffer_traits_multi.h), and set this flag from the FeatureFlags value in GLES2DecoderImpl::GetCapabilities()",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5609ec38_dc037709",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "What makes this true? Can\u0027t a malicious client call InsertGpuFenceINTERNAL(id) twice in a row with the same id?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7edb704_7a83b08f",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "Should this raise a GL error?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f13f7e8_8c8d9347",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "Should this raise a GL error?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934f71bf_c350a3c5",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "nit: the whole thing can be gpu_fence_entries_.erase(client_id);",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b068400c_ae551e45",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "If have_context is false, we should Invalidate all the GLFences. It may not necessarily matter for GLFenceEGL ones, but all other types are context-specific.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf93a37b_2cc45f82",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fed049_582ce43c",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "nit: would it make sense to make GpuFenceEntry movable, and make this a flat_map\u003cuint32_t, GpuFenceEntry\u003e ?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd4d701_24263b92",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "Should this be a TODO?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231daa97_2e892f53",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "nit: also add operator\u003d (rule-of-3)",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666dc4ee_ad283041",
+        "filename": "ui/gl/gl_fence.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "nit: isn\u0027t this NOTREACHED()? Clarifying because otherwise upstream code needs to handle the case.\n\nother nit: return nullptr;\nfallthrough from inside an ifdef is not very readable.",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51b9197_ac094881",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "nit: maybe just use base::WrapUnique(new GLFenceAndroidNativeFenceSyncHelper()) ?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8426c30_f0af76f3",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "It sounds like CreateInternal can fail. What makes this DCHECK valid? Do we need to handle failure at the call sites?",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d54869_0e1a2156",
+        "filename": "ui/gl/gl_fence_egl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-20T20:29:19Z",
+      "side": 1,
+      "message": "nit: ditto, base::WrapUnique(new GLFenceEGL()) ?",
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
