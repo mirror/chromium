@@ -52,6 +52,24 @@
       "revId": "c4aaf3c88787d0e2ac87553a9234c39fed156e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff7f64b_238f9013",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-20T08:30:49Z",
+      "side": 1,
+      "message": "TrackingDocument() const {\n  return *ToDocument(delegate_-\u003eGetExecutionContext());\n}\n\nReading the implementation of TrackingDocument(), it looks a bit itchy.  I think that changing the return type of TrackingDocument() makes more sense.\n\nDocument* TrackingDocument();\n\nif (Document* document \u003d TrackingDocument()) {\n  document-\u003eEnsureIntersectionObserverController()-\u003eAddTrackedObserver(*this);\n}\n\nBy the way, there seems two call sites of TrackingDocument().  Maybe we need to fix the other place, too?",
+      "parentUuid": "74b1759b_bf97c4d3",
+      "revId": "c4aaf3c88787d0e2ac87553a9234c39fed156e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
