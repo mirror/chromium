@@ -11,7 +11,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "crypto/sha2.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 
 namespace content {
 
@@ -34,20 +34,15 @@ std::string SerializeValueToJson(const base::Value& value) {
 
 }  // namespace
 
-// static
-void AuthenticatorImpl::Create(
-    RenderFrameHost* render_frame_host,
-    webauth::mojom::AuthenticatorRequest request) {
-  auto authenticator_impl =
-      base::WrapUnique(new AuthenticatorImpl(render_frame_host));
-  mojo::MakeStrongBinding(std::move(authenticator_impl), std::move(request));
+AuthenticatorImpl::AuthenticatorImpl(RenderFrameHost* render_frame_host)
+    : render_frame_host_(render_frame_host) {
+  DCHECK(render_frame_host);
 }
 
 AuthenticatorImpl::~AuthenticatorImpl() {}
 
-AuthenticatorImpl::AuthenticatorImpl(RenderFrameHost* render_frame_host) {
-  DCHECK(render_frame_host);
-  caller_origin_ = render_frame_host->GetLastCommittedOrigin();
+void AuthenticatorImpl::Bind(webauth::mojom::AuthenticatorRequest request) {
+  bindings_.AddBinding(this, std::move(request));
 }
 
 // mojom:Authenticator
@@ -61,16 +56,17 @@ void AuthenticatorImpl::MakeCredential(
 
   // Steps 6 & 7 of https://w3c.github.io/webauthn/#createCredential
   // opaque origin
-  if (caller_origin_.unique()) {
+  url::Origin caller_origin = render_frame_host_->GetLastCommittedOrigin();
+  if (caller_origin.unique()) {
     std::move(callback).Run(
         webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR, nullptr);
     return;
   }
 
   if (!options->relying_party->id) {
-    relying_party_id = caller_origin_.Serialize();
+    relying_party_id = caller_origin.Serialize();
   } else {
-    effective_domain = caller_origin_.host();
+    effective_domain = caller_origin.host();
 
     DCHECK(!effective_domain.empty());
     // TODO(kpaulhamus): Check if relyingPartyId is a registrable domain
