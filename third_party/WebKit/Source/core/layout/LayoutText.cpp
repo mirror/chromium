@@ -302,6 +302,16 @@ void LayoutText::DeleteTextBoxes() {
   }
 }
 
+Optional<FloatPoint> LayoutText::GetUpperLeftCorner() const {
+  DCHECK(!IsBR());
+  if (!HasTextBoxes())
+    return WTF::nullopt;
+  // TODO(layout-dev): Why don't we use |LinesBoundingBox().Y()|?
+  FloatPoint point(LinesBoundingBox().X(),
+                   FirstTextBox()->Root().LineTop().ToFloat());
+  return LocalToAbsolute(point, kUseTransforms);
+}
+
 scoped_refptr<StringImpl> LayoutText::OriginalText() const {
   Node* e = GetNode();
   return (e && e->IsTextNode()) ? ToText(e)->DataImpl() : nullptr;
