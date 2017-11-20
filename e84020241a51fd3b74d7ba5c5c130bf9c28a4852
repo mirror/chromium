@@ -1,0 +1,662 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a3a2a7_6ec72ef5",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: 2nd sentence is an implementation concern, so I don\u0027t think it should be in the interface description. (move into function body)",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6509319f_8633ec3c",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this is necessary for correctness. If it\u0027s helpful for performance, please state why.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93de929_0e120382",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: If performance matters (thought about that because of the above), this method is only optimal when the two sets have roughly the same size.\n\nIf one of the sets is significantly smaller than the other set (which I expect to be the case with this API), it\u0027s faster to look up the small set\u0027s elements in the big set. I imagine this\u0027d be the case if one set is the scope of a lock (1-element in the common case?) and the other set is the scope of all locks granted for an origin.\n\nIf performance doesn\u0027t matter, the naive impl of looking up the smaller set\u0027s elements in the bigger set might be smaller and easier to understand.\n\nIn either case, should you end up with the simpler implementation, lock scopes can be represented as std::vector\u003cstd::string\u003e. (the unions of all scopes in OriginState would still be std::set\u003cstd::string\u003e though).\n\nGiven that the API shape is evolving, I\u0027m fine with relegating everything I\u0027ve said here to a TODO.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c93d6f_bda5ba1e",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "Seems like you could join this and line 203 (the state.shared.insert call) into something similar to lines 186-187, copied below. This\u0027d make it slightly clearer that the lock\u0027s scope is joined into the state no matter whether the lock is granted or not.\n\n    (lock-\u003emode \u003d\u003d LockMode::SHARED ? state.shared : state.exclusive)\n        .insert(lock-\u003escope.begin(), lock-\u003escope.end());\n\n\nIf you do this, I think you can set granted to IsGrantable(lock) and remove the ifs altogether.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93cc769_b2de5c1c",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "Mind defining and calling this only #if DCHECK_IS_ON()?\n\nGiven the current implementation, a fair amount of work is done in non-debug contexts.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68d9735_ed3cdad2",
+        "filename": "content/browser/locks/locks_context.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: I think a fair number of folks (databases, distributed systems) would call this LockManager.\n\nedit: I saw the Blink-side changes use LockManager. I\u0027m guessing you wanted to avoid a conflict. I still think it\u0027s a reasonable name.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8a6e39_4a8f33bb",
+        "filename": "content/browser/locks/locks_context.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: How about using a LockHandleImpl* (with a forward-declared class) instead of the Origin/id combo? Seems slightly safer.\n\nLockHandleImpl can then expose Origin/lock_id as getters, or it could friend LockHandle. Given that LockHandleImpl is only defined in locks_context.cc, I don\u0027t think there\u0027s much difference between the two alternatives.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8327e8d_c0dd6c2f",
+        "filename": "content/browser/locks/locks_context.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "I\u0027d prefer that we\u0027re explicit what namespace the \"id\" arguments refer to. I think that\u0027s only obvious when a field / method / constructor argument conveys the ID of the containing class (clarifying example: Lock::id() would be obvious, but I\u0027d like to see a LockHandle::lock_id()).",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a947e6d2_8aa1b9da",
+        "filename": "content/browser/locks/locks_context.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "next_lock_id_?",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f6cf24_9f58eecc",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "I was about to give the feedback in the TODO :)\n\nI\u0027m fine with having the interface addition in a separate CL, if doing it here would increase the reviewer list. In that case, please crbug.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec9478c_0f6cbef7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: Precede this block with a TODO to remove the block when moving to a \".https\" WPT file?\n\nI saw (later in the review) that you did this in another file... I think it\u0027d be nice to have the TODO everywhere so we don\u0027t forget. (I can imagine missing this while reviewing a move CL).",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8cd671_cf05ba32",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "I don\u0027t know if it\u0027s meaningful (I might not be familiar with test styles), but this test description makes me expect that it\u0027d cover both positive and negative cases. If that\u0027s not the case, I\u0027d expect the description to be \u0027invalid modes\u0027 or \u0027invalid \"mode\" values\u0027.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b7c8d2_86e34b68",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "Would it make sense to test passing a Promise directly? (instead of a callback returning a Promise)",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61309fa4_4d184793",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "Can you use something like `${self.location.pathname}-${testCase.name}-${++res_num}`?\n\nI figure this\u0027d be nice for various sorts of debugging and for running multiple tests in parallel (assuming the function gets copied over or moved to a support file).",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a81edd_aa0ac777",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: iframe_window?",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72515fd7_57af3029",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "Would it make sense to test that a return value is promisified correctly?",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8501a5ee_7395f9c4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: I think gpromise can be renamed to lock_granted_promise without causing additional line wraps.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8818f94e_65415448",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: Same as above, lock_release_promise?",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed20e187_2e5f5c60",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: \u0027resource\u0027 could be a tad clearer than \u0027a\u0027, with the downside of being less proof to spec changes",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e4abbc_f4cf1f9a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: \"1st lock released\"?",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62460923_eece3b29",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: \"2nd lock granted\" -- would make the result clearer. [\u0027resolved\u0027, \u0027granted\u0027] makes me think the stages refer to the same lock, so I have to read the test carefully.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f493bc5b_d1d89680",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "How about starting out with a simpler case where you request a single lock with isAvailable: true and assert that it\u0027s granted, etc?\n\nAdditional coverage: the presence of the ifAvailable option straight out causes failures.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8eca4a_33992743",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: \u0027shared\u0027 and \u0027exclusive\u0027? (i guessed what this means fairly quickly, but it\u0027s nicer to not have to guess)",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67694bf1_2f6f5d63",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-exclusive.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: log_grant?",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005fd5dc_6e6782f5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-exclusive.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: inner_promises?",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b78708_d49a7bbd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-mixed.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "This deviates from the previous convention of S/X :)\n\nHow about using full mode names, and preceding each lock with the step # in the correct order? (this would be 5-a-exclusive)",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c451e99_f1b7b6e8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-mixed.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "I think that using \"exclusive\" here would make it more obvious that the lock shouldn\u0027t be blocked because of a scope different scope. Under a different conflict resolution spec, using \"shared\" might not cause this lock to be blocked even if the scope would be \"a\".",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28aac0f_511e35db",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: This would be a bit clearer if it had 1...6 instead of \"++n\". I can see why ++n is correct, but I had to think about it for a second.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d307cc5_8c34c165",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "I think that adding \", causing this test to time out\" would make this comment a bit more helpful.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669b373c_143c4d3d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: The checks seem redundant with lock-attributes",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3c491f_22e0f3d4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/non-secure-context.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: double space",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8347d6_4910a257",
+        "filename": "third_party/WebKit/Source/modules/locks/Lock.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "In my code [1], I had to check for resolver-\u003eGetScriptState()-\u003eContextIsValid() before calling Resolve / Reject on ScriptPromiseResolver. I got crashes without that check. I don\u0027t know if this is already done for you by ScriptPromise::Then().\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp?l\u003d353",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a8cce4_eedf4ff1",
+        "filename": "third_party/WebKit/Source/modules/locks/Lock.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "nit: I prefer handle_.reset() to show that the emphasis is on closing the mojo handle.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7756ba_6ae1c07b",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "I think that GetScriptState()-\u003eContextIsValid() is sufficient and simpler than these checks. Same below.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bc7022_a6fe5ae0",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "I think you need to check GetScriptState()-\u003eContextIsValid() at least before calling resolver_-\u003eResolve(), if not for both calls below.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84e9ca3_1631b135",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "Would we want IsSecure() too?",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f168efdf_f3adc8f7",
+        "filename": "third_party/WebKit/public/platform/modules/locks/locks_service.mojom",
+        "patchSetId": 25
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "There\u0027s a (fairly new, completely undocumented) preference towards reserving *Service mojo interface names for entry points in //services.\n\nHow about using LockManager here and in the impl?",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0cd24e_2ed78d93",
+        "filename": "third_party/WebKit/public/platform/modules/locks/locks_service.mojom",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-20T09:53:31Z",
+      "side": 1,
+      "message": "How about returning a nullable LockHandle and an error string instead of sending a request over, and keeping LockRequest management completely on the Blink side?\n\nFWIW, I was hoping to do this for IndexedDB too, but I haven\u0027t gotten around to it quite yet :)",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
