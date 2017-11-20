@@ -19,6 +19,11 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
+#include "build/build_config.h"
+
+#if defined(OS_ANDROID)
+#include "base/sys_info.h"
+#endif  // defined(OS_ANDROID)
 
 namespace {
 
@@ -204,19 +209,18 @@ void StatisticsRecorder::WriteGraph(const std::string& query,
 }
 
 // static
-std::string StatisticsRecorder::ToJSON(const std::string& query) {
+std::string StatisticsRecorder::ToJSON(bool lossy) {
   if (!IsActive())
     return std::string();
 
   std::string output("{");
-  if (!query.empty()) {
-    output += "\"query\":";
-    EscapeJSONString(query, true, &output);
-    output += ",";
-  }
+  bool lossy_dump = false;
 
+#if defined(OS_ANDROID)
+  lossy_dump = base::SysInfo::IsLowEndDevice() && lossy;
+#endif  // defined(OS_ANDROID)
   Histograms snapshot;
-  GetSnapshot(query, &snapshot);
+  GetSnapshot(std::string(), &snapshot);
   output += "\"histograms\":[";
   bool first_histogram = true;
   for (const HistogramBase* histogram : snapshot) {
@@ -225,7 +229,7 @@ std::string StatisticsRecorder::ToJSON(const std::string& query) {
     else
       output += ",";
     std::string json;
-    histogram->WriteJSON(&json);
+    histogram->WriteJSON(&json, lossy_dump);
     output += json;
   }
   output += "]}";

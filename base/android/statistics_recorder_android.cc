@@ -17,7 +17,7 @@ namespace android {
 static ScopedJavaLocalRef<jstring> ToJson(JNIEnv* env,
                                           const JavaParamRef<jclass>& clazz) {
   return ConvertUTF8ToJavaString(
-      env, base::StatisticsRecorder::ToJSON(std::string()));
+      env, base::StatisticsRecorder::ToJSON(true /* lossy */));
 }
 
 }  // namespace android

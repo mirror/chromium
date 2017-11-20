@@ -294,7 +294,7 @@ ExtensionFunction::ResponseAction FeedbackPrivateSendFeedbackFunction::Run() {
 
   if (feedback_info.send_histograms) {
     auto histograms = std::make_unique<std::string>();
-    *histograms = base::StatisticsRecorder::ToJSON(std::string());
+    *histograms = base::StatisticsRecorder::ToJSON(false /* lossy */);
     if (!histograms->empty())
       feedback_data->SetAndCompressHistograms(std::move(histograms));
   }

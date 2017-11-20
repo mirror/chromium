@@ -371,7 +371,7 @@ TEST_P(StatisticsRecorderTest, ToJSON) {
   Histogram::FactoryGet("TestHistogram2", 1, 1000, 50, HistogramBase::kNoFlags)
       ->Add(40);
 
-  std::string json(StatisticsRecorder::ToJSON(std::string()));
+  std::string json(StatisticsRecorder::ToJSON(false /* lossy */));
 
   // Check for valid JSON.
   std::unique_ptr<Value> root = JSONReader::Read(json);
@@ -394,34 +394,6 @@ TEST_P(StatisticsRecorderTest, ToJSON) {
   int sample_count;
   ASSERT_TRUE(histogram_dict->GetInteger("count", &sample_count));
   EXPECT_EQ(2, sample_count);
-
-  // Test the query filter.
-  std::string query("TestHistogram2");
-  json = StatisticsRecorder::ToJSON(query);
-
-  root = JSONReader::Read(json);
-  ASSERT_TRUE(root.get());
-  ASSERT_TRUE(root->GetAsDictionary(&root_dict));
-
-  std::string query_value;
-  ASSERT_TRUE(root_dict->GetString("query", &query_value));
-  EXPECT_EQ(query, query_value);
-
-  ASSERT_TRUE(root_dict->GetList("histograms", &histogram_list));
-  ASSERT_EQ(1u, histogram_list->GetSize());
-
-  ASSERT_TRUE(histogram_list->GetDictionary(0, &histogram_dict));
-
-  std::string histogram_name;
-  ASSERT_TRUE(histogram_dict->GetString("name", &histogram_name));
-  EXPECT_EQ("TestHistogram2", histogram_name);
-
-  json.clear();
-  UninitializeStatisticsRecorder();
-
-  // No data should be returned.
-  json = StatisticsRecorder::ToJSON(query);
-  EXPECT_TRUE(json.empty());
 }
 
 TEST_P(StatisticsRecorderTest, IterationTest) {

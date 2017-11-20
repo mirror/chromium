@@ -219,7 +219,7 @@ class BASE_EXPORT HistogramBase {
   // Produce a JSON representation of the histogram. This is implemented with
   // the help of GetParameters and GetCountAndBucketData; overwrite them to
   // customize the output.
-  void WriteJSON(std::string* output) const;
+  void WriteJSON(std::string* output, bool lossy) const;
 
  protected:
   enum ReportActivity { HISTOGRAM_CREATED, HISTOGRAM_LOOKUP };
