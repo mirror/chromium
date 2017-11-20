@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d280fbf_20ce3e9b",
+        "filename": "content/browser/accessibility/accessibility_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-11-20T16:55:16Z",
+      "side": 1,
+      "message": "Optional nitpick: remove for loop annd replace with std::string(2*indent, \u0027+\u0027)",
+      "revId": "d52c6f7838bf8ae5170c106ae7c95939ac860fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ddf017d_e39568f0",
+        "filename": "content/browser/accessibility/accessibility_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-11-20T16:55:16Z",
+      "side": 1,
+      "message": "Nit: don\u0027t we usually use \u0027++\u0027 for indenting a level?",
+      "revId": "d52c6f7838bf8ae5170c106ae7c95939ac860fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4da9f94_9026e4b6",
         "filename": "content/browser/resources/accessibility/accessibility.js",
         "patchSetId": 2
