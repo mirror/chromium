@@ -16,6 +16,24 @@
       "revId": "0f703542788c0193057783ba6d6e8ea890eb6dc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa103a4_27ee9a7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-20T21:59:20Z",
+      "side": 1,
+      "message": "It seems to be a library originally intended to help tsan builds work with valgrind (extracted from a possibly dead google owned code.google.com project):\nbase/third_party/dynamic_annotations/README.chromium\n\nThe linux/android sandbox code only uses a single function, which returns true when running inside valgrind.",
+      "parentUuid": "2041aafc_58e6ec14",
+      "revId": "0f703542788c0193057783ba6d6e8ea890eb6dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
