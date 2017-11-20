@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "3ce42cf5_bff681cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T05:43:37Z",
+      "side": 1,
+      "message": "Don\u0027t know of a doc, but the git cl upload shows a 72-character string of \"\u003d\", implying a limit of 72, and this has been generally agreed upon. (I think it\u0027s a more general git practice.)",
+      "parentUuid": "27f8f5c6_e93c49d4",
+      "revId": "4b6d89a502e34be007be1a2c6f7c7190181fae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb9753f8_fc82f9ff",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 5

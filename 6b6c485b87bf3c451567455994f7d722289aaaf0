@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "bc442411_0a8b88cb",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-20T05:43:37Z",
+      "side": 1,
+      "message": "I strongly agree with Ben. If a URL is covered by two or more manifest scopes, it belongs to the most specific one.\n\n(If two manifests declare *exactly* the same scope, we can\u0027t deal with that here, but I think that\u0027s an extreme edge case we can deal with by just... picking one arbitrarily.)\n\nWe never consider a URL to belong to the less specific manifests; for example if you have both https://www.google.com/ and https://www.google.com/maps/ apps installed, if you are in the google.com/ app window and click a link to https://www.google.com/maps/place, you are kicked out of the app window because that URL is *not* considered part of the google.com/ app, even though the URL resides within its manifest scope.\n\nThis makes the behaviour a little non-deterministic since it the behaviour for app A depends on whether app B is installed. But that\u0027s still entirely within the control of the domain owner. The easy solution is \"don\u0027t nest manifest scopes\". If you must nest them, I think we can help out this in the future by adding a \"exclude\" set to the manifest scope, so google.com/ can exclude the /maps/ paths from its scope, even if the Maps app is not installed.",
+      "parentUuid": "f31eab20_4beec74c",
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93badc81_d7defd78",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 4
