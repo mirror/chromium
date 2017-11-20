@@ -262,6 +262,10 @@ class InputHandlerProxy : public cc::InputHandlerClient,
 
   std::unique_ptr<base::TickClock> tick_clock_;
 
+  // This flag indicates whether we enable compositor to handle touch action or
+  // not. The actual feature is defined in event_switches.h.
+  bool is_compositor_touch_action_enabled_;
+
   std::unique_ptr<FlingBooster> fling_booster_;
 
   DISALLOW_COPY_AND_ASSIGN(InputHandlerProxy);
