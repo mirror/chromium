@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb3665a9_941edcaa",
+        "filename": "chrome/test/data/webui/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T20:00:39Z",
+      "side": 1,
+      "message": "Can we name this discards_browsertest.js for consistency with most other such tests. Note that \"\n_browsertest.js\" suffix depicts that the given file is not any JS file, but a file that will be used by js2gtest.js to convert JS to C++ GTest tests, as opposed to \"_test.js\" suffix which (again in most cases), depicts a Mocha test file that is unrelated to js2gtest mechanism.",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d506187a_ce62835f",
+        "filename": "chrome/test/data/webui/discards/discards_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T20:00:39Z",
+      "side": 1,
+      "message": "Let\u0027s update this comment, or just remove.",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affffa1e_387ebe02",
+        "filename": "chrome/test/data/webui/discards/discards_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T20:00:39Z",
+      "side": 1,
+      "message": "So, IIUC the currently existing tests, do not really test any content on the page. They simply unit-test some helper methods. Since this page is targeting Chromium developers, this might be sufficient testing.\n\nJust for completeness, mentioning that the usual approach for testing WebUI pages, is the following:\n\n1) Provide the page with fake data (mocking Mojo objects, or other such mechanisms that feed data to the page).\n2) Make assertions on the actual DOM (assert that something is shown/hidden, assert textContent, order of elements etc).\n\nThe above provides deeper coverage than just unit-testing helper methods. For example current tests would not break if someone just stops calling the helper methods in the prod code.",
+      "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f366fc1b_3e87343e",
+        "filename": "chrome/test/data/webui/discards/discards_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T20:00:39Z",
+      "side": 1,
+      "message": "Can we make this test a bit more readable as follows?\n\nlet fn \u003d discards.lastActiveToString;\nassertEquals(\u0027just now\u0027, fn(0));\n...\n\nOr alternative:\n\n[\n  [\u0027just now\u0027, 0],\n  ...\n  [\u00272 days ago\u0027, 2.5 * 24 * 60 * 60)],\n  ...\n].forEach(case) {\n  assertEquals(case[0], discards.lastActiveToString(case[1]));\n});",
+      "revId": "58c8b40411f0d14e8014a8188ca8c2137f3388d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
