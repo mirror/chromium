@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9a5dc85c_c17987c3",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-20T14:07:13Z",
+      "side": 1,
+      "message": "Yes. I would consider any use of |notification_type| in the notification platform bridges an issue.",
+      "parentUuid": "2d6cfc66_be24f34d",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 26
+      },
+      "revId": "44654abd4a98c1bcb7a1d44e6434849273014731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7b81b2f_7e8a6c40",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 1
