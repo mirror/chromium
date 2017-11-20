@@ -12,6 +12,7 @@
 #include "ash/message_center/message_center_view.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shell.h"
@@ -66,8 +67,17 @@ message_center::MessageCenter* GetMessageCenter() {
   return GetTray()->message_center();
 }
 
+void HideMessageCenter() {
+  GetTray()->HideMessageCenter();
+  base::RunLoop().RunUntilIdle();
+}
+
 SystemTray* GetSystemTray() {
   return StatusAreaWidgetTestHelper::GetStatusAreaWidget()->system_tray();
+}
+
+message_center::NotifierId DummyNotifierId() {
+  return message_center::NotifierId();
 }
 
 // Trivial item implementation for testing PopupAndSystemTray test case.
@@ -84,6 +94,16 @@ class TestItem : public SystemTrayItem {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestItem);
+};
+
+class TestNotificationDelegate : public message_center::NotificationDelegate {
+ public:
+  TestNotificationDelegate() = default;
+
+ private:
+  ~TestNotificationDelegate() override = default;
+
+  DISALLOW_COPY_AND_ASSIGN(TestNotificationDelegate);
 };
 
 }  // namespace
@@ -124,6 +144,10 @@ class WebNotificationTrayTest : public AshTestBase {
   }
 
   views::Widget* GetWidget() { return GetTray()->GetWidget(); }
+
+  message_center::UiController* GetUiController() {
+    return GetTray()->message_center_ui_controller_.get();
+  }
 
   int GetPopupWorkAreaBottom() {
     return GetPopupWorkAreaBottomForTray(GetTray());
@@ -204,9 +228,8 @@ TEST_F(WebNotificationTrayTest, WebNotificationPopupBubble) {
   AddNotification("test_id5");
   EXPECT_TRUE(GetTray()->IsPopupVisible());
 
-  GetTray()->message_center_ui_controller_->ShowMessageCenterBubble(
-      false /* show_by_click */);
-  GetTray()->message_center_ui_controller_->HideMessageCenterBubble();
+  GetTray()->ShowMessageCenter(false /* show_by_click */);
+  HideMessageCenter();
 
   EXPECT_FALSE(GetTray()->IsPopupVisible());
 }
@@ -220,9 +243,7 @@ TEST_F(WebNotificationTrayTest, ManyMessageCenterNotifications) {
     std::string id = base::StringPrintf("test_id%d", static_cast<int>(i));
     AddNotification(id);
   }
-  bool shown =
-      GetTray()->message_center_ui_controller_->ShowMessageCenterBubble(
-          false /* show_by_click */);
+  bool shown = GetTray()->ShowMessageCenter(false /* show_by_click */);
   EXPECT_TRUE(shown);
   RunAllPendingInMessageLoop();
   EXPECT_TRUE(GetTray()->message_center_bubble() != NULL);
@@ -483,6 +504,212 @@ TEST_F(WebNotificationTrayTest, CloseOnActivation) {
   // Re-activate the first widget. The system bubble should hide again.
   widget->Activate();
   EXPECT_FALSE(tray->message_center_bubble());
+}
+
+TEST_F(WebNotificationTrayTest, BasicMessageCenter) {
+  WebNotificationTray* tray = GetTray();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  bool shown = tray->ShowMessageCenter(false /* show_by_click */);
+  EXPECT_TRUE(shown);
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_TRUE(tray->IsMessageCenterBubbleVisible());
+
+  HideMessageCenter();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  tray->ShowMessageCenter(false /* show_by_click */);
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_TRUE(tray->IsMessageCenterBubbleVisible());
+
+  HideMessageCenter();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+}
+
+TEST_F(WebNotificationTrayTest, BasicPopup) {
+  WebNotificationTray* tray = GetTray();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  tray->ShowPopups();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  AddNotification("BasicPopup");
+
+  ASSERT_TRUE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  tray->HidePopups();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+}
+
+TEST_F(WebNotificationTrayTest, MessageCenterClosesPopups) {
+  WebNotificationTray* tray = GetTray();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  AddNotification("MessageCenterClosesPopups");
+
+  ASSERT_TRUE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  bool shown = tray->ShowMessageCenter(false /* show_by_click */);
+  EXPECT_TRUE(shown);
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_TRUE(tray->IsMessageCenterBubbleVisible());
+
+  // The notification is queued if it's added when message center is visible.
+  AddNotification("MessageCenterClosesPopups2");
+
+  tray->ShowPopups();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_TRUE(tray->IsMessageCenterBubbleVisible());
+
+  HideMessageCenter();
+
+  // There is no queued notification.
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  tray->ShowMessageCenter(false /* show_by_click */);
+  HideMessageCenter();
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+}
+
+TEST_F(WebNotificationTrayTest, MessageCenterReopenPopupsForSystemPriority) {
+  WebNotificationTray* tray = GetTray();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  std::unique_ptr<message_center::Notification> notification(
+      new message_center::Notification(
+          message_center::NOTIFICATION_TYPE_SIMPLE,
+          "MessageCenterReopnPopupsForSystemPriority",
+          base::ASCIIToUTF16("Test Web Notification"),
+          base::ASCIIToUTF16("Notification message body."), gfx::Image(),
+          base::ASCIIToUTF16("www.test.org"), GURL(), DummyNotifierId(),
+          message_center::RichNotificationData(), NULL /* delegate */));
+  notification->SetSystemPriority();
+  GetMessageCenter()->AddNotification(std::move(notification));
+
+  ASSERT_TRUE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  bool shown = tray->ShowMessageCenter(false /* show_by_click */);
+  EXPECT_TRUE(shown);
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_TRUE(tray->IsMessageCenterBubbleVisible());
+
+  HideMessageCenter();
+
+  ASSERT_TRUE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+}
+
+TEST_F(WebNotificationTrayTest, ShowBubbleFails) {
+  WebNotificationTray* tray = GetTray();
+
+  // Now the tray will signal that the message center was unable to show a
+  // bubble.
+  Shell::Get()->session_controller()->ClearUserSessionsForTest();
+  ASSERT_FALSE(
+      Shell::Get()->session_controller()->ShouldShowNotificationTray());
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  AddNotification("ShowBubbleFails");
+
+  tray->ShowPopups();
+
+  ASSERT_TRUE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  bool shown = tray->ShowMessageCenter(false /* show_by_click */);
+  EXPECT_FALSE(shown);
+
+  ASSERT_TRUE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  HideMessageCenter();
+
+  ASSERT_TRUE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  tray->ShowMessageCenter(false /* show_by_click */);
+
+  ASSERT_TRUE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+
+  tray->HidePopups();
+
+  ASSERT_FALSE(tray->IsPopupVisible());
+  ASSERT_FALSE(tray->IsMessageCenterBubbleVisible());
+}
+
+TEST_F(WebNotificationTrayTest, ContextMenuTestWithMessageCenter) {
+  WebNotificationTray* tray = GetTray();
+
+  const std::string id1 = "id1";
+  const std::string id2 = "id2";
+  const std::string id3 = "id3";
+  AddNotification(id1);
+
+  base::string16 display_source = base::ASCIIToUTF16("www.test.org");
+  message_center::NotifierId notifier_id = DummyNotifierId();
+
+  message_center::NotifierId notifier_id2(
+      message_center::NotifierId::APPLICATION, "sample-app");
+  std::unique_ptr<message_center::Notification> notification(
+      new message_center::Notification(
+          message_center::NOTIFICATION_TYPE_SIMPLE, id2,
+          base::ASCIIToUTF16("Test Web Notification"),
+          base::ASCIIToUTF16("Notification message body."), gfx::Image(),
+          display_source, GURL(), notifier_id2,
+          message_center::RichNotificationData(),
+          new TestNotificationDelegate()));
+  GetMessageCenter()->AddNotification(std::move(notification));
+
+  AddNotification(id3);
+
+  message_center::Notification* notification1 =
+      GetMessageCenter()->FindVisibleNotificationById(id1);
+  std::unique_ptr<ui::MenuModel> model(
+      GetUiController()->CreateNotificationMenuModel(*notification1));
+  EXPECT_EQ(2, model->GetItemCount());
+
+  // The second item is to open the settings.
+  EXPECT_TRUE(model->IsEnabledAt(0));
+  EXPECT_TRUE(model->IsEnabledAt(1));
+  model->ActivatedAt(1);
+  EXPECT_TRUE(tray->IsMessageCenterBubbleVisible());
+
+  HideMessageCenter();
+
+  // The first item is to disable notifications from the notifier id. It also
+  // removes the notification.
+  EXPECT_EQ(3u, GetMessageCenter()->GetVisibleNotifications().size());
+  model->ActivatedAt(0);
+  EXPECT_EQ(2u, GetMessageCenter()->GetVisibleNotifications().size());
 }
 
 }  // namespace ash

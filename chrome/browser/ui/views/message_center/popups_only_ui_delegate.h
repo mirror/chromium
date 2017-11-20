@@ -29,16 +29,19 @@ class PopupsOnlyUiDelegate : public message_center::UiDelegate {
   message_center::MessageCenter* message_center();
 
   // UiDelegate implementation.
-  bool ShowPopups() override;
-  void HidePopups() override;
-  bool ShowMessageCenter(bool show_by_click) override;
-  void HideMessageCenter() override;
   void OnMessageCenterContentsChanged() override;
-  bool ShowNotifierSettings() override;
+  void ShowNotifierSettings() override;
+
+  bool popups_visible() const { return popups_visible_; }
 
   message_center::UiController* GetUiControllerForTesting();
 
  private:
+  bool ShowPopups();
+  void HidePopups();
+
+  bool popups_visible_ = false;
+
   std::unique_ptr<message_center::MessagePopupCollection> popup_collection_;
   std::unique_ptr<message_center::DesktopPopupAlignmentDelegate>
       alignment_delegate_;

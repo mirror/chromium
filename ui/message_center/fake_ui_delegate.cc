@@ -15,20 +15,6 @@ FakeUiDelegate::~FakeUiDelegate() {}
 
 void FakeUiDelegate::OnMessageCenterContentsChanged() {}
 
-bool FakeUiDelegate::ShowPopups() {
-  return false;
-}
-
-void FakeUiDelegate::HidePopups() {}
-
-bool FakeUiDelegate::ShowMessageCenter(bool show_by_click) {
-  return false;
-}
-
-void FakeUiDelegate::HideMessageCenter() {}
-
-bool FakeUiDelegate::ShowNotifierSettings() {
-  return false;
-}
+void FakeUiDelegate::ShowNotifierSettings() {}
 
 }  // namespace message_center

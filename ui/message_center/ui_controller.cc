@@ -96,8 +96,8 @@ void NotificationMenuModel::ExecuteCommand(int command_id, int event_flags) {
 
 UiController::UiController(UiDelegate* delegate)
     : message_center_(MessageCenter::Get()),
-      message_center_visible_(false),
-      popups_visible_(false),
+      // message_center_visible_(false),
+      // popups_visible_(false),
       delegate_(delegate) {
   message_center_->AddObserver(this);
 }
@@ -106,50 +106,7 @@ UiController::~UiController() {
   message_center_->RemoveObserver(this);
 }
 
-bool UiController::ShowMessageCenterBubble(bool show_by_click) {
-  if (message_center_visible_)
-    return true;
-
-  HidePopupBubbleInternal();
-
-  message_center_visible_ = delegate_->ShowMessageCenter(show_by_click);
-  if (message_center_visible_) {
-    message_center_->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
-    NotifyUiControllerChanged();
-  }
-  return message_center_visible_;
-}
-
-bool UiController::HideMessageCenterBubble() {
-#if defined(OS_CHROMEOS)
-  // TODO(yoshiki): Move the message center bubble related logic to ash/.
-  hide_empty_message_center_callback_.reset();
-#endif
-
-  if (!message_center_visible_)
-    return false;
-  delegate_->HideMessageCenter();
-  MarkMessageCenterHidden();
-
-  return true;
-}
-
-void UiController::MarkMessageCenterHidden() {
-  if (!message_center_visible_)
-    return;
-  message_center_visible_ = false;
-  message_center_->SetVisibility(message_center::VISIBILITY_TRANSIENT);
-
-  // Some notifications (like system ones) should appear as popups again
-  // after the message center is closed.
-  if (message_center_->HasPopupNotifications()) {
-    ShowPopupBubble();
-    return;
-  }
-
-  NotifyUiControllerChanged();
-}
-
+/*
 void UiController::ShowPopupBubble() {
   if (message_center_visible_)
     return;
@@ -172,7 +129,6 @@ bool UiController::HidePopupBubble() {
     return false;
   HidePopupBubbleInternal();
   NotifyUiControllerChanged();
-
   return true;
 }
 
@@ -183,15 +139,10 @@ void UiController::HidePopupBubbleInternal() {
   delegate_->HidePopups();
   popups_visible_ = false;
 }
+*/
 
 void UiController::ShowNotifierSettingsBubble() {
-  if (popups_visible_)
-    HidePopupBubbleInternal();
-
-  message_center_visible_ = delegate_->ShowNotifierSettings();
-  message_center_->SetVisibility(message_center::VISIBILITY_SETTINGS);
-
-  NotifyUiControllerChanged();
+  delegate_->ShowNotifierSettings();
 }
 
 std::unique_ptr<ui::MenuModel> UiController::CreateNotificationMenuModel(
@@ -213,15 +164,13 @@ void UiController::OnNotificationUpdated(const std::string& notification_id) {
 }
 
 void UiController::OnNotificationClicked(const std::string& notification_id) {
-  if (popups_visible_)
-    OnMessageCenterChanged();
+  OnMessageCenterChanged();
 }
 
 void UiController::OnNotificationButtonClicked(
     const std::string& notification_id,
     int button_index) {
-  if (popups_visible_)
-    OnMessageCenterChanged();
+  OnMessageCenterChanged();
 }
 
 void UiController::OnNotificationSettingsClicked(bool handled) {
@@ -243,31 +192,6 @@ void UiController::OnBlockingStateChanged(NotificationBlocker* blocker) {
 }
 
 void UiController::OnMessageCenterChanged() {
-#if defined(OS_CHROMEOS)
-  // TODO(yoshiki): Move the message center bubble related logic to ash/.
-  if (message_center_visible_ && message_center_->NotificationCount() == 0) {
-    if (hide_empty_message_center_callback_)
-      return;
-
-    hide_empty_message_center_callback_ =
-        std::make_unique<base::CancelableClosure>(base::Bind(
-            base::IgnoreResult(&UiController::HideMessageCenterBubble),
-            base::Unretained(this)));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, hide_empty_message_center_callback_->callback());
-    return;
-  }
-
-  // Cancel the callback if necessary.
-  if (hide_empty_message_center_callback_)
-    hide_empty_message_center_callback_.reset();
-#endif
-
-  if (popups_visible_ && !message_center_->HasPopupNotifications())
-    HidePopupBubbleInternal();
-  else if (!popups_visible_ && message_center_->HasPopupNotifications())
-    ShowPopupBubble();
-
   NotifyUiControllerChanged();
 }
 
