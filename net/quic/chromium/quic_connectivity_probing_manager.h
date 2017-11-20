@@ -53,9 +53,7 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager
   int HandleWriteError(int error_code,
                        scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer>
                            last_packet) override;
-
   void OnWriteError(int error_code) override;
-
   void OnWriteUnblocked() override;
 
   // Starts probe |network| to |peer_address|. |this| will take ownership of
@@ -72,15 +70,26 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager
                     std::unique_ptr<QuicChromiumPacketReader> reader,
                     base::TimeDelta initial_timeout);
 
-  // Cancels undergoing probing.
-  void CancelProbing();
+  // Cancels undergoing probing if the current |network_| being probed is the
+  // same as |network|.
+  void CancelProbing(NetworkChangeNotifier::NetworkHandle network);
 
   // Called when a connectivity probing packet has been received from
   // |peer_address| on a socket with |self_address|.
   void OnConnectivityProbingReceived(const QuicSocketAddress& self_address,
                                      const QuicSocketAddress& peer_address);
 
+  // Returns true if the manager is currently probing |network| to
+  // |peer_address|.
+  bool IsUnderProbing(NetworkChangeNotifier::NetworkHandle network,
+                      const QuicSocketAddress& peer_address) {
+    return (network == network_ && peer_address == peer_address_);
+  }
+
  private:
+  // Cancels undergoing probing.
+  void CancelProbingIfAny();
+
   // Called when a connectivity probing needs to be sent to |peer_address_| and
   // set a timer to resend a connectivity probing packet to peer after
   // |timeout|.
@@ -94,6 +103,9 @@ class NET_EXPORT_PRIVATE QuicConnectivityProbingManager
 
   Delegate* delegate_;  // Unowned, must outlive |this|.
 
+  // Current network that is under probing, resets to
+  // NetworkChangeNotifier::kInvalidNetwork when probing results has been
+  // delivered to |delegate_|.
   NetworkChangeNotifier::NetworkHandle network_;
   QuicSocketAddress peer_address_;
 
