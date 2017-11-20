@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aeac3cf_4db3d385",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T06:08:11Z",
+      "side": 1,
+      "message": "Ah, sure, this approach works too (i.e., creating a SiteInstance rather than calling DoesSiteRequireDedicatedProcess directly outside content).",
+      "revId": "b349c35696bf3cac4aff22c87e88959901795a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

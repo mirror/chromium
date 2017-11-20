@@ -244,6 +244,30 @@
     },
     {
       "key": {
+        "uuid": "ec1f6af1_a359ea1d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 10623,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T06:08:11Z",
+      "side": 1,
+      "message": "Thanks-- looks good.",
+      "parentUuid": "b9d8ef4c_41419430",
+      "range": {
+        "startLine": 10623,
+        "startChar": 50,
+        "endLine": 10623,
+        "endChar": 55
+      },
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "605fce2d_b3671cf0",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 7
