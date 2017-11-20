@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978edccc_2f27fd71",
+        "filename": "services/preferences/public/cpp/lib/util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T16:00:54Z",
+      "side": 1,
+      "message": "Initially I replaced all of this by\n\n  if (value) {\n    dictionary_value-\u003eSetPath(path_components,\n                              base::Value::FromUniquePtrValue(std::move(value)));\n  } else {\n    dictionary_value-\u003eRemovePath(path_components);\n  }\n\n\nHowever, this caused a test to fail. They are not equivalent, because SetPath does not modify intermediate values that are not dictionaries and simply returns nullptr in this case: https://codesearch.chromium.org/chromium/src/base/values.cc?l\u003d376,377\u0026rcl\u003ddc7f3672754f4c758eab130200ef15ef3cef668b\n\nWhat do you think about changing SetPath\u0027s behavior so that it is overwriting intermediate values and is thus equivalent to calling SetKey() repeatedly and the old Set()?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 1
+      },
+      "revId": "86e7970f84ff1ba1d141a4ded0d6cc41a003786c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
