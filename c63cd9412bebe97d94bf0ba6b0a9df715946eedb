@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0569b817_84ef6a3b",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T17:01:54Z",
+      "side": 1,
+      "message": "Can you file a bug for this with the SiteIsolation component and list the bug number in the TODO?  We\u0027ll want to enforce this in the browser process as part of the site isolation work, and this will help me keep track of it.",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddce9dfb_04cdb86a",
         "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
         "patchSetId": 19
@@ -13,6 +30,41 @@
       "writtenOn": "2017-11-20T01:49:42Z",
       "side": 1,
       "message": "nit: is this needed?",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd39c72_0f2112da",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T17:01:54Z",
+      "side": 1,
+      "message": "\u003e nit: is this needed?\n\nI would want to make sure we have coverage for this in --site-per-process to make sure the change works with OOPIFs.  However, we may not need to do this for all tests in this file.\n\nThe linux try bot does a separate run of content_browsertests with --site-per-process (and we\u0027re adding a waterfall bot for it to replace that), so I think it\u0027s probably safe to proceed without adding the flag and rely on that coverage.",
+      "parentUuid": "ddce9dfb_04cdb86a",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c892c78_e1858847",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T17:01:54Z",
+      "side": 1,
+      "message": "This looks flaky to me.  The NavigateIframeToURL call above will only necessarily wait for the first commit, and not necessarily for #pass to be added.\n\nIs this why some of the tests above have NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 2);?  Some of those are marked flaky as well, fwiw.",
       "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +99,24 @@
       "writtenOn": "2017-11-20T01:49:42Z",
       "side": 1,
       "message": "nit: this is a bit confusing because of the double negative. How about just calling pass() here and fail() in the catch() and then EXPECTing a result of \"fail\"?",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b1f0a1_78a7f513",
+        "filename": "content/test/data/generic_sensor/ambient_light_sensor_cross_origin_iframe_test.html",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T17:01:54Z",
+      "side": 1,
+      "message": "\u003e nit: this is a bit confusing because of the double negative. How about just calling pass() here and fail() in the catch() and then EXPECTing a result of \"fail\"?\n\nI would argue it\u0027s better as is, maybe with a comment like \"The Generic Sensor API is expected to throw an exception for cross-origin frames.\"  I\u0027ve seen this pattern in other tests.  (I would find flipping the meaning of pass() and fail() confusing.)",
+      "parentUuid": "c11c62f4_5a5767a0",
       "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
