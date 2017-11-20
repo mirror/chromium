@@ -22,6 +22,30 @@
       "revId": "f43bee00ab99886c6d9b3286f713022997bfd808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6601980_c0d4e3d8",
+        "filename": "ios/chrome/browser/ui/settings/block_popups_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-20T11:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8952130_00740c90",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 19
+      },
+      "revId": "f43bee00ab99886c6d9b3286f713022997bfd808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
