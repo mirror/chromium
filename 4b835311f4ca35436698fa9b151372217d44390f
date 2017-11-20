@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "539207cc_a3a94a32",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:50:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ab3ef0_9c9e9c54",
+      "range": {
+        "startLine": 90,
+        "startChar": 13,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "4b835311f4ca35436698fa9b151372217d44390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13c8096f_b0c12331",
         "filename": "chrome/browser/resources/md_extensions/item_list.js",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T18:27:49Z",
       "side": 1,
       "message": "isn\u0027t /deep/ deprecated?\nShould we add |focusDetails| and |focusError| to avoid piercing the shadow dom?",
+      "range": {
+        "startLine": 48,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "4b835311f4ca35436698fa9b151372217d44390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822c3a5c_858a6ee0",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:50:12Z",
+      "side": 1,
+      "message": "\"/deep/\" is deprecated only for CSS. It can still be used in JS for now. See NOTE at https://developers.google.com/web/updates/2017/10/remove-shadow-piercing#the_decision_to_remove.",
+      "parentUuid": "13c8096f_b0c12331",
       "range": {
         "startLine": 48,
         "startChar": 29,
@@ -68,6 +116,30 @@
       "revId": "4b835311f4ca35436698fa9b151372217d44390f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6862ad8c_e10d31ba",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-20T18:50:12Z",
+      "side": 1,
+      "message": "Ack. Let\u0027s revisit this if/when necessary. Current thinking:\n\nWhen exiting EXTENSIONS-ITEM-LIST, a number of different views could have been entered, so not clear what to focus. Whichever view is entered should be responsible to focus the right thing, instead of doing this here.\n\nEntering EXTENSIONS-KEYBOARD-SHORTCUT happens via the sidebar only. Exiting EXTENSIONS-KEYBOARD-SHORTCUT can can only happen by clicking the back button in the browser address bar or by re-opening the sidebar, so not obvious what should be focused when returning from that view.",
+      "parentUuid": "735c348a_f5c88a14",
+      "range": {
+        "startLine": 486,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 7
+      },
+      "revId": "4b835311f4ca35436698fa9b151372217d44390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
