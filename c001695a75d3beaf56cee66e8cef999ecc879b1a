@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d5fa0a0_caf42f14",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T21:17:08Z",
+      "side": 1,
+      "message": "#import Foundation",
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83503638_4afbf307",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T21:17:08Z",
+      "side": 1,
+      "message": "Could you please document how this class works in the comments.",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16689889_d7f0d693",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T21:17:08Z",
+      "side": 1,
+      "message": "Would it be better to have a separate documented method for adding a suggestion for form name?",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eba5f2a_5fa5bd12",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T21:17:08Z",
+      "side": 1,
+      "message": "[_suggestionsByFormName[formName] count] ? YES : NO\n\nhttp://go/objc-style#BOOL_Pitfalls",
+      "range": {
+        "startLine": 35,
+        "startChar": 47,
+        "endLine": 35,
+        "endChar": 52
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9a6524_38afba4d",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T21:17:08Z",
+      "side": 1,
+      "message": "s/nil/self ?",
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccadda4_aaf8f911",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T21:17:08Z",
+      "side": 1,
+      "message": "Do we want to record and store this suggestion, so the tests could check them?",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
