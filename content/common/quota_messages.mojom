@@ -1,0 +1,53 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "url/mojo/url.mojom";
+
+// TODO(sashab): Remove duplicate definition storage::StorageType.
+enum StorageType {
+  Temporary,
+  Persistent,
+  Syncable,
+  QuotaNotManaged,
+  Unknown,
+};
+
+// TODO(sashab): Remove duplicate definition storage::QuotaStatusCode.
+enum QuotaStatusCode {
+  Ok = 0,
+  ErrorNotSupported,
+  ErrorInvalidModification,
+  ErrorInvalidAccess,
+  ErrorAbort,
+  Unknown,
+};
+
+// API for the renderer process to request quota information from the browser
+// process.
+// TODO(sashab): Make usage/quota callback parameters optional, only set on
+// success (when QuotaStatusCode is Ok).
+// TODO(sashab): Remove request_id.
+// TODO(sashab): Remove origin_url, moving this interface to be per-frame
+// instead of per-process.
+interface QuotaMessages {
+  // Renderer process requests storage quota from the browser process.
+  RequestStorageQuota(int64 request_id,
+                      int64 render_frame_id,
+                      url.mojom.Url origin_url,
+                      StorageType storage_type,
+                      uint64 requested_size) => (int64 request_id,
+                                                 QuotaStatusCode error,
+                                                 int64 current_usage,
+                                                 int64 granted_quota);
+
+  // Renderer process queries storage usage and quota from the browser process.
+  QueryStorageUsageAndQuota(int64 request_id,
+                            url.mojom.Url origin_url,
+                            StorageType storage_type) => (int64 request_id,
+                                                          QuotaStatusCode error,
+                                                          int64 current_usage,
+                                                          int64 current_quota);
+};
