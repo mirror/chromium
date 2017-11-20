@@ -3,11 +3,12 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""From a native code residency dump created by log_residency.cc, generates a
-visual timeline.
+"""From a native code residency dump created by log_residency.cc, generate a
+visual timeline, and serialize the parsed data to JSON.
 """
 
 import argparse
+import json
 import logging
 from matplotlib import collections as mc
 from matplotlib import pylab as plt
@@ -21,6 +22,8 @@ def CreateArgumentParser():
   parser.add_argument('--dump', type=str, required=True, help='Residency dump')
   parser.add_argument('--output', type=str, required=True,
                       help='Output filename')
+  parser.add_argument('--json', type=str, required=False, default=None,
+                      help='JSON output filename')
   return parser
 
 
@@ -31,16 +34,48 @@ def ParseDump(filename):
     filename: (str) dump filename.
 
   Returns:
-    {timestamp (int): data ([bool])}
+    {"start": offset, "end": offset,
+     "residency": {timestamp (int): data ([bool])}}
   """
   result = {}
   with open(filename, 'r') as f:
+    (start, end) = [int(x) for x in f.readline().strip().split(' ')]
+    result = {'start': start, 'end': end, 'residency': {}}
     for line in f:
       line = line.strip()
       timestamp, data = line.split(' ')
       data_array = [x == '1' for x in data]
-      result[int(timestamp)] = data_array
+      result['residency'][int(timestamp)] = data_array
   return result
+
+
+def WriteJsonOutput(data, filename):
+  """Serializes the parsed data to JSON.
+
+  Args:
+    data: (dict) As returned by ParseDump()
+    filename: (str) output filename.
+
+  JSON format:
+  {'offset': int, 'data': {
+    relative_timestamp: [{'page_offset': int, 'resident': bool}]}}
+
+  Where:
+    - offset is the code start offset into its page
+    - relative_timestamp is the offset in ns since the first measurement
+    - page_offset is the page offset in bytes
+  """
+  result = {'offset': data['start'], 'data': {}}
+  start_timestamp = min(data['data'].keys())
+  for timestamp in data['data']:
+    adjusted_timestamp = timestamp - start_timestamp
+    result[adjusted_timestamp] = []
+    residency = data['data'][timestamp]
+    for (index, resident) in enumerate(residency):
+      result[adjusted_timestamp].append(
+          {'offset': index * (1 << 12), 'resident': resident})
+  with open(filename, 'w') as f:
+    json.dump(result, f)
 
 
 def PlotResidency(data, output_filename):
@@ -50,6 +85,9 @@ def PlotResidency(data, output_filename):
     data: (dict) As returned by ParseDump().
     output_filename: (str) Output filename.
   """
+  start = data['start']
+  end = data['end']
+  data = data['residency']
   fig, ax = plt.subplots(figsize=(20, 10))
   timestamps = sorted(data.keys())
   x_max = len(data.values()[0]) * 4096
@@ -65,10 +103,12 @@ def PlotResidency(data, output_filename):
       lc = mc.LineCollection(segments, colors=colors, linewidths=8)
       ax.add_collection(lc)
 
+  plt.axvline(start)
+  plt.axvline(end)
   plt.title('Code residency vs time since startup.')
   plt.xlabel('Code page offset (bytes)')
   plt.ylabel('Time since startup (ms)')
-  plt.ylim(-.5e3, ymax=(timestamps[-1] - timestamps[0]) / 1e6 + .5e3)
+  plt.ylim(0, ymax=(timestamps[-1] - timestamps[0]) / 1e6)
   plt.xlim(xmin=0, xmax=x_max)
   plt.savefig(output_filename, bbox_inches='tight', dpi=300)
 
@@ -79,6 +119,8 @@ def main():
   logging.basicConfig(level=logging.INFO)
   logging.info('Parsing the data')
   data = ParseDump(args.dump)
+  if args.json:
+    WriteJsonOutput(data, args.json)
   logging.info('Plotting the results')
   PlotResidency(data, args.output)
 
