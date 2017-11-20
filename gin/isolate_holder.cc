@@ -58,15 +58,14 @@ IsolateHolder::IsolateHolder(
                                        base::SysInfo::AmountOfVirtualMemory());
   params.array_buffer_allocator = allocator;
   params.allow_atomics_wait = atomics_wait_mode == kAllowAtomicsWait;
+
+  snapshot_type_ = V8Initializer::GetV8ContextSnapshotData(&snapshot_blob_);
+  CHECK(g_reference_table ||
+        snapshot_type_ != SnapshotType::kV8ContextSnapshot);
+  params.snapshot_blob =
+      (snapshot_type_ == SnapshotType::kNone) ? nullptr : &snapshot_blob_;
   params.external_references = g_reference_table;
 
-  if (startup_data) {
-    CHECK(g_reference_table);
-    V8Initializer::GetV8ContextSnapshotData(startup_data);
-    if (startup_data->data) {
-      params.snapshot_blob = startup_data;
-    }
-  }
   isolate_ = v8::Isolate::New(params);
 
   SetUp(std::move(task_runner));
@@ -74,16 +73,10 @@ IsolateHolder::IsolateHolder(
 
 IsolateHolder::IsolateHolder(v8::StartupData* existing_blob)
     : access_mode_(AccessMode::kSingleThread) {
-  CHECK(existing_blob);
-
   v8::StartupData unused_natives;
-  V8Initializer::GetV8ExternalSnapshotData(&unused_natives, existing_blob);
-  if (!existing_blob->data) {
-    existing_blob = nullptr;
-  }
-
+  V8Initializer::GetV8ExternalSnapshotData(&unused_natives, &snapshot_blob_);
   snapshot_creator_.reset(
-      new v8::SnapshotCreator(g_reference_table, existing_blob));
+      new v8::SnapshotCreator(g_reference_table, existing_blob_));
   isolate_ = snapshot_creator_->GetIsolate();
 
   SetUp(nullptr);
