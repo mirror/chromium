@@ -24,7 +24,9 @@ class WMState;
 namespace aura {
 class Env;
 class TestScreen;
+class TestWindowManagerDelegate;
 class TestWindowTree;
+class TestWindowTreeClientDelegate;
 class TestWindowTreeClientSetup;
 class Window;
 class WindowManagerDelegate;
@@ -38,6 +40,7 @@ class FocusClient;
 }
 namespace test {
 class TestWindowParentingClient;
+class WindowTreeClientSetter;
 
 // A helper class owned by tests that does common initialization required for
 // Aura use. This class creates a root window with clients and other objects
@@ -114,6 +117,12 @@ class AuraTestHelper {
   Mode mode_ = Mode::LOCAL;
   bool setup_called_;
   bool teardown_called_;
+  std::unique_ptr<WindowTreeClientSetter> window_tree_client_setter_;
+  // This is only created if Env has already been created and it's Mode is MUS.
+  std::unique_ptr<TestWindowTreeClientDelegate>
+      test_window_tree_client_delegate_;
+  // This is only created if Env has already been created and it's Mode is MUS.
+  std::unique_ptr<TestWindowManagerDelegate> test_window_manager_delegate_;
   std::unique_ptr<TestWindowTreeClientSetup> window_tree_client_setup_;
   std::unique_ptr<aura::Env> env_;
   std::unique_ptr<wm::WMState> wm_state_;
