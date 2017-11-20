@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "58d59997_338d53f9",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T21:58:18Z",
+      "side": 1,
+      "message": "Ah, OK, it is certainly possible to receive multiple network updates within a frame.\n\nA better solution would be to only allow a single active network request.\n\nAn even better solution would be to move the auto-close logic to internet_page.js. This actually makes a bit more sense with some recent refactoring I did: https://chromium-review.googlesource.com/c/chromium/src/+/775661\n\nIt looks like we are going to want to do something similar for Tether. LEt\u0027s keep the auto close logic out of this CL for now and I will put up a CL that addresses this for both Tether and Arc VPN.",
+      "parentUuid": "8c87711c_02160de6",
+      "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35289046_c6da5b69",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 13
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "From what I observe, for ArcVpn network, it prints source as \"User\". Without isArcVpn check, Forget, prefer and autoconnect option will be shown.",
       "parentUuid": "35289046_c6da5b69",
+      "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9411974f_33cb71fd",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T21:58:18Z",
+      "side": 1,
+      "message": "Hmm. OK. I suppose that makes sense. In that case this is fine, but my orignal comment was actaully incorrect. I was under the impression that Arc VPN was not treated like Shill configured networks and that Source would be None. Since that is not the case, we shouldn\u0027t change the logic here but should change the logic where this is called and we want to treat Arc VPN differently. Apologies for the back and forth.",
+      "parentUuid": "1bc7c16b_2857d2c7",
       "revId": "d8d00158f7bd391448577c7dd4d70f4ca192a429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
