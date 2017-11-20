@@ -20,6 +20,11 @@ cr.define('settings', function() {
      * @param {string} appId
      */
     addThirdPartyVpn(networkType, appId) {}
+
+    /**
+     * Requests Chrome to send list of Arc VPN providers.
+     */
+    requestArcVpnProviders() {}
   }
 
   /**
@@ -34,6 +39,11 @@ cr.define('settings', function() {
     /** @override */
     addThirdPartyVpn(networkType, appId) {
       chrome.send('addNetwork', [networkType, appId]);
+    }
+
+    /** @override */
+    requestArcVpnProviders() {
+      chrome.send('requestArcVpnProviders');
     }
   }
 

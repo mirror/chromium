@@ -146,6 +146,22 @@ Polymer({
   shouldShowConfigureWhenNetworkLoaded_: false,
 
   /**
+   * Set in close_() to prevent close_() been called multiple times when
+   * connection state of Arc VPN changes from connected to disconected
+   * and cause wrong navigation. Reset in currentRouteChanged().
+   * @private {boolean}
+   */
+  isClosed_: false,
+
+  /** @private  {settings.InternetPageBrowserProxy} */
+  browserProxy_: null,
+
+  /** @override */
+  created: function() {
+    this.browserProxy_ = settings.InternetPageBrowserProxyImpl.getInstance();
+  },
+
+  /**
    * settings.RouteObserverBehavior
    * @param {!settings.Route} route
    * @param {!settings.Route} oldRoute
@@ -178,11 +194,15 @@ Polymer({
       Name: {Active: name},
     };
     this.didSetFocus_ = false;
+    this.isClosed_ = false;
     this.getNetworkDetails_();
   },
 
   /** @private */
   close_: function() {
+    if (this.isClosed_)
+      return;
+    this.isClosed_ = true;
     // Delay navigating to allow other subpages to load first.
     requestAnimationFrame(function() {
       settings.navigateToPreviousRoute();
@@ -310,6 +330,11 @@ Polymer({
       return;
     }
     this.networkProperties = properties;
+
+    // Detail page should not be shown when Arc VPN is not connected.
+    if (this.isArcVpn_(properties) && !this.isConnectedState_(properties))
+      this.close_();
+
     this.networkPropertiesReceived_ = true;
   },
 
@@ -390,7 +415,8 @@ Polymer({
    */
   isRemembered_: function(networkProperties) {
     var source = networkProperties.Source;
-    return !!source && source != CrOnc.Source.NONE;
+    return !!source && source != CrOnc.Source.NONE &&
+        !this.isArcVpn_(networkProperties);
   },
 
   /**
@@ -434,6 +460,11 @@ Polymer({
   showConnect_: function(networkProperties, globalPolicy) {
     if (this.connectNotAllowed_(networkProperties, globalPolicy))
       return false;
+    // TODO(lgcheng@) support connect Arc VPN from UI once Android support API
+    // to initiate a VPN session.
+    if (this.isArcVpn_(networkProperties))
+      return false;
+
     return networkProperties.Type != CrOnc.Type.ETHERNET &&
         networkProperties.ConnectionState ==
         CrOnc.ConnectionState.NOT_CONNECTED;
@@ -459,6 +490,7 @@ Polymer({
     var type = networkProperties.Type;
     if (type != CrOnc.Type.WI_FI && type != CrOnc.Type.VPN)
       return false;
+
     return !this.isPolicySource(networkProperties.Source) &&
         this.isRemembered_(networkProperties);
   },
@@ -491,6 +523,10 @@ Polymer({
     if ((type == CrOnc.Type.WI_FI || type == CrOnc.Type.WI_MAX) &&
         networkProperties.ConnectionState !=
             CrOnc.ConnectionState.NOT_CONNECTED) {
+      return false;
+    }
+    if (this.isArcVpn_(networkProperties) &&
+        !this.isConnectedState_(networkProperties)) {
       return false;
     }
     return true;
@@ -598,6 +634,11 @@ Polymer({
 
   /** @private */
   onConfigureTap_: function() {
+    if (this.networkProperties && this.isArcVpn_(this.networkProperties)) {
+      this.browserProxy_.showNetworkConfigure(this.guid);
+      return;
+    }
+
     if (loadTimeData.getBoolean('networkSettingsConfig'))
       this.fire('show-config', this.networkProperties);
     else
@@ -869,6 +910,8 @@ Polymer({
       var vpnType = CrOnc.getActiveValue(this.networkProperties.VPN.Type);
       if (vpnType == 'ThirdPartyVPN') {
         fields.push('VPN.ThirdPartyVPN.ProviderName');
+      } else if (vpnType == 'ARCVPN') {
+        fields.push('VPN.Type');
       } else {
         fields.push('VPN.Host', 'VPN.Type');
         if (vpnType == 'OpenVPN')
@@ -953,7 +996,8 @@ Polymer({
       return false;
     }
     return this.hasAdvancedFields_() || this.hasDeviceFields_() ||
-        this.isRememberedOrConnected_(networkProperties);
+        (networkProperties.Type != CrOnc.Type.VPN &&
+         this.isRememberedOrConnected_(networkProperties));
   },
 
   /**
@@ -1020,12 +1064,29 @@ Polymer({
   },
 
   /**
+   * @param {!CrOnc.NetworkProperties} networkProperties
+   * @return {boolean}
+   * @private
+   */
+  isArcVpn_: function(networkProperties) {
+    return !!networkProperties.VPN &&
+        CrOnc.getActiveValue(this.networkProperties.VPN.Type) == 'ARCVPN';
+  },
+
+  /**
    * @param {string} ipAddress
    * @param {!CrOnc.NetworkProperties} networkProperties
    * @return {boolean}
    * @private
    */
   showIpAddress_: function(ipAddress, networkProperties) {
+    // Arc Vpn does not currently pass IP configuration to ChromeOS. IP address
+    // property holds an internal IP address Android uses to talk to ChromeOS.
+    // TODO(lgcheng@) Show correct IP address when we implement IP configuration
+    // correclty.
+    if (this.isArcVpn_(networkProperties))
+      return false;
+
     return !!ipAddress && this.isConnectedState_(networkProperties);
   },
 
