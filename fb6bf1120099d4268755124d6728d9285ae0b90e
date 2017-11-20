@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3451cffb_c8b6e49e",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-20T05:34:58Z",
+      "side": 1,
+      "message": "content embedders can only include content/public, even test files\n\nso you can add a SetNetworkFactoryForTesting method to StorageParition interface that does the plumbing",
+      "revId": "fb6bf1120099d4268755124d6728d9285ae0b90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
