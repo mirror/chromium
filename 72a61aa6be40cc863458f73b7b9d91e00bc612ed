@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d751179b_2215d0f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-20T18:18:22Z",
+      "side": 1,
+      "message": "This looks identical to the line above?",
+      "range": {
+        "startLine": 171,
+        "startChar": 47,
+        "endLine": 171,
+        "endChar": 48
+      },
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23fb035_2b7623c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-20T18:18:22Z",
+      "side": 1,
+      "message": "I would suggest first checking the return value and adding the section only if there\u0027s going to be something in the section.",
+      "range": {
+        "startLine": 191,
+        "startChar": 12,
+        "endLine": 191,
+        "endChar": 27
+      },
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33db1c7_66d895c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-20T18:18:22Z",
+      "side": 1,
+      "message": "Same here, check for names being available first",
+      "range": {
+        "startLine": 194,
+        "startChar": 25,
+        "endLine": 194,
+        "endChar": 40
+      },
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dd52c4_f5d4f547",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-20T18:18:22Z",
+      "side": 1,
+      "message": "I would try to make the try/catch block more narrow, I assume this can happen in x509.getSubjectAlternativeNames()? Putting try-catch around that only makes it more obvious where the error is likely to happen and what the output would be in case of exception.",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8687a9_4d6b8bd9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2484,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-20T18:18:22Z",
+      "side": 1,
+      "message": "Please move out this message into shared OS block instead of creating a new message",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256e3895_d721b504",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2652,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-20T18:18:22Z",
+      "side": 1,
+      "message": "Ditto. I think having consistent naming with desktop would be good.",
+      "revId": "72a61aa6be40cc863458f73b7b9d91e00bc612ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
