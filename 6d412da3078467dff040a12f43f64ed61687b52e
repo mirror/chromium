@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13e0daac_abf2c0d9",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T22:31:43Z",
+      "side": 1,
+      "message": "nit: perhaps we can rephrase this so people who aren\u0027t familiar with these terms can understand this?  Something like:\n\nCheck two kinds of access:\n- isolated origins should only be allowed to access data for the same origin (\"jail\" enforcement)\n- other sites should not be allowed to access data of an isolated origin (\"citadel\" enforcement)",
+      "range": {
+        "startLine": 1054,
+        "startChar": 50,
+        "endLine": 1055,
+        "endChar": 17
+      },
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2137cb9_dffa7caf",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T22:31:43Z",
+      "side": 1,
+      "message": "nit: EXPECT_TRUE",
+      "range": {
+        "startLine": 1004,
+        "startChar": 0,
+        "endLine": 1004,
+        "endChar": 43
+      },
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8c96d1_9ea29d76",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T22:31:43Z",
+      "side": 1,
+      "message": "nit: not needed, can just use \"web_contents()\" helper defined in this class.",
+      "range": {
+        "startLine": 1005,
+        "startChar": 19,
+        "endLine": 1005,
+        "endChar": 22
+      },
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead4ab74_3749f028",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T22:31:43Z",
+      "side": 1,
+      "message": "nit: main frame\u0027s? (there\u0027s no subframe here)",
+      "range": {
+        "startLine": 1013,
+        "startChar": 44,
+        "endLine": 1013,
+        "endChar": 54
+      },
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167b9140_ffdde060",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T22:31:43Z",
+      "side": 1,
+      "message": "nit: s/accessed/set/",
+      "range": {
+        "startLine": 1032,
+        "startChar": 23,
+        "endLine": 1032,
+        "endChar": 31
+      },
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94eef6bb_3cb4b196",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T22:31:43Z",
+      "side": 1,
+      "message": "EXPECT_TRUE",
+      "range": {
+        "startLine": 1048,
+        "startChar": 2,
+        "endLine": 1048,
+        "endChar": 15
+      },
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc5586e_9b0d2c7d",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T22:31:43Z",
+      "side": 1,
+      "message": "web_contents()",
+      "range": {
+        "startLine": 1050,
+        "startChar": 32,
+        "endLine": 1050,
+        "endChar": 35
+      },
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc7be82_7fa5bd34",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T22:31:43Z",
+      "side": 1,
+      "message": "s/subframe/main frame/",
+      "range": {
+        "startLine": 1057,
+        "startChar": 44,
+        "endLine": 1057,
+        "endChar": 54
+      },
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
