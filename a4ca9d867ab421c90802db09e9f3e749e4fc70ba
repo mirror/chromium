@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0e3aace3_475fbe62",
+        "filename": "sandbox/linux/syscall_broker/broker_file_permission.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T19:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3579c739_0e535baf",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 209,
+        "endChar": 1
+      },
+      "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daebd389_7bcc03de",
         "filename": "third_party/WebKit/Source/platform/fonts/BitmapGlyphsBlacklist.cpp",
         "patchSetId": 2
@@ -233,6 +257,30 @@
       "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63d4b50_7ee514f0",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T19:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab8634a0_9e89e88f",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 10
+      },
+      "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
