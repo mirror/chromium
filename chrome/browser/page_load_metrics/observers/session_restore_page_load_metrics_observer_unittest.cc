@@ -13,10 +13,12 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
+#include "base/metrics/metrics_hashes.h"
 #include "base/stl_util.h"
 #include "base/test/histogram_tester.h"
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h"
 #include "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_tester.h"
 #include "chrome/browser/page_load_metrics/page_load_tracker.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
@@ -31,15 +33,16 @@
 #include "content/public/common/referrer.h"
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/web_contents_tester.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
 using WebContents = content::WebContents;
 
 class SessionRestorePageLoadMetricsObserverTest
-    : public ChromeRenderViewHostTestHarness {
+    : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  static void RegisterObservers(page_load_metrics::PageLoadTracker* tracker) {
+  void RegisterObservers(page_load_metrics::PageLoadTracker* tracker) override {
     tracker->AddObserver(
         base::MakeUnique<SessionRestorePageLoadMetricsObserver>());
   }
@@ -48,7 +51,7 @@ class SessionRestorePageLoadMetricsObserverTest
   SessionRestorePageLoadMetricsObserverTest() {}
 
   void SetUp() override {
-    ChromeRenderViewHostTestHarness::SetUp();
+    PageLoadMetricsObserverTestHarness::SetUp();
 
     // Add a default web contents.
     AddForegroundTabWithTester();
@@ -85,7 +88,8 @@ class SessionRestorePageLoadMetricsObserverTest
         base::MakeUnique<page_load_metrics::PageLoadMetricsObserverTester>(
             contents,
             base::BindRepeating(
-                &SessionRestorePageLoadMetricsObserverTest::RegisterObservers));
+                &SessionRestorePageLoadMetricsObserverTest::RegisterObservers,
+                base::Unretained(this)));
     testers_[contents] = std::move(tester);
     contents->WasShown();
     return contents;
@@ -106,6 +110,15 @@ class SessionRestorePageLoadMetricsObserverTest
     histogram_tester_.ExpectTotalCount(
         internal::kHistogramSessionRestoreForegroundTabFirstMeaningfulPaint,
         expected_total_count);
+  }
+
+  void ExpectUkmEntry(const ukm::mojom::UkmEntry* entry, int num_tabs) {
+    using UkmEntry = ukm::builders::
+        TabManager_Experimental_SessionRestore_ForegroundTab_PageLoad;
+    EXPECT_EQ(base::HashMetricName(UkmEntry::kEntryName), entry->event_hash);
+    const ukm::mojom::UkmMetric* metric = ukm::TestUkmRecorder::FindMetric(
+        entry, UkmEntry::kSessionRestoreTabCountName);
+    EXPECT_EQ(num_tabs, metric->value);
   }
 
   void RestoreTab(WebContents* contents) {
@@ -152,6 +165,7 @@ class SessionRestorePageLoadMetricsObserverTest
 
 TEST_F(SessionRestorePageLoadMetricsObserverTest, NoMetrics) {
   ExpectFirstPaintMetricsTotalCount(0);
+  EXPECT_EQ(0ul, test_ukm_recorder().entries_count());
 }
 
 TEST_F(SessionRestorePageLoadMetricsObserverTest,
@@ -160,6 +174,7 @@ TEST_F(SessionRestorePageLoadMetricsObserverTest,
       GetTestURL(), web_contents()->GetMainFrame());
   ASSERT_NO_FATAL_FAILURE(SimulateTimingUpdateForTab(web_contents()));
   ExpectFirstPaintMetricsTotalCount(0);
+  EXPECT_EQ(0ul, test_ukm_recorder().entries_count());
 }
 
 TEST_F(SessionRestorePageLoadMetricsObserverTest, RestoreSingleForegroundTab) {
@@ -167,6 +182,8 @@ TEST_F(SessionRestorePageLoadMetricsObserverTest, RestoreSingleForegroundTab) {
   ASSERT_NO_FATAL_FAILURE(RestoreTab(web_contents()));
   ASSERT_NO_FATAL_FAILURE(SimulateTimingUpdateForTab(web_contents()));
   ExpectFirstPaintMetricsTotalCount(1);
+  EXPECT_EQ(1ul, test_ukm_recorder().entries_count());
+  ExpectUkmEntry(test_ukm_recorder().GetEntry(0), 1);
 }
 
 TEST_F(SessionRestorePageLoadMetricsObserverTest,
@@ -179,6 +196,8 @@ TEST_F(SessionRestorePageLoadMetricsObserverTest,
     ASSERT_NO_FATAL_FAILURE(RestoreTab(contents));
     ASSERT_NO_FATAL_FAILURE(SimulateTimingUpdateForTab(contents));
     ExpectFirstPaintMetricsTotalCount(i + 1);
+    EXPECT_EQ(i + 1, test_ukm_recorder().entries_count());
+    ExpectUkmEntry(test_ukm_recorder().GetEntry(i), i + 1);
   }
 }
 
@@ -192,6 +211,7 @@ TEST_F(SessionRestorePageLoadMetricsObserverTest, RestoreBackgroundTab) {
 
   // No paint timings recorded for tabs restored in background.
   ExpectFirstPaintMetricsTotalCount(0);
+  EXPECT_EQ(0ul, test_ukm_recorder().entries_count());
 }
 
 TEST_F(SessionRestorePageLoadMetricsObserverTest, HideTabBeforeFirstPaints) {
@@ -224,6 +244,7 @@ TEST_F(SessionRestorePageLoadMetricsObserverTest,
   // No paint timings recorded because the initial foreground tab was hidden.
   ASSERT_NO_FATAL_FAILURE(SimulateTimingUpdateForTab(web_contents()));
   ExpectFirstPaintMetricsTotalCount(0);
+  EXPECT_EQ(0ul, test_ukm_recorder().entries_count());
 }
 
 TEST_F(SessionRestorePageLoadMetricsObserverTest, MultipleSessionRestores) {
@@ -236,5 +257,7 @@ TEST_F(SessionRestorePageLoadMetricsObserverTest, MultipleSessionRestores) {
 
     // Number of paint timings should match the number of session restores.
     ExpectFirstPaintMetricsTotalCount(i);
+    EXPECT_EQ(i, test_ukm_recorder().entries_count());
+    ExpectUkmEntry(test_ukm_recorder().GetEntry(i - 1), i);
   }
 }
