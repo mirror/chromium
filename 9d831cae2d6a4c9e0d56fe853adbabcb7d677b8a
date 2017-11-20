@@ -46,6 +46,30 @@
       "revId": "9d831cae2d6a4c9e0d56fe853adbabcb7d677b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f34972c0_e807dd59",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-20T05:35:44Z",
+      "side": 1,
+      "message": "Thanks, it looks very neat now.",
+      "parentUuid": "78cfb273_9332d102",
+      "range": {
+        "startLine": 417,
+        "startChar": 31,
+        "endLine": 417,
+        "endChar": 37
+      },
+      "revId": "9d831cae2d6a4c9e0d56fe853adbabcb7d677b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
