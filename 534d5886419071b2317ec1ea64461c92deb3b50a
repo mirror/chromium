@@ -1034,6 +1034,30 @@
     },
     {
       "key": {
+        "uuid": "b724df6d_1cb9fdfe",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-20T22:17:15Z",
+      "side": 1,
+      "message": "Right, navigation is in the same frame, the FrameDetached() isn\u0027t called in this scenario either, probably we don\u0027t need to call FrameClosing() here. We don\u0027t need to resolve this here, filed a bug to track it. crbug.com/787085",
+      "parentUuid": "a0b923be_29495f4c",
+      "range": {
+        "startLine": 1209,
+        "startChar": 2,
+        "endLine": 1209,
+        "endChar": 14
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64fac799_3ee551c3",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 1
@@ -1117,6 +1141,30 @@
       "side": 1,
       "message": "Ok, it makes sense about iframes. Do you know what\u0027s the difference between DidStartProvisionalLoad on OnDidStartProvisionalLoad? Is OnDidStartProvisionalLoad called in the same cases as DidStartProvisionalLoad?",
       "parentUuid": "3d0bb9c2_abbc8f58",
+      "range": {
+        "startLine": 1278,
+        "startChar": 48,
+        "endLine": 1278,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "182056a7_79ed7a19",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-20T22:17:15Z",
+      "side": 1,
+      "message": "Not an expert on this, from my understanding OnDidStartProvisionalLoad() is browser side callback of DidStartProvisionalLoad, they are called in same cases. \n\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?rcl\u003de349345e584764cf9c219c3a2ae4ca2f639e554d\u0026l\u003d3816",
+      "parentUuid": "b2a96074_cbbd7fdd",
       "range": {
         "startLine": 1278,
         "startChar": 48,
