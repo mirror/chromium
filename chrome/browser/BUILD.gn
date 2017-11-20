@@ -2557,6 +2557,8 @@ split_static_library("browser") {
       "resource_coordinator/lifetime_unit.h",
       "resource_coordinator/tab_lifetime_observer.cc",
       "resource_coordinator/tab_lifetime_observer.h",
+      "resource_coordinator/tab_lifetime_unit.cc",
+      "resource_coordinator/tab_lifetime_unit.h",
       "resource_coordinator/tab_manager.cc",
       "resource_coordinator/tab_manager.h",
       "resource_coordinator/tab_manager_delegate_chromeos.cc",
