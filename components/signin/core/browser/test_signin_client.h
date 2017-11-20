@@ -28,9 +28,6 @@ class TestSigninClient : public SigninClient {
 
   void DoFinalInit() override;
 
-  // Returns NULL.
-  // NOTE: This should be changed to return a properly-initalized PrefService
-  // once there is a unit test that requires it.
   PrefService* GetPrefs() override;
 
   // Returns a pointer to a loaded database.
@@ -63,9 +60,6 @@ class TestSigninClient : public SigninClient {
   // in the default constructor.
   void SetURLRequestContext(net::URLRequestContextGetter* request_context);
 
-  // Returns true.
-  bool ShouldMergeSigninCredentialsIntoCookieJar() override;
-
   // Registers |callback| and returns the subscription.
   // Note that |callback| will never be called.
   std::unique_ptr<SigninClient::CookieChangedSubscription>
@@ -91,6 +85,12 @@ class TestSigninClient : public SigninClient {
       GaiaAuthConsumer* consumer,
       const std::string& source,
       net::URLRequestContextGetter* getter) override;
+  signin::AccountConsistencyMethod GetAccountConsistencyMethod() override;
+  bool IsDiceEnabled() override;
+  bool IsDiceMigrationEnabled() override;
+  bool IsDicePrepareMigrationEnabled() override;
+  bool IsDiceFixAuthErrorsEnabled() override;
+  bool IsMirrorEnabled() override;
   void PreGaiaLogout(base::OnceClosure callback) override;
 
   // Loads the token database.

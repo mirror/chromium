@@ -12,6 +12,7 @@
 #include "base/time/time.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/signin/core/browser/account_info.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/browser/webdata/token_web_data.h"
 #include "google_apis/gaia/gaia_auth_fetcher.h"
@@ -71,10 +72,6 @@ class SigninClient : public KeyedService {
   // Returns the URL request context information associated with the client.
   virtual net::URLRequestContextGetter* GetURLRequestContext() = 0;
 
-  // Returns whether the user's credentials should be merged into the cookie
-  // jar on signin completion.
-  virtual bool ShouldMergeSigninCredentialsIntoCookieJar() = 0;
-
   // Returns a string containing the version info of the product in which the
   // Signin component is being used.
   virtual std::string GetProductVersion() = 0;
@@ -132,6 +129,17 @@ class SigninClient : public KeyedService {
 
   // Called once the credentials has been copied to another SigninManager.
   virtual void AfterCredentialsCopied() {}
+
+  // AccountConsistency Dice:
+  virtual signin::AccountConsistencyMethod GetAccountConsistencyMethod() = 0;
+  virtual bool IsDiceEnabled() = 0;
+  virtual bool IsDiceMigrationEnabled() = 0;
+  virtual bool IsDicePrepareMigrationEnabled() = 0;
+  virtual bool IsDiceFixAuthErrorsEnabled() = 0;
+  virtual void MigrateProfileToDice() {}
+
+  // AccountConsistency Mirror:
+  virtual bool IsMirrorEnabled() = 0;
 
  protected:
   // Returns device id that is scoped to single signin.

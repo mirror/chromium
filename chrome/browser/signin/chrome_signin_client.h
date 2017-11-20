@@ -48,7 +48,6 @@ class ChromeSigninClient
   std::string GetSigninScopedDeviceId() override;
   void OnSignedOut() override;
   net::URLRequestContextGetter* GetURLRequestContext() override;
-  bool ShouldMergeSigninCredentialsIntoCookieJar() override;
   bool IsFirstRun() const override;
   base::Time GetInstallDate() override;
   bool AreSigninCookiesAllowed() override;
@@ -61,6 +60,13 @@ class ChromeSigninClient
       GaiaAuthConsumer* consumer,
       const std::string& source,
       net::URLRequestContextGetter* getter) override;
+  signin::AccountConsistencyMethod GetAccountConsistencyMethod() override;
+  bool IsDiceEnabled() override;
+  bool IsDiceMigrationEnabled() override;
+  bool IsDicePrepareMigrationEnabled() override;
+  bool IsDiceFixAuthErrorsEnabled() override;
+  void MigrateProfileToDice() override;
+  bool IsMirrorEnabled() override;
 
   // Returns a string describing the chrome version environment. Version format:
   // <Build Info> <OS> <Version number> (<Last change>)<channel or "-devel">

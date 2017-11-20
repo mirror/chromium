@@ -23,7 +23,6 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
-#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "components/signin/core/browser/signin_internals_util.h"
@@ -161,8 +160,9 @@ void ClearPref(PrefService* prefs, TimedSigninStatusField field) {
   prefs->ClearPref(time_pref);
 }
 
-std::string GetAccountConsistencyDescription() {
-  switch (signin::GetAccountConsistencyMethod()) {
+std::string GetAccountConsistencyDescription(
+    signin::AccountConsistencyMethod method) {
+  switch (method) {
     case signin::AccountConsistencyMethod::kDisabled:
       return "None";
     case signin::AccountConsistencyMethod::kMirror:
@@ -528,7 +528,8 @@ AboutSigninInternals::SigninStatus::ToValue(
   AddSectionEntry(basic_info, "Chrome Version",
                   signin_client->GetProductVersion());
   AddSectionEntry(basic_info, "Account Consistency",
-                  GetAccountConsistencyDescription());
+                  GetAccountConsistencyDescription(
+                      signin_client->GetAccountConsistencyMethod()));
   AddSectionEntry(basic_info, "Signin Status",
       signin_manager->IsAuthenticated() ? "Signed In" : "Not Signed In");
   OAuth2TokenServiceDelegate::LoadCredentialsState load_tokens_state =
@@ -645,7 +646,7 @@ AboutSigninInternals::SigninStatus::ToValue(
   signin_status->Set("accountInfo", std::move(account_info));
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-  if (signin::IsDiceEnabledForProfile(signin_client->GetPrefs())) {
+  if (signin_client->IsDiceEnabled()) {
     auto dice_info = base::MakeUnique<base::DictionaryValue>();
     dice_info->SetBoolean("isSignedIn", signin_manager->IsAuthenticated());
     signin_status->Set("dice", std::move(dice_info));

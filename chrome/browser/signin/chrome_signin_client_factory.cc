@@ -5,6 +5,7 @@
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/chrome_signin_client.h"
 #include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 

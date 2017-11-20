@@ -199,10 +199,6 @@ net::URLRequestContextGetter* ChromeSigninClient::GetURLRequestContext() {
   return profile_->GetRequestContext();
 }
 
-bool ChromeSigninClient::ShouldMergeSigninCredentialsIntoCookieJar() {
-  return !signin::IsAccountConsistencyMirrorEnabled();
-}
-
 std::string ChromeSigninClient::GetProductVersion() {
   return chrome::GetVersionString();
 }
@@ -417,6 +413,35 @@ std::unique_ptr<GaiaAuthFetcher> ChromeSigninClient::CreateGaiaAuthFetcher(
     const std::string& source,
     net::URLRequestContextGetter* getter) {
   return base::MakeUnique<GaiaAuthFetcher>(consumer, source, getter);
+}
+
+signin::AccountConsistencyMethod
+ChromeSigninClient::GetAccountConsistencyMethod() {
+  return signin::GetAccountConsistencyMethod();
+}
+
+bool ChromeSigninClient::IsDiceEnabled() {
+  return signin::IsDiceEnabledForProfile(GetPrefs());
+}
+
+bool ChromeSigninClient::IsDiceMigrationEnabled() {
+  return signin::IsDiceMigrationEnabled();
+}
+
+bool ChromeSigninClient::IsDicePrepareMigrationEnabled() {
+  return signin::IsDicePrepareMigrationEnabled();
+}
+
+bool ChromeSigninClient::IsDiceFixAuthErrorsEnabled() {
+  return signin::IsDiceFixAuthErrorsEnabled();
+}
+
+void ChromeSigninClient::MigrateProfileToDice() {
+  signin::MigrateProfileToDice(GetPrefs());
+}
+
+bool ChromeSigninClient::IsMirrorEnabled() {
+  return signin::IsAccountConsistencyMirrorEnabled();
 }
 
 void ChromeSigninClient::VerifySyncToken() {

@@ -67,10 +67,6 @@ void TestSigninClient::LoadTokenDatabase() {
   database_->Init();
 }
 
-bool TestSigninClient::ShouldMergeSigninCredentialsIntoCookieJar() {
-  return true;
-}
-
 std::unique_ptr<SigninClient::CookieChangedSubscription>
 TestSigninClient::AddCookieChangedCallback(
     const GURL& url,
@@ -108,6 +104,31 @@ std::unique_ptr<GaiaAuthFetcher> TestSigninClient::CreateGaiaAuthFetcher(
     const std::string& source,
     net::URLRequestContextGetter* getter) {
   return base::MakeUnique<GaiaAuthFetcher>(consumer, source, getter);
+}
+
+signin::AccountConsistencyMethod
+TestSigninClient::GetAccountConsistencyMethod() {
+  return signin::AccountConsistencyMethod::kDisabled;
+}
+
+bool TestSigninClient::IsDiceEnabled() {
+  return false;
+}
+
+bool TestSigninClient::IsDiceMigrationEnabled() {
+  return false;
+}
+
+bool TestSigninClient::IsDicePrepareMigrationEnabled() {
+  return false;
+}
+
+bool TestSigninClient::IsDiceFixAuthErrorsEnabled() {
+  return false;
+}
+
+bool TestSigninClient::IsMirrorEnabled() {
+  return false;
 }
 
 void TestSigninClient::PreGaiaLogout(base::OnceClosure callback) {
