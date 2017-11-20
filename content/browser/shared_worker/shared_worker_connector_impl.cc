@@ -72,7 +72,9 @@ void SharedWorkerConnectorImpl::Connect(
     mojo::ScopedMessagePipeHandle message_port) {
   SharedWorkerServiceImpl::GetInstance()->ConnectToWorker(
       process_id_, frame_id_, std::move(info), std::move(client),
-      creation_context_type, blink::MessagePortChannel(std::move(message_port)),
+      creation_context_type,
+      blink::MessagePortChannel(std::move(message_port),
+                                base::ThreadTaskRunnerHandle::Get()),
       resource_context_, WorkerStoragePartitionId(worker_storage_partition_));
 }
 

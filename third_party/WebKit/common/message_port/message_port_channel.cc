@@ -16,7 +16,8 @@ namespace blink {
 
 MessagePortChannel::~MessagePortChannel() {}
 
-MessagePortChannel::MessagePortChannel() : state_(new State()) {}
+MessagePortChannel::MessagePortChannel()
+    : state_(new State(base::ThreadTaskRunnerHandle::Get())) {}
 
 MessagePortChannel::MessagePortChannel(const MessagePortChannel& other)
     : state_(other.state_) {}
@@ -28,7 +29,13 @@ MessagePortChannel& MessagePortChannel::operator=(
 }
 
 MessagePortChannel::MessagePortChannel(mojo::ScopedMessagePipeHandle handle)
-    : state_(new State(std::move(handle))) {}
+    : MessagePortChannel(std::move(handle),
+                         base::ThreadTaskRunnerHandle::Get()) {}
+
+MessagePortChannel::MessagePortChannel(
+    mojo::ScopedMessagePipeHandle handle,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    : state_(new State(std::move(handle), task_runner)) {}
 
 const mojo::ScopedMessagePipeHandle& MessagePortChannel::GetHandle() const {
   return state_->handle();
@@ -115,10 +122,14 @@ void MessagePortChannel::ClearCallback() {
   state_->StopWatching();
 }
 
-MessagePortChannel::State::State() {}
+MessagePortChannel::State::State(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    : task_runner_(task_runner) {}
 
-MessagePortChannel::State::State(mojo::ScopedMessagePipeHandle handle)
-    : handle_(std::move(handle)) {}
+MessagePortChannel::State::State(
+    mojo::ScopedMessagePipeHandle handle,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    : handle_(std::move(handle)), task_runner_(task_runner) {}
 
 void MessagePortChannel::State::StartWatching(const base::Closure& callback) {
   base::AutoLock lock(lock_);
@@ -165,6 +176,7 @@ MessagePortChannel::State::~State() = default;
 
 void MessagePortChannel::State::ArmWatcher() {
   lock_.AssertAcquired();
+  DCHECK(task_runner_);
 
   if (!watcher_handle_.is_valid())
     return;
@@ -186,7 +198,7 @@ void MessagePortChannel::State::ArmWatcher() {
 
   if (ready_result == MOJO_RESULT_OK) {
     // The handle is already signaled, so we trigger a callback now.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    task_runner_->PostTask(
         FROM_HERE, base::BindOnce(&State::OnHandleReady, this, MOJO_RESULT_OK));
     return;
   }
