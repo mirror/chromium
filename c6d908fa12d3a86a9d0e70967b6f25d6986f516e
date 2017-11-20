@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "932293c2_9733ffe1",
+        "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T20:30:54Z",
+      "side": 1,
+      "message": "This line is not needed and is removed.\n\nDone.",
+      "parentUuid": "538482a4_b4d7c995",
+      "revId": "c6d908fa12d3a86a9d0e70967b6f25d6986f516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f453b6a6_06024814",
         "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-20T05:46:41Z",
       "side": 1,
       "message": "because of the new kIgnoreCertificateErrors, we don\u0027t need this anymore right?",
+      "revId": "c6d908fa12d3a86a9d0e70967b6f25d6986f516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c8bbd6_90e77403",
+        "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-20T20:30:54Z",
+      "side": 1,
+      "message": "Right. I removed this line.\n\nDone.",
+      "parentUuid": "f453b6a6_06024814",
       "revId": "c6d908fa12d3a86a9d0e70967b6f25d6986f516e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
