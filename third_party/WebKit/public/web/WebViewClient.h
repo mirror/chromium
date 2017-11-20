@@ -82,7 +82,7 @@ class WebViewClient : protected WebWidgetClient {
   }
 
   // Create a new popup WebWidget.
-  virtual WebWidget* CreatePopupMenu(WebPopupType) { return 0; }
+  virtual WebWidget* CreatePopupMenu(WebLocalFrame*, WebPopupType) { return 0; }
 
   // Create a session storage namespace object associated with this WebView.
   virtual WebStorageNamespace* CreateSessionStorageNamespace() { return 0; }
