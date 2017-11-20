@@ -140,6 +140,12 @@ NotificationPlatformBridge* NotificationPlatformBridge::Create() {
   return new NotificationPlatformBridgeAndroid();
 }
 
+// static
+bool NotificationPlatformBridge::CanHandleType(
+    NotificationCommon::Type notification_type) {
+  return notification_type != NotificationCommon::TRANSIENT;
+}
+
 NotificationPlatformBridgeAndroid::NotificationPlatformBridgeAndroid() {
   java_object_.Reset(Java_NotificationPlatformBridge_create(
       AttachCurrentThread(), reinterpret_cast<intptr_t>(this)));

@@ -54,12 +54,14 @@ NativeNotificationDisplayService::~NativeNotificationDisplayService() = default;
 void NativeNotificationDisplayService::OnNotificationPlatformBridgeReady(
     bool success) {
   UMA_HISTOGRAM_BOOLEAN("Notifications.UsingNativeNotificationCenter", success);
-  if (success) {
+  if (success)
     notification_bridge_ready_ = true;
-  } else {
-    message_center_display_service_ =
-        std::make_unique<MessageCenterDisplayService>(profile_);
-  }
+
+  // TODO(estade): this shouldn't be necessary in the succesful case, but some
+  // notification bridges can't handle TRANSIENT notifications and still have to
+  // fall back to the MessageCenter.
+  message_center_display_service_ =
+      std::make_unique<MessageCenterDisplayService>(profile_);
 
   while (!actions_.empty()) {
     std::move(actions_.front()).Run();
@@ -76,12 +78,13 @@ void NativeNotificationDisplayService::Display(
   if (notification_type == NotificationCommon::TRANSIENT)
     DCHECK(notification.delegate());
 
-  if (notification_bridge_ready_) {
+  if (ShouldUsePlatformBridge(notification_type)) {
     notification_bridge_->Display(notification_type, GetProfileId(profile_),
                                   profile_->IsOffTheRecord(), notification,
                                   std::move(metadata));
     NotificationHandler* handler = GetNotificationHandler(notification_type);
-    handler->OnShow(profile_, notification.id());
+    if (handler)
+      handler->OnShow(profile_, notification.id());
   } else if (message_center_display_service_) {
     message_center_display_service_->Display(notification_type, notification,
                                              std::move(metadata));
@@ -95,7 +98,7 @@ void NativeNotificationDisplayService::Display(
 void NativeNotificationDisplayService::Close(
     NotificationCommon::Type notification_type,
     const std::string& notification_id) {
-  if (notification_bridge_ready_) {
+  if (ShouldUsePlatformBridge(notification_type)) {
     notification_bridge_->Close(GetProfileId(profile_), notification_id);
 
     // TODO(miguelg): Figure out something better here, passing an empty
@@ -126,4 +129,10 @@ void NativeNotificationDisplayService::GetDisplayed(
         base::BindOnce(&NativeNotificationDisplayService::GetDisplayed,
                        weak_factory_.GetWeakPtr(), callback));
   }
+}
+
+bool NativeNotificationDisplayService::ShouldUsePlatformBridge(
+    NotificationCommon::Type notification_type) {
+  return notification_bridge_ready_ &&
+         NotificationPlatformBridge::CanHandleType(notification_type);
 }
