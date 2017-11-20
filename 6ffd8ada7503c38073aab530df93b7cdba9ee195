@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3c5e63_8046bf43",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T18:02:54Z",
+      "side": 1,
+      "message": "This is now an integration test and not a unit test anymore. In your previous CL revision you used TestWebState and it was a unit test. I think it\u0027s ok to write *one* integration test for CWVAutofillController, but integration tests should not be a replacement for unit tests (because they are slow).\n\nWith this CL, let\u0027s go with a real unit test and if you want an integration test, let\u0027s land it in a separate CL. I would suggest to go back to the previous design, where various objects were injected into CRWAutofillController and the class was actually unit testable.",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 24
+      },
+      "revId": "6ffd8ada7503c38073aab530df93b7cdba9ee195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
