@@ -1391,6 +1391,10 @@ public class VrShellDelegate
 
         promptForFeedbackIfNeeded(stayingInChrome);
 
+        // Listener may not handled yet at this point due to other reasons (e.g back/close button
+        // was pressed while at exit prompt UI in VR), failure should be reported despite that we
+        // are exiting VR.
+        callOnExitVrRequestListener(false);
         assert mOnExitVrRequestListener == null;
     }
 
