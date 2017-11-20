@@ -9,7 +9,7 @@
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "core/StylePropertyShorthand.h"
 #include "core/css/cssom/StyleValueFactory.h"
-#include "core/css/parser/CSSParser.h"
+#include "core/css/properties/CSSProperty.h"
 
 namespace blink {
 
@@ -32,11 +32,8 @@ CSSStyleValueVector ParseCSSStyleValue(const String& property_name,
     return CSSStyleValueVector();
   }
 
-  // TODO(crbug.com/783031): This should probably use an existing parser context
-  // (e.g. from execution context) to parse relative URLs correctly.
-  const CSSValue* css_value =
-      CSSParser::ParseSingleValue(property_id, value, StrictCSSParserContext());
-  if (!css_value) {
+  const auto style_values = StyleValueFactory::FromString(property_id, value);
+  if (style_values.IsEmpty()) {
     exception_state.ThrowDOMException(
         kSyntaxError, "The value provided ('" + value +
                           "') could not be parsed as a '" + property_name +
@@ -44,10 +41,7 @@ CSSStyleValueVector ParseCSSStyleValue(const String& property_name,
     return CSSStyleValueVector();
   }
 
-  CSSStyleValueVector style_value_vector =
-      StyleValueFactory::CssValueToStyleValueVector(property_id, *css_value);
-  DCHECK(!style_value_vector.IsEmpty());
-  return style_value_vector;
+  return style_values;
 }
 
 }  // namespace
