@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1756820d_86498409",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "The \"on exit\" is clever in that you\u0027ll always get a reply, but just like you could without it forget to post a reply, you can now forget to set what it should exit with. I think a helper function for posting is actually more clear and not necessarily more error prone, despite having to remember to call it, but I leave this entirely up to you if you disagree.",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36652726_c494c185",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Silently auto-closing the file leads to StopLocalLogFile replying with false which may be unexpected behavior, but I suspect we don\u0027t care?",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3902834_b71d4738",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "nit: Here and other places, the link fits on the row above.",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fc0c57_bb758855",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "nit: \"out_\" for out variables, e.g. out_path instead of write_here.",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b822d1_23d85784",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "nit: out_path",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54544687_cfa441f5",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "It may be more readable to simply write to a file_path_ variable in the callback instead of this more flexible code of choosing which variable to write to, since this code is only used in one place and it\u0027s a unittest. It is good to not spread out code in too many helper functions or make stuff too generic when writing unittests. You can also use base::Bind directly in LocalWebRtcEventLogStart instead of an additional helper function. Up to you.\n\nFYI for the future, it is common to have a class that only implements the wait for value and read value logic separately when you don\u0027t want to muddle it with the rest of the test class or reuse it in other tests. You get something like:\n\nFilePathObserver observer;\nmanager_-\u003eLocalWebRtcEventLogStart(..., base::Bind(\u0026FilePathObserver::Callback, \u0026observer));\nobserver.WaitForReply();\n// observer.file_path() now available.\n\nIn this case you don\u0027t need a separate class for this, it could be a member of the test.\nAnyway I will not waste more of your time, just a thought, you can keep this as-is if you wish.",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "950bae32_6316395e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Can you rename or remove \"On..\"? It sounds like it is a callback for what happens on writing, not that you are telling it to write. Unless you think it is important it has the same name as the function it is testing, up to you.",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718065f0_c0502f15",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Square?",
+      "range": {
+        "startLine": 413,
+        "startChar": 59,
+        "endLine": 413,
+        "endChar": 60
+      },
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9bc828_b8b974a0",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Huh?",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06da1255_7571eda0",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Why are you disabling all of these tests? Shouldn\u0027t you update them to cover the new code?",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

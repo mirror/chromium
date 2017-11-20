@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6458e4a0_99b9614a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7836784b_c68aae8a",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e14b990_42bf9814",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 13
@@ -86,6 +104,24 @@
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d1a709_881171a8",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29d5cb94_e9c2531a",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +245,24 @@
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db52ba9_1cbcfbb6",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4f1dec7c_83ec0041",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +470,24 @@
       "side": 1,
       "message": "I agree in principle, but I don\u0027t think this is a right application of the principle. The length of |log| is of no consequence, provided that it\u0027s longer than |file_size_limit|. The error of off-by-one would manifest itself if we end up writing one more/less than |file_size_limit|. That option is covered by:\n  EXPECT_EQ(file_contents, log.substr(0, file_size_limit));",
       "parentUuid": "c6ce912b_67e806ef",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2016685e_277a12e7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-20T16:17:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50a7b7e9_378baa19",
       "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
