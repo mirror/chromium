@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f05c98b_31df5107",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-20T22:03:55Z",
+      "side": 1,
+      "message": "nit: probably static, too (though I suspect the compiler will optimize this)",
+      "revId": "374c0eac4094e9ff981461c430951164caa957d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab8b698_b416831f",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-20T22:03:55Z",
+      "side": 1,
+      "message": "Just pointing out what you\u0027re probably already aware of: these are somewhat more aggressive than the previous ones, in that they throw an exception on property access, before the value of the property is even used (for a function call, for addListener). This seems like it was likely intentional (and unpacked extensions being rare, probably not an issue?), but double-checking nonetheless.",
+      "revId": "374c0eac4094e9ff981461c430951164caa957d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117346e0_d68a31be",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-20T22:03:55Z",
+      "side": 1,
+      "message": "This DCHECK is correct because it\u0027s impossible for such a context to have direct scripted access to another context without this restriction, right? (Otherwise, they can play games by plugging a function from one context into an object from another, which I think would make this DCHECK break.)",
+      "revId": "374c0eac4094e9ff981461c430951164caa957d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
