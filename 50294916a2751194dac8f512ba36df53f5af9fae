@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0ff3236_7114629f",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-20T10:38:07Z",
+      "side": 1,
+      "message": "Yes, you are right. I was a bit confused because I got two different icons for this case. However, in the mocks we are only using one of them. Done",
+      "parentUuid": "415ee449_6c56fd8a",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "50294916a2751194dac8f512ba36df53f5af9fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51efa375_dc125b6c",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3b7679a7_d1d21e54",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-20T10:38:07Z",
+      "side": 1,
+      "message": "No, this function is only called when sync is enabled.",
+      "parentUuid": "51efa375_dc125b6c",
+      "revId": "50294916a2751194dac8f512ba36df53f5af9fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66188456_a1ea4abc",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "50294916a2751194dac8f512ba36df53f5af9fae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b21cf75_ac7fe6ac",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-20T10:38:07Z",
+      "side": 1,
+      "message": "Yes, it is possible. So, unfortunately, I can\u0027t add a DCHECK.",
+      "parentUuid": "66188456_a1ea4abc",
+      "revId": "50294916a2751194dac8f512ba36df53f5af9fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
