@@ -6,6 +6,7 @@
 
 #include <unordered_map>
 
+#include "chrome/browser/net/nqe/ui_network_quality_estimator_service.h"
 #include "components/previews/core/previews_experiments.h"
 
 namespace {
@@ -26,9 +27,11 @@ const char kOfflineDesciption[] = "Offline Previews";
 
 InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
     mojom::InterventionsInternalsPageHandlerRequest request,
-    previews::PreviewsUIService* previews_ui_service)
+    previews::PreviewsUIService* previews_ui_service,
+    UINetworkQualityEstimatorService* ui_nqe_service)
     : binding_(this, std::move(request)),
       previews_ui_service_(previews_ui_service),
+      ui_nqe_service_(ui_nqe_service),
       current_estimated_ect_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {
   logger_ = previews_ui_service_->previews_logger();
   DCHECK(logger_);
@@ -37,6 +40,7 @@ InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
 InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {
   DCHECK(logger_);
   logger_->RemoveObserver(this);
+  ui_nqe_service_->RemoveEffectiveConnectionTypeObserver(this);
 }
 
 void InterventionsInternalsPageHandler::SetClientPage(
@@ -45,6 +49,7 @@ void InterventionsInternalsPageHandler::SetClientPage(
   DCHECK(page_);
   OnEffectiveConnectionTypeChanged(current_estimated_ect_);
   logger_->AddAndNotifyObserver(this);
+  ui_nqe_service_->AddEffectiveConnectionTypeObserver(this);
 }
 
 void InterventionsInternalsPageHandler::OnEffectiveConnectionTypeChanged(
