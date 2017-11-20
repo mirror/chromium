@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a425af4_c630fd8a",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T02:00:00Z",
+      "side": 1,
+      "message": "Depending on when the ExtensionRegistry returns the app, we might open a new app window. So:\n\nhttps://www.google.com/ -\u003e https://www.google.com/maps\n\nmight result in a new app window if the user has both Google and Maps installed.\n\nWe can make this return an array of the matching apps and check if the target app is in the array. OK to do in a follow up?",
+      "parentUuid": "9e3f07f6_47e51c4c",
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93badc81_d7defd78",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "220de6f9_1d0455e6",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T02:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93badc81_d7defd78",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 26
+      },
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae40f63c_f8260b7d",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cd632c_08df8627",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-20T02:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae40f63c_f8260b7d",
+      "range": {
+        "startLine": 130,
+        "startChar": 29,
+        "endLine": 130,
+        "endChar": 43
+      },
+      "revId": "6b6c485b87bf3c451567455994f7d722289aaaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
