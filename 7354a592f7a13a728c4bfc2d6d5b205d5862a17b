@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f80c3a4c_e6bc9257",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T23:17:07Z",
+      "side": 1,
+      "message": "Should this be an enum of potential fail causes?",
+      "range": {
+        "startLine": 218,
+        "startChar": 28,
+        "endLine": 219,
+        "endChar": 42
+      },
+      "revId": "7354a592f7a13a728c4bfc2d6d5b205d5862a17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39572431_b51434c3",
         "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
         "patchSetId": 2
@@ -25,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "87cce920_b97de8ea",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T23:17:07Z",
+      "side": 1,
+      "message": "Should this be std::move()?",
+      "range": {
+        "startLine": 1043,
+        "startChar": 33,
+        "endLine": 1043,
+        "endChar": 50
+      },
+      "revId": "7354a592f7a13a728c4bfc2d6d5b205d5862a17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84599b3_38a76079",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T23:17:07Z",
+      "side": 1,
+      "message": "Should this happen inside DownloadManager?",
+      "range": {
+        "startLine": 1058,
+        "startChar": 4,
+        "endLine": 1058,
+        "endChar": 59
+      },
+      "revId": "7354a592f7a13a728c4bfc2d6d5b205d5862a17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82f5d310_33105504",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 2
@@ -41,6 +110,29 @@
         "startChar": 43,
         "endLine": 238,
         "endChar": 64
+      },
+      "revId": "7354a592f7a13a728c4bfc2d6d5b205d5862a17b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6666556_ba32e67f",
+        "filename": "content/public/browser/download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T23:17:07Z",
+      "side": 1,
+      "message": "Should default just trigger the callback?  Also make post?",
+      "range": {
+        "startLine": 54,
+        "startChar": 60,
+        "endLine": 54,
+        "endChar": 62
       },
       "revId": "7354a592f7a13a728c4bfc2d6d5b205d5862a17b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
