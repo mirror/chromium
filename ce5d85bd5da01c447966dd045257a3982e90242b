@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "b0610b1d_73329057",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T21:05:27Z",
+      "side": 1,
+      "message": "So how do you see this being hooked up in a post-network-service world?  Seems like how it\u0027s enabled largely dictates how it should be tested.",
+      "parentUuid": "d04494be_edb579e2",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
