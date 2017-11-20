@@ -728,5 +728,102 @@ TEST(BrokerProcess, StatFile) {
   }
 }
 
+TEST(BrokerProcess, RenameFileOk) {
+  std::string oldpath;
+  std::string newpath;
+  {
+    // Just to generate names and ensure they do not exist upon scope exit.
+    ScopedTemporaryFile oldfile;
+    ScopedTemporaryFile newfile;
+    oldpath = oldfile.full_file_name();
+    newpath = newfile.full_file_name();
+  }
+
+  // Now make a file using old path name.
+  int fd = open(oldpath.c_str(), O_RDWR | O_CREAT);
+  EXPECT_TRUE(fd > 0);
+  close(fd);
+
+  EXPECT_TRUE(access(oldpath.c_str(), F_OK) == 0);
+  EXPECT_TRUE(access(newpath.c_str(), F_OK) < 0);
+
+  std::vector<BrokerFilePermission> permissions;
+  permissions.push_back(BrokerFilePermission::ReadWrite(oldpath));
+  permissions.push_back(BrokerFilePermission::ReadWrite(newpath));
+
+  bool fast_check_in_client = false;
+  BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
+  ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
+  EXPECT_EQ(0, open_broker.Rename(oldpath.c_str(), newpath.c_str()));
+
+  EXPECT_TRUE(access(oldpath.c_str(), F_OK) < 0);
+  EXPECT_TRUE(access(newpath.c_str(), F_OK) == 0);
+
+  // Cleanup using new path name.
+  unlink(newpath.c_str());
+}
+
+TEST(BrokerProcess, RenameFileNoOldPermission) {
+  std::string oldpath;
+  std::string newpath;
+  {
+    // Just to generate names and ensure they do not exist upon scope exit.
+    ScopedTemporaryFile oldfile;
+    ScopedTemporaryFile newfile;
+    oldpath = oldfile.full_file_name();
+    newpath = newfile.full_file_name();
+  }
+
+  // Now make a file using old path name.
+  int fd = open(oldpath.c_str(), O_RDWR | O_CREAT);
+  EXPECT_TRUE(fd > 0);
+  close(fd);
+
+  EXPECT_TRUE(access(oldpath.c_str(), F_OK) == 0);
+  EXPECT_TRUE(access(newpath.c_str(), F_OK) < 0);
+
+  std::vector<BrokerFilePermission> permissions;
+  permissions.push_back(BrokerFilePermission::ReadWrite(newpath));
+
+  bool fast_check_in_client = false;
+  BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
+  ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
+  EXPECT_EQ(-EPERM, open_broker.Rename(oldpath.c_str(), newpath.c_str()));
+
+  // Cleanup using old path name.
+  unlink(oldpath.c_str());
+}
+
+TEST(BrokerProcess, RenameFileNoNewPermission) {
+  std::string oldpath;
+  std::string newpath;
+  {
+    // Just to generate names and ensure they do not exist upon scope exit.
+    ScopedTemporaryFile oldfile;
+    ScopedTemporaryFile newfile;
+    oldpath = oldfile.full_file_name();
+    newpath = newfile.full_file_name();
+  }
+
+  // Now make a file using old path name.
+  int fd = open(oldpath.c_str(), O_RDWR | O_CREAT);
+  EXPECT_TRUE(fd > 0);
+  close(fd);
+
+  EXPECT_TRUE(access(oldpath.c_str(), F_OK) == 0);
+  EXPECT_TRUE(access(newpath.c_str(), F_OK) < 0);
+
+  std::vector<BrokerFilePermission> permissions;
+  permissions.push_back(BrokerFilePermission::ReadWrite(oldpath));
+
+  bool fast_check_in_client = false;
+  BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
+  ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
+  EXPECT_EQ(-EPERM, open_broker.Rename(oldpath.c_str(), newpath.c_str()));
+
+  // Cleanup using old path name.
+  unlink(oldpath.c_str());
+}
+
 }  // namespace syscall_broker
 }  // namespace sandbox

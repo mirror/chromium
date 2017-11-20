@@ -59,6 +59,11 @@ class BrokerClient {
   // This is async signal safe.
   int Stat(const char* pathname, struct stat* sb);
 
+  // Can be used in place of rename().
+  // It's similar to the rename() system call and will return -errno on errors.
+  // This is async signal safe.
+  int Rename(const char* oldpath, const char* newpath);
+
   // Get the file descriptor used for IPC. This is used for tests.
   int GetIPCDescriptor() const { return ipc_channel_.get(); }
 

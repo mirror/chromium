@@ -44,7 +44,6 @@ class SANDBOX_EXPORT BrokerProcess {
   // A file available read-write should be listed in both.
   // |fast_check_in_client| and |quiet_failures_for_tests| are reserved for
   // unit tests, don't use it.
-
   BrokerProcess(
       int denied_errno,
       const std::vector<syscall_broker::BrokerFilePermission>& permissions,
@@ -52,6 +51,7 @@ class SANDBOX_EXPORT BrokerProcess {
       bool quiet_failures_for_tests = false);
 
   ~BrokerProcess();
+
   // Will initialize the broker process. There should be no threads at this
   // point, since we need to fork().
   // broker_process_init_callback will be called in the new broker process,
@@ -73,6 +73,10 @@ class SANDBOX_EXPORT BrokerProcess {
   // Can be used in place of stat(). Will be async signal safe.
   // It's similar to the stat() system call and will return -errno on errors.
   int Stat(const char* pathname, struct stat* sb) const;
+
+  // Can be used in place of rename(). Will be async signal safe.
+  // It's similar to the rename() system call and will return -errno on errors.
+  int Rename(const char* oldpath, const char* newpath) const;
 
   int broker_pid() const { return broker_pid_; }
 
