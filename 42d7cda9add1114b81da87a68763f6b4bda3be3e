@@ -16,6 +16,24 @@
       "revId": "42d7cda9add1114b81da87a68763f6b4bda3be3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1d706c_fd182760",
+        "filename": "chrome/common/media_router/issue.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-20T19:44:09Z",
+      "side": 1,
+      "message": "Yes, but there\u0027s no need to distinguish between a nullopt and an empty string, so I\u0027ll make this non-optional and check for null in media_router_bindings.js.",
+      "parentUuid": "e33959fb_eb30a09a",
+      "revId": "42d7cda9add1114b81da87a68763f6b4bda3be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
