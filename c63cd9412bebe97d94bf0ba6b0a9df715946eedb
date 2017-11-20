@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b1c2dbb5_fb36e03d",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T19:19:42Z",
+      "side": 1,
+      "message": "\u003e Yes, I think it is the same reason as some of the tests above have NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 2).\n\nOh, I see-- your navigation_observer is meant to wait for the #pass commit, since it has  a 3 there.  I didn\u0027t notice that before.\n\nOk, should work.  Can you add a comment above line 475 (and 497) along the lines of this?\n// Wait for the main frame, subframe, and the #pass/#fail commits.",
+      "parentUuid": "9023b921_cbb8bb66",
+      "revId": "c63cd9412bebe97d94bf0ba6b0a9df715946eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "315f00d8_a21847f6",
         "filename": "content/browser/generic_sensor_browsertest.cc",
         "patchSetId": 19

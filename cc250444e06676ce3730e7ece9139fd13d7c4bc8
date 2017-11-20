@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f794ecc_4892f738",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T19:19:42Z",
+      "side": 1,
+      "message": "Minor request: Please add the following line to make sure it passes with --site-per-process before landing, so that our Site Isolation FYI bots don\u0027t go red.  (Not that I expect that, since you were explicitly testing it in earlier patchsets.)\n\nCq-Include-Trybots: master.tryserver.chromium.linux:linux_site_isolation",
+      "revId": "cc250444e06676ce3730e7ece9139fd13d7c4bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b104c12a_319e0437",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T19:19:42Z",
+      "side": 1,
+      "message": "This one needs the same NavigationObserver that waits for 3 commits, right?",
+      "revId": "cc250444e06676ce3730e7ece9139fd13d7c4bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
