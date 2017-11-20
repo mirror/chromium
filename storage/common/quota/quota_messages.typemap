@@ -1,0 +1,14 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//content/common/quota_messages.mojom"
+public_headers = [
+  "//storage/common/quota/quota_status_code.h",
+  "//storage/common/quota/quota_types.h",
+]
+traits_headers = [ "//storage/common/quota/quota_messages_struct_traits.h" ]
+type_mappings = [
+  "content.mojom.QuotaStatusCode=storage::QuotaStatusCode",
+  "content.mojom.StorageType=storage::StorageType",
+]

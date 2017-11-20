@@ -1,2 +1,7 @@
 # TEAM: storage-dev@chromium.org
 # COMPONENT: Blink>Storage>Quota
+
+per-file *_messages*.h=set noparent
+per-file *_messages*.h=file://ipc/SECURITY_OWNERS
+per-file *.typemap=set noparent
+per-file *.typemap=file://ipc/SECURITY_OWNERS
