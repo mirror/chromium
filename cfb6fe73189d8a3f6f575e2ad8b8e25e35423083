@@ -16,6 +16,24 @@
       "revId": "cfb6fe73189d8a3f6f575e2ad8b8e25e35423083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0824184_844e21ff",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-20T17:46:39Z",
+      "side": 1,
+      "message": "Yeah. Done.\n\nBefore sending this for review, I noodled around with trying to make this a method on a common base class, but that was ultimately ugly and a lot of change for not much gain. A simple helper function like this seems just right.",
+      "parentUuid": "89e40cfa_0e77738d",
+      "revId": "cfb6fe73189d8a3f6f575e2ad8b8e25e35423083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
