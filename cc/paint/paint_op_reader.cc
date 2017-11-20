@@ -178,6 +178,14 @@ void PaintOpReader::Read(uint8_t* data) {
   ReadSimple(data);
 }
 
+void PaintOpReader::Read(uint32_t* data) {
+  ReadSimple(data);
+}
+
+void PaintOpReader::Read(int32_t* data) {
+  ReadSimple(data);
+}
+
 void PaintOpReader::Read(SkRect* rect) {
   ReadSimple(rect);
 }
@@ -483,6 +491,20 @@ bool PaintOpReader::AlignMemory(size_t alignment) {
   memory_ += padding;
   remaining_bytes_ -= padding;
   return true;
+}
+
+const volatile void* PaintOpReader::ExtractReadableMemory(size_t bytes) {
+  if (remaining_bytes_ < bytes)
+    valid_ = false;
+  if (!valid_)
+    return nullptr;
+  if (bytes == 0)
+    return nullptr;
+
+  const volatile void* extracted_memory = memory_;
+  memory_ += bytes;
+  remaining_bytes_ -= bytes;
+  return extracted_memory;
 }
 
 }  // namespace cc

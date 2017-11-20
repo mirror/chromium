@@ -40,6 +40,8 @@ class CC_PAINT_EXPORT PaintOpReader {
   void Read(SkScalar* data);
   void Read(size_t* data);
   void Read(uint8_t* data);
+  void Read(uint32_t* data);
+  void Read(int32_t* data);
   void Read(SkRect* rect);
   void Read(SkIRect* rect);
   void Read(SkRRect* rect);
@@ -72,6 +74,11 @@ class CC_PAINT_EXPORT PaintOpReader {
     Read(&value);
     *data = !!value;
   }
+
+  // Returns a pointer to the next block of memory of size |bytes|, and treats
+  // this memory as read (advancing the reader). Returns nullptr if |bytes|
+  // would exceed the available budfer.
+  const volatile void* ExtractReadableMemory(size_t bytes);
 
  private:
   template <typename T>

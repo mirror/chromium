@@ -1241,6 +1241,7 @@ void GpuImageDecodeCache::DecodeImageIfNecessary(const DrawImage& draw_image,
       image =
           SkImage::MakeFromRaster(pixmap, [](const void*, void*) {}, nullptr);
     }
+    image = SkImage::MakeFromRaster(pixmap, [](const void*, void*) {}, nullptr);
   }
 
   if (image_data->decode.data()) {
