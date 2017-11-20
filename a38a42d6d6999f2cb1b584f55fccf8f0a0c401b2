@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ce802e_dccd87d3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/passwordcredential-basics.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-20T13:10:31Z",
+      "side": 0,
+      "message": "Can we upstream this file to WPT now? I think we can.",
+      "revId": "a38a42d6d6999f2cb1b584f55fccf8f0a0c401b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
