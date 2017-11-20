@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "54fa017a_9158e390",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the point would be of lowering this value? As mentioned, no memory is pre-allocated here, so this makes no difference to the efficiency of the tests. There is only one test that actually attempts to reach the maximum, and for it, I indeed set a lower minimum, so as to have a more efficient as well as more human-readable test. For all other tests - where the maximum is not reached - having a lower maximum has the unfortunate side-effect of raising the reader\u0027s eyebrow due to looking unrealistically low. (Who would believe in a unit-test for event-logging that can barely fit a second event?)",
+      "parentUuid": "e5daa86b_ea281b14",
+      "revId": "cef8084513377b5f158ec9c7bd0d2cdbd6d9a962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20ad951c_a6d0297b",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 12

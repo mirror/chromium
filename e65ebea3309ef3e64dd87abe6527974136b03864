@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4ebe0b9_a7af97ab",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "1. I doubt there would be more than one place to exit with the reply being \"success\". For \"failure\", no edit would be necessary; simply exiting would elicit the desired behavior.\n2. It\u0027s up to unit-tests to ensure correct behavior. This construct does serves to make the code terser, while not sacrificing maintainability and error-prone-ness.",
+      "parentUuid": "1756820d_86498409",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36652726_c494c185",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02936012_24c0d22b",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "1. StopLocalLogFile() has a |reply| only for unit-tests. Nobody should be providing a |reply| otherwise, as no caller is expected to have anything useful to do with that reply.\n2. An intelligent caller - one that insists on getting a |reply|, such as unit-tests - should know not to call StopLocalLogFile() when a previous call to WriteToLocalLogFile() ended up with false being returned. (That being said, in an async environment, the latter might be invoked before the former has had time to reply. That is another reason why a design where the caller actually relies on the reply is undesirable.)\n3. I am expecting to delete LocalWebRtcEventLogStart() and LocalWebRtcEventLogStop() in the next CL (or, if I reorder things, a bit after the very next one.)",
+      "parentUuid": "36652726_c494c185",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7d1a347a_c6589a15",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "Seeing as this is temporary (the very next CL should remove this one, and the other one is also not long for this world), I\u0027m going to save the time it would take my machine to recompile this file and just keep it as it is. I hope you\u0027re fine with that.",
+      "parentUuid": "a3902834_b71d4738",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0fc0c57_bb758855",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7d428c_2db69ab7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0fc0c57_bb758855",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "acfe6ce8_1cd1b41c",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "This suggestion in the previous place (instead of \"write_here\") was good, IMHO, but here I\u0027d prefer not to take it. I doubt that all output parameters in the codebase are prefixed with \"out_\". Especially for this case, with just one parameter, it doesn\u0027t appear to me to increase clarity.",
+      "parentUuid": "61b822d1_23d85784",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54544687_cfa441f5",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 14
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-20T16:17:03Z",
       "side": 1,
       "message": "It may be more readable to simply write to a file_path_ variable in the callback instead of this more flexible code of choosing which variable to write to, since this code is only used in one place and it\u0027s a unittest. It is good to not spread out code in too many helper functions or make stuff too generic when writing unittests. You can also use base::Bind directly in LocalWebRtcEventLogStart instead of an additional helper function. Up to you.\n\nFYI for the future, it is common to have a class that only implements the wait for value and read value logic separately when you don\u0027t want to muddle it with the rest of the test class or reuse it in other tests. You get something like:\n\nFilePathObserver observer;\nmanager_-\u003eLocalWebRtcEventLogStart(..., base::Bind(\u0026FilePathObserver::Callback, \u0026observer));\nobserver.WaitForReply();\n// observer.file_path() now available.\n\nIn this case you don\u0027t need a separate class for this, it could be a member of the test.\nAnyway I will not waste more of your time, just a thought, you can keep this as-is if you wish.",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf134406_e0e0d5eb",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "It\u0027s good to know that this pattern would have been acceptable, and you might see me using this pattern in future CLs, but I\u0027d prefer not to use it here. IMHO, having a designated-parking member (whatever your suggested FilePathObserver would have ended up writing into) is the \"easy way\", and this way is the \"right way\". Unless it ends up saving significant work, I prefer the \"right way\".",
+      "parentUuid": "54544687_cfa441f5",
       "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -118,6 +226,24 @@
       "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b03421_f03a3778",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "I think it helps clarity to keep the names consistent. One might otherwise find oneself searching the file for a function that\u0027s not there, only to scratch one\u0027s head later and ask, \"why on Earth would they change the name like that?\"",
+      "parentUuid": "950bae32_6316395e",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "c4fc6f62_2bb4e18c",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t get it.",
+      "parentUuid": "718065f0_c0502f15",
+      "range": {
+        "startLine": 413,
+        "startChar": 59,
+        "endLine": 413,
+        "endChar": 60
+      },
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9bc828_b8b974a0",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 14
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "d69de2fd_0339a33a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "I thought this was clear on its own. Let me try to elaborate (please don\u0027t ask for this elaboration to be worked into the comment itself; I don\u0027t think it deserves to):\n\nThis test should trigger the following DCHECK in the UUT:\nDCHECK(local_logs_.find({render_process_id, lid}) \u003d\u003d local_logs_.end());\nIt does, which is great. But, knowing that death-tests are problematic, I also checked to see what would happen if I commented-out that DCHECK. Turns out, the test still passes. Why? Because the death-test triggers a fork() that allows us to go into a bad state that, if not for the fork(), we wouldn\u0027t have had. That is to say, it\u0027s not surfacing a problem, it\u0027s producing one. This is unfortunate, but not important enough to delay my next tasks over. Better keep it as a TODO for when I actually have time to look more into it.\n\nIf this explanation also wasn\u0027t enough, I would happily clarify offline.",
+      "parentUuid": "8b9bc828_b8b974a0",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06da1255_7571eda0",
         "filename": "content/browser/webrtc/webrtc_eventlog_host_unittest.cc",
         "patchSetId": 14
@@ -175,6 +343,24 @@
       "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d926c471_220371d4",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "1. I did update them.\n2. Please see the following comment earlier in the file:\n  // TODO(eladalon): These tests work fine when executed separately, but crash\n  // when we run them in sequence, because the WebRtcEventLogManager that\u0027s hiding\n  // behind WebRtcEventlogHost is a singleton, so it outlives the tests, but its\n  // thread doesn\u0027t. This is not a problem, because we provide the same coverage\n  // in WebRtcEventLogManager\u0027s unit-tests. In an upcoming CL, we remove both\n  // as well as these tests. https://crbug.com/775415",
+      "parentUuid": "06da1255_7571eda0",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "92a061ef_9a1bde06",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-20T17:29:49Z",
+      "side": 1,
+      "message": "It\u0027s not on the same thread.",
+      "parentUuid": "062d2342_8d91383e",
+      "revId": "b8bd32e9b300f5e23897015ec2c680b287fa51fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c78176a_3728fcac",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 13
