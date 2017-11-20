@@ -104,29 +104,15 @@ static void RestoreToCookieJarInternal(net::URLRequestContextGetter* getter,
   }
 
   base::Callback<void(bool success)> cb;
-
-  // To re-create the original cookie, a domain should only be passed in to
-  // SetCookieWithDetailsAsync if cookie.Domain() has a leading period, to
-  // re-create the original cookie.
-  std::string effective_domain = cookie.Domain();
-  std::string host;
-  if (effective_domain.length() > 1 && effective_domain[0] == '.') {
-    host = effective_domain.substr(1);
-  } else {
-    host = effective_domain;
-    effective_domain = "";
-  }
+  std::unique_ptr<net::CanonicalCookie> cc(
+      std::make_unique<net::CanonicalCookie>(cookie));
+  DCHECK(cc->IsCanonical());
 
   // Assume HTTPS - since the cookies are being restored from another store,
   // they have already gone through the strict secure check.
-  GURL url(std::string(url::kHttpsScheme) + url::kStandardSchemeSeparator +
-           host + "/");
-
-  store->SetCookieWithDetailsAsync(
-      url, cookie.Name(), cookie.Value(), effective_domain, cookie.Path(),
-      base::Time(), cookie.ExpiryDate(), cookie.LastAccessDate(),
-      cookie.IsSecure(), cookie.IsHttpOnly(), cookie.SameSite(),
-      cookie.Priority(), cb);
+  store->SetCanonicalCookieAsync(std::move(cc), true /*secure_source*/,
+                                 true /*modify_http_only*/,
+                                 net::CookieStore::SetCookiesCallback());
 }
 
 static void RestoreCookies(JNIEnv* env,
