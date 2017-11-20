@@ -22,6 +22,30 @@
       "revId": "0511d9786022395adbf1bd4f0af78c8dc077ceb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4f0dc9_dc73e99e",
+        "filename": "net/android/javatests/src/org/chromium/net/NetworkChangeNotifierTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-20T02:00:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5038fdea_c43578de",
+      "range": {
+        "startLine": 964,
+        "startChar": 26,
+        "endLine": 964,
+        "endChar": 33
+      },
+      "revId": "0511d9786022395adbf1bd4f0af78c8dc077ceb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
