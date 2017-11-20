@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b26c932_57410b37",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:29:32Z",
+      "side": 1,
+      "message": "nit: It\u0027s unclear to me what is a \"regular\" string search.",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0b1cf2_2aae4442",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:29:32Z",
+      "side": 1,
+      "message": "nit: This sentence is also a little confusing: The previous one suggests that short words are not considered, while this one does the opposite. It is also not completely clear which delimiters the comment talks about and where should the words be placed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a918a4_568c2cf9",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:29:32Z",
+      "side": 1,
+      "message": "All four occurrences of [non-]latin should have the indefinite article \"a\" in front of them in this sentence.",
+      "range": {
+        "startLine": 47,
+        "startChar": 26,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64da2c08_ee9599f2",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-20T16:29:32Z",
+      "side": 1,
+      "message": "While this is not a new code, I just spotted that it is a static object with a non-trivial destructor. We should make it just a const char array and construct a base::StringPiece based on that during each call.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
