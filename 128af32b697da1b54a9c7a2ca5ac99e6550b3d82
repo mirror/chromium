@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "5dadce47_732f0355",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T22:59:20Z",
+      "side": 1,
+      "message": "SGTM! I haven\u0027t really used protos before. shocking, I know ;-)\n\nI found some corroboration here as well: https://developers.google.com/protocol-buffers/docs/proto#required_warning",
+      "parentUuid": "ba975a6e_575d181e",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b06c71c0_119704ba",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 7
@@ -296,6 +320,30 @@
       "side": 1,
       "message": "I prefer to keep 0 for special use, e.g. UNKNOWN. e.g. in DeviceType, we have 0 for UNKNOWN_DEVICE. Please let me know if this doesn\u0027t follow the guideline or something, thanks.",
       "parentUuid": "43468246_f1f6cece",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "128af32b697da1b54a9c7a2ca5ac99e6550b3d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5505f6c_19126941",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T22:59:20Z",
+      "side": 1,
+      "message": "Sounds fine. Was just curious.",
+      "parentUuid": "c06d458a_cc27835d",
       "range": {
         "startLine": 27,
         "startChar": 4,
