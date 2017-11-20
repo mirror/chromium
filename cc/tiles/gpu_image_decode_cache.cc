@@ -40,9 +40,9 @@ namespace {
 // The number or entries to keep in the cache, depending on the memory state of
 // the system. This limit can be breached by in-use cache items, which cannot
 // be deleted.
-static const int kNormalMaxItemsInCache = 2000;
-static const int kThrottledMaxItemsInCache = 100;
-static const int kSuspendedMaxItemsInCache = 0;
+static const int kNormalMaxItemsInCacheForGpu = 2000;
+static const int kThrottledMaxItemsInCacheForGpu = 100;
+static const int kSuspendedMaxItemsInCacheForGpu = 0;
 
 // lock_count │ used  │ result state
 // ═══════════╪═══════╪══════════════════
@@ -259,12 +259,12 @@ GpuImageDecodeCache::InUseCacheEntry::~InUseCacheEntry() = default;
 
 // Task which decodes an image and stores the result in discardable memory.
 // This task does not use GPU resources and can be run on any thread.
-class ImageDecodeTaskImpl : public TileTask {
+class ImageDecodeTaskImplForGpu : public TileTask {
  public:
-  ImageDecodeTaskImpl(GpuImageDecodeCache* cache,
-                      const DrawImage& draw_image,
-                      const ImageDecodeCache::TracingInfo& tracing_info,
-                      GpuImageDecodeCache::DecodeTaskType task_type)
+  ImageDecodeTaskImplForGpu(GpuImageDecodeCache* cache,
+                            const DrawImage& draw_image,
+                            const ImageDecodeCache::TracingInfo& tracing_info,
+                            GpuImageDecodeCache::DecodeTaskType task_type)
       : TileTask(true),
         cache_(cache),
         image_(draw_image),
@@ -275,8 +275,9 @@ class ImageDecodeTaskImpl : public TileTask {
 
   // Overridden from Task:
   void RunOnWorkerThread() override {
-    TRACE_EVENT2("cc", "ImageDecodeTaskImpl::RunOnWorkerThread", "mode", "gpu",
-                 "source_prepare_tiles_id", tracing_info_.prepare_tiles_id);
+    TRACE_EVENT2("cc", "ImageDecodeTaskImplForGpu::RunOnWorkerThread", "mode",
+                 "gpu", "source_prepare_tiles_id",
+                 tracing_info_.prepare_tiles_id);
     devtools_instrumentation::ScopedImageDecodeTask image_decode_task(
         &image_.paint_image(),
         devtools_instrumentation::ScopedImageDecodeTask::kGpu,
@@ -290,7 +291,7 @@ class ImageDecodeTaskImpl : public TileTask {
   }
 
  protected:
-  ~ImageDecodeTaskImpl() override {}
+  ~ImageDecodeTaskImplForGpu() override {}
 
  private:
   GpuImageDecodeCache* cache_;
@@ -298,7 +299,7 @@ class ImageDecodeTaskImpl : public TileTask {
   const ImageDecodeCache::TracingInfo tracing_info_;
   const GpuImageDecodeCache::DecodeTaskType task_type_;
 
-  DISALLOW_COPY_AND_ASSIGN(ImageDecodeTaskImpl);
+  DISALLOW_COPY_AND_ASSIGN(ImageDecodeTaskImplForGpu);
 };
 
 // Task which creates an image from decoded data. Typically this involves
@@ -960,7 +961,7 @@ scoped_refptr<TileTask> GpuImageDecodeCache::GetImageDecodeTaskAndRef(
     // Ref image decode and create a decode task. This ref will be released in
     // DecodeTaskCompleted.
     RefImageDecode(draw_image);
-    existing_task = base::MakeRefCounted<ImageDecodeTaskImpl>(
+    existing_task = base::MakeRefCounted<ImageDecodeTaskImplForGpu>(
         this, draw_image, tracing_info, task_type);
   }
   return existing_task;
@@ -1182,14 +1183,14 @@ bool GpuImageDecodeCache::ExceedsPreferredCount() const {
 
   size_t items_limit;
   if (aggressively_freeing_resources_) {
-    items_limit = kSuspendedMaxItemsInCache;
+    items_limit = kSuspendedMaxItemsInCacheForGpu;
   } else if (memory_state_ == base::MemoryState::NORMAL) {
-    items_limit = kNormalMaxItemsInCache;
+    items_limit = kNormalMaxItemsInCacheForGpu;
   } else if (memory_state_ == base::MemoryState::THROTTLED) {
-    items_limit = kThrottledMaxItemsInCache;
+    items_limit = kThrottledMaxItemsInCacheForGpu;
   } else {
     DCHECK_EQ(base::MemoryState::SUSPENDED, memory_state_);
-    items_limit = kSuspendedMaxItemsInCache;
+    items_limit = kSuspendedMaxItemsInCacheForGpu;
   }
 
   return persistent_cache_.size() > items_limit;
