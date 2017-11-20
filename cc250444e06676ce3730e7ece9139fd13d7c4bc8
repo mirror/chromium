@@ -69,6 +69,24 @@
       "revId": "cc250444e06676ce3730e7ece9139fd13d7c4bc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a1263c_837cdebd",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-20T23:46:34Z",
+      "side": 1,
+      "message": "\u003e This one actually only needs to wait 2 commits. I think the reason is that in ambient_light_sensor_cross_origin_iframe_test.html, the\n\u003e \u003cbody onLoad\u003d\"start()\"\u003e\n\u003e throws an exception and the page immediately navigates to #pass, so the iframe page is not counted as navigation, only the main frame and the #pass page.\n\u003e \n\u003e I tried changing the html to be:\n\u003e \u003cbody onLoad\u003d\"setTimeout(start, 200)\"\u003e\n\u003e and it does need to wait 3 commits.\n\u003e \n\u003e So I changed the ambient_light_sensor_cross_origin_iframe_test.html to use setTimeout() and also added TestNavigationObserver and comments here.\n\nThanks.   As we chatted about offline, it looks like the other tests rely on a periodic event to listen to, so this setTimeout makes the test kind of similar.\n\nLet\u0027s keep an eye out for flakiness just in case, but feel free to proceed.",
+      "parentUuid": "f24e777c_b8ff8f12",
+      "revId": "cc250444e06676ce3730e7ece9139fd13d7c4bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
