@@ -456,11 +456,9 @@ def interface_context(interface, interfaces):
     if unscopables or conditional_attributes or conditional_methods:
         install_conditional_features_func = (  # pylint: disable=invalid-name
             v8_class_name_or_partial + '::InstallConditionalFeatures')
-    has_install_conditional_features_on_global_func = bool(conditional_interface_objects)  # pylint: disable=invalid-name
 
     context.update({
         'install_conditional_features_func': install_conditional_features_func,
-        'has_install_conditional_features_on_global_func': has_install_conditional_features_on_global_func,
     })
 
     context.update({
