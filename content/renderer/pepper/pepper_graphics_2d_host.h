@@ -239,6 +239,8 @@ class CONTENT_EXPORT PepperGraphics2DHost
   // Texture ids move from |texture_copies_| to here once they are available for
   // reuse.
   std::vector<std::pair<uint32_t, gpu::Mailbox>> recycled_texture_copies_;
+  uint32_t scanout_texture_target_rgba_ = 0;
+  uint32_t scanout_texture_target_bgra_ = 0;
 
   // This is a bitmap that was recently released by the compositor and may be
   // used to transfer bytes to the compositor again.
