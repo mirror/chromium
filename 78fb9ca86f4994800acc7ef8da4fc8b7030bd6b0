@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc8dbe61_fdc85b4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ece45b_63fdc820",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4885ee_a5cb5993",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9745b2f5_f07ea716",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4885ee_a5cb5993",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b939dc44_2813f6f0",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/detach-gc.html",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-17T21:55:44Z",
       "side": 1,
       "message": "runGarbageCollection().then(resolve);",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8db681_39b8327c",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/detach-gc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "I actually had this thought come across me while I was modifying this file. I should have tried it to see if it worked. Thanks for the suggestion.",
+      "parentUuid": "b939dc44_2813f6f0",
       "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2d29aed2_20d37f1a",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/detach-gc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea533f1b_8d013181",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdf72d63_71423583",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/gc-detach.html",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5f4179_eedf4f84",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/gc-detach.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdf72d63_71423583",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "89244070_63eac73c",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "I changed it to use that, and I also went ahead and added the removeEventListener line as well.",
+      "parentUuid": "b093ab0b_d8f63907",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56985942_ef612677",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 3
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fc17bf97_50bd39f5",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56985942_ef612677",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b0cbb3f_0498fb22",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4ee2a9_436094bb",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b0cbb3f_0498fb22",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +313,24 @@
       "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fb607b_8ada9124",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-20T17:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7900e6c6_189cb698",
+      "revId": "78fb9ca86f4994800acc7ef8da4fc8b7030bd6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
