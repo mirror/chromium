@@ -14,6 +14,8 @@ source_set("test_support") {
     "histogram_test_util.mm",
     "history_test_util.h",
     "history_test_util.mm",
+    "ios_chrome_scoped_testing_block_popups_pref.h",
+    "ios_chrome_scoped_testing_block_popups_pref.mm",
     "navigation_test_util.h",
     "navigation_test_util.mm",
     "password_test_util.h",
