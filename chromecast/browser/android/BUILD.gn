@@ -32,6 +32,10 @@ java_cpp_template("cast_shell_build_config_gen") {
   if (display_web_contents_in_service) {
     defines += [ "_DISPLAY_WEB_CONTENTS_IN_SERVICE" ]
   }
+
+  if (is_android_things) {
+    defines += [ "_IS_ANDROID_THINGS" ]
+  }
 }
 
 android_resources("cast_shell_android_resources") {
