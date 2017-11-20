@@ -31,6 +31,10 @@ class CookieStoreIOSPersistent : public CookieStoreIOS {
   explicit CookieStoreIOSPersistent(
       net::CookieMonster::PersistentCookieStore* persistent_store);
 
+  CookieStoreIOSPersistent(
+      net::CookieMonster::PersistentCookieStore* persistent_store,
+      std::unique_ptr<SystemCookieStore> system_store);
+
   ~CookieStoreIOSPersistent() override;
 
   // Inherited CookieStore methods.

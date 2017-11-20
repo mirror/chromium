@@ -65,23 +65,30 @@ void WKHTTPSystemCookieStore::GetCookiesForURLAsync(
     SystemCookieCallbackForCookies callback) {
   __block SystemCookieCallbackForCookies shared_callback = std::move(callback);
   GURL block_url = url;
-  [cookie_store_ getAllCookies:^(NSArray<NSHTTPCookie*>* cookies) {
-    NSMutableArray* result = [NSMutableArray array];
-    for (NSHTTPCookie* cookie in cookies) {
-      if (ShouldIncludeForRequestUrl(cookie, block_url)) {
-        [result addObject:cookie];
-      }
-    }
-    RunSystemCookieCallbackForCookies(std::move(shared_callback), result);
-  }];
+  web::WebThread::PostTask(
+      web::WebThread::UI, FROM_HERE, base::BindBlockArc(^{
+        [cookie_store_ getAllCookies:^(NSArray<NSHTTPCookie*>* cookies) {
+          NSMutableArray* result = [NSMutableArray array];
+          for (NSHTTPCookie* cookie in cookies) {
+            if (ShouldIncludeForRequestUrl(cookie, block_url)) {
+              [result addObject:cookie];
+            }
+          }
+          RunSystemCookieCallbackForCookies(std::move(shared_callback), result);
+        }];
+      }));
 }
 
 void WKHTTPSystemCookieStore::GetAllCookiesAsync(
     SystemCookieCallbackForCookies callback) {
   __block SystemCookieCallbackForCookies shared_callback = std::move(callback);
-  [cookie_store_ getAllCookies:^(NSArray<NSHTTPCookie*>* cookies) {
-    RunSystemCookieCallbackForCookies(std::move(shared_callback), cookies);
-  }];
+  web::WebThread::PostTask(
+      web::WebThread::UI, FROM_HERE, base::BindBlockArc(^{
+        [cookie_store_ getAllCookies:^(NSArray<NSHTTPCookie*>* cookies) {
+          RunSystemCookieCallbackForCookies(std::move(shared_callback),
+                                            cookies);
+        }];
+      }));
 }
 
 void WKHTTPSystemCookieStore::DeleteCookieAsync(NSHTTPCookie* cookie,
