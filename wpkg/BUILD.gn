@@ -1,0 +1,9 @@
+executable("wpkgtest") {
+  sources = [
+    "main.cc",
+  ]
+  public_deps = [
+    "//base",
+    "//buildtools/third_party/libc++",
+  ]
+}

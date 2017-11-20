@@ -80,6 +80,7 @@ group("gn_all") {
     "//tools/ipc_fuzzer:ipc_fuzzer_all",
     "//ui/base:ui_base_unittests",
     "//url:url_unittests",
+    "//wpkg:wpkgtest",
   ]
 
   if (!is_android && !is_chromecast) {
