@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35047b85_af8545f0",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-20T15:04:23Z",
+      "side": 1,
+      "message": "nit: this doesn\u0027t look needed?",
+      "revId": "02932d0b90bf94aba529a9f3265d2372fffd5b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869ac363_16e9ae4f",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-20T15:04:23Z",
+      "side": 1,
+      "message": "is this needed? These calls are best avoided if possible, since they bake in dependencies on how the production code internally posts tasks. if possible, better to wait for specific events.",
+      "revId": "02932d0b90bf94aba529a9f3265d2372fffd5b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
