@@ -10,7 +10,8 @@
 Polymer({
   is: 'settings-internet-page',
 
-  behaviors: [I18nBehavior, settings.RouteObserverBehavior],
+  behaviors:
+      [I18nBehavior, settings.RouteObserverBehavior, WebUIListenerBehavior],
 
   properties: {
     /**
@@ -83,6 +84,18 @@ Polymer({
      * @private
      */
     thirdPartyVpnProviders_: {
+      type: Array,
+      value: function() {
+        return [];
+      }
+    },
+
+    /**
+     * List of Arc VPN providers.
+     * @type {!Array<!chrome.networkingPrivate.ArcVPNProperties>}
+     * @private
+     */
+    arcVpnProviders_: {
       type: Array,
       value: function() {
         return [];
@@ -163,6 +176,15 @@ Polymer({
     chrome.management.onDisabled.addListener(this.onExtensionDisabledListener_);
 
     chrome.management.getAll(this.onGetAllExtensions_.bind(this));
+
+    this.addWebUIListener(
+        'sendArcVpnProviders', this.onArcVpnProvidersReceived_.bind(this));
+    this.addWebUIListener(
+        'removeArcVpnProvider', this.onArcVpnProviderRemoved_.bind(this));
+    this.addWebUIListener(
+        'updateArcVpnProvider', this.onArcVpnProviderUpdated_.bind(this));
+
+    this.browserProxy_.requestArcVpnProviders();
 
     this.networkingPrivate.getGlobalPolicy(policy => {
       this.globalPolicy_ = policy;
@@ -291,11 +313,7 @@ Polymer({
    * @private
    */
   onShowNetworks_: function(event) {
-    this.detailType_ = event.detail.Type;
-    var params = new URLSearchParams;
-    params.append('type', event.detail.Type);
-    this.subpageType_ = event.detail.Type;
-    settings.navigateTo(settings.routes.INTERNET_NETWORKS, params);
+    this.showNetworksSubpage_(event.detail.Type);
   },
 
   /**
@@ -384,6 +402,23 @@ Polymer({
   onAddThirdPartyVpnTap_: function(event) {
     var provider = event.model.item;
     this.browserProxy_.addThirdPartyVpn(CrOnc.Type.VPN, provider.ExtensionID);
+  },
+
+  /** @private */
+  onAddArcVpnTap_: function() {
+    this.showNetworksSubpage_(CrOnc.Type.VPN);
+  },
+
+  /**
+   * @param {string} type
+   * @private
+   */
+  showNetworksSubpage_: function(type) {
+    this.detailType_ = type;
+    var params = new URLSearchParams;
+    params.append('type', type);
+    this.subpageType_ = type;
+    settings.navigateTo(settings.routes.INTERNET_NETWORKS, params);
   },
 
   /**
@@ -480,6 +515,59 @@ Polymer({
       var provider = this.thirdPartyVpnProviders_[i];
       if (provider.ExtensionID == extensionId) {
         this.splice('thirdPartyVpnProviders_', i, 1);
+        break;
+      }
+    }
+  },
+
+  /**
+   * Compares Arc VPN Providers based on LastlauchTime
+   * @param {!chrome.networkingPrivate.ArcVPNProperties} arcVpnProvider1
+   * @param {!chrome.networkingPrivate.ArcVPNProperties} arcVpnProvider2
+   * @private
+   */
+  compareArcVpnProviders_: function(arcVpnProvider1, arcVpnProvider2) {
+    if (arcVpnProvider1.LastLaunchTime > arcVpnProvider2.LastLaunchTime)
+      return -1;
+    if (arcVpnProvider1.LastLaunchTime < arcVpnProvider2.LastLaunchTime)
+      return 1;
+    return 0;
+  },
+
+  /**
+   * @param {!Array<!chrome.networkingPrivate.ArcVPNProperties>} arcVpnProviders
+   * @private
+   */
+  onArcVpnProvidersReceived_: function(arcVpnProviders) {
+    arcVpnProviders.sort(this.compareArcVpnProviders_);
+    this.arcVpnProviders_ = arcVpnProviders;
+  },
+
+  /**
+   * @param {!chrome.networkingPrivate.ArcVPNProperties} arcVpnProvider
+   * @private
+   */
+  onArcVpnProviderUpdated_: function(arcVpnProvider) {
+    this.maybeRemoveArcVpnProvider_(arcVpnProvider.PackageName);
+    this.unshift('arcVpnProviders_', arcVpnProvider);
+  },
+
+  /**
+   * @param {string} packageName
+   * @private
+   */
+  onArcVpnProviderRemoved_: function(packageName) {
+    this.maybeRemoveArcVpnProvider_(packageName);
+  },
+
+  /**
+   * @param {string} packageName
+   * @private
+   */
+  maybeRemoveArcVpnProvider_(packageName) {
+    for (var i = 0; i < this.arcVpnProviders_.length; ++i) {
+      if (this.arcVpnProviders_[i].PackageName == packageName) {
+        this.splice('arcVpnProviders_', i, 1);
         break;
       }
     }
