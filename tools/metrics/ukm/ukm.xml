@@ -1384,6 +1384,25 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="Pepper.Broker" singular="True">
+  <owner>raymes@chromium.org</owner>
+  <summary>
+    Event recorded when a flash instance is created which creates a Pepper
+    Broker resource for unsandboxed access to the system.
+  </summary>
+  <metric name="Connect">
+    <summary>
+      Records '1' if the website calls the Connect function on the broker
+      resource.
+    </summary>
+  </metric>
+  <metric name="Create">
+    <summary>
+      Records '1' if a broker resource is created.
+    </summary>
+  </metric>
+</event>
+
 <event name="SubresourceFilter" singular="True">
   <owner>bmcquade@chromium.org</owner>
   <owner>csharrison@chromium.org</owner>

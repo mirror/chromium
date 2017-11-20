@@ -16,6 +16,7 @@
 #include "content/renderer/render_view_impl.h"
 #include "ppapi/c/pp_errors.h"
 #include "ppapi/shared_impl/platform_file.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebPluginContainer.h"
 
@@ -39,6 +40,13 @@ PPB_Broker_Impl::PPB_Broker_Impl(PP_Instance instance)
 
   UMA_HISTOGRAM_ENUMERATION("Pepper.BrokerAction", PepperBrokerAction::CREATE,
                             PepperBrokerAction::NUM);
+
+  PepperPluginInstanceImpl* plugin_instance =
+      HostGlobals::Get()->GetInstance(pp_instance());
+  ukm::UkmRecorder* recorder = ukm::UkmRecorder::Get();
+  ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+  recorder->UpdateSourceURL(source_id, plugin_instance->document_url());
+  ukm::builders::Pepper_Broker(source_id).SetCreate(1).Record(recorder);
 }
 
 PPB_Broker_Impl::~PPB_Broker_Impl() {
@@ -58,9 +66,6 @@ int32_t PPB_Broker_Impl::Connect(
     scoped_refptr<TrackedCallback> connect_callback) {
   // TODO(ddorwin): Return PP_ERROR_FAILED if plugin is in-process.
 
-  UMA_HISTOGRAM_ENUMERATION("Pepper.BrokerAction", PepperBrokerAction::CONNECT,
-                            PepperBrokerAction::NUM);
-
   if (broker_) {
     // May only be called once.
     return PP_ERROR_FAILED;
@@ -70,6 +75,15 @@ int32_t PPB_Broker_Impl::Connect(
       HostGlobals::Get()->GetInstance(pp_instance());
   if (!plugin_instance)
     return PP_ERROR_FAILED;
+
+  UMA_HISTOGRAM_ENUMERATION("Pepper.BrokerAction", PepperBrokerAction::CONNECT,
+                            PepperBrokerAction::NUM);
+
+  ukm::UkmRecorder* recorder = ukm::UkmRecorder::Get();
+  ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+  recorder->UpdateSourceURL(source_id, plugin_instance->document_url());
+  ukm::builders::Pepper_Broker(source_id).SetConnect(1).Record(recorder);
+
   PluginModule* module = plugin_instance->module();
   const base::FilePath& broker_path = module->path();
 
