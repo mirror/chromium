@@ -189,6 +189,8 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
 
   class Observer;
   friend class Observer;
+  class SetRemoteDescriptionObserver;
+  friend class SetRemoteDescriptionObserver;
 
   void OnSignalingChange(
       webrtc::PeerConnectionInterface::SignalingState new_state);
@@ -204,9 +206,7 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
       std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
           remote_stream_adapter_refs);
   void OnRemoveRemoteTrack(
-      scoped_refptr<webrtc::RtpReceiverInterface> webrtc_receiver,
-      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
-          remote_track_adapter_ref);
+      scoped_refptr<webrtc::RtpReceiverInterface> webrtc_receiver);
   void OnDataChannel(std::unique_ptr<RtcDataChannelHandler> handler);
   void OnIceCandidate(const std::string& sdp, const std::string& sdp_mid,
       int sdp_mline_index, int component, int address_family);
