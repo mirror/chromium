@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e3b6af9_a7d80598",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-20T05:14:09Z",
+      "side": 1,
+      "message": "std::move(registration) ?",
+      "range": {
+        "startLine": 189,
+        "startChar": 22,
+        "endLine": 189,
+        "endChar": 34
+      },
+      "revId": "763a9978a331ba346adc0814fcc4e42d942b261f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "083f5ff2_bcdbdace",
         "filename": "content/browser/service_worker/service_worker_context_core.h",
         "patchSetId": 7
