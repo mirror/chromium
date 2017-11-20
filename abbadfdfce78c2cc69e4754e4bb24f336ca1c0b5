@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe5b23ed_5c85c495",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-20T04:06:39Z",
+      "side": 1,
+      "message": "Please leave a comment to describe why this check is needed.",
+      "revId": "abbadfdfce78c2cc69e4754e4bb24f336ca1c0b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2026f65c_370827ec",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-20T04:06:39Z",
+      "side": 1,
+      "message": "Could you update this comment please?",
+      "revId": "abbadfdfce78c2cc69e4754e4bb24f336ca1c0b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

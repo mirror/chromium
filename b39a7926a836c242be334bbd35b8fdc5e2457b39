@@ -124,6 +124,24 @@
       "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b20afc_f5e9ebda",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-20T04:06:39Z",
+      "side": 1,
+      "message": "Sorry for being unclear, what I wanted to know is if ignoring notifications when type \u003d\u003d net::NetworkChangeNotifier::CONNECTION_NONE \u0026\u0026 !net::NetworkChangeNotifier::IsOffline() results in any behavior changes or not.\nEspecially if it results in dismissing real type\u003d\u003dCONNECTION_NONE events from any states (e.g. the device going totally offline from an intermediate offline state while switching from ethernet to wifi).",
+      "parentUuid": "f89fc442_7fbe9ba6",
+      "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
