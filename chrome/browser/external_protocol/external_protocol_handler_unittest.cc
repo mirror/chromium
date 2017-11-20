@@ -13,6 +13,23 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "url/third_party/mozilla/url_parse.h"
+
+namespace {
+
+// Creates a GURL from a string without auto-canonicalizing it. Allows testing
+// with non-canonical GURL inputs (which can occur in reality).
+GURL MakeNonCanonicalGURL(const std::string& spec) {
+  // First, make a canonical version (so we can get a Parsed).
+  const GURL canonical_gurl(spec);
+  const url::Parsed& parsed = canonical_gurl.parsed_for_possibly_invalid_spec();
+
+  // Now, create a "raw" GURL which will have a non-canonical spec, but a
+  // canonical Parsed.
+  return GURL(spec, parsed, canonical_gurl.is_valid());
+}
+
+}  // namespace
 
 class FakeExternalProtocolHandlerWorker
     : public shell_integration::DefaultProtocolClientWorker {
@@ -131,7 +148,9 @@ class ExternalProtocolHandlerTest : public testing::Test {
   void DoTest(ExternalProtocolHandler::BlockState block_state,
               shell_integration::DefaultWebClientState os_state,
               Action expected_action) {
-    GURL url("mailto:test@test.com");
+    // TODO(mgiuca): Not all tests should use this URL. Make this an optional
+    // parameter of DoTest. DO NOT SUBMIT.
+    GURL url = MakeNonCanonicalGURL("mailto:test@test.com\" --bad \"file");
     EXPECT_FALSE(delegate_.has_prompted());
     EXPECT_FALSE(delegate_.has_launched());
     EXPECT_FALSE(delegate_.has_blocked());
