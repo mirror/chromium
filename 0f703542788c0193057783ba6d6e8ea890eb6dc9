@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2041aafc_58e6ec14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T21:51:59Z",
+      "side": 1,
+      "message": "What is dynamic_annotations?",
+      "revId": "0f703542788c0193057783ba6d6e8ea890eb6dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
