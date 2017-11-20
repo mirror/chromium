@@ -466,7 +466,7 @@ void NavigationRequest::BeginNavigation() {
     // it by OnRequestFailed().
     CreateNavigationHandle();
     OnRequestFailedInternal(false, net::ERR_BLOCKED_BY_CLIENT, base::nullopt,
-                            false, false);
+                            false);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -480,8 +480,7 @@ void NavigationRequest::BeginNavigation() {
     // Create a navigation handle so that the correct error code can be set on
     // it by OnRequestFailed().
     CreateNavigationHandle();
-    OnRequestFailedInternal(false, net::ERR_ABORTED, base::nullopt, false,
-                            false);
+    OnRequestFailedInternal(false, net::ERR_ABORTED, base::nullopt, false);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -640,7 +639,7 @@ void NavigationRequest::OnRequestRedirected(
   // otherwise block.
   if (CheckContentSecurityPolicyFrameSrc(true /* is redirect */) ==
       CONTENT_SECURITY_POLICY_CHECK_FAILED) {
-    OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT, base::nullopt, false);
+    OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT, base::nullopt);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -651,7 +650,7 @@ void NavigationRequest::OnRequestRedirected(
           CredentialedSubresourceCheckResult::BLOCK_REQUEST ||
       CheckLegacyProtocolInSubresource() ==
           LegacyProtocolInSubresourceCheckResult::BLOCK_REQUEST) {
-    OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
+    OnRequestFailed(false, net::ERR_ABORTED, base::nullopt);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -847,18 +846,15 @@ void NavigationRequest::OnResponseStarted(
 void NavigationRequest::OnRequestFailed(
     bool has_stale_copy_in_cache,
     int net_error,
-    const base::Optional<net::SSLInfo>& ssl_info,
-    bool should_ssl_errors_be_fatal) {
+    const base::Optional<net::SSLInfo>& ssl_info) {
   NavigationRequest::OnRequestFailedInternal(has_stale_copy_in_cache, net_error,
-                                             ssl_info,
-                                             should_ssl_errors_be_fatal, false);
+                                             ssl_info, false);
 }
 
 void NavigationRequest::OnRequestFailedInternal(
     bool has_stale_copy_in_cache,
     int net_error,
     const base::Optional<net::SSLInfo>& ssl_info,
-    bool should_ssl_errors_be_fatal,
     bool skip_throttles) {
   DCHECK(state_ == STARTED || state_ == RESPONSE_STARTED);
   // TODO(https://crbug.com/757633): Check that ssl_info.has_value() if
@@ -928,9 +924,8 @@ void NavigationRequest::OnRequestFailedInternal(
   } else {
     // Check if the navigation should be allowed to proceed.
     navigation_handle_->WillFailRequest(
-        ssl_info, should_ssl_errors_be_fatal,
-        base::Bind(&NavigationRequest::OnFailureChecksComplete,
-                   base::Unretained(this), render_frame_host));
+        ssl_info, base::Bind(&NavigationRequest::OnFailureChecksComplete,
+                             base::Unretained(this), render_frame_host));
   }
 }
 
@@ -972,7 +967,7 @@ void NavigationRequest::OnStartChecksComplete(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationRequest::OnRequestFailedInternal,
                        weak_factory_.GetWeakPtr(), false,
-                       result.net_error_code(), base::nullopt, false, true));
+                       result.net_error_code(), base::nullopt, true));
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -1069,7 +1064,7 @@ void NavigationRequest::OnRedirectChecksComplete(
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE if needed.
     DCHECK_EQ(net::ERR_ABORTED, result.net_error_code());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
-                            false, true);
+                            true);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -1080,7 +1075,7 @@ void NavigationRequest::OnRedirectChecksComplete(
       result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
     DCHECK_EQ(net::ERR_BLOCKED_BY_CLIENT, result.net_error_code());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
-                            false, true);
+                            true);
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
     return;
@@ -1127,7 +1122,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
           download_manager->GetNavigationInterceptionCB(
               response_, std::move(handle_), ssl_status_,
               frame_tree_node_->frame_tree_node_id()));
-      OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
+      OnRequestFailed(false, net::ERR_ABORTED, base::nullopt);
       return;
     }
     loader_->ProceedWithResponse();
@@ -1144,7 +1139,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
       net_error = net::ERR_ABORTED;
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
     DCHECK_EQ(net::ERR_ABORTED, net_error);
-    OnRequestFailedInternal(false, net_error, base::nullopt, false, true);
+    OnRequestFailedInternal(false, net_error, base::nullopt, true);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -1154,7 +1149,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
   if (result.action() == NavigationThrottle::BLOCK_RESPONSE) {
     DCHECK_EQ(net::ERR_BLOCKED_BY_RESPONSE, result.net_error_code());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
-                            false, true);
+                            true);
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
     return;
