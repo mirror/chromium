@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d5765a_f749f0b3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/support/federatedcredential-get.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-20T08:25:22Z",
+      "side": 1,
+      "message": "This should not be \u0027password\u0027, right?",
+      "revId": "0d8daa88eafb91093341f963259f4a98bc149f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
