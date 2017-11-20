@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a8687da_9604c21f",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_event_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-20T20:23:07Z",
+      "side": 1,
+      "message": "A DCHECK inside an if is odd. Can we adjust the DCHECK instead? (and the one below too.",
+      "revId": "0e603efaca7a365619d39129324528521a15fe07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a26455_1148400a",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_event_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-20T20:23:07Z",
+      "side": 1,
+      "message": "Can you add comments that needs_scroll_begin/end are only used for non-latching now? Its odd to have variables that are invalid to read sometimes. Do you want to re-name them so they are clear that they can only be read when latching is disabled?",
+      "revId": "0e603efaca7a365619d39129324528521a15fe07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
