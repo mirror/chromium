@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a59a7537_4d58181e",
+        "filename": "content/renderer/loader/web_url_request_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-20T03:17:20Z",
+      "side": 1,
+      "message": "Thanks for reminding us of the serialization code. I\u0027ve been looking into this further, and I realized that the data pipe approach doesn\u0027t just work with it. Also I suspect it might not have been actually working well even in the legacy code but I\u0027m not entirely sure... currently we store Blob uuid (without securing blob\u0027s lifetime) into the serialization code and just tries to use it, but when it\u0027s deserialized there doesn\u0027t seem no guarantee that it can be read.\n\nI think we might need to split ResourceRequestBody into two, one that\u0027s used by renderer, navigation and browser process and the other one that is used for communication with Network Service?",
+      "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
