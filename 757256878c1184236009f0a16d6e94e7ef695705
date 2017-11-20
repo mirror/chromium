@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "33cbf0c8_6fd4635c",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3473,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "\u003e \u003e This raises an interesting question of how we want BI-scoped isolated origins to behave with --process-per-site.\n\u003e \u003e \n\u003e \u003e I plumbed the BI here so that it can be passed to IsSuitableHost -\u003e ShouldLockToOrigin -\u003e DoesSiteRequireDedicatedProcess.  On first thought, it feels weird, since this is picking a process for a site in --process-per-site, which feels like it shouldn\u0027t care about isolated origins scoped to any BrowsingInstances.  On the other hand, I think if a particular BrowsingInstance requires foo.com to be isolated, that should probably override --process-per-site, and this will let us do this.\n\u003e \n\u003e Agreed.  At least for SafeBrowsing, we would want the BI-scoped isolated origin to take precedence and thus live in a different process from the rest of the foo.com instances.\n\u003e \n\u003e \n\u003e \u003e \n\u003e \u003e Thinking through the behavior here, with browser-wide isolated origins and --process-per-site, we\u0027ll only ever have one process for an isolated origin, and it will be origin-locked and should always be considered suitable below.\n\u003e \n\u003e Agreed, for the browser-wide isolated-origin case.  That plus --process-per-site should use a single process for all instances.\n\u003e \n\u003e \u003e  With BI-scoped isolated origins, however, if we\u0027ve been using process 1 for foo.com, but then hit a BI which requires foo.com to be isolated, we probably shouldn\u0027t reuse process 1 anymore, and need to now create a second foo.com process, which will host the isolated part of foo.com.\n\u003e \n\u003e Agreed that the BI case should create a second process.  However, I\u0027m not sure I\u0027d say \"shouldn\u0027t reuse process 1 anymore.\"  Other BIs might not require the same isolation, and they should still reuse process 1.\n\nThat\u0027s right, BIs that don\u0027t require isolation should still be able to reuse process 1.\n\n\u003e \n\u003e \n\u003e \u003e \n\u003e \u003e The way it does this though is by taking process 1 off the --process-per-site map and then re-adding the second process to the map once it\u0027s created in RPHI::GetProcessHostForSiteInstance, which may not be ideal.  Perhaps ShouldUseProcessPerSite needs to return false in this case, so that we never even use this logic in this case?\n\u003e \n\u003e Yeah, I don\u0027t think we want to take process 1 out of the map.  Returning false from ShouldUseProcessPerSite sounds better for the BI-scoped case.\n\nI tried this, but it\u0027s a bit involved, so I\u0027m curious if it\u0027s OK to punt this until a followup CL to deal with --process-per-site with BI-scoped isolated origins?  The problem is ShouldUseProcessPerSite is defined publicly on RPH and used from SiteDetails, and I don\u0027t think we want to expose BI from the content public API.  We could try to pass a SiteInstance instead, but that\u0027d be blocked on the same problem in the DetermineSiteInstanceForURL call site, similarly to GetProcessHostForSite (see my other comments on that). \n\n\u003e \n\u003e \u003e  That still would need a way for us to plumb through the BrowserContext to IsSuitableHost -\u003e ShouldLockToOrigin -\u003e DoesSiteRequireDedicatedProcess. It seems wasteful to pass in both a BrowserContext and a BrowsingInstance, but maybe that\u0027s better for cases like this?\n\u003e \n\u003e I think I\u0027m missing this part.  Why would we need to pass both?  Are there cases we have the BrowserContext but not the BrowsingInstance?\n\nSorry, this was definitely confusing. :)  I think I wanted to say that if we didn\u0027t want to pass a BrowsingInstance into here, we\u0027d need to find a way to still pass the BrowsingContext into IsSuitableHost -\u003e ShouldLockToOrigin -\u003e DoesSiteRequireDedicatedProcess, which is called from here.  That means those functions would need to be able to take both a BrowsingInstance, which would be used when available, and a BrowsingContext to fall back to if BrowsingInstance is null.  I think this doesn\u0027t make much sense, and the best way forward is to find a way to pass SiteInstance into all process-per-site functions.\n\n\u003e \n\u003e \u003e  In any case, I\u0027ll need to add a test for --process-per-site behavior in a subsequent CL that introduces isolated origins within a BI, and perhaps iron out more of this behavior there.\n\u003e \n\u003e Sounds good.",
+      "parentUuid": "8da2a98d_25867bcb",
+      "range": {
+        "startLine": 3473,
+        "startChar": 4,
+        "endLine": 3473,
+        "endChar": 39
+      },
+      "revId": "757256878c1184236009f0a16d6e94e7ef695705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7438f6d7_2f57f2a7",
         "filename": "content/browser/site_instance_impl.h",
         "patchSetId": 5

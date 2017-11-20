@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cacb7b32_dc60383b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "This is blocking passing SiteInstance into GetProcessHostForSite.\n\nI considered just creating the process-per-site SiteInstance early (via current_instance-\u003eGetRelatedSiteInstance(dest_url)) for passing into GetProcessHostForSite and later into the returned SiteInstanceDescriptor, but I think that might also need some tweaking to SiteInstanceDescriptor to add a ref to that SiteInstance so it doesn\u0027t go away between here and ConvertToSiteInstance.  I can pursue that if you think this is worthwhile, though maybe in a followup?\n\nDo you know the background of why we check if there\u0027s an existing process here?  Do we still need it?  I see you added it long ago in https://chromiumcodereview.appspot.com/10575014, but curious why only checking ShouldUseProcessPerSite isn\u0027t sufficient.  Is this optimizing the case where we redirect to a process-per-site URL1 and then to a non-process-per-site URL2, so that we won\u0027t unnecessarily create the process for URL1 in between?",
+      "range": {
+        "startLine": 1314,
+        "startChar": 8,
+        "endLine": 1315,
+        "endChar": 66
+      },
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35279199_dcbfac2e",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 6
@@ -13,6 +36,24 @@
       "writtenOn": "2017-11-14T20:06:51Z",
       "side": 1,
       "message": "Is it worth passing SiteInstance here?",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dba088d_43e0cef4",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3558,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Yes, and it will be needed for the IsSuitableHost call once I rebase on r516585.  Done.",
+      "parentUuid": "35279199_dcbfac2e",
       "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "41b9082d_5a29d0bf",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3565,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ded81c1_e998e4e4",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97875fe7_94b637e7",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 6
@@ -47,6 +106,24 @@
       "writtenOn": "2017-11-14T20:06:51Z",
       "side": 1,
       "message": "Should we update this (and ShouldTrackProcessForSite and ShouldUseSiteProcessTracking) as well?  That would avoid the need to call GetSiteURL() above and move us more toward just passing a SiteInstance in most places.  (I\u0027m not sure how viral that change is, though.)",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ecdbd0b_7faaa73a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3973,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Unfortunately, these are a lot more complicated.  The problem is that the (Add|Remove)ExpectedFrameWithSite() methods need to pass in the SiteInstance as well, but they don\u0027t have it today -- NavigationHandleImpl only maintains site_url_ and updates it by recomputing GetSiteForURL when necessary.  We\u0027d need to rework the logic there to instead keep and update a SiteInstance on redirects, etc (or pass in a fresh ephemeral SiteInstance computed as a related SiteInstance off of starting_site_instance_ in NavigationHandleImpl::SetExpectedProcess).  If we do want to go there, I\u0027d probably prefer to do that in a separate CL, to not make this one too big -- let me know if you agree.",
+      "parentUuid": "97875fe7_94b637e7",
       "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "f1dbe547_762a74f0",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Done; also added a small comment to clarify when this is used (process reuse when over process limit).  \n\nI also added a high-level overview to GetProcessHostForSiteInstance to lay out the scenarios and the flow.  Does that help disambiguate these calls?  (I\u0027m a bit concerned the function references may get stale, but at least outlining the scenarios may be helpful.)\n\nFor process-per-site, maybe we can create a helper class within RPHI, similarly to what we did for spare RPH and TDI?  We can move the process-per-site map tracking there, and instead of calling GetProcessHostForSite, we\u0027d say ProcessPerSiteManager::GetProcessForSite() or something similar, which would be a bit more understandable.  I can file a new bug for me or Avi to look at in a followup if you think this is worthwhile.",
+      "parentUuid": "b7db24e0_eb283697",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2520e5cc_29f36d0d",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 6
@@ -87,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "91081eb8_87eec2c8",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2520e5cc_29f36d0d",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d4906a6_bc3cd5ff",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 6
@@ -98,6 +211,24 @@
       "writtenOn": "2017-11-14T20:06:51Z",
       "side": 1,
       "message": "For cases that we are opening in a new BrowsingInstance, I suppose we have that BrowsingInstance already by the time we call this?  (We would want to stay in the same BrowserContext, so we couldn\u0027t just pass a null BrowsingInstance.)",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b83b461_0dbf6182",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Yes, I think so.  This is really used in two ways:\n- process assignment in RPHI, where all call sites originate from SiteInstance::GetProcess().  If we\u0027re opening in a new BrowsingInstance, we must\u0027ve created a SiteInstance for the new BI in GetSiteInstanceForNavigation before reaching this.\n- SiteInstance::HasWrongProcessForURL.  If a BI swap is required, I think we might call this on the old SiteInstance\u0027s BrowsingInstance and dest_url when determining whether or not to swap processes (e.g., from IsCurrentlySameSite), but a BI swap implies that we\u0027ll ultimately create a new BI and SI (regardless of any isolated origins scoped to old or new BI), and when we call SiteInstance::GetProcess(), that will have the new BI and its BrowserContext.",
+      "parentUuid": "1d4906a6_bc3cd5ff",
       "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +252,24 @@
     },
     {
       "key": {
+        "uuid": "02604442_4049458a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "That\u0027d be nice and I tried this, but ran into two issues: \n* GetProcessHostForSite calls into this and it doesn\u0027t have the SiteInstance (more discussion on that call below).\n* SiteInstance::HasWrongProcessForURL calls this and also doesn\u0027t have the destination SiteInstance.\n\nWe could create temporary related SiteInstances at these call sites, just to have something to pass here, but that seemed undesirable and a bit risky, so I left this as-is for now.  WDYT?",
+      "parentUuid": "626b0faa_747e5af9",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efc46cf2_8c4e9ed8",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 6
@@ -132,6 +281,24 @@
       "writtenOn": "2017-11-14T20:06:51Z",
       "side": 1,
       "message": "I was hoping we could just pass SiteInstance here as well, but that may not work.  Some callers of this pass the dest_url, and I suppose that matters for hosted apps, which can have certain paths that need process-per-site (sigh).",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf06f57_f221d576",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Yeah, RenderFrameHostManager::DetermineSiteInstanceForURL is the problematic caller which does this, and since GetProcessHostForSite also uses IsSuitableHost, that also blocks passing SiteInstance into IsSuitableHost.  I\u0027ve put more discussion on our options at that call site inside DetermineSiteInstanceForURL.",
+      "parentUuid": "efc46cf2_8c4e9ed8",
       "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +322,24 @@
     },
     {
       "key": {
+        "uuid": "86833fd7_3961bb11",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad0515b8_4d2f8d2b",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b1dcc9_c49ea0d3",
         "filename": "content/browser/site_instance_impl.cc",
         "patchSetId": 6
@@ -166,6 +351,24 @@
       "writtenOn": "2017-11-14T20:06:51Z",
       "side": 1,
       "message": "How hard would it be to eliminate this condition?  Would be nice to simplify and avoid this check if possible, but don\u0027t worry if it\u0027s a huge change.",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cffc756_617dc40f",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Not hard, needed to fix four isolated origin unit tests in SiteInstanceTest, which were passing null into here.  Those tests were also passing a null BrowserContext in a few more places, so I also fixed those to pass in the BrowsingInstance\u0027s BrowserContext, just to be consistent.  Done.",
+      "parentUuid": "86b1dcc9_c49ea0d3",
       "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +389,24 @@
       "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3d0df2_6c2f4c75",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-20T18:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4d8320f_ffbf9e7a",
+      "revId": "89912927c9357af9c0cfaf7822b5e038542713d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
