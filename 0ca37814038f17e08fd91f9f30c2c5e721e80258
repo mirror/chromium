@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a72780_4a0ffd5a",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-20T10:13:54Z",
+      "side": 1,
+      "message": "Please add a comment as to what the reference_table is and when it is needed",
+      "revId": "0ca37814038f17e08fd91f9f30c2c5e721e80258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
