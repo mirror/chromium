@@ -22,6 +22,40 @@
       "revId": "8616589a07892de252910a57b08e3bdc04b9c928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086cc266_b42da471",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:59:59Z",
+      "side": 1,
+      "message": "Previously I was suggesting that we don\u0027t need \u0027is_first_char\u0027, this would be simpler with an extra explicit test.\n\nif (hostname[0] \u003d\u003d \u0027-\u0027)\n  return false;  // \u0027-\u0027 is not valid for the first char\nfor (const char\u0026 c : hostname) {\n  if (!IsValidHostnameCharacter(c))\n    return false;\n}\nreturn true;",
+      "revId": "8616589a07892de252910a57b08e3bdc04b9c928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb5a6d8_3cb75099",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-20T19:59:59Z",
+      "side": 1,
+      "message": "private static methods should just be file local functions (unless used by a test, but for that we generally use a ForTest wrapper around the file local function).",
+      "revId": "8616589a07892de252910a57b08e3bdc04b9c928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
