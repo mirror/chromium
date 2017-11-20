@@ -16,6 +16,41 @@
       "revId": "849371b7be946b6f41265e4e03e4e72804d450c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3ccb71_13d1e199",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T06:51:53Z",
+      "side": 1,
+      "message": "I think we can remove it, it\u0027s a bit of clutter.",
+      "parentUuid": "39558cb2_516931ce",
+      "revId": "849371b7be946b6f41265e4e03e4e72804d450c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50615f2c_0e0f6680",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-20T06:51:53Z",
+      "side": 1,
+      "message": "This preamble in each function is a bit heavy but I don\u0027t see a better way to simplify it. We could probably use macros or templates but that may be even more complex, especially with the CompleteFindSoon thing we want to call.",
+      "revId": "849371b7be946b6f41265e4e03e4e72804d450c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
