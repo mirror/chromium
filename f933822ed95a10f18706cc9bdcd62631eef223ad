@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "158dbc26_0763cb5d",
+        "filename": "content/renderer/media/webmediaplayer_ms_compositor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-20T14:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e889959_c589c266",
+      "range": {
+        "startLine": 406,
+        "startChar": 13,
+        "endLine": 406,
+        "endChar": 24
+      },
+      "revId": "f933822ed95a10f18706cc9bdcd62631eef223ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f936066_509ee908",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T13:56:55Z",
       "side": 1,
       "message": "nit: you can use \nv.onerror \u003d t.unreached_func()\nv.onresize \u003d t.unreached_func()\n\nthis applies to other event listeners, but follow foolip@\u0027s advice here.",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "f933822ed95a10f18706cc9bdcd62631eef223ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd70610_c803d1d4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-20T14:18:08Z",
+      "side": 1,
+      "message": "I just kept the same style as the other event tests in the same folder.\nonresize should be reached though, that\u0027s the point of the test!",
+      "parentUuid": "7f936066_509ee908",
       "range": {
         "startLine": 18,
         "startChar": 4,
