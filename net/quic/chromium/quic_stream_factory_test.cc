@@ -2980,6 +2980,100 @@ TEST_P(QuicStreamFactoryTest, NewNetworkConnectedAfterNoNetwork) {
   EXPECT_TRUE(socket_data1.AllWriteDataConsumed());
 }
 
+// This test receives NCN signals in the following order:
+// - new network connected
+// - new network made default
+// - old network soon to disconnect
+// - old network disconnected
+// TODO(zhongyi): fix the socket data mock.
+TEST_P(QuicStreamFactoryTest,
+       NewNetworkMadeDefaultBeforeOldNetworkDisconnected) {
+  InitializeConnectionMigrationV2Test({kDefaultNetworkForTests});
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  QuicStreamFactoryPeer::SetTaskRunner(factory_.get(), runner_.get());
+
+  MockQuicData socket_data;
+  QuicStreamOffset header_stream_offset = 0;
+  socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
+  socket_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructGetRequestPacket(
+      2, GetNthClientInitiatedStreamId(0), true, true, &header_stream_offset));
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+  // Create request and QuicHttpStream.
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+  EXPECT_THAT(callback_.WaitForResult(), IsOk());
+  std::unique_ptr<HttpStream> stream = CreateStream(&request);
+  EXPECT_TRUE(stream.get());
+
+  // Cause QUIC stream to be created.
+  HttpRequestInfo request_info;
+  request_info.method = "GET";
+  request_info.url = url_;
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+                                         net_log_, CompletionCallback()));
+
+  // Ensure that session is alive and active.
+  QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
+  EXPECT_TRUE(QuicStreamFactoryPeer::IsLiveSession(factory_.get(), session));
+  EXPECT_TRUE(HasActiveSession(host_port_pair_));
+
+  // Send GET request on stream.
+  HttpResponseInfo response;
+  HttpRequestHeaders request_headers;
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+                                    callback_.callback()));
+  // Add a new network and notify the stream factory of a new connected network.
+  // This should be ignored as current network is still connected and working.
+  scoped_mock_network_change_notifier_->mock_network_change_notifier()
+      ->SetConnectedNetworksList({kNewNetworkForTests});
+  scoped_mock_network_change_notifier_->mock_network_change_notifier()
+      ->NotifyNetworkConnected(kNewNetworkForTests);
+  EXPECT_TRUE(QuicStreamFactoryPeer::IsLiveSession(factory_.get(), session));
+  EXPECT_TRUE(HasActiveSession(host_port_pair_));
+  EXPECT_EQ(1u, session->GetNumActiveStreams());
+
+  // Set up second socket data provider that is used for probing.
+  MockQuicData socket_data1;
+  socket_data1.AddWrite(
+      client_maker_.MakeConnectivityProbingPacket(3, true, 1350));
+  socket_data1.AddRead(
+      server_maker_.MakeConnectivityProbingPacket(1, false, 1350));
+  socket_data1.AddWrite(
+      client_maker_.MakePingPacket(4, /*include_version=*/false));
+  socket_data1.AddRead(ConstructOkResponsePacket(
+      2, GetNthClientInitiatedStreamId(0), false, false));
+  socket_data1.AddWrite(client_maker_.MakeAckPacket(5, 2, 1, 1, false));
+  // TODO(zhongyi): expects more data.
+  socket_data1.AddSocketDataToFactory(socket_factory_.get());
+
+  // Notify the stream factory that the new connected network is made default,
+  // session will be stay on the original network, but try to migrate back to
+  // default network.
+  scoped_mock_network_change_notifier_->mock_network_change_notifier()
+      ->NotifyNetworkMadeDefault(kNewNetworkForTests);
+
+  // Response headers are received over the new network.
+  // EXPECT_THAT(callback_.WaitForResult(), IsOk());
+  EXPECT_EQ(200, response.headers->response_code());
+  // Check that the session is still alive.
+  EXPECT_TRUE(QuicStreamFactoryPeer::IsLiveSession(factory_.get(), session));
+  EXPECT_TRUE(HasActiveSession(host_port_pair_));
+
+  EXPECT_TRUE(socket_data.AllReadDataConsumed());
+  EXPECT_TRUE(socket_data.AllWriteDataConsumed());
+  EXPECT_TRUE(socket_data1.AllReadDataConsumed());
+  EXPECT_TRUE(socket_data1.AllWriteDataConsumed());
+}
+
 TEST_P(QuicStreamFactoryTest, OnNetworkChangeDisconnectedPauseBeforeConnected) {
   InitializeConnectionMigrationTest({kDefaultNetworkForTests});
   ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();

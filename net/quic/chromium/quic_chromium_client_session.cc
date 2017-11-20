@@ -1661,14 +1661,12 @@ void QuicChromiumClientSession::OnNetworkConnected(
     return;
   }
 
-  if (!migrate_session_on_network_change_v2_) {
-    // TODO(jri): Ensure that OnSessionGoingAway is called consistently,
-    // and that it's always called at the same time in the whole
-    // migration process. Allows tests to be more uniform.
-    stream_factory_->OnSessionGoingAway(this);
-    Migrate(network, connection()->peer_address().impl().socket_address(),
-            /*close_session_on_error=*/true, net_log);
-  }
+  // TODO(jri): Ensure that OnSessionGoingAway is called consistently,
+  // and that it's always called at the same time in the whole
+  // migration process. Allows tests to be more uniform.
+  stream_factory_->OnSessionGoingAway(this);
+  Migrate(network, connection()->peer_address().impl().socket_address(),
+          /*close_session_on_error=*/true, net_log);
 }
 
 void QuicChromiumClientSession::OnNetworkDisconnected(
@@ -1731,7 +1729,7 @@ void QuicChromiumClientSession::OnNetworkMadeDefault(
   }
 
   // Connection migration v2.
-  // If we are already on the new network.
+  // If we are already on the new network, cancel migrate back timer.
   if (GetDefaultSocket()->GetBoundNetwork() == new_network) {
     CancelMigrateBackToDefaultNetworkTimer();
     HistogramAndLogMigrationFailure(
