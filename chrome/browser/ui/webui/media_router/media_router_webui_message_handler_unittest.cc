@@ -416,6 +416,7 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateMediaRouteStatus) {
   status.duration = base::TimeDelta::FromSeconds(90);
   status.current_time = base::TimeDelta::FromSeconds(80);
   status.volume = 0.9;
+  // TODO(imcheng): Test hangouts and mirroring extra data here.
 
   handler_->UpdateMediaRouteStatus(status);
   const base::DictionaryValue* status_value =
@@ -635,6 +636,18 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, OnMediaCommandsReceived) {
   args->SetDouble("volume", volume);
   EXPECT_CALL(*controller, SetVolume(volume));
   handler_->OnSetCurrentMediaVolume(&args_list);
+}
+
+TEST_F(MediaRouterWebUIMessageHandlerTest, OnSetMediaRemotingEnabled) {
+  auto controller =
+      base::MakeRefCounted<MirroringMediaRouteController>("routeId", profile());
+  EXPECT_CALL(*mock_media_router_ui_, GetMediaRouteController())
+      .WillRepeatedly(Return(controller.get()));
+
+  base::ListValue args_list;
+  args_list.emplace_back(false);
+  handler_->OnSetMediaRemotingEnabled(&args_list);
+  EXPECT_FALSE(controller->media_remoting_enabled());
 }
 
 TEST_F(MediaRouterWebUIMessageHandlerTest, OnInvalidMediaCommandsReceived) {

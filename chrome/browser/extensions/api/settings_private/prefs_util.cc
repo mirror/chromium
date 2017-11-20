@@ -441,6 +441,10 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
       settings_private::PrefType::PREF_TYPE_BOOLEAN;
 #endif  // defined(GOOGLE_CHROME_BUILD)
 
+  // Media Remoting settings.
+  (*s_whitelist)[::prefs::kMediaRouterMediaRemotingEnabled] =
+      settings_private::PrefType::PREF_TYPE_DICTIONARY;
+
   return *s_whitelist;
 }
 
