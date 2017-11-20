@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39827c4b_acd5022c",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T16:20:41Z",
+      "side": 1,
+      "message": "nit: AutofillMetricsMetricsBrowserTest::SetUpCommandLine(command_line);",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 67
+      },
+      "revId": "03c7f1b99678800f5d252174a6bf0202ff43f7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
