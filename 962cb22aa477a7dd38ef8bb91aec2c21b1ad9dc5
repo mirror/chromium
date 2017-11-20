@@ -22,6 +22,30 @@
       "revId": "962cb22aa477a7dd38ef8bb91aec2c21b1ad9dc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecd2706_31ab0703",
+        "filename": "ash/app_list/model/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-20T18:40:56Z",
+      "side": 1,
+      "message": "Currently not. In the future when we add mojo calls, it\u0027ll depend \"//ash/public/cpp:ash_public_cpp\".\n\nWe\u0027re in the process of migration, and should keep the dependency \"//ui/app_list\" -\u003e \"//ash/app_list/model:app_list_model\".\n\nWhile we already have \"//ash\" -\u003e \"//ui/app_list/presenter\" -\u003e \"//ui/app_list\", building this model into \"//ash\" will end up with a dep cycle.",
+      "parentUuid": "de54ab64_8a919281",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 29
+      },
+      "revId": "962cb22aa477a7dd38ef8bb91aec2c21b1ad9dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
