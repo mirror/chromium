@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ef32d40_d77c84cc",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-20T18:51:15Z",
+      "side": 1,
+      "message": "nit: how about unverified_sync_tokens.push_back(to_return.back().sync_token.GetData())?\n\nnit: in any case, can you add a comment warning against using the to_return stack variable?",
+      "revId": "b82cf990a511db0065bd8ee84a271e80fca03d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
