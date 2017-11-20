@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "a4160403_20f1b17a",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T13:14:47Z",
+      "side": 1,
+      "message": "nit: emplace_back(std::move(key), std::move(form))",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 74
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f4127a_8f1bc2f0",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T13:14:47Z",
+      "side": 1,
+      "message": "nit: this should work without the lambda as well",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 56
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d9d1a5_3ba36292",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T13:14:47Z",
+      "side": 1,
+      "message": "nit: emplace(previous_key, std::move(key_to_form.second))",
+      "range": {
+        "startLine": 119,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 69
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd69edc_5d5c8e02",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T13:14:47Z",
+      "side": 1,
+      "message": "nit: std::move(duplicates-\u003ebegin(), duplicates-\u003eend(), std::back_inserter(*list))",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 5
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f2ba568_3b0d7869",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
