@@ -32,6 +32,7 @@
 #include "core/layout/LayoutText.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "core/paint/PaintLayer.h"
 
 namespace blink {
@@ -355,8 +356,25 @@ static void MarkSelected(SelectedLayoutObjects* selected_objects,
   selected_objects->insert(layout_object);
 }
 
+// If crrev.com/c/776413 is merged, we can use EnclosingNGBlockFlow() directly
+static LayoutBlockFlow* EnclosingNGBlockFlow(LayoutObject* layout_object) {
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
+    return layout_object->EnclosingNGBlockFlow();
+  return nullptr;
+}
+
 static void MarkSelectedInside(SelectedLayoutObjects* selected_objects,
                                LayoutObject* layout_object) {
+  if (LayoutBlockFlow* const ng_block_flow =
+          EnclosingNGBlockFlow(layout_object)) {
+    if (selected_objects->Contains(ng_block_flow)) {
+      DCHECK(ng_block_flow->GetSelectionState() == SelectionState::kInside);
+      return;
+    }
+    ng_block_flow->LayoutObject::SetSelectionState(SelectionState::kInside);
+    selected_objects->insert(ng_block_flow);
+    return;
+  }
   MarkSelected(selected_objects, layout_object, SelectionState::kInside);
   LayoutTextFragment* const first_letter_part =
       FirstLetterPartFor(layout_object);
@@ -385,6 +403,26 @@ static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInOneNode(
   DCHECK_GE(end_offset.value(), start_offset.value());
   if (start_offset.value() == end_offset.value())
     return {};
+
+  if (LayoutBlockFlow* const ng_block_flow =
+          EnclosingNGBlockFlow(layout_object)) {
+    const Position& start = {layout_object->GetNode(), start_offset.value()};
+    const NGOffsetMapping* const mapping = NGOffsetMapping::GetFor(start);
+    const WTF::Optional<unsigned int>& ng_start_offset =
+        mapping->GetTextContentOffset(start);
+    DCHECK(ng_start_offset.has_value());
+    const WTF::Optional<unsigned int>& ng_end_offset =
+        mapping->GetTextContentOffset(
+            {layout_object->GetNode(), end_offset.value()});
+    DCHECK(ng_end_offset.has_value());
+    ng_block_flow->LayoutObject::SetSelectionState(
+        SelectionState::kStartAndEnd);
+    selected_objects.insert(ng_block_flow);
+    return {{ng_block_flow, (int)ng_start_offset.value(), ng_block_flow,
+             (int)ng_end_offset.value()},
+            std::move(selected_objects)};
+  }
+
   LayoutTextFragment* const first_letter_part =
       FirstLetterPartFor(layout_object);
   if (!first_letter_part) {
