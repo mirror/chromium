@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bdda11b_6eb4a4e0",
+        "filename": "components/autofill/ios/browser/resources/suggestion_controller.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:42:34Z",
+      "side": 1,
+      "message": "Sure, getElementByNameWithParent may be in suggestion_controller.js, even as \"private\" function.",
+      "parentUuid": "5a14fc5f_218d7e99",
+      "range": {
+        "startLine": 274,
+        "startChar": 25,
+        "endLine": 274,
+        "endChar": 51
+      },
+      "revId": "240500cb447a002d2ab8c2486e4d0433e7d4d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26dfc75c_64f7fa1f",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "240500cb447a002d2ab8c2486e4d0433e7d4d5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a362ebc7_77affa88",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26dfc75c_64f7fa1f",
+      "range": {
+        "startLine": 736,
+        "startChar": 9,
+        "endLine": 736,
+        "endChar": 11
+      },
+      "revId": "240500cb447a002d2ab8c2486e4d0433e7d4d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
