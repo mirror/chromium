@@ -83,14 +83,14 @@ TEST_F(TabManagerWebContentsDataTest, RecentlyAudible) {
 }
 
 TEST_F(TabManagerWebContentsDataTest, LastAudioChangeTime) {
-  EXPECT_EQ(base::TimeTicks::UnixEpoch(), tab_data()->LastAudioChangeTime());
+  EXPECT_TRUE(tab_data()->LastAudioChangeTime().is_null());
   auto now = NowTicks();
   tab_data()->SetLastAudioChangeTime(now);
   EXPECT_EQ(now, tab_data()->LastAudioChangeTime());
 }
 
 TEST_F(TabManagerWebContentsDataTest, LastInactiveTime) {
-  EXPECT_EQ(base::TimeTicks::UnixEpoch(), tab_data()->LastInactiveTime());
+  EXPECT_TRUE(tab_data()->LastInactiveTime().is_null());
   auto now = NowTicks();
   tab_data()->SetLastInactiveTime(now);
   EXPECT_EQ(now, tab_data()->LastInactiveTime());
