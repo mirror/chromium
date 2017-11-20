@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40ff5480_3410d566",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede15673_0711a4ed",
+      "range": {
+        "startLine": 217,
+        "startChar": 23,
+        "endLine": 217,
+        "endChar": 52
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c89735a7_5c26ff8e",
         "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T09:04:04Z",
       "side": 1,
       "message": "Please compare ProviderId instead, or both id and type.",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6677994_fa9ccb9e",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Again, would changing this to .GetExtensionId() be sufficient since it implicitly checks that type\u003d\u003dEXTENSION?",
+      "parentUuid": "c89735a7_5c26ff8e",
       "range": {
         "startLine": 193,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "41f2b1e5_2691fba6",
+        "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "It looks like this function can only get called via the request manager so will only get called by Extensions. Switching this to .GetExtensionId() to be sure.",
+      "parentUuid": "4e9c8b07_6af1a65c",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 70
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a17ff3b_58ab4141",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e55fbb70_9af0a4c2",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "I think changing line 147 to .GetExtensionId() would be sufficient as it has a CHECK macro in it now.",
+      "parentUuid": "3a17ff3b_58ab4141",
+      "range": {
+        "startLine": 150,
+        "startChar": 31,
+        "endLine": 150,
+        "endChar": 32
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaf2c529_4cac8ebf",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-20T09:04:04Z",
       "side": 1,
       "message": "I haven\u0027t done much Chrome development recently, but is this necessary (or recommended)?",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f10634_4ce5c662",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "this was suggested by zentaro@ in a prior patchset. It looks like per https://chromium-cpp.appspot.com/ that regular enums should have an explicit base type.",
+      "parentUuid": "aaf2c529_4cac8ebf",
       "range": {
         "startLine": 33,
         "startChar": 20,
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "45a3f14b_14141032",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce6254e_bd0dc4c1",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83f5914f_cbc357d6",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b808c306_5b889533",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c85be399_9ea7000e",
         "filename": "chrome/browser/chromeos/file_system_provider/registry.cc",
         "patchSetId": 7
@@ -174,6 +342,30 @@
       "writtenOn": "2017-11-20T09:04:04Z",
       "side": 1,
       "message": "We have a collision here. If we have two provider ids with the same id but different types, we\u0027ll overwrite their settings.\n\nLet\u0027s add a serializing method to ProviderId, which we could use here:\n\nstd::string ProviderId::ToString() const {\n  std::stringstream ss;\n  ss \u003c\u003c type_ \u003c\u003c id_;  // Or something like that.\n  return ss.str();\n}\n\nand\n\nstatic ProviderId::FromString(const std::string\u0026 value) {\n  int type \u003d static_cast\u003cProviderType\u003e(...);\n  switch (type) {\n    case TYPE_EXTENSION:\n      return FromExtensionId(...);\n    ...\n  }\n}\n\nor something like that?",
+      "range": {
+        "startLine": 97,
+        "startChar": 10,
+        "endLine": 97,
+        "endChar": 49
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20867f7f_3bad1c28",
+        "filename": "chrome/browser/chromeos/file_system_provider/registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Serialization makes a lot of sense- I\u0027m not sure where we will use the deserialization yet?",
+      "parentUuid": "c85be399_9ea7000e",
       "range": {
         "startLine": 97,
         "startChar": 10,
@@ -209,6 +401,47 @@
     },
     {
       "key": {
+        "uuid": "af0e3723_c916b67b",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "I like this a lot!",
+      "parentUuid": "b1de4903_73c9e4f7",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 130,
+        "endChar": 54
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e982752_c2a42c70",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "This will temporarily be .GetIdUnsafe(). Adding a todo to change once we switch from Factory Callbacks to Providers with GetCapabilities \u0026 CreateFileSystem fns (go/add-file-system-providers)",
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80eaf607_f722ee53",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 7
@@ -229,6 +462,30 @@
       "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a61b91_4f6a5fa5",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Agreed, but we don\u0027t have a ProviderId to compare it to. Is it okay to call .GetExtensionId so the type is implicitly checked?",
+      "parentUuid": "80eaf607_f722ee53",
+      "range": {
+        "startLine": 373,
+        "startChar": 8,
+        "endLine": 373,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +512,30 @@
     },
     {
       "key": {
+        "uuid": "4032adc6_d573d2dc",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d66bad36_4228c7e3",
+      "range": {
+        "startLine": 468,
+        "startChar": 2,
+        "endLine": 468,
+        "endChar": 48
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b16247bc_5ab113da",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 7
@@ -278,6 +559,30 @@
     },
     {
       "key": {
+        "uuid": "637d9e68_4c562c7a",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b16247bc_5ab113da",
+      "range": {
+        "startLine": 469,
+        "startChar": 4,
+        "endLine": 469,
+        "endChar": 28
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "334452b1_ff66eb8b",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 7
@@ -298,6 +603,30 @@
       "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3983e6_d365a52d",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-20T22:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "334452b1_ff66eb8b",
+      "range": {
+        "startLine": 474,
+        "startChar": 2,
+        "endLine": 474,
+        "endChar": 6
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
