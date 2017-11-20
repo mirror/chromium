@@ -378,7 +378,8 @@ void Affordance::UpdatePaintedLayer() {
 }
 
 void Affordance::UpdateArrowLayer() {
-  const float progress = std::min(1.f, GetAffordanceProgress());
+  const float progress = GetAffordanceProgress();
+  const float capped_progress = std::min(1.f, progress);
   gfx::Transform transform;
   if (mode_ == OVERSCROLL_SOUTH) {
     gfx::Vector2dF offset(kArrowSize / 2.f, kArrowSize / 2.f);
@@ -388,7 +389,7 @@ void Affordance::UpdateArrowLayer() {
   } else {
     // Calculate the offset for the arrow relative to its final position.
     const float offset =
-        (1 - progress) * (-kBackgroundRadius + kArrowSize / 2.f);
+        (1 - capped_progress) * (-kBackgroundRadius + kArrowSize / 2.f);
     transform.Translate(
         gfx::Vector2dF(mode_ == OVERSCROLL_EAST ? offset : -offset, 0));
   }
@@ -398,10 +399,10 @@ void Affordance::UpdateArrowLayer() {
   // kArrowOpacityProgressThreshold and after that increases linearly to 1;
   // essentially, making a quick bump at the end.
   float opacity = kArrowInitialOpacity;
-  if (progress > kArrowOpacityProgressThreshold) {
+  if (capped_progress > kArrowOpacityProgressThreshold) {
     const float max_opacity_bump = kArrowFullOpacity - kArrowInitialOpacity;
     const float opacity_bump_ratio =
-        std::min(1.f, (progress - kArrowOpacityProgressThreshold) /
+        std::min(1.f, (capped_progress - kArrowOpacityProgressThreshold) /
                           (1.f - kArrowOpacityProgressThreshold));
     opacity += opacity_bump_ratio * max_opacity_bump;
   }
