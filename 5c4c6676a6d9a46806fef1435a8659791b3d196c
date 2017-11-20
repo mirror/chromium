@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07fd81c6_f19a1b5e",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-20T02:28:31Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "fd5bd003_c9ac31bc",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 25
+      },
+      "revId": "5c4c6676a6d9a46806fef1435a8659791b3d196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48ba042c_dfdfa00e",
         "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "5c4c6676a6d9a46806fef1435a8659791b3d196c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84eb0ca1_4e4d911e",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-20T02:28:31Z",
+      "side": 1,
+      "message": "That\u0027s because libva 2 uses major version 1, and version 1 uses 0. Things will be clearer once I move things to a function as you suggested above.",
+      "parentUuid": "48ba042c_dfdfa00e",
+      "range": {
+        "startLine": 262,
+        "startChar": 6,
+        "endLine": 262,
+        "endChar": 40
+      },
+      "revId": "5c4c6676a6d9a46806fef1435a8659791b3d196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
