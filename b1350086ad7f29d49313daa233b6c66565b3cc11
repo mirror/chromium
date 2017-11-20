@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05e58387_080ecad1",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-20T21:27:15Z",
+      "side": 1,
+      "message": "This changed as well, since webrtc test was giving warning:\n\nThe project name \u0027build\u003eandroid\u003ebuildhooks\u003ebuild_hooks_java\u0027 contains at least one of the following characters: [ , /, \\, :, \u003c, \u003e, \", ?, *, |]. This has been deprecated and is scheduled to be removed in Gradle 5.0. Set the \u0027rootProject.name\u0027 or adjust the \u0027include\u0027 statement (see https://docs.gradle.org/4.3-rc-3/dsl/org.gradle.api.initialization.Settings.htm",
+      "range": {
+        "startLine": 197,
+        "startChar": 53,
+        "endLine": 197,
+        "endChar": 54
+      },
+      "revId": "b1350086ad7f29d49313daa233b6c66565b3cc11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
