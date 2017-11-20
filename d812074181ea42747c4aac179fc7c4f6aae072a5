@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd4a2d9b_0910d41f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-11-20T08:47:50Z",
+      "side": 1,
+      "message": "Please mention that this CL only add/rename fields, no functionality change yet.",
+      "revId": "d812074181ea42747c4aac179fc7c4f6aae072a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
