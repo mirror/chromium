@@ -205,6 +205,30 @@
     },
     {
       "key": {
+        "uuid": "7d40055c_b7a308fd",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T12:29:19Z",
+      "side": 1,
+      "message": "This change does not enable account consistency in Chrome. Basically, when Mirror is on, the Chrome AccountReconcilor is turned https://cs.chromium.org/chromium/src/components/signin/core/browser/account_reconcilor.cc\n\nAccountReconcilor is a service that continuously monitors the Gaia cookies and Chrome tokens to see any mismatch between the accounts in there. If it notices any difference, it will rebuild the Gaia cookie. Take the following example:\n* User is signed in to Chrome with child account K (both on content area and in Chrome sync).\n* Gaia cookie expires.\n* Account reconcilor adds back account K to Gaia cookie.\n\u003d\u003e user continues to be signed in with the same account in Chrome and on the web.",
+      "parentUuid": "07514f5c_00658fc0",
+      "range": {
+        "startLine": 129,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51d21dd1_4fb29699",
         "filename": "components/signin/core/browser/signin_header_helper_unittest.cc",
         "patchSetId": 19
