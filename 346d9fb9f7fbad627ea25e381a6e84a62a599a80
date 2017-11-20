@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed8b754e_4321b766",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_last_visit_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-20T19:58:01Z",
+      "side": 1,
+      "message": "Okay, that\u0027s a fair point.\nI\u0027ll do it another way, suggested by Bernhard in https://chromium-review.googlesource.com/c/chromium/src/+/725323.",
+      "parentUuid": "742528ec_4db6e910",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 42
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e8483b5_5d519ee1",
         "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306b428d_981717ae",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-20T19:58:01Z",
+      "side": 1,
+      "message": "Not relevant any more.",
+      "parentUuid": "2e8483b5_5d519ee1",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 60
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "70ad1ff0_0bde7928",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-20T19:58:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "800f15e1_55ba9ac8",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 87,
+        "endChar": 10
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4962641c_2371642a",
         "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fb37b5a1_115253e2",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-20T19:58:01Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "4962641c_2371642a",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeb58904_218b187a",
         "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-18T09:27:25Z",
       "side": 1,
       "message": "nit: replace with first.",
+      "range": {
+        "startLine": 91,
+        "startChar": 55,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285a16e8_7e954bd8",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-20T19:58:01Z",
+      "side": 1,
+      "message": "I am sorry, I do not understand what you mean :|",
+      "parentUuid": "aeb58904_218b187a",
       "range": {
         "startLine": 91,
         "startChar": 55,
