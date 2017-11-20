@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2479d63b_3f93b040",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "This is an implementation detail of GLRenderer and doesn\u0027t need to be in viz/common/. It could really go in the gl_renderer.cc file I think, but at least go in the same directory.",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26e820c_bf63dc3b",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "I think ScopedTexture is a more literal description of what this class is.",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd02f867_66b20fe9",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like GLRenderer needs the ability to make \"Resource\" without it being an allocated texture. The constructor could do GenTextures() and TexStorage/Image2D?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541bceb0_39a3a57a",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "ColorSpace isn\u0027t used by this class, should it be separate?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20b8927_c19a6435",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "This bool can go away if we do this in constructor.",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8f5257_f7c5c27b",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "This could happen from the destructor only? Does GLRenderer need a separate Free() method? I don\u0027t see it being used.",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ec6ff7_6f2a661c",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "This does nothing when unit is GL_TEXTURE0 which is what GLRenderer uses. I think we can remove this, and GLRenderer can just call gl-\u003eBindTexture ?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efb8db0_572be5cc",
+        "filename": "components/viz/common/resources/scoped_local_resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "If it\u0027s always GL_TEXTURE_2D let\u0027s remove it.",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6caeb677_b8b3ea33",
+        "filename": "components/viz/common/resources/scoped_local_resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "same",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d72833c_48131301",
+        "filename": "components/viz/common/resources/scoped_local_resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "same",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec26793b_0187c6d9",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "Why is this |filter_texture|? I would have thought something like |bypass_quad_texture|, as that\u0027s how I see it being used?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0997396c_e83b99fb",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "same: re \"filter\"",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ccac4c_bf3157b1",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "Should this name be changing to match the variable its tracking?\n\nOr if we remove the color space from the Scoped object then it could track it for that case too?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc8aa8e_b225233a",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "It seems like we\u0027re already tracking the color space here so don\u0027t need it on the Scoped object?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e607c39_aaf27936",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "Can we grab local variables for the things we need in if/else, and then make a single call to ApplyImageFilter with those?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98071407_c61cb904",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "else if",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ba42b2_6a40ffe0",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "else if filter_texture {\n ..\nelse {\n .. contents_texture?\n\nThen we dont mix if/else with ?:",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae88188_29be4cba",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "This comment and line of code don\u0027t seem relevant anymore.",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e531933d_961a08aa",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3609,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "It seems like the hint() is being hardcoded, so why do we need to check it here? What would we do if this was wrong, we\u0027d still be using that hint? The hint here can include mipmap, right?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb82a3c_06b6b7ab",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3632,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "These settings come from the context capabilities which we have already here on the context_provider().\n\n  use_texture_storage \u003d caps.texture_storage;\n  use_texture_usage_hint \u003d caps.texture_usage;",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b8af84_26dd2783",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3646,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "It seems like this would always be true, the DCHECK agrees. So just return if the find() \u003d\u003d end or not?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdfb350_a885d2ff",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T22:39:47Z",
+      "side": 1,
+      "message": "This isn\u0027t a lock anymore. current_framebuffer_texture_ ?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
