@@ -329,6 +329,30 @@
       "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7ee010_2acd8f83",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-20T23:39:12Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "64c71e2a_845e83ba",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "c001695a75d3beaf56cee66e8cef999ecc879b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
