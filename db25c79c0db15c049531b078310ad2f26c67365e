@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e2dc025b_b019bb5f",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-20T05:02:55Z",
+      "side": 1,
+      "message": "No, it will be done in another patch.\nHaving small patch is important thing. ;)",
+      "parentUuid": "2754c71b_cd739a7d",
+      "revId": "db25c79c0db15c049531b078310ad2f26c67365e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa02215a_c142f7fe",
         "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
         "patchSetId": 13
