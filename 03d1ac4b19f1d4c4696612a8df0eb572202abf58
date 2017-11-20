@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31f31137_294d9c23",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: insert an empty line before",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee49e011_118e15b8",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: not matching what\u0027s declared in header",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaaede89_5207b3e1",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: \"return\" to get rid of \"else\" and save some indent",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12cca8e_30513f78",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "Should this be a OnceClosure ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a300f6b_eaa29fcd",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: const method?",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efdc78f_3151c360",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: move to cc file",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d67b72e_80c7ce64",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: content::BrowserContext* const browser_context_;",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cf89e7_1e53c3ec",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 5
+      },
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b08039c_82f95f5b",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN(SigninPartitionManagerTest);",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1900626_d4d39693",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "signin_partition_name_2 ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 38
+      },
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b378ee_0163a9bc",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "Is it accurate? Think we only verified that the login screen has a webview associated with the |storage_partition| created, not that the webview is being displayed.",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cd653b_7324816e",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: Why not use JsChecker::GetString() ?\n\ni.e.\n  std::string signin_frame_partition_name_1 \u003d JS().GetString(\n      \"$(\u0027signin-frame\u0027).partition\");",
+      "range": {
+        "startLine": 184,
+        "startChar": 14,
+        "endLine": 184,
+        "endChar": 52
+      },
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508f8436_354cfda3",
+        "filename": "chrome/browser/chromeos/profiles/profile_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: Can we move this earlier to L279 and use a \"return\" to save some indent.\n\ni.e.\n  if (!profile_manager-\u003eGetProfileByPath(...)) {\n    OnSigninProfileCleared();\n    return;\n  }\n\n  // Real clear code with less indent",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aca8adc_5a1e5195",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "Use signinFrame.attributes to copy everything except \"src\" and \"partition\" ?\n\nWith the current impl, we would miss the \"class\" that is set in JS [1].\n\n[1]: https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/login/screen_gaia_signin.js?rcl\u003ddb5696b39173bcda1e530fd456e30b1668de5f46\u0026l\u003d466",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527c54ab_a05acd11",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-20T21:18:18Z",
+      "side": 1,
+      "message": "nit: add a brief jsdoc",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
