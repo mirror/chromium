@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a3ed6a_e0dc0d68",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T08:06:06Z",
+      "side": 1,
+      "message": "This will notify ARC side IME to hide if the rect is empty.\nAccording to your commit message, OnKeyboardAvailabilityChanging needs to be listened, too?\n\n(off-topic): BTW, what\u0027s the diff/relation between\n OnKeyboardAvailabilityChanging()\n OnKeyboardClosed(), and\n OnKeyboardHidden()\n\nNice to document them, I think.",
+      "revId": "25c4b58c71a5e7788b85f40e7edc7c4d5132dc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
