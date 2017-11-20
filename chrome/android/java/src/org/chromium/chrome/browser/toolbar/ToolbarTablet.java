@@ -552,7 +552,7 @@ public class ToolbarTablet
 
     @Override
     public boolean useLightDrawables() {
-        return mUseLightColorAssets;
+        return mUseLightColorAssets != null && mUseLightColorAssets;
     }
 
     @Override
