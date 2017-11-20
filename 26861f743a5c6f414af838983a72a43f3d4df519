@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "542075ed_002f2394",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-20T19:19:53Z",
+      "side": 1,
+      "message": "If these extras are intended to launch TWAs, you will actually need one more extra: BrowserSessionDataProvider.EXTRA_LAUNCH_AS_TRUSTED_WEB_ACTIVITY to get it launched.",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "26861f743a5c6f414af838983a72a43f3d4df519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
