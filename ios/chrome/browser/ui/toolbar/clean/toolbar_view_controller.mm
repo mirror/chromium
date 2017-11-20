@@ -15,6 +15,7 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_button_updater.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #import "ios/third_party/material_components_ios/src/components/ProgressView/src/MaterialProgressView.h"
@@ -25,6 +26,7 @@
 
 @interface ToolbarViewController ()
 @property(nonatomic, strong) ToolbarButtonFactory* buttonFactory;
+@property(nonatomic, strong) ToolbarButtonUpdater* buttonUpdater;
 @property(nonatomic, strong) UIView* locationBarContainer;
 @property(nonatomic, strong) UIStackView* stackView;
 @property(nonatomic, strong) ToolbarButton* backButton;
@@ -40,6 +42,7 @@
 
 @implementation ToolbarViewController
 @synthesize buttonFactory = _buttonFactory;
+@synthesize buttonUpdater = _buttonUpdater;
 @synthesize dispatcher = _dispatcher;
 @synthesize locationBarView = _locationBarView;
 @synthesize stackView = _stackView;
@@ -58,11 +61,13 @@
 
 - (instancetype)initWithDispatcher:
                     (id<ApplicationCommands, BrowserCommands>)dispatcher
-                     buttonFactory:(ToolbarButtonFactory*)buttonFactory {
+                     buttonFactory:(ToolbarButtonFactory*)buttonFactory
+                     buttonUpdater:(ToolbarButtonUpdater*)buttonUpdater {
   _dispatcher = dispatcher;
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _buttonFactory = buttonFactory;
+    _buttonUpdater = buttonUpdater;
     [self setUpToolbarButtons];
     [self setUpLocationBarContainer];
     [self setUpProgressBar];
@@ -266,6 +271,10 @@
   [self.stopButton addTarget:self.dispatcher
                       action:@selector(stopLoading)
             forControlEvents:UIControlEventTouchUpInside];
+
+  // Add buttons to button updater.
+  self.buttonUpdater.backButton = self.backButton;
+  self.buttonUpdater.forwardButton = self.forwardButton;
 
   // Set the button constraint priority to UILayoutPriorityDefaultHigh so
   // these are not broken when being hidden by the StackView.
