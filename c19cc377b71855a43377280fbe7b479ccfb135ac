@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "511f1858_e0545bac",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-20T00:08:29Z",
+      "side": 1,
+      "message": "creis: For any expectation.isolated \u003d true, the test fails because the value is false (the default value). Shouldn\u0027t the |context| have a pref set, given the call to SetBoolean/SetString in the test bodies? I\u0027m missing something. Thanks for any clues. :)",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
