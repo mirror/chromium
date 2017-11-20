@@ -7,7 +7,6 @@
 
 #include <map>
 #include <memory>
-#include <string>
 #include <vector>
 
 #include "base/gtest_prod_util.h"
@@ -87,7 +86,7 @@ namespace blink {
 // between a RenderFrame and any of its associated RenderFrameProxies. A list of
 // these form a ParsedFeaturePolicy.
 // NOTE: These types are used for replication frame state between processes.
-// They exist only because we can't transfer WebVectors directly over IPC.
+// TODO(lunalu): Remove unnecessary types used for transferring over IPC.
 struct BLINK_COMMON_EXPORT ParsedFeaturePolicyDeclaration {
   ParsedFeaturePolicyDeclaration();
   ParsedFeaturePolicyDeclaration(FeaturePolicyFeature feature,
@@ -126,6 +125,12 @@ class BLINK_COMMON_EXPORT FeaturePolicy {
 
     // Returns true if the given origin has been added to the whitelist.
     bool Contains(const url::Origin& origin) const;
+
+    // Returns true if the whitelist matches all origins.
+    bool MatchesAll() const;
+
+    // Returns list of origins in the whitelist.
+    const std::vector<url::Origin>& Origins() const;
 
    private:
     bool matches_all_origins_;
@@ -170,6 +175,12 @@ class BLINK_COMMON_EXPORT FeaturePolicy {
   // specific origin.
   bool IsFeatureEnabledForOrigin(FeaturePolicyFeature feature,
                                  const url::Origin& origin) const;
+
+  // Returns the origins where the feature is enabled, if the feature is enabled
+  // for all origins, set |matches_all| to be true.
+  const std::vector<url::Origin> GetOriginsForFeature(
+      FeaturePolicyFeature feature,
+      bool* matches_all) const;
 
   // Sets the declared policy from the parsed Feature-Policy HTTP header.
   // Unrecognized features will be ignored.
