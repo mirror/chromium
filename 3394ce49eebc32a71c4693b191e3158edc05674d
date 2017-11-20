@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0554e711_80d85d6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-20T20:18:14Z",
+      "side": 1,
+      "message": "Nit: s/talks/requests/ ?",
+      "revId": "3394ce49eebc32a71c4693b191e3158edc05674d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d73f6d_a2bfcd7d",
+        "filename": "tools/traffic_annotation/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-20T20:18:14Z",
+      "side": 1,
+      "message": "Nit: why not say `gn gen --args\u003d\"is_official_build\u003dtrue\" out/Default` here?",
+      "revId": "3394ce49eebc32a71c4693b191e3158edc05674d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6af52d9_86a168e5",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-20T20:18:14Z",
+      "side": 1,
+      "message": "I\u0027d change line 20 to say `TEST_IS_ENABLED \u003d sys.platform !\u003d \u0027win32\u0027` instead.",
+      "revId": "3394ce49eebc32a71c4693b191e3158edc05674d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
