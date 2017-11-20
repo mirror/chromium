@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee93658e_7f3d0712",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T16:49:40Z",
+      "side": 1,
+      "message": "I think this implementation is equivalent to \u003d default.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ff3987_09d40358",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T16:49:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06c9831_fd173142",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T16:49:40Z",
+      "side": 1,
+      "message": "The \"Interface\" suffix is not commonly used in Chromium. Can you just call it WebRtcRemoteDescriptionObserver?",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 64
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33373128_c9de4271",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T16:49:40Z",
+      "side": 1,
+      "message": "Is this class intended to be copyable?",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 62
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "526a786a_93a17b9b",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T16:49:40Z",
+      "side": 1,
+      "message": "Would RunLoop.Run() work here if InvokeOnsuccessOnsignalingThread gets the quit closure?",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12357e7_1dbd9ee6",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T16:49:40Z",
+      "side": 1,
+      "message": "processes -\u003e process\nis needed -\u003e are needed",
+      "range": {
+        "startLine": 126,
+        "startChar": 28,
+        "endLine": 126,
+        "endChar": 37
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
