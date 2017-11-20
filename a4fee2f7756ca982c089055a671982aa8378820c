@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae775b8f_d2cdfcd8",
+        "filename": "chrome/browser/content_settings/content_settings_pref_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-20T06:25:34Z",
+      "side": 1,
+      "message": "I may have gone overboard with this test, sorry.",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
