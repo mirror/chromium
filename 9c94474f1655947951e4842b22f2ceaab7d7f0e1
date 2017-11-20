@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "602a7678_5ea48dce",
+        "filename": "components/autofill/ios/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T20:14:19Z",
+      "side": 1,
+      "message": "I presume there will be a follow up CL to use this? If it is ready to go, please chain it to this CL, as it makes good reference.",
+      "revId": "9c94474f1655947951e4842b22f2ceaab7d7f0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
