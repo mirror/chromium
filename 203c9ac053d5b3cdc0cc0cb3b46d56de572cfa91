@@ -22,6 +22,30 @@
       "revId": "203c9ac053d5b3cdc0cc0cb3b46d56de572cfa91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced26d71_44d608b2",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-20T19:50:18Z",
+      "side": 1,
+      "message": "I do intend to ship with audioLevel possibly being null. Computing the audio level when it is null here would be a non-trivial change to WebRTC. I think that providing the audio level from the header extension when possible is useful on its own. The limitation of this implementation is described on chromestatus (https://www.chromestatus.com/feature/5637113429098496).\n\nIt looks like there is an open issue in the spec about making the field nullable (https://github.com/w3c/webrtc-pc/issues/1665). I am following up with the spec owners.",
+      "parentUuid": "53be204f_2538e6f7",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "203c9ac053d5b3cdc0cc0cb3b46d56de572cfa91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
