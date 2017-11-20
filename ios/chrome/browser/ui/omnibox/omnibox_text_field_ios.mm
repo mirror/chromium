@@ -51,7 +51,7 @@ const CGFloat kClearButtonRightMarginIpad = 12;
 // omnibox border.
 const CGFloat kTextAreaLeadingOffset = -2;
 
-const CGFloat kStarButtonWidth = 36;
+// const CGFloat kStarButtonWidth = 36;
 const CGFloat kVoiceSearchButtonWidth = 36.0;
 
 // The default omnibox text color (used while editing).
@@ -466,29 +466,31 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   [self setTextInternal:as autocompleteLength:0];
 }
 
-- (CGRect)textRectForBounds:(CGRect)bounds {
-  CGRect newBounds = [super textRectForBounds:bounds];
-
-  LayoutRect textRectLayout =
-      LayoutRectForRectInBoundingRect(newBounds, bounds);
-  CGFloat textInset = kTextInset;
-
-  // Shift the text right and reduce the width to create empty space between the
-  // left view and the omnibox text.
-  textRectLayout.position.leading += textInset + kTextAreaLeadingOffset;
-  textRectLayout.size.width -= textInset - kTextAreaLeadingOffset;
-
-  if (IsIPadIdiom()) {
-    if (!IsCompactTablet()) {
-      // Adjust the width so that the text doesn't overlap with the bookmark and
-      // voice search buttons which are displayed inside the omnibox.
-      textRectLayout.size.width += self.rightView.bounds.size.width -
-                                   kVoiceSearchButtonWidth - kStarButtonWidth;
-    }
-  }
-
-  return LayoutRectGetRect(textRectLayout);
-}
+//- (CGRect)textRectForBounds:(CGRect)bounds {
+//  CGRect newBounds = [super textRectForBounds:bounds];
+//
+//  LayoutRect textRectLayout =
+//      LayoutRectForRectInBoundingRect(newBounds, bounds);
+//  CGFloat textInset = kTextInset;
+//
+//  // Shift the text right and reduce the width to create empty space between
+//  the
+//  // left view and the omnibox text.
+//  textRectLayout.position.leading += textInset + kTextAreaLeadingOffset;
+//  textRectLayout.size.width -= textInset - kTextAreaLeadingOffset;
+//
+//  if (IsIPadIdiom()) {
+//    if (!IsCompactTablet()) {
+//      // Adjust the width so that the text doesn't overlap with the bookmark
+//      and
+//      // voice search buttons which are displayed inside the omnibox.
+//      textRectLayout.size.width += self.rightView.bounds.size.width -
+//                                   kVoiceSearchButtonWidth - kStarButtonWidth;
+//    }
+//  }
+//
+//  return LayoutRectGetRect(textRectLayout);
+//}
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect newBounds = [super editingRectForBounds:bounds];
@@ -528,21 +530,21 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
   return newBounds;
 }
-
-// Enumerate url components (host, path) and draw each one in different rect.
-- (void)drawTextInRect:(CGRect)rect {
-  if (base::ios::IsRunningOnOrLater(11, 1, 0)) {
-    // -[UITextField drawTextInRect:] ignores the argument, so we can't do
-    // anything on 11.1 and up.
-    [super drawTextInRect:rect];
-    return;
-  }
-
-  // Save and restore the graphics state because rectForDrawTextInRect may
-  // apply an image mask to fade out beginning and/or end of the URL.
-  gfx::ScopedCGContextSaveGState saver(UIGraphicsGetCurrentContext());
-  [super drawTextInRect:[self rectForDrawTextInRect:rect]];
-}
+//
+//// Enumerate url components (host, path) and draw each one in different rect.
+//- (void)drawTextInRect:(CGRect)rect {
+//  if (base::ios::IsRunningOnOrLater(11, 1, 0)) {
+//    // -[UITextField drawTextInRect:] ignores the argument, so we can't do
+//    // anything on 11.1 and up.
+//    [super drawTextInRect:rect];
+//    return;
+//  }
+//
+//  // Save and restore the graphics state because rectForDrawTextInRect may
+//  // apply an image mask to fade out beginning and/or end of the URL.
+//  gfx::ScopedCGContextSaveGState saver(UIGraphicsGetCurrentContext());
+//  [super drawTextInRect:[self rectForDrawTextInRect:rect]];
+//}
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
   if (![self rightView]) {

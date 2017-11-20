@@ -783,7 +783,7 @@ bool OmniboxViewIOS::ShouldIgnoreUserInputDueToPendingVoiceSearch() {
 
 void OmniboxViewIOS::SetLeftImage(int imageId) {
   // TODO: actually use the location bar isntead.
-  [(id)field_.get().superview setPlaceholderImage:imageId];
+  [(id)field_.get().superview.superview setPlaceholderImage:imageId];
 }
 
 void OmniboxViewIOS::HideKeyboardAndEndEditing() {

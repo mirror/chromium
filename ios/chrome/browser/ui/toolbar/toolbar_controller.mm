@@ -185,8 +185,8 @@ using ios::material::TimingFunction;
         constraintEqualToAnchor:self.view.leadingAnchor];
     self.trailingFakeSafeAreaConstraint = [contentView_.trailingAnchor
         constraintEqualToAnchor:self.view.trailingAnchor];
-    safeAreaLeading.priority = UILayoutPriorityDefaultHigh;
-    safeAreaTrailing.priority = UILayoutPriorityDefaultHigh;
+    //    safeAreaLeading.priority = UILayoutPriorityDefaultRequired;
+    //    safeAreaTrailing.priority = UILayoutPriorityDefaultRequired;
     [NSLayoutConstraint activateConstraints:@[
       safeAreaLeading,
       safeAreaTrailing,
