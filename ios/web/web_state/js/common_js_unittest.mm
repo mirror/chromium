@@ -190,4 +190,57 @@ TEST_F(CommonJsTest, IsSameOrigin) {
   }
 }
 
+TEST_F(CommonJsTest, GetElementByNameWithParent) {
+  LoadHtml(
+      @"<html><body>"
+       "<form id='form1'>"
+       "<input type='text' name='lastname' id='id1'>"
+       "</form>"
+       "<form id='form2'>"
+       "<input type='password' name='pw' id='id2'>"
+       "</form>"
+       "<form id='form3'>"
+       "<div>"
+       "<input type='password' name='pw' id='id3'>"
+       "</div>"
+       "</form>"
+       "</body></html>");
+
+  struct TestData {
+    NSString* parent_id;
+    NSString* child_name;
+    NSString* is_password;  // empty string means not provided
+    NSString* expected_id;  // if not null it should be quoted
+  } testElements[] = {
+      {@"form1", @"lastname", @"false", @"'id1'"},
+      {@"form1", @"lastname", @"", @"'id1'"},
+      {@"form1", @"not_existing_element", @"false", @"null"},
+      {@"form1", @"not_existing_element", @"", @"null"},
+      {@"form1", @"lastname", @"true", @"null"},
+      {@"form2", @"pw", @"true", @"'id2'"},
+      {@"form2", @"not_existing_element", @"true", @"null"},
+      {@"form2", @"pw", @"false", @"null"},
+      {@"form3", @"pw", @"true", @"'id3'"},
+  };
+
+  NSString* js_test =
+      @"(function() {"
+       "  var parent = document.getElementById('%@');"
+       "  var output_element = "
+       "__gCrWeb.common.getElementByNameWithParent(parent, '%@', %@);"
+       "  var expected_output = %@;"
+       "  if (expected_output === null)"
+       "    return output_element === null;"
+       "  return output_element.id === expected_output;"
+       "})()";
+
+  for (size_t i = 0; i < arraysize(testElements); ++i) {
+    const TestData& test_data = testElements[i];
+    id result = ExecuteJavaScript([NSString
+        stringWithFormat:js_test, test_data.parent_id, test_data.child_name,
+                         test_data.is_password, test_data.expected_id]);
+    EXPECT_NSEQ(@YES, result) << "testcase with index " << i;
+  }
+}
+
 }  // namespace web
