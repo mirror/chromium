@@ -16,6 +16,24 @@
       "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b677869_0fa82683",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-20T00:12:16Z",
+      "side": 1,
+      "message": "(Note that manual testing with the actual browser succeeds, though.)",
+      "parentUuid": "511f1858_e0545bac",
+      "revId": "c19cc377b71855a43377280fbe7b479ccfb135ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
