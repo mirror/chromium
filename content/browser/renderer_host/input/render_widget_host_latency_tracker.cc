@@ -385,7 +385,9 @@ void RenderWidgetHostLatencyTracker::ReportRapporScrollLatency(
     const std::string& name,
     const LatencyInfo::LatencyComponent& start_component,
     const LatencyInfo::LatencyComponent& end_component) {
-  CONFIRM_VALID_TIMING(start_component, end_component)
+  CONFIRM_EVENT_TIMES_EXIST(start_component, end_component)
+  if (end_component.last_event_time < start_component.first_event_time)
+    return;
   rappor::RapporService* rappor_service =
       GetContentClient()->browser()->GetRapporService();
   if (rappor_service && render_widget_host_delegate_) {

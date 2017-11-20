@@ -228,6 +228,36 @@ class RenderWidgetHostLatencyTrackerTest
   ContentBrowserClient* old_browser_client_;
 };
 
+TEST_F(RenderWidgetHostLatencyTrackerTest, TestValidEventTiming) {
+  // These numbers are sensitive to where the histogram buckets are.
+  base::TimeTicks now = base::TimeTicks::Now();
+
+  ui::LatencyInfo latency_info;
+  latency_info.set_trace_id(kTraceEventId);
+  latency_info.set_source_event_type(ui::SourceEventType::WHEEL);
+  latency_info.AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, 0,
+      now + base::TimeDelta::FromMilliseconds(30), 1);
+
+  latency_info.AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
+      tracker()->latency_component_id(), 0,
+      now + base::TimeDelta::FromMilliseconds(20), 1);
+
+  latency_info.AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT, 0, 0,
+      now + base::TimeDelta::FromMilliseconds(10), 1);
+
+  latency_info.AddLatencyNumberWithTimestamp(
+      ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0, 0, now, 1);
+
+  tracker()->OnGpuSwapBuffersCompleted(latency_info);
+
+  // No recording due to invalid event times.
+  EXPECT_TRUE(HistogramSizeEq("Event.Latency.Browser.WheelUI", 0));
+  EXPECT_TRUE(HistogramSizeEq("Event.Latency.Browser.WheelAcked", 0));
+}
+
 TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToFirstScrollHistograms) {
   const GURL url(kUrl);
   size_t total_ukm_entry_count = 0;

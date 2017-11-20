@@ -36,7 +36,10 @@ std::string LatencySourceEventTypeToInputModalityString(
 void RecordUmaEventLatencyScrollWheelTimeToScrollUpdateSwapBegin2Histogram(
     const ui::LatencyInfo::LatencyComponent& start,
     const ui::LatencyInfo::LatencyComponent& end) {
-  CONFIRM_VALID_TIMING(start, end);
+  CONFIRM_EVENT_TIMES_EXIST(start, end);
+  if (end.last_event_time < start.first_event_time)
+    return;
+
   UMA_HISTOGRAM_CUSTOM_COUNTS(
       "Event.Latency.Scroll.Wheel.TimeToScrollUpdateSwapBegin2",
       (end.last_event_time - start.first_event_time).InMicroseconds(), 1,
@@ -102,7 +105,9 @@ void LatencyTracker::ReportUkmScrollLatency(
     const LatencyInfo::LatencyComponent& start_component,
     const LatencyInfo::LatencyComponent& end_component,
     const ukm::SourceId ukm_source_id) {
-  CONFIRM_VALID_TIMING(start_component, end_component)
+  CONFIRM_EVENT_TIMES_EXIST(start_component, end_component);
+  if (end_component.last_event_time < start_component.first_event_time)
+    return;
 
   // Only report a subset of this metric as the volume is too high.
   if (event_name == "Event.ScrollUpdate.Touch") {
