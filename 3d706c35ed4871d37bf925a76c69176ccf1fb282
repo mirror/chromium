@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38f56667_81b9977f",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "remove: this whole file is excluded on android",
+      "range": {
+        "startLine": 1189,
+        "startChar": 25,
+        "endLine": 1189,
+        "endChar": 43
+      },
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024426dc_3a79479d",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "indent",
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33946b9_bf14b91e",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "nit: return early if isLocalDestination... is true instead of calculating isCloudDestination...",
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0d18ab_fe767bd9",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "use gender-neutral language (e.g. \"their\" or just drop the pronoun entirely). https://chromium.googlesource.com/chromium/src/+/master/styleguide/gender_neutral_code.md",
+      "range": {
+        "startLine": 438,
+        "startChar": 72,
+        "endLine": 438,
+        "endChar": 75
+      },
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90583ef_099ce2e1",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "nit: no indent (that\u0027s just for wrapped lines for fields like @param)",
+      "range": {
+        "startLine": 439,
+        "startChar": 7,
+        "endLine": 439,
+        "endChar": 11
+      },
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59bd12f5_e2450080",
+        "filename": "chrome/browser/resources/settings/printing_page/printing_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "again, no need to mention that this excludes Android",
+      "range": {
+        "startLine": 8,
+        "startChar": 3,
+        "endLine": 8,
+        "endChar": 10
+      },
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b5087e_0a31645e",
+        "filename": "chrome/browser/resources/settings/printing_page/printing_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa5fe3c_25b2ff98",
+        "filename": "chrome/browser/resources/settings/printing_page/printing_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "ditto, throughout :-)",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfc01a0_f03ba563",
+        "filename": "chrome/browser/resources/settings/settings_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "nit: indent",
+      "range": {
+        "startLine": 817,
+        "startChar": 6,
+        "endLine": 822,
+        "endChar": 38
+      },
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53aef2dd_b66c3a86",
+        "filename": "chrome/browser/ui/webui/settings/printing_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-20T20:11:15Z",
+      "side": 1,
+      "message": "group with other SettingsPageUIHandlerl overrides",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "3d706c35ed4871d37bf925a76c69176ccf1fb282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
