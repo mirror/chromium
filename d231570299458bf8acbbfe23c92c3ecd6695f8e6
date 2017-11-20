@@ -202,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "b806c280_d5adce79",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-20T08:56:58Z",
+      "side": 1,
+      "message": "I think this was missed?",
+      "parentUuid": "281e61f8_633f6587",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebeab9ba_27d6e1ce",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 17
@@ -1369,6 +1387,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "9a6eadd8_76e4256c",
+      "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f96d0105_752e59fb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-20T08:56:58Z",
+      "side": 1,
+      "message": "Also \"output_buffer_count_\" please.",
+      "parentUuid": "345708d3_3139c8c8",
       "revId": "d231570299458bf8acbbfe23c92c3ecd6695f8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
