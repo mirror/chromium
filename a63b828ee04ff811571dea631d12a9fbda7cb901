@@ -70,6 +70,24 @@
       "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa37e2ca_9f4e61dc",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-20T09:59:41Z",
+      "side": 1,
+      "message": "Right, I wasn\u0027t aware of what these svg elements are used for. We are relying on visual invalidation diffs, etc?",
+      "parentUuid": "2c3ea525_c826817a",
+      "revId": "a63b828ee04ff811571dea631d12a9fbda7cb901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
