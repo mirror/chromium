@@ -178,6 +178,14 @@ void PaintOpReader::Read(uint8_t* data) {
   ReadSimple(data);
 }
 
+void PaintOpReader::Read(uint32_t* data) {
+  ReadSimple(data);
+}
+
+void PaintOpReader::Read(int32_t* data) {
+  ReadSimple(data);
+}
+
 void PaintOpReader::Read(SkRect* rect) {
   ReadSimple(rect);
 }
@@ -466,6 +474,18 @@ void PaintOpReader::Read(SkMatrix* matrix) {
   FixupMatrixPostSerialization(matrix);
 }
 
+void PaintOpReader::Read(SkColorType* color_type) {
+  uint32_t raw_color_type;
+  ReadSimple(&raw_color_type);
+
+  if (raw_color_type > kLastEnum_SkColorType) {
+    *color_type = kUnknown_SkColorType;
+    return;
+  }
+
+  *color_type = static_cast<SkColorType>(raw_color_type);
+}
+
 bool PaintOpReader::AlignMemory(size_t alignment) {
   // Due to the math below, alignment must be a power of two.
   DCHECK_GT(alignment, 0u);
@@ -483,6 +503,20 @@ bool PaintOpReader::AlignMemory(size_t alignment) {
   memory_ += padding;
   remaining_bytes_ -= padding;
   return true;
+}
+
+const volatile void* PaintOpReader::ExtractReadableMemory(size_t bytes) {
+  if (remaining_bytes_ < bytes)
+    valid_ = false;
+  if (!valid_)
+    return nullptr;
+  if (bytes == 0)
+    return nullptr;
+
+  const volatile void* extracted_memory = memory_;
+  memory_ += bytes;
+  remaining_bytes_ -= bytes;
+  return extracted_memory;
 }
 
 }  // namespace cc

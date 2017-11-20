@@ -60,6 +60,14 @@ void PaintOpWriter::Write(uint8_t data) {
   WriteSimple(data);
 }
 
+void PaintOpWriter::Write(uint32_t data) {
+  WriteSimple(data);
+}
+
+void PaintOpWriter::Write(int32_t data) {
+  WriteSimple(data);
+}
+
 void PaintOpWriter::Write(const SkRect& rect) {
   WriteSimple(rect);
 }
@@ -222,6 +230,10 @@ void PaintOpWriter::Write(const PaintShader* shader) {
   // using other fields.
 }
 
+void PaintOpWriter::Write(SkColorType color_type) {
+  WriteSimple(static_cast<uint32_t>(color_type));
+}
+
 void PaintOpWriter::WriteData(size_t bytes, const void* input) {
   if (bytes > remaining_bytes_)
     valid_ = false;
@@ -238,6 +250,20 @@ void PaintOpWriter::WriteData(size_t bytes, const void* input) {
 void PaintOpWriter::WriteArray(size_t count, const SkPoint* input) {
   size_t bytes = sizeof(SkPoint) * count;
   WriteData(bytes, input);
+}
+
+void* PaintOpWriter::ReserveWritableMemory(size_t bytes) {
+  if (bytes > remaining_bytes_)
+    valid_ = false;
+  if (!valid_)
+    return nullptr;
+  if (bytes == 0)
+    return nullptr;
+
+  void* reserved = memory_;
+  memory_ += bytes;
+  remaining_bytes_ -= bytes;
+  return reserved;
 }
 
 bool PaintOpWriter::AlignMemory(size_t alignment) {
