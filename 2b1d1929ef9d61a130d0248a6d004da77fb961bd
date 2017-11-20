@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f49c89_a2cd81fc",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2323,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-20T00:57:54Z",
+      "side": 1,
+      "message": "Made some comments in the doc about these strings.",
+      "revId": "2b1d1929ef9d61a130d0248a6d004da77fb961bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
