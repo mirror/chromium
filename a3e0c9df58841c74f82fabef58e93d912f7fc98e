@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69f560aa_cb2df842",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-20T19:15:58Z",
+      "side": 1,
+      "message": "My opinion is that this should be fine, because all raf animations are running on the main thread, so it should go into the main thread animations category.",
+      "parentUuid": "8517bcf5_514f8423",
+      "revId": "a3e0c9df58841c74f82fabef58e93d912f7fc98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f165477_3b12e83d",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-20T15:10:27Z",
       "side": 1,
       "message": "Does this work properly in the case where multiple rAFs are scheduled and one cancelled? E.g.\n\nvar req1 \u003d window.requestAnimationFrame(function() { ... });\nvar req2 \u003d window.requestAnimationFrame(function() { ... });\nwindow.cancelAnimationFrame(req1);\n\nThis may be worth adding a test for whether it currently works properly or not.",
+      "revId": "a3e0c9df58841c74f82fabef58e93d912f7fc98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6871e9f1_792aaf49",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 6561,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-20T19:15:58Z",
+      "side": 1,
+      "message": "That\u0027s a great point. My solution to this is to turn the |current_frame_has_raf_| into a int, which starts from 0, ++ in RequestAnimationFrame() and -- in CancelAnimationFrame(). I wrote another unit test for this case. Please review the new patch.",
+      "parentUuid": "9f165477_3b12e83d",
       "revId": "a3e0c9df58841c74f82fabef58e93d912f7fc98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
