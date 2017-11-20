@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "chrome/browser/notifications/notification_common.h"
 
 class GURL;
 class XmlWriter;
@@ -22,9 +23,15 @@ class Image;
 namespace message_center {
 struct ButtonInfo;
 class Notification;
-}
+}  // namespace message_center
 
 class NotificationImageRetainer;
+
+// The Notification Toast element name in the toast XML.
+extern const char kNotificationToastElement[];
+
+// The Notification Launch attribute name in the toast XML.
+extern const char kNotificationLaunchAttribute[];
 
 // Builds XML-based notification templates for displaying a given notification
 // in the Windows Action Center.
@@ -38,6 +45,7 @@ class NotificationTemplateBuilder {
   // Builds the notification template for the given |notification|.
   static std::unique_ptr<NotificationTemplateBuilder> Build(
       NotificationImageRetainer* notification_image_retainer,
+      const std::string& notification_id,
       const std::string& profile_id,
       const message_center::Notification& notification);
 
