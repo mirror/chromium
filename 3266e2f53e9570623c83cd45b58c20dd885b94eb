@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "001a2bb9_a7134c7b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SmartClipProviderTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:17:15Z",
+      "side": 0,
+      "message": "Could you walk me through why we aren\u0027t checking this anymore?",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 79
+      },
+      "revId": "3266e2f53e9570623c83cd45b58c20dd885b94eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
