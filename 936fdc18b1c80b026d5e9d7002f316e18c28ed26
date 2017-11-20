@@ -402,6 +402,24 @@
       "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91eab13f_2c3e1c10",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-20T12:07:07Z",
+      "side": 1,
+      "message": "Someone recently updated media controls and all related code to use PointerEvents. We should check what\u0027s wrong and come back to them. Maybe add a TODO and file a bug?",
+      "parentUuid": "7def3d8f_5a0f45a1",
+      "revId": "936fdc18b1c80b026d5e9d7002f316e18c28ed26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
