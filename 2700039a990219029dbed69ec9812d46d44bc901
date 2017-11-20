@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "375e986a_3786b183",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-20T19:01:41Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027re going to want the network service to know what a ResourceType is.  Should we expose some other way to set this?",
+      "range": {
+        "startLine": 339,
+        "startChar": 14,
+        "endLine": 339,
+        "endChar": 28
+      },
+      "revId": "2700039a990219029dbed69ec9812d46d44bc901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
