@@ -207,7 +207,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
 
   ServiceWorkerProviderType provider_type() const { return info_.type; }
   bool IsProviderForClient() const;
-  blink::WebServiceWorkerClientType client_type() const;
+  blink::mojom::ServiceWorkerClientType client_type() const;
 
   // For service worker clients. Associates to |registration| to listen for its
   // version change events and sets the controller. If |notify_controllerchange|
