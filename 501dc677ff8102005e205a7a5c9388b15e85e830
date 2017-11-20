@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "08d513b6_146ade84",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-20T20:21:27Z",
+      "side": 1,
+      "message": "I see, I wasn\u0027t aware of that. Moved to the top.",
+      "parentUuid": "905cdb1f_5b1bec06",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f676c7ef_52c436f3",
         "filename": "chrome/browser/ui/blocked_content/framebust_block_tab_helper.cc",
         "patchSetId": 9
@@ -470,6 +494,24 @@
       "side": 1,
       "message": "Ah, can we reach here in those cases?  If so, I would add a note that that\u0027s why we need the conditional.",
       "parentUuid": "15465466_12e61957",
+      "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6bb9952_dd569edd",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-20T20:21:27Z",
+      "side": 1,
+      "message": "I am not convinced that what I wrote was true. If other callers of TabSpecificContentSettings::FromWebContents(web_contents) use a DCHECK, I\u0027ll do the same.",
+      "parentUuid": "e7055e25_c12a0533",
       "revId": "501dc677ff8102005e205a7a5c9388b15e85e830",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
