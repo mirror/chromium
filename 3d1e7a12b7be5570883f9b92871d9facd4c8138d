@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3641d536_15973be1",
+        "filename": "tools/blink_rename_merge_helper/data/idl_blocklist.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T15:51:17Z",
+      "side": 0,
+      "message": "Judging by thakis@ comment in https://codereview.chromium.org/2867643004#msg7 removing this is probably not necessary. I will remove it from this CL.",
+      "range": {
+        "startLine": 686,
+        "startChar": 0,
+        "endLine": 686,
+        "endChar": 47
+      },
+      "revId": "3d1e7a12b7be5570883f9b92871d9facd4c8138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
