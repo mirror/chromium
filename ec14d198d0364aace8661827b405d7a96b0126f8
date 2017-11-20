@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07f32ad9_aaec512b",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-20T20:02:11Z",
+      "side": 1,
+      "message": "I see.. changed back to the original name.",
+      "parentUuid": "7dc5918b_f200b8a3",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ae27130_6d9676b6",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef34910d_7324f61d",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-20T20:02:11Z",
+      "side": 1,
+      "message": "Done. Changed back to |kUsersWallpaperInfo|.",
+      "parentUuid": "7ae27130_6d9676b6",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "619899dc_81d1d31a",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-20T20:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59950835_af6ab1f7",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc21bf2_95a9bc55",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0343c8ae_e7a769d4",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-20T20:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc21bf2_95a9bc55",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6199865a_2eecf6a9",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-20T20:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e9f951_253a4afa",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de2b8963_54c752c1",
         "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
         "patchSetId": 12
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-18T00:34:41Z",
       "side": 1,
       "message": "Just curious: The default wallpaper doesn\u0027t load here?",
+      "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342aa6d0_3fe06c5e",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-20T20:02:11Z",
+      "side": 1,
+      "message": "I checked that it doesn\u0027t include a setting wallpaper call.",
+      "parentUuid": "de2b8963_54c752c1",
       "revId": "ec14d198d0364aace8661827b405d7a96b0126f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
