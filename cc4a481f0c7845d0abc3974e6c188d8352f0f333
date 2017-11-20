@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f052d99_f2b999b9",
+        "filename": "net/disk_cache/simple/simple_index_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-20T21:10:30Z",
+      "side": 1,
+      "message": "Hmm, this looks like it\u0027s making a dubious disctinction to me, since we can begin shutting down after checking if we\u0027re shutting down, since this is some random worker thread, can\u0027t we?",
+      "range": {
+        "startLine": 314,
+        "startChar": 1,
+        "endLine": 316,
+        "endChar": 63
+      },
+      "revId": "cc4a481f0c7845d0abc3974e6c188d8352f0f333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f90224d_dc46403e",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-20T21:10:30Z",
+      "side": 1,
+      "message": "I think this one can be removed now. We both don\u0027t really look at this often and read the whole file at once large portion of the time, anyway. (well, with experiment flags)",
+      "range": {
+        "startLine": 1106,
+        "startChar": 0,
+        "endLine": 1111,
+        "endChar": 69
+      },
+      "revId": "cc4a481f0c7845d0abc3974e6c188d8352f0f333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
