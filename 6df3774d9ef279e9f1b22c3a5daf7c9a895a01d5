@@ -46,6 +46,30 @@
       "revId": "6df3774d9ef279e9f1b22c3a5daf7c9a895a01d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43db17aa_0443e122",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-20T17:52:08Z",
+      "side": 1,
+      "message": "sorry, yea, FocusableBorder was a bad suggestion. Have been out of this particular code too long so I forgot. I\u0027m thinking\n\n1) a focus painter would be good\n2) CreateSolidFocusPainter (the non deprecated version) with empty insets\n3) CreateSolidFocusPainter should probably default to a thickness of 2 and empty insets. The 2 constant is unfortunately in ash/ right now but all CreateSolidFocusPainter call sites seem to use it, so we could just default to 2 or even remove it.",
+      "parentUuid": "01300781_2dcfb3c2",
+      "range": {
+        "startLine": 318,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 9
+      },
+      "revId": "6df3774d9ef279e9f1b22c3a5daf7c9a895a01d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
