@@ -1,0 +1,306 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d1e780e_7f594c63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "QueryStorageUsageAndQuota does seem to be used in the implementation of the new storage quota API.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef41d76_41aeb49e",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "const all the request parameters.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eae3aae_21ba2485",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ef32f5_7edaa603",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "No \u0026",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc55439_62ba43c0",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Mojom enumerator values should be named the same as C++: https://google.github.io/styleguide/cppguide.html#Enumerator_Names.",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d16be34_9f0ecfe2",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Note that primitive types can\u0027t be nullable.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69806d47_86aa28f2",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Please remove request_id now.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57319d8b_9c9f4c72",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Name mojo interfaces as you would interfaces in other languages. Something like QuotaDispatcherHost is probably a reasonable start.",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af23eec7_c2fa7d8f",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Use url.mojom.Origin for origins.",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 35
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc375a1_564dfe58",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "I don\u0027t think this will work off the main thread.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e450c0ca_ffb2f530",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Remove this. See https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#do-not-handle-impossible-situations.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dcf25d_3aecc954",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Bind this into the callback instead of sending it.",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 16
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d375d3_a6e48189",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Bind this into the callback instead of sending it.",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 16
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0531be_c217e324",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ca2829_56eba0cf",
+        "filename": "storage/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "//content depends on //storage so //storage shouldn\u0027t depend on //content.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ab14f0_adf594d5",
+        "filename": "storage/common/quota/quota_messages.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-20T08:58:49Z",
+      "side": 1,
+      "message": "These mojom enums should live in //storage/common/quota too.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
