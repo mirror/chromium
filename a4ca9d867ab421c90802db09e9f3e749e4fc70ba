@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86fc1ad2_7555273d",
+        "filename": "components/feedback/anonymizer_tool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-20T18:16:03Z",
+      "side": 1,
+      "message": "I\u0027d expect to see the const after the *.  Or maybe it\u0027s the constexpr, since the array base is constexpr but the contents are const char*",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 15
+      },
+      "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbd7baa_c16d3305",
+        "filename": "components/nacl/renderer/json_manifest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-20T18:16:03Z",
+      "side": 1,
+      "message": "same here?",
+      "range": {
+        "startLine": 167,
+        "startChar": 9,
+        "endLine": 167,
+        "endChar": 31
+      },
+      "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64e4586_68f518ca",
+        "filename": "components/nacl/zygote/nacl_fork_delegate_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-20T18:16:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 225,
+        "startChar": 13,
+        "endLine": 225,
+        "endChar": 42
+      },
+      "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3579c739_0e535baf",
+        "filename": "sandbox/linux/syscall_broker/broker_file_permission.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-20T18:16:03Z",
+      "side": 1,
+      "message": "kinda silly not to just return the literal?",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 209,
+        "endChar": 1
+      },
+      "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daebd389_7bcc03de",
+        "filename": "third_party/WebKit/Source/platform/fonts/BitmapGlyphsBlacklist.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-20T18:16:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8634a0_9e89e88f",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-20T18:16:03Z",
+      "side": 1,
+      "message": "nit: write it out, there\u0027s only 4 of em.",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 10
+      },
+      "revId": "a4ca9d867ab421c90802db09e9f3e749e4fc70ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
