@@ -1,0 +1,31 @@
+<!doctype html>
+<title>test event resize for video element with mediastreams</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/common/media.js"></script>
+<div id=log></div>
+<video id="vid"></video>
+<script>
+async_test(function(t) {
+  var v = document.getElementById('vid');
+  var resizeEventCount = 0;
+
+  v.addEventListener('resize', function (e) {
+    resizeEventCount += 1;
+  });
+
+  v.addEventListener('timeupdate', t.step_func(function (e) {
+    // Check for duplicate resize events (https://crbug.com/777444)
+    assert_true(resizeEventCount == 1, "Should have had only one resize event");
+    t.done();
+    v.pause();
+  }));
+
+  navigator.mediaDevices.getUserMedia({video: true}).then(t.step_func(function (stream) {
+    v.srcObject = stream;
+    v.play();
+  }), t.step_func(function(error) {
+    assert_unreached("getUserMedia should succeed.");
+  }));
+});
+</script>
