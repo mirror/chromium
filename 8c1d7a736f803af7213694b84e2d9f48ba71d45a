@@ -16,6 +16,24 @@
       "revId": "8c1d7a736f803af7213694b84e2d9f48ba71d45a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb4cf99_1bb3af04",
+        "filename": "components/exo/seat_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-20T06:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f25a4f26_0c7a3ce1",
+      "revId": "8c1d7a736f803af7213694b84e2d9f48ba71d45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
