@@ -33,6 +33,47 @@
       "revId": "e8bdd3c29e757dba8ddd26a60cc7beb3a119035b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f4b5e4_63230584",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-20T01:44:43Z",
+      "side": 1,
+      "message": "WorkerCreationObserver deletes itself in WorkerCreationObserver::DevToolsAgentHostCreated().",
+      "parentUuid": "611d031f_f70eb1cd",
+      "revId": "e8bdd3c29e757dba8ddd26a60cc7beb3a119035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87c8209_99b6bada",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-20T01:44:43Z",
+      "side": 1,
+      "message": "nit: Add comment.\n\n// Terminates the given worker. Returns true if the process was found.",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "e8bdd3c29e757dba8ddd26a60cc7beb3a119035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca51a07_d91e36ef",
+        "filename": "content/browser/devtools/shared_worker_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-20T01:44:43Z",
+      "side": 0,
+      "message": "Thank you for fixing this bug.",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "277d7a08d3de9af3548ae1722e4a22d6219dcc0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
