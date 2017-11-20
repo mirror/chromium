@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e2e51842_8b44a102",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-20T12:14:02Z",
+      "side": 1,
+      "message": "nit: `return !entries.empty();`",
+      "revId": "420adcef988ec2e3a96f748fe5ffbf336754a4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90e06ddd_015abdf6",
         "filename": "chrome/browser/content_settings/sound_content_setting_observer_unittest.cc",
         "patchSetId": 11
@@ -13,6 +30,23 @@
       "writtenOn": "2017-11-20T00:21:39Z",
       "side": 1,
       "message": "If there is only 1 entry, is this loop needed?",
+      "revId": "420adcef988ec2e3a96f748fe5ffbf336754a4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c246865_bad423ee",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-20T12:14:02Z",
+      "side": 1,
+      "message": "same as the comment above from Raymes",
       "revId": "420adcef988ec2e3a96f748fe5ffbf336754a4dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +70,40 @@
         "endLine": 219,
         "endChar": 11
       },
+      "revId": "420adcef988ec2e3a96f748fe5ffbf336754a4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b1aaa5_cd8353e6",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-20T12:14:02Z",
+      "side": 1,
+      "message": "nit: expected value should be first",
+      "revId": "420adcef988ec2e3a96f748fe5ffbf336754a4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d672de9_879dac80",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-20T12:14:02Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "420adcef988ec2e3a96f748fe5ffbf336754a4dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
