@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d35eb83_762075ae",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "It\u0027s impossible :(, compiler would generate error that Constructor-Destructor of non-trivial structure should be out-of-line.",
+      "parentUuid": "4bc634b5_f240d37f",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06509401_230835a9",
         "filename": "ios/chrome/browser/passwords/account_select_fill_data.cc",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c477364d_91731492",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "It makes sense. Done.",
+      "parentUuid": "06509401_230835a9",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7d4760c4_f120a700",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f4f1fee_f5050b70",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ded64077_711e1269",
         "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
         "patchSetId": 20
@@ -91,6 +163,30 @@
       "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7933ec_02fe6456",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ded64077_711e1269",
+      "range": {
+        "startLine": 78,
+        "startChar": 33,
+        "endLine": 78,
+        "endChar": 35
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "43200b41_cd55efd7",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56fd4370_445cd82f",
+      "range": {
+        "startLine": 83,
+        "startChar": 13,
+        "endLine": 83,
+        "endChar": 23
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c46b4d86_beb2c2f0",
         "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
         "patchSetId": 20
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f85c3144_f471d99f",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "c46b4d86_beb2c2f0",
+      "range": {
+        "startLine": 90,
+        "startChar": 57,
+        "endLine": 91,
+        "endChar": 15
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "698f4baf_257a0496",
         "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
         "patchSetId": 20
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-20T16:16:04Z",
       "side": 1,
       "message": "Why mutable? (Please also explain in the file itself.)",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 9
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb44807_66e3a730",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "I\u0027ve added comment\nMutable because it\u0027s updated from RetrieveSuggestions, which is logically should be mutable.",
+      "parentUuid": "698f4baf_257a0496",
       "range": {
         "startLine": 103,
         "startChar": 2,
@@ -183,6 +351,30 @@
       "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef23977_1e641591",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "No it\u0027s not different, it\u0027s just helper method for key look-up. \nComment is added.",
+      "parentUuid": "70078008_e40c801f",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,54 @@
     },
     {
       "key": {
+        "uuid": "8a20ce9b_9bd4fdec",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5231a734_79663e95",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1bc494c_0fbda738",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e0af45d_c33272c4",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 5
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d255582_e7f4fb46",
         "filename": "ios/chrome/browser/passwords/account_select_fill_data_unittest.cc",
         "patchSetId": 20
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "27bb4dcc_06da82e8",
+        "filename": "ios/chrome/browser/passwords/account_select_fill_data_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "Thanks, changed to EXPECT (it was copied from the previos test, where ASSERT_TRUE made sense).",
+      "parentUuid": "5d255582_e7f4fb46",
+      "range": {
+        "startLine": 227,
+        "startChar": 2,
+        "endLine": 227,
+        "endChar": 14
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4480d6a4_4d509628",
         "filename": "ios/chrome/browser/passwords/password_controller.mm",
         "patchSetId": 20
@@ -275,6 +539,30 @@
       "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8402516_19ff373d",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-20T17:30:00Z",
+      "side": 1,
+      "message": "Thanks! Extra word input in the comment. Fixed",
+      "parentUuid": "4480d6a4_4d509628",
+      "range": {
+        "startLine": 118,
+        "startChar": 30,
+        "endLine": 118,
+        "endChar": 39
+      },
+      "revId": "1911c7d3096199de53bab62bedcaff8c5bf5c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
