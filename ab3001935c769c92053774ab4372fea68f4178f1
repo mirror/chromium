@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684d6e97_73f26b83",
+        "filename": "components/download/downloader/in_progress/download_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:53:31Z",
+      "side": 1,
+      "message": "Work with jming@ to handle operator\u003d\u003d override (if her patch lands first you might have to update to add this field there).",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "ab3001935c769c92053774ab4372fea68f4178f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa6644b_0881cee4",
+        "filename": "components/download/downloader/in_progress/download_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:53:31Z",
+      "side": 1,
+      "message": "Mention \"append only\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 72
+      },
+      "revId": "ab3001935c769c92053774ab4372fea68f4178f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae2ab81_5b3c0e27",
+        "filename": "components/download/downloader/in_progress/proto/download_source.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:53:31Z",
+      "side": 1,
+      "message": "Can you put a line in download_source.h saying any changes there should go here too?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 64
+      },
+      "revId": "ab3001935c769c92053774ab4372fea68f4178f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833e2be9_c3f6befe",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T21:53:31Z",
+      "side": 1,
+      "message": "Can we make the parameter just an enum instead of a string?",
+      "range": {
+        "startLine": 930,
+        "startChar": 43,
+        "endLine": 930,
+        "endChar": 68
+      },
+      "revId": "ab3001935c769c92053774ab4372fea68f4178f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
