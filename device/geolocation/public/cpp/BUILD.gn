@@ -4,6 +4,8 @@
 
 source_set("cpp") {
   sources = [
+    "fake_geolocation.cc",
+    "fake_geolocation.h",
     "geoposition.cc",
     "geoposition.h",
   ]

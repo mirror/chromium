@@ -11,14 +11,20 @@
 #include "base/bind.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "components/autofill/content/browser/risk/proto/fingerprint.pb.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/common/screen_info.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/test_utils.h"
-#include "device/geolocation/geolocation_provider.h"
+#include "device/geolocation/public/cpp/fake_geolocation.h"
+#include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
 #include "device/geolocation/public/interfaces/geoposition.mojom.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/interfaces/connector.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
@@ -44,7 +50,8 @@ void GetFingerprintInternal(
     const std::string& app_locale,
     const std::string& user_agent,
     const base::TimeDelta& timeout,
-    const base::Callback<void(std::unique_ptr<Fingerprint>)>& callback);
+    const base::Callback<void(std::unique_ptr<Fingerprint>)>& callback,
+    service_manager::Connector* connector);
 
 }  // namespace internal
 
@@ -73,6 +80,25 @@ class AutofillRiskFingerprintTest : public content::ContentBrowserTest {
         screen_bounds_(0, 0, 101, 71),
         available_screen_bounds_(0, 11, 101, 60),
         unavailable_screen_bounds_(0, 0, 101, 11) {}
+
+  void SetUpOnMainThread() override {
+    device::mojom::Geoposition position;
+    position.latitude = kLatitude;
+    position.longitude = kLongitude;
+    position.altitude = kAltitude;
+    position.accuracy = kAccuracy;
+    position.timestamp = base::Time::UnixEpoch() +
+                         base::TimeDelta::FromMilliseconds(kGeolocationTime);
+    fake_geolocation_ = std::make_unique<device::FakeGeolocation>(position);
+
+    service_manager::mojom::ConnectorRequest request;
+    connector_ = service_manager::Connector::Create(&request);
+    service_manager::Connector::TestApi test_api(connector_.get());
+    test_api.OverrideBinderForTesting(
+        device::mojom::kServiceName, device::mojom::GeolocationContext::Name_,
+        base::Bind(&device::FakeGeolocation::Bind,
+                   base::Unretained(fake_geolocation_.get())));
+  }
 
   void GetFingerprintTestCallback(base::OnceClosure continuation_callback,
                                   std::unique_ptr<Fingerprint> fingerprint) {
@@ -182,23 +208,15 @@ class AutofillRiskFingerprintTest : public content::ContentBrowserTest {
   const gfx::Rect available_screen_bounds_;
   const gfx::Rect unavailable_screen_bounds_;
 
+  std::unique_ptr<service_manager::Connector> connector_;
+  std::unique_ptr<device::FakeGeolocation> fake_geolocation_;
+
   // A message loop to block on the asynchronous loading of the fingerprint.
   base::MessageLoopForUI message_loop_;
 };
 
 // Test that getting a fingerprint works on some basic level.
 IN_PROC_BROWSER_TEST_F(AutofillRiskFingerprintTest, GetFingerprint) {
-  device::mojom::Geoposition position;
-  position.latitude = kLatitude;
-  position.longitude = kLongitude;
-  position.altitude = kAltitude;
-  position.accuracy = kAccuracy;
-  position.timestamp = base::Time::UnixEpoch() +
-                       base::TimeDelta::FromMilliseconds(kGeolocationTime);
-
-  device::GeolocationProvider::GetInstance()->OverrideLocationForTesting(
-      position);
-
   content::ScreenInfo screen_info;
   screen_info.depth = kScreenColorDepth;
   screen_info.rect = screen_bounds_;
@@ -211,7 +229,8 @@ IN_PROC_BROWSER_TEST_F(AutofillRiskFingerprintTest, GetFingerprint) {
       kUserAgent,
       base::TimeDelta::FromDays(1),  // Ought to be longer than any test run.
       base::Bind(&AutofillRiskFingerprintTest::GetFingerprintTestCallback,
-                 base::Unretained(this), run_loop.QuitWhenIdleClosure()));
+                 base::Unretained(this), run_loop.QuitWhenIdleClosure()),
+      connector_.get());
 
   // Wait for the callback to be called.
   run_loop.Run();

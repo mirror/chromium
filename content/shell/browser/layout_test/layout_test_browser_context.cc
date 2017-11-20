@@ -21,8 +21,6 @@
 #include "content/shell/browser/layout_test/layout_test_url_request_context_getter.h"
 #include "content/shell/browser/shell_url_request_context_getter.h"
 #include "content/test/mock_background_sync_controller.h"
-#include "device/geolocation/geolocation_provider.h"
-#include "device/geolocation/public/interfaces/geoposition.mojom.h"
 
 #if defined(OS_WIN)
 #include "base/base_paths_win.h"
@@ -37,23 +35,9 @@ namespace content {
 
 LayoutTestBrowserContext::LayoutTestBrowserContext(bool off_the_record,
                                                    net::NetLog* net_log)
-    : ShellBrowserContext(off_the_record, net_log) {
-  Init();
-}
+    : ShellBrowserContext(off_the_record, net_log) {}
 
 LayoutTestBrowserContext::~LayoutTestBrowserContext() {
-}
-
-void LayoutTestBrowserContext::Init() {
-  // Fake geolocation coordinates for testing.
-  device::mojom::Geoposition position;
-  position.latitude = 0;
-  position.longitude = 0;
-  position.altitude = 0;
-  position.accuracy = 0;
-  position.timestamp = base::Time::Now();
-  device::GeolocationProvider::GetInstance()->OverrideLocationForTesting(
-      position);
 }
 
 ShellURLRequestContextGetter*
