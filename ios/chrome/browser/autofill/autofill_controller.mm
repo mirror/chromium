@@ -179,6 +179,11 @@ showAutofillPopup:(const std::vector<autofill::Suggestion>&)popup_suggestions
                        popupDelegate:base::WeakPtr<AutofillPopupDelegate>()];
 }
 
+- (void)onDelegateDestruction:(AutofillPopupDelegate*)delegate {
+  if ([_autofillAgent usesDelegate:delegate])
+    [self hideAutofillPopup];
+}
+
 #pragma mark - AutofillDriverIOSBridge
 
 - (void)onFormDataFilled:(uint16_t)query_id
