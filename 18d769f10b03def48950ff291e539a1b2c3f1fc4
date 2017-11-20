@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b18b545a_af335fe6",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-11-20T22:40:39Z",
+      "side": 1,
+      "message": "Nit: \u0027HDR is not supported ...\u0027",
+      "range": {
+        "startLine": 668,
+        "startChar": 32,
+        "endLine": 668,
+        "endChar": 39
+      },
+      "revId": "18d769f10b03def48950ff291e539a1b2c3f1fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
