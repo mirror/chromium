@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68ae7aca_fd11fee0",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "Let\u0027s rename this to:\ns/account_consistency_required/mirror_enabled",
+      "range": {
+        "startLine": 412,
+        "startChar": 15,
+        "endLine": 412,
+        "endChar": 45
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dd7d44_d58d82f4",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "Here and everywhere else where \"Account consistency\" is used in this CL.\n\nAccount consistency is of 2 types depending on the platform:\n* Mirror for mobile (and now for Unicorn on ChromeOS)\n* DICE for desktop (currently under development).\n\nI think we need to make it clear what we mean by account consistency here:\ns/Account consistency/Mirror",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 26
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738e062c_4c978a14",
+        "filename": "chrome/browser/supervised_user/supervised_user_constants.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "s/kAccountConsistencyRequired/kAccountConsistencyMirrorRequired or kMirrorRequired.",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4290484b_285cb3b2",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "I think it is confusing that Mirror may be enabled for profiles when Mirror feature is not enabled. We discussed this within the team and we believe the best option here is the followimg:\n1. Remove the function IsAccountConsistencyMirrorEnabled from the //compontens/signin\n2. Stop using IsAccountConsistencyMirrorEnabled in this file and pass a boolean as an argument to the constructor of ChromeConnectedHeaderHelper.\n\nIn this CL, please just implement bullet point 2 above (\"Stop using  IsAccountConsistencyMirrorEnabled in this file ..\"). David will do the follow-up clean-up and remove IsAccountConsistencyMirrorEnabled  from //components/signin.",
+      "range": {
+        "startLine": 128,
+        "startChar": 9,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2a3e4d_08e86e6a",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "s/account_consistency_required_by_profile_/is_mirror_enabled_",
+      "range": {
+        "startLine": 129,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d21dd1_4fb29699",
+        "filename": "components/signin/core/browser/signin_header_helper_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "Here and everywhere in this file:\ns/false/false /* is_mirror_enabled */",
+      "range": {
+        "startLine": 459,
+        "startChar": 60,
+        "endLine": 459,
+        "endChar": 65
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e018f9cd_bc03853c",
+        "filename": "components/signin/core/browser/signin_manager_base.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "Mirror is more than just sending X-CHROME-CONNECTED header to Google origins - when Mirror is enabled, Chrome ensures account consistency between the browser and the web by continously monitoring the accounts in the Gaia cookies and in the token service and by pushing the accounts from the tokens to the cookies.\n\nIn this CL, only the part of passing the header to Gaia is implemented. Do you want to have full Mirror on (including account reconcilor)? If so, then make sure to create the mirror account reconcilor - see https://cs.chromium.org/chromium/src/chrome/browser/signin/account_reconcilor_factory.cc?rcl\u003d92f669180c3fa4c7190817870ead6155e12fcc78\u0026l\u003d75",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93f12d0_a3e9a6ce",
+        "filename": "components/signin/core/browser/signin_manager_base.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "David: This pref is for Mirror. I would say it would make more sense to register it in https://cs.chromium.org/chromium/src/chrome/browser/signin/account_reconcilor_factory.cc?rcl\u003d92f669180c3fa4c7190817870ead6155e12fcc78\u0026l\u003d65",
+      "range": {
+        "startLine": 45,
+        "startChar": 39,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0847b8_2363d014",
+        "filename": "components/signin/core/browser/signin_pref_names.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-20T10:23:38Z",
+      "side": 1,
+      "message": "s/kAccountConsistencyRequired/kAccountConsistencyMirrorRequired or kAccountConsistencyMirrorEnabled or kMirrorEnabled",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
