@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47dc3778_a1993c2e",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-20T18:54:54Z",
+      "side": 1,
+      "message": "FYI/question: I put these checks here because of evidence (and other examples in our code) of CALayer setters having some cost even when they don\u0027t change anything. Is that still a good practice?",
+      "revId": "99ca7b12834571a5f39518e618960a0207a0cebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

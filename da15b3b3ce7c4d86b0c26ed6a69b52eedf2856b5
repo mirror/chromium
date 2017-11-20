@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06b73e1d_ca85ab70",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-20T18:54:54Z",
+      "side": 1,
+      "message": "Done. I used a slightly different name; let me know if you think it\u0027s confusing.",
+      "parentUuid": "7ad39029_a3666c5b",
+      "revId": "da15b3b3ce7c4d86b0c26ed6a69b52eedf2856b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcfbc5c5_e41cacbe",
         "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "da15b3b3ce7c4d86b0c26ed6a69b52eedf2856b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c55ff9f_7effe10f",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-20T18:54:54Z",
+      "side": 1,
+      "message": "Ah, yeah, this was a bit of a cheat that relied on the frame being set to the zero rect the rest of the time. Done.",
+      "parentUuid": "bcfbc5c5_e41cacbe",
+      "revId": "da15b3b3ce7c4d86b0c26ed6a69b52eedf2856b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
