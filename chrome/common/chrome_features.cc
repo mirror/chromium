@@ -541,7 +541,7 @@ const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",
 #if !defined(OS_ANDROID)
 // Enables or disables Voice Search on the local NTP.
 const base::Feature kVoiceSearchOnLocalNtp{"VoiceSearchOnLocalNtp",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
 #if defined(OS_CHROMEOS)
