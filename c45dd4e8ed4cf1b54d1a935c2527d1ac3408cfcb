@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0255cd2_cdfecf06",
+        "filename": "mojo/public/cpp/bindings/callback_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-20T23:56:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f433c1a0_4d99a9c9",
+      "revId": "c45dd4e8ed4cf1b54d1a935c2527d1ac3408cfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f94e811_ab3f83d2",
         "filename": "mojo/public/cpp/bindings/callback_helpers.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T08:00:40Z",
       "side": 1,
       "message": "Maybe someone asked this before but who uses this functionality? It looks a bit confusing...",
+      "revId": "c45dd4e8ed4cf1b54d1a935c2527d1ac3408cfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38348cb_7b053670",
+        "filename": "mojo/public/cpp/bindings/callback_helpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-20T23:56:40Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "5f94e811_ab3f83d2",
       "revId": "c45dd4e8ed4cf1b54d1a935c2527d1ac3408cfcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
