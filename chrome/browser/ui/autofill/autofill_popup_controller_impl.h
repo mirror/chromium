@@ -64,6 +64,9 @@ class AutofillPopupControllerImpl : public AutofillPopupController {
 
   bool HandleKeyPressEvent(const content::NativeWebKeyboardEvent& event);
 
+  // If |delegate| is the |delegate_| of |*this|, hides and deletes |*this|.
+  void HideOnDestroyedDelegate(AutofillPopupDelegate* delegate);
+
   // Tells the view to capture mouse events. Must be called before |Show()|.
   void set_hide_on_outside_click(bool hide_on_outside_click);
 

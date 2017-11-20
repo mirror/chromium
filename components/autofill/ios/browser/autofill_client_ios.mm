@@ -118,6 +118,11 @@ void AutofillClientIOS::HideAutofillPopup() {
   [bridge_ hideAutofillPopup];
 }
 
+void AutofillClientIOS::OnAutofillPopupDelegateDestruction(
+    AutofillPopupDelegate* delegate) {
+  [bridge_ onDelegateDestruction:delegate];
+}
+
 bool AutofillClientIOS::IsAutocompleteEnabled() {
   // For browser, Autocomplete is always enabled as part of Autofill.
   return GetPrefs()->GetBoolean(prefs::kAutofillEnabled);
