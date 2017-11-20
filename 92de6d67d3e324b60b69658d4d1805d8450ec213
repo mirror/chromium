@@ -16,6 +16,24 @@
       "revId": "92de6d67d3e324b60b69658d4d1805d8450ec213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a76828f_ad420620",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-20T09:27:42Z",
+      "side": 1,
+      "message": "how about we do that in another CL?\n\nThe problem is that these methods are being mocked right now. I would like to make this pass-through first and then migrate the unit test to using a fake in a separate CL. If I deleted this now, I\u0027d have to also put the fake in this CL.\n\nIf that\u0027s preferable to you, I can do it that way instead.",
+      "parentUuid": "18b19977_affe5af0",
+      "revId": "92de6d67d3e324b60b69658d4d1805d8450ec213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
