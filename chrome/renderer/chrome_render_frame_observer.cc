@@ -137,12 +137,6 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
   render_frame->GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&ChromeRenderFrameObserver::OnRenderFrameObserverRequest,
                  base::Unretained(this)));
-#if defined(SAFE_BROWSING_CSD)
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  if (!command_line.HasSwitch(switches::kDisableClientSidePhishingDetection))
-    SetClientSidePhishingDetection(true);
-#endif
   translate_helper_ = new translate::TranslateHelper(
       render_frame, chrome::ISOLATED_WORLD_ID_TRANSLATE,
       extensions::kExtensionScheme);

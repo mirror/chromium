@@ -286,11 +286,6 @@ LocalSafeBrowsingDatabaseManager::LocalSafeBrowsingDatabaseManager(
   enable_download_protection_ = !cmdline->HasSwitch(
       safe_browsing::switches::kSbDisableDownloadProtection);
 
-  // We only download the csd-whitelist if client-side phishing detection is
-  // enabled.
-  enable_csd_whitelist_ =
-      !cmdline->HasSwitch(::switches::kDisableClientSidePhishingDetection);
-
   // We download the download-whitelist if download protection is enabled.
   enable_download_whitelist_ = enable_download_protection_;
 

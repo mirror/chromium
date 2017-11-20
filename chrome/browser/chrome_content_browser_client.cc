@@ -1692,14 +1692,6 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
         }
       }
 
-      // Disable client-side phishing detection in the renderer if it is
-      // disabled in the Profile preferences or the browser process.
-      if (!prefs->GetBoolean(prefs::kSafeBrowsingEnabled) ||
-          !g_browser_process->safe_browsing_detection_service()) {
-        command_line->AppendSwitch(
-            switches::kDisableClientSidePhishingDetection);
-      }
-
       if (prefs->GetBoolean(prefs::kPrintPreviewDisabled))
         command_line->AppendSwitch(switches::kDisablePrintPreview);
 

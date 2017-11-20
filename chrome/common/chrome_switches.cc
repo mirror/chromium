@@ -190,13 +190,6 @@ const char kDisableCastStreamingHWEncoding[] =
 const char kDisableClearBrowsingDataCounters[] =
     "disable-clear-browsing-data-counters";
 
-// Disables the client-side phishing detection feature. Note that even if
-// client-side phishing detection is enabled, it will only be active if the
-// user has opted in to UMA stats and SafeBrowsing is enabled in the
-// preferences.
-const char kDisableClientSidePhishingDetection[] =
-    "disable-client-side-phishing-detection";
-
 // Disable default component extensions with background pages - useful for
 // performance tests where these pages may interfere with perf results.
 const char kDisableComponentExtensionsWithBackgroundPages[] =
