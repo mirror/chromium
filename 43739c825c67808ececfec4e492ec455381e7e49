@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ed95be_ddddb2e3",
+        "filename": "printing/backend/cups_ipp_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-20T19:21:35Z",
+      "side": 1,
+      "message": "This should be / 10.  There should be more millimeters in an inch than centimeters.",
+      "range": {
+        "startLine": 42,
+        "startChar": 40,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "43739c825c67808ececfec4e492ec455381e7e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630eda7c_9f6545f0",
+        "filename": "printing/backend/cups_ipp_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-20T19:21:35Z",
+      "side": 1,
+      "message": "Please comment this function and include that |size| is in dots per inch.",
+      "range": {
+        "startLine": 203,
+        "startChar": 5,
+        "endLine": 203,
+        "endChar": 18
+      },
+      "revId": "43739c825c67808ececfec4e492ec455381e7e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fae1ae_34c33dfb",
+        "filename": "printing/backend/cups_ipp_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-20T19:21:35Z",
+      "side": 1,
+      "message": "Please DCHECK this value",
+      "range": {
+        "startLine": 203,
+        "startChar": 60,
+        "endLine": 203,
+        "endChar": 64
+      },
+      "revId": "43739c825c67808ececfec4e492ec455381e7e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa91b4f5_1e2173ce",
+        "filename": "printing/backend/cups_ipp_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-20T19:21:35Z",
+      "side": 1,
+      "message": "Please provide a comment",
+      "range": {
+        "startLine": 221,
+        "startChar": 5,
+        "endLine": 221,
+        "endChar": 23
+      },
+      "revId": "43739c825c67808ececfec4e492ec455381e7e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
