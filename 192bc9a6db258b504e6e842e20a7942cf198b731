@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "460afcce_d84befae",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-20T15:17:47Z",
+      "side": 1,
+      "message": "The code in this file is mostly based on executescript/run_at with some ideas from other tests at the same level (e.g. executescript/basic)",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
