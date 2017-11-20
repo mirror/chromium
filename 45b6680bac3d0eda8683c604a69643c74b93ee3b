@@ -234,6 +234,30 @@
       "revId": "45b6680bac3d0eda8683c604a69643c74b93ee3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac82770_25a17525",
+        "filename": "components/download/internal/scheduler/device_status.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-20T20:56:50Z",
+      "side": 1,
+      "message": "Oh I thought that was a good idea, I just wondered if we should set this to the lower required battery level by default instead of the higher one?",
+      "parentUuid": "15c51304_9ee8f145",
+      "range": {
+        "startLine": 85,
+        "startChar": 49,
+        "endLine": 85,
+        "endChar": 59
+      },
+      "revId": "45b6680bac3d0eda8683c604a69643c74b93ee3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
