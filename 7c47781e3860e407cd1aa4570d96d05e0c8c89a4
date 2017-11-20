@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0957d36_24c9f7a6",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-20T20:58:39Z",
+      "side": 1,
+      "message": "This can be null in some tests, tho apparently not any that do compositing.\n\nI can if() around this. Or I can move it to PrepareTextureMailbox, or I can try move it out to the caller content_renderer_pepper_host_factory.cc or..",
+      "revId": "7c47781e3860e407cd1aa4570d96d05e0c8c89a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
