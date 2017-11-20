@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fdbcc135_5d9a8d87",
+        "filename": "chrome/browser/chromeos/mobile/mobile_activator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T19:03:56Z",
+      "side": 1,
+      "message": "Yeah, you are right, this looks weird. I will leave this as is for now and ask the original author what the intended behavior is.",
+      "parentUuid": "18403858_095c8d14",
+      "revId": "7c7fc98daf67d59577e62df830d7955d78c8b260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ec83dd6_53bc5dde",
         "filename": "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7c7fc98daf67d59577e62df830d7955d78c8b260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31ec361_0c5dfb69",
+        "filename": "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-20T19:03:56Z",
+      "side": 1,
+      "message": "True, I will remove this. Most likely its a leftover of my early \u0027s/base::StringValue/base::Value\u0027 CL.",
+      "parentUuid": "3ec83dd6_53bc5dde",
+      "revId": "7c7fc98daf67d59577e62df830d7955d78c8b260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
