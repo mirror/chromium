@@ -22,6 +22,9 @@ namespace cryptohome {
 
 // Converts the given KeyDefinition to a Key.
 void CHROMEOS_EXPORT KeyDefinitionToKey(const KeyDefinition& key_def, Key* key);
+// Creates an AuthorizationRequest from the given secret and label.
+AuthorizationRequest CHROMEOS_EXPORT
+CreateAuthorizationRequest(const std::string& secret, const std::string& label);
 
 // Creates an AuthorizationRequest from the given secret and label.
 AuthorizationRequest CHROMEOS_EXPORT
@@ -102,8 +105,8 @@ class CHROMEOS_EXPORT HomedirMethods {
   // Asks cryptohomed to remove specific key labeled with |label| for user
   // identified by |id| using |auth|.
   virtual void RemoveKeyEx(const Identification& id,
-                           const Authorization& auth,
-                           const std::string& label,
+                           const AuthorizationRequest& auth,
+                           const RemoveKeyRequest& request,
                            const Callback& callback) = 0;
 
   // Asks cryptohomed to change cryptohome identification |id_from| to |id_to|,
