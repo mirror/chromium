@@ -894,14 +894,18 @@ TEST_F(SpdySessionTest, ClientPing) {
       base::TimeDelta::FromSeconds(-1));
   session_->set_hung_interval(base::TimeDelta::FromMilliseconds(50));
 
-  session_->SendPrefacePingIfNoneInFlight();
+  session_->MaybeSendPrefacePing();
+
+  EXPECT_EQ(1, session_->pings_in_flight());
+  EXPECT_EQ(2u, session_->next_ping_id());
+  EXPECT_TRUE(session_->check_ping_status_pending());
 
   base::RunLoop().RunUntilIdle();
 
   session_->CheckPingStatus(before_ping_time);
 
   EXPECT_EQ(0, session_->pings_in_flight());
-  EXPECT_GE(session_->next_ping_id(), 1U);
+  EXPECT_EQ(2u, session_->next_ping_id());
   EXPECT_FALSE(session_->check_ping_status_pending());
   EXPECT_GE(session_->last_activity_time(), before_ping_time);
 
@@ -1785,7 +1789,7 @@ TEST_F(SpdySessionTest, FailedPing) {
   // Send a PING frame.
   session_->WritePingFrame(1, false);
   EXPECT_LT(0, session_->pings_in_flight());
-  EXPECT_GE(session_->next_ping_id(), 1U);
+  EXPECT_EQ(2u, session_->next_ping_id());
   EXPECT_TRUE(session_->check_ping_status_pending());
 
   // Assert session is not closed.
