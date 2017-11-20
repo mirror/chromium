@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e889959_c589c266",
+        "filename": "content/renderer/media/webmediaplayer_ms_compositor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T13:56:55Z",
+      "side": 1,
+      "message": "nit: rename to |is_first_frame|",
+      "range": {
+        "startLine": 406,
+        "startChar": 13,
+        "endLine": 406,
+        "endChar": 24
+      },
+      "revId": "f933822ed95a10f18706cc9bdcd62631eef223ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f936066_509ee908",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T13:56:55Z",
+      "side": 1,
+      "message": "nit: you can use \nv.onerror \u003d t.unreached_func()\nv.onresize \u003d t.unreached_func()\n\nthis applies to other event listeners, but follow foolip@\u0027s advice here.",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "f933822ed95a10f18706cc9bdcd62631eef223ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cc439a_c3f31598",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/video-resize-event.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-20T13:56:55Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "f933822ed95a10f18706cc9bdcd62631eef223ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
