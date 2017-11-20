@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e77f24dd_3ed03684",
+        "filename": "mojo/public/cpp/bindings/interface_ptr_set.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-20T05:31:07Z",
+      "side": 1,
+      "message": "nit: i think you meant \"very slow\"?",
+      "revId": "712a2904e2c3e8b90516a4b4fd4d3e9ad12c6cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb92323_6f9ec640",
+        "filename": "mojo/public/cpp/bindings/interface_ptr_set.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-20T05:31:07Z",
+      "side": 1,
+      "message": "nit: is this needed or can line 59 just be it-\u003eget()-\u003eFlushForTesting()?",
+      "revId": "712a2904e2c3e8b90516a4b4fd4d3e9ad12c6cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
