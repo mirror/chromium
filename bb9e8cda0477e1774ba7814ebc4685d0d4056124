@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9b33325f_24064791",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-20T18:35:12Z",
+      "side": 1,
+      "message": "\u003e \u003e Done. Introduced ContentViewCoreFactory for embedder/content tests to instantiate TestContentViewCore.\n\u003e \n\u003e I don\u0027t see any reason for the factory? Plus I don\u0027t actually see this being moved to the test interface?\n\u003e \n\u003e I think the confusion is that the test interface isn\u0027t actually an interface. I think it would make TestCVC be an interface that inherits from CVC\n\nWait no, that makes no sense either. TestFoo in content/test generally are fake versions of Foo, but that\u0027s not the case here. So these methods should actually stay here, just clearly labelled as test-only, and there should not be a TestCVC at all.",
+      "parentUuid": "502578f1_c76694a0",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "427f5339_f9474973",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 2
