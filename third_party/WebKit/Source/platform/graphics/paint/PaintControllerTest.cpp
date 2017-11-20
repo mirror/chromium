@@ -2369,6 +2369,38 @@ TEST_F(PaintControllerUnderInvalidationTest,
   GetPaintController().CommitNewDisplayItems();
 }
 
+TEST_F(PaintControllerUnderInvalidationTest,
+       PairAfterNoopPairInCachedSubsequence) {
+  FakeDisplayItemClient client("client");
+  GraphicsContext context(GetPaintController());
+
+  {
+    SubsequenceRecorder r(context, client);
+    {
+      ClipRecorder clip_recorder(context, client, kClipType,
+                                 IntRect(100, 100, 50, 50));
+      DrawRect(context, client, kBackgroundType, FloatRect(100, 100, 200, 200));
+    }
+  }
+  GetPaintController().CommitNewDisplayItems();
+
+  {
+    EXPECT_FALSE(
+        SubsequenceRecorder::UseCachedSubsequenceIfPossible(context, client));
+    SubsequenceRecorder r(context, client);
+    {
+      ClipRecorder clip_recorder(context, client, kClipType,
+                                 IntRect(100, 100, 50, 50));
+    }
+    {
+      ClipRecorder clip_recorder(context, client, kClipType,
+                                 IntRect(100, 100, 50, 50));
+      DrawRect(context, client, kBackgroundType, FloatRect(100, 100, 200, 200));
+    }
+  }
+  GetPaintController().CommitNewDisplayItems();
+}
+
 #endif  // defined(GTEST_HAS_DEATH_TEST) && !defined(OS_ANDROID)
 
 }  // namespace blink
