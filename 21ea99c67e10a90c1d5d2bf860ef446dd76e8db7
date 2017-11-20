@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75e80492_b95c42e3",
+        "filename": "ui/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-20T19:26:57Z",
+      "side": 1,
+      "message": "ui/aura too?",
+      "revId": "21ea99c67e10a90c1d5d2bf860ef446dd76e8db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
