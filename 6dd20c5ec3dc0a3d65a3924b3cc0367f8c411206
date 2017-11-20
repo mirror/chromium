@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c77e148_db67dc3e",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-20T19:17:40Z",
+      "side": 1,
+      "message": "nit: this isn\u0027t necessary, since if it fires the null dereference below will be just as useful of a signal",
+      "revId": "6dd20c5ec3dc0a3d65a3924b3cc0367f8c411206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
