@@ -18,6 +18,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/html/parser/TextResourceDecoder.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/origin_trials/origin_trials.h"
 #include "modules/cachestorage/CacheStorageError.h"
 #include "modules/fetch/BodyStreamBuffer.h"
 #include "modules/fetch/FetchDataLoader.h"
@@ -198,9 +199,9 @@ bool VaryHeaderContainsAsterisk(const Response* response) {
 
 bool ShouldGenerateV8CodeCache(ScriptState* script_state,
                                const Response* response) {
-  if (!RuntimeEnabledFeatures::PWAFullCodeCacheEnabled())
-    return false;
   ExecutionContext* context = ExecutionContext::From(script_state);
+  if (!OriginTrials::pWAFullCodeCacheEnabled(context))
+    return false;
   if (!context->IsServiceWorkerGlobalScope())
     return false;
   if (!ToServiceWorkerGlobalScope(context)->IsInstalling())

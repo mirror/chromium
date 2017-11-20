@@ -39,6 +39,8 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/Event.h"
+#include "core/frame/UseCounter.h"
+#include "core/frame/WebFeature.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/WorkerInspectorController.h"
 #include "core/inspector/WorkerThreadDebugger.h"
@@ -328,6 +330,8 @@ void ServiceWorkerGlobalScope::CountCacheStorageInstalledScript(
   script_size_histogram.Count(script_size);
 
   if (script_metadata_size) {
+    UseCounter::Count(this,
+                      WebFeature::kScriptInCacheStorageInstalledWithMetadata);
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         CustomCountHistogram, script_metadata_size_histogram,
         ("ServiceWorker.CacheStorageInstalledScript.CachedMetadataSize", 1000,
