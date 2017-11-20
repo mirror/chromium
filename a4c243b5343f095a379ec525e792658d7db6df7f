@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "355327e1_1917553e",
+        "filename": "ios/web/web_state/web_state_observer_bridge.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:48:43Z",
+      "side": 1,
+      "message": "nit: |\u003d default;|",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 47
+      },
+      "revId": "a4c243b5343f095a379ec525e792658d7db6df7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
