@@ -22,6 +22,30 @@
       "revId": "da841021fbc46e5cb16829fb8824cfb2fa7d856d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b50394b_ad4f669f",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-20T19:04:47Z",
+      "side": 1,
+      "message": "It\u0027s already in anonymous namespace, so no need to do that :)",
+      "parentUuid": "d15d8e09_cf013c58",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 18
+      },
+      "revId": "da841021fbc46e5cb16829fb8824cfb2fa7d856d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
