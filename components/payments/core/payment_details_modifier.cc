@@ -30,11 +30,15 @@ PaymentDetailsModifier::PaymentDetailsModifier(
 PaymentDetailsModifier& PaymentDetailsModifier::operator=(
     const PaymentDetailsModifier& other) {
   method_data = other.method_data;
-  if (other.total)
+  if (other.total) {
     total = std::make_unique<PaymentItem>(*other.total);
-  else
+  } else {
     total.reset(nullptr);
-  additional_display_items = other.additional_display_items;
+  }
+  additional_display_items =
+      std::vector<PaymentItem>(other.additional_display_items.size());
+  for (auto& item : other.additional_display_items)
+    additional_display_items.push_back(std::move(item));
   return *this;
 }
 

@@ -9,7 +9,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/values.h"
-#include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_response.h"
 #include "components/payments/core/payment_shipping_option.h"
 #include "components/payments/core/web_payment_request.h"
@@ -127,10 +126,11 @@ NSString* JSONEscape(NSString* JSON) {
   [self executeScript:script completionHandler:completionHandler];
 }
 
-- (void)updateShippingAddress:(const payments::PaymentAddress&)shippingAddress
+- (void)updateShippingAddress:
+            (const payments::mojom::PaymentAddress&)shippingAddress
             completionHandler:(ProceduralBlockWithBool)completionHanlder {
   std::unique_ptr<base::DictionaryValue> shippingAddressData =
-      shippingAddress.ToDictionaryValue();
+      payments::PaymentAddressToDictionaryValue(shippingAddress);
   std::string shippingAddressDataJSON;
   base::JSONWriter::Write(*shippingAddressData, &shippingAddressDataJSON);
   NSString* script = [NSString
