@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5d424e3_c3da3abe",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-20T19:02:17Z",
+      "side": 1,
+      "message": "nit: this comment isn\u0027t necessary; it\u0027s describing the code.",
+      "revId": "d4d19b87d3d59aeafba3047453bdf9538c976ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
