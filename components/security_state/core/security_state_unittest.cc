@@ -57,7 +57,8 @@ class TestSecurityStateHelper {
         ran_mixed_content_(false),
         malicious_content_status_(MALICIOUS_CONTENT_STATUS_NONE),
         is_incognito_(false),
-        is_error_page_(false) {}
+        is_error_page_(false),
+        has_policy_certificate_(false) {}
   virtual ~TestSecurityStateHelper() {}
 
   void SetCertificate(scoped_refptr<net::X509Certificate> cert) {
@@ -71,6 +72,9 @@ class TestSecurityStateHelper {
   }
   void AddCertStatus(net::CertStatus cert_status) {
     cert_status_ |= cert_status;
+  }
+  void set_cert_status(net::CertStatus cert_status) {
+    cert_status_ = cert_status;
   }
   void set_displayed_mixed_content(bool displayed_mixed_content) {
     displayed_mixed_content_ = displayed_mixed_content;
@@ -98,7 +102,9 @@ class TestSecurityStateHelper {
   void set_insecure_field_edit(bool insecure_field_edit) {
     insecure_input_events_.insecure_field_edited = insecure_field_edit;
   }
-
+  void set_has_policy_certificate(bool has_policy_cert) {
+    has_policy_certificate_ = has_policy_cert;
+  }
   void SetUrl(const GURL& url) { url_ = url; }
 
   std::unique_ptr<VisibleSecurityState> GetVisibleSecurityState() const {
@@ -120,10 +126,9 @@ class TestSecurityStateHelper {
   }
 
   void GetSecurityInfo(SecurityInfo* security_info) const {
-    security_state::GetSecurityInfo(
-        GetVisibleSecurityState(),
-        false /* used policy installed certificate */,
-        base::Bind(&IsOriginSecure), security_info);
+    security_state::GetSecurityInfo(GetVisibleSecurityState(),
+                                    has_policy_certificate_,
+                                    base::Bind(&IsOriginSecure), security_info);
   }
 
  private:
@@ -137,6 +142,7 @@ class TestSecurityStateHelper {
   MaliciousContentStatus malicious_content_status_;
   bool is_incognito_;
   bool is_error_page_;
+  bool has_policy_certificate_;
   InsecureInputEventData insecure_input_events_;
 };
 
@@ -152,6 +158,13 @@ TEST(SecurityStateTest, SHA1Blocked) {
   helper.GetSecurityInfo(&security_info);
   EXPECT_TRUE(security_info.sha1_in_chain);
   EXPECT_EQ(DANGEROUS, security_info.security_level);
+
+  // Ensure that policy-installed certificates do not interfere.
+  helper.set_has_policy_certificate(true);
+  SecurityInfo policy_cert_security_info;
+  helper.GetSecurityInfo(&policy_cert_security_info);
+  EXPECT_TRUE(policy_cert_security_info.sha1_in_chain);
+  EXPECT_EQ(DANGEROUS, policy_cert_security_info.security_level);
 }
 
 // Tests that SHA1-signed certificates, when allowed by policy, downgrade the
@@ -162,6 +175,13 @@ TEST(SecurityStateTest, SHA1Warning) {
   helper.GetSecurityInfo(&security_info);
   EXPECT_TRUE(security_info.sha1_in_chain);
   EXPECT_EQ(NONE, security_info.security_level);
+
+  // Ensure that policy-installed certificates do not interfere.
+  helper.set_has_policy_certificate(true);
+  SecurityInfo policy_cert_security_info;
+  helper.GetSecurityInfo(&policy_cert_security_info);
+  EXPECT_TRUE(policy_cert_security_info.sha1_in_chain);
+  EXPECT_EQ(NONE, policy_cert_security_info.security_level);
 }
 
 // Tests that SHA1-signed certificates, when allowed by policy, don't interfere
@@ -510,12 +530,14 @@ TEST(SecurityStateTest, MixedForm) {
 
   helper.set_contained_mixed_form(true);
 
+  // Verify that a mixed form downgrades the security level.
   SecurityInfo mixed_form_security_info;
   helper.GetSecurityInfo(&mixed_form_security_info);
   EXPECT_TRUE(mixed_form_security_info.contained_mixed_form);
   EXPECT_EQ(CONTENT_STATUS_NONE, mixed_form_security_info.mixed_content_status);
   EXPECT_EQ(NONE, mixed_form_security_info.security_level);
 
+  // Ensure that active mixed content trumps the mixed form warning.
   helper.set_ran_mixed_content(true);
   SecurityInfo mixed_form_and_active_security_info;
   helper.GetSecurityInfo(&mixed_form_and_active_security_info);
@@ -523,6 +545,61 @@ TEST(SecurityStateTest, MixedForm) {
   EXPECT_EQ(CONTENT_STATUS_RAN,
             mixed_form_and_active_security_info.mixed_content_status);
   EXPECT_EQ(DANGEROUS, mixed_form_and_active_security_info.security_level);
+}
+
+// Tests that policy-installed-certificates do not interfere with mixed content
+// notifications.
+TEST(SecurityStateTest, MixedContentWithPolicyCertificate) {
+  TestSecurityStateHelper helper;
+
+  helper.set_has_policy_certificate(true);
+  helper.set_cert_status(0);
+
+  // Verify that if no mixed content is present, the policy-installed
+  // certificate is recorded.
+  {
+    SecurityInfo no_mixed_content_security_info;
+    helper.GetSecurityInfo(&no_mixed_content_security_info);
+    EXPECT_FALSE(no_mixed_content_security_info.contained_mixed_form);
+    EXPECT_EQ(CONTENT_STATUS_NONE,
+              no_mixed_content_security_info.mixed_content_status);
+    EXPECT_EQ(SECURE_WITH_POLICY_INSTALLED_CERT,
+              no_mixed_content_security_info.security_level);
+  }
+
+  // Verify that a mixed form downgrades the security level.
+  {
+    SecurityInfo mixed_form_security_info;
+    helper.set_contained_mixed_form(true);
+    helper.GetSecurityInfo(&mixed_form_security_info);
+    EXPECT_TRUE(mixed_form_security_info.contained_mixed_form);
+    EXPECT_EQ(CONTENT_STATUS_NONE,
+              mixed_form_security_info.mixed_content_status);
+    EXPECT_EQ(NONE, mixed_form_security_info.security_level);
+  }
+
+  // Verify that passive mixed content downgrades the security level.
+  {
+    helper.set_contained_mixed_form(false);
+    helper.set_displayed_mixed_content(true);
+    SecurityInfo passive_mixed_security_info;
+    helper.GetSecurityInfo(&passive_mixed_security_info);
+    EXPECT_EQ(CONTENT_STATUS_DISPLAYED,
+              passive_mixed_security_info.mixed_content_status);
+    EXPECT_EQ(NONE, passive_mixed_security_info.security_level);
+  }
+
+  // Ensure that active mixed content downgrades the security level.
+  {
+    helper.set_contained_mixed_form(false);
+    helper.set_displayed_mixed_content(false);
+    helper.set_ran_mixed_content(true);
+    SecurityInfo active_mixed_security_info;
+    helper.GetSecurityInfo(&active_mixed_security_info);
+    EXPECT_EQ(CONTENT_STATUS_RAN,
+              active_mixed_security_info.mixed_content_status);
+    EXPECT_EQ(DANGEROUS, active_mixed_security_info.security_level);
+  }
 }
 
 // Tests that a field edit is reflected in the SecurityInfo.
