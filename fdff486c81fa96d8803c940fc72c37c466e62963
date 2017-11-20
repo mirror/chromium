@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "1ca756cc_b2264002",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-20T22:16:04Z",
+      "side": 1,
+      "message": "Since current decoder now only supports input that can be canonically deserialized, this is always an error case.",
+      "parentUuid": "19f60e52_c37999a8",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b53569c5_ec708604",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 3
@@ -699,6 +717,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6618bc_07f9c46e",
+        "filename": "content/browser/webauth/cbor/cbor_reader_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-20T22:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2b0dc96_573cac38",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
