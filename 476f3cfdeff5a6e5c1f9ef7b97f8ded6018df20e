@@ -22,6 +22,29 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83746b7_6a22ebd9",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 4634,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-11-20T16:49:04Z",
+      "side": 1,
+      "message": "Can you please implement these too?  This command decoder is now used by 50% of our Canary users on Windows (dev/beta soon too)",
+      "range": {
+        "startLine": 4634,
+        "startChar": 2,
+        "endLine": 4634,
+        "endChar": 19
+      },
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
