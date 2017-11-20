@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905c8005_4f292fc6",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-20T09:21:01Z",
+      "side": 1,
+      "message": "It used to work. We had a callback when opening an archive backed by avfs/fuse.\n\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/file_tasks.js?rcl\u003df4d92a15f70bd435fbc903389bc3e92e0d8a7ffc\u0026l\u003d774\n\nDid it regress?",
+      "range": {
+        "startLine": 1173,
+        "startChar": 7,
+        "endLine": 1173,
+        "endChar": 76
+      },
+      "revId": "e1f72e5c0d1c02203e31d3095a7f8cf6fe6eb4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
