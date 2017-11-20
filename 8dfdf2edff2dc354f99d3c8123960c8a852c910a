@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79cb2a8d_67672656",
+        "filename": "chrome/browser/media/webrtc/webrtc_text_log_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-20T19:47:29Z",
+      "side": 1,
+      "message": "I was trying to preserve the previous behavior as much as possible. Previously:\n\nP1) ChannelClosing() calls PostTask() based on the original |logging_state_| value.\nP2) ChannelClosing() sets |logging_state_|.\nP3) DisableBrowserProcessLoggingOnUIThread() will eventually reach the IO thread to clear the callback, if P1 occurred.\n\nNow:\n\nN1) ChannelClosing() sets |logging_state_|.\nN2) ChannelClosing() clears the callback based on the original |logging_state_| value.\n\nIf you know it\u0027s safe to further simplify this to your suggestion, please let me know and I\u0027ll do that.",
+      "parentUuid": "f4ed3d9f_a06524c2",
+      "range": {
+        "startLine": 270,
+        "startChar": 7,
+        "endLine": 270,
+        "endChar": 24
+      },
+      "revId": "8dfdf2edff2dc354f99d3c8123960c8a852c910a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37e1ee4b_026db4f4",
         "filename": "content/public/browser/webrtc_log.h",
         "patchSetId": 3
