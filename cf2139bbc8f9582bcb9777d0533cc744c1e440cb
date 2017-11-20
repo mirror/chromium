@@ -16,6 +16,24 @@
       "revId": "cf2139bbc8f9582bcb9777d0533cc744c1e440cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24549bd1_a34bdce6",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-20T20:14:25Z",
+      "side": 1,
+      "message": "I tried and that would result in \"Uncaught ReferenceError: foo is not defined\". Maybe I have missed something obvious?",
+      "parentUuid": "2132e41e_096ee734",
+      "revId": "cf2139bbc8f9582bcb9777d0533cc744c1e440cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
