@@ -7,6 +7,7 @@
 #include "base/mac/foundation_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
+#include "base/scoped_observer.h"
 #include "components/ntp_snippets/content_suggestions_service.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
@@ -57,6 +58,8 @@ const char kRateThisAppCommand[] = "ratethisapp";
 
 @interface NTPHomeMediator ()<CRWWebStateObserver> {
   std::unique_ptr<web::WebStateObserverBridge> _webStateObserver;
+  std::unique_ptr<ScopedObserver<web::WebState, web::WebStateObserver>>
+      _scopedObserver;
 }
 
 @property(nonatomic, strong) AlertCoordinator* alertCoordinator;
@@ -74,14 +77,28 @@ const char kRateThisAppCommand[] = "ratethisapp";
 @synthesize alertCoordinator = _alertCoordinator;
 @synthesize metricsRecorder = _metricsRecorder;
 
+- (instancetype)init {
+  if ((self = [super init])) {
+    _webStateObserver = std::make_unique<web::WebStateObserverBridge>(self);
+    _scopedObserver =
+        std::make_unique<ScopedObserver<web::WebState, web::WebStateObserver>>(
+            _webStateObserver.get());
+  }
+  return self;
+}
+
+- (void)dealloc {
+  _scopedObserver.reset();
+  _webStateObserver.reset();
+}
+
 - (void)setUp {
   DCHECK(self.suggestionsService);
-  _webStateObserver =
-      base::MakeUnique<web::WebStateObserverBridge>(self.webState, self);
+  _scopedObserver->Add(self.webState);
 }
 
 - (void)shutdown {
-  _webStateObserver.reset();
+  _scopedObserver->RemoveAll();
 }
 
 #pragma mark - CRWWebStateObserver
@@ -106,6 +123,10 @@ const char kRateThisAppCommand[] = "ratethisapp";
     // Update the constraints in case the omnibox needs to be moved.
     [self.suggestionsViewController updateConstraints];
   }
+}
+
+- (void)webStateDestroyed:(web::WebState*)webState {
+  _scopedObserver->Remove(webState);
 }
 
 #pragma mark - ContentSuggestionsCommands
