@@ -113,6 +113,10 @@ class NET_EXPORT_PRIVATE ThroughputAnalyzer {
   // testing.
   void EraseHangingRequests(const URLRequest& request);
 
+  bool IsHangingWindow(int64_t bits_received,
+                       base::TimeDelta duration,
+                       double downstream_kbps_double) const;
+
  private:
   friend class TestThroughputAnalyzer;
 
