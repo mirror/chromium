@@ -57,6 +57,7 @@ class MultipleFieldsTemporalInputTypeView final
                                                      BaseTemporalInputType&);
   ~MultipleFieldsTemporalInputTypeView() override;
   void Trace(blink::Visitor*) override;
+  bool NeedsShadowSubtree() const override { return true; }
 
  private:
   MultipleFieldsTemporalInputTypeView(HTMLInputElement&,

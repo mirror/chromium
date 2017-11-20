@@ -60,6 +60,8 @@ class ColorInputType final : public InputType,
   Vector<ColorSuggestion> Suggestions() const override;
   ColorChooserClient* GetColorChooserClient() override;
 
+  bool NeedsShadowSubtree() const override { return true; }
+
  private:
   explicit ColorInputType(HTMLInputElement&);
   InputTypeView* CreateView() override;

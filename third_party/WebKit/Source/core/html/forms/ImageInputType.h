@@ -43,6 +43,7 @@ class ImageInputType final : public BaseButtonInputType {
   static InputType* Create(HTMLInputElement&);
   scoped_refptr<ComputedStyle> CustomStyleForLayoutObject(
       scoped_refptr<ComputedStyle>) override;
+  bool NeedsShadowSubtree() const override { return true; }
 
  private:
   ImageInputType(HTMLInputElement&);
