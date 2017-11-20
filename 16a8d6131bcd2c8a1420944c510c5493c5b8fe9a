@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "86db4732_425c190b",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-20T04:18:02Z",
+      "side": 1,
+      "message": "This code is already doing something not so usual in Chromium codebase (i.e. passing the ownership of a C++ object to a C library as void*) so I don\u0027t think using Callback* matters here.\nIs there any real problems which cannot be found with compilers?\nIf not, I prefer putting everything in one place, instead of having a redundant class in a separate place.",
+      "parentUuid": "f3949311_03452cbb",
+      "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c84415b3_0dab4392",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 3
