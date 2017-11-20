@@ -37,8 +37,6 @@ namespace blink {
 const WrapperTypeInfo V8TestInterfaceConstructor::wrapperTypeInfo = {
     gin::kEmbedderBlink,
     V8TestInterfaceConstructor::domTemplate,
-    V8TestInterfaceConstructor::Trace,
-    V8TestInterfaceConstructor::TraceWrappers,
     nullptr,
     "TestInterfaceConstructor",
     nullptr,
@@ -320,8 +318,6 @@ static void constructor(const v8::FunctionCallbackInfo<v8::Value>& info) {
 const WrapperTypeInfo V8TestInterfaceConstructorConstructor::wrapperTypeInfo = {
     gin::kEmbedderBlink,
     V8TestInterfaceConstructorConstructor::domTemplate,
-    V8TestInterfaceConstructor::Trace,
-    V8TestInterfaceConstructor::TraceWrappers,
     nullptr,
     "TestInterfaceConstructor",
     nullptr,
