@@ -16,6 +16,24 @@
       "revId": "eddec791796fda3d98d650204849e21cec7921c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70618059_b81ab671",
+        "filename": "chromeos/dbus/cras_audio_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-20T16:18:27Z",
+      "side": 1,
+      "message": "if chrome doesn\u0027t call this (or any other methods in Client classes), then yes, i think they should be deleted.",
+      "parentUuid": "848e253e_54c12ea9",
+      "revId": "eddec791796fda3d98d650204849e21cec7921c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
