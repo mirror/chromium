@@ -89,6 +89,14 @@ message DeviceOpenNetworkConfigurationProto {
   optional string open_network_configuration = 1;
 }
 
+message NetworkHostnameProto {
+  // The device hostname template. It might contain following
+  // patterns that would be substituted by the device:
+  // ASSET_ID, SERIAL_NUM, MAC_ADDR, and string after substitution should
+  // be a valid hostname.
+  optional string device_hostname_template = 1;
+}
+
 // Policies to turn on portions of the device status reports.
 message DeviceReportingProto {
   optional bool report_version_info = 1 [default = true];
@@ -1008,4 +1016,5 @@ message ChromeDeviceSettingsProto {
   optional TPMFirmwareUpdateSettingsProto tpm_firmware_update_settings = 59;
   optional MinimumRequiredVersionProto minimum_required_version = 60;
   optional ForcedReenrollmentProto forced_reenrollment = 61;
+  optional NetworkHostnameProto network_hostname = 62;
 }
