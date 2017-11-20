@@ -483,7 +483,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
       assertFalse(passwordDialog.$.showPasswordButton.hidden);
 
-      passwordDialog.password = PASSWORD;
+      passwordDialog.set('item.password', PASSWORD);
       Polymer.dom.flush();
 
       assertEquals(PASSWORD,
@@ -501,7 +501,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       // Hidden passwords should be disabled.
       assertTrue(passwordListItem.$$('#password').disabled);
 
-      passwordListItem.password = PASSWORD;
+      passwordListItem.set('item.password', PASSWORD);
       Polymer.dom.flush();
 
       assertEquals(PASSWORD, passwordListItem.$$('#password').value);

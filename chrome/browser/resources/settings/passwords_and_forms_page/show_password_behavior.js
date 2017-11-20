@@ -16,16 +16,6 @@ var ShowPasswordBehavior = {
      * @type {!chrome.passwordsPrivate.PasswordUiEntry}
      */
     item: Object,
-
-    /**
-     * Holds the plaintext password when requested.
-     * Initializing it to the empty string is necessary to indicate that the
-     * password hasn't been fetched yet.
-     */
-    password: {
-      type: String,
-      value: '',
-    },
   },
 
   /**
@@ -34,7 +24,7 @@ var ShowPasswordBehavior = {
    * @private
    */
   getPasswordInputType_: function() {
-    return this.password || this.item.federationText ? 'text' : 'password';
+    return this.item.password || this.item.federationText ? 'text' : 'password';
   },
 
   /**
@@ -54,7 +44,7 @@ var ShowPasswordBehavior = {
    * @private
    */
   getIconClass_: function() {
-    return this.password ? 'icon-visibility-off' : 'icon-visibility';
+    return this.item.password ? 'icon-visibility-off' : 'icon-visibility';
   },
 
   /**
@@ -66,8 +56,7 @@ var ShowPasswordBehavior = {
   getPassword_: function() {
     if (!this.item)
       return '';
-
-    return this.item.federationText || this.password ||
+    return this.item.federationText || this.item.password ||
         ' '.repeat(this.item.numCharactersInPassword);
   },
 
@@ -77,8 +66,8 @@ var ShowPasswordBehavior = {
    * @private
    */
   onShowPasswordButtonTap_: function() {
-    if (this.password)
-      this.password = '';
+    if (this.item.password)
+      this.set('item.password', '');
     else
       this.fire('show-password', this);  // Request the password.
   },
