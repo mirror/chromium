@@ -75,8 +75,7 @@ class LoginShelfButton : public views::LabelButton {
     SetAccessibleName(text);
     SetImage(views::Button::STATE_NORMAL, image);
     SetFocusBehavior(FocusBehavior::ALWAYS);
-    SetFocusPainter(views::Painter::CreateSolidFocusPainter(
-        kFocusBorderColor, kFocusBorderThickness, gfx::InsetsF()));
+    SetFocusPainter(views::Painter::CreateSolidFocusPainter(kFocusBorderColor));
     SetInkDropMode(views::InkDropHostView::InkDropMode::ON);
     set_ink_drop_base_color(kShelfInkDropBaseColor);
     set_ink_drop_visible_opacity(kShelfInkDropVisibleOpacity);

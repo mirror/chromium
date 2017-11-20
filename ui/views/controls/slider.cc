@@ -20,6 +20,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/native_theme/native_theme.h"
 #include "ui/views/widget/widget.h"
 
 namespace {
@@ -87,6 +88,10 @@ void Slider::SetValue(float value) {
 
 void Slider::SetAccessibleName(const base::string16& name) {
   accessible_name_ = name;
+}
+
+void Slider::SetFocusPainter(std::unique_ptr<Painter> focus_painter) {
+  focus_painter_ = std::move(focus_painter);
 }
 
 void Slider::UpdateState(bool control_on) {
@@ -305,6 +310,9 @@ void Slider::OnPaint(gfx::Canvas* canvas) {
   canvas->DrawCircle(
       thumb_center,
       is_active_ ? kThumbRadius : (kThumbRadius - kThumbStroke / 2), flags);
+
+  if (HasFocus() && should_paint_focus_rect_)
+    Painter::PaintFocusPainter(this, canvas, focus_painter_.get());
 }
 
 void Slider::OnFocus() {

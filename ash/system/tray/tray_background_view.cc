@@ -371,9 +371,10 @@ void TrayBackgroundView::UpdateAfterShelfAlignmentChange() {
   // sure clicking on the edges brings up the popup. However, the focus border
   // should be only around the container.
   gfx::Rect paint_bounds(GetBackgroundBounds());
-  paint_bounds.Inset(gfx::Insets(-kFocusBorderThickness));
+  paint_bounds.Inset(
+      gfx::Insets(-views::Painter::kDefaultSolidFocusPainterThicknessDp));
   SetFocusPainter(views::Painter::CreateSolidFocusPainter(
-      kFocusBorderColor, kFocusBorderThickness,
+      kFocusBorderColor, views::Painter::kDefaultSolidFocusPainterThicknessDp,
       GetLocalBounds().InsetsFrom(paint_bounds)));
 }
 

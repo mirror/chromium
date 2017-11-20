@@ -13,13 +13,13 @@
 #include "base/macros.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/nine_image_painter_factory.h"
+#include "ui/gfx/geometry/insets_f.h"
 #include "ui/views/views_export.h"
 
 namespace gfx {
 class Canvas;
 class ImageSkia;
 class Insets;
-class InsetsF;
 class Rect;
 class Size;
 }
@@ -39,6 +39,8 @@ class VIEWS_EXPORT Painter {
  public:
   Painter();
   virtual ~Painter();
+
+  static constexpr int kDefaultSolidFocusPainterThicknessDp = 2;
 
   // A convenience method for painting a Painter in a particular region.
   // This translates the canvas to x/y and paints the painter.
@@ -90,8 +92,8 @@ class VIEWS_EXPORT Painter {
   // |thickness| is in dip.
   static std::unique_ptr<Painter> CreateSolidFocusPainter(
       SkColor color,
-      int thickness,
-      const gfx::InsetsF& insets);
+      int thickness = kDefaultSolidFocusPainterThicknessDp,
+      const gfx::InsetsF& insets = gfx::InsetsF());
 
   // Creates and returns a texture layer that is painted by |painter|.
   static std::unique_ptr<ui::LayerOwner> CreatePaintedLayer(
