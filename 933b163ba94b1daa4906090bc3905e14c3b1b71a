@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "012157cc_54529422",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1159974
+      },
+      "writtenOn": "2017-11-20T16:35:21Z",
+      "side": 1,
+      "message": "Is there something we could do through AudioParameters, perhaps? There are flags to indicate which platform effects should be _enabled_ for a stream. Maybe we could widen the scope of that enum or add a similar one for things we _don\u0027t_ want.",
+      "parentUuid": "c32d1806_e6db97c4",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d79d671_a8e06973",
         "filename": "media/audio/mac/audio_manager_mac.cc",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Indeed. We can\u0027t know for sure what the user means. Let\u0027s discuss offline.",
       "parentUuid": "2e59ff2a_2da165f9",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97f720a_4c8ccba3",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1159974
+      },
+      "writtenOn": "2017-11-20T16:35:21Z",
+      "side": 1,
+      "message": "Let\u0027s! :)",
+      "parentUuid": "362a34b8_9f4d9887",
       "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -201,6 +237,24 @@
       "side": 1,
       "message": "It makes it clear for the reader that it\u0027s not relevant and not used if NR isn\u0027t supported.",
       "parentUuid": "0a77618d_fdab9304",
+      "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d66e92_67284e9b",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1159974
+      },
+      "writtenOn": "2017-11-20T16:35:21Z",
+      "side": 1,
+      "message": "Hmm, you may be right...\n\nThe problem I have with that is it would require me to keep more state, specifically in AUAudioInputStream, to remember if SuppressNoiseReduction succeeded and, only then call UnsuppressNoiseReduction. That, or remove the checks enforcing that they are called the same number of times.",
+      "parentUuid": "202cb1a3_20dd3fe7",
       "revId": "933b163ba94b1daa4906090bc3905e14c3b1b71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
