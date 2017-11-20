@@ -166,6 +166,8 @@ bool TextControlElement::PlaceholderShouldBeVisible() const {
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
+  if (!SupportsPlaceholder())
+    return nullptr;
   return ToHTMLElementOrDie(
       UserAgentShadowRoot()->getElementById(ShadowElementNames::Placeholder()));
 }
