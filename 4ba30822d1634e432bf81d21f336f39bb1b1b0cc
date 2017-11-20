@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9687fcab_568b51ed",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-20T18:30:10Z",
+      "side": 1,
+      "message": "Add a quick comment explaining why we need it, something like:\n// Some ATK interfaces require returning a (const gchar*), use\n// this macro to make it safe to return a pointer to a temporary\n// string.",
+      "revId": "4ba30822d1634e432bf81d21f336f39bb1b1b0cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
