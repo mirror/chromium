@@ -66,9 +66,8 @@ void LayoutSVGRect::UpdateShapeFromElement() {
         length_context.ValueForLength(StyleRef().SvgStyle().Ry(), StyleRef(),
                                       SVGLengthMode::kHeight) > 0 ||
         HasNonScalingStroke() || !DefinitelyHasSimpleStroke()) {
-      LayoutSVGShape::UpdateShapeFromElement();
+      CreatePath();
       use_path_fallback_ = true;
-      return;
     }
   }
 
@@ -92,7 +91,7 @@ bool LayoutSVGRect::ShapeDependentStrokeContains(const FloatPoint& point) {
   // cases.
   if (use_path_fallback_ || !DefinitelyHasSimpleStroke()) {
     if (!HasPath())
-      LayoutSVGShape::UpdateShapeFromElement();
+      CreatePath();
     return LayoutSVGShape::ShapeDependentStrokeContains(point);
   }
 

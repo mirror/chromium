@@ -57,13 +57,13 @@ void LayoutSVGEllipse::UpdateShapeFromElement() {
     // Fall back to LayoutSVGShape and path-based hit detection if the ellipse
     // has a non-scaling or discontinuous stroke.
     if (HasNonScalingStroke() || !HasContinuousStroke()) {
-      LayoutSVGShape::UpdateShapeFromElement();
+      CreatePath();
       use_path_fallback_ = true;
-      return;
     }
   }
 
-  ClearPath();
+  if (!use_path_fallback_)
+    ClearPath();
 
   fill_bounding_box_ =
       FloatRect(center_.X() - radii_.Width(), center_.Y() - radii_.Height(),
