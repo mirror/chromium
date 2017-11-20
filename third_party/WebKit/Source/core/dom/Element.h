@@ -521,7 +521,12 @@ class CORE_EXPORT Element : public ContainerNode {
     return const_cast<ComputedStyle*>(NonLayoutObjectComputedStyle());
   }
 
+  // Determines whether a *computed* style should be stored in the absence
+  // of an associated layout object.
   bool ShouldStoreNonLayoutObjectComputedStyle(const ComputedStyle&) const;
+  // A stronger version of the predicate above, which also forces style
+  // resolution.
+  bool RequiresNonLayoutObjectComputedStyle() const;
   void StoreNonLayoutObjectComputedStyle(scoped_refptr<ComputedStyle>);
 
   // Methods for indicating the style is affected by dynamic updates (e.g.,

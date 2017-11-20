@@ -95,10 +95,10 @@ bool LayoutTreeBuilderForElement::ShouldCreateLayoutObject() const {
     return false;
   if (!parent_layout_object->CanHaveChildren())
     return false;
-  return node_->LayoutObjectIsNeeded(Style());
+  return node_->LayoutObjectIsNeeded(EnsureStyle());
 }
 
-ComputedStyle& LayoutTreeBuilderForElement::Style() const {
+ComputedStyle& LayoutTreeBuilderForElement::EnsureStyle() const {
   if (!style_)
     style_ = node_->StyleForLayoutObject();
   return *style_;
@@ -106,7 +106,7 @@ ComputedStyle& LayoutTreeBuilderForElement::Style() const {
 
 DISABLE_CFI_PERF
 void LayoutTreeBuilderForElement::CreateLayoutObject() {
-  ComputedStyle& style = Style();
+  ComputedStyle& style = EnsureStyle();
 
   LayoutObject* new_layout_object = node_->CreateLayoutObject(style);
   if (!new_layout_object)

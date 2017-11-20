@@ -3508,7 +3508,11 @@ bool Element::ShouldStoreNonLayoutObjectComputedStyle(
 
   return style.Display() == EDisplay::kContents ||
          IsHTMLOptGroupElement(*this) || IsHTMLOptionElement(*this) ||
-         IsSVGStopElement(*this);
+         RequiresNonLayoutObjectComputedStyle();
+}
+
+bool Element::RequiresNonLayoutObjectComputedStyle() const {
+  return IsSVGStopElement(*this);
 }
 
 void Element::StoreNonLayoutObjectComputedStyle(
