@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534553f3_84f23628",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57cf809a_aa056b9f",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "need?",
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f436c49_9a284e29",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "No need as it\u0027s on by default?",
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6777a6_4864932c",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "need?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 67
+      },
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5349e9_4e7c0820",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "Should we have a test with and without?\n\nMaybe a subclass of AutofillMetricsMetricsBrowserTest",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afaed31_64a62567",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "std::make_unique and include \u003cutility\u003e",
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98816f99_2e03fe1d",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "need? your server is actually https_server_",
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd49ab5_b7076129",
+        "filename": "chrome/browser/autofill/autofill_metrics_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "We could have\n\n  std::vector\u003cconst ukm::UkmSource*\u003e sources \u003d\n      test_ukm_recorder_-\u003eGetSourcesForUrl(iframe_url.spec().c_str());\n  EXPECT_TRUE(sources.empty());\n\n  sources \u003d test_ukm_recorder_-\u003eGetSourcesForUrl(main_frame_url.spec().c_str());\n  EXPECT_FALSE(sources.empty());",
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26e2dfa_1609b789",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "Isn\u0027t this just |frame|? I\u0027m confused.\n\nAlso let\u0027s nullcheck Top()",
+      "range": {
+        "startLine": 1478,
+        "startChar": 6,
+        "endLine": 1478,
+        "endChar": 37
+      },
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea29d8f_0ea361f2",
+        "filename": "components/autofill/core/common/form_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "6?",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 20
+      },
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810c2abf_e899b6f4",
+        "filename": "components/autofill/core/common/form_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-20T15:45:56Z",
+      "side": 1,
+      "message": "should these fake URLs at least look like URLs? https://example.com, https://example.com/action etc.",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 122,
+        "endChar": 54
+      },
+      "revId": "ea2b1edd77a22812e45d1f522fb6bf634f32562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
