@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "05b6d7d9_aa2a4a9c",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T06:57:56Z",
+      "side": 1,
+      "message": "Hmm, ok.\nMoving forward to fix the thread-safenesss looks more important to me.\nSo done.",
+      "parentUuid": "86db4732_425c190b",
+      "revId": "16a8d6131bcd2c8a1420944c510c5493c5b8fe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c84415b3_0dab4392",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 3

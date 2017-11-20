@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae87efb5_111d5d0f",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-20T06:57:56Z",
+      "side": 1,
+      "message": "Note: hmm, looks weird, but this is the result of git cl format, so I\u0027ve left it.",
+      "range": {
+        "startLine": 343,
+        "startChar": 30,
+        "endLine": 343,
+        "endChar": 60
+      },
+      "revId": "518936440aee6683f1a696d13ed8a08f9752cce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
