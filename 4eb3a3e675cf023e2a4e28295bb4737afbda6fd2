@@ -45,6 +45,282 @@
       "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b2104b_c5854e9a",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "Ok, GetFlags* used above in GetFlagsCount is ok prefix I suppose (vs. full method name GetPreviewsFlagsDetails*). So this test should be something more like GetFlagsEctDefaultValue",
+      "range": {
+        "startLine": 377,
+        "startChar": 46,
+        "endLine": 377,
+        "endChar": 69
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608bde13_339befb4",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "maybe GetFlagsForceEctValue",
+      "range": {
+        "startLine": 389,
+        "startChar": 46,
+        "endLine": 389,
+        "endChar": 67
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce48a9e_6293cd60",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "GetFlagsNoScriptDefaultValue",
+      "range": {
+        "startLine": 415,
+        "startChar": 46,
+        "endLine": 415,
+        "endChar": 74
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6417e7f_1f70c0a0",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "GetFlagsNoScriptEnabled",
+      "range": {
+        "startLine": 427,
+        "startChar": 46,
+        "endLine": 427,
+        "endChar": 70
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1be44a4_1b3d156d",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "Really, the \"force\" aspect is about overriding ECT value vs. its actual value.\nI don\u0027t think we should use with these features which are just enabled or disabled.",
+      "range": {
+        "startLine": 440,
+        "startChar": 13,
+        "endLine": 440,
+        "endChar": 27
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17dfbe8_adb3a89f",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "GetFlagsNoScriptDisabled",
+      "range": {
+        "startLine": 444,
+        "startChar": 46,
+        "endLine": 444,
+        "endChar": 71
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d5b18e_cdb61329",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "just \"Disabled\"",
+      "range": {
+        "startLine": 457,
+        "startChar": 13,
+        "endLine": 457,
+        "endChar": 19
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eecda41_ac022c9b",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "GetFlagsOfflinePageDefaultValue",
+      "range": {
+        "startLine": 467,
+        "startChar": 19,
+        "endLine": 467,
+        "endChar": 50
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2dcf4e9_f2cbe52b",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "GetFlagsOfflinePageEnabled",
+      "range": {
+        "startLine": 482,
+        "startChar": 19,
+        "endLine": 482,
+        "endChar": 42
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f19e64f_04a32981",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 497,
+        "startChar": 13,
+        "endLine": 497,
+        "endChar": 19
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfa7425_be87006d",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "GetFlagsOfflinePageDisabled",
+      "range": {
+        "startLine": 502,
+        "startChar": 19,
+        "endLine": 502,
+        "endChar": 43
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed00b1a_910feeb5",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-20T17:56:45Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 517,
+        "startChar": 13,
+        "endLine": 517,
+        "endChar": 19
+      },
+      "revId": "4eb3a3e675cf023e2a4e28295bb4737afbda6fd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
