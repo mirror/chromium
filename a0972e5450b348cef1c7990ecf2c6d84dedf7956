@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1d649d1_2f7648ae",
+        "filename": "ios/web/shell/view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-20T16:27:50Z",
+      "side": 1,
+      "message": "Is it really necessary to reset ivars?",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "a0972e5450b348cef1c7990ecf2c6d84dedf7956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
