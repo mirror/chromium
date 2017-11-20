@@ -76,8 +76,7 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
     : BrowserNonClientFrameView(frame, browser_view),
       caption_button_container_(nullptr),
       back_button_(nullptr),
-      window_icon_(nullptr),
-      hosted_app_button_container_(nullptr) {
+      window_icon_(nullptr) {
   ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
                                                       nullptr);
   ash::Shell::Get()->AddShellObserver(this);
@@ -211,11 +210,11 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetWindowBoundsForClientBounds(
 }
 
 int BrowserNonClientFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
-  if (hosted_app_button_container_) {
+  if (hosted_app_button_container()) {
     gfx::Point client_point(point);
-    View::ConvertPointToTarget(this, hosted_app_button_container_,
+    View::ConvertPointToTarget(this, hosted_app_button_container(),
                                &client_point);
-    if (hosted_app_button_container_->HitTestPoint(client_point))
+    if (hosted_app_button_container()->HitTestPoint(client_point))
       return HTCLIENT;
   }
 
@@ -274,8 +273,8 @@ void BrowserNonClientFrameViewAsh::OnPaint(gfx::Canvas* canvas) {
                              : ash::FrameHeader::MODE_INACTIVE;
   frame_header_->PaintHeader(canvas, header_mode);
 
-  if (hosted_app_button_container_)
-    hosted_app_button_container_->SetPaintAsActive(should_paint_as_active);
+  if (hosted_app_button_container())
+    hosted_app_button_container()->SetPaintAsActive(should_paint_as_active);
 
   if (browser_view()->IsToolbarVisible() &&
       !browser_view()->toolbar()->GetPreferredSize().IsEmpty() &&

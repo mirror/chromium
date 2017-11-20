@@ -14,7 +14,6 @@
 #include "chrome/browser/ui/views/frame/browser_non_client_frame_view.h"
 #include "chrome/browser/ui/views/tab_icon_view_model.h"
 
-class HostedAppButtonContainer;
 class TabIconView;
 
 namespace ash {

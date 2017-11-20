@@ -722,3 +722,5 @@ void BrowserWindowCocoa::ShowImeWarningBubble(
         callback) {
   NOTREACHED() << "The IME warning bubble is unsupported on this platform.";
 }
+
+void BrowserWindowCocoa::UpdateCustomFrameButtons() const {}

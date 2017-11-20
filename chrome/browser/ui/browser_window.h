@@ -375,6 +375,9 @@ class BrowserWindow : public ui::BaseWindow {
   virtual std::string GetWorkspace() const = 0;
   virtual bool IsVisibleOnAllWorkspaces() const = 0;
 
+  // Updates custom frame buttons.
+  virtual void UpdateCustomFrameButtons() const = 0;
+
  protected:
   friend class BrowserCloseManager;
   friend class BrowserView;
