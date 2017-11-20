@@ -94,6 +94,9 @@ class CONTENT_EXPORT MouseWheelEventQueue {
   // GSB has been sent in the past.
   bool needs_scroll_end_;
 
+  // True when a GSB is sent and its corresponding GSE is not sent.
+  bool scroll_in_progress_;
+
   // True if the touchpad and wheel scroll latching flag is enabled.
   bool enable_scroll_latching_;
 
