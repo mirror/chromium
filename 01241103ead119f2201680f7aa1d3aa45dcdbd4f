@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41983a6a_31aea2e9",
+        "filename": "chrome/browser/background/background_contents_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:56:25Z",
+      "side": 1,
+      "message": "Why do you need this additional check? How do you end up with a Profile that isn\u0027t valid? Is there some other way you can null out the profile if it\u0027s being deleted?",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 68
+      },
+      "revId": "01241103ead119f2201680f7aa1d3aa45dcdbd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0162906_83fa3589",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:56:25Z",
+      "side": 1,
+      "message": "Move were used (line 112ish).",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 68
+      },
+      "revId": "01241103ead119f2201680f7aa1d3aa45dcdbd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03126782_d13202b4",
+        "filename": "ui/message_center/notification_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:56:25Z",
+      "side": 1,
+      "message": "using (while you\u0027re here)",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 10
+      },
+      "revId": "01241103ead119f2201680f7aa1d3aa45dcdbd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

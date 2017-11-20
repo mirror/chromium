@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ec26a9f_bfcf00eb",
+        "filename": "chrome/browser/background/background_contents_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-20T17:56:25Z",
+      "side": 0,
+      "message": "I assume this is not a problem with your patch because NotificationDisplayService is over mojom and thus async. Do I have that right?",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 71
+      },
+      "revId": "5427a3a3f716d18e5e57a4633c65bfb24eb551da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
