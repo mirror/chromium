@@ -42,7 +42,7 @@
 //       observer_list_.AddObserver(obs);
 //     }
 //
-//     void RemoveObserver(Observer* obs) {
+//     void RemoveObserver(const Observer* obs) {
 //       observer_list_.RemoveObserver(obs);
 //     }
 //
@@ -66,33 +66,47 @@
 
 namespace base {
 
-template <typename ObserverType>
-class ObserverListThreadSafe;
+// Enumeration of which observers are notified.
+enum class NotificationType {
+  // Specifies that any observers added during notification are notified.
+  // This is the default type if no type is provided to the constructor.
+  NOTIFY_ALL,
 
-template <class ObserverType>
-class ObserverListBase
-    : public SupportsWeakPtr<ObserverListBase<ObserverType>> {
+  // Specifies that observers added while sending out notification are not
+  // notified.
+  NOTIFY_EXISTING_ONLY
+};
+
+// When check_empty is true, assert that the list is empty on destruction.
+template <class ObserverType, bool check_empty = false>
+class ObserverList
+    : public SupportsWeakPtr<ObserverList<ObserverType, check_empty>> {
  public:
-  // Enumeration of which observers are notified.
-  enum NotificationType {
-    // Specifies that any observers added during notification are notified.
-    // This is the default type if no type is provided to the constructor.
-    NOTIFY_ALL,
-
-    // Specifies that observers added while sending out notification are not
-    // notified.
-    NOTIFY_EXISTING_ONLY
-  };
-
   // An iterator class that can be used to access the list of observers.
-  template <class ContainerType>
   class Iter {
    public:
-    Iter();
-    explicit Iter(ContainerType* list);
-    ~Iter();
+    Iter() : index_(0), max_index_(0) {}
 
-    // Copy constructor.
+    explicit Iter(const ObserverList* list)
+        : list_(const_cast<ObserverList*>(list)->AsWeakPtr()),
+          index_(0),
+          max_index_(list->type_ == NotificationType::NOTIFY_ALL
+                         ? std::numeric_limits<size_t>::max()
+                         : list->observers_.size()) {
+      DCHECK(list_);
+      EnsureValidIndex();
+      ++list_->live_iterator_count_;
+    }
+
+    ~Iter() {
+      if (!list_)
+        return;
+
+      DCHECK_GT(list_->live_iterator_count_, 0);
+      if (--list_->live_iterator_count_ == 0)
+        list_->Compact();
+    }
+
     Iter(const Iter& other)
         : list_(other.list_),
           index_(other.index_),
@@ -101,7 +115,6 @@ class ObserverListBase
         ++list_->live_iterator_count_;
     }
 
-    // Unified assignment operator.
     Iter& operator=(Iter other) {
       using std::swap;
       swap(list_, other.list_);
@@ -110,23 +123,45 @@ class ObserverListBase
       return *this;
     }
 
-    // A workaround for C2244. MSVC requires fully qualified type name for
-    // return type on a function definition to match a function declaration.
-    using ThisType =
-        typename ObserverListBase<ObserverType>::template Iter<ContainerType>;
+    bool operator==(const Iter& other) const {
+      return (is_end() && other.is_end()) ||
+             (list_.get() == other.list_.get() && index_ == other.index_);
+    }
 
-    bool operator==(const Iter& other) const;
-    bool operator!=(const Iter& other) const;
-    ThisType& operator++();
-    ObserverType* operator->() const;
-    ObserverType& operator*() const;
+    bool operator!=(const Iter& other) const { return !(*this == other); }
+
+    Iter& operator++() {
+      if (list_) {
+        ++index_;
+        EnsureValidIndex();
+      }
+      return *this;
+    }
+
+    ObserverType* operator->() const { return &**this; }
+
+    ObserverType& operator*() const {
+      ObserverType* const current = GetCurrent();
+      DCHECK(current);
+      return *current;
+    }
 
    private:
     FRIEND_TEST_ALL_PREFIXES(ObserverListTest, BasicStdIterator);
     FRIEND_TEST_ALL_PREFIXES(ObserverListTest, StdIteratorRemoveFront);
 
-    ObserverType* GetCurrent() const;
-    void EnsureValidIndex();
+    ObserverType* GetCurrent() const {
+      DCHECK(list_);
+      DCHECK_LT(index_, clamped_max_index());
+      return list_->observers_[index_];
+    }
+
+    void EnsureValidIndex() {
+      DCHECK(list_);
+      const size_t max_index = clamped_max_index();
+      while (index_ < max_index && !list_->observers_[index_])
+        ++index_;
+    }
 
     size_t clamped_max_index() const {
       return std::min(max_index_, list_->observers_.size());
@@ -134,7 +169,8 @@ class ObserverListBase
 
     bool is_end() const { return !list_ || index_ == clamped_max_index(); }
 
-    WeakPtr<ObserverListBase<ObserverType>> list_;
+    WeakPtr<ObserverList> list_;
+
     // When initially constructed and each time the iterator is incremented,
     // |index_| is guaranteed to point to a non-null index if the iterator
     // has not reached the end of the ObserverList.
@@ -142,177 +178,51 @@ class ObserverListBase
     size_t max_index_;
   };
 
-  using Iterator = Iter<ObserverListBase<ObserverType>>;
+  using iterator = Iter;
+  using const_iterator = Iter;
 
-  using iterator = Iter<ObserverListBase<ObserverType>>;
-  iterator begin() {
-    // An optimization: do not involve weak pointers for empty list.
-    // Note: can't use ?: operator here due to some MSVC bug (unit tests fail)
-    if (observers_.empty())
-      return iterator();
-    return iterator(this);
-  }
-  iterator end() { return iterator(); }
-
-  using const_iterator = Iter<const ObserverListBase<ObserverType>>;
   const_iterator begin() const {
-    if (observers_.empty())
-      return const_iterator();
-    return const_iterator(this);
+    // An optimization: do not involve weak pointers for empty list.
+    return observers_.empty() ? const_iterator() : const_iterator(this);
   }
+
   const_iterator end() const { return const_iterator(); }
 
-  ObserverListBase() : live_iterator_count_(0), type_(NOTIFY_ALL) {}
-  explicit ObserverListBase(NotificationType type)
+  ObserverList()
+      : live_iterator_count_(0), type_(NotificationType::NOTIFY_ALL) {}
+  explicit ObserverList(NotificationType type)
       : live_iterator_count_(0), type_(type) {}
 
-  // Add an observer to the list.  An observer should not be added to
-  // the same list more than once.
-  void AddObserver(ObserverType* obs);
+  ~ObserverList() {
+    if (check_empty) {
+      DCHECK(std::all_of(
+          observers_.begin(), observers_.end(),
+          [](const ObserverType* const obs) { return obs == nullptr; }));
+    }
+  }
 
-  // Remove an observer from the list if it is in the list.
-  void RemoveObserver(ObserverType* obs);
-
-  // Determine whether a particular observer is in the list.
-  bool HasObserver(const ObserverType* observer) const;
-
-  void Clear();
-
- protected:
-  size_t size() const { return observers_.size(); }
-
-  void Compact();
-
- private:
-  friend class ObserverListThreadSafe<ObserverType>;
-
-  typedef std::vector<ObserverType*> ListType;
-
-  ListType observers_;
-
-  // Number of active iterators referencing this ObserverListBase.
+  // Add an observer to this list. An observer should not be added to the same
+  // list more than once.
   //
-  // This counter is not synchronized although it is modified by const
-  // iterators.
-  int live_iterator_count_;
-
-  const NotificationType type_;
-
-  template <class ContainerType>
-  friend class Iter;
-
-  DISALLOW_COPY_AND_ASSIGN(ObserverListBase);
-};
-
-template <class ObserverType>
-template <class ContainerType>
-ObserverListBase<ObserverType>::Iter<ContainerType>::Iter()
-    : index_(0), max_index_(0) {}
-
-template <class ObserverType>
-template <class ContainerType>
-ObserverListBase<ObserverType>::Iter<ContainerType>::Iter(ContainerType* list)
-    : list_(const_cast<ObserverListBase<ObserverType>*>(list)->AsWeakPtr()),
-      index_(0),
-      max_index_(list->type_ == NOTIFY_ALL ? std::numeric_limits<size_t>::max()
-                                           : list->observers_.size()) {
-  EnsureValidIndex();
-  DCHECK(list_);
-  ++list_->live_iterator_count_;
-}
-
-template <class ObserverType>
-template <class ContainerType>
-ObserverListBase<ObserverType>::Iter<ContainerType>::~Iter() {
-  if (!list_)
-    return;
-
-  DCHECK_GT(list_->live_iterator_count_, 0);
-  if (--list_->live_iterator_count_ == 0)
-    list_->Compact();
-}
-
-template <class ObserverType>
-template <class ContainerType>
-bool ObserverListBase<ObserverType>::Iter<ContainerType>::operator==(
-    const Iter& other) const {
-  if (is_end() && other.is_end())
-    return true;
-  return list_.get() == other.list_.get() && index_ == other.index_;
-}
-
-template <class ObserverType>
-template <class ContainerType>
-bool ObserverListBase<ObserverType>::Iter<ContainerType>::operator!=(
-    const Iter& other) const {
-  return !operator==(other);
-}
-
-template <class ObserverType>
-template <class ContainerType>
-typename ObserverListBase<ObserverType>::template Iter<ContainerType>&
-    ObserverListBase<ObserverType>::Iter<ContainerType>::operator++() {
-  if (list_) {
-    ++index_;
-    EnsureValidIndex();
+  // Precondition: obs != nullptr
+  // Precondition: !HasObserver(obs)
+  void AddObserver(ObserverType* obs) {
+    DCHECK(obs);
+    if (HasObserver(obs)) {
+      NOTREACHED() << "Observers can only be added once!";
+      return;
+    }
+    observers_.push_back(obs);
   }
-  return *this;
-}
 
-template <class ObserverType>
-template <class ContainerType>
-ObserverType* ObserverListBase<ObserverType>::Iter<ContainerType>::operator->()
-    const {
-  ObserverType* current = GetCurrent();
-  DCHECK(current);
-  return current;
-}
+  // Removes the given observer from this list. Does nothing if this observer is
+  // not in this list.
+  void RemoveObserver(const ObserverType* obs) {
+    DCHECK(obs);
+    const auto it = std::find(observers_.begin(), observers_.end(), obs);
+    if (it == observers_.end())
+      return;
 
-template <class ObserverType>
-template <class ContainerType>
-ObserverType& ObserverListBase<ObserverType>::Iter<ContainerType>::operator*()
-    const {
-  ObserverType* current = GetCurrent();
-  DCHECK(current);
-  return *current;
-}
-
-template <class ObserverType>
-template <class ContainerType>
-ObserverType* ObserverListBase<ObserverType>::Iter<ContainerType>::GetCurrent()
-    const {
-  if (!list_)
-    return nullptr;
-  return index_ < clamped_max_index() ? list_->observers_[index_] : nullptr;
-}
-
-template <class ObserverType>
-template <class ContainerType>
-void ObserverListBase<ObserverType>::Iter<ContainerType>::EnsureValidIndex() {
-  if (!list_)
-    return;
-
-  size_t max_index = clamped_max_index();
-  while (index_ < max_index && !list_->observers_[index_])
-    ++index_;
-}
-
-template <class ObserverType>
-void ObserverListBase<ObserverType>::AddObserver(ObserverType* obs) {
-  DCHECK(obs);
-  if (ContainsValue(observers_, obs)) {
-    NOTREACHED() << "Observers can only be added once!";
-    return;
-  }
-  observers_.push_back(obs);
-}
-
-template <class ObserverType>
-void ObserverListBase<ObserverType>::RemoveObserver(ObserverType* obs) {
-  DCHECK(obs);
-  typename ListType::iterator it =
-    std::find(observers_.begin(), observers_.end(), obs);
-  if (it != observers_.end()) {
     DCHECK_GE(live_iterator_count_, 0);
     if (live_iterator_count_) {
       *it = nullptr;
@@ -320,58 +230,41 @@ void ObserverListBase<ObserverType>::RemoveObserver(ObserverType* obs) {
       observers_.erase(it);
     }
   }
-}
 
-template <class ObserverType>
-bool ObserverListBase<ObserverType>::HasObserver(
-    const ObserverType* observer) const {
-  for (size_t i = 0; i < observers_.size(); ++i) {
-    if (observers_[i] == observer)
-      return true;
+  // Determine whether a particular observer is in the list.
+  bool HasObserver(const ObserverType* obs) const {
+    return ContainsValue(observers_, obs);
   }
-  return false;
-}
 
-template <class ObserverType>
-void ObserverListBase<ObserverType>::Clear() {
-  DCHECK_GE(live_iterator_count_, 0);
-  if (live_iterator_count_) {
-    for (typename ListType::iterator it = observers_.begin();
-      it != observers_.end(); ++it) {
-      *it = nullptr;
-    }
-  } else {
-    observers_.clear();
-  }
-}
-
-template <class ObserverType>
-void ObserverListBase<ObserverType>::Compact() {
-  observers_.erase(std::remove(observers_.begin(), observers_.end(), nullptr),
-                   observers_.end());
-}
-
-template <class ObserverType, bool check_empty = false>
-class ObserverList : public ObserverListBase<ObserverType> {
- public:
-  typedef typename ObserverListBase<ObserverType>::NotificationType
-      NotificationType;
-
-  ObserverList() {}
-  explicit ObserverList(NotificationType type)
-      : ObserverListBase<ObserverType>(type) {}
-
-  ~ObserverList() {
-    // When check_empty is true, assert that the list is empty on destruction.
-    if (check_empty) {
-      ObserverListBase<ObserverType>::Compact();
-      DCHECK_EQ(ObserverListBase<ObserverType>::size(), 0U);
+  // Removes all the observers from this list.
+  void Clear() {
+    DCHECK_GE(live_iterator_count_, 0);
+    if (live_iterator_count_) {
+      std::fill(observers_.begin(), observers_.end(), nullptr);
+    } else {
+      observers_.clear();
     }
   }
 
-  bool might_have_observers() const {
-    return ObserverListBase<ObserverType>::size() != 0;
+  bool might_have_observers() const { return !observers_.empty(); }
+
+ private:
+  void Compact() {
+    observers_.erase(std::remove(observers_.begin(), observers_.end(), nullptr),
+                     observers_.end());
   }
+
+  std::vector<ObserverType*> observers_;
+
+  // Number of active iterators referencing this ObserverList.
+  //
+  // This counter is not synchronized although it is modified by const
+  // iterators.
+  int live_iterator_count_;
+
+  const NotificationType type_;
+
+  DISALLOW_COPY_AND_ASSIGN(ObserverList);
 };
 
 }  // namespace base
