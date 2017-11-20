@@ -9,6 +9,50 @@
 namespace chromeos {
 namespace file_system_provider {
 
+ProviderId::ProviderId(const std::string& internal_id,
+                       ProviderType provider_type)
+    : id_(internal_id), type_(provider_type) {}
+
+ProviderId::ProviderId() {}
+
+// static
+ProviderId ProviderId::CreateFromExtensionId(const std::string& extension_id) {
+  return ProviderId(extension_id, EXTENSION);
+}
+
+// static
+ProviderId ProviderId::CreateFromNativeId(const std::string& native_id) {
+  return ProviderId(native_id, NATIVE);
+}
+
+std::string ProviderId::GetExtensionId() const {
+  CHECK_EQ(EXTENSION, type_);
+  return id_;
+}
+
+std::string ProviderId::GetNativeId() const {
+  CHECK_EQ(NATIVE, type_);
+  return id_;
+}
+
+std::string ProviderId::GetIdUnsafe() const {
+  return id_;
+}
+
+ProviderId::ProviderType ProviderId::GetType() const {
+  return type_;
+}
+
+std::string ProviderId::ToString() const {
+  std::stringstream ss;
+  ss << type_ << ':' << id_;
+  return ss.str();
+}
+
+bool ProviderId::operator==(const ProviderId& other) const {
+  return this->ToString() == other.ToString();
+}
+
 MountOptions::MountOptions()
     : writable(false),
       supports_notify_tag(false),
@@ -33,7 +77,7 @@ ProvidedFileSystemInfo::ProvidedFileSystemInfo()
 }
 
 ProvidedFileSystemInfo::ProvidedFileSystemInfo(
-    const std::string& provider_id,
+    const ProviderId& provider_id,
     const MountOptions& mount_options,
     const base::FilePath& mount_path,
     bool configurable,
@@ -51,6 +95,20 @@ ProvidedFileSystemInfo::ProvidedFileSystemInfo(
       source_(source) {
   DCHECK_LE(0, mount_options.opened_files_limit);
 }
+
+ProvidedFileSystemInfo::ProvidedFileSystemInfo(
+    const std::string& extension_id,
+    const MountOptions& mount_options,
+    const base::FilePath& mount_path,
+    bool configurable,
+    bool watchable,
+    extensions::FileSystemProviderSource source)
+    : ProvidedFileSystemInfo(ProviderId(extension_id, ProviderId::EXTENSION),
+                             mount_options,
+                             mount_path,
+                             configurable,
+                             watchable,
+                             source) {}
 
 ProvidedFileSystemInfo::ProvidedFileSystemInfo(
     const ProvidedFileSystemInfo& other) = default;

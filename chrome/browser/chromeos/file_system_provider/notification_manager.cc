@@ -102,7 +102,7 @@ std::string NotificationManager::GetNotificationId() {
 
 void NotificationManager::ShowNotification() {
   if (!extension_icon_.get())
-    icon_loader_->FetchImage(file_system_info_.provider_id());
+    icon_loader_->FetchImage(file_system_info_.provider_id().GetExtensionId());
 
   message_center::RichNotificationData rich_notification_data;
   rich_notification_data.buttons.push_back(
