@@ -2555,6 +2555,7 @@ split_static_library("browser") {
       "resource_coordinator/discard_condition.h",
       "resource_coordinator/discard_metrics_util.cc",
       "resource_coordinator/discard_metrics_util.h",
+      "resource_coordinator/lifetime_sink.h",
       "resource_coordinator/lifetime_unit.cc",
       "resource_coordinator/lifetime_unit.h",
       "resource_coordinator/tab_lifetime_observer.cc",
