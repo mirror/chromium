@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8165a1f3_d116eff5",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2262,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-20T21:32:42Z",
+      "side": 1,
+      "message": "So this may or may not do what you want, you tell me. With this logic, if there is a \"long enough\" pause followed by N writes, each write will be prefaced by a PING. I *suspect* you only want the first write to be followed by a ping, but maybe not? \n\nIn QUIC, we have a similar metric. We use either the last read time, or, the time of the first write time after the last read time. In other words, we only allow a single write to move this metric, but subsequent once don\u0027t. But I have no idea if this what you want here :\u003e",
+      "range": {
+        "startLine": 2262,
+        "startChar": 65,
+        "endLine": 2262,
+        "endChar": 0
+      },
+      "revId": "c1afd91d213ef2b3e8ab867188bd6ab36a54c5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a672935_bc440c0a",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-20T21:32:42Z",
+      "side": 1,
+      "message": "nit: It looks like this method is only called from SendPrefacePingIfNoneInFlight(). Can we just inline it? (I\u0027m guessing no for some reason like we override it in a test of something?)",
+      "range": {
+        "startLine": 2266,
+        "startChar": 37,
+        "endLine": 2266,
+        "endChar": 0
+      },
+      "revId": "c1afd91d213ef2b3e8ab867188bd6ab36a54c5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e07fd18_7dafa1a0",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-20T21:32:42Z",
+      "side": 1,
+      "message": "nit: can you update the comment too?",
+      "range": {
+        "startLine": 1110,
+        "startChar": 34,
+        "endLine": 1110,
+        "endChar": 42
+      },
+      "revId": "c1afd91d213ef2b3e8ab867188bd6ab36a54c5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
