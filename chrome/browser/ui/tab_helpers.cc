@@ -132,12 +132,16 @@
 #include "extensions/browser/view_type_utils.h"
 #endif
 
-#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
-#include "chrome/browser/supervised_user/supervised_user_navigation_observer.h"
-#endif
-
 #if BUILDFLAG(ENABLE_PRINTING)
 #include "chrome/browser/printing/printing_init.h"
+#endif
+
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+#include "chrome/browser/ui/tabs/tabs_tracker.h"
+#endif
+
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+#include "chrome/browser/supervised_user/supervised_user_navigation_observer.h"
 #endif
 
 using content::WebContents;
@@ -322,12 +326,16 @@ offline_pages::RecentTabHelper::CreateForWebContents(web_contents);
   extensions::TabHelper::CreateForWebContents(web_contents);
 #endif
 
-#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
-  SupervisedUserNavigationObserver::CreateForWebContents(web_contents);
-#endif
-
 #if BUILDFLAG(ENABLE_PRINTING) && !defined(OS_ANDROID)
   printing::InitializePrinting(web_contents);
+#endif
+
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+  tabs::TabsTracker::WebContentsData::CreateForWebContents(web_contents);
+#endif
+
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+  SupervisedUserNavigationObserver::CreateForWebContents(web_contents);
 #endif
 
   bool enabled_distiller = base::CommandLine::ForCurrentProcess()->HasSwitch(
