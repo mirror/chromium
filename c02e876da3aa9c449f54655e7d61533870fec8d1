@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66cd79f7_f226250b",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 9715,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-11-21T16:53:00Z",
+      "side": 1,
+      "message": "nit: missing trailing dot.",
+      "range": {
+        "startLine": 9715,
+        "startChar": 41,
+        "endLine": 9715,
+        "endChar": 0
+      },
+      "revId": "c02e876da3aa9c449f54655e7d61533870fec8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
