@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ecd57f1_32cd6ead",
+        "filename": "components/sync/protocol/proto_visitors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-21T21:25:09Z",
+      "side": 1,
+      "message": "You need to VISIT(user_consent) here as well.",
+      "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3da7cbd_c070e66c",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-21T21:25:09Z",
+      "side": 1,
+      "message": "Does this need to be a string? Seems like a number could carry the same information but be smaller.",
+      "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2af09aa_90acb9e8",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-21T21:25:09Z",
+      "side": 1,
+      "message": "Reading the comment together with the name of this field leaves me confused as to what it does.\n\nPart of me thinks that maybe having a nested message type that combines id and strings together would be cleaner but I don\u0027t know how negatively that\u0027d impact message size.",
+      "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f1efba_5a16756f",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-21T21:25:09Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed. Not sure about locale, +bartekg to weigh in on what exactly we already have in user agent.",
+      "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
