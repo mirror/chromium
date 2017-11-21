@@ -66,6 +66,7 @@
 #include "core/layout/LayoutCounter.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutEmbeddedObject.h"
+#include "core/layout/LayoutFullScreen.h"
 #include "core/layout/LayoutScrollbar.h"
 #include "core/layout/LayoutScrollbarPart.h"
 #include "core/layout/LayoutView.h"
@@ -2942,16 +2943,30 @@ void LocalFrameView::UpdateScrollCorner() {
 }
 
 Color LocalFrameView::DocumentBackgroundColor() const {
-  // The LayoutView's background color is set in
-  // Document::inheritHtmlAndBodyElementStyles.  Blend this with the base
-  // background color of the LocalFrameView. This should match the color drawn
-  // by ViewPainter::paintBoxDecorationBackground.
+  // Start with the base background color of the LocalFrameView.
   Color result = BaseBackgroundColor();
-  LayoutItem document_layout_object = GetLayoutViewItem();
-  if (!document_layout_object.IsNull()) {
-    result = result.Blend(
-        document_layout_object.ResolveColor(CSSPropertyBackgroundColor));
+
+  LayoutObject* fullscreen_layout_object = nullptr;
+  if (auto* document = GetFrame().GetDocument()) {
+    if (Fullscreen* fullscreen = Fullscreen::FromIfExists(*document))
+      fullscreen_layout_object = fullscreen->FullScreenLayoutObject();
   }
+
+  for (auto* layout_object : (const LayoutObject* []){
+           // The LayoutView's background color is set in
+           // Document::inheritHtmlAndBodyElementStyles.
+           GetFrame().ContentLayoutObject(),
+           // If a fullscreen element is present, add its background color.
+           fullscreen_layout_object,
+       }) {
+    if (layout_object) {
+      result =
+          result.Blend(layout_object->ResolveColor(CSSPropertyBackgroundColor));
+    }
+  }
+
+  // This should match the color drawn by
+  // ViewPainter::paintBoxDecorationBackground.
   return result;
 }
 
