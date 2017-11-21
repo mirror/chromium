@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f3e9a0f3_57e964de",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "GetExtensionId would crash the entire browser if type !\u003d EXTENSION. So we can call it only if we\u0027re 100% sure it\u0027s of type EXTENSION. In this case it\u0027s not true. Some of providers registered in the Service may be of NATIVE type. So we need to compare ProviderIds here.",
+      "parentUuid": "b6677994_fa9ccb9e",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e9c8b07_6af1a65c",
         "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
         "patchSetId": 7
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "It looks like this function can only get called via the request manager so will only get called by Extensions. Switching this to .GetExtensionId() to be sure.",
       "parentUuid": "4e9c8b07_6af1a65c",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 70
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07249d93_8c253e4a",
+        "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "+1 for changing to GetExtensionId. We should also add a DCHECK in constructor of NotificationManager to make sure that this class is only created for EXTENSION type.",
+      "parentUuid": "41f2b1e5_2691fba6",
       "range": {
         "startLine": 105,
         "startChar": 4,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "a4496b90_a3a792e6",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "That\u0027s true. But I also think that DCHECK serve as self-documenting code. It would make it easier for readers to notice that this class only supports EXTENSION provider id. It would also crash earlier, at the instantiation moment, rather than when performing some operation later on.",
+      "parentUuid": "e55fbb70_9af0a4c2",
+      "range": {
+        "startLine": 150,
+        "startChar": 31,
+        "endLine": 150,
+        "endChar": 32
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaf2c529_4cac8ebf",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
         "patchSetId": 7
@@ -225,6 +297,30 @@
       "side": 1,
       "message": "this was suggested by zentaro@ in a prior patchset. It looks like per https://chromium-cpp.appspot.com/ that regular enums should have an explicit base type.",
       "parentUuid": "aaf2c529_4cac8ebf",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e7f9b1_2af7f4db",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "93f10634_4ce5c662",
       "range": {
         "startLine": 33,
         "startChar": 20,
@@ -378,6 +474,30 @@
     },
     {
       "key": {
+        "uuid": "e7a45655_5923137a",
+        "filename": "chrome/browser/chromeos/file_system_provider/registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "Good point. Let\u0027s only implement ToString() then.",
+      "parentUuid": "20867f7f_3bad1c28",
+      "range": {
+        "startLine": 97,
+        "startChar": 10,
+        "endLine": 97,
+        "endChar": 49
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1de4903_73c9e4f7",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 7
@@ -436,6 +556,24 @@
       "writtenOn": "2017-11-20T22:29:07Z",
       "side": 1,
       "message": "This will temporarily be .GetIdUnsafe(). Adding a todo to change once we switch from Factory Callbacks to Providers with GetCapabilities \u0026 CreateFileSystem fns (go/add-file-system-providers)",
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84a3e48_4eae2169",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "SGTM. Alternatively we can do something as simple as:\n\nif (provider_id.GetType() \u003d\u003d EXTENSION)\n  GetProvidingExtensionInfo(provider_id.GetExtensionId(), \u0026provider_info);",
+      "parentUuid": "2e982752_c2a42c70",
       "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaeefe04_c9189ea9",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "The naming indicates it\u0027s an extension id, but it\u0027s not true. It\u0027s now an extension or native id with a prefix. Files app may be using this field for fetching things like the extension icon.\n\nThis will require some refactoring, so how about leaving this for a separate CL, and for now just calling GetIdUnsafe()?\n\n[1] https://cs.chromium.org/chromium/src/chrome/common/extensions/api/file_manager_private.idl?rcl\u003db7cdd8383c1c3f2f8c0b59d07068c543a2e24e79\u0026l\u003d340\n\n[2]\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/providers_model.js?rcl\u003db7cdd8383c1c3f2f8c0b59d07068c543a2e24e79\u0026l\u003d62\n\n[3]\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/providers_model.js?rcl\u003db7cdd8383c1c3f2f8c0b59d07068c543a2e24e79\u0026l\u003d113\n\n[4]\nhttps://cs.chromium.org/chromium/src/ui/file_manager/externs/volume_info.js?rcl\u003db7cdd8383c1c3f2f8c0b59d07068c543a2e24e79\u0026l\u003d80",
+      "range": {
+        "startLine": 216,
+        "startChar": 21,
+        "endLine": 216,
+        "endChar": 33
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c05803c3_e895bff2",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "We need to compare ProviderId here, otherwise we\u0027ll crash on NATIVE providers here.",
+      "range": {
+        "startLine": 191,
+        "startChar": 8,
+        "endLine": 191,
+        "endChar": 73
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0927f37_8dc6c067",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "Hm, for other volume types we\u0027d fallback to something default here. How about adding a new provider type called INVALID and update this comment?",
+      "range": {
+        "startLine": 154,
+        "startChar": 1,
+        "endLine": 155,
+        "endChar": 47
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3496b7dc_6b808e21",
+        "filename": "chrome/browser/chromeos/file_system_provider/mount_path_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "This should be an extension id which *uses* the file. So doesn\u0027t have to have anything in common with ProviderId. Let\u0027s just use kExtensionId here.\n\nconst std::string origin \u003d std::string(\"chrome-extension://\") + kExtensionId;",
+      "range": {
+        "startLine": 48,
+        "startChar": 60,
+        "endLine": 48,
+        "endChar": 68
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "586de14f_e5883fd1",
+        "filename": "chrome/browser/chromeos/file_system_provider/mount_path_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "Can we update GetMountPath to accept ProviderId instead?\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/file_system_provider/mount_path_util.h?rcl\u003d14d78f717c78b39d7a59534cc6441316195ed7f4\u0026l\u003d25",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 18
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c5078a3_cf116f55",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "Sorry, I forgot about backward compatibility. Since providers are stored in preferences, we don\u0027t want to reset providers for existing users. So how about:\n\nswitch (type_) {\n  case EXTENSION:\n    return internal_id_;\n  case NATIVE:\n    return std::string(\"@\") + internal_id_;\n}\n\nand adding a DCHECK to CreateFromExtensionId enforcing that the passed extension_id doesn\u0027t contain @?\n\nOr something similar?\n\nWDYT?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 18
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22ee5d8a_ca0bdb5d",
+        "filename": "chrome/browser/chromeos/file_system_provider/registry.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-21T01:35:03Z",
+      "side": 1,
+      "message": "We\u0027re breaking backward compatibility here. See my other comment.",
+      "range": {
+        "startLine": 117,
+        "startChar": 10,
+        "endLine": 117,
+        "endChar": 33
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
