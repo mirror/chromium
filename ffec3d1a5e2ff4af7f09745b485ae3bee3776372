@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6d66903_808e7f1c",
+        "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T16:19:23Z",
+      "side": 1,
+      "message": "Maybe add a short comment here that explains this: As the infobar allows the user to undo the intervention, dismissing it implies accepting the intervention.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "ffec3d1a5e2ff4af7f09745b485ae3bee3776372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743b31f7_1baa1d1a",
+        "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T16:19:23Z",
+      "side": 1,
+      "message": "Small nit: It\u0027s not completely clear who \"the caller\" is here. Maybe \"this object\u0027s owner\"? And for extra tidiness points, add a comment to the constructor that explains that the |intervention_delegate| should outlive this object?",
+      "range": {
+        "startLine": 30,
+        "startChar": 31,
+        "endLine": 30,
+        "endChar": 54
+      },
+      "revId": "ffec3d1a5e2ff4af7f09745b485ae3bee3776372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
