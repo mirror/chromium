@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5497580_63e9c236",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62a918e9_fe4a9fbc",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daf7d410_21228270",
         "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b4cabd1b_b679feeb",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daf7d410_21228270",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c683b9b_c4614635",
         "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
         "patchSetId": 14
@@ -50,6 +86,24 @@
       "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d24cb63_67149706",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c683b9b_c4614635",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "bc5bcb14_eda4daac",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "959e0318_3cf54e5b",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 60
+      },
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2933aa6b_cce3273b",
         "filename": "chrome/browser/resources/pdf/pdf.js",
         "patchSetId": 14
@@ -90,6 +168,24 @@
       "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7568a349_1d75b9a6",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2933aa6b_cce3273b",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "b69fbf0e_e1d37f39",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "515047bd_f13c996d",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e39162b_63008694",
         "filename": "chrome/test/data/pdf/viewport_test.js",
         "patchSetId": 14
@@ -124,6 +238,24 @@
       "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93c73b2_7d6f0f13",
+        "filename": "chrome/test/data/pdf/viewport_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e39162b_63008694",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
