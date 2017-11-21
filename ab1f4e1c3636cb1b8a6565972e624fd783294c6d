@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1867655_cd8903ee",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-21T20:27:28Z",
+      "side": 1,
+      "message": "this and next can be static.\nAlso, maybe worth adding comments on what they do.",
+      "range": {
+        "startLine": 143,
+        "startChar": 10,
+        "endLine": 143,
+        "endChar": 21
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0244367d_cc337b68",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-21T20:27:28Z",
+      "side": 1,
+      "message": "if condition is multiline, then you need {} for code block",
+      "range": {
+        "startLine": 152,
+        "startChar": 23,
+        "endLine": 152,
+        "endChar": 35
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec54c01e_edecd429",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-21T20:27:28Z",
+      "side": 1,
+      "message": "Should this be scoped_nsobject\u003cNSOperationQueue\u003e?",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 18
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f327f84c_4ae75ea6",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-21T20:27:28Z",
+      "side": 1,
+      "message": "Need more tests here. Let\u0027s start with TODO that describes tests that we want.",
+      "range": {
+        "startLine": 145,
+        "startChar": 17,
+        "endLine": 145,
+        "endChar": 33
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
