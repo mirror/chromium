@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "468622cd_f4142ba9",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "i don\u0027t think you\u0027re using this",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecd0f8d_c107f3eb",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "nit: use std::make_unique\u003cbase::DefaultTickClock\u003e() here instead\n\n(chrome is trying to cut down on use of \u0027new\u0027 since it makes memory ownership unclear)",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 71
+      },
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d745a52_7d120a6f",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "nit: consider using tick_clock_ here as well instead of the timestamp from powerd so you\u0027re getting all of your activity times from the same source",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a64027_bd55140a",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e for std::unique_ptr",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec73f564_b4c2303a",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "#include \"base/optional.h\"",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a92f81b_68becd0d",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "#include \"base/time/time.h\"",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee4ca0f_35fca20a",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "nit: FastForwardAndCheckResults since this isn\u0027t a trivial getter/setter\n\nalso move it above data members: https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 37
+      },
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2208613_ba19bd47",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "i think that you may be able to shorten this (and other calls) to:\n\n  FastForwardANdCheckResults(1, {now});",
+      "range": {
+        "startLine": 113,
+        "startChar": 36,
+        "endLine": 113,
+        "endChar": 58
+      },
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f03f2d_415eb737",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T15:12:52Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem necessary",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
