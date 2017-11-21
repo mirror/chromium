@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c5b1ed_90a619cb",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-21T15:54:43Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t this just\n  100 * actual_frames / ideal_frames\n?",
+      "range": {
+        "startLine": 298,
+        "startChar": 17,
+        "endLine": 298,
+        "endChar": 60
+      },
+      "revId": "28754c73ba5a3f635d75497d8f7255458ae77e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
