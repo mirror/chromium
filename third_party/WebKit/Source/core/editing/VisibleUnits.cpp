@@ -967,7 +967,7 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
     // *about* to move to a visually distinct position.
     if (EndsOfNodeAreVisuallyDistinctPositions(current_node) &&
         current_node != boundary)
-      return last_visible.DeprecatedComputePosition();
+      return last_visible.ComputePosition();
 
     // skip position in non-laid out or invisible node
     const LayoutObject* const layout_object =
@@ -991,7 +991,7 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
     // we terminate early to avoid doing a nodeIndex() call.
     if (EndsOfNodeAreVisuallyDistinctPositions(current_node) &&
         current_pos.AtStartOfNode())
-      return last_visible.DeprecatedComputePosition();
+      return last_visible.ComputePosition();
 
     // Return position after tables and nodes which have content that can be
     // ignored.
@@ -1027,7 +1027,7 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
             text_layout_object->TextStartOffset()))
       return current_pos.ComputePosition();
   }
-  return last_visible.DeprecatedComputePosition();
+  return last_visible.ComputePosition();
 }
 
 Position MostBackwardCaretPosition(const Position& position,
@@ -1088,13 +1088,13 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
     // Do not move to a visually distinct position.
     if (EndsOfNodeAreVisuallyDistinctPositions(current_node) &&
         current_node != boundary)
-      return last_visible.DeprecatedComputePosition();
+      return last_visible.ComputePosition();
     // Do not move past a visually disinct position.
     // Note: The first position after the last in a node whose ends are visually
     // distinct positions will be [boundary->parentNode(),
     // originalBlock->nodeIndex() + 1].
     if (boundary && Strategy::Parent(*boundary) == current_node)
-      return last_visible.DeprecatedComputePosition();
+      return last_visible.ComputePosition();
 
     // skip position in non-laid out or invisible node
     const LayoutObject* const layout_object =
@@ -1104,7 +1104,7 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
       continue;
 
     if (rule == kCanCrossEditingBoundary && boundary_crossed)
-      return current_pos.DeprecatedComputePosition();
+      return current_pos.ComputePosition();
 
     // track last visible streamer position
     if (IsStreamer<Strategy>(current_pos))
@@ -1140,7 +1140,7 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
             text_layout_object->TextStartOffset()))
       return current_pos.ComputePosition();
   }
-  return last_visible.DeprecatedComputePosition();
+  return last_visible.ComputePosition();
 }
 
 Position MostForwardCaretPosition(const Position& position,
