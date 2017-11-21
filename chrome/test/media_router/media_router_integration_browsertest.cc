@@ -246,7 +246,7 @@ MediaRouterIntegrationBrowserTest::StartSessionWithTestPageAndChooseSink() {
   return web_contents;
 }
 
-void MediaRouterIntegrationBrowserTest::OpenDialogAndCastFile() {
+WebContents* MediaRouterIntegrationBrowserTest::OpenDialogAndCastFile() {
   SetTestData(FILE_PATH_LITERAL("local_media_sink.json"));
   GURL file_url = GURL("file:///path/to/a/file.mp3");
   // Open the dialog, waits for it to load
@@ -263,10 +263,13 @@ void MediaRouterIntegrationBrowserTest::OpenDialogAndCastFile() {
   WaitUntilSinkDiscoveredOnUI();
   // Click on sink.
   ChooseSink(GetActiveWebContents(), kTestSinkName);
-  // Give casting a second to go through.
-  Wait(base::TimeDelta::FromSeconds(1));
+  // Give casting a few seconds to go through.
+  Wait(base::TimeDelta::FromSeconds(3));
   // Expect that the current tab has the file open in it.
-  ASSERT_EQ(file_url, GetActiveWebContents()->GetURL());
+  WebContents* web_contents = GetActiveWebContents();
+  CHECK(web_contents);
+  CHECK(file_url == web_contents->GetURL());
+  return web_contents;
 }
 
 void MediaRouterIntegrationBrowserTest::OpenDialogAndCastFileFails() {
@@ -703,10 +706,13 @@ IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
   // Make sure there is 1 tab.
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
 
-  OpenDialogAndCastFile();
+  WebContents* web_contents = OpenDialogAndCastFile();
 
   // Expect that no new tab has been opened.
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
+
+  // Verify a cast session is running.
+  CheckSessionValidity(web_contents);
 }
 
 // Tests that creating a route with a local file opens the file in a new tab.
@@ -718,13 +724,16 @@ IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
   // Make sure there is 1 tab.
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
 
-  OpenDialogAndCastFile();
+  WebContents* web_contents = OpenDialogAndCastFile();
 
   // Expect that a new tab has been opened.
   ASSERT_EQ(2, browser()->tab_strip_model()->count());
+
+  // Verify a cast session is running.
+  CheckSessionValidity(web_contents);
 }
 
-// Tests that creating a route with a local file opens the file in a new tab.
+// Tests that failing to create a route with a local file shows an issue.
 IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
                        MANUAL_OpenLocalMediaFileFailsAndShowsIssue) {
   OpenDialogAndCastFileFails();
