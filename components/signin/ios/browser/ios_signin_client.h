@@ -41,7 +41,6 @@ class IOSSigninClient
   void DoFinalInit() override;
   bool CanRevokeCredentials() override;
   std::string GetSigninScopedDeviceId() override;
-  bool ShouldMergeSigninCredentialsIntoCookieJar() override;
   bool IsFirstRun() const override;
   bool AreSigninCookiesAllowed() override;
   void AddContentSettingsObserver(
@@ -57,6 +56,13 @@ class IOSSigninClient
       GaiaAuthConsumer* consumer,
       const std::string& source,
       net::URLRequestContextGetter* getter) override;
+  signin::AccountConsistencyMethod GetAccountConsistencyMethod() override;
+  bool IsDiceEnabled() override;
+  bool IsDiceMigrationEnabled() override;
+  bool IsDicePrepareMigrationEnabled() override;
+  bool IsDiceFixAuthErrorsEnabled() override;
+  void MigrateProfileToDice() override;
+  bool IsMirrorEnabled() override;
 
   // KeyedService implementation.
   void Shutdown() override;

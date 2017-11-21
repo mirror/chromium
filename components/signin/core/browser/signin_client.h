@@ -12,6 +12,7 @@
 #include "base/time/time.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/signin/core/browser/account_info.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/browser/webdata/token_web_data.h"
 #include "google_apis/gaia/gaia_auth_fetcher.h"
@@ -71,10 +72,6 @@ class SigninClient : public KeyedService {
   // Returns the URL request context information associated with the client.
   virtual net::URLRequestContextGetter* GetURLRequestContext() = 0;
 
-  // Returns whether the user's credentials should be merged into the cookie
-  // jar on signin completion.
-  virtual bool ShouldMergeSigninCredentialsIntoCookieJar() = 0;
-
   // Returns a string containing the version info of the product in which the
   // Signin component is being used.
   virtual std::string GetProductVersion() = 0;
@@ -132,6 +129,33 @@ class SigninClient : public KeyedService {
 
   // Called once the credentials has been copied to another SigninManager.
   virtual void AfterCredentialsCopied() {}
+
+  // Returns the account consistency method for this client.
+  virtual signin::AccountConsistencyMethod GetAccountConsistencyMethod() = 0;
+
+  // If true, then account management is done through Gaia webpages.
+  // Can only be used on the UI thread.
+  virtual bool IsDiceEnabled() = 0;
+
+  // Returns true if Dice account consistency is enabled or if the Dice
+  // migration process is in progress (account consistency method is kDice or
+  // kDiceMigration).
+  virtual bool IsDiceMigrationEnabled() = 0;
+
+  // Returns true if the account consistency method is kDicePrepareMigration or
+  // greater.
+  virtual bool IsDicePrepareMigrationEnabled() = 0;
+
+  // Returns true if the account consistency method is kDiceFixAuthErrors or
+  // greater.
+  virtual bool IsDiceFixAuthErrorsEnabled() = 0;
+
+  // Called to migrate a client to Dice.
+  virtual void MigrateProfileToDice() {}
+
+  // Checks whether Mirror account consistency is enabled for this client.
+  // If enabled, the account management UI is available in the avatar bubble.
+  virtual bool IsMirrorEnabled() = 0;
 
  protected:
   // Returns device id that is scoped to single signin.

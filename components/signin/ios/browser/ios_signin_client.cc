@@ -4,6 +4,7 @@
 
 #include "components/signin/ios/browser/ios_signin_client.h"
 
+#include "base/logging.h"
 #include "components/signin/core/browser/signin_cookie_changed_subscription.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 
@@ -53,10 +54,6 @@ bool IOSSigninClient::CanRevokeCredentials() {
 
 std::string IOSSigninClient::GetSigninScopedDeviceId() {
   return GetOrCreateScopedDeviceIdPref(GetPrefs());
-}
-
-bool IOSSigninClient::ShouldMergeSigninCredentialsIntoCookieJar() {
-  return false;
 }
 
 bool IOSSigninClient::IsFirstRun() const {
@@ -150,4 +147,33 @@ std::unique_ptr<GaiaAuthFetcher> IOSSigninClient::CreateGaiaAuthFetcher(
     const std::string& source,
     net::URLRequestContextGetter* getter) {
   return base::MakeUnique<GaiaAuthFetcher>(consumer, source, getter);
+}
+
+signin::AccountConsistencyMethod
+IOSSigninClient::GetAccountConsistencyMethod() {
+  return signin::AccountConsistencyMethod::kMirror;
+}
+
+bool IOSSigninClient::IsDiceEnabled() {
+  return false;
+}
+
+bool IOSSigninClient::IsDiceMigrationEnabled() {
+  return false;
+}
+
+bool IOSSigninClient::IsDicePrepareMigrationEnabled() {
+  return false;
+}
+
+bool IOSSigninClient::IsDiceFixAuthErrorsEnabled() {
+  return false;
+}
+
+void IOSSigninClient::MigrateProfileToDice() {
+  NOTREACHED();
+}
+
+bool IOSSigninClient::IsMirrorEnabled() {
+  return true;
 }

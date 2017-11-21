@@ -15,20 +15,22 @@ class PrefRegistrySyncable;
 }
 
 class PrefService;
+class SigninClient;
 
 namespace signin {
 
 // AccountReconcilorDelegate specialized for Dice.
 class DiceAccountReconcilorDelegate : public AccountReconcilorDelegate {
  public:
-  DiceAccountReconcilorDelegate(PrefService* user_prefs, bool is_new_profile);
+  DiceAccountReconcilorDelegate(SigninClient* signin_client,
+                                bool is_new_profile);
   ~DiceAccountReconcilorDelegate() override {}
 
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
   // Dice migration methods, public for testing:
   // Schedules migration to happen at next startup.
-  static void SetDiceMigrationOnStartup(PrefService* prefs, bool migrate);
+  static void SetDiceMigrationOnStartup(PrefService* user_prefs, bool migrate);
   // Returns true if migration can happen on the next startup.
   bool IsReadyForDiceMigration(bool is_new_profile);
 
@@ -44,10 +46,10 @@ class DiceAccountReconcilorDelegate : public AccountReconcilorDelegate {
                            bool reconcile_is_noop) override;
 
  private:
-  PrefService* user_prefs_;
-
   // Last known "first account". Used when cookies are lost as a best guess.
   std::string last_known_first_account_;
+
+  SigninClient* signin_client_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceAccountReconcilorDelegate);
 };
