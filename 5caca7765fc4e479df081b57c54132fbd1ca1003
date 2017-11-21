@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ccddefe7_9cc03afe",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-21T03:11:29Z",
+      "side": 1,
+      "message": "thanks for the suggestion, I have modified the cl",
+      "parentUuid": "2a13aad9_74cb8c98",
+      "revId": "5caca7765fc4e479df081b57c54132fbd1ca1003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55af158e_b164d01a",
         "filename": "services/device/geolocation/public_ip_address_geolocator.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "5caca7765fc4e479df081b57c54132fbd1ca1003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ba96d5_b56c8cb2",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-21T03:11:29Z",
+      "side": 1,
+      "message": "thanks for the catch! removed it!",
+      "parentUuid": "55af158e_b164d01a",
+      "revId": "5caca7765fc4e479df081b57c54132fbd1ca1003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
