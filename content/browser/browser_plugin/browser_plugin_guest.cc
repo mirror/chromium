@@ -436,7 +436,7 @@ void BrowserPluginGuest::SetChildFrameSurface(
     const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
   has_attached_since_surface_set_ = false;
-  if (!IsUsingMus()) {
+  if (!IsMusHostingViz()) {
     SendMessageToEmbedder(
         std::make_unique<BrowserPluginMsg_SetChildFrameSurface>(
             browser_plugin_instance_id(), surface_info, sequence));
@@ -703,7 +703,7 @@ void BrowserPluginGuest::RenderViewReady() {
   // In case we've created a new guest render process after a crash, let the
   // associated BrowserPlugin know. We only need to send this if we're attached,
   // as guest_crashed_ is cleared automatically on attach anyways.
-  if (attached() && !IsUsingMus()) {
+  if (attached() && !IsMusHostingViz()) {
     RenderWidgetHostViewGuest* rwhv = static_cast<RenderWidgetHostViewGuest*>(
         web_contents()->GetRenderWidgetHostView());
     if (rwhv) {

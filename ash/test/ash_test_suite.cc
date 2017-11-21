@@ -22,6 +22,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/test/fake_context_factory.h"
 #include "ui/gfx/gfx_paths.h"
 #include "ui/gl/test/gl_surface_test_support.h"
@@ -142,6 +143,11 @@ void AshTestSuite::Initialize() {
     context_factory_ = std::make_unique<AshTestContextFactory>();
     env_->set_context_factory(context_factory_.get());
     env_->set_context_factory_private(nullptr);
+#if BUILDFLAG(ENABLE_MUS)
+    // Always assume that mus is hosting viz.
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kMus, switches::kMusHostVizValue);
+#endif
   }
 }
 

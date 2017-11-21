@@ -55,6 +55,7 @@ WindowTreeHostMus::WindowTreeHostMus(WindowTreeHostMusInitParams init_params)
   // seems them at the time the window is created.
   for (auto& pair : init_params.properties)
     window_mus->SetPropertyFromServer(pair.first, &pair.second);
+  LOG(ERROR) << "Creating WindowTreeHostMus";
   CreateCompositor(viz::FrameSinkId());
   gfx::AcceleratedWidget accelerated_widget;
 // We need accelerated widget numbers to be different for each
@@ -190,6 +191,17 @@ void WindowTreeHostMus::SetBoundsInPixels(const gfx::Rect& bounds) {
   if (!in_set_bounds_from_server_)
     delegate_->OnWindowTreeHostBoundsWillChange(this, bounds);
   WindowTreeHostPlatform::SetBoundsInPixels(bounds);
+}
+
+void WindowTreeHostMus::OverrideAcceleratedWidget(
+    gfx::AcceleratedWidget widget) {
+  bool was_visible = compositor()->IsVisible();
+  if (was_visible)
+    compositor()->SetVisible(false);
+  compositor()->ReleaseAcceleratedWidget();
+  OnAcceleratedWidgetAvailable(widget, GetDisplay().device_scale_factor());
+  if (was_visible)
+    compositor()->SetVisible(true);
 }
 
 void WindowTreeHostMus::DispatchEvent(ui::Event* event) {

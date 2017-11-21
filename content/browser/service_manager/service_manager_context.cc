@@ -249,14 +249,17 @@ std::unique_ptr<service_manager::Service> CreateEmbeddedUIService(
   config.resource_runner = task_runner;
   config.image_cursors_set_weak_ptr = image_cursors_set_weak_ptr;
   config.memory_manager = memory_manager;
+  config.should_host_viz = false;
   return base::MakeUnique<ui::Service>(&config);
 }
 
 void RegisterUIServiceInProcessIfNecessary(
     ServiceManagerConnection* connection) {
   // Some tests don't create BrowserMainLoop.
+  if (!BrowserMainLoop::GetInstance())
+    return;
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch("mus") ||
-      !BrowserMainLoop::GetInstance()) {
+      base::CommandLine::ForCurrentProcess()->HasSwitch("mash")) {
     return;
   }
 
