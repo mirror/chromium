@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "092a8c36_9063f596",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:58:23Z",
+      "side": 1,
+      "message": "style: I think \"observer\" is better name and corresponds to what the style says about naming\n\n\u003e Names should be descriptive; avoid abbreviation.\n\u003e\n\u003e Give as descriptive a name as possible, within reason. Do not worry about\n\u003e saving horizontal space as it is far more important to make your code\n\u003e immediately understandable by a new reader. Do not use abbreviations that\n\u003e are ambiguous or unfamiliar to readers outside your project, and do not\n\u003e abbreviate by deleting letters within a word.\n\nhttps://google.github.io/styleguide/cppguide.html#General_Naming_Rules",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2af9b5e_9f105ae9",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_shim.cc",
         "patchSetId": 8
