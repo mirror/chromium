@@ -16,6 +16,23 @@
       "revId": "7b5bab11dee4fbda8e95b9dba240e8d18d291440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e7c922_b595f7ed",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-21T21:57:44Z",
+      "side": 1,
+      "message": "Suggest you back this out. I\u0027m making the same change in another CL that\u0027s going to remove all the MessageLoops in one pass.",
+      "revId": "7b5bab11dee4fbda8e95b9dba240e8d18d291440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
