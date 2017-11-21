@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "74fee979_35d32b7e",
+        "filename": "android_webview/browser/aw_safe_browsing_ui_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T05:28:58Z",
+      "side": 1,
+      "message": "Yes please, if the same histogram name is emitted to from multiple callsites.",
+      "parentUuid": "7263079c_75ddfa09",
+      "range": {
+        "startLine": 62,
+        "startChar": 66,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "561cf64af4740602f71efcd394c47ab07c6d4152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d219ca_a789a907",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
