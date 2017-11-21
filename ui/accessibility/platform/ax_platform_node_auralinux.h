@@ -12,6 +12,16 @@
 #include "ui/accessibility/ax_export.h"
 #include "ui/accessibility/platform/ax_platform_node_base.h"
 
+// Some ATK interfaces require returning a (const gchar*), use
+// this macro to make it safe to return a pointer to a temporary
+// string.
+#define ATK_AURALINUX_RETURN_STRING(str_expr) \
+  {                                           \
+    static std::string result;                \
+    result = (str_expr);                      \
+    return result.c_str();                    \
+  }
+
 namespace ui {
 
 // Implements accessibility on Aura Linux using ATK.
@@ -44,6 +54,7 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   const gchar* GetDefaultActionName();
   const gchar* GetDocumentAttributeValue(const gchar* attribute);
   float GetStepAttribute();
+  AtkHyperlink* GetAtkHyperlink();
 
   void SetExtentsRelativeToAtkCoordinateType(
       gint* x, gint* y, gint* width, gint* height,
@@ -78,8 +89,9 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   GType GetAccessibilityGType();
   AtkObject* CreateAtkObject();
 
-  // We own a reference to this ref-counted object.
+  // We own a reference to these ref-counted objects.
   AtkObject* atk_object_;
+  AtkHyperlink* atk_hyperlink_;
 
   // The root-level Application object that's the parent of all
   // top-level windows.
