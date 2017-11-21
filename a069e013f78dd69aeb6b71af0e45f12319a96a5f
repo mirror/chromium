@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23439af6_312cd69b",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T23:52:14Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem safe to use Unretained here, since the callback could be invoked after |this| is destroyed -- bind a WeakPtr instead?",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 37
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b96ce8b_da0e0761",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T23:52:14Z",
+      "side": 1,
+      "message": "nit: To achieve the same effect as static_assert in a previous patchset, you can extract 4 into a constexpr int and use it in the std::array\u0027s.",
+      "range": {
+        "startLine": 56,
+        "startChar": 42,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253aa0ec_3abed991",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T23:52:14Z",
+      "side": 1,
+      "message": "This seems unused now.",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a93dbf_26c8a517",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T23:52:14Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

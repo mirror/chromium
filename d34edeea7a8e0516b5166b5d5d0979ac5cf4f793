@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0fc068e7_b129e175",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T23:52:14Z",
+      "side": 1,
+      "message": "Ack. I haven\u0027t tried it but I think it\u0027s possible to omit this by explicitly declaring \"enum class Foo : int32_t { ... }\". Not a big deal.",
+      "parentUuid": "ee338472_ae75b085",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8be338b4_8be354a7",
         "filename": "chrome/browser/media/router/discovery/dial/device_description_service.h",
         "patchSetId": 9
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "c2d60726_e87eb470",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T23:52:14Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly, but would slightly prefer group_id be an implementation detail of SafelyParseDialDeviceDescription. Our eventual goal is to have DialMediaSinkService / DeviceDescriptionService become a singleton, so I think it\u0027s fine to let the API remain a free function and uses a fixed group_id (like the one you have in DeviceDescriptionService).",
+      "parentUuid": "2d19d62d_75291aac",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "829e3c9e_c4d68fc1",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 9
@@ -393,6 +429,24 @@
       "side": 1,
       "message": "I changed them to be std::arrays.\nI am not sure about moving kNodeNames/kParsingErrors to the anonymous namespace (out of the method). I feel it makes the code less readable: you have to scroll-up to see the values when they are only used here (and they are already in an anonymous namespace).",
       "parentUuid": "9c553390_31831b5c",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e7ac0c_d494a669",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T23:52:14Z",
+      "side": 1,
+      "message": "Ack. Can they be static though?",
+      "parentUuid": "7310cf12_1f2aacdf",
       "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
