@@ -603,6 +603,17 @@ BlinkPlatformImpl::CreateFlingAnimationCurve(
       IsMainThread());
 }
 
+std::unique_ptr<blink::WebGestureCurve>
+BlinkPlatformImpl::CreateFlingAnimationCurveFromDistance(
+    blink::WebGestureDevice device_source,
+    const blink::WebFloatPoint& distance,
+    const blink::WebSize& cumulative_scroll) {
+  return ui::WebGestureCurveImpl::CreateFromDefaultPlatformCurveByDistance(
+      device_source, gfx::Vector2dF(distance.x, distance.y),
+      gfx::Vector2dF(cumulative_scroll.width, cumulative_scroll.height),
+      IsMainThread());
+}
+
 bool BlinkPlatformImpl::AllowScriptExtensionForServiceWorker(
     const blink::WebURL& scriptUrl) {
   return GetContentClient()->AllowScriptExtensionForServiceWorker(scriptUrl);
