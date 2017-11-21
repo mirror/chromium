@@ -488,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "a841a25f_9af9da43",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:57:32Z",
+      "side": 1,
+      "message": "Actually it looks like we can use g_browser_process-\u003esystem_request_context(). I think it is worth trying after this patch lands.",
+      "parentUuid": "70ec40bc_20f0b502",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15309faa_05fddc43",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 8
