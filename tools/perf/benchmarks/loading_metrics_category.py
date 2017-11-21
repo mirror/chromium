@@ -22,5 +22,7 @@ def AugmentOptionsForLoadingMetrics(tbm_options):
   # necessary to compute time-to-interactive.
   cat_filter.AddIncludedCategory('toplevel')
 
+  cat_filter.AddIncludedCategory('v8')
+
   tbm_options.AddTimelineBasedMetric('loadingMetric')
   return tbm_options
