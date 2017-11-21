@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "491b5ae7_9a6c8c9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T13:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ab72608_cdd67f90",
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "409d004c_c23175d7",
         "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
         "patchSetId": 21
@@ -210,6 +228,24 @@
       "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d41c35_2ccc4d18",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T13:32:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "569fc787_f20269c1",
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
