@@ -8,6 +8,7 @@ module url.mojom;
 // It's used in PageState serialization, so backwards incompatible changes
 // would cause stored PageState objects to be un-parseable. Please contact the
 // page state serialization owners before making such a change.
+[EnableIf=foo]
 struct Url {
   string url;
 };

@@ -43,6 +43,7 @@ from mojom.generate import translate
 from mojom.generate import template_expander
 from mojom.generate.generator import AddComputedData
 from mojom.parse.parser import Parse
+from mojom.parse.conditional_features import RemoveDisabledDefinitions
 
 
 _BUILTIN_GENERATORS = {
@@ -147,8 +148,9 @@ class MojomProcessor(object):
     _processed_files: {Dict[str, mojom.generate.module.Module]} Mapping from
         relative mojom filename paths to the module AST for that mojom file.
   """
-  def __init__(self, should_generate):
+  def __init__(self, should_generate, enabled_flags):
     self._should_generate = should_generate
+    self._enabled_flags = enabled_flags
     self._processed_files = {}
     self._parsed_files = {}
     self._typemap = {}
@@ -249,6 +251,7 @@ class MojomProcessor(object):
 
     try:
       tree = Parse(source, rel_filename.path)
+      RemoveDisabledDefinitions(tree, self._enabled_flags)
     except Error as e:
       full_stack = imported_filename_stack + [rel_filename.path]
       print str(e) + MakeImportStackMessage(full_stack)
@@ -279,7 +282,8 @@ def _Generate(args, remaining_args):
 
   fileutil.EnsureDirectoryExists(args.output_dir)
 
-  processor = MojomProcessor(lambda filename: filename in args.filename)
+  processor = MojomProcessor(lambda filename: filename in args.filename,
+                             args.enabled_flag)
   processor.LoadTypemaps(set(args.typemaps))
   for filename in args.filename:
     processor.ProcessFile(args, remaining_args, generator_modules, filename)
@@ -384,6 +388,8 @@ def main():
       help="Allows the [Native] attribute to be specified on structs within "
       "the mojom file. Must not be specified on internal bindings mojom or "
       "other dependencies thereof.", action="store_true")
+  generate_parser.add_argument(
+      "--enabled_flag", help="Does stuff.", default=[], action="append")
   generate_parser.set_defaults(func=_Generate)
 
   precompile_parser = subparsers.add_parser("precompile",
