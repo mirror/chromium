@@ -10,6 +10,7 @@
 #include "base/values.h"
 
 class Browser;
+class Profile;
 
 namespace content {
 class RenderFrameHost;
@@ -18,6 +19,27 @@ class WebUI;
 }
 
 namespace signin {
+
+// Argument for |CanOfferSignin|.
+enum CanOfferSigninType {
+  CAN_OFFER_SIGNIN_FOR_ALL_ACCOUNTS,
+  CAN_OFFER_SIGNIN_FOR_SECONDARY_ACCOUNT
+};
+
+// Returns true if sign-in is allowed for account with |email| and |gaia_id| to
+// |profile|. If the sign-in is not allowed, then the error message is passed
+// to the called in |out_error_message|
+bool CanOfferSignin(Profile* profile,
+                    CanOfferSigninType can_offer_type,
+                    const std::string& gaia_id,
+                    const std::string& email,
+                    std::string* out_error_message);
+
+// Return true if the account given by |email| and |gaia_id| is signed in to
+// Chrome in a different profile.
+bool IsCrossAccountError(Profile* profile,
+                         const std::string& email,
+                         const std::string& gaia_id);
 
 // Gets a webview within an auth page that has the specified parent frame name
 // (i.e. <webview name="foobar"></webview>).
