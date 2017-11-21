@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "342ae9ce_32d89da8",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-21T15:17:31Z",
+      "side": 1,
+      "message": "Talked offline - moving input invalidation time delta to browser process.",
+      "parentUuid": "b39fc443_4876c9ad",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "674ff074_485ed5b8",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 9
