@@ -46,10 +46,11 @@ class METRICS_EXPORT MojoUkmRecorder : public UkmRecorder {
 
   base::WeakPtr<MojoUkmRecorder> GetWeakPtr();
 
- private:
+ protected:
   // UkmRecorder:
   void AddEntry(mojom::UkmEntryPtr entry) override;
 
+ private:
   mojom::UkmRecorderInterfacePtr interface_;
 
   base::WeakPtrFactory<MojoUkmRecorder> weak_factory_;

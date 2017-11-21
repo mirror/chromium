@@ -27,6 +27,10 @@ extern const char
     kTabFromBackgroundedToFirstNonPersistentNotificationCreatedUMA[];
 extern const base::TimeDelta kMaxAudioSlientTimeout;
 extern const base::TimeDelta kMetricsReportDelayTimeout;
+// The number of reports to wait before reporting ExpectedQueueingTime. For
+// example, if |frequency_ukm_eqt_reported_| is 2, then the first value is not
+// reported, the second one is, the third one isn't, etc.
+extern const size_t kFrequencyUkmEQTReported;
 
 // A MetricsCollector observes changes happened inside CoordinationUnit Graph,
 // and reports UMA/UKM.
@@ -89,16 +93,21 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
         first_title_updated;
   };
 
-  struct UkmCPUUsageCollectionState {
+  struct UkmCollectionState {
     size_t num_cpu_usage_measurements = 0u;
+    size_t num_unreported_eqt_measurements = 0u;
     ukm::SourceId ukm_source_id = ukm::kInvalidSourceId;
   };
 
   bool ShouldReportMetrics(const PageCoordinationUnitImpl* page_cu);
   bool IsCollectingCPUUsageForUkm(const CoordinationUnitID& page_cu_id);
+  bool IsCollectingExpectedQueueingTimeForUkm(
+      const CoordinationUnitID& page_cu_id);
   void RecordCPUUsageForUkm(const CoordinationUnitID& page_cu_id,
                             double cpu_usage,
                             size_t num_coresident_tabs);
+  void RecordExpectedQueueingTimeForUkm(const CoordinationUnitID& page_cu_id,
+                                        int64_t expected_queueing_time);
   void UpdateUkmSourceIdForPage(const CoordinationUnitID& page_cu_id,
                                 ukm::SourceId ukm_source_id);
   void UpdateWithFieldTrialParams();
@@ -107,8 +116,7 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   // The metrics_report_record_map_ is used to record whether a metric was
   // already reported to avoid reporting multiple metrics.
   std::map<CoordinationUnitID, MetricsReportRecord> metrics_report_record_map_;
-  std::map<CoordinationUnitID, UkmCPUUsageCollectionState>
-      ukm_cpu_usage_collection_state_map_;
+  std::map<CoordinationUnitID, UkmCollectionState> ukm_collection_state_map_;
   size_t max_ukm_cpu_usage_measurements_ = 0u;
   DISALLOW_COPY_AND_ASSIGN(MetricsCollector);
 };
