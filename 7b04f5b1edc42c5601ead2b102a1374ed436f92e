@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d50a3cff_579bbe82",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: make this const ref to eliminate a copy. Or, alternatively, just remove this and use |it.first| below.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 21
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c96c90_85661d37",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: GetAsString is deprecated. Use a combination of it.second.is_string() and it.second.GetString() instead. This will also eliminate a copy.",
+      "range": {
+        "startLine": 98,
+        "startChar": 37,
+        "endLine": 98,
+        "endChar": 48
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e79e583_b791ddd0",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: Remove this DCHECK, or handle this case and only copy the most recent kMaxCacheSize number of network properties.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae1aeb5_c80a845e",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "Instead of calling SetKey() on the update directly, could you get the DictionaryValue above this and just call SetKey() on that?",
+      "range": {
+        "startLine": 212,
+        "startChar": 10,
+        "endLine": 212,
+        "endChar": 16
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6315497c_9e2533cc",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: |prefs_as_dict| seems kinda wordy, would |dict| be better? Or maybe |properties_dict|?",
+      "range": {
+        "startLine": 214,
+        "startChar": 25,
+        "endLine": 214,
+        "endChar": 38
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42afc9dd_8c84008b",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: GetAsString() is deprecated. Could you use a combination of |it.second.is_string()| and |it.second.GetString()| instead? That\u0027ll also eliminate a copy.",
+      "range": {
+        "startLine": 231,
+        "startChar": 16,
+        "endLine": 231,
+        "endChar": 27
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f9c868_2bee30f4",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "Instead of skipping broken entries, shouldn\u0027t they be removed?",
+      "range": {
+        "startLine": 235,
+        "startChar": 8,
+        "endLine": 235,
+        "endChar": 17
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3314bb_a5ede335",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "Instead of parsing every entry in the map here, would it be possible to go through the map on the IO thread (where the NetworkProperties are already parsed) and find the oldest one that way?\n\nThis means that you\u0027d have to cap the map on the IO thread at 10 entries as well, but that\u0027ll have the side benefit of preventing the map from growing out of control, and also having the in-memory map match the map in prefs, which might not be so bad.\n\nIf you\u0027re worried about the prefs changing without the map being notified, the NetworkManager could always just send the whole DictionaryValue (or even a ListValue if you want to truly simplify the design and e.g. order the entries by recency, removing the need to include any timestamp) to be written at once (overwriting any existing dictionary in prefs) instead of the individual updates, since it\u0027s only 10 elements max right now.\n\nIf we ever want to vastly increase the maximum cache size to something really, really big (which TBH seems kinda unlikely right now), then we could cross that bridge when we come to it.",
+      "range": {
+        "startLine": 238,
+        "startChar": 36,
+        "endLine": 238,
+        "endChar": 51
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ce6c01_bbaf0473",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "No need for the extra DictionaryPrefUpdate here, just call Remove() on the DictionaryValue.",
+      "range": {
+        "startLine": 248,
+        "startChar": 6,
+        "endLine": 248,
+        "endChar": 33
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a01eff_7dc6d4bf",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: This DCHECK could also fail if somehow there was more that 1 extra entry in the map. Could you remove it, or handle the case above?",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 251,
+        "endChar": 13
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79c6cb3_99b3c85f",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: Move this to private",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 78
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a061c821_5702b158",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: Is is possible to just forward-declare PrefManager right here, e.g. \"class PrefManager;\", and then fully define it in the .cc file?",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adce28fb_698c65be",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "optional nit: Is the |ui_| part of the name or the comment really necessary?",
+      "range": {
+        "startLine": 130,
+        "startChar": 42,
+        "endLine": 130,
+        "endChar": 45
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252ac1b0_c0192e9c",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "nit: it looks like this isn\u0027t used, please remove",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc1e8fc_a320c785",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "What happens in the user wants to clear the stored SSIDs and mmc_mnc\u0027s that they\u0027ve been to? Can we hook this pref up to the user\u0027s history being cleared somehow, or something like that?",
+      "range": {
+        "startLine": 214,
+        "startChar": 11,
+        "endLine": 214,
+        "endChar": 29
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

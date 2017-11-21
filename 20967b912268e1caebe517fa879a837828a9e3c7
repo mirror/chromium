@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1b49bacd_5892f978",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "IIUC, the only time it would be \u003c10 is (a) right after the feature gets turned on as users build up to 10 and (b) if a user only ever visits \u003c10 networks/mcc_mnc pairs, which seems very unlikely/uncommon. If so, then I\u0027d just expect to see lots and lots of 10s, which (unless I\u0027m mistaken) may or may not mean anything with respect to whether we should increase the cache size, right? The old entries in the cache might not have been used in a long time, since it looks like entries are only evicted until the map is at most 10 entries, right?\n\nIs this understanding correct? Whether it\u0027s correct or not, can you describe how this histogram is useful?",
+      "parentUuid": "3b9bb54f_82d6948d",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c15bbe07_52618372",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 14
@@ -284,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "1e5d117e_636ce524",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "Sorry, let me clarify - this is really more a comment about how the properties are being ordered. Suppose I have 10 entries in my map, then I set my clock back one year. For the next year, those older entries will have timestamps that are later than any new entries from networks I browse.\n\nThere\u0027s a special case to keep the current network, but other than that, the map will hold those older 9 entries (that have greater timestamps) until I either encounter those network IDs again or one year passes.\n\nMultiple solutions to this problem exist, such as simply storing the networks as an ordered ListValue, or clearing the list of saved networks if the clock seems to have gone back in time.",
+      "parentUuid": "4b993e8d_9fafb794",
+      "range": {
+        "startLine": 148,
+        "startChar": 10,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0ec9969_19a6d388",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 14
@@ -378,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "a8fc00b6_166540e3",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "It shouldn\u0027t, but it could, if the prefs get corrupted or something. Could you please remove the DCHECK?",
+      "parentUuid": "144a4e54_b22c3ee4",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 46
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cf74619_758ca7e3",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 14
@@ -469,6 +541,30 @@
       "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bf00fd_e158b9dc",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-21T19:50:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29395cbc_61184b36",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
