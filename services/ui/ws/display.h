@@ -67,7 +67,8 @@ class Display : public PlatformDisplayDelegate,
   // Initializes the display root ServerWindow and PlatformDisplay. Adds this to
   // DisplayManager as a pending display, until accelerated widget is available.
   void Init(const display::ViewportMetrics& metrics,
-            std::unique_ptr<DisplayBinding> binding);
+            std::unique_ptr<DisplayBinding> binding,
+            Display* display_to_mirror = nullptr);
 
   // Initialize the display's root window to host window manager content.
   void InitWindowManagerDisplayRoots();
@@ -98,6 +99,8 @@ class Display : public PlatformDisplayDelegate,
   // of the corresponding WindowManagers.
   ServerWindow* root_window() { return root_.get(); }
   const ServerWindow* root_window() const { return root_.get(); }
+
+  Display* display_to_mirror() const { return display_to_mirror_; }
 
   // Returns the ServerWindow whose id is |id|. This does not do a search over
   // all windows, rather just the display and window manager root windows.
@@ -218,6 +221,9 @@ class Display : public PlatformDisplayDelegate,
   // In internal window mode this contains information about the display. In
   // external window mode this will be invalid.
   display::Display display_;
+
+  // The source display if this display is a mirror, null otherwise.
+  Display* display_to_mirror_ = nullptr;
 
   viz::LocalSurfaceIdAllocator allocator_;
 

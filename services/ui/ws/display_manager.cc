@@ -176,18 +176,25 @@ bool DisplayManager::SetDisplayConfiguration(
     }
   }
   for (size_t i = 0; i < mirrors.size(); ++i) {
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus mirroring/unified mode.";
+    Display* ws_display_to_mirror = GetDisplayById(displays[0].id());
     Display* ws_mirror = GetDisplayById(mirrors[i].id());
     const auto& metrics = viewport_metrics[displays.size() + i];
+    // Destroy any existing extended display, it will be recreated as a mirror.
+    if (ws_mirror && ws_mirror->display_to_mirror() != ws_display_to_mirror) {
+      display_list.RemoveDisplay(mirrors[i].id());
+      DestroyDisplay(ws_mirror);
+      ws_mirror = nullptr;
+    }
     if (!ws_mirror) {
-      // Create a mirror destination display on startup or on display connected.
-      CreateDisplay(mirrors[i], metrics);
+      // Create the mirror display as needed.
+      ws_mirror = new ws::Display(window_server_);
+      ws_mirror->SetDisplay(mirrors[i]);
+      ws_mirror->Init(metrics, nullptr, ws_display_to_mirror);
     } else {
-      // Reuse an existing display for mirroring that was previously extended.
       ws_mirror->SetDisplay(mirrors[i]);
       ws_mirror->OnViewportMetricsChanged(metrics);
-      display_list.AddOrUpdateDisplay(mirrors[i],
-                                      display::DisplayList::Type::NOT_PRIMARY);
+      display_list.UpdateDisplay(mirrors[i],
+                                 display::DisplayList::Type::NOT_PRIMARY);
     }
   }
 
@@ -361,6 +368,24 @@ void DisplayManager::OnDisplayAcceleratedWidgetAvailable(Display* display) {
   if (event_rewriter_)
     display->platform_display()->AddEventRewriter(event_rewriter_.get());
   window_server_->OnDisplayReady(display, is_first_display);
+}
+
+void DisplayManager::OnFirstSurfaceActivation(
+    Display* display,
+    const viz::SurfaceInfo& surface_info) {
+  display->platform_display()->GetFrameGenerator()->OnFirstSurfaceActivation(
+      surface_info);
+  // Also pass the surface info to any displays mirroring the given display.
+  for (Display* mirror : displays_) {
+    if (mirror->display_to_mirror() == display) {
+      PlatformDisplay* platform_mirror = mirror->platform_display();
+      const display::ViewportMetrics& metrics =
+          platform_mirror->GetViewportMetrics();
+      viz::SurfaceInfo info(surface_info.id(), metrics.device_scale_factor,
+                            metrics.bounds_in_pixels.size());
+      platform_mirror->GetFrameGenerator()->OnFirstSurfaceActivation(info);
+    }
+  }
 }
 
 void DisplayManager::SetHighContrastMode(bool enabled) {
