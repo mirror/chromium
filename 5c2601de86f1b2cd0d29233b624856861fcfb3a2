@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23329c1_86bc5b31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-21T01:31:22Z",
+      "side": 1,
+      "message": "You have mixed use of \"Delta\" and \"Delay,\" I think consistency would be helpful here.\n\nAlso, I\u0027m unsure of what this parameter really means. If this is a measurement of elapsed time, then I think \"delta\" is appropriate (as in Python\u0027s TimeDelta). I think of a \"delay\" as \"an amount of time to intentionally wait before doing a task\", as in PostDelayedTask [1].\n\n[1] https://cs.chromium.org/chromium/src/base/task_runner.h?q\u003dpostdelayedtask+f:base\u0026sq\u003dpackage:chromium\u0026l\u003d69",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "5c2601de86f1b2cd0d29233b624856861fcfb3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca32f16_17e24e8f",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-21T01:31:22Z",
+      "side": 1,
+      "message": "Can you fix the formatting? Wrap with \"// clang-format off\" and \"// clang-format on\". Clang-format unfortunately doesn\u0027t handle lambdas well.",
+      "range": {
+        "startLine": 171,
+        "startChar": 28,
+        "endLine": 171,
+        "endChar": 55
+      },
+      "revId": "5c2601de86f1b2cd0d29233b624856861fcfb3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e099faa_fcb3e11b",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-21T01:31:22Z",
+      "side": 1,
+      "message": "Why is this hardcoded? Why 10? This is a mock, so I\u0027m OK with not measuring the actual time delta, but can we put this in a named constant to explain why it\u0027s the value it is?",
+      "range": {
+        "startLine": 172,
+        "startChar": 74,
+        "endLine": 172,
+        "endChar": 76
+      },
+      "revId": "5c2601de86f1b2cd0d29233b624856861fcfb3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
