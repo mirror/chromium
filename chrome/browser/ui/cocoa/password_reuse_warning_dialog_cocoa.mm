@@ -116,3 +116,7 @@ void PasswordReuseWarningDialogCocoa::Close() {
 
   [parent_window_ endSheet:sheet_.get() returnCode:NSModalResponseStop];
 }
+
+void PasswordReuseWarningDialogCocoa::WebContentsDestroyed() {
+  Close();
+}

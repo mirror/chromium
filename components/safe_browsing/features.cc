@@ -33,7 +33,7 @@ const base::Feature kGaiaPasswordReuseReporting{
 
 const base::Feature kGoogleBrandedPhishingWarning{
     "PasswordProtectionGoogleBrandedPhishingWarning",
-    base::FEATURE_DISABLED_BY_DEFAULT};
+    base::FEATURE_ENABLED_BY_DEFAULT};
 
 // If enabled, SafeBrowsing URL checks don't defer starting requests or
 // following redirects, no matter on desktop or mobile. Instead they only defer
