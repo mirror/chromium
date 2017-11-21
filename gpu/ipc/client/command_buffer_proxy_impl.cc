@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/command_line.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -29,6 +30,7 @@
 #include "gpu/ipc/common/gpu_param_traits.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_switches.h"
 
 #if defined(OS_MACOSX)
 #include "gpu/ipc/client/gpu_process_hosted_ca_layer_tree_params.h"
@@ -161,6 +163,7 @@ bool CommandBufferProxyImpl::OnMessageReceived(const IPC::Message& message) {
                         OnSwapBuffersCompleted);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_UpdateVSyncParameters,
                         OnUpdateVSyncParameters);
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_BufferPresented, OnBufferPresented);
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -300,6 +303,12 @@ void CommandBufferProxyImpl::SetUpdateVSyncParametersCallback(
     const UpdateVSyncParametersCallback& callback) {
   CheckLock();
   update_vsync_parameters_completion_callback_ = callback;
+}
+
+void CommandBufferProxyImpl::SetPresentationCallback(
+    const PresentationCallback& callback) {
+  CheckLock();
+  presentation_callback_ = callback;
 }
 
 void CommandBufferProxyImpl::SetNeedsVSync(bool needs_vsync) {
@@ -782,15 +791,31 @@ void CommandBufferProxyImpl::OnSwapBuffersCompleted(
   gpu::GpuProcessHostedCALayerTreeParamsMac* mac_frame_ptr = nullptr;
 #endif
 
-  if (!swap_buffers_completion_callback_.is_null()) {
+  if (!swap_buffers_completion_callback_.is_null())
     swap_buffers_completion_callback_.Run(params.response, mac_frame_ptr);
-  }
 }
 
 void CommandBufferProxyImpl::OnUpdateVSyncParameters(base::TimeTicks timebase,
                                                      base::TimeDelta interval) {
+  DCHECK(!base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnablePresentationCallback));
   if (!update_vsync_parameters_completion_callback_.is_null())
     update_vsync_parameters_completion_callback_.Run(timebase, interval);
+}
+
+void CommandBufferProxyImpl::OnBufferPresented(
+    uint64_t swap_id,
+    const gfx::PresentationFeedback& feedback) {
+  DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnablePresentationCallback));
+  if (presentation_callback_)
+    presentation_callback_.Run(swap_id, feedback);
+
+  if (update_vsync_parameters_completion_callback_ &&
+      feedback.timestamp != base::TimeTicks()) {
+    update_vsync_parameters_completion_callback_.Run(feedback.timestamp,
+                                                     feedback.refresh);
+  }
 }
 
 void CommandBufferProxyImpl::OnGpuSyncReplyError() {
