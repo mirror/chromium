@@ -6,8 +6,10 @@
 
 #include <algorithm>
 
+#include "base/optional.h"
 #include "remoting/base/constants.h"
 #include "remoting/protocol/frame_stats.h"
+#include "remoting/protocol/cast_bandwidth_estimator.h"
 #include "remoting/protocol/webrtc_bandwidth_estimator.h"
 #include "remoting/protocol/webrtc_dummy_video_encoder.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_frame.h"
@@ -53,6 +55,11 @@ int64_t GetRegionArea(const webrtc::DesktopRegion& region) {
   return result;
 }
 
+bool UseCastBandwidthEstimator(const SessionOptions& options) {
+  base::Optional<bool> value = options.GetBool("Cast-Bandwidth-Estimator");
+  return value && *value;
+}
+
 }  // namespace
 
 // TODO(zijiehe): Use |options| to select bandwidth estimator.
@@ -60,7 +67,9 @@ WebrtcFrameSchedulerSimple::WebrtcFrameSchedulerSimple(
     const SessionOptions& options)
     : pacing_bucket_(LeakyBucket::kUnlimitedDepth, 0),
       updated_region_area_(kStatsWindow),
-      bandwidth_estimator_(new WebrtcBandwidthEstimator()),
+      bandwidth_estimator_(UseCastBandwidthEstimator(options) ?
+          static_cast<BandwidthEstimator*>(new CastBandwidthEstimator()) :
+          static_cast<BandwidthEstimator*>(new WebrtcBandwidthEstimator())),
       weak_factory_(this) {}
 
 WebrtcFrameSchedulerSimple::~WebrtcFrameSchedulerSimple() {
