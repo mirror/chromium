@@ -168,6 +168,7 @@ bool IsMailHTMLBlockquoteElement(const Node*);
 bool IsDisplayInsideTable(const Node*);
 bool IsInline(const Node*);
 bool IsTableCell(const Node*);
+bool IsTablePart(const Node*);
 bool IsEmptyTableCell(const Node*);
 bool IsTableStructureNode(const Node*);
 bool IsHTMLListElement(Node*);

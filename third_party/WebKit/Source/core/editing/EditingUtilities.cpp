@@ -1518,6 +1518,12 @@ bool IsTableCell(const Node* node) {
   return r ? r->IsTableCell() : IsHTMLTableCellElement(*node);
 }
 
+bool IsTablePart(const Node* node) {
+  DCHECK(node);
+  LayoutObject* r = node->GetLayoutObject();
+  return r ? r->IsTable() || r->IsTablePart() : false;
+}
+
 bool IsEmptyTableCell(const Node* node) {
   // Returns true IFF the passed in node is one of:
   //   .) a table cell with no children,

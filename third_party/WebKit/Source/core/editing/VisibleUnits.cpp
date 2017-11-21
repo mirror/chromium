@@ -1240,8 +1240,12 @@ static bool IsVisuallyEquivalentCandidateAlgorithm(
       layout_object->IsLayoutGrid()) {
     if (ToLayoutBlock(layout_object)->LogicalHeight() ||
         IsHTMLBodyElement(*anchor_node)) {
-      if (!HasRenderedNonAnonymousDescendantsWithHeight(layout_object))
+      if (!HasRenderedNonAnonymousDescendantsWithHeight(layout_object) &&
+          (!layout_object->IsLayoutBlockFlow() ||
+           !IsTablePart(anchor_node->parentNode()) ||
+           !layout_object->Style()->HasAppearance())) {
         return position.AtFirstEditingPositionForNode();
+      }
       return HasEditableStyle(*anchor_node) && AtEditingBoundary(position);
     }
   } else {
