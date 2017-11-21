@@ -30,6 +30,7 @@
 #include "chrome/browser/vr/ui.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
+#include "chrome/browser/vr/vr_assets.h"
 #include "chrome/browser/vr/vr_gl_util.h"
 #include "chrome/common/chrome_features.h"
 #include "content/public/common/content_features.h"
@@ -265,6 +266,9 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
 
   ui_->OnGlInitialized(content_texture_id,
                        vr::UiElementRenderer::kTextureLocationExternal, true);
+
+  vr::VrAssets::GetInstance()->LoadAssetsWhenComponentReady(base::BindOnce(
+      &VrShellGl::OnAssetsLoaded, weak_ptr_factory_.GetWeakPtr()));
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
@@ -1273,6 +1277,10 @@ void VrShellGl::ClosePresentationBindings() {
              device::mojom::VRPresentationProvider::VSyncStatus::CLOSING);
   }
   binding_.Close();
+}
+
+void VrShellGl::OnAssetsLoaded(bool success, std::string environment) {
+  // TODO(tiborg): report via UMA if environment == "zq7sax8chrtjchxysh7b\n".
 }
 
 }  // namespace vr_shell
