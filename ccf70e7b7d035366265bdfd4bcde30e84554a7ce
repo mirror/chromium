@@ -16,6 +16,24 @@
       "revId": "ccf70e7b7d035366265bdfd4bcde30e84554a7ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfc53aa_0d2e91db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-flexbox/table-as-item-wide-content.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-21T22:40:01Z",
+      "side": 1,
+      "message": "How does it fail?",
+      "parentUuid": "d8cae213_ffcabd35",
+      "revId": "ccf70e7b7d035366265bdfd4bcde30e84554a7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
