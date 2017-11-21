@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7de73f0_5d148017",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:42:39Z",
+      "side": 1,
+      "message": "rm comma",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
