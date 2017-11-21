@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76b873e1_53d54359",
+        "filename": "components/arc/common/notifications.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-11-21T08:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67cfdc4c_383332c7",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 25
+      },
+      "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb4f37dc_aae7b2eb",
         "filename": "ui/arc/notification/arc_notification_content_view.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32417d09_248000e4",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-11-21T08:33:12Z",
+      "side": 1,
+      "message": "Done. In that case, we need to check whether the swipe was started in the Android input rect area, so we don\u0027t gobble events for swipes that started on the chrome side, then moved into the Android input rect. So, I\u0027ve added a swipe_captured_ variable.",
+      "parentUuid": "eb4f37dc_aae7b2eb",
+      "range": {
+        "startLine": 120,
+        "startChar": 29,
+        "endLine": 120,
+        "endChar": 56
+      },
+      "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d3b65cb6_bacfc075",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-11-21T08:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "601ef98b_41df9e80",
+      "range": {
+        "startLine": 128,
+        "startChar": 36,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8038c25b_ea2830e8",
         "filename": "ui/arc/notification/arc_notification_item.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3e18ac_758c3fa4",
+        "filename": "ui/arc/notification/arc_notification_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-11-21T08:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8038c25b_ea2830e8",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 73
+      },
+      "revId": "aa3ebdb867ce6a6e18f80774e3bebba6c80a4321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
