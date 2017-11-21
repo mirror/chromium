@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a5348e53_9e2f3c62",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:26:51Z",
+      "side": 1,
+      "message": "The follow-up CL should be referenced in the CL\u0027s description instead.",
+      "parentUuid": "ac2345a1_9211ff2a",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "f0d25ddfdc77793ab5e7751ae2e1b333d177872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9875cfce_4f2ff1dc",
         "filename": "content/renderer/media/peer_connection_tracker.cc",
         "patchSetId": 5
