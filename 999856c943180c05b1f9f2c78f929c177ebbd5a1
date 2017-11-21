@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4a30db6_81869307",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-21T00:11:17Z",
+      "side": 1,
+      "message": "s/desktop-pwas/Bookmark app browser test/\n\nPlease prominently state that this is a change to a browser test.\n\nI had no idea what this change could possibly mean until I realised that it was only a test change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "999856c943180c05b1f9f2c78f929c177ebbd5a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14b7ea4_d97e6cf7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-21T00:11:17Z",
+      "side": 1,
+      "message": "Explain why this change is helpful (or otherwise why you\u0027re doing it).\n\nDoes it just simplify / clean up the logic of the test, or is there something that this enables (being across two hosts) that we couldn\u0027t do before?",
+      "revId": "999856c943180c05b1f9f2c78f929c177ebbd5a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
