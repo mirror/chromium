@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50657a69_478a1e99",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-21T23:07:17Z",
+      "side": 1,
+      "message": "Using |real_url| vs |url| here used to not matter, since GetEffectiveURL for an isolated origin used to always return back |url| unchanged.  But now that this is no longer true for NTP, I think we should use |url| here, similarly to what we do in IsSameWebSite().",
+      "range": {
+        "startLine": 372,
+        "startChar": 60,
+        "endLine": 372,
+        "endChar": 63
+      },
+      "revId": "d26a1bd622cce1526e7b93767e4d6986ac9148ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cabbed2_edcca3e4",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-21T23:07:17Z",
+      "side": 1,
+      "message": "We can discuss whether this is the best way to plumb this.  Some alternatives:\n- expose IsIsolatedOrigin() publicly and check that directly from ChromeContentBrowserClient()\n- expose a different CCBC method, something like ShouldEffectiveURLOverrideIsolatedURL(), and use it to decide whether CCBC::GetEffectiveURL() output should be used in SiteInstanceImpl::GetEffectiveURL().",
+      "range": {
+        "startLine": 215,
+        "startChar": 31,
+        "endLine": 215,
+        "endChar": 54
+      },
+      "revId": "d26a1bd622cce1526e7b93767e4d6986ac9148ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
