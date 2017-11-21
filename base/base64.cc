@@ -5,6 +5,8 @@
 #include "base/base64.h"
 
 #include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
 #include "third_party/modp_b64/modp_b64.h"
 
@@ -22,6 +24,13 @@ void Base64Encode(const StringPiece& input, std::string* output) {
 }
 
 bool Base64Decode(const StringPiece& input, std::string* output) {
+  __uint128_t a;
+  uint64_t b;
+  memcpy(&a, input.data(), sizeof(a));
+  memcpy(&b, input.data() + sizeof(a), sizeof(b));
+  static __uint128_t c;
+  c = a % b;
+
   std::string temp;
   temp.resize(modp_b64_decode_len(input.size()));
 
