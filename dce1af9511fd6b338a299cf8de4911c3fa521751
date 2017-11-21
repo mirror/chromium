@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2242781a_e2f796be",
+        "filename": "chromeos/dbus/proto/media_perception.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-21T00:48:40Z",
+      "side": 1,
+      "message": "supernit: expand to \"with respect to\"",
+      "range": {
+        "startLine": 130,
+        "startChar": 27,
+        "endLine": 130,
+        "endChar": 33
+      },
+      "revId": "dce1af9511fd6b338a299cf8de4911c3fa521751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d0427d_54c1119f",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-21T00:48:40Z",
+      "side": 1,
+      "message": "Use { } for if conditions where the the contents wrap to more than one line (here and below).",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 62
+      },
+      "revId": "dce1af9511fd6b338a299cf8de4911c3fa521751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75325048_6ac2b3de",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-21T00:48:40Z",
+      "side": 1,
+      "message": "nit: add const char [] declarations for these strings above.",
+      "range": {
+        "startLine": 29,
+        "startChar": 33,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "dce1af9511fd6b338a299cf8de4911c3fa521751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b059ce5_6a03a64c",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-21T00:48:40Z",
+      "side": 1,
+      "message": "nit: add const char [] declaration above.",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "dce1af9511fd6b338a299cf8de4911c3fa521751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685a9ba9_bbeb616b",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-21T00:48:40Z",
+      "side": 1,
+      "message": "supernit: expand to \"with respect to\"",
+      "range": {
+        "startLine": 165,
+        "startChar": 31,
+        "endLine": 165,
+        "endChar": 37
+      },
+      "revId": "dce1af9511fd6b338a299cf8de4911c3fa521751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
