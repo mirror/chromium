@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db9630c8_a128cb5f",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2760,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T19:55:17Z",
+      "side": 0,
+      "message": "If the variable only has one use, may as well inline the constant into the MakeGL call for less LOC to need to read. Probably some others in this file.",
+      "revId": "6ec8ee4de81c1a053c4cc82b03123969f6567a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
