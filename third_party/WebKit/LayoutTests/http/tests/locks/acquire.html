@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Web Locks API: navigator.locks.acquire method</title>
+<link rel=help href="https://github.com/inexorabletash/web-locks">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/get-host-info.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  await promise_rejects(t, new TypeError(), navigator.locks.acquire());
+  await promise_rejects(t, new TypeError(), navigator.locks.acquire('s'));
+}, 'navigator.locks.acquire requires a scope and a callback');
+
+promise_test(async t => {
+  await promise_rejects(
+    t, new TypeError(),
+    navigator.locks.acquire('s', {mode: 'foo'}, lock => {}));
+  await promise_rejects(
+    t, new TypeError(),
+    navigator.locks.acquire('s', {mode: null }, lock => {}));
+  assert_equals(await navigator.locks.acquire(
+    's', {mode: 'exclusive'}, lock => lock.mode), 'exclusive',
+                'mode is exclusive');
+  assert_equals(await navigator.locks.acquire(
+    's', {mode: 'shared'}, lock => lock.mode), 'shared',
+                'mode is shared');
+}, 'mode must be "shared" or "exclusive"');
+
+promise_test(async t => {
+  await promise_rejects(
+    t, new TypeError(), navigator.locks.acquire('s', undefined));
+  await promise_rejects(
+    t, new TypeError(), navigator.locks.acquire('s', null));
+  await promise_rejects(
+    t, new TypeError(), navigator.locks.acquire('s', 123));
+  await promise_rejects(
+    t, new TypeError(), navigator.locks.acquire('s', 'abc'));
+  await promise_rejects(
+    t, new TypeError(), navigator.locks.acquire('s', []));
+  await promise_rejects(
+    t, new TypeError(), navigator.locks.acquire('s', {}));
+  await promise_rejects(
+    t, new TypeError(), navigator.locks.acquire('s', new Promise(r => {})));
+}, 'callback must be a function');
+
+promise_test(async t => {
+  let release;
+  const promise = new Promise(r => { release = r; });
+
+  let returned = navigator.locks.acquire('s', lock => { return promise; });
+
+  const order = [];
+
+  returned.then(() => { order.push('returned'); });
+  promise.then(() => { order.push('holding'); });
+
+  release();
+
+  await Promise.all([returned, promise]);
+
+  assert_array_equals(order, ['holding', 'returned']);
+
+}, 'navigator.locks.acquire\'s returned promise resolves after' +
+   ' lock is released');
+
+</script>
