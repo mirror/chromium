@@ -46,6 +46,30 @@
       "revId": "c73164d464e834e263bd7471ace3b0162f614289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8244759c_d305bb44",
+        "filename": "ui/content_accelerators/accelerator_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T20:34:12Z",
+      "side": 1,
+      "message": "Interesting; I\u0027d assumed from the fact that the utils were in a source_set() that something else would be pulling them in, but apparently not. Fixed.",
+      "parentUuid": "47fc7ea8_4ffa3565",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "c73164d464e834e263bd7471ace3b0162f614289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
