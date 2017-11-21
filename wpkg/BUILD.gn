@@ -1,0 +1,13 @@
+executable("wpkgtest") {
+  sources = [
+    "../content/browser/webauth/cbor/cbor_values.cc",
+    "../content/browser/webauth/cbor/cbor_values.h",
+    "../content/browser/webauth/cbor/cbor_writer.cc",
+    "../content/browser/webauth/cbor/cbor_writer.h",
+    "main.cc",
+  ]
+  public_deps = [
+    "//base",
+    "//buildtools/third_party/libc++",
+  ]
+}
