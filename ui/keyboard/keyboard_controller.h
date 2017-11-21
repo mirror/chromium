@@ -19,6 +19,7 @@
 #include "ui/keyboard/keyboard_event_filter.h"
 #include "ui/keyboard/keyboard_export.h"
 #include "ui/keyboard/keyboard_layout_delegate.h"
+#include "ui/keyboard/keyboard_ukm_recorder.h"
 #include "ui/keyboard/keyboard_util.h"
 
 namespace aura {
@@ -162,6 +163,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // the ContainerBehavior change is synchronous.
   void SetContainerType(const ContainerType type);
 
+  // Record a UKM entry for virtual keyboard usage.
+  void RecordUkm(const GURL& url, const ui::TextInputClient* client);
+
  private:
   // For access to Observer methods for simulation.
   friend class KeyboardControllerTest;
@@ -256,6 +260,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   KeyboardControllerState state_;
 
   ContainerType enqueued_container_type_;
+
+  KeyboardUkmRecorder ukm_recorder_;
 
   static KeyboardController* instance_;
 
