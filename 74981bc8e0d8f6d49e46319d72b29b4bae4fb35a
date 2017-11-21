@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86790b5e_a53ff81b",
+        "filename": "components/policy/resources/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T08:57:17Z",
+      "side": 1,
+      "message": "nit: Maybe omit quotes around these numbers?",
+      "range": {
+        "startLine": 91,
+        "startChar": 38,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "74981bc8e0d8f6d49e46319d72b29b4bae4fb35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8369a932_0673aac0",
+        "filename": "components/policy/resources/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T08:57:17Z",
+      "side": 1,
+      "message": "nit: This space is extra.",
+      "range": {
+        "startLine": 100,
+        "startChar": 18,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "74981bc8e0d8f6d49e46319d72b29b4bae4fb35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
