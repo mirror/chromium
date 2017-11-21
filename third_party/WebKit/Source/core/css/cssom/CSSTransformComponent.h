@@ -5,6 +5,7 @@
 #ifndef CSSTransformComponent_h
 #define CSSTransformComponent_h
 
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSFunctionValue.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -20,7 +21,6 @@ class ExceptionState;
 // before they can be used as a value for properties like "transform".
 // See CSSTransformComponent.idl for more information about this class.
 class CORE_EXPORT CSSTransformComponent : public ScriptWrappable {
-  WTF_MAKE_NONCOPYABLE(CSSTransformComponent);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -58,6 +58,7 @@ class CORE_EXPORT CSSTransformComponent : public ScriptWrappable {
 
  private:
   bool is2D_;
+  DISALLOW_COPY_AND_ASSIGN(CSSTransformComponent);
 };
 
 }  // namespace blink
