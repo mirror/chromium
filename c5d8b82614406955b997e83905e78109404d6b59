@@ -34,6 +34,24 @@
       "revId": "c5d8b82614406955b997e83905e78109404d6b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8310a62_513184b8",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-21T00:17:08Z",
+      "side": 1,
+      "message": "Cool! Yeah, non bonding devices not connecting seems like a separate issue and if I remember correctly it was called out as one of the things the UWP API fixed.\n\nSo to confirm the follow is what happens:\n\n1. Device that supports pairing disconnects\n2. We enumerate devices\n3. Windows reconnects to the device in 1.\n\nBut for non-bonding devices 3. doesn\u0027t happen?\n\nI mainly want to know if Windows is always trying to reconnect to the device and that if the device is not connected when this function is called then we can assume Windows is not able to reconnect to the device and we should reject here.",
+      "parentUuid": "90f7df36_852acf70",
+      "revId": "c5d8b82614406955b997e83905e78109404d6b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
