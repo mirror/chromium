@@ -16,6 +16,121 @@
       "revId": "449637b8995bf7615a52207197cd11e6554125bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa36c91_efdec3a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T22:16:15Z",
+      "side": 1,
+      "message": "Should there be a return after this line?",
+      "range": {
+        "startLine": 130,
+        "startChar": 12,
+        "endLine": 130,
+        "endChar": 85
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef6d49d_8788d38c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T22:16:15Z",
+      "side": 1,
+      "message": "The logic for when to show a survey has gotten kind of confusing. I think it\u0027d be helpful to list out the use-cases that we\u0027re trying to support and the ones we\u0027re explicitly not supporting.\n\nIn onSurveyAvailable, if the tab is valid and interactable and the web contents are done loading, we show the infobar. If the webcontents aren\u0027t done loading we add a tab observer. Here, after the tab model changed event, we just add an observer (without doing the checks for webcontents being loaded). Is there a reason these two paths are different?\n\nMaybe we can condense the logic? e.g. onSurveyAvailable() and this onChange() could both call a helper method\n\nattemptToShowOnCurrentTab() {\n // show if all conditions are met, otherwise add tab observer\n}",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 61
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46fba957_7732db13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T22:16:15Z",
+      "side": 1,
+      "message": "nit: I would just say something like \"Don\u0027t show the survey infobar until the tab is interactable\"",
+      "range": {
+        "startLine": 168,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 48
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9da5baa_7a102668",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T22:16:15Z",
+      "side": 1,
+      "message": "style nit: put this on one line and add a blank line after",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 172,
+        "endChar": 17
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd3d8bd_fdc17dd4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T22:16:15Z",
+      "side": 1,
+      "message": "Should this be done in showSurveyInfoBar() if mTabModelSelector !\u003d null?",
+      "range": {
+        "startLine": 176,
+        "startChar": 20,
+        "endLine": 176,
+        "endChar": 72
+      },
+      "revId": "449637b8995bf7615a52207197cd11e6554125bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

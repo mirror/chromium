@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "61bf8a2a_8e307d8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T22:16:15Z",
+      "side": 1,
+      "message": "\u003e we don\u0027t want the user to see an infobar upon returning to the tab (i.e. the infobar should remain as long as the user stays on the tab), then it\u0027s more fitting to have onInteractabilityChanged over onHidden.\n\nIn the most recent patchset it looks like we will show the user an infobar if the they enter the tab switcher while a tab is loading, it loads in the background, then they exit the tab switcher (without  changing tabs). But if we show the infobar, then the user goes to the tab switcher, we will close the infobar. Does that all sound correct to you?",
+      "parentUuid": "fae3b9cf_dc0d87e9",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 11
+      },
+      "revId": "757d938f0ee6c2dbc65f3bc96b1510b050f6e5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8818520_db083a25",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
         "patchSetId": 13
