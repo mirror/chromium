@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26333d44_0786dc09",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T21:30:49Z",
+      "side": 0,
+      "message": "Good idea!  Done.",
+      "parentUuid": "80d04412_36241d2d",
+      "range": {
+        "startLine": 272,
+        "startChar": 28,
+        "endLine": 272,
+        "endChar": 33
+      },
+      "revId": "db60e6825b2fd3832b36a959e71a33005632e218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fde2e915_a74a2535",
         "filename": "chrome/browser/extensions/webstore_reinstaller.cc",
         "patchSetId": 2
@@ -57,6 +81,24 @@
       "revId": "db60e6825b2fd3832b36a959e71a33005632e218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9228660_a4fa749f",
+        "filename": "chrome/browser/extensions/webstore_reinstaller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T21:30:49Z",
+      "side": 0,
+      "message": "Yeah, I thought about this, but I don\u0027t think it\u0027s necessary.  For one, per-task-ordering, but also because the callback was incomplete before.  It wouldn\u0027t wait for file deletion, which would be the more likely conflict, I think.  I think all the callback really did was add a false sense of security.  If we find that this is becoming a problem (and per-task-ordering is not sufficient), we should do a better job of waiting anyway :)",
+      "parentUuid": "45baf885_91abcc0f",
+      "revId": "db60e6825b2fd3832b36a959e71a33005632e218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
