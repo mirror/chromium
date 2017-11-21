@@ -77,6 +77,9 @@ suite('SiteDetails', function() {
         protectedContent: {
           setting: settings.ContentSetting.ALLOW,
         },
+        clipboard: {
+          setting: settings.ContentSetting.ALLOW,
+        },
       },
       exceptions: {
         ads: [createExceptionForTest()],
@@ -104,6 +107,7 @@ suite('SiteDetails', function() {
         sound: [createExceptionForTest()],
         unsandboxed_plugins: [createExceptionForTest()],
         protectedContent: [createExceptionForTest()],
+        clipboard: [createExceptionForTest()],
       }
     };
 
@@ -140,6 +144,9 @@ suite('SiteDetails', function() {
     optionalSiteDetailsContentSettingsTypes[settings.ContentSettingsTypes
                                                 .SOUND] =
         'enableSoundContentSetting';
+    optionalSiteDetailsContentSettingsTypes[settings.ContentSettingsTypes
+                                                .CLIPBOARD] =
+        'enableClipboardContentSetting';
 
     browserProxy.setPrefs(prefs);
 
@@ -198,6 +205,7 @@ suite('SiteDetails', function() {
     // Make sure all the possible content settings are shown for this test.
     loadTimeData.overrideValues({enableSoundContentSetting: true});
     loadTimeData.overrideValues({enableSafeBrowsingSubresourceFilter: true});
+    loadTimeData.overrideValues({enableClipboardContentSetting: true});
     testElement = createSiteDetails('https://foo.com:443');
 
     return browserProxy.whenCalled('isOriginValid')
