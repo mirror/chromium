@@ -230,6 +230,16 @@ bool LoadAmdGpuLibraries() {
     LOG(ERROR) << "dlopen(radeonsi_dri.so) failed with error: " << dlerror();
     return false;
   }
+  if (options.vaapi_accelerated_video_encode_enabled ||
+        options.accelerated_video_decode_enabled) {
+    dlopen("/usr/lib64/dri/radeonsi_drv_video.so", dlopen_flag);
+    dlopen("libva.so.1", dlopen_flag);
+#if defined(USE_OZONE)
+    dlopen("libva-drm.so.1", dlopen_flag);
+#elif defined(USE_X11)
+    dlopen("libva-x11.so.1", dlopen_flag);
+#endif
+  }
   return true;
 }
 
