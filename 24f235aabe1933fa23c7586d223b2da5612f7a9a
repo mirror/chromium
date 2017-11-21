@@ -51,6 +51,24 @@
       "revId": "24f235aabe1933fa23c7586d223b2da5612f7a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2198cb32_c9a907ca",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-21T23:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2888112d_b2a495ae",
+      "revId": "24f235aabe1933fa23c7586d223b2da5612f7a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
