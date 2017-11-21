@@ -16,6 +16,24 @@
       "revId": "b54d018befedb6d529d96da249d617513d14816c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc26e022_35b17b43",
+        "filename": "chrome/installer/zucchini/disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-21T15:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63864ef_c8f7ce48",
+      "revId": "b54d018befedb6d529d96da249d617513d14816c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
