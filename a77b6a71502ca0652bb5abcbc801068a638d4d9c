@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d55f2e0_04c1a7e0",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-21T21:10:59Z",
+      "side": 1,
+      "message": "optional: Code could be clearer if this was moved to a helper function.",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9973843a_6420f86e",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-21T21:10:59Z",
+      "side": 1,
+      "message": "This can deadlock if a task on the main thread waits for a task running in TaskScheduler.\n\nAdd TODO to remove this once TaskTracker knows about tasks on all threads (GetNumIncompleteUndelayedTasksForTesting() below won\u0027t return zero if there are pending tasks on the main thread, and we will go back to the top of the loop).",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
