@@ -69,6 +69,24 @@
       "revId": "0eeffbd5b68146106c6c26558435d922daa41dc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b1bcd0_5a3c00ab",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-21T01:04:20Z",
+      "side": 1,
+      "message": "OK. So that\u0027s probably itself technically a bug as I vaguely discussed when I was there the other day (there probably shouldn\u0027t be a way for websites to store data on disk that the application can\u0027t control), but it\u0027s consistent :)\n\n(not sure we can do anything about that in a way that\u0027s worth the effort; a new setting that\u0027s off by default would just break stuff..)",
+      "parentUuid": "4ac78b0c_60b303e0",
+      "revId": "0eeffbd5b68146106c6c26558435d922daa41dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
