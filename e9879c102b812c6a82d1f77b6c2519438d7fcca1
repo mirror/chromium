@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0635abb7_11bd6b71",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:20:45Z",
+      "side": 1,
+      "message": "I think using std::find_if() makes the code easier to understand as it makes clear that this is a linear search for the element in the list. It also allow to easily add a DCHECK that the element was found and removed.\n\n  auto\u0026 forms \u003d form.blacklisted_by_user ? blacklistedForms_ : savedForms_;\n  auto iterator \u003d std::find_if(\n    forms.begin(), forms.end(), [\u0026](const auto\u0026 value) {\n      return value \u003d\u003d form;\n    });\n  DCHECK(iterator !\u003d forms.end());\n  forms.erase(iterator);",
+      "revId": "e9879c102b812c6a82d1f77b6c2519438d7fcca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
