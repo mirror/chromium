@@ -16,6 +16,24 @@
       "revId": "e159133b2c0e35855cb60a683e11b5d39437cf42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dc2b98_a81796df",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-21T20:42:12Z",
+      "side": 1,
+      "message": "Good phrasing.  Done.",
+      "parentUuid": "78f7bffa_ffedb442",
+      "revId": "e159133b2c0e35855cb60a683e11b5d39437cf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
