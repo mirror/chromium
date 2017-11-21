@@ -46,6 +46,30 @@
       "revId": "d9528a259c1f2330ca75508c50e87a4e3e96f18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c31528_5a9bb091",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T01:30:02Z",
+      "side": 1,
+      "message": "If we don\u0027t need to nil out |autofill_agent_| then I think we should not. Do you want to document in the comments why we want to nil out |autofill_controller_|?",
+      "parentUuid": "421e9956_deff7e62",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "d9528a259c1f2330ca75508c50e87a4e3e96f18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
