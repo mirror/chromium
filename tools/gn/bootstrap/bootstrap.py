@@ -69,6 +69,13 @@ def run_build(tempdir, options):
     build_rel = os.path.join('out', 'Release')
   build_root = os.path.join(SRC_ROOT, build_rel)
 
+  if not options.force_overwrite_build_root and os.path.isdir(build_root):
+    print >> sys.stderr, (
+        'Tried to build gn in %s, but the directory already exists.  Rerun '
+        'with -f or --force-overwrite-build-root to silence this warning.'
+    ) % build_rel
+    return 1
+
   print 'Building gn manually in a temporary directory for bootstrapping...'
   build_gn_with_ninja_manually(tempdir, options)
   temp_gn = os.path.join(tempdir, 'gn')
@@ -89,6 +96,8 @@ def run_build(tempdir, options):
     # Preserve the executable permission bit.
     shutil.copy2(out_gn, options.output)
 
+  return 0
+
 def windows_target_build_arch():
     # Target build architecture set by vcvarsall.bat
     target_arch = os.environ.get('Platform')
@@ -101,6 +110,9 @@ def main(argv):
   parser = optparse.OptionParser(description=sys.modules[__name__].__doc__)
   parser.add_option('-d', '--debug', action='store_true',
                     help='Do a debug build. Defaults to release build.')
+  parser.add_option('-f', '--force-overwrite-build-root', action='store_true',
+                    help='Force a build even if it might overwrite existing '
+                    'files.')
   parser.add_option('-o', '--output',
                     help='place output in PATH', metavar='PATH')
   parser.add_option('-s', '--no-rebuild', action='store_true',
