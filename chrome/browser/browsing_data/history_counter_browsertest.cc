@@ -240,6 +240,11 @@ IN_PROC_BROWSER_TEST_F(HistoryCounterTest, PeriodChanged) {
   AddVisit("https://www.example.com");
   AddVisit("https://www.example.com");
 
+  RevertTimeInDays(100);
+  AddVisit("https://www.google.com");
+  AddVisit("https://www.example.com");
+  AddVisit("https://www.example.com");
+
   Profile* profile = browser()->profile();
 
   HistoryCounter counter(
@@ -271,6 +276,10 @@ IN_PROC_BROWSER_TEST_F(HistoryCounterTest, PeriodChanged) {
   SetDeletionPeriodPref(browsing_data::TimePeriod::ALL_TIME);
   WaitForCounting();
   EXPECT_EQ(9u, GetLocalResult());
+
+  SetDeletionPeriodPref(browsing_data::TimePeriod::OLDER_THAN_30_DAYS);
+  WaitForCounting();
+  EXPECT_EQ(3u, GetLocalResult());
 }
 
 // Test the behavior for a profile that syncs history.
