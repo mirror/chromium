@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f8ba0af3_2416b213",
+        "filename": "media/filters/video_renderer_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-11-21T02:05:35Z",
+      "side": 1,
+      "message": "Oh I misunderstood the comment then. I thought it was saying that the result of the conversion is uncompensated.",
+      "parentUuid": "bce5c940_dd430605",
+      "revId": "34ea1cb0f539f6b4a35941bd4e4e0601c00680d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1168550_b9d61cb0",
         "filename": "media/renderers/video_renderer_impl.cc",
         "patchSetId": 2
@@ -81,6 +99,30 @@
       "revId": "34ea1cb0f539f6b4a35941bd4e4e0601c00680d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae09aec_a2fa54d3",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-11-21T02:05:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0249c9db_c4f43a59",
+      "range": {
+        "startLine": 558,
+        "startChar": 59,
+        "endLine": 558,
+        "endChar": 74
+      },
+      "revId": "34ea1cb0f539f6b4a35941bd4e4e0601c00680d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
