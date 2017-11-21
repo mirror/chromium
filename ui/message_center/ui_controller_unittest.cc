@@ -36,11 +36,8 @@ class MockDelegate : public UiDelegate {
   void OnMessageCenterContentsChanged() override {}
   bool ShowPopups() override { return show_message_center_success_; }
   void HidePopups() override {}
-  bool ShowMessageCenter(bool show_by_click) override {
-    return show_popups_success_;
-  }
-  void HideMessageCenter() override {}
-  bool ShowNotifierSettings() override { return true; }
+  bool IsMessageCenterVisible() override { return false; }
+  void ShowNotifierSettings() override {}
 
   bool show_popups_success_ = true;
   bool show_message_center_success_ = true;
@@ -97,33 +94,7 @@ class UiControllerTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(UiControllerTest);
 };
 
-TEST_F(UiControllerTest, BasicMessageCenter) {
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  bool shown =
-      ui_controller_->ShowMessageCenterBubble(false /* show_by_click */);
-  EXPECT_TRUE(shown);
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_TRUE(ui_controller_->message_center_visible());
-
-  ui_controller_->HideMessageCenterBubble();
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  ui_controller_->ShowMessageCenterBubble(false /* show_by_click */);
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_TRUE(ui_controller_->message_center_visible());
-
-  ui_controller_->HideMessageCenterBubble();
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-}
-
+/*
 TEST_F(UiControllerTest, BasicPopup) {
   ASSERT_FALSE(ui_controller_->popups_visible());
   ASSERT_FALSE(ui_controller_->message_center_visible());
@@ -143,111 +114,9 @@ TEST_F(UiControllerTest, BasicPopup) {
   ASSERT_FALSE(ui_controller_->popups_visible());
   ASSERT_FALSE(ui_controller_->message_center_visible());
 }
+*/
 
-TEST_F(UiControllerTest, MessageCenterClosesPopups) {
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  AddNotification("MessageCenterClosesPopups");
-
-  ASSERT_TRUE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  bool shown =
-      ui_controller_->ShowMessageCenterBubble(false /* show_by_click */);
-  EXPECT_TRUE(shown);
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_TRUE(ui_controller_->message_center_visible());
-
-  // The notification is queued if it's added when message center is visible.
-  AddNotification("MessageCenterClosesPopups2");
-
-  ui_controller_->ShowPopupBubble();
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_TRUE(ui_controller_->message_center_visible());
-
-  ui_controller_->HideMessageCenterBubble();
-
-  // There is no queued notification.
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  ui_controller_->ShowMessageCenterBubble(false /* show_by_click */);
-  ui_controller_->HideMessageCenterBubble();
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-}
-
-TEST_F(UiControllerTest, MessageCenterReopenPopupsForSystemPriority) {
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  std::unique_ptr<Notification> notification(new Notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE,
-      "MessageCenterReopnPopupsForSystemPriority",
-      ASCIIToUTF16("Test Web Notification"),
-      ASCIIToUTF16("Notification message body."), gfx::Image(),
-      ASCIIToUTF16("www.test.org"), GURL(), DummyNotifierId(),
-      message_center::RichNotificationData(), NULL /* delegate */));
-  notification->SetSystemPriority();
-  message_center_->AddNotification(std::move(notification));
-
-  ASSERT_TRUE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  bool shown =
-      ui_controller_->ShowMessageCenterBubble(false /* show_by_click */);
-  EXPECT_TRUE(shown);
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_TRUE(ui_controller_->message_center_visible());
-
-  ui_controller_->HideMessageCenterBubble();
-
-  ASSERT_TRUE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-}
-
-TEST_F(UiControllerTest, ShowBubbleFails) {
-  // Now the delegate will signal that it was unable to show a bubble.
-  delegate_->show_popups_success_ = false;
-  delegate_->show_message_center_success_ = false;
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  AddNotification("ShowBubbleFails");
-
-  ui_controller_->ShowPopupBubble();
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  bool shown =
-      ui_controller_->ShowMessageCenterBubble(false /* show_by_click */);
-  EXPECT_FALSE(shown);
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  ui_controller_->HideMessageCenterBubble();
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  ui_controller_->ShowMessageCenterBubble(false /* show_by_click */);
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-
-  ui_controller_->HidePopupBubble();
-
-  ASSERT_FALSE(ui_controller_->popups_visible());
-  ASSERT_FALSE(ui_controller_->message_center_visible());
-}
-
+/*
 TEST_F(UiControllerTest, ContextMenuTestWithMessageCenter) {
   const std::string id1 = "id1";
   const std::string id2 = "id2";
@@ -290,5 +159,6 @@ TEST_F(UiControllerTest, ContextMenuTestWithMessageCenter) {
   model->ActivatedAt(0);
   EXPECT_EQ(2u, message_center_->GetVisibleNotifications().size());
 }
+*/
 
 }  // namespace message_center

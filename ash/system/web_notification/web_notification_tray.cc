@@ -359,6 +359,9 @@ bool WebNotificationTray::ShowMessageCenterInternal(bool show_settings,
 
   shelf()->UpdateAutoHideState();
   SetIsActive(true);
+
+  message_center()->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
+  OnMessageCenterContentsChanged();
   return true;
 }
 
@@ -369,10 +372,18 @@ bool WebNotificationTray::ShowMessageCenter(bool show_by_click) {
 void WebNotificationTray::HideMessageCenter() {
   if (!message_center_bubble())
     return;
+
+  message_center()->SetVisibility(message_center::VISIBILITY_TRANSIENT);
+
+  hide_empty_message_center_callback_.reset();
+
   SetIsActive(false);
   message_center_bubble_.reset();
   show_message_center_on_unlock_ = false;
   shelf()->UpdateAutoHideState();
+
+  ShowPopups();
+  OnMessageCenterContentsChanged();
 }
 
 void WebNotificationTray::SetTrayBubbleHeight(int height) {
@@ -387,13 +398,25 @@ bool WebNotificationTray::ShowPopups() {
   if (message_center_bubble())
     return false;
 
+  if (popups_visible_) {
+    OnMessageCenterContentsChanged();
+    return true;
+  }
+
+  if (!message_center()->HasPopupNotifications())
+    return false;
+
   popup_collection_->DoUpdateIfPossible();
+  popups_visible_ = true;
   return true;
 }
 
 void WebNotificationTray::HidePopups() {
   DCHECK(popup_collection_.get());
+  if (!popups_visible_)
+    return;
   popup_collection_->MarkAllPopupsShown();
+  popups_visible_ = false;
 }
 
 // Private methods.
@@ -408,11 +431,15 @@ bool WebNotificationTray::IsMessageCenterBubbleVisible() const {
           message_center_bubble()->bubble()->IsVisible());
 }
 
+bool WebNotificationTray::IsPopupVisible() const {
+  return popups_visible_;
+}
+
 void WebNotificationTray::UpdateAfterShelfAlignmentChange() {
   TrayBackgroundView::UpdateAfterShelfAlignmentChange();
   // Destroy any existing bubble so that it will be rebuilt correctly.
-  message_center_ui_controller_->HideMessageCenterBubble();
-  message_center_ui_controller_->HidePopupBubble();
+  HideMessageCenter();
+  HidePopups();
 }
 
 void WebNotificationTray::AnchorUpdated() {
@@ -441,9 +468,9 @@ void WebNotificationTray::HideBubbleWithView(
     const views::TrayBubbleView* bubble_view) {
   if (message_center_bubble() &&
       bubble_view == message_center_bubble()->bubble_view()) {
-    message_center_ui_controller_->HideMessageCenterBubble();
+    HideMessageCenter();
   } else if (popup_collection_.get()) {
-    message_center_ui_controller_->HidePopupBubble();
+    HidePopups();
   }
 }
 
@@ -468,14 +495,21 @@ void WebNotificationTray::HideBubble(const views::TrayBubbleView* bubble_view) {
   HideBubbleWithView(bubble_view);
 }
 
-bool WebNotificationTray::ShowNotifierSettings() {
+void WebNotificationTray::ShowNotifierSettings() {
+  if (popups_visible_)
+    HidePopups();
+
   if (message_center_bubble()) {
     static_cast<MessageCenterBubble*>(message_center_bubble()->bubble())
         ->SetSettingsVisible();
-    return true;
+    return;
   }
-  return ShowMessageCenterInternal(true /* show_settings */,
-                                   false /* show_by_click */);
+  ShowMessageCenterInternal(true /* show_settings */,
+                            false /* show_by_click */);
+}
+
+bool WebNotificationTray::IsMessageCenterVisible() {
+  return message_center_bubble();
 }
 
 bool WebNotificationTray::IsCommandIdChecked(int command_id) const {
@@ -501,6 +535,28 @@ void WebNotificationTray::ExecuteCommand(int command_id, int event_flags) {
 }
 
 void WebNotificationTray::OnMessageCenterContentsChanged() {
+  if (popups_visible_ && !message_center()->HasPopupNotifications()) {
+    HidePopups();
+  } else if (!popups_visible_ && message_center()->HasPopupNotifications() &&
+             !message_center_bubble()) {
+    ShowPopups();
+  }
+
+  if (message_center_bubble() && message_center()->NotificationCount() == 0) {
+    if (hide_empty_message_center_callback_)
+      return;
+
+    hide_empty_message_center_callback_ =
+        std::make_unique<base::CancelableClosure>(base::Bind(
+            base::IgnoreResult(&WebNotificationTray::HideMessageCenter),
+            base::Unretained(this)));
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, hide_empty_message_center_callback_->callback());
+  } else {
+    // Cancel the callback if necessary.
+    hide_empty_message_center_callback_.reset();
+  }
+
   // Do not update the tray contents directly. Multiple change events can happen
   // consecutively, and calling Update in the middle of those events will show
   // intermediate unread counts for a moment.
@@ -584,7 +640,7 @@ void WebNotificationTray::ClickedOutsideBubble() {
   if (!message_center_bubble())
     return;
 
-  message_center_ui_controller_->HideMessageCenterBubble();
+  HideMessageCenter();
 }
 
 bool WebNotificationTray::PerformAction(const ui::Event& event) {
@@ -598,12 +654,12 @@ bool WebNotificationTray::PerformAction(const ui::Event& event) {
 }
 
 void WebNotificationTray::CloseBubble() {
-  message_center_ui_controller_->HideMessageCenterBubble();
+  HideMessageCenter();
 }
 
 void WebNotificationTray::ShowBubble(bool show_by_click) {
   if (!IsMessageCenterBubbleVisible())
-    message_center_ui_controller_->ShowMessageCenterBubble(show_by_click);
+    ShowMessageCenter(show_by_click);
 }
 
 views::TrayBubbleView* WebNotificationTray::GetBubbleView() {
@@ -616,10 +672,6 @@ message_center::MessageCenter* WebNotificationTray::message_center() const {
 }
 
 // Methods for testing
-
-bool WebNotificationTray::IsPopupVisible() const {
-  return message_center_ui_controller_->popups_visible();
-}
 
 MessageCenterBubble* WebNotificationTray::GetMessageCenterBubbleForTest() {
   if (!message_center_bubble())

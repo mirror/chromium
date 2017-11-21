@@ -35,9 +35,8 @@ class MessageCenterBridge : public message_center::UiDelegate {
   void OnMessageCenterContentsChanged() override;
   bool ShowPopups() override;
   void HidePopups() override;
-  bool ShowMessageCenter(bool show_by_click) override;
-  void HideMessageCenter() override;
-  bool ShowNotifierSettings() override;
+  bool IsMessageCenterVisible() override;
+  void ShowNotifierSettings() override;
 
   message_center::MessageCenter* message_center() { return message_center_; }
 

@@ -32,20 +32,6 @@ class MESSAGE_CENTER_EXPORT UiController : public MessageCenterObserver {
   explicit UiController(UiDelegate* delegate);
   ~UiController() override;
 
-  // Shows or updates the message center bubble and hides the popup bubble. Set
-  // |show_by_click| to true if bubble is shown by mouse or gesture click.
-  // Returns whether the message center is visible after the call, whether or
-  // not it was visible before.
-  bool ShowMessageCenterBubble(bool show_by_click);
-
-  // Hides the message center if visible and returns whether the message center
-  // was visible before.
-  bool HideMessageCenterBubble();
-
-  // Marks the message center as "not visible" (this method will not hide the
-  // message center).
-  void MarkMessageCenterHidden();
-
   // Causes an update if the popup bubble is already shown.
   void ShowPopupBubble();
 

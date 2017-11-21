@@ -31,8 +31,7 @@ class PopupsOnlyUiDelegate : public message_center::UiDelegate {
   // UiDelegate implementation.
   bool ShowPopups() override;
   void HidePopups() override;
-  bool ShowMessageCenter(bool show_by_click) override;
-  void HideMessageCenter() override;
+  bool IsMessageCenterVisible() override;
   void OnMessageCenterContentsChanged() override;
   bool ShowNotifierSettings() override;
 

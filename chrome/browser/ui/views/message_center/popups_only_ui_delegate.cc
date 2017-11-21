@@ -43,12 +43,10 @@ void PopupsOnlyUiDelegate::HidePopups() {
   popup_collection_->MarkAllPopupsShown();
 }
 
-bool PopupsOnlyUiDelegate::ShowMessageCenter(bool show_by_click) {
+bool PopupsOnlyUiDelegate::IsMessageCenterVisible() {
   // Message center not available on Windows/Linux.
   return false;
 }
-
-void PopupsOnlyUiDelegate::HideMessageCenter() {}
 
 bool PopupsOnlyUiDelegate::ShowNotifierSettings() {
   // Message center settings not available on Windows/Linux.

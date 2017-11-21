@@ -37,12 +37,8 @@ void MessageCenterBridge::HidePopups() {
   popup_collection_.reset();
 }
 
-bool MessageCenterBridge::ShowMessageCenter(bool show_by_click) {
+bool MessageCenterBridge::IsMessageCenterVisible() {
   return false;
 }
 
-void MessageCenterBridge::HideMessageCenter() {}
-
-bool MessageCenterBridge::ShowNotifierSettings() {
-  return false;
-}
+void MessageCenterBridge::ShowNotifierSettings() {}
