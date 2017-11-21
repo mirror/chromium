@@ -10,9 +10,11 @@ PASS Calling CSSStyleValue.parseAll with an invalid cssText for the given proper
 PASS Calling CSSStyleValue.parse with a valid cssText for the given property returns a valid CSSStyleValue
 PASS Calling CSSStyleValue.parse with a mixed case cssText returns a valid CSSStyleValue
 FAIL Calling CSSStyleValue.parse with a custom property returns a valid CSSStyleValue Failed to execute 'parse' on 'CSSStyleValue': Invalid property name
+PASS Calling CSSStyleValue.parse with a property which have relative url returns a valid CSSStyleValue
 PASS Calling CSSStyleValue.parseAll with a valid cssText for the given property returns a single-element list containing a valid CSSStyleValue
 PASS Calling CSSStyleValue.parseAll with a mixed case cssText returns a single-element list containing a valid CSSStyleValue
 FAIL Calling CSSStyleValue.parseAll with a custom property returns a single-element list containing a valid CSSStyleValue Failed to execute 'parseAll' on 'CSSStyleValue': Invalid property name
+PASS Calling CSSStyleValue.parseAll with a property which have relative url returns a single-element list containing a valid CSSStyleValue
 PASS Calling CSSStyleValue.parse with a list-value property returns first list value
 PASS Calling CSSStyleValue.parseAll with a list-value property returns a sequence of values
 Harness: the test ran to completion.
