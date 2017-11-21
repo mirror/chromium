@@ -273,6 +273,7 @@ WebURLRequest::RequestContext ResourceFetcher::DetermineRequestContext(
 ResourceFetcher::ResourceFetcher(FetchContext* new_context)
     : context_(new_context),
       scheduler_(ResourceLoadScheduler::Create(&Context())),
+      defer_non_critical_resources_(true),
       archive_(Context().IsMainFrame() ? nullptr : Context().Archive()),
       resource_timing_report_timer_(
           Context().GetLoadingTaskRunner(),
@@ -308,6 +309,18 @@ bool ResourceFetcher::IsControlledByServiceWorker() const {
   return Context().IsControlledByServiceWorker();
 }
 
+void ResourceFetcher::PreloadScannerProcessedChunk() {
+  DCHECK(IsMainThread());
+  if (!defer_non_critical_resources_)
+    return;
+  for (auto& resource : deferred_resources_) {
+    if (resource->StillNeedsLoad())
+      StartLoad(resource);
+  }
+  deferred_resources_.clear();
+  defer_non_critical_resources_ = false;
+}
+
 bool ResourceFetcher::ResourceNeedsLoad(Resource* resource,
                                         const FetchParameters& params,
                                         RevalidationPolicy policy) {
@@ -315,6 +328,14 @@ bool ResourceFetcher::ResourceNeedsLoad(Resource* resource,
   // preload.
   if (resource->GetType() == Resource::kFont && !params.IsLinkPreload())
     return false;
+
+  const ResourceRequest& resource_request = params.GetResourceRequest();
+  if (params.IsLinkPreload() &&
+      resource_request.Priority() < kResourceLoadPriorityHigh &&
+      defer_non_critical_resources_) {
+    deferred_resources_.push_back(resource);
+    return false;
+  }
 
   // Defer loading images either when:
   // - images are disabled
@@ -1754,6 +1775,7 @@ void ResourceFetcher::Trace(blink::Visitor* visitor) {
   visitor->Trace(resources_from_previous_fetcher_);
   visitor->Trace(preloads_);
   visitor->Trace(matched_preloads_);
+  visitor->Trace(deferred_resources_);
   visitor->Trace(resource_timing_info_map_);
 }
 

@@ -13,8 +13,8 @@ sendScriptRequestPrecededByImage
 Request: abe.png?precedingScript priority: Low
 Request: empty-script.js?precededByImage priority: Medium
 sendScriptRequestPrecededByPreloadedImage
-Request: abe.png?preloaded priority: Low
 Request: empty-script.js?precededByPreloadedImage priority: High
+Request: abe.png?preloaded priority: Low
 sendXHRSync
 Request: empty.html?xhr-sync priority: VeryHigh
 sendXHRAsync
