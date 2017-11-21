@@ -244,7 +244,7 @@ const base::Feature kPepper3DImageChromium {
 
 // Generate V8 full code cache for PWAs.
 const base::Feature kPWAFullCodeCache{"PWAFullCodeCache",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Port some content::ResourceScheduler functionalities to renderer.
 const base::Feature kRendererSideResourceScheduler{
