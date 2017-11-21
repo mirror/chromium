@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71c0e166_16412d60",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 43
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9b0322c_4b956044",
+      "range": {
+        "startLine": 211,
+        "startChar": 16,
+        "endLine": 211,
+        "endChar": 19
+      },
+      "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad9bc00_aa64b964",
         "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
         "patchSetId": 43
@@ -69,6 +93,30 @@
       "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cc1b00_60b3bb39",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 43
+      },
+      "lineNbr": 4666,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "I\u0027ve renamed it to CHROMIUM_gpu_fence, otherwise I think it\u0027s too confusingly similar to the \"fence sync\" as used in CHROMIUM_sync_point.",
+      "parentUuid": "4f452633_daccfd2d",
+      "range": {
+        "startLine": 4666,
+        "startChar": 18,
+        "endLine": 4666,
+        "endChar": 32
+      },
+      "revId": "014001c69f80dd63ee925d45c21ec0a7707cb00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49a96427_754708bb",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eacc13a_a646085d",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c3657c5_d4fb4960",
         "filename": "docs/design/gpu_synchronization.md",
         "patchSetId": 46
@@ -33,6 +51,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6656588_060cd1fb",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Thank you for the explanation! I\u0027ve updated and expanded the text. Can you sanity check that I got it right? (FWIW, one reason for me to write this was that I couldn\u0027t find a clear explanation in existing docs and was unclear on it myself.)",
+      "parentUuid": "4c3657c5_d4fb4960",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "97fbc2ea_1493357a",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done, and added a note on the performance cost of glFlush on tiling GPUs. (I don\u0027t think we\u0027d want this approach on phone EGL.)",
+      "parentUuid": "d786a00f_4c944926",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0fb1987_e8928ea6",
         "filename": "docs/design/gpu_synchronization.md",
         "patchSetId": 46
@@ -67,6 +121,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ad77d2_f7e6db50",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 46
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0fb1987_e8928ea6",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "f0707358_2698ec51",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_fence.txt",
+        "patchSetId": 46
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done, now using CHROMIUM_gpu_fence everywhere.\n\nreveman@ had originally requested that I rename the extension to CHROMIUM_fence, but I think this got very confusing in documentation since CHROMIUM_sync_point already uses the name \"fence sync\".",
+      "parentUuid": "4c0b3cc9_97766fba",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f460ad0_63af0d17",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
@@ -107,6 +203,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2eaa98e_45845198",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Added, I was using the wrong build type which had bypassed this.",
+      "parentUuid": "6f460ad0_63af0d17",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "d5611231_74df620a",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to use GetIdAllocator(IdNamespaces::kGpuFences)-\u003eAllocateIDAtOrAbove(last_gpu_fence_id_ + 1) which should prevent recycling of frame IDs. It\u0027ll wrap once it\u0027s allocated 2^32 of them which should be ok for a per-command-buffer counter.",
+      "parentUuid": "101329cf_053fd5ea",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
@@ -141,6 +273,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c6c4d1_12ed70e7",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "What do you think of the new approach which avoids recycling? I\u0027d prefer to avoid adding extra flushes to reduce the IPCs needed. A shallow flush wouldn\u0027t remove the need for service side tracking since the callback can only be run after the actual fence got created, and that would only happen on a full flush.",
+      "parentUuid": "5b1e294e_b870ce42",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "3bdd2112_071e21c8",
+        "filename": "gpu/command_buffer/common/gles2_cmd_format.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Moved to IdNamespaces.",
+      "parentUuid": "78f6881a_03979661",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f8ea916_75d62d47",
         "filename": "gpu/command_buffer/common/gles2_cmd_format.h",
         "patchSetId": 46
@@ -175,6 +343,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8d0b33_71496f66",
+        "filename": "gpu/command_buffer/common/gles2_cmd_format.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done (It is now 4.)",
+      "parentUuid": "2f8ea916_75d62d47",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "aa5dc491_74b3a349",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 5156,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "I\u0027ve changed this to return kInvalidArguments instead, and generally updated the related code to use an error status instead of DCHECK for cases of API misuse by clients.",
+      "parentUuid": "12a23b93_f615a8c9",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69966bed_3d6e4202",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 46
@@ -209,6 +413,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee56d4e_ad526bd1",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 5161,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69966bed_3d6e4202",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +457,30 @@
     },
     {
       "key": {
+        "uuid": "e51736fd_e2caaa92",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 4634,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done. FYI, this likely wouldn\u0027t work right on Android/Adreno as-is due to that currently requiring virtualized contexts as per driver blacklist, but that\u0027s a separate issue.",
+      "parentUuid": "e83746b7_6a22ebd9",
+      "range": {
+        "startLine": 4634,
+        "startChar": 2,
+        "endLine": 4634,
+        "endChar": 19
+      },
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c7ddd4_1041a8bd",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
         "patchSetId": 46
@@ -249,6 +495,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8225fe3_c4760710",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done, including gpu::Capabilities.",
+      "parentUuid": "93c7ddd4_1041a8bd",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +533,24 @@
     },
     {
       "key": {
+        "uuid": "88c58811_c5791708",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Replaced with a \"bool success\" return, and it now forces a context loss in gpu_command_buffer_stub\u0027s OnSendGpuFenceHandle if it fails. (That\u0027s a bit harsh, but this shouldn\u0027t happen unless there\u0027s a logic bug or compromised client.)",
+      "parentUuid": "5609ec38_dc037709",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7edb704_7a83b08f",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
         "patchSetId": 46
@@ -283,6 +565,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ac192f_5008867d",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7edb704_7a83b08f",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +603,24 @@
     },
     {
       "key": {
+        "uuid": "b53a3fc5_c5420545",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f13f7e8_8c8d9347",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "934f71bf_c350a3c5",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
         "patchSetId": 46
@@ -317,6 +635,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf775e5_d8c424eb",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "934f71bf_c350a3c5",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +673,24 @@
     },
     {
       "key": {
+        "uuid": "c9da513d_c40118ae",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done, this required implementing GLFenceEGL::Invalidate().",
+      "parentUuid": "b068400c_ae551e45",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf93a37b_2cc45f82",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
         "patchSetId": 46
@@ -351,6 +705,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765b563b_65844557",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf93a37b_2cc45f82",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +743,24 @@
     },
     {
       "key": {
+        "uuid": "e63871f5_eeb7473c",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "If I understand it right, flat_map is most efficient if it contains simple data types. While GpuFenceEntry has just two elements, one of them is itself a vector, and having those moved around as part of map insert/delete sounds inefficient, though it may not matter much in practice. I\u0027d prefer to keep the pointer indirection unless you feel strongly about it.",
+      "parentUuid": "10fed049_582ce43c",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdd4d701_24263b92",
         "filename": "gpu/ipc/in_process_command_buffer.cc",
         "patchSetId": 46
@@ -385,6 +775,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2601921b_458165c2",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "I\u0027ve implemented it instead of making it a TODO :-)",
+      "parentUuid": "cdd4d701_24263b92",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -405,6 +813,24 @@
     },
     {
       "key": {
+        "uuid": "ff688ba2_fbc30f9a",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "231daa97_2e892f53",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "666dc4ee_ad283041",
         "filename": "ui/gl/gl_fence.cc",
         "patchSetId": 46
@@ -419,6 +845,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946efe64_d4e82aec",
+        "filename": "ui/gl/gl_fence.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done, using NOTREACHED.",
+      "parentUuid": "666dc4ee_ad283041",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +883,24 @@
     },
     {
       "key": {
+        "uuid": "6c2bad76_69d2a60f",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done, using base::WrapUnique(new GLFenceAndroidNativeFenceSync()) to avoid the need for the helper class.",
+      "parentUuid": "c51b9197_ac094881",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8426c30_f0af76f3",
         "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
         "patchSetId": 46
@@ -456,6 +918,24 @@
     },
     {
       "key": {
+        "uuid": "3d48b329_0e47f238",
+        "filename": "ui/gl/gl_fence_android_native_fence_sync.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Yes, it can fail, i.e. if the file descriptor is invalid. I\u0027ve removed the DCHECK here and replaced a DCHECK in GpuFenceManager with an error return.",
+      "parentUuid": "c8426c30_f0af76f3",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d54869_0e1a2156",
         "filename": "ui/gl/gl_fence_egl.cc",
         "patchSetId": 46
@@ -470,6 +950,24 @@
       "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92dceda_17d2a7d6",
+        "filename": "ui/gl/gl_fence_egl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-21T21:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98d54869_0e1a2156",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
