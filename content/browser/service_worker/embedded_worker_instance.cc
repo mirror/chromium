@@ -23,6 +23,7 @@
 #include "content/common/service_worker/embedded_worker_settings.h"
 #include "content/common/service_worker/embedded_worker_start_params.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
@@ -547,7 +548,7 @@ void EmbeddedWorkerInstance::Stop() {
     observer.OnStopping();
 }
 
-void EmbeddedWorkerInstance::StopIfIdle() {
+void EmbeddedWorkerInstance::StopIfNotAttachedToDevtool() {
   if (devtools_attached_) {
     if (devtools_proxy_) {
       // Check ShouldNotifyWorkerStopIgnored not to show the same message
@@ -586,9 +587,11 @@ void EmbeddedWorkerInstance::ResumeAfterDownload() {
 
 EmbeddedWorkerInstance::EmbeddedWorkerInstance(
     base::WeakPtr<ServiceWorkerContextCore> context,
+    ServiceWorkerVersion* owner_version,
     int embedded_worker_id)
     : context_(context),
       registry_(context->embedded_worker_registry()),
+      owner_version_(owner_version),
       embedded_worker_id_(embedded_worker_id),
       status_(EmbeddedWorkerStatus::STOPPED),
       starting_phase_(NOT_STARTING),
@@ -687,6 +690,26 @@ void EmbeddedWorkerInstance::OnStartWorkerMessageSent(
   starting_phase_ = is_script_streaming ? SCRIPT_STREAMING : SENT_START_WORKER;
   for (auto& observer : listener_list_)
     observer.OnStartWorkerMessageSent();
+}
+
+void EmbeddedWorkerInstance::RequestTermination() {
+  if (!ServiceWorkerUtils::IsServicificationEnabled()) {
+    mojo::ReportBadMessage(
+        "Invalid termination RequestTermination shouldn't come when "
+        "S13nServiceWorker is not enabled");
+    return;
+  }
+
+  // Temination should be requested during running or stopping.
+  if (status() != EmbeddedWorkerStatus::RUNNING &&
+      status() != EmbeddedWorkerStatus::STOPPING) {
+    mojo::ReportBadMessage("Invalid termination request: invalid status");
+    return;
+  }
+
+  if (status() == EmbeddedWorkerStatus::STOPPING)
+    return;
+  owner_version_->StopWorkerIfIdle();
 }
 
 void EmbeddedWorkerInstance::OnReadyForInspection() {
