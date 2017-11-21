@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b87b34df_33ec712c",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-11-21T02:08:54Z",
+      "side": 1,
+      "message": "please add a comment to this that nothing shipping should ever set this, and nothing in the chrome main repo should set this, and that it\u0027s only for third-party test-only code that we don\u0027t control and that needs exceptions.",
+      "revId": "c9f5ee0fd4004ab992bdc9413b96680c207e577b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
