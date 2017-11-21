@@ -41,6 +41,7 @@ void MediaControlsMediaEventListener::Attach() {
   GetMediaElement().addEventListener(EventTypeNames::waiting, this, false);
   GetMediaElement().addEventListener(EventTypeNames::progress, this, false);
   GetMediaElement().addEventListener(EventTypeNames::loadeddata, this, false);
+  GetMediaElement().addEventListener(EventTypeNames::stalled, this, false);
 
   // Listen to two different fullscreen events in order to make sure the new and
   // old APIs are handled.
@@ -175,6 +176,10 @@ void MediaControlsMediaEventListener::handleEvent(
   }
   if (event->type() == EventTypeNames::loadeddata) {
     media_controls_->OnLoadedData();
+    return;
+  }
+  if (event->type() == EventTypeNames::stalled) {
+    media_controls_->OnStalled();
     return;
   }
 

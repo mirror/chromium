@@ -266,6 +266,7 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   void OnWaiting();
   void OnLoadingProgress();
   void OnLoadedData();
+  void OnStalled();
 
   // Media control elements.
   Member<MediaControlOverlayEnclosureElement> overlay_enclosure_;
@@ -314,6 +315,9 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   IntSize size_;
 
   bool keep_showing_until_timer_fires_ : 1;
+
+  // True if we have recently received a stalled event.
+  bool received_stalled_event_ = false;
 
   Member<MediaDownloadInProductHelpManager> download_iph_manager_;
 };

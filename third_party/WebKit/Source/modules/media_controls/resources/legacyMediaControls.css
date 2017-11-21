@@ -292,8 +292,6 @@ video::-internal-media-controls-overlay-cast-button.on {
 
 audio::-webkit-media-controls-play-button, video::-webkit-media-controls-play-button {
     -webkit-appearance: -internal-media-control;
-    background-image: -webkit-image-set(
-      url(default_100_percent/legacy/mediaplayer_pause.png) 1x);
     background-size: 32px;
     background-repeat: no-repeat;
     background-position: center center;
@@ -308,10 +306,14 @@ audio::-webkit-media-controls-play-button, video::-webkit-media-controls-play-bu
     color: inherit;
 }
 
-audio::-webkit-media-controls-play-button.pause,
-video::-webkit-media-controls-play-button.pause {
-  background-image: -webkit-image-set(
+input[pseudo="-webkit-media-controls-play-button" i] {
+    background-image: -webkit-image-set(
       url(default_100_percent/legacy/mediaplayer_play.png) 1x);
+}
+
+.state-playing input[pseudo="-webkit-media-controls-play-button" i] {
+    background-image: -webkit-image-set(
+      url(default_100_percent/legacy/mediaplayer_pause.png) 1x);
 }
 
 audio::-webkit-media-controls-timeline-container, video::-webkit-media-controls-timeline-container {

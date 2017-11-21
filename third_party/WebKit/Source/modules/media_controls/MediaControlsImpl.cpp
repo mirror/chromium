@@ -595,7 +595,7 @@ MediaControlsImpl::ControlsState MediaControlsImpl::State() const {
     case HTMLMediaElement::kNetworkLoading:
       if (MediaElement().getReadyState() == HTMLMediaElement::kHaveNothing)
         return ControlsState::kLoadingMetadata;
-      if (!MediaElement().paused())
+      if (received_stalled_event_)
         return ControlsState::kBuffering;
       break;
     case HTMLMediaElement::kNetworkIdle:
@@ -1202,6 +1202,8 @@ void MediaControlsImpl::OnDurationChange() {
 }
 
 void MediaControlsImpl::OnPlay() {
+  received_stalled_event_ = false;
+
   UpdatePlayState();
   timeline_->SetPosition(MediaElement().currentTime());
   UpdateCurrentTimeDisplay();
@@ -1209,6 +1211,8 @@ void MediaControlsImpl::OnPlay() {
 }
 
 void MediaControlsImpl::OnPlaying() {
+  received_stalled_event_ = false;
+
   timeline_->OnPlaying();
   if (download_iph_manager_)
     download_iph_manager_->SetIsPlaying(true);
@@ -1218,6 +1222,8 @@ void MediaControlsImpl::OnPlaying() {
 }
 
 void MediaControlsImpl::OnPause() {
+  received_stalled_event_ = false;
+
   UpdatePlayState();
   timeline_->SetPosition(MediaElement().currentTime());
   UpdateCurrentTimeDisplay();
@@ -1272,6 +1278,11 @@ void MediaControlsImpl::OnPanelKeypress() {
   // the controls. This is called when the user mutes/unmutes, turns CC on/off,
   // etc.
   ResetHideMediaControlsTimer();
+}
+
+void MediaControlsImpl::OnStalled() {
+  received_stalled_event_ = true;
+  UpdateCSSClassFromState();
 }
 
 void MediaControlsImpl::NotifyElementSizeChanged(DOMRectReadOnly* new_size) {
@@ -1508,6 +1519,10 @@ void MediaControlsImpl::NetworkStateChanged() {
   // source or no longer have a source.
   download_button_->SetIsWanted(
       download_button_->ShouldDisplayDownloadButton());
+
+  // Reset the stalled event if we are not loading.
+  if (MediaElement().getNetworkState() != HTMLMediaElement::kNetworkLoading)
+    received_stalled_event_ = false;
 
   UpdateCSSClassFromState();
 }
