@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.webapps;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -22,6 +23,8 @@ import org.chromium.chrome.browser.metrics.WebappUma;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.ColorUtils;
+import org.chromium.net.NetError;
+import org.chromium.net.NetworkChangeNotifier;
 
 /** Shows and hides splash screen. */
 class WebappSplashScreenController extends EmptyTabObserver {
@@ -40,8 +43,19 @@ class WebappSplashScreenController extends EmptyTabObserver {
     private ViewGroup mSplashScreen;
     private WebappUma mWebappUma;
 
-    public WebappSplashScreenController() {
+    /** The error code of the navigation. */
+    private int mErrorCode;
+
+    private WebAppOfflineDialog mOfflineDialog;
+
+    /** Indicates whether reloading is allowed. */
+    private boolean mAllowReloads;
+
+    private String mApkPackageName;
+
+    public WebappSplashScreenController(WebappInfo appInfo) {
         mWebappUma = new WebappUma();
+        mApkPackageName = appInfo.apkPackageName();
     }
 
     /** Shows the splash screen. */
@@ -121,8 +135,66 @@ class WebappSplashScreenController extends EmptyTabObserver {
         animateHidingSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_CRASH);
     }
 
+    @Override
+    public void onDidFinishNavigation(final Tab tab, final String url, boolean isInMainFrame,
+            boolean isErrorPage, boolean hasCommitted, boolean isSameDocument,
+            boolean isFragmentNavigation, Integer pageTransition, int errorCode,
+            int httpStatusCode) {
+        if (TextUtils.isEmpty(mApkPackageName)) return;
+
+        mErrorCode = errorCode;
+
+        switch (mErrorCode) {
+            case NetError.ERR_NETWORK_CHANGED:
+                onNetworkChanged(tab);
+                break;
+            case NetError.ERR_INTERNET_DISCONNECTED:
+                onNetworkDisconnected(tab);
+                break;
+            default:
+                if (mOfflineDialog != null) {
+                    mOfflineDialog.cancel();
+                    mOfflineDialog = null;
+                }
+                break;
+        }
+    }
+
     protected boolean canHideSplashScreen() {
-        return true;
+        return mErrorCode != NetError.ERR_INTERNET_DISCONNECTED
+                && mErrorCode != NetError.ERR_NETWORK_CHANGED;
+    }
+
+    private void onNetworkChanged(Tab tab) {
+        if (!mAllowReloads) return;
+
+        // It is possible that we get {@link NetError.ERR_NETWORK_CHANGED} during the first
+        // reload after the device is online. The navigation will fail until the next auto
+        // reload fired by {@link NetErrorHelperCore}. We call reload explicitly to reduce the
+        // waiting time.
+        tab.reloadIgnoringCache();
+        mAllowReloads = false;
+    }
+
+    private void onNetworkDisconnected(final Tab tab) {
+        if (mOfflineDialog != null || tab.getActivity() == null) return;
+
+        final NetworkChangeNotifier.ConnectionTypeObserver observer =
+                new NetworkChangeNotifier.ConnectionTypeObserver() {
+                    @Override
+                    public void onConnectionTypeChanged(int connectionType) {
+                        if (!NetworkChangeNotifier.isOnline()) return;
+
+                        NetworkChangeNotifier.removeConnectionTypeObserver(this);
+                        tab.reloadIgnoringCache();
+                        // One more reload is allowed after the network connection is back.
+                        mAllowReloads = true;
+                    }
+                };
+
+        NetworkChangeNotifier.addConnectionTypeObserver(observer);
+        mOfflineDialog = new WebAppOfflineDialog();
+        mOfflineDialog.show(tab.getActivity(), mApkPackageName);
     }
 
     /** Sets the splash screen layout and sets the splash screen's title and icon. */

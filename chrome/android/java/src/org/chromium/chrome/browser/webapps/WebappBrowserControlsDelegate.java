@@ -23,6 +23,10 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
     public boolean canShowBrowserControls() {
         if (!super.canShowBrowserControls()) return false;
 
+        // If this is a Trusted Web Activity that has failed verification, always show browser
+        // controls independent of policy/webapp info.
+        if (mActivity.getBrowserSession() != null && mActivity.didVerificationFail()) return true;
+
         return shouldShowBrowserControls(mActivity.scopePolicy(), mActivity.getWebappInfo(),
                 mTab.getUrl(), mTab.getSecurityLevel());
     }
