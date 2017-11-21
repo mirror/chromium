@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29b9e89c_db56b800",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-21T23:48:28Z",
+      "side": 1,
+      "message": "carlosil is addressing this in https://chromium-review.googlesource.com/c/chromium/src/+/778042",
+      "range": {
+        "startLine": 701,
+        "startChar": 2,
+        "endLine": 703,
+        "endChar": 41
+      },
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed026055_16beed15",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-21T23:48:28Z",
+      "side": 1,
+      "message": "This feels a little weird as I think it should only be null in the case of unit tests. Maybe it would be better to give unit tests a testing NetworkService?",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 37
+      },
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7082f8c_c254f930",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-21T23:48:28Z",
+      "side": 1,
+      "message": "This one should pass after https://chromium-review.googlesource.com/c/chromium/src/+/778042 lands as well.",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 44
+      },
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ccaa2b4_8c4dbd6e",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-21T23:48:28Z",
+      "side": 1,
+      "message": "Not sure what\u0027s going on with these ones -- they are failing in both the transient and committed version so I don\u0027t think it\u0027s related to committed interstitials. Will investigate separately.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 49
+      },
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
