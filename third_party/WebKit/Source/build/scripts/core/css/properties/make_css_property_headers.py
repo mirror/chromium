@@ -95,6 +95,20 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
                     'auto_getter': 'HasNormalColumnGap',
                     'auto_setter': 'SetHasNormalColumnGap',
                     'auto_identity': 'CSSValueNormal'}
+            if (property_name in
+                    ['BorderImageOutset', 'BorderImageRepeat',
+                     'BorderImageSlice', 'BorderImageWidth',
+                     'WebkitMaskBoxImageOutset', 'WebkitMaskBoxImageRepeat',
+                     'WebkitMaskBoxImageSlice', 'WebkitMaskBoxImageWidth']):
+                property_['custom_apply'] = 'border_image'
+                is_mask_box = 'WebkitMaskBox' in property_name
+                getter = 'MaskBoxImage' if is_mask_box else 'BorderImage'
+                property_['custom_apply_args'] = {
+                    'is_mask_box': is_mask_box,
+                    'modifier_type': property_name[18:] if is_mask_box else property_name[11:],
+                    'getter': getter,
+                    'setter': 'Set' + getter
+                }
         property_['should_implement_apply_functions'] = (
             property_['should_declare_apply_functions'] and
             (not (property_['custom_apply_functions_initial'] and
@@ -125,6 +139,9 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
                 includes.append("core/style/SVGComputedStyle.h")
             else:
                 includes.append("core/style/ComputedStyle.h")
+            if (property_.get('custom_apply_args') and
+                    property_.get('custom_apply_args').get('modifier_type') in ['Width', 'Slice', 'Outset']):
+                includes.append("core/css/properties/StyleBuildingUtils.h")
         includes.sort()
         property_['includes'] = includes
 
