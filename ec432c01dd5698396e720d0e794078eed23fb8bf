@@ -93,6 +93,24 @@
     },
     {
       "key": {
+        "uuid": "f4977268_4e776296",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-21T23:49:38Z",
+      "side": 1,
+      "message": "Thanks Anita. Yes, delegating notification permission to WebAPKs is ideal, and we have a bug to track this. I don\u0027t want to include that changes in this CL, since I know it is a huge.",
+      "parentUuid": "31ab92d0_ef633f36",
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea1150b1_278482cc",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
         "patchSetId": 3
