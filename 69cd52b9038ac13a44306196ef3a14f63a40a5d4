@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d5601f13_0140e524",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-21T00:20:50Z",
+      "side": 1,
+      "message": "Drive-by question: should the enterprise policy overrides any value of that flag that might\u0027ve been specified by the user on the command line?  Or should we concatenate the two lists of isolated origins?\n\nThe user-specified flag would normally be applied from https://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?l\u003d813\u0026rcl\u003d72b5bd9f0b98b447686d09aa036dfce707c6f950, though Charlie and I were discussing changing that.",
+      "range": {
+        "startLine": 1178,
+        "startChar": 4,
+        "endLine": 1180,
+        "endChar": 15
+      },
+      "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1967ca41_16302a1b",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 14
