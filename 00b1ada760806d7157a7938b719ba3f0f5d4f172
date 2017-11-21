@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a4e8a9f_593a6097",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-21T23:10:45Z",
+      "side": 1,
+      "message": "nit: if (api \u003d\u003d null) return;",
+      "range": {
+        "startLine": 355,
+        "startChar": 16,
+        "endLine": 355,
+        "endChar": 34
+      },
+      "revId": "00b1ada760806d7157a7938b719ba3f0f5d4f172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1ffec9_aa8ab0bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-21T23:10:45Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t bother with this function at all for now, it isn\u0027t doing anything useful.\n\nJust at the callsites \"if (isDaydreamCurrentViewer()) nativeRegisterVrAssetsComponent();\" is fine.",
+      "range": {
+        "startLine": 481,
+        "startChar": 24,
+        "endLine": 481,
+        "endChar": 63
+      },
+      "revId": "00b1ada760806d7157a7938b719ba3f0f5d4f172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4ce4df_fb824913",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-21T23:10:45Z",
+      "side": 1,
+      "message": "Can you do this in the \"// Perform slow initialization asynchronously.\" block below?",
+      "range": {
+        "startLine": 1166,
+        "startChar": 8,
+        "endLine": 1166,
+        "endChar": 47
+      },
+      "revId": "00b1ada760806d7157a7938b719ba3f0f5d4f172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
