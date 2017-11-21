@@ -60,6 +60,14 @@ void PaintOpWriter::Write(uint8_t data) {
   WriteSimple(data);
 }
 
+void PaintOpWriter::Write(uint32_t data) {
+  WriteSimple(data);
+}
+
+void PaintOpWriter::Write(int32_t data) {
+  WriteSimple(data);
+}
+
 void PaintOpWriter::Write(const SkRect& rect) {
   WriteSimple(rect);
 }
@@ -220,6 +228,10 @@ void PaintOpWriter::Write(const PaintShader* shader) {
             shader->positions_.data());
   // Explicitly don't write the cached_shader_ because that can be regenerated
   // using other fields.
+}
+
+void PaintOpWriter::Write(SkColorType color_type) {
+  WriteSimple(static_cast<uint32_t>(color_type));
 }
 
 void PaintOpWriter::WriteData(size_t bytes, const void* input) {
