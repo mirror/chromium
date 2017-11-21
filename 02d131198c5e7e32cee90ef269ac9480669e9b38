@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "617d5780_ae0a52f6",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-21T03:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5a4b418_67a0ce0c",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb4bfdba_c69d9017",
         "filename": "chrome/browser/download/download_stats.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3dbd8b_5d226412",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-21T03:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb4bfdba_c69d9017",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "85c495fb_de7ef529",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-21T03:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6c3c572_33f61263",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ccb8f94_0e2898d1",
         "filename": "chrome/browser/ui/views/download/download_item_view.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-10T09:21:38Z",
       "side": 1,
       "message": "do you just need to override\n\nView::OnPerformDrop(const ui::DropTargetEvent\u0026 event);\nView::OnDragDone();\n\nto get the others on non-mac?\n\n(I\u0027m pretty sure OnDragDone will be called when the drag source is a View - not so sure about OnPerformDrop though).",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab08550d_9ab46442",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-21T03:21:49Z",
+      "side": 1,
+      "message": "I think this uses a different code path which doesn\u0027t call those methods (see drag_download_item_views.cc):\n\n  aura::client::GetDragDropClient(root_window)-\u003eStartDragAndDrop(…)\n\nJust in case, I tried overriding those methods and making a MacViews build, and they didn\u0027t get called :(.",
+      "parentUuid": "2ccb8f94_0e2898d1",
       "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
