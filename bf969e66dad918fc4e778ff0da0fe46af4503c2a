@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d5f98b0_f9928b05",
+        "filename": "extensions/common/manifest_handlers/csp_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-11-21T18:30:26Z",
+      "side": 1,
+      "message": "I agree, I\u0027ll fix this.",
+      "parentUuid": "7f628b5c_fac097a7",
+      "revId": "bf969e66dad918fc4e778ff0da0fe46af4503c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af396b15_005bf9d2",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "735806cb_d973993a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-11-21T18:30:26Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, I\u0027ll take a look! I wasn\u0027t thrilled with having chrome-extension hardcoded here, so hopefully the SchemeRegistry will work better.",
+      "parentUuid": "af396b15_005bf9d2",
+      "revId": "bf969e66dad918fc4e778ff0da0fe46af4503c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5748e5b2_5f4f60d8",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-21T09:51:11Z",
       "side": 1,
       "message": "This will still show web-visible behavior changes insofar as other browsers will consider `wasm-eval` an error (and report it as such in the console). Did you consider moving this check to `SourceListDirective::ParseSource` instead?",
+      "revId": "bf969e66dad918fc4e778ff0da0fe46af4503c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ec2583_408a0b37",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-11-21T18:30:26Z",
+      "side": 1,
+      "message": "I tried this originally, but there the URL scheme was always null for some reason. Maybe once I have this in the Scheme registry it will be possible to do the check in ParseSource instead.",
+      "parentUuid": "5748e5b2_5f4f60d8",
       "revId": "bf969e66dad918fc4e778ff0da0fe46af4503c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
