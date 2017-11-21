@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3e0a27d0_4eb9db95",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-21T10:36:17Z",
+      "side": 1,
+      "message": "Whether incognito windows is used or not and whether a user opts in to UMA or not is also checked in UKM collection class as you can see in https://chromium-review.googlesource.com/c/537774/",
+      "parentUuid": "25a879c8_b136aa51",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9eac49f7_a78bacf3",
         "filename": "ui/base/ime/text_input_client.h",
         "patchSetId": 2
