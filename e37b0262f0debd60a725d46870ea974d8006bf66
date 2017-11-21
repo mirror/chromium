@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b76e373_c221a580",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-21T23:21:05Z",
+      "side": 1,
+      "message": "sort-of nit: I\u0027m concerned that this sort might not produce optimal results. Consider:\n\nOriginal image: 2x400\ntarget size: 1x50\navailable sizes: 1x200, 1x100\n\nBecause the widths are the same in both available sizes, neither will return true from the following function and they will be considered equal. In this case they may not be re-arranged in the sort (seems like order is arbitrary at that point).\n\nBelow, we will check 1x200 first, it will fulfill the requirements, and we will scale from that. Unfortunately, the optimal size to scale from was 1x100.\n\nMaybe we want to do a comparison based on \"area1 \u003c area2\" - this should work out as the cases with different source rects will be thrown out below?",
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b7601d_8a2aa4d1",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-21T23:21:05Z",
+      "side": 1,
+      "message": "I\u0027m not quite following how extracting a subset is different from using a subrect? In both cases aren\u0027t we caching a sub-rect of the image?",
+      "range": {
+        "startLine": 576,
+        "startChar": 6,
+        "endLine": 576,
+        "endChar": 26
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
