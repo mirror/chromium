@@ -22,7 +22,8 @@ namespace safe_browsing {
 class ChromePromptImpl : public chrome_cleaner::mojom::ChromePrompt {
  public:
   using OnPromptUser = base::OnceCallback<void(
-      std::unique_ptr<std::set<base::FilePath>>,
+      std::set<base::FilePath>&&,
+      std::set<base::string16>&&,
       chrome_cleaner::mojom::ChromePrompt::PromptUserCallback)>;
 
   ChromePromptImpl(chrome_cleaner::mojom::ChromePromptRequest request,
@@ -30,9 +31,11 @@ class ChromePromptImpl : public chrome_cleaner::mojom::ChromePrompt {
                    OnPromptUser on_prompt_user);
   ~ChromePromptImpl() override;
 
-  void PromptUser(const std::vector<base::FilePath>& files_to_delete,
-                  chrome_cleaner::mojom::ChromePrompt::PromptUserCallback
-                      callback) override;
+  void PromptUser(
+      const std::vector<base::FilePath>& files_to_delete,
+      const base::Optional<std::vector<base::string16>>& registry_keys,
+      chrome_cleaner::mojom::ChromePrompt::PromptUserCallback callback)
+      override;
 
  private:
   mojo::Binding<chrome_cleaner::mojom::ChromePrompt> binding_;

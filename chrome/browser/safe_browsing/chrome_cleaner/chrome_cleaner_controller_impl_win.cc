@@ -391,10 +391,10 @@ void ChromeCleanerControllerImpl::NotifyObserver(Observer* observer) const {
       observer->OnScanning();
       break;
     case State::kInfected:
-      observer->OnInfected(*files_to_delete_);
+      observer->OnInfected(files_to_delete_, registry_keys_);
       break;
     case State::kCleaning:
-      observer->OnCleaning(*files_to_delete_);
+      observer->OnCleaning(files_to_delete_, registry_keys_);
       break;
     case State::kRebootRequired:
       observer->OnRebootRequired();
@@ -420,7 +420,8 @@ void ChromeCleanerControllerImpl::ResetCleanerDataAndInvalidateWeakPtrs() {
 
   weak_factory_.InvalidateWeakPtrs();
   reporter_invocation_.reset();
-  files_to_delete_.reset();
+  files_to_delete_.clear();
+  registry_keys_.clear();
   prompt_user_callback_.Reset();
 }
 
@@ -462,7 +463,8 @@ void ChromeCleanerControllerImpl::OnChromeCleanerFetchedAndVerified(
 // static
 void ChromeCleanerControllerImpl::WeakOnPromptUser(
     const base::WeakPtr<ChromeCleanerControllerImpl>& controller,
-    std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+    std::set<base::FilePath>&& files_to_delete,
+    std::set<base::string16>&& registry_keys,
     ChromePrompt::PromptUserCallback prompt_user_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -474,24 +476,25 @@ void ChromeCleanerControllerImpl::WeakOnPromptUser(
                                              PromptAcceptance::DENIED));
   }
 
-  controller->OnPromptUser(std::move(files_to_delete),
+  controller->OnPromptUser(std::move(files_to_delete), std::move(registry_keys),
                            std::move(prompt_user_callback));
 }
 
 void ChromeCleanerControllerImpl::OnPromptUser(
-    std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+    std::set<base::FilePath>&& files_to_delete,
+    std::set<base::string16>&& registry_keys,
     ChromePrompt::PromptUserCallback prompt_user_callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK(files_to_delete);
   DCHECK_EQ(State::kScanning, state());
-  DCHECK(!files_to_delete_);
+  DCHECK(files_to_delete_.empty());
+  DCHECK(registry_keys_.empty());
   DCHECK(!prompt_user_callback_);
   DCHECK(!time_scanning_started_.is_null());
 
   UMA_HISTOGRAM_LONG_TIMES_100("SoftwareReporter.Cleaner.ScanningTime",
                                base::Time::Now() - time_scanning_started_);
 
-  if (files_to_delete->empty()) {
+  if (files_to_delete.empty()) {
     BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
         ->PostTask(FROM_HERE, base::BindOnce(std::move(prompt_user_callback),
                                              PromptAcceptance::DENIED));
@@ -502,8 +505,9 @@ void ChromeCleanerControllerImpl::OnPromptUser(
   }
 
   UMA_HISTOGRAM_COUNTS_1000("SoftwareReporter.NumberOfFilesToDelete",
-                            files_to_delete->size());
+                            files_to_delete.size());
   files_to_delete_ = std::move(files_to_delete);
+  registry_keys_ = std::move(registry_keys);
   prompt_user_callback_ = std::move(prompt_user_callback);
   SetStateAndNotifyObservers(State::kInfected);
 }

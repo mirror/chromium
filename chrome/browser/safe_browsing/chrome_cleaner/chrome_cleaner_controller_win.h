@@ -91,8 +91,10 @@ class ChromeCleanerController {
    public:
     virtual void OnIdle(IdleReason idle_reason) {}
     virtual void OnScanning() {}
-    virtual void OnInfected(const std::set<base::FilePath>& files_to_delete) {}
-    virtual void OnCleaning(const std::set<base::FilePath>& files_to_delete) {}
+    virtual void OnInfected(const std::set<base::FilePath>& files_to_delete,
+                            const std::set<base::string16>& registry_keys) {}
+    virtual void OnCleaning(const std::set<base::FilePath>& files_to_delete,
+                            const std::set<base::string16>& registry_keys) {}
     virtual void OnRebootRequired() {}
     virtual void OnRebootFailed() {}
     virtual void OnLogsEnabledChanged(bool logs_enabled) {}
