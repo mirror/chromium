@@ -2144,7 +2144,7 @@ MigrationResult QuicChromiumClientSession::Migrate(
                                    yield_after_packets_, yield_after_duration_,
                                    net_log_));
   std::unique_ptr<QuicChromiumPacketWriter> new_writer(
-      new QuicChromiumPacketWriter(socket.get()));
+      new QuicChromiumPacketWriter(socket.get(), task_runner_));
   new_writer->set_delegate(this);
 
   // Migrate to the new socket.
