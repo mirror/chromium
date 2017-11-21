@@ -175,16 +175,16 @@ base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
     base::Optional<CBORValue> value = DecodeCBOR(max_nesting_level - 1);
     if (!key.has_value() || !value.has_value())
       return base::nullopt;
-    if (key.value().type() != CBORValue::Type::STRING) {
+    if (key.value().type() != CBORValue::Type::STRING &&
+        key.value().type() != CBORValue::Type::UNSIGNED) {
       error_code_ = INCORRECT_MAP_KEY_TYPE;
       return base::nullopt;
     }
 
-    CheckDuplicateKey(key.value().GetString(), &cbor_map);
-    CheckOutOfOrderKey(key.value().GetString(), &cbor_map);
+    CheckDuplicateKey(key.value(), &cbor_map);
+    CheckOutOfOrderKey(key.value(), &cbor_map);
 
-    cbor_map.insert_or_assign(key.value().GetString(),
-                              std::move(value.value()));
+    cbor_map.insert_or_assign(std::move(key.value()), std::move(value.value()));
   }
   return CBORValue(std::move(cbor_map));
 }
@@ -212,7 +212,7 @@ void CBORReader::CheckExtraneousData() {
     error_code_ = EXTRANEOUS_DATA_ERROR;
 }
 
-void CBORReader::CheckDuplicateKey(const std::string& new_key,
+void CBORReader::CheckDuplicateKey(const CBORValue& new_key,
                                    CBORValue::MapValue* map) {
   if (map->count(new_key) > 0)
     error_code_ = DUPLICATE_KEY_ERROR;
@@ -226,7 +226,7 @@ bool CBORReader::HasValidUTF8Format(const std::string& string_data) {
   return true;
 }
 
-void CBORReader::CheckOutOfOrderKey(const std::string& new_key,
+void CBORReader::CheckOutOfOrderKey(const CBORValue& new_key,
                                     CBORValue::MapValue* map) {
   auto comparator = map->key_comp();
   if (!map->empty() && comparator(new_key, map->rbegin()->first))
