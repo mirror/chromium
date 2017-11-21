@@ -773,6 +773,35 @@ void PaymentRequestBrowserTestBase::WaitForObservedEvent() {
   event_observer_->Wait();
 }
 
+void PaymentRequestBrowserTestBase::InstallPaymentAppInScopeForMethod(
+    const GURL& alicepay_install_url,
+    const std::string& method_name) {
+  ui_test_utils::NavigateToURL(browser(), alicepay_install_url);
+
+  std::string contents;
+  std::string script = "install('" + method_name + "');";
+  ASSERT_TRUE(content::ExecuteScriptAndExtractString(
+      browser()->tab_strip_model()->GetActiveWebContents(), script, &contents))
+      << "Script execution failed: " << script;
+  ASSERT_NE(std::string::npos,
+            contents.find("Payment app for \"" + method_name +
+                          "\" method installed."))
+      << method_name << " method install message not found in:\n"
+      << contents;
+}
+
+bool PaymentRequestBrowserTestBase::StartTestServer(
+    const std::string& hostname,
+    net::EmbeddedTestServer* test_server) {
+  host_resolver()->AddRule(hostname, "127.0.0.1");
+  if (!test_server->InitializeAndListen())
+    return false;
+  test_server->ServeFilesFromSourceDirectory("components/test/data/payments/" +
+                                             hostname);
+  test_server->StartAcceptingConnections();
+  return true;
+}
+
 }  // namespace payments
 
 std::ostream& operator<<(

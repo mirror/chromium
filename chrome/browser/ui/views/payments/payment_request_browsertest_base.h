@@ -278,6 +278,17 @@ class PaymentRequestBrowserTestBase
   // Wait for the event(s) passed to ResetEventObserver*() to occur.
   void WaitForObservedEvent();
 
+  // Invokes the JavaScript function install(|method_name|) in
+  // components/test/data/payments/alicepay.com (/app1/ or /app2/ depends on
+  // |alicepay_install_url|) index.js, which responds back via
+  // domAutomationController.
+  void InstallPaymentAppInScopeForMethod(const GURL& alicepay_install_url,
+                                         const std::string& method_name);
+
+  // Starts the |test_server| for |hostname|. Returns true on success.
+  bool StartTestServer(const std::string& hostname,
+                       net::EmbeddedTestServer* test_server);
+
  private:
   std::unique_ptr<DialogEventObserver> event_observer_;
   std::unique_ptr<net::EmbeddedTestServer> https_server_;
