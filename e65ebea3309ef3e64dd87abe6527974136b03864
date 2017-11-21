@@ -294,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "eb750a09_376c769c",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T09:09:42Z",
+      "side": 1,
+      "message": "nit: There\u0027s an ASCII square in the string. Doesn\u0027t matter but I don\u0027t think it was intentional.",
+      "parentUuid": "c4fc6f62_2bb4e18c",
+      "range": {
+        "startLine": 413,
+        "startChar": 59,
+        "endLine": 413,
+        "endChar": 60
+      },
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9bc828_b8b974a0",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 14
@@ -358,6 +382,24 @@
       "side": 1,
       "message": "1. I did update them.\n2. Please see the following comment earlier in the file:\n  // TODO(eladalon): These tests work fine when executed separately, but crash\n  // when we run them in sequence, because the WebRtcEventLogManager that\u0027s hiding\n  // behind WebRtcEventlogHost is a singleton, so it outlives the tests, but its\n  // thread doesn\u0027t. This is not a problem, because we provide the same coverage\n  // in WebRtcEventLogManager\u0027s unit-tests. In an upcoming CL, we remove both\n  // as well as these tests. https://crbug.com/775415",
       "parentUuid": "06da1255_7571eda0",
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2be0daf7_fb828284",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T09:09:42Z",
+      "side": 1,
+      "message": "Ack. Usually DISABLED_ tests have a TODO above them, I missed the fact that you had a TODO earlier in the file. This is good.",
+      "parentUuid": "d926c471_220371d4",
       "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
