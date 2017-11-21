@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b433034_71abade8",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T11:47:39Z",
+      "side": 1,
+      "message": "Actually, could we move this into InterventionInfoBarDelegate? It makes sense for every intervention infobar to accept the intervention when it is dismissed, and that actually keeps more of the logic in one place.",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63fe448c_81317e70",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T11:47:39Z",
+      "side": 1,
+      "message": "Can we use DCHECK_EQ here?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 8
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "562b3124_d21644fc",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
         "patchSetId": 3
@@ -42,6 +88,52 @@
         "startChar": 2,
         "endLine": 39,
         "endChar": 34
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d1fa42_8f613ef2",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T11:47:39Z",
+      "side": 1,
+      "message": "You could probably inline this method into the dismiss callback like in FramebustBlockInfoBar (or the other way around, but it would be good to be consistent, so people have one pattern to follow in the future). Same for DeclineIntervention.",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbaba28_4a468486",
+        "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T11:47:39Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 2
       },
       "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
