@@ -21,6 +21,8 @@ namespace consent_auditor {
 
 class ConsentAuditor : public KeyedService {
  public:
+  enum class ConsentStatus { REVOKED, GIVEN };
+
   ConsentAuditor(PrefService* pref_service,
                  syncer::UserEventService* user_event_service,
                  const std::string& app_version,
@@ -32,6 +34,13 @@ class ConsentAuditor : public KeyedService {
 
   // Registers the preferences needed by this service.
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+
+  // Records that the user consented to |feature|.
+  void RecordGaiaConsent(
+      const std::string& feature,
+      const std::vector<int64_t>& consent_grd_ids,
+      const std::vector<std::string>& placeholder_replacements,
+      ConsentStatus status);
 
   // Records that the user consented to a |feature|. The user was presented with
   // |description_text| and accepted it by interacting |confirmation_text|

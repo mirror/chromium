@@ -48,6 +48,14 @@ void ConsentAuditor::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(prefs::kLocalConsentsDictionary);
 }
 
+void ConsentAuditor::RecordGaiaConsent(
+    const std::string& feature,
+    const std::vector<int64_t>& consent_grd_ids,
+    const std::vector<std::string>& placeholder_replacements,
+    ConsentStatus status) {
+  // TODO(crbug.com/781765): Implement consent recording.
+}
+
 void ConsentAuditor::RecordLocalConsent(const std::string& feature,
                                         const std::string& description_text,
                                         const std::string& confirmation_text) {
