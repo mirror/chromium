@@ -13,6 +13,7 @@ import android.os.SystemClock;
 import android.provider.Browser;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.view.WindowManager.BadTokenException;
 import android.webkit.WebView;
 
 import org.chromium.base.CommandLine;
@@ -493,10 +494,16 @@ public class ExternalNavigationHandler {
             if (params.isIncognito() && !mDelegate.willChromeHandleIntent(intent)) {
                 // This intent may leave Chrome.  Warn the user that incognito does not carry over
                 // to apps out side of Chrome.
-                mDelegate.startIncognitoIntent(intent, params.getReferrerUrl(),
-                        hasBrowserFallbackUrl ? browserFallbackUrl : null, params.getTab(),
-                        params.shouldCloseContentsOnOverrideUrlLoadingAndLaunchIntent(),
-                        shouldProxyForInstantApps);
+                try {
+                    mDelegate.startIncognitoIntent(intent, params.getReferrerUrl(),
+                            hasBrowserFallbackUrl ? browserFallbackUrl : null, params.getTab(),
+                            params.shouldCloseContentsOnOverrideUrlLoadingAndLaunchIntent(),
+                            shouldProxyForInstantApps);
+                } catch (BadTokenException e) {
+                    Log.e(TAG,
+                            "BadTokenException: Failed to start incognito intent, activity may "
+                                    + "have been shut down");
+                }
                 if (DEBUG) Log.i(TAG, "OVERRIDE_WITH_ASYNC_ACTION: Incognito navigation out");
                 return OverrideUrlLoadingResult.OVERRIDE_WITH_ASYNC_ACTION;
             }
@@ -576,9 +583,15 @@ public class ExternalNavigationHandler {
                 intent.putExtra(Intent.EXTRA_REFERRER, Uri.parse(params.getReferrerUrl()));
             }
             if (params.isIncognito()) {
-                mDelegate.startIncognitoIntent(intent, params.getReferrerUrl(), null,
-                        params.getTab(),
-                        params.shouldCloseContentsOnOverrideUrlLoadingAndLaunchIntent(), false);
+                try {
+                    mDelegate.startIncognitoIntent(intent, params.getReferrerUrl(), null,
+                            params.getTab(),
+                            params.shouldCloseContentsOnOverrideUrlLoadingAndLaunchIntent(), false);
+                } catch (BadTokenException e) {
+                    Log.e(TAG,
+                            "BadTokenException: Failed to start incognito intent, activity may "
+                                    + "have been shut down");
+                }
                 if (DEBUG) Log.i(TAG, "OVERRIDE_WITH_ASYNC_ACTION: Incognito intent to Play Store");
                 return OverrideUrlLoadingResult.OVERRIDE_WITH_ASYNC_ACTION;
             } else {
