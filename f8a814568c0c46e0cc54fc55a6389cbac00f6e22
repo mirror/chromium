@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "585b0654_e77b675a",
+        "filename": "chrome/browser/ui/tabs/web_contents_closer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:08:55Z",
+      "side": 1,
+      "message": "I actually meant deleted here, but in reality either works.",
+      "parentUuid": "7295fb12_576fd05e",
+      "revId": "f8a814568c0c46e0cc54fc55a6389cbac00f6e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f2f49f6_06356f89",
         "filename": "chrome/browser/ui/tabs/web_contents_closer.h",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-20T23:24:22Z",
       "side": 1,
       "message": "Can you mention here what one should do with the WebContenses not closed? I actually have no idea? Will they close themselves? Are you supposed to wait for some signal?",
+      "revId": "f8a814568c0c46e0cc54fc55a6389cbac00f6e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41179fc_e094324e",
+        "filename": "chrome/browser/ui/tabs/web_contents_closer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:08:55Z",
+      "side": 1,
+      "message": "I added more comments.",
+      "parentUuid": "9f2f49f6_06356f89",
       "revId": "f8a814568c0c46e0cc54fc55a6389cbac00f6e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
