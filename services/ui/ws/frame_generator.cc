@@ -14,7 +14,6 @@
 #include "components/viz/common/quads/surface_draw_quad.h"
 
 namespace ui {
-
 namespace ws {
 
 FrameGenerator::FrameGenerator() = default;
@@ -229,5 +228,4 @@ void FrameGenerator::SetNeedsBeginFrame(bool needs_begin_frame) {
 }
 
 }  // namespace ws
-
 }  // namespace ui

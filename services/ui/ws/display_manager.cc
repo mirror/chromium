@@ -166,6 +166,7 @@ bool DisplayManager::SetDisplayConfiguration(
   display_list.AddOrUpdateDisplay(displays[primary_display_index],
                                   display::DisplayList::Type::PRIMARY);
   for (size_t i = 0; i < displays.size(); ++i) {
+    LOG(ERROR) << "MSW configuring a display: " << displays[i].ToString(); 
     Display* ws_display = GetDisplayById(displays[i].id());
     DCHECK(ws_display);
     ws_display->SetDisplay(displays[i]);
@@ -176,18 +177,31 @@ bool DisplayManager::SetDisplayConfiguration(
     }
   }
   for (size_t i = 0; i < mirrors.size(); ++i) {
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus mirroring/unified mode.";
+    Display* ws_display_to_mirror = GetDisplayById(displays[0].id());
     Display* ws_mirror = GetDisplayById(mirrors[i].id());
     const auto& metrics = viewport_metrics[displays.size() + i];
+    // Destroy any existing display, it'll be recreated with a mirror config.
+    // TODO(msw): Re-use displays when reconfiguring as extended<->mirrored? 
+    if (ws_mirror && ws_mirror->display_to_mirror() != ws_display_to_mirror) {
+      LOG(ERROR) << "MSW destroying an extended display to make a mirror!!!!\n"
+                << ws_mirror->GetDisplay().ToString() << "\n"
+                << mirrors[i].ToString();
+      display_list.RemoveDisplay(mirrors[i].id());
+      DestroyDisplay(ws_mirror);
+      ws_mirror = nullptr;
+    }
     if (!ws_mirror) {
-      // Create a mirror destination display on startup or on display connected.
-      CreateDisplay(mirrors[i], metrics);
-    } else {
-      // Reuse an existing display for mirroring that was previously extended.
+      // Recreate the mirror as needed. 
+      ws_mirror = new ws::Display(window_server_);
       ws_mirror->SetDisplay(mirrors[i]);
-      ws_mirror->OnViewportMetricsChanged(metrics);
-      display_list.AddOrUpdateDisplay(mirrors[i],
-                                      display::DisplayList::Type::NOT_PRIMARY);
+      LOG(ERROR) << "MSW creating a new mirror: " << mirrors[i].ToString(); 
+      ws_mirror->Init(metrics, nullptr, ws_display_to_mirror);
+    } else {
+      LOG(ERROR) << "MSW using existing mirror: " << mirrors[i].ToString(); 
+      // ws_mirror->SetDisplay(mirrors[i]);
+      // ws_mirror->OnViewportMetricsChanged(metrics);
+      // display_list.AddOrUpdateDisplay(mirrors[i],
+      //                                 display::DisplayList::Type::NOT_PRIMARY);
     }
   }
 
@@ -352,6 +366,7 @@ WindowId DisplayManager::GetAndAdvanceNextRootId() {
 }
 
 void DisplayManager::OnDisplayAcceleratedWidgetAvailable(Display* display) {
+  LOG(ERROR) << "MSW DisplayManager::OnDisplayAcceleratedWidgetAvailable " << display->GetDisplay().id() << " mirror? " << display->display_to_mirror();
   DCHECK_NE(0u, pending_displays_.count(display));
   DCHECK_EQ(0u, displays_.count(display));
   const bool is_first_display =
@@ -361,6 +376,24 @@ void DisplayManager::OnDisplayAcceleratedWidgetAvailable(Display* display) {
   if (event_rewriter_)
     display->platform_display()->AddEventRewriter(event_rewriter_.get());
   window_server_->OnDisplayReady(display, is_first_display);
+}
+
+void DisplayManager::OnFirstSurfaceActivation(
+    Display* display,
+    const viz::SurfaceInfo& surface_info) {
+  display->platform_display()->GetFrameGenerator()->OnFirstSurfaceActivation(
+      surface_info);
+  // Also pass the surface info to any displays mirroring the given display.
+  for (Display* mirror : displays_) {
+    if (mirror->display_to_mirror() == display) {
+      PlatformDisplay* platform_mirror = mirror->platform_display();
+      const display::ViewportMetrics& metrics = platform_mirror->GetViewportMetrics();
+      viz::SurfaceInfo info(surface_info.id(),
+                            metrics.device_scale_factor,
+                            metrics.bounds_in_pixels.size());
+      platform_mirror->GetFrameGenerator()->OnFirstSurfaceActivation(info);
+    }
+  }
 }
 
 void DisplayManager::SetHighContrastMode(bool enabled) {

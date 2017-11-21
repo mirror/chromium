@@ -24,6 +24,7 @@ struct TextInputState;
 
 namespace ws {
 
+class Display;
 class FrameGenerator;
 class PlatformDisplayDelegate;
 class PlatformDisplayFactory;
@@ -38,7 +39,8 @@ class PlatformDisplay : public ui::EventSource {
   static std::unique_ptr<PlatformDisplay> Create(
       ServerWindow* root_window,
       const display::ViewportMetrics& metrics,
-      ThreadedImageCursorsFactory* threaded_image_cursors_factory);
+      ThreadedImageCursorsFactory* threaded_image_cursors_factory,
+      Display* display_to_mirror);
 
   virtual void Init(PlatformDisplayDelegate* delegate) = 0;
 

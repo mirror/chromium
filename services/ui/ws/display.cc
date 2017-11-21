@@ -48,7 +48,7 @@ Display::~Display() {
   window_server_->window_manager_window_tree_factory_set()->RemoveObserver(
       this);
 
-  if (!focus_controller_) {
+  if (focus_controller_) {
     focus_controller_->RemoveObserver(this);
     focus_controller_.reset();
   }
@@ -66,14 +66,17 @@ Display::~Display() {
 }
 
 void Display::Init(const display::ViewportMetrics& metrics,
-                   std::unique_ptr<DisplayBinding> binding) {
+                   std::unique_ptr<DisplayBinding> binding,
+                   Display* display_to_mirror) {
   binding_ = std::move(binding);
   display_manager()->AddDisplay(this);
+  display_to_mirror_ = display_to_mirror;
 
   CreateRootWindow(metrics.bounds_in_pixels.size());
 
   platform_display_ = PlatformDisplay::Create(
-      root_.get(), metrics, window_server_->GetThreadedImageCursorsFactory());
+      root_.get(), metrics, window_server_->GetThreadedImageCursorsFactory(),
+      display_to_mirror_);
   platform_display_->Init(this);
   UpdateCursorConfig();
 }
@@ -167,7 +170,7 @@ bool Display::SetFocusedWindow(ServerWindow* new_focused_window) {
   ServerWindow* old_focused_window = focus_controller_->GetFocusedWindow();
   if (old_focused_window == new_focused_window)
     return true;
-  DCHECK(!new_focused_window || root_window()->Contains(new_focused_window));
+  DCHECK(!new_focused_window || root_->Contains(new_focused_window));
   return focus_controller_->SetFocusedWindow(new_focused_window);
 }
 
