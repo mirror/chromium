@@ -16,6 +16,24 @@
       "revId": "8f37986d2db56aa56433b97601e65aeb7972b4d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32d022e_1fb7eca4",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T22:10:14Z",
+      "side": 1,
+      "message": "Ack. Current workaround compiles and runs fine, so keeping it for now.",
+      "parentUuid": "d3ff9b80_35370b56",
+      "revId": "8f37986d2db56aa56433b97601e65aeb7972b4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
