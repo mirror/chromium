@@ -34,6 +34,24 @@
       "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06c096b_f2fe7ab6",
+        "filename": "content/renderer/loader/web_url_request_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-21T06:22:06Z",
+      "side": 1,
+      "message": "Thanks for digging this.  If you get the form element, create a FormData from it, append a blob using it and send it with XHR-- would it work?\n\nE.g.\nvar formData \u003d new FormData(formElem);\nformData.append(\u0027blob field\u0027, blob, \u0027filename.txt\u0027);\nvar req \u003d new XMLHttpRequest();\nreq.open(\"POST\", \"...\", false /* bad! */);\nreq.send(formData);\n\n(Haven\u0027t tested with navigation yet though)",
+      "parentUuid": "6261ccbf_e0140ab8",
+      "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
