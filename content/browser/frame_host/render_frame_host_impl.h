@@ -142,7 +142,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       base::Callback<void(
           const ui::AXTreeUpdate&)>;
   using SmartClipCallback = base::Callback<void(const base::string16& text,
-                                                const base::string16& html)>;
+                                                const base::string16& html,
+                                                const gfx::Rect& clip_rect)>;
 
   // An accessibility reset is only allowed to prevent very rare corner cases
   // or race conditions where the browser and renderer get out of sync. If
@@ -819,7 +820,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const AXContentTreeUpdate& snapshot);
   void OnSmartClipDataExtracted(uint32_t id,
                                 base::string16 text,
-                                base::string16 html);
+                                base::string16 html,
+                                gfx::Rect clip_rect);
   void OnToggleFullscreen(bool enter_fullscreen);
   void OnSuddenTerminationDisablerChanged(
       bool present,

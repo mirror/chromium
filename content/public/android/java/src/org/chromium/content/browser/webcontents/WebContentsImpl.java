@@ -121,25 +121,25 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
         public SmartClipCallbackImpl(final Handler smartClipHandler) {
             mHandler = smartClipHandler;
         }
-        public void storeRequestRect(Rect rect) {
-            mRect = rect;
-        }
 
         @Override
-        public void onSmartClipDataExtracted(String text, String html) {
+        public void onSmartClipDataExtracted(String text, String html, Rect clipRect) {
+            // Return the screen coordinates in dip scale for clipRect by adding the contentOffset
+            // which was removed while requesting smart clip extract.
+            final float dpi = getRenderCoordinates().getDeviceScaleFactor();
+            clipRect.offset(0, (int) (getRenderCoordinates().getContentOffsetYPix() / dpi));
             Bundle bundle = new Bundle();
             bundle.putString("url", getVisibleUrl());
             bundle.putString("title", getTitle());
             bundle.putString("text", text);
             bundle.putString("html", html);
-            bundle.putParcelable("rect", mRect);
+            bundle.putParcelable("rect", clipRect);
 
             Message msg = Message.obtain(mHandler, 0);
             msg.setData(bundle);
             msg.sendToTarget();
         }
 
-        Rect mRect;
         final Handler mHandler;
     }
     private SmartClipCallbackImpl mSmartClipCallback;
@@ -509,10 +509,9 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     @Override
     public void requestSmartClipExtract(int x, int y, int width, int height) {
         if (mSmartClipCallback == null) return;
-        mSmartClipCallback.storeRequestRect(new Rect(x, y, x + width, y + height));
         RenderCoordinates coordinateSpace = getRenderCoordinates();
         float dpi = coordinateSpace.getDeviceScaleFactor();
-        y = (int) (y - coordinateSpace.getContentOffsetYPix());
+        y = y - (int) coordinateSpace.getContentOffsetYPix();
         nativeRequestSmartClipExtract(mNativeWebContentsAndroid, mSmartClipCallback,
                 (int) (x / dpi), (int) (y / dpi), (int) (width / dpi), (int) (height / dpi));
     }
@@ -528,8 +527,13 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
 
     @CalledByNative
     private static void onSmartClipDataExtracted(
-            String text, String html, SmartClipCallback callback) {
-        callback.onSmartClipDataExtracted(text, html);
+            String text, String html, Rect clipRect, SmartClipCallback callback) {
+        callback.onSmartClipDataExtracted(text, html, clipRect);
+    }
+
+    @CalledByNative
+    private static Rect createRect(int x, int y, int right, int bottom) {
+        return new Rect(x, y, right, bottom);
     }
 
     @Override

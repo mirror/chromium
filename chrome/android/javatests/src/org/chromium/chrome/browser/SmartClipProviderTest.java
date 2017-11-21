@@ -172,7 +172,6 @@ public class SmartClipProviderTest implements Handler.Callback {
     @Feature({"SmartClip"})
     @RetryOnFailure
     public void testSmartClipDataCallback() throws InterruptedException, TimeoutException {
-        final Rect rect = new Rect(10, 20, 110, 190);
         ThreadUtils.runOnUiThreadBlocking(() -> {
             // This emulates what OEM will be doing when they want to call
             // functions on SmartClipProvider through view hierarchy.
@@ -182,8 +181,7 @@ public class SmartClipProviderTest implements Handler.Callback {
             Assert.assertNotNull(scp);
             try {
                 mSetSmartClipResultHandlerMethod.invoke(scp, mHandler);
-                mExtractSmartClipDataMethod.invoke(
-                        scp, rect.left, rect.top, rect.width(), rect.height());
+                mExtractSmartClipDataMethod.invoke(scp, 10, 20, 100, 70);
             } catch (Exception e) {
                 e.printStackTrace();
                 Assert.fail();
@@ -195,10 +193,6 @@ public class SmartClipProviderTest implements Handler.Callback {
         Assert.assertNotNull(mCallbackHelper.getText());
         Assert.assertNotNull(mCallbackHelper.getHtml());
         Assert.assertNotNull(mCallbackHelper.getRect());
-        Assert.assertEquals(rect.left, mCallbackHelper.getRect().left);
-        Assert.assertEquals(rect.top, mCallbackHelper.getRect().top);
-        Assert.assertEquals(rect.width(), mCallbackHelper.getRect().width());
-        Assert.assertEquals(rect.height(), mCallbackHelper.getRect().height());
     }
 
     @Test
