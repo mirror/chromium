@@ -46,6 +46,30 @@
       "revId": "f5ce56bdad32e44a1746de3a02478ba09eaa3309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08b8909_f7714736",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-21T13:11:26Z",
+      "side": 1,
+      "message": "I have investigated this and data: URLs do not generate any notifications. It\u0027s a bit sad that a redirected message may end without going through onComplete or OnErrorOccurred, but that\u0027s not your fault. :-)",
+      "parentUuid": "9d25b9bf_e8017a5b",
+      "range": {
+        "startLine": 1180,
+        "startChar": 18,
+        "endLine": 1180,
+        "endChar": 34
+      },
+      "revId": "f5ce56bdad32e44a1746de3a02478ba09eaa3309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
