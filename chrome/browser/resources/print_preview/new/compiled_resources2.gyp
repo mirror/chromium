@@ -41,6 +41,7 @@
       'target_name': 'pages_settings',
       'dependencies': [
         'model',
+	'settings_behavior',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
       ],
@@ -51,36 +52,42 @@
       'dependencies': [
         'model',
         'number_settings_section',
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'layout_settings',
       'dependencies': [
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'color_settings',
       'dependencies': [
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'media_size_settings',
       'dependencies': [
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'margins_settings',
       'dependencies': [
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'dpi_settings',
       'dependencies': [
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -89,6 +96,7 @@
       'dependencies': [
         'model',
         'number_settings_section',
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -96,6 +104,7 @@
       'target_name': 'other_options_settings',
       'dependencies': [
         'model',
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -103,6 +112,7 @@
       'target_name': 'advanced_options_settings',
       'dependencies': [
         'model',
+	'settings_behavior',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -113,9 +123,17 @@
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
+      'target_name': 'settings_behavior',
+      'dependencies': [
+        'model',
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
       'target_name': 'model',
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
+	'../compiled_resources2.gyp:print_preview',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     }
