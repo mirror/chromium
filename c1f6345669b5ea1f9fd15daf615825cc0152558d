@@ -22,6 +22,30 @@
       "revId": "c1f6345669b5ea1f9fd15daf615825cc0152558d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857a056a_222d98a8",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T07:50:19Z",
+      "side": 1,
+      "message": "Actually it is documented in its caller, UpdateContentTypeAndCharset.\n\nI added the spec text to the commit message.",
+      "parentUuid": "29607300_d3a79873",
+      "range": {
+        "startLine": 190,
+        "startChar": 9,
+        "endLine": 190,
+        "endChar": 31
+      },
+      "revId": "c1f6345669b5ea1f9fd15daf615825cc0152558d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
