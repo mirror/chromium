@@ -151,6 +151,59 @@ TEST(CBORReaderTest, TestReadArray) {
   }
 }
 
+TEST(CBORReaderTest, TestReadTaggedValue) {
+  static const std::vector<uint8_t> kTaggedCBORBytes = {
+      // clang-format off
+      0xda, 0x00, 0x0f, 0x42, 0x40,  // tag:1000000
+      0x64, 0x49, 0x45, 0x54, 0x46   // "IETF"
+      // clang-format on
+  };
+
+  base::Optional<CBORValue> cbor = CBORReader::Read(kTaggedCBORBytes);
+  ASSERT_TRUE(cbor.has_value());
+  ASSERT_TRUE(cbor.value().GetTag().has_value());
+  EXPECT_EQ(cbor.value().GetTag().value(), 1000000u);
+  ASSERT_EQ(cbor.value().type(), CBORValue::Type::STRING);
+  EXPECT_EQ(cbor.value().GetString(), "IETF");
+}
+
+TEST(CBORReaderTest, TestReadNestedTaggedValue) {
+  static const std::vector<uint8_t> kNestedTaggedCBORBytes = {
+      // clang-format off
+      0xda, 0x00, 0x0f, 0x42, 0x40,  // tag:1000000
+      0xa2,                          // Map type with 2 key value pairs.
+      0x61, 0x61,                    // Key 'a'
+      0xc0, 0x18,                    // Value 100 with tag 0.
+      0x64, 0x61, 0x62,              // Key 'b'
+      0xc1, 0x18,                    // Value 200 with tag 1.
+      0xc8
+      // clang-format on
+  };
+
+  base::Optional<CBORValue> cbor = CBORReader::Read(kNestedTaggedCBORBytes);
+  ASSERT_TRUE(cbor.has_value());
+  ASSERT_TRUE(cbor.value().GetTag().has_value());
+  EXPECT_EQ(cbor.value().GetTag().value(), 1000000u);
+
+  CBORValue map_val = std::move(cbor.value());
+  ASSERT_EQ(map_val.type(), CBORValue::Type::MAP);
+  ASSERT_EQ(map_val.GetMap().size(), 2u);
+
+  ASSERT_EQ(map_val.GetMap().count("a"), 1u);
+  ASSERT_EQ(map_val.GetMap().find("a")->second.type(),
+            CBORValue::Type::UNSIGNED);
+  ASSERT_TRUE(map_val.GetMap().find("a")->second.GetTag().has_value());
+  EXPECT_EQ(map_val.GetMap().find("a")->second.GetTag().value(), 0u);
+  EXPECT_EQ(map_val.GetMap().find("a")->second.GetUnsigned(), 100u);
+
+  ASSERT_EQ(map_val.GetMap().count("b"), 1u);
+  ASSERT_EQ(map_val.GetMap().find("b")->second.type(),
+            CBORValue::Type::UNSIGNED);
+  ASSERT_TRUE(map_val.GetMap().find("b")->second.GetTag().has_value());
+  EXPECT_EQ(map_val.GetMap().find("b")->second.GetTag().value(), 1u);
+  EXPECT_EQ(map_val.GetMap().find("b")->second.GetUnsigned(), 200u);
+}
+
 TEST(CBORReaderTest, TestReadMapWithMapValue) {
   static const std::vector<uint8_t> kMapTestCaseCbor = {
       // clang-format off
@@ -525,6 +578,21 @@ TEST(CBORReaderTest, TestExtraneousCBORDataError) {
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::EXTRANEOUS_DATA_ERROR);
   }
+}
+
+TEST(CBORReaderTest, TestUnsupportedTagFormatError) {
+  static const std::vector<uint8_t> kCBORWithConsecutiveTags = {
+      // clang-format off
+      0xc1, 0xc2,  // tag(1), tag(2)
+      0x62, 0x49, 0x45, 0x54, 0x46 // "IETF"
+      // clang-format on
+  };
+
+  CBORReader::CBORDecoderError error_code;
+  base::Optional<CBORValue> cbor =
+      CBORReader::Read(kCBORWithConsecutiveTags, &error_code);
+  EXPECT_FALSE(cbor.has_value());
+  EXPECT_EQ(error_code, CBORReader::UNSUPPORTED_TAG_FORMAT_ERROR);
 }
 
 }  // namespace content

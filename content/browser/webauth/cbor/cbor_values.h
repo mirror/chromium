@@ -5,12 +5,14 @@
 #ifndef CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_VALUES_H_
 #define CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_VALUES_H_
 
+#include <stdint.h>
 #include <string>
 #include <tuple>
 #include <vector>
 
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string_piece_forward.h"
 #include "content/common/content_export.h"
 
@@ -65,6 +67,7 @@ class CONTENT_EXPORT CBORValue {
     STRING = 3,
     ARRAY = 4,
     MAP = 5,
+    TAG = 6,
     NONE = -1,
   };
 
@@ -73,19 +76,29 @@ class CONTENT_EXPORT CBORValue {
 
   explicit CBORValue(Type type);
   explicit CBORValue(uint64_t in_unsigned);
+  explicit CBORValue(uint64_t in_unsigned, uint64_t tag);
 
   explicit CBORValue(const BinaryValue& in_bytes);
+  explicit CBORValue(const BinaryValue& in_bytes, uint64_t tag);
   explicit CBORValue(BinaryValue&& in_bytes) noexcept;
+  explicit CBORValue(BinaryValue&& in_bytes, uint64_t tag) noexcept;
 
   explicit CBORValue(const char* in_string);
+  explicit CBORValue(const char* in_string, uint64_t tag);
   explicit CBORValue(std::string&& in_string) noexcept;
+  explicit CBORValue(std::string&& in_string, uint64_t tag) noexcept;
   explicit CBORValue(base::StringPiece in_string);
+  explicit CBORValue(base::StringPiece in_string, uint64_t tag);
 
   explicit CBORValue(const ArrayValue& in_array);
+  explicit CBORValue(const ArrayValue& in_array, uint64_t tag);
   explicit CBORValue(ArrayValue&& in_array) noexcept;
+  explicit CBORValue(ArrayValue&& in_array, uint64_t tag) noexcept;
 
   explicit CBORValue(const MapValue& in_map);
+  explicit CBORValue(const MapValue& in_map, uint64_t tag);
   explicit CBORValue(MapValue&& in_map) noexcept;
+  explicit CBORValue(MapValue&& in_map, uint64_t tag) noexcept;
 
   CBORValue& operator=(CBORValue&& that) noexcept;
 
@@ -114,8 +127,11 @@ class CONTENT_EXPORT CBORValue {
   const ArrayValue& GetArray() const;
   const MapValue& GetMap() const;
 
+  const base::Optional<uint64_t> GetTag() const;
+
  private:
   Type type_;
+  uint64_t tag_;
 
   union {
     uint64_t unsigned_value_;
