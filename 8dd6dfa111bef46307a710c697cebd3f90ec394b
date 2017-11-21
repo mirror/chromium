@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9bd0f06_1a34d571",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-21T09:36:29Z",
+      "side": 1,
+      "message": "The A30DaysAgo() method looks really weird, maybe just make it a local variable as well?",
+      "revId": "8dd6dfa111bef46307a710c697cebd3f90ec394b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
