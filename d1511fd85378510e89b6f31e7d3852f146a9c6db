@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa10d51b_e1333da0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T05:59:16Z",
+      "side": 1,
+      "message": "nit: I\u0027d rephrase this to something like \"Add a histogram to measure how often the ZIP unpacker extension is unexpectedly disabled, and why.\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 70,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d1511fd85378510e89b6f31e7d3852f146a9c6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd212199_316240a4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24850,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T05:59:16Z",
+      "side": 1,
+      "message": "nit: s/of why/why",
+      "range": {
+        "startLine": 24850,
+        "startChar": 23,
+        "endLine": 24850,
+        "endChar": 29
+      },
+      "revId": "d1511fd85378510e89b6f31e7d3852f146a9c6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f6eab7_8209eb88",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24850,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T05:59:16Z",
+      "side": 1,
+      "message": "nit: s/ZIP unpacker extension/the ZIP unpacker extension",
+      "range": {
+        "startLine": 24850,
+        "startChar": 30,
+        "endLine": 24850,
+        "endChar": 52
+      },
+      "revId": "d1511fd85378510e89b6f31e7d3852f146a9c6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9349a56f_110c78c4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24851,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T05:59:16Z",
+      "side": 1,
+      "message": "nit: s/This/Each entry (or \"Each increment\" or \"Each record\" or something along those lines)",
+      "range": {
+        "startLine": 24851,
+        "startChar": 63,
+        "endLine": 24851,
+        "endChar": 67
+      },
+      "revId": "d1511fd85378510e89b6f31e7d3852f146a9c6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7827f605_e5334ab3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24852,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T05:59:16Z",
+      "side": 1,
+      "message": "nit: s/fix/a fix",
+      "range": {
+        "startLine": 24852,
+        "startChar": 56,
+        "endLine": 24852,
+        "endChar": 59
+      },
+      "revId": "d1511fd85378510e89b6f31e7d3852f146a9c6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
