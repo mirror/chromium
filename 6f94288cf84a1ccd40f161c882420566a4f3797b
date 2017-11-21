@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb268e7_8bb6ee9e",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-21T23:47:49Z",
+      "side": 1,
+      "message": "I had to use an extra layer of indirection vs. the one I suggested in the review since I remembered that there are a few interfaces that don\u0027t have an Init method :/",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 2
+      },
+      "revId": "6f94288cf84a1ccd40f161c882420566a4f3797b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
