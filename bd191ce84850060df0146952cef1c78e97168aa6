@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf14a384_c290cc11",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T11:02:47Z",
+      "side": 1,
+      "message": "Ugh, weak pointers :-/\n\nWhat I would do here is add a method to NearOomMessageDelegate to be called when the infobar is destroyed. The delegate can then hold a raw pointer to the infobar and clear it in that method. That also fits more nicely with the lifetime contract of this method (see the comment in line 35).",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "bd191ce84850060df0146952cef1c78e97168aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
