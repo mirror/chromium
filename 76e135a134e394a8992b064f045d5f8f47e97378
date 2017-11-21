@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b309b6_7f13697a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T07:24:52Z",
+      "side": 1,
+      "message": "I realized that we shouldn\u0027t need IsWrapper \u0026 ToImplWithTypeCheck hack once we make window.event be [Replaceable] (it\u0027s not yet).\n\nSo, could you add:\n\n  TODO(yukishiino): Make window.event [Replaceable] and simplify the following IsWrapper/ToImplWithTypeCheck hack.\n\nIt\u0027s optional to add another TODO to remove the use counter.",
+      "revId": "76e135a134e394a8992b064f045d5f8f47e97378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c407997_5c4517b4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T07:24:52Z",
+      "side": 1,
+      "message": "|event| may be nullptr.\n\nAuthor script can run: window.event \u003d document; for example.  In this case, |document| is a platform object, so IsWrapper() returns true, but it\u0027s not an Event.",
+      "revId": "76e135a134e394a8992b064f045d5f8f47e97378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
