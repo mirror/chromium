@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f603bae3_7c2a83fd",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-21T19:33:36Z",
+      "side": 1,
+      "message": ". This callback is used only in tests.",
+      "range": {
+        "startLine": 209,
+        "startChar": 64,
+        "endLine": 209,
+        "endChar": 65
+      },
+      "revId": "dc11fa1db8f5794ff5898d6db367d41e0e39d357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

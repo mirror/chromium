@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f7f89650_12484852",
+        "filename": "chrome/browser/payments/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-21T19:33:36Z",
+      "side": 1,
+      "message": "Thank you for taking a deeper look at this. Now that you\u0027ve experimented more with this, I can see that my initial intuition to make service_worker_payment_app_factory_browsertest.cc depend on the same base class as payment_request_payment_app_browsertest.cc was short-sighted. Please pardon my initial short-sighted suggestion. If you please undo all changes to service_worker_payment_app_factory_browsertest.cc and this DEPS file, then your patch should be ready to submit.",
+      "parentUuid": "841e7d18_fb7740cd",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 72
+      },
+      "revId": "cf68f48b5d7e1e038f52b9d3dfe93a557d67aa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "222154c3_6a8e5fa4",
         "filename": "components/payments/content/payment_request_state.cc",
         "patchSetId": 9
