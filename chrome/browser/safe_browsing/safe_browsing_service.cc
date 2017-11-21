@@ -328,7 +328,6 @@ SafeBrowsingProtocolConfig SafeBrowsingService::GetProtocolConfig() const {
 
   base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
   config.disable_auto_update =
-      cmdline->HasSwitch(safe_browsing::switches::kSbDisableAutoUpdate) ||
       cmdline->HasSwitch(::switches::kDisableBackgroundNetworking);
   config.url_prefix = kSbDefaultURLPrefix;
   config.backup_connect_error_url_prefix = kSbBackupConnectErrorURLPrefix;
