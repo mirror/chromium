@@ -16,6 +16,24 @@
       "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a3ec8c_62ac79b3",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T18:18:33Z",
+      "side": 1,
+      "message": "No, the current design does not require us to plumb the bit through mojom, because the MirroringMediaRouteController is capable of populating this bit from PrefService. The extension is also capable of doing so using extension API, but it just makes more sense to do it in the browser.",
+      "parentUuid": "11aa6892_ea160398",
+      "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
