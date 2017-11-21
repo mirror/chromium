@@ -65,6 +65,137 @@
     },
     {
       "key": {
+        "uuid": "9a97cf57_6db00d90",
+        "filename": "content/browser/frame_host/interstitial_page_impl_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "Can these changes be moved to a separate CL? This one is quite large, and this could be separated from the actual Mojofication.",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4833ebf1_6b620d8a",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure that vectors of enums are passed by value in mojo, so this std::move() doesn\u0027t actually result in a move. I wouldn\u0027t expect this to copy anyway, since the reply callback will just serialize the bytes to the wire.",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 36
+      },
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa834384_aaa1408f",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "mojo::BadMessageReceived() this please, since it shouldn\u0027t be used on non-Mac platforms.",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77c6659_6fdb4174",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "Consider making this private, since there\u0027s a public Create() function (I guess this means it will need to use WrapUnique instead of make_unique, but I think that\u0027s OK)",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fedc15_1130cc3f",
+        "filename": "content/browser/renderer_host/clipboard_host_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "Nit: host_",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a5dfcf_3abf714e",
+        "filename": "content/common/clipboard_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "Remove the default case here and below.",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfcf1ee_ad498b45",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "I think I\u0027d rather code just directly invoke it rather than going through the scoper helper: this was only needed in the past due to the thread differences, so we should probably just get rid of the Set* helpers altogether.",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21402732_a289cf8b",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 17
@@ -76,6 +207,46 @@
       "writtenOn": "2017-11-21T17:00:01Z",
       "side": 1,
       "message": "it\u0027s best to avoid creating a new pipe each time this is called (https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Consider-the-cost-of-setting-up-message-pipes), since there\u0027s already one in the renderer. you can make RendererBlinkPlatformImpl::GetClipboardHost() public and it\u0027s accessible through RenderThreadImpl::current_blink_platform_impl()",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093ac99f_ff5253b2",
+        "filename": "content/renderer/webclipboard_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "Nit: technically, the rest of Chrome doesn\u0027t allow mutable reference args (even though Blink uses them). I don\u0027t feel strongly about this though (since I think the alternative is strictly worse in this case)",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 21,
+        "endChar": 49
+      },
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c89368_b1013339",
+        "filename": "ui/base/clipboard/mojom/clipboard_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T22:16:32Z",
+      "side": 1,
+      "message": "No default case here (and below), since it suppresses compiler warnings for new enum values.",
       "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
