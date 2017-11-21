@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7302a574_1240be08",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T16:50:55Z",
+      "side": 1,
+      "message": "I don\u0027t think the comment is right, the video_frame already has a sync token when it was created.\n\nI guess it runs twice to make sure the token doesn\u0027t get replaced even on multiple calls.",
+      "revId": "68098cc0bde62986ac9d2e3839319ec8709cee61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
