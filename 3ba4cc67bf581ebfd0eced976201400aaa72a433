@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9087adb_3220796f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-21T04:47:52Z",
+      "side": 1,
+      "message": "\"Convert all of IPC messages\" ... ?",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9905013b_8cecc79f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-21T04:47:52Z",
+      "side": 1,
+      "message": "\"we replace this witl\" -\u003e replace this with?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f4f445_8d5a56e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-21T04:47:52Z",
+      "side": 1,
+      "message": "\"We remove\" -\u003e Remove",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
