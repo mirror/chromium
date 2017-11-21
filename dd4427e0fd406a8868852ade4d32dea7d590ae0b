@@ -22,6 +22,30 @@
       "revId": "dd4427e0fd406a8868852ade4d32dea7d590ae0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153a1f9c_00c1d048",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 44901,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-21T15:19:18Z",
+      "side": 1,
+      "message": "*facepalm* I searched for the new name and then added the comment, but of course the new name is listed in the old histograms deprecation message. *sigh*",
+      "parentUuid": "bebbcac5_3e90292a",
+      "range": {
+        "startLine": 44900,
+        "startChar": 76,
+        "endLine": 44901,
+        "endChar": 30
+      },
+      "revId": "dd4427e0fd406a8868852ade4d32dea7d590ae0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
