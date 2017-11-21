@@ -68,6 +68,9 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   base::string16 GetWindowTitle() const override;
   bool ShouldShowCloseButton() const override;
 
+  // views::DialogDelegate:
+  int GetPreferredFrameWidth() const override;
+
   // views::BubbleDialogDelegateView:
   void Init() override;
   View* CreateExtraView() override;

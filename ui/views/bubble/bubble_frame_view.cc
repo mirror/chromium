@@ -596,6 +596,13 @@ gfx::Size BubbleFrameView::GetFrameSizeForClientSize(
   const gfx::Insets client_insets = GetClientInsetsForFrameWidth(frame_width);
   DCHECK_GE(frame_width, client_size.width());
   gfx::Size size(frame_width, client_size.height() + client_insets.height());
+  DialogDelegate* dialog_delegate =
+      GetWidget()->widget_delegate()->AsDialogDelegate();
+  if (dialog_delegate) {
+    const int preferred_width = dialog_delegate->GetPreferredFrameWidth();
+    if (preferred_width)
+      size.set_width(preferred_width);
+  }
 
   // Only account for footnote_container_'s height if it's visible, because
   // content_margins_ adds extra padding even if all child views are invisible.

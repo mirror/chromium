@@ -94,6 +94,10 @@ class VIEWS_EXPORT DialogDelegate : public ui::DialogModel,
   // LayoutProvider's snapping.
   virtual bool ShouldSnapFrameWidth() const;
 
+  // Returns the preferred frame width to override the calculated width or
+  // snapped frame width. Return 0 to use calculated or snapped width.
+  virtual int GetPreferredFrameWidth() const;
+
   // Overridden from ui::DialogModel:
   int GetDialogButtons() const override;
   int GetDefaultDialogButton() const override;
