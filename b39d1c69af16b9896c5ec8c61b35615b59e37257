@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8ef6a7_1ddb0a2f",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-21T17:45:37Z",
+      "side": 1,
+      "message": "(This is not necessarily related to the CL but I think might be worth investigating)\nI see using FocusedCoreFrame() is the only difference between the implementation here and that of WebFrameWidgetImpl. Is there a way to use FocusedLocalFrameInWidget() instead and move the implementation from both WebViewImpl and WebFrameWidgetImpl to WebFrameWidgetBase?\n\nIf that is a possibility (which means there are no legitimate uses of this method when !MainFrameImpl() or there are no focused frames), then the actual public API could be removed to something like WebFrameWidget -- or at least the WebViewImpl override could be removed.",
+      "revId": "b39d1c69af16b9896c5ec8c61b35615b59e37257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1c8039_9628f212",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-21T17:45:37Z",
+      "side": 1,
+      "message": "This seems unnecessary given line 2178.",
+      "revId": "b39d1c69af16b9896c5ec8c61b35615b59e37257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
