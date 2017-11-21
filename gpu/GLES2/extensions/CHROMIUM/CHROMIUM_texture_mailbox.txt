@@ -20,10 +20,10 @@ Overview
     objects in different contexts where the contexts would not normally share
     texture resources. Five new functions are exported. glGenMailboxCHROMIUM
     generates a name that can be used to identify texture image data outside
-    the scope of a context group. glProduceTextureCHROMIUM and
-    glProduceTextureDirectCHROMIUM associate a texture object with a global
-    mailbox name. glConsumeMailboxCHROMIUM and glCreateAndConsumeTextureCHROMIUM
-    associate the texture object referenced by a mailbox name to a texture name.
+    the scope of a context group. glProduceTextureDirectCHROMIUM associates a
+    texture object with a global mailbox name. glCreateAndConsumeTextureCHROMIUM
+    associates the texture object referenced by a mailbox name to a texture
+    name.
 
 New Procedures and Functions
 
@@ -36,44 +36,25 @@ New Procedures and Functions
 
     <mailbox> returns a GL_MAILBOX_SIZE_CHROMIUM byte sized name
 
+    void glProduceTextureDirectCHROMIUM (GLuint texture, const GLbyte *mailbox)
 
-    void glProduceTextureCHROMIUM (GLenum target, const GLbyte *mailbox)
-
-    Associates the currently bound texture object with the mailbox name. A
-    given texture object can be associated with several mailbox names. If a
+    Associates the specified texture object with the mailbox name.  A given
+    texture object can be associated with several mailbox names. If a
     mailbox name was previously associated with a texture object, that
-    previous association is broken. The currently bound texture object is not
-    modified by the operation.
+    previous association is broken.
 
-    If glProduceTextureCHROMIUM generates an error, the mailbox name keeps its
-    current association, if any.
+    This operation does not change the texture bindings or alter the bound
+    texture in any way. If <texture> is 0 then any previous association of the
+    mailbox with a texture object is broken and no new association is created.
 
-    The mailbox does not keep a reference to the texture object. When the
-    texture object is destroyed (deleted from all context groups, and unbound
-    from all texture units and framebuffer attachments), the mailbox is
-    disassociated from the texture object.
-
-    <target> uses the same parameters as TexImage2D.
+    <texture> Specifies the name of a texture.
 
     <mailbox> identifies a GL_MAILBOX_SIZE_CHROMIUM byte sized name returned by
     glGenMailboxCHROMIUM.
 
-    INVALID_OPERATION is generated if <target> is not a valid target.
+    INVALID_OPERATION is generated if <texture> is not a valid texture.
 
     INVALID_OPERATION is generated if <mailbox> is invalid.
-
-
-    void glProduceTextureDirectCHROMIUM (GLuint texture, GLenum target,
-        const GLbyte *mailbox)
-
-    Associates the specified texture object with the mailbox name. Performs
-    identically to glProduceTextureCHROMIUM except that the texture specified by
-    <texture> is used instead of the currently bound texture. This operation
-    does not change the texture bindings or alter the bound texture in any
-    way. If <texture> is 0 then any previous association of the mailbox with a
-    texture object is broken and no new association is created.
-
-    <texture> Specifies the name of a texture.
 
 
     GLuint glCreateAndConsumeTextureCHROMIUM (GLenum target,
@@ -131,3 +112,4 @@ Revision History
     8/03/2016    Allow unbinding mailbox using glProduceTextureDirectCHROMIUM.
     10/20/2017   Remove glConsumeTextureCHROMIUM and update
                  glCreateAndConsumeTextureCHROMIUM definition.
+    11/20/2017   Remove glProduceTextureCHROMIUM.  Remove <target> arguments.

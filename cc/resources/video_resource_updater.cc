@@ -268,7 +268,6 @@ VideoResourceUpdater::AllocateResource(const gfx::Size& plane_size,
     ResourceProvider::ScopedWriteLockGL lock(resource_provider_, resource_id);
     gl->ProduceTextureDirectCHROMIUM(
         lock.GetTexture(),
-        resource_provider_->GetResourceTextureTarget(resource_id),
         mailbox.name);
   }
   all_resources_.push_front(
