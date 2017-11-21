@@ -15,6 +15,8 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/metrics/field_trial.h"
+#include "base/test/scoped_feature_list.h"
 #include "components/ukm/ukm_recorder_impl.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
@@ -166,6 +168,9 @@ class TestUkmRecorder : public UkmRecorderImpl {
   std::vector<const ukm::mojom::UkmEntry*> GetEntriesForSourceID(
       ukm::SourceId source_id,
       const char* event_name) const;
+
+  base::FieldTrialList field_trial_list_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(TestUkmRecorder);
 };

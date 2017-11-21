@@ -12,6 +12,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "components/ukm/ukm_source.h"
+#include "components/variations/variations_associated_data.h"
 #include "services/metrics/public/cpp/delegating_ukm_recorder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -59,8 +60,40 @@ std::vector<int64_t> GetValuesForMetric(const mojom::UkmEntry* entry,
 
 }  // namespace
 
-TestUkmRecorder::TestUkmRecorder() {
+TestUkmRecorder::TestUkmRecorder()
+    : field_trial_list_(nullptr /* entropy_provider */) {
+  static const char kTestFieldTrialName[] = "TestTrial";
+  static const char kTestExperimentGroupName[] = "TestGroup";
+
   EnableRecording();
+
+  variations::testing::ClearAllVariationParams();
+
+  EXPECT_TRUE(variations::AssociateVariationParams(
+      kTestFieldTrialName, kTestExperimentGroupName,
+      {{"RestrictToWhitelistedSourceIds", "false"}}));
+
+  base::FieldTrial* field_trial = base::FieldTrialList::CreateFieldTrial(
+      kTestFieldTrialName, kTestExperimentGroupName);
+
+  std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
+  feature_list->RegisterFieldTrialOverride(
+      kUkmFeature.name, base::FeatureList::OVERRIDE_ENABLE_FEATURE,
+      field_trial);
+
+  // Since we are adding a scoped feature list after browser start, copy over
+  // the existing feature list to prevent inconsistency.
+  base::FeatureList* existing_feature_list = base::FeatureList::GetInstance();
+  if (existing_feature_list) {
+    std::string enabled_features;
+    std::string disabled_features;
+    base::FeatureList::GetInstance()->GetFeatureOverrides(&enabled_features,
+                                                          &disabled_features);
+    feature_list->InitializeFromCommandLine(enabled_features,
+                                            disabled_features);
+  }
+
+  scoped_feature_list_.InitWithFeatureList(std::move(feature_list));
 }
 
 TestUkmRecorder::~TestUkmRecorder() {
