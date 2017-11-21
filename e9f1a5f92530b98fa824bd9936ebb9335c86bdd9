@@ -93,6 +93,30 @@
     },
     {
       "key": {
+        "uuid": "a7d9cf3f_c72bf60e",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T01:47:34Z",
+      "side": 1,
+      "message": "kTemporary etc? Gotcha.",
+      "parentUuid": "7fc55439_62ba43c0",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d16be34_9f0ecfe2",
         "filename": "content/common/quota_messages.mojom",
         "patchSetId": 2
@@ -104,6 +128,24 @@
       "writtenOn": "2017-11-20T08:58:49Z",
       "side": 1,
       "message": "Note that primitive types can\u0027t be nullable.",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18308ea_eed86491",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T01:47:34Z",
+      "side": 1,
+      "message": "Is there a standard way around this?",
+      "parentUuid": "5d16be34_9f0ecfe2",
       "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +180,30 @@
       "writtenOn": "2017-11-20T08:58:49Z",
       "side": 1,
       "message": "Name mojo interfaces as you would interfaces in other languages. Something like QuotaDispatcherHost is probably a reasonable start.",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85f3072_91db5b0b",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T01:47:34Z",
+      "side": 1,
+      "message": "I thought we were avoiding names like host/sender/receiver/etc. What about QuotaRequest?",
+      "parentUuid": "57319d8b_9c9f4c72",
       "range": {
         "startLine": 35,
         "startChar": 10,
@@ -190,6 +256,24 @@
     },
     {
       "key": {
+        "uuid": "b6219675_5bdbe321",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T01:47:34Z",
+      "side": 1,
+      "message": "Is there a canonical way to do this so it works off all threads?",
+      "parentUuid": "0dc375a1_564dfe58",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e450c0ca_ffb2f530",
         "filename": "content/renderer/quota_dispatcher.cc",
         "patchSetId": 2
@@ -218,6 +302,30 @@
       "writtenOn": "2017-11-20T08:58:49Z",
       "side": 1,
       "message": "Bind this into the callback instead of sending it.",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 16
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0a48d5_57d44a8c",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T01:47:34Z",
+      "side": 1,
+      "message": "Nice! I didn\u0027t think of doing that. Thanks",
+      "parentUuid": "43dcf25d_3aecc954",
       "range": {
         "startLine": 106,
         "startChar": 6,
