@@ -39,6 +39,7 @@ void IOSSecurityInterstitialPage::Show() {
       web_state_, ShouldCreateNewNavigation(), request_url_,
       std::unique_ptr<web::HtmlWebInterstitialDelegate>(this));
   web_interstitial_->Show();
+  web_state()->DidChangeVisibleSecurityState();
   AfterShow();
 }
 
