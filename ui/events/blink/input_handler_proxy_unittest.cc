@@ -219,6 +219,8 @@ class MockInputHandler : public cc::InputHandler {
   MOCK_CONST_METHOD1(
       GetEventListenerProperties,
       cc::EventListenerProperties(cc::EventListenerClass event_class));
+  MOCK_CONST_METHOD1(PointInWidgetInsideWheelEventListenerRegion,
+                     bool(const gfx::Point& point));
   MOCK_METHOD2(EventListenerTypeForTouchStartOrMoveAt,
                cc::InputHandler::TouchStartOrMoveEventListenerType(
                    const gfx::Point& point,
