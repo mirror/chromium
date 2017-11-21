@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "feb4d0a3_36d399d7",
+        "filename": "third_party/libxml/chromium/libxml_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-21T22:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69d11469_4fd68a5b",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "d59620fac082600d793c558faecfb65545e77621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc52bfb6_18f928f9",
         "filename": "third_party/libxml/chromium/libxml_utils.cc",
         "patchSetId": 12
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-21T19:52:20Z",
       "side": 1,
       "message": "Bleh, this API. I think |names| leaks here if this fails. Would it be possible to do the XmlStringToStdStringWithDelete here instead of in GetAllNodeAttributes() or GetAllDeclaredNamespaces()?",
+      "revId": "d59620fac082600d793c558faecfb65545e77621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfb9376_6eb31440",
+        "filename": "third_party/libxml/chromium/libxml_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-21T22:27:15Z",
+      "side": 1,
+      "message": "Are you sure? The doc mentions that the strings returned by xmlTextReaderConstLocalName and xmlTextReaderConstName are deallocated with the reader, so I don\u0027t think we should delete them.",
+      "parentUuid": "fc52bfb6_18f928f9",
       "revId": "d59620fac082600d793c558faecfb65545e77621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
