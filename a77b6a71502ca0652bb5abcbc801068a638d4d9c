@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "513b1524_00d56937",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-21T23:16:29Z",
+      "side": 1,
+      "message": "The separate function with the switch now makes it super obvious there exists a 1:1 mapping between main_thread_type and the type of message loop (or lack thereof).\n\nThe initializer lists are ideally short expressions per variables. This initializer spans 8 lines is much longer than expected.",
+      "parentUuid": "d432195c_1cd5c8b1",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75774fe9_504278ab",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 23
@@ -296,6 +320,30 @@
       "side": 1,
       "message": "I don\u0027t understand which expectation you feel is missing here? Delays are artificial in mock time, so nothing expires from under the hood (well TaskScheduler tasks still do I guess for now but that\u0027s a wall clock race and not one the caller can depend on -- obvious I think?).",
       "parentUuid": "c77a2632_186b0ad3",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 34
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04ca7419_ec8ff62e",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-21T23:16:29Z",
+      "side": 1,
+      "message": "Might be obvious to us, but it\u0027s not obvious to the casual user. Can users trust that the delayed tasks are completed by the end? The unit tests suggest yes and it would be good to provide that as a guarantee here.",
+      "parentUuid": "cfaf383e_15bce8d6",
       "range": {
         "startLine": 99,
         "startChar": 0,
