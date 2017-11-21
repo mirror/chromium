@@ -16,6 +16,24 @@
       "revId": "1fe8edeeee038217d30130a43ad4350fc62e5ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24eacc27_8175a9bb",
+        "filename": "components/sync/mojo/syncer_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-21T21:49:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84fb45cf_65ae9475",
+      "revId": "1fe8edeeee038217d30130a43ad4350fc62e5ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
