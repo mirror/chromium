@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "915ff565_4254c933",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-21T17:59:11Z",
+      "side": 1,
+      "message": "Don\u0027t you need a call to SetHost?",
+      "range": {
+        "startLine": 114,
+        "startChar": 37,
+        "endLine": 114,
+        "endChar": 48
+      },
+      "revId": "c53b16d7e6f491e9475284a78b3be2af50fc82c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b6f092_d2c5a983",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-21T17:59:11Z",
+      "side": 1,
+      "message": "Now that you are touching this:\n\n  ArcPolicyBridge::ArcPolicyBridge(content::BrowserContext* context,\n                                   ArcBridgeService* bridge_service)\n      : ArcPolicyBridge(context, bridge_service, nullptr /* policy_service */) {}",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 1
+      },
+      "revId": "c53b16d7e6f491e9475284a78b3be2af50fc82c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

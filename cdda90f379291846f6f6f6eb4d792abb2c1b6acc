@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a0cde52_55b828d9",
+        "filename": "chrome/browser/chromeos/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-21T17:59:11Z",
+      "side": 0,
+      "message": "I think we want to preserve this. Maybe even in the ConnectionHolder itself.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 74
+      },
+      "revId": "cdda90f379291846f6f6f6eb4d792abb2c1b6acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
