@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95fb6f60_913a2a7a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-21T23:17:41Z",
+      "side": 1,
+      "message": "Please add comment",
+      "revId": "2e9542e6b14d56df636a712a98d7ad01e0e8e867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
