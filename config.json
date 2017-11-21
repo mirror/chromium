@@ -26,6 +26,7 @@
     "gpu",
     "ios",
     "media",
+    "media/midi",
     "mojo",
     "net",
     "net/third_party/nss",
