@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96e9dbb8_24b9b4b9",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T19:35:53Z",
+      "side": 1,
+      "message": "This comment asserts the opposite of the below expectations. Which is it?",
+      "revId": "21e7aefce5827a011f017643c65125a7d53a997c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a396c2c3_379b185c",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T19:35:53Z",
+      "side": 1,
+      "message": "nit: no need to static_cast; that is already the type of the variable",
+      "revId": "21e7aefce5827a011f017643c65125a7d53a997c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab492eb6_6373c32b",
+        "filename": "third_party/WebKit/public/web/WebGlobalObjectReusePolicy.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T19:35:53Z",
+      "side": 1,
+      "message": "nit: Please comment explaining what this enum is intended to be used for, and what the meanings of the enumerators are. It seems to be \"is the same JavaScript global object [as well as global proxy?] used in each JS context [per-world] when the frame navigates\", but I\u0027m not certain I understand correctly.",
+      "revId": "21e7aefce5827a011f017643c65125a7d53a997c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
