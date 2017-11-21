@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e5549344_8b2be895",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-21T21:32:14Z",
+      "side": 1,
+      "message": "Meh, eventually I\u0027m thinking of just making it all a bag of options anyways (a la TestBrowserThreadBundle), i.e. when MOCK_TIME is available for all main thread types. For now though I don\u0027t think this is too bad hidden in the .cc as-is.",
+      "parentUuid": "9d55f2e0_04c1a7e0",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75774fe9_504278ab",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 23
@@ -138,6 +162,30 @@
       "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9f8d2b_44c3bd75",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-21T21:32:14Z",
+      "side": 1,
+      "message": "\u003e This can deadlock if a task on the main thread waits for a task running in TaskScheduler.\n\u003e \n\nRight, I made the assumption that main thread tasks shouldn\u0027t synchronously block on TaskScheduler tasks (and restriction goes away when we take ownership of main thread as you say). Added explicit note.\n\n\u003e Add TODO to remove this once TaskTracker knows about tasks on all threads (GetNumIncompleteUndelayedTasksForTesting() below won\u0027t return zero if there are pending tasks on the main thread, and we will go back to the top of the loop).\n\nRight :), done.",
+      "parentUuid": "9973843a_6420f86e",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
