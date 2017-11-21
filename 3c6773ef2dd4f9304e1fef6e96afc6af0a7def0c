@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7d4078c_9796e08e",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T14:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b433034_71abade8",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63fe448c_81317e70",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768727e6_4255beb7",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T14:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63fe448c_81317e70",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 8
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "27c226b4_200339bf",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T14:44:21Z",
+      "side": 1,
+      "message": "Done, and swapped the button\u0027s action sent to OK. it essentially just closes the infobar but it accepts the intervention so I guess an affirmative/positive action is also right.",
+      "parentUuid": "2939fa54_e3ad8491",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6d1fa42_8f613ef2",
         "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
         "patchSetId": 3
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "505deced_d0498c94",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T14:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d1fa42_8f613ef2",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abbaba28_4a468486",
         "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.h",
         "patchSetId": 3
@@ -138,6 +234,30 @@
       "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5619ad36_2780e7c4",
+        "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T14:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abbaba28_4a468486",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 2
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
