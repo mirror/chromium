@@ -35,6 +35,16 @@ namespace content {
 namespace {
 constexpr size_t kDefaultAllocationSize = 512 * 1024;
 
+void RecordCertificateChainSize(const net::SSLInfo& ssl_info) {
+  base::Pickle cert_pickle;
+  ssl_info.cert->Persist(&cert_pickle);
+  base::Pickle unverified_cert_pickle;
+  ssl_info.unverified_cert->Persist(&unverified_cert_pickle);
+  UMA_HISTOGRAM_MEMORY_KB(
+      "Network.URLLoader.OnCompleteCertificateChainsSize",
+      (cert_pickle.size() + unverified_cert_pickle.size()) / 1000);
+}
+
 // TODO: this duplicates ResourceDispatcherHostImpl::BuildLoadFlagsForRequest.
 int BuildLoadFlagsForRequest(const ResourceRequest& request,
                              bool is_sync_load) {
@@ -497,6 +507,10 @@ void URLLoader::OnCertificateRequested(net::URLRequest* unused,
 void URLLoader::OnSSLCertificateError(net::URLRequest* request,
                                       const net::SSLInfo& ssl_info,
                                       bool fatal) {
+  if (!context_->network_service()) {
+    OnSSLCertificateErrorResponse(ssl_info, net::ERR_INSECURE_RESPONSE);
+    return;
+  }
   context_->network_service()->client()->OnSSLCertificateError(
       resource_type_, url_request_->url(), process_id_, render_frame_id_,
       ssl_info, fatal,
@@ -680,6 +694,18 @@ void URLLoader::NotifyCompleted(int error_code) {
   status.encoded_data_length = url_request_->GetTotalReceivedBytes();
   status.encoded_body_length = url_request_->GetRawBodyBytes();
   status.decoded_body_length = total_written_bytes_;
+
+  if (resource_type_ == RESOURCE_TYPE_MAIN_FRAME &&
+      net::IsCertStatusError(url_request_->ssl_info().cert_status) &&
+      !net::IsCertStatusMinorError(url_request_->ssl_info().cert_status)) {
+    status.ssl_info = url_request_->ssl_info();
+  }
+
+  UMA_HISTOGRAM_BOOLEAN("Network.URLLoader.OnCompleteHasSSLInfo",
+                        status.ssl_info.has_value());
+  if (status.ssl_info.has_value()) {
+    RecordCertificateChainSize(status.ssl_info.value());
+  }
 
   url_loader_client_->OnComplete(status);
   DeleteIfNeeded();

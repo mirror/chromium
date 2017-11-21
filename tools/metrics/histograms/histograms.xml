@@ -49660,6 +49660,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Network.URLLoader.OnCompleteCertificateChainsSize" units="KB">
+  <owner>estark@chromium.org</owner>
+  <summary>
+    When the URLLoader's OnComplete message to its client contains certificate
+    chains, this histogram records the size in KB of those pickled certificate
+    chains. This histogram is recorded by URLLoader implementations that fetch
+    from network, for every request which contains an SSLInfo in its OnComplete
+    notification.
+  </summary>
+</histogram>
+
+<histogram name="Network.URLLoader.OnCompleteHasSSLInfo" enum="BooleanPresent">
+  <owner>estark@chromium.org</owner>
+  <summary>
+    Whether the URLLoader's OnComplete message to its client contains an
+    SSLInfo, which should only be present for main-frame requests with
+    certificate errors. This histogram is recorded for every request completion
+    by URLLoader implementations that fetch from network.
+  </summary>
+</histogram>
+
 <histogram name="Network.Wifi.AuthMode" enum="NetworkAuthModeType">
   <obsolete>
     Deprecated 04/2016 as doesn't have data nor owner.

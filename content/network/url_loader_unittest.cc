@@ -16,6 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -48,6 +49,11 @@
 namespace content {
 
 namespace {
+
+const char kOnCompleteSSLInfoHistogram[] =
+    "Network.URLLoader.OnCompleteHasSSLInfo";
+const char kOnCompleteSSLInfoCertSizeHistogram[] =
+    "Network.URLLoader.OnCompleteCertificateChainsSize";
 
 static ResourceRequest CreateResourceRequest(const char* method,
                                              ResourceType type,
@@ -1050,6 +1056,50 @@ TEST_F(URLLoaderTest, UploadDoubleRawFile) {
   std::string response_body;
   EXPECT_EQ(net::OK, Load(test_server()->GetURL("/echo"), &response_body));
   EXPECT_EQ(expected_body + expected_body, response_body);
+}
+
+// Tests that SSLInfo is not attached to OnComplete messages when there is no
+// certificate error.
+TEST_F(URLLoaderTest, NoSSLInfoWithoutCertificateError) {
+  base::HistogramTester histograms;
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  ASSERT_TRUE(https_server.Start());
+  set_resource_type(RESOURCE_TYPE_MAIN_FRAME);
+  EXPECT_EQ(net::OK, Load(https_server.GetURL("/")));
+  EXPECT_FALSE(client()->completion_status().ssl_info.has_value());
+  histograms.ExpectUniqueSample(kOnCompleteSSLInfoHistogram, false, 1);
+  histograms.ExpectTotalCount(kOnCompleteSSLInfoCertSizeHistogram, 0);
+}
+
+// Tests that SSLInfo is not attached to OnComplete messages for non-main-frame
+// requests.
+TEST_F(URLLoaderTest, NoSSLInfoForSubresources) {
+  base::HistogramTester histograms;
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_EXPIRED);
+  ASSERT_TRUE(https_server.Start());
+  set_resource_type(RESOURCE_TYPE_XHR);
+  EXPECT_EQ(net::ERR_INSECURE_RESPONSE, Load(https_server.GetURL("/")));
+  EXPECT_FALSE(client()->completion_status().ssl_info.has_value());
+  histograms.ExpectUniqueSample(kOnCompleteSSLInfoHistogram, false, 1);
+  histograms.ExpectTotalCount(kOnCompleteSSLInfoCertSizeHistogram, 0);
+}
+
+// Tests that SSLInfo is attached to OnComplete messages for main-frame requests
+// with certificate errors.
+TEST_F(URLLoaderTest, SSLInfoOnComplete) {
+  base::HistogramTester histograms;
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_EXPIRED);
+  ASSERT_TRUE(https_server.Start());
+  set_resource_type(RESOURCE_TYPE_MAIN_FRAME);
+  EXPECT_EQ(net::ERR_INSECURE_RESPONSE, Load(https_server.GetURL("/")));
+  ASSERT_TRUE(client()->completion_status().ssl_info.has_value());
+  EXPECT_TRUE(client()->completion_status().ssl_info.value().cert);
+  EXPECT_EQ(net::CERT_STATUS_DATE_INVALID,
+            client()->completion_status().ssl_info.value().cert_status);
+  histograms.ExpectUniqueSample(kOnCompleteSSLInfoHistogram, true, 1);
+  histograms.ExpectTotalCount(kOnCompleteSSLInfoCertSizeHistogram, 1);
 }
 
 }  // namespace content
