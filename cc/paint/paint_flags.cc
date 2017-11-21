@@ -126,6 +126,9 @@ SkPaint PaintFlags::ToSkPaint() const {
 }
 
 bool PaintFlags::IsValid() const {
+  // All PaintFlag floats should be not infinity nor nan.
+  if (SkScalarIsNaN(text_size_ * width_ * miter_limit_))
+    return false;
   return PaintOp::IsValidPaintFlagsSkBlendMode(getBlendMode());
 }
 

@@ -953,7 +953,7 @@ std::vector<float> test_floats = {0.f,
                                   0.0001f,
                                   std::numeric_limits<float>::min(),
                                   std::numeric_limits<float>::max(),
-                                  std::numeric_limits<float>::infinity()};
+                                  23.4f};
 
 std::vector<uint8_t> test_uint8s = {
     0, 255, 128, 10, 45,
@@ -1538,7 +1538,7 @@ void PushSaveLayerAlphaOps(PaintOpBuffer* buffer) {
 }
 
 void PushScaleOps(PaintOpBuffer* buffer) {
-  for (size_t i = 0; i < test_floats.size(); i += 2)
+  for (size_t i = 0; i < test_floats.size() - 1; i += 2)
     buffer->push<ScaleOp>(test_floats[i], test_floats[i + 1]);
   ValidateOps<ScaleOp>(buffer);
 }
@@ -1550,7 +1550,7 @@ void PushSetMatrixOps(PaintOpBuffer* buffer) {
 }
 
 void PushTranslateOps(PaintOpBuffer* buffer) {
-  for (size_t i = 0; i < test_floats.size(); i += 2)
+  for (size_t i = 0; i < test_floats.size() - 1; i += 2)
     buffer->push<TranslateOp>(test_floats[i], test_floats[i + 1]);
   ValidateOps<TranslateOp>(buffer);
 }
@@ -1696,6 +1696,7 @@ TEST_P(PaintOpSerializationTest, SmokeTest) {
        DeserializerIterator(output_.get(), serializer.TotalBytesWritten())) {
     SCOPED_TRACE(base::StringPrintf(
         "%s #%zu", PaintOpTypeToString(GetParamType()).c_str(), i));
+    ASSERT_EQ(!*iter, !base_written);
     EXPECT_EQ(**iter, *base_written);
     ++iter;
     ++i;
