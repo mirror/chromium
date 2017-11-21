@@ -114,7 +114,7 @@ PhishingClassifierDelegate::PhishingClassifierDelegate(
 }
 
 PhishingClassifierDelegate::~PhishingClassifierDelegate() {
-  CancelPendingClassification(SHUTDOWN);
+  CancelPendingClassification(CancelClassificationReason::SHUTDOWN);
   g_delegates.Get().erase(this);
 }
 
@@ -127,7 +127,8 @@ void PhishingClassifierDelegate::SetPhishingScorer(
     // TODO(noelutz): if this happens too frequently we could also
     // replace the old scorer with the new one once classification is done
     // but this would complicate the code somewhat.
-    CancelPendingClassification(NEW_PHISHING_SCORER);
+    CancelPendingClassification(
+        CancelClassificationReason::NEW_PHISHING_SCORER);
   }
   classifier_->set_phishing_scorer(scorer);
   // Start classifying the current page if all conditions are met.
@@ -157,9 +158,10 @@ void PhishingClassifierDelegate::DidCommitProvisionalLoad(
   DocumentState* document_state =
       DocumentState::FromDocumentLoader(frame->GetDocumentLoader());
   NavigationState* navigation_state = document_state->navigation_state();
-  CancelPendingClassification(navigation_state->WasWithinSameDocument()
-                                  ? NAVIGATE_WITHIN_PAGE
-                                  : NAVIGATE_AWAY);
+  CancelPendingClassification(
+      navigation_state->WasWithinSameDocument()
+          ? CancelClassificationReason::NAVIGATE_WITHIN_PAGE
+          : CancelClassificationReason::NAVIGATE_AWAY);
   if (frame->Parent())
     return;
 
@@ -176,7 +178,7 @@ void PhishingClassifierDelegate::PageCaptured(base::string16* page_text,
   //
   // Note: Currently, if the url hasn't changed, we won't restart
   // classification in this case.  We may want to adjust this.
-  CancelPendingClassification(PAGE_RECAPTURED);
+  CancelPendingClassification(CancelClassificationReason::PAGE_RECAPTURED);
   last_finished_load_url_ = render_frame()->GetWebFrame()->GetDocument().Url();
   classifier_page_text_.swap(*page_text);
   have_page_text_ = true;
@@ -186,9 +188,9 @@ void PhishingClassifierDelegate::PageCaptured(base::string16* page_text,
 void PhishingClassifierDelegate::CancelPendingClassification(
     CancelClassificationReason reason) {
   if (is_classifying_) {
-    UMA_HISTOGRAM_ENUMERATION("SBClientPhishing.CancelClassificationReason",
-                              reason,
-                              CANCEL_CLASSIFICATION_MAX);
+    UMA_HISTOGRAM_ENUMERATION(
+        "SBClientPhishing.CancelClassificationReason", reason,
+        CancelClassificationReason::CANCEL_CLASSIFICATION_MAX);
     is_classifying_ = false;
   }
   if (classifier_->is_ready()) {

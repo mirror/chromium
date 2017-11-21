@@ -122,7 +122,8 @@ class PhishingClassifierDelegateTest : public ChromeRenderViewTest {
       return;
 
     delegate_->CancelPendingClassification(
-        PhishingClassifierDelegate::PAGE_RECAPTURED);
+        PhishingClassifierDelegate::CancelClassificationReason::
+            PAGE_RECAPTURED);
     delegate_->last_finished_load_url_ = page_url;
     delegate_->classifier_page_text_.swap(*page_text);
     delegate_->have_page_text_ = true;
