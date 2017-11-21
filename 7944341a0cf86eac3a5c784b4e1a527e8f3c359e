@@ -211,6 +211,30 @@
       "revId": "7944341a0cf86eac3a5c784b4e1a527e8f3c359e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef92492_f3780dc3",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-21T19:27:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af8f0f17_a926b269",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "7944341a0cf86eac3a5c784b4e1a527e8f3c359e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
