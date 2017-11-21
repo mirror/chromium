@@ -34,6 +34,24 @@
       "revId": "e31f681b4fba7496ac02a316806017973afbf78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd24090e_2644e984",
+        "filename": "testing/buildbot/chromium.clang.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 5646,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-21T04:32:48Z",
+      "side": 1,
+      "message": "Wow, somehow I overlooked that target earlier despite looking specifically for it X(\n\nI don\u0027t know of anything specifically wrong w/ running both targets on this bot.",
+      "parentUuid": "aade51f6_09d79f3c",
+      "revId": "e31f681b4fba7496ac02a316806017973afbf78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
