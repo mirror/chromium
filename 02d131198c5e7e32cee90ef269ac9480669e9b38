@@ -139,6 +139,24 @@
       "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6239294f_e18aab7e",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T03:48:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ab08550d_9ab46442",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
