@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66ed7f39_298ae467",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-21T21:38:14Z",
+      "side": 1,
+      "message": "Passing thought: maybe we should rename this to chrome_browser",
+      "revId": "1cd6fea4e8c73bb571947f90acdf808868354fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "034f35d3_60e74ca1",
+        "filename": "chrome/browser/chrome_service.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-21T21:38:14Z",
+      "side": 1,
+      "message": "Not for this CL, but we should try to find a way to do the same thing for the embedder browser service that this does for the renderer service.",
+      "revId": "1cd6fea4e8c73bb571947f90acdf808868354fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b68f41_07ee9fcb",
+        "filename": "chrome/browser/chrome_service.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-21T21:38:14Z",
+      "side": 1,
+      "message": "nit: I think this is only a one-time use thing - maybe it should just be a static method which DCHECKs that there is no ChromeService instance before instantiating the singleton?",
+      "revId": "1cd6fea4e8c73bb571947f90acdf808868354fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b28029d_701f1a50",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 1703,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-21T21:38:14Z",
+      "side": 1,
+      "message": "groan... Can\u0027t we just have a ChromeRenderer class internal to this file, which implements Service? Bonus points then for not (IMHO weirdly) having OnStart and OnBindInterface floating around in ChromeContentRendererClient.",
+      "revId": "1cd6fea4e8c73bb571947f90acdf808868354fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

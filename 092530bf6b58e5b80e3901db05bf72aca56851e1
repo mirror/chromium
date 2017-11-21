@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d44d982a_f8c9bba5",
+        "filename": "chrome/browser/chrome_content_renderer_manifest_overlay.json",
+        "patchSetId": 43
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-21T21:38:14Z",
+      "side": 0,
+      "message": "I don\u0027t think it\u0027s safe to remove this yet? Lots of other stuff exposed by \"renderer\" capability on in chrome_content_browser_manifest_overlay.json.",
+      "revId": "092530bf6b58e5b80e3901db05bf72aca56851e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
