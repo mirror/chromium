@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "2f9325b0_f5dfce18",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T21:15:10Z",
+      "side": 1,
+      "message": "Actually this isn\u0027t quite right either with the changes, sorry! It changes colors of what all parts of the system render and present on the display which this ui::Compositor is the root of. This now sounds like it changes how the ui::Compositor\u0027s layer paint/raster, which is not the case.\n\nSaid another way, this is changing the color matrix which transforms how all output is drawn to the display underlying this ui::Compositor.\n\nThere was a time that ui::Compositor drew directly to a display and this would have been right, and that may be the model ur working from here, but now it is no longer the case. ui::Compositor is only responsible for rasterizing the ui itself into textures and building the scene, which is given to the display compositor, where it is composited with the renderer/media/canvas/other clients of the display compositor.",
+      "parentUuid": "95ff407b_60cc76d8",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56ed5f86_51f1d050",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 1
@@ -366,6 +384,24 @@
       "side": 1,
       "message": "Oh I see, right the DCHECK above means its only for root layers, ok I guess it\u0027s not the most obvious API situation but it will work, shouldn\u0027t cause problems that I see, esp with the DCHECK/docs about it :)",
       "parentUuid": "516b9df5_e4c66032",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69aea78b_ca00678a",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T21:15:10Z",
+      "side": 1,
+      "message": "I thought about this some more and one example of a problem:\n- You create a layer and set this property, then add it to the compositor. This method won\u0027t tell the compositor when you set it, and nothing tells the compositor when it is added. Same thing when you move a layer between compositors. It is overall odd to change compositor properties from a layer - which can move between or not be attached to one at all. And maybe there\u0027s more edge cases that I\u0027m not thinking of.\n\nWhy does this need to animate like layer properties? In fact it feels wrong to animate it like a layer property. Layer properties animate things that require ui::Compositor to do raster, compute transforms, and eventually make and submit a new CompositorFrame to the display compositor. This property does not, in fact ui::Compositor::ScheduleFullRedraw() doesn\u0027t make sense here, the ui::Compositor doesn\u0027t have to do anything at all, the ui hasn\u0027t changed. Only a property on the Display compositor is changing and these are separate components. Compositor::ScheduleFullRedraw() tells ui::Compositor to do a commit, but there\u0027s nothing new to commit in the ui::Compositor.\n\nThe relationship here that we\u0027re building on is that there is a 1:1 relationship between ui::Compositor and the display compositor because it is the root of the display compositor\u0027s scene. But really we need to change this property on the Display only. Tying this into the Layer will make this increasingly awkward I think and constrain and eventually require us to rewrite this as we move display compositing over to the gpu process.\n\nI think the Layer code should be removed, the ui::Compositor piece can stay as it simply passes through the value to the Display and re-passes it when the CompositorFrameSink changes, and the damage being added in Layer (via ScheduleFullRedraw) should be done so on the display compositor side instead. We don\u0027t need to damage the ui::Compositor here, and doing so makes a much larger piece of the ui graphics stack get involved than is neccesary.",
+      "parentUuid": "734d4503_f63f2223",
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

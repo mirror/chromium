@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28212ba0_25887d4e",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T21:15:10Z",
+      "side": 1,
+      "message": "Why is this method needed? What test cant just do this to the output surface?",
+      "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd15dace_c0df9894",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T21:15:10Z",
+      "side": 1,
+      "message": "Can we add a test in here that verifies UniformMatrix4fv() is called on a mock GL context appropriately (for the root not for children, with the right arguments and such)?",
+      "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996c9d32_3a541949",
+        "filename": "components/viz/service/display/overlay_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T21:15:10Z",
+      "side": 1,
+      "message": "Can we mention in a comment that this is passing a non-identity color matrix and why this matters?",
+      "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2949e74c_d3702c7d",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T21:15:10Z",
+      "side": 1,
+      "message": "Thanks for the pixel test! Can we have another test with a non-root renderpass in it too?",
+      "revId": "4864469798646a65b03102186e8f82c78bdfb79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
