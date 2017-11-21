@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d49c43_7cbb37c5",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T06:07:11Z",
+      "side": 1,
+      "message": "Just to clarify: Are you intending to control this via Finch?  If so, the enabled/disabled state is already going to be reported.  Or, are you trying to understand whether it\u0027s enabled/disabled based on a different enabling/disabling mechanism?",
+      "range": {
+        "startLine": 546,
+        "startChar": 8,
+        "endLine": 546,
+        "endChar": 73
+      },
+      "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b0afe0_b69e2f86",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T06:07:11Z",
+      "side": 1,
+      "message": "Please document when this is recorded, as that context is often very important for correctly interpreting metrics data.",
+      "range": {
+        "startLine": 2462,
+        "startChar": 61,
+        "endLine": 2462,
+        "endChar": 0
+      },
+      "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
