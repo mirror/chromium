@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f75b94_79b9c14e",
+        "filename": "chrome/browser/secure_origin_whitelist_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-21T10:02:51Z",
+      "side": 1,
+      "message": "Nit: `example.com` is canonically an example domain. :)",
+      "revId": "61e6597248fae55f671de31fc263d57aa3674f55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e72a55_a86c2455",
+        "filename": "chrome/common/secure_origin_whitelist.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-21T10:02:51Z",
+      "side": 1,
+      "message": "It\u0027s a little strange that none of these functions are namespaced. Maybe something for a followup CL?",
+      "revId": "61e6597248fae55f671de31fc263d57aa3674f55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
