@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b3abe558_ab9c00c7",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-11-21T22:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724c7fd_c281b0ef",
+      "range": {
+        "startLine": 543,
+        "startChar": 2,
+        "endLine": 543,
+        "endChar": 20
+      },
+      "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d49c43_7cbb37c5",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T06:07:11Z",
       "side": 1,
       "message": "Just to clarify: Are you intending to control this via Finch?  If so, the enabled/disabled state is already going to be reported.  Or, are you trying to understand whether it\u0027s enabled/disabled based on a different enabling/disabling mechanism?",
+      "range": {
+        "startLine": 546,
+        "startChar": 8,
+        "endLine": 546,
+        "endChar": 73
+      },
+      "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc9043a_f3d91ef3",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-11-21T22:55:43Z",
+      "side": 1,
+      "message": "Oh, I just realized that this is not gonna work. We decided not to do a Finch experiment for now, but rather enable the flag by default and *take it into account* only for certain chromeos boards. So checking the flag is not really helpful here. Perhaps I have to ask ARC about final decision. Will investigate...",
+      "parentUuid": "f1d49c43_7cbb37c5",
       "range": {
         "startLine": 546,
         "startChar": 8,
@@ -68,6 +116,30 @@
       "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927e3aad_6d8f3413",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-11-21T22:55:43Z",
+      "side": 1,
+      "message": "Done. Shouldn\u0027t all histograms appear in chrome://histograms though? I don\u0027t really see Arc.State and Arc.NativeBridgeExperiment there..",
+      "parentUuid": "60b0afe0_b69e2f86",
+      "range": {
+        "startLine": 2462,
+        "startChar": 61,
+        "endLine": 2462,
+        "endChar": 0
+      },
+      "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
