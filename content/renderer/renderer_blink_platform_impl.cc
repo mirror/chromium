@@ -562,7 +562,8 @@ RendererBlinkPlatformImpl::CreateLocalStorageNamespace() {
           switches::kDisableMojoLocalStorage)) {
     if (!local_storage_cached_areas_) {
       local_storage_cached_areas_.reset(new LocalStorageCachedAreas(
-          RenderThreadImpl::current()->GetStoragePartitionService()));
+          RenderThreadImpl::current()->GetStoragePartitionService(),
+          renderer_scheduler_));
     }
     return std::make_unique<LocalStorageNamespace>(
         local_storage_cached_areas_.get());
@@ -1380,7 +1381,7 @@ RendererBlinkPlatformImpl::CreateTrialTokenValidator() {
 //------------------------------------------------------------------------------
 
 blink::WebNotificationManager*
-RendererBlinkPlatformImpl::GetNotificationManager() {
+RendererBlinkPlatformImpl::GetWebNotificationManager() {
   if (!thread_safe_sender_.get() || !notification_dispatcher_.get())
     return nullptr;
 
