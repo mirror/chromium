@@ -166,7 +166,7 @@ void NGInlineLayoutAlgorithm::PlaceItems(
         item.Type() == NGInlineItem::kControl) {
       DCHECK(item.GetLayoutObject()->IsText() ||
              item.GetLayoutObject()->IsLayoutNGListItem());
-      DCHECK(!box->text_metrics.IsEmpty());
+      DCHECK(!box->text_with_leading.IsEmpty());
       if (item_result.shape_result) {
         if (quirks_mode_)
           box->ActivateTextMetrics();
@@ -181,12 +181,14 @@ void NGInlineLayoutAlgorithm::PlaceItems(
         DCHECK(!item.TextShapeResult());  // kControl or unit tests.
       }
 
-      text_builder.SetItem(&item_result, box->text_metrics.LineHeight());
+      text_builder.SetItem(&item_result,
+                           box->text_without_leading.LineHeight());
       scoped_refptr<NGPhysicalTextFragment> text_fragment =
           text_builder.ToTextFragment(item_result.item_index,
                                       item_result.start_offset,
                                       item_result.end_offset);
-      line_box_.AddChild(std::move(text_fragment), {position, box->text_top});
+      line_box_.AddChild(std::move(text_fragment),
+                         {position, -box->text_without_leading.ascent});
     } else if (item.Type() == NGInlineItem::kOpenTag) {
       box = box_states_->OnOpenTag(item, item_result, line_box_, position);
       // Compute text metrics for all inline boxes since even empty inlines
@@ -307,12 +309,13 @@ void NGInlineLayoutAlgorithm::PlaceText(
   unsigned start_offset = shape_result->StartIndexForResult();
   unsigned end_offset = shape_result->EndIndexForResult();
   LayoutUnit inline_size = shape_result->SnappedWidth();
-  text_builder->SetText(std::move(style), std::move(shape_result), inline_size,
-                        box->text_metrics.LineHeight());
+  text_builder->SetText(std::move(style), std::move(shape_result),
+                        {inline_size, box->text_without_leading.LineHeight()});
   scoped_refptr<NGPhysicalTextFragment> text_fragment =
       text_builder->ToTextFragment(std::numeric_limits<unsigned>::max(),
                                    start_offset, end_offset);
-  line_box_.AddChild(std::move(text_fragment), {*position, box->text_top});
+  line_box_.AddChild(std::move(text_fragment),
+                     {*position, -box->text_without_leading.ascent});
   *position += inline_size;
 }
 
@@ -359,8 +362,8 @@ void NGInlineLayoutAlgorithm::PlaceLayoutResult(NGInlineItemResult* item_result,
     // atomic inline, and its item_index. Add a text fragment as a marker.
     NGTextFragmentBuilder text_builder(Node(),
                                        ConstraintSpace().GetWritingMode());
-    text_builder.SetAtomicInline(&style, fragment.InlineSize(),
-                                 metrics.LineHeight());
+    text_builder.SetAtomicInline(&style,
+                                 {fragment.InlineSize(), metrics.LineHeight()});
     scoped_refptr<NGPhysicalTextFragment> text_fragment =
         text_builder.ToTextFragment(item_result->item_index,
                                     item_result->start_offset,

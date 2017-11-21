@@ -43,13 +43,15 @@ struct NGInlineBoxState {
   // 'vertical-align'.
   NGLineHeightMetrics metrics;
 
+  // The metrics of the font for this box without the leading from the
+  // 'line-height' property.
+  // This is the distance between the text-top/text-bottom and the baseline for
+  // this box, because the text-top/text-bottom does not include leadings.
+  NGLineHeightMetrics text_without_leading;
+
   // The metrics of the font for this box. This includes leadings as specified
   // by the 'line-height' property.
-  NGLineHeightMetrics text_metrics;
-
-  // The distance between the text-top and the baseline for this box. The
-  // text-top does not include leadings.
-  LayoutUnit text_top;
+  NGLineHeightMetrics text_with_leading;
 
   // These values are to create a box fragment. Set only when needs_box_fragment
   // is set.
@@ -75,7 +77,7 @@ struct NGInlineBoxState {
   // Activate text metrics.  Used by the line height quirk when the
   // box gets text content or has border, padding or margin in the
   // inline layout direction.
-  void ActivateTextMetrics() { metrics.Unite(text_metrics); }
+  void ActivateTextMetrics() { metrics.Unite(text_with_leading); }
 
   // Create a box fragment for this box.
   void SetNeedsBoxFragment(bool when_empty);
