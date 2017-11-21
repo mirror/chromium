@@ -182,7 +182,11 @@ viz::mojom::HitTestRegionListPtr FrameGenerator::GenerateHitTestRegionList()
   hit_test_region->frame_sink_id = surface_id.frame_sink_id();
   hit_test_region->local_surface_id = surface_id.local_surface_id();
   hit_test_region->flags = viz::mojom::kHitTestChildSurface;
-  hit_test_region->rect = gfx::Rect(pixel_size_);
+
+  auto hit_test_rect = viz::mojom::HitTestRect::New();
+  hit_test_rect->flags = viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch;
+  hit_test_rect->rect = gfx::Rect(pixel_size_);
+  hit_test_region->rects.push_back(std::move(hit_test_rect));
 
   hit_test_region_list->regions.push_back(std::move(hit_test_region));
 

@@ -104,9 +104,12 @@ void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
 
   size_t region_index = 1;
   for (const auto& region : hit_test_region_list->regions) {
-    if (region_index >= write_size_ - 1)
-      break;
-    region_index = AppendRegion(region_index, region);
+    for (size_t rect_index = 0; rect_index < region->rects.size();
+         ++rect_index) {
+      if (region_index >= write_size_ - 1)
+        break;
+      region_index = AppendRegion(region_index, region, rect_index);
+    }
   }
 
   DCHECK_GE(region_index, 1u);
@@ -118,7 +121,8 @@ void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
 }
 
 size_t HitTestAggregator::AppendRegion(size_t region_index,
-                                       const mojom::HitTestRegionPtr& region) {
+                                       const mojom::HitTestRegionPtr& region,
+                                       size_t region_rect_index) {
   size_t parent_index = region_index++;
   if (region_index >= write_size_ - 1) {
     if (write_size_ > kMaxSize) {
@@ -154,16 +158,20 @@ size_t HitTestAggregator::AppendRegion(size_t region_index,
       flags |= hit_test_region_list->flags;
 
       for (const auto& child_region : hit_test_region_list->regions) {
-        region_index = AppendRegion(region_index, child_region);
-        if (region_index >= write_size_ - 1)
-          break;
+        for (size_t rect_index = 0; rect_index < child_region->rects.size();
+             ++rect_index) {
+          region_index = AppendRegion(region_index, child_region, rect_index);
+          if (region_index >= write_size_ - 1)
+            break;
+        }
       }
     }
   }
   DCHECK_GE(region_index - parent_index - 1, 0u);
   int32_t child_count = region_index - parent_index - 1;
-  SetRegionAt(parent_index, region->frame_sink_id, flags, region->rect,
-              transform, child_count);
+  SetRegionAt(parent_index, region->frame_sink_id,
+              flags | region->rects[region_rect_index]->flags,
+              region->rects[region_rect_index]->rect, transform, child_count);
   return region_index;
 }
 

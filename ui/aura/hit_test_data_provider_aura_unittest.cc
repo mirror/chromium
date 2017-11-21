@@ -154,11 +154,12 @@ TEST_F(HitTestDataProviderAuraTest, Stacking) {
   EXPECT_EQ(hit_test_data_1->regions.size(), arraysize(expected_order_1));
   int i = 0;
   for (const auto& region : hit_test_data_1->regions) {
-    EXPECT_EQ(region->flags, viz::mojom::kHitTestMine |
-                                 viz::mojom::kHitTestMouse |
-                                 viz::mojom::kHitTestTouch);
+    EXPECT_EQ(region->flags, viz::mojom::kHitTestMine);
     EXPECT_EQ(region->frame_sink_id, expected_order_1[i]->GetFrameSinkId());
-    EXPECT_EQ(region->rect.ToString(),
+    EXPECT_EQ(region->rects.size(), 1u);
+    EXPECT_EQ(region->rects[0]->flags,
+              viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch);
+    EXPECT_EQ(region->rects[0]->rect.ToString(),
               expected_order_1[i]->bounds().ToString());
     i++;
   }
@@ -173,11 +174,12 @@ TEST_F(HitTestDataProviderAuraTest, Stacking) {
   EXPECT_EQ(hit_test_data_2->regions.size(), arraysize(expected_order_2));
   i = 0;
   for (const auto& region : hit_test_data_2->regions) {
-    EXPECT_EQ(region->flags, viz::mojom::kHitTestMine |
-                                 viz::mojom::kHitTestMouse |
-                                 viz::mojom::kHitTestTouch);
+    EXPECT_EQ(region->flags, viz::mojom::kHitTestMine);
     EXPECT_EQ(region->frame_sink_id, expected_order_2[i]->GetFrameSinkId());
-    EXPECT_EQ(region->rect.ToString(),
+    EXPECT_EQ(region->rects.size(), 1u);
+    EXPECT_EQ(region->rects[0]->flags,
+              viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch);
+    EXPECT_EQ(region->rects[0]->rect.ToString(),
               expected_order_2[i]->bounds().ToString());
     i++;
   }
@@ -195,33 +197,41 @@ TEST_F(HitTestDataProviderAuraTest, CustomTargeter) {
   // Children of a window that has the custom targeter installed as well as that
   // window will get reported twice, once with hit-test bounds optimized for
   // mouse events and another time with bounds expanded more for touch input.
+  struct FlagsInset {
+    uint32_t flags;
+    int inset;
+  };
   struct {
     Window* window;
     uint32_t flags;
-    int insets;
+    std::vector<FlagsInset> insets;
   } expected[] = {
-      {window3(), viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse,
-       kMouseInset},
-      {window3(), viz::mojom::kHitTestMine | viz::mojom::kHitTestTouch,
-       kTouchInset},
-      {window4(), viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse,
-       kMouseInset},
-      {window4(), viz::mojom::kHitTestMine | viz::mojom::kHitTestTouch,
-       kTouchInset},
+      {window3(),
+       viz::mojom::kHitTestMine,
+       {{viz::mojom::kHitTestMouse, kMouseInset},
+        {viz::mojom::kHitTestTouch, kTouchInset}}},
+      {window4(),
+       viz::mojom::kHitTestMine,
+       {{viz::mojom::kHitTestMouse, kMouseInset},
+        {viz::mojom::kHitTestTouch, kTouchInset}}},
       {window2(),
-       viz::mojom::kHitTestChildSurface | viz::mojom::kHitTestMouse |
-           viz::mojom::kHitTestTouch,
-       0}};
-  ASSERT_EQ(hit_test_data->regions.size(), arraysize(expected));
-  ASSERT_EQ(hit_test_data->regions.size(), arraysize(expected));
+       viz::mojom::kHitTestChildSurface,
+       {{viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch, 0}}}};
+
   ASSERT_EQ(hit_test_data->regions.size(), arraysize(expected));
   int i = 0;
   for (const auto& region : hit_test_data->regions) {
     EXPECT_EQ(region->frame_sink_id, expected[i].window->GetFrameSinkId());
     EXPECT_EQ(region->flags, expected[i].flags);
-    gfx::Rect expected_bounds = expected[i].window->bounds();
-    expected_bounds.Inset(gfx::Insets(expected[i].insets));
-    EXPECT_EQ(region->rect.ToString(), expected_bounds.ToString());
+    EXPECT_EQ(region->rects.size(), expected[i].insets.size());
+    int j = 0;
+    for (const auto& rect : region->rects) {
+      gfx::Rect expected_bounds = expected[i].window->bounds();
+      expected_bounds.Inset(gfx::Insets(expected[i].insets[j].inset));
+      EXPECT_EQ(rect->flags, expected[i].insets[j].flags);
+      EXPECT_EQ(rect->rect.ToString(), expected_bounds.ToString());
+      j++;
+    }
     i++;
   }
 }
@@ -241,22 +251,33 @@ TEST_F(HitTestDataProviderAuraTest, HoleTargeter) {
   // original window4 is at gfx::Rect(20, 10, 60, 30).
   struct {
     Window* window;
-    gfx::Rect bounds;
-  } expected[] = {
-      {window3(), {50, 60, 100, 13}},  {window3(), {50, 73, 33, 14}},
-      {window3(), {117, 73, 33, 14}},  {window3(), {50, 87, 100, 13}},
-      {window4(), {20, 10, 60, 10}},   {window4(), {20, 20, 20, 10}},
-      {window4(), {60, 20, 20, 10}},   {window4(), {20, 30, 60, 10}},
-      {window2(), window2()->bounds()}};
-  constexpr uint32_t expected_flags = viz::mojom::kHitTestMine |
-                                      viz::mojom::kHitTestMouse |
-                                      viz::mojom::kHitTestTouch;
+    std::vector<gfx::Rect> bounds;
+  } expected[] = {{window3(),
+                   {{50, 60, 100, 13},
+                    {50, 73, 33, 14},
+                    {117, 73, 33, 14},
+                    {50, 87, 100, 13}}},
+                  {window4(),
+                   {{20, 10, 60, 10},
+                    {20, 20, 20, 10},
+                    {60, 20, 20, 10},
+                    {20, 30, 60, 10}}},
+                  {window2(), {window2()->bounds()}}};
+  constexpr uint32_t expected_flags = viz::mojom::kHitTestMine;
+  constexpr uint32_t expected_event_flags =
+      viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch;
   ASSERT_EQ(hit_test_data->regions.size(), arraysize(expected));
   int i = 0;
   for (const auto& region : hit_test_data->regions) {
     EXPECT_EQ(region->frame_sink_id, expected[i].window->GetFrameSinkId());
     EXPECT_EQ(region->flags, expected_flags);
-    EXPECT_EQ(region->rect.ToString(), expected[i].bounds.ToString());
+    EXPECT_EQ(region->rects.size(), expected[i].bounds.size());
+    int j = 0;
+    for (const auto& rect : region->rects) {
+      EXPECT_EQ(rect->flags, expected_event_flags);
+      EXPECT_EQ(rect->rect.ToString(), expected[i].bounds[j].ToString());
+      j++;
+    }
     i++;
   }
 }
