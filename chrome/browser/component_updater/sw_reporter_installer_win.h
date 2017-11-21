@@ -49,8 +49,7 @@ using SwReporterRunner =
 
 class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
  public:
-  SwReporterInstallerPolicy(const SwReporterRunner& reporter_runner,
-                            bool is_experimental_engine_supported);
+  explicit SwReporterInstallerPolicy(const SwReporterRunner& reporter_runner);
   ~SwReporterInstallerPolicy() override;
 
   // ComponentInstallerPolicy implementation.
@@ -74,12 +73,7 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
  private:
   friend class SwReporterInstallerTest;
 
-  // Returns true if the experimental engine is supported and the Feature is
-  // enabled.
-  bool IsExperimentalEngineEnabled() const;
-
   SwReporterRunner reporter_runner_;
-  const bool is_experimental_engine_supported_;
 
   DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerPolicy);
 };
