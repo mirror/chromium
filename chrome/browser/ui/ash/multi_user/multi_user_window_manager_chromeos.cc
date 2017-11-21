@@ -121,8 +121,6 @@ bool HasSystemModalTransientChildWindow(aura::Window* window) {
 
 }  // namespace
 
-namespace chrome {
-
 // A class to temporarily change the animation properties for a window.
 class AnimationSetter {
  public:
@@ -738,5 +736,3 @@ int MultiUserWindowManagerChromeOS::GetAdjustedAnimationTimeInMS(
              ? default_time_in_ms
              : (animation_speed_ == ANIMATION_SPEED_FAST ? 10 : 0);
 }
-
-}  // namespace chrome
