@@ -4,6 +4,8 @@
 
 #include "content/browser/site_instance_impl.h"
 
+#include <string>
+
 #include "base/command_line.h"
 #include "base/debug/crash_logging.h"
 #include "base/macros.h"
@@ -63,7 +65,7 @@ scoped_refptr<SiteInstanceImpl> SiteInstanceImpl::CreateForURL(
   // This will create a new SiteInstance and BrowsingInstance.
   scoped_refptr<BrowsingInstance> instance(
       new BrowsingInstance(browser_context));
-  return instance->GetSiteInstanceForURL(url);
+  return instance->GetOrCreateSiteInstanceForURL(url);
 }
 
 int32_t SiteInstanceImpl::GetId() {
@@ -190,7 +192,7 @@ bool SiteInstanceImpl::HasRelatedSiteInstance(const GURL& url) {
 
 scoped_refptr<SiteInstance> SiteInstanceImpl::GetRelatedSiteInstance(
     const GURL& url) {
-  return browsing_instance_->GetSiteInstanceForURL(url);
+  return browsing_instance_->GetOrCreateSiteInstanceForURL(url);
 }
 
 bool SiteInstanceImpl::IsRelatedSiteInstance(const SiteInstance* instance) {
