@@ -17,6 +17,7 @@
 #include "content/public/common/screen_info.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/test_utils.h"
+#include "device/geolocation/public/cpp/fake_geolocation.h"
 #include "device/geolocation/public/interfaces/geolocation.mojom.h"
 #include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
 #include "device/geolocation/public/interfaces/geoposition.mojom.h"
@@ -30,41 +31,6 @@
 #include "ui/gfx/geometry/rect.h"
 
 using testing::ElementsAre;
-
-namespace {
-
-class FakeGeolocation : public device::mojom::GeolocationContext,
-                        public device::mojom::Geolocation {
- public:
-  explicit FakeGeolocation(device::mojom::Geoposition& position)
-      : binding_context_(this), binding_(this), position_(position) {}
-  ~FakeGeolocation() override {}
-
-  void Bind(mojo::ScopedMessagePipeHandle handle) {
-    binding_context_.Bind(
-        device::mojom::GeolocationContextRequest(std::move(handle)));
-  }
-
-  // device::mojom::Geolocation implementation:
-  void QueryNextPosition(QueryNextPositionCallback callback) override {
-    std::move(callback).Run(position_.Clone());
-  }
-  void SetHighAccuracy(bool high_accuracy) override {}
-
-  // device::mojom::GeolocationContext implementation:
-  void BindGeolocation(device::mojom::GeolocationRequest request) override {
-    binding_.Bind(std::move(request));
-  }
-  void SetOverride(device::mojom::GeopositionPtr geoposition) override {}
-  void ClearOverride() override {}
-
- private:
-  mojo::Binding<device::mojom::GeolocationContext> binding_context_;
-  mojo::Binding<device::mojom::Geolocation> binding_;
-  device::mojom::Geoposition position_;
-};
-
-}  // namespace
 
 namespace autofill {
 namespace risk {
@@ -123,14 +89,14 @@ class AutofillRiskFingerprintTest : public content::ContentBrowserTest {
     position.accuracy = kAccuracy;
     position.timestamp = base::Time::UnixEpoch() +
                          base::TimeDelta::FromMilliseconds(kGeolocationTime);
-    fake_geolocation_ = std::make_unique<FakeGeolocation>(position);
+    fake_geolocation_ = std::make_unique<device::FakeGeolocation>(position);
 
     service_manager::mojom::ConnectorRequest request;
     connector_ = service_manager::Connector::Create(&request);
     service_manager::Connector::TestApi test_api(connector_.get());
     test_api.OverrideBinderForTesting(
         device::mojom::kServiceName, device::mojom::GeolocationContext::Name_,
-        base::Bind(&FakeGeolocation::Bind,
+        base::Bind(&device::FakeGeolocation::BindForOverrideConnector,
                    base::Unretained(fake_geolocation_.get())));
   }
 
@@ -243,7 +209,7 @@ class AutofillRiskFingerprintTest : public content::ContentBrowserTest {
   const gfx::Rect unavailable_screen_bounds_;
 
   std::unique_ptr<service_manager::Connector> connector_;
-  std::unique_ptr<FakeGeolocation> fake_geolocation_;
+  std::unique_ptr<device::FakeGeolocation> fake_geolocation_;
 
   // A message loop to block on the asynchronous loading of the fingerprint.
   base::MessageLoopForUI message_loop_;

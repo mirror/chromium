@@ -99,6 +99,13 @@
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
+#include "device/geolocation/public/cpp/fake_geolocation.h"
+#include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
+#include "device/geolocation/public/interfaces/geoposition.mojom.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/service_context.h"
+
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/public/browser/plugin_service.h"
 #include "content/public/common/webplugininfo.h"
@@ -514,7 +521,18 @@ class WebViewTestBase : public extensions::PlatformAppBrowserTest {
     // Mock out geolocation for geolocation specific tests.
     if (!strncmp(test_info->name(), "GeolocationAPI",
             strlen("GeolocationAPI"))) {
-      ui_test_utils::OverrideGeolocation(10, 20);
+      device::mojom::Geoposition position;
+      position.latitude = 10;
+      position.longitude = 20;
+      position.altitude = 0;
+      position.accuracy = 0;
+      position.timestamp = base::Time::Now();
+      fake_geolocation_ = std::make_unique<device::FakeGeolocation>(position);
+
+      service_manager::ServiceContext::SetGlobalBinderForTesting(
+          device::mojom::kServiceName, device::mojom::GeolocationContext::Name_,
+          base::Bind(&device::FakeGeolocation::BindForOverrideService,
+                     base::Unretained(fake_geolocation_.get())));
     }
   }
 
@@ -839,6 +857,7 @@ class WebViewTestBase : public extensions::PlatformAppBrowserTest {
     return !strncmp(test_info->name(), name, strlen(name));
   }
 
+  std::unique_ptr<device::FakeGeolocation> fake_geolocation_;
   std::unique_ptr<content::FakeSpeechRecognitionManager>
       fake_speech_recognition_manager_;
 
