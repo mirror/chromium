@@ -1,0 +1,9 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+@Subdir third_party/fuchsia-sdk/qemu-aarch64
+fuchsia/qemu/linux-arm64 d1f6c82a86cc49b94b1a0e1d18c5b9a4b572d676
+
+@Subdir third_party/fuchsia-sdk/qemu-x86_64
+fuchsia/qemu/linux-amd64 80a2a04674404151a87678f773eb1957624622ac

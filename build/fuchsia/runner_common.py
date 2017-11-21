@@ -649,7 +649,7 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
         stdout=subprocess.PIPE, stdin=open(os.devnull))
   else:
     qemu_path = os.path.join(
-        SDK_ROOT, 'qemu', 'bin',
+        SDK_ROOT, 'qemu-' + platform.machine(), 'bin',
         'qemu-system-' + _TargetCpuToArch(bootfs_data.target_cpu))
     qemu_command = [qemu_path,
         '-m', '2048',
