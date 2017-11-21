@@ -792,15 +792,9 @@ void DisplayManager::OnNativeDisplaysChanged(
 
 #if defined(OS_CHROMEOS)
   if (!configure_displays_ && new_display_info_list.size() > 1) {
-    DisplayIdList list = GenerateDisplayIdList(
-        new_display_info_list.begin(), new_display_info_list.end(),
-        [](const ManagedDisplayInfo& info) { return info.id(); });
-
-    const DisplayLayout& layout =
-        layout_store_->GetRegisteredDisplayLayout(list);
     // Mirror mode is set by DisplayConfigurator on the device.
     // Emulate it when running on linux desktop.
-    if (layout.mirrored)
+    if (layout_store_->forced_mirror_mode() || request_mirror_mode_on_)
       SetMultiDisplayMode(MIRRORING);
   }
 #endif
@@ -1180,6 +1174,7 @@ void DisplayManager::SetMirrorMode(bool mirror) {
       (!is_multi_mirroring_enabled_ && num_connected_displays() != 2)) {
     return;
   }
+  request_mirror_mode_on_ = mirror;
 
 #if defined(OS_CHROMEOS)
   if (configure_displays_) {
@@ -1334,8 +1329,7 @@ void DisplayManager::SetDefaultMultiDisplayModeForCurrentDisplays(
     MultiDisplayMode mode) {
   DCHECK_NE(MIRRORING, mode);
   DisplayIdList list = GetCurrentDisplayIdList();
-  layout_store_->UpdateMultiDisplayState(list, IsInMirrorMode(),
-                                         mode == UNIFIED);
+  layout_store_->UpdateDefaultUnified(list, mode == UNIFIED);
   ReconfigureDisplays();
 }
 
