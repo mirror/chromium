@@ -469,6 +469,30 @@
       "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ae7482_f64997f3",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T17:30:53Z",
+      "side": 1,
+      "message": "Current names are good. But names can not fully communicate what non-trivial functions do, so Style Guides call out the importance of the comments (e.g. here: http://go/objc-style#Declaration_Comments, C++ Style Guide is a bit more vague on that topic).\n\nFor example to understand what LogRendererCrash does it will be necessary to look into implementation, unless there is a comment.",
+      "parentUuid": "3876984e_95b35c28",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

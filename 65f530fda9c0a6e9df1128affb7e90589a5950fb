@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce2bbf6_15824f8b",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T17:30:53Z",
+      "side": 1,
+      "message": "Do we need a TODO for removing this?",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "65f530fda9c0a6e9df1128affb7e90589a5950fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b0425f_7d0d6d9e",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T17:30:53Z",
+      "side": 1,
+      "message": "nit: No need for static keyword",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "65f530fda9c0a6e9df1128affb7e90589a5950fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
