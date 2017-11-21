@@ -21,6 +21,7 @@ namespace content {
 //  * Negative integers.
 //  * Floating-point numbers.
 //  * Indefinite-length encodings.
+//  * Map value with array, map, and negative integer type keys.
 class CONTENT_EXPORT CBORValue {
  public:
   struct CTAPLess {
@@ -38,18 +39,23 @@ class CONTENT_EXPORT CBORValue {
     // See section 6 of https://fidoalliance.org/specs/fido-v2.0-rd-20170927/
     // fido-client-to-authenticator-protocol-v2.0-rd-20170927.html and
     // https://tools.ietf.org/html/rfc7049#section-3.9 also.
-    bool operator()(const std::string& a, const std::string& b) const {
-      const size_t a_size = a.size();
-      const size_t b_size = b.size();
-      return std::tie(a_size, a) < std::tie(b_size, b);
-    }
-
-    bool operator()(const char* a, const std::string& b) const {
-      return operator()(std::string(a), b);
-    }
-
-    bool operator()(const std::string& a, const char* b) const {
-      return operator()(a, std::string(b));
+    bool operator()(const CBORValue& a, const CBORValue& b) const {
+      Type a_type = a.type();
+      Type b_type = b.type();
+      size_t a_size = a.GetCBORPlainDataSize();
+      size_t b_size = b.GetCBORPlainDataSize();
+      if (a_type != b_type) {
+        return std::tie(a_size, a_type) < std::tie(b_size, b_type);
+      } else {
+        if (a_type == Type::UNSIGNED) {
+          return std::make_tuple(a_size, a_type, a.GetUnsigned()) <
+                 std::make_tuple(b_size, b_type, b.GetUnsigned());
+        } else {
+          CHECK(a_type == Type::STRING);
+          return std::make_tuple(a_size, a_type, a.GetString()) <
+                 std::make_tuple(b_size, b_type, b.GetString());
+        }
+      }
     }
 
     using is_transparent = void;
@@ -57,7 +63,7 @@ class CONTENT_EXPORT CBORValue {
 
   using BinaryValue = std::vector<uint8_t>;
   using ArrayValue = std::vector<CBORValue>;
-  using MapValue = base::flat_map<std::string, CBORValue, CTAPLess>;
+  using MapValue = base::flat_map<CBORValue, CBORValue, CTAPLess>;
 
   enum class Type {
     UNSIGNED = 0,
@@ -84,6 +90,7 @@ class CONTENT_EXPORT CBORValue {
   explicit CBORValue(const ArrayValue& in_array);
   explicit CBORValue(ArrayValue&& in_array) noexcept;
 
+  // Will fatally crash for map value with unsupported key type.
   explicit CBORValue(const MapValue& in_map);
   explicit CBORValue(MapValue&& in_map) noexcept;
 
@@ -113,6 +120,9 @@ class CONTENT_EXPORT CBORValue {
   const std::string& GetString() const;
   const ArrayValue& GetArray() const;
   const MapValue& GetMap() const;
+
+  // Returns byte length of CBOR map key values without serializing.
+  size_t GetCBORPlainDataSize() const;
 
  private:
   Type type_;

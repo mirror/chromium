@@ -87,24 +87,25 @@ TEST(CBORValuesTest, ConstructArray) {
 
 TEST(CBORValuesTest, ConstructMap) {
   CBORValue::MapValue map;
+  CBORValue key_foo("foo");
   map.emplace("foo", CBORValue("bar"));
   {
     CBORValue value(map);
     EXPECT_EQ(CBORValue::Type::MAP, value.type());
-    ASSERT_EQ(value.GetMap().count("foo"), 1u);
+    ASSERT_EQ(value.GetMap().count(key_foo), 1u);
     EXPECT_EQ(CBORValue::Type::STRING,
-              value.GetMap().find("foo")->second.type());
-    EXPECT_EQ("bar", value.GetMap().find("foo")->second.GetString());
+              value.GetMap().find(key_foo)->second.type());
+    EXPECT_EQ("bar", value.GetMap().find(key_foo)->second.GetString());
   }
 
-  map["foo"] = CBORValue("baz");
+  map[CBORValue("foo")] = CBORValue("baz");
   {
     CBORValue value(std::move(map));
     EXPECT_EQ(CBORValue::Type::MAP, value.type());
-    ASSERT_EQ(value.GetMap().count("foo"), 1u);
+    ASSERT_EQ(value.GetMap().count(key_foo), 1u);
     EXPECT_EQ(CBORValue::Type::STRING,
-              value.GetMap().find("foo")->second.type());
-    EXPECT_EQ("baz", value.GetMap().find("foo")->second.GetString());
+              value.GetMap().find(key_foo)->second.type());
+    EXPECT_EQ("baz", value.GetMap().find(key_foo)->second.GetString());
   }
 }
 
@@ -165,23 +166,24 @@ TEST(CBORValuesTest, CopyArray) {
 
 TEST(CBORValuesTest, CopyMap) {
   CBORValue::MapValue map;
+  CBORValue key_unsigned("unsigned");
   map.emplace("unsigned", CBORValue(123));
   CBORValue value(std::move(map));
 
   CBORValue copied_value(value.Clone());
   EXPECT_EQ(1u, copied_value.GetMap().size());
-  ASSERT_EQ(value.GetMap().count("unsigned"), 1u);
-  ASSERT_EQ(copied_value.GetMap().count("unsigned"), 1u);
-  EXPECT_EQ(value.GetMap().find("unsigned")->second.GetUnsigned(),
-            copied_value.GetMap().find("unsigned")->second.GetUnsigned());
+  ASSERT_EQ(value.GetMap().count(key_unsigned), 1u);
+  ASSERT_EQ(copied_value.GetMap().count(key_unsigned), 1u);
+  EXPECT_EQ(value.GetMap().find(key_unsigned)->second.GetUnsigned(),
+            copied_value.GetMap().find(key_unsigned)->second.GetUnsigned());
 
   CBORValue blank;
   blank = value.Clone();
   EXPECT_EQ(1u, blank.GetMap().size());
-  ASSERT_EQ(value.GetMap().count("unsigned"), 1u);
-  ASSERT_EQ(copied_value.GetMap().count("unsigned"), 1u);
-  EXPECT_EQ(value.GetMap().find("unsigned")->second.GetUnsigned(),
-            copied_value.GetMap().find("unsigned")->second.GetUnsigned());
+  ASSERT_EQ(value.GetMap().count(key_unsigned), 1u);
+  ASSERT_EQ(copied_value.GetMap().count(key_unsigned), 1u);
+  EXPECT_EQ(value.GetMap().find(key_unsigned)->second.GetUnsigned(),
+            copied_value.GetMap().find(key_unsigned)->second.GetUnsigned());
 }
 
 // Test move constructors and move-assignment
@@ -227,24 +229,27 @@ TEST(CBORValuesTest, MoveBytestring) {
 
 TEST(CBORValuesTest, MoveConstructMap) {
   CBORValue::MapValue map;
+  CBORValue key_unsigned("unsigned");
   map.emplace("unsigned", CBORValue(123));
 
   CBORValue value(std::move(map));
   CBORValue moved_value(std::move(value));
   EXPECT_EQ(CBORValue::Type::MAP, moved_value.type());
-  ASSERT_EQ(moved_value.GetMap().count("unsigned"), 1u);
-  EXPECT_EQ(123u, moved_value.GetMap().find("unsigned")->second.GetUnsigned());
+  ASSERT_EQ(moved_value.GetMap().count(key_unsigned), 1u);
+  EXPECT_EQ(123u,
+            moved_value.GetMap().find(key_unsigned)->second.GetUnsigned());
 }
 
 TEST(CBORValuesTest, MoveAssignMap) {
   CBORValue::MapValue map;
+  CBORValue key_unsigned("unsigned");
   map.emplace("unsigned", CBORValue(123));
 
   CBORValue blank;
   blank = CBORValue(std::move(map));
   EXPECT_EQ(CBORValue::Type::MAP, blank.type());
-  ASSERT_EQ(blank.GetMap().count("unsigned"), 1u);
-  EXPECT_EQ(123u, blank.GetMap().find("unsigned")->second.GetUnsigned());
+  ASSERT_EQ(blank.GetMap().count(key_unsigned), 1u);
+  EXPECT_EQ(123u, blank.GetMap().find(key_unsigned)->second.GetUnsigned());
 }
 
 TEST(CBORValuesTest, MoveArray) {

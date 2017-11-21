@@ -11,6 +11,25 @@
 
 namespace content {
 
+namespace {
+
+uint8_t GetIntegerByteSize(uint64_t integer) {
+  if (integer < 24)
+    return 0;
+  if (integer < UINT8_MAX)
+    return 1;
+  if (integer < UINT16_MAX)
+    return 2;
+  if (integer < UINT32_MAX)
+    return 4;
+  if (integer < UINT64_MAX)
+    return 8;
+  NOTREACHED();
+  return 0;
+}
+
+}  // namespace
+
 CBORValue::CBORValue() noexcept : type_(Type::NONE) {}
 
 CBORValue::CBORValue(CBORValue&& that) noexcept {
@@ -73,8 +92,12 @@ CBORValue::CBORValue(ArrayValue&& in_array) noexcept
 
 CBORValue::CBORValue(const MapValue& in_map) : type_(Type::MAP), map_value_() {
   map_value_.reserve(in_map.size());
-  for (const auto& it : in_map)
-    map_value_.emplace_hint(map_value_.end(), it.first, it.second.Clone());
+  for (const auto& it : in_map) {
+    DCHECK(it.first.type() == Type::UNSIGNED ||
+           it.first.type() == Type::STRING);
+    map_value_.emplace_hint(map_value_.end(), it.first.Clone(),
+                            it.second.Clone());
+  }
 }
 
 CBORValue::CBORValue(MapValue&& in_map) noexcept
@@ -134,6 +157,19 @@ const CBORValue::ArrayValue& CBORValue::GetArray() const {
 const CBORValue::MapValue& CBORValue::GetMap() const {
   CHECK(is_map());
   return map_value_;
+}
+
+size_t CBORValue::GetCBORPlainDataSize() const {
+  switch (type_) {
+    case Type::UNSIGNED:
+      return 1 + GetIntegerByteSize(GetUnsigned());
+    case Type::STRING:
+      return 1 + GetIntegerByteSize(GetString().size()) + GetString().size();
+    default:
+      break;
+  }
+  NOTREACHED();
+  return 0;
 }
 
 void CBORValue::InternalMoveConstructFrom(CBORValue&& that) {
