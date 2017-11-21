@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841ff991_f8311cd9",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-21T17:35:35Z",
+      "side": 1,
+      "message": "this seems like a misleading name for this variable. It\u0027s only used for the settings transition, not all animations. The vast majority of animations are less than 500ms. For example, in layer_animator.cc we have kDefaultTransitionDurationMs \u003d 120.",
+      "range": {
+        "startLine": 224,
+        "startChar": 28,
+        "endLine": 224,
+        "endChar": 55
+      },
+      "revId": "2dada21bdff006a106ae79d4779eeac862a217df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775310fc_021938ef",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-21T17:35:35Z",
+      "side": 1,
+      "message": "this is a bit unusual because you are using a (box) layout manager but then tweaking layout afterwards. This seems off because the box layout would take into account both the button container and the collapse button, but then you move the collapse button later. I think the simplest way to deal with this is just to remove the box layout completely since there are only three children to lay out.",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 282,
+        "endChar": 67
+      },
+      "revId": "2dada21bdff006a106ae79d4779eeac862a217df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
