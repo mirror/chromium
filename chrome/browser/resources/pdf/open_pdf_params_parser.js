@@ -121,13 +121,29 @@ OpenPDFParamsParser.prototype = {
     }
 
     if ('view' in paramsDictionary) {
-      var viewMode = paramsDictionary['view'].toLowerCase();
-      if (viewMode === 'fit')
-        viewportPosition['view'] = Viewport.FittingType.FIT_TO_PAGE;
-      else if (viewMode === 'fith')
-        viewportPosition['view'] = Viewport.FittingType.FIT_TO_WIDTH;
-      else if (viewMode === 'fitv')
-        viewportPosition['view'] = Viewport.FittingType.FIT_TO_HEIGHT;
+      var viewModeString = paramsDictionary['view'].toLowerCase();
+      var viewModeComponents = viewModeString.split(',');
+      if (viewModeComponents.length >= 1) {
+        var viewMode = viewModeComponents[0];
+        var acceptsPositionParam;
+        if (viewMode === 'fit') {
+          viewportPosition['view'] = Viewport.FittingType.FIT_TO_PAGE;
+          acceptsPositionParam = false;
+        } else if (viewMode === 'fith') {
+          viewportPosition['view'] = Viewport.FittingType.FIT_TO_WIDTH;
+          acceptsPositionParam = true;
+        } else if (viewMode === 'fitv') {
+          viewportPosition['view'] = Viewport.FittingType.FIT_TO_HEIGHT;
+          acceptsPositionParam = true;
+        }
+
+        if (acceptsPositionParam && viewModeComponents.length >= 2) {
+          var position = parseInt(viewModeComponents[1]);
+          if (!isNaN(position)) {
+            viewportPosition['viewPosition'] = position;
+          }
+        }
+      }
     }
 
     if ('zoom' in paramsDictionary)
