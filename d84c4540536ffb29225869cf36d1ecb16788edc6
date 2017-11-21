@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "889e4d9f_4d338e94",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-21T15:44:04Z",
+      "side": 1,
+      "message": "What ID are you referring to here?",
+      "range": {
+        "startLine": 158,
+        "startChar": 71,
+        "endLine": 158,
+        "endChar": 74
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c416d02_29db4ba0",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-21T15:44:04Z",
+      "side": 1,
+      "message": "This needs braces",
+      "range": {
+        "startLine": 170,
+        "startChar": 41,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e417f9c_1550ef90",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-21T15:44:04Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. Why exactly is 1 okay? Also, I imagine s/living/leaving/.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 67
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb27e95_a7f8257c",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-21T15:44:04Z",
+      "side": 1,
+      "message": "Does this work reliably on Windows?",
+      "range": {
+        "startLine": 320,
+        "startChar": 13,
+        "endLine": 320,
+        "endChar": 30
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff13da8_1b8e31a9",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-21T15:44:04Z",
+      "side": 1,
+      "message": "Does DeleteFile provide equivalent behavior to SimpleCacheDeleteFile on Windows?",
+      "range": {
+        "startLine": 1525,
+        "startChar": 9,
+        "endLine": 1525,
+        "endChar": 44
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
