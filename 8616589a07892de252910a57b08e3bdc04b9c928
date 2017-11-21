@@ -116,6 +116,24 @@
       "revId": "8616589a07892de252910a57b08e3bdc04b9c928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a6d59e6_31d84dad",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T19:06:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "47091b0d_e01e32e4",
+      "revId": "8616589a07892de252910a57b08e3bdc04b9c928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

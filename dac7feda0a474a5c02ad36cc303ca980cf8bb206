@@ -442,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "c1cd2940_95a9274a",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T19:06:53Z",
+      "side": 1,
+      "message": "I really think we should fix this in this CL, since the current implementaiton will be incorrect as soon as the default network changes.\n\nThe simplest solution is to just make this class a NetworkStateHandlerObserver and call this from DefaultNetworkChanged(). We can cache the last calculated hostname and only call SetHostname if it changes.",
+      "parentUuid": "0dd5d008_6db788e3",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4125b1_76029de4",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
