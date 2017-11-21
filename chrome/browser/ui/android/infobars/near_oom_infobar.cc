@@ -44,7 +44,8 @@ NearOomInfoBar::NearOomInfoBar(NearOomMessageDelegate* delegate)
     : InfoBarAndroid(std::make_unique<NearOomInfoBarDelegate>(
           base::BindOnce(&NearOomInfoBar::AcceptIntervention,
                          base::Unretained(this)))),
-      delegate_(delegate) {
+      delegate_(delegate),
+      weak_factory_(this) {
   DCHECK(delegate_);
 }
 
@@ -80,8 +81,11 @@ base::android::ScopedJavaLocalRef<jobject> NearOomInfoBar::CreateRenderInfoBar(
 }
 
 // static
-void NearOomInfoBar::Show(content::WebContents* web_contents,
-                          NearOomMessageDelegate* delegate) {
+base::WeakPtr<NearOomInfoBar> NearOomInfoBar::Show(
+    content::WebContents* web_contents,
+    NearOomMessageDelegate* delegate) {
+  NearOomInfoBar* info_bar = new NearOomInfoBar(delegate);
   InfoBarService* service = InfoBarService::FromWebContents(web_contents);
-  service->AddInfoBar(base::WrapUnique(new NearOomInfoBar(delegate)));
+  service->AddInfoBar(base::WrapUnique(info_bar));
+  return info_bar->weak_factory_.GetWeakPtr();
 }

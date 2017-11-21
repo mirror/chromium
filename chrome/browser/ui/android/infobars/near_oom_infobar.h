@@ -8,6 +8,7 @@
 #include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "chrome/browser/ui/android/infobars/infobar_android.h"
 
 namespace content {
@@ -32,8 +33,8 @@ class NearOomInfoBar : public InfoBarAndroid {
   ~NearOomInfoBar() override;
 
   // |delegate| must remain alive while showing this info bar.
-  static void Show(content::WebContents* web_contents,
-                   NearOomMessageDelegate* delegate);
+  static base::WeakPtr<NearOomInfoBar> Show(content::WebContents* web_contents,
+                                            NearOomMessageDelegate* delegate);
 
  private:
   explicit NearOomInfoBar(NearOomMessageDelegate* delegate);
@@ -48,6 +49,9 @@ class NearOomInfoBar : public InfoBarAndroid {
   void ProcessButton(int action) override;
 
   NearOomMessageDelegate* delegate_;
+
+  base::WeakPtrFactory<NearOomInfoBar> weak_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(NearOomInfoBar);
 };
 

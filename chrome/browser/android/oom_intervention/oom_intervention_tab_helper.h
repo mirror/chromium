@@ -64,11 +64,14 @@ class OomInterventionTabHelper
 
   void ResetInterventionState();
 
+  void StopInterventionIfStarted();
+
   bool navigation_started_ = false;
   base::Optional<base::TimeTicks> near_oom_detected_time_;
   std::unique_ptr<NearOomMonitor::Subscription> subscription_;
 
   blink::mojom::OomInterventionPtr intervention_;
+  base::WeakPtr<NearOomInfoBar> info_bar_;
 
   enum class InterventionState {
     // Intervention isn't triggered yet.

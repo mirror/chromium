@@ -81,7 +81,7 @@ void OomInterventionTabHelper::AcceptIntervention() {
 
 void OomInterventionTabHelper::DeclineIntervention() {
   RecordInterventionUserDecision(false);
-  intervention_.reset();
+  StopInterventionIfStarted();
   intervention_state_ = InterventionState::DECLINED;
 }
 
@@ -92,7 +92,7 @@ void OomInterventionTabHelper::WebContentsDestroyed() {
 
 void OomInterventionTabHelper::RenderProcessGone(
     base::TerminationStatus status) {
-  intervention_.reset();
+  StopInterventionIfStarted();
 
   // Skip background process termination.
   if (!IsLastVisibleWebContents(web_contents())) {
@@ -134,7 +134,9 @@ void OomInterventionTabHelper::DidStartNavigation(
   if (navigation_handle->IsSameDocument())
     return;
 
-  // Filter out background navigation.
+  StopInterventionIfStarted();
+
+  // Don't record UMA for background navigations.
   if (!IsLastVisibleWebContents(navigation_handle->GetWebContents())) {
     ResetInterventionState();
     return;
@@ -222,7 +224,7 @@ void OomInterventionTabHelper::OnNearOomDetected() {
     DCHECK(render_process_host);
     content::BindInterface(render_process_host,
                            mojo::MakeRequest(&intervention_));
-    NearOomInfoBar::Show(web_contents(), this);
+    info_bar_ = NearOomInfoBar::Show(web_contents(), this);
     intervention_state_ = InterventionState::UI_SHOWN;
   }
 }
@@ -230,4 +232,12 @@ void OomInterventionTabHelper::OnNearOomDetected() {
 void OomInterventionTabHelper::ResetInterventionState() {
   near_oom_detected_time_.reset();
   intervention_state_ = InterventionState::NOT_TRIGGERED;
+}
+
+void OomInterventionTabHelper::StopInterventionIfStarted() {
+  intervention_.reset();
+  if (info_bar_) {
+    info_bar_->RemoveSelf();
+    info_bar_.reset();
+  }
 }
