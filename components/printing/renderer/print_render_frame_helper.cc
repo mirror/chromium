@@ -1664,6 +1664,67 @@ void PrintRenderFrameHelper::PrintPages() {
   }
 }
 
+#if defined(OS_MACOSX) || defined(OS_WIN)
+bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
+                                              int page_count) {
+  const PrintMsg_PrintPages_Params& params = *print_pages_params_;
+  const PrintMsg_Print_Params& print_params = params.params;
+
+  std::vector<int> printed_pages = GetPrintedPages(params, page_count);
+  if (printed_pages.empty())
+    return false;
+
+  PdfMetafileSkia metafile(print_params.printed_doc_type);
+  CHECK(metafile.Init());
+
+  std::vector<gfx::Size> page_size_in_dpi(printed_pages.size());
+  std::vector<gfx::Rect> content_area_in_dpi(printed_pages.size());
+#if defined(OS_WIN)
+  std::vector<gfx::Rect> printable_area_in_dpi(printed_pages.size());
+#endif
+  for (size_t i = 0; i < printed_pages.size(); ++i) {
+    PrintPageInternal(print_params, printed_pages[i], page_count, frame,
+                      &metafile, &page_size_in_dpi[i], &content_area_in_dpi[i],
+#if defined(OS_WIN)
+                      &printable_area_in_dpi[i]);
+#else
+                      nullptr);
+#endif
+  }
+
+  // blink::printEnd() for PDF should be called before metafile is closed.
+  FinishFramePrinting();
+
+  metafile.FinishDocument();
+
+  PrintHostMsg_DidPrintPage_Params page_params;
+  if (!CopyMetafileDataToSharedMem(metafile,
+                                   &page_params.metafile_data_handle)) {
+    return false;
+  }
+
+  page_params.data_size = metafile.GetDataSize();
+  page_params.document_cookie = print_params.document_cookie;
+  for (size_t i = 0; i < printed_pages.size(); ++i) {
+    page_params.page_number = printed_pages[i];
+    page_params.page_size = page_size_in_dpi[i];
+    page_params.content_area = content_area_in_dpi[i];
+#if defined(OS_WIN)
+    page_params.physical_offsets =
+        gfx::Point(printable_area_in_dpi[i].x(), printable_area_in_dpi[i].y());
+#endif
+    Send(new PrintHostMsg_DidPrintPage(routing_id(), page_params));
+    // Send the rest of the pages with an invalid metafile handle.
+    // TODO(erikchen): Fix semantics. See https://crbug.com/640840
+    if (page_params.metafile_data_handle.IsValid()) {
+      page_params.metafile_data_handle = base::SharedMemoryHandle();
+      page_params.data_size = 0;
+    }
+  }
+  return true;
+}
+#endif  // defined(OS_MACOSX) || defined(OS_WIN)
+
 void PrintRenderFrameHelper::FinishFramePrinting() {
   prep_frame_view_.reset();
 }
