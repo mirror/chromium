@@ -85,7 +85,8 @@ class CONTENT_EXPORT NetworkConnectionTracker
  protected:
   // NetworkChangeManagerClient implementation. Protected for testing.
   void OnInitialConnectionType(mojom::ConnectionType type) override;
-  void OnNetworkChanged(mojom::ConnectionType type) override;
+  void OnNetworkChanged(mojom::ConnectionType broadcast_type,
+                        mojom::ConnectionType actual_type) override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(NetworkGetConnectionTest,
