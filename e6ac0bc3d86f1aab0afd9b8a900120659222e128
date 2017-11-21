@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5baaccf7_ff72fe71",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-21T15:12:45Z",
+      "side": 1,
+      "message": "Can you expand the comment?\n\nIIRC, this is because there can be a race between reading the server response and opening the new connection, right?",
+      "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ef8a73_6389846e",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-21T15:12:45Z",
+      "side": 1,
+      "message": "nit: Update the comment",
+      "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92148f8b_0b07b6d2",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-21T15:12:45Z",
+      "side": 1,
+      "message": "I have a vague preference for unique_ptr\u003c\u003e rather than \u0026\u0026, less risk of shooting yourself in the foot. Though I don\u0027t see mistakes in the code, up to you.",
+      "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eabd2b7_4707f1ee",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-21T15:12:45Z",
+      "side": 1,
+      "message": "omg the STL is soooo much better to use with lambdas now.",
+      "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
