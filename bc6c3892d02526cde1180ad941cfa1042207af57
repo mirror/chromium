@@ -22,6 +22,30 @@
       "revId": "bc6c3892d02526cde1180ad941cfa1042207af57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19971f92_f781b549",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-21T21:06:13Z",
+      "side": 1,
+      "message": "We are running a nested message loop here, waiting for quite_closure_ to be run. If you look at line 472, we will get into a deadlock because we need to grab the lock before we can run quit_closure_.",
+      "parentUuid": "48b381cc_636b18fe",
+      "range": {
+        "startLine": 493,
+        "startChar": 6,
+        "endLine": 493,
+        "endChar": 17
+      },
+      "revId": "bc6c3892d02526cde1180ad941cfa1042207af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
