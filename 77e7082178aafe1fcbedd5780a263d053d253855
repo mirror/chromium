@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7b7c15b_e539358c",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-21T21:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d618f7b5_dbd7e849",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e110f220_6f8c17cf",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9840f143_8561c806",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-21T21:20:21Z",
+      "side": 1,
+      "message": "As we discussed offline with Adam, this is the temporary solution for local media sources. Added a TODO to improve this.",
+      "parentUuid": "e110f220_6f8c17cf",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e959dad3_17bd46aa",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-21T21:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "283627da_f15a647a",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b43cfb1_db04253b",
         "filename": "chrome/common/media_router/media_route_provider_helper.h",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c89296_c63f978e",
+        "filename": "chrome/common/media_router/media_route_provider_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-21T21:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b43cfb1_db04253b",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "30431e7c_d1f157b5",
+        "filename": "chrome/common/media_router/media_sink.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-21T21:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39f92755_6741f1a3",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f635bb14_0a7c3dcd",
         "filename": "chrome/common/media_router/mojo/media_router.mojom",
         "patchSetId": 11
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-17T07:00:19Z",
       "side": 1,
       "message": "What does \"UNKNOWN\" mean? It seems like it\u0027s a valid value to pass--but what does it actually indicate? Maybe we could call this something else that better describes the third possibility?\n\n(Also, a minor terminology nit: I would traditionally think of this as more of something named \u0027enum Type\u0027 rather than \u0027enum Id\u0027: to me, they indicate slightly different things. But I guess it might be annoying to change that, and maybe that\u0027s how the rest of cast / media router code treats this)",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a980061_c2909170",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-21T21:20:21Z",
+      "side": 1,
+      "message": "I was thinking of it as a default value before the value is actually set (since Mojo uses a param-less ctor), but maybe it\u0027s better to use one of the actually valid values as the default? Getting rid of UNKNOWN in the new patchset.\n\nI called this Id instead of Type because I wanted to indicate that there can\u0027t be two MediaRouteProviders of the same kind.",
+      "parentUuid": "f635bb14_0a7c3dcd",
       "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
