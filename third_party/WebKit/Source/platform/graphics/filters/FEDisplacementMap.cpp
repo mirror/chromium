@@ -115,6 +115,12 @@ static SkDisplacementMapEffect::ChannelSelectorType ToSkiaMode(
 sk_sp<SkImageFilter> FEDisplacementMap::CreateImageFilter() {
   sk_sp<SkImageFilter> color = SkiaImageFilterBuilder::Build(
       InputEffect(0), OperatingInterpolationSpace());
+  // FEDisplacementMap must be a pass-through filter if
+  // the origin is tainted. See:
+  // https://www.w3.org/TR/filter-effects-1/#fedisplacemnentmap-restrictions.
+  if (OriginTainted()) {
+    return color;
+  }
   sk_sp<SkImageFilter> displ = SkiaImageFilterBuilder::Build(
       InputEffect(1), OperatingInterpolationSpace());
   SkDisplacementMapEffect::ChannelSelectorType type_x =
