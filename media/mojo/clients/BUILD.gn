@@ -17,11 +17,16 @@ source_set("clients") {
 
     "//content/gpu:*",
 
+    # For gpu_jpeg_decode_accelerator_host.*
+    "//content/browser",
+
     # TODO(liberato): can we avoid this?
     "//content/test/*",
   ]
 
   sources = [
+    "gpu_jpeg_decode_accelerator_host.cc",
+    "gpu_jpeg_decode_accelerator_host.h",
     "mojo_audio_decoder.cc",
     "mojo_audio_decoder.h",
     "mojo_cdm.cc",

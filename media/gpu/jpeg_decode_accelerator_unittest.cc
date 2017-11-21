@@ -28,7 +28,7 @@
 #include "media/base/test_data_util.h"
 #include "media/filters/jpeg_parser.h"
 #include "media/gpu/features.h"
-#include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.h"
+#include "media/gpu/gpu_jpeg_decode_accelerator_factory.h"
 #include "media/gpu/video_accelerator_unittest_helpers.h"
 #include "media/video/jpeg_decode_accelerator.h"
 #include "third_party/libyuv/include/libyuv.h"
