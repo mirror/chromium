@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc1e3feb_a89aced1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappTabDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-21T04:24:13Z",
+      "side": 1,
+      "message": "Drive by: Can this parameter be renamed: mApkPackageName to make it clearer that it does not refer to Chrome\u0027s package name?",
+      "revId": "11f667a458c0f8c0909fb2feb10f27a5711fba70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
