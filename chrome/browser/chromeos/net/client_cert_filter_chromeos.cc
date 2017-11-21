@@ -36,15 +36,17 @@ bool ClientCertFilterChromeOS::Init(const base::Closure& callback) {
                    weak_ptr_factory_.GetWeakPtr()));
   }
 
-  private_slot_ = crypto::GetPrivateSlotForChromeOSUser(
-      username_hash_, base::Bind(&ClientCertFilterChromeOS::GotPrivateSlot,
-                                 weak_ptr_factory_.GetWeakPtr()));
+  if (!username_hash_.empty()) {
+    private_slot_ = crypto::GetPrivateSlotForChromeOSUser(
+        username_hash_, base::Bind(&ClientCertFilterChromeOS::GotPrivateSlot,
+                                   weak_ptr_factory_.GetWeakPtr()));
 
-  // If the returned slot is null, GotPrivateSlot will be called back
-  // eventually. If it is not null, the private slot was available synchronously
-  // and the callback will not be called.
-  if (private_slot_)
-    waiting_for_private_slot_ = false;
+    // If the returned slot is null, GotPrivateSlot will be called back
+    // eventually. If it is not null, the private slot was available
+    // synchronously and the callback will not be called.
+    if (private_slot_)
+      waiting_for_private_slot_ = false;
+  }
 
   // Do not call back if we initialized synchronously.
   if (InitIfSlotsAvailable())

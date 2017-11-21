@@ -486,6 +486,12 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
       params->use_system_key_slot = user->IsAffiliated();
     }
   }
+  // Use the device-wide system key slot for the sign-in profile.
+  // Note that contexts in which client certificates are used on the sign-in
+  // profile are restricted on client certificate selection (see
+  // ChromeContentBrowserClient::SelectClientCertificate).
+  if (chromeos::ProfileHelper::IsSigninProfile(profile))
+    params->use_system_key_slot = true;
 
   chromeos::CertificateProviderService* cert_provider_service =
       chromeos::CertificateProviderServiceFactory::GetForBrowserContext(
