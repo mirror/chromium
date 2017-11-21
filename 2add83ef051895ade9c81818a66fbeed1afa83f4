@@ -301,6 +301,23 @@
     },
     {
       "key": {
+        "uuid": "0e0e6d9f_c67f933f",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T16:11:13Z",
+      "side": 1,
+      "message": "If there\u0027s 1 matrix per compositor, why is there also 1 matrix per layer? The last layer to have it set wins? Why not just a compositor api?",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c8d96a9_09d401af",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 1
@@ -330,6 +347,24 @@
       "side": 1,
       "message": "I added a pixel test and an overlay test. Please take a look. I\u0027m not sure what would be the best way to test this end-to-end from the ui::Layer down to the pixels.",
       "parentUuid": "4c8d96a9_09d401af",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954df03c_a864bd58",
+        "filename": "ui/compositor/test/in_process_context_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T16:11:13Z",
+      "side": 1,
+      "message": "It\u0027s usually nicer to test each layer of the code separately. :)\n\nI was expecting some compositor unittest that verifies when you set it, that it gets passed to the ContextFactory, and when the CompositorFrameSink is lost and recreated, that it is passed to it again.\n\nThen tests on the Display/GLRenderer sound good and like what you\u0027ve got.",
+      "parentUuid": "900c84fd_b329c98a",
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
