@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7b47ae4_fa6be3b7",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T18:55:17Z",
+      "side": 1,
+      "message": "FYI (for a potential future cleanup CL): There is a built-in way to retrieve URL parameters see documentation at [1] and an examples from WebUI code at [2].\n\n\n[1] https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams\n[2] https://cs.chromium.org/search/?q\u003dURLSearchParams+file:%5Esrc/chrome/browser/resources/settings/+package:%5Echromium$\u0026type\u003dcs",
+      "revId": "7e1cb505f4a64a8b950eef29e2f9db027f76ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0b710bb_84e28b10",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T18:55:17Z",
+      "side": 1,
+      "message": "@return {boolean} Whether the current fitting type i a paged mode.",
+      "revId": "7e1cb505f4a64a8b950eef29e2f9db027f76ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414cd116_41e03098",
+        "filename": "chrome/test/data/pdf/material_elements_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T18:55:17Z",
+      "side": 1,
+      "message": "Instead of storing e.type and e.detail separately, why not just store the entire event?\n\nlastEvent \u003d e;",
+      "revId": "7e1cb505f4a64a8b950eef29e2f9db027f76ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf144cd_36a83b5f",
+        "filename": "chrome/test/data/pdf/material_elements_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T18:55:17Z",
+      "side": 1,
+      "message": "|fittingType| is a parameter passed to assertEvent(). I don\u0027t think it makes sense to set the parameter to null. Should this be |lastFittingType| instead? Same at line 223 in this file.",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 17
+      },
+      "revId": "7e1cb505f4a64a8b950eef29e2f9db027f76ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaadfa85_03a541df",
+        "filename": "chrome/test/data/pdf/viewport_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T18:55:17Z",
+      "side": 1,
+      "message": "FYI, you can use backticks as of latest ES6 styleguide revision.\n`${expectedMockWidth}px`\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#Template-Literals",
+      "revId": "7e1cb505f4a64a8b950eef29e2f9db027f76ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
