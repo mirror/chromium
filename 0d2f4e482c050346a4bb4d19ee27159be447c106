@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b447a946_00c22f6a",
+        "filename": "extensions/renderer/worker_thread_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T19:52:10Z",
+      "side": 1,
+      "message": "This reads a bit worrying: accessing Dispatcher and calling methods on it. We assume this is OK since it only accesses dispatcher delegate. Maybe if we had AddWorkerData passed in the delegate (similar to |source_map|) and access it here to construct the binding system (by making CreateBindingsSystem static and letting it take the deleage param), it would be clearly documenting the subtlety. WDYT?",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 56
+      },
+      "revId": "0d2f4e482c050346a4bb4d19ee27159be447c106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
