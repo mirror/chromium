@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90fb8a23_477c224a",
+        "filename": "ui/views/mouse_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:12:25Z",
+      "side": 1,
+      "message": "optional: no need to pass in nullptr here.",
+      "range": {
+        "startLine": 117,
+        "startChar": 18,
+        "endLine": 121,
+        "endChar": 25
+      },
+      "revId": "b49e25ae5a00e0a77e4177cf94ebc8ce637539d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
