@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01514d3d_326434d0",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-21T00:51:24Z",
+      "side": 1,
+      "message": "Oops - apologies for not being clear, |enableClipboardContentSetting_| will also need to be declared in site_details.js (again, see the |enableSoundContentSetting_| for precedent).",
+      "revId": "a18c7a2ecd3ae6932d1341a1b4220eb0cbed3bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
