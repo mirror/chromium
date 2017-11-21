@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd8f2efb_a867a23c",
+        "filename": "chrome/browser/chromeos/first_run/drive_first_run_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T06:09:57Z",
+      "side": 1,
+      "message": "Const ref, since it no longer need to hold on to the result of the conversion.",
+      "revId": "8ab554e9585fa1433a1311c094cda5a3f14cf872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
