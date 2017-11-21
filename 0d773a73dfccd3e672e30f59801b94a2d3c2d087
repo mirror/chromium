@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0abb454_808280ad",
+        "filename": "base/android/library_loader/library_loader_hooks.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-21T15:52:37Z",
+      "side": 1,
+      "message": "As discussed offline, this is only for testing for now, though the eventual implementation will probably be in the same place. In this case, we wouldn\u0027t call madvise() on the whole range, but only on the unordered one.",
+      "parentUuid": "ecfe8d11_50e06f31",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 29
+      },
+      "revId": "0d773a73dfccd3e672e30f59801b94a2d3c2d087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5fd7923_0bb7548f",
         "filename": "base/base_switches.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T16:45:10Z",
       "side": 1,
       "message": "does it need to be called in every process? I thought madvise is a property of the mapping, so for shared memory the property is the same.",
+      "range": {
+        "startLine": 124,
+        "startChar": 11,
+        "endLine": 124,
+        "endChar": 29
+      },
+      "revId": "0d773a73dfccd3e672e30f59801b94a2d3c2d087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0d7af7_22b2be2c",
+        "filename": "base/base_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-21T15:52:37Z",
+      "side": 1,
+      "message": "As discussed offline, it is a property of the mapping indeed, in the sense that it\u0027s applied at page fault time, so needs to be from all processes.",
+      "parentUuid": "e5fd7923_0bb7548f",
       "range": {
         "startLine": 124,
         "startChar": 11,
