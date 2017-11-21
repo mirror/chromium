@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5060e04e_58723a4b",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:56:22Z",
+      "side": 1,
+      "message": "nit: return std::string() here and elsewhere",
+      "revId": "8ecce3777f792f5f7e0cba6b430075afe8b00c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb33448e_49c962d6",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:56:22Z",
+      "side": 1,
+      "message": "Please return a const ref to avoid string copies.",
+      "revId": "8ecce3777f792f5f7e0cba6b430075afe8b00c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a3c2b8_c2f320f5",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:56:22Z",
+      "side": 1,
+      "message": "nit: maybe explain what this is used for, maybe: \"Returns a string description of the view hosting the given text input element (ie. the URL for web contents), used for recording metrics.\"",
+      "revId": "8ecce3777f792f5f7e0cba6b430075afe8b00c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

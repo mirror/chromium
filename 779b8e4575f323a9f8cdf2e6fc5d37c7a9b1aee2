@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "61784414_a0a78428",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:56:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3e0a27d0_4eb9db95",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eac49f7_a78bacf3",
         "filename": "ui/base/ime/text_input_client.h",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "The controller of the Virtual Keyboard, which is KeyboardController in ui/keyboard, interacts with the window with keyboard focus only via TextInputClient interface, so I added this method to TextInputClient.\n\nI changed a return value to std::string to implement this method on native views.",
       "parentUuid": "8ee350d5_32c5f062",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b73da26_476670d8",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:56:22Z",
+      "side": 1,
+      "message": "I\u0027m on the fence now that I\u0027ve seen the calling code in https://chromium-review.googlesource.com/c/chromium/src/+/758024. If we don\u0027t imminently plan to provide non-url string context for browser ui text elements etc., then it seems silly to return the string spec from the GURL and immediately convert that to a GURL and check for validity. I\u0027m curious what Sadrul thinks about just passing a GURL and being more explicit that function is *just* for web content text input elements URL-Keyed Metrics.",
+      "parentUuid": "8e26de12_781fcb17",
       "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
