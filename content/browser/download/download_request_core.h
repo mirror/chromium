@@ -111,6 +111,11 @@ class CONTENT_EXPORT DownloadRequestCore
   // downstream receiver of its output.
   static const int kDownloadByteStreamSize;
 
+  // Returns the encrypted identifier of the originating app if this
+  // download is initiated from CCT. Empty string otherwise.
+  static std::string GetRequestOriginFromRequest(
+      const net::URLRequest* request);
+
  protected:
   net::URLRequest* request() const { return request_; }
 
