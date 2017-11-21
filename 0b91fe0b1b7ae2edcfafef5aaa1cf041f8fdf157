@@ -22,6 +22,30 @@
       "revId": "0b91fe0b1b7ae2edcfafef5aaa1cf041f8fdf157",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f8e021_8313eed0",
+        "filename": "components/omnibox/browser/omnibox_edit_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-21T01:04:27Z",
+      "side": 0,
+      "message": "Per discussion with pkasting, we don\u0027t believe this is necessary. I\u0027ll keep an eye on the bots when I submit this.",
+      "parentUuid": "16a933ce_4e963029",
+      "range": {
+        "startLine": 236,
+        "startChar": 34,
+        "endLine": 236,
+        "endChar": 0
+      },
+      "revId": "0b91fe0b1b7ae2edcfafef5aaa1cf041f8fdf157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

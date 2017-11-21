@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d15bc233_f80139b0",
+        "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-21T01:04:27Z",
+      "side": 1,
+      "message": "The old test fixture was creating these in the constructor which means they were being reused across tests. Using unique_ptr and resetting them in SetUp ensures that there\u0027s no danger of future problems caused by state leaking between tests.",
+      "parentUuid": "b13ff936_f2a93ca8",
+      "revId": "f97ef2581db0a19d88ac9b61d5fd0be75c49f977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f039c7b3_2ce8f216",
         "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6ccfcea6_d963d447",
+        "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-21T01:04:27Z",
+      "side": 1,
+      "message": "There was an extra trailing comma on this one that caused the formatter to treat it differently. Fixed.",
+      "parentUuid": "f039c7b3_2ce8f216",
+      "revId": "f97ef2581db0a19d88ac9b61d5fd0be75c49f977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c26612e8_8043f33d",
         "filename": "components/omnibox/browser/test_omnibox_view.h",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-16T00:58:38Z",
       "side": 1,
       "message": "A lot of the below includes are not needed.  Please remove from here and the .cc",
+      "revId": "f97ef2581db0a19d88ac9b61d5fd0be75c49f977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0c019a_45eeaf21",
+        "filename": "components/omnibox/browser/test_omnibox_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-21T01:04:27Z",
+      "side": 1,
+      "message": "Oops, missed this file in my cleanup pass. Thanks for catching.\n\nDone.",
+      "parentUuid": "c26612e8_8043f33d",
       "revId": "f97ef2581db0a19d88ac9b61d5fd0be75c49f977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
