@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ccd7ed_c28ae882",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-21T18:45:08Z",
+      "side": 1,
+      "message": "Can we add a test for this scenario?\nWe can set a custom hung interval and use a base::ScopedMockTimeMessageLoopTaskRunner to forward the task runner after PING ack has been received but before CheckPingStatus() is executed.",
+      "revId": "02f1703ba8e71f8a718fa4cbec374515d4f577d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b482189_7b04801c",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2259,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-21T18:45:08Z",
+      "side": 1,
+      "message": "nit: since you are already here, could you change \"pings_in_flight_\" to be a more explicit check, \"pings_in_flight_ \u003e 0\"?",
+      "revId": "02f1703ba8e71f8a718fa4cbec374515d4f577d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b78146_c4fe3171",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-21T18:45:08Z",
+      "side": 1,
+      "message": "Since we are returning here early without posting a task, it might be a good idea to reset |check_ping_status_pending_| as well",
+      "revId": "02f1703ba8e71f8a718fa4cbec374515d4f577d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
