@@ -73,7 +73,6 @@
 #include "content/renderer/quota_dispatcher.h"
 #include "content/renderer/quota_message_filter.h"
 #include "content/renderer/render_thread_impl.h"
-#include "content/renderer/renderer_clipboard_delegate.h"
 #include "content/renderer/storage_util.h"
 #include "content/renderer/web_database_observer_impl.h"
 #include "content/renderer/webclipboard_impl.h"
@@ -277,8 +276,6 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
                             : nullptr),
       compositor_thread_(nullptr),
       main_thread_(renderer_scheduler->CreateMainThread()),
-      clipboard_delegate_(new RendererClipboardDelegate),
-      clipboard_(new WebClipboardImpl(clipboard_delegate_.get())),
       sudden_termination_disables_(0),
       plugin_refresh_allowed_(true),
       default_task_runner_(renderer_scheduler->DefaultTaskRunner()),
@@ -425,6 +422,9 @@ blink::WebClipboard* RendererBlinkPlatformImpl::Clipboard() {
       GetContentClient()->renderer()->OverrideWebClipboard();
   if (clipboard)
     return clipboard;
+  if (!clipboard_) {
+    clipboard_ = std::make_unique<WebClipboardImpl>(GetClipboardHost());
+  }
   return clipboard_.get();
 }
 
@@ -1426,6 +1426,13 @@ void RendererBlinkPlatformImpl::InitializeWebDatabaseHostIfNeeded() {
 blink::mojom::WebDatabaseHost& RendererBlinkPlatformImpl::GetWebDatabaseHost() {
   InitializeWebDatabaseHostIfNeeded();
   return **web_database_host_;
+}
+
+mojom::ClipboardHost& RendererBlinkPlatformImpl::GetClipboardHost() {
+  if (!clipboard_host_) {
+    GetConnector()->BindInterface(mojom::kBrowserServiceName, &clipboard_host_);
+  }
+  return *clipboard_host_;
 }
 
 }  // namespace content
