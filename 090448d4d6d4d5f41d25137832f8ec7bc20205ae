@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a74b3f45_74c08d84",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-21T13:38:05Z",
+      "side": 1,
+      "message": "this var is not needed since we pass the callback.\nDone.",
+      "parentUuid": "0b82bad8_07195cc8",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "036fbdcd_7b38c417",
         "filename": "device/geolocation/geolocation_provider_impl.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T08:41:53Z",
       "side": 1,
       "message": "similar naming nit: I would call this variable g_custom_location_provider.",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7175c326_8795732e",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-21T13:38:05Z",
+      "side": 1,
+      "message": "Rename it to g_custom_location_provider_callback",
+      "parentUuid": "036fbdcd_7b38c417",
       "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "64c5ca11_476e2984",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-21T13:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c904e9b5_69a9a1fd",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8dc0dee_2ee93c74",
         "filename": "device/geolocation/geolocation_provider_impl.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a402ac5_008adde4",
+        "filename": "device/geolocation/geolocation_provider_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-21T13:38:05Z",
+      "side": 1,
+      "message": "Rename it to SetCustomLocationProviderCallback()",
+      "parentUuid": "f8dc0dee_2ee93c74",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +227,24 @@
       "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789d8b42_187ce6ca",
+        "filename": "device/geolocation/location_arbitrator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-21T13:38:05Z",
+      "side": 1,
+      "message": "Comments changed since we pass in a callback",
+      "parentUuid": "8e944f45_fd4de095",
+      "revId": "090448d4d6d4d5f41d25137832f8ec7bc20205ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
