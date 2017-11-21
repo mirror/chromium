@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbfbf98c_96f8edea",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-21T19:46:52Z",
+      "side": 1,
+      "message": "done.  i was also thinking yesterday that the dcheck @202 should just be a normal failure, for the same reason.  it doesn\u0027t seem like that big of a deal if our caller forgets to provide a cdm.  i had a test written for that case until i realized that it would dcheck.",
+      "parentUuid": "9f8112f8_3158cf39",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "a5d730f35c0386c02fc808c478d6c6ab580f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f19d5a1f_69e9243f",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8a7a7961_2e477c5e",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-21T19:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f19d5a1f_69e9243f",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 79
+      },
+      "revId": "a5d730f35c0386c02fc808c478d6c6ab580f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abd8ffa4_d885414c",
         "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "a5d730f35c0386c02fc808c478d6c6ab580f2eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588a29a5_bfa10c1a",
+        "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-21T19:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abd8ffa4_d885414c",
+      "range": {
+        "startLine": 778,
+        "startChar": 1,
+        "endLine": 778,
+        "endChar": 0
+      },
+      "revId": "a5d730f35c0386c02fc808c478d6c6ab580f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
