@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78e5087f_aa2d390d",
+        "filename": "chrome/app/theme/default_100_percent/common/sync_complete_circle.png",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T04:19:08Z",
+      "side": 1,
+      "message": "did you discuss with your designer about providing a vector icon for this? They look nicer on Windows\u0027 with its weird/fractional scale factors, and can change color easily. But also the 16x16 icon is tiny -- you might need that precise pixel control over it :/",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e94d12_4f643e64",
+        "filename": "chrome/app/theme/default_200_percent/common/sync_complete_circle.png",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T04:19:08Z",
+      "side": 1,
+      "message": "(also did you compress these with src/tools/resources/optimize-png-files.sh ?)",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275f187b_33931e57",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T04:19:08Z",
+      "side": 1,
+      "message": "is this used?",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfb1ef5_b0917304",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T04:19:08Z",
+      "side": 1,
+      "message": "nit: do you need the outer parens? (pretty sure the dot operator has precedence)",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5038da79_a85c5807",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T04:19:08Z",
+      "side": 1,
+      "message": "nit: needs curlies for mutli-line if",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
