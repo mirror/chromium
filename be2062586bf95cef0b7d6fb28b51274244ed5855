@@ -470,6 +470,29 @@
       "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97b5b6e6_a21b56cc",
+        "filename": "chrome/browser/banners/app_banner_settings_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-21T03:06:47Z",
+      "side": 1,
+      "message": "This isn\u0027t testing the same thing any more (it\u0027s now just testing that the site engagement service returns the same score for multiple URLs on the same origin).\n\nPerhaps this can:\n\n - EXPECT_FALSE(WasBlockedRecently) on kTestUrl\n - Add a block on kTestUrl\n - EXPECT_TRUE(WasBlockedRecently) on kSameOriginTestURL\n\nAnd similar for ignore.",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 76
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
