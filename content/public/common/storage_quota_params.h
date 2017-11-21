@@ -24,6 +24,7 @@ struct CONTENT_EXPORT StorageQuotaParams {
         requested_size(0) {}
 
   int render_frame_id;
+  // TODO(sashab): Remove request_id.
   int request_id;
   GURL origin_url;
   storage::StorageType storage_type;
