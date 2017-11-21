@@ -18,6 +18,7 @@
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
+#include "chrome/browser/vr/vr_assets.h"
 #include "chrome/common/chrome_features.h"
 
 namespace vr {
@@ -146,6 +147,9 @@ void Ui::OnGlInitialized(unsigned int content_texture_id,
   }
   scene_manager_->OnGlInitialized(content_texture_id, content_location,
                                   provider_.get());
+
+  VrAssets::GetInstance()->LoadAssetsWhenComponentReady(
+      base::BindOnce(&Ui::OnAssetsLoaded, weak_ptr_factory_.GetWeakPtr()));
 }
 
 void Ui::OnAppButtonClicked() {
@@ -196,6 +200,12 @@ void Ui::OnPlatformControllerInitialized(PlatformController* controller) {
 bool Ui::IsControllerVisible() const {
   UiElement* controller_group = scene_->GetUiElementByName(kControllerGroup);
   return controller_group && controller_group->GetTargetOpacity() > 0.0f;
+}
+
+void Ui::OnAssetsLoaded(bool success, std::string environment) {
+  bool environment_correct = environment == "zq7sax8chrtjchxysh7b\n";
+  LOG(INFO) << "VrAssetsComponent - Ui::OnAssetsLoaded " << success << " "
+            << environment_correct;
 }
 
 }  // namespace vr

@@ -311,6 +311,8 @@ bool CrxUpdateService::CheckForUpdates() {
   for (const auto id : components_order_) {
     DCHECK(components_.find(id) != components_.end());
 
+    LOG(INFO) << "VrAssetsComponent - CrxUpdateService::CheckForUpdates " << id;
+
     auto* component(GetComponent(id));
     if (!component || component->requires_network_encryption)
       secure_ids.push_back(id);
