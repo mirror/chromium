@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "239a304b_15f184d8",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-21T03:50:55Z",
+      "side": 1,
+      "message": "I think we need to add something like:\n  [self.toolbarViewController.view.superview layoutIfNeeded];\nafter these two lines, otherwise [self snapshotForTabSwitcher] will use the wrong size.",
+      "revId": "8e36ae15cffdd2d398eeb6b83ba133d8df91be83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c77e282f_ac8a190a",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 3
