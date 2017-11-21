@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48b381cc_636b18fe",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-21T20:38:35Z",
+      "side": 1,
+      "message": "silly question: why do we need to release the lock before running .Run()?",
+      "range": {
+        "startLine": 493,
+        "startChar": 6,
+        "endLine": 493,
+        "endChar": 17
+      },
+      "revId": "bc6c3892d02526cde1180ad941cfa1042207af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
