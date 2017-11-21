@@ -6,9 +6,13 @@ package org.chromium.chrome.browser.vr_shell;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
+import android.view.Choreographer;
+import android.view.Choreographer.FrameCallback;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -24,6 +28,7 @@ import android.widget.RelativeLayout;
 import com.google.vr.ndk.base.AndroidCompat;
 import com.google.vr.ndk.base.GvrLayout;
 
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -58,6 +63,7 @@ import org.chromium.ui.base.WindowAndroid.PermissionCallback;
 import org.chromium.ui.display.DisplayAndroid;
 import org.chromium.ui.display.VirtualDisplayAndroid;
 
+import java.util.concurrent.locks.ReentrantLock;
 /**
  * This view extends from GvrLayout which wraps a GLSurfaceView that renders VR shell.
  */
@@ -83,6 +89,7 @@ public class VrShellImpl
     private FrameLayout mRenderToSurfaceLayoutParent;
     private FrameLayout mRenderToSurfaceLayout;
     private Surface mSurface;
+    private Surface mUiSurface;
     private View mPresentationView;
 
     // The tab that holds the main ContentViewCore.
@@ -109,12 +116,51 @@ public class VrShellImpl
 
     private OnDispatchTouchEventCallback mOnDispatchTouchEventForTesting;
 
+    private View mUiViews;
+    private int mSurfaceWidth;
+    private int mSurfaceHeight;
+    private final ReentrantLock mLock = new ReentrantLock();
+
+    private final FrameCallback mFrameCallback = new FrameCallback() {
+        @Override
+        public void doFrame(long frameTimeNanos) {
+            mLock.lock();
+            Choreographer.getInstance().postFrameCallback(this);
+            if (mUiSurface == null || mUiViews == null || !mUiSurface.isValid()) {
+                mLock.unlock();
+                return;
+            }
+            mUiViews.requestLayout();
+            mUiViews.invalidate();
+            /////////////////////////
+            mUiViews.setBackgroundColor(0xffeeeeee);
+            mUiViews.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+            /*
+                        mUiViews.layout(0, 0, 1200, 800);
+                        mUiViews.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+
+                        mUiViews.layout(0, 0, 1200, 800);
+            */
+            /////////////////////////
+            final Canvas surfaceCanvas = mUiSurface.lockCanvas(null);
+            surfaceCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            Log.e(TAG, "VRP => redraw");
+            mUiViews.draw(surfaceCanvas);
+            mUiSurface.unlockCanvasAndPost(surfaceCanvas);
+            mLock.unlock();
+        }
+    };
+
     public VrShellImpl(
             ChromeActivity activity, VrShellDelegate delegate, TabModelSelector tabModelSelector) {
         super(activity);
         mActivity = activity;
         mDelegate = delegate;
         mTabModelSelector = tabModelSelector;
+
+        Choreographer.getInstance().postFrameCallback(mFrameCallback);
 
         mActivity.getFullscreenManager().addListener(this);
 
@@ -186,12 +232,16 @@ public class VrShellImpl
                         nativeRestoreContentSurface(mNativeVrShell);
                         mRenderToSurfaceLayoutParent.setVisibility(View.INVISIBLE);
                         mSurface = null;
+                        mUiSurface = null;
                     }
                 }
                 if (tab.getNativePage() != null) {
                     mRenderToSurfaceLayoutParent.setVisibility(View.VISIBLE);
                     mNativePage = tab.getNativePage();
                     if (mSurface == null) mSurface = nativeTakeContentSurface(mNativeVrShell);
+                    if (mUiSurface == null) {
+                        mUiSurface = nativeTakeUiSurface(mNativeVrShell);
+                    }
                     mRenderToSurfaceLayout.addView(mNativePage.getView(),
                             new FrameLayout.LayoutParams(
                                     LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -519,6 +569,8 @@ public class VrShellImpl
         }
         mRenderToSurfaceLayout.setLayoutParams(
                 new FrameLayout.LayoutParams(surfaceWidth, surfaceHeight));
+        mSurfaceWidth = surfaceWidth;
+        mSurfaceHeight = surfaceHeight;
         nativeContentPhysicalBoundsChanged(mNativeVrShell, surfaceWidth, surfaceHeight, dpr);
     }
 
@@ -528,6 +580,12 @@ public class VrShellImpl
         mSurface = nativeTakeContentSurface(mNativeVrShell);
         mNativePage.getView().invalidate();
         mRenderToSurfaceLayout.invalidate();
+    }
+
+    @CalledByNative
+    public void uiSurfaceChanged(Surface surface) {
+        if (mUiSurface != null) return;
+        mUiSurface = surface;
     }
 
     @Override
@@ -610,6 +668,24 @@ public class VrShellImpl
     @Override
     public void teardown() {
         shutdown();
+    }
+    @Override
+    public void setDialogView(View view, String s) {
+        mLock.lock();
+        mUiViews = view;
+        if (mUiViews == null) {
+            mLock.unlock();
+            return;
+        }
+        mUiViews.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+
+        /*        mUiViews.layout(0, 0, 1200, 800);
+                mUiViews.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                        MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+
+                mUiViews.layout(0, 0, 1200, 800);*/
+        mLock.unlock();
     }
 
     @Override
@@ -901,6 +977,7 @@ public class VrShellImpl
             String title);
     private native void nativeOnTabRemoved(long nativeVrShell, boolean incognito, int id);
     private native Surface nativeTakeContentSurface(long nativeVrShell);
+    private native Surface nativeTakeUiSurface(long nativeVrShell);
     private native void nativeRestoreContentSurface(long nativeVrShell);
     private native void nativeSetHistoryButtonsEnabled(
             long nativeVrShell, boolean canGoBack, boolean canGoForward);

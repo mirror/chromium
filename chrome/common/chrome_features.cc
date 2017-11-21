@@ -214,6 +214,10 @@ const base::Feature kExperimentalAppBanners{"ExperimentalAppBanners",
 const base::Feature kExperimentalKeyboardLockUI{
     "ExperimentalKeyboardLockUI", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables Android UI in VR.
+const base::Feature kVrBrowsingNativeAndroidUi{
+    "VrBrowsingNativeAndroidUi", base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if BUILDFLAG(ENABLE_VR) || defined(OS_ANDROID)
 // Controls whether browsing in VR headsets is enabled.
 const base::Feature kVrBrowsing {
@@ -224,6 +228,7 @@ const base::Feature kVrBrowsing {
       base::FEATURE_DISABLED_BY_DEFAULT
 #endif
 };
+
 #endif  // BUILDFLAG(ENABLE_VR) || defined(OS_ANDROID)
 
 #if BUILDFLAG(ENABLE_VR)

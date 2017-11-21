@@ -61,6 +61,12 @@ void VrGLThread::ContentSurfaceChanged(jobject surface) {
       base::Bind(&VrShell::ContentSurfaceChanged, weak_vr_shell_, surface));
 }
 
+void VrGLThread::UiSurfaceChanged(jobject surface) {
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&VrShell::UiSurfaceChanged, weak_vr_shell_, surface));
+}
+
 void VrGLThread::GvrDelegateReady(gvr::ViewerType viewer_type) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
@@ -277,6 +283,14 @@ void VrGLThread::OnSpeechRecognitionStateChanged(int new_state) {
       FROM_HERE,
       base::Bind(&vr::BrowserUiInterface::OnSpeechRecognitionStateChanged,
                  browser_ui_, new_state));
+}
+
+void VrGLThread::SetAlertDialogEnabled(bool enabled,
+                                       vr::ContentInputDelegate* delegate) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAlertDialogEnabled,
+                            browser_ui_, enabled, delegate));
 }
 
 bool VrGLThread::OnMainThread() const {

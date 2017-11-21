@@ -43,6 +43,7 @@ import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ApplicationLifetime;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeAlertDialog;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
@@ -288,7 +289,19 @@ public class VrShellDelegate
         if (sInstance == null) return false;
         return sInstance.mInVr;
     }
+    private FrameLayout mUiView;
+    public static void setDialogView(View view, String title) {
+        if (sInstance == null) return;
+        if (view != null)
+            sInstance.mUiView.addView(view);
+        else
+            sInstance.mUiView.removeAllViews();
+        sInstance.mVrShell.setDialogView(view, title);
+    }
 
+    public static void sendToView(Runnable runnable) {
+        sInstance.mActivity.runOnUiThread(runnable);
+    }
     /**
      * See {@link ChromeActivity#handleBackPressed}
      * Only handles the back press while in VR.
@@ -800,6 +813,12 @@ public class VrShellDelegate
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_NATIVE_ANDROID_UI)) {
+            VrAlertDialog alertDialog = new VrAlertDialog(mNativeVrShellDelegate);
+            ChromeAlertDialog.setDialogHandler(alertDialog);
+        }
+
         mExitedDueToUnsupportedMode = false;
 
         addVrViews();
@@ -1381,7 +1400,9 @@ public class VrShellDelegate
 
         if (!mInVr) return;
         mInVr = false;
-
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_NATIVE_ANDROID_UI)) {
+            ChromeAlertDialog.setDialogHandler(null);
+        }
         if (mShowingDaydreamDoff) {
             onExitVrResult(true);
             return;
@@ -1614,6 +1635,8 @@ public class VrShellDelegate
         LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
+        mUiView = new FrameLayout(decor.getContext());
+        decor.addView(mUiView, params);
         decor.addView(mVrShell.getContainer(), params);
         mActivity.onEnterVr();
     }
@@ -1622,6 +1645,7 @@ public class VrShellDelegate
         mVrShell.onBeforeWindowDetached();
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
+        decor.removeView(mUiView);
         decor.removeView(mVrShell.getContainer());
     }
 
