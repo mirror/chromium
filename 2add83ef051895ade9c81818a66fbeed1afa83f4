@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "24a20479_66965957",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-21T18:07:01Z",
+      "side": 1,
+      "message": "Yeah, we should be iterating through ui::Compositors in ApplyColorTemperatureToLayers in NightLightController.\n\n(And get rid of the blue and green scales here)",
+      "parentUuid": "0e0e6d9f_c67f933f",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c8d96a9_09d401af",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 1
