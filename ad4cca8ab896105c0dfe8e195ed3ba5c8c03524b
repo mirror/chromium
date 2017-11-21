@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d827247_367b0d61",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T20:14:55Z",
+      "side": 1,
+      "message": "nit: This would be cleaner as a common error checked over the resulting keyframe_effects vector for both single effect and vector cases, despite a slightly more awkward error message - All effects vs Effect.",
+      "revId": "ad4cca8ab896105c0dfe8e195ed3ba5c8c03524b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
