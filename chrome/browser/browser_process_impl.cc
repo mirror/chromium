@@ -170,6 +170,10 @@
 #include "chrome/browser/plugins/plugins_resource_service.h"
 #endif
 
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+#include "chrome/browser/ui/tabs/tabs_tracker.h"
+#endif
+
 #if BUILDFLAG(ENABLE_WEBRTC)
 #include "chrome/browser/media/webrtc/webrtc_log_uploader.h"
 #endif
@@ -850,6 +854,15 @@ prefs::InProcessPrefServiceFactory* BrowserProcessImpl::pref_service_factory()
     const {
   return pref_service_factory_.get();
 }
+
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+tabs::TabsTracker* BrowserProcessImpl::GetTabsTracker() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (!tabs_tracker_)
+    tabs_tracker_ = std::make_unique<tabs::TabsTracker>();
+  return tabs_tracker_.get();
+}
+#endif
 
 // static
 void BrowserProcessImpl::RegisterPrefs(PrefRegistrySimple* registry) {

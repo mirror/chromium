@@ -52,6 +52,10 @@
 #include "chrome/browser/printing/print_preview_dialog_controller.h"
 #endif
 
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+#include "chrome/browser/ui/tabs/tabs_tracker.h"
+#endif
+
 #if !defined(OS_ANDROID)
 #include "components/keep_alive_registry/keep_alive_registry.h"
 #endif
@@ -453,6 +457,14 @@ prefs::InProcessPrefServiceFactory*
 TestingBrowserProcess::pref_service_factory() const {
   return nullptr;
 }
+
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+tabs::TabsTracker* TestingBrowserProcess::GetTabsTracker() {
+  if (!tabs_tracker_)
+    tabs_tracker_ = std::make_unique<tabs::TabsTracker>();
+  return tabs_tracker_.get();
+}
+#endif
 
 void TestingBrowserProcess::SetSystemRequestContext(
     net::URLRequestContextGetter* context_getter) {

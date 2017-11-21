@@ -130,6 +130,10 @@ namespace safe_browsing {
 class ClientSideDetectionService;
 }
 
+namespace tabs {
+class TabsTracker;
+}
+
 // NOT THREAD SAFE, call only from the main thread.
 // These functions shouldn't return NULL unless otherwise noted.
 class BrowserProcess {
@@ -309,6 +313,9 @@ class BrowserProcess {
   virtual physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() = 0;
 
   virtual prefs::InProcessPrefServiceFactory* pref_service_factory() const = 0;
+
+  // Returns the TabsTracker, or null on non-supported platforms.
+  virtual tabs::TabsTracker* GetTabsTracker() = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BrowserProcess);
