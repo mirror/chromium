@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "3ef3d62d_4438b6e7",
+        "filename": "device/vr/vr_device_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-21T15:37:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c54b7be_3d9a5e79",
+      "revId": "156b2558e506978006ebfe5c911cd7f07b0de01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5803cea2_2169dec5",
         "filename": "device/vr/vr_device_base.h",
         "patchSetId": 1

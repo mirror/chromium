@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "739e2af9_c171d360",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-21T15:37:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b4234c5_df05b902",
+      "revId": "0c52f0ce691c32e5b572d3d3848c67b9671890ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "656729fd_ce2618b0",
         "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0c52f0ce691c32e5b572d3d3848c67b9671890ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7781f56_71b99df8",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-21T15:37:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "656729fd_ce2618b0",
+      "revId": "0c52f0ce691c32e5b572d3d3848c67b9671890ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "0c52f0ce691c32e5b572d3d3848c67b9671890ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe54b22e_6c2f1c69",
+        "filename": "device/vr/android/gvr/gvr_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-21T15:37:52Z",
+      "side": 1,
+      "message": "Yeah, private is intentional as it shouldn\u0027t be used outside of the magic window bindings. I\u0027ve added the appropriate comments.",
+      "parentUuid": "dc7952ad_dc6fd574",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "0c52f0ce691c32e5b572d3d3848c67b9671890ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
