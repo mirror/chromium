@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "570e81fd_650245d5",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-21T12:40:02Z",
+      "side": 1,
+      "message": "That makes sense to me. It looks like it is safe to use a NONE value to indicate an error then. However, given that devlin has a TODO at a very similar line of code (line 656 in this file) already, maybe you could duplicate the TODO here as well?",
+      "parentUuid": "1025f12f_94500159",
+      "range": {
+        "startLine": 372,
+        "startChar": 6,
+        "endLine": 372,
+        "endChar": 33
+      },
+      "revId": "cbd71302ee1c687327000eace524387c7597f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691ff2df_21fe409c",
         "filename": "chrome/browser/extensions/api/preference/preference_api.h",
         "patchSetId": 3

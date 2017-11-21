@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52556170_35e2b38b",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-21T12:40:02Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 211,
+        "startChar": 47,
+        "endLine": 211,
+        "endChar": 48
+      },
+      "revId": "1347a0ef482dedfa5ad199ea0af4fbb76aff19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
