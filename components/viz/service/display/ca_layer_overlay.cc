@@ -254,6 +254,7 @@ class CALayerOverlayProcessor {
       case DrawQuad::SURFACE_CONTENT:
         return CA_LAYER_FAILED_SURFACE_CONTENT;
       case DrawQuad::YUV_VIDEO_CONTENT:
+        DCHECK(0);
         return CA_LAYER_FAILED_YUV_VIDEO_CONTENT;
       default:
         break;
