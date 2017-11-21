@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "919b1e97_5c3819dc",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-21T18:06:46Z",
+      "side": 1,
+      "message": "This name seems inappropriate, because sometimes it\u0027ll return true but we shouldn\u0027t display most visited URLs.  E.g., we decided not to launch zero suggest on the NTP.",
+      "revId": "1e93239b596dfe69bae9396c8e4eef0bc3ba4e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
