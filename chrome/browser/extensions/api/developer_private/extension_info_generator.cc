@@ -560,7 +560,7 @@ void ExtensionInfoGenerator::CreateExtensionInfoHelper(
                                  extension_misc::EXTENSION_ICON_MEDIUM,
                                  ExtensionIconSet::MATCH_BIGGER);
   if (icon.empty()) {
-    info->icon_url = GetDefaultIconUrl(extension.is_app(), !is_enabled);
+    info->icon_url = GetDefaultIconUrl(extension.is_app());
     list_.push_back(std::move(*info));
   } else {
     ++pending_image_loads_;
@@ -575,45 +575,22 @@ void ExtensionInfoGenerator::CreateExtensionInfoHelper(
   }
 }
 
-const std::string& ExtensionInfoGenerator::GetDefaultIconUrl(
-    bool is_app,
-    bool is_greyscale) {
-  std::string* str;
-  if (is_app) {
-    str = is_greyscale ? &default_disabled_app_icon_url_ :
-        &default_app_icon_url_;
-  } else {
-    str = is_greyscale ? &default_disabled_extension_icon_url_ :
-        &default_extension_icon_url_;
-  }
+const std::string& ExtensionInfoGenerator::GetDefaultIconUrl(bool is_app) {
+  std::string* str =
+      is_app ? &default_app_icon_url_ : &default_extension_icon_url_;
 
   if (str->empty()) {
     *str = GetIconUrlFromImage(
         ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-            is_app ? IDR_APP_DEFAULT_ICON : IDR_EXTENSION_DEFAULT_ICON),
-        is_greyscale);
+            is_app ? IDR_APP_DEFAULT_ICON : IDR_EXTENSION_DEFAULT_ICON));
   }
 
   return *str;
 }
 
 std::string ExtensionInfoGenerator::GetIconUrlFromImage(
-    const gfx::Image& image,
-    bool should_greyscale) {
-  scoped_refptr<base::RefCountedMemory> data;
-  if (should_greyscale) {
-    color_utils::HSL shift = {-1, 0, 0.6};
-    const SkBitmap* bitmap = image.ToSkBitmap();
-    DCHECK(bitmap);
-    SkBitmap grey = SkBitmapOperations::CreateHSLShiftedBitmap(*bitmap, shift);
-    scoped_refptr<base::RefCountedBytes> image_bytes(
-        new base::RefCountedBytes());
-    gfx::PNGCodec::EncodeBGRASkBitmap(grey, false, &image_bytes->data());
-    data = image_bytes;
-  } else {
-    data = image.As1xPNGBytes();
-  }
-
+    const gfx::Image& image) {
+  scoped_refptr<base::RefCountedMemory> data = image.As1xPNGBytes();
   std::string base_64;
   base::Base64Encode(base::StringPiece(data->front_as<char>(), data->size()),
                      &base_64);
@@ -625,15 +602,13 @@ void ExtensionInfoGenerator::OnImageLoaded(
     std::unique_ptr<developer::ExtensionInfo> info,
     const gfx::Image& icon) {
   if (!icon.IsEmpty()) {
-    info->icon_url = GetIconUrlFromImage(
-        icon, info->state != developer::EXTENSION_STATE_ENABLED);
+    info->icon_url = GetIconUrlFromImage(icon);
   } else {
     bool is_app =
         info->type == developer::EXTENSION_TYPE_HOSTED_APP ||
         info->type == developer::EXTENSION_TYPE_LEGACY_PACKAGED_APP ||
         info->type == developer::EXTENSION_TYPE_PLATFORM_APP;
-    info->icon_url = GetDefaultIconUrl(
-        is_app, info->state != developer::EXTENSION_STATE_ENABLED);
+    info->icon_url = GetDefaultIconUrl(is_app);
   }
 
   list_.push_back(std::move(*info));
