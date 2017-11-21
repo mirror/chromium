@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ea2909c_962bd487",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T17:45:33Z",
+      "side": 1,
+      "message": "This line was failing before the change, because GetSiteURL() returned the isolated_url\u0027s origin but SiteInstanceGotProcess looked it up as a hosted app anyway.",
+      "revId": "b77e1dbb7f563a2ec993a8ae5c40c268ec34c4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee152a4b_c2555cee",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T17:45:33Z",
+      "side": 1,
+      "message": "I put this in for completeness, but it didn\u0027t fail before the test, apparently because we don\u0027t get to SiteInstanceGotProcess in this tab.  (Not entirely sure why.)",
+      "revId": "b77e1dbb7f563a2ec993a8ae5c40c268ec34c4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
