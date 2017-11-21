@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b289488e_4deb2082",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-21T22:49:15Z",
+      "side": 1,
+      "message": "nit: be more descriptive in CL title, e.g. \"Add CdmProxy mojom interface\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c46b38_37618a55",
+        "filename": "media/base/ipc/media_param_traits_macros.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-21T22:49:15Z",
+      "side": 1,
+      "message": "nit: These\u0027s some confusion between CdmKeyInformation (above) and this KeyInfo. Maybe rename the latter to be CdmProxyKeyInfo?",
+      "range": {
+        "startLine": 160,
+        "startChar": 24,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade514b9_ae333c86",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-21T22:49:15Z",
+      "side": 1,
+      "message": "In any class values outside the enum range would not work. Do you want to say those values are not allowed and will trigger failure?",
+      "range": {
+        "startLine": 17,
+        "startChar": 74,
+        "endLine": 17,
+        "endChar": 77
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2620836_a72fce9e",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-21T22:49:15Z",
+      "side": 1,
+      "message": "output_data_",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62eb2b32_54e9e59f",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-21T22:49:15Z",
+      "side": 1,
+      "message": "nit: fit in one line?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
