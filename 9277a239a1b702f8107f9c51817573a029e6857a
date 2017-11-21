@@ -93,6 +93,30 @@
       "revId": "9277a239a1b702f8107f9c51817573a029e6857a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70cea38_84021e9d",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T16:08:59Z",
+      "side": 1,
+      "message": "\u003e Good point I\u0027ve told translators not to translate flags strings when I updated but I guess it just automatically goes through the workflow.\n\nWhat do you mean by that?",
+      "parentUuid": "57790caa_2bfb7933",
+      "range": {
+        "startLine": 90,
+        "startChar": 64,
+        "endLine": 90,
+        "endChar": 78
+      },
+      "revId": "9277a239a1b702f8107f9c51817573a029e6857a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
