@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aef1ca8_b193985c",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_blocking_page.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:30:50Z",
+      "side": 1,
+      "message": "Is this the same thing what other platforms do?",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 44
+      },
+      "revId": "fb0e27b6f10c20b732aab3f289dc648f4eb4ab92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
