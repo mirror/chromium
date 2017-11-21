@@ -17,7 +17,7 @@ import sys
 # If this test starts failing, please set TEST_IS_ENABLED to "False" and file a
 # bug to get this reenabled, and cc the people listed in
 # //tools/traffic_annotation/OWNERS.
-TEST_IS_ENABLED = sys.platform != 'win32'
+TEST_IS_ENABLED = True
 
 
 class NetworkTrafficAnnotationChecker():
@@ -113,9 +113,6 @@ class NetworkTrafficAnnotationChecker():
 
     args = [self.auditor_path, "--test-only", "--limit=%i" % limit,
             "--build-path=" + self.build_path ] + file_paths
-
-    if sys.platform.startswith("win"):
-      args.insert(0, sys.executable)
 
     command = subprocess.Popen(args, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)

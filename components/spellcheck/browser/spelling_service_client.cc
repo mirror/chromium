@@ -107,7 +107,7 @@ bool SpellingServiceClient::RequestTextCheck(
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("spellcheck_lookup", R"(
         semantics {
-          sender: "Online Spellcheck"
+          sender: "Online Spellcheck2"
           description:
             "Chromium can provide smarter spell-checking, by sending the text "
             "that the users type into the browser, to Google's servers. This"
@@ -307,6 +307,5 @@ void SpellingServiceClient::OnURLFetchComplete(const net::URLFetcher* source) {
 std::unique_ptr<net::URLFetcher> SpellingServiceClient::CreateURLFetcher(
     const GURL& url,
     net::NetworkTrafficAnnotationTag traffic_annotation) {
-  return net::URLFetcher::Create(url, net::URLFetcher::POST, this,
-                                 traffic_annotation);
+  return net::URLFetcher::Create(url, net::URLFetcher::POST, this);
 }
