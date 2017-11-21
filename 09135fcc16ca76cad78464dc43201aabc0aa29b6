@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "03c454cd_c27f1c83",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-21T07:00:55Z",
+      "side": 1,
+      "message": "I just thought this was a tad neater. I can also then use code search to hunt them all down and remove as many as possible as part of this effort. But it\u0027s much of a muchness. If you hate it I can change it back.",
+      "parentUuid": "b8f17509_181cf4d7",
+      "revId": "09135fcc16ca76cad78464dc43201aabc0aa29b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15cbbb78_b38d7257",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 6
