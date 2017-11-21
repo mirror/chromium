@@ -22,6 +22,30 @@
       "revId": "26bee1b19f445a75cd75fc80a5a888859566be2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ecad45a_e73025af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-21T19:28:44Z",
+      "side": 1,
+      "message": "It\u0027s not clear from Java Docs whether these are guaranteed to be non-null: https://docs.oracle.com/javase/8/docs/api/java/security/cert/X509Certificate.html#getSubjectAlternativeNames--\n\nAdded checks to be extra safe.",
+      "parentUuid": "5a41650a_0bbc4514",
+      "range": {
+        "startLine": 267,
+        "startChar": 34,
+        "endLine": 267,
+        "endChar": 35
+      },
+      "revId": "26bee1b19f445a75cd75fc80a5a888859566be2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
