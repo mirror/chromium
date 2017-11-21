@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c76275_d037d302",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T00:58:43Z",
+      "side": 1,
+      "message": "Could we get a string instead of a number? We did this in ServiceWorkerUtils::ErrorTypeToString before, I\u0027m not sure if there is a better way.",
+      "revId": "803f42c127fa681406200f3584fec1291c1d556b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e533d4f8_d47494d6",
+        "filename": "third_party/WebKit/common/serviceworker/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T00:58:43Z",
+      "side": 1,
+      "message": "This file should be identical to public/platform/modules/serviceworker/OWNERS",
+      "revId": "803f42c127fa681406200f3584fec1291c1d556b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94510da_8a9c067a",
+        "filename": "third_party/WebKit/common/serviceworker/service_worker_client.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T00:58:43Z",
+      "side": 1,
+      "message": "Clients can be uncontrolled.\n\n// Indicates the service worker client type. See https://w3c.github.io/ServiceWorker/#service-worker-client-concept and https://w3c.github.io/ServiceWorker/#dom-clientqueryoptions-type",
+      "revId": "803f42c127fa681406200f3584fec1291c1d556b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e3365d_76483ae9",
+        "filename": "third_party/WebKit/common/serviceworker/service_worker_client.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T00:58:43Z",
+      "side": 1,
+      "message": "Can you remove or comment out kWorker? I don\u0027t believe it\u0027s used in production code.",
+      "revId": "803f42c127fa681406200f3584fec1291c1d556b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
