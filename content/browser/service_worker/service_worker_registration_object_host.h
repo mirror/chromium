@@ -36,7 +36,7 @@ class CONTENT_EXPORT ServiceWorkerRegistrationObjectHost
  public:
   ServiceWorkerRegistrationObjectHost(
       base::WeakPtr<ServiceWorkerContextCore> context,
-      ServiceWorkerProviderHost* provider_host,
+      base::WeakPtr<ServiceWorkerProviderHost> provider_host,
       scoped_refptr<ServiceWorkerRegistration> registration);
   ~ServiceWorkerRegistrationObjectHost() override;
 
@@ -106,9 +106,7 @@ class CONTENT_EXPORT ServiceWorkerRegistrationObjectHost
                                              const char* error_prefix,
                                              Args... args);
 
-  // |provider_host_| is valid throughout lifetime of |this| because it owns
-  // |this|.
-  ServiceWorkerProviderHost* provider_host_;
+  base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
   base::WeakPtr<ServiceWorkerContextCore> context_;
   mojo::AssociatedBindingSet<blink::mojom::ServiceWorkerRegistrationObjectHost>
       bindings_;
