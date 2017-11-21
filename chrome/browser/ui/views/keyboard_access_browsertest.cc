@@ -354,14 +354,7 @@ IN_PROC_BROWSER_TEST_F(KeyboardAccessTest, MAYBE_TestAltMenuKeyboardAccess) {
   TestMenuKeyboardAccess(true, false, false);
 }
 
-// If this flakes, use http://crbug.com/62311.
-#if defined(OS_WIN)
-#define MAYBE_TestShiftAltMenuKeyboardAccess DISABLED_TestShiftAltMenuKeyboardAccess
-#else
-#define MAYBE_TestShiftAltMenuKeyboardAccess TestShiftAltMenuKeyboardAccess
-#endif
-IN_PROC_BROWSER_TEST_F(KeyboardAccessTest,
-                       MAYBE_TestShiftAltMenuKeyboardAccess) {
+IN_PROC_BROWSER_TEST_F(KeyboardAccessTest, TestShiftAltMenuKeyboardAccess) {
   TestMenuKeyboardAccess(true, true, false);
 }
 
@@ -371,8 +364,7 @@ IN_PROC_BROWSER_TEST_F(KeyboardAccessTest,
   TestMenuKeyboardAccess(true, false, true);
 }
 
-IN_PROC_BROWSER_TEST_F(KeyboardAccessTest,
-                       DISABLED_TestSystemMenuWithKeyboard) {
+IN_PROC_BROWSER_TEST_F(KeyboardAccessTest, TestSystemMenuWithKeyboard) {
   TestSystemMenuWithKeyboard();
 }
 #endif
