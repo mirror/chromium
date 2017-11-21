@@ -16,6 +16,24 @@
       "revId": "92e46e1351a12ea313c4cc75fbbc753e30fc76ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fde4a18_80db584a",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-21T18:54:32Z",
+      "side": 1,
+      "message": "Yes, I find that to be better UX than not opening the context menu at all (the user will be able to tell that all entries are disabled).",
+      "parentUuid": "a1a1b472_4ae91190",
+      "revId": "92e46e1351a12ea313c4cc75fbbc753e30fc76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
