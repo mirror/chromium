@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b1984b8_eb11dcd5",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-21T19:57:25Z",
+      "side": 1,
+      "message": "used?",
+      "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43179f10_ee5ee459",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-21T19:57:25Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem to toggle - I\u0027d expect that if you\u0027re already dictating, it\nshould stop. That seems small, maybe just implement that for this\nchange?",
+      "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea322c5_f256b5bd",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-21T19:57:25Z",
+      "side": 1,
+      "message": "Please add the author of app_list/speech_recognizer* as a\nreviewer and maybe add a TODO to the top of speech_recognizer.h\nto refactor it out of app_list. I don\u0027t think dictation\nshould depend on app_list directly.",
+      "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923775f9_0ac06d45",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-21T19:57:25Z",
+      "side": 1,
+      "message": "User-initiated",
+      "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
