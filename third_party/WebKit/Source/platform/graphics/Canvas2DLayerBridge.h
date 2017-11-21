@@ -33,6 +33,7 @@
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "platform/PlatformExport.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/graphics/CanvasResourceConsumer.h"
 #include "platform/graphics/ImageBufferSurface.h"
 #include "platform/graphics/paint/PaintRecorder.h"
 #include "platform/wtf/Allocator.h"
@@ -81,8 +82,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   Canvas2DLayerBridge(const IntSize&,
                       int msaa_sample_count,
                       AccelerationMode,
-                      const CanvasColorParams&,
-                      bool is_unit_test = false);
+                      const CanvasColorParams&);
 
   ~Canvas2DLayerBridge() override;
 
@@ -112,6 +112,9 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
                    int y) override;
   void DontUseIdleSchedulingForTesting() {
     dont_use_idle_scheduling_for_testing_ = true;
+  }
+  void SetCanvasResourceConsumer(CanvasResourceConsumer* consumer) {
+    consumer_ = consumer;
   }
 
   void BeginDestruction();
@@ -195,6 +198,8 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   AccelerationMode acceleration_mode_;
   CanvasColorParams color_params_;
   CheckedNumeric<int> recording_pixel_count_;
+
+  CanvasResourceConsumer* consumer_;
 };
 
 }  // namespace blink
