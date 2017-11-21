@@ -16,6 +16,24 @@
       "revId": "7a8812f1141157775aea4a96d7211eb4d73b7c33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dccd46bf_4f707044",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T15:58:33Z",
+      "side": 1,
+      "message": "Thanks for the pointer!\n\nI am aware of it, I just feel that native structs violate the idea of Mojo APIs.  At least this way Java code could theoretically pass in proxy rules, for instance (Though it would quite possibly get them wrong, if it tried to do anything fancy).",
+      "parentUuid": "58ef97f8_d72ca7fd",
+      "revId": "7a8812f1141157775aea4a96d7211eb4d73b7c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
