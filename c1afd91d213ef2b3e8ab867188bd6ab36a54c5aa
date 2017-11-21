@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78ba5380_f378399b",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2262,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-21T01:34:33Z",
+      "side": 1,
+      "message": "Hm, I think the logic is slightly different here.  After a long pause, the first write will be prefaced by a PING.  However, the next write will not: if the ACK has not been received yet, then |pings_in_flight| is true, so SendPrefacePingIfNoneInFlight() does an early return.  When the ACK is received, DoReadComplete updates |last_read_time_|, so this condition does not hold, therefore there is no more preface PINGs.\n\nIf enough time passes after getting that ACK, then indeed I want yet another PING to be sent.",
+      "parentUuid": "8165a1f3_d116eff5",
+      "range": {
+        "startLine": 2262,
+        "startChar": 65,
+        "endLine": 2262,
+        "endChar": 0
+      },
+      "revId": "c1afd91d213ef2b3e8ab867188bd6ab36a54c5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a672935_bc440c0a",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "300eefa3_8c227a6b",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-21T01:34:33Z",
+      "side": 1,
+      "message": "Great idea.  I\u0027m doing it in another CL: https://crrev.com/c/779670.",
+      "parentUuid": "0a672935_bc440c0a",
+      "range": {
+        "startLine": 2266,
+        "startChar": 37,
+        "endLine": 2266,
+        "endChar": 0
+      },
+      "revId": "c1afd91d213ef2b3e8ab867188bd6ab36a54c5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e07fd18_7dafa1a0",
         "filename": "net/spdy/chromium/spdy_session.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "c1afd91d213ef2b3e8ab867188bd6ab36a54c5aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5399ad_a0455142",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-21T01:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e07fd18_7dafa1a0",
+      "range": {
+        "startLine": 1110,
+        "startChar": 34,
+        "endLine": 1110,
+        "endChar": 42
+      },
+      "revId": "c1afd91d213ef2b3e8ab867188bd6ab36a54c5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
