@@ -16,6 +16,24 @@
       "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56985c7a_7d5358a3",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileCallback.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T12:21:44Z",
+      "side": 1,
+      "message": "FileCallback is a callback interface, it returns nothing (type void).\n\nAn author function that has been passed to Blink as a FileCallback is called back with an argument of type Blob.\n\nFor example,\n\n  function my_func(x) { console.log(x); }\n\n  file_entry.file(my_func);\n\nthen, my_func is called back with x \u003d a Blob object.\n\n\nExactly speaking, the spec says that it must be a File object instead of a Blob object (see the spec link on line 5).  However, I didn\u0027t want to make any behavioral change in this patch, so I didn\u0027t change the argument type.",
+      "parentUuid": "b7b2f490_a7a2f4a6",
+      "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
