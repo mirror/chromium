@@ -287,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "daeb7a1a_6988adc9",
+        "filename": "media/mojo/clients/gpu_jpeg_decode_accelerator_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-21T21:22:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed96526_187c8910",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "143c9532_b75761f4",
         "filename": "media/mojo/interfaces/jpeg_decoder.mojom",
         "patchSetId": 7
