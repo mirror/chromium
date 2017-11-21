@@ -14,8 +14,6 @@
 #include "base/memory/shared_memory.h"
 #include "content/common/content_export.h"
 
-struct FontDescriptor;
-
 namespace content {
 
 // Provides functionality to transmit fonts over IPC.
@@ -45,7 +43,9 @@ class FontLoader {
   // sending over IPC. On failure, zeroes and an invalid handle are reported
   // to the callback.
   CONTENT_EXPORT
-  static void LoadFont(const FontDescriptor& font, LoadedCallback callback);
+  static void LoadFont(const base::string16& font_name,
+                       const float font_point_size,
+                       LoadedCallback callback);
 
   // Given a shared memory buffer containing the raw data for a font file, load
   // the font and return a CGFontRef.
@@ -65,7 +65,8 @@ class FontLoader {
 
   CONTENT_EXPORT
   static std::unique_ptr<ResultInternal> LoadFontForTesting(
-      const FontDescriptor& font);
+      const base::string16& font_name,
+      const float font_point_size);
 };
 
 }  // namespace content
