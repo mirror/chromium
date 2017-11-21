@@ -5,6 +5,7 @@
 #include "content/public/browser/download_manager.h"
 
 #include "content/browser/byte_stream.h"
+#include "content/browser/download/download_request_core.h"
 #include "content/browser/download/download_task_runner.h"
 
 namespace content {
