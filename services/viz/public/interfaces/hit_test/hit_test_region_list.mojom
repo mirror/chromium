@@ -24,11 +24,20 @@ const uint32 kHitTestAsk = 0x08;
 
 // TODO(varkha): Add other kHitTest* flags as necessary for other event sources
 // such as mouse-wheel, stylus or perhaps even mouse-move.
+// Flags for different event sources.
 // Hit-testing for mouse events.
 const uint32 kHitTestMouse = 0x10;
 
 // Hit-testing for touch events.
 const uint32 kHitTestTouch = 0x20;
+
+struct HitTestRect {
+  // Flags to indicate the event source.
+  uint32 flags;
+
+  // The rect of the region in the coordinate space of the parent.
+  gfx.mojom.Rect rect;
+};
 
 struct HitTestRegion {
   // Flags to indicate the type of HitTestRegion.
@@ -40,13 +49,13 @@ struct HitTestRegion {
   // LocalSurfaceId is required when flags include kHitTestChildSurface.
   LocalSurfaceId? local_surface_id;
 
-  // The rect of the region in the coordinate space of the embedder.
-  gfx.mojom.Rect rect;
-
   // The transform of the region.  The transform applied to the rect
   // defines the space occupied by this region in the coordinate space of
   // the embedder.
   gfx.mojom.Transform transform;
+
+  // The list of rect with its corresponding event source flags.
+  array<HitTestRect> rects;
 };
 
 struct HitTestRegionList {
