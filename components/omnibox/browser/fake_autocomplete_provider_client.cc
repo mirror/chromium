@@ -13,13 +13,16 @@
 #include "components/omnibox/browser/in_memory_url_index.h"
 #include "components/omnibox/browser/in_memory_url_index_test_util.h"
 
-FakeAutocompleteProviderClient::FakeAutocompleteProviderClient()
+FakeAutocompleteProviderClient::FakeAutocompleteProviderClient(
+    bool create_history_db)
     : is_tab_open_with_url_(false) {
+  set_template_url_service(base::MakeUnique<TemplateURLService>(nullptr, 0));
+
   bookmark_model_ = bookmarks::TestBookmarkClient::CreateModel();
 
   CHECK(history_dir_.CreateUniqueTempDir());
   history_service_ =
-      history::CreateHistoryService(history_dir_.GetPath(), true);
+      history::CreateHistoryService(history_dir_.GetPath(), create_history_db);
 
   in_memory_url_index_.reset(
       new InMemoryURLIndex(bookmark_model_.get(), history_service_.get(),
