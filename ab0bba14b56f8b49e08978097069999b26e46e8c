@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc13b4f7_a1c97919",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T14:56:07Z",
+      "side": 1,
+      "message": "nit: \"because |png_data| comes\"",
+      "range": {
+        "startLine": 87,
+        "startChar": 43,
+        "endLine": 87,
+        "endChar": 72
+      },
+      "revId": "ab0bba14b56f8b49e08978097069999b26e46e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
