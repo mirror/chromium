@@ -442,6 +442,7 @@
         <structure type="chrome_scaled_image" name="IDR_SWIPE_BACK" file="mac/back_large.png" />
         <structure type="chrome_scaled_image" name="IDR_SWIPE_FORWARD" file="mac/forward_large.png" />
       </if>
+      <structure type="chrome_scaled_image" name="IDR_SYNC_COMPLETE_CIRCLE" file="common/sync_complete_circle.png" />
       <!-- Note: Tab close buttons are not traditional buttons.  Tab close buttons
            fill a background with a color from the theme and tile IDR_CLOSE_1 over it.
            See chrome/browser/ui/views/tabs/tab.cc -->
