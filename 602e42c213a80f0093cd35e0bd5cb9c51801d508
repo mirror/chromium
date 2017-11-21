@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c126255_df1bf0ab",
+        "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T02:25:09Z",
+      "side": 1,
+      "message": "Not needed if you use std::make_unique below.",
+      "revId": "602e42c213a80f0093cd35e0bd5cb9c51801d508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d15627e_be28a9e1",
+        "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T02:25:09Z",
+      "side": 1,
+      "message": "You can probably forward declare this and shared_memory.h, and move the #include to the appropriate .cc files.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes",
+      "revId": "602e42c213a80f0093cd35e0bd5cb9c51801d508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
