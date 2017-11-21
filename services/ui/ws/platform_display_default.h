@@ -9,7 +9,6 @@
 
 #include "base/macros.h"
 #include "services/ui/display/viewport_metrics.h"
-#include "services/ui/ws/frame_generator.h"
 #include "services/ui/ws/platform_display.h"
 #include "services/ui/ws/platform_display_delegate.h"
 #include "services/ui/ws/server_window.h"
@@ -18,6 +17,7 @@
 namespace ui {
 
 class EventSink;
+class FrameGenerator;
 class PlatformWindow;
 
 namespace ws {
@@ -35,7 +35,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
                          std::unique_ptr<ThreadedImageCursors> image_cursors);
   ~PlatformDisplayDefault() override;
 
-  // EventSource::
+  // EventSource:
   EventSink* GetEventSink() override;
 
   // PlatformDisplay:

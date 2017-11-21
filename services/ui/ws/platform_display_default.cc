@@ -11,6 +11,7 @@
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "services/ui/display/screen_manager.h"
 #include "services/ui/public/interfaces/cursor/cursor_struct_traits.h"
+#include "services/ui/ws/frame_generator.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/threaded_image_cursors.h"
 #include "ui/display/display.h"

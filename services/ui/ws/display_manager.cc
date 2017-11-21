@@ -17,6 +17,7 @@
 #include "services/ui/ws/display_creation_config.h"
 #include "services/ui/ws/event_dispatcher.h"
 #include "services/ui/ws/frame_generator.h"
+#include "services/ui/ws/platform_display_mirror.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/user_display_manager.h"
 #include "services/ui/ws/user_display_manager_delegate.h"
@@ -176,19 +177,40 @@ bool DisplayManager::SetDisplayConfiguration(
     }
   }
   for (size_t i = 0; i < mirrors.size(); ++i) {
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus mirroring/unified mode.";
-    Display* ws_mirror = GetDisplayById(mirrors[i].id());
+    Display* ws_display_to_mirror = GetDisplayById(displays[0].id());
+    Display* ws_display = GetDisplayById(mirrors[i].id());
     const auto& metrics = viewport_metrics[displays.size() + i];
-    if (!ws_mirror) {
-      // Create a mirror destination display on startup or on display connected.
-      CreateDisplay(mirrors[i], metrics);
-    } else {
-      // Reuse an existing display for mirroring that was previously extended.
-      ws_mirror->SetDisplay(mirrors[i]);
-      ws_mirror->OnViewportMetricsChanged(metrics);
-      display_list.AddOrUpdateDisplay(mirrors[i],
-                                      display::DisplayList::Type::NOT_PRIMARY);
+    // Destroy any existing extended display, mirrors are managed separately.
+    // TODO(msw): Do this below via removed_display_ids, and recreate mirrors afterwards? 
+    if (ws_display) {
+      // display_list.RemoveDisplay(mirrors[i].id());
+      DestroyDisplay(ws_display);
     }
+    int64_t mirror_id = mirrors[i].id();
+    PlatformDisplayMirror* mirror = nullptr;
+    for (size_t i = 0; i < mirrors_.size(); ++i) {
+      if (mirrors_[i]->display().id() == mirror_id) {
+        mirror = mirrors_[i].get();
+        break;
+      }
+    }
+    if (mirror) {
+      LOG(ERROR) << "MSW Found existing mirror: " << mirror->display().ToString() << " -> " << mirrors[i].ToString(); 
+      // ws_mirror->SetDisplay(mirrors[i]);
+      // ws_mirror->OnViewportMetricsChanged(metrics);
+      // display_list.UpdateDisplay(mirrors[i],
+      //                             display::DisplayList::Type::NOT_PRIMARY);
+      continue;
+    }
+    LOG(ERROR) << "MSW Creating a new mirror: " << mirrors[i].ToString(); 
+    // Generate a new FrameSinkId for the mirror destination display.
+    // WindowId id = GetAndAdvanceNextRootId();
+    mirrors_.push_back(std::make_unique<PlatformDisplayMirror>(
+        mirrors[i], metrics,
+        window_server_, // viz::FrameSinkId(id.client_id, id.window_id),
+        ws_display_to_mirror));
+    display_list.AddOrUpdateDisplay(mirrors[i],
+                                    display::DisplayList::Type::NOT_PRIMARY);
   }
 
   std::set<int64_t> existing_display_ids;
@@ -361,6 +383,25 @@ void DisplayManager::OnDisplayAcceleratedWidgetAvailable(Display* display) {
   if (event_rewriter_)
     display->platform_display()->AddEventRewriter(event_rewriter_.get());
   window_server_->OnDisplayReady(display, is_first_display);
+}
+
+void DisplayManager::OnFirstSurfaceActivation(
+    Display* display,
+    const viz::SurfaceInfo& surface_info) {
+  LOG(ERROR) << "MSW ui::ws::FrameGenerator::OnFirstSurfaceActivation A " << display->GetDisplay().ToString(); 
+  display->platform_display()->GetFrameGenerator()->OnFirstSurfaceActivation(
+      surface_info);
+  // Also pass the surface info to any displays mirroring the given display.
+  for (size_t i = 0; i < mirrors_.size(); ++i) {
+    PlatformDisplayMirror* mirror = mirrors_[i].get();
+    if (mirror->display_to_mirror() == display) {
+      const display::ViewportMetrics& metrics = mirror->GetViewportMetrics();
+      viz::SurfaceInfo info(surface_info.id(), metrics.device_scale_factor,
+                            metrics.bounds_in_pixels.size());
+      LOG(ERROR) << "MSW ui::ws::FrameGenerator::OnFirstSurfaceActivation B " << mirror->display().ToString() << " info: " << info.id().ToString() << " scale:" << info.device_scale_factor() << " size:" << info.size_in_pixels().ToString(); 
+      mirror->GetFrameGenerator()->OnFirstSurfaceActivation(info);
+    }
+  }
 }
 
 void DisplayManager::SetHighContrastMode(bool enabled) {

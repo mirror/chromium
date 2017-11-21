@@ -48,7 +48,7 @@ Display::~Display() {
   window_server_->window_manager_window_tree_factory_set()->RemoveObserver(
       this);
 
-  if (!focus_controller_) {
+  if (focus_controller_) {
     focus_controller_->RemoveObserver(this);
     focus_controller_.reset();
   }
@@ -167,7 +167,7 @@ bool Display::SetFocusedWindow(ServerWindow* new_focused_window) {
   ServerWindow* old_focused_window = focus_controller_->GetFocusedWindow();
   if (old_focused_window == new_focused_window)
     return true;
-  DCHECK(!new_focused_window || root_window()->Contains(new_focused_window));
+  DCHECK(!new_focused_window || root_->Contains(new_focused_window));
   return focus_controller_->SetFocusedWindow(new_focused_window);
 }
 
