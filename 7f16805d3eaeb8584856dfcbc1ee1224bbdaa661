@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2e2aa8b_d786b9b4",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T20:00:35Z",
+      "side": 1,
+      "message": "nit: no need to use {}",
+      "revId": "7f16805d3eaeb8584856dfcbc1ee1224bbdaa661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
