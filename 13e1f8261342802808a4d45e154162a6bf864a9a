@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c06cbb6d_07563555",
+        "filename": "ios/chrome/browser/autofill/form_input_accessory_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T15:34:17Z",
+      "side": 1,
+      "message": "nit: Do we need this and the next line?",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 274,
+        "endChar": 27
+      },
+      "revId": "13e1f8261342802808a4d45e154162a6bf864a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
