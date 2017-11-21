@@ -44,6 +44,7 @@ class InlineLoginHandlerImpl : public InlineLoginHandler,
 
  private:
   friend class InlineLoginUIBrowserTest;
+  friend class DiceTurnSyncOnHelper;
   FRIEND_TEST_ALL_PREFIXES(InlineLoginUIBrowserTest, CanOfferNoProfile);
   FRIEND_TEST_ALL_PREFIXES(InlineLoginUIBrowserTest, CanOffer);
   FRIEND_TEST_ALL_PREFIXES(InlineLoginUIBrowserTest, CanOfferProfileConnected);
