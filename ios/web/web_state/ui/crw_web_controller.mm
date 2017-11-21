@@ -47,7 +47,6 @@
 #import "ios/web/net/crw_cert_verification_controller.h"
 #import "ios/web/net/crw_ssl_status_updater.h"
 #include "ios/web/public/browser_state.h"
-#import "ios/web/public/download/download_controller.h"
 #include "ios/web/public/favicon_url.h"
 #import "ios/web/public/java_script_dialog_presenter.h"
 #import "ios/web/public/navigation_item.h"
@@ -4242,7 +4241,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
-  scoped_refptr<net::HttpResponseHeaders> HTTPHeaders;
   if ([navigationResponse.response isKindOfClass:[NSHTTPURLResponse class]]) {
     // Create HTTP headers from the response.
     // TODO(crbug.com/546157): Due to the limited interface of
@@ -4250,8 +4248,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // inexact.  Once UIWebView is no longer supported, update WebState's
     // implementation so that the Content-Language and the MIME type can be set
     // without using this imperfect conversion.
-    HTTPHeaders = net::CreateHeadersFromNSHTTPURLResponse(
-        static_cast<NSHTTPURLResponse*>(navigationResponse.response));
+    scoped_refptr<net::HttpResponseHeaders> HTTPHeaders =
+        net::CreateHeadersFromNSHTTPURLResponse(
+            static_cast<NSHTTPURLResponse*>(navigationResponse.response));
     self.webStateImpl->OnHttpResponseHeadersReceived(
         HTTPHeaders.get(), net::GURLWithNSURL(navigationResponse.response.URL));
   }
@@ -4260,7 +4259,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // retrieved state will be pending until |didCommitNavigation| callback.
   [self updatePendingNavigationInfoFromNavigationResponse:navigationResponse];
 
-  NSString* MIMEType = navigationResponse.response.MIMEType;
   BOOL allowNavigation = navigationResponse.canShowMIMEType;
   if (allowNavigation) {
     allowNavigation = self.webStateImpl->ShouldAllowResponse(
@@ -4268,20 +4266,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     if (!allowNavigation && navigationResponse.isForMainFrame) {
       [_pendingNavigationInfo setCancelled:YES];
     }
-  } else {
-    std::string contentDisposition;
-    if (HTTPHeaders) {
-      HTTPHeaders->GetNormalizedHeader("content-disposition",
-                                       &contentDisposition);
-    }
-    int64_t contentLength = navigationResponse.response.expectedContentLength;
-    web::BrowserState* browserState = self.webState->GetBrowserState();
-    web::DownloadController::FromBrowserState(browserState)
-        ->CreateDownloadTask(_webStateImpl, [NSUUID UUID].UUIDString,
-                             responseURL, contentDisposition, contentLength,
-                             base::SysNSStringToUTF8(MIMEType));
   }
-  if ([self.passKitDownloader isMIMETypePassKitType:MIMEType]) {
+  if ([self.passKitDownloader
+          isMIMETypePassKitType:[_pendingNavigationInfo MIMEType]]) {
     [self.passKitDownloader downloadPassKitFileWithURL:responseURL];
     allowNavigation = NO;
 
