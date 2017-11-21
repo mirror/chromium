@@ -69,6 +69,30 @@
       "revId": "ffec3d1a5e2ff4af7f09745b485ae3bee3776372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddec63c_721e1eaa",
+        "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T16:42:05Z",
+      "side": 1,
+      "message": "Yup, \"guaranteed to outlive this object\" is totally fine.",
+      "parentUuid": "ec0c3034_d178f035",
+      "range": {
+        "startLine": 30,
+        "startChar": 31,
+        "endLine": 30,
+        "endChar": 54
+      },
+      "revId": "ffec3d1a5e2ff4af7f09745b485ae3bee3776372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
