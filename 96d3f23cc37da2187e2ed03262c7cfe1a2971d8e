@@ -554,6 +554,24 @@
     },
     {
       "key": {
+        "uuid": "a096d9d5_b77d866e",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-21T19:03:12Z",
+      "side": 1,
+      "message": "Thanks. This plan makes sense.",
+      "parentUuid": "6aae6ccf_85e0cb5d",
+      "revId": "96d3f23cc37da2187e2ed03262c7cfe1a2971d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9439af7_66d1e408",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 14
