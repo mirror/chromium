@@ -22,6 +22,30 @@
       "revId": "c7706cc1d43cf3a6e55c411e723c25f1f5a46c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e914c7_9f6fb65c",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-21T19:52:30Z",
+      "side": 1,
+      "message": "Hmm. If the renderbuffer hasn\u0027t been bound then it also can\u0027t have been allocated, since binding is a prerequisite to calling the allocation functions like RenderbufferStorage.\n\nI think it\u0027s OK to leave this as is, what do you think?",
+      "parentUuid": "58172972_12cadd12",
+      "range": {
+        "startLine": 155,
+        "startChar": 21,
+        "endLine": 155,
+        "endChar": 37
+      },
+      "revId": "c7706cc1d43cf3a6e55c411e723c25f1f5a46c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
