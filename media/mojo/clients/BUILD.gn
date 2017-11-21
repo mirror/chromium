@@ -54,6 +54,7 @@ source_set("clients") {
   }
 
   public_deps = [
+    ":jpeg_decode_accelerator",
     "//base",
     "//media",
     "//media/mojo:features",
@@ -77,6 +78,24 @@ source_set("clients") {
       "//ui/gl:gl",
     ]
   }
+}
+
+source_set("jpeg_decode_accelerator") {
+  visibility = [
+    ":clients",
+    "//content/browser",
+  ]
+
+  sources = [
+    "gpu_jpeg_decode_accelerator_host.cc",
+    "gpu_jpeg_decode_accelerator_host.h",
+  ]
+
+  deps = [
+    "//base",
+    "//media/mojo/interfaces",
+    "//mojo/common",
+  ]
 }
 
 source_set("unit_tests") {
