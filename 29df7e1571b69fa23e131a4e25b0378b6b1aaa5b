@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23e59a2_5864e7d4",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T16:02:12Z",
+      "side": 1,
+      "message": "super-nit: you might want to ReserveInitialCapacity, since the final size is known?",
+      "revId": "29df7e1571b69fa23e131a4e25b0378b6b1aaa5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
