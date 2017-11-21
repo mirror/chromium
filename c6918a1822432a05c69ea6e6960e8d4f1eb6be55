@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0ed12b37_eaed3c1a",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-21T01:38:56Z",
+      "side": 1,
+      "message": "Per conversation w/ maruel earlier today, we want to use sha256 ultimately in the isolate server, and we want to track what the isolate server is doing; those are slightly contradictory goals, but it\u0027s easy to change things, so let\u0027s use sha1 now and switch to sha256 as part of crbug.com/787113 (i.e., add a TODO)",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d145c4a3_9dec632c",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -13,6 +30,41 @@
       "writtenOn": "2017-11-16T22:45:19Z",
       "side": 1,
       "message": "I feel slightly uncomfortable about doing a bare call like this. I\u0027d prefer to be importing some python script.\n\nI found two I could use; one is depot_tool\u0027s download_from_google_storage, and one is //build/android/pylib/utils. Is there a preference for either? Should I bother using them?",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da656c68_c1371c15",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-21T01:38:56Z",
+      "side": 1,
+      "message": "I don\u0027t think gsutil is guaranteed to be in the path, so you probably need to do *something* :).\n\nI think either is fine, though I\u0027d rather not have a dependency on something in an \"android\" directory b/c it might be somewhat confusing. Perhaps we should consider moving/renaming google_storage_helper somewhere?",
+      "parentUuid": "d145c4a3_9dec632c",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ef05ae_aadc9691",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-21T01:38:56Z",
+      "side": 1,
+      "message": "ick, don\u0027t use the same variable name, that\u0027s confusing :). Maybe change the function parameter to `local_data` or something?",
       "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
