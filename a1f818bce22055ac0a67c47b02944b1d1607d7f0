@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a29e2851_15250a5a",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T20:04:22Z",
+      "side": 1,
+      "message": "unique_ptr",
+      "parentUuid": "58f3b5d6_a043309c",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8ddd6a6_dd6abd8d",
         "filename": "google_apis/gaia/gaia_auth_consumer.h",
         "patchSetId": 4
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "You\u0027re suggesting to return the ID token\u0027s JSON converted in a dictionary? I don\u0027t see the point of having the parsing in the middle of the way here. I think we should either send the raw ID token in the response and perform the parsing wherever needs it; or send the child account info boolean here after all the decoding, directly. WDYT?\n\nAnother detail is that DictionaryValue is being removed, Value should be used instead:\nhttps://cs.chromium.org/chromium/src/base/values.h?type\u003dcs\u0026q\u003dbase::DictionaryValue\u0026l\u003d71",
       "parentUuid": "e8ddd6a6_dd6abd8d",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce4b7a8_98f7710f",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T20:04:22Z",
+      "side": 1,
+      "message": "If you look into JSON reader header, you\u0027ll see that casting it to correct value type is a way to do.\n\nThis also helps to know that this is a dictionary, and not something else. While JSON reader is not migrated, I\u0027d follow the usage suggestions there.",
+      "parentUuid": "b4d66ca8_577fc42a",
       "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "I get a build error.\n\nSee my comment in the .cc file.",
       "parentUuid": "60308c54_22ed149c",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d089d5f4_8c3248d0",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T20:04:22Z",
+      "side": 1,
+      "message": "You did not read all of my comments. I mentioned that you should modify the file that failed (and explained how to do it).",
+      "parentUuid": "414dd39b_f70d1644",
       "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
