@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed213b5c_60478e59",
+        "filename": "chrome/browser/supervised_user/supervised_user_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-21T16:16:43Z",
+      "side": 1,
+      "message": "Also ASSERT that we\u0027re still showing an interstitial?",
+      "range": {
+        "startLine": 351,
+        "startChar": 45,
+        "endLine": 351,
+        "endChar": 0
+      },
+      "revId": "3ab09b5fc366c600c455b6cc8222ac37c1b60d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
