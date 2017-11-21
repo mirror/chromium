@@ -62,6 +62,23 @@
       "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21402732_a289cf8b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-21T17:00:01Z",
+      "side": 1,
+      "message": "it\u0027s best to avoid creating a new pipe each time this is called (https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Consider-the-cost-of-setting-up-message-pipes), since there\u0027s already one in the renderer. you can make RendererBlinkPlatformImpl::GetClipboardHost() public and it\u0027s accessible through RenderThreadImpl::current_blink_platform_impl()",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
