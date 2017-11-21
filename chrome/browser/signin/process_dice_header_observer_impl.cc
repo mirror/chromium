@@ -13,6 +13,45 @@
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_manager.h"
 
+#include "base/metrics/user_metrics.h"
+#include "base/metrics/user_metrics_action.h"
+#include "chrome/browser/profiles/profile_window.h"
+#include "chrome/browser/signin/about_signin_internals_factory.h"
+#include "chrome/browser/signin/account_tracker_service_factory.h"
+#include "chrome/browser/signin/investigator_dependency_provider.h"
+#include "chrome/browser/signin/local_auth.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_error_controller_factory.h"
+#include "chrome/browser/signin/signin_util.h"
+#include "chrome/browser/sync/profile_sync_service_factory.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/webui/signin/finish_login.h"
+#include "chrome/browser/ui/webui/signin/signin_email_confirmation_dialog.h"
+#include "components/browser_sync/profile_sync_service.h"
+#include "components/signin/core/browser/about_signin_internals.h"
+#include "components/signin/core/browser/signin_metrics.h"
+#include "components/signin/core/browser/signin_pref_names.h"
+
+#include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/ui/webui/signin/login_ui_service.h"
+#include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
+#include "chrome/common/webui_url_constants.h"
+
+namespace {
+
+void RedirectToNtp(content::WebContents* contents,
+                   signin_metrics::AccessPoint access_point) {
+  VLOG(1) << "RedirectToNtpOrAppsPage";
+  // Redirect to NTP page.
+  content::OpenURLParams params(GURL(chrome::kChromeUINewTabURL),
+                                content::Referrer(),
+                                WindowOpenDisposition::CURRENT_TAB,
+                                ui::PAGE_TRANSITION_AUTO_TOPLEVEL, false);
+  contents->OpenURL(params);
+}
+
+}  // namespace
+
 ProcessDiceHeaderObserverImpl::ProcessDiceHeaderObserverImpl(
     content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents), should_start_sync_(false) {}
@@ -49,6 +88,7 @@ void ProcessDiceHeaderObserverImpl::DidFinishRefreshTokenFetch(
   SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile);
   DCHECK(signin_manager);
   if (signin_manager->IsAuthenticated()) {
+    // This happens in general for a reauth flow.
     VLOG(1) << "Do not start sync after web sign-in [already authenticated].";
     return;
   }
@@ -56,10 +96,16 @@ void ProcessDiceHeaderObserverImpl::DidFinishRefreshTokenFetch(
   DiceTabHelper* tab_helper = DiceTabHelper::FromWebContents(web_contents);
   DCHECK(tab_helper);
 
-  // OneClickSigninSyncStarter is suicidal (it will kill itself once it finishes
-  // enabling sync).
+  // After signing in to Chrome, the user should be redirected to the NTP.
+  RedirectToNtp(web_contents, tab_helper->signin_access_point());
+
+  // Turn on sync for an existing account.
   VLOG(1) << "Start sync after web sign-in.";
-  new OneClickSigninSyncStarter(
-      profile, browser, gaia_id, email, tab_helper->signin_access_point(),
-      tab_helper->signin_reason(), OneClickSigninSyncStarter::Callback());
+  std::string account_id = AccountTrackerServiceFactory::GetForProfile(profile)
+                               ->PickAccountIdForAccount(gaia_id, email);
+
+  // DiceTurnSyncOnHelper is suicidal (it will kill itself once it finishes
+  // enabling sync).
+  new DiceTurnSyncOnHelper(profile, browser, tab_helper->signin_access_point(),
+                           tab_helper->signin_reason(), account_id);
 }
