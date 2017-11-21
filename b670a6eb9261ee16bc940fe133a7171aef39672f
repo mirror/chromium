@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5dad4ce2_13e4e7f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9600de05_3574d2cd",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 62
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a9e6d6_5eb75db7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3599bfc4_526f717f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1a9e6d6_5eb75db7",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41317457_ccd2d8d9",
         "filename": "chrome/browser/payments/service_worker_payment_app_factory_browsertest.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8d50eb_fd9fe560",
+        "filename": "chrome/browser/payments/service_worker_payment_app_factory_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41317457_ccd2d8d9",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 3
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "a460822a_2acd2b83",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f17ef06_aa8ad76d",
+      "range": {
+        "startLine": 187,
+        "startChar": 6,
+        "endLine": 187,
+        "endChar": 48
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef0380ec_b789bd90",
         "filename": "components/payments/content/service_worker_payment_app_factory.cc",
         "patchSetId": 6
@@ -128,6 +224,30 @@
       "writtenOn": "2017-11-17T20:27:36Z",
       "side": 1,
       "message": "To make reading the header and the source file side-by-side easier, please keep the order of the methods in the header and the source file identical.",
+      "range": {
+        "startLine": 234,
+        "startChar": 37,
+        "endLine": 234,
+        "endChar": 54
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a86680_bab7da06",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Do you mean to move constructor and destructor down to GetAllPaymentApps? Constructor is used by GetInstance, looks better to keep them below GetInstance,",
+      "parentUuid": "ef0380ec_b789bd90",
       "range": {
         "startLine": 234,
         "startChar": 37,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "60960753_728d4834",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Agree, the other solution I was thinking is make the interface static public, but looks also not ideal.\n\nOr expose SelfDeletingServiceWorkerPaymentAppFactory or extract it into a separate file? looks overkill for testing.",
+      "parentUuid": "21f2fead_23bf6dbf",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 71
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f3217de_9cf85b47",
         "filename": "components/payments/content/service_worker_payment_app_factory.h",
         "patchSetId": 6
@@ -183,6 +327,30 @@
       "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a59796_ef9b5749",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f3217de_9cf85b47",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "efd84ba0_cc6b4555",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2aa7b04_8318e10c",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f343fb3d_091ba815",
         "filename": "components/payments/content/service_worker_payment_app_factory.h",
         "patchSetId": 6
@@ -229,6 +421,30 @@
       "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04977934_9f0cec51",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f343fb3d_091ba815",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

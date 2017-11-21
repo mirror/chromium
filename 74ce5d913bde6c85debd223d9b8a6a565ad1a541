@@ -22,6 +22,30 @@
       "revId": "74ce5d913bde6c85debd223d9b8a6a565ad1a541",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ec29ab_507b68f7",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T17:09:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "5fa1cb96_b5045b81",
+      "range": {
+        "startLine": 51,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 41
+      },
+      "revId": "74ce5d913bde6c85debd223d9b8a6a565ad1a541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
