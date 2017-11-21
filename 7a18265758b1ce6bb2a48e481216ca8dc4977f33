@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e55a074d_aeb71cb4",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-21T03:19:22Z",
+      "side": 1,
+      "message": "I would think all the changes could stay in slider.cc/h --- have a default focus painter (color comes from theme like you had before) and when value_ is zero, draw the painter.",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cd90c9_10c9a8f5",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-21T03:19:22Z",
+      "side": 1,
+      "message": "I think PaintFocusPainter takes care of the HasFocus() check",
+      "range": {
+        "startLine": 314,
+        "startChar": 6,
+        "endLine": 314,
+        "endChar": 17
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
