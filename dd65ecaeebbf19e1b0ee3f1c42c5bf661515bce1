@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c92ad3b_9ed97c19",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-21T22:07:48Z",
+      "side": 1,
+      "message": "I find this awkward.  Would be a lot easier to follow if you had shouldEncodeFromImageData(), and then call either ToImageData or GetImageBuffer()-\u003eNewImageSnapshot() accordingly. This will also make the logic at the call sites easier to follow.",
+      "range": {
+        "startLine": 747,
+        "startChar": 24,
+        "endLine": 747,
+        "endChar": 54
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46dcb1cf_4c147359",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-21T22:07:48Z",
+      "side": 1,
+      "message": "Doing the readback upfront is unfortunate.  This is an expensive operation that will block the main thread.  Could we delay this To make it happen during an idle task or on the background thread.  Also, StaticBitmapImage has this brand new neat little function called MakeUnaccelerated().  You should just use that.  Also, I think it would be generally useful to have a peekPixels method on StaticBitmapImage.",
+      "range": {
+        "startLine": 252,
+        "startChar": 45,
+        "endLine": 252,
+        "endChar": 55
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86e8e9d_a56979b9",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-21T22:07:48Z",
+      "side": 1,
+      "message": "Do we really need to continue supporting the old mode that uses data_?",
+      "range": {
+        "startLine": 113,
+        "startChar": 31,
+        "endLine": 113,
+        "endChar": 36
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12dd6d92_39ddb6ed",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-21T22:07:48Z",
+      "side": 1,
+      "message": "Not sure this is the right name. ImageBitmap is something else.",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b52b715_3f60945f",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-21T22:07:48Z",
+      "side": 1,
+      "message": "Why not just do this:\nskia_image \u003d skia_image-\u003emakeNonTextureImage();",
+      "range": {
+        "startLine": 514,
+        "startChar": 7,
+        "endLine": 514,
+        "endChar": 17
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cffc547_fbd35027",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-21T22:07:48Z",
+      "side": 1,
+      "message": "This copy constructor does not read well. Would be cleaner to put \"src \u003d pixmap_\" in an \"else\" clause below.",
+      "range": {
+        "startLine": 541,
+        "startChar": 15,
+        "endLine": 541,
+        "endChar": 22
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
