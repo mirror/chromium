@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e63864ef_c8f7ce48",
+        "filename": "chrome/installer/zucchini/disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-21T13:01:23Z",
+      "side": 1,
+      "message": "nit:\n  auto disasm \u003d std::make_unique\u003cDIS\u003e();\n(and remove the ptr_util.h include",
+      "revId": "b54d018befedb6d529d96da249d617513d14816c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
