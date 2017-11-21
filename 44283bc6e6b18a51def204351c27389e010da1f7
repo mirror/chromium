@@ -70,6 +70,30 @@
       "revId": "44283bc6e6b18a51def204351c27389e010da1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1217117e_d80c4113",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-21T22:33:05Z",
+      "side": 1,
+      "message": "If we are going moving to SafeArea everywhere, perhaps we can just simplify the SafeAreaCompatibleToolbar path in StatusBarHeight with `return IsPortrait() ? 44 : 0;`\n\ne.g. https://chromium-review.googlesource.com/c/chromium/src/+/783323\n\nIs that the root cause of this bug?  We should really kill StatusBarHeight forever.",
+      "parentUuid": "c3711c37_9a133658",
+      "range": {
+        "startLine": 2416,
+        "startChar": 27,
+        "endLine": 2416,
+        "endChar": 0
+      },
+      "revId": "44283bc6e6b18a51def204351c27389e010da1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
