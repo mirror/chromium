@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c215c76_10bff87e",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-21T17:07:11Z",
+      "side": 1,
+      "message": "Under which circumstances would the value be cached? ReportBootProgress() is expected to be called exactly once per container lifecycle, as soon as Init() is called. In other words, I think we should have just invoked the ARC start time from session manager from ReportBootProgress() from the very beginning.",
+      "range": {
+        "startLine": 206,
+        "startChar": 52,
+        "endLine": 206,
+        "endChar": 58
+      },
+      "revId": "d4fc6802dac1798e40cb75054ad06673cb898e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
