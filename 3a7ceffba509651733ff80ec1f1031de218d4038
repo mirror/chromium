@@ -34,6 +34,24 @@
       "revId": "3a7ceffba509651733ff80ec1f1031de218d4038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f535e595_3dc7bcbc",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T19:48:55Z",
+      "side": 1,
+      "message": "How does that explain why the tests work if the executable directly depends on this target, vs. through vr_test_support?\n\nI\u0027ll try it out though!",
+      "parentUuid": "47ce1de0_7b9d1ea8",
+      "revId": "3a7ceffba509651733ff80ec1f1031de218d4038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
