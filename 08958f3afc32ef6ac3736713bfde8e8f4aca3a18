@@ -70,6 +70,24 @@
       "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c008d2_8786f483",
+        "filename": "content/renderer/loader/web_url_request_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-21T14:25:20Z",
+      "side": 1,
+      "message": "How about something like this? If we won\u0027t hit blob code we should probably just delete it.\n\nvar formData \u003d new FormData(formElem);\nformData.append(\u0027blob field\u0027, blob);\nformElem.submit();",
+      "parentUuid": "7f96b327_e9bbbf74",
+      "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
