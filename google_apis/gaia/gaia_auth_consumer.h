@@ -44,7 +44,9 @@ class GaiaAuthConsumer {
     ClientOAuthResult();
     ClientOAuthResult(const std::string& new_refresh_token,
                       const std::string& new_access_token,
+                      const std::string& new_id_token,
                       int new_expires_in_secs);
+    ClientOAuthResult(const ClientOAuthResult &other);
     ~ClientOAuthResult();
 
     bool operator==(const ClientOAuthResult &b) const;
@@ -55,6 +57,10 @@ class GaiaAuthConsumer {
     // OAuth2 access token.  Token to pass to endpoints that require oauth2
     // authentication.
     std::string access_token;
+
+    // OAuth2 ID token.  Used for obtaining basic profile information and
+    // service flags.
+    std::string id_token;
 
     // The lifespan of |access_token| in seconds.
     int expires_in_secs;
