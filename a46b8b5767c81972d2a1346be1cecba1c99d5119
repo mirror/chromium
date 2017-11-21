@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4559930_4994ebe3",
+        "filename": "chrome/browser/app_controller_mac_browsertest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T03:44:59Z",
+      "side": 0,
+      "message": "this test was the only thing calling BuildMenu(). Nothing called ResetMenu. So no need to implement MainMenuItem.",
+      "revId": "a46b8b5767c81972d2a1346be1cecba1c99d5119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa58baa7_26969119",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T03:44:59Z",
+      "side": 0,
+      "message": "nothing called UpdateSubMenu...",
+      "revId": "a46b8b5767c81972d2a1346be1cecba1c99d5119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fc093f_c1fdd85f",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T03:44:59Z",
+      "side": 0,
+      "message": ".. and since UpdateSubMenu() was the only thing that passed |true| for |is_submenu| this got simpler as well.",
+      "revId": "a46b8b5767c81972d2a1346be1cecba1c99d5119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c407d1f_90c8a2de",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_bridge.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T03:44:59Z",
+      "side": 0,
+      "message": "\"else for\" is gone.. (gah)",
+      "revId": "a46b8b5767c81972d2a1346be1cecba1c99d5119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

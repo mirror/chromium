@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "994e8926_c07a636b",
+        "filename": "chrome/browser/ui/cocoa/app_menu/app_menu_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T03:44:59Z",
+      "side": 1,
+      "message": "previously the old NSMenu tree was not cleared until the menu was clicked again. Now it happens in menuDidClose:",
+      "revId": "912bc52ec767cbcc404437cd2eff4a480551f34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafddfc2_021093ff",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T03:44:59Z",
+      "side": 1,
+      "message": "This is moved from |controller_|, basically.",
+      "revId": "912bc52ec767cbcc404437cd2eff4a480551f34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
