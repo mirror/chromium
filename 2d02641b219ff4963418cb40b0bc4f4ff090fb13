@@ -255,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "f58e5710_e1079aa4",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-21T16:57:11Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e Is the only remaining work here to ensure that for --isolate-extensions, web pages can\u0027t request resources belonging to extensions?  (Since extensions also aren\u0027t origin-locked.)  Might be worth adding a TODO about this somewhere.\n\u003e \u003e \n\u003e \u003e Done - added a TODO.  I worder the TODO in terms of extension isolation, but I am not sure what other things need enforcement (do CWS, default search engine, WebUI get locked origin?).  FWIW, I note that some WebUI tests end up triggering usage of localStorage.\n\u003e \u003e \n\u003e \u003e Please shout if I should reword the TODO :-)\n\u003e \n\u003e The TODO sounds good.  I don\u0027t think any of those things get locked to origin today, so we can follow up on all of them separately.  For WebUI that may change if we require a dedicated process for it (I think Charlie started to look into it in https://chromium-review.googlesource.com/c/chromium/src/+/718076), and deprecate process sharing among same-privilege WebUI pages that we have currently.  When that happens, we may want some additional logic here to consider WebUI URLs to be \"isolated\", for the purposes of this check.\n\u003e \n\u003e CWS is not origin-locked, but I think it probably should be.  We can make it an isolated origin to achieve that, which would also protect its data here. (We\u0027d also achieve some of that if we generically disallow web URLs from accessing extensions data, since CWS is a hosted app with an extension URL, but I think we also want to guard CWS from other extensions.)  However, I think we\u0027d still need some of the special logic we currently have for protecting CWS, since it\u0027s stronger than isolated origins -- e.g., we still need to force a separate BrowsingInstance for CWS, so that other sites can\u0027t mess with it via postMessage.\n\nAck.  I\u0027ve added a comment to https://crbug.com/764958 to try to remember covering these isolation modes as well.",
+      "parentUuid": "d0aeb706_ce9d71f1",
+      "revId": "2d02641b219ff4963418cb40b0bc4f4ff090fb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08e59ff0_40ea8612",
         "filename": "content/browser/child_process_security_policy_impl.cc",
         "patchSetId": 2
