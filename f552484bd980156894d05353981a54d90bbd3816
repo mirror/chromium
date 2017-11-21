@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ce1de015_2258d0c6",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-21T00:06:06Z",
+      "side": 1,
+      "message": "At the end of the style recalc stage the new ComputedStyle information should be the nonAttachedStyle and that is the immutable information that we should carry ahead in the Layout tree construction phase. Right?",
+      "parentUuid": "572d6d7b_82217d50",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "041331c3_92e8687f",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 3
