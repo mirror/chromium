@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43c7b986_e4b48c4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T17:24:43Z",
+      "side": 1,
+      "message": "what are \"unlikely flaky problems\"? maybe you just meant \"flakiness\"?",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "fcfc1b924e7ee9c47f43d2b4bad2cbae2eddf3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c547d4_f863f560",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T17:24:43Z",
+      "side": 1,
+      "message": "Do you need to check for duplicates here? \nIf so, consider base::flat_set",
+      "range": {
+        "startLine": 246,
+        "startChar": 5,
+        "endLine": 246,
+        "endChar": 6
+      },
+      "revId": "fcfc1b924e7ee9c47f43d2b4bad2cbae2eddf3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c112bf0_3cf30343",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T17:24:43Z",
+      "side": 1,
+      "message": "I know it was exciting to find the bug, but remove this or replace with an actual TODO :)",
+      "range": {
+        "startLine": 319,
+        "startChar": 22,
+        "endLine": 319,
+        "endChar": 24
+      },
+      "revId": "fcfc1b924e7ee9c47f43d2b4bad2cbae2eddf3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
