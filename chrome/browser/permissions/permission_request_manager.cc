@@ -133,7 +133,7 @@ PermissionRequestManager::PermissionRequestManager(
       main_frame_has_fully_loaded_(false),
       tab_is_visible_(web_contents->IsVisible()),
       persist_(true),
-      auto_response_for_test_(NONE),
+      auto_response_for_test_(AutoResponseType::NONE),
       weak_factory_(this) {}
 
 PermissionRequestManager::~PermissionRequestManager() {
@@ -427,7 +427,7 @@ void PermissionRequestManager::ShowBubble(bool is_reshow) {
   NotifyBubbleAdded();
 
   // If in testing mode, automatically respond to the bubble that was shown.
-  if (auto_response_for_test_ != NONE)
+  if (auto_response_for_test_ != AutoResponseType::NONE)
     DoAutoResponseForTesting();
 }
 
@@ -567,16 +567,16 @@ void PermissionRequestManager::NotifyBubbleAdded() {
 
 void PermissionRequestManager::DoAutoResponseForTesting() {
   switch (auto_response_for_test_) {
-    case ACCEPT_ALL:
+    case AutoResponseType::ACCEPT_ALL:
       Accept();
       break;
-    case DENY_ALL:
+    case AutoResponseType::DENY_ALL:
       Deny();
       break;
-    case DISMISS:
+    case AutoResponseType::DISMISS:
       Closing();
       break;
-    case NONE:
+    case AutoResponseType::NONE:
       NOTREACHED();
   }
 }

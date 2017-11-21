@@ -809,7 +809,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPVoiceSearchSmokeTest, MicrophonePermission) {
   ASSERT_EQ(0, prompt_factory.TotalRequestCount());
 
   // Auto-approve the permissions bubble as soon as it shows up.
-  prompt_factory.set_response_type(PermissionRequestManager::ACCEPT_ALL);
+  prompt_factory.set_response_type(
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
 
   // Click on the microphone button, which will trigger a permission request.
   ASSERT_TRUE(content::ExecuteScript(

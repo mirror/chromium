@@ -391,13 +391,13 @@ HostContentSettingsMap* GeolocationBrowserTest::GetHostContentSettingsMap() {
 
 bool GeolocationBrowserTest::WatchPositionAndGrantPermission() {
   std::string result = WatchPositionAndRespondToPermissionRequest(
-      PermissionRequestManager::ACCEPT_ALL);
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   return "request-callback-success" == result;
 }
 
 bool GeolocationBrowserTest::WatchPositionAndDenyPermission() {
   std::string result = WatchPositionAndRespondToPermissionRequest(
-      PermissionRequestManager::DENY_ALL);
+      PermissionRequestManager::AutoResponseType::DENY_ALL);
   return "request-callback-error" == result;
 }
 

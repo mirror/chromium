@@ -17,7 +17,7 @@ MockPermissionPromptFactory::MockPermissionPromptFactory(
     : can_update_ui_(false),
       show_count_(0),
       requests_count_(0),
-      response_type_(PermissionRequestManager::NONE),
+      response_type_(PermissionRequestManager::AutoResponseType::NONE),
       manager_(manager) {
   manager->view_factory_ =
       base::Bind(&MockPermissionPromptFactory::Create, base::Unretained(this));
