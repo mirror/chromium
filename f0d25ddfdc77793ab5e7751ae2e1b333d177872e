@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b20f646c_e080d93f",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:25:19Z",
+      "side": 1,
+      "message": "Remove this message from this CL since the handler is NOTREACHED.\nAdd it in the follow-up CL.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "f0d25ddfdc77793ab5e7751ae2e1b333d177872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2345a1_9211ff2a",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:25:19Z",
+      "side": 1,
+      "message": "This is not phrased like a TODO.\nA clearer \"TODO(eladalon): Change to true when the browser-side logging functionality lands\" or something similar. \nIt\u0027s not a good idea to reference the CL itself since it is not 100% guaranteed that that CL is the one that will ultimately implement the TODO.",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "f0d25ddfdc77793ab5e7751ae2e1b333d177872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9875cfce_4f2ff1dc",
+        "filename": "content/renderer/media/peer_connection_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:25:19Z",
+      "side": 1,
+      "message": "Since you should remove the message from this CL, add a \nTODO(eladalon): Send RtcEventLogWrite message to the browser.",
+      "range": {
+        "startLine": 745,
+        "startChar": 2,
+        "endLine": 745,
+        "endChar": 12
+      },
+      "revId": "f0d25ddfdc77793ab5e7751ae2e1b333d177872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
