@@ -16,6 +16,24 @@
       "revId": "479135e2f70db093a19aa47f2d08c48fb4e25b4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38aa0833_0c86459e",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001939
+      },
+      "writtenOn": "2017-11-21T01:26:30Z",
+      "side": 1,
+      "message": "since clang-official-release_bot_minimal_symbols_x86 is \u0027no_clang\u0027 now (very confusing...)",
+      "parentUuid": "e32826de_31b1c33e",
+      "revId": "479135e2f70db093a19aa47f2d08c48fb4e25b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
