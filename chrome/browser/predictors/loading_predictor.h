@@ -109,8 +109,7 @@ class LoadingPredictor : public KeyedService,
   // May start a preconnect to |preconnect_origins| and preresolve of
   // |preresolve_hosts| for |url| with a given hint |origin|.
   void MaybeAddPreconnect(const GURL& url,
-                          const std::vector<GURL>& preconnect_origins,
-                          const std::vector<GURL>& preresolve_hosts,
+                          std::vector<PreconnectRequest>&& requests,
                           HintOrigin origin);
   // If a preconnect exists for |url|, stop it.
   void MaybeRemovePreconnect(const GURL& url);
