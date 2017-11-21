@@ -34,6 +34,24 @@
       "revId": "a0c70cd563a6a880a0ca2c0e693460dd87e47137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72913222_514fb278",
+        "filename": "third_party/boringssl/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-21T21:20:37Z",
+      "side": 1,
+      "message": "So the boringssl functions I had blacklisted individually (in a private branch) prior to adding type generalization were:\nfun:*bio_io*\nfun:*ASN1_d2i_bio*\nfun:*ASN1_i2d_bio*\nfun:*get_next_ptr_and_hash*\nfun:*lh_doall_internal*\nfun:*PEM_ASN1_write_bio*\nfun:*PEM_ASN1_read_bio*\nfun:*sk_pop_free*\nfun:*sk_deep_copy*\nfun:*CTR_DRBG*\nfun:*CRYPTO_gcm*\nfun:*CRYPTO_ofb*\nfun:*CRYPTO_ctr*\nfun:*CRYPTO_cbc*\nfun:*aes_cbc_cipher*\nfun:*aead_aes_gcm_siv*\nfun:*gcm_siv_*",
+      "parentUuid": "a558bfe6_14f70289",
+      "revId": "a0c70cd563a6a880a0ca2c0e693460dd87e47137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
