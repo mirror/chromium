@@ -78,6 +78,7 @@ group("gn_all") {
     "//skia:skia_unittests",
     "//sql:sql_unittests",
     "//tools/ipc_fuzzer:ipc_fuzzer_all",
+    "//tools/media_engagement_preload:generator",
     "//ui/base:ui_base_unittests",
     "//url:url_unittests",
   ]

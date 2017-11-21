@@ -110,7 +110,7 @@ uint32_t TrieBitBuffer::WriteToBitWriter(BitWriter* writer) {
       uint32_t target = element.position;
       DCHECK(target < current) << "Reference is not backwards";
       uint32_t delta = current - target;
-      uint8_t delta_number_of_bits = BitLength(delta);
+      uint32_t delta_number_of_bits = static_cast<uint32_t>(BitLength(delta));
       DCHECK(delta_number_of_bits < 32) << "Delta to large";
       writer->WriteBits(delta_number_of_bits, 5);
       writer->WriteBits(delta, delta_number_of_bits);
