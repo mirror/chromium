@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7911d79f_3bd33e92",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-21T20:35:14Z",
+      "side": 1,
+      "message": "Can you declare/define this in components/safe_browsing/features.h/cc ?\nAnd then add it to https://cs.chromium.org/chromium/src/components/safe_browsing/features.cc?l\u003d62\u0026rcl\u003db21880d1020cc244c6a42d64de06c0fb08de7f62\n\nI missed this during the earlier review.",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "d4e00d713344dadae5092c44a198e139cd9333aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
