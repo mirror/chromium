@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f628b5c_fac097a7",
+        "filename": "extensions/common/manifest_handlers/csp_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-21T09:51:11Z",
+      "side": 1,
+      "message": "This wrapping makes the policy harder to read. Perhaps this is a good case for offsetting the block with `// clang format off` + `// clang format on`?",
+      "revId": "bf969e66dad918fc4e778ff0da0fe46af4503c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af396b15_005bf9d2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-21T09:51:11Z",
+      "side": 1,
+      "message": "Blink shouldn\u0027t know about chrome extensions. One way to do this without this layering violation would be to extend the SchemeRegistry (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/weborigin/SchemeRegistry.h) to include a set of schemes for which `wasm-eval` is applicable.",
+      "revId": "bf969e66dad918fc4e778ff0da0fe46af4503c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5748e5b2_5f4f60d8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-21T09:51:11Z",
+      "side": 1,
+      "message": "This will still show web-visible behavior changes insofar as other browsers will consider `wasm-eval` an error (and report it as such in the console). Did you consider moving this check to `SourceListDirective::ParseSource` instead?",
+      "revId": "bf969e66dad918fc4e778ff0da0fe46af4503c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
