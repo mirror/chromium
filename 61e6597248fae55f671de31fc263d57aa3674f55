@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "767e0dfa_83bed1d3",
+        "filename": "chrome/browser/secure_origin_whitelist_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-21T14:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f75b94_79b9c14e",
+      "revId": "61e6597248fae55f671de31fc263d57aa3674f55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6e72a55_a86c2455",
         "filename": "chrome/common/secure_origin_whitelist.h",
         "patchSetId": 3
