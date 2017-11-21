@@ -46,6 +46,30 @@
       "revId": "07bdf73fc11b75aca1c0a244ae9033779b456daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22471e9a_ad89f660",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-21T20:34:46Z",
+      "side": 1,
+      "message": "oops.. no you\u0027re right! fixing this...",
+      "parentUuid": "7b7ec6ce_a6afa957",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "07bdf73fc11b75aca1c0a244ae9033779b456daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
