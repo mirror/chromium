@@ -45,6 +45,138 @@
       "revId": "921107ec32e51d8c9427b7ead08cc248fb7975df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63abe614_6027ba52",
+        "filename": "content/common/mac/attributed_string_coder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T11:01:35Z",
+      "side": 1,
+      "message": "const base::string16\u0026",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "921107ec32e51d8c9427b7ead08cc248fb7975df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446dcd72_2f124aeb",
+        "filename": "content/common/mac/attributed_string_coder.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T11:01:35Z",
+      "side": 1,
+      "message": "std::move(font_name)",
+      "range": {
+        "startLine": 91,
+        "startChar": 17,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "921107ec32e51d8c9427b7ead08cc248fb7975df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a32505_396bc030",
+        "filename": "content/common/mac/attributed_string_coder.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T11:01:35Z",
+      "side": 1,
+      "message": "std::move(font_name)",
+      "range": {
+        "startLine": 174,
+        "startChar": 45,
+        "endLine": 174,
+        "endChar": 54
+      },
+      "revId": "921107ec32e51d8c9427b7ead08cc248fb7975df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83be2be9_e5aca6a1",
+        "filename": "content/common/mac/font_loader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T11:01:35Z",
+      "side": 1,
+      "message": "Why wait?",
+      "revId": "921107ec32e51d8c9427b7ead08cc248fb7975df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc3ad9b_cf55ddf4",
+        "filename": "content/common/mac/font_loader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T11:01:35Z",
+      "side": 1,
+      "message": "Remove. It isn\u0027t meaningful for parameters passed by value to be const in the declaration.",
+      "range": {
+        "startLine": 50,
+        "startChar": 23,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "921107ec32e51d8c9427b7ead08cc248fb7975df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c81b80d_a48eb2e5",
+        "filename": "content/common/mac/font_loader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T11:01:35Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 11
+      },
+      "revId": "921107ec32e51d8c9427b7ead08cc248fb7975df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
