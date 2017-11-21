@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7e486039_04999438",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-21T17:28:15Z",
+      "side": 1,
+      "message": "I mean button.h focus_painter_ stays unassigned until SetFocusPainter from a user set it. Maybe its parent has some focus shower as well? I added a default color for the slider, but i think we still need line 135 here so it is the tray style, unless you want the tray style to be the default the style, then we have to pull or copy the constant out of ash.",
+      "parentUuid": "ae7eaf5f_67d41338",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cd90c9_10c9a8f5",
         "filename": "ui/views/controls/slider.cc",
         "patchSetId": 4
