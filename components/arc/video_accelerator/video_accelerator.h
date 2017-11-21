@@ -5,6 +5,8 @@
 #ifndef COMPONENTS_ARC_VIDEO_ACCELERATOR_VIDEO_ACCELERATOR_H_
 #define COMPONENTS_ARC_VIDEO_ACCELERATOR_VIDEO_ACCELERATOR_H_
 
+#include "components/arc/common/app.mojom.h"
+
 namespace arc {
 
 struct VideoFramePlane {

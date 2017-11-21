@@ -193,6 +193,7 @@ mojom("arc_bindings") {
     "common/tts.mojom",
     "common/video.mojom",
     "common/video_common.mojom",
+    "common/video_decode_accelerator.mojom",
     "common/video_decode_accelerator_deprecated.mojom",
     "common/video_encode_accelerator.mojom",
     "common/voice_interaction_arc_home.mojom",
