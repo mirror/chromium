@@ -381,9 +381,6 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       has_host_context_menu_location_(false),
       has_added_input_handler_(false),
       has_focus_(false),
-#if defined(OS_MACOSX)
-      text_input_client_observer_(new TextInputClientObserver(this)),
-#endif
       first_update_visual_state_after_hidden_(false),
       was_shown_time_(base::TimeTicks::Now()),
       current_content_source_id_(0),
@@ -635,10 +632,6 @@ void RenderWidget::OnShowHostContextMenu(ContextMenuParams* params) {
 }
 
 bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
-#if defined(OS_MACOSX)
-  if (IPC_MESSAGE_CLASS(message) == TextInputClientMsgStart)
-    return text_input_client_observer_->OnMessageReceived(message);
-#endif
   if (mouse_lock_dispatcher_ &&
       mouse_lock_dispatcher_->OnMessageReceived(message))
     return true;

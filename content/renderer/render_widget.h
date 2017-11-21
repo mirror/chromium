@@ -113,7 +113,6 @@ class RenderWidgetCompositor;
 class RenderWidgetOwnerDelegate;
 class RenderWidgetScreenMetricsEmulator;
 class ResizingModeSelector;
-class TextInputClientObserver;
 class WidgetInputHandlerManager;
 struct ContextMenuParams;
 struct ResizeParams;
@@ -889,12 +888,6 @@ class CONTENT_EXPORT RenderWidget
   // A callback into the creator/opener of this widget, to be executed when
   // WebWidgetClient::show() occurs.
   ShowCallback show_callback_;
-
-#if defined(OS_MACOSX)
-  // Responds to IPCs from TextInputClientMac regarding getting string at given
-  // position or range as well as finding character index at a given position.
-  std::unique_ptr<TextInputClientObserver> text_input_client_observer_;
-#endif
 
   // Stores edit commands associated to the next key event.
   // Will be cleared as soon as the next key event is processed.
