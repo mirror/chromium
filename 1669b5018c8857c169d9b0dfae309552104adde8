@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5af9295_a562cbbc",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 4483,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:50:20Z",
+      "side": 1,
+      "message": "I\u0027m concerned that we\u0027ll be stuck with this patch forever, without being able to reason about when WKWebView.URL is usable here vs. backForwardList.currentItem.URL.\n\nIIUC from the bug, we suspect this may be an iOS 10 bug that\u0027s fixed in iOS 11. Would it make sense then to log a UMA counter here so we can remove this code path once occurrence has gone away?\n\nOn the other hand, if we feel WKWebView.URL is not the correct last committed URL to use, how about replacing line 4477 with webView.backForwardList.currentItem.URL? Are there cases where |webView:didCommitNavigation| is called but backForwardList is actually empty?",
+      "range": {
+        "startLine": 4483,
+        "startChar": 77,
+        "endLine": 4483,
+        "endChar": 0
+      },
+      "revId": "1669b5018c8857c169d9b0dfae309552104adde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
