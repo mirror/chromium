@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c04b0b5_cfd2d2e4",
+        "filename": "components/signin/core/browser/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-21T15:06:53Z",
+      "side": 1,
+      "message": "Do we need a subclass, or can this just be a typedef?",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "b4945961f6a7bcea5e59ea1d1ea55897dcc31036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
