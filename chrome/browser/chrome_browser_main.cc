@@ -1158,6 +1158,19 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   // tasks.
   SetupFieldTrials();
 
+  // Add Site Isolation switches as dictated by policy.
+  auto* command_line = base::CommandLine::ForCurrentProcess();
+  if (g_browser_process->local_state()->GetBoolean(prefs::kSitePerProcess) &&
+      !command_line->HasSwitch(switches::kSitePerProcess)) {
+    command_line->AppendSwitch(switches::kSitePerProcess);
+  }
+  if (g_browser_process->local_state()->HasPrefPath(prefs::kIsolateOrigins) &&
+      !command_line->HasSwitch(switches::kIsolateOrigins)) {
+    command_line->AppendSwitchASCII(
+        switches::kIsolateOrigins,
+        g_browser_process->local_state()->GetString(prefs::kIsolateOrigins));
+  }
+
   // ChromeOS needs ui::ResourceBundle::InitSharedInstance to be called before
   // this.
   browser_process_->PreCreateThreads(parsed_command_line());
