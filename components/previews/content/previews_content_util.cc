@@ -12,16 +12,19 @@ content::PreviewsState DetermineClientPreviewsState(
     const net::URLRequest& url_request,
     previews::PreviewsDecider* previews_decider) {
   content::PreviewsState previews_state = content::PREVIEWS_UNSPECIFIED;
-  bool is_https = url_request.url().SchemeIs(url::kHttpsScheme);
+
+  if (!url_request.url().SchemeIsHTTPOrHTTPS()) {
+    return previews_state;
+  }
 
   // Check for client-side previews in precendence order.
-  // Note that Client LoFi may be enabled for an http request (enabled for
-  // its https image resources).
-  if (is_https && previews_decider->ShouldAllowPreviewAtECT(
-                      url_request, previews::PreviewsType::NOSCRIPT,
-                      previews::params::GetECTThresholdForPreview(
-                          previews::PreviewsType::NOSCRIPT),
-                      std::vector<std::string>())) {
+  // Note: this for for the beginning of navigation so we should not
+  // check for https here (since an http request may redirect to https).
+  if (previews_decider->ShouldAllowPreviewAtECT(
+          url_request, previews::PreviewsType::NOSCRIPT,
+          previews::params::GetECTThresholdForPreview(
+              previews::PreviewsType::NOSCRIPT),
+          std::vector<std::string>())) {
     previews_state |= content::NOSCRIPT_ON;
   } else if (
       previews::params::IsClientLoFiEnabled() &&

@@ -955,7 +955,12 @@ ChromeResourceDispatcherHostDelegate::GetNavigationData(
   const content::ResourceRequestInfo* info =
       content::ResourceRequestInfo::ForRequest(request);
   if (info) {
-    data->set_previews_state(info->GetPreviewsState());
+    content::PreviewsState previews_state = info->GetPreviewsState();
+    if (!request->url().SchemeIs(url::kHttpsScheme)) {
+      // Clear https-only previews types.
+      previews_state &= ~(content::NOSCRIPT_ON);
+    }
+    data->set_previews_state(previews_state);
   }
 
   data_reduction_proxy::DataReductionProxyData* data_reduction_proxy_data =
