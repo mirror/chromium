@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af358bae_0cefa208",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "|access_point| is not used.",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d3263b_6d2c9b86",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "\"Redirect to NTP.\"\n\nWhy apps?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fdaaf8f_dd675a7a",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "Not used?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e35cb7_7639fabe",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bd92d3_ed5b9eb1",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "Nit: maybe inline the function here. It\u0027s only called once and is pretty short.",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04778d8_b36b7c5f",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "s/DCHECK(false)/NOTREACHED()/\n\nAnd break, for consistency with other cases.",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750cf1c4_7b7993c2",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "why is this in webui? Should it be in ui instead?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a10a72_4be46a7b",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "Not sure:\ns/sync/Sync/\n?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12010874_d04a16fc",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "Nit: not sure what is the recommended style. Do we really have to make every class virtual?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88e3c8b_a6fd621a",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "Not sure:\ns/sync/Sync/\n?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e3879a_2620bf34",
+        "filename": "chrome/browser/ui/webui/signin/signin_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6dc586_a10d17f5",
+        "filename": "chrome/browser/ui/webui/signin/signin_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "Should we really support the null manager? What about:\n if (!manager) return false;",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddac1f40_17937599",
+        "filename": "chrome/browser/ui/webui/signin/signin_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-21T15:24:50Z",
+      "side": 1,
+      "message": "Is it possible that there is no profile_manager? Could we DCHECK(profile_manager) instead?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
