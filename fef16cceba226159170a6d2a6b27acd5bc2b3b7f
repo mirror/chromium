@@ -34,6 +34,24 @@
       "revId": "fef16cceba226159170a6d2a6b27acd5bc2b3b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2dc4cb4_d815173b",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-21T18:16:05Z",
+      "side": 1,
+      "message": "I must have been holding it wrong when I tried that before because now it works just fine -- PTAL.",
+      "parentUuid": "75e089ae_0a1de9b2",
+      "revId": "fef16cceba226159170a6d2a6b27acd5bc2b3b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
