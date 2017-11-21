@@ -207,6 +207,8 @@ class PagePopupChromeClient final : public EmptyChromeClient {
   void SetTouchAction(LocalFrame* frame, TouchAction touch_action) override {
     DCHECK(frame);
     WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
+    if (!web_frame)
+      return;
     WebFrameWidget* widget = web_frame->LocalRoot()->FrameWidget();
     if (!widget)
       return;
