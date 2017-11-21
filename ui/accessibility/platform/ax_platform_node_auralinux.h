@@ -43,6 +43,7 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   bool DoDefaultAction();
   const gchar* GetDefaultActionName();
   const gchar* GetDocumentAttributeValue(const gchar* attribute);
+  float GetStepAttribute();
 
   void SetExtentsRelativeToAtkCoordinateType(
       gint* x, gint* y, gint* width, gint* height,
