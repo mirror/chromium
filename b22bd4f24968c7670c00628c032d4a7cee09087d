@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e803a96_775662b1",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-11-21T11:44:46Z",
+      "side": 1,
+      "message": "this should be rtt_ms \u003c kDefaultRTTMilliSecs. You want max(rtt, kDefault), right?",
+      "range": {
+        "startLine": 2043,
+        "startChar": 0,
+        "endLine": 2043,
+        "endChar": 51
+      },
+      "revId": "b22bd4f24968c7670c00628c032d4a7cee09087d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d615b4_b09cbc92",
+        "filename": "net/quic/core/quic_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-11-21T11:44:46Z",
+      "side": 1,
+      "message": "This is odd -- the DVLOG above should only happen if the packet is established as a PROBING packet, right? If so, the previous structure seemed correct. How does this not end up calling the visitor\u0027s OnConnectivityProbeReceived on all received packets?",
+      "range": {
+        "startLine": 1025,
+        "startChar": 6,
+        "endLine": 1025,
+        "endChar": 14
+      },
+      "revId": "b22bd4f24968c7670c00628c032d4a7cee09087d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7488843b_53e410d2",
+        "filename": "net/quic/core/quic_connection.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-11-21T11:44:46Z",
+      "side": 1,
+      "message": "nit: \"write\" -\u003e \"written\". Maybe expand on the comment to say what it means that subsequent packets can (or cannot) be written to the probing writer.",
+      "range": {
+        "startLine": 677,
+        "startChar": 3,
+        "endLine": 677,
+        "endChar": 4
+      },
+      "revId": "b22bd4f24968c7670c00628c032d4a7cee09087d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
