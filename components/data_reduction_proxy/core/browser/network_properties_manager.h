@@ -5,17 +5,37 @@
 #ifndef COMPONENTS_DATA_REDUCTION_PROXY_CORE_BROWSER_NETWORK_PROPERTIES_MANAGER_H_
 #define COMPONENTS_DATA_REDUCTION_PROXY_CORE_BROWSER_NETWORK_PROPERTIES_MANAGER_H_
 
+#include <map>
+#include <memory>
+#include <string>
+
 #include "base/macros.h"
+#include "base/sequence_checker.h"
+#include "base/sequenced_task_runner.h"
 #include "components/data_reduction_proxy/proto/network_properties.pb.h"
+#include "components/prefs/pref_service.h"
+
+namespace base {
+class Value;
+}
 
 namespace data_reduction_proxy {
 
-// Stores the properties of a single network.
+// Stores the properties of a single network. Created on the UI thread, but
+// lives on the IO thread. Guaranteed to be destroyed on IO thread if the IO
+// thread is still available at the time of destruction. If the IO thread is
+// unavailable, then the destruction will happen on the UI thread.
 class NetworkPropertiesManager {
  public:
-  NetworkPropertiesManager();
+  NetworkPropertiesManager(
+      PrefService* pref_service,
+      scoped_refptr<base::SequencedTaskRunner> ui_task_runner);
 
-  ~NetworkPropertiesManager();
+  virtual ~NetworkPropertiesManager();
+
+  void ShutdownOnUIThread();
+
+  void OnChangeInNetworkID(const std::string& network_id);
 
   // Returns true if usage of secure proxies are allowed on the current network.
   bool IsSecureProxyAllowed() const;
@@ -51,9 +71,65 @@ class NetworkPropertiesManager {
   void SetHasWarmupURLProbeFailed(bool secure_proxy,
                                   bool warmup_url_probe_failed);
 
+ protected:
+  // Map from network IDs to network properties.
+  typedef std::map<std::string, NetworkProperties> NetworkPropertiesContainer;
+
  private:
+  // PrefManager writes or updates the network properties prefs. Created on
+  // UI thread, and should be used on the UI thread. May be destroyed on UI
+  // or IO thread.
+  class PrefManager {
+   public:
+    explicit PrefManager(PrefService* pref_service);
+    ~PrefManager();
+
+    base::WeakPtr<PrefManager> GetWeakPtr();
+
+    void ShutdownOnUIThread();
+
+    void OnChangeInNetworkPropertyOnUIThread(
+        const std::string& network_id,
+        const NetworkProperties& network_properties);
+
+   private:
+    // Guaranteed to be non-null during the lifetime of |this|.
+    PrefService* pref_service_;
+
+    SEQUENCE_CHECKER(sequence_checker_);
+
+    // Used to get |weak_ptr_| to self on the UI thread.
+    base::WeakPtrFactory<PrefManager> ui_weak_ptr_factory_;
+
+    DISALLOW_COPY_AND_ASSIGN(PrefManager);
+  };
+
+  // Called when there is a change in the network property of the current
+  // network.
+  void OnChangeInNetworkPropertyOnIOThread();
+
+  static NetworkPropertiesContainer ConvertDictionaryValueToParsedPrefs(
+      const base::Value* value);
+
+  // Task runner on which prefs should be accessed.
+  scoped_refptr<base::SequencedTaskRunner> ui_task_runner_;
+
+  // Network properties of different networks. Should be accessed on the IO
+  // thread.
+  NetworkPropertiesContainer network_properties_container_;
+
+  // ID of the current network.
+  std::string network_id_;
+
   // State of the proxies on the current network.
   NetworkProperties network_properties_;
+
+  std::unique_ptr<PrefManager> pref_manager_;
+
+  // Should be accessed only on the UI thread.
+  base::WeakPtr<PrefManager> pref_manager_ui_weak_ptr_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(NetworkPropertiesManager);
 };
