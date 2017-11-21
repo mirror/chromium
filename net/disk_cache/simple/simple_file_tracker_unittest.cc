@@ -24,6 +24,11 @@ class SimpleFileTrackerTest : public DiskCacheTest {
   void DeleteSyncEntry(SimpleSynchronousEntry* entry) { delete entry; }
 
  protected:
+  // We limit open files to 4 for the fixture, as this is large enough
+  // that simple tests don't have to worry about naming files normally,
+  // but small enough to test with easily.
+  SimpleFileTrackerTest() : file_tracker_(/* file_limit = */ 4) {}
+
   // A bit of messiness since we rely on friendship of the fixture to be able to
   // create/delete SimpleSynchronousEntry objects.
   class SyncEntryDeleter {
@@ -47,14 +52,17 @@ class SimpleFileTrackerTest : public DiskCacheTest {
         SyncEntryDeleter(this));
   }
 
-  // Creates a vector of TrackedFiles object with their key.doom_generation
-  // fields filled in to match |doom_generations|. Nothing else is filled in.
-  std::vector<SimpleFileTracker::TrackedFiles> TrackedFilesWithDoomGenerations(
+  // Creates a vector of unique_ptrs to TrackedFiles object with their
+  // key.doom_generation fields filled in to match |doom_generations|. Nothing
+  // else is filled in.
+  std::vector<std::unique_ptr<SimpleFileTracker::TrackedFiles>>
+  TrackedFilesWithDoomGenerations(
       const std::vector<uint32_t>& doom_generations) {
-    std::vector<SimpleFileTracker::TrackedFiles> result;
+    std::vector<std::unique_ptr<SimpleFileTracker::TrackedFiles>> result;
     for (uint32_t doom_gen : doom_generations) {
-      SimpleFileTracker::TrackedFiles entry;
-      entry.key.doom_generation = doom_gen;
+      std::unique_ptr<SimpleFileTracker::TrackedFiles> entry =
+          std::make_unique<SimpleFileTracker::TrackedFiles>();
+      entry->key.doom_generation = doom_gen;
       result.push_back(std::move(entry));
     }
     return result;
@@ -179,10 +187,11 @@ TEST_F(SimpleFileTrackerTest, Reopen) {
                          std::move(file_1));
 
   file_tracker_.Close(entry.get(), SimpleFileTracker::SubFile::FILE_1);
-  base::File file_1b(path_1, base::File::FLAG_OPEN | base::File::FLAG_WRITE);
-  ASSERT_TRUE(file_1b.IsValid());
+  std::unique_ptr<base::File> file_1b = std::make_unique<base::File>(
+      path_1, base::File::FLAG_OPEN | base::File::FLAG_WRITE);
+  ASSERT_TRUE(file_1b->IsValid());
   file_tracker_.Register(entry.get(), SimpleFileTracker::SubFile::FILE_1,
-                         std::move(file_1));
+                         std::move(file_1b));
   file_tracker_.Close(entry.get(), SimpleFileTracker::SubFile::FILE_0);
   file_tracker_.Close(entry.get(), SimpleFileTracker::SubFile::FILE_1);
   EXPECT_TRUE(file_tracker_.IsEmptyForTesting());
