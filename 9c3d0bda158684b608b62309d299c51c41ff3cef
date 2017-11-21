@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44f33e0e_355bd554",
+        "filename": "third_party/WebKit/Source/core/dom/events/Event.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-21T14:52:20Z",
+      "side": 1,
+      "message": "Can we try to remove the const?",
+      "revId": "9c3d0bda158684b608b62309d299c51c41ff3cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e91710_3573a45a",
+        "filename": "third_party/WebKit/Source/core/events/WheelEvent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-21T14:52:20Z",
+      "side": 1,
+      "message": "This is non-obvious and requires a comment why it exists",
+      "revId": "9c3d0bda158684b608b62309d299c51c41ff3cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
