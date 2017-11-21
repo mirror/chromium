@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "681b7e18_eb33b04a",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-21T12:02:29Z",
+      "side": 1,
+      "message": "I would say \"...as dictated by Policy\" since this is currently the only source.\n\nAlso you might want to add a check here if the flag is not present already as it can be.",
+      "parentUuid": "8985fd87_d517d859",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dbd6b0e_cc2ab0ab",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 20
@@ -53,6 +71,47 @@
       "writtenOn": "2017-11-21T04:30:19Z",
       "side": 1,
       "message": "Was there a reason we only need to do one of them here?  It\u0027s not clear to me.",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793c40ea_92858d32",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-21T12:02:29Z",
+      "side": 1,
+      "message": "This seems to be a forgotten deletion no code consults the profile pref service anymore.",
+      "parentUuid": "5dbd6b0e_cc2ab0ab",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24763435_1a8a9f20",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-21T12:02:29Z",
+      "side": 1,
+      "message": "Usually the functions that register the prefs lie with the code that consumes the prefs. It seems right that now this is indeed not this class. That said it\u0027s ok to keep this a todo. I would generally urge you to open a new bug to rewire if possible this code to not rely on the command line flags directly. You can then also put this bug as a ref in this todo (and vice-versa mention this in the bug).",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 29
+      },
       "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +152,29 @@
       "writtenOn": "2017-11-21T04:30:19Z",
       "side": 1,
       "message": "We should skip this test on the Site Isolation bots, since all sites will be isolated in that case.  Similar to IsolatedOriginTest\u0027s NoOOPIFWhenIsolatedOriginNavigatesToNonIsolatedOrigin test, let\u0027s add:\n\n  // Skip this test if all sites are isolated.\n  if (AreAllSitesIsolatedForTesting())\n    return;",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025597d5_904c1d35",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-21T12:02:29Z",
+      "side": 1,
+      "message": "Please add a \"note\" entry for both policies that mentions the fact that there is indeed a pref behind them but due to the fact that tests override the default with a command line flag on some trybots those can not be verified with the common test.",
+      "range": {
+        "startLine": 876,
+        "startChar": 2,
+        "endLine": 876,
+        "endChar": 21
+      },
       "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
