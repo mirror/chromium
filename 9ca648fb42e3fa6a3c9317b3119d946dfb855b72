@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51049b6a_cb765146",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-11-21T21:11:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d13baed7_fd163a4f",
+      "revId": "9ca648fb42e3fa6a3c9317b3119d946dfb855b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5d9ea95_3912e38f",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-20T18:56:06Z",
       "side": 1,
       "message": "this qualification shouldn\u0027t be necessary... you\u0027re already in this class/namespace.",
+      "range": {
+        "startLine": 1361,
+        "startChar": 14,
+        "endLine": 1361,
+        "endChar": 31
+      },
+      "revId": "9ca648fb42e3fa6a3c9317b3119d946dfb855b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4303bb67_f33fcf52",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-11-21T21:11:43Z",
+      "side": 1,
+      "message": "Agree. But looks like every other places in this class used \"AutofillMetrics::\" to annotate the event.",
+      "parentUuid": "c5d9ea95_3912e38f",
       "range": {
         "startLine": 1361,
         "startChar": 14,
@@ -56,6 +98,24 @@
       "revId": "9ca648fb42e3fa6a3c9317b3119d946dfb855b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac43f1c7_d1e462b1",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-11-21T21:11:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aad6ce47_b2848606",
+      "revId": "9ca648fb42e3fa6a3c9317b3119d946dfb855b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
