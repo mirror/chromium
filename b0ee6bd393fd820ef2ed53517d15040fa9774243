@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d62d4b_231d6a55",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-11-21T11:10:42Z",
+      "side": 1,
+      "message": "This code is probably not needed anymore. TSan doesn\u0027t have this problem.",
+      "revId": "b0ee6bd393fd820ef2ed53517d15040fa9774243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1eb221_92b98b48",
+        "filename": "sandbox/linux/seccomp-bpf/sandbox_bpf.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-11-21T11:10:42Z",
+      "side": 1,
+      "message": "Not needed.\nIf seccomp isn\u0027t supposed to work under TSan, use `#if !defined(THREAD_SANITIZER)`",
+      "revId": "b0ee6bd393fd820ef2ed53517d15040fa9774243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0278f33_65595194",
+        "filename": "sandbox/linux/seccomp-bpf/sandbox_bpf_test_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-11-21T11:10:42Z",
+      "side": 1,
+      "message": "Probably unneeded.",
+      "revId": "b0ee6bd393fd820ef2ed53517d15040fa9774243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f59714_6db2abed",
+        "filename": "sandbox/linux/services/credentials.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-11-21T11:10:42Z",
+      "side": 1,
+      "message": "Probably unneeded.",
+      "revId": "b0ee6bd393fd820ef2ed53517d15040fa9774243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53ecf8b_2426b349",
+        "filename": "sandbox/linux/services/namespace_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-11-21T11:10:42Z",
+      "side": 1,
+      "message": "Unneeded.",
+      "revId": "b0ee6bd393fd820ef2ed53517d15040fa9774243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696e1cc1_141b740c",
+        "filename": "sandbox/linux/services/thread_helpers_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-11-21T11:10:42Z",
+      "side": 1,
+      "message": "Unneeded. Note this is already under ifndef THREAD_SANITIZER.",
+      "revId": "b0ee6bd393fd820ef2ed53517d15040fa9774243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8ae3dc_2ec92d4d",
+        "filename": "sandbox/linux/syscall_broker/broker_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-11-21T11:10:42Z",
+      "side": 1,
+      "message": "Unneeded.",
+      "revId": "b0ee6bd393fd820ef2ed53517d15040fa9774243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5643302_03e6b98b",
+        "filename": "sandbox/linux/tests/unit_tests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-11-21T11:10:42Z",
+      "side": 1,
+      "message": "If we want to increase the timeout under TSan, use an ifdef instead.",
+      "revId": "b0ee6bd393fd820ef2ed53517d15040fa9774243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
