@@ -47,11 +47,13 @@ const ComputedStyle* ComputedStylePropertyMap::UpdateStyle() {
 
 CSSStyleValueVector ComputedStylePropertyMap::GetAllInternal(
     CSSPropertyID property_id) {
+  if (property_id == CSSPropertyInvalid)
+    return CSSStyleValueVector();
   const ComputedStyle* style = UpdateStyle();
   if (!style)
     return CSSStyleValueVector();
   const CSSValue* css_value = ComputedStyleCSSValueMapping::Get(
-      property_id, *style, nullptr /* layout_object */);
+      CSSProperty::Get(property_id), *style, nullptr /* layout_object */);
   if (!css_value)
     return CSSStyleValueVector();
   return StyleValueFactory::CssValueToStyleValueVector(property_id, *css_value);
