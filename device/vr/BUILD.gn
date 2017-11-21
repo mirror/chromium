@@ -22,6 +22,10 @@ if (enable_vr) {
       "features",
     ]
     sources += [
+      "orientation/orientation_device.cc",
+      "orientation/orientation_device.h",
+      "orientation/orientation_device_provider.cc",
+      "orientation/orientation_device_provider.h",
       "vr_device.h",
       "vr_device_base.cc",
       "vr_device_base.h",
@@ -34,6 +38,8 @@ if (enable_vr) {
       "//base",
       "//gpu/ipc/common:interfaces",
       "//mojo/public/cpp/bindings",
+      "//services/device/public/cpp/generic_sensor",
+      "//services/service_manager/public/cpp",
       "//ui/gfx",
     ]
 

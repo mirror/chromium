@@ -10,7 +10,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
+#include "content/public/common/service_manager_connection.h"
 #include "device/vr/features/features.h"
+#include "device/vr/orientation/orientation_device_provider.h"
 
 #if defined(OS_ANDROID)
 #include "device/vr/android/gvr/gvr_device_provider.h"
@@ -24,6 +26,20 @@ namespace vr {
 
 namespace {
 VRDeviceManager* g_vr_device_manager = nullptr;
+
+std::unique_ptr<device::VRDeviceProvider> CreateDefaultProvider() {
+  content::ServiceManagerConnection* connection =
+      content::ServiceManagerConnection::GetForProcess();
+
+  if (!connection) {
+    // If there is no service manager connection we cannot supply a default
+    // device.
+    return nullptr;
+  }
+
+  return std::make_unique<device::OrientationDeviceProvider>(
+      connection->GetConnector());
+}
 }
 
 VRDeviceManager* VRDeviceManager::GetInstance() {
@@ -37,6 +53,7 @@ VRDeviceManager* VRDeviceManager::GetInstance() {
 #if BUILDFLAG(ENABLE_OPENVR)
     providers.emplace_back(std::make_unique<device::OpenVRDeviceProvider>());
 #endif
+
     new VRDeviceManager(std::move(providers));
   }
   return g_vr_device_manager;
@@ -49,6 +66,9 @@ bool VRDeviceManager::HasInstance() {
 VRDeviceManager::VRDeviceManager(ProviderList providers)
     : providers_(std::move(providers)) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  default_provider_ = CreateDefaultProvider();
+
   CHECK(!g_vr_device_manager);
   g_vr_device_manager = this;
 }
@@ -67,8 +87,13 @@ void VRDeviceManager::AddService(VRServiceImpl* service) {
   InitializeProviders();
 
   std::vector<device::VRDevice*> devices;
-  for (const auto& provider : providers_)
-    provider->GetDevices(&devices);
+  // for (const auto& provider : providers_)
+  //   provider->GetDevices(&devices);
+
+  // If there are no devices, try to at least provide the orientation API.
+  if (devices.size() == 0) {
+    default_provider_->GetDevices(&devices);
+  }
 
   for (auto* device : devices) {
     if (device->GetId() == device::VR_DEVICE_LAST_ID)
@@ -111,6 +136,7 @@ void VRDeviceManager::InitializeProviders() {
 
   for (const auto& provider : providers_)
     provider->Initialize();
+  default_provider_->Initialize();
 
   vr_initialized_ = true;
 }
