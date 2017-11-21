@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6223796b_a8fd819f",
+        "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T17:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d66903_808e7f1c",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "ffec3d1a5e2ff4af7f09745b485ae3bee3776372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "743b31f7_1baa1d1a",
         "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.h",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yup, \"guaranteed to outlive this object\" is totally fine.",
       "parentUuid": "ec0c3034_d178f035",
+      "range": {
+        "startLine": 30,
+        "startChar": 31,
+        "endLine": 30,
+        "endChar": 54
+      },
+      "revId": "ffec3d1a5e2ff4af7f09745b485ae3bee3776372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43335211_a643bac1",
+        "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T17:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ddec63c_721e1eaa",
       "range": {
         "startLine": 30,
         "startChar": 31,
