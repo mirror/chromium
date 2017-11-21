@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dbb922e8_3133f969",
+        "filename": "components/browser_watcher/stability_debugging.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-11-21T19:02:55Z",
+      "side": 1,
+      "message": "LG - I don\u0027t think there will ever by a 64 bit SyzyASAN.",
+      "parentUuid": "f7b712b5_1c2f58fc",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "eff829a1bb667f1138e65539edd2cbe4043237f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da909a88_fbdb6d30",
         "filename": "components/browser_watcher/stability_debugging.cc",
         "patchSetId": 3
