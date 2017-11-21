@@ -134,13 +134,13 @@ public class TabWebContentsObserver extends WebContentsObserver {
 
     @Override
     public void navigationEntryCommitted() {
-        if (mTab.getNativePage() != null) {
-            mTab.pushNativePageStateToNavigationEntry();
-        }
     }
 
     @Override
     public void didFinishLoad(long frameId, String validatedUrl, boolean isMainFrame) {
+        if (mTab.getNativePage() != null) {
+            mTab.pushNativePageStateToNavigationEntry();
+        }
         if (isMainFrame) mTab.didFinishPageLoad();
         PolicyAuditor auditor = AppHooks.get().getPolicyAuditor();
         auditor.notifyAuditEvent(
