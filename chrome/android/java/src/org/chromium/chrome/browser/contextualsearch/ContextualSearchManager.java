@@ -1242,6 +1242,11 @@ public class ContextualSearchManager
                 Profile.getLastUsedProfile().getOriginalProfile());
     }
 
+    @Override
+    public void onPanelResize() {
+        mInProductHelp.updateBubblePosition();
+    }
+
     /**
      * @return The {@link SelectionClient} used by Contextual Search.
      */
