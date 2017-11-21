@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe9aedc6_035763f3",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2017-11-21T21:34:36Z",
+      "side": 1,
+      "message": "Officially, we recommend against using a local branch to track the remote.  In particular using \"master\" to track \"origin/infra/config\" would actually be a misnomer.\n\nIn git, \"master\" generally refers to the local version of \"origin/master\", which is the \"refs/heads/master\" branch on the \"origin\" remote.  In this case, \"infra/config\" is the name of the remote branch, which is not master.",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "a95a9fe020c662b887a0ca26b471c725754d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee88ec2_106da432",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2017-11-21T21:34:36Z",
+      "side": 1,
+      "message": "\"git checkout origin/infra/config\"\n\"git new-branch --upstream_current your_branch_name\"\n\nShould also work",
+      "revId": "a95a9fe020c662b887a0ca26b471c725754d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
