@@ -23,6 +23,8 @@ class WebGestureCurveMock : public blink::WebGestureCurve {
   // Returns false if curve has finished and can no longer be applied.
   bool Apply(double time, blink::WebGestureCurveTarget* target) override;
 
+  gfx::Vector2dF GetFinalOffset() override {}
+
  private:
   blink::WebFloatPoint velocity_;
   blink::WebSize cumulative_scroll_;

@@ -28,3 +28,7 @@ bool WebGestureCurveMock::Apply(double time,
   target->ScrollBy(increment, velocity);
   return true;
 }
+
+gfx::Vector2dF GetFinalOffset() {
+  return gfx::Vector2dF();
+}

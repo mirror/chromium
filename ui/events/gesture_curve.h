@@ -24,6 +24,8 @@ class EVENTS_BASE_EXPORT GestureCurve {
   virtual bool ComputeScrollOffset(base::TimeTicks time,
                                    gfx::Vector2dF* offset,
                                    gfx::Vector2dF* velocity) = 0;
+
+  virtual gfx::Vector2dF GetCurveFinalOffset() = 0;
 };
 
 }  // namespace ui
