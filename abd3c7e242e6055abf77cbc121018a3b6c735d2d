@@ -68,6 +68,29 @@
       "revId": "abd3c7e242e6055abf77cbc121018a3b6c735d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80686a7_504ec79a",
+        "filename": "content/shell/android/java/src/org/chromium/content_shell/Shell.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-21T18:20:17Z",
+      "side": 1,
+      "message": "ditto Impl",
+      "range": {
+        "startLine": 299,
+        "startChar": 8,
+        "endLine": 299,
+        "endChar": 24
+      },
+      "revId": "abd3c7e242e6055abf77cbc121018a3b6c735d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
