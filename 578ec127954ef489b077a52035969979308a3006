@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19cb9515_6553cfee",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-21T10:49:31Z",
+      "side": 1,
+      "message": "Can we write base::Passed(\u0026callback) here?",
+      "range": {
+        "startLine": 390,
+        "startChar": 19,
+        "endLine": 390,
+        "endChar": 52
+      },
+      "revId": "578ec127954ef489b077a52035969979308a3006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9bbe87_d1cb0247",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-21T10:49:31Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 415,
+        "startChar": 24,
+        "endLine": 415,
+        "endChar": 57
+      },
+      "revId": "578ec127954ef489b077a52035969979308a3006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
