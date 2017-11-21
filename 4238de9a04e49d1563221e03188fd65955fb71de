@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a522e7e0_9ea5b2a9",
+        "filename": "ios/chrome/browser/ui/broadcaster/chrome_broadcast_observer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-21T16:51:43Z",
+      "side": 1,
+      "message": "Some of these broadcast methods have been removed from ChromeBroadcastObserver.",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "4238de9a04e49d1563221e03188fd65955fb71de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
