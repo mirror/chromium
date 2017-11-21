@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64eadf72_0b1c79ba",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-21T15:44:14Z",
+      "side": 1,
+      "message": "I think this one was missed :)",
+      "range": {
+        "startLine": 25,
+        "startChar": 57,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "a0cf26b5522eb6334ba74c1576b547582623c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac25e87a_f14ef426",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-21T15:44:14Z",
+      "side": 1,
+      "message": "nit: delete last \u0027origin\u0027 :)",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 15
+      },
+      "revId": "a0cf26b5522eb6334ba74c1576b547582623c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bd75a8_52abc4fc",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-21T15:44:14Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 179,
+        "startChar": 17,
+        "endLine": 179,
+        "endChar": 27
+      },
+      "revId": "a0cf26b5522eb6334ba74c1576b547582623c54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

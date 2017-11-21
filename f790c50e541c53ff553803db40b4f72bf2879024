@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9718d731_988b30cf",
+        "filename": "android_webview/tools/system_webview_shell/test/data/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 1735,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-21T15:44:14Z",
+      "side": 1,
+      "message": "\u003e Acoording to Bo, \"the webexposed txt file is in android webview to ensure that the new js apis work on android webview\".\n\u003e \n\u003e Question is do we want policy to be exposed to android webview?\nYes, but I thought that was the change on line 732, where you\u0027ve added document.policy. I\u0027m wondering why this is showing up on HTMLIFrameElement here?",
+      "parentUuid": "aab9edae_dbad2c60",
+      "revId": "f790c50e541c53ff553803db40b4f72bf2879024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b4a5c37_37b895d5",
         "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_main_document.php",
         "patchSetId": 19
