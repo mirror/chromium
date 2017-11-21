@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cba48c9b_65c5e519",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-21T11:33:24Z",
+      "side": 1,
+      "message": "nit: remove this, as it cannot fail (the checker is initialized on this thread immediately before this check).",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e52a496_851d2aef",
         "filename": "third_party/openvr/src/headers/openvr.h",
         "patchSetId": 3
@@ -30,6 +47,29 @@
       "writtenOn": "2017-11-21T00:08:00Z",
       "side": 1,
       "message": "A newline after this might be helpful",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8509feac_c1f2b56a",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-21T11:33:24Z",
+      "side": 1,
+      "message": "nit: extern \"C\"",
+      "range": {
+        "startLine": 1153,
+        "startChar": 21,
+        "endLine": 1153,
+        "endChar": 30
+      },
       "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
