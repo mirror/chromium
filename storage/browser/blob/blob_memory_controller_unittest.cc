@@ -199,13 +199,13 @@ TEST_F(BlobMemoryControllerTest, Strategy) {
     BlobMemoryController controller(temp_dir_.GetPath(), file_runner_);
     SetTestMemoryLimits(&controller);
 
-    EXPECT_EQ(
-        Strategy::SHARED_MEMORY,
-        controller.DetermineStrategy(0, kTestBlobStorageMaxBlobMemorySize -
-                                            kTestBlobStorageMinFileSizeBytes));
+    EXPECT_EQ(Strategy::SHARED_MEMORY,
+              controller.DetermineStrategy(
+                  0, kTestBlobStorageMaxBlobMemorySize -
+                         kTestBlobStorageMinFileSizeBytes - 1));
     EXPECT_EQ(Strategy::FILE, controller.DetermineStrategy(
                                   0, kTestBlobStorageMaxBlobMemorySize -
-                                         kTestBlobStorageMinFileSizeBytes + 1));
+                                         kTestBlobStorageMinFileSizeBytes));
 
     EXPECT_EQ(Strategy::FILE, controller.DetermineStrategy(
                                   0, kTestBlobStorageMaxBlobMemorySize));
