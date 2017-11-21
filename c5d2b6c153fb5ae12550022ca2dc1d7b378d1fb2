@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "625a9212_39488c21",
+        "filename": "base/files/file_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-21T18:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62937184_61473f74",
+      "range": {
+        "startLine": 376,
+        "startChar": 3,
+        "endLine": 376,
+        "endChar": 7
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed1ab06_b9be7bb2",
         "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c687b0f_4d36831c",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-21T18:20:11Z",
+      "side": 1,
+      "message": "I\u0027ve updated the TODO.",
+      "parentUuid": "2ed1ab06_b9be7bb2",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f28ad9ea_dbdf7c78",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-21T18:20:11Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "ab65213e_cd70fcb2",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "586747f7_b076e5b1",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 15
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e43c9b9e_587b4a1b",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-21T18:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "586747f7_b076e5b1",
+      "range": {
+        "startLine": 172,
+        "startChar": 46,
+        "endLine": 172,
+        "endChar": 52
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5734d0a_70778c22",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 15
@@ -114,6 +210,30 @@
       "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fc60e8_195e2c30",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-21T18:20:11Z",
+      "side": 1,
+      "message": "Precisely. I just wanted a shorter way of writing this.\nI see that if I just drop the \"std::\" in the beginning, it fits in the same number of lines. I\u0027ll use that then.",
+      "parentUuid": "d5734d0a_70778c22",
+      "range": {
+        "startLine": 229,
+        "startChar": 33,
+        "endLine": 229,
+        "endChar": 36
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
