@@ -22,6 +22,30 @@
       "revId": "d38bd5416702235994915615f315d2630c58d056",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c202b4_b03b7b01",
+        "filename": "media/blink/video_decode_stats_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-21T21:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e230602_79dd6c55",
+      "range": {
+        "startLine": 315,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 21
+      },
+      "revId": "d38bd5416702235994915615f315d2630c58d056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
