@@ -1,0 +1,62 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Interface used to parse simple XML files.
+//
+// Ignores namespaces, node attributes, comments and white-spaces.
+// Note also that the text content of elements is returned as base::Value of
+// type STRING: no effort is made by the parser to parse numeric values.
+
+module data_decoder.mojom;
+
+import "mojo/common/values.mojom";
+
+interface XmlParser {
+  const string kTagKey = "tag";
+  const string kTextKey = "text";
+  const string kChildrenKey = "children";
+
+  // Parses the input XML and returns a Value with its content. If parsing
+  // failed that value is empty and an error is set:
+  //
+  // For example the following XML:
+  //
+  // <library>
+  //   <book id="k123">
+  //     <author>Isaac Newton</author>
+  //     <title>Philosophiae Naturalis Principia Mathematica</title>
+  //   </book>
+  //   <book id="k456">
+  //     <author>Dr. Seuss</author>
+  //     <author>Theodor Seuss Geisel</author>
+  //     <title>Green Eggs and Ham</title>
+  //     <kids/>
+  //   </book>
+  // </library>
+  //
+  // becomes (base::Value's represented as JSON):
+  //
+  // {"tag": "library",
+  //  "children":["
+  //     {"tag": "book",
+  //      "children": [
+  //        {"tag": "author", "text": "Isaac Newton"},
+  //        {"tag": "title",
+  //         "text": "Philosophiae Naturalis Principia Mathematica"},
+  //        {"tag": "genre", "text": "Science"},
+  //        {"tag": "price", "text": "40.95"},
+  //        {"tag": "publish_date", "text": "1947-9-03"}
+  //    ]},
+  //    {"tag": "book",
+  //     "children": [
+  //        {"tag": "author", "text": "Dr. Seuss"},
+  //        {"tag": "title", "text": "Green Eggs and Ham"},
+  //        {"tag": "genre", "text": "Kid"},
+  //        {"tag": "kids"},
+  //        {"tag": "price", "text": "4.95"},
+  //        {"tag": "publish_date", "text": "1960-8-12"}
+  //    ]}
+  // ]}"
+  Parse(string xml) => (mojo.common.mojom.Value? result, string? error);
+};
