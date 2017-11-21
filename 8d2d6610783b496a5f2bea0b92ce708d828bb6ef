@@ -22,6 +22,30 @@
       "revId": "8d2d6610783b496a5f2bea0b92ce708d828bb6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da406e46_fd3b8e74",
+        "filename": "components/arc/connection_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T08:04:34Z",
+      "side": 1,
+      "message": "I\u0027m ok to remove the line, if it confuses you.\n\nThank you for discussion and the reference.\nNote that, at the moment, I\u0027m still think this is a variation of type-erasure technique,\nas template param annotated to the concrete class below is just removed on run-time.\nThough, there could be more discussion about how the current design should be interpreted,\nand I don\u0027t think it is the main focus of this CL :-).",
+      "parentUuid": "1268647a_4c33339b",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "8d2d6610783b496a5f2bea0b92ce708d828bb6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
