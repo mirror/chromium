@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23d836f0_d24dd8c5",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:52:02Z",
+      "side": 1,
+      "message": "driveby nit: default ctors do not require explicit invocation in initializer lists.",
+      "revId": "52286db02026158c51e498ce1dc477b820c852e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1ef4d2_77a355b6",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:52:02Z",
+      "side": 1,
+      "message": "driveby q: where is this defined?",
+      "revId": "52286db02026158c51e498ce1dc477b820c852e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4860d51_f74a8b5a",
+        "filename": "ui/keyboard/keyboard_ukm_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:52:02Z",
+      "side": 1,
+      "message": "driveby nit: strings are empty by default, this initializer is not needed, and those below could be inlined with the member declarations in the header, allowing |KeyboardUkmRecorder() \u003d default;| for the ctor definition.",
+      "revId": "52286db02026158c51e498ce1dc477b820c852e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a7648e_1aa88ff4",
+        "filename": "ui/keyboard/keyboard_ukm_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:52:02Z",
+      "side": 1,
+      "message": "driveby: please use kInvalidSourceId here and elsewhere",
+      "revId": "52286db02026158c51e498ce1dc477b820c852e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5353f2ad_d328cdea",
+        "filename": "ui/keyboard/keyboard_ukm_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:52:02Z",
+      "side": 1,
+      "message": "driveby: |ukm_source_id_| and |client_source_info_| should be cleared when the string is empty (and probably when the url is invalid) (ie. when the user interacts with browser ui outside of web content), to ensure that those text input elements do not log ukm values for unrelated textfields. Maybe it would make more sense to inline these functions into KeyboardController and perform the update and the logging at the same time? It might be nice to unit test to ensure that KeyboardController handles the case I cited correctly.",
+      "revId": "52286db02026158c51e498ce1dc477b820c852e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
