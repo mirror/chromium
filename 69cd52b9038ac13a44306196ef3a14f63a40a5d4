@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f4e0ff39_b327aad4",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t know what the right policy is. I\u0027ll take suggestions. :)\n\u003e \n\u003e Would be:\n\u003e \n\u003e   g_browser_process-\u003elocal_state()-\u003eGetString(prefs::kIsolateOrigins) + \",\" + parsed_command_line_.GetSwitchValueASCII(switches::kIsolateOrigins);\n\u003e \n\u003e , right?\n\nWhile I\u0027d love to see us honor both the enterprise policy and the user-specified origins (rather than have the enterprise policy replace the user-specified origins), I\u0027m worried about it being more complex than that.  AddIsolatedOrigin CHECKs if you add a duplicate origin, so appending them here might crash if the user\u0027s origins overlap with the enterprise ones.  They might be able to work it out on their own, but it would be a bit surprising.\n\nJulian, is the typical thing to have enterprise policy override the user\u0027s choice, or should we try to honor both (e.g., by skipping duplicates rather than asserting that they don\u0027t exist)?",
+      "parentUuid": "8cd44fe9_07f8fda4",
+      "range": {
+        "startLine": 1178,
+        "startChar": 4,
+        "endLine": 1180,
+        "endChar": 15
+      },
+      "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1967ca41_16302a1b",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 14
@@ -81,6 +105,24 @@
       "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa841149_8332fa12",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "\u003e Omitting that line makes the CL not work, alas.\n\nGlad we found a way around it (by moving the original AddIsolatedOriginsFromCommand line call later).",
+      "parentUuid": "4b0b40da_0fc56621",
+      "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

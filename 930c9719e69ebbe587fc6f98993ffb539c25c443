@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd12b4b4_73d9aad6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "minor nit: Introduce",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8985fd87_d517d859",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "minor nit: Add comment, like:\n// Add Site Isolation switches if dictated by the PrefService.\n\n(Maybe remove the blank line on 1165, too, since these are one related block.)",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbd6b0e_cc2ab0ab",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "Was there a reason we only need to do one of them here?  It\u0027s not clear to me.",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5343226_9180e354",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "Maybe it\u0027s worth declaring this as scoped_refptr\u003cSiteInstance\u003e instance?  Not sure if it\u0027s necessary, but SiteInstance is ref counted and we wouldn\u0027t want it to leak.",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 19
+      },
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b54e72_d61c082a",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "We should skip this test on the Site Isolation bots, since all sites will be isolated in that case.  Similar to IsolatedOriginTest\u0027s NoOOPIFWhenIsolatedOriginNavigatesToNonIsolatedOrigin test, let\u0027s add:\n\n  // Skip this test if all sites are isolated.\n  if (AreAllSitesIsolatedForTesting())\n    return;",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a342c2_c712bde1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 10648,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "Just repeating my earlier comment so it doesn\u0027t fall between the cracks.  Deciding it\u0027s not worth changing is ok.  :)\n\nI\u0027m not sure compatibility is the word we\u0027re looking for.  IsolateOrigins would reduce overhead compared to SitePerProcess, and while there would still be functional regressions on the (important) origins you list, the regressions are limited to those origins and not all cross-site iframes.\n\nMaybe something like \"isolation and limited impact for users\"?",
+      "range": {
+        "startLine": 10648,
+        "startChar": 41,
+        "endLine": 10648,
+        "endChar": 54
+      },
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

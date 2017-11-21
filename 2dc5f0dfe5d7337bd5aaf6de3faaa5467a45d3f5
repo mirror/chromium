@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b724657d_8d96a99f",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T04:30:19Z",
+      "side": 1,
+      "message": "\u003e Looks like it\u0027s not needed anymore. Removed!\n\nHooray!",
+      "parentUuid": "e57129fb_5b4dac42",
+      "revId": "2dc5f0dfe5d7337bd5aaf6de3faaa5467a45d3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "515609da_88530c51",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 17
