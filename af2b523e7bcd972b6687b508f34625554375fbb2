@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f434b02_e8dc4a44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-21T22:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad8b057_6897c168",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16a8f7ac_06446522",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa5ced5_d9529d43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-21T22:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a8f7ac_06446522",
+      "range": {
+        "startLine": 30,
+        "startChar": 55,
+        "endLine": 30,
+        "endChar": 76
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7bce03c0_8c0f3e33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-21T22:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bf3705d_74ee5368",
+      "range": {
+        "startLine": 31,
+        "startChar": 44,
+        "endLine": 31,
+        "endChar": 77
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfe18635_a21f0751",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
@@ -82,6 +154,24 @@
       "writtenOn": "2017-11-21T20:43:05Z",
       "side": 1,
       "message": "Instead of adding a new state can we change the WebappInfo display mode to MINIMAL_UI?\n\nWe will need to spec out how a TWA behaves when verification fails.  For instance, does a TWA for which verification fails show the disclosure UI?",
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5780e8de_1a195a77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-21T22:38:37Z",
+      "side": 1,
+      "message": "My understanding was that Dominick was saying we should have the check inside the BrowserControlsDelegate to avoid another codepath updating the display mode to something else. (DisplayMode being MINIMAL_UI is not as alarming as a committed verification failing).\n\nI am fine doing it either way :)",
+      "parentUuid": "dfe18635_a21f0751",
       "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "1b50b1eb_5b2236b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-21T22:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee6dd7e4_61409319",
+      "range": {
+        "startLine": 164,
+        "startChar": 15,
+        "endLine": 164,
+        "endChar": 25
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92c1f5f8_47279d1d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbb97e8_b7cd39f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-21T22:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92c1f5f8_47279d1d",
+      "range": {
+        "startLine": 197,
+        "startChar": 47,
+        "endLine": 197,
+        "endChar": 62
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

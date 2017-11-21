@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fa7fcf24_0d0deada",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkOfflineDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-21T22:38:37Z",
+      "side": 1,
+      "message": "OK, added a new string for webapp/twa message and made the quit more generic. Plumbing through state about the app being a webAPK now to decide which one to use",
+      "parentUuid": "9fc19984_2d788a20",
+      "revId": "a0b4102bf7371aa5463953dab87d6df809c056be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "148a69e9_d9b84292",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 1
