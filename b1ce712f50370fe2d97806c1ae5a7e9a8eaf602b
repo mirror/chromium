@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b151814_c2e5da18",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-21T03:29:10Z",
+      "side": 1,
+      "message": "There\u0027s an unhandled edge case: first-letter with \u0027float\u0027 style.\n\nIn this case, we need to mark the first-letter and remaining text parts in different blocks.",
+      "revId": "b1ce712f50370fe2d97806c1ae5a7e9a8eaf602b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
