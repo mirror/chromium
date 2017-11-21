@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="resources/shadow-dom.js"></script>
+
+<div id="test">
+  <div id="normal-div"></div>
+  <div id="shadow-host-1"></div>
+  <div id="shadow-host-2"></div>
+</div>
+
+<script>
+const normalDiv = document.querySelector('#normal-div');
+const shadowHost1 = document.querySelector('#shadow-host-1');
+shadowHost1.createShadowRoot();
+const shadowHost2 = document.querySelector('#shadow-host-2');
+shadowHost2.attachShadow({mode : 'open'});
+const test_event = new Event('test');
+
+async_test((test) => {
+  normalDiv.addEventListener('test', test.step_func_done((e) => {
+    assert_not_equals(event, null);
+    assert_equals(event, e);
+    assert_equals(event, test_event);
+  }));
+  normalDiv.dispatchEvent(test_event);
+}, 'window.event should contain the current event being handled when the target is a normal DOM node');
+
+async_test((test) => {
+  shadowHost1.shadowRoot.addEventListener('test', test.step_func_done((e) => {
+    assert_not_equals(event, null);
+    assert_equals(event, e);
+    assert_equals(event, test_event);
+  }));
+  shadowHost1.shadowRoot.dispatchEvent(test_event);
+}, 'window.event should contain the current event being handled when the target is a V0 Shadow DOM node');
+
+async_test((test) => {
+  shadowHost2.shadowRoot.addEventListener('test', test.step_func_done((e) => {
+    assert_equals(event, undefined);
+    assert_not_equals(event, e);
+  }));
+  shadowHost2.shadowRoot.dispatchEvent(test_event);
+}, 'window.event should be undefined when the target of the current event being handled is a V1 Shadow DOM node');
+
+</script>
