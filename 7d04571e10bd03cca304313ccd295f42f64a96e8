@@ -16,6 +16,24 @@
       "revId": "7d04571e10bd03cca304313ccd295f42f64a96e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c000f4_0653da78",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-21T18:51:53Z",
+      "side": 1,
+      "message": "This is to set the font size proportional to the viewport width. Basically, 15px for 400px width and 36px for 1920px width. This is to solve the \"small font\" issue (please see the description) brought by the fs-in-tab UI. If using fixed font size, the texts may look bigger for lower capture resolution (probably the screen size) in the same size browser window. So I set the font size proportional to the capture resolution (viewport size). Does it sgty? :)",
+      "parentUuid": "6555d8c2_79e57e21",
+      "revId": "7d04571e10bd03cca304313ccd295f42f64a96e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
