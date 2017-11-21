@@ -222,6 +222,30 @@
       "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9816e7e9_8942a718",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-21T19:08:35Z",
+      "side": 1,
+      "message": "Huh.  Sorry, quite right.  I thought I scanned for that, but I missed it.",
+      "parentUuid": "5ea3aa5c_d6ff7ca4",
+      "range": {
+        "startLine": 495,
+        "startChar": 26,
+        "endLine": 495,
+        "endChar": 45
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
