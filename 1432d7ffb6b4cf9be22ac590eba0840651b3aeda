@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b29b024c_9b898c83",
+        "filename": "third_party/WebKit/Source/core/dom/PseudoElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-21T17:12:21Z",
+      "side": 1,
+      "message": "-to",
+      "revId": "1432d7ffb6b4cf9be22ac590eba0840651b3aeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
