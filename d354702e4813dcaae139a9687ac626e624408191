@@ -22,6 +22,30 @@
       "revId": "d354702e4813dcaae139a9687ac626e624408191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c51034b_7a7a1f65",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-21T03:20:09Z",
+      "side": 1,
+      "message": "I think that List\u003cActivityInfo\u003e is more extensible. Given that we don\u0027t make much use of the new parameter yet, it does not really matter either way in my opinion.",
+      "parentUuid": "dbc310fd_22a990b0",
+      "range": {
+        "startLine": 132,
+        "startChar": 81,
+        "endLine": 132,
+        "endChar": 91
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
