@@ -55,6 +55,7 @@ class VRDeviceManager {
   void InitializeProviders();
 
   ProviderList providers_;
+  std::unique_ptr<device::VRDeviceProvider> default_provider_;
 
   // Devices are owned by their providers.
   using DeviceMap = std::map<unsigned int, device::VRDevice*>;
