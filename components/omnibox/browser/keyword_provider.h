@@ -92,6 +92,9 @@ class KeywordProvider : public AutocompleteProvider {
                                         const base::string16& keyword,
                                         const AutocompleteInput& input);
 
+  // Called when the user enters keyword mode for an extension keyword.
+  void OnKeywordEntered();
+
   // AutocompleteProvider:
   void DeleteMatch(const AutocompleteMatch& match) override;
   void Start(const AutocompleteInput& input, bool minimal_changes) override;

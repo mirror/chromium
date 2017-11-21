@@ -12766,6 +12766,7 @@ Called by update_net_error_codes.py.-->
   <int value="412" label="AUTOMATION_INTERNAL_ON_ACTION_RESULT"/>
   <int value="413" label="OMNIBOX_ON_DELETE_SUGGESTION"/>
   <int value="414" label="VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CONFIG_CHANGED"/>
+  <int value="415" label="OMNIBOX_ON_KEYWORD_ENTERED"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult">

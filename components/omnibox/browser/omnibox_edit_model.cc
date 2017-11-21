@@ -739,6 +739,8 @@ bool OmniboxEditModel::AcceptKeyword(
   else
     StartAutocomplete(false, true);
 
+  HandleOnKeywordEntered();
+
   // When entering keyword mode via tab, the new text to show is whatever the
   // newly-selected match in the dropdown is.  When entering via space, however,
   // we should make sure to use the actual |user_text_| as the basis for the new
@@ -1275,6 +1277,13 @@ void OmniboxEditModel::InternalSetUserText(const base::string16& text) {
 
 void OmniboxEditModel::ClearPopupKeywordMode() const {
   omnibox_controller_->ClearPopupKeywordMode();
+}
+
+void OmniboxEditModel::HandleOnKeywordEntered() {
+  KeywordProvider* kp =
+      omnibox_controller_->autocomplete_controller()->keyword_provider();
+  if (kp)
+    kp->OnKeywordEntered();
 }
 
 base::string16 OmniboxEditModel::MaybeStripKeyword(
