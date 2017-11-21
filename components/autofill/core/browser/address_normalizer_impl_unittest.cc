@@ -57,7 +57,7 @@ class TestAddressNormalizer : public AddressNormalizerImpl {
  public:
   TestAddressNormalizer(std::unique_ptr<::i18n::addressinput::Source> source,
                         std::unique_ptr<::i18n::addressinput::Storage> storage)
-      : AddressNormalizerImpl(std::move(source), std::move(storage)) {}
+      : AddressNormalizerImpl(std::move(source), std::move(storage), "en-US") {}
 
   ~TestAddressNormalizer() override {}
 
@@ -141,7 +141,7 @@ TEST_F(AddressNormalizerTest, NormalizeAddressAsync_RulesLoaded) {
 
   // Do the normalization.
   normalizer()->NormalizeAddressAsync(
-      profile, kCountryCode, 0,
+      profile, 0,
       base::BindOnce(&AddressNormalizerTest::OnAddressNormalized,
                      base::Unretained(this)));
 
@@ -159,8 +159,6 @@ TEST_F(AddressNormalizerTest,
        NormalizeAddressAsync_RulesNotLoaded_WillNotLoad) {
   AutofillProfile profile = autofill::test::GetFullProfile();
   profile.SetRawInfo(ADDRESS_HOME_STATE, base::ASCIIToUTF16("California"));
-  const std::string kCountryCode =
-      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
 
   // Make sure the rules will not be loaded in the NormalizeAddressAsync
   // call.
@@ -168,7 +166,7 @@ TEST_F(AddressNormalizerTest,
 
   // Do the normalization.
   normalizer()->NormalizeAddressAsync(
-      profile, kCountryCode, 0,
+      profile, 0,
       base::BindOnce(&AddressNormalizerTest::OnAddressNormalized,
                      base::Unretained(this)));
 
@@ -192,15 +190,15 @@ TEST_F(AddressNormalizerTest, NormalizeAddressAsync_RulesNotAvailable) {
             base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_STATE)));
 
   // Do the normalization.
-  const std::string kCountryCode =
-      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
   normalizer()->NormalizeAddressAsync(
-      profile, kCountryCode, 0,
+      profile, 0,
       base::BindOnce(&AddressNormalizerTest::OnAddressNormalized,
                      base::Unretained(this)));
 
   // The source is synchronous but the region is not available. Nornalization is
   // not successful.
+  const std::string kCountryCode =
+      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
   EXPECT_FALSE(normalizer()->AreRulesLoadedForRegion(kCountryCode));
   EXPECT_FALSE(normalization_successful());
 
@@ -219,10 +217,8 @@ TEST_F(AddressNormalizerTest, NormalizeAddressAsync_RulesNotLoaded_WillLoad) {
   profile.SetRawInfo(ADDRESS_HOME_STATE, base::ASCIIToUTF16("California"));
 
   // Do the normalization.
-  const std::string kCountryCode =
-      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
   normalizer()->NormalizeAddressAsync(
-      profile, kCountryCode, 0,
+      profile, 0,
       base::BindOnce(&AddressNormalizerTest::OnAddressNormalized,
                      base::Unretained(this)));
 
@@ -230,6 +226,8 @@ TEST_F(AddressNormalizerTest, NormalizeAddressAsync_RulesNotLoaded_WillLoad) {
   // NormalizeAddressAsync, they should get loaded in the call. Since our
   // test source is synchronous, the normalization will happen synchronously
   // too.
+  const std::string kCountryCode =
+      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
   EXPECT_TRUE(normalizer()->AreRulesLoadedForRegion(kCountryCode));
   EXPECT_TRUE(normalization_successful());
   EXPECT_EQ("CA",
@@ -251,7 +249,7 @@ TEST_F(AddressNormalizerTest, FormatPhone_AddressNormalizedAsync) {
 
   // Do the normalization.
   normalizer()->NormalizeAddressAsync(
-      profile, kCountryCode, 0,
+      profile, 0,
       base::BindOnce(&AddressNormalizerTest::OnAddressNormalized,
                      base::Unretained(this)));
 
@@ -277,10 +275,8 @@ TEST_F(AddressNormalizerTest, FormatPhone_AddressNotNormalizedAsync) {
   normalizer()->ShouldLoadRules(false);
 
   // Do the normalization.
-  const std::string kCountryCode =
-      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
   normalizer()->NormalizeAddressAsync(
-      profile, kCountryCode, 0,
+      profile, 0,
       base::BindOnce(&AddressNormalizerTest::OnAddressNormalized,
                      base::Unretained(this)));
 
@@ -307,9 +303,7 @@ TEST_F(AddressNormalizerTest, NormalizeAddressSync_RulesNotLoaded) {
                      base::UTF8ToUTF16("515-123-1234"));
 
   // Do the normalization.
-  const std::string kCountryCode =
-      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
-  EXPECT_FALSE(normalizer()->NormalizeAddressSync(&profile, kCountryCode));
+  EXPECT_FALSE(normalizer()->NormalizeAddressSync(&profile));
 
   // The rules are not loaded before the call to NormalizeAddressSync.
   // Normalization fails.
@@ -335,7 +329,7 @@ TEST_F(AddressNormalizerTest, NormalizeAddressSync_RulesLoaded) {
   EXPECT_TRUE(normalizer()->AreRulesLoadedForRegion(kCountryCode));
 
   // Do the normalization.
-  EXPECT_TRUE(normalizer()->NormalizeAddressSync(&profile, kCountryCode));
+  EXPECT_TRUE(normalizer()->NormalizeAddressSync(&profile));
 
   // The rules were loaded before the call to NormalizeAddressSync.
   // Normalization succeeds.

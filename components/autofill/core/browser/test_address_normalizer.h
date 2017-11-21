@@ -26,11 +26,9 @@ class TestAddressNormalizer : public AddressNormalizer {
 
   void NormalizeAddressAsync(
       const AutofillProfile& profile,
-      const std::string& region_code,
       int timeout_seconds,
       AddressNormalizer::NormalizationCallback callback) override;
-  bool NormalizeAddressSync(AutofillProfile* profile,
-                            const std::string& region_code) override;
+  bool NormalizeAddressSync(AutofillProfile* profile) override;
 
   void OnAddressValidationRulesLoaded(const std::string& region_code,
                                       bool success) override {}

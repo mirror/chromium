@@ -28,7 +28,8 @@ class AutofillProfile;
 class AddressNormalizerImpl : public AddressNormalizer {
  public:
   AddressNormalizerImpl(std::unique_ptr<::i18n::addressinput::Source> source,
-                        std::unique_ptr<::i18n::addressinput::Storage> storage);
+                        std::unique_ptr<::i18n::addressinput::Storage> storage,
+                        const std::string& app_locale);
   ~AddressNormalizerImpl() override;
 
   // AddressNormalizer implementation.
@@ -36,11 +37,9 @@ class AddressNormalizerImpl : public AddressNormalizer {
   bool AreRulesLoadedForRegion(const std::string& region_code) override;
   void NormalizeAddressAsync(
       const AutofillProfile& profile,
-      const std::string& region_code,
       int timeout_seconds,
       AddressNormalizer::NormalizationCallback callback) override;
-  bool NormalizeAddressSync(AutofillProfile* profile,
-                            const std::string& region_code) override;
+  bool NormalizeAddressSync(AutofillProfile* profile) override;
 
  private:
   // Called when the validation rules for the |region_code| have finished
@@ -55,6 +54,7 @@ class AddressNormalizerImpl : public AddressNormalizer {
 
   // The address validator used to normalize addresses.
   AddressValidator address_validator_;
+  const std::string app_locale_;
 
   DISALLOW_COPY_AND_ASSIGN(AddressNormalizerImpl);
 };
