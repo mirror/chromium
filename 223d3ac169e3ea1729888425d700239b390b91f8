@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5438c23b_e5db1930",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-21T18:10:49Z",
+      "side": 1,
+      "message": "re: chat thread about entering keyword mode yields a suggestion from the default search engine at the top.\n\nI wonder if the problem is that this function is called here.  Perhaps we haven\u0027t yet revised AutocompleteInput to indicate that we\u0027re in a keyword mode, which is why search provider is willing to provide a high-scoring match.  Maybe it should be lower.\n\nAlso, somewhere the keyword provider code probably needs to be revised to make sure it\u0027s still producing the exact keyword match (with no search string), as it does if the extension isn\u0027t listening for on-entering-keyword-mode.  I would guess that somewhere we\u0027re skipping that logic.",
+      "range": {
+        "startLine": 742,
+        "startChar": 2,
+        "endLine": 742,
+        "endChar": 24
+      },
+      "revId": "223d3ac169e3ea1729888425d700239b390b91f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
