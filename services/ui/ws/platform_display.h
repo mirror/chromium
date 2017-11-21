@@ -24,6 +24,7 @@ struct TextInputState;
 
 namespace ws {
 
+class Display;
 class FrameGenerator;
 class PlatformDisplayDelegate;
 class PlatformDisplayFactory;

@@ -5,6 +5,7 @@
 #include "services/ui/ws/platform_display.h"
 
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 #include "services/ui/ws/platform_display_default.h"
 #include "services/ui/ws/platform_display_factory.h"
 #include "services/ui/ws/server_window.h"
@@ -25,13 +26,12 @@ std::unique_ptr<PlatformDisplay> PlatformDisplay::Create(
   if (factory_)
     return factory_->CreatePlatformDisplay(root, metrics);
 
-#if defined(OS_ANDROID)
-  return std::make_unique<PlatformDisplayDefault>(root, metrics,
-                                                  nullptr /* image_cursors */);
-#else
-  return std::make_unique<PlatformDisplayDefault>(
-      root, metrics, threaded_image_cursors_factory->CreateCursors());
+  std::unique_ptr<ThreadedImageCursors> cursors;
+#if !defined(OS_ANDROID)
+  cursors = threaded_image_cursors_factory->CreateCursors();
 #endif
+  return std::make_unique<PlatformDisplayDefault>(root, metrics,
+                                                  std::move(cursors));
 }
 
 }  // namespace ws
