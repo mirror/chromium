@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8e88c2e_95bbfded",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T17:08:47Z",
+      "side": 1,
+      "message": "Any reason to DCHECK here and not in Mac?",
+      "revId": "ca5fef75138908c54ed3210dad4b2e9edadae7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
