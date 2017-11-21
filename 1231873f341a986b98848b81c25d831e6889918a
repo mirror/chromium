@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "894bb27d_1fac6175",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T18:10:22Z",
+      "side": 1,
+      "message": "This makes the assumption that every app window will have a first commit callback.  I\u0027d prefer we use a separate bool in the object to indicate that (e.g., handled_first_commit_ or similar).",
+      "revId": "1231873f341a986b98848b81c25d831e6889918a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b509bb7c_fd38524f",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T18:10:22Z",
+      "side": 1,
+      "message": "nit: prefer std::move() over base::ResetAndReturn() for OnceCallbacks.",
+      "revId": "1231873f341a986b98848b81c25d831e6889918a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5458b9b_bf007327",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T18:10:22Z",
+      "side": 1,
+      "message": "We should update the name (and the set method) to reflect that this will be called either when the window is ready to commit or has been closed.  Without reading the subtle comments, it\u0027s very unclear that OnFirstCommitCallback will be called when the window is closed early on.",
+      "revId": "1231873f341a986b98848b81c25d831e6889918a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a94f991_9524db72",
+        "filename": "extensions/browser/app_window/app_window_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T18:10:22Z",
+      "side": 1,
+      "message": "This relies on the assumption that the only cleanup the renderer will do when a window is closed is to dispatch the event, which might not be true.  Is there any harm in dispatching the IPC?",
+      "revId": "1231873f341a986b98848b81c25d831e6889918a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
