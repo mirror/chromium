@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28d8cf3c_d2f4c69f",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:16:51Z",
+      "side": 1,
+      "message": "nit: s/here/by CWVAutofillController",
+      "revId": "b866e79eb9963785e006584ee44fd3627f7d7ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df755ba_25c47465",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:16:51Z",
+      "side": 1,
+      "message": "NSString* const",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "b866e79eb9963785e006584ee44fd3627f7d7ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402bd880_a62dff88",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:16:51Z",
+      "side": 1,
+      "message": "nit: Do you want to improve the formatting with using statement as follows?:\n\nIn global scope:\nusing testing::WaitUntilConditionOrTimeout;\nsuing testing::kWaitForActionTimeout;\n\nHere:\n\nEXPECT_TRUE(WaitUntilConditionOrTimeout(kWaitForActionTimeout, ^{\n  base::RunLoop().RunUntilIdle();\n  return fetch_completion_was_called;\n});\n\nSame question for other places.",
+      "range": {
+        "startLine": 97,
+        "startChar": 23,
+        "endLine": 97,
+        "endChar": 50
+      },
+      "revId": "b866e79eb9963785e006584ee44fd3627f7d7ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd89358_28542111",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:16:51Z",
+      "side": 1,
+      "message": "nit: Do we need this local variable?",
+      "range": {
+        "startLine": 135,
+        "startChar": 5,
+        "endLine": 135,
+        "endChar": 26
+      },
+      "revId": "b866e79eb9963785e006584ee44fd3627f7d7ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2acd2519_4832aa3b",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:16:51Z",
+      "side": 1,
+      "message": "nit: Do we need |success| local variable?",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "b866e79eb9963785e006584ee44fd3627f7d7ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
