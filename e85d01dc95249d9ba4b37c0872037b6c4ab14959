@@ -16,6 +16,24 @@
       "revId": "e85d01dc95249d9ba4b37c0872037b6c4ab14959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6272dfb1_1e8d275b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T02:23:01Z",
+      "side": 1,
+      "message": "In most cases, these are setting up inspected page functions (e.g. makeSimpleXHR) - in that case they should just become NetworkTestRunner.makeSimpleXHR which calls evaluateInPageAnonymously.\n\nI\u0027ll add a note inline.",
+      "parentUuid": "579d7a88_7065da29",
+      "revId": "e85d01dc95249d9ba4b37c0872037b6c4ab14959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
