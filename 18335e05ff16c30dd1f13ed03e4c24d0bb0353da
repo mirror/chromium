@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23fb5c1d_6fae0239",
+        "filename": "content/browser/renderer_host/render_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T00:36:50Z",
+      "side": 1,
+      "message": "#else\nmojo::ReportBadMessage(...)",
+      "revId": "18335e05ff16c30dd1f13ed03e4c24d0bb0353da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741e06fe_599563f3",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T00:36:50Z",
+      "side": 1,
+      "message": "This should be an enum typemapped to base::ThreadPriority.",
+      "range": {
+        "startLine": 44,
+        "startChar": 47,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "18335e05ff16c30dd1f13ed03e4c24d0bb0353da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
