@@ -176,7 +176,8 @@ void OffscreenCanvasResourceProvider::SetTransferableResourceToSharedGPUContext(
     swizzled.reset();
 
     gl->GenMailboxCHROMIUM(frame_resource->mailbox_.name);
-    gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, frame_resource->mailbox_.name);
+    gl->ProduceTextureDirectCHROMIUM(frame_resource->texture_id_,
+                                     frame_resource->mailbox_.name);
   }
 
   const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();

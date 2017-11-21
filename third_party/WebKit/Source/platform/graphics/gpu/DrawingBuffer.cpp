@@ -386,7 +386,6 @@ bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
   // produceSyncToken with that point.
   {
     gl_->ProduceTextureDirectCHROMIUM(color_buffer_for_mailbox->texture_id,
-                                      texture_target_,
                                       color_buffer_for_mailbox->mailbox.name);
     const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
     // It's critical to order the execution of this context's work relative
@@ -751,7 +750,7 @@ bool DrawingBuffer::CopyToPlatformTexture(gpu::gles2::GLES2Interface* dst_gl,
   } else {
     src_gl->GenMailboxCHROMIUM(mailbox.name);
     src_gl->ProduceTextureDirectCHROMIUM(back_color_buffer_->texture_id,
-                                         src_texture_target, mailbox.name);
+                                         mailbox.name);
     const GLuint64 fence_sync = src_gl->InsertFenceSyncCHROMIUM();
     src_gl->OrderingBarrierCHROMIUM();
     src_gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync,
