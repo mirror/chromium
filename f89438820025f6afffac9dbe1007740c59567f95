@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab6627e_b4936bcb",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLInputStream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T18:11:16Z",
+      "side": 1,
+      "message": "We can probably make InsertionPointRecord not a template, which would clean up its call sites. We could either make it explicitly know about the two cases (and then HTMLInputStream might not need the virtual magic), like this:\n\nexplicit InsertionPointRecord(HTMLInputStreamBase* input_stream)\n    : input_stream_(input_stream) {\n  if (input_stream_-\u003eSupports16Bit())\n    Begin(static_cast\u003cHTMLInputStream\u003ctrue\u003e*\u003e(input_stream));\n  else\n    Begin(static_cast\u003cHTMLInputStream\u003cfalse\u003e*\u003e(input_stream));\n}\n\ntemplate \u003cbool supports16bit\u003e\nvoid Begin(HTMLInputStream\u003csupports16Bit\u003e* input_stream) {\n  // SplitInto, SetCurrentPosition, etc.\n}\n\nor push that knowledge into HTMLInputStream, and just store something like this internally (so InsertionPointRecord doesn\u0027t need templates at all):\n\nexplicit InsertionPointRecord(HTMLInputStreamBase* input_stream)\n    : input_stream_(input_stream) {\n  // input_stream_ has access to sufficient members of |this|\n  // to store next_, etc.\n  input_stream_-\u003eBeginInsertionPoint(this);\n}\n\n~InsertionPointRecord() {\n  input_stream_-\u003eEndInsertionPoint(this);\n}\n\n// for exclusive use by HTMLInputStream\ntemplate \u003cbool supports16Bit\u003e SegmentedStringImpl\u003csupports16Bit\u003e\u0026 InitSegmentedString();\n\ntemplate \u003cbool supports16Bit\u003e SegmentedStringImpl\u003csupports16Bit\u003e\u0026 GetSegmentedString();\ntemplate \u003c\u003e SegmentedStringImpl\u003ctrue\u003e\u0026 GetSegmentedString() { return next_16bit_; }\ntemplate \u003c\u003e SegmentedStringImpl\u003cfalse\u003e\u0026 GetSegmentedString() { return next_8bit_; }\n\nunion {\n  SegmentedStringImpl\u003cfalse\u003e next_8bit_;\n  SegmentedStringImpl\u003ctrue\u003e next_16bit_;\n};\n\n// ... in HTMLInputStream ...\n\ntemplate \u003cbool supports16Bit\u003e\nvoid HTMLInputStream\u003csupports16Bit\u003e::BeginInsertionPoint(InsertionPointRecord* record) {\n  record-\u003eline_ \u003d CurrentLine();\n  record-\u003ecolumn_ \u003d CurrentColumn();\n  auto\u0026 next \u003d record-\u003eGetSegmentedString\u003csupports16Bit\u003e();\n  new (\u0026next) SegmentedStringImpl\u003csupports16Bit\u003e();\n  SplitInto(next);\n  // etc.\n}\n\ntemplate \u003cbool supports16Bit\u003e\nvoid HTMLInputStream\u003csupports16Bit\u003e::BeginInsertionPoint(InsertionPointRecord* record) {\n  // etc.\n\n  // explicitly destroy the union member\n  record-\u003eGetSegmentedString\u003csupports16Bit\u003e().~SegmentedStringImpl();\n}\n\nEither of these hides the template from the caller (at the cost of either a branch or a virtual call, depending which way you go), avoiding the need to template the user of InsertionPointRecord.\n\n(I haven\u0027t tested this code, so I may have gotten some of the tricky voodoo wrong. But it does allow us to avoid infecting HTMLParserScriptRunner etc.)",
+      "revId": "f89438820025f6afffac9dbe1007740c59567f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17865a2_97a36f08",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T18:11:16Z",
+      "side": 1,
+      "message": "As you note, you pulled a bunch of stuff into the header here. That\u0027s not necessary, because we could just get make explicit instantiations of the two cases in the source file. (And it\u0027s useful to separate the performance impact from making this easier to inline from that of templating it.)",
+      "revId": "f89438820025f6afffac9dbe1007740c59567f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
