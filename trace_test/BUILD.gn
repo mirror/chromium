@@ -1,0 +1,14 @@
+# gn args must include "is_official_build = true"
+# you can compile this by running
+#  $ ninja -C out/Official trace_test -v
+
+shared_library("trace_test") {
+  sources = [
+    "trace_708990_c1.cc",
+    "trace_708990_c2.cc",
+    "trace_initial.cc",
+  ]
+  deps = [
+    "//base",
+  ]
+}
