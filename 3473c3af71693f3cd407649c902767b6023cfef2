@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "eb57638f_0c9c9dda",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-21T22:00:49Z",
+      "side": 1,
+      "message": "For consideration: Does this need to be an enum class (instead of just an enum)? If so, the naming of the values is now redundant since now all code is required to specify the class name too. So, I\u0027d suggest either making it a non-class enum, or removing the NOTIFY_ prefix from the value names.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf7703e_2f862ac3",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-21T22:00:49Z",
+      "side": 1,
+      "message": "Please put this back as a class member, or name it something more specific like ObserverListPolicy. The reason is that \"enum NotificationType\" appears EVERYWHERE all over the code base, with lots of different declarations: https://cs.chromium.org/search/?q\u003dNotificationType\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 79,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2af9b5e_9f105ae9",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_shim.cc",
         "patchSetId": 8
