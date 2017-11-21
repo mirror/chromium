@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85142008_37c74665",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T06:08:47Z",
+      "side": 1,
+      "message": "When author script runs:\n\n    window.event \u003d \"my own value\";\n\nthen, we\u0027re running this line, storing the author script\u0027s value into this private property.  So, it\u0027s not guaranteed that what is stored in the private property, i.e. |js_event| on line 114.  Sigh.\n\nWhat we can do is:\n\na) V8DOMWrapper::IsWrapper(isolate, js_event)  // Makes sure that |js_event| is a platform object (an object that implements Web IDL interface).\nb) V8Event::ToImplWithTypeCheck(isolate, js_event)  // Converts a platform object to Event*.  May return nullptr if js_event is not an Event.\n\nNote that V8Event::ToImplWithTypeCheck is **NOT** designed to handle an author script\u0027s value.  The API implicitly assumes that the object was created by Blink (thus, it\u0027s a *safe* object).  So, we must first check whether js_event is really a platform object or not.  So, please use V8DOMWrapper::IsWrapper first, and iff the result is true, use V8Event::ToImplWithTypeCheck.\n\n(I hope that you\u0027ll remove this counter sometime soon regardless of whether window.event is not used in V0 shadow tree or is widely used.)",
+      "revId": "2b251420fcdf6f3d701487af6f82fcfbab73247b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
