@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17800191_81774eef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55b32ccb_a9c020c2",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74d4e41c_6e06ce8a",
         "filename": "chrome/browser/notifications/non_persistent_notification_handler.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c94f265_a0297c23",
+        "filename": "chrome/browser/notifications/non_persistent_notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74d4e41c_6e06ce8a",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c225d807_7c3b463a",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "899702bd_45d1e769",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb53d92e_aaf40fd8",
         "filename": "chrome/browser/notifications/notification_handler.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c1d02e_5bef08ea",
+        "filename": "chrome/browser/notifications/notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "Yes. Only constructors and destructors automatically call through to their ancestors.",
+      "parentUuid": "fb53d92e_aaf40fd8",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8a945962_3b02822f",
+        "filename": "chrome/browser/notifications/notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "The virtual method already had an implementation in the header file.",
+      "parentUuid": "80b91b04_2b4a40cf",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0a25756_efd028ea",
         "filename": "chrome/browser/notifications/notification_handler.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88a7258_893e0248",
+        "filename": "chrome/browser/notifications/notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0a25756_efd028ea",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1c021171_d0ac841d",
+        "filename": "chrome/browser/notifications/notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e65d3bf_f20954f6",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "342f1f51_76701d86",
         "filename": "chrome/browser/notifications/notification_handler.h",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5f0c1d8a_22bc6108",
+        "filename": "chrome/browser/notifications/notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342f1f51_76701d86",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9920edf_52ee54d3",
         "filename": "chrome/browser/notifications/persistent_notification_handler.cc",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3447eb02_7fe4a096",
+        "filename": "chrome/browser/notifications/persistent_notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "I\u0027d rather do that in a follow-up. The delegate does forward the call to OnPersistentNotificationClose() and we have another check in the //content code, so I\u0027d like to get a better understanding of where we are beforehand.",
+      "parentUuid": "d9920edf_52ee54d3",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +340,30 @@
     },
     {
       "key": {
+        "uuid": "f85b3739_b0e4db7b",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "I haven\u0027t got a clue. Removed.",
+      "parentUuid": "514bfd41_78f6a566",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 78
+      },
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97a1bb1d_5e0bb61a",
         "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
         "patchSetId": 3
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "f1a90001_74677df6",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "I\u0027ve added a line to the header, but don\u0027t think it\u0027s useful here. The reader should familiarize themselves with run loops, which is super useful knowledge in this project :).",
+      "parentUuid": "97a1bb1d_5e0bb61a",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42e38992_51064658",
         "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
         "patchSetId": 3
@@ -209,6 +413,24 @@
       "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a149ab1_db94f823",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42e38992_51064658",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +454,30 @@
       "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566d4844_19d36f0d",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T14:54:27Z",
+      "side": 1,
+      "message": "That\u0027s just the way how this code has been written - DoDispatchNotification{Click,Close} event are the success case, the second callback is the failure case. We only invoke the callback once.",
+      "parentUuid": "d04ab1b6_4b31f47f",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 80
+      },
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
