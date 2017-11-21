@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1734b1da_eb04b134",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/workers-on-navigation-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T00:47:47Z",
+      "side": 1,
+      "message": "This line moved b/c page reloaded is now called earlier in the navigation lifecycle.",
+      "revId": "e6b3c7e496fd77b65d7f16bc3448c81415f48c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "145a36a8_68d304be",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/workers-on-navigation.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T00:47:47Z",
+      "side": 1,
+      "message": "See below. On second thought, I think we should just do this automatically before starting a test like we did in the old test framework.\n\n/**\n * This monkey patches console functions in DevTools context so the console\n * messages are shown in the right places, instead of having all of the console\n * messages printed at the top of the test expectation file (default behavior).\n */\nTestRunner.printDevToolsConsole \u003d function() {\n  console.log \u003d TestRunner._consoleOutputHook.bind(TestRunner, \u0027log\u0027);\n  console.error \u003d TestRunner._consoleOutputHook.bind(TestRunner, \u0027error\u0027);\n  console.info \u003d TestRunner._consoleOutputHook.bind(TestRunner, \u0027info\u0027);\n};",
+      "parentUuid": "78afa85b_6befb842",
+      "revId": "c1530f1ab40d1c0c1a28abc6637522ae093f1c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a026a691_ca6495de",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/workers-on-navigation.js",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2017-11-20T17:15:09Z",
       "side": 1,
       "message": "What??",
+      "revId": "c1530f1ab40d1c0c1a28abc6637522ae093f1c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07b7967_740fe133",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/workers-on-navigation.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T00:47:47Z",
+      "side": 1,
+      "message": "My bad! I was debugging and forgot to delete this.",
+      "parentUuid": "a026a691_ca6495de",
       "revId": "c1530f1ab40d1c0c1a28abc6637522ae093f1c94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +120,24 @@
       "revId": "c1530f1ab40d1c0c1a28abc6637522ae093f1c94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a66356b_3d2a922d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/workers-on-navigation.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T00:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d8f080_714c78dc",
+      "revId": "c1530f1ab40d1c0c1a28abc6637522ae093f1c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
