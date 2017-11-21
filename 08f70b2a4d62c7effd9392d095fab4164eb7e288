@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29745b21_299aa568",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "We can do that using perfect forwarding, and std::forward / std::move has no runtime cost. It might be less useful now that these are no longer free functions.",
+      "parentUuid": "22af4407_cff1f07a",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7d3cc73_52aaffae",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f82f5b_e70fad6c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7d3cc73_52aaffae",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "cec63de0_05e284e4",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "I debated a little about it. Since the callbacks aren\u0027t related to DialMediaSinkService, it might make sense to let those callbacks go through if they outlive DialMediaSinkService. OTOH, if DialMediaSinkService is no longer valid, perhaps this means the results are no longer valid either. I changed it so the callback is bound to DMSS\u0027s WeakPtr.",
+      "parentUuid": "86874694_492d4385",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675eb480_f74d1a1b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "07e3e896_670a52b8",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "No requirement other than the constructor (which accesses BrowserContext) needs to run on UI thread, but that should be quite obvious. I can replace the checks with SequenceChecker.",
+      "parentUuid": "675eb480_f74d1a1b",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86866422_18e8c48c",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-21T01:23:45Z",
       "side": 1,
       "message": "Under what circumstances do we expect Start() to be called multiple times?  Won\u0027t this early-exit confuse callers, since the second and subsequent pairs of callbacks won\u0027t get invoked?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693dc1fb_2bdbd1e0",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "The contract states subsequent Start() calls are no-op. It is only expected to be called once by MediaRouterDesktop.",
+      "parentUuid": "86866422_18e8c48c",
       "range": {
         "startLine": 52,
         "startChar": 0,
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "16bc061a_7f5b6f54",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "If in-browser DIAL is on but in-browser Cast is not, then there would not be a dual discovery callback.",
+      "parentUuid": "665bb06b_cafafd8e",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbb9c0a_d1f026cf",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -139,6 +271,24 @@
       "writtenOn": "2017-11-20T17:39:57Z",
       "side": 1,
       "message": "Is there a reason to create the implementation lazily?\n\nIt seems like this would be simpler to implement by passing the callbacks in the ctor to set everything up, and just calling Start() to post a task to start the implementation.\n\nYou\u0027d need to have some state reflecting whether the impl_ successfully started to check in the rest of the API before posting additional tasks, so maybe it doesn\u0027t buy you as much as I thought at first.\n\nOr are different callbacks needed to be passed each time it\u0027s started?",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509e3c61_dd02bfc6",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "It could go either way. The advantage of creating impl_ lazily is you can also use it to check if Start() has already been called. Start() can only be called once.",
+      "parentUuid": "0cbb9c0a_d1f026cf",
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -159,6 +309,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c680cb_c3ea2364",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "This will always succeed.",
+      "parentUuid": "b49c0a3e_e396570e",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "c568733f_e9338fff",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "I removed Stop() from both Service and ServiceImpl classes and moved the logic to dtor.",
+      "parentUuid": "f3873a93_49061820",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19831fad_9615e435",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -211,6 +397,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf8484d_e1c91f0e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Yeah, Start() always succeeds.",
+      "parentUuid": "19831fad_9615e435",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +435,24 @@
     },
     {
       "key": {
+        "uuid": "9b4cc4a4_e3f52a49",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "bbbf70ff_ed3a6ed9",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09cd31b4_ba6c8235",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 8
@@ -242,6 +464,24 @@
       "writtenOn": "2017-11-20T17:39:57Z",
       "side": 1,
       "message": "Do you think we can eventually remove the dependency on content::BrowserContext (and thus the UI thread)?   Maybe a NOTE/TODO here explaining the situation / path forward?",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ec40bc_20f0b502",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "It isn\u0027t clear if we can get a URLRequestContextGetter independent of a BrowserContext. Regardless, what we can do in the future is to pass scoped_refptr\u003cURLRequestContextGetter\u003e across threads to here if we want to move this out of UI thread. This is in fact what we currently do in DialMediaSinkServiceImpl, so more likely scenario is that this class will be gone if we want to have Cast MRP run outside of UI thread.\n\nWith network servicification down the road, it seems network operations will run in its own sandboxed process, so the picture w.r.t. BrowserContext might look a bit different. We may also no longer need to manage as many thread hops since some stuff will be moved out of IO thread.",
+      "parentUuid": "09cd31b4_ba6c8235",
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -265,6 +505,24 @@
     },
     {
       "key": {
+        "uuid": "48ebb439_88d10d79",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Yep. The first callback is for ProvideSinks to the extension, and the second is for dual discovery.",
+      "parentUuid": "15309faa_05fddc43",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9eda022_00430491",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 8
@@ -282,6 +540,24 @@
     },
     {
       "key": {
+        "uuid": "1af4a55a_2c0049dd",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9eda022_00430491",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c99c727_4776aa4c",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 8
@@ -293,6 +569,24 @@
       "writtenOn": "2017-11-20T17:39:57Z",
       "side": 1,
       "message": "I know we force discovery on a user gesture (opening the dialog).\nIs there a need for both of these methods in the API?",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889c3e5f_57b959c5",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Force discovery callback is slightly different -- it\u0027s to send sinks back to the extension when it is brought back up, to ensure the extension state is synced up with MR.",
+      "parentUuid": "0c99c727_4776aa4c",
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -316,6 +610,24 @@
     },
     {
       "key": {
+        "uuid": "1a38883e_0858f483",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943055ca_0697cb3e",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86179e81_ddac399f",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
         "patchSetId": 8
@@ -330,6 +642,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d10ccb_254f812e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "There shouldn\u0027t be any problem if we pass in the SequencedTaskRunner to use from DialMediaSinkService.",
+      "parentUuid": "86179e81_ddac399f",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -350,6 +680,24 @@
     },
     {
       "key": {
+        "uuid": "4c362877_fe1d8feb",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d169972_240e7f75",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4489c6fa_a2ee47de",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
         "patchSetId": 8
@@ -364,6 +712,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081e9257_9667f869",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "What I can do is to invoke this cb in the mock impl to test that the thread hopping is done correctly.",
+      "parentUuid": "4489c6fa_a2ee47de",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -384,6 +750,24 @@
     },
     {
       "key": {
+        "uuid": "d89ec42c_fb0f9941",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "I tried doing this, but don\u0027t think that\u0027s possible with lambdas. You have to capture |this| to access member variables, or extract it from |this| before passing it to the capture list.",
+      "parentUuid": "fb1787dc_b9009f6f",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c6f63b1_493aabbf",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
         "patchSetId": 8
@@ -398,6 +782,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d68f85_8f8815a2",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6f63b1_493aabbf",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -424,6 +826,30 @@
     },
     {
       "key": {
+        "uuid": "6fb63525_6362b9e3",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Moved function into class method and bound with WeakPtr.",
+      "parentUuid": "fb30ecfd_957ce6f1",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c792743_450d25d6",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 8
@@ -438,6 +864,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81832c9b_2576f158",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c792743_450d25d6",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -476,6 +920,24 @@
     },
     {
       "key": {
+        "uuid": "652c0d2a_43dbbeb5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Yes it\u0027s possible to optimize this as mentioned in the patch description. But I decided not to do this because (1) I don\u0027t want to assume that DMSSImpl and CMSSImpl run on the same sequence (which is true, due to IO thread restrictions) and (2) for consistency with OnSinksDiscoveredCallback so it\u0027s easier to understand by not having to pass in 2 callbacks that run on different sequences.",
+      "parentUuid": "2828f3b1_6bf69518",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f88fab3a_09da3b72",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
         "patchSetId": 8
@@ -487,6 +949,30 @@
       "writtenOn": "2017-11-21T01:23:45Z",
       "side": 1,
       "message": "Why is it desirable to no-op if already started? What happens if we re-start with a different callback, then?",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53017536_cefa207d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Because it only makes sense to only start it once (i.e. when MediaRouter is started up). Would you like me to add a DCHECK to assert this?",
+      "parentUuid": "f88fab3a_09da3b72",
       "range": {
         "startLine": 43,
         "startChar": 33,
@@ -522,6 +1008,30 @@
     },
     {
       "key": {
+        "uuid": "e8b13fe6_48bb8c67",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "014f273c_30e87138",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab6b0043_6b2b5d61",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
         "patchSetId": 8
@@ -533,6 +1043,24 @@
       "writtenOn": "2017-11-20T17:39:57Z",
       "side": 1,
       "message": "This should always be set in the ctor?",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36e9da5_6190493f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Yep, I got rid of the other ctor that didn\u0027t set it.",
+      "parentUuid": "ab6b0043_6b2b5d61",
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -556,6 +1084,24 @@
     },
     {
       "key": {
+        "uuid": "318b1d73_bc2781eb",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "It\u0027s used in net_log below, but my understanding is that it is temporary (see .h file)",
+      "parentUuid": "136daeb5_539ef639",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1687829a_3cb3954d",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 8
@@ -567,6 +1113,30 @@
       "writtenOn": "2017-11-21T01:23:45Z",
       "side": 1,
       "message": "nit: Why quantize to 100ms granularity? Is this just to avoid inadvertently triggering high-precision timers?",
+      "range": {
+        "startLine": 283,
+        "startChar": 40,
+        "endLine": 283,
+        "endChar": 66
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffa8c29_9ab7c22e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "No particular reason that I can think of. Bin may know why, but she\u0027s OOO currently.",
+      "parentUuid": "1687829a_3cb3954d",
       "range": {
         "startLine": 283,
         "startChar": 40,
@@ -602,6 +1172,30 @@
     },
     {
       "key": {
+        "uuid": "4e54c3bf_26bc5f64",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "task_runner() is the only method that can run on any thread. Since that is already called out specifically, I can change this to say all methods.",
+      "parentUuid": "bed4bf95_ab2e7172",
+      "range": {
+        "startLine": 322,
+        "startChar": 29,
+        "endLine": 322,
+        "endChar": 58
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53775ee2_5ba027c7",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 8
@@ -619,6 +1213,24 @@
     },
     {
       "key": {
+        "uuid": "d5548b10_c77e8bce",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "53775ee2_5ba027c7",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "080e454f_3e993d45",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
         "patchSetId": 8
@@ -633,6 +1245,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fff6008_6389ed6d",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "080e454f_3e993d45",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -659,6 +1289,30 @@
     },
     {
       "key": {
+        "uuid": "3f8fb0b4_368b69fe",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f82b7ed3_03dde2e0",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81c6781c_9a8f0431",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
         "patchSetId": 8
@@ -682,6 +1336,30 @@
     },
     {
       "key": {
+        "uuid": "8464b453_e1a6c331",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "s/when/with",
+      "parentUuid": "81c6781c_9a8f0431",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "523ed05e_96ae6c53",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
         "patchSetId": 8
@@ -696,6 +1374,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394009ff_7d9469ac",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "523ed05e_96ae6c53",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -716,6 +1412,24 @@
     },
     {
       "key": {
+        "uuid": "1bed8eb6_d0749280",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "I got rid of it since it\u0027s only called on subclass dtors, and destroying this object has the same effect.",
+      "parentUuid": "1827a348_83804d6d",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa34d20a_8c6bfb01",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
         "patchSetId": 8
@@ -730,6 +1444,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de495ec_0a06b533",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa34d20a_8c6bfb01",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -750,6 +1482,24 @@
     },
     {
       "key": {
+        "uuid": "054711eb_5290cf32",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f655ba8_c89e4b7d",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bdc7391_85a69fb0",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
         "patchSetId": 8
@@ -764,6 +1514,24 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09be8421_101b2d81",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bdc7391_85a69fb0",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -802,6 +1570,24 @@
     },
     {
       "key": {
+        "uuid": "a8c2c703_9fcbd0c4",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done on comment.\n\nLet\u0027s call this variable discovery_timer_?",
+      "parentUuid": "a4d9d763_a89d30c2",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e7fd072_f8208365",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
         "patchSetId": 8
@@ -825,6 +1611,30 @@
     },
     {
       "key": {
+        "uuid": "c60c8452_62723ddd",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e7fd072_f8208365",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 2
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ebe7845_772f8d73",
         "filename": "components/cast_channel/cast_socket_service.cc",
         "patchSetId": 8
@@ -836,6 +1646,30 @@
       "writtenOn": "2017-11-21T01:23:45Z",
       "side": 1,
       "message": "If this is leaked then can we just use a static here, e.g:\n\nCastSocketService::GetInstance() {\n  static CastSocketService* instance \u003d new CastSocketService;\n  return instance;\n}",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 79
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05dff268_7337f0a5",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done. This should be thread safe in C++11.",
+      "parentUuid": "8ebe7845_772f8d73",
       "range": {
         "startLine": 35,
         "startChar": 0,
@@ -871,6 +1705,30 @@
     },
     {
       "key": {
+        "uuid": "85631f01_2b351391",
+        "filename": "components/cast_channel/cast_socket_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "An alternative is to expose a set of public thread safe methods that post task to the actual method to |task_runner_|. Both ways are valid but I chose this way so we don\u0027t have to define 2 versions of each method. Given that only 2 places use this I think it is not a big deal.",
+      "parentUuid": "2cb7cc21_79633112",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 3
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "105e18fc_c8012fad",
         "filename": "components/cast_channel/cast_socket_service.h",
         "patchSetId": 8
@@ -891,6 +1749,30 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d221905_b6169f82",
+        "filename": "components/cast_channel/cast_socket_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "105e18fc_c8012fad",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -917,6 +1799,30 @@
     },
     {
       "key": {
+        "uuid": "0d6eae63_de5d96f3",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "I think so, if the browser shuts down without the listener being removed first, then observer_ will be non-null here.",
+      "parentUuid": "7ac351d4_04e6e64a",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37af24db_e12dc96c",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 8
@@ -937,6 +1843,30 @@
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f831ea60_8eae6991",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T22:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37af24db_e12dc96c",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 11
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
