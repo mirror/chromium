@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b72c5cf6_48da9fbb",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T22:53:41Z",
+      "side": 1,
+      "message": "holte: I could remove this function if source_url_recorder.h exposes a method to get the SourceId from a WebContents. WDYT? Or is there a nicer way of getting the SourceId I haven\u0027t found?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 3
+      },
+      "revId": "53098c6c8452b17e1e2a088b21988a78749ad40e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
