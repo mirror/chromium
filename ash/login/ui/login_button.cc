@@ -28,8 +28,7 @@ LoginButton::LoginButton(views::ButtonListener* listener)
     : views::ImageButton(listener) {
   SetImageAlignment(views::ImageButton::ALIGN_CENTER,
                     views::ImageButton::ALIGN_MIDDLE);
-  SetFocusPainter(views::Painter::CreateSolidFocusPainter(
-      kFocusBorderColor, kFocusBorderThickness, gfx::InsetsF()));
+  SetFocusPainter(views::Painter::CreateSolidFocusPainter(kFocusBorderColor));
   SetInkDropMode(InkDropHostView::InkDropMode::ON);
   set_has_ink_drop_action_on_click(true);
 }

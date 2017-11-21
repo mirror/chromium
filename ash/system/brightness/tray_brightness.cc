@@ -116,6 +116,7 @@ BrightnessView::BrightnessView(bool default_view, double initial_percent)
     SetVisible(Shell::Get()
                    ->tablet_mode_controller()
                    ->IsTabletModeWindowManagerEnabled());
+    SetVisible(true);
   }
   tri_view->SetContainerVisible(TriView::Container::END, false);
 }

@@ -132,6 +132,7 @@ VolumeView::VolumeView(SystemTrayItem* owner,
   slider_->SetValue(CrasAudioHandler::Get()->GetOutputVolumePercent() / 100.0f);
   slider_->SetAccessibleName(
       l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_VOLUME));
+  slider_->SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
   tri_view_->AddView(TriView::Container::CENTER, slider_);
 
   SetBackground(views::CreateThemedSolidBackground(

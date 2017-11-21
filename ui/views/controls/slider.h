@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
+#include "ui/views/painter.h"
 #include "ui/views/view.h"
 #include "ui/views/views_export.h"
 
@@ -58,6 +59,8 @@ class VIEWS_EXPORT Slider : public View, public gfx::AnimationDelegate {
   void set_enable_accessibility_events(bool enabled) {
     accessibility_events_enabled_ = enabled;
   }
+
+  void SetFocusPainter(std::unique_ptr<Painter> focus_painter);
 
   // Update UI based on control on/off state.
   void UpdateState(bool control_on);
@@ -134,6 +137,8 @@ class VIEWS_EXPORT Slider : public View, public gfx::AnimationDelegate {
   float thumb_highlight_radius_ = 0.f;
 
   gfx::SlideAnimation highlight_animation_;
+
+  std::unique_ptr<Painter> focus_painter_;
 
   DISALLOW_COPY_AND_ASSIGN(Slider);
 };
