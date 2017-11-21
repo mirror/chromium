@@ -710,17 +710,14 @@ void PersonalDataManagerAndroid::StartAddressNormalization(
     JNIEnv* env,
     const JavaParamRef<jobject>& unused_obj,
     const JavaParamRef<jobject>& jprofile,
-    const JavaParamRef<jstring>& jregion_code,
     jint jtimeout_seconds,
     const JavaParamRef<jobject>& jdelegate) {
-  const std::string region_code = ConvertJavaStringToUTF8(env, jregion_code);
-
   AutofillProfile profile;
   PopulateNativeProfileFromJava(jprofile, env, &profile);
 
   // Start the normalization.
   address_normalizer_.NormalizeAddressAsync(
-      profile, region_code, jtimeout_seconds,
+      profile, jtimeout_seconds,
       base::BindOnce(&OnAddressNormalized,
                      ScopedJavaGlobalRef<jobject>(jdelegate)));
 }

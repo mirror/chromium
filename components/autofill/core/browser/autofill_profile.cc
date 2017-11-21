@@ -25,6 +25,7 @@
 #include "components/autofill/core/browser/address.h"
 #include "components/autofill/core/browser/address_i18n.h"
 #include "components/autofill/core/browser/autofill_country.h"
+#include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/autofill_field.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
 #include "components/autofill/core/browser/autofill_profile_comparator.h"
@@ -611,15 +612,14 @@ base::string16 AutofillProfile::ConstructInferredLabel(
   base::string16 separator =
       l10n_util::GetStringUTF16(IDS_AUTOFILL_ADDRESS_SUMMARY_SEPARATOR);
 
-  AutofillType region_code_type(HTML_TYPE_COUNTRY_CODE, HTML_MODE_NONE);
-  const base::string16& profile_region_code =
-      GetInfo(region_code_type, app_locale);
-  std::string address_region_code = UTF16ToUTF8(profile_region_code);
+  const std::string address_region_code =
+      data_util::GetCountryCodeWithFallback(*this, app_locale);
 
   // A copy of |this| pruned down to contain only data for the address fields in
   // |included_fields|.
   AutofillProfile trimmed_profile(guid(), origin());
-  trimmed_profile.SetInfo(region_code_type, profile_region_code, app_locale);
+  trimmed_profile.SetInfo(AutofillType(HTML_TYPE_COUNTRY_CODE, HTML_MODE_NONE),
+                          base::UTF8ToUTF16(address_region_code), app_locale);
   trimmed_profile.set_language_code(language_code());
 
   std::vector<ServerFieldType> remaining_fields;

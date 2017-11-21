@@ -298,17 +298,16 @@ class PersonalDataManagerAndroid : public PersonalDataManagerObserver {
       const base::android::JavaParamRef<jobject>& unused_obj,
       const base::android::JavaParamRef<jstring>& region_code);
 
-  // Normalizes the address of the |jprofile| synchronously if the
-  // |jregion_code| rules have finished loading. Otherwise sets up the task to
-  // start the address normalization when the rules have finished loading. Also
-  // defines a time limit for the normalization, in which case the the
-  // |jdelegate| will be notified. If the rules are loaded before the timeout,
-  // |jdelegate| will receive the normalized profile.
+  // Normalizes the address of the |jprofile| synchronously if the region rules
+  // have finished loading. Otherwise sets up the task to start the address
+  // normalization when the rules have finished loading. Also defines a time
+  // limit for the normalization, in which case the the |jdelegate| will be
+  // notified. If the rules are loaded before the timeout, |jdelegate| will
+  // receive the normalized profile.
   void StartAddressNormalization(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& unused_obj,
       const base::android::JavaParamRef<jobject>& jprofile,
-      const base::android::JavaParamRef<jstring>& jregion_code,
       jint jtimeout_seconds,
       const base::android::JavaParamRef<jobject>& jdelegate);
 
