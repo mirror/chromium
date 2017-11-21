@@ -318,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "17fce0e7_dd07bc2c",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-21T10:19:17Z",
+      "side": 1,
+      "message": "I don\u0027t see it, and when I copy/paste the string and pipe it to wc (word-count), I get just the number of characters that I see on the screen. Where and how do you see the square?",
+      "parentUuid": "eb750a09_376c769c",
+      "range": {
+        "startLine": 413,
+        "startChar": 59,
+        "endLine": 413,
+        "endChar": 60
+      },
+      "revId": "e65ebea3309ef3e64dd87abe6527974136b03864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9bc828_b8b974a0",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 14
