@@ -284,7 +284,8 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
   // Attempt to replace some or all of the quads of the root render pass with
   // overlays.
   overlay_processor_->ProcessForOverlays(
-      resource_provider_, render_passes_in_draw_order, render_pass_filters_,
+      resource_provider_, render_passes_in_draw_order,
+      output_surface_->color_matrix(), render_pass_filters_,
       render_pass_background_filters_, &current_frame()->overlay_list,
       &current_frame()->ca_layer_overlay_list,
       &current_frame()->dc_layer_overlay_list,
@@ -333,6 +334,11 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
   render_pass_background_filters_.clear();
 
   current_frame_valid_ = false;
+}
+
+void DirectRenderer::SetOutputSurfaceColorMatrixForTesting(
+    const SkMatrix44& matrix) {
+  output_surface_->set_color_matrix(matrix);
 }
 
 gfx::Rect DirectRenderer::DeviceViewportRectInDrawSpace() const {

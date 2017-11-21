@@ -906,6 +906,32 @@ TEST_F(GLRendererPixelTest, SolidColorBlend) {
       cc::FuzzyPixelOffByOneComparator(true)));
 }
 
+TEST_F(GLRendererPixelTest, SolidColorWithTemperature) {
+  gfx::Rect rect(this->device_viewport_size_);
+
+  int id = 1;
+  std::unique_ptr<RenderPass> pass = CreateTestRootRenderPass(id, rect);
+
+  SharedQuadState* shared_state =
+      CreateTestSharedQuadState(gfx::Transform(), rect, pass.get());
+
+  auto* color_quad = pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  color_quad->SetNew(shared_state, rect, rect, SK_ColorYELLOW, false);
+
+  RenderPassList pass_list;
+  pass_list.push_back(std::move(pass));
+
+  SkMatrix44 color_matrix(SkMatrix44::kIdentity_Constructor);
+  color_matrix.set(0, 0, 0.7f);
+  color_matrix.set(1, 1, 0.4f);
+  color_matrix.set(2, 2, 0.5f);
+  this->renderer()->SetOutputSurfaceColorMatrixForTesting(color_matrix);
+
+  EXPECT_TRUE(this->RunPixelTest(
+      &pass_list, base::FilePath(FILE_PATH_LITERAL("temperature_brown.png")),
+      cc::FuzzyPixelOffByOneComparator(true)));
+}
+
 TEST_F(GLRendererPixelTest,
        PremultipliedTextureWithBackgroundAndVertexOpacity) {
   gfx::Rect rect(this->device_viewport_size_);
