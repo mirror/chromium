@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45813f5a_cdd26600",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-21T03:52:15Z",
+      "side": 1,
+      "message": "nit: Please remove extra space between parentheses (just before \"100vw\").",
+      "range": {
+        "startLine": 183,
+        "startChar": 40,
+        "endLine": 183,
+        "endChar": 41
+      },
+      "revId": "5774d0f174db9a84384fff3405ae02d185e3f32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12f6b51_346009c4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-21T03:52:15Z",
+      "side": 1,
+      "message": "Did you mean to subtract instead of add here?",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 19
+      },
+      "revId": "5774d0f174db9a84384fff3405ae02d185e3f32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
