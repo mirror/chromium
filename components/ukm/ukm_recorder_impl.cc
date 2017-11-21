@@ -10,6 +10,7 @@
 #include "base/metrics/metrics_hashes.h"
 #include "base/strings/string_split.h"
 #include "components/ukm/ukm_source.h"
+#include "services/metrics/public/cpp/ukm_source_id.h"
 #include "third_party/metrics_proto/ukm/entry.pb.h"
 #include "third_party/metrics_proto/ukm/report.pb.h"
 #include "third_party/metrics_proto/ukm/source.pb.h"
@@ -23,6 +24,12 @@ namespace {
 std::string GetWhitelistEntries() {
   return base::GetFieldTrialParamValueByFeature(kUkmFeature,
                                                 "WhitelistEntries");
+}
+
+// Whether the source_id (and its associated URLs) are allowed to be recorded.
+bool IsWhitelistedSourceId(ukm::SourceId source_id) {
+  return (static_cast<int64_t>(source_id) &
+          static_cast<int64_t>(SourceIdType::NAVIGATION_ID)) != 0;
 }
 
 // Gets the maximum number of Sources we'll keep in memory before discarding any
@@ -126,6 +133,11 @@ void UkmRecorderImpl::UpdateSourceURL(ukm::SourceId source_id,
 
   if (!recording_enabled_) {
     RecordDroppedSource(DroppedDataReason::RECORDING_DISABLED);
+    return;
+  }
+
+  if (!IsWhitelistedSourceId(source_id)) {
+    RecordDroppedSource(DroppedDataReason::NOT_WHITELISTED);
     return;
   }
 
