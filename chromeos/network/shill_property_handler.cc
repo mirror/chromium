@@ -229,6 +229,15 @@ void ShillPropertyHandler::SetWakeOnLanEnabled(bool enabled) {
                  network_handler::ErrorCallback()));
 }
 
+void ShillPropertyHandler::SetHostname(const std::string& hostname) {
+  base::Value value(hostname);
+  shill_manager_->SetProperty(
+      shill::kHostNameProperty, value, base::Bind(&base::DoNothing),
+      base::Bind(&network_handler::ShillErrorCallbackFunction,
+                 "SetHostname Failed", "Manager",
+                 network_handler::ErrorCallback()));
+}
+
 void ShillPropertyHandler::SetNetworkThrottlingStatus(
     bool throttling_enabled,
     uint32_t upload_rate_kbits,
