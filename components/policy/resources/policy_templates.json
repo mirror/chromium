@@ -10605,6 +10605,54 @@
       If the policy is not configured, the user will be able to change this setting.
       '''
     },
+    {
+      'name': 'IsolateOrigins',
+      'type': 'string',
+      'schema': { 'type': 'string' },
+      'supported_on': ['chrome.*:64-', 'chrome_os:64-'],
+      'features': {
+        'dynamic_refresh': False,
+        'per_profile': False,
+      },
+      'example_value': 'https://example.com/,https://othersite.org/',
+      'id': 396,
+      'caption': '''Enable Site Isolation for specified origins''',
+      'tags': ['system-security'],
+      'desc': '''
+      NOTE: This policy is experimental and may break functionality!
+      If the policy is enabled, each of the named origins in a
+      comma-separated list will run in its own process. This will also isolate
+      origins named by subdomains; e.g. specifying https://example.com/ will
+      also cause https://foo.example.com/ to be isolated as part of the
+      https://example.com/ site.
+      If the policy is disabled, the pre-Site Isolation process management logic will take effect.
+      If the policy is not configured, the user will be able to change this setting.
+      ''',
+    },
+    {
+      'name': 'SitePerProcess',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome.*:64-', 'chrome_os:64-'],
+      'features': {
+        'dynamic_refresh': False,
+        'per_profile': False,
+      },
+      'example_value': True,
+      'id': 397,
+      'caption': '''Enable Site Isolation for every site''',
+      'tags': ['system-security'],
+      'desc': '''
+      NOTE: This policy is experimental and may break functionality!
+      You might want to look at the IsolateOrigins policy setting to get the
+      best of both worlds, isolation and compatibility, by using IsolateOrigins
+      with a list of the sites you want to isolate. This setting,
+      SitePerProcess, isolates all sites.
+      If the policy is enabled, each site will run in its own process.
+      If the policy is disabled, the pre-Site Isolation process management logic will take effect.
+      If the policy is not configured, the user will be able to change this setting.
+      ''',
+    },
   ],
   'messages': {
     # Messages that are not associated to any policies.

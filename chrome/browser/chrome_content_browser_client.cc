@@ -145,6 +145,7 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/content_settings/core/common/content_settings_utils.h"
+#include "components/content_settings/core/common/pref_names.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/dom_distiller/core/url_constants.h"
 #include "components/error_page/common/error_page_switches.h"
@@ -159,6 +160,7 @@
 #include "components/password_manager/content/browser/content_password_manager_driver_factory.h"
 #include "components/patch_service/public/interfaces/constants.mojom.h"
 #include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/rappor/public/rappor_utils.h"
@@ -865,11 +867,19 @@ ChromeContentBrowserClient::~ChromeContentBrowserClient() {
 }
 
 // static
+void ChromeContentBrowserClient::RegisterLocalStatePrefs(
+    PrefRegistrySimple* registry) {
+  registry->RegisterStringPref(prefs::kIsolateOrigins, std::string());
+  registry->RegisterBooleanPref(prefs::kSitePerProcess, false);
+}
+
+// static
 void ChromeContentBrowserClient::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   registry->RegisterBooleanPref(prefs::kDisable3DAPIs, false);
   registry->RegisterBooleanPref(prefs::kEnableHyperlinkAuditing, true);
   registry->RegisterListPref(prefs::kEnableDeprecatedWebPlatformFeatures);
+  registry->RegisterStringPref(prefs::kIsolateOrigins, std::string());
 }
 
 // static
@@ -1712,13 +1722,15 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       InstantService* instant_service =
           InstantServiceFactory::GetForProfile(profile);
       if (instant_service &&
-          instant_service->IsInstantProcess(process->GetID()))
+          instant_service->IsInstantProcess(process->GetID())) {
         command_line->AppendSwitch(switches::kInstantProcess);
+      }
 
       if (prefs->HasPrefPath(prefs::kAllowDinosaurEasterEgg) &&
-          !prefs->GetBoolean(prefs::kAllowDinosaurEasterEgg))
+          !prefs->GetBoolean(prefs::kAllowDinosaurEasterEgg)) {
         command_line->AppendSwitch(
             error_page::switches::kDisableDinosaurEasterEgg);
+      }
     }
 
     if (IsAutoReloadEnabled())
@@ -1810,6 +1822,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kForcePNaClSubzero,
 #endif
       switches::kForceUIDirection,
+      switches::kIsolateOrigins,
       switches::kJavaScriptHarmony,
       switches::kOriginTrialDisabledFeatures,
       switches::kOriginTrialDisabledTokens,
@@ -1821,6 +1834,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kProfilingFile,
       switches::kProfilingFlush,
       switches::kReaderModeHeuristics,
+      switches::kSitePerProcess,
       switches::kUnsafelyTreatInsecureOriginAsSecure,
       translate::switches::kTranslateSecurityOrigin,
     };
