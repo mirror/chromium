@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1d68206_a6cded5f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f90051_80ed155b",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fc28777_18762ee6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T07:54:10Z",
       "side": 1,
       "message": "{ and } should be also excluded",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a0b275_4f9f9145",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T08:26:32Z",
+      "side": 1,
+      "message": "This comes from tspecials in RFC2045 which doesn\u0027t include {}.",
+      "parentUuid": "5fc28777_18762ee6",
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "e5f9d3d1_7ecf6d35",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da43089e_0c5c8964",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efb595bc_11ef110e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "092f0649_691887c5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb595bc_11ef110e",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3479e0dc_6e1d6ef4",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -101,6 +173,24 @@
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7cbb0d_21964b0b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3479e0dc_6e1d6ef4",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +258,24 @@
     },
     {
       "key": {
+        "uuid": "33933055_3d02fb7c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T08:26:32Z",
+      "side": 1,
+      "message": "RFC2045 derives from RFC822 (https://www.ietf.org/rfc/rfc0822.txt).\n\nSee 3.1.4.  STRUCTURED FIELD BODIES: \"To aid in the creation and reading of structured  fields,  the free  insertion   of linear-white-space (which permits folding by inclusion of CRLFs)  is  allowed  between  lexical  tokens.\"",
+      "parentUuid": "9179cc66_5e668456",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe0c3c9b_9b1c8b54",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -182,6 +290,24 @@
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9a3604_b282c4c4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0c3c9b_9b1c8b54",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -216,6 +342,24 @@
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784553ae_3e3a9aab",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T08:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e65b763d_81f5bc6e",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
