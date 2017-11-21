@@ -25,6 +25,7 @@
 #include "chrome/browser/ui/views/frame/system_menu_model_builder.h"
 #include "chrome/browser/ui/views/frame/top_container_view.h"
 #include "chrome/common/chrome_switches.h"
+#include "content/public/common/content_features.h"
 #include "ui/base/hit_test.h"
 #include "ui/events/event_handler.h"
 #include "ui/gfx/font_list.h"
@@ -98,7 +99,10 @@ void BrowserFrame::InitBrowserFrame() {
   }
 
 #if defined(OS_LINUX)
-  browser_command_handler_.reset(new BrowserCommandHandlerLinux(browser_view_));
+  // If extended mouse buttons are supported handle them in the renderer.
+  if (!base::FeatureList::IsEnabled(features::kExtendedMouseButtons))
+    browser_command_handler_.reset(
+        new BrowserCommandHandlerLinux(browser_view_));
 #endif
 }
 

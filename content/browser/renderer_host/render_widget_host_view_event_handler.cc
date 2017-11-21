@@ -18,6 +18,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
+#include "content/public/common/content_features.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/client/screen_position_client.h"
@@ -618,18 +619,20 @@ bool RenderWidgetHostViewEventHandler::CanRendererHandleEvent(
       break;
   }
 #elif defined(USE_X11)
-  // Renderer only supports standard mouse buttons, so ignore programmable
-  // buttons.
-  switch (event->type()) {
-    case ui::ET_MOUSE_PRESSED:
-    case ui::ET_MOUSE_RELEASED: {
-      const int kAllowedButtons = ui::EF_LEFT_MOUSE_BUTTON |
-                                  ui::EF_MIDDLE_MOUSE_BUTTON |
-                                  ui::EF_RIGHT_MOUSE_BUTTON;
-      return (event->flags() & kAllowedButtons) != 0;
+  if (!base::FeatureList::IsEnabled(features::kExtendedMouseButtons)) {
+    // Renderer only supports standard mouse buttons, so ignore programmable
+    // buttons.
+    switch (event->type()) {
+      case ui::ET_MOUSE_PRESSED:
+      case ui::ET_MOUSE_RELEASED: {
+        const int kAllowedButtons = ui::EF_LEFT_MOUSE_BUTTON |
+                                    ui::EF_MIDDLE_MOUSE_BUTTON |
+                                    ui::EF_RIGHT_MOUSE_BUTTON;
+        return (event->flags() & kAllowedButtons) != 0;
+      }
+      default:
+        break;
     }
-    default:
-      break;
   }
 #endif
   return true;
