@@ -126,6 +126,12 @@ suite('Bluetooth', function() {
       assertFalse(bluetoothPage.bluetoothToggleState_);
     });
 
+    function waitForTimeout(timeMs) {
+      return new Promise(function(resolve) {
+        setTimeout(resolve, timeMs);
+      });
+    }
+
     test('paired device list', function() {
       var pairedContainer = subpage.$.pairedContainer;
       assertTrue(!!pairedContainer);
@@ -133,19 +139,23 @@ suite('Bluetooth', function() {
       assertFalse(subpage.$.noPairedDevices.hidden);
 
       bluetoothApi_.setDevicesForTest(fakeDevices_);
-      Polymer.dom.flush();
-      assertEquals(4, subpage.deviceList_.length);
-      assertEquals(2, subpage.pairedDeviceList_.length);
-      assertTrue(subpage.$.noPairedDevices.hidden);
 
-      var ironList = subpage.$.pairedDevices;
-      assertTrue(!!ironList);
-      ironList.notifyResize();
-      Polymer.dom.flush();
-      var devices = ironList.querySelectorAll('bluetooth-device-list-item');
-      assertEquals(2, devices.length);
-      assertTrue(devices[0].device.connected);
-      assertFalse(devices[1].device.connected);
+      // Subpage is updated per second.
+      return waitForTimeout(1000).then(function() {
+        Polymer.dom.flush();
+        assertEquals(4, subpage.deviceList_.length);
+        assertEquals(2, subpage.pairedDeviceList_.length);
+        assertTrue(subpage.$.noPairedDevices.hidden);
+
+        var ironList = subpage.$.pairedDevices;
+        assertTrue(!!ironList);
+        ironList.notifyResize();
+        Polymer.dom.flush();
+        var devices = ironList.querySelectorAll('bluetooth-device-list-item');
+        assertEquals(2, devices.length);
+        assertTrue(devices[0].device.connected);
+        assertFalse(devices[1].device.connected);
+      });
     });
 
     test('unpaired device list', function() {
@@ -155,48 +165,61 @@ suite('Bluetooth', function() {
       assertFalse(subpage.$.noUnpairedDevices.hidden);
 
       bluetoothApi_.setDevicesForTest(fakeDevices_);
-      Polymer.dom.flush();
-      assertEquals(4, subpage.deviceList_.length);
-      assertEquals(2, subpage.unpairedDeviceList_.length);
-      assertTrue(subpage.$.noUnpairedDevices.hidden);
 
-      var ironList = subpage.$.unpairedDevices;
-      assertTrue(!!ironList);
-      ironList.notifyResize();
-      Polymer.dom.flush();
-      var devices = ironList.querySelectorAll('bluetooth-device-list-item');
-      assertEquals(2, devices.length);
-      assertFalse(devices[0].device.paired);
-      assertFalse(devices[1].device.paired);
+      // Subpage is updated per second.
+      return waitForTimeout(1000).then(function() {
+        Polymer.dom.flush();
+        assertEquals(4, subpage.deviceList_.length);
+        assertEquals(2, subpage.unpairedDeviceList_.length);
+        assertTrue(subpage.$.noUnpairedDevices.hidden);
+
+        var ironList = subpage.$.unpairedDevices;
+        assertTrue(!!ironList);
+        ironList.notifyResize();
+        Polymer.dom.flush();
+        var devices = ironList.querySelectorAll('bluetooth-device-list-item');
+        assertEquals(2, devices.length);
+        assertFalse(devices[0].device.paired);
+        assertFalse(devices[1].device.paired);
+      });
     });
 
     test('pair device', function(done) {
       bluetoothApi_.setDevicesForTest(fakeDevices_);
-      Polymer.dom.flush();
-      assertEquals(4, subpage.deviceList_.length);
-      assertEquals(2, subpage.pairedDeviceList_.length);
-      assertEquals(2, subpage.unpairedDeviceList_.length);
 
-      var address = subpage.unpairedDeviceList_[0].address;
-      bluetoothPrivateApi_.connect(address, function() {
+      // Subpage is updated per second.
+      return waitForTimeout(1000).then(function() {
         Polymer.dom.flush();
-        assertEquals(3, subpage.pairedDeviceList_.length);
-        assertEquals(1, subpage.unpairedDeviceList_.length);
-        done();
+        assertEquals(4, subpage.deviceList_.length);
+        assertEquals(2, subpage.pairedDeviceList_.length);
+        assertEquals(2, subpage.unpairedDeviceList_.length);
+
+        var address = subpage.unpairedDeviceList_[0].address;
+        bluetoothPrivateApi_.connect(address, function() {
+          Polymer.dom.flush();
+          assertEquals(3, subpage.pairedDeviceList_.length);
+          assertEquals(1, subpage.unpairedDeviceList_.length);
+          done();
+        });
       });
     });
 
     test('pair dialog', function() {
       bluetoothApi_.setDevicesForTest(fakeDevices_);
-      Polymer.dom.flush();
-      var dialog = subpage.$.deviceDialog;
-      assertTrue(!!dialog);
-      assertFalse(dialog.$.dialog.open);
 
-      // Simulate selecting an unpaired device; should show the pair dialog.
-      subpage.connectDevice_(subpage.unpairedDeviceList_[0]);
-      Polymer.dom.flush();
-      assertTrue(dialog.$.dialog.open);
+
+      // Subpage is updated per second.
+      return waitForTimeout(1000).then(function() {
+        Polymer.dom.flush();
+        var dialog = subpage.$.deviceDialog;
+        assertTrue(!!dialog);
+        assertFalse(dialog.$.dialog.open);
+
+        // Simulate selecting an unpaired device; should show the pair dialog.
+        subpage.connectDevice_(subpage.unpairedDeviceList_[0]);
+        Polymer.dom.flush();
+        assertTrue(dialog.$.dialog.open);
+      });
     });
   });
 });
