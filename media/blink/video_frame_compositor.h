@@ -91,6 +91,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   bool HasCurrentFrame() override;
   scoped_refptr<VideoFrame> GetCurrentFrame() override;
   void PutCurrentFrame() override;
+  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner() override;
 
   // Returns |current_frame_|, without offering a guarantee as to how recently
   // it was updated. In certain applications, one might need to periodically

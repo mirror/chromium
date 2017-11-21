@@ -9,6 +9,10 @@
 #include "base/time/time.h"
 #include "cc/cc_export.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}
+
 namespace media {
 class VideoFrame;
 }
@@ -48,6 +52,11 @@ class CC_EXPORT VideoFrameProvider {
    protected:
     virtual ~Client() {}
   };
+
+  // Provides a taskrunner to the client such that calls not originating from
+  // the VideoFrameProvider (such as mojo calls) can proceed on the correct
+  // thread, the same thread from which all other client methods are called.
+  virtual scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner() = 0;
 
   // May be called from any thread, but there must be some external guarantee
   // that the provider is not destroyed before this call returns.

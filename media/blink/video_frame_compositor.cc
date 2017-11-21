@@ -124,6 +124,11 @@ void VideoFrameCompositor::OnRendererStateUpdate(bool new_state) {
   }
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+VideoFrameCompositor::GetTaskRunner() {
+  return task_runner_;
+}
+
 void VideoFrameCompositor::SetVideoFrameProviderClient(
     cc::VideoFrameProvider::Client* client) {
   DCHECK(task_runner_->BelongsToCurrentThread());
