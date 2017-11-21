@@ -102,7 +102,7 @@ public class PopupZoomerTest {
             public void run() {
                 Context context = mActivityTestRule.getActivity();
                 WebContents webContents = mActivityTestRule.getContentViewCore().getWebContents();
-                mContentViewCore = new ContentViewCore(context, "");
+                mContentViewCore = ContentViewCore.create(context, "");
                 mContentViewCore.setSelectionPopupControllerForTesting(
                         new SelectionPopupController(context, null, webContents, null));
                 ViewGroup containerView = mActivityTestRule.getContentViewCore().getContainerView();
