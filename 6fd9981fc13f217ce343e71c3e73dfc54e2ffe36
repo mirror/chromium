@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e52a496_851d2aef",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-21T00:08:00Z",
+      "side": 1,
+      "message": "Please determine whether the line below should have been removed.",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026518f9_6e638ca4",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-21T00:08:00Z",
+      "side": 1,
+      "message": "A newline after this might be helpful",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68528903_e0d342e2",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-21T00:08:00Z",
+      "side": 1,
+      "message": "This doesn\u0027t really describe the else since it is the third branch.\nAlso, it\u0027s inconsistent with line 1152, which describes what the else _is_.",
+      "range": {
+        "startLine": 1164,
+        "startChar": 9,
+        "endLine": 1164,
+        "endChar": 73
+      },
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6788a6_4db727bc",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-21T00:08:00Z",
+      "side": 1,
+      "message": "Unnecessarily removed line.",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
