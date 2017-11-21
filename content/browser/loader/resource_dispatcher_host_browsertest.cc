@@ -135,9 +135,10 @@ IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest, DynamicTitle2) {
 
 IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
                        SniffHTMLWithNoContentType) {
-  CheckTitleTest(
-      net::URLRequestMockHTTPJob::GetMockUrl("content-sniffer-test0.html"),
-      "Content Sniffer Test 0");
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  CheckTitleTest(embedded_test_server()->GetURL("/content-sniffer-test0.html"),
+                 "Content Sniffer Test 0");
 }
 
 IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
@@ -162,28 +163,33 @@ IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
                        SniffNoContentTypeNoData) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   // Make sure no downloads start.
   BrowserContext::GetDownloadManager(
       shell()->web_contents()->GetBrowserContext())
       ->AddObserver(this);
-  CheckTitleTest(
-      net::URLRequestMockHTTPJob::GetMockUrl("content-sniffer-test3.html"),
-      "Content Sniffer Test 3");
+  CheckTitleTest(embedded_test_server()->GetURL("/content-sniffer-test3.html"),
+                 "Content Sniffer Test 3");
   EXPECT_EQ(1u, Shell::windows().size());
   ASSERT_FALSE(got_downloads());
 }
 
 IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
                        ContentDispositionEmpty) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   CheckTitleTest(
-      net::URLRequestMockHTTPJob::GetMockUrl("content-disposition-empty.html"),
+      embedded_test_server()->GetURL("/content-disposition-empty.html"),
       "success");
 }
 
 IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
                        ContentDispositionInline) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   CheckTitleTest(
-      net::URLRequestMockHTTPJob::GetMockUrl("content-disposition-inline.html"),
+      embedded_test_server()->GetURL("/content-disposition-inline.html"),
       "success");
 }
 
@@ -381,6 +387,8 @@ IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
 #endif
 IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
                        MAYBE_CrossSiteAfterCrash) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   // Make sure we have a live process before trying to kill it.
   NavigateToURL(shell(), GURL("about:blank"));
 
@@ -394,19 +402,19 @@ IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
 
   // Navigate to a new cross-site page.  The browser should not wait around for
   // the old renderer's on{before}unload handlers to run.
-  CheckTitleTest(
-      net::URLRequestMockHTTPJob::GetMockUrl("content-sniffer-test0.html"),
-      "Content Sniffer Test 0");
+  CheckTitleTest(embedded_test_server()->GetURL("/content-sniffer-test0.html"),
+                 "Content Sniffer Test 0");
 }
 
 // Tests that cross-site navigations work when the new page does not go through
 // the BufferedEventHandler (e.g., non-http{s} URLs).  (Bug 1225872)
 IN_PROC_BROWSER_TEST_F(ResourceDispatcherHostBrowserTest,
                        CrossSiteNavigationNonBuffered) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   // Start with an HTTP page.
-  CheckTitleTest(
-      net::URLRequestMockHTTPJob::GetMockUrl("content-sniffer-test0.html"),
-      "Content Sniffer Test 0");
+  CheckTitleTest(embedded_test_server()->GetURL("/content-sniffer-test0.html"),
+                 "Content Sniffer Test 0");
 
   // Now load a file:// page, which does not use the BufferedEventHandler.
   // Make sure that the page loads and displays a title, and doesn't get stuck.
