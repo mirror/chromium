@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8bcf5b06_53d80d78",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-21T18:14:49Z",
+      "side": 1,
+      "message": "Sure, it doesn\u0027t. I was referring to the failing test in ps3. Current(ps4) failing test seems to be caused by the above change which fixed the failing test in ps3. I think we need to find an appropriate place to run DeviceRequest\u0027s mojo callbacks(if not run earlier) before it\u0027s destroyed.",
+      "parentUuid": "c0b1f12e_2c39fc77",
+      "range": {
+        "startLine": 635,
+        "startChar": 77,
+        "endLine": 635,
+        "endChar": 0
+      },
+      "revId": "8e4d60f0badb297d9bd49ca01fd93b26872e31de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7013a1c_e56cb57b",
         "filename": "content/browser/renderer_host/media/media_stream_requester.h",
         "patchSetId": 4
