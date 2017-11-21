@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e33652b_e43da903",
+        "filename": "google_apis/gaia/gaia_auth_consumer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "-    int new_expires_in_secs)\n+    int new_expires_in_secs,\n+    std::unique_ptr\u003cbase::DictionaryValue\u003e id_token_payload)",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fda54e_70d3fdcd",
+        "filename": "google_apis/gaia/gaia_auth_consumer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "-      expires_in_secs(new_expires_in_secs) {}\n+      expires_in_secs(new_expires_in_secs),\n+      id_token_payload(std::move(id_token_payload)) {}",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9314ec2d_4b9c73b4",
+        "filename": "google_apis/gaia/gaia_auth_consumer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "Probably don\u0027t need.",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6592e619_f1450857",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ddd6a6_dd6abd8d",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "namespace base {\nclass DictionaryValue;\n}",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a55e722_ca1ce28c",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "const std::string\u0026 new_access_token,\n-                      int new_expires_in_secs);\n+                      int new_expires_in_secs,\n+                      std::unique_ptr\u003cbase::DictionaryValue\u003e id_token_payload);",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23289b7a_1cc7d65c",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "Don\u0027t need.",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfda892a_13e8a059",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "+\n+    // The payload part of Google id_token if present.\n+    std::unique_ptr\u003cbase::DictionaryValue\u003e id_token_payload;",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd12b0b2_e02208a6",
+        "filename": "google_apis/gaia/gaia_auth_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "I just landed a Cl that removed some unused code from this file, so this function is now simplified. So it is easy now to make changes here.\n\nI\u0027d suggest implementing token decoding in anonymous namespace in this file. Basically in this function.\n\nIt is actually used only to create GaiaAuthConsumer::ClientOAuthResult responce, so you can make this function fully construct it. This will also make it constant in the other places, which reduces complexity.\n\nSo, if you can return ClientOAuthResult from here, then, the function signature will looks like:\n\nstd::unique_ptr\u003cconst GaiaAuthConsumer::ClientOAuthResult\u003e\nExtractOAuth2TokenPairResponse(const std::string\u0026 data);\n\nThen you decode |data|, remember that |id_token| is a dictionary (and optional!), so it is reasonable to store it in ClientOAuthResult as a pointer to dictionary. Dictionary in Chrome means base::DictionaryValue (basically this is what you get from JSON decoder).\n\nSo your function (after you rebase your Cl to adjust to underlying changes), could probably  look like:\n\nstd::unique_ptr\u003cconst GaiaAuthConsumer::ClientOAuthResult\u003e\nExtractOAuth2TokenPairResponse(const std::string\u0026 data) {\n  std::unique_ptr\u003cbase::Value\u003e value \u003d base::JSONReader::Read(data);\n  if (!value.get() || value-\u003etype() !\u003d base::Value::Type::DICTIONARY)\n    return nullptr;\n\n  base::DictionaryValue* dict \u003d\n        static_cast\u003cbase::DictionaryValue*\u003e(value.get());\n\n  std::string refresh_token;\n  std::string access_token;\n  int expires_in_secs \u003d 0;\n\n  if (!dict-\u003eGetStringWithoutPathExpansion(\"refresh_token\", \u0026refresh_token) ||\n      !dict-\u003eGetStringWithoutPathExpansion(\"access_token\", \u0026access_token) ||\n      !dict-\u003eGetIntegerWithoutPathExpansion(\"expires_in\", \u0026expires_in_secs)) {\n    return nullptr;\n  }\n  std::string id_token;\n  std::unique_ptr\u003cbase::DictionaryValue\u003e id_token_payload;\n  if (dict-\u003eGetStringWithoutPathExpansion(\"id_token\", \u0026id_token) \u0026\u0026\n      !DecodeIdToken(id_token, \u0026id_token_payload)) {\n    return nullptr;\n  }\n  return std::make_unique\u003cGaiaAuthConsumer::ClientOAuthResult\u003e(\n      refresh_token, access_token, expires_in_secs,\n      std::move(id_token_payload));\n}\n\n\nThen, you\u0027ll need to implement DecodeIdToken() using our base/ library. You\u0027ll need to split string, run JSON decoder, check for return types, and make sure you extract dictionary from the token. You also need to check for errors.\n\nSo we could imagine it could look like this:\n\nbool DecodeIdToken(const std::string\u0026 id_token,                                  \n                   std::unique_ptr\u003cbase::DictionaryValue\u003e* out_payload) {        \n  const std::vector\u003cbase::StringPiece\u003e parts \u003d                                   \n      base::SplitStringPiece(base::StringPiece(id_token), \".\",                   \n                             base::WhitespaceHandling::KEEP_WHITESPACE,          \n                             base::SplitResult::SPLIT_WANT_ALL);                 \n  if (parts.size() !\u003d 3) {                                                       \n    VLOG(1) \u003c\u003c \"Invalid id_token: \" \u003c\u003c parts.size() \u003c\u003c \" parts.\";                \n    return false;                                                                \n  }                                                                              \n                                                                                 \n  // Ignore header (parts[0]).                                                   \n  std::string payload;                                                           \n  if (!base::Base64UrlDecode(                                                    \n          parts[1], base::Base64UrlDecodePolicy::DISALLOW_PADDING, \u0026payload)) {  \n    VLOG(1) \u003c\u003c \"Invalid id_token: payload decoding failed.\";                     \n    return false;                                                                \n  }                                                                              \n  // Ignore signature (part[2]).                                                 \n                                                                                 \n  std::unique_ptr\u003cbase::Value\u003e payload_value \u003d base::JSONReader::Read(payload);  \n  if (!payload_value) {                                                          \n    VLOG(1) \u003c\u003c \"Invalid id_token: payload parsing failed.\";                      \n    return false;                                                                \n  }                                                                              \n                                                                                 \n  *out_payload \u003d base::DictionaryValue::From(std::move(payload_value));          \n  if (!out_payload-\u003eget()) {                                                     \n    VLOG(1) \u003c\u003c \"Invalid id_token: payload is not a dictionary.\";                 \n    return false;                                                                \n  }                                                                              \n                                                                                 \n  return true;                                                                   \n}",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84335731_a0c46c4a",
+        "filename": "google_apis/gaia/gaia_auth_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "And now you do not need |success| at all. This could look like:\n\n  std::unique_ptr\u003cconst GaiaAuthConsumer::ClientOAuthResult\u003e result;             \n  if (status.is_success() \u0026\u0026 response_code \u003d\u003d net::HTTP_OK) {                    \n    result \u003d ExtractOAuth2TokenPairResponse(data);                               \n  }                                                                              \n                                                                                 \n  if (result) {                                                                  \n    consumer_-\u003eOnClientOAuthSuccess(*result);  // I\u0027ll update this later, but for now it\u0027s convenient.                                  \n  } else {                                                                       \n    consumer_-\u003eOnClientOAuthFailure(GenerateAuthError(data, status));            \n  }",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51ff078_2c56264c",
+        "filename": "google_apis/gaia/gaia_auth_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "This function no longer exists.",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5c3e16_bdf48ee8",
+        "filename": "google_apis/gaia/gaia_auth_fetcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "If you want unit_test for ExtractOAuth2TokenPairResponse / DecodeIdToken, we usually do it like this: https://cs.chromium.org/chromium/src/chromeos/timezone/timezone_resolver.h (search for \"Expose internal fuctions for testing\"). Please note that proxy functions have \"ForTesting\" in their name. This will make build system correctly filter these functions and prevent them from being called in production.",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c30f20_6eef52b1",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T10:54:27Z",
+      "side": 1,
+      "message": "You are trying to re-implement base::SplitString and base64-URL decoding, which are already avalable in base/ .",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
