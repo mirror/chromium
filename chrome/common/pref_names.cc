@@ -2542,4 +2542,8 @@ const char kTabStatsWindowCountMax[] = "tab_stats.window_count_max";
 //  Timestamp of the last time the tab stats daily metrics have been reported.
 const char kTabStatsDailySample[] = "tab_stats.last_daily_sample";
 
+// A list of URLs (for U2F) or domains (for webauthn) that automatically permit
+// direct attestation of a Security Key.
+const char kSecurityKeyPermitAttestation[] = "securitykey.permit_attestation";
+
 }  // namespace prefs
