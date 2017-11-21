@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae658f2d_334e4a51",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a3a2a7_6ec72ef5",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6509319f_8633ec3c",
         "filename": "content/browser/locks/locks_context.cc",
         "patchSetId": 25
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9726d7ad_1f2170ab",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "6509319f_8633ec3c",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c93de929_0e120382",
         "filename": "content/browser/locks/locks_context.cc",
         "patchSetId": 25
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-20T09:53:31Z",
       "side": 1,
       "message": "nit: If performance matters (thought about that because of the above), this method is only optimal when the two sets have roughly the same size.\n\nIf one of the sets is significantly smaller than the other set (which I expect to be the case with this API), it\u0027s faster to look up the small set\u0027s elements in the big set. I imagine this\u0027d be the case if one set is the scope of a lock (1-element in the common case?) and the other set is the scope of all locks granted for an origin.\n\nIf performance doesn\u0027t matter, the naive impl of looking up the smaller set\u0027s elements in the bigger set might be smaller and easier to understand.\n\nIn either case, should you end up with the simpler implementation, lock scopes can be represented as std::vector\u003cstd::string\u003e. (the unions of all scopes in OriginState would still be std::set\u003cstd::string\u003e though).\n\nGiven that the API shape is evolving, I\u0027m fine with relegating everything I\u0027ve said here to a TODO.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642f469e_8913f07b",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Added a TODO. Thoughts on the threshold?",
+      "parentUuid": "c93de929_0e120382",
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ba473ba0_1b0697ed",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done (the first part, not the second). IsGrantable() doesn\u0027t take a lock instance, and does extra lookups. If the logic gets more complex we can de-dupe.",
+      "parentUuid": "35c93d6f_bda5ba1e",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f93cc769_b2de5c1c",
         "filename": "content/browser/locks/locks_context.cc",
         "patchSetId": 25
@@ -84,6 +156,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8074be3_4cb92625",
+        "filename": "content/browser/locks/locks_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Just removing this.",
+      "parentUuid": "f93cc769_b2de5c1c",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +205,24 @@
       "writtenOn": "2017-11-20T09:53:31Z",
       "side": 1,
       "message": "nit: How about using a LockHandleImpl* (with a forward-declared class) instead of the Origin/id combo? Seems slightly safer.\n\nLockHandleImpl can then expose Origin/lock_id as getters, or it could friend LockHandle. Given that LockHandleImpl is only defined in locks_context.cc, I don\u0027t think there\u0027s much difference between the two alternatives.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddacd28_0d400664",
+        "filename": "content/browser/locks/locks_context.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Requests get cancelled too, and they aren\u0027t reified as LockHandleImpl. See the request.set_connection_error_handler() call.\n\nWe could introduce a new class to hold an (origin, id) pair but I\u0027m not convinced yet that it\u0027s an improvement.",
+      "parentUuid": "be8a6e39_4a8f33bb",
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "29579f51_484e66a6",
+        "filename": "content/browser/locks/locks_context.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a947e6d2_8aa1b9da",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3f6cf24_9f58eecc",
         "filename": "content/browser/storage_partition_impl.h",
         "patchSetId": 25
@@ -189,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "dc2b447c_8e93b47a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "I didn\u0027t mean to leave this in the file... I was pondering copying/pasting this everywhere but decided not to and rely on the dedicated *secure* tests. And then forgot to remove this. Removed.",
+      "parentUuid": "dec9478c_0f6cbef7",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b8cd671_cf05ba32",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
         "patchSetId": 25
@@ -203,6 +347,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae054ed7_5b418a80",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b8cd671_cf05ba32",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +385,24 @@
     },
     {
       "key": {
+        "uuid": "8c435bd6_2fbb7124",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9b7c8d2_86e34b68",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61309fa4_4d184793",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
         "patchSetId": 25
@@ -237,6 +417,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afbe22b_f5eec2f9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61309fa4_4d184793",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +455,24 @@
     },
     {
       "key": {
+        "uuid": "9c146358_68a5cfcb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4a81edd_aa0ac777",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72515fd7_57af3029",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
         "patchSetId": 25
@@ -271,6 +487,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24932353_4c9ee08b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72515fd7_57af3029",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +525,24 @@
     },
     {
       "key": {
+        "uuid": "dddcc825_9b60f414",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8501a5ee_7395f9c4",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8818f94e_65415448",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
         "patchSetId": 25
@@ -305,6 +557,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5400e335_33b8a9da",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8818f94e_65415448",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +595,24 @@
     },
     {
       "key": {
+        "uuid": "6c0ee70c_12894243",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed20e187_2e5f5c60",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06e4abbc_f4cf1f9a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
         "patchSetId": 25
@@ -339,6 +627,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fe6e19_0ba936ee",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e4abbc_f4cf1f9a",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +665,24 @@
     },
     {
       "key": {
+        "uuid": "c59faf21_9d626eb2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62460923_eece3b29",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f493bc5b_d1d89680",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
         "patchSetId": 25
@@ -370,6 +694,24 @@
       "writtenOn": "2017-11-20T09:53:31Z",
       "side": 1,
       "message": "How about starting out with a simpler case where you request a single lock with isAvailable: true and assert that it\u0027s granted, etc?\n\nAdditional coverage: the presence of the ifAvailable option straight out causes failures.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535a0684_781237a1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Isn\u0027t that what the first test is?\n\nAlso, not sure what you mean by \"the presence... causes failures\" ?",
+      "parentUuid": "f493bc5b_d1d89680",
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -393,6 +735,24 @@
     },
     {
       "key": {
+        "uuid": "3ff5d18f_b3070747",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Went with \u0027resource\u0027 and \u0027different\u0027 so as not to confuse with the mode.",
+      "parentUuid": "fb8eca4a_33992743",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67694bf1_2f6f5d63",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-exclusive.html",
         "patchSetId": 25
@@ -407,6 +767,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4eac50d_f935474a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-exclusive.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67694bf1_2f6f5d63",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +805,24 @@
     },
     {
       "key": {
+        "uuid": "d35aaeca_7e99af27",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-exclusive.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "005fd5dc_6e6782f5",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00b78708_d49a7bbd",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-mixed.html",
         "patchSetId": 25
@@ -441,6 +837,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af7ca7b_21297439",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-mixed.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00b78708_d49a7bbd",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -461,6 +875,24 @@
     },
     {
       "key": {
+        "uuid": "534dc50f_6dca07bf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-mixed.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c451e99_f1b7b6e8",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f28aac0f_511e35db",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
         "patchSetId": 25
@@ -475,6 +907,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107b299a_0da699a2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f28aac0f_511e35db",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -495,6 +945,24 @@
     },
     {
       "key": {
+        "uuid": "6a36c73f_af672dad",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d307cc5_8c34c165",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "669b373c_143c4d3d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
         "patchSetId": 25
@@ -509,6 +977,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7438b2_3be9d435",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done. I think I just wanted to assert something; I turned it into booleans set during the callbacks, asserted at the very end.",
+      "parentUuid": "669b373c_143c4d3d",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -535,6 +1021,30 @@
     },
     {
       "key": {
+        "uuid": "42944349_ea6f5c54",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/non-secure-context.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f3c491f_22e0f3d4",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8347d6_4910a257",
         "filename": "third_party/WebKit/Source/modules/locks/Lock.cpp",
         "patchSetId": 25
@@ -549,6 +1059,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b19f781_ff1f47dd",
+        "filename": "third_party/WebKit/Source/modules/locks/Lock.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be necessary here since this is being invoked by V8.",
+      "parentUuid": "8d8347d6_4910a257",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -569,6 +1097,24 @@
     },
     {
       "key": {
+        "uuid": "0caa3a16_69e182f6",
+        "filename": "third_party/WebKit/Source/modules/locks/Lock.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29a8cce4_eedf4ff1",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de7756ba_6ae1c07b",
         "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
         "patchSetId": 25
@@ -583,6 +1129,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5844d6aa_9e0d3574",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de7756ba_6ae1c07b",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -603,6 +1167,24 @@
     },
     {
       "key": {
+        "uuid": "54a48891_8d4b03db",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0bc7022_a6fe5ae0",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b84e9ca3_1631b135",
         "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
         "patchSetId": 25
@@ -617,6 +1199,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfaeda40_7c0c3ab0",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "[SecureContext] should take care of that. The APIs shouldn\u0027t even exist in non-secure contexts. \n\n(That they appear in secure-but-opaque origins is weird.)",
+      "parentUuid": "b84e9ca3_1631b135",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -657,6 +1257,24 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619ff523_4e1b385c",
+        "filename": "third_party/WebKit/public/platform/modules/locks/locks_service.mojom",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T01:09:27Z",
+      "side": 1,
+      "message": "That\u0027s how I started, but having an explicit LockRequest allows the request to be aborted on the client side when the context terminates (implemented) or when an AbortSignal fires (FYI).\n\nThis used to be covered in a README but I moved the description into the design doc (WIP): https://docs.google.com/document/d/1Ot5zKMTqxKijdc_vakf69ZppKdvdKeYq2swWa33BJYI/edit",
+      "parentUuid": "cf0cd24e_2ed78d93",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
