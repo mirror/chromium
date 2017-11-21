@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1025f12f_94500159",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-21T10:53:30Z",
+      "side": 1,
+      "message": "Wait, are we talking about null pointers or values of type NONE? Also, are we talking about PrefService, or the values that are used by the extension API?\n\nPrefService may never return a null pointer. It could in principle return a NONE value, but because prefs are typed, this would be a preference that can only have a single value, which doesn\u0027t make much sense.\n\nPer the new contract of PrefTransformerInterface, the transformed value is type NONE iff there was an error during the conversion, which means that a legitimate NONE can\u0027t be represented that way. And because the input to the transformer can be expected not to be NONE, that holds even for, say, the IdentityTransformer.",
+      "parentUuid": "98d933de_0e48eeea",
+      "range": {
+        "startLine": 372,
+        "startChar": 6,
+        "endLine": 372,
+        "endChar": 33
+      },
+      "revId": "cbd71302ee1c687327000eace524387c7597f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691ff2df_21fe409c",
         "filename": "chrome/browser/extensions/api/preference/preference_api.h",
         "patchSetId": 3
