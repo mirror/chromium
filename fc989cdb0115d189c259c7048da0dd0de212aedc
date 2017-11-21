@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ef0b51c_e2e127f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "I\u0027ll use the same bug. All the TODOs have my name next to them, I\u0027ll work on them straight after this patch :)",
+      "parentUuid": "e0322589_0bce32f4",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92082886_934c2032",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T21:14:06Z",
       "side": 1,
       "message": "As noted inline, the API is available from Workers too so it can\u0027t just be frames. Fortunately it\u0027s now possible to grab the interface provider via ExecutionContext. :)",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597150fb_8035c678",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Yay! Updated list to say frames and workers\n\n@sammc - is my understanding correct?",
+      "parentUuid": "92082886_934c2032",
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79366157_43d68d0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Ah great, thanks for the info. Done",
+      "parentUuid": "e8b2a32b_a088d588",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "bfbefdf2_430904ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Thanks! Fixed",
+      "parentUuid": "66bc3da6_262ce315",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2a0e5dd_418628c5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -90,6 +168,24 @@
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab12b59f_83e88419",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2a0e5dd_418628c5",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "3c91a36f_0fb55100",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Thanks, done",
+      "parentUuid": "ed87d9f1_d0c4c42e",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e29ea48_58dcbcfe",
         "filename": "content/browser/quota_dispatcher_host.h",
         "patchSetId": 6
@@ -124,6 +238,24 @@
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66a928b_2469bb50",
+        "filename": "content/browser/quota_dispatcher_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Done, also switched in mojo file",
+      "parentUuid": "2e29ea48_58dcbcfe",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "15122b8f_a9e7a175",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Yup, that\u0027s right. Added a TODO to clarify.",
+      "parentUuid": "3187e786_d7faf685",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77fdecc_8262d326",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 6
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "01220eff_efd0b0ec",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Thanks; done.",
+      "parentUuid": "c77fdecc_8262d326",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "626819d8_95096f9c",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 6
@@ -175,6 +343,24 @@
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1070aa_36358199",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "626819d8_95096f9c",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "1299a808_2a822cf6",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c86e669_37f2364a",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "703ad126_e5ec872b",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 6
@@ -215,6 +425,24 @@
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd180b0_be019c3f",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Oops, meant to do this. Thanks\n\n@sammc - is there a mojo linter?",
+      "parentUuid": "703ad126_e5ec872b",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "13bd0f88_97fa591c",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9a4a09f_8761a748",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71cbc20e_88a78cc3",
         "filename": "content/public/common/storage_quota_params.h",
         "patchSetId": 6
@@ -249,6 +495,24 @@
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f556957_e8e9c757",
+        "filename": "content/public/common/storage_quota_params.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Good call, done :)",
+      "parentUuid": "71cbc20e_88a78cc3",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +533,24 @@
     },
     {
       "key": {
+        "uuid": "0fee84d6_26bec3f5",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Thanks! Good find. Fixed to put the unique ID logic back.",
+      "parentUuid": "b06b7f02_29a3572e",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a04fb24_b0c6bd21",
         "filename": "content/renderer/quota_dispatcher.cc",
         "patchSetId": 6
@@ -283,6 +565,24 @@
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02776d6_641448da",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Put it in the same patch; seems like a small enough change.",
+      "parentUuid": "6a04fb24_b0c6bd21",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +603,24 @@
     },
     {
       "key": {
+        "uuid": "a784e6b2_c61bd096",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93abd61e_7fcd8e19",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9faddf52_05b0054f",
         "filename": "content/renderer/quota_dispatcher.h",
         "patchSetId": 6
@@ -320,6 +638,24 @@
     },
     {
       "key": {
+        "uuid": "f9f49241_73a82c6c",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Changed to be \u0027per execution context\u0027. I think that refactor should happen before onion souping, to make sure the file goes to the right place.",
+      "parentUuid": "9faddf52_05b0054f",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4e01da_4559b63f",
         "filename": "content/renderer/quota_dispatcher.h",
         "patchSetId": 6
@@ -334,6 +670,24 @@
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651df8c8_d71a5f99",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-21T23:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4e01da_4559b63f",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
