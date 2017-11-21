@@ -24,7 +24,7 @@ constexpr float kHitPlaneScaleFactorHovered = 1.2;
 }  // namespace
 
 Button::Button(base::Callback<void()> click_handler,
-               int draw_phase,
+               DrawPhase draw_phase,
                float width,
                float height,
                float hover_offset,

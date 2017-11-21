@@ -36,6 +36,9 @@ class ExitPrompt : public TexturedElement {
   void OnButtonDown(const gfx::PointF& position) override;
   void OnButtonUp(const gfx::PointF& position) override;
 
+  void ClickPrimaryButtonForTesting();
+  void ClickSecondaryButtonForTesting();
+
  private:
   UiTexture* GetTexture() const override;
 
@@ -48,7 +51,7 @@ class ExitPrompt : public TexturedElement {
   std::unique_ptr<ExitPromptTexture> texture_;
 
   Callback primary_button_callback_;
-  Callback secondary_buttton_callback_;
+  Callback secondary_button_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ExitPrompt);
 };

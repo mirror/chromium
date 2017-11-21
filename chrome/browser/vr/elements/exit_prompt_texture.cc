@@ -5,7 +5,7 @@
 #include "chrome/browser/vr/elements/exit_prompt_texture.h"
 
 #include "cc/paint/skia_paint_canvas.h"
-#include "chrome/browser/vr/color_scheme.h"
+#include "chrome/browser/vr/model/color_scheme.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -176,5 +176,7 @@ gfx::Size ExitPromptTexture::GetPreferredTextureSize(int maximum_width) const {
 gfx::SizeF ExitPromptTexture::GetDrawnSize() const {
   return size_;
 }
+
+void ExitPromptTexture::OnSetColorScheme() {}
 
 }  // namespace vr

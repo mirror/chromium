@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_VR_COLOR_SCHEME_H_
-#define CHROME_BROWSER_VR_COLOR_SCHEME_H_
+#ifndef CHROME_BROWSER_VR_MODEL_COLOR_SCHEME_H_
+#define CHROME_BROWSER_VR_MODEL_COLOR_SCHEME_H_
 
 #include "third_party/skia/include/core/SkColor.h"
 
@@ -108,4 +108,4 @@ struct ColorScheme {
 
 }  // namespace vr
 
-#endif  // CHROME_BROWSER_VR_COLOR_SCHEME_H_
+#endif  // CHROME_BROWSER_VR_MODEL_COLOR_SCHEME_H_
