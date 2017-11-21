@@ -42,6 +42,7 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   bool GrabFocus();
   bool DoDefaultAction();
   const gchar* GetDefaultActionName();
+  const gchar* GetDocumentAttributeValue(const gchar* attribute);
 
   void SetExtentsRelativeToAtkCoordinateType(
       gint* x, gint* y, gint* width, gint* height,
