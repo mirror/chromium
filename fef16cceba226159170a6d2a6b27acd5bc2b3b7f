@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a88565d9_da92f2a4",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-21T01:29:34Z",
+      "side": 1,
+      "message": "Does this make more sense to log in OnStartCompleted?\n\nParticularly, it looks like transaction_ but !transaction_-\u003eGetResponseInfo() is a valid API return. It also would let you filter to only log for result \u003d\u003d OK during connection establishment",
+      "revId": "fef16cceba226159170a6d2a6b27acd5bc2b3b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
