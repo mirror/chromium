@@ -28,6 +28,7 @@
 #include "ui/aura/test/env_test_helper.h"
 #include "ui/aura/test/mus/input_method_mus_test_api.h"
 #include "ui/aura/window.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/test/fake_context_factory.h"
 #include "ui/gl/gl_switches.h"
 #include "ui/views/mus/desktop_window_tree_host_mus.h"
@@ -251,6 +252,11 @@ void ViewsMusTestSuite::Initialize() {
   EnsureCommandLineSwitch(ui::switches::kUseTestConfig);
 
   EnsureCommandLineSwitch(switches::kOverrideUseSoftwareGLForTests);
+#if BUILDFLAG(ENABLE_MUS)
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kMus, switches::kMusHostVizValue);
+#endif
+
 
   ViewsTestSuite::Initialize();
   service_manager_connections_ = std::make_unique<ServiceManagerConnection>();

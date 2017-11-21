@@ -1454,9 +1454,6 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 
 #if BUILDFLAG(ENABLE_MUS)
   if (IsUsingMus()) {
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kMus,
-        IsMusHostingViz() ? switches::kMusHostVizValue : std::string());
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kEnableSurfaceSynchronization);
   }

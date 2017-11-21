@@ -29,6 +29,7 @@
 #include "ui/base/ime/input_method_factory.h"
 #include "ui/base/ime/input_method_initializer.h"
 #include "ui/base/platform_window_defaults.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer_animator.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
@@ -147,6 +148,11 @@ void AuraTestHelper::SetUp(ui::ContextFactory* context_factory,
     root_window()->Show();
     // Ensure width != height so tests won't confuse them.
     host()->SetBoundsInPixels(gfx::Rect(host_size));
+  } else {
+#if BUILDFLAG(ENABLE_MUS)
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kMus, switches::kMusHostVizValue);
+#endif
   }
 
   if (mode_ == Mode::MUS_CREATE_WINDOW_TREE_CLIENT) {

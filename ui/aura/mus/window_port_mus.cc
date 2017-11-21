@@ -4,6 +4,7 @@
 
 #include "ui/aura/mus/window_port_mus.h"
 
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "components/viz/client/local_surface_id_provider.h"
 #include "ui/aura/client/aura_constants.h"
@@ -18,6 +19,7 @@
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/class_property.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/dip_util.h"
@@ -591,6 +593,8 @@ void WindowPortMus::UpdatePrimarySurfaceId() {
 }
 
 void WindowPortMus::UpdateClientSurfaceEmbedder() {
+  if (!switches::IsMusHostingViz())
+    return;
   if (window_mus_type() != WindowMusType::TOP_LEVEL_IN_WM &&
       window_mus_type() != WindowMusType::EMBED_IN_OWNER &&
       window_mus_type() != WindowMusType::DISPLAY_MANUALLY_CREATED &&

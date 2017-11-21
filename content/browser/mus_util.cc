@@ -4,8 +4,9 @@
 
 #include "content/browser/mus_util.h"
 
+#include "ui/base/ui_base_switches_util.h"
+
 #if defined(USE_AURA)
-#include "content/public/browser/context_factory.h"
 #include "ui/aura/env.h"
 #endif
 
@@ -20,8 +21,7 @@ bool IsUsingMus() {
 }
 
 bool IsMusHostingViz() {
-  // TODO(sad): Currently mus always is the viz host.
-  return IsUsingMus();
+  return switches::IsMusHostingViz();
 }
 
 }  // namespace content

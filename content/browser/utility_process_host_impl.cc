@@ -297,13 +297,17 @@ bool UtilityProcessHostImpl::StartProcess() {
 #if defined(OS_MACOSX)
       switches::kEnableSandboxLogging,
 #endif
+#if BUILDFLAG(ENABLE_MUS)
+      switches::kMus,
+#endif
       switches::kUseFakeDeviceForMediaStream,
       switches::kUseFileForFakeVideoCapture,
 #if defined(OS_WIN)
       switches::kForceMediaFoundationVideoCapture,
 #endif  // defined(OS_WIN)
       switches::kUtilityStartupDialog,
-      switches::kUseGL
+      switches::kUseGL,
+      "mash"
     };
     cmd_line->CopySwitchesFrom(browser_command_line, kSwitchNames,
                                arraysize(kSwitchNames));

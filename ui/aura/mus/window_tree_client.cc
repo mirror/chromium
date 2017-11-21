@@ -19,6 +19,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/threading/thread.h"
+#include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "components/discardable_memory/client/client_discardable_shared_memory_manager.h"
 #include "mojo/public/cpp/bindings/map.h"
@@ -57,6 +58,7 @@
 #include "ui/aura/window_port_for_shutdown.h"
 #include "ui/aura/window_tracker.h"
 #include "ui/base/layout.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
@@ -222,11 +224,15 @@ WindowTreeClient::WindowTreeClient(
       io_task_runner = io_thread_->task_runner();
     }
 
-    gpu_ = ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
-    compositor_context_factory_ =
-        std::make_unique<MusContextFactory>(gpu_.get());
-    initial_context_factory_ = Env::GetInstance()->context_factory();
-    Env::GetInstance()->set_context_factory(compositor_context_factory_.get());
+    if (switches::IsMusHostingViz()) {
+      gpu_ =
+          ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
+      compositor_context_factory_ =
+          std::make_unique<MusContextFactory>(gpu_.get());
+      initial_context_factory_ = Env::GetInstance()->context_factory();
+      Env::GetInstance()->set_context_factory(
+          compositor_context_factory_.get());
+    }
 
     // WindowServerTest will create more than one WindowTreeClient. We will not
     // create the discardable memory manager for those tests.
@@ -1717,7 +1723,10 @@ void WindowTreeClient::OnConnect() {
 void WindowTreeClient::WmOnAcceleratedWidgetForDisplay(
     int64_t display,
     gpu::SurfaceHandle surface_handle) {
-  // TODO(crbug.com/786453): Implement this.
+  if (window_manager_delegate_) {
+    window_manager_delegate_->OnWmAcceleratedWidgetAvailableForDisplay(
+        display, surface_handle);
+  }
 }
 
 void WindowTreeClient::WmNewDisplayAdded(
