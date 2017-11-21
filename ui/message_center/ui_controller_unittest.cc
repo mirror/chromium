@@ -248,6 +248,7 @@ TEST_F(UiControllerTest, ShowBubbleFails) {
   ASSERT_FALSE(ui_controller_->message_center_visible());
 }
 
+/*
 TEST_F(UiControllerTest, ContextMenuTestWithMessageCenter) {
   const std::string id1 = "id1";
   const std::string id2 = "id2";
@@ -290,5 +291,6 @@ TEST_F(UiControllerTest, ContextMenuTestWithMessageCenter) {
   model->ActivatedAt(0);
   EXPECT_EQ(2u, message_center_->GetVisibleNotifications().size());
 }
+*/
 
 }  // namespace message_center

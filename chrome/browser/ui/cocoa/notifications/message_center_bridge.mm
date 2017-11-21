@@ -14,10 +14,6 @@
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/ui_controller.h"
 
-message_center::UiDelegate* CreateUiDelegate() {
-  return new MessageCenterBridge(g_browser_process->message_center());
-}
-
 MessageCenterBridge::MessageCenterBridge(
     message_center::MessageCenter* message_center)
     : message_center_(message_center),
