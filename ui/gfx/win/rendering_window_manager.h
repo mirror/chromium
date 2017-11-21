@@ -7,8 +7,7 @@
 
 #include <windows.h>
 
-#include <map>
-
+#include "base/containers/flat_map.h"
 #include "base/synchronization/lock.h"
 #include "ui/gfx/gfx_export.h"
 
@@ -27,7 +26,6 @@ class GFX_EXPORT RenderingWindowManager {
 
   void RegisterParent(HWND parent);
   bool RegisterChild(HWND parent, HWND child_window);
-  void DoSetParentOnChild(HWND parent);
   void UnregisterParent(HWND parent);
   bool HasValidChildWindow(HWND parent);
 
@@ -37,8 +35,10 @@ class GFX_EXPORT RenderingWindowManager {
   RenderingWindowManager();
   ~RenderingWindowManager();
 
+  void DoSetParentOnChild(HWND parent);
+
   base::Lock lock_;
-  std::map<HWND, HWND> info_;
+  base::flat_map<HWND, HWND> info_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderingWindowManager);
 };

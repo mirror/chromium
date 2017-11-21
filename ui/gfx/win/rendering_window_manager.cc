@@ -32,23 +32,8 @@ bool RenderingWindowManager::RegisterChild(HWND parent, HWND child_window) {
     return false;
 
   info_[parent] = child_window;
+  DoSetParentOnChild(parent);
   return true;
-}
-
-void RenderingWindowManager::DoSetParentOnChild(HWND parent) {
-  HWND child;
-  {
-    base::AutoLock lock(lock_);
-
-    auto it = info_.find(parent);
-    if (it == info_.end())
-      return;
-    if (!it->second)
-      return;
-    child = it->second;
-  }
-
-  ::SetParent(child, parent);
 }
 
 void RenderingWindowManager::UnregisterParent(HWND parent) {
@@ -66,5 +51,21 @@ bool RenderingWindowManager::HasValidChildWindow(HWND parent) {
 
 RenderingWindowManager::RenderingWindowManager() {}
 RenderingWindowManager::~RenderingWindowManager() {}
+
+void RenderingWindowManager::DoSetParentOnChild(HWND parent) {
+  HWND child;
+  {
+    base::AutoLock lock(lock_);
+
+    auto it = info_.find(parent);
+    if (it == info_.end())
+      return;
+    if (!it->second)
+      return;
+    child = it->second;
+  }
+
+  ::SetParent(child, parent);
+}
 
 }  // namespace gfx

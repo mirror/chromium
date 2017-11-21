@@ -22,6 +22,7 @@ class GrContext;
 
 namespace gpu {
 class GLInProcessContext;
+class GpuChannelManager;
 class GpuMemoryBufferManager;
 class ImageFactory;
 struct SharedMemoryLimits;
@@ -41,7 +42,8 @@ class VIZ_COMMON_EXPORT InProcessContextProvider : public ContextProvider {
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       gpu::ImageFactory* image_factory,
       const gpu::SharedMemoryLimits& limits,
-      InProcessContextProvider* shared_context);
+      InProcessContextProvider* shared_context,
+      gpu::GpuChannelManager* gpu_channel_manager = nullptr);
 
   gpu::ContextResult BindToCurrentThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
