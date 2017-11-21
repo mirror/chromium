@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6625c13_55f4babb",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T01:28:02Z",
+      "side": 1,
+      "message": "In Chromium we prefer to stick to chromium threading API, rather than GCD. You may find code which uses GCD, but those are not good examples.\n\nweb::WebThread::PostTask(web::WebThread::UI, FROM_HERE, base::BindBlockArc(^{\n});",
+      "range": {
+        "startLine": 58,
+        "startChar": 17,
+        "endLine": 58,
+        "endChar": 40
+      },
+      "revId": "656fc90ea78f26e4618137a2ec7d2906eedb7273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f074a9c_1892722c",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T01:28:02Z",
+      "side": 1,
+      "message": "Form name or field name can easily contain \"-\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 40,
+        "endLine": 91,
+        "endChar": 41
+      },
+      "revId": "656fc90ea78f26e4618137a2ec7d2906eedb7273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
