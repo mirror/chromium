@@ -241,46 +241,55 @@ void AppBannerSettingsHelper::RecordBannerEvent(
     settings->FlushLossyWebsiteSettings();
 }
 
-InstallableStatusCode AppBannerSettingsHelper::ShouldShowBanner(
+bool AppBannerSettingsHelper::HasBeenInstalled(
     content::WebContents* web_contents,
     const GURL& origin_url,
-    const std::string& package_name_or_start_url,
-    base::Time time) {
-  // Never show a banner when the package name or URL is empty.
-  if (package_name_or_start_url.empty())
-    return PACKAGE_NAME_OR_START_URL_EMPTY;
-
-  // Don't show if it has been added to the homescreen.
+    const std::string& package_name_or_start_url) {
   base::Time added_time =
       GetSingleBannerEvent(web_contents, origin_url, package_name_or_start_url,
                            APP_BANNER_EVENT_DID_ADD_TO_HOMESCREEN);
-  if (!added_time.is_null())
-    return ALREADY_INSTALLED;
 
-  // Showing of experimental app banners is under developer control, and
-  // requires a user gesture. In contrast, showing of traditional app banners
-  // is automatic, so we throttle it if the user has recently ignored or
-  // blocked the banner.
-  if (!base::FeatureList::IsEnabled(features::kExperimentalAppBanners)) {
-    base::Time blocked_time = GetSingleBannerEvent(web_contents, origin_url,
-                                                   package_name_or_start_url,
-                                                   APP_BANNER_EVENT_DID_BLOCK);
+  return !added_time.is_null();
+}
 
-    // Null times are in the distant past, so the delta between real times and
-    // null events will always be greater than the limits.
-    if (time - blocked_time <
-        base::TimeDelta::FromDays(gDaysAfterDismissedToShow)) {
-      return PREVIOUSLY_BLOCKED;
-    }
+bool WasEventWithinPeriod(AppBannerSettingsHelper::AppBannerEvent event,
+                          base::TimeDelta period,
+                          content::WebContents* web_contents,
+                          const GURL& origin_url,
+                          const std::string& package_name_or_start_url,
+                          base::Time now) {
+  base::Time event_time = AppBannerSettingsHelper::GetSingleBannerEvent(
+      web_contents, origin_url, package_name_or_start_url, event);
 
-    base::Time shown_time = GetSingleBannerEvent(web_contents, origin_url,
-                                                 package_name_or_start_url,
-                                                 APP_BANNER_EVENT_DID_SHOW);
-    if (time - shown_time < base::TimeDelta::FromDays(gDaysAfterIgnoredToShow))
-      return PREVIOUSLY_IGNORED;
-  }
+  // Null times are in the distant past, so the delta between real times and
+  // null events will always be greater than the limits.
+  return (now - event_time < period);
+}
 
-  return NO_ERROR_DETECTED;
+bool AppBannerSettingsHelper::WasBannerRecentlyBlocked(
+    content::WebContents* web_contents,
+    const GURL& origin_url,
+    const std::string& package_name_or_start_url,
+    base::Time now) {
+  DCHECK(!package_name_or_start_url.empty());
+
+  return WasEventWithinPeriod(
+      APP_BANNER_EVENT_DID_BLOCK,
+      base::TimeDelta::FromDays(gDaysAfterDismissedToShow), web_contents,
+      origin_url, package_name_or_start_url, now);
+}
+
+bool AppBannerSettingsHelper::WasBannerRecentlyIgnored(
+    content::WebContents* web_contents,
+    const GURL& origin_url,
+    const std::string& package_name_or_start_url,
+    base::Time now) {
+  DCHECK(!package_name_or_start_url.empty());
+
+  return WasEventWithinPeriod(
+      APP_BANNER_EVENT_DID_SHOW,
+      base::TimeDelta::FromDays(gDaysAfterIgnoredToShow), web_contents,
+      origin_url, package_name_or_start_url, now);
 }
 
 base::Time AppBannerSettingsHelper::GetSingleBannerEvent(
