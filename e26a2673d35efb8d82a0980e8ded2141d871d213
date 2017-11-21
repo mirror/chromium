@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4384359d_b1242cd7",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T23:18:28Z",
+      "side": 1,
+      "message": "nit: IIUC, this is subtle in that EnsureUserAgentShadowRoot will cause CreateShadowSubtree to be called internally, which explains why we don\u0027t need to do so again in that case. A comment might help, but an alternative might be to remove the CreateShadowSubtree call in DidCreateUserAgentShadowRoot.\n\nWDYT of:\n\n- removing said call\n\n- making HTMLInputElement::InitializeTypeInParsing do this:\nif (input_type_view_-\u003eNeedsShadowSubtree()) {\n  CreateUserAgentShadowRoot();\n  input_type_view_-\u003eCreateShadowSubtree());\n}\n\n- making this call site do:\nif (input_type_view_-\u003eNeedsShadowSubtree()) {\n  EnsureUserAgentShadowRoot();\n  input_type_view_-\u003eCreateShadowSubtree());\n}\n\nIf it doesn\u0027t break anything, it seems clearer to me. Those four lines (the first technically doesn\u0027t need to check it again because at that site we know none exists, but we could check again) could even be gathered into a CreateShadowSubtreeIfNeeded method if you like that better.",
+      "revId": "e26a2673d35efb8d82a0980e8ded2141d871d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
