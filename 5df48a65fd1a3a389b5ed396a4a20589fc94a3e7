@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f067d40b_b440de10",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-21T20:13:04Z",
+      "side": 1,
+      "message": "If you want to get test coverage for this one, make it the first in the list. (only the first one is applied)",
+      "range": {
+        "startLine": 803,
+        "startChar": 16,
+        "endLine": 808,
+        "endChar": 17
+      },
+      "revId": "5df48a65fd1a3a389b5ed396a4a20589fc94a3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
