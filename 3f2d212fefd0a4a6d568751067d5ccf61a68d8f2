@@ -16,6 +16,24 @@
       "revId": "3f2d212fefd0a4a6d568751067d5ccf61a68d8f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f57dbeb_8a173799",
+        "filename": "third_party/WebKit/Source/modules/filesystem/ErrorCallback.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T10:08:07Z",
+      "side": 1,
+      "message": "Yeah, somewhat independent and somewhat related.\n\nFileCallback and ErrorCallback are a pair of callback in Filesystem APIs, so I wanted them to be symmetric.",
+      "parentUuid": "30a2916b_0e611dc2",
+      "revId": "3f2d212fefd0a4a6d568751067d5ccf61a68d8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
