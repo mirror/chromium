@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/elements/exit_prompt_texture.h"
 
+#include "base/i18n/case_conversion.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/grit/generated_resources.h"
@@ -62,7 +63,8 @@ void ExitPromptTexture::Draw(SkCanvas* sk_canvas,
   GetFontList(ToPixels(kFontSizePromptButtonText), text, &fonts);
 
   // Secondary button area.
-  text = l10n_util::GetStringUTF16(IDS_VR_SHELL_EXIT_PROMPT_EXIT_VR_BUTTON);
+  text = base::i18n::ToUpper(
+      l10n_util::GetStringUTF16(IDS_VR_SHELL_EXIT_PROMPT_EXIT_VR_BUTTON));
   lines = PrepareDrawStringRect(
       text, fonts, color_scheme().prompt_secondary_button_foreground,
       &button_text_size, kTextAlignmentCenter, kWrappingBehaviorWrap);
