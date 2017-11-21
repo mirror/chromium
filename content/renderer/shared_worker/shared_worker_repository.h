@@ -39,6 +39,7 @@ class SharedWorkerRepository final
       const blink::WebURL& url,
       const blink::WebString& name,
       DocumentID document_id,
+      const blink::WebSecurityOrigin& security_origin,
       const blink::WebString& content_security_policy,
       blink::WebContentSecurityPolicyType,
       blink::WebAddressSpace,
