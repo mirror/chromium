@@ -37,16 +37,12 @@ IsolateHolder::IsolateHolder(
 IsolateHolder::IsolateHolder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     AccessMode access_mode)
-    : IsolateHolder(std::move(task_runner),
-                    access_mode,
-                    kAllowAtomicsWait,
-                    nullptr) {}
+    : IsolateHolder(std::move(task_runner), access_mode, kAllowAtomicsWait) {}
 
 IsolateHolder::IsolateHolder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     AccessMode access_mode,
-    AllowAtomicsWaitMode atomics_wait_mode,
-    v8::StartupData* startup_data)
+    AllowAtomicsWaitMode atomics_wait_mode)
     : access_mode_(access_mode) {
   v8::ArrayBuffer::Allocator* allocator = g_array_buffer_allocator;
   CHECK(allocator) << "You need to invoke gin::IsolateHolder::Initialize first";
@@ -58,32 +54,32 @@ IsolateHolder::IsolateHolder(
                                        base::SysInfo::AmountOfVirtualMemory());
   params.array_buffer_allocator = allocator;
   params.allow_atomics_wait = atomics_wait_mode == kAllowAtomicsWait;
-  params.external_references = g_reference_table;
 
-  if (startup_data) {
-    CHECK(g_reference_table);
-    V8Initializer::GetV8ContextSnapshotData(startup_data);
-    if (startup_data->data) {
-      params.snapshot_blob = startup_data;
-    }
-  }
+#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+  snapshot_blob_.reset(new v8::StartupData{nullptr, 0});
+  snapshot_type_ =
+      V8Initializer::GetV8ContextSnapshotData(snapshot_blob_.get());
+  CHECK(g_reference_table ||
+        snapshot_type_ != SnapshotType::kV8ContextSnapshot);
+  params.snapshot_blob =
+      (snapshot_type_ == SnapshotType::kNone) ? nullptr : snapshot_blob_.get();
+  params.external_references = g_reference_table;
+#endif
+
   isolate_ = v8::Isolate::New(params);
 
   SetUp(std::move(task_runner));
 }
 
-IsolateHolder::IsolateHolder(v8::StartupData* existing_blob)
-    : access_mode_(AccessMode::kSingleThread) {
-  CHECK(existing_blob);
-
+IsolateHolder::IsolateHolder() : access_mode_(AccessMode::kSingleThread) {
   v8::StartupData unused_natives;
-  V8Initializer::GetV8ExternalSnapshotData(&unused_natives, existing_blob);
-  if (!existing_blob->data) {
-    existing_blob = nullptr;
-  }
-
+  snapshot_blob_.reset(new v8::StartupData{nullptr, 0});
+  // We must not get Blink's snapshot here, because it will be updated from
+  // here.
+  V8Initializer::GetV8ExternalSnapshotData(&unused_natives,
+                                           snapshot_blob_.get());
   snapshot_creator_.reset(
-      new v8::SnapshotCreator(g_reference_table, existing_blob));
+      new v8::SnapshotCreator(g_reference_table, snapshot_blob_.get()));
   isolate_ = snapshot_creator_->GetIsolate();
 
   SetUp(nullptr);
@@ -117,7 +113,10 @@ void IsolateHolder::Initialize(ScriptMode mode,
   CHECK(allocator);
   V8Initializer::Initialize(mode, v8_extras_mode);
   g_array_buffer_allocator = allocator;
-  g_reference_table = reference_table;
+  if (reference_table) {
+    DCHECK(!g_reference_table);
+    g_reference_table = reference_table;
+  }
 }
 
 void IsolateHolder::AddRunMicrotasksObserver() {
