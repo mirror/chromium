@@ -124,13 +124,17 @@ void ChromeCleanupHandler::OnScanning() {
                          base::Value("chrome-cleanup-on-scanning"));
 }
 
-void ChromeCleanupHandler::OnInfected(const std::set<base::FilePath>& files) {
+void ChromeCleanupHandler::OnInfected(
+    const std::set<base::FilePath>& files,
+    const std::set<base::string16>& registry_keys) {
   CallJavascriptFunction("cr.webUIListenerCallback",
                          base::Value("chrome-cleanup-on-infected"),
                          GetFilesAsListStorage(files));
 }
 
-void ChromeCleanupHandler::OnCleaning(const std::set<base::FilePath>& files) {
+void ChromeCleanupHandler::OnCleaning(
+    const std::set<base::FilePath>& files,
+    const std::set<base::string16>& registry_keys) {
   CallJavascriptFunction("cr.webUIListenerCallback",
                          base::Value("chrome-cleanup-on-cleaning"),
                          GetFilesAsListStorage(files));

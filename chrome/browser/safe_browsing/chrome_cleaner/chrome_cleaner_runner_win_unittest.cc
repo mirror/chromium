@@ -113,7 +113,8 @@ class ChromeCleanerRunnerSimpleTest
 
   // IPC callbacks.
 
-  void OnPromptUser(std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+  void OnPromptUser(std::set<base::FilePath>&& files_to_delete,
+                    std::set<base::string16>&& registry_entry,
                     ChromePrompt::PromptUserCallback response) {}
 
   void OnConnectionClosed() {}
@@ -204,22 +205,24 @@ enum class UwsFoundState {
 class ChromeCleanerRunnerTest
     : public testing::TestWithParam<
           std::tuple<UwsFoundState,
+                     MockChromeCleanerProcess::RegistryKeysReporting,
                      MockChromeCleanerProcess::CrashPoint,
                      PromptAcceptance>>,
       public ChromeCleanerRunnerTestDelegate {
  public:
   void SetUp() override {
     UwsFoundState uws_found_state;
+    MockChromeCleanerProcess::RegistryKeysReporting registry_keys_reporting;
     MockChromeCleanerProcess::CrashPoint crash_point;
     PromptAcceptance prompt_acceptance_to_send;
-    std::tie(uws_found_state, crash_point, prompt_acceptance_to_send) =
-        GetParam();
+    std::tie(uws_found_state, registry_keys_reporting, crash_point,
+             prompt_acceptance_to_send) = GetParam();
 
     ASSERT_FALSE(uws_found_state == UwsFoundState::kNoUwsFound &&
                  prompt_acceptance_to_send != PromptAcceptance::DENIED);
 
-    cleaner_process_options_.SetDoFindUws(uws_found_state !=
-                                          UwsFoundState::kNoUwsFound);
+    cleaner_process_options_.SetReportedResults(
+        uws_found_state != UwsFoundState::kNoUwsFound, registry_keys_reporting);
     cleaner_process_options_.set_reboot_required(
         uws_found_state == UwsFoundState::kUwsFoundRebootRequired);
     cleaner_process_options_.set_crash_point(crash_point);
@@ -272,10 +275,12 @@ class ChromeCleanerRunnerTest
   // IPC callbacks.
 
   // Will receive the main Mojo message from the Mock Chrome Cleaner process.
-  void OnPromptUser(std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+  void OnPromptUser(std::set<base::FilePath>&& files_to_delete,
+                    std::set<base::string16>&& registry_keys,
                     ChromePrompt::PromptUserCallback response) {
     on_prompt_user_called_ = true;
     received_files_to_delete_ = std::move(files_to_delete);
+    received_registry_keys_ = std::move(registry_keys);
     BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
         ->PostTask(FROM_HERE, base::BindOnce(std::move(response),
                                              prompt_acceptance_to_send_));
@@ -309,7 +314,8 @@ class ChromeCleanerRunnerTest
   ChromeCleanerRunner::ProcessStatus process_status_;
 
   // Set by OnPromptUser().
-  std::unique_ptr<std::set<base::FilePath>> received_files_to_delete_;
+  std::set<base::FilePath> received_files_to_delete_;
+  std::set<base::string16> received_registry_keys_;
 
   bool on_prompt_user_called_ = false;
   bool on_connection_closed_called_ = false;
@@ -351,8 +357,16 @@ TEST_P(ChromeCleanerRunnerTest, WithMockCleanerProcess) {
 
   if (on_prompt_user_called_ &&
       !cleaner_process_options_.files_to_delete().empty()) {
-    EXPECT_EQ(*received_files_to_delete_,
-              cleaner_process_options_.files_to_delete());
+    EXPECT_EQ(received_files_to_delete_,
+              std::set<base::FilePath>(
+                  cleaner_process_options_.files_to_delete().begin(),
+                  cleaner_process_options_.files_to_delete().end()));
+    EXPECT_EQ(received_registry_keys_,
+              cleaner_process_options_.registry_keys()
+                  ? std::set<base::string16>(
+                        cleaner_process_options_.registry_keys()->begin(),
+                        cleaner_process_options_.registry_keys()->end())
+                  : std::set<base::string16>());
   }
 
   EXPECT_EQ(process_status_.launch_status,
@@ -367,6 +381,9 @@ INSTANTIATE_TEST_CASE_P(
     ChromeCleanerRunnerTest,
     Combine(
         Values(UwsFoundState::kNoUwsFound),
+        Values(MockChromeCleanerProcess::RegistryKeysReporting::kUnsupported,
+               MockChromeCleanerProcess::RegistryKeysReporting::kNotReported,
+               MockChromeCleanerProcess::RegistryKeysReporting::kReported),
         Values(MockChromeCleanerProcess::CrashPoint::kNone,
                MockChromeCleanerProcess::CrashPoint::kOnStartup,
                MockChromeCleanerProcess::CrashPoint::kAfterConnection,
@@ -380,6 +397,9 @@ INSTANTIATE_TEST_CASE_P(
     Combine(
         Values(UwsFoundState::kUwsFoundRebootRequired,
                UwsFoundState::kUwsFoundNoRebootRequired),
+        Values(MockChromeCleanerProcess::RegistryKeysReporting::kUnsupported,
+               MockChromeCleanerProcess::RegistryKeysReporting::kNotReported,
+               MockChromeCleanerProcess::RegistryKeysReporting::kReported),
         Values(MockChromeCleanerProcess::CrashPoint::kNone,
                MockChromeCleanerProcess::CrashPoint::kOnStartup,
                MockChromeCleanerProcess::CrashPoint::kAfterConnection,

@@ -184,7 +184,8 @@ void ChromeCleanerDialogControllerImpl::OnScanning() {
 }
 
 void ChromeCleanerDialogControllerImpl::OnInfected(
-    const std::set<base::FilePath>& files_to_delete) {
+    const std::set<base::FilePath>& files_to_delete,
+    const std::set<base::string16>& registry_keys) {
   DCHECK(!dialog_shown_);
 
   browser_ = chrome_cleaner_util::FindBrowser();
@@ -201,7 +202,8 @@ void ChromeCleanerDialogControllerImpl::OnInfected(
 }
 
 void ChromeCleanerDialogControllerImpl::OnCleaning(
-    const std::set<base::FilePath>& files_to_delete) {
+    const std::set<base::FilePath>& files_to_delete,
+    const std::set<base::string16>& registry_keys) {
   if (!dialog_shown_)
     OnInteractionDone();
 }
