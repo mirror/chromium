@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1be40d7f_be5e54ea",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "\"RequestTermination() was called but S13nServiceWorker is not enabled\"",
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53111a18_9fcd2cc6",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "This comment isn\u0027t so helpful. You might move it to the string in line 706 instead for more detail.",
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14162540_59c671fd",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "DevTools",
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b685441f_81533ea2",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "can still be const? same comment throughout",
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5dd15c_dd7a3edd",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "update this function name",
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd14554c_0c90fe0b",
+        "filename": "content/browser/service_worker/embedded_worker_registry.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "can it be make_unique or is this one of those private constructor things?",
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534356a7_97f95a97",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "probably easier to read without the line break",
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475fa5f4_f09acac3",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "maybe also add: The worker will request to be terminated when it realizes it has been idle for some time.",
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0616d37_cf34e168",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "periodic",
+      "range": {
+        "startLine": 69,
+        "startChar": 51,
+        "endLine": 69,
+        "endChar": 61
+      },
+      "revId": "e98074c41d8a21eceea3a9d3f5e700c71203fe14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

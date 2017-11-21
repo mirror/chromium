@@ -72,6 +72,74 @@
     },
     {
       "key": {
+        "uuid": "24f80915_b7b29d0d",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "S13nServiceWorker is not enabled.",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b24646e_1ad1a0a6",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "Although I\u0027m a fan of comments this one doesn\u0027t look so useful.",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eec0b77_b4fa376a",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "s/Devtool/DevTools/",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0568c362_104f624c",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T07:53:02Z",
+      "side": 1,
+      "message": "can still be const? (same comment throughout)",
+      "revId": "741b0aede51fb810ccc6798c54857e5364acc154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e96c7dea_14f680cb",
         "filename": "content/common/service_worker/embedded_worker.mojom",
         "patchSetId": 9
