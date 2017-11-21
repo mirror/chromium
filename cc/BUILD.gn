@@ -652,6 +652,7 @@ cc_test("cc_unittests") {
     "tiles/picture_layer_tiling_set_unittest.cc",
     "tiles/picture_layer_tiling_unittest.cc",
     "tiles/software_image_decode_cache_unittest.cc",
+    "tiles/software_image_decode_cache_unittest_combinations.cc",
     "tiles/tile_manager_unittest.cc",
     "tiles/tile_priority_unittest.cc",
     "trees/damage_tracker_unittest.cc",
