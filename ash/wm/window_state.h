@@ -192,6 +192,11 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // by this object and the returned object will be owned by the caller.
   std::unique_ptr<State> SetStateObject(std::unique_ptr<State> new_state);
 
+  // Updates |snapped_width_ratio_| based on the given window |bounds|. It gets
+  // set when window is snapped or snapped window bounds is changed after
+  // dragging complete.
+  void UpdateSnappedWidthRatio(const gfx::Rect& bounds);
+
   // True if the window should be unminimized to the restore bounds, as
   // opposed to the window's current bounds. |unminimized_to_restore_bounds_| is
   // reset to the default value after the window is unminimized.
@@ -396,6 +401,10 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   bool can_be_dragged_;
   bool cached_always_on_top_;
   bool allow_set_bounds_direct_ = false;
+
+  // Saves the ratio between snapped window width and display workarea width. It
+  // is used to update snapped window width if display workarea width changed.
+  float snapped_width_ratio_ = 0.5f;
 
   // A property to remember the window position which was set before the
   // auto window position manager changed the window bounds, so that it can get

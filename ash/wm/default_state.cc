@@ -555,6 +555,7 @@ void DefaultState::UpdateBoundsFromState(
           state_type_ == mojom::WindowStateType::LEFT_SNAPPED
               ? GetDefaultLeftSnappedWindowBoundsInParent(window)
               : GetDefaultRightSnappedWindowBoundsInParent(window);
+      window_state->UpdateSnappedWidthRatio(bounds_in_parent);
       break;
 
     case mojom::WindowStateType::DEFAULT:
