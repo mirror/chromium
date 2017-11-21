@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3026c330_5fa562f5",
+        "filename": "chrome/browser/ui/cocoa/app_menu/app_menu_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-21T21:30:12Z",
+      "side": 1,
+      "message": "Ooof just realized that we have (at least) 3x copies of bookmark objects floating around.",
+      "range": {
+        "startLine": 314,
+        "startChar": 5,
+        "endLine": 314,
+        "endChar": 66
+      },
+      "revId": "e7eefd0c2b2f81b661e120546ff539876e277d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cef4c89_b8473ff9",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_cocoa_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-21T21:30:12Z",
+      "side": 1,
+      "message": "Remove these? (not sure what our position is on them)",
+      "range": {
+        "startLine": 89,
+        "startChar": 33,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "e7eefd0c2b2f81b661e120546ff539876e277d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

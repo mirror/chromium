@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cb1e972_19b95970",
+        "filename": "chrome/browser/app_controller_mac_browsertest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-21T21:30:12Z",
+      "side": 0,
+      "message": "Yeah I think MainMenuItem interactions in AppController got snarfed at the last attempt to speed up the bookmarks menu item.",
+      "parentUuid": "d4559930_4994ebe3",
+      "revId": "a46b8b5767c81972d2a1346be1cecba1c99d5119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa58baa7_26969119",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_bridge.h",
         "patchSetId": 9
