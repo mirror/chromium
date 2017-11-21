@@ -5,3 +5,8 @@ michaeln@chromium.org
 
 # TEAM: storage-dev@chromium.org
 # COMPONENT: Blink>Storage
+
+per-file *.mojom=set noparent
+per-file *.mojom=file://ipc/SECURITY_OWNERS
+per-file *_struct_traits*.*=set noparent
+per-file *_struct_traits*.*=file://ipc/SECURITY_OWNERS
