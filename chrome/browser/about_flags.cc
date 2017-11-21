@@ -3546,10 +3546,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kModuleScriptsImportMetaUrlDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kModuleScriptsImportMetaUrl)},
 
+#if defined(OS_ANDROID)
     {"stop-loading-in-background",
      flag_descriptions::kStopLoadingInBackgroundName,
      flag_descriptions::kStopLoadingInBackgroundDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kStopLoadingInBackground)},
+#endif  // defined(OS_ANDROID)
 
 #if defined(TOOLKIT_VIEWS)
     {"experimental-tab-controller",

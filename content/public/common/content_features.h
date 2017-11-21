@@ -79,7 +79,6 @@ CONTENT_EXPORT extern const base::Feature kServiceWorkerScriptStreaming;
 CONTENT_EXPORT extern const base::Feature kSignInProcessIsolation;
 CONTENT_EXPORT extern const base::Feature kSitePerProcess;
 CONTENT_EXPORT extern const base::Feature kSlimmingPaintInvalidation;
-CONTENT_EXPORT extern const base::Feature kStopLoadingInBackground;
 CONTENT_EXPORT extern const base::Feature kTimerThrottlingForHiddenFrames;
 CONTENT_EXPORT extern const base::Feature kTopDocumentIsolation;
 CONTENT_EXPORT extern const base::Feature kTouchpadAndWheelScrollLatching;
@@ -113,6 +112,7 @@ CONTENT_EXPORT extern const base::Feature kAndroidAutofillAccessibility;
 CONTENT_EXPORT extern const base::Feature kHideIncorrectlySizedFullscreenFrames;
 CONTENT_EXPORT extern const base::Feature kImeThread;
 CONTENT_EXPORT extern const base::Feature kWebNfc;
+CONTENT_EXPORT extern const base::Feature kStopLoadingInBackground;
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_MACOSX)
