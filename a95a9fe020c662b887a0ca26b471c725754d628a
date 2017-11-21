@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68423275_2c439926",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-21T21:53:42Z",
+      "side": 1,
+      "message": "I tried changing this to \"upstream_config\" but found while attempting to upload my changes that \"git cl upload\" seems to special-case the \"master\" branch. If one uses any other branch name as the upstream then git cl upload wants to see that branch uploaded.\n\nBeing able to merge easily with upstream changes like on the Chromium project is important. I\u0027m putting this back the way it was.",
+      "parentUuid": "fe9aedc6_035763f3",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "a95a9fe020c662b887a0ca26b471c725754d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cee88ec2_106da432",
         "filename": "README.md",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-21T21:34:36Z",
       "side": 1,
       "message": "\"git checkout origin/infra/config\"\n\"git new-branch --upstream_current your_branch_name\"\n\nShould also work",
+      "revId": "a95a9fe020c662b887a0ca26b471c725754d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8533b10_c6883618",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-21T21:53:42Z",
+      "side": 1,
+      "message": "Added as a comment. I personally always use git checkout -b.",
+      "parentUuid": "cee88ec2_106da432",
       "revId": "a95a9fe020c662b887a0ca26b471c725754d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
