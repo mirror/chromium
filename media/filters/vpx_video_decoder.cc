@@ -145,11 +145,13 @@ void VpxVideoDecoder::Initialize(const VideoDecoderConfig& config,
                                  const OutputCB& output_cb) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(config.IsValidConfig());
+  LOG(ERROR) << "AVDA: " << __func__;
 
   CloseDecoder();
 
   InitCB bound_init_cb = bind_callbacks_ ? BindToCurrentLoop(init_cb) : init_cb;
   if (config.is_encrypted() || !ConfigureDecoder(config)) {
+  LOG(ERROR) << "AVDA: " << __func__;
     bound_init_cb.Run(false);
     return;
   }
@@ -158,6 +160,7 @@ void VpxVideoDecoder::Initialize(const VideoDecoderConfig& config,
   config_ = config;
   state_ = kNormal;
   output_cb_ = output_cb;
+  LOG(ERROR) << "AVDA: " << __func__;
   bound_init_cb.Run(true);
 }
 
@@ -168,21 +171,25 @@ void VpxVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   DCHECK(!decode_cb.is_null());
   DCHECK_NE(state_, kUninitialized)
       << "Called Decode() before successful Initialize()";
+  LOG(ERROR) << "AVDA: " << __func__;
 
   DecodeCB bound_decode_cb =
       bind_callbacks_ ? BindToCurrentLoop(decode_cb) : decode_cb;
 
   if (state_ == kError) {
+  LOG(ERROR) << "AVDA: " << __func__;
     bound_decode_cb.Run(DecodeStatus::DECODE_ERROR);
     return;
   }
 
   if (state_ == kDecodeFinished) {
+  LOG(ERROR) << "AVDA: " << __func__;
     bound_decode_cb.Run(DecodeStatus::OK);
     return;
   }
 
   if (state_ == kNormal && buffer->end_of_stream()) {
+  LOG(ERROR) << "AVDA: " << __func__;
     state_ = kDecodeFinished;
     bound_decode_cb.Run(DecodeStatus::OK);
     return;
@@ -193,12 +200,15 @@ void VpxVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   if (config_.codec() == kCodecVP9) {
     SCOPED_UMA_HISTOGRAM_TIMER("Media.VpxVideoDecoder.Vp9DecodeTime");
     decode_okay = VpxDecode(buffer.get(), &video_frame);
+  LOG(ERROR) << "AVDA: " << __func__;
   } else {
     decode_okay = VpxDecode(buffer.get(), &video_frame);
+  LOG(ERROR) << "AVDA: " << __func__;
   }
 
   if (!decode_okay) {
     state_ = kError;
+  LOG(ERROR) << "AVDA: " << __func__;
     bound_decode_cb.Run(DecodeStatus::DECODE_ERROR);
     return;
   }
@@ -206,6 +216,7 @@ void VpxVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   // We might get a successful VpxDecode but not a frame if only a partial
   // decode happened.
   if (video_frame) {
+  LOG(ERROR) << "AVDA: " << __func__;
     video_frame->metadata()->SetBoolean(VideoFrameMetadata::POWER_EFFICIENT,
                                         false);
     // Safe to call |output_cb_| here even if we're on the offload thread since
@@ -220,6 +231,7 @@ void VpxVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
 void VpxVideoDecoder::Reset(const base::Closure& reset_cb) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   state_ = kNormal;
+  LOG(ERROR) << "AVDA: " << __func__;
 
   if (bind_callbacks_)
     BindToCurrentLoop(reset_cb).Run();
@@ -236,6 +248,7 @@ bool VpxVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config) {
     return false;
 
   // These are the combinations of codec-pixel format supported in principle.
+  LOG(ERROR) << "AVDA: " <<__func__ << " codec: " << config.codec() << " format: " << config.format();
   DCHECK(
       (config.codec() == kCodecVP8 && config.format() == PIXEL_FORMAT_YV12) ||
       (config.codec() == kCodecVP8 && config.format() == PIXEL_FORMAT_YV12A) ||
@@ -268,6 +281,7 @@ bool VpxVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config) {
     if (vpx_codec_set_frame_buffer_functions(
             vpx_codec_.get(), &GetVP9FrameBuffer, &ReleaseVP9FrameBuffer,
             memory_pool_.get())) {
+  LOG(ERROR) << "AVDA: " << __func__;
       DLOG(ERROR) << "Failed to configure external buffers. "
                   << vpx_codec_error(vpx_codec_.get());
       return false;
@@ -279,6 +293,7 @@ bool VpxVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config) {
 
   DCHECK(!vpx_codec_alpha_);
   vpx_codec_alpha_ = InitializeVpxContext(config);
+  LOG(ERROR) << "AVDA: " << __func__ << " alpha: " << vpx_codec_alpha_.get();
   return !!vpx_codec_alpha_;
 }
 
@@ -316,6 +331,7 @@ bool VpxVideoDecoder::VpxDecode(const DecoderBuffer* buffer,
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(video_frame);
   DCHECK(!buffer->end_of_stream());
+  LOG(ERROR) << "AVDA: " << __func__;
 
   int64_t timestamp = buffer->timestamp().InMicroseconds();
   void* user_priv = reinterpret_cast<void*>(&timestamp);
@@ -327,6 +343,7 @@ bool VpxVideoDecoder::VpxDecode(const DecoderBuffer* buffer,
     if (status != VPX_CODEC_OK) {
       DLOG(ERROR) << "vpx_codec_decode() error: "
                   << vpx_codec_err_to_string(status);
+  LOG(ERROR) << "AVDA: " << __func__ << " " << vpx_codec_err_to_string(status);
       return false;
     }
   }
@@ -341,6 +358,7 @@ bool VpxVideoDecoder::VpxDecode(const DecoderBuffer* buffer,
 
   if (vpx_image->user_priv != user_priv) {
     DLOG(ERROR) << "Invalid output timestamp.";
+  LOG(ERROR) << "AVDA: " << __func__;
     return false;
   }
 
@@ -348,15 +366,19 @@ bool VpxVideoDecoder::VpxDecode(const DecoderBuffer* buffer,
   AlphaDecodeStatus alpha_decode_status =
       DecodeAlphaPlane(vpx_image, &vpx_image_alpha, buffer);
   if (alpha_decode_status == kAlphaPlaneError) {
+  LOG(ERROR) << "AVDA: " << __func__;
     return false;
   } else if (alpha_decode_status == kNoAlphaPlaneData) {
     *video_frame = nullptr;
+  LOG(ERROR) << "AVDA: " << __func__;
     return true;
   }
   if (!CopyVpxImageToVideoFrame(vpx_image, vpx_image_alpha, video_frame)) {
+  LOG(ERROR) << "AVDA: " << __func__;
     return false;
   }
   if (vpx_image_alpha && config_.codec() == kCodecVP8) {
+  LOG(ERROR) << "AVDA: " << __func__;
     libyuv::CopyPlane(vpx_image_alpha->planes[VPX_PLANE_Y],
                       vpx_image_alpha->stride[VPX_PLANE_Y],
                       (*video_frame)->visible_data(VideoFrame::kAPlane),
@@ -438,6 +460,7 @@ bool VpxVideoDecoder::VpxDecode(const DecoderBuffer* buffer,
     }
   }
 
+  LOG(ERROR) << "AVDA: " << __func__;
   return true;
 }
 
