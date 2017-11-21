@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1a1b472_4ae91190",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T03:55:16Z",
+      "side": 1,
+      "message": "This is OK, but it won\u0027t disable the context menu, it will fill in the context menu with disabled items. Is that what we want?",
+      "revId": "92e46e1351a12ea313c4cc75fbbc753e30fc76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
