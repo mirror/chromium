@@ -27,8 +27,14 @@ SensorReadingSharedBuffer::~SensorReadingSharedBuffer() = default;
 SensorReading::SensorReading() {
   new (&raw) SensorReadingRaw();
 }
+SensorReading::SensorReading(const SensorReading& other) {
+  raw = other.raw;
+}
 SensorReading::~SensorReading() {
   raw.~SensorReadingRaw();
+}
+SensorReading& SensorReading::operator=(const SensorReading& other) {
+  raw = other.raw;
 }
 
 // static
