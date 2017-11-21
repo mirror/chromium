@@ -435,6 +435,24 @@
     },
     {
       "key": {
+        "uuid": "7084df04_ab876a67",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-21T16:29:07Z",
+      "side": 1,
+      "message": "This is good enough. I don\u0027t think visibility check is necessary.",
+      "parentUuid": "2fe4e276_03b4b195",
+      "revId": "03d1ac4b19f1d4c4696612a8df0eb572202abf58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69cd653b_7324816e",
         "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
         "patchSetId": 9

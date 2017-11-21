@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d250d7cf_4956cc24",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-21T16:29:07Z",
+      "side": 1,
+      "message": "nit: No \"const\" when returning non-const pointer/object ref.\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Use-const-correctly",
+      "range": {
+        "startLine": 53,
+        "startChar": 57,
+        "endLine": 53,
+        "endChar": 63
+      },
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a31060b_fcd41d58",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-21T16:29:07Z",
+      "side": 1,
+      "message": "Can you implement similar unbinding logic for SamlHandler? We have a few event listeners there too.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/gaia_auth_host/saml_handler.js?rcl\u003d6809a4d6fe9136335e05f06ddf04e10ab15b6d63\u0026l\u003d144",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
