@@ -161,7 +161,6 @@ public class NewTabPageTest {
     @Test
     @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
-    @DisabledTest(message = "crbug/784598")
     public void testRender() throws IOException {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         RenderTestRule.sanitize(mNtp.getView());
@@ -176,14 +175,16 @@ public class NewTabPageTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                recyclerView.scrollBy(0, scrollAmount);
+                // Scroll to bottom.
+                recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
             }
         });
 
         CriteriaHelper.pollUiThread(new Criteria(){
             @Override
             public boolean isSatisfied() {
-                return recyclerView.computeVerticalScrollOffset() == scrollAmount;
+                // Wait until we can scroll no further.
+                return !recyclerView.canScrollVertically(1);
             }
         });
 
