@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc50006b_dea18e42",
+        "filename": "content/browser/renderer_host/clipboard_host_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T00:28:00Z",
+      "side": 1,
+      "message": "To be consistent, this should pass\n\nshared_memory-\u003eClone(mojo::SharedBufferHandle::AccessMode::READ_ONLY)",
+      "range": {
+        "startLine": 38,
+        "startChar": 24,
+        "endLine": 38,
+        "endChar": 48
+      },
+      "revId": "16547eabd808e25fa276431713e870ddc6959b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
