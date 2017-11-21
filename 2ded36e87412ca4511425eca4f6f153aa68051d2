@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb4065a7_9ba92f63",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/invalid-image-constructor-error.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T20:35:07Z",
+      "side": 1,
+      "message": "This global assumes that both \u0027foo\u0027 and \u0027error\u0027 are run in the same global scope but the spec does not require this afaict. There is no reason to expect separate instances to run in the same scope.",
+      "revId": "2ded36e87412ca4511425eca4f6f153aa68051d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359740d7_a16c28f0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/invalid-image-constructor-error.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T20:35:07Z",
+      "side": 1,
+      "message": "How could this test ever fail? It starts passing and nothing tries to paint \u0027foo\u0027 so even if the constructor didn\u0027t throw an error this still shouldn\u0027t be called. Wouldn\u0027t we test this by painting red here and green below?",
+      "range": {
+        "startLine": 22,
+        "startChar": 14,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "2ded36e87412ca4511425eca4f6f153aa68051d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d09d4a_5a3fba1c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/paint2d-image-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T20:35:07Z",
+      "side": 1,
+      "message": "doesn\u0027t this need to be an async test if it doesn\u0027t have the correct result until the image is loaded?",
+      "revId": "2ded36e87412ca4511425eca4f6f153aa68051d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
