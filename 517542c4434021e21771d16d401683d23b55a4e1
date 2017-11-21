@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "fa25dacf_d63b56f1",
+        "filename": "sandbox/linux/syscall_broker/broker_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-21T18:02:46Z",
+      "side": 1,
+      "message": "Ack. I\u0027d keep sys/stat.h but drop the others.",
+      "parentUuid": "76fe6e97_a17c2564",
+      "revId": "517542c4434021e21771d16d401683d23b55a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f324a726_a22425c8",
         "filename": "sandbox/linux/syscall_broker/broker_host.cc",
         "patchSetId": 5
@@ -160,6 +178,24 @@
       "side": 1,
       "message": "So it sounds like I have to implement both stat and stat64 handlers, and similarly funnel at_fcwd into these like we do with open.\n\nGot a pointer to newfstatat() ?",
       "parentUuid": "ad827cf3_c1e55511",
+      "revId": "517542c4434021e21771d16d401683d23b55a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc43c46a_2002bc92",
+        "filename": "sandbox/linux/syscall_broker/broker_process.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-21T18:02:46Z",
+      "side": 1,
+      "message": "The best pointers I have are to the kernel source directly. All the syscall handlers for stat are in this file:\n\nhttps://github.com/torvalds/linux/blob/v4.12/fs/stat.c#L243\nhttps://github.com/torvalds/linux/blob/v4.12/include/uapi/asm-generic/stat.h#L23\n\nI think we should broker stat/stat64 and then redirect fstatat/fstatat64 in the sandbox process to the stat syscall if the call comes with AT_FDCWD and flags \u003d\u003d 0.\n\nI don\u0027t know if we actually need to handle newfstatat though.",
+      "parentUuid": "2b7e3258_32aec837",
       "revId": "517542c4434021e21771d16d401683d23b55a4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
