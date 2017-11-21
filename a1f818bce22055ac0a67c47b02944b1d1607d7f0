@@ -104,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "60308c54_22ed149c",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T11:12:31Z",
+      "side": 1,
+      "message": "You do not need this. You also need to remove member |oauth_tokens_| from chrome/browser/chromeos/login/signin/oauth2_token_fetcher.cc to make it compile. Otherwise it should be fine being non-copyable.",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23289b7a_1cc7d65c",
         "filename": "google_apis/gaia/gaia_auth_consumer.h",
         "patchSetId": 4
