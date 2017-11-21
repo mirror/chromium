@@ -45,6 +45,30 @@
       "revId": "ffec3d1a5e2ff4af7f09745b485ae3bee3776372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0c3034_d178f035",
+        "filename": "chrome/browser/ui/interventions/intervention_infobar_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T16:23:10Z",
+      "side": 1,
+      "message": "Hum that\u0027s not even the object\u0027s owner... for framebust delegate is owned by the infobar (the object\u0027s owner), while for OOM it\u0027s by the object that requests the creation of the infobar... Maybe I\u0027ll just remove the comment there and just mention that it should outlive the object.",
+      "parentUuid": "743b31f7_1baa1d1a",
+      "range": {
+        "startLine": 30,
+        "startChar": 31,
+        "endLine": 30,
+        "endChar": 54
+      },
+      "revId": "ffec3d1a5e2ff4af7f09745b485ae3bee3776372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
