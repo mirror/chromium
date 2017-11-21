@@ -57,6 +57,67 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
         rare_paint_data->ContentsProperties(),
         snapped_paint_offset + foreground_layer->OffsetFromLayoutObject());
   }
+
+  if (const auto* scrollable_area =
+          mapping->OwningLayer().GetScrollableArea()) {
+    if (auto* horizontal_scrollbar_layer =
+            mapping->LayerForHorizontalScrollbar()) {
+      horizontal_scrollbar_layer->SetLayerState(
+          PropertyTreeState(*rare_paint_data->LocalBorderBoxProperties()),
+          snapped_paint_offset +
+              horizontal_scrollbar_layer->OffsetFromLayoutObject() +
+              scrollable_area->HorizontalScrollbar()->FrameRect().Location());
+    }
+    if (auto* vertical_scrollbar_layer = mapping->LayerForVerticalScrollbar()) {
+      vertical_scrollbar_layer->SetLayerState(
+          PropertyTreeState(*rare_paint_data->LocalBorderBoxProperties()),
+          snapped_paint_offset +
+              vertical_scrollbar_layer->OffsetFromLayoutObject() +
+              scrollable_area->VerticalScrollbar()->FrameRect().Location());
+    }
+    if (auto* scroll_corner_layer = mapping->LayerForScrollCorner()) {
+      scroll_corner_layer->SetLayerState(
+          PropertyTreeState(*rare_paint_data->LocalBorderBoxProperties()),
+          snapped_paint_offset + scroll_corner_layer->OffsetFromLayoutObject());
+    }
+  }
+
+  // TODO(trchen): Complete for all drawable layers.
+}
+
+void CompositingLayerPropertyUpdater::Update(const LocalFrameView& frame_view) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() ||
+      RuntimeEnabledFeatures::SlimmingPaintV2Enabled() ||
+      RuntimeEnabledFeatures::RootLayerScrollingEnabled())
+    return;
+
+  const auto* contents_state = frame_view.TotalPropertyTreeStateForContents();
+  if (!contents_state)
+    return;
+
+  auto* horizontal_scrollbar_layer = frame_view.LayerForHorizontalScrollbar();
+  auto* vertical_scrollbar_layer = frame_view.LayerForVerticalScrollbar();
+  auto* scroll_corner_layer = frame_view.LayerForScrollCorner();
+  if (horizontal_scrollbar_layer || vertical_scrollbar_layer ||
+      scroll_corner_layer) {
+    PropertyTreeState scrollbar_state(frame_view.PreTranslation(),
+                                      contents_state->Clip()->Parent(),
+                                      contents_state->Effect());
+    if (horizontal_scrollbar_layer) {
+      horizontal_scrollbar_layer->SetLayerState(
+          PropertyTreeState(scrollbar_state),
+          frame_view.HorizontalScrollbar()->FrameRect().Location());
+    }
+    if (vertical_scrollbar_layer) {
+      vertical_scrollbar_layer->SetLayerState(
+          PropertyTreeState(scrollbar_state),
+          frame_view.VerticalScrollbar()->FrameRect().Location());
+    }
+    if (scroll_corner_layer) {
+      scroll_corner_layer->SetLayerState(PropertyTreeState(scrollbar_state),
+                                         IntPoint());
+    }
+  }
   // TODO(trchen): Complete for all drawable layers.
 }
 
