@@ -180,6 +180,10 @@ class CORE_EXPORT ContentSecurityPolicy
                  SecurityViolationReportingPolicy,
                  ExceptionStatus,
                  const String& script_content) const;
+  bool AllowWasmEval(ScriptState*,
+                     SecurityViolationReportingPolicy,
+                     ExceptionStatus,
+                     const String& script_content) const;
   bool AllowPluginType(const String& type,
                        const String& type_attribute,
                        const KURL&,
