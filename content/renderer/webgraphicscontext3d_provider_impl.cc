@@ -67,7 +67,7 @@ void WebGraphicsContext3DProviderImpl::SetLostContextCallback(
 }
 
 void WebGraphicsContext3DProviderImpl::SetErrorMessageCallback(
-    const base::Callback<void(const char*, int32_t)>& c) {
+    const base::RepeatingCallback<void(const char*, int32_t)>& c) {
   provider_->ContextSupport()->SetErrorMessageCallback(c);
 }
 
