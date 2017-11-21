@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11bd6442_43344ec6",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "\u0027Transform\u0027 or better, something more descriptive, e.g. \u0027GetBluetoothDeviceInfo\u0027",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6916e479_86ffb9b0",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "nit: slightly more clear (I think) + effiicient to remove second condition from for statement and add here:\n\nif (list.size() \u003e\u003d kMaximumDevicesShown)\n  break;",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83f2a41_0bc0b299",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1696697_72ca5f65",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "This can be a member variable instead of a property since we don\u0027t use it in the HTML.\n\nAlso, initialize to \u0027undefined\u0027 instead of -1 so that we don\u0027t have to worry about whether \u0027-1\u0027 is a valid id.",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc95cf6_8a302a7e",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "We should make \u0027added\u0027 a separate listener and have that call requestListUpdate. This should do nothing if index \u003c 0.",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac80468_71ccb3b7",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "invert and early exit",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db202fd_e5568151",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "It\u0027s unfortnate that we are forced to do this in the JS. Have we considered doing this in the bluetooth model instead so that the Web UI and system tray UI do not need to duplicate the sorting logic? Frankly we could also limit the size of the device list there as well.",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be20cc0e_fbff11cc",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "Same comment as in the C++ about testing the list lenght here instead of in the for statement.",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

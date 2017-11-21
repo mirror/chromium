@@ -69,6 +69,23 @@
       "revId": "3d85a818c88c9bbeff14ea440b39d9a202b7ba76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59709114_8fdf25e0",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T21:03:11Z",
+      "side": 1,
+      "message": "I guess I missed a previous discussion arguing against limiting this here?",
+      "revId": "3d85a818c88c9bbeff14ea440b39d9a202b7ba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
