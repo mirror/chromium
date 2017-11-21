@@ -16,6 +16,24 @@
       "revId": "13735fd7943f8b236eb3a50ca342592471d3a095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3ca8ac1_12152550",
+        "filename": "chrome/browser/ui/aura/accessibility/ax_tree_source_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-21T16:13:34Z",
+      "side": 1,
+      "message": "No, because when you move a Window, a Widget, or a View, all of its\nchildren move with it, and they do not get location changed events\nfired on them unless the parent is also resized and that triggers a\nre-layout.\n\nBasically if we didn\u0027t do it this way, we\u0027d have to invalidate the\nwhole subtree when anything moves in order to be sure that all of the\nchildren are correct. For something like a window animating (the bug\nI\u0027m trying to fix), that\u0027s a lot less efficient.",
+      "parentUuid": "73b20bf6_f218378f",
+      "revId": "13735fd7943f8b236eb3a50ca342592471d3a095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
