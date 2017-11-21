@@ -168,9 +168,9 @@ Browser* GetBrowserForDisposition(chrome::NavigateParams* params) {
       } else if (params->source_contents) {
         extensions::TabHelper* extensions_tab_helper =
             extensions::TabHelper::FromWebContents(params->source_contents);
-        if (extensions_tab_helper && extensions_tab_helper->is_app()) {
+        if (extensions_tab_helper && extensions_tab_helper->IsApp()) {
           app_name = web_app::GenerateApplicationNameFromExtensionId(
-              extensions_tab_helper->extension_app()->id());
+              extensions_tab_helper->GetExtensionApp()->id());
         }
       }
 #endif

@@ -1475,7 +1475,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, OpenAppWindowLikeNtp) {
   ASSERT_TRUE(extensions::TabHelper::FromWebContents(app_window));
   EXPECT_EQ(
       extension_app,
-      extensions::TabHelper::FromWebContents(app_window)->extension_app());
+      extensions::TabHelper::FromWebContents(app_window)->GetExtensionApp());
   EXPECT_EQ(extensions::AppLaunchInfo::GetFullLaunchURL(extension_app),
             app_window->GetURL());
 

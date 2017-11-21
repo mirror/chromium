@@ -77,8 +77,8 @@ class TabHelper : public content::WebContentsObserver,
   // Set just the app icon, used by panels created by an extension.
   void SetExtensionAppIconById(const ExtensionId& extension_app_id);
 
-  const Extension* extension_app() const { return extension_app_; }
-  bool is_app() const { return extension_app_ != NULL; }
+  const Extension* GetExtensionApp() const;
+  bool IsApp() const;
   const WebApplicationInfo& web_app_info() const {
     return web_app_info_;
   }

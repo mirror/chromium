@@ -214,7 +214,8 @@ void TabHelper::RemoveScriptExecutionObserver(
 }
 
 void TabHelper::SetExtensionApp(const Extension* extension) {
-  DCHECK(!extension || AppLaunchInfo::GetFullLaunchURL(extension).is_valid());
+  DCHECK(!extension || extension->is_hosted_app() ||
+         extension->is_legacy_packaged_app());
   if (extension_app_ == extension)
     return;
 
@@ -245,6 +246,19 @@ void TabHelper::SetExtensionAppIconById(const ExtensionId& extension_app_id) {
   const Extension* extension = GetExtension(extension_app_id);
   if (extension)
     UpdateExtensionAppIcon(extension);
+}
+
+const Extension* TabHelper::GetExtensionApp() const {
+  if (extension_app_) {
+    Browser* browser = chrome::FindBrowserWithWebContents(web_contents());
+    CHECK(!browser || web_app::GetExtensionIdFromApplicationName(
+                          browser->app_name()) == extension_app_->id());
+  }
+  return extension_app_;
+}
+
+bool TabHelper::IsApp() const {
+  return GetExtensionApp();
 }
 
 SkBitmap* TabHelper::GetExtensionAppIcon() {
@@ -325,7 +339,7 @@ void TabHelper::DidCloneToNewWebContents(WebContents* old_web_contents,
   CreateForWebContents(new_web_contents);
   TabHelper* new_helper = FromWebContents(new_web_contents);
 
-  new_helper->SetExtensionApp(extension_app());
+  new_helper->SetExtensionApp(GetExtensionApp());
   new_helper->extension_app_icon_ = extension_app_icon_;
 }
 

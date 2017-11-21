@@ -102,7 +102,7 @@ std::string ChromeTabRestoreServiceClient::GetExtensionAppIDForTab(
   // extensions_tab_helper is NULL in some browser tests.
   if (extensions_tab_helper) {
     const extensions::Extension* extension =
-        extensions_tab_helper->extension_app();
+        extensions_tab_helper->GetExtensionApp();
     if (extension)
       extension_app_id = extension->id();
   }
