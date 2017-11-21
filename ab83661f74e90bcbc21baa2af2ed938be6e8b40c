@@ -22,6 +22,30 @@
       "revId": "ab83661f74e90bcbc21baa2af2ed938be6e8b40c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7623b4c4_a246d7e7",
+        "filename": "ios/third_party/motion_interchange_objc/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T10:09:04Z",
+      "side": 1,
+      "message": "It is animation for Chrome\u0027s Browser UI on iOS as implemented by the Material Design Components UI library. The description is copied verbatim from the project description. Should I rephrase it to make this clearer?",
+      "parentUuid": "6778014f_a5a955c2",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "ab83661f74e90bcbc21baa2af2ed938be6e8b40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
