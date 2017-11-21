@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2af984ed_3ce9155e",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-21T13:06:26Z",
+      "side": 1,
+      "message": "nit: Also add NOT_IMPLEMENTED() ?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "1cdab223ca3111397aab89acb74582706c25cdc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b52daa_f39cc7cc",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-21T13:06:26Z",
+      "side": 1,
+      "message": "Please clarify the meaning of all the parameters.\n\nPlease explain the hidden assumptions (this records consent for the signed-in account, if you\u0027re not signed in it will probably DCHECK() etc.)",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "1cdab223ca3111397aab89acb74582706c25cdc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675bb60a_8b1a2759",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-21T13:06:26Z",
+      "side": 1,
+      "message": "I\u0027ve seen your comments in the doc. But since this glue layer is supposed to unblock us for future possibilities, I would still prefer boolean. I predict that we will discover failure modes, and I\u0027d rather end up with a bool method that always returns \"true\" than having to change things mid-implementation.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "1cdab223ca3111397aab89acb74582706c25cdc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
