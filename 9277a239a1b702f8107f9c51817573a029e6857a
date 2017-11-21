@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65f02863_52406e3c",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-11-21T13:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57450b34_db1a3583",
+      "range": {
+        "startLine": 69,
+        "startChar": 77,
+        "endLine": 69,
+        "endChar": 81
+      },
+      "revId": "9277a239a1b702f8107f9c51817573a029e6857a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6f8e6b7_a2323d4b",
         "filename": "components/flags_ui/resources/flags.html",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T10:10:19Z",
       "side": 1,
       "message": "So, I just realized that it\u0027s a bit weird to i18nize the controls here, as the flag *contents* are not translated (chrome://flags is meant to be used by developers, not the general public, and removing the translations saves quite a bit of binary size). Would it be more consistent to stop localizing these strings too?\n\n(Also, meta-question: Who actually makes product decisions for chrome://flags? Is it essentially you? 😃)",
+      "range": {
+        "startLine": 90,
+        "startChar": 64,
+        "endLine": 90,
+        "endChar": 78
+      },
+      "revId": "9277a239a1b702f8107f9c51817573a029e6857a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57790caa_2bfb7933",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-11-21T13:42:19Z",
+      "side": 1,
+      "message": "Good point I\u0027ve told translators not to translate flags strings when I updated but I guess it just automatically goes through the workflow. I\u0027ll put together a CL to do this. \n\nRe flags decisions. It seems like they are all coming through me because due to being the last person who touched the code. As I work in the UX team, I do discuss feature requests with a couple of people on the team who are interested through being frequent users of the flags page.\n\nThere is one last overhaul I want to get round to which is to make all the switches work the same showing the current state of the flag rather than a future state.",
+      "parentUuid": "e6f8e6b7_a2323d4b",
       "range": {
         "startLine": 90,
         "startChar": 64,
