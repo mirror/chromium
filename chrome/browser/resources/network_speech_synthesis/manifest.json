@@ -1,153 +1,517 @@
 {
-   "background": {
-      "scripts": [ "tts_extension.js" ],
-      "persistent": false
-   },
-   "description": "Component extension providing speech via the Google network text-to-speech service.",
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8GSbNUMGygqQTNDMFGIjZNcwXsHLzkNkHjWbuY37PbNdSDZ4VqlVjzbWqODSe+MjELdv5Keb51IdytnoGYXBMyqKmWpUrg+RnKvQ5ibWr4MW9pyIceOIdp9GrzC1WZGgTmZismYR3AjaIpufZ7xDdQQv+XrghPWCkdVqLN+qZDA1HU+DURznkMICiDDSH2sU0egm9UbWfS218bZqzKeQDiC3OnTPlaxcbJtKUuupIm5knjze3Wo9Ae9poTDMzKgchg0VlFCv3uqox+wlD8sjXBoyBCCK9HpImdVAF1a7jpdgiUHpPeV/26oYzM9/grltwNR3bzECQgSpyXp0eyoegwIDAQAB",
-   "manifest_version": 2,
-   "name": "Google Network Speech",
-   "permissions": [
-     "systemPrivate",
-     "ttsEngine",
-     "https://www.google.com/"
-   ],
-   "tts_engine": {
-      "voices": [
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "de-DE",
-          "voice_name": "Google Deutsch",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "en-US",
-          "voice_name": "Google US English",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "en-GB",
-          "voice_name": "Google UK English Female",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "male",
-          "lang": "en-GB",
-          "voice_name": "Google UK English Male",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "es-ES",
-          "voice_name": "Google español",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "es-US",
-          "voice_name": "Google español de Estados Unidos",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "fr-FR",
-          "voice_name": "Google français",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "hi-IN",
-          "voice_name": "Google हिन्दी",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "id-ID",
-          "voice_name": "Google Bahasa Indonesia",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "it-IT",
-          "voice_name": "Google italiano",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "ja-JP",
-          "voice_name": "Google 日本語",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "ko-KR",
-          "voice_name": "Google 한국의",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "nl-NL",
-          "voice_name": "Google Nederlands",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "pl-PL",
-          "voice_name": "Google polski",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "pt-BR",
-          "voice_name": "Google português do Brasil",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "ru-RU",
-          "voice_name": "Google русский",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "zh-CN",
-          "voice_name": "Google 普通话（中国大陆）",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "zh-HK",
-          "voice_name": "Google 粤語（香港）",
-          "remote": true
-        },
-        {
-          "event_types": [ "start", "end", "error" ],
-          "gender": "female",
-          "lang": "zh-TW",
-          "voice_name": "Google 國語（臺灣）",
-          "remote": true
-        }
-      ]
-   },
-   "version": "1.0"
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "tts_extension.js"
+    ]
+  },
+  "description": "Component extension providing speech via the Google network text-to-speech service.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8GSbNUMGygqQTNDMFGIjZNcwXsHLzkNkHjWbuY37PbNdSDZ4VqlVjzbWqODSe+MjELdv5Keb51IdytnoGYXBMyqKmWpUrg+RnKvQ5ibWr4MW9pyIceOIdp9GrzC1WZGgTmZismYR3AjaIpufZ7xDdQQv+XrghPWCkdVqLN+qZDA1HU+DURznkMICiDDSH2sU0egm9UbWfS218bZqzKeQDiC3OnTPlaxcbJtKUuupIm5knjze3Wo9Ae9poTDMzKgchg0VlFCv3uqox+wlD8sjXBoyBCCK9HpImdVAF1a7jpdgiUHpPeV/26oYzM9/grltwNR3bzECQgSpyXp0eyoegwIDAQAB",
+  "manifest_version": 2,
+  "name": "Google Network Speech",
+  "permissions": [
+    "systemPrivate",
+    "ttsEngine",
+    "https://www.google.com/"
+  ],
+  "tts_engine": {
+    "voices": [
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "ar-XA",
+        "remote": true,
+        "voice_name": "Google \u0627\u0644\u0639\u0631\u0628\u064a\u0629"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "male",
+        "language": "bn-BD",
+        "remote": true,
+        "voice_name": "Google \u09ac\u09be\u0982\u09b2\u09be (\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "male",
+        "language": "bn-IN",
+        "remote": true,
+        "voice_name": "Google \u09ac\u09be\u0982\u09b2\u09be (\u09ad\u09be\u09b0\u09a4)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "cs-CZ",
+        "remote": true,
+        "voice_name": "Google \u010ce\u0161tina"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "da-DK",
+        "remote": true,
+        "voice_name": "Google Dansk"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "de-DE",
+        "remote": true,
+        "voice_name": "Google Deutsch"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "el-GR",
+        "remote": true,
+        "voice_name": "Google \u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "en-AU",
+        "remote": true,
+        "voice_name": "Google English (Australia)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "en-GB",
+        "remote": true,
+        "voice_name": "Google English (United Kingdom)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "male",
+        "language": "en-GB",
+        "remote": true,
+        "voice_name": "Google English (United Kingdom)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "en-IN",
+        "remote": true,
+        "voice_name": "Google English (India)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "en-IN",
+        "remote": true,
+        "voice_name": "Google English (India)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "en-US",
+        "remote": true,
+        "voice_name": "Google English (United States)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "es-ES",
+        "remote": true,
+        "voice_name": "Google Espa\u00f1ol (Espa\u00f1a)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "es-US",
+        "remote": true,
+        "voice_name": "Google Espa\u00f1ol (Estados Unidos)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "male",
+        "language": "et-EE",
+        "remote": true,
+        "voice_name": "Google Eesti"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "fi-FI",
+        "remote": true,
+        "voice_name": "Google Suomi"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "fil-PH",
+        "remote": true,
+        "voice_name": "Google Filipino"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "fr-FR",
+        "remote": true,
+        "voice_name": "Google Fran\u00e7ais"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "hi-IN",
+        "remote": true,
+        "voice_name": "Google \u0939\u093f\u0928\u094d\u0926\u0940"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "hu-HU",
+        "remote": true,
+        "voice_name": "Google Magyar"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "id-ID",
+        "remote": true,
+        "voice_name": "Google Bahasa Indonesia"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "it-IT",
+        "remote": true,
+        "voice_name": "Google Italiano (Italia)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "ja-JP",
+        "remote": true,
+        "voice_name": "Google \u65e5\u672c\u8a9e"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "jv-ID",
+        "remote": true,
+        "voice_name": "Google Basa Jawa"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "km-KH",
+        "remote": true,
+        "voice_name": "Google \u1781\u17d2\u1798\u17c2\u179a"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "ko-KR",
+        "remote": true,
+        "voice_name": "Google \ud55c\uad6d\uc5b4"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "ne-NP",
+        "remote": true,
+        "voice_name": "Google \u0928\u0947\u092a\u093e\u0932\u0940"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "nl-NL",
+        "remote": true,
+        "voice_name": "Google Nederlands"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "no",
+        "remote": true,
+        "voice_name": "Google Norsk (Bokm\u00e5l)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "pl-PL",
+        "remote": true,
+        "voice_name": "Google Polski"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "pt-BR",
+        "remote": true,
+        "voice_name": "Google Portugu\u00eas (Brasil)"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "ro-RO",
+        "remote": true,
+        "voice_name": "Google Rom\u00e2n\u0103"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "ru-RU",
+        "remote": true,
+        "voice_name": "Google \u0420\u0443\u0441\u0441\u043a\u0438\u0439"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "si-LK",
+        "remote": true,
+        "voice_name": "Google \u0dc3\u0dd2\u0d82\u0dc4\u0dbd"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "sk-SK",
+        "remote": true,
+        "voice_name": "Google Sloven\u010dina"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "su-ID",
+        "remote": true,
+        "voice_name": "Google Basa Sunda"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "sv-SE",
+        "remote": true,
+        "voice_name": "Google Svenska"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "th-TH",
+        "remote": true,
+        "voice_name": "Google \u0e44\u0e17\u0e22"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "tr-TR",
+        "remote": true,
+        "voice_name": "Google T\u00fcrk\u00e7e"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "uk-UA",
+        "remote": true,
+        "voice_name": "Google \u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "vi-VN",
+        "remote": true,
+        "voice_name": "Google Ti\u1ebfng Vi\u1ec7t"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "zh-CN",
+        "remote": true,
+        "voice_name": "Google \u4e2d\u6587\uff08\u4e2d\u56fd\uff09"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "zh-HK",
+        "remote": true,
+        "voice_name": "Google \u4e2d\u6587\uff08\u9999\u6e2f\uff09"
+      },
+      {
+        "event_types": [
+          "start",
+          "end",
+          "error"
+        ],
+        "gender": "female",
+        "language": "zh-TW",
+        "remote": true,
+        "voice_name": "Google \u4e2d\u6587\uff08\u53f0\u7063\uff09"
+      }
+    ]
+  },
+  "version": "1.0"
 }

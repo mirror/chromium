@@ -37,12 +37,60 @@ TtsExtension.prototype = {
    * A mapping from language and gender to voice name, hardcoded for now
    * until the speech synthesis server capabilities response provides this.
    * The key of this map is of the form '<lang>-<gender>'.
+   *
+   * NOTE: this can be auto-generated / auto-updated by running:
+   *
+   * tools/speech/update_network_speech_synthesis.py
+   *
    * @type {Object<string>}
    * @private
    */
   LANG_AND_GENDER_TO_VOICE_NAME_: {
-    'en-gb-male': 'rjs',
+    'ar-xa-female': 'cfh',
+    'bn-bd-male': 'ban',
+    'bn-in-male': 'bin',
+    'cs-cz-female': 'jfs',
+    'da-dk-female': 'kfm',
+    'de-de-female': 'nfh',
+    'el-gr-female': 'vfz',
+    'en-au-female': 'afh',
     'en-gb-female': 'fis',
+    'en-gb-male': 'rjs',
+    'en-in-female': 'ahp',
+    'en-in-female': 'cxx',
+    'en-us-female': 'sfg',
+    'es-es-female': 'ana',
+    'es-us-female': 'sfb',
+    'et-ee-male': 'tms',
+    'fi-fi-female': 'afi',
+    'fil-ph-female': 'cfc',
+    'fr-fr-female': 'vlf',
+    'hi-in-female': 'cfn',
+    'hu-hu-female': 'kfl',
+    'id-id-female': 'dfz',
+    'it-it-female': 'kda',
+    'ja-jp-female': 'htm',
+    'jv-id-female': 'jvf',
+    'km-kh-female': 'khm',
+    'ko-kr-female': 'ism',
+    'ne-np-female': 'nep',
+    'nl-nl-female': 'tfb',
+    'no-female': 'rfj',
+    'pl-pl-female': 'oda',
+    'pt-br-female': 'afs',
+    'ro-ro-female': 'vfv',
+    'ru-ru-female': 'dfc',
+    'si-lk-female': 'sin',
+    'sk-sk-female': 'sfk',
+    'su-id-female': 'suf',
+    'sv-se-female': 'lfs',
+    'th-th-female': 'mol',
+    'tr-tr-female': 'mfm',
+    'uk-ua-female': 'hfd',
+    'vi-vn-female': 'gft',
+    'zh-cn-female': 'ssa',
+    'zh-hk-female': 'jar',
+    'zh-tw-female': 'sxx',
   },
 
   /**
@@ -81,7 +129,7 @@ TtsExtension.prototype = {
     var voices = chrome.app.getDetails().tts_engine.voices;
     for (var i = 0; i < voices.length; i++) {
       this.voiceNameToLangAndGender_[voices[i].voice_name] = {
-        lang: voices[i].lang,
+        lang: voices[i].language,
         gender: voices[i].gender
       };
     }
