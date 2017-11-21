@@ -2033,4 +2033,59 @@ TEST(MessageLoopTest, SequenceLocalStorageDifferentMessageLoops) {
   EXPECT_NE(slot.Get(), 11);
 }
 
+namespace {
+
+void QuitBoth(base::RunLoop* loop1, base::RunLoop* loop2) {
+  loop1->Quit();
+  loop2->Quit();
+}
+
+void RunNested(base::RunLoop* loop1) {
+  // Force a deferred quit for |loop1| by simultaneously quitting from |loop1|
+  // and |loop2|.
+  base::RunLoop loop2;
+  base::MessageLoop::ScopedNestableTaskAllower allow(
+      base::MessageLoop::current());
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&QuitBoth, base::Unretained(loop1), base::Unretained(&loop2)),
+      base::TimeDelta::FromSeconds(1));
+  loop2.Run();
+
+  // The deferred quit for |loop1| should not affect |loop3|.
+  bool was_called = false;
+  base::RunLoop loop3;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(
+                     [](bool* was_called, base::RunLoop* loop3) {
+                       *was_called = true;
+                       loop3->Quit();
+                     },
+                     &was_called, &loop3));
+  loop3.Run();
+  EXPECT_TRUE(was_called);
+}
+
+}  // namespace
+
+TEST(MessageLoopForIOTest, DeferredQuitWithSiblingNestedLoop) {
+  base::MessageLoopForIO message_loop;
+  base::RunLoop loop1;
+  CHECK(base::ThreadTaskRunnerHandle::Get());
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&RunNested, base::Unretained(&loop1)));
+  loop1.Run();
+}
+
+TEST(MessageLoopForUITest, DeferredQuitWithSiblingNestedLoop) {
+  base::MessageLoopForUI message_loop;
+  base::RunLoop loop1;
+  CHECK(base::ThreadTaskRunnerHandle::Get());
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&RunNested, base::Unretained(&loop1)));
+  loop1.Run();
+}
+
 }  // namespace base
