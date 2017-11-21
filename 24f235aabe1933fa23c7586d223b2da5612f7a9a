@@ -34,6 +34,23 @@
       "revId": "24f235aabe1933fa23c7586d223b2da5612f7a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2888112d_b2a495ae",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-21T22:24:51Z",
+      "side": 1,
+      "message": "why not call this ReleaseFrameResources, to match VideoResourceUpdater?",
+      "revId": "24f235aabe1933fa23c7586d223b2da5612f7a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
