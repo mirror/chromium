@@ -39,10 +39,15 @@ GaiaAuthConsumer::ClientOAuthResult::ClientOAuthResult()
 GaiaAuthConsumer::ClientOAuthResult::ClientOAuthResult(
     const std::string& new_refresh_token,
     const std::string& new_access_token,
+    const std::string& new_id_token,
     int new_expires_in_secs)
     : refresh_token(new_refresh_token),
       access_token(new_access_token),
+      id_token(new_id_token),
       expires_in_secs(new_expires_in_secs) {}
+
+GaiaAuthConsumer::ClientOAuthResult::ClientOAuthResult(
+    const ClientOAuthResult& other) = default;
 
 GaiaAuthConsumer::ClientOAuthResult::~ClientOAuthResult() {}
 
