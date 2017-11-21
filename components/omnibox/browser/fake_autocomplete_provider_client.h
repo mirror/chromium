@@ -26,7 +26,7 @@ class InMemoryURLIndex;
 // Fully operational AutocompleteProviderClient for usage in tests.
 class FakeAutocompleteProviderClient : public MockAutocompleteProviderClient {
  public:
-  FakeAutocompleteProviderClient();
+  explicit FakeAutocompleteProviderClient(bool create_history_db = true);
   ~FakeAutocompleteProviderClient() override;
 
   const AutocompleteSchemeClassifier& GetSchemeClassifier() const override;

@@ -13,11 +13,11 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/time/time.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/url_database.h"
@@ -26,9 +26,8 @@
 #include "components/omnibox/browser/autocomplete_provider.h"
 #include "components/omnibox/browser/autocomplete_provider_listener.h"
 #include "components/omnibox/browser/autocomplete_result.h"
+#include "components/omnibox/browser/fake_autocomplete_provider_client.h"
 #include "components/omnibox/browser/history_quick_provider.h"
-#include "components/omnibox/browser/mock_autocomplete_provider_client.h"
-#include "components/omnibox/browser/test_scheme_classifier.h"
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/default_search_manager.h"
 #include "components/search_engines/search_terms_data.h"
@@ -172,33 +171,17 @@ struct TestURLInfo {
 };
 
 class AnonFakeAutocompleteProviderClient
-    : public MockAutocompleteProviderClient {
+    : public FakeAutocompleteProviderClient {
  public:
-  explicit AnonFakeAutocompleteProviderClient(bool create_history_db) {
-    set_template_url_service(base::MakeUnique<TemplateURLService>(nullptr, 0));
-    if (history_dir_.CreateUniqueTempDir()) {
-      history_service_ = history::CreateHistoryService(history_dir_.GetPath(),
-                                                       create_history_db);
-    }
-  }
-
-  const AutocompleteSchemeClassifier& GetSchemeClassifier() const override {
-    return scheme_classifier_;
-  }
+  explicit AnonFakeAutocompleteProviderClient(bool create_history_db)
+      : FakeAutocompleteProviderClient(create_history_db) {}
 
   const SearchTermsData& GetSearchTermsData() const override {
     return search_terms_data_;
   }
 
-  history::HistoryService* GetHistoryService() override {
-    return history_service_.get();
-  }
-
  private:
-  TestSchemeClassifier scheme_classifier_;
   SearchTermsData search_terms_data_;
-  base::ScopedTempDir history_dir_;
-  std::unique_ptr<history::HistoryService> history_service_;
 
   DISALLOW_COPY_AND_ASSIGN(AnonFakeAutocompleteProviderClient);
 };
@@ -265,7 +248,7 @@ class HistoryURLProviderTest : public testing::Test,
                                 size_t expected_match_location,
                                 size_t expected_match_length);
 
-  base::MessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   ACMatches matches_;
   std::unique_ptr<AnonFakeAutocompleteProviderClient> client_;
   scoped_refptr<HistoryURLProvider> autocomplete_;
