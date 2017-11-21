@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e186332c_18046b99",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T00:38:21Z",
+      "side": 1,
+      "message": "Is this still needed, or is the call in chrome_browser_main.cc sufficient?",
+      "revId": "2dc5f0dfe5d7337bd5aaf6de3faaa5467a45d3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515609da_88530c51",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T00:38:21Z",
+      "side": 1,
+      "message": "I\u0027m glad that moving this after line 832 works!\n\nLet\u0027s move it a little further down and combine it with the block at line 917.  We\u0027ll probably declare |policy|, then add values GetOriginsRequiringDedicatedProcess(), then add values from the command line.\n\nLet\u0027s include a comment as well, explaining that the command line values must be read after parts_-\u003ePreCreateThreads() so that embedders can append values via policy.",
+      "revId": "2dc5f0dfe5d7337bd5aaf6de3faaa5467a45d3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
