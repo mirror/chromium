@@ -50,6 +50,10 @@ inline constexpr WebSandboxFlags operator~(WebSandboxFlags flags) {
   return static_cast<WebSandboxFlags>(~static_cast<int>(flags));
 }
 
+inline std::ostream& operator<<(std::ostream& out, WebSandboxFlags flags) {
+  return out << std::bitset<16>(static_cast<int>(flags));
+}
+
 }  // namespace blink
 
 #endif  // THIRD_PARTY_WEBKIT_COMMON_SANDBOX_FLAGS_H_
