@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62937184_61473f74",
+        "filename": "base/files/file_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:28:26Z",
+      "side": 1,
+      "message": "Remove this change from this CL.\nYou can file it on a separate CL and look for a base owner to review it.",
+      "range": {
+        "startLine": 376,
+        "startChar": 3,
+        "endLine": 376,
+        "endChar": 7
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed1ab06_b9be7bb2",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:28:26Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand what the comment says. Can you clarify?\nWhat does \"leading into local logging\" mean and why does it need fixing?\nTODO comments are normally about what needs to be done, not what it is doing today or what it was doing in the past.",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab65213e_cd70fcb2",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:28:26Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586747f7_b076e5b1",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:28:26Z",
+      "side": 1,
+      "message": "nit: remove hyphen",
+      "range": {
+        "startLine": 172,
+        "startChar": 46,
+        "endLine": 172,
+        "endChar": 52
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5734d0a_70778c22",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T11:28:26Z",
+      "side": 1,
+      "message": "Do you mean std::numeric_limits\u003cint\u003e::max()?",
+      "range": {
+        "startLine": 229,
+        "startChar": 33,
+        "endLine": 229,
+        "endChar": 36
+      },
+      "revId": "c5d2b6c153fb5ae12550022ca2dc1d7b378d1fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
