@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fd2050a8_2bae82b2",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T19:49:19Z",
+      "side": 1,
+      "message": "As far as I can tell, this means we now ignore any attempt to change the bounds of snapped windows because we will override its position and size.",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93b2594_8c850c81",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T19:49:19Z",
+      "side": 1,
+      "message": "This can probably use the window\u0027s curent bounds if its called at the right time.",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "151abc0b_bbeee5d2",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 9
@@ -13,6 +47,58 @@
       "writtenOn": "2017-11-21T02:11:48Z",
       "side": 1,
       "message": "I think we could only change snapped window bounds (width) by dragging? SetBounds in tests is not right to me.",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f64c30e_3d93d767",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T19:49:19Z",
+      "side": 1,
+      "message": "I\u0027m concerned about only tracking specific circumstances in which we know the bounds have been changed. This means that if the bounds changes by some other means, and we don\u0027t immediately AdjustSnappedBounds then the next time we do we\u0027ll see the bounds snap back to the last remembered ratio.",
+      "parentUuid": "151abc0b_bbeee5d2",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0726d5d1_83898c94",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T19:49:19Z",
+      "side": 1,
+      "message": "Perhaps updating the snapped ratio when bounds are set would handle all cases of bounds changes?",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9aad19_eaac0861",
+        "filename": "ash/wm/window_state.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-21T19:49:19Z",
+      "side": 1,
+      "message": "We should reset this when the window is no longer snapped to ensure that we don\u0027t accidentally preserve the ration for the lifetime of the window state.",
       "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
