@@ -22,6 +22,30 @@
       "revId": "4a9c480b1640f2582bd17ea9bbcdc06d2e69be30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354f3efa_39e1b739",
+        "filename": "components/payments/content/manifest_verifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-21T19:14:10Z",
+      "side": 1,
+      "message": "Ack. Something to watch out for...",
+      "parentUuid": "426d7b22_465285b3",
+      "range": {
+        "startLine": 47,
+        "startChar": 51,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "4a9c480b1640f2582bd17ea9bbcdc06d2e69be30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
