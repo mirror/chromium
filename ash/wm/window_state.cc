@@ -316,6 +316,14 @@ std::unique_ptr<WindowState::State> WindowState::SetStateObject(
   return old_object;
 }
 
+void WindowState::UpdateSnappedWidthRatio(const gfx::Rect& bounds) {
+  DCHECK(IsSnapped());
+  gfx::Rect maximized_bounds =
+      ScreenUtil::GetMaximizedWindowBoundsInParent(window_);
+  snapped_width_ratio_ = static_cast<float>(bounds.width()) /
+                         static_cast<float>(maximized_bounds.width());
+}
+
 void WindowState::SetPreAutoManageWindowBounds(const gfx::Rect& bounds) {
   pre_auto_manage_window_bounds_.reset(new gfx::Rect(bounds));
 }
@@ -359,6 +367,9 @@ void WindowState::CreateDragDetails(const gfx::Point& point_in_parent,
 
 void WindowState::DeleteDragDetails() {
   drag_details_.reset();
+  // Dragging may change snapped bounds. Snapped width ratio needs update.
+  if (IsSnapped())
+    UpdateSnappedWidthRatio(window_->bounds());
 }
 
 void WindowState::SetAndClearRestoreBounds() {
@@ -407,6 +418,8 @@ void WindowState::AdjustSnappedBounds(gfx::Rect* bounds) {
     return;
   gfx::Rect maximized_bounds =
       ScreenUtil::GetMaximizedWindowBoundsInParent(window_);
+  bounds->set_width(
+      static_cast<int>(snapped_width_ratio_ * maximized_bounds.width()));
   if (GetStateType() == mojom::WindowStateType::LEFT_SNAPPED)
     bounds->set_x(maximized_bounds.x());
   else if (GetStateType() == mojom::WindowStateType::RIGHT_SNAPPED)
