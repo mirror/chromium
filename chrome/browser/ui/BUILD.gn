@@ -1540,6 +1540,12 @@ split_static_library("ui") {
     if (use_cras) {
       defines += [ "USE_CRAS" ]
     }
+  } else if (!is_android) {
+    # !is_chromeos && !is_android
+    sources += [
+      "webui/settings/printing_handler.cc",
+      "webui/settings/printing_handler.h",
+    ]
   }
 
   if (is_win || is_mac || is_desktop_linux) {
@@ -3027,6 +3033,8 @@ split_static_library("ui") {
         "views/ssl_client_certificate_selector.h",
         "views/status_bubble_views.cc",
         "views/status_bubble_views.h",
+        "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
+        "views/tab_contents/chrome_web_contents_view_focus_helper.h",
         "views/tab_dialogs_views.cc",
         "views/tab_dialogs_views.h",
         "views/tab_icon_view.cc",
@@ -3080,8 +3088,6 @@ split_static_library("ui") {
         "views/toolbar/toolbar_view.cc",
         "views/toolbar/toolbar_view.h",
         "views/touch_uma/touch_uma.h",
-        "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
-        "views/tab_contents/chrome_web_contents_view_focus_helper.h",
         "views/translate/translate_icon_view.cc",
         "views/translate/translate_icon_view.h",
         "views/webshare/webshare_target_picker_view.cc",
