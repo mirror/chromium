@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f4aaa74_7ad32c5a",
+        "filename": "base/callback_with_delete.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T19:21:23Z",
+      "side": 1,
+      "message": "see dcheng\u0027s comment below",
+      "revId": "687613ef24335589ae501c08328f9bb572071f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a29150_36c2b19d",
         "filename": "base/callback_with_delete.h",
         "patchSetId": 3
