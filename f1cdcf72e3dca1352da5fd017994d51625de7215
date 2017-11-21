@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeab0d76_52555545",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-21T11:14:36Z",
+      "side": 1,
+      "message": "Suggestion: Move into \u0027if\u0027 clause above, so you get the error message.",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "f1cdcf72e3dca1352da5fd017994d51625de7215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660cd484_20e0f05f",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-21T11:14:36Z",
+      "side": 1,
+      "message": "Sorry, I think this should be \u0027|| mount_id \u003c 0\u0027 (or \u003c\u003d 0, depending whether your first valid mount id is 0 or 1, I don\u0027t remember).",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "f1cdcf72e3dca1352da5fd017994d51625de7215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48bcb75_9060a5a7",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-21T11:14:36Z",
+      "side": 1,
+      "message": "Nit: smbprovider::ERROR_OK would be a bit more explicit here.",
+      "range": {
+        "startLine": 92,
+        "startChar": 28,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "f1cdcf72e3dca1352da5fd017994d51625de7215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

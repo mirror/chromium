@@ -187,6 +187,30 @@
       "revId": "7944341a0cf86eac3a5c784b4e1a527e8f3c359e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8f0f17_a926b269",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-21T11:14:36Z",
+      "side": 1,
+      "message": "Actually, you\u0027re right, all methods have to be called from the origin thread, see\nhttps://cs.chromium.org/chromium/src/dbus/object_proxy.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d184,\nand D-Bus asserts for you, so you don\u0027t have to do anything.",
+      "parentUuid": "c5c1c7da_535ae188",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "7944341a0cf86eac3a5c784b4e1a527e8f3c359e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
