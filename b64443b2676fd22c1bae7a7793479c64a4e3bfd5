@@ -22,6 +22,30 @@
       "revId": "b64443b2676fd22c1bae7a7793479c64a4e3bfd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97832510_67c7bfa7",
+        "filename": "remoting/ios/display/gl_display_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-21T20:19:26Z",
+      "side": 1,
+      "message": "The spec only says it will return nil if the object can\u0027t be created, so technically it can happen for some unknown reason?\n\nAlso very old phones like iPhone 3G only support GLES1, but we never bother to support them though :)\n\nLooks like RTCEAGLVideoView is doing something similar:\nhttps://cs.chromium.org/chromium/src/third_party/webrtc/sdk/objc/Framework/Classes/UI/RTCEAGLVideoView.m?l\u003d148\u0026rcl\u003ded1023db0eb81f7fd27e487eba2a811db99a6e80\n\nSo I think it\u0027s safer to add the DCHECK...",
+      "parentUuid": "e5e3e2b2_e1299f46",
+      "range": {
+        "startLine": 130,
+        "startChar": 26,
+        "endLine": 130,
+        "endChar": 0
+      },
+      "revId": "b64443b2676fd22c1bae7a7793479c64a4e3bfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
