@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "968b089e_ba356777",
+        "filename": "media/filters/video_renderer_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-11-21T01:57:26Z",
+      "side": 1,
+      "message": "What effect will this lack of compensation have for cases where playback_rate is \u003c\u003c1 or \u003e\u003e1 ?",
+      "revId": "34ea1cb0f539f6b4a35941bd4e4e0601c00680d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1168550_b9d61cb0",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-11-21T01:57:26Z",
+      "side": 1,
+      "message": "Is there an edge case where AverageDuration() here is base::TimeDelta, such that the VRA cannot use it as an estimated duration? In such case, do we need to still await 2 frames in low delay mode?",
+      "range": {
+        "startLine": 558,
+        "startChar": 59,
+        "endLine": 558,
+        "endChar": 74
+      },
+      "revId": "34ea1cb0f539f6b4a35941bd4e4e0601c00680d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
