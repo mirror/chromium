@@ -1016,7 +1016,16 @@ void QuicConnection::OnPacketComplete() {
   if (server_reply_to_connectivity_probes_) {
     QUIC_FLAG_COUNT_N(
         quic_reloadable_flag_quic_server_reply_to_connectivity_probing, 3, 4);
-    if (current_packet_content_ == SECOND_FRAME_IS_PADDING) {
+    if (perspective_ == Perspective::IS_CLIENT) {
+      QUIC_DVLOG(1) << ENDPOINT
+                    << "Received a speculative connectivity probing packet for "
+                    << last_header_.connection_id << " frome ip:port: "
+                    << last_packet_source_address_.ToString() << " to ip:port "
+                    << last_packet_destination_address_.ToString();
+      // TODO(zhongyi): change the method name.
+      visitor_->OnConnectivityProbeReceived(last_packet_destination_address_,
+                                            last_packet_source_address_);
+    } else if (current_packet_content_ == SECOND_FRAME_IS_PADDING) {
       QUIC_DVLOG(1) << ENDPOINT << "Received a padded PING packet";
       if (last_packet_source_address_ != peer_address_ ||
           last_packet_destination_address_ != self_address_) {
@@ -2483,7 +2492,7 @@ void QuicConnection::SendMtuDiscoveryPacket(QuicByteCount target_mtu) {
   packet_generator_.GenerateMtuDiscoveryPacket(target_mtu);
 }
 
-void QuicConnection::SendConnectivityProbingPacket(
+bool QuicConnection::SendConnectivityProbingPacket(
     QuicPacketWriter* probing_writer,
     const QuicSocketAddress& peer_address) {
   DCHECK(peer_address.IsInitialized());
@@ -2494,9 +2503,8 @@ void QuicConnection::SendConnectivityProbingPacket(
   DCHECK(probing_writer);
 
   if (probing_writer->IsWriteBlocked()) {
-    QUIC_BUG << "Writer blocked when send connectivity probing packet";
-    visitor_->OnWriteBlocked();
-    return;
+    QUIC_DLOG(INFO) << "Writer blocked when send connectivity probing packet";
+    return true;
   }
 
   QUIC_DLOG(INFO) << ENDPOINT << "Sending connectivity probing packet for "
@@ -2509,19 +2517,14 @@ void QuicConnection::SendConnectivityProbingPacket(
       probing_packet->data(), probing_packet->length(), self_address().host(),
       peer_address, per_packet_options_);
 
-  if (result.status == WRITE_STATUS_ERROR) {
-    OnWriteError(result.error_code);
-    QUIC_BUG << "Write probing packet failed with error = "
-             << result.error_code;
-    return;
+  if (result.status == WRITE_STATUS_ERROR ||
+      result.status == WRITE_STATUS_BLOCKED) {
+    QUIC_DLOG(INFO) << "Write probing packet not finished with error = "
+                    << result.error_code;
+    return false;
   }
 
-  if (result.status == WRITE_STATUS_BLOCKED) {
-    visitor_->OnWriteBlocked();
-    if (probing_writer->IsWriteBlockedDataBuffered()) {
-      QUIC_BUG << "Write probing packet blocked";
-    }
-  }
+  return true;
 }
 
 void QuicConnection::DiscoverMtu() {
