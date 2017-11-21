@@ -116,6 +116,13 @@ float FromLinear(ColorSpace::TransferID id, float v) {
       return a * log(v - b) + c;
     }
 
+    case ColorSpace::TransferID::PSEUDO_HDR: {
+      v /= 5.0f;
+      v = max(v, 0.0f);
+      v = v <= 0.0031308 ? 12.92f * v : 1.055f * pow(v, 1.0f / 2.4f);
+      return v;
+    }
+
     default:
       // Handled by SkColorSpaceTransferFn.
       break;
@@ -191,6 +198,12 @@ float ToLinear(ColorSpace::TransferID id, float v) {
       if (v <= 0.5f)
         return (v * 2.0f) * (v * 2.0f);
       return exp((v - c) / a) + b;
+    }
+
+    case ColorSpace::TransferID::PSEUDO_HDR: {
+      v = max(v, 0.0f);
+      v = v <= 0.04045f ? v / 12.92f : pow((v + 0.055f) / 1.055f, 2.4f);
+      return v * 5.0f;
     }
 
     default:
@@ -550,6 +563,16 @@ class ColorTransformFromLinear : public ColorTransformPerChannelTransferFn {
                 "    return 0.5 * sqrt(v);\n"
                 "  return a * log(v - b) + c;\n";
         return;
+
+      case ColorSpace::TransferID::PSEUDO_HDR:
+        *src
+            << "  v /= 5.0;\n"
+               "  v = max(v, 0.0);\n"
+               "  v = v <= 0.0031308 ? 12.92 * v : 1.055 * pow(v, 1.0 / 2.4);\n"
+               // TODO(hubbe): Do dithering here!!!!
+               "  return v;\n";
+        return;
+
       default:
         break;
     }
@@ -638,6 +661,12 @@ class ColorTransformToLinear : public ColorTransformPerChannelTransferFn {
                 "  if (v <= 0.5)\n"
                 "    return (v * 2.0) * (v * 2.0);\n"
                 "  return exp((v - c) / a) + b;\n";
+        return;
+      case ColorSpace::TransferID::PSEUDO_HDR:
+        *src << "  v = max(v, 0.0);\n"
+                "  v = v <= 0.04045 ? v / 12.92 : pow((v + 0.055) / 1.055, "
+                "2.4);\n"
+                " return v * 5.0;\n";
         return;
       default:
         break;

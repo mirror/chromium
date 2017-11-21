@@ -1,3 +1,4 @@
+
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -188,7 +189,8 @@ bool ColorSpace::IsHDR() const {
   return transfer_ == TransferID::SMPTEST2084 ||
          transfer_ == TransferID::ARIB_STD_B67 ||
          transfer_ == TransferID::LINEAR_HDR ||
-         transfer_ == TransferID::IEC61966_2_1_HDR;
+         transfer_ == TransferID::IEC61966_2_1_HDR ||
+         transfer_ == TransferID::PSEUDO_HDR;
 }
 
 bool ColorSpace::FullRangeEncodedValues() const {
@@ -331,6 +333,7 @@ std::string ColorSpace::ToString() const {
     PRINT_ENUM_CASE(TransferID, SMPTEST2084_NON_HDR)
     PRINT_ENUM_CASE(TransferID, IEC61966_2_1_HDR)
     PRINT_ENUM_CASE(TransferID, LINEAR_HDR)
+    PRINT_ENUM_CASE(TransferID, PSEUDO_HDR)
     case TransferID::CUSTOM: {
       SkColorSpaceTransferFn fn;
       GetTransferFunction(&fn);
@@ -395,7 +398,8 @@ ColorSpace ColorSpace::GetRasterColorSpace() const {
 ColorSpace ColorSpace::GetBlendingColorSpace() const {
   // HDR output on windows requires output have a linear transfer function.
   // Linear blending breaks the web, so use extended-sRGB for blending.
-  if (transfer_ == TransferID::LINEAR_HDR)
+  if (transfer_ == TransferID::LINEAR_HDR ||
+      transfer_ == TransferID::PSEUDO_HDR)
     return CreateExtendedSRGB();
   return *this;
 }
@@ -723,6 +727,7 @@ bool ColorSpace::GetTransferFunction(SkColorSpaceTransferFn* fn) const {
       fn->fD = 0.040449937172f;
       fn->fG = 2.400000000000f;
       return true;
+
     case ColorSpace::TransferID::SMPTEST428_1:
       fn->fA = 0.225615407568f;
       fn->fE = -1.091041666667f;
@@ -738,6 +743,7 @@ bool ColorSpace::GetTransferFunction(SkColorSpaceTransferFn* fn) const {
     case ColorSpace::TransferID::LOG_SQRT:
     case ColorSpace::TransferID::SMPTEST2084:
     case ColorSpace::TransferID::SMPTEST2084_NON_HDR:
+    case ColorSpace::TransferID::PSEUDO_HDR:
     case ColorSpace::TransferID::INVALID:
       break;
   }
@@ -754,6 +760,7 @@ bool ColorSpace::GetInverseTransferFunction(SkColorSpaceTransferFn* fn) const {
 
 bool ColorSpace::HasExtendedSkTransferFn() const {
   return transfer_ == TransferID::LINEAR_HDR ||
+         transfer_ == TransferID::PSEUDO_HDR ||
          transfer_ == TransferID::IEC61966_2_1_HDR;
 }
 

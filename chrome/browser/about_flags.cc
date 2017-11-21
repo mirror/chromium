@@ -772,6 +772,8 @@ const FeatureEntry::Choice kForceColorProfileChoices[] = {
      switches::kForceColorProfile, "color-spin-gamma24"},
     {flag_descriptions::kForceColorProfileHdr, switches::kForceColorProfile,
      "scrgb-linear"},
+    {flag_descriptions::kForceColorProfilePseudoHdrP3,
+     switches::kForceColorProfile, "pseudo-hdr-p3"},
 };
 
 const FeatureEntry::Choice kAutoplayPolicyChoices[] = {
