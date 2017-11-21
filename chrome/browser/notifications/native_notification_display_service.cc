@@ -68,12 +68,12 @@ void NativeNotificationDisplayService::OnNotificationPlatformBridgeReady(
 }
 
 void NativeNotificationDisplayService::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   // TODO(estade): in the future, the reverse should also be true: a
   // non-TRANSIENT type implies no delegate.
-  if (notification_type == NotificationCommon::TRANSIENT)
+  if (notification_type == NotificationHandler::Type::TRANSIENT)
     DCHECK(notification.delegate());
 
   if (notification_bridge_ready_) {
@@ -94,7 +94,7 @@ void NativeNotificationDisplayService::Display(
 }
 
 void NativeNotificationDisplayService::Close(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& notification_id) {
   if (notification_bridge_ready_) {
     notification_bridge_->Close(GetProfileId(profile_), notification_id);

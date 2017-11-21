@@ -25,6 +25,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/notifications/notification_image_retainer.h"
 #include "chrome/browser/notifications/notification_template_builder.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -46,7 +47,7 @@ using message_center::RichNotificationData;
 
 // Hold related data for a notification.
 struct NotificationData {
-  NotificationData(NotificationCommon::Type notification_type,
+  NotificationData(NotificationHandler::Type notification_type,
                    const std::string& notification_id,
                    const std::string& profile_id,
                    bool incognito,
@@ -58,7 +59,7 @@ struct NotificationData {
         origin_url(origin_url) {}
 
   // Same parameters used by NotificationPlatformBridge::Display().
-  NotificationCommon::Type notification_type;
+  NotificationHandler::Type notification_type;
   const std::string notification_id;
   const std::string profile_id;
   const bool incognito;
@@ -91,7 +92,7 @@ HRESULT CreateActivationFactory(wchar_t const (&class_name)[size], T** object) {
 
 // Perform |operation| on a notification once the profile has been loaded.
 void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationCommon::Type notification_type,
+                           NotificationHandler::Type notification_type,
                            const GURL& origin,
                            const std::string& notification_id,
                            const base::Optional<int>& action_index,
@@ -110,7 +111,7 @@ void ProfileLoadedCallback(NotificationCommon::Operation operation,
 
 void ForwardNotificationOperationOnUiThread(
     NotificationCommon::Operation operation,
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const GURL& origin,
     const std::string& notification_id,
     const std::string& profile_id,
@@ -258,7 +259,7 @@ class NotificationPlatformBridgeWinImpl
     return S_OK;
   }
 
-  void Display(NotificationCommon::Type notification_type,
+  void Display(NotificationHandler::Type notification_type,
                const std::string& profile_id,
                bool incognito,
                std::unique_ptr<message_center::Notification> notification,
@@ -454,7 +455,7 @@ NotificationPlatformBridgeWin::NotificationPlatformBridgeWin() {
 NotificationPlatformBridgeWin::~NotificationPlatformBridgeWin() = default;
 
 void NotificationPlatformBridgeWin::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& profile_id,
     bool is_incognito,
     const message_center::Notification& notification,

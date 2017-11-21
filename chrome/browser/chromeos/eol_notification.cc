@@ -6,7 +6,6 @@
 
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/ui/browser_navigator.h"
@@ -69,7 +68,7 @@ class EolNotificationDelegate : public message_center::NotificationDelegate {
         break;
     }
     NotificationDisplayServiceFactory::GetForProfile(profile_)->Close(
-        NotificationCommon::TRANSIENT, kEolNotificationId);
+        NotificationHandler::Type::TRANSIENT, kEolNotificationId);
   }
 
   Profile* const profile_;
