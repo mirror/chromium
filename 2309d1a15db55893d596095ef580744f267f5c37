@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "c43a809c_ab5b162e",
+        "filename": "chrome/browser/ui/browser_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T02:05:06Z",
+      "side": 1,
+      "message": "To go along with the std::set suggestion - does shuffling the ordering in |currently_closing_browsers_| matter? All the callers want to do is see how big the container is, and if it contains a particular Browser*.",
+      "revId": "2309d1a15db55893d596095ef580744f267f5c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "867222c1_dff77b43",
         "filename": "chrome/browser/ui/browser_list.h",
         "patchSetId": 5
