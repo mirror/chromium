@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7263079c_75ddfa09",
+        "filename": "android_webview/browser/aw_safe_browsing_ui_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-21T00:10:24Z",
+      "side": 1,
+      "message": "Done. Should I add a wrapper for the UMA_HISTOGRAM_ENUMERATION CL I sent previously?",
+      "parentUuid": "b75eb1dc_a9331ee6",
+      "range": {
+        "startLine": 62,
+        "startChar": 66,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "561cf64af4740602f71efcd394c47ab07c6d4152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d219ca_a789a907",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "561cf64af4740602f71efcd394c47ab07c6d4152",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e719e5_5ccfe732",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71446,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-21T00:10:24Z",
+      "side": 1,
+      "message": "Done. I opted to reuse \"BooleanVisible\" since this is basically what we want (I think the \u003csummary\u003e is good enough to explain the precise definition of what we actually measure).",
+      "parentUuid": "84d219ca_a789a907",
+      "range": {
+        "startLine": 71446,
+        "startChar": 54,
+        "endLine": 71446,
+        "endChar": 61
+      },
+      "revId": "561cf64af4740602f71efcd394c47ab07c6d4152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
