@@ -529,8 +529,7 @@ public class BottomSheet
             return true;
         }
 
-        return currentEvent.getRawX() > startX && currentEvent.getRawX() < endX
-                || getSheetState() != SHEET_STATE_PEEK;
+        return currentEvent.getRawX() > startX && currentEvent.getRawX() < endX;
     }
 
     /**
@@ -1292,8 +1291,6 @@ public class BottomSheet
         }
 
         mBottomSheetContentContainer.setVisibility(View.VISIBLE);
-
-        mIsSheetOpen = true;
 
         // Browser controls should stay visible until the sheet is closed.
         mPersistentControlsToken =
