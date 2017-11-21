@@ -87,6 +87,24 @@
       "revId": "d77d810f5ca65801ed31df07449dbde54f1bb1e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2c6ead3_c7eb5033",
+        "filename": "gin/public/v8_platform.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-21T01:38:45Z",
+      "side": 1,
+      "message": "Feels like loss of encapsulation: something outside should know too much about how this data is being used in the implementation to pass around icu::TimeZone. After all it\u0027s not \"the chrome-wide class for representing TZ\", at least yet. And producing one from string is not an absolutely straightforward operation either.",
+      "parentUuid": "2470365c_45a767a8",
+      "revId": "d77d810f5ca65801ed31df07449dbde54f1bb1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
