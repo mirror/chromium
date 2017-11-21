@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80ef3cfb_511a7ffe",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-21T18:02:15Z",
+      "side": 1,
+      "message": "Actually, return base::EmptyString() or GURL::EmptyGURL() to support the const ref return type.",
+      "parentUuid": "5060e04e_58723a4b",
+      "revId": "8ecce3777f792f5f7e0cba6b430075afe8b00c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb33448e_49c962d6",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 4
