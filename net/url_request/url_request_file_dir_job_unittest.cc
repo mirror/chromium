@@ -82,6 +82,16 @@ int GetEntryCount(const std::string& response_body) {
   return count;
 }
 
+#if !defined(OS_ANDROID)
+base::FilePath GetRootDir() {
+#if defined(OS_WIN)
+  base::FilePath root_dir(L"C:\\");
+#else
+  base::FilePath root_dir("/");
+#endif
+}
+#endif  // !defined(OS_ANDROID)
+
 class TestJobFactory : public URLRequestJobFactory {
  public:
   explicit TestJobFactory(const base::FilePath& path) : path_(path) {}
@@ -302,12 +312,9 @@ TEST_F(URLRequestFileDirTest, EmptyDirectory) {
   EXPECT_FALSE(HasParentDirEntry(delegate.data_received()));
 }
 
+#if !defined(OS_ANDROID)
 TEST_F(URLRequestFileDirTest, RootDirectory) {
-#if defined(OS_WIN)
-  base::FilePath root_dir(L"C:\\");
-#else
-  base::FilePath root_dir("/");
-#endif
+  base::FilePath root_dir = GetRootDir();
   TestJobFactory factory(root_dir);
   context_.set_job_factory(&factory);
 
@@ -329,11 +336,7 @@ TEST_F(URLRequestFileDirTest, RootDirectory) {
 }
 
 TEST_F(URLRequestFileDirTest, RootDirectoryWithTrailer) {
-#if defined(OS_WIN)
-  base::FilePath root_dir(L"C:\\\\");
-#else
-  base::FilePath root_dir("//");
-#endif
+  base::FilePath root_dir = GetRootDir();
   TestJobFactory factory(root_dir);
   context_.set_job_factory(&factory);
 
@@ -355,11 +358,7 @@ TEST_F(URLRequestFileDirTest, RootDirectoryWithTrailer) {
 }
 
 TEST_F(URLRequestFileDirTest, RootDirectoryWithLongerTrailer) {
-#if defined(OS_WIN)
-  base::FilePath root_dir(L"C:\\\\\\");
-#else
-  base::FilePath root_dir("///");
-#endif
+  base::FilePath root_dir = GetRootDir();
   TestJobFactory factory(root_dir);
   context_.set_job_factory(&factory);
 
@@ -379,6 +378,7 @@ TEST_F(URLRequestFileDirTest, RootDirectoryWithLongerTrailer) {
   EXPECT_GT(GetEntryCount(delegate.data_received()), 0);
   EXPECT_FALSE(HasParentDirEntry(delegate.data_received()));
 }
+#endif  // !defined(OS_ANDROID)
 
 }  // namespace
 
