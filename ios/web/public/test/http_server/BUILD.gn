@@ -33,6 +33,8 @@ source_set("http_server") {
     "http_server.mm",
     "http_server_util.h",
     "http_server_util.mm",
+    "infinite_pending_response_provider.h",
+    "infinite_pending_response_provider.mm",
     "response_provider.h",
     "response_provider.mm",
     "string_response_provider.h",

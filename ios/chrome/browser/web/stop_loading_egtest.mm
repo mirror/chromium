@@ -5,7 +5,6 @@
 #import <EarlGrey/EarlGrey.h>
 
 #include "base/memory/ptr_util.h"
-#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/test/app/navigation_test_util.h"
@@ -13,9 +12,9 @@
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
-#include "ios/web/public/test/http_server/html_response_provider.h"
 #import "ios/web/public/test/http_server/http_server.h"
 #include "ios/web/public/test/http_server/http_server_util.h"
+#import "ios/web/public/test/http_server/infinite_pending_response_provider.h"
 #include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -23,52 +22,6 @@
 #endif
 
 using chrome_test_util::ButtonWithAccessibilityLabelId;
-
-namespace {
-
-// Text appearing on the navigation test page.
-const char kPageText[] = "Navigation testing page";
-
-// Response provider that serves the page which never finishes loading.
-class InfinitePendingResponseProvider : public HtmlResponseProvider {
- public:
-  explicit InfinitePendingResponseProvider(const GURL& url) : url_(url) {}
-  ~InfinitePendingResponseProvider() override {}
-
-  // HtmlResponseProvider overrides:
-  bool CanHandleRequest(const Request& request) override {
-    return request.url == url_ ||
-           request.url == GetInfinitePendingResponseUrl();
-  }
-  void GetResponseHeadersAndBody(
-      const Request& request,
-      scoped_refptr<net::HttpResponseHeaders>* headers,
-      std::string* response_body) override {
-    if (request.url == url_) {
-      *headers = GetDefaultResponseHeaders();
-      *response_body =
-          base::StringPrintf("<p>%s</p><img src='%s'/>", kPageText,
-                             GetInfinitePendingResponseUrl().spec().c_str());
-    } else if (request.url == GetInfinitePendingResponseUrl()) {
-      base::PlatformThread::Sleep(base::TimeDelta::FromDays(1));
-    } else {
-      NOTREACHED();
-    }
-  }
-
- private:
-  // Returns a url for which this response provider will never reply.
-  GURL GetInfinitePendingResponseUrl() const {
-    GURL::Replacements replacements;
-    replacements.SetPathStr("resource");
-    return url_.GetOrigin().ReplaceComponents(replacements);
-  }
-
-  // Main page URL that never finish loading.
-  GURL url_;
-};
-
-}  // namespace
 
 // Test case for Stop Loading button.
 @interface StopLoadingTestCase : ChromeTestCase
@@ -106,7 +59,8 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
   }
 
   // Wait until the page is half loaded.
-  [ChromeEarlGrey waitForWebViewContainingText:kPageText];
+  [ChromeEarlGrey waitForWebViewContainingText:InfinitePendingResponseProvider::
+                                                   GetPageText()];
 
   // On iPhone Stop/Reload button is a part of tools menu, so open it.
   if (!IsIPadIdiom()) {
