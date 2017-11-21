@@ -26,6 +26,7 @@ class AccessibilityControllerClient
 
   // ash::mojom::AccessibilityControllerClient:
   void TriggerAccessibilityAlert(ash::mojom::AccessibilityAlert alert) override;
+  void ToggleDictation() override;
 
   // Flushes the mojo pipe to ash.
   void FlushForTesting();

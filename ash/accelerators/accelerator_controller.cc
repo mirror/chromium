@@ -771,6 +771,11 @@ void HandleToggleCapsLock() {
   keyboard->SetCapsLockEnabled(!keyboard->CapsLockIsEnabled());
 }
 
+void HandleToggleDictation() {
+  base::RecordAction(UserMetricsAction("Accel_Toggle_DICTATION"));
+  Shell::Get()->accessibility_controller()->ToggleDictation();
+}
+
 void HandleToggleHighContrast() {
   base::RecordAction(UserMetricsAction("Accel_Toggle_High_Contrast"));
 
@@ -1179,6 +1184,7 @@ bool AcceleratorController::CanPerformAction(
     case TAKE_PARTIAL_SCREENSHOT:
     case TAKE_SCREENSHOT:
     case TAKE_WINDOW_SCREENSHOT:
+    case TOGGLE_DICTATION:
     case TOGGLE_FULLSCREEN:
     case TOGGLE_HIGH_CONTRAST:
     case TOGGLE_MAXIMIZED:
@@ -1417,6 +1423,9 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       break;
     case TOGGLE_CAPS_LOCK:
       HandleToggleCapsLock();
+      break;
+    case TOGGLE_DICTATION:
+      HandleToggleDictation();
       break;
     case TOGGLE_FULLSCREEN:
       HandleToggleFullscreen(accelerator);

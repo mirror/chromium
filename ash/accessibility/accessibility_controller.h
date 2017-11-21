@@ -49,6 +49,9 @@ class ASH_EXPORT AccessibilityController
   // Triggers an accessibility alert to give the user feedback.
   void TriggerAccessibilityAlert(mojom::AccessibilityAlert alert);
 
+  // Toggle dictation.
+  void ToggleDictation();
+
   // mojom::AccessibilityController:
   void SetClient(mojom::AccessibilityControllerClientPtr client) override;
 

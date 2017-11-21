@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 
 #include "ash/public/interfaces/constants.mojom.h"
+#include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/aura/accessibility/automation_manager_aura.h"
 #include "chrome/grit/generated_resources.h"
@@ -113,6 +114,13 @@ void AccessibilityControllerClient::TriggerAccessibilityAlert(
     if (alert == ash::mojom::AccessibilityAlert::SCREEN_OFF)
       SetAutomationManagerEnabled(profile, false);
   }
+}
+
+void AccessibilityControllerClient::ToggleDictation() {
+  chromeos::AccessibilityManager* accessibility_manager =
+      chromeos::AccessibilityManager::Get();
+  if (accessibility_manager)
+    accessibility_manager->ToggleDictation();
 }
 
 void AccessibilityControllerClient::FlushForTesting() {
