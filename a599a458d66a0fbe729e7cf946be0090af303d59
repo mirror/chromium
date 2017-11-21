@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0bef2a8_62397d1c",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-21T18:11:15Z",
+      "side": 0,
+      "message": "This TODO was a little confusingly placed, we still need to leave it in here because |ssl_info_| isn\u0027t yet properly set in the case of cert errors.",
+      "range": {
+        "startLine": 701,
+        "startChar": 2,
+        "endLine": 702,
+        "endChar": 12
+      },
+      "revId": "a599a458d66a0fbe729e7cf946be0090af303d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
