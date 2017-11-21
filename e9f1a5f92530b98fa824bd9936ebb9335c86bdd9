@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "69fbf7d9_d778a98d",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T02:12:21Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "a7d9cf3f_c72bf60e",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d16be34_9f0ecfe2",
         "filename": "content/common/quota_messages.mojom",
         "patchSetId": 2
@@ -146,6 +170,24 @@
       "side": 1,
       "message": "Is there a standard way around this?",
       "parentUuid": "5d16be34_9f0ecfe2",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def434e3_174fc73d",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T02:12:21Z",
+      "side": 1,
+      "message": "Put them in a struct. Make the struct parameter nullable.",
+      "parentUuid": "f18308ea_eed86491",
       "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -216,6 +258,30 @@
     },
     {
       "key": {
+        "uuid": "6f275078_b8281b53",
+        "filename": "content/common/quota_messages.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T02:12:21Z",
+      "side": 1,
+      "message": "QuotaRequest might be a bit weird with the QuotaRequestRequest typedef. Host suffixes are still being used for browser-implemented interfaces.",
+      "parentUuid": "e85f3072_91db5b0b",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af23eec7_c2fa7d8f",
         "filename": "content/common/quota_messages.mojom",
         "patchSetId": 2
@@ -268,6 +334,24 @@
       "side": 1,
       "message": "Is there a canonical way to do this so it works off all threads?",
       "parentUuid": "0dc375a1_564dfe58",
+      "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997c10ad_4d866dcd",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-21T02:12:21Z",
+      "side": 1,
+      "message": "Post the request from mojo::MakeRequest() to the main thread and use BindInterface() there.",
+      "parentUuid": "b6219675_5bdbe321",
       "revId": "e9f1a5f92530b98fa824bd9936ebb9335c86bdd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
