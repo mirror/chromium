@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "2791fc70_c6c11d22",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T01:05:18Z",
+      "side": 1,
+      "message": "\u003e So this is still problematic. The right thing to do here would be:\n\u003e - always pass nullptr for same_document_loads\n\u003e - only pass the navigation_ui_data to the main frame for different_document_loads. All subframe should get nullptr.\n\u003e My reasoning is that the NavigationUIData was initialized for the main frame. Therefore, we cannot pass it to a subframe since it contains frame info.\n\nIf it\u0027s created for main frames only, then yes, we don\u0027t want to pass it to subframes.  (I haven\u0027t looked at the rest of the CL, but is it intended that this data will never be needed or used for subframes?)\n\n\u003e \n\u003e @creis: does this make sense to you? I\u0027m not sure in which case we can end up with several loads in the NavigationController.\n\nWe can go back multiple history items at once, and that can cause multiple subframes to need to load.\n\n(You could imagine it also affecting the main frame and subframes if same-document navigations are involved, but that\u0027s not possible due to the TODO and early return on line 2109-- we don\u0027t traverse down into children of a frame that\u0027s being navigated, at least for now.)",
+      "parentUuid": "21f98933_12d8b995",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "417b0574_bfd3ad5d",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 31
