@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bce5c940_dd430605",
+        "filename": "media/filters/video_renderer_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-21T02:01:48Z",
+      "side": 1,
+      "message": "What do you mean? This is just a clarifying comment about the differences between the values. We\u0027re correctly compensating duration in all case.",
+      "parentUuid": "968b089e_ba356777",
+      "revId": "34ea1cb0f539f6b4a35941bd4e4e0601c00680d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1168550_b9d61cb0",
         "filename": "media/renderers/video_renderer_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-21T01:57:26Z",
       "side": 1,
       "message": "Is there an edge case where AverageDuration() here is base::TimeDelta, such that the VRA cannot use it as an estimated duration? In such case, do we need to still await 2 frames in low delay mode?",
+      "range": {
+        "startLine": 558,
+        "startChar": 59,
+        "endLine": 558,
+        "endChar": 74
+      },
+      "revId": "34ea1cb0f539f6b4a35941bd4e4e0601c00680d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0249c9db_c4f43a59",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-21T02:01:48Z",
+      "side": 1,
+      "message": "There\u0027s an edge case, but I don\u0027t think it\u0027s worth handling. I.e. we\u0027d have to have video frames w/o duration (Which should be never... mse always has duration information and ffmpeg will also AFAIK, but wouldn\u0027t discount broken files).\n\nIn the worst case we resume slightly before we should and this code is already so complex that I don\u0027t think trying to keep both the 2 frame wait and the no-wait case is worth it.",
+      "parentUuid": "d1168550_b9d61cb0",
       "range": {
         "startLine": 558,
         "startChar": 59,
