@@ -104,3 +104,16 @@ static ScopedJavaLocalRef<jstring> GetCertSHA1FingerprintText(
   return ConvertUTF8ToJavaString(
       env, l10n_util::GetStringUTF8(IDS_CERT_INFO_SHA1_FINGERPRINT_LABEL));
 }
+
+static ScopedJavaLocalRef<jstring> GetCertExtensionText(
+    JNIEnv* env,
+    const JavaParamRef<jclass>&) {
+  return ConvertUTF8ToJavaString(
+      env, l10n_util::GetStringUTF8(IDS_CERT_DETAILS_EXTENSIONS));
+}
+
+static ScopedJavaLocalRef<jstring> GetCertSANText(JNIEnv* env,
+                                                  const JavaParamRef<jclass>&) {
+  return ConvertUTF8ToJavaString(
+      env, l10n_util::GetStringUTF8(IDS_CERT_X509_SUBJECT_ALT_NAME));
+}
