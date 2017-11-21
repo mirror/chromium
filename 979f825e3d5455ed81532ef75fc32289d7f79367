@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "029c2875_bc883c73",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T19:29:19Z",
+      "side": 1,
+      "message": "1. There may not be any existing proxy impl that holds state, but there shouldn\u0027t be any reason not to. Any caching should be in the implementaiton, not the prototyie (i.e.  InternetPageBrowserProxyImpl)\n\nThat said, now that I think about it, unless we anticipate hundreds of arc vpn providers, we could simplify the C++/JS API and just have one listener, \u0027sendArcVpnProviders\u0027 that gets called with the complete list on any update. Then we wouldn\u0027t need any of the list maintenance code in JS. I would still put the listener in the browser proxy however.\n\n2. Each chrome://settings page will have its own render process and thus its own settings.DevicePageBrowserProxyImpl.getInstance(). It will also have its own instance of the C++ handler.\n\n3. Heh, yes, that makes sense :) Because of 2, you don\u0027t have to do anything special for multiple settings page instances.",
+      "parentUuid": "62247dc2_21b6ca23",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7534247_e77abd4c",
         "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
         "patchSetId": 19
