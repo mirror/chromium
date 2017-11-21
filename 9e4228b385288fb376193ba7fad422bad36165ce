@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0bd28689_dd3ab8f3",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T20:24:17Z",
+      "side": 1,
+      "message": "use the normal parameter name, and comment out the name:\n\n   (const ui::Event* /*event*/)\n\n\u003e Unused parameters that might not be obvious should comment out the\n\u003e variable name in the function definition\"\n\nfrom https://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions",
+      "range": {
+        "startLine": 22,
+        "startChar": 57,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd99c61c_ad551a47",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 4
@@ -42,6 +65,92 @@
         "startChar": 12,
         "endLine": 32,
         "endChar": 38
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0200d764_daca1c70",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T20:24:17Z",
+      "side": 1,
+      "message": "nit: \"Flag to determine\" or \"Flag indicating\"",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed28b8e_5b473949",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T20:24:17Z",
+      "side": 1,
+      "message": "nit: blank line above comment",
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eff8c5c_dabb5bbb",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T20:24:17Z",
+      "side": 1,
+      "message": "optional: use a temporary instead of a variable:\n\nReportIdleEvent({base::TimeTicks::Now()});",
+      "range": {
+        "startLine": 68,
+        "startChar": 18,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b18b02_8726d3b1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T20:24:17Z",
+      "side": 1,
+      "message": "Throughout: order should be (expected, actual)",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 29
       },
       "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -90,6 +199,46 @@
         "endLine": 77,
         "endChar": 11
       },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4beb51_19a2d388",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T20:24:17Z",
+      "side": 1,
+      "message": "period.",
+      "range": {
+        "startLine": 93,
+        "startChar": 29,
+        "endLine": 93,
+        "endChar": 30
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab4f92b_5f246e97",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T20:24:17Z",
+      "side": 1,
+      "message": "In computer science there are three numbers: zero, one, and many.\n\nCan we add a test for logging multiple UserActivityEvents?",
       "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
