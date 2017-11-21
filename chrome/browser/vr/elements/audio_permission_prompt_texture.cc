@@ -6,7 +6,6 @@
 
 #include "base/i18n/case_conversion.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
@@ -55,16 +54,15 @@ void AudioPermissionPromptTexture::Draw(SkCanvas* sk_canvas,
   gfx::Canvas* canvas = &gfx_canvas;
 
   SkPaint back_paint;
-  back_paint.setColor(color_scheme().audio_permission_prompt_background);
+  back_paint.setColor(background_color());
   sk_canvas->drawRoundRect(SkRect::MakeWH(size_.width(), size_.height()),
                            ToPixels(kCornerRadius), ToPixels(kCornerRadius),
                            back_paint);
 
   // Icon
   gfx::PointF icon_location(ToPixels(kPadding), ToPixels(kPadding));
-  VectorIcon::DrawVectorIcon(
-      canvas, vector_icons::kMicrophoneIcon, ToPixels(kIconSize), icon_location,
-      color_scheme().audio_permission_prompt_icon_foreground);
+  VectorIcon::DrawVectorIcon(canvas, vector_icons::kMicrophoneIcon,
+                             ToPixels(kIconSize), icon_location, icon_color_);
 
   // Prompt description.
   auto text = l10n_util::GetStringUTF16(
@@ -72,9 +70,9 @@ void AudioPermissionPromptTexture::Draw(SkCanvas* sk_canvas,
   gfx::FontList fonts;
   GetFontList(ToPixels(kFontSizePromptText), text, &fonts);
   gfx::Rect prompt_text_size(size_.width(), 0);
-  std::vector<std::unique_ptr<gfx::RenderText>> lines = PrepareDrawStringRect(
-      text, fonts, color_scheme().element_foreground, &prompt_text_size,
-      kTextAlignmentNone, kWrappingBehaviorWrap);
+  std::vector<std::unique_ptr<gfx::RenderText>> lines =
+      PrepareDrawStringRect(text, fonts, foreground_color(), &prompt_text_size,
+                            kTextAlignmentNone, kWrappingBehaviorWrap);
   canvas->Save();
   canvas->Translate(
       gfx::Vector2d(ToPixels(IsRTL() ? kPadding + kTextLeftMargin
@@ -94,9 +92,8 @@ void AudioPermissionPromptTexture::Draw(SkCanvas* sk_canvas,
   text = base::i18n::ToUpper(l10n_util::GetStringUTF16(
       IDS_VR_SHELL_AUDIO_PERMISSION_PROMPT_ABORT_BUTTON));
   lines = PrepareDrawStringRect(
-      text, fonts,
-      color_scheme().audio_permission_prompt_secondary_button_forground,
-      &button_text_size, kTextAlignmentCenter, kWrappingBehaviorWrap);
+      text, fonts, secondary_button_colors_.foreground, &button_text_size,
+      kTextAlignmentCenter, kWrappingBehaviorWrap);
   secondary_button_rect_.SetRect(
       ToPixels(kWidth - kPadding - kButtonsDistance - 2 * kButtonWidth),
       ToPixels(kPadding + kIconSize + kVerticalGap), ToPixels(kButtonWidth),
@@ -118,9 +115,9 @@ void AudioPermissionPromptTexture::Draw(SkCanvas* sk_canvas,
   text = base::i18n::ToUpper(l10n_util::GetStringUTF16(
       IDS_VR_SHELL_AUDIO_PERMISSION_PROMPT_CONTINUE_BUTTON));
   button_text_size.set_size(gfx::Size(ToPixels(kButtonWidth), 0));
-  lines = PrepareDrawStringRect(
-      text, fonts, color_scheme().audio_permission_prompt_background,
-      &button_text_size, kTextAlignmentCenter, kWrappingBehaviorWrap);
+  lines = PrepareDrawStringRect(text, fonts, primary_button_colors_.foreground,
+                                &button_text_size, kTextAlignmentCenter,
+                                kWrappingBehaviorWrap);
   primary_button_rect_.SetRect(ToPixels(kWidth - kPadding - kButtonWidth),
                                ToPixels(kPadding + kIconSize + kVerticalGap),
                                ToPixels(kButtonWidth), ToPixels(kButtonHeight));
@@ -149,18 +146,18 @@ gfx::PointF AudioPermissionPromptTexture::PercentToPixels(
 
 SkColor AudioPermissionPromptTexture::GetPrimaryButtonColor() const {
   if (primary_pressed_)
-    return color_scheme().audio_permission_prompt_primary_button_down;
+    return primary_button_colors_.background_down;
   if (primary_hovered_)
-    return color_scheme().audio_permission_prompt_primary_button_hover;
-  return color_scheme().audio_permission_prompt_primary_button_background;
+    return primary_button_colors_.background_hover;
+  return primary_button_colors_.background;
 }
 
 SkColor AudioPermissionPromptTexture::GetSecondaryButtonColor() const {
   if (secondary_pressed_)
-    return color_scheme().audio_permission_prompt_secondary_button_down;
+    return secondary_button_colors_.background_down;
   if (secondary_hovered_)
-    return color_scheme().audio_permission_prompt_secondary_button_hover;
-  return color_scheme().audio_permission_prompt_background;
+    return secondary_button_colors_.background_hover;
+  return secondary_button_colors_.background;
 }
 
 bool AudioPermissionPromptTexture::HitsPrimaryButton(
@@ -195,6 +192,26 @@ void AudioPermissionPromptTexture::SetSecondaryButtonPressed(bool pressed) {
   if (secondary_pressed_ != pressed)
     set_dirty();
   secondary_pressed_ = pressed;
+}
+
+void AudioPermissionPromptTexture::SetPrimaryButtonColors(
+    const ButtonColors& colors) {
+  if (primary_button_colors_ != colors)
+    set_dirty();
+  primary_button_colors_ = colors;
+}
+
+void AudioPermissionPromptTexture::SetSecondaryButtonColors(
+    const ButtonColors& colors) {
+  if (secondary_button_colors_ != colors)
+    set_dirty();
+  secondary_button_colors_ = colors;
+}
+
+void AudioPermissionPromptTexture::SetIconColor(SkColor color) {
+  if (icon_color_ != color)
+    set_dirty();
+  icon_color_ = color;
 }
 
 gfx::Size AudioPermissionPromptTexture::GetPreferredTextureSize(

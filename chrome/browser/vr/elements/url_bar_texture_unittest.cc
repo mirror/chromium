@@ -10,6 +10,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/vr/elements/render_text_wrapper.h"
+#include "chrome/browser/vr/model/color_scheme.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
 #include "components/security_state/core/security_state.h"
 #include "components/toolbar/vector_icons.h"
@@ -111,6 +112,7 @@ TestUrlBarTexture::TestUrlBarTexture()
     : UrlBarTexture(base::Bind(&TestUrlBarTexture::OnUnsupportedFeature,
                                base::Unretained(this))) {
   gfx::FontList::SetDefaultFontDescription("Arial, Times New Roman, 15px");
+  SetColorScheme(&ColorScheme::GetColorScheme(ColorScheme::kModeNormal));
 }
 
 class MockRenderText : public RenderTextWrapper {

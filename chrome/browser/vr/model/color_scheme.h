@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_VR_COLOR_SCHEME_H_
-#define CHROME_BROWSER_VR_COLOR_SCHEME_H_
+#ifndef CHROME_BROWSER_VR_MODEL_COLOR_SCHEME_H_
+#define CHROME_BROWSER_VR_MODEL_COLOR_SCHEME_H_
 
 #include "third_party/skia/include/core/SkColor.h"
 
@@ -11,10 +11,24 @@ namespace vr {
 
 struct ButtonColors {
   bool operator==(const ButtonColors& other) const;
+  bool operator!=(const ButtonColors& other) const;
   SkColor background;
   SkColor background_hover;
-  SkColor background_press;
+  SkColor background_down;
   SkColor foreground;
+  SkColor foreground_disabled;
+};
+
+struct UrlBarColors {
+  bool operator==(const UrlBarColors& other) const;
+  bool operator!=(const UrlBarColors& other) const;
+  SkColor deemphasized;
+  SkColor emphasized;
+  SkColor secure;
+  SkColor insecure;
+  SkColor offline_page_warning;
+  SkColor separator;
+  ButtonColors back_button;
 };
 
 struct ColorScheme {
@@ -57,35 +71,15 @@ struct ColorScheme {
   SkColor system_indicator_background;
   SkColor audio_permission_prompt_icon_foreground;
   SkColor audio_permission_prompt_background;
-  SkColor audio_permission_prompt_secondary_button_forground;
-  SkColor audio_permission_prompt_secondary_button_hover;
-  SkColor audio_permission_prompt_secondary_button_down;
-  SkColor audio_permission_prompt_primary_button_background;
-  SkColor audio_permission_prompt_primary_button_hover;
-  SkColor audio_permission_prompt_primary_button_down;
+  ButtonColors audio_permission_prompt_secondary_button_colors;
+  ButtonColors audio_permission_prompt_primary_button_colors;
 
   // The colors used for text and buttons on prompts.
   SkColor prompt_foreground;
-  SkColor prompt_primary_button_forground;
-  SkColor prompt_secondary_button_foreground;
-  SkColor prompt_primary_button_background;
-  SkColor prompt_secondary_button_background;
-  SkColor prompt_button_background_hover;
-  SkColor prompt_button_background_down;
+  ButtonColors prompt_secondary_button_colors;
+  ButtonColors prompt_primary_button_colors;
 
-  // If you have a segmented element, its separators should use this color.
-  SkColor separator;
-
-  // Some content changes color based on the security level. Those visuals
-  // should respect these colors.
-  SkColor secure;
-  SkColor insecure;
-  SkColor url_emphasized;
-  SkColor url_deemphasized;
-  SkColor offline_page_warning;
-
-  // The color used for disabled icons.
-  SkColor disabled;
+  UrlBarColors url_bar;
 
   // Screen dimmer colors.
   SkColor dimmer_outer;
@@ -108,4 +102,4 @@ struct ColorScheme {
 
 }  // namespace vr
 
-#endif  // CHROME_BROWSER_VR_COLOR_SCHEME_H_
+#endif  // CHROME_BROWSER_VR_MODEL_COLOR_SCHEME_H_

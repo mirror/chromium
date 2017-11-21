@@ -24,7 +24,7 @@ constexpr float kHitPlaneScaleFactorHovered = 1.2;
 }  // namespace
 
 Button::Button(base::Callback<void()> click_handler,
-               int draw_phase,
+               DrawPhase draw_phase,
                float width,
                float height,
                float hover_offset,
@@ -131,7 +131,7 @@ void Button::OnStateUpdated() {
   }
 
   if (pressed_) {
-    background_->SetColor(colors_.background_press);
+    background_->SetColor(colors_.background_down);
   } else if (hovered_) {
     background_->SetColor(colors_.background_hover);
   } else {
