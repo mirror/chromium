@@ -22,6 +22,30 @@
       "revId": "c5da5189ba10821e304a947e6480dae925ba8844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6df94a8_b589cbc8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T15:31:02Z",
+      "side": 1,
+      "message": "It doesn\u0027t -- on Linux we\u0027re notified of interaction through DBus signals, which require our process to remain alive. The notification servers I\u0027m aware of all close our notifications when we close our DBus connection and the process goes away.",
+      "parentUuid": "50e09843_5e4d64ed",
+      "range": {
+        "startLine": 772,
+        "startChar": 29,
+        "endLine": 772,
+        "endChar": 59
+      },
+      "revId": "c5da5189ba10821e304a947e6480dae925ba8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
