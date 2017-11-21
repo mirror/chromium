@@ -22,6 +22,30 @@
       "revId": "07bdf73fc11b75aca1c0a244ae9033779b456daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7ec6ce_a6afa957",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-21T20:33:25Z",
+      "side": 1,
+      "message": "It\u0027s needed to convert a Profile* to BrowserContext* here https://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/tab_manager.cc?l\u003d822\u0026rcl\u003d86c8199e89e3991732f8375fad1f1b667cc7edf4",
+      "parentUuid": "30b43b56_3f7ab0b2",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "07bdf73fc11b75aca1c0a244ae9033779b456daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
