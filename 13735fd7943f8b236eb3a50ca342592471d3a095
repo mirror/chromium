@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b20bf6_f218378f",
+        "filename": "chrome/browser/ui/aura/accessibility/ax_tree_source_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-11-21T15:59:56Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be more efficient and semantically meaningful to make views location relative to their window/widget? Also, making windows relative to their desktops.",
+      "revId": "13735fd7943f8b236eb3a50ca342592471d3a095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
