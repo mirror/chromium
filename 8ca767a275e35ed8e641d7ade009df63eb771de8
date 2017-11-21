@@ -22,6 +22,47 @@
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d84d94a_5cf6c0af",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T07:33:35Z",
+      "side": 1,
+      "message": "This mostly comes from RFC2045.",
+      "parentUuid": "c175d43b_cd3b06e7",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 9
+      },
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6a1b84_c52a163a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T07:33:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is correct - https://tools.ietf.org/html/rfc2045#section-5.1 doesn\u0027t allow to omit parameter values, so it may be good to return undefined if tokenize.ConsumeChar(\u0027\u003d\u0027) returns false, but that\u0027s not Firefox / Chrome is doing. What do you think?",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
