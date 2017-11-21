@@ -549,6 +549,7 @@ message GarbageCollectionDirective {
   // This field specifies the max number of items that the client should keep
   // for a specific datatype.  If the number of items exceeds this limit, the
   // client should purge the extra sync entities based on the LRU rule.
+  // This field is currently not implemented and is ignored.
   optional int32 max_number_of_items = 4;
 }
 

@@ -808,6 +808,7 @@ void SharedModelTypeProcessor::ExpireEntriesIfNeeded(
     cached_gc_directive_version_ = new_gc_directive.version_watermark();
     has_expired_changes = true;
   }
+
   if (new_gc_directive.has_age_watermark_in_days()) {
     DCHECK(new_gc_directive.age_watermark_in_days());
     // For saving resource purpose(ex. cpu, battery), We round up garbage
@@ -822,6 +823,10 @@ void SharedModelTypeProcessor::ExpireEntriesIfNeeded(
       cached_gc_directive_aged_out_day_ = to_be_expired;
       has_expired_changes = true;
     }
+  }
+
+  if (new_gc_directive.has_max_number_of_items()) {
+    NOTIMPLEMENTED();
   }
 
   if (has_expired_changes)

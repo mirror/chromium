@@ -300,6 +300,10 @@ void DirectoryUpdateHandler::ExpireEntriesIfNeeded(
       cached_gc_directive_aged_out_day_ = to_be_expired;
     }
   }
+
+  if (new_gc_directive.has_max_number_of_items()) {
+    NOTIMPLEMENTED();
+  }
 }
 
 }  // namespace syncer
