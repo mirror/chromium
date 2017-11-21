@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2b1b954e_48a01d1a",
+        "filename": "net/disk_cache/simple/simple_index_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-21T16:14:27Z",
+      "side": 1,
+      "message": "Yes, please, unless you wish to object in its favor.",
+      "parentUuid": "81198ead_4fdba468",
+      "range": {
+        "startLine": 314,
+        "startChar": 1,
+        "endLine": 316,
+        "endChar": 63
+      },
+      "revId": "cc4a481f0c7845d0abc3974e6c188d8352f0f333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f90224d_dc46403e",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 1
