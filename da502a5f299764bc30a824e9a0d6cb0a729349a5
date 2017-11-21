@@ -16,6 +16,24 @@
       "revId": "da502a5f299764bc30a824e9a0d6cb0a729349a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948a2318_86e8ee64",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T13:33:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d3c3e350_f6f09059",
+      "revId": "da502a5f299764bc30a824e9a0d6cb0a729349a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
