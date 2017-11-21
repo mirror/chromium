@@ -181,6 +181,10 @@ const CGFloat kHintLabelSidePadding = 12;
     self.logoVendor.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.fakeOmnibox.translatesAutoresizingMaskIntoConstraints = NO;
 
+    UIEdgeInsets safeAreaInsets = SafeAreaInsetsForView(
+        [[UIApplication sharedApplication] keyWindow].rootViewController.view);
+    width = std::max<CGFloat>(
+        0, width - safeAreaInsets.left - safeAreaInsets.right);
     self.fakeOmniboxWidthConstraint = [self.fakeOmnibox.widthAnchor
         constraintEqualToConstant:content_suggestions::searchFieldWidth(width)];
     [self addConstraintsForLogoView:self.logoVendor.view
