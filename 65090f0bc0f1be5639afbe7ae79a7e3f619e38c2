@@ -16,6 +16,24 @@
       "revId": "65090f0bc0f1be5639afbe7ae79a7e3f619e38c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718ec6b2_8bf732dd",
+        "filename": "third_party/WebKit/Source/core/paint/FragmentData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-21T22:41:48Z",
+      "side": 1,
+      "message": "This patch set also changes PaintPropertyTreeBuilder to use the non-const version. However I removed the non-const version and let PaintPropertyTreeBuilder still use RarePaintData in the new patch set because this doesn\u0027t save many lines.",
+      "parentUuid": "925afc41_39127aaa",
+      "revId": "65090f0bc0f1be5639afbe7ae79a7e3f619e38c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
