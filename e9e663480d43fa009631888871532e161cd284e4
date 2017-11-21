@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "69898fa2_9e6313db",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-21T22:10:58Z",
+      "side": 1,
+      "message": "Okay, my eyes skipped over the \"not\".\n\nI had completely forgotten the reason documented in your link. Might be worthwhile to add the reasoning *why* in the UKM description as well?",
+      "parentUuid": "ab995dea_0acd783f",
+      "range": {
+        "startLine": 561,
+        "startChar": 55,
+        "endLine": 561,
+        "endChar": 56
+      },
+      "revId": "e9e663480d43fa009631888871532e161cd284e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7a23e1d_91ef0fb4",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 18
