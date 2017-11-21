@@ -140,6 +140,52 @@
     },
     {
       "key": {
+        "uuid": "103f02b6_15bc64ac",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:52:12Z",
+      "side": 1,
+      "message": "Let\u0027s use the following format:\n\n  \u0027binary_name.%p.profraw\u0027\n\nSee https://bugs.chromium.org/p/chromium/issues/detail?id\u003d784613#c10",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 243,
+        "endChar": 21
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfad323c_f79e26ec",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:52:12Z",
+      "side": 1,
+      "message": "We also have to handle that change here, as names of profraw files become less predictive (%p will be replaced by PID).",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 48
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d44f93b2_c6a567a9",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
