@@ -100,9 +100,9 @@ class CONTENT_EXPORT CBORReader {
   base::Optional<CBORValue> ReadCBORMap(uint64_t length, int max_nesting_level);
   bool CanConsume(uint64_t bytes);
   void CheckExtraneousData();
-  void CheckDuplicateKey(const std::string& new_key, CBORValue::MapValue* map);
+  void CheckDuplicateKey(const CBORValue& new_key, CBORValue::MapValue* map);
   bool HasValidUTF8Format(const std::string& string_data);
-  void CheckOutOfOrderKey(const std::string& new_key, CBORValue::MapValue* map);
+  void CheckOutOfOrderKey(const CBORValue& new_key, CBORValue::MapValue* map);
   bool CheckUintEncodedByteLength(uint8_t additional_bytes, uint64_t uint_data);
 
   CBORDecoderError GetErrorCode();
