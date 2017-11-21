@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6aa823b6_4703621f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-21T23:30:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1985d39_3a0ccb77",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "c2f4548e28905d9e2a1cac0f325776c355f4aa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71e3734_e898fd6a",
         "filename": "build/cipd/fuchsia/OWNERS",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "c2f4548e28905d9e2a1cac0f325776c355f4aa04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd11251c_e9ca3c52",
+        "filename": "build/cipd/fuchsia/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-21T23:30:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c71e3734_e898fd6a",
+      "revId": "c2f4548e28905d9e2a1cac0f325776c355f4aa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
