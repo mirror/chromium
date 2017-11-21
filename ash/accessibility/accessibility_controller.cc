@@ -5,6 +5,7 @@
 #include "ash/accessibility/accessibility_controller.h"
 
 #include <memory>
+#include <utility>
 
 #include "ash/high_contrast/high_contrast_controller.h"
 #include "ash/public/cpp/ash_pref_names.h"
@@ -106,6 +107,11 @@ void AccessibilityController::TriggerAccessibilityAlert(
     mojom::AccessibilityAlert alert) {
   if (client_)
     client_->TriggerAccessibilityAlert(alert);
+}
+
+void AccessibilityController::ToggleDictation() {
+  if (client_)
+    client_->ToggleDictation();
 }
 
 void AccessibilityController::SetClient(

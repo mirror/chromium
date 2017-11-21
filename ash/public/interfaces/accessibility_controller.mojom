@@ -47,4 +47,7 @@ interface AccessibilityController {
 interface AccessibilityControllerClient {
   // Triggers an accessibility alert to give the user feedback.
   TriggerAccessibilityAlert(AccessibilityAlert alert);
+
+  // Toggle dictation.
+  ToggleDictation();
 };
