@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e07fdc_e2be57cf",
+        "filename": "ios/chrome/browser/ui/broadcaster/chrome_broadcast_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-21T07:56:23Z",
+      "side": 0,
+      "message": "This one can be removed too. It was added when the toolbar mediator was copied from clean but it is not used.",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "0b58b7d1bd47f22453023055f0acdce0a7b13c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
