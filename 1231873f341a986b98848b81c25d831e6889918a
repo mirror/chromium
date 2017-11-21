@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e050ccf4_88143907",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-21T19:30:14Z",
+      "side": 1,
+      "message": "Revised code and use |send_onclosed| name to avoid confusions.\n\nThe code now is something like the following:\n  booo send_onclosed \u003d true;  // The default behavior.\n  if (!on_first_commit_callback_.is_null()) {\n    // Run the callback\n    send_onclosed \u003d false;  // Since callback sets error for window.create\n  }",
+      "parentUuid": "894bb27d_1fac6175",
+      "revId": "1231873f341a986b98848b81c25d831e6889918a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b509bb7c_fd38524f",
         "filename": "extensions/browser/app_window/app_window.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1231873f341a986b98848b81c25d831e6889918a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bee999_b65847f1",
+        "filename": "extensions/browser/app_window/app_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-21T19:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b509bb7c_fd38524f",
+      "revId": "1231873f341a986b98848b81c25d831e6889918a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "af6291b9_63a9bbf3",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-21T19:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5458b9b_bf007327",
+      "revId": "1231873f341a986b98848b81c25d831e6889918a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a94f991_9524db72",
         "filename": "extensions/browser/app_window/app_window_contents.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-21T18:10:22Z",
       "side": 1,
       "message": "This relies on the assumption that the only cleanup the renderer will do when a window is closed is to dispatch the event, which might not be true.  Is there any harm in dispatching the IPC?",
+      "revId": "1231873f341a986b98848b81c25d831e6889918a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccc3dec_8da20e73",
+        "filename": "extensions/browser/app_window/app_window_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-21T19:30:14Z",
+      "side": 1,
+      "message": "Put |send_onclosed| flag in ExtensionMsg_AppWindowClosed and send it down to renderer.",
+      "parentUuid": "7a94f991_9524db72",
       "revId": "1231873f341a986b98848b81c25d831e6889918a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
