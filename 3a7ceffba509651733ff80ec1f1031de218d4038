@@ -16,6 +16,24 @@
       "revId": "3a7ceffba509651733ff80ec1f1031de218d4038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ce1de0_7b9d1ea8",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-21T19:46:37Z",
+      "side": 1,
+      "message": "If you need something available at runtime, I believe you should be using data or data_deps (depending on whether it needs to be compiled or not) https://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/reference.md#data",
+      "parentUuid": "2a9b303f_42fcc244",
+      "revId": "3a7ceffba509651733ff80ec1f1031de218d4038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
