@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d9f0230_ea4d1db2",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T17:45:10Z",
+      "side": 1,
+      "message": "If this is only conditionally populated, perhaps we should make it optional?\n\nDOMString? password",
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fb169e_d90471cb",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T17:45:10Z",
+      "side": 1,
+      "message": "I don\u0027t see this being set anywhere in the API?",
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
