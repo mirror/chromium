@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "7fbafa10_c452ffde",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-21T02:35:02Z",
+      "side": 1,
+      "message": "It has no relation to CachingCertVerifier, but because multiple URLRequests may reuse sockets (HTTP/2, QUIC, or HTTP/1.1 + KeepAlive). I think it\u0027s important to include this in the CL description, considering a whole academic paper was written on the importance of these differences in drawing conclusions ( https://research.google.com/pubs/pub46197.html )",
+      "parentUuid": "79763c6f_db453ed9",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85e1c170_d6149602",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -70,6 +88,24 @@
       "writtenOn": "2017-11-21T00:19:14Z",
       "side": 1,
       "message": "Can you link to a bug motivating this change?\n\nThere may be some risk to this being reverted due to binary size increase for all the cert hashes (how much rodata does it add?), I think it would be helpful to have a bug on file for the change acknowledging this cost.",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a87de84_74495397",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-21T02:35:02Z",
+      "side": 1,
+      "message": "Yes, that was acked as a TODO before landing :)",
+      "parentUuid": "85e1c170_d6149602",
       "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "4363c5bf_5b228bb9",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-21T02:35:02Z",
+      "side": 1,
+      "message": "Hrm. I was hoping to avoid that confusion, but it looks like I failed.\n\nThe common issue is that \u0027root cert\u0027 and \u0027trust anchor\u0027 are used interchangably, and there may be multiple trust anchors within a given chain. This is because a given platform may have a different set of trust anchors than how we (Chrome) logically view trust anchors (and their operating organizations).\n\nI wanted to avoid the confusion from the more precise term \"trust anchor\" from the code, but opted for more specificity in the description.\n\nHow do you feel about RecordTrustAnchorHistogram? Even \u0027most-specific\u0027 was a linguistic nuance I was dancing around, so I was wanting to avoid that in the API signature. I think it also means renaming the histogram - which I\u0027ve gone ahead and done.",
+      "parentUuid": "321be0f6_23076776",
+      "range": {
+        "startLine": 275,
+        "startChar": 5,
+        "endLine": 275,
+        "endChar": 28
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b31c9055_27f9ff67",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 4
@@ -110,6 +170,24 @@
       "writtenOn": "2017-11-21T00:19:14Z",
       "side": 1,
       "message": "I think we may as well histogram the zero value too (outside of this loop, when no known root was identified).\n\nCould help validate that we have enumerated the full set of known roots; especially if we have a histogram for CertVerifyResult::is_issued_by_known_root to compare it against.",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2b3709_d59a4e30",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-21T02:35:02Z",
+      "side": 1,
+      "message": "It\u0027s intentional that this isn\u0027t histogrammed.\n\nFor example, in a certificate chain of \u0027leaf\u0027, \u0027intermediate\u0027, \u0027root\u0027, where root is a trust anchor, both \u0027leaf\u0027 and \u0027intermediate\u0027 would return 0.\n\nThis is because of working in a bottom-up approach, but the same concern would apply in a top-down approach of \u0027leaf\u0027, \u0027intermediate\u0027, \u0027trust-anchor 1\u0027, \u0027bridge\u0027, \u0027trust anchor 2\u0027 - simply walking down from TA2 to the first zero value (bridge) would miss \u0027trust anchor 1\u0027.\n\nFinally, there\u0027s the enterprise scenario of only a single trusted root (the organization\u0027s \u0027trust store\u0027 key), which goes \u0027leaf\u0027, \u0027intermediate\u0027, \u0027public trust anchor\u0027, \u0027private enterprise key\u0027. This is an existing deficiency of \u0027is_issued_by_known_root\u0027 for those organizations, but it\u0027s why this approach was chosen. There\u0027s no interest in knowing about \u0027leaf\u0027, \u0027intermediate\u0027, or \u0027bridge\u0027",
+      "parentUuid": "b31c9055_27f9ff67",
       "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -271,6 +349,30 @@
     },
     {
       "key": {
+        "uuid": "fd04f1cb_603bd89a",
+        "filename": "net/cert/root_cert_list_generated.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-21T02:35:02Z",
+      "side": 1,
+      "message": "Histograms themselves use int32_t for the underlying type, but it also wouldn\u0027t save bytes in the structure due to the alignment requirements for pointers, of which sha256_spki_hash would be. That is, unfortunately, we\u0027d still end up with two bytes of padding if I\u0027m not mistaken.",
+      "parentUuid": "17119714_773299e7",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d516aa53_c87a830e",
         "filename": "net/data/ssl/root_stores/README.md",
         "patchSetId": 4
@@ -339,6 +441,24 @@
       "writtenOn": "2017-11-21T00:19:14Z",
       "side": 1,
       "message": "Is this intentionally different in terms of errors? The per-verification logging only happens on successful verifications, whereas I believe this runs on failed cert verifications. Or is |transaction_| expected to be null in those cases?",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739c214b_bd2faed9",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-21T02:35:02Z",
+      "side": 1,
+      "message": "Good point; it doesn\u0027t necessarily reset transaction_, so this would count those cases (and miss cases where transaction_ had been reset as part of error processing)\n\nI\u0027ve since moved this up to OnStartCompleted and updated the error parsing and checking.",
+      "parentUuid": "30c5922d_c51839fc",
       "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
