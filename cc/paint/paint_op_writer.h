@@ -36,6 +36,8 @@ class CC_PAINT_EXPORT PaintOpWriter {
   void Write(SkScalar data);
   void Write(size_t data);
   void Write(uint8_t data);
+  void Write(uint32_t data);
+  void Write(int32_t data);
   void Write(const SkRect& rect);
   void Write(const SkIRect& rect);
   void Write(const SkRRect& rect);
@@ -46,6 +48,7 @@ class CC_PAINT_EXPORT PaintOpWriter {
   void Write(const sk_sp<SkData>& data);
   void Write(const PaintShader* shader);
   void Write(const scoped_refptr<PaintTextBlob>& blob);
+  void Write(SkColorType color_type);
 
   void Write(SkClipOp op) { Write(static_cast<uint8_t>(op)); }
   void Write(PaintCanvas::AnnotationType type) {
