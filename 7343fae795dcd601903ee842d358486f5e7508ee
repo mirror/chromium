@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e600a97f_372bf3db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-21T15:54:52Z",
+      "side": 1,
+      "message": "I see that you\u0027re making use of the else if condition explicitly. But can you end up in this condition? It\u0027s not entirely clear to me that this would do the right thing.",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 66
+      },
+      "revId": "7343fae795dcd601903ee842d358486f5e7508ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
