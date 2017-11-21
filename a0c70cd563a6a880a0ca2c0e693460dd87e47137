@@ -52,6 +52,24 @@
       "revId": "a0c70cd563a6a880a0ca2c0e693460dd87e47137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3fee563_a72f9f92",
+        "filename": "third_party/boringssl/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-11-21T21:47:44Z",
+      "side": 1,
+      "message": "I think bio_io has since been removed. Otherwise, that matches what I expect.",
+      "parentUuid": "72913222_514fb278",
+      "revId": "a0c70cd563a6a880a0ca2c0e693460dd87e47137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
