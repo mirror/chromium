@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b12803d5_773122fc",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-21T07:54:38Z",
+      "side": 1,
+      "message": "Good idea. It will be happened later in another patch.",
+      "parentUuid": "84c3af90_6f579a53",
+      "revId": "53960b53844bec4f017492e2cbd9e1bbf61e3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bae0635_364b7870",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "53960b53844bec4f017492e2cbd9e1bbf61e3d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb52c6b5_32e0bc4a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-21T07:54:38Z",
+      "side": 1,
+      "message": "We need to have LayoutText::GetUpperLeftCorner().\n\"padding\" makes fragment offset top and line top different.\n\nExample: https://jsfiddle.net/tk01ymev/\n\nUpper left corner of \"two\" is (28,5) instead of (28,25).\n\n5 \u003d 22 - 17; offset of box\n25 \u003d 22 - 17 + 15 + 5; offset of text\n\n  Box offset:3,3 size:778x44\n    LineBox offset:3,3 size:91x19\n      Text offset:0,3 size:52x19 start: 0 end: 4\n      Box offset:52,3 size:39x13\n        Text offset:0,0 size:39x19 start: 4 end: 7\n      Text offset:91,3 size:0x19 start: 7 end: 8\n    LineBox offset:3,22 size:89x19\n      Box offset:0,-17 size:89x53\n        Box offset:20,15 size:49x23\n          Text offset:5,5 size:39x19 start: 8 end: 11",
+      "parentUuid": "7bae0635_364b7870",
+      "revId": "53960b53844bec4f017492e2cbd9e1bbf61e3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
