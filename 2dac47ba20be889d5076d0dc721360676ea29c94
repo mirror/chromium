@@ -2,6 +2,149 @@
   "comments": [
     {
       "key": {
+        "uuid": "9e3f73ae_ba7ced5c",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "Maybe use base::Time::Max() to be resistant against clock adjustments towards backwards?",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25581104_9aecee23",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "Could you please explain briefly why it\u0027s correct to take the domain of the last visited URL? I.e., how is this handling the possibility of having multiple redirects over different domains during a single sign-in flow?",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4863b4e_124c4098",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "Maybe add a DCHECK or even CHECK that it\u0027s not called prematurely or after Close...() - that is, when |current_storage_partition_name_| is empty?\nBecause, IIUC the CL, it\u0027s very important for the overall isolation to not accidentally use an empty partition name.\n\nDitto for GetCurrentStoragePartition().",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b1afac_c202df78",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Remove \"(c)\".\nSee https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa57ce0_51bc0fa2",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: I believe the \"web_contents\" spelling is much more common throughout the code base.",
+      "range": {
+        "startLine": 39,
+        "startChar": 59,
+        "endLine": 39,
+        "endChar": 70
+      },
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0313fb_90fef4c4",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Typo in \"returns\".",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 12
+      },
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4da2af_6f07f3b8",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: I believe it\u0027s also disallowed to access this right after a call to CloseCurrentSigninSession()? Please adjust the comments then.",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d250d7cf_4956cc24",
         "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
         "patchSetId": 12
@@ -25,6 +168,137 @@
     },
     {
       "key": {
+        "uuid": "d7a9c9a9_c2e1ae4e",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Rename this variable to \"found\" as well, following the comment from Xiyuan?",
+      "range": {
+        "startLine": 72,
+        "startChar": 9,
+        "endLine": 72,
+        "endChar": 21
+      },
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045cb526_05af8b1a",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Perhaps \"!Object\", as the arguments here are non-nullable?",
+      "range": {
+        "startLine": 625,
+        "startChar": 15,
+        "endLine": 625,
+        "endChar": 21
+      },
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1485350_0cd9381a",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Maybe use the Set type (from ECMAScript 2015)? It\u0027s weird to pass boolean value while you only need a \"contains\" check.",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a8908d_b130356d",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Not sure if that\u0027s guaranteed to work here, but this can be simplified a bit with a for-in loop.",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987497f8_5906c5fb",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "Is this check enough to really be sure that the webview hasn\u0027t visited any page (with returning back to the empty URL)?",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c00eef_36fc3851",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Maybe just use .replaceChild()?",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdb7ddd_ebf58fb1",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Maybe also assert that |webview_| is empty?",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a31060b_fcd41d58",
         "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
         "patchSetId": 12
@@ -36,6 +310,69 @@
       "writtenOn": "2017-11-21T16:29:07Z",
       "side": 1,
       "message": "Can you implement similar unbinding logic for SamlHandler? We have a few event listeners there too.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/gaia_auth_host/saml_handler.js?rcl\u003d6809a4d6fe9136335e05f06ddf04e10ab15b6d63\u0026l\u003d144",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a833fd_8e4c1043",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Use for-in loop?",
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983325f6_d8fd9db1",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Remove extra \"a\".",
+      "range": {
+        "startLine": 686,
+        "startChar": 67,
+        "endLine": 686,
+        "endChar": 69
+      },
+      "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109f5de6_e9e4902a",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-21T16:37:44Z",
+      "side": 1,
+      "message": "nit: Wouldn\u0027t the \"partition_id\" name be a bit more consistent?\nThat\u0027s the name used for the corresponding variable inside WebViewGuest::CreateWebContents() and in some other places.\n\nAnd if you do decide to rename, then please also check your diff in other files as well.",
+      "range": {
+        "startLine": 290,
+        "startChar": 23,
+        "endLine": 290,
+        "endChar": 37
+      },
       "revId": "2dac47ba20be889d5076d0dc721360676ea29c94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
