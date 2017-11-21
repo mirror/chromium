@@ -66,6 +66,9 @@ class MockChromeCleanerProcess {
     const std::set<base::FilePath>& files_to_delete() const {
       return files_to_delete_;
     }
+    const std::set<base::string16>& registry_keys() const {
+      return registry_keys_;
+    }
 
     void set_reboot_required(bool reboot_required) {
       reboot_required_ = reboot_required;
@@ -89,6 +92,7 @@ class MockChromeCleanerProcess {
 
    private:
     std::set<base::FilePath> files_to_delete_;
+    std::set<base::string16> registry_keys_;
     bool reboot_required_ = false;
     CrashPoint crash_point_ = CrashPoint::kNone;
     chrome_cleaner::mojom::PromptAcceptance expected_user_response_ =

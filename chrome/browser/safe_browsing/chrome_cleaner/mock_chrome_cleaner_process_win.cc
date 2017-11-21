@@ -82,6 +82,7 @@ MockChromeCleanerProcess::Options::Options() = default;
 
 MockChromeCleanerProcess::Options::Options(const Options& other)
     : files_to_delete_(other.files_to_delete_),
+      registry_keys_(other.registry_keys_),
       reboot_required_(other.reboot_required_),
       crash_point_(other.crash_point_),
       expected_user_response_(other.expected_user_response_) {}
@@ -89,6 +90,7 @@ MockChromeCleanerProcess::Options::Options(const Options& other)
 MockChromeCleanerProcess::Options& MockChromeCleanerProcess::Options::operator=(
     const Options& other) {
   files_to_delete_ = other.files_to_delete_;
+  registry_keys_ = other.registry_keys_;
   reboot_required_ = other.reboot_required_;
   crash_point_ = other.crash_point_;
   expected_user_response_ = other.expected_user_response_;
@@ -128,6 +130,9 @@ void MockChromeCleanerProcess::Options::SetDoFindUws(bool do_find_uws) {
       base::FilePath(FILE_PATH_LITERAL("/path/to/other/file2.exe")));
   files_to_delete_.insert(
       base::FilePath(FILE_PATH_LITERAL("/path/to/some file.dll")));
+
+  registry_keys_.insert(L"HKCU:32\\Software\\Some\\Unwanted Software");
+  registry_keys_.insert(L"HKCU:32\\Software\\Another\\Unwanted Software");
 }
 
 int MockChromeCleanerProcess::Options::ExpectedExitCode(
@@ -231,6 +236,8 @@ void MockChromeCleanerProcess::SendScanResults(
       ->PromptUser(
           std::vector<base::FilePath>(options_.files_to_delete().begin(),
                                       options_.files_to_delete().end()),
+          std::vector<base::string16>(options_.registry_keys().begin(),
+                                      options_.registry_keys().end()),
           base::BindOnce(&MockChromeCleanerProcess::PromptUserCallback,
                          base::Unretained(this), std::move(quit_closure)));
 }

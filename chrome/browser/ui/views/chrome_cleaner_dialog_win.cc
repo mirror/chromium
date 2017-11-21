@@ -219,7 +219,8 @@ void ChromeCleanerDialog::OnScanning() {
 }
 
 void ChromeCleanerDialog::OnCleaning(
-    const std::set<base::FilePath>& files_to_delete) {
+    const std::set<base::FilePath>& files_to_delete,
+    const std::set<base::string16>& registry_keys) {
   Abort();
 }
 

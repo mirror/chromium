@@ -72,8 +72,12 @@ class MockChromeCleanerControllerObserver
  public:
   MOCK_METHOD1(OnIdle, void(ChromeCleanerController::IdleReason));
   MOCK_METHOD0(OnScanning, void());
-  MOCK_METHOD1(OnInfected, void(const std::set<base::FilePath>&));
-  MOCK_METHOD1(OnCleaning, void(const std::set<base::FilePath>&));
+  MOCK_METHOD2(OnInfected,
+               void(const std::set<base::FilePath>&,
+                    const std::set<base::string16>&));
+  MOCK_METHOD2(OnCleaning,
+               void(const std::set<base::FilePath>&,
+                    const std::set<base::string16>&));
   MOCK_METHOD0(OnRebootRequired, void());
   MOCK_METHOD0(OnRebootFailed, void());
   MOCK_METHOD1(OnLogsEnabledChanged, void(bool));
@@ -493,7 +497,7 @@ TEST_P(ChromeCleanerControllerTest, WithMockCleanerProcess) {
   }
 
   if (ExpectedOnInfectedCalled()) {
-    EXPECT_CALL(mock_observer_, OnInfected(_))
+    EXPECT_CALL(mock_observer_, OnInfected(_, _))
         .WillOnce(DoAll(SaveArg<0>(&files_to_delete_on_infected),
                         InvokeWithoutArgs([this, profile1]() {
                           controller_->ReplyWithUserResponse(profile1,
@@ -504,14 +508,14 @@ TEST_P(ChromeCleanerControllerTest, WithMockCleanerProcess) {
     if (user_response_ == UserResponse::kAcceptedWithoutLogs)
       EXPECT_CALL(mock_observer_, OnLogsEnabledChanged(false));
   } else {
-    EXPECT_CALL(mock_observer_, OnInfected(_)).Times(0);
+    EXPECT_CALL(mock_observer_, OnInfected(_, _)).Times(0);
   }
 
   if (ExpectedOnCleaningCalled()) {
-    EXPECT_CALL(mock_observer_, OnCleaning(_))
+    EXPECT_CALL(mock_observer_, OnCleaning(_, _))
         .WillOnce(SaveArg<0>(&files_to_delete_on_cleaning));
   } else {
-    EXPECT_CALL(mock_observer_, OnCleaning(_)).Times(0);
+    EXPECT_CALL(mock_observer_, OnCleaning(_, _)).Times(0);
   }
 
   if (ExpectedOnRebootRequiredCalled()) {

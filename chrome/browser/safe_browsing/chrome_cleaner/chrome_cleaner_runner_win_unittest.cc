@@ -113,7 +113,8 @@ class ChromeCleanerRunnerSimpleTest
 
   // IPC callbacks.
 
-  void OnPromptUser(std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+  void OnPromptUser(std::set<base::FilePath>&& files_to_delete,
+                    std::set<base::string16>&& registry_entry,
                     ChromePrompt::PromptUserCallback response) {}
 
   void OnConnectionClosed() {}
@@ -272,10 +273,12 @@ class ChromeCleanerRunnerTest
   // IPC callbacks.
 
   // Will receive the main Mojo message from the Mock Chrome Cleaner process.
-  void OnPromptUser(std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+  void OnPromptUser(std::set<base::FilePath>&& files_to_delete,
+                    std::set<base::string16>&& registry_keys,
                     ChromePrompt::PromptUserCallback response) {
     on_prompt_user_called_ = true;
     received_files_to_delete_ = std::move(files_to_delete);
+    received_registry_keys_ = std::move(registry_keys);
     BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
         ->PostTask(FROM_HERE, base::BindOnce(std::move(response),
                                              prompt_acceptance_to_send_));
@@ -309,7 +312,8 @@ class ChromeCleanerRunnerTest
   ChromeCleanerRunner::ProcessStatus process_status_;
 
   // Set by OnPromptUser().
-  std::unique_ptr<std::set<base::FilePath>> received_files_to_delete_;
+  std::set<base::FilePath> received_files_to_delete_;
+  std::set<base::string16> received_registry_keys_;
 
   bool on_prompt_user_called_ = false;
   bool on_connection_closed_called_ = false;
@@ -351,8 +355,10 @@ TEST_P(ChromeCleanerRunnerTest, WithMockCleanerProcess) {
 
   if (on_prompt_user_called_ &&
       !cleaner_process_options_.files_to_delete().empty()) {
-    EXPECT_EQ(*received_files_to_delete_,
+    EXPECT_EQ(received_files_to_delete_,
               cleaner_process_options_.files_to_delete());
+    EXPECT_EQ(received_registry_keys_,
+              cleaner_process_options_.registry_keys());
   }
 
   EXPECT_EQ(process_status_.launch_status,
