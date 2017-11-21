@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4116c63c_5ac5cdd5",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-21T00:06:03Z",
+      "side": 1,
+      "message": "I see. I filed a bug and added a TODO. (Currently we checked info.location !\u003d empty before caching the colors, so the problem is, wallpapers with empty location never gets the chance to cache colors.)",
+      "parentUuid": "3228b6b7_41094021",
+      "revId": "1e9088e9966fc1c7d73bd84aca3de158dccaf0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1aa8d4b_91e77296",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "1e9088e9966fc1c7d73bd84aca3de158dccaf0df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2ad28e_524844c6",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-21T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1aa8d4b_91e77296",
+      "revId": "1e9088e9966fc1c7d73bd84aca3de158dccaf0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
