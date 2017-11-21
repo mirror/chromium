@@ -206,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "e29c6cd6_d71803c5",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-11-21T00:21:50Z",
+      "side": 1,
+      "message": "I removed it to match the original logic that I ported to mojo (which git is not showing a side-by-side vs the original). \\o/\n\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/clipboard_message_filter.cc?rcl\u003dc282ab4aa09714880e867f5f66b035d06d03e6d8\u0026l\u003d279",
+      "parentUuid": "dbd4783d_b25c7870",
+      "revId": "63c0ca00d36a1c70b681e2fe26674ebf9838f99a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e0d84ef_98f60477",
         "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
         "patchSetId": 12
