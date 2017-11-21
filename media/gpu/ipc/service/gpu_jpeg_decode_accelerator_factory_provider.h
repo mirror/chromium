@@ -6,6 +6,7 @@
 #define MEDIA_GPU_IPC_SERVICE_GPU_JPEG_DECODE_ACCELERATOR_FACTORY_PROVIDER_H_
 
 #include "base/memory/ref_counted.h"
+#include "media/gpu/media_gpu_export.h"
 #include "media/video/jpeg_decode_accelerator.h"
 
 namespace base {
@@ -14,7 +15,9 @@ class SingleThreadTaskRunner;
 
 namespace media {
 
-class GpuJpegDecodeAcceleratorFactoryProvider {
+// TODO(mcasas): rename to GpuJpegDecodeAcceleratorFactory, see
+// https://crbug.com/787176
+class MEDIA_GPU_EXPORT GpuJpegDecodeAcceleratorFactoryProvider {
  public:
   using CreateAcceleratorCB =
       base::Callback<std::unique_ptr<JpegDecodeAccelerator>(
