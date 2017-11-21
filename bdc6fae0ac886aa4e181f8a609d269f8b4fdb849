@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9651158e_98a390b7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/generic/policy-inherited-correctly-778658.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-21T13:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6caf6bbd_ab6c947c",
+      "range": {
+        "startLine": 6,
+        "startChar": 70,
+        "endLine": 6,
+        "endChar": 71
+      },
+      "revId": "bdc6fae0ac886aa4e181f8a609d269f8b4fdb849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb11cbd2_4aa724ee",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/generic/policy-inherited-correctly-778658.html",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "9b61b13e_0cd6aa73",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/generic/policy-inherited-correctly-778658.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-21T13:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb11cbd2_4aa724ee",
+      "revId": "bdc6fae0ac886aa4e181f8a609d269f8b4fdb849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd0cc03b_c33aee25",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/generic/policy-inherited-correctly-778658.html",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "bdc6fae0ac886aa4e181f8a609d269f8b4fdb849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616dcba8_63dd2e9c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/generic/policy-inherited-correctly-778658.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-21T13:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd0cc03b_c33aee25",
+      "revId": "bdc6fae0ac886aa4e181f8a609d269f8b4fdb849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
