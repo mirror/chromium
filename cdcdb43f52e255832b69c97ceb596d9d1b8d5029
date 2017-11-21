@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "290105b0_825a463d",
+        "filename": "components/arc/arc_bridge_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-21T15:56:50Z",
+      "side": 1,
+      "message": "That was quite surprising. Thanks for the explanation!",
+      "parentUuid": "10c35b62_ecb6460f",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33126c61_942c757f",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 1
