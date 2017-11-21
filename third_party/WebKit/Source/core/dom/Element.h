@@ -981,6 +981,8 @@ class CORE_EXPORT Element : public ContainerNode {
 
   void CancelFocusAppearanceUpdate();
 
+  bool ShouldCallScrollCustomizationHandlers(const ScrollState&);
+
   const ComputedStyle* VirtualEnsureComputedStyle(
       PseudoId pseudo_element_specifier = kPseudoIdNone) override {
     return EnsureComputedStyle(pseudo_element_specifier);
