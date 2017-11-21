@@ -20,6 +20,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/shell_integration.h"
+#include "chrome/common/features.h"
 #include "media/media_features.h"
 
 class BackgroundModeManager;
@@ -129,6 +130,12 @@ class TabManager;
 namespace safe_browsing {
 class ClientSideDetectionService;
 }
+
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+namespace tabs {
+class TabsTracker;
+}
+#endif
 
 // NOT THREAD SAFE, call only from the main thread.
 // These functions shouldn't return NULL unless otherwise noted.
@@ -309,6 +316,10 @@ class BrowserProcess {
   virtual physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() = 0;
 
   virtual prefs::InProcessPrefServiceFactory* pref_service_factory() const = 0;
+
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+  virtual tabs::TabsTracker* GetTabsTracker() = 0;
+#endif
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BrowserProcess);

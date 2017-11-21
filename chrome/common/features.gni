@@ -49,6 +49,10 @@ declare_args() {
   enable_one_click_signin =
       is_win || is_mac || (is_linux && !is_chromeos && !is_chromecast)
 
+  # Enables tab usage UKMs.
+  # TODO(michaelpg): Also gate the resource coordinator itself on this flag.
+  enable_resource_coordinator = is_win || is_mac || is_linux
+
   enable_service_discovery = enable_mdns || is_mac
 
   # Enables use of the session service, which is enabled by default.
