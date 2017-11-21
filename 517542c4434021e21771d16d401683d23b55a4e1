@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6330c5ee_6af7111f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-21T00:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd88e08_4f683784",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "517542c4434021e21771d16d401683d23b55a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0a7a7fc_dc231080",
         "filename": "sandbox/linux/syscall_broker/broker_client.h",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-20T23:32:06Z",
       "side": 1,
       "message": "Need all these in this header?",
+      "revId": "517542c4434021e21771d16d401683d23b55a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fe6e97_a17c2564",
+        "filename": "sandbox/linux/syscall_broker/broker_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-21T00:21:46Z",
+      "side": 1,
+      "message": "There needs to be a declaration at top-level scope, otherwise line 60 is interpreted as being an incomplete declaration of sandbox::syscall_broker::stat.  So I could put something like\n\nextern \"C\" {\nstruct stat;\n}\n\nto be strictly correct what with mangling, so I figured it was easier to just expose the includes.",
+      "parentUuid": "f0a7a7fc_dc231080",
       "revId": "517542c4434021e21771d16d401683d23b55a4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "87b79f82_65dbb30d",
+        "filename": "sandbox/linux/syscall_broker/broker_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-21T00:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f324a726_a22425c8",
+      "range": {
+        "startLine": 116,
+        "startChar": 31,
+        "endLine": 116,
+        "endChar": 35
+      },
+      "revId": "517542c4434021e21771d16d401683d23b55a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad827cf3_c1e55511",
         "filename": "sandbox/linux/syscall_broker/broker_process.cc",
         "patchSetId": 5
@@ -76,6 +142,24 @@
       "writtenOn": "2017-11-20T23:32:06Z",
       "side": 1,
       "message": "Unfortunately I don\u0027t think brokering stat will be this simple. A couple of concerns:\n\n- This won\u0027t cover stat64, a separate syscall with a separate `struct stat64`\n- Some Libcs will translate stat/stat64 to fstatat(64) using AT_FCWD\n- There\u0027s also newfstatat on some architectures (ARM64, X86_64)",
+      "revId": "517542c4434021e21771d16d401683d23b55a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7e3258_32aec837",
+        "filename": "sandbox/linux/syscall_broker/broker_process.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-21T00:21:46Z",
+      "side": 1,
+      "message": "So it sounds like I have to implement both stat and stat64 handlers, and similarly funnel at_fcwd into these like we do with open.\n\nGot a pointer to newfstatat() ?",
+      "parentUuid": "ad827cf3_c1e55511",
       "revId": "517542c4434021e21771d16d401683d23b55a4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
