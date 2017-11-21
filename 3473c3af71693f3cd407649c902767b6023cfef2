@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3396fed7_f016e8b9",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-21T15:06:14Z",
+      "side": 1,
+      "message": "Why the change from \"auto\" here? The use of \"auto\" to walk the notification list is standard style across Chrome.",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2af9b5e_9f105ae9",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-21T15:06:14Z",
+      "side": 1,
+      "message": "I don\u0027t like the promotion of NotificationType to be in base:: directly. It implies that it\u0027s a top-level thing, not that it\u0027s a part of ObserverList.\n\nIt would be great if it could be named something like base::ObserverList::Notification::EXISTING_ONLY, though the reason you hoisted it from the class was that you wanted to drop the template parameters here. Maybe base::ObserverListNotification::EXISTING_ONLY?",
+      "range": {
+        "startLine": 221,
+        "startChar": 32,
+        "endLine": 221,
+        "endChar": 76
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
