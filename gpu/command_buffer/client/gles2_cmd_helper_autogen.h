@@ -2586,19 +2586,7 @@ void VertexAttribDivisorANGLE(GLuint index, GLuint divisor) {
   }
 }
 
-void ProduceTextureCHROMIUMImmediate(GLenum target, const GLbyte* mailbox) {
-  const uint32_t size =
-      gles2::cmds::ProduceTextureCHROMIUMImmediate::ComputeSize();
-  gles2::cmds::ProduceTextureCHROMIUMImmediate* c =
-      GetImmediateCmdSpaceTotalSize<
-          gles2::cmds::ProduceTextureCHROMIUMImmediate>(size);
-  if (c) {
-    c->Init(target, mailbox);
-  }
-}
-
 void ProduceTextureDirectCHROMIUMImmediate(GLuint texture,
-                                           GLenum target,
                                            const GLbyte* mailbox) {
   const uint32_t size =
       gles2::cmds::ProduceTextureDirectCHROMIUMImmediate::ComputeSize();
@@ -2606,7 +2594,7 @@ void ProduceTextureDirectCHROMIUMImmediate(GLuint texture,
       GetImmediateCmdSpaceTotalSize<
           gles2::cmds::ProduceTextureDirectCHROMIUMImmediate>(size);
   if (c) {
-    c->Init(texture, target, mailbox);
+    c->Init(texture, mailbox);
   }
 }
 

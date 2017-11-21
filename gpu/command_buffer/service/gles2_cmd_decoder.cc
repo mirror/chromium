@@ -1043,14 +1043,11 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                                    GLsizei width,
                                    GLsizei height);
 
-  void DoProduceTextureCHROMIUM(GLenum target, const volatile GLbyte* key);
   void DoProduceTextureDirectCHROMIUM(GLuint texture,
-                                      GLenum target,
                                       const volatile GLbyte* key);
   void ProduceTextureRef(const char* func_name,
                          bool clear,
                          TextureRef* texture_ref,
-                         GLenum target,
                          const volatile GLbyte* data);
 
   void EnsureTextureForClientId(GLenum target, GLuint client_id);
@@ -18059,34 +18056,20 @@ void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
     framebuffer_state_.clear_state_dirty = true;
 }
 
-void GLES2DecoderImpl::DoProduceTextureCHROMIUM(GLenum target,
-                                                const volatile GLbyte* data) {
-  TRACE_EVENT2("gpu", "GLES2DecoderImpl::DoProduceTextureCHROMIUM",
-      "context", logger_.GetLogPrefix(),
-      "mailbox[0]", static_cast<unsigned char>(data[0]));
-
-  TextureRef* texture_ref = texture_manager()->GetTextureInfoForTarget(
-      &state_, target);
-  ProduceTextureRef("glProduceTextureCHROMIUM", false, texture_ref, target,
-                    data);
-}
-
 void GLES2DecoderImpl::DoProduceTextureDirectCHROMIUM(
     GLuint client_id,
-    GLenum target,
     const volatile GLbyte* data) {
   TRACE_EVENT2("gpu", "GLES2DecoderImpl::DoProduceTextureDirectCHROMIUM",
       "context", logger_.GetLogPrefix(),
       "mailbox[0]", static_cast<unsigned char>(data[0]));
 
   ProduceTextureRef("glProduceTextureDirectCHROMIUM", !client_id,
-                    GetTexture(client_id), target, data);
+                    GetTexture(client_id), data);
 }
 
 void GLES2DecoderImpl::ProduceTextureRef(const char* func_name,
                                          bool clear,
                                          TextureRef* texture_ref,
-                                         GLenum target,
                                          const volatile GLbyte* data) {
   Mailbox mailbox =
       Mailbox::FromVolatile(*reinterpret_cast<const volatile Mailbox*>(data));
@@ -18102,8 +18085,7 @@ void GLES2DecoderImpl::ProduceTextureRef(const char* func_name,
   }
 
   if (!texture_ref) {
-    LOCAL_SET_GL_ERROR(
-        GL_INVALID_OPERATION, func_name, "unknown texture for target");
+    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, func_name, "unknown texture");
     return;
   }
 
@@ -18111,12 +18093,6 @@ void GLES2DecoderImpl::ProduceTextureRef(const char* func_name,
   if (!produced) {
     LOCAL_SET_GL_ERROR(
         GL_INVALID_OPERATION, func_name, "invalid texture");
-    return;
-  }
-
-  if (produced->target() != target) {
-    LOCAL_SET_GL_ERROR(
-        GL_INVALID_OPERATION, func_name, "invalid target");
     return;
   }
 
