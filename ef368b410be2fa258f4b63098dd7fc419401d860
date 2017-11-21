@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55b32ccb_a9c020c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "s/events/event",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d4e41c_6e06ce8a",
+        "filename": "chrome/browser/notifications/non_persistent_notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "It strikes me that including just the bug number is sufficient here.\n\nAlso do we actually need a new bug for this - \u0027implementing event acknowledgements\u0027 is a separate task than \u0027migrate to mojo\u0027, it just depends on it.",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899702bd_45d1e769",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "s/to/from? (would make more sense to me)",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb53d92e_aaf40fd8",
+        "filename": "chrome/browser/notifications/notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "i\u0027m still a bit unsure of how method inheritance works in c++ - when will this default implementation be called? when something which inherits from NotificationHandler doesn\u0027t provide an implementation?",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b91b04_2b4a40cf",
+        "filename": "chrome/browser/notifications/notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "Are we trading a compile-time error for a run-time one by providing an implementation of the virtual method here?",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a25756_efd028ea",
+        "filename": "chrome/browser/notifications/notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "they\u0027re only called toasts in the message center, right? mind fixing this comment?",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e65d3bf_f20954f6",
+        "filename": "chrome/browser/notifications/notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "s/cliks to/clicks on",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342f1f51_76701d86",
+        "filename": "chrome/browser/notifications/notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "Should it be s/close/click here?",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9920edf_52ee54d3",
+        "filename": "chrome/browser/notifications/persistent_notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "mind expanding this comment a bit? it\u0027s unclear to me why we wouldn\u0027t propagate back programmatic close events.",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514bfd41_78f6a566",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "I\u0027m confused by this comment, well it makes sense but I don\u0027t understand how it relates to the methods below - mind improving it?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 78
+      },
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a1bb1d_5e0bb61a",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "Maybe a comment here explaining the reason for the quit closure (so this method doesn\u0027t return until the notification-close has been completely processed, right?)",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e38992_51064658",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "Why can\u0027t we just bind the QuitClosure directly here, instead of a function that runs it?",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04ab1b6_4b31f47f",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T13:59:59Z",
+      "side": 1,
+      "message": "Wait, why are we passing the callback to two different places? we don\u0027t want to run it twice do we?",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 80
+      },
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
