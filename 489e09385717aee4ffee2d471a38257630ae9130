@@ -22,6 +22,30 @@
       "revId": "489e09385717aee4ffee2d471a38257630ae9130",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba7166b_5bd83aff",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-21T21:58:20Z",
+      "side": 1,
+      "message": "Yep, that\u0027s checked here: https://cs.chromium.org/chromium/src/components/viz/service/surfaces/surface.cc?l\u003d121",
+      "parentUuid": "40851a74_4b9855b7",
+      "range": {
+        "startLine": 439,
+        "startChar": 2,
+        "endLine": 439,
+        "endChar": 55
+      },
+      "revId": "489e09385717aee4ffee2d471a38257630ae9130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
