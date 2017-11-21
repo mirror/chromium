@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f9a4ca_407678bc",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-21T08:04:40Z",
+      "side": 1,
+      "message": "altimin: I realized that the name |ipc_task_runner_| is confusing since CreateClientFactory takes two task runners: |ipc_task_runner| and proxy_task_runner| respectively. I\u0027d want to rename |ipc_task_runner_| here. Wdyt?",
+      "revId": "1ad34bb1b068ceedcb92d7ea2781344aed8cacd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
