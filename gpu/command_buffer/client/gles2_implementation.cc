@@ -6090,7 +6090,7 @@ uint64_t GLES2Implementation::ShareGroupTracingGUID() const {
 }
 
 void GLES2Implementation::SetErrorMessageCallback(
-    const base::Callback<void(const char*, int32_t)>& callback) {
+    const base::RepeatingCallback<void(const char*, int32_t)>& callback) {
   error_message_callback_ = callback;
 }
 
