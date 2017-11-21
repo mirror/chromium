@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e5c45f8_6c8d74ac",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-21T10:23:15Z",
+      "side": 1,
+      "message": "Hmm, I\u0027d like to avoid that raw delete... I\u0027ll put a comment around the design of the ownership.",
+      "range": {
+        "startLine": 303,
+        "startChar": 3,
+        "endLine": 303,
+        "endChar": 14
+      },
+      "revId": "4f1d0b332f585d1ad20a6d25e8890d78c431eedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
