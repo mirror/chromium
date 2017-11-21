@@ -135,7 +135,7 @@ TEST_F(GLTextureMailboxTest, ProduceAndConsumeTexture) {
                GL_UNSIGNED_BYTE,
                &source_pixel);
 
-  glProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox1);
+  glProduceTextureDirectCHROMIUM(tex1, mailbox1);
   glFlush();
 
   gl2_.MakeCurrent();
@@ -143,7 +143,7 @@ TEST_F(GLTextureMailboxTest, ProduceAndConsumeTexture) {
   GLuint tex2 = glCreateAndConsumeTextureCHROMIUM(GL_TEXTURE_2D, mailbox1);
   glBindTexture(GL_TEXTURE_2D, tex2);
   EXPECT_EQ(source_pixel, ReadTexel(tex2, 0, 0));
-  glProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox2);
+  glProduceTextureDirectCHROMIUM(tex2, mailbox2);
   glFlush();
 
   gl1_.MakeCurrent();
@@ -177,7 +177,7 @@ TEST_F(GLTextureMailboxTest, ProduceAndConsumeTextureRGB) {
                GL_UNSIGNED_BYTE,
                &source_pixel);
 
-  glProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox1);
+  glProduceTextureDirectCHROMIUM(tex1, mailbox1);
   glFlush();
 
   gl2_.MakeCurrent();
@@ -185,7 +185,7 @@ TEST_F(GLTextureMailboxTest, ProduceAndConsumeTextureRGB) {
   GLuint tex2 = glCreateAndConsumeTextureCHROMIUM(GL_TEXTURE_2D, mailbox1);
   glBindTexture(GL_TEXTURE_2D, tex2);
   EXPECT_EQ(source_pixel, ReadTexel(tex2, 0, 0));
-  glProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox2);
+  glProduceTextureDirectCHROMIUM(tex2, mailbox2);
   glFlush();
 
   gl1_.MakeCurrent();
@@ -219,7 +219,7 @@ TEST_F(GLTextureMailboxTest, ProduceAndConsumeTextureDirect) {
                GL_UNSIGNED_BYTE,
                &source_pixel);
 
-  glProduceTextureDirectCHROMIUM(tex1, GL_TEXTURE_2D, mailbox1);
+  glProduceTextureDirectCHROMIUM(tex1, mailbox1);
   glFlush();
 
   gl2_.MakeCurrent();
@@ -227,7 +227,7 @@ TEST_F(GLTextureMailboxTest, ProduceAndConsumeTextureDirect) {
   GLuint tex2 = glCreateAndConsumeTextureCHROMIUM(GL_TEXTURE_2D, mailbox1);
   glBindTexture(GL_TEXTURE_2D, tex2);
   EXPECT_EQ(source_pixel, ReadTexel(tex2, 0, 0));
-  glProduceTextureDirectCHROMIUM(tex2, GL_TEXTURE_2D, mailbox2);
+  glProduceTextureDirectCHROMIUM(tex2, mailbox2);
   glFlush();
 
   gl1_.MakeCurrent();
@@ -256,7 +256,7 @@ TEST_F(GLTextureMailboxTest, SharedTextures) {
   GLbyte mailbox[GL_MAILBOX_SIZE_CHROMIUM];
   glGenMailboxCHROMIUM(mailbox);
 
-  glProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox);
+  glProduceTextureDirectCHROMIUM(tex1, mailbox);
   EXPECT_EQ(static_cast<GLenum>(GL_NO_ERROR), glGetError());
   glFlush();
 
@@ -360,7 +360,7 @@ TEST_F(GLTextureMailboxTest, OrderingBarrierImpliesFlush) {
 
   GLbyte mailbox[GL_MAILBOX_SIZE_CHROMIUM];
   glGenMailboxCHROMIUM(mailbox);
-  glProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox);
+  glProduceTextureDirectCHROMIUM(tex1, mailbox);
 
   for (int i = 0; i < 1000; ++i) {
     // Assume context 1 is current.
@@ -609,31 +609,6 @@ TEST_F(GLTextureMailboxTest, FrontBufferSamplerParameters) {
     glGetTexParameteriv(GL_TEXTURE_2D, expected_parameter.first, &value);
     EXPECT_EQ(expected_parameter.second, value);
   }
-}
-
-TEST_F(GLTextureMailboxTest, ProduceTextureDirectInvalidTarget) {
-  SetUpContexts();
-  gl1_.MakeCurrent();
-
-  GLbyte mailbox1[GL_MAILBOX_SIZE_CHROMIUM];
-  glGenMailboxCHROMIUM(mailbox1);
-
-  GLuint tex1;
-  glGenTextures(1, &tex1);
-
-  glBindTexture(GL_TEXTURE_CUBE_MAP, tex1);
-  uint32_t source_pixel = 0xFF0000FF;
-  glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X,
-               0,
-               GL_RGBA,
-               1, 1,
-               0,
-               GL_RGBA,
-               GL_UNSIGNED_BYTE,
-               &source_pixel);
-
-  glProduceTextureDirectCHROMIUM(tex1, GL_TEXTURE_2D, mailbox1);
-  EXPECT_EQ(static_cast<GLenum>(GL_INVALID_OPERATION), glGetError());
 }
 
 // http://crbug.com/281565

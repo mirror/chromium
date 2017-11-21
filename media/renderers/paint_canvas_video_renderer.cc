@@ -898,7 +898,6 @@ bool PaintCanvasVideoRenderer::CopyVideoFrameTexturesToGLTexture(
     mailbox_holder.texture_target = texture_info->fTarget;
     canvas_gl->GenMailboxCHROMIUM(mailbox_holder.mailbox.name);
     canvas_gl->ProduceTextureDirectCHROMIUM(texture_info->fID,
-                                            mailbox_holder.texture_target,
                                             mailbox_holder.mailbox.name);
 
     // Wait for mailbox creation on canvas context before consuming it and

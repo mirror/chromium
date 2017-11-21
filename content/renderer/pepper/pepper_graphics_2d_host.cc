@@ -658,7 +658,7 @@ bool PepperGraphics2DHost::PrepareTextureMailbox(
       gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
       gl->GenMailboxCHROMIUM(gpu_mailbox.name);
-      gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, gpu_mailbox.name);
+      gl->ProduceTextureDirectCHROMIUM(texture_id, gpu_mailbox.name);
     }
 
     texture_copies_.push_back(std::make_pair(texture_id, gpu_mailbox));
