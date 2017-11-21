@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e645c903_f68801b9",
+        "filename": "components/autofill/ios/browser/fake_js_autofill_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:01:50Z",
+      "side": 1,
+      "message": "FakeJSallowNavigation \n\nFrom Style Guide: \"Any class, category, method, function, or variable name should use all capitals for acronyms and initialisms within the name.\"\nhttp://go/objc-style#Naming\n\nIt will be inconsistent with JsAutofillManager but there is no need to be consistent with Style Guide violations.",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "1c31f0fe4cefdf7eaaef7730a04667d1783b6506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5200dcb3_931fc76e",
+        "filename": "components/autofill/ios/browser/fake_js_autofill_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:01:50Z",
+      "side": 1,
+      "message": "Optional nit: Would it better to return the Array of all cleared forms? Clients then can check |lastObject| if they only care about the last form. I don\u0027t have strong opinion on this.",
+      "range": {
+        "startLine": 17,
+        "startChar": 37,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1c31f0fe4cefdf7eaaef7730a04667d1783b6506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
