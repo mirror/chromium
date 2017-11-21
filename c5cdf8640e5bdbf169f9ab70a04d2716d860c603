@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9edb5fa_70da0f6a",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T22:01:04Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "57f6a189_ba3c67d9",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 58
+      },
+      "revId": "c5cdf8640e5bdbf169f9ab70a04d2716d860c603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db2749bc_3425de50",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
         "patchSetId": 1
