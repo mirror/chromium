@@ -77,6 +77,44 @@ TEST(GlobalDumpGraphTest, VisitInDepthFirstPostOrder) {
   ASSERT_EQ(iterator.next(), nullptr);
 }
 
+TEST(GlobalDumpGraphTest, VisitInDepthFirstPreOrder) {
+  GlobalDumpGraph graph;
+  Process* process = graph.shared_memory_graph();
+  Node* root = process->root();
+
+  Node c1(process, root);
+  Node c2(process, root);
+  Node c2_c1(process, &c2);
+  Node c2_c2(process, &c2);
+  Node c3(process, root);
+  Node c3_c1(process, &c3);
+  Node c3_c2(process, &c3);
+
+  root->InsertChild("c1", &c1);
+  root->InsertChild("c2", &c2);
+  root->InsertChild("c3", &c3);
+  c2.InsertChild("c1", &c2_c1);
+  c2.InsertChild("c2", &c2_c2);
+  c3.InsertChild("c1", &c3_c1);
+  c3.InsertChild("c2", &c3_c2);
+
+  // |c2_c2| owns |c3_c2|. Note this is opposite of post-order.
+  graph.AddNodeOwnershipEdge(&c2_c2, &c3_c2, 1);
+
+  // This method should always call owners and then children after the node
+  // itself.
+  auto iterator = process->VisitInDepthFirstPreOrder();
+  ASSERT_EQ(iterator.next(), root);
+  ASSERT_EQ(iterator.next(), &c1);
+  ASSERT_EQ(iterator.next(), &c2);
+  ASSERT_EQ(iterator.next(), &c2_c1);
+  ASSERT_EQ(iterator.next(), &c3);
+  ASSERT_EQ(iterator.next(), &c3_c1);
+  ASSERT_EQ(iterator.next(), &c3_c2);
+  ASSERT_EQ(iterator.next(), &c2_c2);
+  ASSERT_EQ(iterator.next(), nullptr);
+}
+
 TEST(ProcessTest, CreateAndFindNode) {
   GlobalDumpGraph global_dump_graph;
   Process graph(1, &global_dump_graph);
