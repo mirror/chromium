@@ -16,6 +16,24 @@
       "revId": "d7c38fc24a015181d1ccc0f8000f2db2e18a9ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd555f2_8b51990a",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/window-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-21T04:32:29Z",
+      "side": 1,
+      "message": "Oops, it should be async_test. The test failed before and I tinkered with it a bit and forgot to return this back to async_test. Done!",
+      "parentUuid": "b8b5b9af_50ea45ad",
+      "revId": "d7c38fc24a015181d1ccc0f8000f2db2e18a9ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
