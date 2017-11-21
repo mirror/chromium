@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f9a334_1cf0e539",
+        "filename": "content/browser/loader/upload_data_stream_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-21T06:06:55Z",
+      "side": 1,
+      "message": "Could we reach here in the current code path?",
+      "revId": "44856bfcfe387a6c34dd4d1edf4fea6ee0fb0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecef7b1e_575e16c3",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-21T06:06:55Z",
+      "side": 1,
+      "message": "It looks for this particular call site we\u0027ll likely be safe",
+      "revId": "44856bfcfe387a6c34dd4d1edf4fea6ee0fb0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5bb4a25_d34967be",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-21T06:06:55Z",
+      "side": 1,
+      "message": "nit: \u0027// Commonly used in every case:\u0027 for TYPE_BYTES ?",
+      "revId": "44856bfcfe387a6c34dd4d1edf4fea6ee0fb0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
