@@ -598,6 +598,30 @@
       "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af72c685_c16fd136",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T15:48:26Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment.",
+      "parentUuid": "34448997_9bd39420",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 80
+      },
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
