@@ -59790,6 +59790,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Platform.DetachableBase.ActivePercent" units="%">
+  <owner>kitching@google.com</owner>
+  <summary>
+    Ratio of time a detachable base keyboard is active, i.e. when the USB
+    interface is not auto-suspended.  Reported every 30 seconds when the base is
+    connected.
+  </summary>
+</histogram>
+
+<histogram name="Platform.DetachableBase.AttachedOnBoot" enum="Boolean">
+  <owner>kitching@google.com</owner>
+  <summary>Whether or not the detachable base is connected on boot.</summary>
+</histogram>
+
 <histogram name="Platform.DetachableBase.PairResult"
     enum="DetachableBasePairResult">
   <owner>kitching@google.com</owner>
