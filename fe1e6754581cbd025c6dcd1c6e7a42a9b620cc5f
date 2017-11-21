@@ -16,6 +16,41 @@
       "revId": "fe1e6754581cbd025c6dcd1c6e7a42a9b620cc5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90492c9f_876bf018",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T01:50:44Z",
+      "side": 1,
+      "message": "Right, and then members can be private, and then we can get rid of the `this-\u003e` disambiguation (dis-potential-ambiguation?), too. Right, Albert?",
+      "parentUuid": "ccb1c898_18d76629",
+      "revId": "fe1e6754581cbd025c6dcd1c6e7a42a9b620cc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b01f78_1eb70cf1",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T01:50:44Z",
+      "side": 1,
+      "message": "Nit: Capital P in PartitionAlloc().",
+      "revId": "fe1e6754581cbd025c6dcd1c6e7a42a9b620cc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
