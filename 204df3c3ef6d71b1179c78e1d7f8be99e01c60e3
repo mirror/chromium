@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8df16404_61c6e025",
+        "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-21T19:32:10Z",
+      "side": 1,
+      "message": "Thanks. I\u0027d prefer not to use the service as a page can replace the favicon with a custom version, and we\u0027d like the one shown in the WebUI to match the actual current displayed favicon for the tab.\n\nI\u0027m happy to move the fallback logic to the UI side.",
+      "parentUuid": "12110382_ee1aefb3",
+      "revId": "204df3c3ef6d71b1179c78e1d7f8be99e01c60e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "927744c5_631b607a",
         "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "204df3c3ef6d71b1179c78e1d7f8be99e01c60e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614dda52_879f0170",
+        "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-21T19:32:10Z",
+      "side": 1,
+      "message": "Wasn\u0027t aware of it, thanks.\n\nDone.",
+      "parentUuid": "927744c5_631b607a",
+      "revId": "204df3c3ef6d71b1179c78e1d7f8be99e01c60e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "204df3c3ef6d71b1179c78e1d7f8be99e01c60e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8315f7e2_559b1dd2",
+        "filename": "chrome/test/data/webui/discards/discards_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-21T19:32:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32b7e16b_7a5cddfb",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "204df3c3ef6d71b1179c78e1d7f8be99e01c60e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
