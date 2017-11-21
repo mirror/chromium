@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f1ea9c5_d22f6e6c",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-21T18:30:54Z",
+      "side": 1,
+      "message": "nit: Please avoid single character variable name.\n\nBackground: The |LayoutObject| class used to be named |Renderer|, which is the reason that some old code uses |r| as the variable name for a LayoutObject. We shouldn\u0027t do that in new code.",
+      "range": {
+        "startLine": 1523,
+        "startChar": 16,
+        "endLine": 1523,
+        "endChar": 17
+      },
+      "revId": "56e51444ba9d46f4a762c75ce7a92977b2a22638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
