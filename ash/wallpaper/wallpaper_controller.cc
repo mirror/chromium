@@ -24,6 +24,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/path_service.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
@@ -161,9 +162,32 @@ ColorProfileType GetColorProfileType(ColorProfile color_profile) {
   return ColorProfileType::DARK_MUTED;
 }
 
+// Deletes a list of wallpaper files in |file_list|.
+void DeleteWallpaperInList(const std::vector<base::FilePath>& file_list) {
+  for (std::vector<base::FilePath>::const_iterator it = file_list.begin();
+       it != file_list.end(); ++it) {
+    base::FilePath path = *it;
+    if (!base::DeleteFile(path, true))
+      LOG(ERROR) << "Failed to remove user wallpaper at " << path.value();
+  }
+}
+
 }  // namespace
 
 const SkColor WallpaperController::kInvalidColor = SK_ColorTRANSPARENT;
+
+base::Optional<int> WallpaperController::dir_user_data_path_id =
+    base::Optional<int>();
+base::Optional<int> WallpaperController::dir_chromeos_wallpapers_path_id =
+    base::Optional<int>();
+base::Optional<int>
+    WallpaperController::dir_chromeos_custom_wallpapers_path_id =
+        base::Optional<int>();
+
+const char WallpaperController::kSmallWallpaperSubDir[] = "small";
+const char WallpaperController::kLargeWallpaperSubDir[] = "large";
+const char WallpaperController::kOriginalWallpaperSubDir[] = "original";
+const char WallpaperController::kThumbnailWallpaperSubDir[] = "thumb";
 
 WallpaperController::WallpaperController()
     : locked_(false),
@@ -195,6 +219,35 @@ void WallpaperController::RegisterLocalStatePrefs(
     PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(prefs::kUsersWallpaperInfo);
   registry->RegisterDictionaryPref(prefs::kWallpaperColors);
+}
+
+// static
+gfx::Size WallpaperController::GetMaxDisplaySizeInNative() {
+  // Return an empty size for test environments where the screen is null.
+  if (!display::Screen::GetScreen())
+    return gfx::Size();
+
+  gfx::Size max;
+  for (const auto& display : display::Screen::GetScreen()->GetAllDisplays()) {
+    // Use the native size, not ManagedDisplayInfo::size_in_pixel or
+    // Display::size.
+    // TODO(msw): Avoid using Display::size here; see http://crbug.com/613657.
+    gfx::Size size = display.size();
+    if (Shell::HasInstance()) {
+      display::ManagedDisplayInfo info =
+          Shell::Get()->display_manager()->GetDisplayInfo(display.id());
+      // TODO(mash): Mash returns a fake ManagedDisplayInfo. crbug.com/622480
+      if (info.id() == display.id())
+        size = info.bounds_in_native().size();
+    }
+    if (display.rotation() == display::Display::ROTATE_90 ||
+        display.rotation() == display::Display::ROTATE_270) {
+      size = gfx::Size(size.height(), size.width());
+    }
+    max.SetToMax(size);
+  }
+
+  return max;
 }
 
 void WallpaperController::BindRequest(
@@ -273,6 +326,14 @@ void WallpaperController::CreateEmptyWallpaper() {
   InstallDesktopControllerForAllWindows();
 }
 
+base::FilePath WallpaperController::GetCustomWallpaperDir(const char* sub_dir) {
+  base::FilePath custom_wallpaper_dir;
+  DCHECK(dir_chromeos_custom_wallpapers_path_id.has_value());
+  CHECK(PathService::Get(dir_chromeos_custom_wallpapers_path_id.value(),
+                         &custom_wallpaper_dir));
+  return custom_wallpaper_dir.Append(sub_dir);
+}
+
 void WallpaperController::OnDisplayConfigurationChanged() {
   gfx::Size max_display_size = GetMaxDisplaySizeInNative();
   if (current_max_display_size_ != max_display_size) {
@@ -330,35 +391,6 @@ void WallpaperController::OnSessionStateChanged(
     MoveToUnlockedContainer();
   else
     MoveToLockedContainer();
-}
-
-// static
-gfx::Size WallpaperController::GetMaxDisplaySizeInNative() {
-  // Return an empty size for test environments where the screen is null.
-  if (!display::Screen::GetScreen())
-    return gfx::Size();
-
-  gfx::Size max;
-  for (const auto& display : display::Screen::GetScreen()->GetAllDisplays()) {
-    // Use the native size, not ManagedDisplayInfo::size_in_pixel or
-    // Display::size.
-    // TODO(msw): Avoid using Display::size here; see http://crbug.com/613657.
-    gfx::Size size = display.size();
-    if (Shell::HasInstance()) {
-      display::ManagedDisplayInfo info =
-          Shell::Get()->display_manager()->GetDisplayInfo(display.id());
-      // TODO(mash): Mash returns a fake ManagedDisplayInfo. crbug.com/622480
-      if (info.id() == display.id())
-        size = info.bounds_in_native().size();
-    }
-    if (display.rotation() == display::Display::ROTATE_90 ||
-        display.rotation() == display::Display::ROTATE_270) {
-      size = gfx::Size(size.height(), size.width());
-    }
-    max.SetToMax(size);
-  }
-
-  return max;
 }
 
 bool WallpaperController::WallpaperIsAlreadyLoaded(
@@ -480,27 +512,6 @@ bool WallpaperController::GetUserWallpaperInfo(const AccountId& account_id,
   return true;
 }
 
-void WallpaperController::RemoveUserWallpaperInfo(const AccountId& account_id,
-                                                  bool is_persistent) {
-  if (wallpaper_cache_map_.find(account_id) != wallpaper_cache_map_.end())
-    wallpaper_cache_map_.erase(account_id);
-
-  PrefService* local_state = Shell::Get()->GetLocalStatePrefService();
-  // Local state can be null in tests.
-  if (!local_state)
-    return;
-  WallpaperInfo info;
-  GetUserWallpaperInfo(account_id, &info, is_persistent);
-  DictionaryPrefUpdate prefs_wallpapers_info_update(local_state,
-                                                    prefs::kUsersWallpaperInfo);
-  prefs_wallpapers_info_update->RemoveWithoutPathExpansion(
-      account_id.GetUserEmail(), nullptr);
-  // Remove the color cache of the previous wallpaper if it exists.
-  DictionaryPrefUpdate wallpaper_colors_update(local_state,
-                                               prefs::kWallpaperColors);
-  wallpaper_colors_update->RemoveWithoutPathExpansion(info.location, nullptr);
-}
-
 bool WallpaperController::GetWallpaperFromCache(const AccountId& account_id,
                                                 gfx::ImageSkia* image) {
   CustomWallpaperMap::const_iterator it = wallpaper_cache_map_.find(account_id);
@@ -532,6 +543,17 @@ CustomWallpaperMap* WallpaperController::GetWallpaperCacheMap() {
 void WallpaperController::SetClient(
     mojom::WallpaperControllerClientPtr client) {
   wallpaper_controller_client_ = std::move(client);
+}
+
+void WallpaperController::SetPathId(int user_data_path_id,
+                                    int chromeos_wallpapers_path_id,
+                                    int chromeos_custom_wallpapers_path_id) {
+  DCHECK(!dir_user_data_path_id.has_value());
+  dir_user_data_path_id = user_data_path_id;
+  DCHECK(!dir_chromeos_wallpapers_path_id.has_value());
+  dir_chromeos_wallpapers_path_id = chromeos_wallpapers_path_id;
+  DCHECK(!dir_chromeos_custom_wallpapers_path_id.has_value());
+  dir_chromeos_custom_wallpapers_path_id = chromeos_custom_wallpapers_path_id;
 }
 
 void WallpaperController::SetCustomWallpaper(
@@ -598,8 +620,10 @@ void WallpaperController::ShowSigninWallpaper() {
 }
 
 void WallpaperController::RemoveUserWallpaper(
-    mojom::WallpaperUserInfoPtr user_info) {
-  NOTIMPLEMENTED();
+    mojom::WallpaperUserInfoPtr user_info,
+    const std::string& wallpaper_files_id) {
+  RemoveUserWallpaperInfo(user_info->account_id, !user_info->is_ephemeral);
+  RemoveUserWallpaperImpl(user_info->account_id, wallpaper_files_id);
 }
 
 void WallpaperController::SetWallpaper(const SkBitmap& wallpaper,
@@ -722,6 +746,57 @@ int WallpaperController::GetWallpaperContainerId(bool locked) {
 void WallpaperController::UpdateWallpaper(bool clear_cache) {
   current_wallpaper_.reset();
   Shell::Get()->wallpaper_delegate()->UpdateWallpaper(clear_cache);
+}
+
+void WallpaperController::RemoveUserWallpaperInfo(const AccountId& account_id,
+                                                  bool is_persistent) {
+  if (wallpaper_cache_map_.find(account_id) != wallpaper_cache_map_.end())
+    wallpaper_cache_map_.erase(account_id);
+
+  PrefService* local_state = Shell::Get()->GetLocalStatePrefService();
+  // Local state can be null in tests.
+  if (!local_state)
+    return;
+  WallpaperInfo info;
+  GetUserWallpaperInfo(account_id, &info, is_persistent);
+  DictionaryPrefUpdate prefs_wallpapers_info_update(local_state,
+                                                    prefs::kUsersWallpaperInfo);
+  prefs_wallpapers_info_update->RemoveWithoutPathExpansion(
+      account_id.GetUserEmail(), nullptr);
+  // Remove the color cache of the previous wallpaper if it exists.
+  DictionaryPrefUpdate wallpaper_colors_update(local_state,
+                                               prefs::kWallpaperColors);
+  wallpaper_colors_update->RemoveWithoutPathExpansion(info.location, nullptr);
+}
+
+void WallpaperController::RemoveUserWallpaperImpl(
+    const AccountId& account_id,
+    const std::string& wallpaper_files_id) {
+  if (wallpaper_files_id.empty())
+    return;
+
+  std::vector<base::FilePath> file_to_remove;
+
+  // Remove small user wallpapers.
+  base::FilePath wallpaper_path = GetCustomWallpaperDir(kSmallWallpaperSubDir);
+  file_to_remove.push_back(wallpaper_path.Append(wallpaper_files_id));
+
+  // Remove large user wallpapers.
+  wallpaper_path = GetCustomWallpaperDir(kLargeWallpaperSubDir);
+  file_to_remove.push_back(wallpaper_path.Append(wallpaper_files_id));
+
+  // Remove user wallpaper thumbnails.
+  wallpaper_path = GetCustomWallpaperDir(kThumbnailWallpaperSubDir);
+  file_to_remove.push_back(wallpaper_path.Append(wallpaper_files_id));
+
+  // Remove original user wallpapers.
+  wallpaper_path = GetCustomWallpaperDir(kOriginalWallpaperSubDir);
+  file_to_remove.push_back(wallpaper_path.Append(wallpaper_files_id));
+
+  base::PostTaskWithTraits(FROM_HERE,
+                           {base::MayBlock(), base::TaskPriority::BACKGROUND,
+                            base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+                           base::Bind(&DeleteWallpaperInList, file_to_remove));
 }
 
 void WallpaperController::SetProminentColors(
