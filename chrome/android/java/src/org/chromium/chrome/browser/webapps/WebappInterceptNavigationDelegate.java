@@ -100,6 +100,8 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
             customTabIntent.intent.putExtra(CustomTabIntentDataProvider.EXTRA_BROWSER_LAUNCH_SOURCE,
                     mActivity.getActivityType());
             customTabIntent.launchUrl(mActivity, Uri.parse(navigationParams.url));
+
+            onOverrideUrlLoadingAndLaunchIntent();
             return true;
         }
 
