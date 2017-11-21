@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1afaea1_ca1f3fc7",
+        "filename": "chrome/app/theme/default_100_percent/common/sync_complete_circle.png",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-21T14:21:46Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I asked the designer about this and will update the icons according to his response.",
+      "parentUuid": "78e5087f_aa2d390d",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e94d12_4f643e64",
         "filename": "chrome/app/theme/default_200_percent/common/sync_complete_circle.png",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13bfe86_18a313e5",
+        "filename": "chrome/app/theme/default_200_percent/common/sync_complete_circle.png",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-21T14:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e94d12_4f643e64",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "508bfda3_1b8dee45",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-21T14:21:46Z",
+      "side": 1,
+      "message": "Indeed, it\u0027s not. Done",
+      "parentUuid": "275f187b_33931e57",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dfb1ef5_b0917304",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f75c1ce1_1140771c",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-21T14:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dfb1ef5_b0917304",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5038da79_a85c5807",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135b3a10_f0714a06",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-21T14:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5038da79_a85c5807",
+      "revId": "1f9cd0377fdec07a84327e04d4aa8895d4769a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
