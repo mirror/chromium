@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ae7eaf5f_67d41338",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-21T17:11:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure which button class you mean exactly but if I make a default MdTextButton, for example, I don\u0027t have to do anything special to make it visually indicate focus.",
+      "parentUuid": "aaebc407_b145d9a8",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cd90c9_10c9a8f5",
         "filename": "ui/views/controls/slider.cc",
         "patchSetId": 4
