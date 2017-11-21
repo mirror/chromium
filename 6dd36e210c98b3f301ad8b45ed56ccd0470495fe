@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1658cb_c193d20f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-21T06:38:41Z",
+      "side": 1,
+      "message": "This function would be updated as soon as CL 781207 (adding integer as cbor map keys) and CL 777807 (adding negative integer type) lands so that 1) keys are not string type (they should be CBORValues themselves). 2) key can be string/unsigned int/ negative.",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 56
+      },
+      "revId": "6dd36e210c98b3f301ad8b45ed56ccd0470495fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f79103e_65ef1fd3",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-21T06:38:41Z",
+      "side": 1,
+      "message": "Alternatives to using function overloading that was considered:\n1) Adding optional \u0026 default parameter for tags. \n    - CBORValue() constructor will be cluttered with optional parameters especially when this CL is merged with CL 777807 (adding negative int). \n\n2) Exposing accessor/mutator methods for tag attribute. \n\nPlease let me know if you think theses alternatives should be used! :)",
+      "range": {
+        "startLine": 77,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 63
+      },
+      "revId": "6dd36e210c98b3f301ad8b45ed56ccd0470495fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
