@@ -71,17 +71,17 @@ void SupervisedUserNavigationObserver::DidFinishNavigation(
 
   url_filter_->GetFilteringBehaviorForURLWithAsyncChecks(
       web_contents()->GetLastCommittedURL(),
-      base::Bind(&SupervisedUserNavigationObserver::URLFilterCheckCallback,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 navigation_handle->GetURL()));
+      base::BindOnce(&SupervisedUserNavigationObserver::URLFilterCheckCallback,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     navigation_handle->GetURL()));
 }
 
 void SupervisedUserNavigationObserver::OnURLFilterChanged() {
   url_filter_->GetFilteringBehaviorForURLWithAsyncChecks(
       web_contents()->GetLastCommittedURL(),
-      base::Bind(&SupervisedUserNavigationObserver::URLFilterCheckCallback,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 web_contents()->GetLastCommittedURL()));
+      base::BindOnce(&SupervisedUserNavigationObserver::URLFilterCheckCallback,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     web_contents()->GetLastCommittedURL()));
 }
 
 void SupervisedUserNavigationObserver::OnRequestBlockedInternal(
@@ -141,7 +141,7 @@ void SupervisedUserNavigationObserver::MaybeShowInterstitial(
     supervised_user_error_page::FilteringBehaviorReason reason,
     bool initial_page_load,
     const base::Callback<void(bool)>& callback) {
-  if (is_showing_interstitial_)
+  if (is_showing_interstitial_ && !initial_page_load)
     return;
 
   is_showing_interstitial_ = true;
