@@ -27,7 +27,8 @@ TEST(TranslateLanguageListTest, SetSupportedLanguages) {
   EXPECT_TRUE(manager->language_list()->SetSupportedLanguages(language_list));
 
   std::vector<std::string> results;
-  manager->language_list()->GetSupportedLanguages(&results);
+  manager->language_list()->GetSupportedLanguages(true /* translate_allowed */,
+                                                  &results);
   ASSERT_EQ(2u, results.size());
   EXPECT_EQ("en", results[0]);
   EXPECT_EQ("ja", results[1]);
@@ -83,7 +84,7 @@ TEST(TranslateLanguageListTest, IsSupportedLanguage) {
 TEST(TranslateLanguageListTest, GetSupportedLanguages) {
   TranslateLanguageList language_list;
   std::vector<std::string> languages;
-  language_list.GetSupportedLanguages(&languages);
+  language_list.GetSupportedLanguages(true /* translate_allowed */, &languages);
   // Check there are a lot of default languages.
   EXPECT_GE(languages.size(), 100ul);
   // Check that some very common languages are there.
