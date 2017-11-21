@@ -144,22 +144,13 @@ MultipleDisplayState DisplayChangeObserver::GetStateForDisplayIds(
   UpdateInternalDisplay(display_states);
   if (display_states.size() == 1)
     return MULTIPLE_DISPLAY_STATE_SINGLE;
-  if (!display_manager_->is_multi_mirroring_enabled() &&
-      display_states.size() > 2) {
-    // TODO(weidongg/774795): Remove this condition when multi-mirroring is
-    // enabled by default.
-    // When multi-mirroring is disabled, mirroring across 3+ displays are not
-    // supported, so default to EXTENDED.
-    return MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
+  if (display_manager_->layout_store()->forced_mirror_mode() ||
+      display_manager_->request_mirror_mode_on()) {
+    // Mirror mode should be on if it is enforced or the user requested to set
+    // mirror mode on.
+    return MULTIPLE_DISPLAY_STATE_DUAL_MIRROR;
   }
-  DisplayIdList list =
-      GenerateDisplayIdList(display_states.begin(), display_states.end(),
-                            [](const DisplaySnapshot* display_state) {
-                              return display_state->display_id();
-                            });
-  bool mirrored = display_manager_->layout_store()->GetMirrorMode(list);
-  return mirrored ? MULTIPLE_DISPLAY_STATE_DUAL_MIRROR
-                  : MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
+  return MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
 }
 
 bool DisplayChangeObserver::GetResolutionForDisplayId(int64_t display_id,
