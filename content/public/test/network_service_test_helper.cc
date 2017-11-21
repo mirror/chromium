@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/process/process.h"
 #include "content/public/common/content_features.h"
 #include "content/public/test/test_host_resolver.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -44,7 +45,10 @@ class NetworkServiceTestHelper::NetworkServiceTestImpl
   }
 
   void SimulateCrash() override {
+    LOG(ERROR) << "Begin NetworkServiceTestHelper::NetworkServiceTestImpl::SimulateCrash()";
+    LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
     CHECK(false) << "Crash NetworkService process for testing.";
+    LOG(ERROR) << "End NetworkServiceTestHelper::NetworkServiceTestImpl::SimulateCrash()";
   }
 
   void BindRequest(content::mojom::NetworkServiceTestRequest request) {
