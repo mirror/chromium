@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ff9b80_35370b56",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T21:53:01Z",
+      "side": 1,
+      "message": "FYI, the error you are facing\n## /usr/local/google/home/hnakashima/repo/chromium/src/chrome/browser/resources/pdf/open_pdf_params_parser.js:5: ERROR - Suspicious code. Is there a missing \u0027+\u0027 on the previous line?\n\nis related to https://github.com/google/closure-compiler/issues/2046.\n\nThe compiler sees a concatenated file where \u0027use strict\u0027 is at a random place within the file, not at the begining, causing the error you are seeing.",
+      "revId": "8f37986d2db56aa56433b97601e65aeb7972b4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
