@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "41e2c4be_ab860ee9",
+        "filename": "media/mojo/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-21T00:22:28Z",
+      "side": 1,
+      "message": "PS8 merges it into media_mojo_unittests.",
+      "parentUuid": "fe12949e_db1e7837",
+      "range": {
+        "startLine": 141,
+        "startChar": 6,
+        "endLine": 141,
+        "endChar": 47
+      },
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "139fbc02_3eb5d448",
         "filename": "media/mojo/clients/BUILD.gn",
         "patchSetId": 7
@@ -90,6 +114,24 @@
     },
     {
       "key": {
+        "uuid": "3fe84a59_8437a73a",
+        "filename": "media/mojo/clients/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-21T00:22:28Z",
+      "side": 1,
+      "message": "I have a pending TODO to rename them to\n mojo_jpeg_decode_accelerator.{cc,h} \n-- and the corresponding ones in //media/mojo/services to\n mojo_jpeg_decode_accelerator_service.{cc,h}\n\nbut to simplify reviews and merges I kept the\nnames in this CL.",
+      "parentUuid": "139fbc02_3eb5d448",
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae4c3d6_af22edb6",
         "filename": "media/mojo/clients/gpu_jpeg_decode_accelerator_host.h",
         "patchSetId": 7
@@ -101,6 +143,30 @@
       "writtenOn": "2017-11-20T23:30:28Z",
       "side": 1,
       "message": "Is Jpeg decode always tied to the GPU? ISTM that this class will provide the ability to host a remote (mojo based) JDA. So I can see that it\u0027s tied to mojo, but not necessarily tied to GPU. Does that make sense?\n\nSimilarly, it seems JpegDecodeAccelerator should just be JpegDecoder?\n\nThese can be in separate CLs, but if you agree, we should add file bug and add TODO to track the work.",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335e0248_a78c931f",
+        "filename": "media/mojo/clients/gpu_jpeg_decode_accelerator_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-21T00:22:28Z",
+      "side": 1,
+      "message": "\u003e Is Jpeg decode always tied to the GPU? \nCorrect.\n\n\u003e ISTM that this class will provide the ability to host a remote (mojo\n\u003e based) JDA. So I can see that it\u0027s tied to mojo, but not necessarily \n\u003e tied to GPU. Does that make sense?\n\nYeah, the TODO is incorrect, the rename here should be\n MojoJpegDecodeAccelerator\n(talking to //media/mojo/services MojoJpegDecodeAccelerator).\n\n\u003e \n\u003e Similarly, it seems JpegDecodeAccelerator should just be JpegDecoder?\n\u003e \n\u003e These can be in separate CLs, but if you agree, we should add file bug and add TODO to track the work.\n\nI\u0027m not against this new naming set, i.e.\n JpegDecodeAccelerator and JpegDecodeAcceleratorService.\n\nWhatever is the custom of the folder and, if possible,\nof the //services area. I\u0027d keep the accelerator though,\nbecause there\u0027s unaccelerated versions in use (in Skia).\n\nWhichever way we can do it in a follow up CL and just\nreuse the TODO and bug. WDYT?",
+      "parentUuid": "fae4c3d6_af22edb6",
       "range": {
         "startLine": 22,
         "startChar": 28,
@@ -130,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "47903fd7_41d48ed2",
+        "filename": "media/mojo/interfaces/jpeg_decoder.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-21T00:22:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "143c9532_b75761f4",
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f2f03e_696adc17",
         "filename": "media/mojo/services/gpu_jpeg_decode_accelerator_factory_provider.h",
         "patchSetId": 7
@@ -144,6 +228,24 @@
       "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6aa4a9_92aea289",
+        "filename": "media/mojo/services/gpu_jpeg_decode_accelerator_factory_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-21T00:22:28Z",
+      "side": 1,
+      "message": "\u003e This class seems to have nothing to do with mojo, maybe it should be in media/video where we have the JDA interface?\n\nHmmm you\u0027re right, I think it should go into //media/gpu\nbut be renamed so it\u0027s similar to the existing\n//media/gpu/video_{decode,encode}_accelerator_factory.{cc,h}.\nWill do: crbug.com/787176\n\n\u003e \n\u003e Or, shall we have a media/jpeg folder for JDA related stuff, since JEPG is not video? But I might be missing some earlier discussions.\n\nI guess it\u0027s related to video because it\u0027s used for \ndecoding MJPEG :-)",
+      "parentUuid": "17f2f03e_696adc17",
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
