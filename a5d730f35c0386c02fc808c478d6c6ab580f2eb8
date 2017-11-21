@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f8112f8_3158cf39",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-11-21T06:28:35Z",
+      "side": 1,
+      "message": "I think we should delete this DCHECK now because it seems fine to get a non-null cdm_context and a non-encrypted config.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "a5d730f35c0386c02fc808c478d6c6ab580f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19d5a1f_69e9243f",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-11-21T06:28:35Z",
+      "side": 1,
+      "message": "nit: my inclination is to make LOG(ERRORS) shorter to avoid bloating the binary.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 79
+      },
+      "revId": "a5d730f35c0386c02fc808c478d6c6ab580f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd8ffa4_d885414c",
+        "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-11-21T06:28:35Z",
+      "side": 1,
+      "message": "One test for cdm init failure would be nice IMO",
+      "range": {
+        "startLine": 778,
+        "startChar": 1,
+        "endLine": 778,
+        "endChar": 0
+      },
+      "revId": "a5d730f35c0386c02fc808c478d6c6ab580f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
