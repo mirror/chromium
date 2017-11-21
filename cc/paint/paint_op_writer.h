@@ -36,6 +36,8 @@ class CC_PAINT_EXPORT PaintOpWriter {
   void Write(SkScalar data);
   void Write(size_t data);
   void Write(uint8_t data);
+  void Write(uint32_t data);
+  void Write(int32_t data);
   void Write(const SkRect& rect);
   void Write(const SkIRect& rect);
   void Write(const SkRRect& rect);
@@ -46,6 +48,7 @@ class CC_PAINT_EXPORT PaintOpWriter {
   void Write(const sk_sp<SkData>& data);
   void Write(const PaintShader* shader);
   void Write(const scoped_refptr<PaintTextBlob>& blob);
+  void Write(SkColorType color_type);
 
   void Write(SkClipOp op) { Write(static_cast<uint8_t>(op)); }
   void Write(PaintCanvas::AnnotationType type) {
@@ -55,6 +58,12 @@ class CC_PAINT_EXPORT PaintOpWriter {
     Write(static_cast<uint8_t>(constraint));
   }
   void Write(bool data) { Write(static_cast<uint8_t>(data)); }
+
+  // Returns a pointer to a block of memory of size |bytes|. Treats this memory
+  // as though it has already been written (increasing the PaintOpWriter's
+  // size). It is the callers responsibility to populate the buffer. Returns
+  // nullptr if not enough memory is available.
+  void* ReserveWritableMemory(size_t bytes);
 
  private:
   template <typename T>
