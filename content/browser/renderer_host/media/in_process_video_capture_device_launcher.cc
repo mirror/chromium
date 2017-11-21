@@ -23,6 +23,7 @@
 
 #if defined(ENABLE_SCREEN_CAPTURE) && !defined(OS_ANDROID)
 #include "content/browser/media/capture/desktop_capture_device.h"
+#include "content/browser/media/capture/fake_desktop_capture_device.h"
 #if defined(USE_AURA)
 #include "content/browser/media/capture/desktop_capture_device_aura.h"
 #endif
@@ -39,6 +40,19 @@ std::unique_ptr<media::VideoCaptureJpegDecoder> CreateGpuJpegDecoder(
     base::Callback<void(const std::string&)> send_log_message_cb) {
   return std::make_unique<content::VideoCaptureGpuJpegDecoder>(
       std::move(decode_done_cb), std::move(send_log_message_cb));
+}
+
+bool MaybeCreateFakeCapturerForTest(content::DesktopMediaID desktop_id) {
+  bool createFakeCapturer = false;
+  if (desktop_id.type == content::DesktopMediaID::TYPE_WEB_CONTENTS) {
+    content::WebContentsMediaCaptureId media_id = desktop_id.web_contents_id;
+    if (media_id.render_process_id == content::DesktopMediaID::kFakeId &&
+        media_id.main_render_frame_id == content::DesktopMediaID::kFakeId)
+      createFakeCapturer = true;
+  } else if (desktop_id.id == content::DesktopMediaID::kFakeId) {
+    createFakeCapturer = true;
+  }
+  return createFakeCapturer;
 }
 
 // The maximum number of video frame buffers in-flight at any one time. This
@@ -269,6 +283,14 @@ void InProcessVideoCaptureDeviceLauncher::DoStartDesktopCaptureOnDeviceThread(
   if (desktop_id.is_null()) {
     DLOG(ERROR) << "Desktop media ID is null";
     result_callback.Run(nullptr);
+    return;
+  }
+
+  // Create and start a fake desktop catpure device for testing purpose.
+  if (MaybeCreateFakeCapturerForTest(desktop_id)) {
+    video_capture_device = FakeDesktopCaptureDevice::Create(desktop_id);
+    video_capture_device->AllocateAndStart(params, std::move(device_client));
+    result_callback.Run(std::move(video_capture_device));
     return;
   }
 
