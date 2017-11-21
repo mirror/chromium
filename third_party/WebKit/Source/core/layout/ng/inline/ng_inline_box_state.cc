@@ -18,12 +18,12 @@ namespace blink {
 void NGInlineBoxState::ComputeTextMetrics(const ComputedStyle& style,
                                           FontBaseline baseline_type,
                                           bool line_height_quirk) {
-  text_metrics = NGLineHeightMetrics(style, baseline_type);
-  text_top = -text_metrics.ascent;
-  text_metrics.AddLeading(style.ComputedLineHeightAsFixed());
+  text_without_leading = NGLineHeightMetrics(style, baseline_type);
+  text_with_leading = text_without_leading;
+  text_with_leading.AddLeading(style.ComputedLineHeightAsFixed());
 
   if (!line_height_quirk)
-    metrics.Unite(text_metrics);
+    metrics.Unite(text_with_leading);
 
   include_used_fonts = style.LineHeight().IsNegative();
 }
@@ -66,7 +66,7 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     for (auto& box : stack_) {
       box.fragment_start = 0;
       if (!line_height_quirk)
-        box.metrics = box.text_metrics;
+        box.metrics = box.text_with_leading;
       else
         box.metrics = NGLineHeightMetrics();
       if (box.needs_box_fragment) {
@@ -299,8 +299,9 @@ NGInlineLayoutStateStack::ApplyBaselineShift(
       }
       switch (child.vertical_align) {
         case EVerticalAlign::kTextTop:
-          DCHECK(!box->text_metrics.IsEmpty());
-          baseline_shift = child.metrics.ascent + box->text_top;
+          DCHECK(!box->text_with_leading.IsEmpty());
+          baseline_shift =
+              child.metrics.ascent - box->text_without_leading.ascent;
           break;
         case EVerticalAlign::kTop:
           if (box->metrics.IsEmpty())
@@ -363,7 +364,7 @@ NGInlineLayoutStateStack::ApplyBaselineShift(
       const Length& length = style.GetVerticalAlignLength();
       LayoutUnit line_height = length.IsPercentOrCalc()
                                    ? style.ComputedLineHeightAsFixed()
-                                   : box->text_metrics.LineHeight();
+                                   : box->text_with_leading.LineHeight();
       baseline_shift = -ValueForLength(length, line_height);
       break;
     }
