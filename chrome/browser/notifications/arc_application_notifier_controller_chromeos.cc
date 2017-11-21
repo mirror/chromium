@@ -7,9 +7,7 @@
 #include <set>
 
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/profiles/profile_manager.h"
 #include "ui/base/layout.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -112,14 +110,8 @@ void ArcApplicationNotifierControllerChromeOS::OnIconUpdated(ArcAppIcon* icon) {
 void ArcApplicationNotifierControllerChromeOS::StopObserving() {
   if (!last_profile_)
     return;
-
-  // This is also called from the destructor during shutdown. In that case, the
-  // profile manager and the profiles are already destroyed. (see Issue 783538)
-  if (g_browser_process->profile_manager() &&
-      g_browser_process->profile_manager()->IsValidProfile(last_profile_)) {
-    ArcAppListPrefs* const app_list = ArcAppListPrefs::Get(last_profile_);
-    app_list->RemoveObserver(this);
-  }
+  ArcAppListPrefs* const app_list = ArcAppListPrefs::Get(last_profile_);
+  app_list->RemoveObserver(this);
   last_profile_ = nullptr;
 }
 
