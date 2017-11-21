@@ -2,11 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 13
+// Next MinVersion: 14
 
 module arc.mojom;
 
 import "bitmap.mojom";
+import "gfx.mojom";
 
 // These values must be matched with the NOTIFICATION_EVENT_* constants in
 // com.android.server.ArcNotificationListenerService.
@@ -128,6 +129,10 @@ struct ArcNotificationData {
   ArcNotificationShownContents shown_contents;
   [MinVersion=12]
   ArcNotificationRemoteInputState remote_input_state;
+  // Indicates a rect for which Android wants to handle swipe events for by
+  // itself. The coordinates in this Reect are in Android pixels.
+  [MinVersion=13]
+  Rect? swipe_input_rect;
 };
 
 [MinVersion=2]

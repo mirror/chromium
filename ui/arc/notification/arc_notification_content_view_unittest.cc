@@ -104,6 +104,7 @@ class MockArcNotificationItem : public ArcNotificationItem {
   mojom::ArcNotificationShownContents GetShownContents() const override {
     return mojom::ArcNotificationShownContents::CONTENTS_SHOWN;
   }
+  gfx::Rect GetSwipeInputRect() const override { return gfx::Rect(); }
   const base::string16& GetAccessibleName() const override {
     return base::EmptyString16();
   };
