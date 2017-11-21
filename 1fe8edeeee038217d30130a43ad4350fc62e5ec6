@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84fb45cf_65ae9475",
+        "filename": "components/sync/mojo/syncer_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-21T19:49:41Z",
+      "side": 1,
+      "message": "nit: newline before this line",
+      "revId": "1fe8edeeee038217d30130a43ad4350fc62e5ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
