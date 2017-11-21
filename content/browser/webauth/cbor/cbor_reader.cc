@@ -89,6 +89,8 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
   switch (major_type) {
     case CBORValue::Type::UNSIGNED:
       return CBORValue(length);
+    case CBORValue::Type::NEGATIVE:
+      return CBORValue(length + 1, CBORValue::IntegerType::NEGATIVE);
     case CBORValue::Type::BYTE_STRING:
       return ReadBytes(length);
     case CBORValue::Type::STRING:
