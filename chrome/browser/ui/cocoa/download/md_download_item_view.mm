@@ -257,7 +257,7 @@ NSTextField* MakeLabel(
     imageView_.autoresizingMask =
         [NSView cr_localizedAutoresizingMask:NSViewMaxXMargin];
     ui::a11y_util::HideImageFromAccessibilityOrder(imageView_);
-    imageView_.alphaValue = 0;
+    imageView_.hidden = YES;
     [self addSubview:imageView_];
 
     base::scoped_nsobject<MDDownloadItemProgressIndicator> progressIndicator(
@@ -397,9 +397,9 @@ NSTextField* MakeLabel(
                    [NSAnimationContext
                        runAnimationGroup:^(NSAnimationContext* context) {
                          context.duration = 0.3;
-                         progressIndicator_.animator.alphaValue = 0;
+                         progressIndicator_.animator.hidden = YES;
                          context.duration = 1;
-                         imageView_.animator.alphaValue = 1;
+                         imageView_.animator.hidden = NO;
                        }
                        completionHandler:nil];
                  });
