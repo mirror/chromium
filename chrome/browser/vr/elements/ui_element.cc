@@ -16,6 +16,13 @@
 #include "ui/gfx/geometry/angle_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
 
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
+#define YELLOW "\x1b[33m"
+#define BLUE "\x1b[34m"
+#define CYAN "\x1b[36m"
+#define RESET "\x1b[0m"
+
 namespace vr {
 
 namespace {
@@ -232,6 +239,15 @@ cc::TransformOperations UiElement::GetTargetTransform() const {
       TargetProperty::TRANSFORM, transform_operations_);
 }
 
+gfx::Transform UiElement::GetTargetWorldSpaceTransform() const {
+  gfx::Transform m;
+  for (const UiElement* current = this; current; current = current->parent()) {
+    m.ConcatTransform(current->layout_offset_.Apply() *
+                      current->GetTargetTransform().Apply());
+  }
+  return m;
+}
+
 float UiElement::GetTargetOpacity() const {
   return animation_player_.GetTargetFloatValue(TargetProperty::OPACITY,
                                                opacity_);
@@ -294,16 +310,6 @@ void UiElement::HitTest(const HitTestRequest& request,
   }
 }
 
-void UiElement::SetMode(ColorScheme::Mode mode) {
-  for (auto& child : children_) {
-    child->SetMode(mode);
-  }
-  if (mode_ == mode)
-    return;
-  mode_ = mode;
-  OnSetMode();
-}
-
 const gfx::Transform& UiElement::world_space_transform() const {
   DCHECK_LE(kUpdatedWorldSpaceTransform, phase_);
   return world_space_transform_;
@@ -317,7 +323,76 @@ std::string UiElement::DebugName() const {
   return UiElementNameToString(name());
 }
 
-void UiElement::OnSetMode() {}
+void UiElement::DumpHierarchy(std::vector<size_t> counts,
+                              std::ostringstream* os) const {
+#ifndef NDEBUG
+  if (!IsVisible() && GetTargetOpacity() == 0.0f) {
+    return;
+  }
+
+  // Put our ancestors in a vector for easy reverse traversal.
+  std::vector<const UiElement*> ancestors;
+  for (const UiElement* ancestor = parent(); ancestor;
+       ancestor = ancestor->parent()) {
+    ancestors.push_back(ancestor);
+  }
+  DCHECK_EQ(counts.size(), ancestors.size());
+
+  *os << CYAN;
+  for (size_t i = 0; i < counts.size(); ++i) {
+    if (i + 1 == counts.size()) {
+      *os << "+-";
+    } else if (ancestors[ancestors.size() - i - 1]->children().size() >
+               counts[i] + 1) {
+      *os << "| ";
+    } else {
+      *os << "  ";
+    }
+  }
+  *os << RESET;
+
+  *os << DebugName() << " ";
+  *os << CYAN << DrawPhaseToString(draw_phase_) << " " << RESET;
+
+  float z = -GetCenter().z();
+  if (draw_phase_ != kPhaseNone && std::abs(z) > 1e-4) {
+    *os << RED << "[" << (size().width() / z) << "DMM, "
+        << (size().height() / z) << "DMM] " << RESET;
+  }
+
+  *os << GREEN;
+  if (!transform_operations_.at(0).IsIdentity()) {
+    const auto& translate = transform_operations_.at(0).translate;
+    *os << "t(" << translate.x << ", " << translate.y << ", " << translate.z
+        << ") ";
+  }
+
+  if (!transform_operations_.at(1).IsIdentity()) {
+    const auto& rotate = transform_operations_.at(1).rotate;
+    if (rotate.axis.x > 0.0f) {
+      *os << "rx(" << rotate.angle << ") ";
+    } else if (rotate.axis.y > 0.0f) {
+      *os << "ry(" << rotate.angle << ") ";
+    } else if (rotate.axis.z > 0.0f) {
+      *os << "rz(" << rotate.angle << ") ";
+    }
+  }
+
+  if (!transform_operations_.at(2).IsIdentity()) {
+    const auto& scale = transform_operations_.at(2).scale;
+    *os << "t(" << scale.x << ", " << scale.y << ", " << scale.z << ") ";
+  }
+  *os << RESET;
+  *os << std::endl;
+
+  counts.push_back(0u);
+  for (auto& child : children_) {
+    child->DumpHierarchy(counts, os);
+    counts.back()++;
+  }
+#endif
+}
+
 void UiElement::OnUpdatedWorldSpaceTransform() {}
 
 gfx::SizeF UiElement::stale_size() const {

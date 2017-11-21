@@ -10,7 +10,6 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "chrome/browser/vr/color_scheme.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -40,8 +39,10 @@ class UiTexture {
 
   bool dirty() const { return dirty_; }
 
-  void SetMode(ColorScheme::Mode mode);
   void OnInitialized();
+
+  void SetForegroundColor(SkColor color);
+  void SetBackgroundColor(SkColor color);
 
   // This function sets |font_list| to a list of available fonts for |text|. If
   // no font supports |text|, it returns false and leave |font_list| untouched.
@@ -63,10 +64,6 @@ class UiTexture {
 
  protected:
   virtual void Draw(SkCanvas* canvas, const gfx::Size& texture_size) = 0;
-
-  virtual void OnSetMode();
-  ColorScheme::Mode mode() const { return mode_; }
-  const ColorScheme& color_scheme() const;
 
   // Prepares a set of RenderText objects with the given color and fonts.
   // Attempts to fit the text within the provided size. |flags| specifies how
@@ -90,15 +87,19 @@ class UiTexture {
       SkColor color,
       TextAlignment text_alignment);
 
-  void set_dirty() { dirty_ = true; }
-
   static bool IsRTL();
   static gfx::FontList GetDefaultFontList(int size);
   static void SetForceFontFallbackFailureForTesting(bool force);
 
+  void set_dirty() { dirty_ = true; }
+
+  SkColor foreground_color() const { return foreground_color_; }
+  SkColor background_color() const { return background_color_; }
+
  private:
   bool dirty_ = true;
-  ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
+  SkColor foreground_color_;
+  SkColor background_color_;
 
   DISALLOW_COPY_AND_ASSIGN(UiTexture);
 };
