@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cb65611_ed7ed09f",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-21T20:46:47Z",
+      "side": 1,
+      "message": "missing documentation",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "27e96a9c206b703265809f31b72871febf05989b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
