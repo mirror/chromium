@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "59add47d_4a51bb34",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Added another histogram to record cache hit rate (I was going to do that in next CL). Variations in cache hit rate along with the dictionary size would be useful in determining if the cache hit rate is low because the dictionary size is too low or for some other reasons.",
+      "parentUuid": "1b49bacd_5892f978",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c15bbe07_52618372",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 14
@@ -332,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "0753e9bb_a0507cb8",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Added a TODO.",
+      "parentUuid": "1e5d117e_636ce524",
+      "range": {
+        "startLine": 148,
+        "startChar": 10,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ec9969_19a6d388",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 14
@@ -447,6 +495,54 @@
       "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56b2576_b34ffbbb",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8fc00b6_166540e3",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 46
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64fb47bf_e5bc33a9",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8fc00b6_166540e3",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 46
+      },
+      "revId": "20967b912268e1caebe517fa879a837828a9e3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

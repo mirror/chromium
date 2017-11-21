@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4456dac_c6f199c1",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50a3cff_579bbe82",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 21
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c96c90_85661d37",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1126d236_fa9d0960",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Good catch. I wish there was a presubmit check for this.\nDone.",
+      "parentUuid": "b8c96c90_85661d37",
+      "range": {
+        "startLine": 98,
+        "startChar": 37,
+        "endLine": 98,
+        "endChar": 48
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "67e2109f_7cad8139",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Is there a reason to believe that this would trigger on debug builds unless there is a bug in the code? Anyways, removed.",
+      "parentUuid": "4e79e583_b791ddd0",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae1aeb5_c80a845e",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 15
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-21T19:50:15Z",
       "side": 1,
       "message": "Instead of calling SetKey() on the update directly, could you get the DictionaryValue above this and just call SetKey() on that?",
+      "range": {
+        "startLine": 212,
+        "startChar": 10,
+        "endLine": 212,
+        "endChar": 16
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb061f98_2895934e",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "umm, how do I get the DictionaryValue?",
+      "parentUuid": "aae1aeb5_c80a845e",
       "range": {
         "startLine": 212,
         "startChar": 10,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f59def5a_99c5da03",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6315497c_9e2533cc",
+      "range": {
+        "startLine": 214,
+        "startChar": 25,
+        "endLine": 214,
+        "endChar": 38
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42afc9dd_8c84008b",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 15
@@ -137,6 +257,30 @@
       "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132569b5_49be3154",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42afc9dd_8c84008b",
+      "range": {
+        "startLine": 231,
+        "startChar": 16,
+        "endLine": 231,
+        "endChar": 27
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "fffbffb8_de866458",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Maybe, added a TODO.",
+      "parentUuid": "d1f9c868_2bee30f4",
+      "range": {
+        "startLine": 235,
+        "startChar": 8,
+        "endLine": 235,
+        "endChar": 17
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3314bb_a5ede335",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 15
@@ -174,6 +342,30 @@
       "writtenOn": "2017-11-21T19:50:15Z",
       "side": 1,
       "message": "Instead of parsing every entry in the map here, would it be possible to go through the map on the IO thread (where the NetworkProperties are already parsed) and find the oldest one that way?\n\nThis means that you\u0027d have to cap the map on the IO thread at 10 entries as well, but that\u0027ll have the side benefit of preventing the map from growing out of control, and also having the in-memory map match the map in prefs, which might not be so bad.\n\nIf you\u0027re worried about the prefs changing without the map being notified, the NetworkManager could always just send the whole DictionaryValue (or even a ListValue if you want to truly simplify the design and e.g. order the entries by recency, removing the need to include any timestamp) to be written at once (overwriting any existing dictionary in prefs) instead of the individual updates, since it\u0027s only 10 elements max right now.\n\nIf we ever want to vastly increase the maximum cache size to something really, really big (which TBH seems kinda unlikely right now), then we could cross that bridge when we come to it.",
+      "range": {
+        "startLine": 238,
+        "startChar": 36,
+        "endLine": 238,
+        "endChar": 51
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686fe3fd_45c313b4",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Right, this method is called only on connection change, when the dictionary size is 10, and the user visits a network that has not been seen before. I think these 3 conditions together would be true rarely enough that it should not be a problem to go over 10 entries.",
+      "parentUuid": "3e3314bb_a5ede335",
       "range": {
         "startLine": 238,
         "startChar": 36,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "46dd4414_2ac5b2f8",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5ce6c01_bbaf0473",
+      "range": {
+        "startLine": 248,
+        "startChar": 6,
+        "endLine": 248,
+        "endChar": 33
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6a01eff_7dc6d4bf",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 15
@@ -229,6 +445,30 @@
       "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcaab89d_6168000b",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6a01eff_7dc6d4bf",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 251,
+        "endChar": 13
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "df96bf8e_ab0e5046",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79c6cb3_99b3c85f",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 78
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a061c821_5702b158",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 15
@@ -275,6 +539,30 @@
       "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce4a09f_af516ae7",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a061c821_5702b158",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "835b2eb7_352f37e9",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Not sure if there is a prefered style here, but done.",
+      "parentUuid": "adce28fb_698c65be",
+      "range": {
+        "startLine": 130,
+        "startChar": 42,
+        "endLine": 130,
+        "endChar": 45
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "252ac1b0_c0192e9c",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager_unittest.cc",
         "patchSetId": 15
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "14394107_8eff6914",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "252ac1b0_c0192e9c",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc1e8fc_a320c785",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.cc",
         "patchSetId": 15
@@ -344,6 +680,30 @@
       "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6909405a_eded9027",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-21T22:10:46Z",
+      "side": 1,
+      "message": "Done. I was planning to do that in the next CL. Good catch :)",
+      "parentUuid": "1dc1e8fc_a320c785",
+      "range": {
+        "startLine": 214,
+        "startChar": 11,
+        "endLine": 214,
+        "endChar": 29
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
