@@ -3,16 +3,6 @@
   "layers": [
     {
       "name": "LayoutView #document",
-      "bounds": [800, 600],
-      "backgroundColor": "#FFFFFF"
-    },
-    {
-      "name": "Scrolling Layer",
-      "bounds": [785, 600],
-      "drawsContent": false
-    },
-    {
-      "name": "Scrolling Contents Layer",
       "bounds": [785, 1650],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
@@ -25,16 +15,36 @@
       "transform": 1
     },
     {
-      "name": "LayoutView #document",
-      "position": [22, 152],
-      "bounds": [280, 200],
-      "transform": 1
-    },
-    {
-      "name": "Child Containment Layer",
+      "name": "Frame Overflow Controls Host Layer",
       "position": [22, 152],
       "bounds": [280, 200],
       "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Frame Clipping Layer",
+      "position": [22, 152],
+      "bounds": [280, 200],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Frame Scrolling Layer",
+      "position": [22, 152],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Content Root Layer",
+      "position": [22, 152],
+      "bounds": [280, 200],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "LayoutView #document",
+      "position": [22, 152],
+      "bounds": [280, 200],
       "transform": 1
     },
     {
@@ -44,17 +54,37 @@
       "transform": 1
     },
     {
-      "name": "LayoutView #document",
-      "position": [31, 161],
-      "bounds": [250, 170],
-      "backgroundColor": "#C0C0C0",
-      "transform": 1
-    },
-    {
-      "name": "Child Containment Layer",
+      "name": "Frame Overflow Controls Host Layer",
       "position": [31, 161],
       "bounds": [250, 170],
       "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Frame Clipping Layer",
+      "position": [31, 161],
+      "bounds": [250, 170],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Frame Scrolling Layer",
+      "position": [31, 161],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Content Root Layer",
+      "position": [31, 161],
+      "bounds": [250, 230],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "LayoutView #document",
+      "position": [31, 161],
+      "bounds": [250, 230],
+      "backgroundColor": "#C0C0C0",
       "transform": 1
     },
     {
@@ -71,16 +101,36 @@
       "transform": 1
     },
     {
-      "name": "LayoutView #document",
-      "position": [22, 376],
-      "bounds": [280, 200],
-      "transform": 1
-    },
-    {
-      "name": "Child Containment Layer",
+      "name": "Frame Overflow Controls Host Layer",
       "position": [22, 376],
       "bounds": [280, 200],
       "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Frame Clipping Layer",
+      "position": [22, 376],
+      "bounds": [280, 200],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Frame Scrolling Layer",
+      "position": [22, 376],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Content Root Layer",
+      "position": [22, 376],
+      "bounds": [280, 200],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "LayoutView #document",
+      "position": [22, 376],
+      "bounds": [280, 200],
       "transform": 1
     },
     {
@@ -90,17 +140,37 @@
       "transform": 1
     },
     {
-      "name": "LayoutView #document",
-      "position": [31, 385],
-      "bounds": [250, 170],
-      "backgroundColor": "#C0C0C0",
-      "transform": 1
-    },
-    {
-      "name": "Child Containment Layer",
+      "name": "Frame Overflow Controls Host Layer",
       "position": [31, 385],
       "bounds": [250, 170],
       "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Frame Clipping Layer",
+      "position": [31, 385],
+      "bounds": [250, 170],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Frame Scrolling Layer",
+      "position": [31, 385],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "Content Root Layer",
+      "position": [31, 385],
+      "bounds": [250, 230],
+      "drawsContent": false,
+      "transform": 1
+    },
+    {
+      "name": "LayoutView #document",
+      "position": [31, 385],
+      "bounds": [250, 230],
+      "backgroundColor": "#C0C0C0",
       "transform": 1
     },
     {
@@ -126,8 +196,7 @@
         [0, 1, 0, 0],
         [0, 0, 1, 0],
         [0, -100, 0, 1]
-      ],
-      "flattenInheritedTransform": false
+      ]
     },
     {
       "id": 2,
