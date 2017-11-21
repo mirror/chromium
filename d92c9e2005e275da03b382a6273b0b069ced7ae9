@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02f79fc1_4fc5419c",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-21T23:23:58Z",
+      "side": 1,
+      "message": "According to the description, this was supposed to be enabled by default.",
+      "range": {
+        "startLine": 80,
+        "startChar": 71,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "d92c9e2005e275da03b382a6273b0b069ced7ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b3e8e9_4c53001f",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-21T23:23:58Z",
+      "side": 1,
+      "message": "Nit: b -\u003e crbug.com",
+      "range": {
+        "startLine": 349,
+        "startChar": 10,
+        "endLine": 349,
+        "endChar": 11
+      },
+      "revId": "d92c9e2005e275da03b382a6273b0b069ced7ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
