@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="../resources/get-host-info.js"></script>
+<style>
+#test {
+  width: 100px;
+  height: 100px;
+  background: green;
+  background: paint(fail) purple;
+}
+</style>
+<div id="test"></div>
+<script>
+  if (window.location.origin != get_host_info().UNAUTHENTICATED_ORIGIN) {
+    window.location = get_host_info().UNAUTHENTICATED_ORIGIN + window.location.pathname;
+  } else {
+    test(function() {
+      const element = document.getElementById('test');
+      assert_false(window.isSecureContext);
+      assert_equals(getComputedStyle(element).backgroundColor, 'rgb(0, 128, 0)');
+    });
+  }
+</script>
