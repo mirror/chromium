@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccb1c898_18d76629",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-21T00:54:57Z",
+      "side": 1,
+      "message": "I\u0027m assuming you rename |lock| to |lock_| in a follow-up CL.",
+      "revId": "fe1e6754581cbd025c6dcd1c6e7a42a9b620cc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
