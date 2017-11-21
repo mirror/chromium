@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d8fc571_d0fef451",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-21T21:08:25Z",
+      "side": 1,
+      "message": "In hindsight this should really refer to \"utility process\" or any kind of process at all. How about \"Parses |unsafe_xml| using the data_decoder service which, whenever feasible, will be run in an isolated sandboxed process.\"",
+      "revId": "4f750b04c304428da41e2aed22ec3165bd0193c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624cc0a2_6f082ad5",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-21T21:08:25Z",
+      "side": 1,
+      "message": "And this is maybe confusing too (sorry)... Maybe\n\n|connector| is the Connector to use when connecting to the data_decoder service. This should be retrieved from whichever service is requesting the decode operation.",
+      "revId": "4f750b04c304428da41e2aed22ec3165bd0193c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48608b2_5c1029a1",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-21T21:08:25Z",
+      "side": 1,
+      "message": "Maybe \"batch_id\"?\n\nI would also be less prescriptive about the effect. In fact (oversight on my part), this documentation really should not be referring to processes at all since that\u0027s a detail of the system, not a guarantee of the API. (we may choose to run data_decoder in-process someday, in some cases.)\n\nMaybe something like \"If |batch_id| is non-empty, the system may batch this parse request with other parse requests using the same |batch_id| in an effort to amortize the overhead of a single request. The trade-off is that batch requests may not be well-isolated from each other, so this should be used with appropriate caution.\"",
+      "revId": "4f750b04c304428da41e2aed22ec3165bd0193c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
