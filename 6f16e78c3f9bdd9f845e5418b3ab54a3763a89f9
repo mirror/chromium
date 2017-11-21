@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fdc7a92_30fbb88d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:27:36Z",
+      "side": 1,
+      "message": "nit: please put a blank line before the include of the .h corresponding to this .mm and the other .h included\n\n  #import \"ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.h\"\n\n  #include \"base/logging.h\"\n  ...",
+      "revId": "6f16e78c3f9bdd9f845e5418b3ab54a3763a89f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
