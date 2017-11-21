@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a6d53cf_9cc05e00",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-21T04:21:53Z",
+      "side": 1,
+      "message": "Can\u0027t this be a DCHECK?\nIt\u0027s already checked in FakeCryptohomeClient::FakeCryptohomeClient().",
+      "revId": "98a5f8fa1b0d31687377c5b45144798f2fa2f5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e587e0d1_4d317d1c",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-21T04:21:53Z",
+      "side": 1,
+      "message": "Please make this a constant with a description why this value is chosen.",
+      "range": {
+        "startLine": 788,
+        "startChar": 65,
+        "endLine": 788,
+        "endChar": 70
+      },
+      "revId": "98a5f8fa1b0d31687377c5b45144798f2fa2f5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
