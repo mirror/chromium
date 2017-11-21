@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d669e9cf_e5b0e9d7",
+        "filename": "media/mojo/clients/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-21T17:49:35Z",
+      "side": 1,
+      "message": "Do we need this? Can we just keep them as separate targets?",
+      "revId": "59dc966e13d14ea2e5da256558e13e05313c45e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0284674d_29139060",
+        "filename": "media/mojo/clients/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-21T17:49:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "59dc966e13d14ea2e5da256558e13e05313c45e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
