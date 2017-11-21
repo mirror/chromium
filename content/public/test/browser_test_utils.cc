@@ -67,6 +67,8 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/test/test_fileapi_operation_waiter.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -2390,6 +2392,18 @@ void ContextMenuFilter::OnContextMenu(
 WebContents* GetEmbedderForGuest(content::WebContents* guest) {
   CHECK(guest);
   return static_cast<content::WebContentsImpl*>(guest)->GetOuterWebContents();
+}
+
+bool HasOutOfProcessNetworkService() {
+#if defined(OS_ANDROID)
+  return false;
+#endif  // defined(OS_ANDROID)
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kSingleProcess))
+    return false;
+
+  return base::FeatureList::IsEnabled(features::kNetworkService);
 }
 
 }  // namespace content
