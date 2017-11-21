@@ -50,5 +50,3 @@ class DownloadControllerImpl : public DownloadController,
 };
 
 }  // namespace web
-
-#endif  // IOS_WEB_DOWNLOAD_DOWNLOAD_CONTROLLER_IMPL_H_
