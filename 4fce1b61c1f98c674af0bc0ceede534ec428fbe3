@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c0a6578_8c58cf34",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59793,
+      "author": {
+        "id": 1129199
+      },
+      "writtenOn": "2017-11-21T04:28:38Z",
+      "side": 1,
+      "message": "Unrelated, right? (maybe update the commit message then?)",
+      "revId": "4fce1b61c1f98c674af0bc0ceede534ec428fbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
