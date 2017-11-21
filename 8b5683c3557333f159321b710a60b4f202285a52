@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8107713d_5f64058f",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-21T22:20:41Z",
+      "side": 1,
+      "message": "Probably not needed/helpful, though it fits with the style in the rest of this file...",
+      "parentUuid": "5f41d509_18bee65d",
+      "revId": "8b5683c3557333f159321b710a60b4f202285a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34866158_19ac0007",
         "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "8b5683c3557333f159321b710a60b4f202285a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f626d894_27d6b7d2",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-21T22:20:41Z",
+      "side": 1,
+      "message": "Expanded.  (Took your suggestion and rephrased.)",
+      "parentUuid": "34866158_19ac0007",
+      "revId": "8b5683c3557333f159321b710a60b4f202285a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
