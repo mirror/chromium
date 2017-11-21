@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "975b9a35_d6a69457",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3552,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-21T00:41:03Z",
+      "side": 1,
+      "message": "I think you can just change kOsAll with kOsAndroid and you don\u0027t need the ifdefs",
+      "revId": "779bb89af70dbb6cbdcd64c6b20b38fe883a2f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
