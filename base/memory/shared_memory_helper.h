@@ -6,8 +6,14 @@
 #define BASE_MEMORY_SHARED_MEMORY_HELPER_H_
 
 #include "base/memory/shared_memory.h"
+#include "build/build_config.h"
 
 #include <fcntl.h>
+
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include <linux/memfd.h>
+#include <sys/syscall.h>
+#endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
 
 namespace base {
 
@@ -28,7 +34,13 @@ bool PrepareMapFile(ScopedFILE fp,
                     ScopedFD readonly_fd,
                     int* mapped_file,
                     int* readonly_mapped_file);
-#endif
+#endif  // !defined(OS_ANDROID)
+
+#if defined(OS_LINUX)
+static inline int memfd_create(const char* name, unsigned int flags) {
+  return syscall(__NR_memfd_create, name, flags);
+}
+#endif  // defined(OS_LINUX)
 
 }  // namespace base
 
