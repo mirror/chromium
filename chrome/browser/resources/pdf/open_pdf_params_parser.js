@@ -120,6 +120,16 @@ OpenPDFParamsParser.prototype = {
         viewportPosition['page'] = pageNumber - 1;
     }
 
+    if ('view' in paramsDictionary) {
+      var viewMode = paramsDictionary['view'].toLowerCase();
+      if (viewMode === 'fit')
+        viewportPosition['view'] = Viewport.FittingType.FIT_TO_PAGE;
+      else if (viewMode === 'fith')
+        viewportPosition['view'] = Viewport.FittingType.FIT_TO_WIDTH;
+      else if (viewMode === 'fitv')
+        viewportPosition['view'] = Viewport.FittingType.FIT_TO_HEIGHT;
+    }
+
     if ('zoom' in paramsDictionary)
       this.parseZoomParam_(paramsDictionary['zoom'], viewportPosition);
 
