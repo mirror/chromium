@@ -150,6 +150,11 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   // Whether this is a download.
   void set_is_download(bool download) { is_download_ = download; }
 
+  // Update PreviewsState.
+  void set_previews_state(content::PreviewsState previews_state) {
+    previews_state_ = previews_state;
+  }
+
   // Whether this is a stream.
   bool is_stream() const { return is_stream_; }
   void set_is_stream(bool stream) { is_stream_ = stream; }

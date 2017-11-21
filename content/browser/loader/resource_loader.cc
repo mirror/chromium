@@ -68,10 +68,7 @@ void PopulateResourceResponse(
       response_info.alpn_negotiated_protocol;
   response->head.connection_info = response_info.connection_info;
   response->head.socket_address = response_info.socket_address;
-  const content::ResourceRequestInfo* request_info =
-      content::ResourceRequestInfo::ForRequest(request);
-  if (request_info)
-    response->head.previews_state = request_info->GetPreviewsState();
+  response->head.previews_state = info->GetPreviewsState();
   if (info->ShouldReportRawHeaders()) {
     response->head.devtools_info =
         BuildDevToolsInfo(*request, raw_request_headers, raw_response_headers);
@@ -652,6 +649,14 @@ void ResourceLoader::FollowDeferredRedirectInternal() {
 
 void ResourceLoader::CompleteResponseStarted() {
   ResourceRequestInfoImpl* info = GetRequestInfo();
+  content::PreviewsState previews_state = info->GetPreviewsState();
+  if (previews_state > 0) {
+    if (!request_->url().SchemeIs(url::kHttpsScheme)) {
+      // Clear https-only previews types.
+      previews_state &= ~(content::NOSCRIPT_ON);
+    }
+    info->set_previews_state(previews_state);
+  }
   scoped_refptr<ResourceResponse> response = new ResourceResponse();
   PopulateResourceResponse(info, request_.get(), response.get(),
                            raw_request_headers_, raw_response_headers_.get());
