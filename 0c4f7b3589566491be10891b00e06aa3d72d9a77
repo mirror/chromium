@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f885957_ad8bbc56",
+        "filename": "chrome/browser/resources/chromeos/login/update_required_card.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-21T01:16:12Z",
+      "side": 1,
+      "message": "Are you sure we want HTML here? Will i18n-content be sufficient?",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "0c4f7b3589566491be10891b00e06aa3d72d9a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
