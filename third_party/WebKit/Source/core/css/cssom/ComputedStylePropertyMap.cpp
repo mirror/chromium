@@ -73,9 +73,9 @@ CSSStyleValueVector ComputedStylePropertyMap::GetAllInternal(
 
 Vector<String> ComputedStylePropertyMap::getProperties() {
   Vector<String> result;
-  for (CSSPropertyID property_id :
+  for (const CSSProperty* property :
        CSSComputedStyleDeclaration::ComputableProperties()) {
-    result.push_back(getPropertyNameString(property_id));
+    result.push_back(getPropertyNameString(property->PropertyID()));
   }
   return result;
 }

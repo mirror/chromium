@@ -62,7 +62,7 @@ class CSSProperty {
   virtual bool IsLonghand() const { return false; }
   static void FilterEnabledCSSPropertiesIntoVector(const CSSPropertyID*,
                                                    size_t length,
-                                                   Vector<CSSPropertyID>&);
+                                                   Vector<const CSSProperty*>&);
 
  protected:
   static const StylePropertyShorthand& BorderDirections();
