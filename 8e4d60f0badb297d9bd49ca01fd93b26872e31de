@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0b1f12e_2c39fc77",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T17:46:17Z",
+      "side": 1,
+      "message": "Note that the new failing test seems to be using SpeechRecognition, so it shouldn\u0027t use generateStream.\nMaybe you\u0027re introducing a regression for MEDIA_DEVICE_ACCESS-type requests, which is what speech recognition uses.",
+      "parentUuid": "9c560f42_228f8ef1",
+      "range": {
+        "startLine": 635,
+        "startChar": 77,
+        "endLine": 635,
+        "endChar": 0
+      },
+      "revId": "8e4d60f0badb297d9bd49ca01fd93b26872e31de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7013a1c_e56cb57b",
         "filename": "content/browser/renderer_host/media/media_stream_requester.h",
         "patchSetId": 4
