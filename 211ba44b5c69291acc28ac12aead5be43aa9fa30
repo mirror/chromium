@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f16d53d_f0b0edc0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T07:55:35Z",
+      "side": 1,
+      "message": "Please end with a period \".\" when a statement ends.",
+      "revId": "211ba44b5c69291acc28ac12aead5be43aa9fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2ae25a_f9458fca",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T07:55:35Z",
+      "side": 1,
+      "message": "Please end with a period \".\" when a statement ends.",
+      "revId": "211ba44b5c69291acc28ac12aead5be43aa9fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f294965_dc340a2d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T07:55:35Z",
+      "side": 1,
+      "message": "As the spec says, we don\u0027t need [CEReactions] for this version of open.",
+      "range": {
+        "startLine": 122,
+        "startChar": 45,
+        "endLine": 122,
+        "endChar": 58
+      },
+      "revId": "211ba44b5c69291acc28ac12aead5be43aa9fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241b7f8d_daa35196",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T07:55:35Z",
+      "side": 1,
+      "message": "s/DOMWindow/Window/",
+      "range": {
+        "startLine": 122,
+        "startChar": 99,
+        "endLine": 122,
+        "endChar": 108
+      },
+      "revId": "211ba44b5c69291acc28ac12aead5be43aa9fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
