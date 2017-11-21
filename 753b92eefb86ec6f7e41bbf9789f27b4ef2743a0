@@ -742,6 +742,30 @@
     },
     {
       "key": {
+        "uuid": "b22e4ef9_26be7354",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T16:20:25Z",
+      "side": 1,
+      "message": "Fine as-is, I was just wondering if I should be looking at it relative to some metric of what in particular we should be checking.",
+      "parentUuid": "26948f22_86d861a5",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e087f445_733d5dea",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
@@ -824,6 +848,30 @@
       "side": 1,
       "message": "So I do test it by setting the UID in the tag on line 122 below.  This isn\u0027t a thorough test obviously as it\u0027s not a particularly interesting UID value to set...but it does at least exercise all the code paths.\nTo blame other apps (UIDs) requires MODIFY_NETWORK_ACCOUNTING permission which AFAIK only Google Play Services has.  I\u0027d prefer not to add that permission to the net_unittest APK as I don\u0027t want other parts of the net stack accidentally assuming that kind of permission is available.  I could add another test APK entirely just for the purpose of testing this more thoroughly, but that would be a huge undertaking (would need to modify all the bots to run this new test APK).\nMy thought was to have this minimal test (line 122 below) here, and potentially a more thorough integration test within a system that might utilize this feature (in which case the permission would already be present).",
       "parentUuid": "8ab13da1_9e0de408",
+      "range": {
+        "startLine": 95,
+        "startChar": 25,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c5c1e64_83a484c6",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T16:20:25Z",
+      "side": 1,
+      "message": "SGTM.  In particular, any more thorough test should also have a test where we go from a 3rd party app\u0027s uid to an UNSET_UID\u003e",
+      "parentUuid": "95fe3428_571d35d0",
       "range": {
         "startLine": 95,
         "startChar": 25,

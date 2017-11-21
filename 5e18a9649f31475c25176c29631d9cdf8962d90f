@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ec8755c_69a9d88c",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T16:20:25Z",
+      "side": 1,
+      "message": "include \u003cstdint.h\u003e?",
+      "range": {
+        "startLine": 15,
+        "startChar": 18,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "5e18a9649f31475c25176c29631d9cdf8962d90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c7424b_f4091e97",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T16:20:25Z",
+      "side": 1,
+      "message": "blank line before C++ headers",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "5e18a9649f31475c25176c29631d9cdf8962d90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
