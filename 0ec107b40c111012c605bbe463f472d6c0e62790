@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2b7e727_322626e8",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3165,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T20:38:21Z",
+      "side": 1,
+      "message": "I will remove this after Shimi has a chance to review the proposed string.",
+      "range": {
+        "startLine": 3165,
+        "startChar": 182,
+        "endLine": 3165,
+        "endChar": 202
+      },
+      "revId": "0ec107b40c111012c605bbe463f472d6c0e62790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
