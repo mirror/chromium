@@ -807,13 +807,6 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
     LevelDBWrapperImpl::EnableAggressiveCommitDelay();
   }
 
-  if (parsed_command_line_.HasSwitch(switches::kIsolateOrigins)) {
-    ChildProcessSecurityPolicyImpl* policy =
-        ChildProcessSecurityPolicyImpl::GetInstance();
-    policy->AddIsolatedOriginsFromCommandLine(
-        parsed_command_line_.GetSwitchValueASCII(switches::kIsolateOrigins));
-  }
-
   // Enable memory-infra dump providers.
   InitSkiaEventTracer();
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
@@ -845,6 +838,13 @@ int BrowserMainLoop::PreCreateThreads() {
   // redirection experiment concludes https://crbug.com/622400.
   if (!base::SequencedWorkerPool::IsEnabled())
     base::SequencedWorkerPool::EnableForProcess();
+
+  if (parsed_command_line_.HasSwitch(switches::kIsolateOrigins)) {
+    ChildProcessSecurityPolicyImpl* policy =
+        ChildProcessSecurityPolicyImpl::GetInstance();
+    policy->AddIsolatedOriginsFromCommandLine(
+        parsed_command_line_.GetSwitchValueASCII(switches::kIsolateOrigins));
+  }
 
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
