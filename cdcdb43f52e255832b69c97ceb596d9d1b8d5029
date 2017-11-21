@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10c35b62_ecb6460f",
+        "filename": "components/arc/arc_bridge_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T14:00:37Z",
+      "side": 1,
+      "message": "Now full-duplex ConnectionHolderImpl has std::unique_ptr\u003cmojo::Binding\u003cHostType\u003e\u003e.\n\nAs ABS now has unique_ptr\u003cConnectionHolder\u003cInstanceType, HostType\u003e\u003e as members,\non its dtor, ConnectionHolderImpl is destroyed, which resets the unique_ptr.\nThus, mojo::binding\u003cHostType\u003e needs to be a concrete type, which requires actual HostType,\nwhile we didn\u0027t include but used forward decl in the header.\n(Hmm... lengthy dependency...)\n\nI included arc_bridge.mojom.h, instead of individual mojom.h files,\njust for convenience.",
+      "parentUuid": "6c91a246_a121e3cb",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33126c61_942c757f",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T21:14:58Z",
       "side": 1,
       "message": "This doesn\u0027t seem to be used.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd96d1c1_9bcc5ac6",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T14:00:37Z",
+      "side": 1,
+      "message": "Oops, forgot to remove after debugging. Done.",
+      "parentUuid": "33126c61_942c757f",
       "range": {
         "startLine": 23,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "598ada8c_f82ba6f0",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T14:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c40224fb_975bd126",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "933637c2_1e3ccf7d",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5da54dca_37b8cccd",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T14:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "933637c2_1e3ccf7d",
+      "range": {
+        "startLine": 57,
+        "startChar": 58,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "884947e8_e35a89ca",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-20T21:14:58Z",
       "side": 1,
       "message": "Can you do something along the lines of the following?\n\n template \u003ctypename Signature\u003e\n struct CountArgsImpl;\n\n template \u003ctypename R, typename Receiver, typename... Args\u003e\n struct CountArgsImpl\u003cR (Receiver::*)(Args...)\u003e {\n   static constexpr size_t value \u003d sizeof...(Args);\n };\n\n ...\n\n CallInstanceInit(std::move(host_proxy));\n\n ...\n\n typename std::enable_if\u003cCountArgsImpl\u003cdecltype(\u0026HostType::Init)\u003e::value \u003d\u003d 2,\n                         void\u003e::type\n CallInstanceInit(mojo::InterfacePtr\u003cHostType\u003e host_proxy) {\n   instance_-\u003eInit(std::move(host_proxy),\n                   base::Bind(\u0026ConnectionHolderImpl::OnFullDuplexInitReady, ...));\n }\n\n typename std::enable_if\u003cCountArgsImpl\u003cdecltype(\u0026HostType::Init)\u003e::value \u003d\u003d 1,\n                         void\u003e::type\n CallInstanceInit(mojo::InterfacePtr\u003cHostType\u003e host_proxy) {\n   instance_-\u003eInit(std::move(host_proxy));\n   // TODO(deprecate)\n   OnFullDuplexInitReady();\n }\n\n void OnFullDuplexInitReady() {\n   connection_notifier_-\u003eNotifyConnectionReady();\n }\n\nseparate change is fine, but that\u0027ll allow people that are trying to add new interfaces to migrate sooner.",
+      "range": {
+        "startLine": 94,
+        "startChar": 6,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7271d22_6be14b3b",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T14:00:37Z",
+      "side": 1,
+      "message": "Yes, I has been planning to this. Please let me work on it in a following CL which will introduce new Init() \u003d\u003e () methods into mojom file.",
+      "parentUuid": "884947e8_e35a89ca",
       "range": {
         "startLine": 94,
         "startChar": 6,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "76ff2f06_ff561e7a",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T14:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9a9241b_0d1d5a36",
+      "range": {
+        "startLine": 108,
+        "startChar": 5,
+        "endLine": 108,
+        "endChar": 11
+      },
+      "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53fb4c34_e4fdc6d1",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 1
@@ -151,6 +295,24 @@
       "writtenOn": "2017-11-20T21:14:58Z",
       "side": 1,
       "message": "Here can you add\n\n static_assert(CountArgsImpl\u003cdecltype(\u0026InstanceType::Init)\u003e::value \u003d\u003d 1,\n               \"Full duplex ConnectionHolderImpl should be used instead\");\n\nthe condition might need more work if there are any interfaces without Init().",
+      "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1135b16_74282095",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-21T14:00:37Z",
+      "side": 1,
+      "message": "Yes, I will, too.\nAt the moment, I just migrate only app.mojom, so other services are still using this, even if it has (old) Init(), so we cannot assert it yet.\nI added TODO, instead.",
+      "parentUuid": "53fb4c34_e4fdc6d1",
       "revId": "cdcdb43f52e255832b69c97ceb596d9d1b8d5029",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
