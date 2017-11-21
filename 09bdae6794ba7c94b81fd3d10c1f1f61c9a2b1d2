@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "4b19e6b6_31b22a5f",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-21T19:50:34Z",
+      "side": 1,
+      "message": "Okay- So the browser wouldnt crash if it were called with NATIVE, it would just do nothing inside this conditional?",
+      "parentUuid": "f3e9a0f3_57e964de",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e9c8b07_6af1a65c",
         "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
         "patchSetId": 7
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "+1 for changing to GetExtensionId. We should also add a DCHECK in constructor of NotificationManager to make sure that this class is only created for EXTENSION type.",
       "parentUuid": "41f2b1e5_2691fba6",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 70
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71fcd243_89209a2a",
+        "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-21T19:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07249d93_8c253e4a",
       "range": {
         "startLine": 105,
         "startChar": 4,
@@ -262,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "2bdfe33b_8a4ace96",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-21T19:50:34Z",
+      "side": 1,
+      "message": "Definitely makes the code more readable- but wouldn\u0027t the crash from the initializer list calling GetExtensionId on 147 happen before the body of the constructor on 151?",
+      "parentUuid": "a4496b90_a3a792e6",
+      "range": {
+        "startLine": 150,
+        "startChar": 31,
+        "endLine": 150,
+        "endChar": 32
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaf2c529_4cac8ebf",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
         "patchSetId": 7
@@ -330,6 +402,30 @@
       "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3307a172_1933aee4",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-21T19:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e7f9b1_2af7f4db",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -577,6 +673,24 @@
       "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670f6bef_ee090fe5",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-21T19:50:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a84a3e48_4eae2169",
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
