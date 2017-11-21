@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/test_mock_time_task_runner.h"
 #include "content/network/throttling/network_conditions.h"
 #include "content/network/throttling/throttling_network_interceptor.h"
 #include "content/network/throttling/throttling_network_transaction.h"
@@ -132,8 +133,18 @@ class ThrottlingControllerHelper {
   TestCallback* callback() { return &callback_; }
   ThrottlingNetworkTransaction* transaction() { return transaction_.get(); }
 
+  void UseMockTimeTaskRunner() {
+    task_runner_ = base::MakeRefCounted<base::TestMockTimeTaskRunner>();
+    message_loop_.SetTaskRunner(task_runner_);
+  }
+
+  void FastForwardUntilNoTasksRemain() {
+    task_runner_->FastForwardUntilNoTasksRemain();
+  }
+
  private:
   base::MessageLoop message_loop_;
+  scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
   MockNetworkLayer network_layer_;
   TestCallback callback_;
   net::CompletionCallback completion_callback_;
@@ -274,44 +285,46 @@ TEST(ThrottlingControllerTest, UploadDoesNotFail) {
 
 TEST(ThrottlingControllerTest, DownloadOnly) {
   ThrottlingControllerHelper helper;
+  helper.UseMockTimeTaskRunner();
   TestCallback* callback = helper.callback();
 
   helper.SetNetworkState(false, 10000000, 0);
   int rv = helper.Start(false);
   EXPECT_EQ(rv, net::ERR_IO_PENDING);
-  base::RunLoop().RunUntilIdle();
+  helper.FastForwardUntilNoTasksRemain();
   EXPECT_EQ(callback->run_count(), 1);
   EXPECT_GE(callback->value(), net::OK);
 
   rv = helper.Read();
   EXPECT_EQ(rv, net::ERR_IO_PENDING);
   EXPECT_EQ(callback->run_count(), 1);
-  base::RunLoop().RunUntilIdle();
+  helper.FastForwardUntilNoTasksRemain();
   EXPECT_EQ(callback->run_count(), 2);
   EXPECT_GE(callback->value(), net::OK);
 }
 
 TEST(ThrottlingControllerTest, UploadOnly) {
   ThrottlingControllerHelper helper;
+  helper.UseMockTimeTaskRunner();
   TestCallback* callback = helper.callback();
 
   helper.SetNetworkState(false, 0, 1000000);
   int rv = helper.Start(true);
   EXPECT_EQ(rv, net::OK);
-  base::RunLoop().RunUntilIdle();
+  helper.FastForwardUntilNoTasksRemain();
   EXPECT_EQ(callback->run_count(), 0);
 
   rv = helper.Read();
   EXPECT_EQ(rv, net::ERR_IO_PENDING);
   EXPECT_EQ(callback->run_count(), 0);
-  base::RunLoop().RunUntilIdle();
+  helper.FastForwardUntilNoTasksRemain();
   EXPECT_EQ(callback->run_count(), 1);
   EXPECT_GE(callback->value(), net::OK);
 
   rv = helper.ReadUploadData();
   EXPECT_EQ(rv, net::ERR_IO_PENDING);
   EXPECT_EQ(callback->run_count(), 1);
-  base::RunLoop().RunUntilIdle();
+  helper.FastForwardUntilNoTasksRemain();
   EXPECT_EQ(callback->run_count(), 2);
   EXPECT_EQ(callback->value(), static_cast<int>(arraysize(kUploadData)));
 }
