@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "10a35150_5e55c1ff",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-21T22:59:59Z",
+      "side": 1,
+      "message": "Removed this as per jam@\u0027s suggestion.",
+      "parentUuid": "1bb49ef4_037038c9",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "c1dc427fa6e0d813746444bba31d5a07c951f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09e677ca_ddc36ad9",
         "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
         "patchSetId": 11
@@ -68,6 +92,30 @@
       "revId": "c1dc427fa6e0d813746444bba31d5a07c951f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0a2013_fd281cbc",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-21T22:59:59Z",
+      "side": 1,
+      "message": "Removed class as per jam@\u0027s suggestion",
+      "parentUuid": "09e677ca_ddc36ad9",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 2
+      },
+      "revId": "c1dc427fa6e0d813746444bba31d5a07c951f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
