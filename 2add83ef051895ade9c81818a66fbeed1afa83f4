@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ae64a7bc_8745e059",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-21T00:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c73e76d_9a2ca740",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c0634b2_88e85587",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a140a3f5_675d2794",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2993,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-21T00:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c0634b2_88e85587",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "208d4d68_18117068",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-21T00:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c381b856_19767775",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d64edb_305b9738",
         "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
         "patchSetId": 1
@@ -85,6 +139,24 @@
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362ac3b4_86348380",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-21T00:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38d64edb_305b9738",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "cbb3cec1_14b84ee0",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-21T00:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37c1ea2d_d080048e",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e9d937e_9f498320",
         "filename": "ui/compositor/compositor.h",
         "patchSetId": 1
@@ -137,6 +227,24 @@
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ff407b_60cc76d8",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-21T00:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e9d937e_9f498320",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "b1aa672d_845de7ac",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-21T00:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df40babd_87274f5c",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c8d96a9_09d401af",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 1
@@ -186,6 +312,24 @@
       "writtenOn": "2017-11-20T17:28:44Z",
       "side": 1,
       "message": "Seems like there should be some tests for this of some sort?",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900c84fd_b329c98a",
+        "filename": "ui/compositor/test/in_process_context_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-21T00:53:53Z",
+      "side": 1,
+      "message": "I added a pixel test and an overlay test. Please take a look. I\u0027m not sure what would be the best way to test this end-to-end from the ui::Layer down to the pixels.",
+      "parentUuid": "4c8d96a9_09d401af",
       "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
