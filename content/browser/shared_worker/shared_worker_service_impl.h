@@ -41,9 +41,6 @@ class CONTENT_EXPORT SharedWorkerServiceImpl : public WorkerService {
   // Returns the SharedWorkerServiceImpl singleton.
   static SharedWorkerServiceImpl* GetInstance();
 
-  // Terminates the given worker. Returns true if the process was found.
-  bool TerminateWorker(int process_id, int route_id);
-
   // WorkerService implementation:
   void TerminateAllWorkersForTesting(base::OnceClosure callback) override;
   std::vector<WorkerInfo> GetWorkers() override;

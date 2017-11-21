@@ -70,10 +70,8 @@ SharedWorkerHost::SharedWorkerHost(
 SharedWorkerHost::~SharedWorkerHost() {
   UMA_HISTOGRAM_LONG_TIMES("SharedWorker.TimeToDeleted",
                            base::TimeTicks::Now() - creation_time_);
-  if (!closed_ && !termination_message_sent_) {
-    SharedWorkerDevToolsManager::GetInstance()->WorkerDestroyed(process_id_,
-                                                                route_id_);
-  }
+  if (!closed_ && !termination_message_sent_)
+    SharedWorkerDevToolsManager::GetInstance()->WorkerDestroyed(this);
 }
 
 void SharedWorkerHost::Start(mojom::SharedWorkerFactoryPtr factory,
@@ -128,10 +126,8 @@ void SharedWorkerHost::AllowIndexedDB(const GURL& url,
 
 void SharedWorkerHost::TerminateWorker() {
   termination_message_sent_ = true;
-  if (!closed_) {
-    SharedWorkerDevToolsManager::GetInstance()->WorkerDestroyed(process_id_,
-                                                                route_id_);
-  }
+  if (!closed_)
+    SharedWorkerDevToolsManager::GetInstance()->WorkerDestroyed(this);
   worker_->Terminate();
   // Now, we wait to observe OnWorkerConnectionLost.
 }
@@ -164,15 +160,12 @@ void SharedWorkerHost::OnContextClosed() {
   // being sent to the worker (messages can still be sent from the worker,
   // for exception reporting, etc).
   closed_ = true;
-  if (!termination_message_sent_) {
-    SharedWorkerDevToolsManager::GetInstance()->WorkerDestroyed(process_id_,
-                                                                route_id_);
-  }
+  if (!termination_message_sent_)
+    SharedWorkerDevToolsManager::GetInstance()->WorkerDestroyed(this);
 }
 
 void SharedWorkerHost::OnReadyForInspection() {
-  SharedWorkerDevToolsManager::GetInstance()->WorkerReadyForInspection(
-      process_id_, route_id_);
+  SharedWorkerDevToolsManager::GetInstance()->WorkerReadyForInspection(this);
 }
 
 void SharedWorkerHost::OnScriptLoaded() {
