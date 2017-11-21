@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3fa92c9_f688343c",
+        "filename": "components/chrome_cleaner/public/interfaces/chrome_prompt.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-21T23:50:18Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a reason to document the format here, since the format is set by the sender who could change it. How about \"A string formatted for display to the user\"",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "708a411ee6e72e7d0001fa87f494592ae9066094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
