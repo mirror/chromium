@@ -1,0 +1,294 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e57e137a_4b1ebb4d",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "bool /* known_success */\n\n... since it\u0027t not used within the body.",
+      "range": {
+        "startLine": 276,
+        "startChar": 46,
+        "endLine": 276,
+        "endChar": 59
+      },
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32d5004_d0249081",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "use AutofillClock::Now()... it\u0027s mockable for testing.",
+      "range": {
+        "startLine": 277,
+        "startChar": 48,
+        "endLine": 277,
+        "endChar": 71
+      },
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ed87f1_f820e945",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "optional:\n\nderive from base::SupportsWeakPtr\u003cAutofillAgent\u003e and skip the boilerplate for supporting weakptr.\n\nthis member then becomes AsWeakPtr()\n\nMeh... maybe not... there are comments there about subtle use-after-destroy issues.",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f06d5e_de4ad4dc",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "Does this need to be nested in InteractedFormTracker, as oppposed to in the anonymous namespace here? This is for access to the private FireSuccessfulFormSubmission method?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33423cd_9ae38a61",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "Can we use SequenceTaskRunnerHandle here?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770076f6_afb70ac7",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "does this fit on previous line?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e8df1b_9f4ddfc9",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "put comment above if and remove curly braces?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544e6509_e2f55262",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "DCHECK these?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa96370_ac0c0743",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "nit: don\u0027t follow return with else\n\nif (!foo)\n  return ...;\nif (!bar)\n  return ...;\nreturn false;",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a99698_d73e25ac",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "it\u0027s not cleat to me that the \"Interacted\" part of the name is significant to what the class does.\n\nWhy not just FormTracker (my preference) or FormWatcher?\n\nOr, if the interaction part is important, FormInteractionTracker?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cec6c8a_4ee2e673",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "S/Fire/Notify/?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46180fef_882a0d22",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "add a base::SequenceChecker and ensure that all methods and callbacks occur on the same sequence?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd66993d_5b53e5e5",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "static isn\u0027t needed here",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 6
+      },
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9333ee5_b0cc5f31",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "No need for braces around these return statements.",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64fab0c_717a59c4",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "nit: these shouldn\u0027t be here .\n\nplz change to\n\nextern const char kFoo[];\n\nand move these definitions to the .cc file.",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d4c738_d1e50485",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-21T20:18:22Z",
+      "side": 1,
+      "message": "s/Fire/Notify/?",
+      "revId": "2ea78caf3782b23d7a357199b5d617ab77ed45e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
