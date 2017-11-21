@@ -165,6 +165,8 @@ static_library("vr_common") {
     "ui_scene_manager.cc",
     "ui_scene_manager.h",
     "ui_unsupported_mode.h",
+    "vr_assets.cc",
+    "vr_assets.h",
     "vr_gl_util.cc",
     "vr_gl_util.h",
     "web_contents_event_forwarder.cc",

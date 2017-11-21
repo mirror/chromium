@@ -61,6 +61,13 @@ static_library("vr_android") {
     "//ui/display",
     "//ui/gl",
     "//ui/gl/init",
+    # "//chrome/browser", Causes cyclic dependency:
+    #   //chrome/browser:browser ->
+    #   //chrome/browser/android/vr_shell:vr_android ->
+    #   //chrome/browser:browser
+    # Should be there though since vr_shell_delegate.cc uses:
+    #   chrome/browser/browser_process.h
+    #   chrome/browser/component_updater/vr_assets_component_installer.h
   ]
 
   public_deps = [

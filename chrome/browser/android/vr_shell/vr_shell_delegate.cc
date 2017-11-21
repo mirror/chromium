@@ -10,6 +10,8 @@
 #include "base/callback_helpers.h"
 #include "chrome/browser/android/vr_shell/vr_metrics_util.h"
 #include "chrome/browser/android/vr_shell/vr_shell.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/component_updater/vr_assets_component_installer.h"
 #include "chrome/browser/vr/service/vr_device_manager.h"
 #include "chrome/browser/vr/service/vr_service_impl.h"
 #include "content/public/browser/webvr_service_provider.h"
@@ -265,6 +267,12 @@ jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
 static void OnLibraryAvailable(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   device::GvrDelegateProviderFactory::Install(
       new VrShellDelegateProviderFactory);
+}
+
+static void RegisterVrAssetsComponent(JNIEnv* env,
+                                      const JavaParamRef<jclass>& clazz) {
+  component_updater::RegisterVrAssetsComponent(
+      g_browser_process->component_updater());
 }
 
 }  // namespace vr_shell
