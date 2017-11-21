@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ecd0dfc_fb93c85f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-21T18:53:50Z",
+      "side": 1,
+      "message": "Hrmm. This is obvoiusly a band-aid but have you tried trying to understand the actual bug. Given the error: android.view.WindowManager$BadTokenException: Unable to add window -- window android.view.ViewRootImpl$W@cc837d2 has already been added\n\nit doesn\u0027t sound like the activity has been shut down at all. Could it be that we\u0027re trying to show multiple alerts or something that\u0027s bugging out?",
+      "range": {
+        "startLine": 590,
+        "startChar": 25,
+        "endLine": 590,
+        "endChar": 42
+      },
+      "revId": "10be17e88223838aad878e70578d007f4c5ed9d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
