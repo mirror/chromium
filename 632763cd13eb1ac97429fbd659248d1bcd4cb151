@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f9e67ce_60aa09c8",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-21T09:34:41Z",
+      "side": 1,
+      "message": "This copyright is for V8. Can you replace this with Chromium\u0027s copyright?",
+      "revId": "632763cd13eb1ac97429fbd659248d1bcd4cb151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326cb5f6_d96495d6",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileCallback.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-21T09:34:41Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "632763cd13eb1ac97429fbd659248d1bcd4cb151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
