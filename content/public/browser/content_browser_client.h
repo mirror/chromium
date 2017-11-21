@@ -197,6 +197,11 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual WebContentsViewDelegate* GetWebContentsViewDelegate(
       WebContents* web_contents);
 
+  // Allow embedder to control launching of a new GPU process. If embedder
+  // returns false, then the launch attempt is treated the same way as if the
+  // process launch has failed.
+  virtual bool AllowGpuLaunch();
+
   // Notifies that a render process will be created. This is called before
   // the content layer adds its own BrowserMessageFilters, so that the
   // embedder's IPC filters have priority.

@@ -115,7 +115,11 @@ void BrowserGpuChannelHostFactory::EstablishRequest::RestartTimeout() {
 }
 
 void BrowserGpuChannelHostFactory::EstablishRequest::EstablishOnIO() {
-  GpuProcessHost* host = GpuProcessHost::Get();
+  GpuProcessHost::GpuProcessKind kind =
+      GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED;
+  // TODO(boliu): This check should be moved to GpuProcessHost::Get.
+  bool force_create = GetContentClient()->browser()->AllowGpuLaunch();
+  GpuProcessHost* host = GpuProcessHost::Get(kind, force_create);
   if (!host) {
     LOG(ERROR) << "Failed to launch GPU process.";
     FinishOnIO();
