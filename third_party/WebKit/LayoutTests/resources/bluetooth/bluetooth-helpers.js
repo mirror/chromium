@@ -678,6 +678,7 @@ function getConnectedHealthThermometerDevice(options) {
 // connected to it and discovered its services.
 function getHealthThermometerDeviceWithServicesDiscovered(options) {
   let device, fake_peripheral, fakes;
+  let iframe = document.createElement('iframe');
   return setUpPreconnectedDevice({
     address: '09:09:09:09:09:09',
     name: 'Health Thermometer',
@@ -692,25 +693,31 @@ function getHealthThermometerDeviceWithServicesDiscovered(options) {
     }))
     .then(() => populateHealthThermometerFakes(fake_peripheral))
     .then(_ => fakes = _)
-    .then(() => new Promise((resolve, reject) => {
-      let iframe = document.createElement('iframe');
-      function messageHandler(messageEvent) {
-        if (messageEvent.data === 'Ready') {
-          callWithTrustedClick(() => iframe.contentWindow.postMessage({
-            type: 'DiscoverServices',
-            options: options
-          }, '*'));
-        } else if (messageEvent.data === 'DiscoveryComplete') {
-          window.removeEventListener('message', messageHandler);
-          resolve();
-        } else {
-          reject(new Error(`Unexpected message: {messageEvent.data}`));
-        }
-      }
-      window.addEventListener('message', messageHandler);
+    .then(() => new Promise(resolve => {
       iframe.src =
           '../../../resources/bluetooth/health-thermometer-iframe.html';
       document.body.appendChild(iframe);
+      iframe.addEventListener('load', resolve);
+    }))
+    .then(() => new Promise((resolve, reject) => {
+      callWithTrustedClick(() => {
+        iframe.contentWindow.postMessage({
+          type: 'DiscoverServices',
+          options: options
+        }, '*');
+      })
+
+      function messageHandler(messageEvent) {
+        switch (messageEvent.data) {
+          case 'DiscoveryComplete':
+            window.removeEventListener('message', messageHandler);
+            resolve();
+            break;
+          default:
+            reject(new Error(`Unexpected message: {messageEvent.data}`));
+        }
+      }
+      window.addEventListener('message', messageHandler);
     }))
     .then(() => requestDeviceWithTrustedClick(options))
     .then(_ => device = _)
