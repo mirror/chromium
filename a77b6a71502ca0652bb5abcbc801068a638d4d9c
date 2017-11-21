@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "33db8af2_b696a239",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-21T21:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "308e26df_5d50d3d1",
+      "range": {
+        "startLine": 102,
+        "startChar": 30,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d55f2e0_04c1a7e0",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 23
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Meh, eventually I\u0027m thinking of just making it all a bag of options anyways (a la TestBrowserThreadBundle), i.e. when MOCK_TIME is available for all main thread types. For now though I don\u0027t think this is too bad hidden in the .cc as-is.",
       "parentUuid": "9d55f2e0_04c1a7e0",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d432195c_1cd5c8b1",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-21T21:48:13Z",
+      "side": 1,
+      "message": "Meh, since you both said it I wrote the helper function, and I still don\u0027t like it, it looks like this:\n\n(at top of file)\n\nnamespace {\n\nstd::unique_ptr\u003cMessageLoop\u003e CreateMessageLoopForMainThreadType(\n    ScopedTaskEnvironment::MainThreadType main_thread_type) {\n  switch (main_thread_type) {\n    case DEFAULT:\n      return std::make_unique\u003cMessageLoop\u003e(MessageLoop::TYPE_DEFAULT);\n    case MOCK_TIME:\n      return nullptr;\n    case UI:\n      return std::make_unique\u003cMessageLoop\u003e(MessageLoop::TYPE_UI);\n    case IO:\n      return std::make_unique\u003cMessageLoop\u003e(MessageLoop::TYPE_IO);\n  }\n  NOTREACHED();\n  return nullptr;\n}\n\n}  // namespace\n\nand the constructor then looks like this (further below):\n\n...\n      message_loop_(CreateMessageLoopForMainThreadType(main_thread_type)),\n      mock_time_task_runner_(\n          main_thread_type \u003d\u003d MainThreadType::MOCK_TIME\n              ? MakeRefCounted\u003cTestMockTimeTaskRunner\u003e(\n                    TestMockTimeTaskRunner::Type::kBoundToThread)\n              : nullptr),\n...\n\nThis is more code and it\u0027s also harder for the reader to see that |message_loop_| is null in the only case where |mock_time_task_runner_| isn\u0027t (i.e. that\u0027s the reason I wrote the ternaries that way above, always conditional on MOCK_TIME).\n\nI\u0027m keeping it as-is.",
+      "parentUuid": "e5549344_8b2be895",
       "range": {
         "startLine": 62,
         "startChar": 20,
@@ -236,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "cfaf383e_15bce8d6",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-21T21:48:13Z",
+      "side": 1,
+      "message": "I don\u0027t understand which expectation you feel is missing here? Delays are artificial in mock time, so nothing expires from under the hood (well TaskScheduler tasks still do I guess for now but that\u0027s a wall clock race and not one the caller can depend on -- obvious I think?).",
+      "parentUuid": "c77a2632_186b0ad3",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 34
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "828e3855_a37475a7",
         "filename": "media/test/pipeline_integration_test_base.h",
         "patchSetId": 23
@@ -256,6 +328,30 @@
       "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20eef278_6649e2e6",
+        "filename": "media/test/pipeline_integration_test_base.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-21T21:48:13Z",
+      "side": 1,
+      "message": "They do but there\u0027s too many of them popping up every dry-run and it\u0027s a pain to split up a new CL every time. It doesn\u0027t hurt this one IMO to have a few (bulk was scripted in https://chromium-review.googlesource.com/c/chromium/src/+/782663) so I won\u0027t bother.",
+      "parentUuid": "828e3855_a37475a7",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 1
+      },
+      "revId": "a77b6a71502ca0652bb5abcbc801068a638d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
