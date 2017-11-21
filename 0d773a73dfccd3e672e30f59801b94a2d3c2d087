@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb7acc77_1e61d481",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-21T16:27:11Z",
+      "side": 1,
+      "message": "Not worth changing, but FYI you can also do:\nnew Thread(LibraryLoader::nativePeriodicallyCollectResidency).start();",
+      "range": {
+        "startLine": 253,
+        "startChar": 16,
+        "endLine": 253,
+        "endChar": 22
+      },
+      "revId": "0d773a73dfccd3e672e30f59801b94a2d3c2d087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecfe8d11_50e06f31",
         "filename": "base/android/library_loader/library_loader_hooks.cc",
         "patchSetId": 6

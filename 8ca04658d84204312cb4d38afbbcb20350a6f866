@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "e97a3b57_cf8774ec",
+        "filename": "base/android/library_loader/anchor_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-21T16:27:11Z",
+      "side": 1,
+      "message": "nix the (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "8ca04658d84204312cb4d38afbbcb20350a6f866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8ed3da5_77574379",
         "filename": "base/android/library_loader/library_prefetcher.cc",
         "patchSetId": 1
