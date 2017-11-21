@@ -23,8 +23,10 @@
 #include "content/shell/browser/shell_browser_context.h"
 #include "content/shell/browser/shell_devtools_manager_delegate.h"
 #include "content/shell/browser/shell_net_log.h"
+#include "content/shell/common/layout_test/layout_test_switches.h"
 #include "content/shell/common/shell_switches.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
+#include "media/base/mime_util.h"
 #include "net/base/filename_util.h"
 #include "net/base/net_module.h"
 #include "net/grit/net_resources.h"
@@ -175,6 +177,17 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
   net::NetModule::SetResourceProvider(PlatformResourceProvider);
   ShellDevToolsManagerDelegate::StartHttpHandler(browser_context_.get());
   InitializeMessageLoopContext();
+
+// Unless/until WebM files are added to the media layout tests, we need to
+// avoid removing MP4/H264/AAC so that layout tests can run on Android.
+// TODO(chcunningham): We should fix the tests to always use non-proprietary
+// codecs and just delete this code. http://crbug.com/787575
+#if !defined(OS_ANDROID)
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kRunLayoutTest)) {
+    media::RemoveProprietaryMediaTypesAndCodecsForTests();
+  }
+#endif
 
   if (parameters_.ui_task) {
     parameters_.ui_task->Run();
