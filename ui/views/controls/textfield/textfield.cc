@@ -1626,6 +1626,11 @@ void Textfield::SetTextEditCommandForNextKeyEvent(ui::TextEditCommand command) {
   scheduled_text_edit_command_ = command;
 }
 
+std::string Textfield::GetClientSourceInfo() const {
+  // TODO(yhanada): Implement this method.
+  return "";
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Textfield, protected:
 
