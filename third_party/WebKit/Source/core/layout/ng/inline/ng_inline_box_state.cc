@@ -52,6 +52,19 @@ bool NGInlineBoxState::CanAddTextOfStyle(
   return false;
 }
 
+LayoutObject*
+NGInlineLayoutStateStack::ContainingLayoutObjectForAbsolutePositionObjects()
+    const {
+  for (auto box = stack_.rbegin(); box != stack_.rend(); ++box) {
+    DCHECK(box->style);
+    if (box->style->CanContainAbsolutePositionObjects()) {
+      DCHECK(box->item->GetLayoutObject());
+      return box->item->GetLayoutObject();
+    }
+  }
+  return nullptr;
+}
+
 NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     const ComputedStyle* line_style,
     FontBaseline baseline_type,
