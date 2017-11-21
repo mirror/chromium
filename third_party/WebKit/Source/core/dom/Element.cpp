@@ -3487,7 +3487,7 @@ const ComputedStyle* Element::EnsureComputedStyle(
 }
 
 const ComputedStyle* Element::NonLayoutObjectComputedStyle() const {
-  if (GetLayoutObject() || !HasRareData())
+  if (!HasRareData())
     return nullptr;
 
   return GetElementRareData()->GetComputedStyle();
