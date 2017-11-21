@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1890654b_119c0bdb",
+        "filename": "chrome/browser/profiles/profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-21T00:50:37Z",
+      "side": 1,
+      "message": "This is now reverted to be nonsyncable, since machines have different capabilities w.r.t.  media remoting.",
+      "parentUuid": "a5de8435_1d7d60fd",
+      "revId": "46a70a45442191313f1f471d7f27538709cc9ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b7c92ad_0210b160",
         "filename": "chrome/common/media_router/mojo/media_status.mojom",
         "patchSetId": 3
