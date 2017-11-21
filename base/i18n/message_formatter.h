@@ -56,7 +56,7 @@ class BASE_I18N_EXPORT MessageArg {
 // Message Formatter with the ICU message format syntax support.
 // It can format strings (UTF-8 and UTF-16), numbers and base::Time with
 // plural, gender and other 'selectors' support. This is handy if you
-// have multiple parameters of differnt types and some of them require
+// have multiple parameters of different types and some of them require
 // plural or gender/selector support.
 //
 // To use this API for locale-sensitive formatting, retrieve a 'message

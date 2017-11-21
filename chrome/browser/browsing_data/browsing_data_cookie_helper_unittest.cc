@@ -512,7 +512,7 @@ TEST_F(BrowsingDataCookieHelperTest, CannedGetCookieCount) {
   EXPECT_EQ(2U, helper->GetCookieCount());
 
   // Add two more cookies that are set while loading resources. The two cookies
-  // below have a differnt path-value since the request URLs have different
+  // below have a different path-value since the request URLs have different
   // paths.
   std::unique_ptr<net::CanonicalCookie> cookie4(net::CanonicalCookie::Create(
       request1_url, "A=2", base::Time::Now(), net::CookieOptions()));

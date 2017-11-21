@@ -71,7 +71,7 @@ struct PartialNetworkTrafficAnnotationTag {
 //
 // |unique_id| should be a string that uniquely identifies this annotation
 // across all of Chromium source code. |unique_id| should be kept unchanged
-// as long as possible as its hashed value will be used for differnt logging,
+// as long as possible as its hashed value will be used for different logging,
 // debugging, or auditing tasks. Unique ids should include only alphanumeric
 // characters and underline.
 // |proto| is a text-encoded NetworkTrafficAnnotation protobuf (see
