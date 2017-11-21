@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "3cfb3651_40257f69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SwipeRefreshHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-21T21:53:59Z",
+      "side": 1,
+      "message": "qq: why are all instances of Tracker final?",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 18
+      },
+      "revId": "0ec107b40c111012c605bbe463f472d6c0e62790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ed4fda_e81b0541",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-21T21:53:59Z",
+      "side": 1,
+      "message": "A happy medium between separating the help bubble logic into a separate class and this would be to add another observer like we do for metrics. Seems like it would be a bit sparse with just these changes in there though...",
+      "range": {
+        "startLine": 1324,
+        "startChar": 7,
+        "endLine": 1328,
+        "endChar": 9
+      },
+      "revId": "0ec107b40c111012c605bbe463f472d6c0e62790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2b7e727_322626e8",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 3
