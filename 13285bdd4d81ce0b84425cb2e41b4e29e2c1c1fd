@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ce89207_e0553eef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 1,
+      "message": "I don\u0027t understand this sentence. Care to reword?",
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409d004c_c23175d7",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 1,
+      "message": "sign-in",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c432ad25_98c4de98",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 1,
+      "message": "to make",
+      "range": {
+        "startLine": 35,
+        "startChar": 44,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbadf87_0fbd8cfd",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 1,
+      "message": "Nit: also has",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3cd0cf_33eb7fc6",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 1,
+      "message": "Should you add a RecordSomethingFromAccessPoint() function to the mediator file and encapsulate completely metrics there?",
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6f5c02_6bae28ae",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 1,
+        "endLine": 1205,
+        "endChar": 7
+      },
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

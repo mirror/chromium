@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64bd81b2_a4555c88",
+        "filename": "ios/chrome/browser/ui/settings/BUILD.gn",
+        "patchSetId": 21
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 0,
+      "message": "This is still used in other settings files. Please don\u0027t remove. (Why does it even build without?)",
+      "range": {
+        "startLine": 163,
+        "startChar": 48,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "74b7bd460535bc712918f9b92a668678337e390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b55fc25_ea7d972e",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 0,
+      "message": "I still see this one in use (ivar). Can you check again that these headers are not actually in use? Did you just rely on the compiler and transitive includes?",
+      "range": {
+        "startLine": 39,
+        "startChar": 56,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "74b7bd460535bc712918f9b92a668678337e390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79cbbc5_334b4bcd",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 0,
+      "message": "This is still in use in this file.",
+      "range": {
+        "startLine": 53,
+        "startChar": 71,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "74b7bd460535bc712918f9b92a668678337e390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4caa89af_14ab66d6",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-21T12:34:37Z",
+      "side": 0,
+      "message": "Where is this incrementing done now?\n\nEdit: Answer: down below, line 438. Thanks!",
+      "range": {
+        "startLine": 372,
+        "startChar": 71,
+        "endLine": 372,
+        "endChar": 0
+      },
+      "revId": "74b7bd460535bc712918f9b92a668678337e390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
