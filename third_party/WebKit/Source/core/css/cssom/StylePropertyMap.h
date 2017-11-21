@@ -5,6 +5,7 @@
 #ifndef StylePropertyMap_h
 #define StylePropertyMap_h
 
+#include "base/macros.h"
 #include "core/css/cssom/StylePropertyMapReadonly.h"
 
 namespace blink {
@@ -13,7 +14,6 @@ class ExceptionState;
 
 class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadonly {
   DEFINE_WRAPPERTYPEINFO();
-  WTF_MAKE_NONCOPYABLE(StylePropertyMap);
 
  public:
   void set(const String& property_name,
@@ -35,6 +35,8 @@ class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadonly {
  protected:
   StylePropertyMap() {}
 
+ private:
+  DISALLOW_COPY_AND_ASSIGN(StylePropertyMap);
 };
 
 }  // namespace blink
