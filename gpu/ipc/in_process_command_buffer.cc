@@ -33,6 +33,7 @@
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/command_buffer/service/gl_context_virtual.h"
+#include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
 #include "gpu/command_buffer/service/image_factory.h"
@@ -48,6 +49,8 @@
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 #include "gpu/ipc/service/image_transport_surface.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/gpu_fence.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_image.h"
 #include "ui/gl/gl_image_shared_memory.h"
@@ -983,6 +986,54 @@ void InProcessCommandBuffer::SignalQueryOnGpuThread(
     callback.Run();
   else
     query->AddCallback(callback);
+}
+
+void InProcessCommandBuffer::SendGpuFence(uint32_t gpu_fence_id,
+                                          ClientGpuFence source) {
+  gles2::GpuFenceManager* gpu_fence_manager = decoder_->GetGpuFenceManager();
+  DCHECK(gpu_fence_manager);
+
+  gfx::GpuFence* gpu_fence = gfx::GpuFence::FromClientGpuFence(source);
+  gfx::GpuFenceHandle handle =
+      gfx::CloneHandleForIPC(gpu_fence->GetGpuFenceHandle());
+
+  if (gpu_fence_manager->CreateDuplicateGpuFence(gpu_fence_id, handle))
+    return;
+
+  // The insertion failed. This shouldn't happen, force context loss to avoid
+  // inconsistent state.
+  command_buffer_->SetParseError(error::kLostContext);
+}
+
+void InProcessCommandBuffer::OnGetGpuFenceHandleComplete(
+    uint32_t gpu_fence_id,
+    base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback) {
+  gles2::GpuFenceManager* manager = decoder_->GetGpuFenceManager();
+  DCHECK(manager);
+
+  gfx::GpuFenceHandle handle;
+  if (manager->IsValidGpuFence(gpu_fence_id)) {
+    handle = gfx::CloneHandleForIPC(manager->GetGpuFenceHandle(gpu_fence_id));
+  } else {
+    // Retrieval failed. This shouldn't happen, force context loss to avoid
+    // inconsistent state.
+    DLOG(ERROR) << "GpuFence not found";
+    command_buffer_->SetParseError(error::kLostContext);
+  }
+  std::move(callback).Run(handle);
+}
+
+void InProcessCommandBuffer::GetGpuFenceHandle(
+    uint32_t gpu_fence_id,
+    base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback) {
+  gles2::GpuFenceManager* manager = decoder_->GetGpuFenceManager();
+  DCHECK(manager);
+
+  manager->AddCallback(
+      gpu_fence_id,
+      base::BindOnce(&InProcessCommandBuffer::OnGetGpuFenceHandleComplete,
+                     base::Unretained(this), gpu_fence_id,
+                     std::move(callback)));
 }
 
 void InProcessCommandBuffer::SetLock(base::Lock*) {

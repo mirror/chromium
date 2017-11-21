@@ -4658,6 +4658,41 @@ _FUNCTION_INFO = {
     'extension_flag': 'ext_window_rectangles',
     'es3': True,
   },
+  'InsertGpuFenceCHROMIUM': {
+    'type': 'NoCommand',
+    'impl_func': False,
+    'cmd_args': 'void',
+    'result': ['GLuint'],
+    'extension': 'CHROMIUM_gpu_fence',
+  },
+  'InsertGpuFenceINTERNAL': {
+    'type': 'Custom',
+    'cmd_args': 'GLuint gpu_fence_id',
+    'extension': 'CHROMIUM_gpu_fence',
+    'extension_flag': 'chromium_gpu_fence',
+    'internal': True,
+  },
+  'InsertClientGpuFenceCHROMIUM': {
+    'type': 'NoCommand',
+    'impl_func': False,
+    'cmd_args': 'ClientGpuFence source',
+    'result': ['GLuint'],
+    'extension': 'CHROMIUM_gpu_fence',
+    'extension_flag': 'chromium_gpu_fence',
+  },
+  'WaitGpuFenceCHROMIUM': {
+    'type': 'Custom',
+    'cmd_args': 'GLuint gpu_fence_id',
+    'extension': 'CHROMIUM_gpu_fence',
+    'extension_flag': 'chromium_gpu_fence',
+  },
+  'DestroyGpuFenceCHROMIUM': {
+    'type': 'Custom',
+    'cmd_args': 'GLuint gpu_fence_id',
+    'extension': 'CHROMIUM_gpu_fence',
+    'extension_flag': 'chromium_gpu_fence',
+    #'resource_type': 'GpuFence',
+  },
 }
 
 
@@ -6430,7 +6465,7 @@ class DeleteHandler(TypeHandler):
 
   def WriteServiceImplementation(self, func, f):
     """Overrriden from TypeHandler."""
-    if func.IsES3():
+    if func.IsES3() or func.IsExtension():
       TypeHandler.WriteServiceImplementation(self, func, f)
     # HandleDeleteShader and HandleDeleteProgram are manually written.
     pass
