@@ -116,7 +116,7 @@ class CORE_EXPORT FocusController final
       bool initial_focus,
       InputDeviceCapabilities* source_capabilities);
 
-  bool AdvanceFocusDirectionallyInContainer(Node* container,
+  bool AdvanceFocusDirectionallyInContainer(Node* root_container,
                                             const LayoutRect& starting_rect,
                                             WebFocusType);
   void FindFocusCandidateInContainer(Node& container,
