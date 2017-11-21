@@ -18,7 +18,9 @@
 #include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/test/env_test_helper.h"
 #include "ui/aura/test/event_generator_delegate_aura.h"
+#include "ui/aura/test/mus/test_window_manager_delegate.h"
 #include "ui/aura/test/mus/test_window_tree.h"
+#include "ui/aura/test/mus/test_window_tree_client_delegate.h"
 #include "ui/aura/test/mus/test_window_tree_client_setup.h"
 #include "ui/aura/test/test_focus_client.h"
 #include "ui/aura/test/test_screen.h"
@@ -93,6 +95,19 @@ void AuraTestHelper::DeleteWindowTreeClient() {
 
 void AuraTestHelper::SetUp(ui::ContextFactory* context_factory,
                            ui::ContextFactoryPrivate* context_factory_private) {
+  // |mode_| defaults to LOCAL, but test suites may enable MUS. If this happens
+  // enable mus.
+  if (Env::GetInstanceDontCreate() &&
+      Env::GetInstanceDontCreate()->mode() == Env::Mode::MUS &&
+      mode_ == Mode::LOCAL) {
+    test_window_tree_client_delegate_ =
+        std::make_unique<TestWindowTreeClientDelegate>();
+    test_window_manager_delegate_ =
+        std::make_unique<TestWindowManagerDelegate>();
+    EnableMusWithTestWindowTree(test_window_tree_client_delegate_.get(),
+                                test_window_manager_delegate_.get());
+  }
+
   setup_called_ = true;
 
   if (mode_ != Mode::MUS) {
@@ -113,7 +128,10 @@ void AuraTestHelper::SetUp(ui::ContextFactory* context_factory,
   // Always reset the mode. This really only matters for if Env was created
   // above.
   env_helper.SetMode(env_mode);
-  env_helper.SetWindowTreeClient(window_tree_client_);
+  if (env_mode == Env::Mode::MUS) {
+    window_tree_client_setter_ =
+        std::make_unique<WindowTreeClientSetter>(window_tree_client_);
+  }
   // Tests assume they can set the mouse location on Env() and have it reflected
   // in tests.
   env_helper.SetAlwaysUseLastMouseLocation(true);
@@ -126,14 +144,16 @@ void AuraTestHelper::SetUp(ui::ContextFactory* context_factory,
 
   ui::InitializeInputMethodForTesting();
 
-  if (mode_ != Mode::MUS) {
-    display::Screen* screen = display::Screen::GetScreen();
-    gfx::Size host_size(screen ? screen->GetPrimaryDisplay().GetSizeInPixel()
-                               : gfx::Size(800, 600));
+  display::Screen* screen = display::Screen::GetScreen();
+  const gfx::Size host_size(screen
+                                ? screen->GetPrimaryDisplay().GetSizeInPixel()
+                                : gfx::Size(800, 600));
+  if (mode_ == Mode::LOCAL || (mode_ == Mode::MUS_CREATE_WINDOW_TREE_CLIENT &&
+                               window_manager_delegate_)) {
     // This must be reset before creating TestScreen, which sets up the display
     // scale factor for this test iteration.
     display::Display::ResetForceDeviceScaleFactorForTesting();
-    test_screen_.reset(TestScreen::Create(host_size));
+    test_screen_.reset(TestScreen::Create(host_size, window_tree_client_));
     if (!screen)
       display::Screen::SetScreenInstance(test_screen_.get());
     host_.reset(test_screen_->CreateHostForPrimaryDisplay());
@@ -149,7 +169,18 @@ void AuraTestHelper::SetUp(ui::ContextFactory* context_factory,
     host()->SetBoundsInPixels(gfx::Rect(host_size));
   }
 
-  if (mode_ == Mode::MUS_CREATE_WINDOW_TREE_CLIENT) {
+  if (mode_ == Mode::MUS_CREATE_WINDOW_TREE_CLIENT &&
+      !window_manager_delegate_ && !screen) {
+    // This code path explicitly does *not* create a WindowTreeHost for the
+    // display. Creating a WindowTreeHost for the display only makes sense when
+    // connecting as the window manager.
+    display::Display::ResetForceDeviceScaleFactorForTesting();
+    test_screen_.reset(TestScreen::Create(host_size));
+    display::Screen::SetScreenInstance(test_screen_.get());
+  }
+
+  if (mode_ == Mode::MUS_CREATE_WINDOW_TREE_CLIENT &&
+      window_manager_delegate_) {
     window_tree_client_->focus_synchronizer()->SetActiveFocusClient(
         focus_client_.get(), root_window());
     window_tree()->AckAllChanges();
@@ -162,7 +193,7 @@ void AuraTestHelper::TearDown() {
   g_instance = nullptr;
   teardown_called_ = true;
   parenting_client_.reset();
-  if (mode_ != Mode::MUS) {
+  if (mode_ != Mode::MUS && root_window()) {
     client::SetFocusClient(root_window(), nullptr);
     client::SetCaptureClient(root_window(), nullptr);
     host_.reset();
@@ -174,6 +205,10 @@ void AuraTestHelper::TearDown() {
     window_tree_client_setup_.reset();
     focus_client_.reset();
     capture_client_.reset();
+  } else {
+    if (display::Screen::GetScreen() == test_screen_.get())
+      display::Screen::SetScreenInstance(nullptr);
+    test_screen_.reset();
   }
   ui::GestureRecognizer::Reset();
   ui::ShutdownInputMethodForTesting();
@@ -181,6 +216,7 @@ void AuraTestHelper::TearDown() {
   if (env_)
     env_.reset();
   wm_state_.reset();
+  window_tree_client_setter_.reset();
 }
 
 void AuraTestHelper::RunAllPendingInMessageLoop() {

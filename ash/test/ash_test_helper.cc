@@ -95,7 +95,9 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
         switches::kAshDisableSmoothScreenRotation);
   }
 
-  if (config_ == Config::MUS)
+  // Allow for other code to have created InputDeviceManager (such as the
+  // test-suite).
+  if (config_ == Config::MUS && !ui::InputDeviceManager::HasInstance())
     input_device_client_ = std::make_unique<ui::InputDeviceClient>();
 
   display::ResetDisplayIdForTest();
@@ -267,7 +269,7 @@ void AshTestHelper::CreateMashWindowManager() {
   window_tree_client_setup_.InitForWindowManager(
       window_manager_service_->window_manager_.get(),
       window_manager_service_->window_manager_.get());
-  aura::test::EnvTestHelper().SetWindowTreeClient(
+  aura::test::WindowTreeClientSetter window_tree_client_setter(
       window_tree_client_setup_.window_tree_client());
   // Classic ash does not start the NetworkHandler in tests, so don't start it
   // for mash either. The NetworkHandler may cause subtle side effects (such as

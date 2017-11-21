@@ -98,9 +98,19 @@ void AuraTestBase::TearDown() {
   // and these tasks if un-executed would upset Valgrind.
   RunAllPendingInMessageLoop();
 
-  window_tree_hosts_.clear();
+  // AuraTestHelper may own a WindowTreeHost, don't delete it here else
+  // AuraTestHelper will have use after frees.
+  for (size_t i = window_tree_hosts_.size(); i > 0; --i) {
+    if (window_tree_hosts_[i - 1].get() == helper_->host()) {
+      LOG(ERROR) << "FOUND!";
+      window_tree_hosts_[i - 1].release();
+      window_tree_hosts_.erase(window_tree_hosts_.begin() + i - 1);
+      break;
+    }
+  }
 
   helper_->TearDown();
+  window_tree_hosts_.clear();
   ui::TerminateContextFactoryForTests();
   ui::ShutdownInputMethodForTesting();
   testing::Test::TearDown();
