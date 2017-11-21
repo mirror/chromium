@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b8f17509_181cf4d7",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-21T05:41:52Z",
+      "side": 1,
+      "message": "Sorry, I thought it was comparing two CSSProperty instances.\n\nBut anyway, why not just continue to check CSSProperty.PropertyID() \u003d\u003d property_id? This indirection seems unnecessary.",
+      "parentUuid": "59bfdfaf_d8fd412e",
+      "revId": "09135fcc16ca76cad78464dc43201aabc0aa29b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15cbbb78_b38d7257",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 6
