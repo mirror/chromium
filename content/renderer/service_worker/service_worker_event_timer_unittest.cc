@@ -7,9 +7,33 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/test/test_mock_time_task_runner.h"
+#include "base/time/tick_clock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
+
+namespace {
+
+class MockEvent {
+ public:
+  base::OnceCallback<void(int)> CreateAbortCallback() {
+    EXPECT_FALSE(has_aborted_);
+    return base::BindOnce(&MockEvent::Abort, base::Unretained(this));
+  }
+  void SetEventId(int event_id) { event_id_ = event_id; }
+  bool has_aborted() const { return has_aborted_; }
+
+ private:
+  void Abort(int event_id) {
+    EXPECT_EQ(event_id_, event_id);
+    has_aborted_ = true;
+  }
+
+  bool has_aborted_ = false;
+  int event_id_ = 0;
+};
+
+}  // namespace
 
 class ServiceWorkerEventTimerTest : public testing::Test {
  protected:
@@ -27,38 +51,59 @@ class ServiceWorkerEventTimerTest : public testing::Test {
 };
 
 TEST_F(ServiceWorkerEventTimerTest, IdleTimer) {
+  const base::TimeDelta kIdleInterval =
+      ServiceWorkerEventTimer::kIdleDelay +
+      ServiceWorkerEventTimer::kUpdateInterval +
+      base::TimeDelta::FromSeconds(1);
+
+  base::RepeatingCallback<void(int)> do_nothing_callback =
+      base::BindRepeating([](int) {});
+
   bool is_idle = false;
-  ServiceWorkerEventTimer timer(base::BindRepeating(
-      [](bool* out_is_idle) { *out_is_idle = true; }, &is_idle));
-  task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
-                               base::TimeDelta::FromSeconds(1));
+  ServiceWorkerEventTimer timer(
+      base::BindRepeating([](bool* out_is_idle) { *out_is_idle = true; },
+                          &is_idle),
+      task_runner()->GetMockTickClock());
+  task_runner()->FastForwardBy(kIdleInterval);
   // |idle_callback| should be fired since there is no event.
   EXPECT_TRUE(is_idle);
 
   is_idle = false;
-  timer.StartEvent();
-  task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
-                               base::TimeDelta::FromSeconds(1));
+  int event_id_1 = timer.StartEvent(do_nothing_callback);
+  task_runner()->FastForwardBy(kIdleInterval);
   // Nothing happens since there is an inflight event.
   EXPECT_FALSE(is_idle);
 
-  timer.StartEvent();
-  task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
-                               base::TimeDelta::FromSeconds(1));
+  int event_id_2 = timer.StartEvent(do_nothing_callback);
+  task_runner()->FastForwardBy(kIdleInterval);
   // Nothing happens since there are two inflight events.
   EXPECT_FALSE(is_idle);
 
-  timer.EndEvent();
-  task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
-                               base::TimeDelta::FromSeconds(1));
+  timer.EndEvent(event_id_2);
+  task_runner()->FastForwardBy(kIdleInterval);
   // Nothing happens since there is an inflight event.
   EXPECT_FALSE(is_idle);
 
-  timer.EndEvent();
-  task_runner()->FastForwardBy(ServiceWorkerEventTimer::kIdleDelay +
-                               base::TimeDelta::FromSeconds(1));
+  timer.EndEvent(event_id_1);
+  task_runner()->FastForwardBy(kIdleInterval);
   // |idle_callback| should be fired.
   EXPECT_TRUE(is_idle);
+}
+
+TEST_F(ServiceWorkerEventTimerTest, EventTimer) {
+  const base::TimeDelta kEventInterval =
+      ServiceWorkerEventTimer::kEventTimeout +
+      ServiceWorkerEventTimer::kUpdateInterval +
+      base::TimeDelta::FromSeconds(1);
+
+  ServiceWorkerEventTimer timer(base::BindRepeating(&base::DoNothing),
+                                task_runner()->GetMockTickClock());
+  MockEvent event;
+  int event_id = timer.StartEvent(event.CreateAbortCallback());
+  event.SetEventId(event_id);
+  task_runner()->FastForwardBy(kEventInterval);
+
+  EXPECT_TRUE(event.has_aborted());
 }
 
 }  // namespace content
