@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7c54b7be_3d9a5e79",
+        "filename": "device/vr/vr_device_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-21T06:36:22Z",
+      "side": 1,
+      "message": "VRDisplayImpl\u0027s GetPose() inherits from VRMagicWindowProvider, but this one does not. Thus, I think renaming it makes sense.\n\nEven the VRDisplayImpl::GetPose() implementation is unclear. I\u0027ve suggested in the next PS that the declaration be commented as is standard practice, but it may also help readability to comment above the implementation as well. (Or figure out a way to rename it.) As is, it is just another method in vr_display_impl.cc:\nhttps://cs.chromium.org/chromium/src/device/vr/vr_display_impl.cc?type\u003dcs\u0026q\u003dGetPose+file:%5Esrc/device/vr/+package:%5Echromium$\u0026l\u003d77",
+      "parentUuid": "58aa093e_45497513",
+      "revId": "156b2558e506978006ebfe5c911cd7f07b0de01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5803cea2_2169dec5",
         "filename": "device/vr/vr_device_base.h",
         "patchSetId": 1

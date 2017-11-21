@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b4234c5_df05b902",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-21T06:36:22Z",
+      "side": 1,
+      "message": "Should we add a comment about why we are disabling magic window here?",
+      "revId": "0c52f0ce691c32e5b572d3d3848c67b9671890ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656729fd_ce2618b0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-21T06:36:22Z",
+      "side": 1,
+      "message": "Here too. This is perhaps also interesting since I assume this is related to lifetime ordering not covered by the other path.",
+      "revId": "0c52f0ce691c32e5b572d3d3848c67b9671890ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7952ad_dc6fd574",
+        "filename": "device/vr/android/gvr/gvr_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-21T06:36:22Z",
+      "side": 1,
+      "message": "Regarding VRDisplayImpl\u0027s GetPose():\n* There should be `// VRMagicWindowProvider` above the declaration in the .h.\n* The public pure virtual method is overridden by a private method. Is this intentional? That probably makes sense since this is specific to magic window.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "0c52f0ce691c32e5b572d3d3848c67b9671890ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
