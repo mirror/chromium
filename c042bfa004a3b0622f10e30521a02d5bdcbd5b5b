@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f95c5b53_6cc894c4",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-21T03:01:48Z",
+      "side": 1,
+      "message": "This is almost certainly wrong, but since the view is simply snapshotted and animated in, there\u0027s never going to be a layoutGuide/safeAreaInset to key off of.  Since the view will animate to fullscreen, we can look at the rootViewController.\n\nBut this seems gross.  Is there a better way?",
+      "revId": "c042bfa004a3b0622f10e30521a02d5bdcbd5b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
