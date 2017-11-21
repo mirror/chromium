@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2342e29_c600f499",
+        "filename": "content/browser/frame_host/interstitial_page_navigator_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-21T06:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73cd6402_5916425a",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0432119_1bee00b4",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 31
@@ -33,6 +51,24 @@
       "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9624ddc1_7b9ab9e4",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-21T06:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0432119_1bee00b4",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ca2d7548_b5f65d4c",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-21T06:10:02Z",
+      "side": 1,
+      "message": "\u003e \u003e So this is still problematic. The right thing to do here would be:\n\u003e \u003e - always pass nullptr for same_document_loads\n\u003e \u003e - only pass the navigation_ui_data to the main frame for different_document_loads. All subframe should get nullptr.\n\u003e \u003e My reasoning is that the NavigationUIData was initialized for the main frame. Therefore, we cannot pass it to a subframe since it contains frame info.\n\u003e \n\u003e If it\u0027s created for main frames only, then yes, we don\u0027t want to pass it to subframes.\n\nThere are no guarantees that it will only be created for main frame navigations but we could certainly change it to do it. It would actually simplify some of the code for extensions. I changed it to only initialize a navigation_ui_data if the navigation is for a main frame.\n\n\u003e (I haven\u0027t looked at the rest of the CL, but is it intended that this data will never be needed or used for subframes?)\n\u003e \n\nCorrect. We don\u0027t care about subframes for our use case.\n\n\u003e \u003e \n\u003e \u003e @creis: does this make sense to you? I\u0027m not sure in which case we can end up with several loads in the NavigationController.\n\u003e \n\u003e We can go back multiple history items at once, and that can cause multiple subframes to need to load.\n\u003e \n\u003e (You could imagine it also affecting the main frame and subframes if same-document navigations are involved, but that\u0027s not possible due to the TODO and early return on line 2109-- we don\u0027t traverse down into children of a frame that\u0027s being navigated, at least for now.)",
+      "parentUuid": "2791fc70_c6c11d22",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "417b0574_bfd3ad5d",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 31
@@ -85,6 +139,24 @@
       "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3620539_c8972392",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-21T06:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "417b0574_bfd3ad5d",
+      "revId": "1db2e387bd8c03e57ec99f598abd3f53b1b1e196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
