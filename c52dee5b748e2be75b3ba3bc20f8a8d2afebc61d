@@ -16,6 +16,24 @@
       "revId": "c52dee5b748e2be75b3ba3bc20f8a8d2afebc61d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61cabeb_08afe955",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-21T13:43:26Z",
+      "side": 1,
+      "message": "Discussed in person and decided not to do any of these.",
+      "parentUuid": "33d9196d_43b02b7e",
+      "revId": "c52dee5b748e2be75b3ba3bc20f8a8d2afebc61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
