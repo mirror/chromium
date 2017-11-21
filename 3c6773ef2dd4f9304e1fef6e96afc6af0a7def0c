@@ -22,6 +22,30 @@
       "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2939fa54_e3ad8491",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-21T10:33:43Z",
+      "side": 1,
+      "message": "The \"OK\" button closes the infobar doing nothing, so accepting the intervention by not going to the blocked url.\n\nonLinkClicked is declining the intervention by saying \"I do want to go there!\"\n\nI\u0027ll add comments to explain that.",
+      "parentUuid": "562b3124_d21644fc",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "3c6773ef2dd4f9304e1fef6e96afc6af0a7def0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
