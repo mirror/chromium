@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04ca6450_8781c4b0",
+        "filename": "components/autofill/ios/browser/fake_js_autofill_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-21T22:51:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e645c903_f68801b9",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "1c31f0fe4cefdf7eaaef7730a04667d1783b6506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5200dcb3_931fc76e",
         "filename": "components/autofill/ios/browser/fake_js_autofill_manager.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "1c31f0fe4cefdf7eaaef7730a04667d1783b6506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df0c5b4_de63dd9e",
+        "filename": "components/autofill/ios/browser/fake_js_autofill_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-21T22:51:12Z",
+      "side": 1,
+      "message": "Let\u0027s just leave it as is for now until there is a need for an array property.",
+      "parentUuid": "5200dcb3_931fc76e",
+      "range": {
+        "startLine": 17,
+        "startChar": 37,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1c31f0fe4cefdf7eaaef7730a04667d1783b6506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
