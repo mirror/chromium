@@ -1,5 +1,5 @@
 /**
- * Assert AudioWorklet is enabled.
+ * Assert AudioWorklet Runtime flag is enabled.
  *
  * The content_shell driven by run-webkit-tests.py is supposed to enable all the
  * experimental web platform features.
@@ -8,9 +8,8 @@
  * the content shell and the browser.
  */
 function assertAudioWorklet() {
-  if ((Boolean(window.internals) &&
-       Boolean(window.internals.runtimeFlags.audioWorkletEnabled)) ||
-      (Boolean(window.Worklet) && Boolean(window.audioWorklet))) {
+  if (Boolean(window.internals) &&
+      Boolean(window.internals.runtimeFlags.audioWorkletEnabled)) {
     return;
   }
 
