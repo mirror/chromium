@@ -1,0 +1,4 @@
+include_rules = [
+  "+chrome/browser/media/media_engagement_preload.pb.h",
+  "+net/tools/transport_security_state_generator",
+]
