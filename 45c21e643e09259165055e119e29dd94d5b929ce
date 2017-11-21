@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37e1b73_54cfc6c0",
+        "filename": "media/renderers/paint_canvas_video_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-21T19:12:16Z",
+      "side": 1,
+      "message": "TODO: This seems to be missing a BindTexture.",
+      "revId": "45c21e643e09259165055e119e29dd94d5b929ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
