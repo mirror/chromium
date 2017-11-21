@@ -51,9 +51,10 @@ class CORE_EXPORT RarePaintData {
     partial_invalidation_rect_ = r;
   }
 
-  ObjectPaintProperties* PaintProperties() const {
+  const ObjectPaintProperties* PaintProperties() const {
     return paint_properties_.get();
   }
+  ObjectPaintProperties* PaintProperties() { return paint_properties_.get(); }
   ObjectPaintProperties& EnsurePaintProperties();
   void ClearPaintProperties();
 
@@ -61,7 +62,7 @@ class CORE_EXPORT RarePaintData {
   // starting point to paint this fragment. See also the comment for
   // |local_border_box_properties_|.
   // LocalBorderBoxProperties() includes fragment clip.
-  PropertyTreeState* LocalBorderBoxProperties() const {
+  const PropertyTreeState* LocalBorderBoxProperties() const {
     return local_border_box_properties_.get();
   }
 
