@@ -952,7 +952,7 @@ void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
   GetDocument().EnsurePaintLocationDataValidForNode(start.AnchorNode());
   if (!start.AnchorNode()->GetLayoutObject()->ScrollRectToVisible(
           LayoutRect(ComputeRectToScroll(reveal_extent_option)), alignment,
-          alignment))
+          alignment, kProgrammaticScroll, false))
     return;
 
   UpdateAppearance();
