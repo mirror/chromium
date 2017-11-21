@@ -238,6 +238,8 @@ test("vr_common_unittests") {
     "test/gl_test_environment_unittest.cc",
     "test/mock_browser_interface.cc",
     "test/mock_browser_interface.h",
+    "test/mock_browser_ui_interface.cc",
+    "test/mock_browser_ui_interface.h",
     "test/mock_content_input_delegate.cc",
     "test/mock_content_input_delegate.h",
     "test/paths.cc",
