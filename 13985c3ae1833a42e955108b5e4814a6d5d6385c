@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "2e539861_734583d2",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-21T17:39:40Z",
+      "side": 1,
+      "message": "I think this is the reason a few tests have been failing (timeouts on a few Linux only tests...).\n\nI have updated the logic further to avoid using TaskScheduler::FlushForTesting() without having to re-instantiate TaskObservers or OnEmptyClosures :).\n\nPTanL!",
+      "parentUuid": "39e005f1_52577d32",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 52
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a758ed8f_a5ae3f74",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 3
