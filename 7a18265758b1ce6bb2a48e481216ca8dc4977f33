@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "87861bd8_bf264d2a",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-21T17:40:08Z",
+      "side": 1,
+      "message": "Using the color from the theme provider like you had at one point is good. Other than color, the tray style isn\u0027t providing anything useful. The tray color should not be different from what you get from the NativeTheme (the alpha value is hardcoded in FocusRing, which is unfortunate, and it\u0027s slightly different from the one in ash_constants.cc, also unfortunate, but I don\u0027t think that discrepancy is intentional or desirable).\n\nbutton.h is a base class for many different types of buttons and can\u0027t actually be instantiated on its own.",
+      "parentUuid": "7e486039_04999438",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cd90c9_10c9a8f5",
         "filename": "ui/views/controls/slider.cc",
         "patchSetId": 4
