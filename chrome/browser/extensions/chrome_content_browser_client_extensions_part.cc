@@ -767,9 +767,12 @@ void ChromeContentBrowserClientExtensionsPart::SiteInstanceGotProcess(
   if (!registry)
     return;
 
-  const Extension* extension =
-      registry->enabled_extensions().GetExtensionOrAppByURL(
-          site_instance->GetSiteURL());
+  // Only add the process to the map if the SiteInstance's site URL is already
+  // a chrome-extension:// URL. (Don't look up hosted apps by URL if not.)
+  if (!site_instance->GetSiteURL().SchemeIs(kExtensionScheme))
+    return;
+  const Extension* extension = registry->enabled_extensions().GetByID(
+      site_instance->GetSiteURL().host());
   if (!extension)
     return;
 
