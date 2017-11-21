@@ -112,27 +112,20 @@ class TimeTest : public testing::Test {
 };
 
 // Test conversions to/from time_t and exploding/unexploding.
-#if defined(OS_IOS)
-// TODO(crbug.com/782033): this test seems to be unreliable on the simulator;
-// possibly broken on 10.13?
-#define MAYBE_TimeT DISABLED_TimeT
-#else
-#define MAYBE_TimeT TimeT
-#endif
-TEST_F(TimeTest, MAYBE_TimeT) {
+TEST_F(TimeTest, TimeT) {
   // C library time and exploded time.
   time_t now_t_1 = time(nullptr);
   struct tm tms;
 #if defined(OS_WIN)
-  localtime_s(&tms, &now_t_1);
+  gmtime_s(&tms, &now_t_1);
 #elif defined(OS_POSIX)
-  localtime_r(&now_t_1, &tms);
+  gmtime_r(&now_t_1, &tms);
 #endif
 
   // Convert to ours.
   Time our_time_1 = Time::FromTimeT(now_t_1);
   Time::Exploded exploded;
-  our_time_1.LocalExplode(&exploded);
+  our_time_1.UTCExplode(&exploded);
 
   // This will test both our exploding and our time_t -> Time conversion.
   EXPECT_EQ(tms.tm_year + 1900, exploded.year);
