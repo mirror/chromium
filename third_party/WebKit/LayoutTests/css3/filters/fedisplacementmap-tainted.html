@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<title>canvas filters: apply a displacement map filter to a cross-origin image</title>
+
+<canvas id="canvas" width="200" height="200"></canvas>
+
+<svg height="0">
+  <filter id="filter">
+    <feFlood fill-color="lime"/>
+    <feDisplacementMap in2="SourceGraphic" xChannelSelector="R" yChannelSelector="G" scale="100"/>
+  </filter>
+</svg>
+
+<script>
+// Passes if the output is a black square.
+var img = new Image();
+img.src = "../../http/tests/resources/square.png";
+img.onload = function () {
+  var ctx = document.getElementById("canvas").getContext("2d");
+  ctx.filter = "url(#filter)";
+  ctx.fillRect(-10, -10, 1, 1);
+
+  ctx.drawImage(img, 0, 0);
+}
+</script>
