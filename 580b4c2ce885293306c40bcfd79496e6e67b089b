@@ -407,6 +407,24 @@
     },
     {
       "key": {
+        "uuid": "592b9335_fe04677c",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-21T18:27:07Z",
+      "side": 1,
+      "message": "Done. Changed to assert.",
+      "parentUuid": "536580f8_bfed710e",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f6f2e9_9cf605eb",
         "filename": "chrome/browser/resources/pdf/viewport.js",
         "patchSetId": 11
