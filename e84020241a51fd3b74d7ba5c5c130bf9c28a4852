@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "024e6b5a_e56ab570",
+        "filename": "content/browser/locks/locks_context.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T22:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e68d9735_ed3cdad2",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be8a6e39_4a8f33bb",
         "filename": "content/browser/locks/locks_context.h",
         "patchSetId": 25
@@ -292,6 +310,24 @@
       "writtenOn": "2017-11-20T09:53:31Z",
       "side": 1,
       "message": "I was about to give the feedback in the TODO :)\n\nI\u0027m fine with having the interface addition in a separate CL, if doing it here would increase the reviewer list. In that case, please crbug.",
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a1e566_d75e9ebc",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T22:11:39Z",
+      "side": 1,
+      "message": "Now that we\u0027re discussing this... why do we want it in the public interface anyway? Unlike actual storage APIs which have interactions with clearing browsing data, the only reasons here would be devtools - which we could add later - and browsertests which don\u0027t seem necessary - unit tests and layout tests seem sufficient.\n\nI\u0027ve forgotten why I might have wanted it exposed. What are your thoughts?",
+      "parentUuid": "f3f6cf24_9f58eecc",
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1240,6 +1276,30 @@
       "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2544f74b_bef4a75f",
+        "filename": "third_party/WebKit/public/platform/modules/locks/locks_service.mojom",
+        "patchSetId": 25
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T22:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f168efdf_f3adc8f7",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "e84020241a51fd3b74d7ba5c5c130bf9c28a4852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
