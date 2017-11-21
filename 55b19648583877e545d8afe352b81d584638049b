@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ca37fcb_262bb566",
+        "filename": "chrome/browser/task_manager/providers/child_process_task_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T01:08:06Z",
+      "side": 1,
+      "message": "Nit: no \u0027",
+      "range": {
+        "startLine": 74,
+        "startChar": 36,
+        "endLine": 74,
+        "endChar": 37
+      },
+      "revId": "55b19648583877e545d8afe352b81d584638049b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cec01d_37d22b11",
+        "filename": "content/public/browser/resource_request_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T01:08:06Z",
+      "side": 1,
+      "message": "Otherwise -1, I assume? Maybe document this?",
+      "revId": "55b19648583877e545d8afe352b81d584638049b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
