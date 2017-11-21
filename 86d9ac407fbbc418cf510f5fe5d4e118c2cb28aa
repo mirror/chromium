@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5d0f8e8_8cbad27a",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "nit: remove const. not used for local vars in exo code",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a43b0b_c8302d1f",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "nit: remove const. not used for local vars in exo code",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9c8f8d_5688c176",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "nit: remove const. not used for local vars in exo code",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d30e10_dfe9c184",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "nit: have this match the final version of ScopedDataOfferObserver",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d06439_4f22204c",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "nit: add Overridden from... comment",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a94c065_ff90bc13",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "nit: set_focused_surface",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1a6c8c_1c3ecd0f",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e9c667_7b41e4aa",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "can we do this in ctor? and just use \"std::make_unique\u003cDataDevice\u003e(\u0026delegate_, seat_.get(), \u0026file_helper_)\" in cases where we want to re-init?",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af93b36_0b388675",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T03:10:00Z",
+      "side": 1,
+      "message": "nit: shot comment explaining that this is virtual for tests.",
+      "revId": "86d9ac407fbbc418cf510f5fe5d4e118c2cb28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
