@@ -115,6 +115,8 @@ _CONFIG = [
     {
         'paths': [
             'third_party/WebKit/Source/platform/',
+            'third_party/WebKit/Source/core/exported/',
+            'third_party/WebKit/Source/modules/exported/',
         ],
         # Suppress almost all checks on platform since code in this directory
         # is meant to be a bridge between Blink and non-Blink code. However,

@@ -53,18 +53,15 @@ class PLATFORM_EXPORT TimerBase {
              double repeat_interval,
              const WebTraceLocation&);
 
-  void StartRepeating(double repeat_interval, const WebTraceLocation& caller) {
-    Start(repeat_interval, repeat_interval, caller);
-  }
   void StartRepeating(base::TimeDelta repeat_interval,
                       const WebTraceLocation& caller) {
-    StartRepeating(repeat_interval.InSecondsF(), caller);
+    Start(repeat_interval.InSecondsF(), repeat_interval.InSecondsF(), caller);
   }
   void StartOneShot(double interval, const WebTraceLocation& caller) {
     Start(interval, 0, caller);
   }
   void StartOneShot(base::TimeDelta interval, const WebTraceLocation& caller) {
-    StartOneShot(interval.InSecondsF(), caller);
+    Start(interval.InSecondsF(), 0, caller);
   }
 
   // Timer cancellation is fast enough that you shouldn't have to worry
@@ -75,11 +72,18 @@ class PLATFORM_EXPORT TimerBase {
 
   double NextFireInterval() const;
   double RepeatInterval() const { return repeat_interval_; }
+  TimeDelta RepeatIntervalTimeDelta() const {
+    return TimeDelta::FromSecondsD(repeat_interval_);
+  }
 
   void AugmentRepeatInterval(double delta) {
     double now = TimerMonotonicallyIncreasingTime();
     SetNextFireTime(now, std::max(next_fire_time_ - now + delta, 0.0));
     repeat_interval_ += delta;
+  }
+
+  void AugmentRepeatInterval(TimeDelta delta) {
+    AugmentRepeatInterval(delta.InSecondsF());
   }
 
   void MoveToNewTaskRunner(scoped_refptr<WebTaskRunner>);
