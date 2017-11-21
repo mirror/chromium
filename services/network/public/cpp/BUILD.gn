@@ -10,16 +10,21 @@ static_library("cpp") {
     "cors_error_status.h",
     "net_adapters.cc",
     "net_adapters.h",
+    "ssl_info_ipc_traits.cc",
+    "ssl_info_ipc_traits.h",
     "url_loader_completion_status.cc",
     "url_loader_completion_status.h",
   ]
 
   deps = [
     "//base",
+    "//ipc",
     "//mojo/common",
     "//net",
     "//services/network/public/interfaces",
   ]
+
+  defines = [ "NETWORK_PUBLIC_CPP_IMPL" ]
 }
 
 mojom("test_interfaces") {
