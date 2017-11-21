@@ -160,6 +160,8 @@ class LayerTreeTest : public testing::Test, public TestHooks {
     return image_worker_->task_runner().get();
   }
 
+  LayerTreeSettings settings_;
+
  private:
   virtual void DispatchAddAnimationToPlayer(
       AnimationPlayer* player_to_receive_animation,
@@ -175,8 +177,6 @@ class LayerTreeTest : public testing::Test, public TestHooks {
   void DispatchDidAddAnimation();
   void DispatchCompositeImmediately();
   void DispatchNextCommitWaitsForActivation();
-
-  LayerTreeSettings settings_;
 
   CompositorMode mode_;
 
@@ -216,19 +216,29 @@ class LayerTreeTest : public testing::Test, public TestHooks {
   }                                                               \
   class SingleThreadDelegatingImplNeedsSemicolon##TEST_FIXTURE_NAME {}
 
-#define MULTI_THREAD_TEST_F(TEST_FIXTURE_NAME)                   \
-  TEST_F(TEST_FIXTURE_NAME, RunMultiThread_DelegatingRenderer) { \
-    RunTest(CompositorMode::THREADED);                           \
-  }                                                              \
-  class MultiThreadDelegatingImplNeedsSemicolon##TEST_FIXTURE_NAME {}
+#define MULTI_THREAD_CC_SCHEDULER_TEST_F(TEST_FIXTURE_NAME)                  \
+  TEST_F(TEST_FIXTURE_NAME, RunMultiThread_CCScheduler_DelegatingRenderer) { \
+    settings_.using_synchronous_renderer_compositor = false;                 \
+    RunTest(CompositorMode::THREADED);                                       \
+  }                                                                          \
+  class MultiThreadCCSchedulerDelegatingImplNeedsSemicolon##TEST_FIXTURE_NAME {}
+
+#define MULTI_THREAD_SYNC_SCHEDULER_TEST_F(TEST_FIXTURE_NAME)                   \
+  TEST_F(TEST_FIXTURE_NAME, RunMultiThread_SyncScheduler_DelegatingRenderer) {  \
+    settings_.using_synchronous_renderer_compositor = true;                     \
+    RunTest(CompositorMode::THREADED);                                          \
+  }                                                                             \
+  class                                                                         \
+      MultiThreadSyncSchedulerDelegatingImplNeedsSemicolon##TEST_FIXTURE_NAME { \
+  }
+
+#define MULTI_THREAD_TEST_F(TEST_FIXTURE_NAME)         \
+  MULTI_THREAD_CC_SCHEDULER_TEST_F(TEST_FIXTURE_NAME); \
+  MULTI_THREAD_SYNC_SCHEDULER_TEST_F(TEST_FIXTURE_NAME)
 
 #define SINGLE_AND_MULTI_THREAD_TEST_F(TEST_FIXTURE_NAME) \
   SINGLE_THREAD_TEST_F(TEST_FIXTURE_NAME);                \
   MULTI_THREAD_TEST_F(TEST_FIXTURE_NAME)
-
-#define REMOTE_AND_MULTI_THREAD_TEST_F(TEST_FIXTURE_NAME) \
-  MULTI_THREAD_TEST_F(TEST_FIXTURE_NAME);                 \
-  REMOTE_TEST_F(TEST_FIXTURE_NAME)
 
 // Some tests want to control when notify ready for activation occurs,
 // but this is not supported in the single-threaded case.
