@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "d5440608_7cf08921",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-21T00:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b735cea_e9903f8a",
+      "range": {
+        "startLine": 113,
+        "startChar": 31,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "be2062586bf95cef0b7d6fb28b51274244ed5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9d0fbc7_a91ef07c",
         "filename": "chrome/browser/banners/app_banner_settings_helper.h",
         "patchSetId": 2
