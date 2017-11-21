@@ -68,6 +68,7 @@
 #include "chrome/browser/ui/webui/print_preview/sticky_settings.h"
 #include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/common/secure_origin_whitelist.h"
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/browsing_data/core/pref_names.h"
 #include "components/certificate_transparency/ct_policy_manager.h"
@@ -490,6 +491,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   PushMessagingAppIdentifier::RegisterProfilePrefs(registry);
   RegisterBrowserUserPrefs(registry);
   safe_browsing::RegisterProfilePrefs(registry);
+  SecureOriginWhitelistPrefs(registry);
   SessionStartupPref::RegisterProfilePrefs(registry);
   signin::RegisterAccountConsistencyProfilePrefs(registry);
   syncer::SyncPrefs::RegisterProfilePrefs(registry);
