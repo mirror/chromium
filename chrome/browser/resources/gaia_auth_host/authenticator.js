@@ -120,9 +120,6 @@ cr.define('cr.login', function() {
    * @constructor
    */
   function Authenticator(webview) {
-    this.webview_ = typeof webview == 'string' ? $(webview) : webview;
-    assert(this.webview_);
-
     this.isLoaded_ = false;
     this.email_ = null;
     this.password_ = null;
@@ -146,35 +143,16 @@ cr.define('cr.login', function() {
 
     this.clientId_ = null;
 
-    this.samlHandler_ = new cr.login.SamlHandler(this.webview_);
     this.confirmPasswordCallback = null;
     this.noPasswordCallback = null;
     this.insecureContentBlockedCallback = null;
     this.samlApiUsedCallback = null;
     this.missingGaiaInfoCallback = null;
     this.needPassword = true;
-    this.samlHandler_.addEventListener(
-        'insecureContentBlocked', this.onInsecureContentBlocked_.bind(this));
-    this.samlHandler_.addEventListener(
-        'authPageLoaded', this.onAuthPageLoaded_.bind(this));
-    this.samlHandler_.addEventListener(
-        'videoEnabled', this.onVideoEnabled_.bind(this));
-    this.samlHandler_.addEventListener(
-        'apiPasswordAdded', this.onSamlApiPasswordAdded_.bind(this));
 
-    this.webview_.addEventListener('droplink', this.onDropLink_.bind(this));
-    this.webview_.addEventListener('newwindow', this.onNewWindow_.bind(this));
-    this.webview_.addEventListener(
-        'contentload', this.onContentLoad_.bind(this));
-    this.webview_.addEventListener('loadabort', this.onLoadAbort_.bind(this));
-    this.webview_.addEventListener('loadcommit', this.onLoadCommit_.bind(this));
-    this.webview_.request.onCompleted.addListener(
-        this.onRequestCompleted_.bind(this),
-        {urls: ['<all_urls>'], types: ['main_frame']}, ['responseHeaders']);
-    this.webview_.request.onHeadersReceived.addListener(
-        this.onHeadersReceived_.bind(this),
-        {urls: ['<all_urls>'], types: ['main_frame', 'xmlhttprequest']},
-        ['responseHeaders']);
+    this.unbindWebviewCleanupFunctions_ = [];
+    this.bindToWebview_(webview);
+
     window.addEventListener(
         'message', this.onMessageFromWebview_.bind(this), false);
     window.addEventListener('focus', this.onFocus_.bind(this), false);
@@ -212,6 +190,99 @@ cr.define('cr.login', function() {
   Authenticator.prototype.resetWebview = function() {
     if (this.webview_.src && this.webview_.src != BLANK_PAGE_URL)
       this.webview_.src = BLANK_PAGE_URL;
+  };
+
+  /**
+   * Adds a EventListener to |eventTarget| and adds a clean-up function so we
+   * can remove the listener in unbindFromWebview_.
+   * @param {Object} webview the object to add the listener to
+   * @param {string} type the event type
+   * @param {Function} listener the event listener
+   * @private
+   */
+  Authenticator.prototype.addWebviewRelatedEventListener_ = function(
+      eventTarget, type, listener) {
+    eventTarget.addEventListener(type, listener);
+    this.unbindWebviewCleanupFunctions_.push(
+        eventTarget.removeEventListener.bind(eventTarget, type, listener));
+  };
+
+  /**
+   * Adds a listener to |webRequestEvent| and adds a clean-up function so we can
+   * remove the listener in unbindFromWebview_.
+   * @param {Object} webRequestEvent the object to add the listener to
+   * @param {string} type the event type
+   * @param {Function} listener the event listener
+   * @private
+   */
+  Authenticator.prototype.addWebRequestEventListener_ = function(
+      webRequestEvent, listener, filter, extraInfoSpec) {
+    webRequestEvent.addListener(listener, filter, extraInfoSpec);
+    this.unbindWebviewCleanupFunctions_.push(
+        webRequestEvent.removeListener.bind(webRequestEvent, listener));
+  };
+
+  /**
+   * Binds this authenticator to the passed webview.
+   * @param {Object} webview the new webview to be used by this Authenticator.
+   * @private
+   */
+  Authenticator.prototype.bindToWebview_ = function(webview) {
+    this.webview_ = typeof webview == 'string' ? $(webview) : webview;
+    assert(this.webview_);
+
+    this.samlHandler_ = new cr.login.SamlHandler(this.webview_);
+    this.addWebviewRelatedEventListener_(
+        this.samlHandler_, 'insecureContentBlocked',
+        this.onInsecureContentBlocked_.bind(this));
+    this.addWebviewRelatedEventListener_(
+        this.samlHandler_, 'authPageLoaded', this.onAuthPageLoaded_.bind(this));
+    this.addWebviewRelatedEventListener_(
+        this.samlHandler_, 'videoEnabled', this.onVideoEnabled_.bind(this));
+    this.addWebviewRelatedEventListener_(
+        this.samlHandler_, 'apiPasswordAdded',
+        this.onSamlApiPasswordAdded_.bind(this));
+
+    this.addWebviewRelatedEventListener_(
+        this.webview_, 'droplink', this.onDropLink_.bind(this));
+    this.addWebviewRelatedEventListener_(
+        this.webview_, 'newwindow', this.onNewWindow_.bind(this));
+    this.addWebviewRelatedEventListener_(
+        this.webview_, 'contentload', this.onContentLoad_.bind(this));
+    this.addWebviewRelatedEventListener_(
+        this.webview_, 'loadabort', this.onLoadAbort_.bind(this));
+    this.addWebviewRelatedEventListener_(
+        this.webview_, 'loadcommit', this.onLoadCommit_.bind(this));
+
+    this.addWebRequestEventListener_(
+        this.webview_.request.onCompleted, this.onRequestCompleted_.bind(this),
+        {urls: ['<all_urls>'], types: ['main_frame']}, ['responseHeaders']);
+    this.addWebRequestEventListener_(
+        this.webview_.request.onHeadersReceived,
+        this.onHeadersReceived_.bind(this),
+        {urls: ['<all_urls>'], types: ['main_frame', 'xmlhttprequest']},
+        ['responseHeaders']);
+  };
+
+  /**
+   * Unbinds this Authenticator from the currently bound webview.
+   * @private
+   */
+  Authenticator.prototype.unbindFromWebview_ = function() {
+    for (var i = 0; i < this.unbindWebviewCleanupFunctions_.length; i++)
+      this.unbindWebviewCleanupFunctions_[i]();
+    this.unbindWebviewCleanupFunctions_ = [];
+
+    this.webview_ = undefined;
+  };
+
+  /**
+   * Re-binds to another webview.
+   * @param {Object} webview the new webview to be used by this Authenticator.
+   */
+  Authenticator.prototype.rebindWebview = function(webview) {
+    this.unbindFromWebview_();
+    this.bindToWebview_(webview);
   };
 
   /**
