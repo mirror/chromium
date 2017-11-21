@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b0b40da_0fc56621",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T00:06:31Z",
+      "side": 1,
+      "message": "Omitting that line makes the CL not work, alas.",
+      "parentUuid": "1967ca41_16302a1b",
+      "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3f6336b_e9d56682",
         "filename": "chrome/browser/chrome_content_browser_client.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79191261_9f5170b2",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T00:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3f6336b_e9d56682",
+      "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
