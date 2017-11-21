@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e52973c6_8e47a998",
+        "filename": "chrome/browser/tabs/tab_logger.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:55:43Z",
+      "side": 1,
+      "message": "This code depends upon c/b/ui/tabs, and is tab related. Why not put it there?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 41
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db867fc8_b1518891",
+        "filename": "chrome/browser/tabs/tabs_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:55:43Z",
+      "side": 1,
+      "message": "I actually think it would be better if you track this at the WebContents level. In particular using WasShown and WasHidden. I think you\u0027ll catch more cases then you have by way of listening to the TabStripModel.",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab983ec3_762f767d",
         "filename": "chrome/browser/tabs/tabs_tracker.cc",
         "patchSetId": 9
@@ -18,6 +64,53 @@
         "startChar": 21,
         "endLine": 31,
         "endChar": 55
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d62a46_de21d27d",
+        "filename": "chrome/browser/tabs/tabs_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:55:43Z",
+      "side": 1,
+      "message": "We are consistent. If you need an extra arg, add it.",
+      "parentUuid": "ab983ec3_762f767d",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 55
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d01be0_a02e2470",
+        "filename": "chrome/browser/tabs/tabs_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:55:43Z",
+      "side": 1,
+      "message": "I\u0027m mildly confused as to why you would log here. I get that you\u0027re logging the pinned tab in LogBackgroundTab(), but you aren\u0027t logging when the content type or other state that you are logging changes. So, why do you care when the pinned state changes?",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 31
       },
       "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
