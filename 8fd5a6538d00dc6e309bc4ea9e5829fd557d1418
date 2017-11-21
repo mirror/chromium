@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eb74606_eb5b204a",
+        "filename": "chrome/browser/extensions/standard_management_policy_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-21T08:10:11Z",
+      "side": 1,
+      "message": "This can probably exist in some central place say ManagementPolicy::MustRemainDisabled/UserMayLoad but it seems this is how it\u0027s done for component extensions etc.",
+      "range": {
+        "startLine": 76,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 17
+      },
+      "revId": "8fd5a6538d00dc6e309bc4ea9e5829fd557d1418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
