@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c88d04f_f0cde04d",
+        "filename": "base/android/statistics_recorder_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-21T20:35:56Z",
+      "side": 1,
+      "message": "You\u0027ll need to rebase.",
+      "range": {
+        "startLine": 19,
+        "startChar": 54,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "2cd89a3c052ee8f5dec6a402c0a533d82bcb49fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451b4c66_85ce5bc2",
+        "filename": "base/android/statistics_recorder_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-21T20:35:56Z",
+      "side": 1,
+      "message": "Sorry, but I still don\u0027t think this is the right place to do it.\n\nCan you add a boolean param to the Java toJson() function and pass the right value from the Java code that calls it (HistogramFeedbackSource.java)?\n\nhttps://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/metrics/StatisticsRecorderAndroid.java?rcl\u003d86c8199e89e3991732f8375fad1f1b667cc7edf4\u0026l\u003d20\n\nThis way, the logic is actually in the caller and not the API.",
+      "range": {
+        "startLine": 25,
+        "startChar": 40,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "2cd89a3c052ee8f5dec6a402c0a533d82bcb49fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
