@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1129c5f8_c7b61dcd",
+        "filename": "google_apis/gaia/gaia_auth_consumer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "Let\u0027s continue discussing what piece of data we should add in the result.",
+      "parentUuid": "4e33652b_e43da903",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80fda54e_70d3fdcd",
         "filename": "google_apis/gaia/gaia_auth_consumer.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T10:54:27Z",
       "side": 1,
       "message": "-      expires_in_secs(new_expires_in_secs) {}\n+      expires_in_secs(new_expires_in_secs),\n+      id_token_payload(std::move(id_token_payload)) {}",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1006a9_0ec8cc83",
+        "filename": "google_apis/gaia/gaia_auth_consumer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "80fda54e_70d3fdcd",
       "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "45871386_50801077",
+        "filename": "google_apis/gaia/gaia_auth_consumer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "There was a build error if I did not add this:\n\"Complex class/struct needs an explicit out-of-line copy constructor.\"\n\nI suspect it\u0027s because of the addition of a new field, thus the struct became complex? This error did not happen before adding it.",
+      "parentUuid": "9314ec2d_4b9c73b4",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6592e619_f1450857",
         "filename": "google_apis/gaia/gaia_auth_consumer.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-21T10:54:27Z",
       "side": 1,
       "message": "#include \u003cmemory\u003e",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f3b5d6_a043309c",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "Sorry, I lost it. What is \u003cmemory\u003e for?",
+      "parentUuid": "6592e619_f1450857",
       "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b4d66ca8_577fc42a",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "You\u0027re suggesting to return the ID token\u0027s JSON converted in a dictionary? I don\u0027t see the point of having the parsing in the middle of the way here. I think we should either send the raw ID token in the response and perform the parsing wherever needs it; or send the child account info boolean here after all the decoding, directly. WDYT?\n\nAnother detail is that DictionaryValue is being removed, Value should be used instead:\nhttps://cs.chromium.org/chromium/src/base/values.h?type\u003dcs\u0026q\u003dbase::DictionaryValue\u0026l\u003d71",
+      "parentUuid": "e8ddd6a6_dd6abd8d",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a55e722_ca1ce28c",
         "filename": "google_apis/gaia/gaia_auth_consumer.h",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-21T10:54:27Z",
       "side": 1,
       "message": "const std::string\u0026 new_access_token,\n-                      int new_expires_in_secs);\n+                      int new_expires_in_secs,\n+                      std::unique_ptr\u003cbase::DictionaryValue\u003e id_token_payload);",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80123a8_5376ba04",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "Please see my comment above.",
+      "parentUuid": "7a55e722_ca1ce28c",
       "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "414dd39b_f70d1644",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "I get a build error.\n\nSee my comment in the .cc file.",
+      "parentUuid": "60308c54_22ed149c",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23289b7a_1cc7d65c",
         "filename": "google_apis/gaia/gaia_auth_consumer.h",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-21T10:54:27Z",
       "side": 1,
       "message": "Don\u0027t need.",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8540d225_2d1ba4ec",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "Please see my comment about DictionaryValue.",
+      "parentUuid": "23289b7a_1cc7d65c",
       "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "b02d4cf9_99a03675",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "cfda892a_13e8a059",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd12b0b2_e02208a6",
         "filename": "google_apis/gaia/gaia_auth_fetcher.cc",
         "patchSetId": 4
@@ -166,6 +328,24 @@
       "writtenOn": "2017-11-21T10:54:27Z",
       "side": 1,
       "message": "I just landed a Cl that removed some unused code from this file, so this function is now simplified. So it is easy now to make changes here.\n\nI\u0027d suggest implementing token decoding in anonymous namespace in this file. Basically in this function.\n\nIt is actually used only to create GaiaAuthConsumer::ClientOAuthResult responce, so you can make this function fully construct it. This will also make it constant in the other places, which reduces complexity.\n\nSo, if you can return ClientOAuthResult from here, then, the function signature will looks like:\n\nstd::unique_ptr\u003cconst GaiaAuthConsumer::ClientOAuthResult\u003e\nExtractOAuth2TokenPairResponse(const std::string\u0026 data);\n\nThen you decode |data|, remember that |id_token| is a dictionary (and optional!), so it is reasonable to store it in ClientOAuthResult as a pointer to dictionary. Dictionary in Chrome means base::DictionaryValue (basically this is what you get from JSON decoder).\n\nSo your function (after you rebase your Cl to adjust to underlying changes), could probably  look like:\n\nstd::unique_ptr\u003cconst GaiaAuthConsumer::ClientOAuthResult\u003e\nExtractOAuth2TokenPairResponse(const std::string\u0026 data) {\n  std::unique_ptr\u003cbase::Value\u003e value \u003d base::JSONReader::Read(data);\n  if (!value.get() || value-\u003etype() !\u003d base::Value::Type::DICTIONARY)\n    return nullptr;\n\n  base::DictionaryValue* dict \u003d\n        static_cast\u003cbase::DictionaryValue*\u003e(value.get());\n\n  std::string refresh_token;\n  std::string access_token;\n  int expires_in_secs \u003d 0;\n\n  if (!dict-\u003eGetStringWithoutPathExpansion(\"refresh_token\", \u0026refresh_token) ||\n      !dict-\u003eGetStringWithoutPathExpansion(\"access_token\", \u0026access_token) ||\n      !dict-\u003eGetIntegerWithoutPathExpansion(\"expires_in\", \u0026expires_in_secs)) {\n    return nullptr;\n  }\n  std::string id_token;\n  std::unique_ptr\u003cbase::DictionaryValue\u003e id_token_payload;\n  if (dict-\u003eGetStringWithoutPathExpansion(\"id_token\", \u0026id_token) \u0026\u0026\n      !DecodeIdToken(id_token, \u0026id_token_payload)) {\n    return nullptr;\n  }\n  return std::make_unique\u003cGaiaAuthConsumer::ClientOAuthResult\u003e(\n      refresh_token, access_token, expires_in_secs,\n      std::move(id_token_payload));\n}\n\n\nThen, you\u0027ll need to implement DecodeIdToken() using our base/ library. You\u0027ll need to split string, run JSON decoder, check for return types, and make sure you extract dictionary from the token. You also need to check for errors.\n\nSo we could imagine it could look like this:\n\nbool DecodeIdToken(const std::string\u0026 id_token,                                  \n                   std::unique_ptr\u003cbase::DictionaryValue\u003e* out_payload) {        \n  const std::vector\u003cbase::StringPiece\u003e parts \u003d                                   \n      base::SplitStringPiece(base::StringPiece(id_token), \".\",                   \n                             base::WhitespaceHandling::KEEP_WHITESPACE,          \n                             base::SplitResult::SPLIT_WANT_ALL);                 \n  if (parts.size() !\u003d 3) {                                                       \n    VLOG(1) \u003c\u003c \"Invalid id_token: \" \u003c\u003c parts.size() \u003c\u003c \" parts.\";                \n    return false;                                                                \n  }                                                                              \n                                                                                 \n  // Ignore header (parts[0]).                                                   \n  std::string payload;                                                           \n  if (!base::Base64UrlDecode(                                                    \n          parts[1], base::Base64UrlDecodePolicy::DISALLOW_PADDING, \u0026payload)) {  \n    VLOG(1) \u003c\u003c \"Invalid id_token: payload decoding failed.\";                     \n    return false;                                                                \n  }                                                                              \n  // Ignore signature (part[2]).                                                 \n                                                                                 \n  std::unique_ptr\u003cbase::Value\u003e payload_value \u003d base::JSONReader::Read(payload);  \n  if (!payload_value) {                                                          \n    VLOG(1) \u003c\u003c \"Invalid id_token: payload parsing failed.\";                      \n    return false;                                                                \n  }                                                                              \n                                                                                 \n  *out_payload \u003d base::DictionaryValue::From(std::move(payload_value));          \n  if (!out_payload-\u003eget()) {                                                     \n    VLOG(1) \u003c\u003c \"Invalid id_token: payload is not a dictionary.\";                 \n    return false;                                                                \n  }                                                                              \n                                                                                 \n  return true;                                                                   \n}",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a810ad02_7441dcab",
+        "filename": "google_apis/gaia/gaia_auth_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "\u003e I just landed a Cl that removed some unused code from this file, so this function is now simplified. So it is easy now to make changes here.\n\u003e \n\u003e I\u0027d suggest implementing token decoding in anonymous namespace in this file. Basically in this function.\n\u003e \n\u003e It is actually used only to create GaiaAuthConsumer::ClientOAuthResult responce, so you can make this function fully construct it. This will also make it constant in the other places, which reduces complexity.\n\u003e \n\nI don\u0027t think changing what the method returns makes it simpler. I prefer keeping most of the signature and simply adding the parameter. msarda@, could you please advise?\n\n\u003e So, if you can return ClientOAuthResult from here, then, the function signature will looks like:\n\u003e \n\u003e std::unique_ptr\u003cconst GaiaAuthConsumer::ClientOAuthResult\u003e\n\u003e ExtractOAuth2TokenPairResponse(const std::string\u0026 data);\n\u003e \n\u003e Then you decode |data|, remember that |id_token| is a dictionary (and optional!), so it is reasonable to store it in ClientOAuthResult as a pointer to dictionary. Dictionary in Chrome means base::DictionaryValue (basically this is what you get from JSON decoder).\n\u003e \n\u003e So your function (after you rebase your Cl to adjust to underlying changes), could probably  look like:\n\u003e \n\u003e std::unique_ptr\u003cconst GaiaAuthConsumer::ClientOAuthResult\u003e\n\u003e ExtractOAuth2TokenPairResponse(const std::string\u0026 data) {\n\u003e   std::unique_ptr\u003cbase::Value\u003e value \u003d base::JSONReader::Read(data);\n\u003e   if (!value.get() || value-\u003etype() !\u003d base::Value::Type::DICTIONARY)\n\u003e     return nullptr;\n\u003e \n\u003e   base::DictionaryValue* dict \u003d\n\u003e         static_cast\u003cbase::DictionaryValue*\u003e(value.get());\n\u003e \n\u003e   std::string refresh_token;\n\u003e   std::string access_token;\n\u003e   int expires_in_secs \u003d 0;\n\u003e \n\u003e   if (!dict-\u003eGetStringWithoutPathExpansion(\"refresh_token\", \u0026refresh_token) ||\n\u003e       !dict-\u003eGetStringWithoutPathExpansion(\"access_token\", \u0026access_token) ||\n\u003e       !dict-\u003eGetIntegerWithoutPathExpansion(\"expires_in\", \u0026expires_in_secs)) {\n\u003e     return nullptr;\n\u003e   }\n\u003e   std::string id_token;\n\u003e   std::unique_ptr\u003cbase::DictionaryValue\u003e id_token_payload;\n\u003e   if (dict-\u003eGetStringWithoutPathExpansion(\"id_token\", \u0026id_token) \u0026\u0026\n\u003e       !DecodeIdToken(id_token, \u0026id_token_payload)) {\n\u003e     return nullptr;\n\u003e   }\n\u003e   return std::make_unique\u003cGaiaAuthConsumer::ClientOAuthResult\u003e(\n\u003e       refresh_token, access_token, expires_in_secs,\n\u003e       std::move(id_token_payload));\n\u003e }\n\u003e \n\nI was discussing with escordeiro@ about it, and we think that, initially, the user should not be blocked to sign in if there\u0027s a failure in decoding the ID token. We should, however, be able to report when this happens so we can keep track of this issue.\n\n\u003e \n\u003e Then, you\u0027ll need to implement DecodeIdToken() using our base/ library. You\u0027ll need to split string, run JSON decoder, check for return types, and make sure you extract dictionary from the token. You also need to check for errors.\n\u003e \n\u003e So we could imagine it could look like this:\n\u003e \n\u003e bool DecodeIdToken(const std::string\u0026 id_token,                                  \n\u003e                    std::unique_ptr\u003cbase::DictionaryValue\u003e* out_payload) {        \n\u003e   const std::vector\u003cbase::StringPiece\u003e parts \u003d                                   \n\u003e       base::SplitStringPiece(base::StringPiece(id_token), \".\",                   \n\u003e                              base::WhitespaceHandling::KEEP_WHITESPACE,          \n\u003e                              base::SplitResult::SPLIT_WANT_ALL);           \n\u003e   if (parts.size() !\u003d 3) {                                                       \n\u003e     VLOG(1) \u003c\u003c \"Invalid id_token: \" \u003c\u003c parts.size() \u003c\u003c \" parts.\";                \n\u003e     return false;                                                                \n\u003e   }\n\nThat simplifies the logic. Thanks!                                                                      \n\n\u003e                                                                                  \n\u003e   // Ignore header (parts[0]).                                                   \n\u003e   std::string payload;                                                           \n\u003e   if (!base::Base64UrlDecode(                                                    \n\u003e           parts[1], base::Base64UrlDecodePolicy::DISALLOW_PADDING, \u0026payload)) {\n\u003e     VLOG(1) \u003c\u003c \"Invalid id_token: payload decoding failed.\";                     \n\u003e     return false;                                                                \n\u003e   }                                                                              \n\u003e   // Ignore signature (part[2]).                                                 \n\u003e                                                                                  \n\u003e   std::unique_ptr\u003cbase::Value\u003e payload_value \u003d base::JSONReader::Read(payload);  \n\u003e   if (!payload_value) {                                                          \n\u003e     VLOG(1) \u003c\u003c \"Invalid id_token: payload parsing failed.\";                      \n\u003e     return false;                                                                \n\u003e   }                                                                              \n\u003e                                                                                  \n\u003e   *out_payload \u003d base::DictionaryValue::From(std::move(payload_value));          \n\u003e   if (!out_payload-\u003eget()) {                                                     \n\u003e     VLOG(1) \u003c\u003c \"Invalid id_token: payload is not a dictionary.\";                 \n\u003e     return false;                                                                \n\u003e   }                                                                              \n\u003e                                                                                  \n\u003e   return true;                                                                   \n\u003e }",
+      "parentUuid": "dd12b0b2_e02208a6",
       "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "a2a7ab3d_d5520d0d",
+        "filename": "google_apis/gaia/gaia_auth_fetcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to change how ExtractOAuthTokenPairResponse is tested. Besides, we should probably be fine in testing the public API. Most logic lies in the decoding. If we decide to add it in GaiaAuthFetcher directly and not in a separate class, then I\u0027ll do that. Thanks for the pointer!",
+      "parentUuid": "5f5c3e16_bdf48ee8",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02c30f20_6eef52b1",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
         "patchSetId": 4
@@ -234,6 +432,24 @@
       "writtenOn": "2017-11-21T10:54:27Z",
       "side": 1,
       "message": "You are trying to re-implement base::SplitString and base64-URL decoding, which are already avalable in base/ .",
+      "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded0e910_a0d9533b",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:00:29Z",
+      "side": 1,
+      "message": "Thanks, I wasn\u0027t aware of SplitString.\n\nAbout the base64 decoding, I was already using base::Base64Decode. However, I should be using Base64Url, thanks for pointing that out.",
+      "parentUuid": "02c30f20_6eef52b1",
       "revId": "a1f818bce22055ac0a67c47b02944b1d1607d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
