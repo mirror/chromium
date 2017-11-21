@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "46a22b2d_fa1282cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-21T17:22:49Z",
+      "side": 1,
+      "message": "nit:tyop",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "f083632df45284ec41228aeb2579e056396e35a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1cc85a2_98ae2269",
         "filename": "content/browser/blob_storage/blob_dispatcher_host.cc",
         "patchSetId": 3
