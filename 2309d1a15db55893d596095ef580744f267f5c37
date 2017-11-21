@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d5539c1_5e4d3151",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-21T17:03:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8513b2a7_eb99e037",
+      "revId": "2309d1a15db55893d596095ef580744f267f5c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c43a809c_ab5b162e",
         "filename": "chrome/browser/ui/browser_list.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T02:05:06Z",
       "side": 1,
       "message": "To go along with the std::set suggestion - does shuffling the ordering in |currently_closing_browsers_| matter? All the callers want to do is see how big the container is, and if it contains a particular Browser*.",
+      "revId": "2309d1a15db55893d596095ef580744f267f5c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba918b3_0c9e334b",
+        "filename": "chrome/browser/ui/browser_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-21T17:03:13Z",
+      "side": 1,
+      "message": "Yes, that\u0027s true. The order of currently_closing_browsers_ doesn\u0027t matter.",
+      "parentUuid": "c43a809c_ab5b162e",
       "revId": "2309d1a15db55893d596095ef580744f267f5c37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "21812c1a_1521d56c",
+        "filename": "chrome/browser/ui/browser_list.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-21T17:03:13Z",
+      "side": 1,
+      "message": "ACK\nI have introduced new method to access to closing browsers set:\nconst BrowserSet\u0026 BrowserList::get_currently_closing_browsers();",
+      "parentUuid": "867222c1_dff77b43",
+      "revId": "2309d1a15db55893d596095ef580744f267f5c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78387b1b_4eb89666",
         "filename": "chrome/browser/ui/browser_list.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-21T02:00:22Z",
       "side": 1,
       "message": "Can this just be a std::set\u003cBrowser*\u003e, since the ordering doesn\u0027t matter? (Or base::flat_set, since there aren\u0027t that many Browser objects active, right?)",
+      "revId": "2309d1a15db55893d596095ef580744f267f5c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e47bee2_ac1fbe5f",
+        "filename": "chrome/browser/ui/browser_list.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-21T17:03:13Z",
+      "side": 1,
+      "message": "Yes, you are right. base::flat_set is the best choice here.",
+      "parentUuid": "78387b1b_4eb89666",
       "revId": "2309d1a15db55893d596095ef580744f267f5c37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
