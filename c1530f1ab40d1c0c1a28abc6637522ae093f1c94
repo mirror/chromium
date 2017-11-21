@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "d193d511_4e272327",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/workers-on-navigation.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T01:52:25Z",
+      "side": 1,
+      "message": "Good idea, let\u0027s do it in the harness.",
+      "parentUuid": "145a36a8_68d304be",
+      "revId": "c1530f1ab40d1c0c1a28abc6637522ae093f1c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a026a691_ca6495de",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/workers-on-navigation.js",
         "patchSetId": 1
