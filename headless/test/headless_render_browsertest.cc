@@ -11,6 +11,7 @@
 #include "headless/public/devtools/domains/runtime.h"
 #include "headless/public/headless_devtools_client.h"
 #include "headless/test/headless_render_test.h"
+#include "net/test/embedded_test_server/http_response.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -101,8 +102,17 @@ MATCHER_P(RemoteString, expected, "") {
          arg->GetValue()->GetString() == expected;
 }
 
+MATCHER_P(RequestPath, expected, "") {
+  return arg.relative_url == expected;
+}
+
 using testing::ElementsAre;
+using testing::Eq;
 using testing::StartsWith;
+using net::test_server::HttpRequest;
+using net::test_server::HttpResponse;
+using net::test_server::BasicHttpResponse;
+using net::test_server::RawHttpResponse;
 
 }  // namespace
 
@@ -144,8 +154,33 @@ HEADLESS_RENDER_BROWSERTEST(TimeoutTest);
 
 class JavaScriptOverrideTitle_JsEnabled : public HeadlessRenderTest {
  private:
+  std::unique_ptr<HttpResponse> OnResourceRequest(
+      const HttpRequest& request) override {
+    if (request.relative_url == "/foobar") {
+      std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
+      http_response->set_code(net::HttpStatusCode::HTTP_OK);
+      http_response->set_content_type("text/html");
+      http_response->set_content(
+          "<html>\n"
+          "<head>\n"
+          "  <title>JavaScript is off</title>\n"
+          "  <script language=\"JavaScript\">\n"
+          "      <!-- Begin\n"
+          "      document.title = 'JavaScript is on';\n"
+          "      //  End -->\n"
+          "  </script>\n"
+          "</head>\n"
+          "<body onload=\"settitle()\">\n"
+          "  Hello, World!\n"
+          "</body>\n"
+          "</html>\n");
+      return std::move(http_response);
+    }
+    return std::unique_ptr<net::test_server::HttpResponse>();
+  }
+
   GURL GetPageUrl(HeadlessDevToolsClient* client) override {
-    return GetURL("/render/javascript_override_title.html");
+    return GetURL("/foobar");
   }
 
   void VerifyDom(GetSnapshotResult* dom_snapshot) override {
@@ -158,15 +193,12 @@ class JavaScriptOverrideTitle_JsEnabled : public HeadlessRenderTest {
 };
 HEADLESS_RENDER_BROWSERTEST(JavaScriptOverrideTitle_JsEnabled);
 
-class JavaScriptOverrideTitle_JsDisabled : public HeadlessRenderTest {
+class JavaScriptOverrideTitle_JsDisabled
+    : public JavaScriptOverrideTitle_JsEnabled {
  private:
   void OverrideWebPreferences(WebPreferences* preferences) override {
     HeadlessRenderTest::OverrideWebPreferences(preferences);
     preferences->javascript_enabled = false;
-  }
-
-  GURL GetPageUrl(HeadlessDevToolsClient* client) override {
-    return GetURL("/render/javascript_override_title.html");
   }
 
   void VerifyDom(GetSnapshotResult* dom_snapshot) override {
@@ -186,6 +218,40 @@ class JavaScriptConsoleErrors : public HeadlessRenderTest,
   std::vector<std::string> messages_;
   bool log_called_ = false;
 
+  std::unique_ptr<HttpResponse> OnResourceRequest(
+      const HttpRequest& request) override {
+    if (request.relative_url == "/foobar") {
+      std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
+      http_response->set_code(net::HttpStatusCode::HTTP_OK);
+      http_response->set_content_type("text/html");
+      http_response->set_content(
+          "<html>\n"
+          "<head>\n"
+          "  <script language=\"JavaScript\">\n"
+          "    <![CDATA[\n"
+          "     function image() {\n"
+          "      window.open('<xsl:value-of select=\"/IMAGE/@href\" />');\n"
+          "        }\n"
+          "    ]]>\n"
+          "  </script>\n"
+          "</head>\n"
+          "<body onload=\"func3()\">\n"
+          "  <script type=\"text/javascript\">\n"
+          "    func1()\n"
+          "  </script>\n"
+          "  <script type=\"text/javascript\">\n"
+          "    func2()\n"
+          "  </script>\n"
+          "  <script type=\"text/javascript\">\n"
+          "    console.log(\"Hello, Script!\");\n"
+          "  </script>\n"
+          "</body>\n"
+          "</html>\n");
+      return std::move(http_response);
+    }
+    return std::unique_ptr<net::test_server::HttpResponse>();
+  }
+
   GURL GetPageUrl(HeadlessDevToolsClient* client) override {
     client_ = client;
     client_->GetRuntime()->GetExperimental()->AddObserver(this);
@@ -194,7 +260,7 @@ class JavaScriptConsoleErrors : public HeadlessRenderTest,
     base::MessageLoop::ScopedNestableTaskAllower nest_loop(
         base::MessageLoop::current());
     run_loop.Run();
-    return GetURL("/render/console_errors.html");
+    return GetURL("/foobar");
   }
 
   void OnConsoleAPICalled(
@@ -227,9 +293,34 @@ class DelayedCompletion : public HeadlessRenderTest {
  private:
   base::TimeTicks start_;
 
+  std::unique_ptr<HttpResponse> OnResourceRequest(
+      const HttpRequest& request) override {
+    if (request.relative_url == "/foobar") {
+      std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
+      http_response->set_code(net::HttpStatusCode::HTTP_OK);
+      http_response->set_content_type("text/html");
+      http_response->set_content(
+          "<html>\n"
+          "<body>\n"
+          "  <script type=\"text/javascript\">\n"
+          "    setTimeout(() => {\n"
+          "      var div = document.getElementById('content');\n"
+          "      var p = document.createElement('p');\n"
+          "      p.textContent = 'delayed text';\n"
+          "      div.appendChild(p);\n"
+          "    }, 3000);\n"
+          "  </script>\n"
+          "  <div id=\"content\"/>\n"
+          "</body>\n"
+          "</html>\n");
+      return std::move(http_response);
+    }
+    return std::unique_ptr<net::test_server::HttpResponse>();
+  }
+
   GURL GetPageUrl(HeadlessDevToolsClient* client) override {
     start_ = base::TimeTicks::Now();
-    return GetURL("/render/delayed_completion.html");
+    return GetURL("/foobar");
   }
 
   void VerifyDom(GetSnapshotResult* dom_snapshot) override {
@@ -250,5 +341,104 @@ class DelayedCompletion : public HeadlessRenderTest {
   }
 };
 HEADLESS_RENDER_BROWSERTEST(DelayedCompletion);
+
+class ClientRedirectChain : public HeadlessRenderTest {
+ private:
+  bool image_requested_ = false;
+
+  std::unique_ptr<HttpResponse> OnResourceRequest(
+      const HttpRequest& request) override {
+    GURL base = GetURL("/");
+    if (request.relative_url == "/") {
+      std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
+      http_response->set_code(net::HttpStatusCode::HTTP_OK);
+      http_response->set_content_type("text/html");
+      http_response->set_content(
+          "<html>\n"
+          " <head>\n"
+          "  <meta http-equiv=\"refresh\" "
+          "    content=\"0; url=" +
+          base.Resolve("/1").spec() +
+          "\"/>\n"
+          "  <title>Hello, World 0</title>\n"
+          " </head>\n"
+          " <body>http://www.example.com/</body>\n"
+          "</html>\n");
+      return std::move(http_response);
+    } else if (request.relative_url == "/1") {
+      std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
+      http_response->set_code(net::HttpStatusCode::HTTP_OK);
+      http_response->set_content_type("text/html");
+      http_response->set_content(
+          "<html>\n"
+          " <head>\n"
+          "  <title>Hello, World 1</title>\n"
+          "  <script>\n"
+          "   document.location='" +
+          base.Resolve("/2").spec() +
+          "';\n"
+          "  </script>\n"
+          " </head>\n"
+          " <body>http://www.example.com/1</body>\n"
+          "</html>\n");
+      return std::move(http_response);
+    } else if (request.relative_url == "/2") {
+      std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
+      http_response->set_code(net::HttpStatusCode::HTTP_OK);
+      http_response->set_content_type("text/html");
+      http_response->set_content(
+          "<html>\n"
+          " <head>\n"
+          "  <title>Hello, World 2</title>\n"
+          "  <script>\n"
+          "    setTimeout("
+          "      \"document.location='" +
+          base.Resolve("/3").spec() +
+          "'\","
+          "      1000);\n"
+          "  </script>\n"
+          " </head>\n"
+          " <body>http://www.example.com/2</body>\n"
+          "</html>\n");
+      return std::move(http_response);
+    } else if (request.relative_url == "/3") {
+      std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
+      http_response->set_code(net::HttpStatusCode::HTTP_OK);
+      http_response->set_content_type("text/html");
+      http_response->set_content(
+          "<html>\n"
+          " <head>\n"
+          "  <title>Pass</title>\n"
+          " </head>\n"
+          " <body>\n"
+          "   http://www.example.com/3"
+          "   <img src=\"pass\">\n"
+          "</body>\n"
+          "</html>\n");
+      return std::move(http_response);
+    } else if (request.relative_url == "/pass") {
+      image_requested_ = true;
+    }
+    return std::unique_ptr<net::test_server::HttpResponse>();
+  }
+
+  GURL GetPageUrl(HeadlessDevToolsClient* client) override {
+    return GetURL("/");
+  }
+
+  void VerifyDom(GetSnapshotResult* dom_snapshot) override {
+    EXPECT_TRUE(image_requested_);
+    EXPECT_THAT(
+        GetAccessLog(),
+        ElementsAre(RequestPath("/"), RequestPath("/1"), RequestPath("/2"),
+                    RequestPath("/3"), RequestPath("/pass")));
+    auto dom = FindTags(dom_snapshot, "TITLE");
+    ASSERT_THAT(dom, ElementsAre(NodeName("TITLE")));
+    size_t pos = IndexInDOM(dom_snapshot, dom[0]);
+    const DOMNode* value = GetAt(dom_snapshot, pos + 1);
+    EXPECT_THAT(value, NodeValue("Pass"));
+  }
+};
+HEADLESS_RENDER_BROWSERTEST(ClientRedirectChain);
 
 }  // namespace headless

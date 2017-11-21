@@ -7,6 +7,7 @@
 #include "headless/public/devtools/domains/dom_snapshot.h"
 #include "headless/public/headless_devtools_client.h"
 #include "headless/public/util/virtual_time_controller.h"
+#include "net/test/embedded_test_server/http_response.h"
 #include "net/url_request/url_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -30,6 +31,8 @@ void HeadlessRenderTest::PostRunAsynchronousTest() {
 }
 
 void HeadlessRenderTest::RunDevTooledTest() {
+  embedded_test_server()->RegisterRequestHandler(
+      base::Bind(&HeadlessRenderTest::HandleResourceRequest, this));
   EXPECT_TRUE(embedded_test_server()->Start());
 
   virtual_time_controller_ =
@@ -91,6 +94,12 @@ void HeadlessRenderTest::OverrideWebPreferences(WebPreferences* preferences) {
   preferences->hide_scrollbars = true;
   preferences->javascript_enabled = true;
   preferences->autoplay_policy = content::AutoplayPolicy::kUserGestureRequired;
+}
+
+std::unique_ptr<net::test_server::HttpResponse>
+HeadlessRenderTest::OnResourceRequest(
+    const net::test_server::HttpRequest& request) {
+  return std::unique_ptr<net::test_server::HttpResponse>();
 }
 
 void HeadlessRenderTest::UrlRequestFailed(net::URLRequest* request,
@@ -169,6 +178,15 @@ void HeadlessRenderTest::HandleTimeout() {
     FinishAsynchronousTest();
     OnTimeout();
   }
+}
+
+// static
+std::unique_ptr<net::test_server::HttpResponse>
+HeadlessRenderTest::HandleResourceRequest(
+    HeadlessRenderTest* instance,
+    const net::test_server::HttpRequest& request) {
+  instance->access_log_.push_back(request);
+  return instance->OnResourceRequest(request);
 }
 
 }  // namespace headless
