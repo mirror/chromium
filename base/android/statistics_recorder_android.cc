@@ -5,7 +5,9 @@
 #include <string>
 
 #include "base/android/jni_string.h"
+#include "base/metrics/histogram_base.h"
 #include "base/metrics/statistics_recorder.h"
+#include "base/sys_info.h"
 #include "jni/StatisticsRecorderAndroid_jni.h"
 
 using base::android::JavaParamRef;
@@ -16,8 +18,14 @@ namespace android {
 
 static ScopedJavaLocalRef<jstring> ToJson(JNIEnv* env,
                                           const JavaParamRef<jclass>& clazz) {
+  // Use lossy dump on low memory devices to reduce memory pressure, and
+  // out-of-memory crashes in the browser process.
+  base::JSONVerbosityLevel verbosity_level = base::JSONVerbosityLevel::kFull;
+  if (base::SysInfo::IsLowEndDevice()) {
+    verbosity_level = base::JSONVerbosityLevel::kSkipBuckets;
+  }
   return ConvertUTF8ToJavaString(
-      env, base::StatisticsRecorder::ToJSON(std::string()));
+      env, base::StatisticsRecorder::ToJSON(verbosity_level));
 }
 
 }  // namespace android
