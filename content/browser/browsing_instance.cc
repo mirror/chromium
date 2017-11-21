@@ -4,6 +4,8 @@
 
 #include "content/browser/browsing_instance.h"
 
+#include <string>
+
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "content/browser/site_instance_impl.h"
@@ -16,16 +18,10 @@
 namespace content {
 
 BrowsingInstance::BrowsingInstance(BrowserContext* browser_context)
-    : browser_context_(browser_context),
-      active_contents_count_(0u) {
-}
+    : browser_context_(browser_context) {}
 
 bool BrowsingInstance::HasSiteInstance(const GURL& url) {
-  std::string site =
-      SiteInstanceImpl::GetSiteForURL(browser_context_, url)
-          .possibly_invalid_spec();
-
-  return site_instance_map_.find(site) != site_instance_map_.end();
+  return !!GetSiteInstanceForURL(url);
 }
 
 scoped_refptr<SiteInstanceImpl> BrowsingInstance::GetSiteInstanceForURL(
@@ -33,12 +29,30 @@ scoped_refptr<SiteInstanceImpl> BrowsingInstance::GetSiteInstanceForURL(
   std::string site = SiteInstanceImpl::GetSiteForURL(browser_context_, url)
                          .possibly_invalid_spec();
 
+  // Try to reuse a SiteInstance matching the site of |url|.
   SiteInstanceMap::iterator i = site_instance_map_.find(site);
   if (i != site_instance_map_.end())
     return i->second;
 
+  // Try to reuse a SiteInstance for |url| that doesn't require isolation.
+  bool url_requires_dedicated_site =
+      SiteInstanceImpl::DoesSiteRequireDedicatedProcess(browser_context_, url);
+  if (!url_requires_dedicated_site && undedicated_site_instance_)
+    return undedicated_site_instance_;
+
+  // Give up...
+  return nullptr;
+}
+
+scoped_refptr<SiteInstanceImpl> BrowsingInstance::GetOrCreateSiteInstanceForURL(
+    const GURL& url) {
+  // Try to reuse an existing SiteInstance.
+  scoped_refptr<SiteInstanceImpl> instance = GetSiteInstanceForURL(url);
+  if (instance)
+    return instance;
+
   // No current SiteInstance for this site, so let's create one.
-  scoped_refptr<SiteInstanceImpl> instance = new SiteInstanceImpl(this);
+  instance = new SiteInstanceImpl(this);
 
   // Set the site of this new SiteInstance, which will register it with us.
   instance->SetSite(url);
@@ -84,6 +98,9 @@ void BrowsingInstance::RegisterSiteInstance(SiteInstanceImpl* site_instance) {
     // Not previously registered, so register it.
     site_instance_map_[site] = site_instance;
   }
+
+  if (!undedicated_site_instance_ && !site_instance->RequiresDedicatedProcess())
+    undedicated_site_instance_ = site_instance;
 }
 
 void BrowsingInstance::UnregisterSiteInstance(SiteInstanceImpl* site_instance) {
@@ -101,6 +118,8 @@ void BrowsingInstance::UnregisterSiteInstance(SiteInstanceImpl* site_instance) {
   }
   if (default_subframe_site_instance_ == site_instance)
     default_subframe_site_instance_ = nullptr;
+  if (undedicated_site_instance_ == site_instance)
+    undedicated_site_instance_ = nullptr;
 }
 
 BrowsingInstance::~BrowsingInstance() {

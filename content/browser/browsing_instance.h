@@ -7,6 +7,8 @@
 
 #include <stddef.h>
 
+#include <string>
+
 #include "base/containers/hash_tables.h"
 #include "base/gtest_prod_util.h"
 #include "base/lazy_instance.h"
@@ -76,10 +78,15 @@ class CONTENT_EXPORT BrowsingInstance final
   // the site of the given URL.
   bool HasSiteInstance(const GURL& url);
 
-  // Get the SiteInstance responsible for rendering the given URL.  Should
-  // create a new one if necessary, but should not create more than one
-  // SiteInstance per site.
+  // Gets a SiteInstance that can host the given URL.  Returns nullpts if no
+  // such SiteInstance exists within the current BrowsingInstance.
   scoped_refptr<SiteInstanceImpl> GetSiteInstanceForURL(const GURL& url);
+
+  // Gets or creates the SiteInstance responsible for rendering the given URL.
+  // Should create a new one if necessary, but should not create more than one
+  // SiteInstance per site.
+  scoped_refptr<SiteInstanceImpl> GetOrCreateSiteInstanceForURL(
+      const GURL& url);
 
   // Returns a SiteInstance that should be used for subframes when an oopif is
   // required, but a dedicated process is not. This SiteInstance will be created
@@ -122,8 +129,12 @@ class CONTENT_EXPORT BrowsingInstance final
   // site, such as about:blank.  See NavigatorImpl::ShouldAssignSiteForURL.
   SiteInstanceMap site_instance_map_;
 
+  // A SiteInstance that is part of this BrowsingInstance and which can host
+  // any site that does not require dedicated process.
+  SiteInstanceImpl* undedicated_site_instance_ = nullptr;
+
   // Number of WebContentses currently using this BrowsingInstance.
-  size_t active_contents_count_;
+  size_t active_contents_count_ = 0;
 
   SiteInstanceImpl* default_subframe_site_instance_ = nullptr;
 
