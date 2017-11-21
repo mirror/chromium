@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b83b022_39c49996",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:06:59Z",
+      "side": 1,
+      "message": "nit: delete blank line to match style below?",
+      "revId": "a9149bfaf9159308bc4bf73db8e3cc26325a8e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d46ddc4_30332eb1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:06:59Z",
+      "side": 1,
+      "message": "nit: delete blank line to match style below?",
+      "revId": "a9149bfaf9159308bc4bf73db8e3cc26325a8e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac72fef0_130121bc",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:06:59Z",
+      "side": 1,
+      "message": "nit: delete extra space",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 14
+      },
+      "revId": "a9149bfaf9159308bc4bf73db8e3cc26325a8e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b56ec9f_cc6bc27f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:06:59Z",
+      "side": 1,
+      "message": "nit: UNKNOWN_MANAGEMENT?",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 18
+      },
+      "revId": "a9149bfaf9159308bc4bf73db8e3cc26325a8e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
