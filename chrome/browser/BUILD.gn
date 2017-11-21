@@ -3022,6 +3022,8 @@ split_static_library("browser") {
       "notifications/screen_lock_notification_blocker.cc",
       "notifications/screen_lock_notification_blocker.h",
       "platform_util.cc",
+      "policy/cloud/device_cloud_policy_service.cc",
+      "policy/cloud/device_cloud_policy_service.h",
       "policy/cloud/user_policy_signin_service.cc",
       "policy/cloud/user_policy_signin_service.h",
       "profiles/avatar_menu_actions_desktop.cc",

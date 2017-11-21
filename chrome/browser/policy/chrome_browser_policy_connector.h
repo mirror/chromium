@@ -22,6 +22,7 @@ class URLRequestContextGetter;
 namespace policy {
 
 class ConfigurationPolicyProvider;
+class DeviceCloudPolicyService;
 
 // Extends BrowserPolicyConnector with the setup shared among the desktop
 // implementations and Android.
@@ -43,6 +44,8 @@ class ChromeBrowserPolicyConnector : public BrowserPolicyConnector {
 
  private:
   std::unique_ptr<ConfigurationPolicyProvider> CreatePlatformProvider();
+
+  std::unique_ptr<DeviceCloudPolicyService> device_policy_service_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserPolicyConnector);
 };
