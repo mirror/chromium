@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "59a84a5e_ccee2302",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-21T12:19:56Z",
+      "side": 1,
+      "message": "Ok this makes sense. We are wasting effort without the if guard here. \n\nRe: fix for the option case. It doesn\u0027t fix the issue. \nIn fact why does HTMLOptionElement need to pass in OriginalStyleForLayoutObject() it doesn\u0027t have CustomStyleCallbacks which means StyleForLayoutObject would return the OriginalStyleForLayoutObject(). But that is an issue for another patch...",
+      "parentUuid": "f4f7e3e5_ea2ae4c7",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "041331c3_92e8687f",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 3
