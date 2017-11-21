@@ -33,8 +33,10 @@ class ChromeCleanupHandler
   void OnIdle(
       safe_browsing::ChromeCleanerController::IdleReason idle_reason) override;
   void OnScanning() override;
-  void OnInfected(const std::set<base::FilePath>& files) override;
-  void OnCleaning(const std::set<base::FilePath>& files) override;
+  void OnInfected(const std::set<base::FilePath>& files,
+                  const std::set<base::string16>& registry_keys) override;
+  void OnCleaning(const std::set<base::FilePath>& files,
+                  const std::set<base::string16>& registry_keys) override;
   void OnRebootRequired() override;
   void OnLogsEnabledChanged(bool logs_enabled) override;
 

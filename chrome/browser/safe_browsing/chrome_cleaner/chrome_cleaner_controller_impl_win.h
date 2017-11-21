@@ -94,11 +94,13 @@ class ChromeCleanerControllerImpl : public ChromeCleanerController {
   // objects become no-ops if the bound weak pointer is not valid).
   static void WeakOnPromptUser(
       const base::WeakPtr<ChromeCleanerControllerImpl>& controller,
-      std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+      std::set<base::FilePath>&& files_to_delete,
+      std::set<base::string16>&& registry_keys,
       chrome_cleaner::mojom::ChromePrompt::PromptUserCallback
           prompt_user_callback);
 
-  void OnPromptUser(std::unique_ptr<std::set<base::FilePath>> files_to_delete,
+  void OnPromptUser(std::set<base::FilePath>&& files_to_delete,
+                    std::set<base::string16>&& registry_keys,
                     chrome_cleaner::mojom::ChromePrompt::PromptUserCallback
                         prompt_user_callback);
   void OnConnectionClosed();
@@ -117,7 +119,8 @@ class ChromeCleanerControllerImpl : public ChromeCleanerController {
   bool powered_by_partner_ = false;
   IdleReason idle_reason_ = IdleReason::kInitial;
   std::unique_ptr<SwReporterInvocation> reporter_invocation_;
-  std::unique_ptr<std::set<base::FilePath>> files_to_delete_;
+  std::set<base::FilePath> files_to_delete_;
+  std::set<base::string16> registry_keys_;
   // The Mojo callback that should be called to send a response to the Chrome
   // Cleaner process. This must be posted to run on the IO thread.
   chrome_cleaner::mojom::ChromePrompt::PromptUserCallback prompt_user_callback_;
