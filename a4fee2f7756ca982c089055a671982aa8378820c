@@ -16,6 +16,91 @@
       "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c09f66_18522df7",
+        "filename": "chrome/browser/content_settings/content_settings_pref_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T03:26:28Z",
+      "side": 1,
+      "message": "This test is hard to review carefully because it\u0027s so big. I did my best and it looks correct. I\u0027m not sure if it\u0027s worth breaking up.",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d73f97_560609da",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T03:26:28Z",
+      "side": 1,
+      "message": "Maybe just remove this line? Such that example.com is allowed but google.com isn\u0027t?",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ef202a_d05ef352",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T03:26:28Z",
+      "side": 1,
+      "message": "Then this could stay as EXPECT_EQ(CONTENT_SETTING_BLOCK",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7df66c_1d70669f",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T03:26:28Z",
+      "side": 1,
+      "message": "Then you could keep the expected_default bool here \"true\"",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20d2262_8989c98c",
+        "filename": "components/content_settings/core/browser/content_settings_pref.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T03:26:28Z",
+      "side": 1,
+      "message": "I think this will break in non-debug builds? Perhaps move the DCHECK to a separate statement.",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

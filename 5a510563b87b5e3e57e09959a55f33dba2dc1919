@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e5c5f8_6ec96ffc",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T03:26:28Z",
+      "side": 0,
+      "message": "Maybe keep this to keep the test more similar to before?",
+      "revId": "5a510563b87b5e3e57e09959a55f33dba2dc1919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
