@@ -1,0 +1,339 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0322589_0bce32f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "Are there tracking bug(s) for these, or same bug?",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92082886_934c2032",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "As noted inline, the API is available from Workers too so it can\u0027t just be frames. Fortunately it\u0027s now possible to grab the interface provider via ExecutionContext. :)",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b2a32b_a088d588",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "We\u0027re going to be stuck with this for at least another year or two, so I\u0027d drop this part of the commit comment.",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bc3da6_262ce315",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "outstanding_requests_ was removed in this CL?",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a0e5dd_418628c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "StorageQuotaParams",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed87d9f1_d0c4c42e",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "\u003d default; ?",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e29ea48_58dcbcfe",
+        "filename": "content/browser/quota_dispatcher_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "nit: switch order of Query/Request",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3187e786_d7faf685",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "It\u0027s weird (IMHO) to have the interface split across two mojom files, but this is okay for an intermediate state.\n\nI\u0027d expect that we end up defining this in \nthird_party/WebKit/public/platform/modules/quota/quota_service_manager_thingy_i_hate_naming_stuff.mojom with everything that the client (blink) needs to use the API.",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77fdecc_8262d326",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "Note that at least one of the APIs is callable from Workers, so it should be per \"execution context\" not per frame.",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626819d8_95096f9c",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "Thanks for making this a TODO! This may have unexpected complexity, e.g. since the quota back-end still uses URLs and we may be unexpectedly reliant on quirks of URL\u003c-\u003eOrigin conversion in blink/chromium.",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c86e669_37f2364a",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "Maybe add a comment that render_frame_id is for showing permissions UI.",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703ad126_e5ec872b",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "nit: can you wrap to 80 cols?",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a4a09f_8761a748",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "nit: can you put move the Query method before the Request method? (query is used more frequently, and alphabetical order)",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71cbc20e_88a78cc3",
+        "filename": "content/public/common/storage_quota_params.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "Is there any reason not to remove now? It looks like it\u0027s not used after this CL.",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06b7f02_29a3572e",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "I\u0027m confused - doesn\u0027t this mean requests from the same worker will end up with the same ID in the pending_quota_callbacks_ map?",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a04fb24_b0c6bd21",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "Not this CL, but maybe suffix with this for context about the assertion:\n\n \u003c\u003c \"Requests may show permission UI and are not allowed from workers.\"",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93abd61e_7fcd8e19",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "See above re: \"I\u0027m confused...\"",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9faddf52_05b0054f",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "Well, we should Onion Soupify this and there shouldn\u0027t be any code left in content/renderer. Not sure about the ordering of this cleanup, though.",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4e01da_4559b63f",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-21T21:14:06Z",
+      "side": 1,
+      "message": "The new navigator.storage.estimate() (now in Chrome and Firefox) uses this same plumbing (well, the query half) so I\u0027d drop this comment.\n\nAlso, you can s/kinuko/jsbell/ - I\u0027ll accept the blame for owning this going forward.",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
