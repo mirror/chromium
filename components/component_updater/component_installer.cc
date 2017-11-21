@@ -42,6 +42,31 @@ using InstallError = update_client::InstallError;
 
 }  // namespace
 
+CustomInstallRunner::CustomInstallRunner(
+    update_client::CrxInstaller::Callback callback)
+    : executed(false),
+      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      cancelable(base::BindOnce(std::move(callback))) {}
+
+void CustomInstallRunner::Start() {
+  base::PlatformThread::Sleep(base::TimeDelta::FromSeconds(5));
+  if (!executed) {
+    executed = true;
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(cancelable.callback(),
+                                  update_client::CrxInstaller::Result(
+                                      update_client::InstallError::NONE)));
+  }
+}
+
+void CustomInstallRunner::Run(const Result& result) {
+  if (!executed) {
+    executed = true;
+    task_runner_->PostTask(FROM_HERE,
+                           base::BindOnce(cancelable.callback(), result));
+  }
+}
+
 ComponentInstallerPolicy::~ComponentInstallerPolicy() {}
 
 ComponentInstaller::RegistrationInfo::RegistrationInfo()
@@ -84,14 +109,25 @@ void ComponentInstaller::OnUpdateError(int error) {
   LOG(ERROR) << "Component update error: " << error;
 }
 
-Result ComponentInstaller::InstallHelper(
+void ComponentInstaller::InstallHelper(
     const base::FilePath& unpack_path,
-    std::unique_ptr<base::DictionaryValue>* manifest,
-    base::Version* version,
-    base::FilePath* install_path) {
+    // std::unique_ptr<base::DictionaryValue>* manifest,
+    // base::Version* version,
+    // base::FilePath* install_path,
+    Callback callback) {
+  std::unique_ptr<base::DictionaryValue> manifest;
+  base::Version version;
+  base::FilePath install_path;
   auto local_manifest = update_client::ReadManifest(unpack_path);
-  if (!local_manifest)
-    return Result(InstallError::BAD_MANIFEST);
+  if (!local_manifest) {
+    // return Result(InstallError::BAD_MANIFEST);
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ComponentInstaller::PostInstall, this, unpack_path,
+                       std::move(callback), std::move(manifest), version,
+                       install_path, Result(InstallError::BAD_MANIFEST)));
+    return;
+  }
 
   std::string version_ascii;
   local_manifest->GetStringASCII("version", &version_ascii);
@@ -100,19 +136,48 @@ Result ComponentInstaller::InstallHelper(
   VLOG(1) << "Install: version=" << manifest_version.GetString()
           << " current version=" << current_version_.GetString();
 
-  if (!manifest_version.IsValid())
-    return Result(InstallError::INVALID_VERSION);
-  if (current_version_.CompareTo(manifest_version) > 0)
-    return Result(InstallError::VERSION_NOT_UPGRADED);
+  if (!manifest_version.IsValid()) {
+    // return Result(InstallError::INVALID_VERSION);
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ComponentInstaller::PostInstall, this, unpack_path,
+                       std::move(callback), std::move(manifest), version,
+                       install_path, Result(InstallError::INVALID_VERSION)));
+    return;
+  }
+  if (current_version_.CompareTo(manifest_version) > 0) {
+    // return Result(InstallError::VERSION_NOT_UPGRADED);
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&ComponentInstaller::PostInstall, this,
+                                  unpack_path, std::move(callback),
+                                  std::move(manifest), version, install_path,
+                                  Result(InstallError::VERSION_NOT_UPGRADED)));
+    return;
+  }
   base::FilePath local_install_path;
-  if (!PathService::Get(DIR_COMPONENT_USER, &local_install_path))
-    return Result(InstallError::NO_DIR_COMPONENT_USER);
+  if (!PathService::Get(DIR_COMPONENT_USER, &local_install_path)) {
+    // return Result(InstallError::NO_DIR_COMPONENT_USER);
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&ComponentInstaller::PostInstall, this,
+                                  unpack_path, std::move(callback),
+                                  std::move(manifest), version, install_path,
+                                  Result(InstallError::NO_DIR_COMPONENT_USER)));
+    return;
+  }
   local_install_path =
       local_install_path.Append(installer_policy_->GetRelativeInstallDir())
           .AppendASCII(manifest_version.GetString());
   if (base::PathExists(local_install_path)) {
-    if (!base::DeleteFile(local_install_path, true))
-      return Result(InstallError::CLEAN_INSTALL_DIR_FAILED);
+    if (!base::DeleteFile(local_install_path, true)) {
+      // return Result(InstallError::CLEAN_INSTALL_DIR_FAILED);
+      task_runner_->PostTask(
+          FROM_HERE,
+          base::BindOnce(&ComponentInstaller::PostInstall, this, unpack_path,
+                         std::move(callback), std::move(manifest), version,
+                         install_path,
+                         Result(InstallError::CLEAN_INSTALL_DIR_FAILED)));
+      return;
+    }
   }
 
   VLOG(1) << "unpack_path=" << unpack_path.AsUTF8Unsafe()
@@ -121,7 +186,13 @@ Result ComponentInstaller::InstallHelper(
   if (!base::Move(unpack_path, local_install_path)) {
     PLOG(ERROR) << "Move failed.";
     base::DeleteFile(local_install_path, true);
-    return Result(InstallError::MOVE_FILES_ERROR);
+    // return Result(InstallError::MOVE_FILES_ERROR);
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ComponentInstaller::PostInstall, this, unpack_path,
+                       std::move(callback), std::move(manifest), version,
+                       install_path, Result(InstallError::MOVE_FILES_ERROR)));
+    return;
   }
 
   // Acquire the ownership of the |local_install_path|.
@@ -132,37 +203,96 @@ Result ComponentInstaller::InstallHelper(
   if (!base::SetPosixFilePermissions(local_install_path, 0755)) {
     PLOG(ERROR) << "SetPosixFilePermissions failed: "
                 << local_install_path.value();
-    return Result(InstallError::SET_PERMISSIONS_FAILED);
+    // return Result(InstallError::SET_PERMISSIONS_FAILED);
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ComponentInstaller::PostInstall, this, unpack_path,
+                       std::move(callback), std::move(manifest), version,
+                       install_path,
+                       Result(InstallError::SET_PERMISSIONS_FAILED)));
+    return;
   }
 #endif  // defined(OS_CHROMEOS)
 
   DCHECK(!base::PathExists(unpack_path));
   DCHECK(base::PathExists(local_install_path));
 
-  const Result result =
-      installer_policy_->OnCustomInstall(*local_manifest, local_install_path);
-  if (result.error)
-    return result;
+  auto post_custom_install = base::BindOnce(
+      &ComponentInstaller::PostCustomInstall, this, unpack_path,
+      std::move(callback), std::move(manifest), std::move(local_manifest),
+      manifest_version, local_install_path, version, install_path);
+  std::unique_ptr<CustomInstallRunner> cir =
+      std::make_unique<CustomInstallRunner>(std::move(post_custom_install));
+  cir->Start();
+  installer_policy_->OnCustomInstall(*local_manifest, local_install_path,
+                                     std::move(cir));
+  // Block 5 seconds for post_custom_install to be called. Then call it to avoid
+  // starvation.
+  // base::PlatformThread::Sleep(base::TimeDelta::FromSeconds(5));
+  // task_runner_->PostTask(FROM_HERE,
+  //                       base::BindOnce(std::move(post_custom_install),
+  //                                      Result(InstallError::NONE)));
+}
+
+void ComponentInstaller::PostCustomInstall(
+    const base::FilePath unpack_path,
+    Callback callback,
+    std::unique_ptr<base::DictionaryValue> manifest,
+    std::unique_ptr<base::DictionaryValue> local_manifest,
+    const base::Version manifest_version,
+    base::FilePath local_install_path,
+    base::Version version,
+    base::FilePath install_path,
+    const Result& result) {
+  if (result.error) {
+    // return result;
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ComponentInstaller::PostInstall, this, unpack_path,
+                       std::move(callback), std::move(manifest), version,
+                       install_path, result));
+    return;
+  }
 
   if (!installer_policy_->VerifyInstallation(*local_manifest,
-                                             local_install_path))
-    return Result(InstallError::INSTALL_VERIFICATION_FAILED);
+                                             local_install_path)) {
+    // return Result(InstallError::INSTALL_VERIFICATION_FAILED);
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ComponentInstaller::PostInstall, this, unpack_path,
+                       std::move(callback), std::move(manifest), version,
+                       install_path,
+                       Result(InstallError::INSTALL_VERIFICATION_FAILED)));
+    return;
+  }
 
-  *manifest = std::move(local_manifest);
-  *version = manifest_version;
-  *install_path = install_path_owner.Take();
+  // manifest = std::move(local_manifest);
+  //*version = manifest_version;
+  //*install_path = local_install_path;
+  //*install_path = install_path_owner.Take();
 
-  return Result(InstallError::NONE);
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&ComponentInstaller::PostInstall, this, unpack_path,
+                     std::move(callback), std::move(local_manifest),
+                     manifest_version, local_install_path,
+                     Result(InstallError::NONE)));
+  // return Result(InstallError::NONE);
 }
 
 void ComponentInstaller::Install(const base::FilePath& unpack_path,
                                  const std::string& /*public_key*/,
                                  Callback callback) {
-  std::unique_ptr<base::DictionaryValue> manifest;
-  base::Version version;
-  base::FilePath install_path;
-  const Result result =
-      InstallHelper(unpack_path, &manifest, &version, &install_path);
+  InstallHelper(unpack_path, std::move(callback));
+}
+
+void ComponentInstaller::PostInstall(
+    const base::FilePath unpack_path,
+    Callback callback,
+    std::unique_ptr<base::DictionaryValue> manifest,
+    base::Version version,
+    base::FilePath install_path,
+    Result result) {
   base::DeleteFile(unpack_path, true);
   if (result.error) {
     main_task_runner_->PostTask(FROM_HERE,

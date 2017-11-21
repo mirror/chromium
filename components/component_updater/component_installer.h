@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/callback_forward.h"
+#include "base/cancelable_callback.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -28,6 +29,19 @@ class SingleThreadTaskRunner;
 namespace component_updater {
 
 class ComponentUpdateService;
+
+class CustomInstallRunner {
+ public:
+  CustomInstallRunner(update_client::CrxInstaller::Callback callback);
+  void Run(const update_client::CrxInstaller::Result& result);
+  void Start();
+
+ private:
+  bool executed;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  base::CancelableOnceCallback<void(const update_client::CrxInstaller::Result&)>
+      cancelable;
+};
 
 // Components should use a ComponentInstaller by defining a class that
 // implements the members of ComponentInstallerPolicy, and then registering a
@@ -58,9 +72,10 @@ class ComponentInstallerPolicy {
   // require custom installation operations should implement them here.
   // Returns false if a custom operation failed, and true otherwise.
   // Called only from a thread belonging to a blocking thread pool.
-  virtual update_client::CrxInstaller::Result OnCustomInstall(
-      const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) = 0;
+  virtual void OnCustomInstall(const base::DictionaryValue& manifest,
+                               const base::FilePath& install_dir,
+                               std::unique_ptr<CustomInstallRunner> cir) = 0;
+  // update_client::CrxInstaller::Callback callback) = 0;
 
   // OnCustomUninstall is called during the unregister (uninstall) process.
   // Components that require custom uninstallation operations should implement
@@ -156,11 +171,26 @@ class ComponentInstaller final : public update_client::CrxInstaller {
   bool FindPreinstallation(
       const base::FilePath& root,
       const scoped_refptr<RegistrationInfo>& registration_info);
-  update_client::CrxInstaller::Result InstallHelper(
-      const base::FilePath& unpack_path,
-      std::unique_ptr<base::DictionaryValue>* manifest,
-      base::Version* version,
-      base::FilePath* install_path);
+  void InstallHelper(const base::FilePath& unpack_path,
+                     // std::unique_ptr<base::DictionaryValue>* manifest,
+                     // base::Version* version,
+                     // base::FilePath* install_path,
+                     Callback callback);
+  void PostInstall(const base::FilePath unpack_path,
+                   Callback callback,
+                   std::unique_ptr<base::DictionaryValue> manifest,
+                   base::Version version,
+                   base::FilePath install_path,
+                   Result result);
+  void PostCustomInstall(const base::FilePath unpack_path,
+                         Callback callback,
+                         std::unique_ptr<base::DictionaryValue> manifest,
+                         std::unique_ptr<base::DictionaryValue> local_manifest,
+                         const base::Version manifest_version,
+                         base::FilePath local_install_path,
+                         base::Version version,
+                         base::FilePath install_path,
+                         const Result& result);
   void StartRegistration(
       const scoped_refptr<RegistrationInfo>& registration_info);
   void FinishRegistration(

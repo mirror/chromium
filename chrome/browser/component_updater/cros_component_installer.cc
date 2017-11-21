@@ -101,18 +101,30 @@ bool CrOSComponentInstallerPolicy::RequiresNetworkEncryption() const {
   return true;
 }
 
-update_client::CrxInstaller::Result
-CrOSComponentInstallerPolicy::OnCustomInstall(
+void CrOSComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
+    const base::FilePath& install_dir,
+    std::unique_ptr<CustomInstallRunner> cir) {
+  // update_client::CrxInstaller::Callback callback) {
   std::string version;
   if (!manifest.GetString("version", &version)) {
-    return ToInstallerResult(update_client::InstallError::GENERIC_ERROR);
+    // base::PostTask(
+    //    FROM_HERE,
+    //    base::BindOnce(
+    //        std::move(callback),
+    cir->Run(ToInstallerResult(update_client::InstallError::GENERIC_ERROR));
+    return;
+    // return ToInstallerResult(update_client::InstallError::GENERIC_ERROR);
   }
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&ImageLoaderRegistration, version, install_dir, name));
-  return update_client::CrxInstaller::Result(update_client::InstallError::NONE);
+  // base::PostTask(FROM_HERE,
+  //               base::BindOnce(std::move(callback),
+  cir->Run(
+      update_client::CrxInstaller::Result(update_client::InstallError::NONE));
+  // return
+  // update_client::CrxInstaller::Result(update_client::InstallError::NONE);
 }
 
 void CrOSComponentInstallerPolicy::OnCustomUninstall() {

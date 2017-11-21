@@ -129,11 +129,9 @@ class FakeInstallerPolicy : public ComponentInstallerPolicy {
 
   bool RequiresNetworkEncryption() const override { return true; }
 
-  update_client::CrxInstaller::Result OnCustomInstall(
-      const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override {
-    return update_client::CrxInstaller::Result(0);
-  }
+  void OnCustomInstall(const base::DictionaryValue& manifest,
+                       const base::FilePath& install_dir,
+                       std::unique_ptr<CustomInstallRunner> cir) override {}
 
   void OnCustomUninstall() override {}
 

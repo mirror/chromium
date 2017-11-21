@@ -62,11 +62,13 @@ bool ThirdPartyModuleListComponentInstallerPolicy::RequiresNetworkEncryption()
   return false;
 }
 
-update_client::CrxInstaller::Result
-ThirdPartyModuleListComponentInstallerPolicy::OnCustomInstall(
+void ThirdPartyModuleListComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);  // Nothing custom here.
+    const base::FilePath& install_dir,
+    update_client::Callback callback) {
+  base::PostTask(FROM_HERE,
+                 base::BindOnce(callback, update_client::InstallError::NONE));
+  // return update_client::CrxInstaller::Result(0);  // Nothing custom here.
 }
 
 void ThirdPartyModuleListComponentInstallerPolicy::OnCustomUninstall() {}

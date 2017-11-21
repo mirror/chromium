@@ -171,9 +171,10 @@ class PnaclComponentInstallerPolicy : public ComponentInstallerPolicy {
   // ComponentInstallerPolicy implementation.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
-      const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
+  void OnCustomInstall(const base::DictionaryValue& manifest,
+                       const base::FilePath& install_dir,
+                       std::unique_ptr<CustomInstallRunner> cir) override;
+  // update_client::CrxInstaller::Callback callback) override;
   void OnCustomUninstall() override;
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
@@ -201,11 +202,16 @@ bool PnaclComponentInstallerPolicy::RequiresNetworkEncryption() const {
   return false;
 }
 
-update_client::CrxInstaller::Result
-PnaclComponentInstallerPolicy::OnCustomInstall(
+void PnaclComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);  // Nothing custom here.
+    const base::FilePath& install_dir,
+    // update_client::CrxInstaller::Callback callback) {
+    std::unique_ptr<CustomInstallRunner> cir) {
+  // base::PostTask(FROM_HERE,
+  //               base::BindOnce(std::move(callback),
+  cir->Run(
+      update_client::CrxInstaller::Result(update_client::InstallError::NONE));
+  // return update_client::CrxInstaller::Result(0);  // Nothing custom here.
 }
 
 void PnaclComponentInstallerPolicy::OnCustomUninstall() {}

@@ -310,10 +310,13 @@ bool SwReporterInstallerPolicy::RequiresNetworkEncryption() const {
   return false;
 }
 
-update_client::CrxInstaller::Result SwReporterInstallerPolicy::OnCustomInstall(
+void SwReporterInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);
+    const base::FilePath& install_dir,
+    update_client::Callback callback) {
+  base::PostTask(FROM_HERE,
+                 base::BindOnce(callback, update_client::InstallError::NONE));
+  // return update_client::CrxInstaller::Result(0);
 }
 
 void SwReporterInstallerPolicy::OnCustomUninstall() {}

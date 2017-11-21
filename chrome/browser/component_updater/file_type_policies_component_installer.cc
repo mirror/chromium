@@ -68,11 +68,16 @@ bool FileTypePoliciesComponentInstallerPolicy::RequiresNetworkEncryption()
   return false;
 }
 
-update_client::CrxInstaller::Result
-FileTypePoliciesComponentInstallerPolicy::OnCustomInstall(
+void FileTypePoliciesComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);  // Nothing custom here.
+    const base::FilePath& install_dir,
+    // update_client::CrxInstaller::Callback callback) {
+    std::unique_ptr<CustomInstallRunner> cir) {
+  // return update_client::CrxInstaller::Result(0);  // Nothing custom here.
+  // base::PostTask(FROM_HERE,
+  //               base::BindOnce(std::move(callback),
+  cir->Run(
+      update_client::CrxInstaller::Result(update_client::InstallError::NONE));
 }
 
 void FileTypePoliciesComponentInstallerPolicy::OnCustomUninstall() {}

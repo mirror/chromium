@@ -9,6 +9,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
+#include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "chrome/browser/component_updater/component_updater_utils.h"
 
@@ -38,11 +39,18 @@ bool RecoveryImprovedInstallerPolicy::RequiresNetworkEncryption() const {
   return false;
 }
 
-update_client::CrxInstaller::Result
-RecoveryImprovedInstallerPolicy::OnCustomInstall(
+void RecoveryImprovedInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);
+    const base::FilePath& install_dir,
+    std::unique_ptr<CustomInstallRunner> cir) {
+  // update_client::CrxInstaller::Callback callback) {
+  cir->Run(
+      update_client::CrxInstaller::Result(update_client::InstallError::NONE));
+  // base::PostTask(FROM_HERE,
+  //               base::BindOnce(std::move(callback),
+  //                              update_client::CrxInstaller::Result(
+  //                                  update_client::InstallError::NONE)));
+  // return update_client::CrxInstaller::Result(0);
 }
 
 void RecoveryImprovedInstallerPolicy::OnCustomUninstall() {}
