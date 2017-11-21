@@ -930,4 +930,47 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, LocalStorageOriginEnforcement) {
   crash_observer.Wait();
 }
 
+// Verify that main frame's origin isolation still keeps all same-origin frames
+// in the same process.  When allocating processes for a(b(c),d(c)), we should
+// ensure that "c" frames are in the same process.
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, SameOriginSubframesProcessSharing) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "isolated.foo.com", "/cross_site_iframe_factory.html?a(b(c),d(c))"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  RenderFrameHost* a = root->current_frame_host();
+  RenderFrameHost* b = root->child_at(0)->current_frame_host();
+  RenderFrameHost* c1 = root->child_at(0)->child_at(0)->current_frame_host();
+  RenderFrameHost* d = root->child_at(1)->current_frame_host();
+  RenderFrameHost* c2 = root->child_at(1)->child_at(0)->current_frame_host();
+
+  // Sanity check that the test works with the right frame tree.
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+  EXPECT_TRUE(policy->IsIsolatedOrigin(a->GetLastCommittedOrigin()));
+  EXPECT_EQ("b.com", b->GetLastCommittedURL().host());
+  EXPECT_EQ("d.com", d->GetLastCommittedURL().host());
+  EXPECT_EQ("c.com", c1->GetLastCommittedURL().host());
+  EXPECT_EQ("c.com", c2->GetLastCommittedURL().host());
+
+  // Verify that the isolated site is indeed isolated.
+  EXPECT_NE(a->GetProcess()->GetID(), c1->GetProcess()->GetID());
+  EXPECT_NE(a->GetProcess()->GetID(), c2->GetProcess()->GetID());
+  EXPECT_NE(a->GetProcess()->GetID(), b->GetProcess()->GetID());
+  EXPECT_NE(a->GetProcess()->GetID(), d->GetProcess()->GetID());
+
+  // Verify that same-origin c1 and c2 frames share a process.
+  EXPECT_EQ(c1->GetProcess()->GetID(), c2->GetProcess()->GetID());
+
+  // Verify that same-origin c1 and c2 frames can script each other.
+  EXPECT_TRUE(ExecuteScript(c1, "window.name = 'c1';"));
+  EXPECT_TRUE(ExecuteScript(c2, R"(
+      c1 = window.open('', 'c1');
+      c1.cross_frame_property_test = 'hello from c2'; )"));
+  std::string actual_property_value;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      c1, "domAutomationController.send(window.cross_frame_property_test);",
+      &actual_property_value));
+  EXPECT_EQ("hello from c2", actual_property_value);
+}
+
 }  // namespace content
