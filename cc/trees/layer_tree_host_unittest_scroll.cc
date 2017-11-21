@@ -1631,7 +1631,12 @@ class LayerTreeHostScrollTestScrollMFBA : public LayerTreeHostScrollTest {
   int outer_viewport_container_layer_id_;
 };
 
-MULTI_THREAD_TEST_F(LayerTreeHostScrollTestScrollMFBA);
+// This test relies on scheduler's pipelining not overwriting updates, i.e.,
+// a new tree should not be activated until the previous one has been drawn.
+// This is not respected in webview scheduling.
+// TODO(khushalsagar): Update the test above to also work for WebView. MFBA is
+// used in that mode as well.
+MULTI_THREAD_CC_SCHEDULER_TEST_F(LayerTreeHostScrollTestScrollMFBA);
 
 class LayerTreeHostScrollTestScrollAbortedCommitMFBA
     : public LayerTreeHostScrollTest {
