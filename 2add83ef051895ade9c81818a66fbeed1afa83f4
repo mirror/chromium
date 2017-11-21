@@ -354,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "734d4503_f63f2223",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-21T20:02:02Z",
+      "side": 1,
+      "message": "Oh I see, right the DCHECK above means its only for root layers, ok I guess it\u0027s not the most obvious API situation but it will work, shouldn\u0027t cause problems that I see, esp with the DCHECK/docs about it :)",
+      "parentUuid": "516b9df5_e4c66032",
+      "revId": "2add83ef051895ade9c81818a66fbeed1afa83f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c8d96a9_09d401af",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 1
