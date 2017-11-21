@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58ef97f8_d72ca7fd",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-21T15:54:50Z",
+      "side": 1,
+      "message": "btw another option, to avoid the duplication of structs/enums with versions in src/net, is to use the [Native] attribute. https://chromium.googlesource.com/chromium/src/+/master/ipc#Using-Legacy-IPC-Traits\n\n(I defer to you, just thought I\u0027d point it out in case you weren\u0027t aware of it)",
+      "revId": "7a8812f1141157775aea4a96d7211eb4d73b7c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
