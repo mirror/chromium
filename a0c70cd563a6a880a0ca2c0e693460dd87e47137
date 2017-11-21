@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca45cf9f_dda40e93",
+        "filename": "third_party/boringssl/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-11-21T12:18:44Z",
+      "side": 1,
+      "message": "Ah yes, this mess. I am open to clearing these out of BoringSSL, FWIW, or at least most of it. Depending on how bad the instances in the legacy ASN.1 code is, we may want to block on https://crbug.com/706445.\n\nOtherwise, my expectation is it\u0027ll probably take some work but be doable. For a while, the STACK_OF(T) stuff I would have considered insurmountable, but we\u0027re a bit more typesafe there now and I can introduce some thunk things to get the rest of the way.\n\nThough probably step one is for me to finally get a standalone BoringSSL CFI build going.",
+      "revId": "a0c70cd563a6a880a0ca2c0e693460dd87e47137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
