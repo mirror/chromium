@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8513f5de_dcea8daa",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:46:17Z",
+      "side": 1,
+      "message": "nit: i\u0027d recommend avoiding \u0027auto\u0027 in situations like this where the type isn\u0027t obvious from the surrounding code (i.e. a reader would need to look at the .proto file to figure out |event|\u0027s type)",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 6
+      },
+      "revId": "bf834c4bde9bfda64d31d30c17a8f5491115dab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868fdb40_77f93b5e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:46:17Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "bf834c4bde9bfda64d31d30c17a8f5491115dab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf5b87d_1b73b5b2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:46:17Z",
+      "side": 1,
+      "message": "nit: \u003d default here too (assuming that works with \u0027override\u0027; if not, please ignore)",
+      "revId": "bf834c4bde9bfda64d31d30c17a8f5491115dab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682b58a2_3bd197e4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:46:17Z",
+      "side": 1,
+      "message": "nit: just name this \"events\" (see accessors section of https://google.github.io/styleguide/cppguide.html#Function_Names)",
+      "range": {
+        "startLine": 26,
+        "startChar": 40,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "bf834c4bde9bfda64d31d30c17a8f5491115dab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43adf5c2_136879bd",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:46:17Z",
+      "side": 1,
+      "message": "nit: can this return a const ref instead?",
+      "revId": "bf834c4bde9bfda64d31d30c17a8f5491115dab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd016fcd_b1d7fae5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:46:17Z",
+      "side": 1,
+      "message": "nit: does \"0U\" work? \"0ul\" isn\u0027t something i\u0027ve seen much in chromium.",
+      "range": {
+        "startLine": 91,
+        "startChar": 32,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "bf834c4bde9bfda64d31d30c17a8f5491115dab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d255589e_cbf51cb8",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:46:17Z",
+      "side": 1,
+      "message": "nit: \"1U\"?",
+      "revId": "bf834c4bde9bfda64d31d30c17a8f5491115dab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

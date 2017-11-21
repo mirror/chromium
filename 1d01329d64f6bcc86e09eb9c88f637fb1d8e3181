@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "5403f81c_286f7359",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:46:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9f23b112_929680e4",
+      "revId": "1d01329d64f6bcc86e09eb9c88f637fb1d8e3181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c621e115_66d0dfae",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 2
