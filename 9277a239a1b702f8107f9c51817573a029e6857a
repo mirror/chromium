@@ -117,6 +117,30 @@
       "revId": "9277a239a1b702f8107f9c51817573a029e6857a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ccae94_7fab8c5b",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-11-21T18:44:10Z",
+      "side": 1,
+      "message": "The last time I touch the flag strings, I got a number of buganizer requests from the localisation team asking for context clarification. That\u0027s when I informed them that the flags strings didn\u0027t need localising. But translators have no way of knowing this as the strings are sent in isolation from the UI unless we marked them in the meta description as being translation.",
+      "parentUuid": "d70cea38_84021e9d",
+      "range": {
+        "startLine": 90,
+        "startChar": 64,
+        "endLine": 90,
+        "endChar": 78
+      },
+      "revId": "9277a239a1b702f8107f9c51817573a029e6857a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
