@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96341ccd_faa13fc1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/worklet-context-interaction.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-21T23:03:49Z",
+      "side": 1,
+      "message": "unnecessary space",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14216d24_af733fda",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-21T23:03:49Z",
+      "side": 1,
+      "message": "What do we need to do for this TODO?",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbf00f3_2cacd8af",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-21T23:03:49Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84d4340_2363fc53",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-21T23:03:49Z",
+      "side": 1,
+      "message": "Can you add a test that confirms BaseAudioContext#audioWorklet is available only on a secure context like http/tests/worklet/import-on-insecure-context.html for PaintWorklet?",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4e4bcb_f127d904",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-21T23:03:49Z",
+      "side": 1,
+      "message": "How about moving this to AudioWorklet so that we can remove some indirection like AudioWorkletMessagingProxy::GetParamInfoListForProcessor()?",
+      "revId": "2a513216263d273805275c2a7aa3bc7bb65c0da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
