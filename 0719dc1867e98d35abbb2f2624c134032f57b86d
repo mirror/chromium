@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "290e2013_35f420b5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_function.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-21T23:40:41Z",
+      "side": 1,
+      "message": "idl_type.cpp_type",
+      "range": {
+        "startLine": 56,
+        "startChar": 59,
+        "endLine": 56,
+        "endChar": 85
+      },
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ef52b3_31fa5f83",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/WindowWebDatabase.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-21T23:40:41Z",
+      "side": 1,
+      "message": "Should it be a callback interface?",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
