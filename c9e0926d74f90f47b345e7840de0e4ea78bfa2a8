@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "329fceea_643bcfab",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T22:52:53Z",
+      "side": 1,
+      "message": "In theory.. there should be no point having both this constant and kSmallSnapPoint. One should determine the other.",
+      "revId": "c9e0926d74f90f47b345e7840de0e4ea78bfa2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f626b17a_e7447d0f",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T22:52:53Z",
+      "side": 1,
+      "message": "to me, it feels confusing/redundant to have this as well as ShouldSnapFrameWidth(). snapping already guarantees a minimum width. I think it\u0027s impossible for the frame to make guarantees about the maximum, because the button row could exceed that if the button labels are long enough. So then it becomes confusing how to interpret \"preferred\".",
+      "revId": "c9e0926d74f90f47b345e7840de0e4ea78bfa2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
