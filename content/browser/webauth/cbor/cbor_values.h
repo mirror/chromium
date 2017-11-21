@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_VALUES_H_
 #define CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_VALUES_H_
 
+#include <stdint.h>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -61,6 +62,7 @@ class CONTENT_EXPORT CBORValue {
 
   enum class Type {
     UNSIGNED = 0,
+    NEGATIVE = 1,
     BYTE_STRING = 2,
     STRING = 3,
     ARRAY = 4,
@@ -68,11 +70,14 @@ class CONTENT_EXPORT CBORValue {
     NONE = -1,
   };
 
+  enum class IntegerType { POSITIVE = 1, NEGATIVE = -1 };
+
   CBORValue(CBORValue&& that) noexcept;
   CBORValue() noexcept;  // A NONE value.
 
   explicit CBORValue(Type type);
-  explicit CBORValue(uint64_t in_unsigned);
+  explicit CBORValue(uint64_t integer_magnitude,
+                     IntegerType = IntegerType::POSITIVE);
 
   explicit CBORValue(const BinaryValue& in_bytes);
   explicit CBORValue(BinaryValue&& in_bytes) noexcept;
@@ -102,6 +107,7 @@ class CONTENT_EXPORT CBORValue {
   bool is_type(Type type) const { return type == type_; }
   bool is_none() const { return type() == Type::NONE; }
   bool is_unsigned() const { return type() == Type::UNSIGNED; }
+  bool is_negative() const { return type() == Type::NEGATIVE; }
   bool is_bytestring() const { return type() == Type::BYTE_STRING; }
   bool is_string() const { return type() == Type::STRING; }
   bool is_array() const { return type() == Type::ARRAY; }
@@ -109,6 +115,7 @@ class CONTENT_EXPORT CBORValue {
 
   // These will all fatally assert if the type doesn't match.
   uint64_t GetUnsigned() const;
+  uint64_t GetNegativeIntMagnitude() const;
   const BinaryValue& GetBytestring() const;
   const std::string& GetString() const;
   const ArrayValue& GetArray() const;
@@ -118,7 +125,7 @@ class CONTENT_EXPORT CBORValue {
   Type type_;
 
   union {
-    uint64_t unsigned_value_;
+    uint64_t integer_value_magnitude_;
     BinaryValue bytestring_value_;
     std::string string_value_;
     ArrayValue array_value_;

@@ -44,6 +44,13 @@ bool CBORWriter::EncodeCBOR(const CBORValue& node, int max_nesting_level) {
       return true;
     }
 
+    // Represents negative integers.
+    case CBORValue::Type::NEGATIVE: {
+      uint64_t value = node.GetNegativeIntMagnitude();
+      StartItem(CBORValue::Type::NEGATIVE, value - 1);
+      return true;
+    }
+
     // Represents a byte string.
     case CBORValue::Type::BYTE_STRING: {
       const CBORValue::BinaryValue& bytes = node.GetBytestring();

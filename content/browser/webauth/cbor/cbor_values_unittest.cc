@@ -36,6 +36,12 @@ TEST(CBORValuesTest, ConstructUnsigned) {
   EXPECT_EQ(37u, value.GetUnsigned());
 }
 
+TEST(CBORValuesTest, ConstructNegative) {
+  CBORValue value(100, CBORValue::IntegerType::NEGATIVE);
+  EXPECT_EQ(CBORValue::Type::NEGATIVE, value.type());
+  EXPECT_EQ(100u, value.GetNegativeIntMagnitude());
+}
+
 TEST(CBORValuesTest, ConstructStringFromConstCharPtr) {
   const char* str = "foobar";
   CBORValue value(str);
@@ -122,6 +128,20 @@ TEST(CBORValuesTest, CopyUnsigned) {
   EXPECT_EQ(value.GetUnsigned(), blank.GetUnsigned());
 }
 
+TEST(CBORValuesTest, CopyNegativeInt) {
+  CBORValue value(74, CBORValue::IntegerType::NEGATIVE);
+  CBORValue copied_value(value.Clone());
+  EXPECT_EQ(value.type(), copied_value.type());
+  EXPECT_EQ(value.GetNegativeIntMagnitude(),
+            copied_value.GetNegativeIntMagnitude());
+
+  CBORValue blank;
+
+  blank = value.Clone();
+  EXPECT_EQ(value.type(), blank.type());
+  EXPECT_EQ(value.GetNegativeIntMagnitude(), blank.GetNegativeIntMagnitude());
+}
+
 TEST(CBORValuesTest, CopyString) {
   CBORValue value("foobar");
   CBORValue copied_value(value.Clone());
@@ -196,6 +216,19 @@ TEST(CBORValuesTest, MoveUnsigned) {
   blank = CBORValue(654);
   EXPECT_EQ(CBORValue::Type::UNSIGNED, blank.type());
   EXPECT_EQ(654u, blank.GetUnsigned());
+}
+
+TEST(CBORValuesTest, MoveNegativeInteger) {
+  CBORValue value(74, CBORValue::IntegerType::NEGATIVE);
+  CBORValue moved_value(std::move(value));
+  EXPECT_EQ(CBORValue::Type::NEGATIVE, moved_value.type());
+  EXPECT_EQ(74u, moved_value.GetNegativeIntMagnitude());
+
+  CBORValue blank;
+
+  blank = CBORValue(654, CBORValue::IntegerType::NEGATIVE);
+  EXPECT_EQ(CBORValue::Type::NEGATIVE, blank.type());
+  EXPECT_EQ(654u, blank.GetNegativeIntMagnitude());
 }
 
 TEST(CBORValuesTest, MoveString) {

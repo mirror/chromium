@@ -68,6 +68,38 @@ TEST(CBORReaderTest, TestUintEncodedWithNonMinimumByteLength) {
   }
 }
 
+TEST(CBORReaderTest, TestReadNegativeInt) {
+  typedef struct {
+    const uint64_t negative_int_magnitude;
+    const std::vector<uint8_t> cbor_data;
+  } NegativeIntTestCase;
+
+  static const NegativeIntTestCase kNegativeIntTestCases[] = {
+      {1, {0x20}},
+      {10, {0x29}},
+      {23, {0x36}},
+      {24, {0x37}},
+      {25, {0x38, 0x18}},
+      {100, {0x38, 0x63}},
+      {1000, {0x39, 0x03, 0xe7}},
+      {1000000, {0x3a, 0x00, 0x0f, 0x42, 0x3f}},
+      {0xFFFFFFFF, {0x3a, 0xff, 0xff, 0xff, 0xfe}},
+  };
+
+  int test_case_index = 0;
+  for (const NegativeIntTestCase& test_case : kNegativeIntTestCases) {
+    testing::Message scope_message;
+    scope_message << "testing negative int at index : " << test_case_index++;
+    SCOPED_TRACE(scope_message);
+
+    base::Optional<CBORValue> cbor = CBORReader::Read(test_case.cbor_data);
+    ASSERT_TRUE(cbor.has_value());
+    ASSERT_EQ(cbor.value().type(), CBORValue::Type::NEGATIVE);
+    EXPECT_EQ(cbor.value().GetNegativeIntMagnitude(),
+              test_case.negative_int_magnitude);
+  }
+}
+
 TEST(CBORReaderTest, TestReadBytes) {
   typedef struct {
     const std::vector<uint8_t> value;
