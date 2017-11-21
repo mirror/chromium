@@ -52,6 +52,24 @@
       "revId": "779bb89af70dbb6cbdcd64c6b20b38fe883a2f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf786d43_b90f6c5f",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3552,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-11-21T18:39:07Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "85836e2f_1c1dd30d",
+      "revId": "779bb89af70dbb6cbdcd64c6b20b38fe883a2f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
