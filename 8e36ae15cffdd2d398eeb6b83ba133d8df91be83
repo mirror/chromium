@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98225976_a421cdcc",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-21T10:40:54Z",
+      "side": 1,
+      "message": "Hey, that actually helped! Thanks!",
+      "parentUuid": "239a304b_15f184d8",
+      "revId": "8e36ae15cffdd2d398eeb6b83ba133d8df91be83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77e282f_ac8a190a",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "8e36ae15cffdd2d398eeb6b83ba133d8df91be83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f281b4_c8a3374f",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-21T10:40:54Z",
+      "side": 1,
+      "message": "No, because it\u0027s not available on 11.",
+      "parentUuid": "c77e282f_ac8a190a",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 52
+      },
+      "revId": "8e36ae15cffdd2d398eeb6b83ba133d8df91be83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
