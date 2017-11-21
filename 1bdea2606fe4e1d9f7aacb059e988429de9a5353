@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f6f7025_4c9f427d",
+        "filename": "extensions/renderer/gc_callback.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T19:35:52Z",
+      "side": 1,
+      "message": "nit: isn\u0027t if (!closure_callback_) equivalent?",
+      "range": {
+        "startLine": 71,
+        "startChar": 32,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "1bdea2606fe4e1d9f7aacb059e988429de9a5353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2be1084_d2866813",
+        "filename": "extensions/renderer/gc_callback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T19:35:52Z",
+      "side": 1,
+      "message": "Ah I was going to comment on the code about this :)",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "1bdea2606fe4e1d9f7aacb059e988429de9a5353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
