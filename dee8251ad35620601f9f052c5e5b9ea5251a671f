@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "824b6968_15b8f1ce",
+        "filename": "ui/gl/gl_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-21T00:46:22Z",
+      "side": 1,
+      "message": "nit: do you want to move it to here? Reducing the cost to a few exceptional situations as opposed to multiple times per frame?",
+      "revId": "dee8251ad35620601f9f052c5e5b9ea5251a671f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
