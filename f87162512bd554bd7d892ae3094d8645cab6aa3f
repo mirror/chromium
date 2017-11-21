@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37668e98_d02c7ca5",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-21T18:48:22Z",
+      "side": 1,
+      "message": "Why the inconsistency with the last file?  (Using auto here and not there.)",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 23
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e795bf_e8edb578",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-21T18:48:22Z",
+      "side": 1,
+      "message": "nitty nit, thought (i.e. not even as strong as a suggestion): Despite the extra line involved I think this code would be easier to read if you simply recreated request2 right before the point of use instead of copying it from request.",
+      "range": {
+        "startLine": 220,
+        "startChar": 11,
+        "endLine": 220,
+        "endChar": 22
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c08036_48e61a2a",
+        "filename": "content/browser/browsing_data/browsing_data_remover_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-21T18:48:22Z",
+      "side": 1,
+      "message": "Really nitty nit :-}, suggestion: I\u0027d like to either have the loader_helper decl here or remove the blank line (going by the rule of thumb that things should either be declared at top of scope or just before first use, and having the blank line in between makes me feel like it\u0027s not just before first use).",
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01dfb2e_bfacf422",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-21T18:48:22Z",
+      "side": 1,
+      "message": "I think the comment isn\u0027t quite right for the new args?  (The name\u0027s not quite right either, but I\u0027m not sure I care.  Up to you.)",
+      "range": {
+        "startLine": 150,
+        "startChar": 47,
+        "endLine": 150,
+        "endChar": 62
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309e9bd4_77d5f33b",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-21T18:48:22Z",
+      "side": 1,
+      "message": "This declaration seems redundant for this function at this point.",
+      "range": {
+        "startLine": 495,
+        "startChar": 26,
+        "endLine": 495,
+        "endChar": 45
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

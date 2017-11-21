@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a49b1a22_9ea86070",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-21T18:48:22Z",
+      "side": 0,
+      "message": "What\u0027s the rationale for leaving the url_loader_factory as an argument to the Download* methods?",
+      "range": {
+        "startLine": 101,
+        "startChar": 31,
+        "endLine": 101,
+        "endChar": 49
+      },
+      "revId": "ac085083269f769b47165e92e03b27467bf59b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
