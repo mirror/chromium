@@ -16,6 +16,24 @@
       "revId": "c042bfa004a3b0622f10e30521a02d5bdcbd5b5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7b6ffa_2155eb14",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-21T08:24:52Z",
+      "side": 1,
+      "message": "A better solution would be to either add the view to the view hierarchy before snapshotting (maybe as a hidden view?) or to animated the real view instead of a snapshot.\nBut both of those are complicated and would probably add new bugs.\n\nI don\u0027t see a better way to fix this for now.",
+      "parentUuid": "f95c5b53_6cc894c4",
+      "revId": "c042bfa004a3b0622f10e30521a02d5bdcbd5b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
