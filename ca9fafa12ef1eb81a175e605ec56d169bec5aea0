@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7bdad2f_210ed4cf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/coverage/coverage-repeated-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-21T20:11:16Z",
+      "side": 1,
+      "message": "This is because we now start coverage before we load the script, so we end up with precise block-level coverage. The used size for this file was already 354 for similar scenario in other tests, and the difference, I think, is in the whitespace within the outer function. I somehow did not manage to get \"best effort\" coverage that we previously were showing in this test -- I can get function-level, but it\u0027s not the same. I think this one is good enough and actually less dependent on races against JS GC than the one we were previously showing.",
+      "parentUuid": "b47c8a4e_47b84327",
+      "revId": "ca9fafa12ef1eb81a175e605ec56d169bec5aea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d13bc54_86b80c9b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/coverage/multiple-instances-merge-expected.txt",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "462432e4_03e48a6c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/coverage/multiple-instances-merge-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-21T20:11:16Z",
+      "side": 1,
+      "message": "We used to skip everything that ends with \u0027html\u0027 while dumping the view before, so as not to get noise from test scripts themselves. Now we only skip test://, so this one popped up, and I thought it would be a good idea to keep it.",
+      "parentUuid": "3d13bc54_86b80c9b",
+      "revId": "ca9fafa12ef1eb81a175e605ec56d169bec5aea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6331123_124d7d93",
         "filename": "third_party/WebKit/Source/devtools/front_end/coverage_test_runner/CoverageTestRunner.js",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-21T02:30:22Z",
       "side": 1,
       "message": "Nice. Perhaps enable closure for this module now? coverage_test_runner/module.json - \"skip_compilation\"",
+      "revId": "ca9fafa12ef1eb81a175e605ec56d169bec5aea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "defcc25b_317c7910",
+        "filename": "third_party/WebKit/Source/devtools/front_end/coverage_test_runner/CoverageTestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-21T20:11:16Z",
+      "side": 1,
+      "message": "That was my original intent, but it turned out we depend on DebuggerTestRunner which is not compiled yet, so I ended up reverting the change in module.json.",
+      "parentUuid": "b6331123_124d7d93",
       "revId": "ca9fafa12ef1eb81a175e605ec56d169bec5aea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
