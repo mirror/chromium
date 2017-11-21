@@ -8,6 +8,7 @@
 #include "chrome/browser/signin/dice_response_handler.h"
 
 #include "base/macros.h"
+#include "chrome/browser/ui/sync/one_click_signin_sync_starter.h"
 #include "content/public/browser/web_contents_observer.h"
 
 class ProcessDiceHeaderObserverImpl : public ProcessDiceHeaderObserver,
