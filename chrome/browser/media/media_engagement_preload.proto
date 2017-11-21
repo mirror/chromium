@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package chrome_browser_media;
+
+// Chrome requires this.
+option optimize_for = LITE_RUNTIME;
+
+// Next available id: 4
+message PreloadedData {
+  // The huffman tree.
+  optional bytes huffman_tree = 1;
+
+  // The trie data.
+  optional bytes trie_data = 2;
+
+  // The size of the trie in bits.
+  optional sfixed32 trie_bits = 3;
+
+  // The root position of the trie.
+  optional sfixed32 root_position = 4;
+}

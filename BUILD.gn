@@ -698,6 +698,10 @@ group("gn_all") {
     }
   }
 
+  if (current_toolchain == host_toolchain) {
+    deps += [ "//tools/media_engagement_preload:generator" ]
+  }
+
   if ((is_linux && !is_chromeos && !is_chromecast) || (is_win && use_drfuzz) ||
       (use_libfuzzer && is_mac)) {
     deps += [
