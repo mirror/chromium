@@ -162,6 +162,27 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
   return loader;
 }
 
+// static
+std::unique_ptr<ThrottlingURLLoader>
+ThrottlingURLLoader::InterceptLoadingAfterResponseStarted(
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
+    mojom::URLLoaderClient* forwarding_client) {
+  // This method is called after the response has started. There is no need to
+  // provide |throttles| and |traffic_annotation|.
+  std::unique_ptr<ThrottlingURLLoader> loader(new ThrottlingURLLoader(
+      std::vector<std::unique_ptr<URLLoaderThrottle>>(), forwarding_client,
+      net::NetworkTrafficAnnotationTag({TRAFFIC_ANNOTATION_UNINITIALIZED})));
+
+  loader->url_loader_.Bind(std::move(url_loader));
+  loader->client_binding_.Bind(std::move(url_loader_client));
+  loader->client_binding_.set_connection_error_handler(
+      base::Bind(&ThrottlingURLLoader::OnClientConnectionError,
+                 base::Unretained(loader.get())));
+
+  return loader;
+}
+
 ThrottlingURLLoader::~ThrottlingURLLoader() {
   if (inside_delegate_calls_ > 0) {
     // A throttle is calling into this object. In this case, delay destruction
@@ -200,6 +221,13 @@ void ThrottlingURLLoader::DisconnectClient() {
   client_binding_.Close();
   url_loader_ = nullptr;
   loader_cancelled_ = true;
+}
+
+void ThrottlingURLLoader::UnBind(
+    mojom::URLLoaderPtrInfo* url_loader,
+    mojom::URLLoaderClientRequest* url_loader_client) {
+  *url_loader = url_loader_.PassInterface();
+  *url_loader_client = client_binding_.Unbind();
 }
 
 ThrottlingURLLoader::ThrottlingURLLoader(

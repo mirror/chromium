@@ -187,33 +187,6 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginResourceDownload(
           .release());
 }
 
-// Creates a ResourceDownloader to own the URLLoader and intercept the response,
-// and passes it back to the DownloadManager.
-void InterceptNavigationResponse(
-    base::OnceCallback<void(DownloadManagerImpl::UniqueUrlDownloadHandlerPtr)>
-        callback,
-    base::WeakPtr<DownloadManagerImpl> download_manager,
-    const scoped_refptr<ResourceResponse>& response,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle,
-    const SSLStatus& ssl_status,
-    int frame_tree_node_id,
-    std::unique_ptr<ResourceRequest> resource_request,
-    std::unique_ptr<ThrottlingURLLoader> url_loader,
-    std::vector<GURL> url_chain,
-    base::Optional<network::URLLoaderCompletionStatus> status) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DownloadManagerImpl::UniqueUrlDownloadHandlerPtr resource_downloader(
-      ResourceDownloader::InterceptNavigationResponse(
-          download_manager, std::move(resource_request), response,
-          std::move(consumer_handle), ssl_status, frame_tree_node_id,
-          std::move(url_loader), std::move(url_chain), std::move(status))
-          .release());
-
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(std::move(callback), std::move(resource_downloader)));
-}
-
 class DownloadItemFactoryImpl : public DownloadItemFactory {
  public:
   DownloadItemFactoryImpl() {}
@@ -730,18 +703,21 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
   return DOWNLOAD_INTERRUPT_REASON_NONE;
 }
 
-NavigationURLLoader::NavigationInterceptionCB
-DownloadManagerImpl::GetNavigationInterceptionCB(
+void DownloadManagerImpl::InterceptNavigation(
+    std::unique_ptr<ResourceRequest> resource_request,
+    const std::vector<GURL>& url_chain,
     const scoped_refptr<ResourceResponse>& response,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     int frame_tree_node_id) {
-  return base::BindOnce(
-      &InterceptNavigationResponse,
-      base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
-                     weak_factory_.GetWeakPtr()),
-      weak_factory_.GetWeakPtr(), response, std::move(consumer_handle),
-      ssl_status, frame_tree_node_id);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(InterceptNavigationOnIOThread, weak_factory_.GetWeakPtr(),
+                     std::move(resource_request), url_chain, response,
+                     ssl_status, std::move(url_loader),
+                     std::move(url_loader_client), frame_tree_node_id));
 }
 
 int DownloadManagerImpl::RemoveDownloadsByURLAndTime(
@@ -953,6 +929,30 @@ void DownloadManagerImpl::BeginDownloadInternal(
          base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
                         weak_factory_.GetWeakPtr()));
    }
+}
+
+// static
+void DownloadManagerImpl::InterceptNavigationOnIOThread(
+    base::WeakPtr<DownloadManagerImpl> download_manager,
+    std::unique_ptr<ResourceRequest> resource_request,
+    const std::vector<GURL>& url_chain,
+    const scoped_refptr<ResourceResponse>& response,
+    const SSLStatus& ssl_status,
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
+    int frame_tree_node_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DownloadManagerImpl::UniqueUrlDownloadHandlerPtr resource_downloader(
+      ResourceDownloader::InterceptNavigationResponse(
+          download_manager, std::move(resource_request), std::move(response),
+          ssl_status, std::move(url_loader), std::move(url_loader_client),
+          frame_tree_node_id, std::move(url_chain))
+          .release());
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
+                     download_manager, std::move(resource_downloader)));
 }
 
 }  // namespace content

@@ -621,7 +621,7 @@ int ResourceDispatcher::StartAsync(
     blink::WebURLRequest::LoadingIPCType ipc_type,
     mojom::URLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle) {
+    mojom::MainResourceLoaderParamsPtr main_resource_loader_params) {
   CheckSchemeForReferrerPolicy(*request);
 
   // Compute a unique request_id for this renderer process.
@@ -638,14 +638,14 @@ int ResourceDispatcher::StartAsync(
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       loading_task_runner ? loading_task_runner : thread_task_runner_;
 
-  if (consumer_handle.is_valid()) {
+  if (main_resource_loader_params) {
     pending_requests_[request_id]->url_loader_client =
         std::make_unique<URLLoaderClientImpl>(request_id, this, task_runner);
 
     task_runner->PostTask(
         FROM_HERE, base::BindOnce(&ResourceDispatcher::ContinueForNavigation,
                                   weak_factory_.GetWeakPtr(), request_id,
-                                  base::Passed(std::move(consumer_handle))));
+                                  std::move(main_resource_loader_params)));
 
     return request_id;
   }
@@ -748,7 +748,8 @@ base::TimeTicks ResourceDispatcher::ConsumeIOTimestamp() {
 
 void ResourceDispatcher::ContinueForNavigation(
     int request_id,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle) {
+    mojom::MainResourceLoaderParamsPtr main_resource_loader_params) {
+  DCHECK(main_resource_loader_params);
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
     return;
@@ -766,23 +767,8 @@ void ResourceDispatcher::ContinueForNavigation(
   if (!GetPendingRequestInfo(request_id))
     return;
 
-  // Start streaming now.
-  client_ptr->OnStartLoadingResponseBody(std::move(consumer_handle));
-
-  // Abort if the request is cancelled.
-  if (!GetPendingRequestInfo(request_id))
-    return;
-
-  // Call OnComplete now too, as it won't get called on the client.
-  // TODO(kinuko): Fill this properly.
-  network::URLLoaderCompletionStatus status;
-  status.error_code = net::OK;
-  status.exists_in_cache = false;
-  status.completion_time = base::TimeTicks::Now();
-  status.encoded_data_length = -1;
-  status.encoded_body_length = -1;
-  status.decoded_body_length = -1;
-  client_ptr->OnComplete(status);
+  client_ptr->Bind(std::move(main_resource_loader_params->url_loader),
+                   std::move(main_resource_loader_params->url_loader_client));
 }
 
 // static

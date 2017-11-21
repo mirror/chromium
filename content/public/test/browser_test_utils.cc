@@ -2106,6 +2106,10 @@ void TestNavigationManager::ResumeNavigation() {
   handle_->CallResumeForTesting();
 }
 
+NavigationHandle* TestNavigationManager::GetNavigationHandle() {
+  return handle_;
+}
+
 bool TestNavigationManager::WaitForResponse() {
   desired_state_ = NavigationState::RESPONSE;
   return WaitForDesiredState();
