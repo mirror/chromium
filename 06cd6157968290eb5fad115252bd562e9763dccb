@@ -16,6 +16,24 @@
       "revId": "06cd6157968290eb5fad115252bd562e9763dccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7930a497_5e15bc27",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T23:28:22Z",
+      "side": 1,
+      "message": "The problem is that the point changes on Windows depending on the index. So to avoid having 2 #ifs, the code needs to be something like:\n\n#if defined(OS_WIN)\n  std::vector\u003cgfx::Rect\u003e printable_area_in_dpi(printed_pages.size());\n  gfx::Rect* const printable_area_in_dpi_ptr \u003d printable_area_in_dpi.data();\n#else\n  gfx::Rect* const printable_area_in_dpi_ptr \u003d nullptr;\n#endif\n\nfor (...) {\n  PrintPageInternal(...,\n                    printable_area_in_dpi_ptr ? printable_area_in_dpi_ptr[i] : nullptr);\n}\n\nIs that what you had in mind?",
+      "parentUuid": "984b634f_d4523b4c",
+      "revId": "06cd6157968290eb5fad115252bd562e9763dccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
