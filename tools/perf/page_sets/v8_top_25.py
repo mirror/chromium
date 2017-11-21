@@ -1,15 +1,20 @@
 # Copyright 2016 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-from telemetry.page import page as page_module
+
 from telemetry import story
+from telemetry.page import cache_temperature as cache_temperature_module
+from telemetry.page import shared_page_state
 
+import page_cycler_story
 
-class V8Top25(page_module.Page):
+class V8Top25Story(page_cycler_story.PageCyclerStory):
 
-  def __init__(self, url, page_set, name=''):
-    super(V8Top25, self).__init__(
-        url=url, page_set=page_set, name=name)
+  def __init__(self, url, page_set, name='',
+               cache_temperature=cache_temperature_module.ANY):
+    super(V8Top25Story, self).__init__(
+        url=url, page_set=page_set, name=name,
+        cache_temperature=cache_temperature)
 
   def RunPageInteractions(self, action_runner):
     # We wait for 20 seconds to make sure we capture enough information
@@ -57,6 +62,11 @@ urls_list = [
     'https://cdn.ampproject.org/c/www.bbc.co.uk/news/amp/37344292#log=3',
 ]
 
+cache_temperatures = [
+    cache_temperature_module.COLD,
+    cache_temperature_module.WARM_BROWSER,
+    cache_temperature_module.HOT_BROWSER,
+]
 
 class V8Top25StorySet(story.StorySet):
   """~25 of top pages, used for v8 testing. They represent popular websites as
@@ -69,4 +79,5 @@ class V8Top25StorySet(story.StorySet):
         cloud_storage_bucket=story.INTERNAL_BUCKET)
 
     for url in urls_list:
-      self.AddStory(V8Top25(url, self, url))
+      for temp in cache_temperatures:
+        self.AddStory(V8Top25Story(url, self, url, cache_temperature=temp))
