@@ -534,41 +534,48 @@ TEST_F(ScreenLayoutObserverMultiMirroringTest,
        ExitMirrorModeBecauseAddOrRemoveDisplayMessage) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
+
+  // Set the first display as internal display.
   UpdateDisplay("400x400,300x300,200x200");
   display::Display::SetInternalDisplayId(
-      display_manager()->GetSecondaryDisplay().id());
+      display_manager()->GetCurrentDisplayIdList()[0]);
 
   // Mirroring across 3 displays.
-  display_manager()->SetSoftwareMirroring(true);
-  UpdateDisplay("400x400,300x300,200x200");
+  display_manager()->SetMirrorMode(true);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
                                        GetMirroringDisplayNames()),
             GetDisplayNotificationText());
 
-  // In ChromeOS running on device, mirror mode ends when a display is removed,
-  // because there's no registered display layout for the updated ID list and
-  // the mirror mode of the default layout is off. But the test is using
-  // different code path and the mirror mode persists until it is manually
-  // turned off, so we simulate to turn off mirror mode when removing the third
-  // display.
+  // Mirror mode persists when a display is removed.
   CloseNotification();
-  display_manager()->SetSoftwareMirroring(false);
   UpdateDisplay("400x400,300x300");
+  EXPECT_TRUE(GetDisplayNotificationText().empty());
+
+  // Turn off mirror mode.
+  CloseNotification();
+  display_manager()->SetMirrorMode(false);
   EXPECT_EQ(l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRROR_EXIT),
             GetDisplayNotificationText());
 
-  // Mirroring across 2 displays.
+  // Turn on mirror mode.
   CloseNotification();
-  display_manager()->SetSoftwareMirroring(true);
-  UpdateDisplay("400x400,300x300");
+  display_manager()->SetMirrorMode(true);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
                                        GetMirroringDisplayNames()),
             GetDisplayNotificationText());
 
-  // Add the third display we removed before, the mirror mode is restored.
+  // Mirror mode ends when only one display is left.
   CloseNotification();
-  UpdateDisplay("400x400,300x300,200x200");
-  EXPECT_TRUE(GetDisplayNotificationText().empty());
+  UpdateDisplay("400x400");
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRROR_EXIT),
+            GetDisplayNotificationText());
+
+  // Mirror mode restores when there are more than one displays.
+  CloseNotification();
+  UpdateDisplay("400x400,300x300");
+  EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
+                                       GetMirroringDisplayNames()),
+            GetDisplayNotificationText());
 }
 
 }  // namespace ash
