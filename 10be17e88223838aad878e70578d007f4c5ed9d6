@@ -22,6 +22,30 @@
       "revId": "10be17e88223838aad878e70578d007f4c5ed9d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769d3711_13637e59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-21T19:18:03Z",
+      "side": 1,
+      "message": "Hmm, you\u0027re right, when investigating the various related reports I ended up seeing a lot of \"Unable to add window -- token android.os.BinderProxy@48a5be is not valid; is your activity running?\" which led to the CL description, but clearly the issue isn\u0027t exclusively (if at all) that the activity has been shut down.",
+      "parentUuid": "4ecd0dfc_fb93c85f",
+      "range": {
+        "startLine": 590,
+        "startChar": 25,
+        "endLine": 590,
+        "endChar": 42
+      },
+      "revId": "10be17e88223838aad878e70578d007f4c5ed9d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
