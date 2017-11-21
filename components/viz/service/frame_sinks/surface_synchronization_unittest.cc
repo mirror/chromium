@@ -123,6 +123,12 @@ class SurfaceSynchronizationTest : public testing::Test {
         surface_id);
   }
 
+  Surface* GetLatestInFlightSurface(uint32_t primary_local_id,
+                                    const SurfaceId& fallback_surface_id) {
+    return frame_sink_manager().surface_manager()->GetLatestInFlightSurface(
+        primary_local_id, fallback_surface_id);
+  }
+
   FakeExternalBeginFrameSource* begin_frame_source() {
     return begin_frame_source_.get();
   }
@@ -1774,6 +1780,74 @@ TEST_F(SurfaceSynchronizationTest, ActiveFrameIndex) {
                                          MakeCompositorFrame());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
   EXPECT_EQ(3u, parent_surface()->GetActiveFrameIndex());
+}
+
+// This test verifies that SurfaceManager::GetLatestInFlightSurface returns
+// the latest child surface not yet set as a fallback by the parent.
+// Alternatively, it returns the fallback surface specified, if no tempoary
+// references to child surfaces are available. This mechanism is used by surface
+// synchronization to present the freshest surfaces available at aggregation
+// time.
+TEST_F(SurfaceSynchronizationTest, LatestInFlightSurface) {
+  const SurfaceId parent_id = MakeSurfaceId(kParentFrameSink, 1);
+  const SurfaceId child_id1 = MakeSurfaceId(kChildFrameSink1, 1);
+  const SurfaceId child_id2 = MakeSurfaceId(kChildFrameSink1, 2);
+
+  child_support1().SubmitCompositorFrame(child_id1.local_surface_id(),
+                                         MakeCompositorFrame());
+
+  parent_support().SubmitCompositorFrame(
+      parent_id.local_surface_id(),
+      MakeCompositorFrame({child_id1}, empty_surface_ids(),
+                          std::vector<TransferableResource>()));
+
+  // Verify that the child CompositorFrame activates immediately.
+  EXPECT_TRUE(child_surface1()->HasActiveFrame());
+  EXPECT_FALSE(child_surface1()->HasPendingFrame());
+  EXPECT_THAT(child_surface1()->activation_dependencies(), IsEmpty());
+
+  // Verify that the parent Surface has activated.
+  EXPECT_TRUE(parent_surface()->HasActiveFrame());
+  EXPECT_FALSE(parent_surface()->HasPendingFrame());
+  EXPECT_THAT(parent_surface()->activation_dependencies(), IsEmpty());
+
+  // Verify that there is a temporary reference for the child and there is
+  // no reference from the parent to the child yet.
+  EXPECT_TRUE(HasTemporaryReference(child_id1));
+  EXPECT_THAT(GetChildReferences(parent_id), IsEmpty());
+  EXPECT_EQ(GetSurfaceForId(child_id1), GetLatestInFlightSurface(1, child_id1));
+
+  parent_support().SubmitCompositorFrame(
+      parent_id.local_surface_id(),
+      MakeCompositorFrame(empty_surface_ids(), {child_id1},
+                          std::vector<TransferableResource>()));
+
+  // Verify that the parent Surface has activated.
+  EXPECT_TRUE(parent_surface()->HasActiveFrame());
+  EXPECT_FALSE(parent_surface()->HasPendingFrame());
+  EXPECT_THAT(parent_surface()->activation_dependencies(), IsEmpty());
+
+  // Verify that there is no temporary reference for the child and there is
+  // a reference from the parent to the child.
+  EXPECT_FALSE(HasTemporaryReference(child_id1));
+  EXPECT_THAT(GetChildReferences(parent_id), UnorderedElementsAre(child_id1));
+  EXPECT_EQ(GetSurfaceForId(child_id1), GetLatestInFlightSurface(1, child_id1));
+
+  // Submit a child CompositorFrame to a new SurfaceId and verify that
+  // GetLatestInFlightSurface returns the right surface.
+  child_support1().SubmitCompositorFrame(child_id2.local_surface_id(),
+                                         MakeCompositorFrame());
+
+  // Verify that there is a temporary reference for child_id2 and there is
+  // a reference from the parent to child_id1.
+  EXPECT_TRUE(HasTemporaryReference(child_id2));
+  EXPECT_THAT(GetChildReferences(parent_id), UnorderedElementsAre(child_id1));
+  EXPECT_EQ(GetSurfaceForId(child_id2), GetLatestInFlightSurface(2, child_id1));
+  EXPECT_NE(GetSurfaceForId(child_id1), GetLatestInFlightSurface(2, child_id1));
+
+  // If the primary surface is old, then we shouldn't return an in-flight
+  // surface that is newer than the primary.
+  EXPECT_EQ(GetSurfaceForId(child_id1), GetLatestInFlightSurface(1, child_id1));
 }
 
 }  // namespace test
