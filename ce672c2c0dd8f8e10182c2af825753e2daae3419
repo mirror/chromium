@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c40bcf0_16671429",
+        "filename": "chrome/browser/resources/chromeos/input_method/google_xkb_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-11-21T03:47:38Z",
+      "side": 1,
+      "message": "Maybe don\u0027t change the swiss keyboard configuration? crbug.com/774360 is about lacking German keyboards for German (Austrian) language (de-AT).\n\nPer https://en.wikipedia.org/wiki/QWERTZ German keyboard and Swiss keyboard are different things, so I think we should create a separate patch if we want to change Swiss keyboard\u0027s behavior.",
+      "range": {
+        "startLine": 464,
+        "startChar": 15,
+        "endLine": 464,
+        "endChar": 0
+      },
+      "revId": "ce672c2c0dd8f8e10182c2af825753e2daae3419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
