@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "62247dc2_21b6ca23",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-21T02:40:25Z",
+      "side": 1,
+      "message": "Hi Steven,\n\nI was trying to understand implement your suggestion but I meet several issue I cannot figure out.\n\n1. It looks you are suggesting to move list of Arc VPN providers arcVpnProviders_ to browser_proxy and make browser_proxy hold arcVpnProviders_. I didn\u0027t see any current existing browser_proxy hold variables. Did I misunderstand anything? If I need do that, should I hold the  arcVpnProviders_ in browser_proxy or browser_proxy_impl?\n\n2. It looks you are suggesting to make browser_proxy hold the listeners. But if there are multiple Chome://settings pages open, we need multiple listeners(callbacks are different), and it looks in device_page_browser_proxy example those listeners are never freed?\n\n3. If what we want to do is to minimize the number of c++\u003d\u003ejs interfaces, I can also keep a copy of list of Arc Vpn providers in the internet_handler and always send a list of Arc Vpn providers whenever there is any change/update. WDYT? In this case if multiple chrome://settings page open we keep multiple internet_handler instance so we keep multiple copy of ArcVpnProviders, which is also not idea.",
+      "parentUuid": "33782798_58e377d0",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7534247_e77abd4c",
         "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
         "patchSetId": 19
