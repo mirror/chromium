@@ -22,6 +22,30 @@
       "revId": "97ebcb73a73d3c961041b8b2744459c36f64cddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b81981_4ed62b78",
+        "filename": "cc/test/test_context_support.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-21T11:17:57Z",
+      "side": 1,
+      "message": "Done (in every file).",
+      "parentUuid": "6b4a45d3_661cdee9",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 64
+      },
+      "revId": "97ebcb73a73d3c961041b8b2744459c36f64cddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
