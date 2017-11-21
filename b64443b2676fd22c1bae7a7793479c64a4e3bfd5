@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5e3e2b2_e1299f46",
+        "filename": "remoting/ios/display/gl_display_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-11-21T18:31:18Z",
+      "side": 1,
+      "message": "Could this conceivably fail? If so, then we shouldn\u0027t be using DCHECK here.",
+      "range": {
+        "startLine": 130,
+        "startChar": 26,
+        "endLine": 130,
+        "endChar": 0
+      },
+      "revId": "b64443b2676fd22c1bae7a7793479c64a4e3bfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
