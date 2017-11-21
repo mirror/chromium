@@ -57,6 +57,7 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
             property_['superclass'] = superclass
             class_data = self.get_class(property_)
             self.calculate_apply_functions_to_declare(property_)
+            self.populate_includes(property_)
             self._outputs[class_data.classname + '.h'] = (
                 self.generate_property_h_builder(
                     class_data.classname, property_))
@@ -94,12 +95,55 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
                     'auto_getter': 'HasNormalColumnGap',
                     'auto_setter': 'SetHasNormalColumnGap',
                     'auto_identity': 'CSSValueNormal'}
+            if (property_name in
+                    ['BorderImageOutset', 'BorderImageRepeat',
+                     'BorderImageSlice', 'BorderImageWidth',
+                     'WebkitMaskBoxImageOutset', 'WebkitMaskBoxImageRepeat',
+                     'WebkitMaskBoxImageSlice', 'WebkitMaskBoxImageWidth']):
+                property_['custom_apply'] = 'border_image'
+                is_mask_box = 'WebkitMaskBox' in property_name
+                getter = 'MaskBoxImage' if is_mask_box else 'BorderImage'
+                property_['custom_apply_args'] = {
+                    'is_mask_box': is_mask_box,
+                    'modifier_type': property_name[18:] if is_mask_box else property_name[11:],
+                    'getter': getter,
+                    'setter': 'Set' + getter
+                }
         property_['should_implement_apply_functions'] = (
             property_['should_declare_apply_functions'] and
             (not (property_['custom_apply_functions_initial'] and
                   property_['custom_apply_functions_inherit'] and
                   property_['custom_apply_functions_value']) or
              'custom_apply' in property_.keys()))
+
+    def populate_includes(self, property_):
+        includes = []
+        if property_['direction_aware_options']:
+            includes.append("core/StylePropertyShorthand.h")
+        if property_['runtime_flag']:
+            includes.append("platform/runtime_enabled_features.h")
+        if property_['should_implement_apply_functions']:
+            includes.append("core/css/resolver/StyleResolverState.h")
+            if property_['converter'] == "CSSPrimitiveValue":
+                includes.append("core/css/CSSPrimitiveValue.h")
+                includes.append("core/css/CSSPrimitiveValueMappings.h")
+            elif property_['converter'] == "CSSIdentifierValue":
+                includes.append("core/css/CSSIdentifierValue.h")
+            elif property_['converter']:
+                includes.append("core/css/CSSPrimitiveValueMappings.h")
+                includes.append("core/css/resolver/StyleBuilderConverter.h")
+            if property_['font']:
+                includes.append("core/css/resolver/FontBuilder.h")
+            elif property_['svg']:
+                includes.append("core/style/ComputedStyle.h")
+                includes.append("core/style/SVGComputedStyle.h")
+            else:
+                includes.append("core/style/ComputedStyle.h")
+            if (property_.get('custom_apply_args') and
+                    property_.get('custom_apply_args').get('modifier_type') in ['Width', 'Slice', 'Outset']):
+                includes.append("core/css/properties/StyleBuilderUtils.h")
+        includes.sort()
+        property_['includes'] = includes
 
     def validate_input(self):
         # First collect which classes correspond to which properties.
