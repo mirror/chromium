@@ -130,16 +130,16 @@ class DownloadRequestLimiterTest : public ChromeRenderViewHostTestHarness {
   void UpdateExpectations(TestingAction action) {
     // Set expectations for PermissionRequestManager.
     PermissionRequestManager::AutoResponseType response_type =
-        PermissionRequestManager::DISMISS;
+        PermissionRequestManager::AutoResponseType::DISMISS;
     switch (action) {
       case ACCEPT:
-        response_type = PermissionRequestManager::ACCEPT_ALL;
+        response_type = PermissionRequestManager::AutoResponseType::ACCEPT_ALL;
         break;
       case CANCEL:
-        response_type = PermissionRequestManager::DENY_ALL;
+        response_type = PermissionRequestManager::AutoResponseType::DENY_ALL;
         break;
       case WAIT:
-        response_type = PermissionRequestManager::NONE;
+        response_type = PermissionRequestManager::AutoResponseType::NONE;
         break;
     }
     mock_permission_prompt_factory_->set_response_type(response_type);

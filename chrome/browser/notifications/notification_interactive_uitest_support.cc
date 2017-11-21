@@ -212,19 +212,19 @@ std::string NotificationsTest::RequestAndRespondToPermission(
 
 bool NotificationsTest::RequestAndAcceptPermission(Browser* browser) {
   std::string result = RequestAndRespondToPermission(
-      browser, PermissionRequestManager::ACCEPT_ALL);
+      browser, PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   return "request-callback-granted" == result;
 }
 
 bool NotificationsTest::RequestAndDenyPermission(Browser* browser) {
   std::string result = RequestAndRespondToPermission(
-      browser, PermissionRequestManager::DENY_ALL);
+      browser, PermissionRequestManager::AutoResponseType::DENY_ALL);
   return "request-callback-denied" == result;
 }
 
 bool NotificationsTest::RequestAndDismissPermission(Browser* browser) {
-  std::string result =
-      RequestAndRespondToPermission(browser, PermissionRequestManager::DISMISS);
+  std::string result = RequestAndRespondToPermission(
+      browser, PermissionRequestManager::AutoResponseType::DISMISS);
   return "request-callback-default" == result;
 }
 

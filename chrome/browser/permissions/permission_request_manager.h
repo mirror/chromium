@@ -48,12 +48,7 @@ class PermissionRequestManager
     virtual void OnBubbleAdded();
   };
 
-  enum AutoResponseType {
-    NONE,
-    ACCEPT_ALL,
-    DENY_ALL,
-    DISMISS
-  };
+  enum class AutoResponseType { NONE, ACCEPT_ALL, DENY_ALL, DISMISS };
 
   ~PermissionRequestManager() override;
 

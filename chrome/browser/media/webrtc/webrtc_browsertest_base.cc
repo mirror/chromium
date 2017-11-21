@@ -184,7 +184,8 @@ bool WebRtcTestBase::GetUserMediaWithSpecificConstraintsAndAccept(
     const std::string& constraints) const {
   std::string result;
   PermissionRequestManager::FromWebContents(tab_contents)
-      ->set_auto_response_for_test(PermissionRequestManager::ACCEPT_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   PermissionRequestObserver permissionRequestObserver(tab_contents);
   GetUserMedia(tab_contents, constraints);
   EXPECT_TRUE(permissionRequestObserver.request_shown());
@@ -198,7 +199,8 @@ bool WebRtcTestBase::GetUserMediaWithSpecificConstraintsAndAcceptIfPrompted(
     const std::string& constraints) const {
   std::string result;
   PermissionRequestManager::FromWebContents(tab_contents)
-      ->set_auto_response_for_test(PermissionRequestManager::ACCEPT_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   GetUserMedia(tab_contents, constraints);
   EXPECT_TRUE(content::ExecuteScriptAndExtractString(
       tab_contents->GetMainFrame(), "obtainGetUserMediaResult();", &result));
@@ -215,7 +217,8 @@ void WebRtcTestBase::GetUserMediaWithSpecificConstraintsAndDeny(
     const std::string& constraints) const {
   std::string result;
   PermissionRequestManager::FromWebContents(tab_contents)
-      ->set_auto_response_for_test(PermissionRequestManager::DENY_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::DENY_ALL);
   PermissionRequestObserver permissionRequestObserver(tab_contents);
   GetUserMedia(tab_contents, constraints);
   EXPECT_TRUE(permissionRequestObserver.request_shown());
@@ -228,7 +231,8 @@ void WebRtcTestBase::GetUserMediaAndDismiss(
     content::WebContents* tab_contents) const {
   std::string result;
   PermissionRequestManager::FromWebContents(tab_contents)
-      ->set_auto_response_for_test(PermissionRequestManager::DISMISS);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::DISMISS);
   PermissionRequestObserver permissionRequestObserver(tab_contents);
   GetUserMedia(tab_contents, kAudioVideoCallConstraints);
   EXPECT_TRUE(permissionRequestObserver.request_shown());
@@ -250,7 +254,8 @@ void WebRtcTestBase::GetUserMediaAndExpectAutoAcceptWithoutPrompt(
   // DENY_ALL makes sure that the response to the prompt doesn't accidentally
   // result in a newly granted media stream permission.
   PermissionRequestManager::FromWebContents(tab_contents)
-      ->set_auto_response_for_test(PermissionRequestManager::DENY_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::DENY_ALL);
   PermissionRequestObserver permissionRequestObserver(tab_contents);
   GetUserMedia(tab_contents, kAudioVideoCallConstraints);
   EXPECT_FALSE(permissionRequestObserver.request_shown());
@@ -271,7 +276,8 @@ void WebRtcTestBase::GetUserMediaAndExpectAutoDenyWithoutPrompt(
   // ACCEPT_ALL makes sure that the response to the prompt doesn't accidentally
   // result in a newly granted media stream permission.
   PermissionRequestManager::FromWebContents(tab_contents)
-      ->set_auto_response_for_test(PermissionRequestManager::ACCEPT_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   PermissionRequestObserver permissionRequestObserver(tab_contents);
   GetUserMedia(tab_contents, kAudioVideoCallConstraints);
   EXPECT_FALSE(permissionRequestObserver.request_shown());
@@ -307,7 +313,8 @@ WebRtcTestBase::OpenPageAndGetUserMediaInNewTabWithConstraints(
   // Accept if necessary, but don't expect a prompt (because auto-accept is also
   // okay).
   PermissionRequestManager::FromWebContents(new_tab)
-      ->set_auto_response_for_test(PermissionRequestManager::ACCEPT_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   GetUserMedia(new_tab, constraints);
   std::string result;
   EXPECT_TRUE(content::ExecuteScriptAndExtractString(

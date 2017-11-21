@@ -258,7 +258,8 @@ IN_PROC_BROWSER_TEST_F(WebRtcApprtcBrowserTest, MANUAL_WorksOnApprtc) {
   content::WebContents* left_tab =
       browser()->tab_strip_model()->GetActiveWebContents();
   PermissionRequestManager::FromWebContents(left_tab)
-      ->set_auto_response_for_test(PermissionRequestManager::ACCEPT_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   InfoBarResponder left_infobar_responder(
       InfoBarService::FromWebContents(left_tab), InfoBarResponder::ACCEPT);
   ui_test_utils::NavigateToURL(browser(), room_url);
@@ -275,7 +276,8 @@ IN_PROC_BROWSER_TEST_F(WebRtcApprtcBrowserTest, MANUAL_WorksOnApprtc) {
   content::WebContents* right_tab =
       browser()->tab_strip_model()->GetActiveWebContents();
   PermissionRequestManager::FromWebContents(right_tab)
-      ->set_auto_response_for_test(PermissionRequestManager::ACCEPT_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   InfoBarResponder right_infobar_responder(
       InfoBarService::FromWebContents(right_tab), InfoBarResponder::ACCEPT);
   ui_test_utils::NavigateToURL(browser(), room_url);
@@ -315,7 +317,8 @@ IN_PROC_BROWSER_TEST_F(WebRtcApprtcBrowserTest,
   content::WebContents* chrome_tab =
       browser()->tab_strip_model()->GetActiveWebContents();
   PermissionRequestManager::FromWebContents(chrome_tab)
-      ->set_auto_response_for_test(PermissionRequestManager::ACCEPT_ALL);
+      ->set_auto_response_for_test(
+          PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   InfoBarResponder infobar_responder(
       InfoBarService::FromWebContents(chrome_tab), InfoBarResponder::ACCEPT);
   ui_test_utils::NavigateToURL(browser(), room_url);

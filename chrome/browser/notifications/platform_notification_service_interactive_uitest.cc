@@ -135,12 +135,14 @@ class PlatformNotificationServiceBrowserTest : public InProcessBrowserTest {
 
   bool RequestAndAcceptPermission() {
     return "granted" ==
-           RequestAndRespondToPermission(PermissionRequestManager::ACCEPT_ALL);
+           RequestAndRespondToPermission(
+               PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   }
 
   bool RequestAndDenyPermission() {
     return "denied" ==
-           RequestAndRespondToPermission(PermissionRequestManager::DENY_ALL);
+           RequestAndRespondToPermission(
+               PermissionRequestManager::AutoResponseType::DENY_ALL);
   }
 
   double GetEngagementScore(const GURL& origin) const {

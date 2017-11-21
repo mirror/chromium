@@ -74,7 +74,7 @@ class FlashPermissionBrowserTest : public PermissionsBrowserTest {
 
   void TriggerPrompt() override {
     if (prompt_factory()->response_type() ==
-        PermissionRequestManager::ACCEPT_ALL) {
+        PermissionRequestManager::AutoResponseType::ACCEPT_ALL) {
       // If the prompt will be allowed, we need to wait for the page to refresh.
       PageReloadWaiter reload_waiter(GetWebContents());
       EXPECT_TRUE(RunScriptReturnBool("triggerPrompt();"));
@@ -141,7 +141,8 @@ IN_PROC_BROWSER_TEST_F(FlashPermissionBrowserTest, SucceedsInPopupWindow) {
       base::MakeUnique<MockPermissionPromptFactory>(manager);
 
   EXPECT_EQ(0, popup_prompt_factory->TotalRequestCount());
-  popup_prompt_factory->set_response_type(PermissionRequestManager::ACCEPT_ALL);
+  popup_prompt_factory->set_response_type(
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   // FlashPermissionContext::UpdateTabContext will reload the page, we'll have
   // to wait until it is ready.
   PageReloadWaiter reload_waiter(GetWebContents());
@@ -159,7 +160,8 @@ IN_PROC_BROWSER_TEST_F(FlashPermissionBrowserTest, SucceedsInPopupWindow) {
 
 IN_PROC_BROWSER_TEST_F(FlashPermissionBrowserTest, TriggerPromptViaNewWindow) {
   EXPECT_EQ(0, prompt_factory()->TotalRequestCount());
-  prompt_factory()->set_response_type(PermissionRequestManager::ACCEPT_ALL);
+  prompt_factory()->set_response_type(
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   // FlashPermissionContext::UpdateTabContext will reload the page, we'll have
   // to wait until it is ready.
   PageReloadWaiter reload_waiter(GetWebContents());
@@ -174,7 +176,8 @@ IN_PROC_BROWSER_TEST_F(FlashPermissionBrowserTest,
                        TriggerPromptViaPluginPlaceholder) {
   EXPECT_EQ(0, prompt_factory()->TotalRequestCount());
   EXPECT_FALSE(FeatureUsageSucceeds());
-  prompt_factory()->set_response_type(PermissionRequestManager::ACCEPT_ALL);
+  prompt_factory()->set_response_type(
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   // We need to simulate a mouse click to trigger the placeholder to prompt.
   // When the prompt is auto-accepted, the page will be reloaded.
   PageReloadWaiter reload_waiter(GetWebContents());
@@ -191,7 +194,8 @@ IN_PROC_BROWSER_TEST_F(FlashPermissionBrowserTest,
                        TriggerPromptViaMainFrameNavigationWithoutUserGesture) {
   EXPECT_EQ(0, prompt_factory()->TotalRequestCount());
   EXPECT_FALSE(FeatureUsageSucceeds());
-  prompt_factory()->set_response_type(PermissionRequestManager::ACCEPT_ALL);
+  prompt_factory()->set_response_type(
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
 
   PageReloadWaiter reload_waiter(GetWebContents());
 

@@ -99,7 +99,7 @@ IN_PROC_BROWSER_TEST_F(WebRtcFromWebAccessibleResourceTest,
   PermissionRequestManager* request_manager =
       PermissionRequestManager::FromWebContents(web_contents);
   request_manager->set_auto_response_for_test(
-      PermissionRequestManager::ACCEPT_ALL);
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   PermissionRequestObserver permission_request_observer(web_contents);
   extensions::ResultCatcher catcher;
   ui_test_utils::NavigateToURL(browser(), url);
@@ -122,7 +122,7 @@ IN_PROC_BROWSER_TEST_F(WebRtcFromWebAccessibleResourceTest,
   PermissionRequestManager* request_manager =
       PermissionRequestManager::FromWebContents(web_contents);
   request_manager->set_auto_response_for_test(
-      PermissionRequestManager::DENY_ALL);
+      PermissionRequestManager::AutoResponseType::DENY_ALL);
   PermissionRequestObserver permission_request_observer(web_contents);
   extensions::ResultCatcher catcher;
   ui_test_utils::NavigateToURL(browser(), url);

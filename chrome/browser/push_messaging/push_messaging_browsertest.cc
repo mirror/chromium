@@ -336,7 +336,7 @@ class PushMessagingBrowserTest : public InProcessBrowserTest {
 void PushMessagingBrowserTest::RequestAndAcceptPermission() {
   std::string script_result;
   GetPermissionRequestManager()->set_auto_response_for_test(
-      PermissionRequestManager::ACCEPT_ALL);
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   ASSERT_TRUE(RunScript("requestNotificationPermission();", &script_result));
   ASSERT_EQ("permission status - granted", script_result);
 }
@@ -344,7 +344,7 @@ void PushMessagingBrowserTest::RequestAndAcceptPermission() {
 void PushMessagingBrowserTest::RequestAndDenyPermission() {
   std::string script_result;
   GetPermissionRequestManager()->set_auto_response_for_test(
-      PermissionRequestManager::DENY_ALL);
+      PermissionRequestManager::AutoResponseType::DENY_ALL);
   ASSERT_TRUE(RunScript("requestNotificationPermission();", &script_result));
   ASSERT_EQ("permission status - denied", script_result);
 }
@@ -527,7 +527,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
   ASSERT_EQ("ok - service worker registered", script_result);
 
   GetPermissionRequestManager()->set_auto_response_for_test(
-      PermissionRequestManager::ACCEPT_ALL);
+      PermissionRequestManager::AutoResponseType::ACCEPT_ALL);
   ASSERT_TRUE(RunScript("documentSubscribePush()", &script_result));
   // Both of these methods EXPECT that they succeed.
   ASSERT_NO_FATAL_FAILURE(EndpointToToken(script_result));
