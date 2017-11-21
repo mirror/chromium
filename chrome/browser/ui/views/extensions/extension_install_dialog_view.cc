@@ -61,6 +61,8 @@ using extensions::ExperienceSamplingEvent;
 
 namespace {
 
+
+
 // Width of the bullet column in BulletedView.
 constexpr int kBulletWidth = 20;
 
