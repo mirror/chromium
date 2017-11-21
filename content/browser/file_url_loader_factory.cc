@@ -522,6 +522,7 @@ class FileURLLoader : public mojom::URLLoader {
     else
       client_->OnComplete(network::URLLoaderCompletionStatus(net::ERR_FAILED));
     client_.reset();
+    binding_.Close();
     MaybeDeleteSelf();
   }
 
