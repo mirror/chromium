@@ -22,6 +22,30 @@
       "revId": "1669b5018c8857c169d9b0dfae309552104adde8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e40fe4_da3cbb44",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 4483,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T17:21:36Z",
+      "side": 1,
+      "message": "That\u0027s a reasonable concern. Eventually we might be able to move to webView.backForwardList.currentItem.URL unconditionally, once we stop using loadHTML for WebUI (added that to CL description and added TODO to the code).\nwebView.backForwardList.currentItem.URL does not return what we want after loadHTML call, which Chrome uses for WebUI (see crbug.com/787497). I don\u0027t think we should remove |webView.backForwardList.currentItem.URL| usage, because it\u0027s just the right API. But we should remove the usage of webView.URL when possible.\n\nThe bug with nil WKWeBView.URL is probably fixed on iOS 11.0, but reappeared again on iOS 11.2, so I filed radar as there is no harm in doing that. \n\nI don\u0027t think we need UMA now, because I don\u0027t expect that webView.backForwardList.currentItem.URL API will actually work for Chrome\u0027s WebUI implementation. So there is nothing to measure (at least for now).\n\nWDYT?",
+      "parentUuid": "b5af9295_a562cbbc",
+      "range": {
+        "startLine": 4483,
+        "startChar": 77,
+        "endLine": 4483,
+        "endChar": 0
+      },
+      "revId": "1669b5018c8857c169d9b0dfae309552104adde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
