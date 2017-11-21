@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "251c57e0_74f030ea",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "660916da_f93aeb46",
+      "range": {
+        "startLine": 383,
+        "startChar": 32,
+        "endLine": 383,
+        "endChar": 42
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9ba00e5_f2726bf9",
         "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4665dab_69168232",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done, though this added more reflection :/",
+      "parentUuid": "e9ba00e5_f2726bf9",
+      "range": {
+        "startLine": 432,
+        "startChar": 12,
+        "endLine": 432,
+        "endChar": 26
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "11690c90_82f692b6",
+        "filename": "net/socket/socket_tag.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c7abcd5_9ce4fa9b",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5087cf88_8325ece1",
         "filename": "net/socket/socket_tag.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e9eae9_b4312b8d",
+        "filename": "net/socket/socket_tag.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "My thought was that layers above SocketTag would only want to apply tags when tags are explicitly set, so as to avoid the overhead of setting the tag, probably not a significant overhead, but an overhead none the less, and to avoid any accidental effects of socket tagging when not desired.  They\u0027d do this with code like this:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/550275/17/net/socket/tcp_client_socket.cc#400\nWhere the tag is only applied if a non-default tag is set.\nWe cannot do this non-default check inside SocketTag::Apply() because callers may want to reset a tagged socket back to the default untagged state.\nThis way on non-Android platforms Apply() would never be called.\nThis avoids wrapping every SocketTag instance in #ifdef OS_ANDROID/#endif directives.",
+      "parentUuid": "5087cf88_8325ece1",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "28ce59c0_ff4cb995",
+        "filename": "net/socket/socket_tag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87dbe686_eed99f14",
+      "range": {
+        "startLine": 1,
+        "startChar": 21,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e121707_bba40537",
         "filename": "net/socket/socket_tag.h",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d78ee55_5779adcb",
+        "filename": "net/socket/socket_tag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e121707_bba40537",
+      "range": {
+        "startLine": 21,
+        "startChar": 55,
+        "endLine": 21,
+        "endChar": 67
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f85d6c65_0392e9b9",
+        "filename": "net/socket/socket_tag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5961d60_9c9024d8",
+      "range": {
+        "startLine": 58,
+        "startChar": 15,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bd2aa25_40e5c95b",
         "filename": "net/socket/socket_tag.h",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9270b48_ac12cc36",
+        "filename": "net/socket/socket_tag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bd2aa25_40e5c95b",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "d89cf941_78720872",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce922af6_b343a8ca",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6359a9c_b1cc8cc4",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
@@ -229,6 +445,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3b4eff_9535e9af",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "This is for SCNx64.  I added a comment.",
+      "parentUuid": "d6359a9c_b1cc8cc4",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 18
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "9fc93e9e_4b177af1",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28e657f2_3d201f37",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d68bde_156b559a",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
@@ -269,6 +533,24 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a2640e_edb6e9d3",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d68bde_156b559a",
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "386e391c_ffa87f8b",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "I added the column headers to shed some light on it :)",
+      "parentUuid": "fdcbe71c_259f149c",
+      "range": {
+        "startLine": 49,
+        "startChar": 50,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "612c5d9a_b580e2d5",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
@@ -315,6 +621,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09043d2_b22f3de2",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Oddly the %n is documented in the C spec to not increment the return value...though apparently the Corrigendum disagrees...  Anyhow, it appears not to be counted in Android\u0027s sscanf.",
+      "parentUuid": "612c5d9a_b580e2d5",
+      "range": {
+        "startLine": 51,
+        "startChar": 17,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "1b39be40_436fd8fc",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a25ff4b6_bfc965e6",
+      "range": {
+        "startLine": 67,
+        "startChar": 19,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e95a8e6a_d6e7356e",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
@@ -361,6 +715,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26948f22_86d861a5",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "I just figured it\u0027d be a good idea to mix some unset and set values.  I don\u0027t feel strongly; I can remove if you like; I suppose it\u0027s testing somewhat undefined behavior, I just figured I\u0027d try and keep it consistent.",
+      "parentUuid": "e95a8e6a_d6e7356e",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -387,6 +765,30 @@
     },
     {
       "key": {
+        "uuid": "3966ef4b_3df532bb",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e087f445_733d5dea",
+      "range": {
+        "startLine": 82,
+        "startChar": 19,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ab13da1_9e0de408",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
@@ -407,6 +809,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fe3428_571d35d0",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "So I do test it by setting the UID in the tag on line 122 below.  This isn\u0027t a thorough test obviously as it\u0027s not a particularly interesting UID value to set...but it does at least exercise all the code paths.\nTo blame other apps (UIDs) requires MODIFY_NETWORK_ACCOUNTING permission which AFAIK only Google Play Services has.  I\u0027d prefer not to add that permission to the net_unittest APK as I don\u0027t want other parts of the net stack accidentally assuming that kind of permission is available.  I could add another test APK entirely just for the purpose of testing this more thoroughly, but that would be a huge undertaking (would need to modify all the bots to run this new test APK).\nMy thought was to have this minimal test (line 122 below) here, and potentially a more thorough integration test within a system that might utilize this feature (in which case the permission would already be present).",
+      "parentUuid": "8ab13da1_9e0de408",
+      "range": {
+        "startLine": 95,
+        "startChar": 25,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -433,6 +859,30 @@
     },
     {
       "key": {
+        "uuid": "8e246ac2_0f8139dc",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e381dae_be1d6b53",
+      "range": {
+        "startLine": 101,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 23
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81f8625a_1fea8a16",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
@@ -453,6 +903,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b6b8d3_b9a47ed0",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81f8625a_1fea8a16",
+      "range": {
+        "startLine": 124,
+        "startChar": 23,
+        "endLine": 124,
+        "endChar": 27
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -479,6 +953,30 @@
     },
     {
       "key": {
+        "uuid": "64e91313_15fcbd51",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "015e9344_4d34c739",
+      "range": {
+        "startLine": 125,
+        "startChar": 59,
+        "endLine": 125,
+        "endChar": 65
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9da4bbc3_26af6a1c",
         "filename": "net/socket/socket_tag_unittest.cc",
         "patchSetId": 7
@@ -499,6 +997,30 @@
       "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d6f10b_e497338b",
+        "filename": "net/socket/socket_tag_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-21T05:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9da4bbc3_26af6a1c",
+      "range": {
+        "startLine": 127,
+        "startChar": 25,
+        "endLine": 127,
+        "endChar": 0
+      },
+      "revId": "753b92eefb86ec6f7e41bbf9789f27b4ef2743a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
