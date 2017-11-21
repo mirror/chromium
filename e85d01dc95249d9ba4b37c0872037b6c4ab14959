@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "579d7a88_7065da29",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T02:11:50Z",
+      "side": 1,
+      "message": "Do we have a plan? Migrate to explicit helpers? Or explicit \"await SourcesTestRunner.init()\"? Other ideas?",
+      "revId": "e85d01dc95249d9ba4b37c0872037b6c4ab14959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
