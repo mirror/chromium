@@ -503,14 +503,49 @@ void ImageBuffer::SetNeedsCompositingUpdate() {
     client_->SetNeedsCompositingUpdate();
 }
 
+const unsigned char* ImageDataBuffer::Pixels() const {
+  if (uses_pixmap_)
+    return static_cast<const unsigned char*>(pixmap_.addr());
+  return data_;
+}
+
+ImageDataBuffer::ImageDataBuffer(scoped_refptr<StaticBitmapImage>& image) {
+  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
+  if (!skia_image->peekPixels(&pixmap_)) {
+    DCHECK(skia_image->isTextureBacked());
+    // If the image is texture backed, we have to read back the pixels.
+    SkColorType color_type = kN32_SkColorType;
+    if (skia_image->colorSpace() && skia_image->colorSpace()->gammaIsLinear())
+      color_type = kRGBA_F16_SkColorType;
+    SkImageInfo image_info =
+        SkImageInfo::Make(skia_image->width(), skia_image->height(), color_type,
+                          skia_image->alphaType(), skia_image->refColorSpace());
+    scoped_refptr<ArrayBuffer> pixels_buffer = ArrayBuffer::CreateOrNull(
+        image->Size().Area(), image_info.bytesPerPixel());
+    if (!pixels_buffer)
+      return;
+    bool read_pixels_sucessful = skia_image->readPixels(
+        image_info, pixels_buffer->Data(), image_info.minRowBytes(), 0, 0);
+    DCHECK(read_pixels_sucessful);
+    if (!read_pixels_sucessful)
+      return;
+    pixmap_.reset(image_info, pixels_buffer->Data(), image_info.minRowBytes());
+  }
+  uses_pixmap_ = true;
+  size_ = IntSize(image->width(), image->height());
+}
+
 bool ImageDataBuffer::EncodeImage(const String& mime_type,
                                   const double& quality,
                                   Vector<unsigned char>* encoded_image) const {
-  SkImageInfo info =
-      SkImageInfo::Make(Width(), Height(), kRGBA_8888_SkColorType,
-                        kUnpremul_SkAlphaType, nullptr);
-  const size_t rowBytes = info.minRowBytes();
-  SkPixmap src(info, Pixels(), rowBytes);
+  SkPixmap src(pixmap_);
+  if (!uses_pixmap_) {
+    SkImageInfo info =
+        SkImageInfo::Make(Width(), Height(), kRGBA_8888_SkColorType,
+                          kUnpremul_SkAlphaType, nullptr);
+    const size_t rowBytes = info.minRowBytes();
+    src.reset(info, Pixels(), rowBytes);
+  }
 
   if (mime_type == "image/jpeg") {
     SkJpegEncoder::Options options;
