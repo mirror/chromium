@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "257bf0a4_d46a5bb0",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-21T04:36:53Z",
+      "side": 1,
+      "message": "CL[2] explains the reason and fix http://crbug.com/785147\n\n[2] http://crrev.com/c/779967",
+      "parentUuid": "d822626f_d1b119e6",
+      "revId": "121adf34f6c486aba547be8ec774de2578a84005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe75793_fb051c6a",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
         "patchSetId": 20
