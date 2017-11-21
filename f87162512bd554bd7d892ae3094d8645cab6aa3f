@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "802f0ff7_1471f25c",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T19:03:31Z",
+      "side": 1,
+      "message": "Switched the other file to auto (I don\u0027t like that pattern, so avoid it in files I\u0027ll be modifying, but don\u0027t want to taint other people\u0027s files with that bias)",
+      "parentUuid": "37668e98_d02c7ca5",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 23
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e795bf_e8edb578",
         "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "677f07f8_1dd96e9a",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T19:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21e795bf_e8edb578",
+      "range": {
+        "startLine": 220,
+        "startChar": 11,
+        "endLine": 220,
+        "endChar": 22
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98c08036_48e61a2a",
         "filename": "content/browser/browsing_data/browsing_data_remover_impl_browsertest.cc",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbc0f7d_6320fb4d",
+        "filename": "content/browser/browsing_data/browsing_data_remover_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T19:03:31Z",
+      "side": 1,
+      "message": "Did both.",
+      "parentUuid": "98c08036_48e61a2a",
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d46bd79a_01ed0867",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T19:03:31Z",
+      "side": 1,
+      "message": "Done.  Went with StartSimpleLoader and StartSimpleLoaderAndWait (So no more start vs run.  Think this is more explicit about how they\u0027re related)",
+      "parentUuid": "b01dfb2e_bfacf422",
+      "range": {
+        "startLine": 150,
+        "startChar": 47,
+        "endLine": 150,
+        "endChar": 62
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "309e9bd4_77d5f33b",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 4
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-21T18:48:22Z",
       "side": 1,
       "message": "This declaration seems redundant for this function at this point.",
+      "range": {
+        "startLine": 495,
+        "startChar": 26,
+        "endLine": 495,
+        "endChar": 45
+      },
+      "revId": "f87162512bd554bd7d892ae3094d8645cab6aa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea3aa5c_d6ff7ca4",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T19:03:31Z",
+      "side": 1,
+      "message": "I don\u0027t follow.  We pass ownership of test_helper to its own callback, so we can\u0027t call test_helper-\u003eStartRequest(), since test_helper is nullptr by that point.",
+      "parentUuid": "309e9bd4_77d5f33b",
       "range": {
         "startLine": 495,
         "startChar": 26,

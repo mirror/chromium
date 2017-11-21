@@ -22,6 +22,30 @@
       "revId": "ac085083269f769b47165e92e03b27467bf59b47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d628178_99c0c335",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T19:03:31Z",
+      "side": 0,
+      "message": "I don\u0027t want to always Clone it, and it\u0027s an unowned pointer.  If we\u0027re not started just after creation, not Cloning it leads to lifetime dependencies, which I\u0027d rather avoid, particularly as we apparently want to handle a crashed network service (Which will invalidate the old raw pointer)",
+      "parentUuid": "a49b1a22_9ea86070",
+      "range": {
+        "startLine": 101,
+        "startChar": 31,
+        "endLine": 101,
+        "endChar": 49
+      },
+      "revId": "ac085083269f769b47165e92e03b27467bf59b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
