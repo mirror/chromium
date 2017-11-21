@@ -96,6 +96,7 @@ LayerTreeImpl::LayerTreeImpl(
       handle_visibility_changed_(false),
       have_scroll_event_handlers_(false),
       event_listener_properties_(),
+      wheel_event_listener_region_(),
       browser_controls_shrink_blink_size_(false),
       top_controls_height_(0),
       bottom_controls_height_(0),
@@ -464,6 +465,7 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
   target_tree->set_event_listener_properties(
       EventListenerClass::kTouchEndOrCancel,
       event_listener_properties(EventListenerClass::kTouchEndOrCancel));
+  target_tree->set_wheel_event_listener_region(wheel_event_listener_region());
 
   if (ViewportSizeInvalid())
     target_tree->SetViewportSizeInvalid();

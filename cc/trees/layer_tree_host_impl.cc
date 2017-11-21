@@ -620,6 +620,15 @@ EventListenerProperties LayerTreeHostImpl::GetEventListenerProperties(
   return active_tree_->event_listener_properties(event_class);
 }
 
+bool LayerTreeHostImpl::PointInWidgetInsideWheelEventListenerRegion(
+    const gfx::Point& point) const {
+  const Region& region = active_tree_->wheel_event_listener_region();
+  if (region.IsEmpty() || region.Contains(point))
+    return true;
+  else
+    return false;
+}
+
 // Return true if scrollable node for 'ancestor' is the same as 'child' or an
 // ancestor along the scroll tree.
 bool LayerTreeHostImpl::IsScrolledBy(LayerImpl* child, ScrollNode* ancestor) {

@@ -14,16 +14,18 @@ namespace blink {
 
 class PaintLayer;
 
-struct TouchActionRect {
+enum HitTestRectType { kTouchAction = 0, kWheelEventListener };
+
+struct HitTestRect {
   LayoutRect rect;
   TouchAction whitelisted_touch_action;
+  HitTestRectType rect_type;
 
-  TouchActionRect(LayoutRect layout_rect, TouchAction action)
-      : rect(layout_rect), whitelisted_touch_action(action) {}
+  HitTestRect(LayoutRect layout_rect, TouchAction action, HitTestRectType type)
+      : rect(layout_rect), whitelisted_touch_action(action), rect_type(type) {}
 };
 
-typedef WTF::HashMap<const PaintLayer*, Vector<TouchActionRect>>
-    LayerHitTestRects;
+typedef WTF::HashMap<const PaintLayer*, Vector<HitTestRect>> LayerHitTestRects;
 
 }  // namespace blink
 

@@ -197,6 +197,18 @@ class PagePopupChromeClient final : public EmptyChromeClient {
     return WebEventListenerProperties::kNothing;
   }
 
+  void SetWheelEventListenerRects(LocalFrame*,
+                                  const WebVector<WebRect>& rects) override {
+    if (popup_->layer_tree_view_)
+      popup_->layer_tree_view_->SetWheelEventListenerRects(rects);
+  }
+
+  WebVector<WebRect> WheelEventListenerRects(LocalFrame*) const override {
+    if (popup_->layer_tree_view_)
+      return popup_->layer_tree_view_->WheelEventListenerRects();
+    return WebVector<WebRect>();
+  }
+
   void SetHasScrollEventHandlers(LocalFrame* frame,
                                  bool has_event_handlers) override {
     DCHECK(frame->IsMainFrame());
