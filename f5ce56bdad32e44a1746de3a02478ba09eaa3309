@@ -22,6 +22,30 @@
       "revId": "f5ce56bdad32e44a1746de3a02478ba09eaa3309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d25b9bf_e8017a5b",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-21T09:06:33Z",
+      "side": 1,
+      "message": "I think so.\nDo we have another test which redirects to data URL?",
+      "parentUuid": "92ad5aa6_12c5c2d8",
+      "range": {
+        "startLine": 1180,
+        "startChar": 18,
+        "endLine": 1180,
+        "endChar": 34
+      },
+      "revId": "f5ce56bdad32e44a1746de3a02478ba09eaa3309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
