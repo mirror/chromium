@@ -134,7 +134,8 @@ namespace mediaPerceptionPrivate {
     UNSPECIFIED,
     FACE,
     PERSON,
-    MOTION_REGION
+    MOTION_REGION,
+    LABELED_REGION
   };
 
   dictionary Entity {
@@ -152,6 +153,17 @@ namespace mediaPerceptionPrivate {
 
     // The estimated depth of the entity from the camera.
     Distance? depth;
+
+    // String label for this entity.
+    DOMString? entityLabel;
+  };
+
+  dictionary PacketLatency {
+    // String label for this packet.
+    DOMString? packetLabel;
+
+    // Latency in microseconds with respect to a reference packet.
+    long? latencyUsec;
   };
 
   // The set of computer vision metadata for an image frame.
@@ -167,6 +179,9 @@ namespace mediaPerceptionPrivate {
 
     // The list of entities detected in this frame.
     Entity[]? entities;
+
+    // Latency measurement for a list of packet streams in drishti graph.
+    PacketLatency[]? packetLatency;
   };
 
   dictionary MediaPerception {
