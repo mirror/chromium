@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "847289ba_57bde7eb",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-21T20:05:41Z",
+      "side": 1,
+      "message": "If you can\u0027t pull this out into the anon namespace in the cc (not sure how you\u0027d get around the Trigger enum), maybe make this static?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "8b0a1ecf52f22eb4724882606c9622a2b16aa705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
