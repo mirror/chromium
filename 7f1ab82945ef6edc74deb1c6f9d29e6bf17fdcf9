@@ -16,6 +16,24 @@
       "revId": "7f1ab82945ef6edc74deb1c6f9d29e6bf17fdcf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a2159d_485caa5d",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 10
+      },
+      "lineNbr": 4000,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T16:43:58Z",
+      "side": 1,
+      "message": "I\u0027ve been debugging this. So it\u0027s an existing problem, but before this CL that problem did not trigger flaky test behavior.\n\nThis test file has two flakes.\nI will fix the referenced problem in a separate CL, the file will still be marked flaky due to the the other problem which this CL addresses.\nI will then rebase this CL after that has landed, and it should no longer be flaky. I will update this CL to remove it from TestExpectations before landing.",
+      "parentUuid": "7a199911_51276976",
+      "revId": "7f1ab82945ef6edc74deb1c6f9d29e6bf17fdcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
