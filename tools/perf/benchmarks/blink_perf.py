@@ -506,6 +506,11 @@ class BlinkPerfOWPStorage(_BlinkPerfBenchmark):
   tag = 'owp_storage'
   subdir = 'OWPStorage'
 
+  def SetExtraBrowserOptions(self, options):
+    options.AppendExtraBrowserArgs([
+        '--blob-transport-by-file-min-size=41943040',
+    ])
+
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
