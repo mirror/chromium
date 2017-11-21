@@ -67,6 +67,7 @@ const char* const kKnownSettings[] = {
     kDeviceDisabled,
     kDeviceDisabledMessage,
     kDeviceEnrollmentIdNeeded,
+    kDeviceHostnameTemplate,
     kDeviceLoginScreenAppInstallList,
     kDeviceLoginScreenInputMethods,
     kDeviceLoginScreenLocales,
@@ -612,6 +613,14 @@ void DecodeGenericPolicies(
       new_values_cache->SetValue(
           kDeviceEnrollmentIdNeeded,
           base::MakeUnique<base::Value>(container.enrollment_id_needed()));
+    }
+  }
+
+  if (policy.has_network_hostname()) {
+    const em::NetworkHostnameProto& container(policy.network_hostname());
+    if (container.has_device_hostname_template()) {
+      new_values_cache->SetString(kDeviceHostnameTemplate,
+                                  container.device_hostname_template());
     }
   }
 }
