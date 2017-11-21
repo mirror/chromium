@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30498222_654c616c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/OverlayModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T19:55:23Z",
+      "side": 1,
+      "message": "if (target.suspended())\n  this._overlayAgent.setSuspended(true);",
+      "revId": "9c03cfc11cae53726e2ca74ed23e713687d4f4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
