@@ -1,6 +1,7 @@
 {
   "enabled_paths": [
     "android_webview/glue",
+    "android_webview/support_library/boundary_interfaces",
     "base",
     "base/trace_event/common",
     "breakpad",
