@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf98b88b_6aed2246",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-21T08:28:38Z",
+      "side": 1,
+      "message": "I would expect to have tests that cover the case of translate_allowed \u003d false.",
+      "revId": "731989fead5cf1076fde95b854e5e718dfb5a1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc9c540_d8474255",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-21T08:28:38Z",
+      "side": 1,
+      "message": "Personal remark: I would prefer to see the first 2 arguments swapped. I believe locale should be first.",
+      "range": {
+        "startLine": 180,
+        "startChar": 36,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "731989fead5cf1076fde95b854e5e718dfb5a1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
