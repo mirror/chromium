@@ -15,6 +15,7 @@
 #include "headless/public/headless_browser.h"
 #include "headless/public/headless_browser_context.h"
 #include "headless/test/headless_browser_test.h"
+#include "net/test/embedded_test_server/http_request.h"
 
 #include "url/gurl.h"
 
@@ -68,6 +69,13 @@ class HeadlessRenderTest : public HeadlessAsyncDevTooledBrowserTest,
 
   virtual void OverrideWebPreferences(WebPreferences* preferences);
 
+  virtual std::unique_ptr<net::test_server::HttpResponse> OnResourceRequest(
+      const net::test_server::HttpRequest& request);
+
+  const std::vector<net::test_server::HttpRequest>& GetAccessLog() const {
+    return access_log_;
+  }
+
   void CustomizeHeadlessBrowserContext(
       HeadlessBrowserContext::Builder& builder) override;
 
@@ -92,6 +100,9 @@ class HeadlessRenderTest : public HeadlessAsyncDevTooledBrowserTest,
   void OnGetDomSnapshotDone(
       std::unique_ptr<dom_snapshot::GetSnapshotResult> result);
   void HandleTimeout();
+  static std::unique_ptr<net::test_server::HttpResponse> HandleResourceRequest(
+      HeadlessRenderTest* instance,
+      const net::test_server::HttpRequest& request);
 
   enum State {
     INIT,       // Setting up the client, no navigation performed yet.
@@ -103,6 +114,7 @@ class HeadlessRenderTest : public HeadlessAsyncDevTooledBrowserTest,
   };
   State state_ = INIT;
 
+  std::vector<net::test_server::HttpRequest> access_log_;
   std::unique_ptr<VirtualTimeController> virtual_time_controller_;
   bool navigation_performed_ = false;
 
