@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78f7bffa_ffedb442",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-21T19:22:07Z",
+      "side": 1,
+      "message": "Nit: How about: \"Having extension-provided suggestions appear outside keyword mode can be surprising, so only query for suggestions when in keyword mode.\"",
+      "revId": "e159133b2c0e35855cb60a683e11b5d39437cf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
