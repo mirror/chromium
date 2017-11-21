@@ -46,6 +46,30 @@
       "revId": "1669b5018c8857c169d9b0dfae309552104adde8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821c650d_67a5ace4",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 4483,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T19:05:13Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation. This sounds good to me.",
+      "parentUuid": "a4e40fe4_da3cbb44",
+      "range": {
+        "startLine": 4483,
+        "startChar": 77,
+        "endLine": 4483,
+        "endChar": 0
+      },
+      "revId": "1669b5018c8857c169d9b0dfae309552104adde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
