@@ -16,6 +16,24 @@
       "revId": "fd75c0f0fafe66884fbb985fbe3db71c6835b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f7affd_4fa306a0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T11:18:23Z",
+      "side": 1,
+      "message": "This version of document.open is virtually an alias to window.open, so as we don\u0027t need them for window.open(), we don\u0027t need them for this version of document.open.  (The spec agrees, too.)\n\nI\u0027m not an expert of custom elements, but I\u0027d say that there is no chance to modify a document tree in this version of document.open since it just opens a new window and doesn\u0027t touch a document tree.  This is a direct technical reason, IIUC.",
+      "parentUuid": "ccef555d_e7fcccd8",
+      "revId": "fd75c0f0fafe66884fbb985fbe3db71c6835b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
