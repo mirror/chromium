@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a76dece1_6c65b252",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-21T04:11:18Z",
+      "side": 0,
+      "message": "nit: Could you add DCHECK(layout_object-\u003eIsBox()) for just-in-case?",
+      "parentUuid": "afaca839_a9ed3ad1",
+      "range": {
+        "startLine": 271,
+        "startChar": 2,
+        "endLine": 271,
+        "endChar": 30
+      },
+      "revId": "c282ab4aa09714880e867f5f66b035d06d03e6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a99d97cf_0b718b4e",
         "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c282ab4aa09714880e867f5f66b035d06d03e6d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa75d54b_f0eef489",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-21T04:11:18Z",
+      "side": 0,
+      "message": "ACK. We can catch |inline_box \u003d\u003d nullptr| at L283. No need to add DCHECK()",
+      "parentUuid": "a99d97cf_0b718b4e",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 18
+      },
+      "revId": "c282ab4aa09714880e867f5f66b035d06d03e6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
