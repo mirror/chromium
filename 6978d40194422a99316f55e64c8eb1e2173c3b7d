@@ -493,6 +493,30 @@
       "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907ff1f5_04cee1df",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T19:52:34Z",
+      "side": 1,
+      "message": "I renamed LogLoadStart and LogRendererCrash to be more descriptive.",
+      "parentUuid": "77ae7482_f64997f3",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
