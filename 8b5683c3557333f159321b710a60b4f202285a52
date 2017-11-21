@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f41d509_18bee65d",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T21:25:22Z",
+      "side": 1,
+      "message": "nit: it doesn\u0027t look like it\u0027s possible for WaitForAutocompleteDone() to exit if autocomplete_controller-\u003edone() is false.  Are these expectations needed/helpful?",
+      "revId": "8b5683c3557333f159321b710a60b4f202285a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34866158_19ac0007",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T21:25:22Z",
+      "side": 1,
+      "message": "Maybe expand this a bit?  Something like:\n// Peek into the controller to see if it has the results we expect. Since\n// the user left keyword mode, the extension should not control the results\n// or be the top-ranked suggestion.\n\nWDYT?",
+      "revId": "8b5683c3557333f159321b710a60b4f202285a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
