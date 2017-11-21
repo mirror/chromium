@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec1f9a9_a153aaf0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 6981,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-21T18:48:00Z",
+      "side": 0,
+      "message": "If we know for sure we\u0027ll be re-adding this soon, should we leave it in to save work on the translators?  Or do we risk orphaned strings?",
+      "revId": "7cf1a6b0f5be7d19dc3861867d6b7c722ab38135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

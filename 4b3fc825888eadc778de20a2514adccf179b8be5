@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab1e55a_19c53d5a",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-21T18:48:00Z",
+      "side": 1,
+      "message": "Nit: Could use auto to avoid redundancy (but cleaning that up is not necessary)  (2 places)",
+      "revId": "4b3fc825888eadc778de20a2514adccf179b8be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
