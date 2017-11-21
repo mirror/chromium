@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8af615a_2a70be4b",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-21T16:05:14Z",
+      "side": 1,
+      "message": "A new doom_generation number, I should probably say that.",
+      "parentUuid": "889e4d9f_4d338e94",
+      "range": {
+        "startLine": 158,
+        "startChar": 71,
+        "endLine": 158,
+        "endChar": 74
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c416d02_29db4ba0",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T15:44:04Z",
       "side": 1,
       "message": "This needs braces",
+      "range": {
+        "startLine": 170,
+        "startChar": 41,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78112e4_36882137",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-21T16:05:14Z",
+      "side": 1,
+      "message": "Will do...",
+      "parentUuid": "9c416d02_29db4ba0",
       "range": {
         "startLine": 170,
         "startChar": 41,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "40287772_cf4e6e92",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-21T16:05:14Z",
+      "side": 1,
+      "message": "(yeah, leaving).\n\nThe argument I am trying to make is that you have at most max_uint32 - 2 entries, with no gaps in between, and also the largest one is max_uint32. That means the numbers in use are either \n3 4 .... max_uint32-1 max_uint32\n(which has length max_uint32 - 3 + 1 \u003d max_uint32 - 2)\n... or some suffix thereof, so 1 is not in use.\n(This does mean that the -1  in the CHECK on line 161 is not needed, and changing that would make the longest possible sequence in use start at 2)\n\nI should just put this in a comment, shouldn\u0027t I?",
+      "parentUuid": "5e417f9c_1550ef90",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 67
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecb27e95_a7f8257c",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 16
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c512483e_14fe9f84",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-21T16:05:14Z",
+      "side": 1,
+      "message": "That\u0027s my understanding (and what SimpleCacheDeleteFile used), but I should probably ask for Asanka\u0027s Windows expertise yet again just in case...",
+      "parentUuid": "ecb27e95_a7f8257c",
+      "range": {
+        "startLine": 320,
+        "startChar": 13,
+        "endLine": 320,
+        "endChar": 30
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ff13da8_1b8e31a9",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 16
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-21T15:44:04Z",
       "side": 1,
       "message": "Does DeleteFile provide equivalent behavior to SimpleCacheDeleteFile on Windows?",
+      "range": {
+        "startLine": 1525,
+        "startChar": 9,
+        "endLine": 1525,
+        "endChar": 44
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271ad74e_63036815",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-21T16:05:14Z",
+      "side": 1,
+      "message": "We don\u0027t need them here anymore, as this should never be called while an entry is in use.\n\nThough maybe this should be using cache_util::DeleteCacheFile... Whee.",
+      "parentUuid": "4ff13da8_1b8e31a9",
       "range": {
         "startLine": 1525,
         "startChar": 9,
