@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d9b6aa5_8b0b02dc",
+        "filename": "chrome/browser/secure_origin_whitelist_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-21T16:06:22Z",
+      "side": 1,
+      "message": "should use the switches::kUnsafely... value",
+      "revId": "36cec868ade59be9e0d8fa5593fdffa2d8879966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93100a47_97d6cdc5",
+        "filename": "chrome/test/data/secure_origin_whitelist_browsertest.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-21T16:06:22Z",
+      "side": 1,
+      "message": "please add \u003c!doctype html\u003e",
+      "revId": "36cec868ade59be9e0d8fa5593fdffa2d8879966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
