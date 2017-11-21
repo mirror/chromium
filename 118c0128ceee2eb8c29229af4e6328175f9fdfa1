@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "655b95dc_739f1959",
+        "filename": "content/public/common/screen_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-21T22:04:38Z",
+      "side": 1,
+      "message": "Do we want to #if defined(OS_MACOSX) this?",
+      "range": {
+        "startLine": 31,
+        "startChar": 20,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "118c0128ceee2eb8c29229af4e6328175f9fdfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
