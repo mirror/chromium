@@ -388,7 +388,9 @@ ChildThreadImpl::ChildThreadImpl(const Options& options)
       browser_process_io_runner_(options.browser_process_io_runner),
       channel_connected_factory_(
           new base::WeakPtrFactory<ChildThreadImpl>(this)),
-      ipc_task_runner_(options.ipc_task_runner),
+      ipc_task_runner_(options.ipc_task_runner
+                           ? options.ipc_task_runner
+                           : base::ThreadTaskRunnerHandle::Get()),
       weak_factory_(this) {
   Init(options);
 }
@@ -426,7 +428,7 @@ void ChildThreadImpl::ConnectChannel(
   channel_->Init(
       IPC::ChannelMojo::CreateClientFactory(
           std::move(handle), ChildProcess::current()->io_task_runner(),
-          base::ThreadTaskRunnerHandle::Get()),
+          ipc_task_runner_),
       true /* create_pipe_now */);
 }
 
@@ -442,8 +444,7 @@ void ChildThreadImpl::Init(const Options& options) {
 #endif
 
   channel_ = IPC::SyncChannel::Create(
-      this, ChildProcess::current()->io_task_runner(),
-      ipc_task_runner_ ? ipc_task_runner_ : base::ThreadTaskRunnerHandle::Get(),
+      this, ChildProcess::current()->io_task_runner(), ipc_task_runner_,
       ChildProcess::current()->GetShutDownEvent());
 #if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
   if (!IsInBrowserProcess())
