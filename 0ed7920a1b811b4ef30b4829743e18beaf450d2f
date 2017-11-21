@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f17111f_5fcee82e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/font-face.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T23:51:55Z",
+      "side": 1,
+      "message": "btw, there\u0027s a TestRunner.addIframe you can use\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js?q\u003dTestRunner.addIframe\u0026sq\u003dpackage:chromium\u0026l\u003d546",
+      "revId": "0ed7920a1b811b4ef30b4829743e18beaf450d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e35433_d6bb18f1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/from-disk-cache-timing.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T23:51:55Z",
+      "side": 1,
+      "message": "remove! :)",
+      "revId": "0ed7920a1b811b4ef30b4829743e18beaf450d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b045842_61eb1d59",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/from-disk-cache-timing.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T23:51:55Z",
+      "side": 1,
+      "message": "Don\u0027t think this is needed anymore.",
+      "revId": "0ed7920a1b811b4ef30b4829743e18beaf450d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5925010_ae707f60",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/from-disk-cache-timing.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T23:51:55Z",
+      "side": 1,
+      "message": "FYI: TestRunner.addScriptTag(...)\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js?type\u003dcs\u0026q\u003dTestRunner.addScriptTag\u0026sq\u003dpackage:chromium\u0026l\u003d506",
+      "revId": "0ed7920a1b811b4ef30b4829743e18beaf450d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cae592e_9fec7e5a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/network-disable-cache-memory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T23:51:55Z",
+      "side": 1,
+      "message": "kebab case! it\u0027s much more common than snake case in LayoutTests/",
+      "revId": "0ed7920a1b811b4ef30b4829743e18beaf450d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5bc775_b16124bd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/network-disable-cache-memory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T23:51:55Z",
+      "side": 1,
+      "message": "don\u0027t think this is necessary.",
+      "revId": "0ed7920a1b811b4ef30b4829743e18beaf450d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c9aeb3_4de1d6d1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/resources/gc.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T23:51:55Z",
+      "side": 1,
+      "message": "Might want to note the path this is copied from.",
+      "revId": "0ed7920a1b811b4ef30b4829743e18beaf450d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
