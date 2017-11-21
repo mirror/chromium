@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1103fbba_84108dd1",
+        "filename": "third_party/WebKit/Source/core/dom/events/Event.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-21T15:41:05Z",
+      "side": 1,
+      "message": "Done since there is no \"const\" caller.\n\nBtw, it is not uncommon to have a \"const\" function return a mutable object, to allow using this function from within another \"const\" function. E.g.:\nhttps://cs.chromium.org/search/?q\u003df:/third_party/WebKit/Source/core/dom+f:%5C.h+%22Document%26+GetDocument()+const%22\u0026type\u003dcs",
+      "parentUuid": "44f33e0e_355bd554",
+      "revId": "9c3d0bda158684b608b62309d299c51c41ff3cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9e91710_3573a45a",
         "filename": "third_party/WebKit/Source/core/events/WheelEvent.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9c3d0bda158684b608b62309d299c51c41ff3cef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b942f8_82d037be",
+        "filename": "third_party/WebKit/Source/core/events/WheelEvent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-21T15:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9e91710_3573a45a",
+      "revId": "9c3d0bda158684b608b62309d299c51c41ff3cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
