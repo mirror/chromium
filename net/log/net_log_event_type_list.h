@@ -2027,6 +2027,29 @@ EVENT_TYPE(QUIC_CONNECTION_MIGRATION_FAILURE)
 //  }
 EVENT_TYPE(QUIC_CONNECTION_MIGRATION_SUCCESS)
 
+// Records that a QUIC connection migration attempt due to new network
+// being connected.
+EVENT_TYPE(QUIC_CONNECTION_MIGRATION_ON_NETWORK_CONNECTED)
+
+// Records that a QUIC connection migration attempt due to new network
+// being marked as default network.
+EVENT_TYPE(QUIC_CONNECTION_MIGRATION_ON_NETWORK_MADE_DEFAULT)
+
+// Records that a QUIC connection migration attempt due to old network
+// being disconnected.
+EVENT_TYPE(QUIC_CONNECTION_MIGRATION_ON_NETWORK_DISCONNECTED)
+
+// Records that a QUIC connection migration attempt due to encountering
+// packet write error on the current network.
+EVENT_TYPE(QUIC_CONNECTION_MIGRATION_ON_WRITE_ERROR)
+
+// Records that a QUIC connection migration attempt due to path
+// degrading on the current network.
+EVENT_TYPE(QUIC_CONNECTION_MIGRATION_ON_PATH_DEGRADING)
+
+// Records that a QUIC connection migration attempt due to efforts to
+// migrate back to the default network.
+EVENT_TYPE(QUIC_CONNECTION_MIGRATION_ON_MIGRATE_BACK)
 // ------------------------------------------------------------------------
 // HttpStreamParser
 // ------------------------------------------------------------------------
