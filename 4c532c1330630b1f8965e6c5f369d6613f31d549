@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27dbfcc6_4267ec80",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/window-event.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-21T06:04:22Z",
+      "side": 1,
+      "message": "nit: Do you use any function defined in this file?  (I think not). you may remove this line.",
+      "revId": "4c532c1330630b1f8965e6c5f369d6613f31d549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa4a36b_eb23744f",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/window-event.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-21T06:04:22Z",
+      "side": 1,
+      "message": "nit: shadow-host-v0 may be more explaining the intention.\n\n(and ditto for other instances below, including shadow-host-2, shadowHost1 etc.)",
+      "revId": "4c532c1330630b1f8965e6c5f369d6613f31d549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92185d1_bd5aac9f",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/window-event.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-21T06:04:22Z",
+      "side": 1,
+      "message": "nit: Please be consistent with naming style in a file, \u0027testEvent\u0027 or \u0027test_event\u0027.\n(we don\u0027t have strong style requirement in layout tests)",
+      "revId": "4c532c1330630b1f8965e6c5f369d6613f31d549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
