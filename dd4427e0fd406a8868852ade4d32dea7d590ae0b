@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bebbcac5_3e90292a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 44901,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T06:02:50Z",
+      "side": 1,
+      "message": "nit: Is it correct that this description is with the deprecated histogram rather than the new one?  Given the CL description, I\u0027d have expected the opposite, but I may well be misunderstanding.",
+      "range": {
+        "startLine": 44900,
+        "startChar": 76,
+        "endLine": 44901,
+        "endChar": 30
+      },
+      "revId": "dd4427e0fd406a8868852ade4d32dea7d590ae0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
