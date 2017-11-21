@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36f09bdb_768c1956",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-21T15:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af984ed_3ce9155e",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "1cdab223ca3111397aab89acb74582706c25cdc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7b52daa_f39cc7cc",
         "filename": "components/consent_auditor/consent_auditor.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9241c96c_0409b586",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-21T15:22:18Z",
+      "side": 1,
+      "message": "Done, I\u0027m not sure about the assumptions yet. I think it is best to update this when we know the exact conditions under which logging will be successful.",
+      "parentUuid": "a7b52daa_f39cc7cc",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "1cdab223ca3111397aab89acb74582706c25cdc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675bb60a_8b1a2759",
         "filename": "components/consent_auditor/consent_auditor.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "1cdab223ca3111397aab89acb74582706c25cdc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d6913a_394704b0",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-21T15:22:18Z",
+      "side": 1,
+      "message": "as discussed, I keep it as void and we will add a return value or callback when neccessary",
+      "parentUuid": "675bb60a_8b1a2759",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "1cdab223ca3111397aab89acb74582706c25cdc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
