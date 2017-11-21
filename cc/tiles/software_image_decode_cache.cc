@@ -73,13 +73,14 @@ class AutoRemoveKeyFromTaskMap {
   const SoftwareImageDecodeCache::ImageKey& key_;
 };
 
-class ImageDecodeTaskImpl : public TileTask {
+class SoftwareImageDecodeTaskImpl : public TileTask {
  public:
-  ImageDecodeTaskImpl(SoftwareImageDecodeCache* cache,
-                      const SoftwareImageDecodeCache::ImageKey& image_key,
-                      const PaintImage& paint_image,
-                      SoftwareImageDecodeCache::DecodeTaskType task_type,
-                      const ImageDecodeCache::TracingInfo& tracing_info)
+  SoftwareImageDecodeTaskImpl(
+      SoftwareImageDecodeCache* cache,
+      const SoftwareImageDecodeCache::ImageKey& image_key,
+      const PaintImage& paint_image,
+      SoftwareImageDecodeCache::DecodeTaskType task_type,
+      const ImageDecodeCache::TracingInfo& tracing_info)
       : TileTask(true),
         cache_(cache),
         image_key_(image_key),
@@ -89,7 +90,7 @@ class ImageDecodeTaskImpl : public TileTask {
 
   // Overridden from Task:
   void RunOnWorkerThread() override {
-    TRACE_EVENT2("cc", "ImageDecodeTaskImpl::RunOnWorkerThread", "mode",
+    TRACE_EVENT2("cc", "SoftwareImageDecodeTaskImpl::RunOnWorkerThread", "mode",
                  "software", "source_prepare_tiles_id",
                  tracing_info_.prepare_tiles_id);
     devtools_instrumentation::ScopedImageDecodeTask image_decode_task(
@@ -105,7 +106,7 @@ class ImageDecodeTaskImpl : public TileTask {
   }
 
  protected:
-  ~ImageDecodeTaskImpl() override {}
+  ~SoftwareImageDecodeTaskImpl() override {}
 
  private:
   SoftwareImageDecodeCache* cache_;
@@ -114,7 +115,7 @@ class ImageDecodeTaskImpl : public TileTask {
   SoftwareImageDecodeCache::DecodeTaskType task_type_;
   const ImageDecodeCache::TracingInfo tracing_info_;
 
-  DISALLOW_COPY_AND_ASSIGN(ImageDecodeTaskImpl);
+  DISALLOW_COPY_AND_ASSIGN(SoftwareImageDecodeTaskImpl);
 };
 
 SkSize GetScaleAdjustment(const ImageDecodeCacheKey& key) {
@@ -292,7 +293,7 @@ SoftwareImageDecodeCache::GetTaskForImageAndRefInternal(
   if (!task) {
     // Ref image once for the task.
     ++cache_entry->ref_count;
-    task = base::MakeRefCounted<ImageDecodeTaskImpl>(
+    task = base::MakeRefCounted<SoftwareImageDecodeTaskImpl>(
         this, key, image.paint_image(), task_type, tracing_info);
   }
   return TaskResult(task);
