@@ -59,6 +59,7 @@
 #include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom.h"
 #include "third_party/WebKit/public/platform/modules/presentation/presentation.mojom.h"
+#include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/WebKit/public/web/WebTreeScopeType.h"
 #include "ui/accessibility/ax_modes.h"
@@ -99,6 +100,7 @@ class Rect;
 namespace content {
 class AssociatedInterfaceProviderImpl;
 class AssociatedInterfaceRegistryImpl;
+class AuthenticatorImpl;
 class LegacyIPCFrameInputHandler;
 class FrameTree;
 class FrameTreeNode;
@@ -978,6 +980,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void BindPresentationServiceRequest(
       blink::mojom::PresentationServiceRequest request);
 
+  void BindAuthenticatorRequest(webauth::mojom::AuthenticatorRequest request);
+
   // service_manager::mojom::InterfaceProvider:
   void GetInterface(const std::string& interface_name,
                     mojo::ScopedMessagePipeHandle interface_pipe) override;
@@ -1319,6 +1323,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Hosts blink::mojom::PresentationService for the RenderFrame.
   std::unique_ptr<PresentationServiceImpl> presentation_service_;
+
+  std::unique_ptr<AuthenticatorImpl> authenticator_impl_;
 
   std::unique_ptr<AssociatedInterfaceProviderImpl>
       remote_associated_interfaces_;
