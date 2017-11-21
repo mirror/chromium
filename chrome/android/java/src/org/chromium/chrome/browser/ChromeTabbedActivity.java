@@ -558,7 +558,10 @@ public class ChromeTabbedActivity
             boolean isShowingPromo = mLocaleManager.hasShownSearchEnginePromoThisSession();
             // Promo dialogs in multiwindow mode are broken on some devices: http://crbug.com/354696
             boolean isLegacyMultiWindow = MultiWindowUtils.getInstance().isLegacyMultiWindow(this);
-            if (!isShowingPromo && !mIntentWithEffect && FirstRunStatus.getFirstRunFlowComplete()
+            boolean isFirstRunFlowComplete = FirstRunStatus.getFirstRunFlowComplete()
+                    || CommandLine.getInstance().hasSwitch("skip-first-run-flow-complete-check");
+
+            if (!isShowingPromo && !mIntentWithEffect && isFirstRunFlowComplete
                     && preferenceManager.getPromosSkippedOnFirstStart() && !VrShellDelegate.isInVr()
                     && !isLegacyMultiWindow) {
                 // Data reduction promo should be temporarily suppressed if the sign in promo is
