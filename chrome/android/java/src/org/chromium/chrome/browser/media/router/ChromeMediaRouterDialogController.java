@@ -10,6 +10,7 @@ import android.support.v7.media.MediaRouteSelector;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.chrome.browser.media.router.cast.CastMediaSource;
 import org.chromium.chrome.browser.media.router.cast.MediaSink;
 import org.chromium.chrome.browser.media.router.cast.MediaSource;
 import org.chromium.chrome.browser.media.router.cast.remoting.RemotingMediaSource;
@@ -48,17 +49,12 @@ public class ChromeMediaRouterDialogController implements MediaRouteDialogDelega
         String sourceId = null;
         MediaRouteSelector routeSelector = null;
         for (String sourceUrn : sourceUrns) {
-            MediaSource source = MediaSource.from(sourceUrn);
-            if (source != null) {
-                sourceId = source.getUrn();
-                routeSelector = source.buildRouteSelector();
-                break;
-            }
+            MediaSource source = CastMediaSource.from(sourceUrn);
+            if (source == null) source = RemotingMediaSource.from(sourceUrn);
 
-            RemotingMediaSource remotingSource = RemotingMediaSource.from(sourceUrn);
-            if (remotingSource != null) {
-                sourceId = remotingSource.getSourceId();
-                routeSelector = remotingSource.buildRouteSelector();
+            if (source != null) {
+                sourceId = source.getSourceId();
+                routeSelector = source.buildRouteSelector();
                 break;
             }
         }
@@ -84,16 +80,11 @@ public class ChromeMediaRouterDialogController implements MediaRouteDialogDelega
         String sourceId = null;
         MediaRouteSelector routeSelector = null;
 
-        MediaSource source = MediaSource.from(sourceUrn);
+        MediaSource source = CastMediaSource.from(sourceUrn);
+        if (source == null) source = RemotingMediaSource.from(sourceUrn);
         if (source != null) {
-            sourceId = source.getUrn();
+            sourceId = source.getSourceId();
             routeSelector = source.buildRouteSelector();
-        } else {
-            RemotingMediaSource remotingSource = RemotingMediaSource.from(sourceUrn);
-            if (remotingSource != null) {
-                sourceId = remotingSource.getSourceId();
-                routeSelector = remotingSource.buildRouteSelector();
-            }
         }
 
         if (sourceId == null || routeSelector == null) {

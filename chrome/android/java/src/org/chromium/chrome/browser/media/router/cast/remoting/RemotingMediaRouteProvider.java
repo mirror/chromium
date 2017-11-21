@@ -16,6 +16,7 @@ import org.chromium.chrome.browser.media.router.MediaRouteManager;
 import org.chromium.chrome.browser.media.router.MediaRouteProvider;
 import org.chromium.chrome.browser.media.router.cast.DiscoveryCallback;
 import org.chromium.chrome.browser.media.router.cast.MediaSink;
+import org.chromium.chrome.browser.media.router.cast.MediaSource;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -80,7 +81,12 @@ public class RemotingMediaRouteProvider implements MediaRouteProvider, Discovery
 
     @Override
     public boolean supportsSource(String sourceId) {
-        return RemotingMediaSource.from(sourceId) != null;
+        return getSourceFromId(sourceId) != null;
+    }
+
+    @Override
+    protected MediaSource getSourceFromId(String sourceId) {
+        return RemotingMediaSource.from(sourceId);
     }
 
     @Override
