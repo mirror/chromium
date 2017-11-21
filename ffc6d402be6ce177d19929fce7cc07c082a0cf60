@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48f558a6_5c843344",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-21T08:48:06Z",
+      "side": 1,
+      "message": "Depending on how complex these tests will become you might find the TestInMemoryProtocolHandler* useful.  The main advantage of that is being able to programatically defer responses if you need to test something that is timing or order based.  This looks fine otherwise.\n\n* #include \"headless/public/util/testing/test_in_memory_protocol_handler.h\"",
+      "range": {
+        "startLine": 165,
+        "startChar": 41,
+        "endLine": 165,
+        "endChar": 54
+      },
+      "revId": "ffc6d402be6ce177d19929fce7cc07c082a0cf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4501e5c6_2718d434",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-21T08:48:06Z",
+      "side": 1,
+      "message": "Lets use a C++11 raw string literal here and elsewhere to avoid the ugly and hard to edit quotations.",
+      "range": {
+        "startLine": 169,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 16
+      },
+      "revId": "ffc6d402be6ce177d19929fce7cc07c082a0cf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb7dcd9_7d6476ab",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-21T08:48:06Z",
+      "side": 1,
+      "message": "Take a look at https://cs.chromium.org/chromium/src/headless/lib/frame_id_browsertest.cc?type\u003dcs\u0026q\u003dFrameIdTest\u0026l\u003d109  \n\nIMO that\u0027s more readable.",
+      "range": {
+        "startLine": 352,
+        "startChar": 16,
+        "endLine": 352,
+        "endChar": 28
+      },
+      "revId": "ffc6d402be6ce177d19929fce7cc07c082a0cf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
