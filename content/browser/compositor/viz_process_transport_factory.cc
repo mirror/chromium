@@ -76,8 +76,8 @@ VizProcessTransportFactory::VizProcessTransportFactory(
       resize_task_runner_(std::move(resize_task_runner)),
       frame_sink_id_allocator_(kBrowserClientId),
       task_graph_runner_(std::make_unique<cc::SingleThreadTaskGraphRunner>()),
-      renderer_settings_(
-          viz::CreateRendererSettings(CreateBufferToTextureTargetMap())),
+      renderer_settings_(viz::CreateRendererSettings(
+          CreateBufferUsageAndFormatExceptionList())),
       weak_ptr_factory_(this) {
   DCHECK(gpu_channel_establish_factory_);
   task_graph_runner_->Start("CompositorTileWorker1",
