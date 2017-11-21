@@ -4,25 +4,44 @@
 
 #include "components/signin/core/browser/dice_account_reconcilor_delegate.h"
 
-#include "components/signin/core/browser/profile_management_switches.h"
-#include "components/signin/core/browser/scoped_account_consistency.h"
+#include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+namespace {
+class FakeSigninClient : public TestSigninClient {
+ public:
+  explicit FakeSigninClient(PrefService* prefs) : TestSigninClient(prefs) {}
+
+  bool migrated() { return migrated_; }
+  void set_migration_enabled(bool migration_enabled) {
+    migration_enabled_ = migration_enabled;
+  }
+
+  // TestSigninClient:
+  bool IsDiceEnabled() override { return migrated_; }
+  bool IsDiceMigrationEnabled() override { return migration_enabled_; }
+  void MigrateProfileToDice() override { migrated_ = true; }
+
+ private:
+  bool migrated_ = false;
+  bool migration_enabled_ = true;
+};
+}  // namespace
 
 // Checks that Dice migration happens when the reconcilor is created.
 TEST(DiceAccountReconcilorDelegateTest, MigrateAtCreation) {
   sync_preferences::TestingPrefServiceSyncable pref_service;
   signin::DiceAccountReconcilorDelegate::RegisterProfilePrefs(
       pref_service.registry());
+  FakeSigninClient client(&pref_service);
   signin::RegisterAccountConsistencyProfilePrefs(pref_service.registry());
 
   {
     // Migration does not happen if SetDiceMigrationOnStartup() is not called.
-    signin::ScopedAccountConsistencyDiceMigration scoped_dice_migration;
-    EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
-    signin::DiceAccountReconcilorDelegate delegate(&pref_service, false);
+    signin::DiceAccountReconcilorDelegate delegate(&client, false);
     EXPECT_FALSE(delegate.IsReadyForDiceMigration(false /* is_new_profile */));
-    EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
+    EXPECT_FALSE(client.migrated());
   }
 
   signin::DiceAccountReconcilorDelegate::SetDiceMigrationOnStartup(
@@ -30,31 +49,28 @@ TEST(DiceAccountReconcilorDelegateTest, MigrateAtCreation) {
 
   {
     // Migration does not happen if Dice is not enabled.
-    signin::ScopedAccountConsistencyDiceFixAuthErrors scoped_dice_fix_errors;
-    EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
-    signin::DiceAccountReconcilorDelegate delegate(&pref_service, false);
+    client.set_migration_enabled(false);
+    signin::DiceAccountReconcilorDelegate delegate(&client, false);
     EXPECT_TRUE(delegate.IsReadyForDiceMigration(false /* is_new_profile */));
-    EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
+    EXPECT_FALSE(client.migrated());
   }
 
   {
     // Migration happens.
-    signin::ScopedAccountConsistencyDiceMigration scoped_dice_migration;
-    EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
-    signin::DiceAccountReconcilorDelegate delegate(&pref_service, false);
+    client.set_migration_enabled(true);
+    signin::DiceAccountReconcilorDelegate delegate(&client, false);
     EXPECT_TRUE(delegate.IsReadyForDiceMigration(false /* is_new_profile */));
-    EXPECT_TRUE(signin::IsDiceEnabledForProfile(&pref_service));
+    EXPECT_TRUE(client.migrated());
   }
 }
 
 // Checks that new profiles are migrated at creation.
 TEST(DiceAccountReconcilorDelegateTest, NewProfile) {
-  signin::ScopedAccountConsistencyDiceMigration scoped_dice_migration;
   sync_preferences::TestingPrefServiceSyncable pref_service;
   signin::DiceAccountReconcilorDelegate::RegisterProfilePrefs(
       pref_service.registry());
+  FakeSigninClient client(&pref_service);
   signin::RegisterAccountConsistencyProfilePrefs(pref_service.registry());
-  EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
-  signin::DiceAccountReconcilorDelegate delegate(&pref_service, true);
-  EXPECT_TRUE(signin::IsDiceEnabledForProfile(&pref_service));
+  signin::DiceAccountReconcilorDelegate delegate(&client, true);
+  EXPECT_TRUE(client.migrated());
 }

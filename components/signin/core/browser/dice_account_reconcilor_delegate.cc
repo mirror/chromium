@@ -11,7 +11,7 @@
 #include "base/stl_util.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
-#include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/signin_client.h"
 
 namespace signin {
 
@@ -38,20 +38,19 @@ enum class DiceMigrationStatus {
 }  // namespace
 
 DiceAccountReconcilorDelegate::DiceAccountReconcilorDelegate(
-    PrefService* user_prefs,
+    SigninClient* signin_client,
     bool is_new_profile)
-    : user_prefs_(user_prefs) {
-  DCHECK(user_prefs_);
+    : signin_client_(signin_client) {
   bool is_ready_for_dice = IsReadyForDiceMigration(is_new_profile);
-  if (is_ready_for_dice && IsDiceMigrationEnabled()) {
-    if (!IsDiceEnabledForProfile(user_prefs_))
+  if (is_ready_for_dice && signin_client_->IsDiceMigrationEnabled()) {
+    if (!signin_client_->IsDiceEnabled())
       VLOG(1) << "Profile is migrating to Dice";
-    MigrateProfileToDice(user_prefs_);
-    DCHECK(IsDiceEnabledForProfile(user_prefs_));
+    signin_client_->MigrateProfileToDice();
+    DCHECK(signin_client_->IsDiceEnabled());
   }
   UMA_HISTOGRAM_ENUMERATION(
       kDiceMigrationStatusHistogram,
-      IsDiceEnabledForProfile(user_prefs_)
+      signin_client_->IsDiceEnabled()
           ? DiceMigrationStatus::kEnabled
           : (is_ready_for_dice
                  ? DiceMigrationStatus::kDisabledReadyForMigration
@@ -67,23 +66,24 @@ void DiceAccountReconcilorDelegate::RegisterProfilePrefs(
 
 // static
 void DiceAccountReconcilorDelegate::SetDiceMigrationOnStartup(
-    PrefService* prefs,
+    PrefService* user_prefs,
     bool migrate) {
   VLOG(1) << "Dice migration on next startup: " << migrate;
-  prefs->SetBoolean(kDiceMigrationOnStartupPref, migrate);
+  user_prefs->SetBoolean(kDiceMigrationOnStartupPref, migrate);
 }
 
 bool DiceAccountReconcilorDelegate::IsReadyForDiceMigration(
     bool is_new_profile) {
-  return is_new_profile || user_prefs_->GetBoolean(kDiceMigrationOnStartupPref);
+  return is_new_profile ||
+         signin_client_->GetPrefs()->GetBoolean(kDiceMigrationOnStartupPref);
 }
 
 bool DiceAccountReconcilorDelegate::IsReconcileEnabled() const {
-  return IsDicePrepareMigrationEnabled();
+  return signin_client_->IsDicePrepareMigrationEnabled();
 }
 
 bool DiceAccountReconcilorDelegate::IsAccountConsistencyEnforced() const {
-  return IsDiceEnabledForProfile(user_prefs_);
+  return signin_client_->IsDiceEnabled();
 }
 
 // - On first execution, the candidates are examined in this order:
@@ -161,8 +161,8 @@ void DiceAccountReconcilorDelegate::OnReconcileFinished(
   last_known_first_account_ = first_account;
 
   // Migration happens on startup if the last reconcile was a no-op.
-  if (IsDicePrepareMigrationEnabled())
-    SetDiceMigrationOnStartup(user_prefs_, reconcile_is_noop);
+  if (signin_client_->IsDicePrepareMigrationEnabled())
+    SetDiceMigrationOnStartup(signin_client_->GetPrefs(), reconcile_is_noop);
 }
 
 }  // namespace signin
