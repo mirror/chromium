@@ -29,7 +29,7 @@ MojoVideoDecoderService::MojoVideoDecoderService(
     MojoMediaClient* mojo_media_client,
     base::WeakPtr<MojoCdmServiceContext> mojo_cdm_service_context)
     : mojo_media_client_(mojo_media_client),
-      mojo_cdm_service_context_(std::move(mojo_cdm_service_context)),
+      mojo_cdm_service_context_(mojo_cdm_service_context),
       weak_factory_(this) {
   weak_this_ = weak_factory_.GetWeakPtr();
 }
@@ -145,7 +145,7 @@ void MojoVideoDecoderService::OnDecoderInitialized(
   DCHECK(decoder_);
 
   if (success)
-    cdm_ = std::move(cdm);
+    cdm_ = cdm;
 
   std::move(callback).Run(success, decoder_->NeedsBitstreamConversion(),
                           decoder_->GetMaxDecodeRequests());
