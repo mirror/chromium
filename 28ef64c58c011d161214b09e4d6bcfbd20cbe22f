@@ -94,6 +94,30 @@
       "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b413cf_63c7536d",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_broadcast_forwarder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-21T02:07:06Z",
+      "side": 1,
+      "message": "I\u0027ll leave this CL around since it needs to be landed after crrev.com/c/773443 anyway.  If I\u0027m not mistaken, we want to keep everything as C++ unless Objective-C is completely necessary (or at least that\u0027s the mindset we have in web//).  Since fullscreen will ultimately be model code owned by a BrowserUserData, it makes sense to me to continue using a C++ class.  Of course the actual logic can be completed using either language, but I think that we should support C++ broadcast observers regardless of our decision in this particular case.\n\nI\u0027ve created crrev.com/c/780810 to bridge the broadcaster with C++ objects.  I\u0027m not sure if we can use similar runtime hackery to automatically include new functions in the bridge class like we do for Objective-C, however.",
+      "parentUuid": "5ac59981_ad42709d",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
