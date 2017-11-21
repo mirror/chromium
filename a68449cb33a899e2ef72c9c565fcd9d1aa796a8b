@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9eb6cf07_41c6a6c9",
+        "filename": "content/browser/devtools/devtools_session.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "This one is for PlzNavigate, the other is for old world. Hopefully, it\u0027s temporary :)",
+      "parentUuid": "1db7b7c0_1ff9e09f",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76d07687_c2e127d3",
         "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ae2d67_61f8493b",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d07687_c2e127d3",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "707230bf_35c3f191",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "You are right. Removed.",
+      "parentUuid": "073e3adb_dbcbb18c",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abe163fc_21d83bce",
         "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-21T21:04:52Z",
       "side": 1,
       "message": "It feels awkward that this is repeated several times in the code. Could this just call agent_-\u003eEnsureAgent()?\n\nAlso, can you help me understand why it\u0027s important to bind agent_ptr_ here? It doesn\u0027t seem to be used by FrameHostHolder.",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1fde03_b3a00e09",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "- We generally have two entry points - Attach and Reattach. Each of them has to retrieve DevToolsAgent interface to attach/reattach respectively.\n\n- EnsureAgent() is for PlzNavigate. RenderFrameHostImpl* used there is nullptr in old world. Two FrameHostHolders (current_ and pending_) cannot share the DevToolsAgent interface, since they talk to two different render frames. Fortunatelly, this extra agent_ptr_ should go away after PlzNavigate cleanup.\n\n- agent_ptr_ is used in SessionHost constructor (owner_-\u003eagent_ptr_) to attach a session to correct agent.",
+      "parentUuid": "abe163fc_21d83bce",
       "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "86d1df5d_38954e5a",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t know about such a thing. Nice!",
+      "parentUuid": "9ccc6dfc_dc1570d4",
+      "range": {
+        "startLine": 290,
+        "startChar": 35,
+        "endLine": 290,
+        "endChar": 64
+      },
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12b92b4d_b5331449",
         "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
         "patchSetId": 11
@@ -107,6 +203,24 @@
       "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d701b095_c86b9bf3",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b92b4d_b5331449",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "5ffa7849_6c5dd61b",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3930676f_f2ed3f60",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43e8b2cb_bad8200e",
         "filename": "content/common/devtools.mojom",
         "patchSetId": 11
@@ -138,6 +270,24 @@
       "writtenOn": "2017-11-21T21:04:52Z",
       "side": 1,
       "message": "What are the blockers to getting rid of the routing id?",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080ace83_c8d714f4",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "Hmm... The ability to pass a RenderFrame reference to browser process. I didn\u0027t really think about this much - maybe the easiest way would be to move this to a different interface instead.",
+      "parentUuid": "43e8b2cb_bad8200e",
       "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "778fac60_9202619c",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc1df925_50b252ca",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 20
+      },
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d619a47_2a63fef1",
         "filename": "content/renderer/devtools/devtools_agent.cc",
         "patchSetId": 11
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "58c66bb3_590be804",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d619a47_2a63fef1",
+      "range": {
+        "startLine": 119,
+        "startChar": 15,
+        "endLine": 119,
+        "endChar": 20
+      },
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acd16fdc_9f681cde",
         "filename": "content/renderer/devtools/devtools_agent.cc",
         "patchSetId": 11
@@ -204,6 +402,24 @@
       "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70229ca4_542997aa",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T23:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acd16fdc_9f681cde",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
