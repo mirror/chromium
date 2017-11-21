@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a11d9bb6_30793ca8",
+        "filename": "ui/gfx/font_fallback_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-21T19:46:47Z",
+      "side": 1,
+      "message": "const char kFontFormatTrueType[] \u003d\n\nSame syntax for the one below. Also, put them in the anon namespace above.",
+      "range": {
+        "startLine": 28,
+        "startChar": 12,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "5b6d3d6c463fe4c6c41bfdf71b4948b6c54e670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c704f2a9_980ca820",
+        "filename": "ui/gfx/font_fallback_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-21T19:46:47Z",
+      "side": 1,
+      "message": "Nit: {}",
+      "range": {
+        "startLine": 221,
+        "startChar": 24,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "5b6d3d6c463fe4c6c41bfdf71b4948b6c54e670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed324504_f62e505f",
+        "filename": "ui/gfx/font_fallback_linux_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-21T19:46:47Z",
+      "side": 1,
+      "message": "2015?",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "5b6d3d6c463fe4c6c41bfdf71b4948b6c54e670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
