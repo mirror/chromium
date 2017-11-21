@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fffe1f9_2c23b166",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_texture_mailbox.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-21T19:50:36Z",
+      "side": 1,
+      "message": "TODO(vmiura): Write a description of how we handle texture generation if there is an error.",
+      "revId": "ffa649d82ce3362b2446ab1dbaa69f85484ab1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
