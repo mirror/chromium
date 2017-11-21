@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57b841db_44be467f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-21T21:22:31Z",
+      "side": 1,
+      "message": "This may explain why we\u0027re seeing the user\u0027s version of --isolate-origins override the enterprise version of it?\n\nAs we chatted offline, I\u0027m ok with either behavior for now (as long as duplicates don\u0027t make us crash), but if removing this check is an easy way to make the enterprise policy override the command line, that might be more consistent with other enterprise policies.",
+      "revId": "bd6dbcf37be99bf4a0212d6381d2cea4326eed73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
