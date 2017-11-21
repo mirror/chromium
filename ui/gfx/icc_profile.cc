@@ -147,6 +147,10 @@ bool ICCProfile::IsValid() const {
   return internals_ ? internals_->is_valid_ : false;
 }
 
+std::vector<char> ICCProfile::GetData() const {
+  return internals_ ? internals_->data_ : std::vector<char>();
+}
+
 // static
 ICCProfile ICCProfile::FromData(const void* data, size_t size) {
   return FromDataWithId(data, size, 0);
@@ -218,54 +222,50 @@ ColorSpace ICCProfile::GetParametricColorSpace() const {
   return color_space;
 }
 
-// TODO(ccameron): Change this to ICCProfile::FromColorSpace.
-bool ColorSpace::GetICCProfile(ICCProfile* icc_profile) const {
-  if (!IsValid()) {
-    DLOG(WARNING) << "Cannot fetch ICCProfile for invalid space.";
-    return false;
+// static
+ICCProfile ICCProfile::FromColorSpace(const ColorSpace& color_space) {
+  if (!color_space.IsValid()) {
+    return ICCProfile();
   }
-  if (matrix_ != MatrixID::RGB) {
+  if (color_space.matrix_ != ColorSpace::MatrixID::RGB) {
     DLOG(ERROR) << "Not creating non-RGB ICCProfile";
-    return false;
+    return ICCProfile();
   }
-  if (range_ != RangeID::FULL) {
+  if (color_space.range_ != ColorSpace::RangeID::FULL) {
     DLOG(ERROR) << "Not creating non-full-range ICCProfile";
-    return false;
+    return ICCProfile();
   }
 
   // Check for an entry in the cache for this color space.
   {
     base::AutoLock lock(g_lock.Get());
-    auto found = g_cache.Get().Get(*this);
+    auto found = g_cache.Get().Get(color_space);
     if (found != g_cache.Get().end()) {
-      *icc_profile = found->second;
-      return true;
+      return found->second;
     }
     // If this was an ICC based profile and we don't have the original profile,
     // fall through to using the inaccurate approximation.
-    if (icc_profile_id_) {
+    if (color_space.icc_profile_id_) {
       DLOG(ERROR) << "Failed to find id-based ColorSpace in ICCProfile cache";
-      return false;
+      return ICCProfile();
     }
   }
 
   // Otherwise, construct an ICC profile based on the best approximated
   // primaries and matrix.
   SkMatrix44 to_XYZD50_matrix;
-  GetPrimaryMatrix(&to_XYZD50_matrix);
+  color_space.GetPrimaryMatrix(&to_XYZD50_matrix);
   SkColorSpaceTransferFn fn;
-  if (!GetTransferFunction(&fn)) {
+  if (!color_space.GetTransferFunction(&fn)) {
     DLOG(ERROR) << "Failed to get ColorSpace transfer function for ICCProfile.";
-    return false;
+    return ICCProfile();
   }
   sk_sp<SkData> data = SkICC::WriteToICC(fn, to_XYZD50_matrix);
   if (!data) {
     DLOG(ERROR) << "Failed to create SkICC.";
-    return false;
+    return ICCProfile();
   }
-  *icc_profile = ICCProfile::FromDataWithId(data->data(), data->size(), 0);
-  DCHECK(icc_profile->IsValid());
-  return true;
+  return FromDataWithId(data->data(), data->size(), 0);
 }
 
 ICCProfile::Internals::Internals(std::vector<char> data, uint64_t id)

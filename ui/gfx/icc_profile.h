@@ -45,6 +45,10 @@ class COLOR_SPACE_EXPORT ICCProfile {
   // processes).
   static ICCProfile FromData(const void* icc_profile, size_t size);
 
+  // Return an ICCProfile to represent a ColorSpace. This will return an invalid
+  // color space if |color_space| cannot be represented by an ICCProfile.
+  static ICCProfile FromColorSpace(const gfx::ColorSpace& color_space);
+
   // Return a ColorSpace that references this ICCProfile. ColorTransforms
   // created using this ColorSpace will match this ICCProfile precisely.
   ColorSpace GetColorSpace() const;
@@ -53,6 +57,9 @@ class COLOR_SPACE_EXPORT ICCProfile {
   // ICCProfile. The resulting ColorSpace will reference this ICCProfile only
   // if the parametric approximation is almost exact.
   ColorSpace GetParametricColorSpace() const;
+
+  // Return the data for the profile.
+  std::vector<char> GetData() const;
 
   // Histogram how we this was approximated by a gfx::ColorSpace. Only
   // histogram a given profile once per display.
