@@ -59,9 +59,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   struct PLATFORM_EXPORT PostedTask {
     PostedTask(base::OnceClosure callback,
                base::Location posted_from,
+               base::Optional<TaskType> task_type,
                base::TimeDelta delay = base::TimeDelta(),
-               base::Nestable nestable = base::Nestable::kNestable,
-               base::Optional<TaskType> task_type = base::nullopt);
+               base::Nestable nestable = base::Nestable::kNestable);
 
     base::OnceClosure callback;
     base::Location posted_from;

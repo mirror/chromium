@@ -56,7 +56,8 @@ class RendererMetricsHelperTest : public ::testing::Test {
         new MainThreadTaskQueueForTest(queue_type));
 
     // Pass an empty task for recording.
-    TaskQueue::PostedTask posted_task(base::Closure(), FROM_HERE);
+    TaskQueue::PostedTask posted_task(base::Closure(), FROM_HERE,
+                                      base::nullopt);
     TaskQueue::Task task(std::move(posted_task), base::TimeTicks());
     metrics_helper_->RecordTaskMetrics(queue.get(), task, start,
                                        start + duration);
