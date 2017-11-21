@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5994a08f_74188fb9",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-21T19:51:25Z",
+      "side": 1,
+      "message": "we don\u0027t want to take a really long initial timeout for probing, and we do exponential back off.",
+      "parentUuid": "1e803a96_775662b1",
+      "range": {
+        "startLine": 2043,
+        "startChar": 0,
+        "endLine": 2043,
+        "endChar": 51
+      },
+      "revId": "b22bd4f24968c7670c00628c032d4a7cee09087d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72d615b4_b09cbc92",
         "filename": "net/quic/core/quic_connection.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "19daa13b_29a1a52c",
+        "filename": "net/quic/core/quic_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-21T19:51:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "72d615b4_b09cbc92",
+      "range": {
+        "startLine": 1025,
+        "startChar": 6,
+        "endLine": 1025,
+        "endChar": 14
+      },
+      "revId": "b22bd4f24968c7670c00628c032d4a7cee09087d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7488843b_53e410d2",
         "filename": "net/quic/core/quic_connection.h",
         "patchSetId": 13
@@ -68,6 +116,30 @@
       "revId": "b22bd4f24968c7670c00628c032d4a7cee09087d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefc5953_8a342ace",
+        "filename": "net/quic/core/quic_connection.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-21T19:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7488843b_53e410d2",
+      "range": {
+        "startLine": 677,
+        "startChar": 3,
+        "endLine": 677,
+        "endChar": 4
+      },
+      "revId": "b22bd4f24968c7670c00628c032d4a7cee09087d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
