@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7636e930_733d40f5",
+        "filename": "components/policy/resources/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-21T13:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86790b5e_a53ff81b",
+      "range": {
+        "startLine": 91,
+        "startChar": 38,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "74981bc8e0d8f6d49e46319d72b29b4bae4fb35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8369a932_0673aac0",
         "filename": "components/policy/resources/PRESUBMIT.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "74981bc8e0d8f6d49e46319d72b29b4bae4fb35a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da4702e_77ba635d",
+        "filename": "components/policy/resources/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-21T13:42:22Z",
+      "side": 1,
+      "message": "Done (also in example output in CL description :-) )",
+      "parentUuid": "8369a932_0673aac0",
+      "range": {
+        "startLine": 100,
+        "startChar": 18,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "74981bc8e0d8f6d49e46319d72b29b4bae4fb35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
