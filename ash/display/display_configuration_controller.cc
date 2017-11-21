@@ -121,6 +121,13 @@ void DisplayConfigurationController::SetMirrorMode(bool mirror) {
   }
 }
 
+void DisplayConfigurationController::SetCustomMirrorMode(
+    bool enabled,
+    int64_t source_id,
+    int64_t destination_id) {
+  display_manager_->SetCustomMirrorMode(enabled, source_id, destination_id);
+}
+
 void DisplayConfigurationController::SetDisplayRotation(
     int64_t display_id,
     display::Display::Rotation rotation,

@@ -351,6 +351,15 @@ namespace system.display {
     // display.
     // |id|: The display's unique identifier.
     static void clearTouchCalibration(DOMString id);
+
+    // Enables mirroring from the source display to the destination display if
+    // |enabled| is true. Disables mirroring otherwise. NOTE: This is only
+    // available to Chrome OS Kiosk apps.
+    // |source_id|: the source display's id.
+    // |destination_id|: the destination display's id.
+    static void setCustomMirrorMode(boolean enabled,
+                                    DOMString source_id,
+                                    DOMString destination_id);
   };
 
   interface Events {
