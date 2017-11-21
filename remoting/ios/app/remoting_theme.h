@@ -28,6 +28,7 @@
 @property(class, nonatomic, readonly) UIColor* hostWarningColor;
 @property(class, nonatomic, readonly) UIColor* menuBlueColor;
 @property(class, nonatomic, readonly) UIColor* menuTextColor;
+@property(class, nonatomic, readonly) UIColor* menuSeparatorColor;
 @property(class, nonatomic, readonly) UIColor* refreshIndicatorColor;
 @property(class, nonatomic, readonly) UIColor* pinEntryPairingColor;
 @property(class, nonatomic, readonly) UIColor* pinEntryPlaceholderColor;
