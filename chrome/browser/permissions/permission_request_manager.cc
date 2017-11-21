@@ -18,9 +18,15 @@
 #include "chrome/browser/ui/permission_bubble/permission_prompt.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
+#include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "url/origin.h"
+
+#if !defined(OS_ANDROID)
+#include "chrome/browser/ui/extensions/extension_name.h"
+#include "extensions/common/constants.h"
+#endif  // !defined(OS_ANDROID)
 
 namespace {
 
@@ -338,6 +344,23 @@ void PermissionRequestManager::WasHidden() {
 
 const std::vector<PermissionRequest*>& PermissionRequestManager::Requests() {
   return requests_;
+}
+
+base::string16 PermissionRequestManager::GetDisplayOrigin() {
+  if (requests_.size() == 0) {
+    return base::string16();
+  }
+  GURL origin_url = requests_[0]->GetOrigin();
+
+#if !defined(OS_ANDROID)
+  if (origin_url.SchemeIs(extensions::kExtensionScheme)) {
+    return extensions::GetExtensionName(origin_url, web_contents());
+  }
+#endif  // !defined(OS_ANDROID)
+
+  // Web URLs should be displayed as the origin in the URL.
+  return url_formatter::FormatUrlForSecurityDisplay(
+      origin_url, url_formatter::SchemeDisplay::OMIT_CRYPTOGRAPHIC);
 }
 
 void PermissionRequestManager::TogglePersist(bool new_value) {
