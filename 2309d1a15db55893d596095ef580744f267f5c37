@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8513b2a7_eb99e037",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T02:00:22Z",
+      "side": 1,
+      "message": "Since this is the only caller, would it be slightly simpler to do the following?\n\n- Remove the negation here.\n- Rename IsKeepingAliveNonBrowserOrigins() to IsKeepingAliveOnlyByBrowserOrigin().\n- Flip the true/false return valies in the impl.",
+      "revId": "2309d1a15db55893d596095ef580744f267f5c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867222c1_dff77b43",
+        "filename": "chrome/browser/ui/browser_list.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T02:00:22Z",
+      "side": 1,
+      "message": "Unlike the begin_last_active() usage, the use of these iterators is a bit awkward. Maybe you just want to give access to the underlying data structure, and let browser.cc call base::ContainsKey(currently_closing_browsers_, browser) and currently_closing_browsers_.size().",
+      "revId": "2309d1a15db55893d596095ef580744f267f5c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78387b1b_4eb89666",
+        "filename": "chrome/browser/ui/browser_list.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T02:00:22Z",
+      "side": 1,
+      "message": "Can this just be a std::set\u003cBrowser*\u003e, since the ordering doesn\u0027t matter? (Or base::flat_set, since there aren\u0027t that many Browser objects active, right?)",
+      "revId": "2309d1a15db55893d596095ef580744f267f5c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
