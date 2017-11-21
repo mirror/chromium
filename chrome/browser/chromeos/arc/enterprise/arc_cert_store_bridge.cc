@@ -103,7 +103,6 @@ ArcCertStoreBridge::ArcCertStoreBridge(content::BrowserContext* context,
                                        ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),
-      binding_(this),
       weak_ptr_factory_(this) {
   DVLOG(1) << "ArcCertStoreBridge::ArcCertStoreBridge";
 
@@ -126,14 +125,6 @@ void ArcCertStoreBridge::OnConnectionReady() {
 
   policy_service_->AddObserver(policy::POLICY_DOMAIN_CHROME, this);
   net::CertDatabase::GetInstance()->AddObserver(this);
-
-  auto* instance =
-      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->cert_store(), Init);
-  DCHECK(instance);
-
-  mojom::CertStoreHostPtr host_proxy;
-  binding_.Bind(mojo::MakeRequest(&host_proxy));
-  instance->Init(std::move(host_proxy));
 
   UpdateFromKeyPermissionsPolicy();
 }
