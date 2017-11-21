@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e61d65_aee9c586",
+        "filename": "services/data_decoder/xml_parser_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T23:04:11Z",
+      "side": 1,
+      "message": "Maybe use \u0027 instead of \" to avoid needing to escape it? Would improve readability.",
+      "revId": "290032be1ddcda662c71bd9a18c4ffab5d24e2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba52c8f_30348ffb",
+        "filename": "services/data_decoder/xml_parser_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T23:04:11Z",
+      "side": 1,
+      "message": "Might be good to add some adversarial examples, like\n\n  \u003cbook id\u003d\"k456\" id\u003d\"k123\"\u003e\n\n(duplicate keys, handled differently across XML and across various JSON parsers), and\n\n  \u003cnumber\u003e18446744073709551616\u003c/number\u003e\n\n(integer larger than JavaScript can represent, and which different JSON parsers handle differently), and\n\n  \u003cthing\u003e{\"tag\": \"woop\", \"boing\": 123, 12: \"\\\\\\\"foodyums\"}\u003c/thing\u003e\n\n(JSON injection, misquoting, et c.)",
+      "revId": "290032be1ddcda662c71bd9a18c4ffab5d24e2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
