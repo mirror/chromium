@@ -189,4 +189,3 @@ class Generator(object):
   def GetGlobals(self):
     """Returns global mappings for the template generation."""
     return {}
-
