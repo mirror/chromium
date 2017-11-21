@@ -17,7 +17,6 @@ SelectionForUndoStep SelectionForUndoStep::From(
   result.base_ = selection.Base();
   result.extent_ = selection.Extent();
   result.affinity_ = selection.Affinity();
-  result.is_directional_ = selection.IsDirectional();
   // TODO(editing-dev): We'll use |selection.IsBaseFirst()| once the bug[1]
   // is resolved. [1] http://crbug.com/751945
   result.is_base_first_ =
@@ -29,8 +28,7 @@ SelectionForUndoStep::SelectionForUndoStep(const SelectionForUndoStep& other)
     : base_(other.base_),
       extent_(other.extent_),
       affinity_(other.affinity_),
-      is_base_first_(other.is_base_first_),
-      is_directional_(other.is_directional_) {}
+      is_base_first_(other.is_base_first_) {}
 
 SelectionForUndoStep::SelectionForUndoStep() = default;
 
@@ -40,7 +38,6 @@ SelectionForUndoStep& SelectionForUndoStep::operator=(
   extent_ = other.extent_;
   affinity_ = other.affinity_;
   is_base_first_ = other.is_base_first_;
-  is_directional_ = other.is_directional_;
   return *this;
 }
 
@@ -50,9 +47,7 @@ bool SelectionForUndoStep::operator==(const SelectionForUndoStep& other) const {
   if (other.IsNone())
     return false;
   return base_ == other.base_ && extent_ == other.extent_ &&
-         affinity_ == other.affinity_ &&
-         is_base_first_ == other.is_base_first_ &&
-         is_directional_ == other.is_directional_;
+         affinity_ == other.affinity_ && is_base_first_ == other.is_base_first_;
 }
 
 bool SelectionForUndoStep::operator!=(const SelectionForUndoStep& other) const {
@@ -62,13 +57,11 @@ bool SelectionForUndoStep::operator!=(const SelectionForUndoStep& other) const {
 SelectionInDOMTree SelectionForUndoStep::AsSelection() const {
   if (IsNone()) {
     return SelectionInDOMTree::Builder()
-        .SetIsDirectional(is_directional_)
         .Build();
   }
   return SelectionInDOMTree::Builder()
       .SetBaseAndExtent(base_, extent_)
       .SetAffinity(affinity_)
-      .SetIsDirectional(is_directional_)
       .Build();
 }
 
