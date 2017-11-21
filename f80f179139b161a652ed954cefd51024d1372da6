@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "872056df_e28df7e2",
+        "filename": "chrome/browser/ui/views/profiles/user_manager_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-11-21T14:44:40Z",
+      "side": 1,
+      "message": "DCHECK for the two reasons you mention in the header file.",
+      "range": {
+        "startLine": 235,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 4
+      },
+      "revId": "f80f179139b161a652ed954cefd51024d1372da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
