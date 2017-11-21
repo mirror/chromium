@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f689f4a0_7e0cbbb5",
+        "filename": "third_party/WebKit/LayoutTests/virtual/mojo-notifications/http/tests/notifications/README.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-21T18:09:18Z",
+      "side": 0,
+      "message": "Why are you adding an empty file?",
+      "revId": "df6ab1a91ea1450495fb2a3f5f4993deb5cc33fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
