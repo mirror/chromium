@@ -91,15 +91,16 @@ using WebViewTestProxyType =
     test_runner::WebViewTestProxy<RenderViewImpl,
                                   CompositorDependencies*,
                                   const mojom::CreateViewParams&>;
-using WebWidgetTestProxyType =
-    test_runner::WebWidgetTestProxy<RenderWidget,
-                                    int32_t,
-                                    CompositorDependencies*,
-                                    blink::WebPopupType,
-                                    const ScreenInfo&,
-                                    bool,
-                                    bool,
-                                    bool>;
+using WebWidgetTestProxyType = test_runner::WebWidgetTestProxy<
+    RenderWidget,
+    int32_t,
+    CompositorDependencies*,
+    blink::WebPopupType,
+    const ScreenInfo&,
+    bool,
+    bool,
+    bool,
+    scoped_refptr<base::SingleThreadTaskRunner>>;
 using WebFrameTestProxyType =
     test_runner::WebFrameTestProxy<RenderFrameImpl,
                                    RenderFrameImpl::CreateParams>;
@@ -123,7 +124,7 @@ RenderWidget* CreateWebWidgetTestProxy(int32_t routing_id,
                                        bool never_visible) {
   WebWidgetTestProxyType* render_widget_proxy = new WebWidgetTestProxyType(
       routing_id, compositor_deps, popup_type, screen_info, swapped_out, hidden,
-      never_visible);
+      never_visible, base::ThreadTaskRunnerHandle::Get());
   return render_widget_proxy;
 }
 
