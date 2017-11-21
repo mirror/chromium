@@ -16,6 +16,24 @@
       "revId": "fef16cceba226159170a6d2a6b27acd5bc2b3b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e089ae_0a1de9b2",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-21T01:36:37Z",
+      "side": 1,
+      "message": "In my case I don\u0027t want to filter to result \u003d\u003d OK, because I want to record what % of connections that were supposed to be compliant got ERR_CERTIFICATE_TRANSPARENCY_REQUIRED.\n\nThat said, I think I do remember trying to put this in OnStartCompleted and finding that it didn\u0027t work for some reason, but I can\u0027t remember why not. I can play with it again tomorrow and see if I can remember.",
+      "parentUuid": "a88565d9_da92f2a4",
+      "revId": "fef16cceba226159170a6d2a6b27acd5bc2b3b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
