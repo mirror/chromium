@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9948333a_d1e7ba84",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-21T07:36:23Z",
+      "side": 1,
+      "message": "Alternatively, we could ifdef OS_MAC, and do SetShowHighlightOnHover(true) if full keyboard access is off?",
+      "revId": "a0873abc6eb3179fd15b59221f127f188d0064bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
