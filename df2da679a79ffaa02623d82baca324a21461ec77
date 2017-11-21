@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "945f192e_20025ea6",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-21T23:53:38Z",
+      "side": 1,
+      "message": "This let me think of another approach: baking the offset into OffsetFromLayoutObject() (which seems always zero and not used in SPv1). In this way we can set layer states of several layers in the same way. Done.",
+      "parentUuid": "1bc1c3af_3b74f397",
+      "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "384f3c30_daf52fa3",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
         "patchSetId": 5
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "6bfcfc79_4970dfa0",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-21T23:53:38Z",
+      "side": 1,
+      "message": "Scroll corners are painted differently from scrollbars. It uses paint offset.",
+      "parentUuid": "191fd57b_e511d3e8",
+      "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10bb968f_8ce9e436",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
         "patchSetId": 5
@@ -67,6 +103,24 @@
       "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26508b8_bb7d9db2",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-21T23:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10bb968f_8ce9e436",
+      "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
