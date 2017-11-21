@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9c560f42_228f8ef1",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-21T17:36:15Z",
+      "side": 1,
+      "message": "Mojo mandates that the response callback must be run. In one of the browsertests, GenerateStream callback gets set but the test shuts down before the callback is run resulting in crash(reason for bot failure in ps3). Hence, added this change to ensure the callback is run(if not run before) before the test shuts down. This change seems to result in another browsertest failure as we can see from the failing bots. I\u0027ll check further tomorrow when I am in office. We need to ensure that callbacks are run(if set and not run) before DeviceRequest is destroyed.",
+      "range": {
+        "startLine": 635,
+        "startChar": 77,
+        "endLine": 635,
+        "endChar": 0
+      },
+      "revId": "8e4d60f0badb297d9bd49ca01fd93b26872e31de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7013a1c_e56cb57b",
         "filename": "content/browser/renderer_host/media/media_stream_requester.h",
         "patchSetId": 4
