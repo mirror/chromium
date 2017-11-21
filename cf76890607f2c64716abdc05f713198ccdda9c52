@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "920e268c_175adda9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-21T23:40:58Z",
+      "side": 1,
+      "message": "How about solving it differently, e.g.:\n\nfile://components/offline_pages/OWNERS\n\n# TEAM: offline-dev@chromium.org\n# COMPONENT: UI\u003eBrowser\u003eOffline\n\nWhich is lifted from:\nhttps://cs.chromium.org/chromium/src/chrome/browser/offline_pages/OWNERS",
+      "revId": "cf76890607f2c64716abdc05f713198ccdda9c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
