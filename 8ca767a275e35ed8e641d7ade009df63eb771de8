@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "25f141a0_7a3e9439",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T10:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbabf733_aeae1efd",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf1cc9b9_dfd905c2",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -101,6 +119,24 @@
       "writtenOn": "2017-11-21T07:54:10Z",
       "side": 1,
       "message": "add a note here saying that we omit the index reverting logic as it\u0027s unnecessary",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a4ae70_b5f2abe6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T10:47:21Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t get the point.",
+      "parentUuid": "cf1cc9b9_dfd905c2",
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -312,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "abb7b6cf_b388ee9d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T10:47:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0af685c0_d74f8124",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe0c3c9b_9b1c8b54",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -379,6 +433,24 @@
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6feea0e_f09d7c69",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-21T10:47:21Z",
+      "side": 1,
+      "message": "OK, and I added a few new test cases.",
+      "parentUuid": "2cec7e42_dadd2272",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
