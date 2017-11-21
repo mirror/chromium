@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09390fa1_04e47779",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-21T16:01:33Z",
+      "side": 1,
+      "message": "s/bajonas/bajones",
+      "range": {
+        "startLine": 13,
+        "startChar": 169,
+        "endLine": 13,
+        "endChar": 189
+      },
+      "revId": "5323c149b462a445eaff5fe9350e04da8df7ba3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
