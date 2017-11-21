@@ -105,7 +105,7 @@ class MediaRouterIntegrationBrowserTest : public MediaRouterBaseBrowserTest {
   // Opens the MR dialog and clicks through the motions of casting a file.
   // Note: The system dialog portion has to be mocked out as it cannot be
   // simulated.
-  void OpenDialogAndCastFile();
+  content::WebContents* OpenDialogAndCastFile();
 
   // Opens the MR dialog and clicks through the motions of choosing to cast
   // file, file returns an issue. Note: The system dialog portion has to be
