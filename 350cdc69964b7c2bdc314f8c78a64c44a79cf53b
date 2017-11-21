@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc4fa08_9bed3404",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T18:33:37Z",
+      "side": 1,
+      "message": "Nit: Use List here instead of ArrayList",
+      "range": {
+        "startLine": 190,
+        "startChar": 41,
+        "endLine": 190,
+        "endChar": 50
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cdce65_1decb509",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T18:33:37Z",
+      "side": 1,
+      "message": "This public method needs a JavaDoc.\n\nAlso, I think it\u0027d be better for this method to create and return the array list:\n\npublic List\u003cString\u003e getLanguageList() {\n   List\u003cString\u003e list \u003d new ArrayList\u003c\u003e();\n   nativeGetLanguageList(list, isIncognito);\n   return list;\n}",
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1c7da7_2b79ae01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T18:33:37Z",
+      "side": 1,
+      "message": "This should be List\u003cString\u003e rather than Object",
+      "range": {
+        "startLine": 1087,
+        "startChar": 52,
+        "endLine": 1087,
+        "endChar": 58
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a0b7f1_f98800fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T18:33:37Z",
+      "side": 1,
+      "message": "getWidth() won\u0027t be defined until after the first layout pass and may change on rotation. Does the popup dismiss on rotation?",
+      "range": {
+        "startLine": 135,
+        "startChar": 33,
+        "endLine": 135,
+        "endChar": 41
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fed70e_6b0db99e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T18:33:37Z",
+      "side": 1,
+      "message": "When would mTranslatePref or mAddLanguagePref be null?",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8dc584_89a7e1f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T18:33:37Z",
+      "side": 1,
+      "message": "Instead of an item decorator, Item could could have an optional icon field and this class could be responsible for setting a compound drawable on the TextView if icon is not null. David, what do you think?",
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ae7180_ffb57f0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T18:33:37Z",
+      "side": 1,
+      "message": "Based on this comment, it sounds like an attribute or parameter was the desired way to customize menu width.",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 181,
+        "endChar": 91
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4979e8_8e1a99c1",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-21T18:33:37Z",
+      "side": 1,
+      "message": "This is the same as IDS_REMOVE. It\u0027s best to re-use strings to avoid the extra translation cost and APK size associated with shipping duplicates.",
+      "range": {
+        "startLine": 935,
+        "startChar": 8,
+        "endLine": 935,
+        "endChar": 14
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
