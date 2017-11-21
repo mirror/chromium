@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "510587a4_56bdac9d",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-21T17:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e33947d3_f60e7482",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ec4409e_46779e46",
         "filename": "media/capture/video/win/video_capture_device_factory_win.h",
         "patchSetId": 16
@@ -493,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "ad4182b9_75a06eab",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-21T17:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6f3eb32_f7a7c106",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aa6bd56_eff3ae26",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
@@ -885,6 +921,24 @@
       "side": 1,
       "message": "Added a task for this: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d786854",
       "parentUuid": "a08464e1_753b3e90",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff00fcf0_92067f3e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-21T17:29:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e90bfac9_e956fc25",
       "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "528c5e2b_5a0539fd",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-21T17:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9ae7b61_a32db7c6",
+      "revId": "9ebdfeaaedd077a1491617b46fdb8f2810adbe59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64834cbd_eae8efa1",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "9ebdfeaaedd077a1491617b46fdb8f2810adbe59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41df1813_ad83cdfe",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-21T17:29:25Z",
+      "side": 1,
+      "message": "I did it this way because in a near future, we will have to support all the remaining settings, not only height and width.\nDo you want to remove the scope despite this?",
+      "parentUuid": "64834cbd_eae8efa1",
+      "revId": "9ebdfeaaedd077a1491617b46fdb8f2810adbe59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
