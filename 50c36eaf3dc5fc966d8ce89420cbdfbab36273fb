@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2c1166f_19028764",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-21T17:53:43Z",
+      "side": 1,
+      "message": "Optional sounds good.",
+      "parentUuid": "2d9f0230_ea4d1db2",
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69fb169e_d90471cb",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T17:45:10Z",
       "side": 1,
       "message": "I don\u0027t see this being set anywhere in the API?",
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb50640_28e15ac9",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-21T17:53:43Z",
+      "side": 1,
+      "message": "It is only set and read within JavaScript, see e.g. passwords_section.js:507 or show_password_behavior.js:70 above.\n\nI suppose it doesn\u0027t have to be part of the idl, but I expected the closure compiler to complain if I introduce an additional attribute on an object without defining its type anywhere. What do you suggest to do instead?",
+      "parentUuid": "69fb169e_d90471cb",
       "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
