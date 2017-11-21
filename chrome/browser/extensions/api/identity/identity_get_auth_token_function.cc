@@ -24,6 +24,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/signin_client.h"
 #include "content/public/common/service_manager_connection.h"
 #include "extensions/common/extension_l10n_util.h"
 #include "google_apis/gaia/gaia_urls.h"

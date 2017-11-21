@@ -11,6 +11,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "net/url_request/url_request_test_util.h"
 
@@ -28,9 +29,6 @@ class TestSigninClient : public SigninClient {
 
   void DoFinalInit() override;
 
-  // Returns NULL.
-  // NOTE: This should be changed to return a properly-initalized PrefService
-  // once there is a unit test that requires it.
   PrefService* GetPrefs() override;
 
   // Returns a pointer to a loaded database.
@@ -63,9 +61,6 @@ class TestSigninClient : public SigninClient {
   // in the default constructor.
   void SetURLRequestContext(net::URLRequestContextGetter* request_context);
 
-  // Returns true.
-  bool ShouldMergeSigninCredentialsIntoCookieJar() override;
-
   // Registers |callback| and returns the subscription.
   // Note that |callback| will never be called.
   std::unique_ptr<SigninClient::CookieChangedSubscription>
@@ -91,10 +86,19 @@ class TestSigninClient : public SigninClient {
       GaiaAuthConsumer* consumer,
       const std::string& source,
       net::URLRequestContextGetter* getter) override;
+  signin::AccountConsistencyMethod GetAccountConsistencyMethod() override;
+  bool IsDiceEnabled() override;
+  bool IsDiceMigrationEnabled() override;
+  bool IsDicePrepareMigrationEnabled() override;
+  bool IsDiceFixAuthErrorsEnabled() override;
+  bool IsMirrorEnabled() override;
   void PreGaiaLogout(base::OnceClosure callback) override;
 
   // Loads the token database.
   void LoadTokenDatabase();
+  void set_account_consistency_method(signin::AccountConsistencyMethod method) {
+    account_consistency_method_ = method;
+  }
 
  private:
   base::ScopedTempDir temp_dir_;
@@ -102,6 +106,7 @@ class TestSigninClient : public SigninClient {
   scoped_refptr<TokenWebData> database_;
   PrefService* pref_service_;
   bool are_signin_cookies_allowed_;
+  signin::AccountConsistencyMethod account_consistency_method_;
 
   // Pointer to be filled by PostSignedIn.
   std::string signed_in_password_;

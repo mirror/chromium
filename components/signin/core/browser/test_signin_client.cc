@@ -13,7 +13,10 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 TestSigninClient::TestSigninClient(PrefService* pref_service)
-    : pref_service_(pref_service), are_signin_cookies_allowed_(true) {}
+    : pref_service_(pref_service),
+      are_signin_cookies_allowed_(true),
+      account_consistency_method_(signin::AccountConsistencyMethod::kDisabled) {
+}
 
 TestSigninClient::~TestSigninClient() {}
 
@@ -67,10 +70,6 @@ void TestSigninClient::LoadTokenDatabase() {
   database_->Init();
 }
 
-bool TestSigninClient::ShouldMergeSigninCredentialsIntoCookieJar() {
-  return true;
-}
-
 std::unique_ptr<SigninClient::CookieChangedSubscription>
 TestSigninClient::AddCookieChangedCallback(
     const GURL& url,
@@ -108,6 +107,36 @@ std::unique_ptr<GaiaAuthFetcher> TestSigninClient::CreateGaiaAuthFetcher(
     const std::string& source,
     net::URLRequestContextGetter* getter) {
   return base::MakeUnique<GaiaAuthFetcher>(consumer, source, getter);
+}
+
+signin::AccountConsistencyMethod
+TestSigninClient::GetAccountConsistencyMethod() {
+  return account_consistency_method_;
+}
+
+bool TestSigninClient::IsDiceEnabled() {
+  return account_consistency_method_ == signin::AccountConsistencyMethod::kDice;
+}
+
+bool TestSigninClient::IsDiceMigrationEnabled() {
+  return static_cast<int>(account_consistency_method_) >=
+         static_cast<int>(signin::AccountConsistencyMethod::kDiceMigration);
+}
+
+bool TestSigninClient::IsDicePrepareMigrationEnabled() {
+  return static_cast<int>(account_consistency_method_) >=
+         static_cast<int>(
+             signin::AccountConsistencyMethod::kDicePrepareMigration);
+}
+
+bool TestSigninClient::IsDiceFixAuthErrorsEnabled() {
+  return static_cast<int>(account_consistency_method_) >=
+         static_cast<int>(signin::AccountConsistencyMethod::kDiceFixAuthErrors);
+}
+
+bool TestSigninClient::IsMirrorEnabled() {
+  return account_consistency_method_ ==
+         signin::AccountConsistencyMethod::kMirror;
 }
 
 void TestSigninClient::PreGaiaLogout(base::OnceClosure callback) {

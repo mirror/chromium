@@ -31,7 +31,6 @@ class AccountReconcilorFactory : public BrowserContextKeyedServiceFactory {
 
  private:
   friend struct base::DefaultSingletonTraits<AccountReconcilorFactory>;
-  friend class DummyAccountReconcilorWithDelegate;  // For testing.
 
   AccountReconcilorFactory();
   ~AccountReconcilorFactory() override;

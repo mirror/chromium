@@ -6,10 +6,10 @@
 #define CHROME_BROWSER_SIGNIN_CHROME_SIGNIN_CLIENT_FACTORY_H_
 
 #include "base/memory/singleton.h"
-#include "chrome/browser/signin/chrome_signin_client.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
 class Profile;
+class SigninClient;
 
 // Singleton that owns all ChromeSigninClients and associates them with
 // Profiles.
