@@ -16,6 +16,245 @@
       "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5522f0_16cc4187",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "nit: no (c) in new files",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2da61d8_50fb59e4",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "this is a bit verbose (though I know we do it elsewhere, too).  Let\u0027s just do:\nvar testUrl \u003d \u0027http://b.com:\u0027 + config.testServer.port +\n              \u0027/extensions/api_test/executescript/css_origin/test.html\u0027;",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca075af_42eda781",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "arguments.callee is discouraged.  Let\u0027s just name the listener function:\nchrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo, tab) {\n  ...\n  chrome.tabs.onUpdated.removeListener(listener);\n  ...",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc6b909_37e2ae6a",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "wrap at 80 chars (this whole file)",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56951145_6bbadc34",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "nit: let\u0027s make this a callbackPass() too",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4388065c_4d0da45d",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "I think just checking that it threw is sufficient; comparing exact messages often just means we need to update them when the error changes.",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eafff85_4d3558af",
+        "filename": "extensions/browser/api/execute_code_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "It might be worth throwing an error if the extension specified the css origin for a JS injection.",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632b0ff2_8b6bb17f",
+        "filename": "extensions/browser/script_executor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "let\u0027s make this a base::Optional\u003c\u003e so that we only specify default behavior in one place.",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49ec085_3c6b5da1",
+        "filename": "extensions/common/api/extension_types.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "nit: remove (since it\u0027s specified below)",
+      "range": {
+        "startLine": 45,
+        "startChar": 131,
+        "endLine": 45,
+        "endChar": 173
+      },
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8ef921_b4c81395",
+        "filename": "extensions/common/api/extension_types.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "nit: maybe mention that this is only valid for css injections.",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9118b8e7_68f0b67b",
+        "filename": "extensions/common/api/extension_types.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "nit: s/By default it\u0027s/Defaults to",
+      "range": {
+        "startLine": 74,
+        "startChar": 136,
+        "endLine": 74,
+        "endChar": 177
+      },
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae058366_7356aaa6",
+        "filename": "extensions/common/extension_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "We should use the enum (rather than an int) here.",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c6a08f_8fac44dd",
+        "filename": "extensions/common/user_script.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-21T22:30:30Z",
+      "side": 1,
+      "message": "Since we don\u0027t support specifying CSSOrigin in the manifest, I\u0027d prefer this live somewhere else.  There\u0027s no real good spot, so let\u0027s put it in extensions/common/constants for now.",
+      "revId": "192bc9a6db258b504e6e842e20a7942cf198b731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
