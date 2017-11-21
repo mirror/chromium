@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2afee99e_007c4e39",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "How about a static SkColor Button::GetColor(color_struct, hovered, pressed)?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d167525b_ec1d8c23",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Interesting that this check should never be false in practice, because the binding won\u0027t fire without a change, but I guess we can\u0027t depend on that.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b8b0ea_58ba3ed9",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Similar to icon_color_ here, should ButtonColors have defaults as well, to be safer in development?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5776e8ae_78acf7ce",
+        "filename": "chrome/browser/vr/elements/button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Could use the suggested helper function here too.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471cf6db_caf4cdfb",
+        "filename": "chrome/browser/vr/elements/content_element.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "This should be auto-formatted to fix wrapping.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed29ee5a_9411bb95",
+        "filename": "chrome/browser/vr/elements/content_element.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Hmmm, I wonder how many non-GLuints there are.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762ff710_dbdd75e4",
+        "filename": "chrome/browser/vr/elements/content_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Should be GLuint, since this is changing.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af8d600_7b4b55eb",
+        "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "...and here.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e805469_7f72e658",
+        "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Heh...  starting to think about:\n\ntemplate \u003cT\u003e\nTexturedElement::SetAndDirty(T value, T member)\n\nvoid ExitPromptTexture::SetSecondaryButtonColors(const ButtonColors\u0026 colors) {\n  SetAndDirty(colors, secondary_button_colors_);\n}\n\nJust a thought.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d741349_46117d3b",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Err, why not an enum?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b08085_589ca315",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Please document what the resize config is actually doing.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7566d7a1_0d5faf6e",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "I can see the value of these, but FTR, they feel too specific for this class (and texture) IMO.  Hopefully these are it.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765ca27c_0b75c772",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be \"constexpr string kRed\" in the empty namespace?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b157c1b2_e58e46d0",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "s/Get/Compute/ ?  It sounds like it\u0027s pulling the last-computed transform from DrawFrame().",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1914719_ca23a35d",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Please document (specifically \u0027counts\u0027).",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4008d567_54d106b9",
+        "filename": "chrome/browser/vr/elements/ui_texture.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Can you document that these are only here because they\u0027re very common?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22c2820_98f60e45",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "... and here with an extra check.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1027beb_29218fb5",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "We have these operators in several spots.  Do you think we should static assert on the size of the struct (or something) here to catch the struct growing without updating this comparison?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b33749_af4396ce",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "This looks like it should be down with WebVR state.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db791f0_53fcb220",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "This method should go away in favor of another arg to the above method, or both methods should be a thin wrapper around another method that avoids all this duplication.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5b2db3_33e536f2",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "What\u0027s special about video capture?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6356483_6d65a84c",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Ian, did you intend to remove that huge, ever-stale static representation of the scene graph?  ;)",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d525f7af_aedd0887",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "I think I saw two XXX\u0027s in the CL, FTR (you\u0027d mentioned one).",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64b4d9d_d8430c05",
+        "filename": "chrome/browser/vr/ui_scene_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:47:38Z",
+      "side": 1,
+      "message": "Remove all these set_draw_phase(none) calls?  None is default now.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
