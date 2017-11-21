@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99846079_c8f417ad",
+        "filename": "ios/chrome/browser/pref_names.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T18:05:38Z",
+      "side": 1,
+      "message": "This looks like a project name. I think we should not use project names in code/configuration if possible. It looks like no other platform use this variable yet (https://cs.chromium.org/search/?sq\u003dpackage:chromium\u0026q\u003dzine.articles_enabled), so can we use a different name?\n\nMaybe \"suggestion.articles_for_you_enabled\"?",
+      "range": {
+        "startLine": 17,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "40235ad39af44535415d3df9b89026596817bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24719b6b_3c07bf3a",
+        "filename": "ios/chrome/browser/prefs/browser_prefs.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T18:05:38Z",
+      "side": 1,
+      "message": "In general we should avoid registering preference in this file and instead register them in the factory for the corresponding service. I think you should move this to IOSChromeContentSuggestionsServiceFactory::RegisterBrowserStatePrefs().",
+      "revId": "40235ad39af44535415d3df9b89026596817bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
