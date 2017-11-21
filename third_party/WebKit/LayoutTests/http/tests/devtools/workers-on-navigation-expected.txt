@@ -2,7 +2,8 @@ Tests that workers are correctly detached upon navigation.
 
 Worker added
 Worker removed
-error: Connection is closed, can't dispatch pending Debugger.setBlackboxPatterns
 Page reloaded.
 Worker added
+=== Error messages from console ====
+error: Connection is closed, can't dispatch pending Debugger.setBlackboxPatterns
 
