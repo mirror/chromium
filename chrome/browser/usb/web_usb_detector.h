@@ -5,12 +5,18 @@
 #ifndef CHROME_BROWSER_USB_WEB_USB_DETECTOR_H_
 #define CHROME_BROWSER_USB_WEB_USB_DETECTOR_H_
 
+#include <vector>
+
 #include "base/macros.h"
 #include "base/scoped_observer.h"
 #include "device/usb/usb_service.h"
 
 namespace device {
 class UsbDevice;
+}
+
+namespace message_center {
+class NotificationDelegate;
 }
 
 class UsbDevice;
@@ -29,6 +35,9 @@ class WebUsbDetector : public device::UsbService::Observer {
   void OnDeviceRemoved(scoped_refptr<device::UsbDevice> device) override;
 
   ScopedObserver<device::UsbService, device::UsbService::Observer> observer_;
+
+  std::vector<scoped_refptr<message_center::NotificationDelegate>>
+      active_delegates_;
 
   DISALLOW_COPY_AND_ASSIGN(WebUsbDetector);
 };
