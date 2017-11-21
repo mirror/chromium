@@ -91,6 +91,98 @@
       "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85092fd1_645886d1",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:23:54Z",
+      "side": 1,
+      "message": "nit s/{}/\u003d default;",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66fa2f3_ef01a4a2",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:23:54Z",
+      "side": 1,
+      "message": "DidFinishCollectingMetrics",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d752673_592915a3",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:23:54Z",
+      "side": 1,
+      "message": "Is there a reason why this callback is called didFinishCollectingMetrics? I did not find any metrics collection code in this file.",
+      "range": {
+        "startLine": 741,
+        "startChar": 24,
+        "endLine": 741,
+        "endChar": 50
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c7c303_584a40c2",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T22:23:54Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 931,
+        "startChar": 35,
+        "endLine": 931,
+        "endChar": 36
+      },
+      "revId": "ab1f4e1c3636cb1b8a6565972e624fd783294c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
