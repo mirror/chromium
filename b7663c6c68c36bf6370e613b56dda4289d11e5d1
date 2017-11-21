@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0189d02e_03b25dab",
+        "filename": "extensions/renderer/bindings/js_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T16:43:05Z",
+      "side": 1,
+      "message": "I gather using TLS is common in the rest of extensions; if so, I can live with this (even though it\u0027s slightly unsavory to use globals like this). You might also consider putting this in PerContextData, unless you need to be able to run after teardown. (Then it is described more like \"how do extension bindings run script in this context\" than \"how do extension bindings run script on this thread\".) But I don\u0027t have a super strong feeling.",
+      "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9367d2_cd335e57",
+        "filename": "extensions/renderer/extension_js_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T16:43:05Z",
+      "side": 1,
+      "message": "nit: Since it\u0027s thread-local, do you actually need this check? Each instance already knows what thread it\u0027s gonna be on, right?",
+      "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acecc976_51dbddc9",
+        "filename": "extensions/renderer/extension_js_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T16:43:05Z",
+      "side": 1,
+      "message": "nit: Maybe DCHECK that there isn\u0027t already a thread instance?",
+      "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600fc45f_4ec3471a",
+        "filename": "extensions/renderer/extension_js_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-21T16:43:05Z",
+      "side": 1,
+      "message": "nit: maybe DCHECK that this object is currently the thread instance?",
+      "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
