@@ -16,6 +16,24 @@
       "revId": "a0c70cd563a6a880a0ca2c0e693460dd87e47137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a558bfe6_14f70289",
+        "filename": "third_party/boringssl/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-11-21T13:29:07Z",
+      "side": 1,
+      "message": "Update: okay, yeah, this\u0027ll almost certainly want to block on https://crbug.com/706445. There\u0027s additionally some block128_f, but that\u0027s code we still maintain. The d2i_of_void mess is probably not worth fighting with.",
+      "parentUuid": "ca45cf9f_dda40e93",
+      "revId": "a0c70cd563a6a880a0ca2c0e693460dd87e47137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
