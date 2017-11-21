@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40851a74_4b9855b7",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-21T21:48:46Z",
+      "side": 1,
+      "message": "BTW--This here is correct, right? IIUC, active compositor frames should have the same size as the Surface, or they would be rejected, right?",
+      "range": {
+        "startLine": 439,
+        "startChar": 2,
+        "endLine": 439,
+        "endChar": 55
+      },
+      "revId": "489e09385717aee4ffee2d471a38257630ae9130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
