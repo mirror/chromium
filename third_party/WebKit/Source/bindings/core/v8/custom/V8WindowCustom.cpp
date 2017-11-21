@@ -113,6 +113,19 @@ void V8Window::eventAttributeGetterCustom(
 
   v8::Local<v8::Value> js_event =
       V8PrivateProperty::GetGlobalEvent(isolate).GetOrUndefined(info.Holder());
+
+  // Track usage of window.event when the event's target is inside V0 shadow
+  // tree.
+  if (!js_event->IsNullOrUndefined()) {
+    Node* target_node = ToScriptWrappable(js_event->ToObject())
+                            ->ToImpl<Event>()
+                            ->target()
+                            ->ToNode();
+    if (target_node && target_node->IsInV0ShadowTree()) {
+      UseCounter::Count(CurrentExecutionContext(isolate),
+                        WebFeature::kWindowEventInV0ShadowTree);
+    }
+  }
   V8SetReturnValue(info, js_event);
 }
 
