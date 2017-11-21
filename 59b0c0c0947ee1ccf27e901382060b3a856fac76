@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14a91fd7_e0c6bc17",
+        "filename": "content/renderer/media/webrtc/media_stream_remote_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-21T02:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb2229d_8e5362a7",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1137854_89208cce",
         "filename": "content/renderer/media/webrtc/media_stream_remote_video_source.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef702cd_72fd41d9",
+        "filename": "content/renderer/media/webrtc/media_stream_remote_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-21T02:35:57Z",
+      "side": 1,
+      "message": "1. Yep, I will update it.\n2. It applies to both at this point. Moving it up.",
+      "parentUuid": "c1137854_89208cce",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf89ce47_5de4ea14",
+        "filename": "content/renderer/media/webrtc/webrtc_video_capturer_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-21T02:35:57Z",
+      "side": 1,
+      "message": "I think this only showcases a proper use of libyuv::ScalePlane() and doesn\u0027t really add much if it was to be added in libyuv as libyuv::I420AScale(), considering other possible YUVA formats, i.e. libyuv::I444AScale(). Still I will bring it into libyuv owners\u0027 attention via email.",
+      "parentUuid": "bda10456_c2bcf45c",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2eca6d8_67e8a005",
         "filename": "content/renderer/media/webrtc/webrtc_video_frame_adapter.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-14T05:30:56Z",
       "side": 1,
       "message": "Considering the FrameAdapterWithA is only ever used with \u003cwebrtc::I420ABufferInterface\u003e and FrameAdapter with \u003cwebrtc::I420BufferInterface\u003e using this template approach seems overly complicated. Also, this way FrameAdapterWithA contains two scoped_refptr\u003cmedia::VideoFrame\u003e, one directly and one in its base class.\n\nMy recommendation would be to keep the class I420Adapter, make |frame_| protected instead of private (or use a protected getter for the raw pointer), and then do:\n\nclass FrameAdapterWithA : public I420Adapter, public webrtc::I420ABufferInterface {\n public:\n   FrameAdapterWithA(scoped_refptr\u003cmedia::VideoFrame\u003e frame)\n      : I420Adapter(std::move(frame)) {}\n\n  // webrtc::I420ABufferInterface implementation.\n  using I420Adapter::width;\n  using I420Adapter::height;\n  using I420Adapter::DataY;\n  ...\n  const uint8_t* DataA() const override {\n    return frame_-\u003evisible_data(media::VideoFrame::kAPlane);\n  }\n\n  int StrideA() const override {\n    return frame_-\u003estride(media::VideoFrame::kAPlane);\n  }  \n};\n\nNot sure if the \"using\" statements are enough to tell C++ that we want to delegate the implementation to the base class. If not, we\u0027d have to explicitly write those delegations out.",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad731bb_b4a0213b",
+        "filename": "content/renderer/media/webrtc/webrtc_video_frame_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-21T02:35:57Z",
+      "side": 1,
+      "message": "I tried exactly this before uploading the patch as well. Unfortunately, |using I420Adapter::width|  isn\u0027t enough to tell that method overrides webrtc::I420ABufferInterface. Tbh I couldn\u0027t find a nother way around. I came up with these templates at the end to reduce code duplication.",
+      "parentUuid": "d2eca6d8_67e8a005",
       "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
