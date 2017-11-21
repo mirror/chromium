@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abdf718b_f4c93237",
+        "filename": "components/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T03:28:08Z",
+      "side": 1,
+      "message": "Perhaps patricialor@ should be added here?",
+      "revId": "e52b4c477ab3395e8f17ea68401af208fb693228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
