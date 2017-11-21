@@ -46,7 +46,8 @@ class CORE_EXPORT V8ContextSnapshot {
 
   // Install conditionally enabled features on some v8::Object's in a context
   // created from a snapshot.
-  static void InstallConditionalFeatures(v8::Local<v8::Context>, Document*);
+  // Returns true if |context| was created from the snapshot.
+  static bool InstallConditionalFeatures(v8::Local<v8::Context>, Document*);
 
   static void EnsureInterfaceTemplates(v8::Isolate*);
 
