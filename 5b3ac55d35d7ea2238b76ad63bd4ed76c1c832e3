@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3cdfaed_4544df62",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1252659
+      },
+      "writtenOn": "2017-11-21T18:56:01Z",
+      "side": 1,
+      "message": "Moved into a function.",
+      "parentUuid": "4eaf9508_c2a0da4f",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 5
+      },
+      "revId": "5b3ac55d35d7ea2238b76ad63bd4ed76c1c832e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7248d892_ee2a3432",
         "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T21:30:05Z",
       "side": 1,
       "message": "possible_sample_formats ?",
+      "range": {
+        "startLine": 306,
+        "startChar": 32,
+        "endLine": 306,
+        "endChar": 55
+      },
+      "revId": "5b3ac55d35d7ea2238b76ad63bd4ed76c1c832e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79d51951_10b65c81",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1252659
+      },
+      "writtenOn": "2017-11-21T18:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7248d892_ee2a3432",
       "range": {
         "startLine": 306,
         "startChar": 32,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fcd72151_57d36e1d",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1252659
+      },
+      "writtenOn": "2017-11-21T18:56:01Z",
+      "side": 1,
+      "message": "Added at line 305. Since this commit might be seen by other teams, I prefer not to mention too many details in comment.",
+      "parentUuid": "55549b4e_4c1da7c4",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 317,
+        "endChar": 45
+      },
+      "revId": "5b3ac55d35d7ea2238b76ad63bd4ed76c1c832e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e81528b9_df423197",
         "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-20T21:30:05Z",
       "side": 1,
       "message": "return value isn\u0027t used",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 3
+      },
+      "revId": "5b3ac55d35d7ea2238b76ad63bd4ed76c1c832e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "036277cc_a9a85199",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1252659
+      },
+      "writtenOn": "2017-11-21T18:56:01Z",
+      "side": 1,
+      "message": "No it\u0027s not needed. But macro RETURN_ERROR_CODE has return statement inside, I have to make this function return int.",
+      "parentUuid": "e81528b9_df423197",
       "range": {
         "startLine": 348,
         "startChar": 0,
