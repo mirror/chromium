@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f28d4f02_5d32c204",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41573,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-21T18:53:11Z",
+      "side": 1,
+      "message": "nit: add \"which are probably remote failures, \"?",
+      "revId": "e26bf447f4b20b528feff2f790f6b324560dac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
