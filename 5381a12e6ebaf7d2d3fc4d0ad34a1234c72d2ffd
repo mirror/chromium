@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b68d06cd_525b1918",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2017-11-21T13:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29774f7c_b3683692",
+      "revId": "5381a12e6ebaf7d2d3fc4d0ad34a1234c72d2ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663a0e3a_de672a34",
         "filename": "chrome/browser/browsing_data/history_counter_browsertest.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2d82572c_5aad66e6",
+        "filename": "chrome/browser/browsing_data/history_counter_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2017-11-21T13:48:26Z",
+      "side": 1,
+      "message": "Ack. Removing -31 days. but keeping -100 days just for extra bit of testing.",
+      "parentUuid": "663a0e3a_de672a34",
+      "revId": "5381a12e6ebaf7d2d3fc4d0ad34a1234c72d2ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49a8ca28_b6efb2e9",
         "filename": "chrome/browser/browsing_data/history_counter_browsertest.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "5381a12e6ebaf7d2d3fc4d0ad34a1234c72d2ffd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26db373e_f537c057",
+        "filename": "chrome/browser/browsing_data/history_counter_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2017-11-21T13:48:26Z",
+      "side": 1,
+      "message": "Done. Updated count.",
+      "parentUuid": "49a8ca28_b6efb2e9",
+      "revId": "5381a12e6ebaf7d2d3fc4d0ad34a1234c72d2ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
