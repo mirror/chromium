@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12610f1f_88e25687",
+        "filename": "chrome/browser/sessions/session_restore_stats_collector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:36:48Z",
+      "side": 1,
+      "message": "I would expect a function with this to start the load. How about OnWillLoadNextTab?",
+      "range": {
+        "startLine": 179,
+        "startChar": 35,
+        "endLine": 179,
+        "endChar": 48
+      },
+      "revId": "01e4270642a6920b1b52ecd25a59f3b2c358393b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f821027_69b893f4",
+        "filename": "chrome/browser/sessions/session_restore_stats_collector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:36:48Z",
+      "side": 1,
+      "message": "Document what timeout means.",
+      "range": {
+        "startLine": 127,
+        "startChar": 5,
+        "endLine": 128,
+        "endChar": 21
+      },
+      "revId": "01e4270642a6920b1b52ecd25a59f3b2c358393b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840448e3_d7056faa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 77837,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:36:48Z",
+      "side": 1,
+      "message": "This description is a bit confusing. I think you mean something like, \u0027the boolean indicates whether the load was initiated because another load completed (including the tab was closed) or whether the load was initiated because a time fired to start the next load (true).",
+      "range": {
+        "startLine": 77837,
+        "startChar": 12,
+        "endLine": 77837,
+        "endChar": 68
+      },
+      "revId": "01e4270642a6920b1b52ecd25a59f3b2c358393b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
