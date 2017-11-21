@@ -22,7 +22,7 @@
 #include "base/timer/timer.h"
 #include "build/build_config.h"
 #include "chrome/browser/resource_coordinator/discard_condition.h"
-#include "chrome/browser/resource_coordinator/tab_lifetime_observer.h"
+#include "chrome/browser/resource_coordinator/tab_lifecycle_observer.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/sessions/session_restore_observer.h"
 #include "chrome/browser/ui/browser_list_observer.h"
