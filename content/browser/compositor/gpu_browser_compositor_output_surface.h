@@ -87,8 +87,10 @@ class GpuBrowserCompositorOutputSurface
       const std::vector<ui::LatencyInfo>& latency_info) override;
 
  protected:
-  void OnVSyncParametersUpdated(base::TimeTicks timebase,
-                                base::TimeDelta interval);
+  void OnPresentation(uint64_t swap_id,
+                      base::TimeTicks timestamp,
+                      base::TimeDelta refresh,
+                      uint32_t flags);
   gpu::CommandBufferProxyImpl* GetCommandBufferProxy();
 
   viz::OutputSurfaceClient* client_ = nullptr;

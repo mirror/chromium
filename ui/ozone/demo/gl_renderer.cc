@@ -54,9 +54,12 @@ void GlRenderer::RenderFrame() {
 
   if (surface_->SupportsAsyncSwap()) {
     surface_->SwapBuffersAsync(base::Bind(&GlRenderer::PostRenderFrameTask,
+                                          weak_ptr_factory_.GetWeakPtr()),
+                               base::Bind(&GlRenderer::OnPresentation,
                                           weak_ptr_factory_.GetWeakPtr()));
   } else {
-    PostRenderFrameTask(surface_->SwapBuffers());
+    PostRenderFrameTask(surface_->SwapBuffers(base::Bind(
+        &GlRenderer::OnPresentation, weak_ptr_factory_.GetWeakPtr())));
   }
 }
 
@@ -64,6 +67,13 @@ void GlRenderer::PostRenderFrameTask(gfx::SwapResult result) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&GlRenderer::RenderFrame, weak_ptr_factory_.GetWeakPtr()));
+}
+
+void GlRenderer::OnPresentation(base::TimeTicks timestamp,
+                                base::TimeDelta refresh,
+                                uint32_t flags) {
+  DCHECK(surface_->SupportsPresentationCallback());
+  LOG_IF(ERROR, timestamp.is_null()) << "Last frame is discarded!";
 }
 
 }  // namespace ui

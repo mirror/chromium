@@ -365,6 +365,14 @@ void GpuCommandBufferStub::UpdateVSyncParameters(base::TimeTicks timebase,
                                                      interval));
 }
 
+void GpuCommandBufferStub::BufferPresented(uint64_t swap_id,
+                                           base::TimeTicks timestamp,
+                                           base::TimeDelta refresh,
+                                           uint32_t flags) {
+  Send(new GpuCommandBufferMsg_BufferPresented(route_id_, swap_id, timestamp,
+                                               refresh, flags));
+}
+
 void GpuCommandBufferStub::AddFilter(IPC::MessageFilter* message_filter) {
   return channel_->AddFilter(message_filter);
 }

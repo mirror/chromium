@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "base/time/time.h"
+#include "ui/gl/gl_surface.h"
 #include "ui/ozone/platform/drm/gpu/drm_device.h"
 #include "ui/ozone/platform/drm/gpu/page_flip_request.h"
 #include "ui/ozone/platform/drm/gpu/scanout_buffer.h"
@@ -33,7 +34,8 @@ CrtcController::~CrtcController() {
     SetCursor(nullptr);
     drm_->DisableCrtc(crtc_);
     if (page_flip_request_)
-      SignalPageFlipRequest(gfx::SwapResult::SWAP_ACK);
+      SignalPageFlipRequest(gfx::SwapResult::SWAP_ACK, base::TimeTicks(),
+                            base::TimeDelta(), 0u);
   }
 }
 
@@ -87,19 +89,22 @@ bool CrtcController::SchedulePageFlip(
             << mode_.hdisplay << "x" << mode_.vdisplay << " got "
             << primary->buffer->GetSize().ToString() << " for"
             << " crtc=" << crtc_ << " connector=" << connector_;
-    page_flip_request->Signal(gfx::SwapResult::SWAP_ACK);
+    page_flip_request->Signal(gfx::SwapResult::SWAP_ACK, base::TimeTicks(),
+                              base::TimeDelta(), 0);
     return true;
   }
 
   if (!drm_->plane_manager()->AssignOverlayPlanes(plane_list, overlays, crtc_,
                                                   this)) {
     PLOG(ERROR) << "Failed to assign overlay planes for crtc " << crtc_;
-    page_flip_request->Signal(gfx::SwapResult::SWAP_FAILED);
+    page_flip_request->Signal(gfx::SwapResult::SWAP_FAILED, base::TimeTicks(),
+                              base::TimeDelta(), 0);
     return false;
   }
 
   if (test_only) {
-    page_flip_request->Signal(gfx::SwapResult::SWAP_ACK);
+    page_flip_request->Signal(gfx::SwapResult::SWAP_ACK, base::TimeTicks(),
+                              base::TimeDelta(), 0);
   } else {
     pending_planes_ = overlays;
     page_flip_request_ = page_flip_request;
@@ -121,7 +126,10 @@ std::vector<uint64_t> CrtcController::GetFormatModifiers(uint32_t format) {
 void CrtcController::OnPageFlipEvent(unsigned int frame,
                                      base::TimeTicks timestamp) {
   time_of_last_flip_ = timestamp;
-  SignalPageFlipRequest(gfx::SwapResult::SWAP_ACK);
+  SignalPageFlipRequest(gfx::SwapResult::SWAP_ACK, time_of_last_flip_,
+                        base::TimeDelta::FromSeconds(1) / mode_.vrefresh,
+                        gl::GLSurface::VSYNC | gl::GLSurface::HW_CLOCK |
+                            gl::GLSurface::HW_COMPLETION);
 }
 
 bool CrtcController::SetCursor(const scoped_refptr<ScanoutBuffer>& buffer) {
@@ -155,7 +163,10 @@ bool CrtcController::ResetCursor() {
   return status;
 }
 
-void CrtcController::SignalPageFlipRequest(gfx::SwapResult result) {
+void CrtcController::SignalPageFlipRequest(gfx::SwapResult result,
+                                           base::TimeTicks timestamp,
+                                           base::TimeDelta refresh,
+                                           uint32_t flags) {
   if (result == gfx::SwapResult::SWAP_ACK)
     current_planes_.swap(pending_planes_);
 
@@ -163,7 +174,7 @@ void CrtcController::SignalPageFlipRequest(gfx::SwapResult result) {
 
   scoped_refptr<PageFlipRequest> request;
   request.swap(page_flip_request_);
-  request->Signal(result);
+  request->Signal(result, timestamp, refresh, flags);
 }
 
 }  // namespace ui

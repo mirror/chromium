@@ -36,6 +36,10 @@ class GlRenderer : public RendererBase {
   scoped_refptr<gl::GLContext> context_;
 
  private:
+  void OnPresentation(base::TimeTicks timestamp,
+                      base::TimeDelta refresh,
+                      uint32_t flags);
+
   base::WeakPtrFactory<GlRenderer> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GlRenderer);

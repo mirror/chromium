@@ -114,6 +114,10 @@ class GPU_EXPORT GpuCommandBufferStub
   void SetSnapshotRequestedCallback(const base::Closure& callback) override;
   void UpdateVSyncParameters(base::TimeTicks timebase,
                              base::TimeDelta interval) override;
+  void BufferPresented(uint64_t swap_id,
+                       base::TimeTicks timestamp,
+                       base::TimeDelta refresh,
+                       uint32_t flags) override;
 
   void AddFilter(IPC::MessageFilter* message_filter) override;
   int32_t GetRouteID() const override;
