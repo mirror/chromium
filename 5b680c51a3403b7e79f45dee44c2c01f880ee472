@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89c10918_3d2410fb",
+        "filename": "google_apis/gaia/gaia_auth_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-21T14:07:58Z",
+      "side": 1,
+      "message": "msarda@, do you think it\u0027s better to parse the ID token here and retrieve the is_child_account information directly?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 55
+      },
+      "revId": "5b680c51a3403b7e79f45dee44c2c01f880ee472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
