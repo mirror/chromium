@@ -645,8 +645,9 @@ CSSSelector::RelationType CSSSelectorParser::ConsumeCombinator(
       if (RuntimeEnabledFeatures::DeepCombinatorInCSSDynamicProfileEnabled()) {
         return CSSSelector::kShadowDeep;
       }
-      return context_->IsDynamicProfile() ? CSSSelector::kShadowDeepAsDescendant
-                                          : CSSSelector::kShadowDeep;
+      if (!context_->IsDynamicProfile())
+        return CSSSelector::kShadowDeep;
+      // For dynamic profile, /deep/ is a no-op as of M65.
     }
 
     default:

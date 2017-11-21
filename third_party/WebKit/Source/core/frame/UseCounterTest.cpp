@@ -407,7 +407,7 @@ class DeprecationTest : public ::testing::Test {
 
 TEST_F(DeprecationTest, InspectorDisablesDeprecation) {
   // The specific feature we use here isn't important.
-  WebFeature feature = WebFeature::kCSSDeepCombinator;
+  WebFeature feature = WebFeature::kPrefixedStorageInfo;
   CSSPropertyID property = CSSPropertyFontWeight;
 
   EXPECT_FALSE(deprecation_.IsSuppressed(property));

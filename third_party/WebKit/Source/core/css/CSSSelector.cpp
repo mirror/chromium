@@ -816,10 +816,6 @@ String CSSSelector::SelectorText() const {
       case kChild:
         result = " > " + builder.ToString() + result;
         break;
-      case kShadowDeep:
-      case kShadowDeepAsDescendant:
-        result = " /deep/ " + builder.ToString() + result;
-        break;
       case kShadowPiercingDescendant:
         result = " >>> " + builder.ToString() + result;
         break;
@@ -829,9 +825,10 @@ String CSSSelector::SelectorText() const {
       case kIndirectAdjacent:
         result = " ~ " + builder.ToString() + result;
         break;
+      case kShadowDeep:
+      case kShadowPseudo:
       case kSubSelector:
         NOTREACHED();
-      case kShadowPseudo:
       case kShadowSlot:
         result = builder.ToString() + result;
         break;
