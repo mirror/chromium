@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "987724e1_f59ae615",
+        "filename": "chrome/browser/vr/elements/content_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T22:49:04Z",
+      "side": 1,
+      "message": "Might as well disregard this.  It\u0027s everywhere.",
+      "parentUuid": "762ff710_dbdd75e4",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1af8d600_7b4b55eb",
         "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
         "patchSetId": 7
