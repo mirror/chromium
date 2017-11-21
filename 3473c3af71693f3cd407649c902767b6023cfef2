@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "78ef2ff3_07819c0b",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-21T23:39:21Z",
+      "side": 1,
+      "message": "This is just a comment explaining how to use this class. As such, I find the explicit type more meaningful. Especially if you consider the following subtlety. \n\nObserverList is a container of non-owning non-null pointers to Observer. Its methods AddObserver, HasObserver and RemoveObserver takes an Observer*. But its iterator deals with Observer\u0026 (and not Observer*, nor Observer*\u0026). This is subtly different from standard containers like std::vector.\n\nI find Observer\u0026 more explicit than auto\u0026 here, and highlighting this difference from standard containers. With Observer\u0026, I know exactly what I get at first glance. With auto\u0026, I\u0027m not so sure without looking at a wider context. It could be Observer\u0026, or it could be Observer*\u0026.\n\nThis is just an example. When you actually write code that uses ObserverList, you can use auto if you prefer.",
+      "parentUuid": "3396fed7_f016e8b9",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ce064a2_a58c235a",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-21T23:39:21Z",
+      "side": 1,
+      "message": "Whether it is \u0027observer\u0027 or \u0027obs\u0027, I don\u0027t really mind and I can read both, especially in such a short context.\n\nHowever, there used to be an inconsistency with the lines above this one. \u0027obs\u0027 was more common than \u0027observer\u0027 in this file, and changing the remaining \u0027observer\u0027 to \u0027obs\u0027 was a smaller change than the other way around.",
+      "parentUuid": "092a8c36_9063f596",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb57638f_0c9c9dda",
         "filename": "base/observer_list.h",
         "patchSetId": 8
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "c316f575_d8567575",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-21T23:39:21Z",
+      "side": 1,
+      "message": "Fair point. Renamed this enumeration to ObserverListPolicy.",
+      "parentUuid": "bbf7703e_2f862ac3",
+      "range": {
+        "startLine": 79,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51caf978_a7f5bdc9",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-21T23:39:21Z",
+      "side": 1,
+      "message": "Removed the NOTIFY_ prefix from the value names.",
+      "parentUuid": "eb57638f_0c9c9dda",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2af9b5e_9f105ae9",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_shim.cc",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de5c81e_3bb8b8fe",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-21T23:39:21Z",
+      "side": 1,
+      "message": "Renamed ObserverListPolicy.",
+      "parentUuid": "f2af9b5e_9f105ae9",
+      "range": {
+        "startLine": 221,
+        "startChar": 32,
+        "endLine": 221,
+        "endChar": 76
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
