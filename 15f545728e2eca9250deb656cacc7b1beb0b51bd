@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dbb1e8d_069a4e10",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "Can you put this test under html/semantics/embedded-content/the-video-element/, since the first resize bit is in https://html.spec.whatwg.org/multipage/media.html#the-video-element and the second is conditional on video elements?",
+      "range": {
+        "startLine": 4,
+        "startChar": 24,
+        "endLine": 4,
+        "endChar": 30
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a5bc59_600ec1db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "A spec reference is optional. If you want it, I\u0027d use \u003clink rel\u003d\"help\" href\u003d\"https://html.spec.whatwg.org/multipage/media.html#the-video-element\"\u003e.",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79745d6_c88524d7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "Neither autoplay nor controls ought to be needed for this test, a video element should resize even if it\u0027s not played.",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73d6cb3_0b1ba5b0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "The wrapping test() isn\u0027t needed, and will result in an extra test that doesn\u0027t do anything. I suggest the style `async_test(function() { ... }, \"setting src attribute on autoplay video should trigger resize event\")` with all the good stuff in the ...\n\nIf you copied this from another test, feel free to fix it there as well, or not, as you prefer.",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e87906_5f0ccf49",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "Can you assert_equals(v.videoWidth, 320) and similar for videoHeight? Also assert that both are 0 right before (or after) setting v.src.",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90e54fd_c4cb57bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/event_resize.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "Drop the cache-busting bits there, ought not be needed.",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3e3e4b_c356dde3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/video-resize-event.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "FWIW, if you don\u0027t enjoy coming up with IDs, you can use document.querySelector(\u0027video\u0027) and save a few characters.",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87660cde_2eec5cc4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/video-resize-event.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "Before this I\u0027d also check that v.currentTime \u003e 0, or maybe even \u003e 0.1, so that any resize events that result from the decoding the initial frame have reached us. Did this test fail without the code changes?",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291e7d97_f90ad2b6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/video-resize-event.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "The video won\u0027t be making any noise, so no need to pause() even if running manually.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7f4ecb_a5b9b345",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/video-resize-event.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-21T14:29:42Z",
+      "side": 1,
+      "message": "Just t.unreached_func(\"getUserMedia rejected\") would do it.\n\n(Actually, it\u0027s a bit of an annoying thing that making the failure messages good is extra work here. With promise_test any rejection would result in a sensible failure message, but making this a promise_test isn\u0027t entirely trivial.",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
