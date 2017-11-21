@@ -22,6 +22,30 @@
       "revId": "c73164d464e834e263bd7471ace3b0162f614289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fc7ea8_4ffa3565",
+        "filename": "ui/content_accelerators/accelerator_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-21T16:02:43Z",
+      "side": 1,
+      "message": "I believe you likely haven\u0027t set up your DEPS in your BUILD.gn correct. I believe that the relevant code is bundled into a static library and it will fail if you don\u0027t have the DEPS right.",
+      "parentUuid": "97591e47_cfbc9b09",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "c73164d464e834e263bd7471ace3b0162f614289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
