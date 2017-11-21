@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af7b31a_0152e773",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-21T15:15:20Z",
+      "side": 1,
+      "message": "I don\u0027t think default belongs here. That\u0027s just for switch statements afaik.",
+      "range": {
+        "startLine": 584,
+        "startChar": 53,
+        "endLine": 584,
+        "endChar": 60
+      },
+      "revId": "d2383276ba12f677ae9a72cdc9118d4062e68c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
