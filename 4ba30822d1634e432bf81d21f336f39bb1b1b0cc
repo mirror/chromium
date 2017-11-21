@@ -16,6 +16,24 @@
       "revId": "4ba30822d1634e432bf81d21f336f39bb1b1b0cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851dad83_d4819f40",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-21T08:26:42Z",
+      "side": 1,
+      "message": "I will literally take your comment proposal, it is accurate and informative. Thanks!",
+      "parentUuid": "9687fcab_568b51ed",
+      "revId": "4ba30822d1634e432bf81d21f336f39bb1b1b0cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
