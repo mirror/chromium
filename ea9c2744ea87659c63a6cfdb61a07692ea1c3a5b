@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "151abc0b_bbeee5d2",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-21T02:11:48Z",
+      "side": 1,
+      "message": "I think we could only change snapped window bounds (width) by dragging? SetBounds in tests is not right to me.",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
