@@ -8,9 +8,9 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/render_text_wrapper.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
+#include "chrome/browser/vr/model/color_scheme.h"
 #include "components/url_formatter/elide_url.h"
 #include "components/url_formatter/url_formatter.h"
 #include "components/vector_icons/vector_icons.h"
@@ -163,7 +163,7 @@ SkColor UrlBarTexture::BackButtonColor() const {
   return color_scheme().element_background;
 }
 
-void UrlBarTexture::OnSetMode() {
+void UrlBarTexture::OnSetColorScheme() {
   url_dirty_ = true;
   set_dirty();
 }

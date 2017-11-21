@@ -13,6 +13,7 @@
 #include "chrome/browser/vr/target_property.h"
 #include "chrome/browser/vr/test/mock_browser_interface.h"
 #include "chrome/browser/vr/test/mock_content_input_delegate.h"
+#include "chrome/browser/vr/ui.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkColor.h"
 
@@ -20,7 +21,6 @@ namespace vr {
 
 class UiElement;
 class UiScene;
-class UiSceneManager;
 struct Model;
 
 class UiSceneManagerTest : public testing::Test {
@@ -88,11 +88,11 @@ class UiSceneManagerTest : public testing::Test {
 
   void GetBackgroundColor(SkColor* background_color) const;
 
+  std::unique_ptr<Ui> ui_;
   std::unique_ptr<MockBrowserInterface> browser_;
-  std::unique_ptr<MockContentInputDelegate> content_input_delegate_;
-  std::unique_ptr<UiScene> scene_;
-  std::unique_ptr<Model> model_;
-  std::unique_ptr<UiSceneManager> manager_;
+  MockContentInputDelegate* content_input_delegate_ = nullptr;
+  Model* model_ = nullptr;
+  UiScene* scene_ = nullptr;
   base::TimeTicks current_time_;
 };
 

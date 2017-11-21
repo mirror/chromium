@@ -28,7 +28,7 @@ constexpr float kForegroundZOffsetHover = 4 * kTextureOffset;
 }  // namespace
 
 Button::Button(base::Callback<void()> click_handler,
-               int draw_phase,
+               DrawPhase draw_phase,
                float width,
                float height,
                const gfx::VectorIcon& icon)
