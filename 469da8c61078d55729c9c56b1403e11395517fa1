@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec3ad62_6acabcd5",
+        "filename": "ios/chrome/browser/browser_state/browser_state_keyed_service_factories.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 1,
+      "message": "Why add this #include? Did you forget to also add a call to OverlayServiceFactory::GetInstance() in EnsureBrowserstateKeyedServiceFactoriesBuilt() below?",
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d425db_47859043",
+        "filename": "ios/chrome/browser/overlays/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae257d1_1dd75e7a",
+        "filename": "ios/chrome/browser/overlays/overlay_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 1,
+      "message": "With my refactoring of WebStateObserver (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d775684), this class is no longer necessary. Instead, I recommend changing OverlayScheduler to be a WebStateObserver and to implement both WasShown and WebStateDestroyed, then instead of creating/destroying the WebStateVisibilityObserver, use a ScopedObserver and Add/Remove the WebState to it.\n\nI did a CL doing just that before marq@ removed ios/clean and found it made the code cleaner by removing an unnecessary indirection.",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4503cecf_ebac7f2e",
+        "filename": "ios/chrome/browser/overlays/overlay_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 1,
+      "message": "WebStateObserver",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 24
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e2bda1_c0679798",
+        "filename": "ios/chrome/browser/overlays/overlay_scheduler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 1,
+      "message": "This constructor was removed in https://chromium-review.googlesource.com/c/chromium/src/+/771712.\n\nMy recommendation in overlay_scheduler.h (remove WebStateVisibilityObserver) is IMO the correct way to fix this.",
+      "range": {
+        "startLine": 215,
+        "startChar": 6,
+        "endLine": 215,
+        "endChar": 27
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ddba34_917bac16",
+        "filename": "ios/chrome/browser/overlays/overlay_service_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 1,
+      "message": "This method needs to be called from EnsureBrowserStateKeyedServiceFactoriesBuilt().",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 59
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e550b53c_157b4b07",
+        "filename": "ios/chrome/browser/overlays/overlay_service_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 1,
+      "message": "nit: mark this class as final?\n\n  class OverlayServiceObserverBridge final : public OverlayServiceObserver {\n  };",
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7f642c_e55ddce5",
+        "filename": "ios/chrome/browser/overlays/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98e5cc3b_361012ce",
+        "filename": "ios/chrome/browser/browser_state/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:17:06Z",
+      "side": 0,
+      "message": "This was removed in https://chromium-review.googlesource.com/c/chromium/src/+/781701, you need to rebase I think.",
+      "revId": "205b6923172f55b015e70866b801c441fdb7b209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
