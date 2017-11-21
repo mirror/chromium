@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "bd87853d_ce41c26a",
+        "filename": "chromeos/dbus/dbus_clients_browser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-21T16:37:34Z",
+      "side": 1,
+      "message": "No need to change since it isn\u0027t done consistently yet but generally this would be preferable.\n\n\u003d std::make_unique\u003cFakeSmbProviderClient\u003e()\n\nhttps://goto.google.com/totw/126",
+      "revId": "f1cdcf72e3dca1352da5fd017994d51625de7215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c727f747_fde25eb9",
+        "filename": "chromeos/dbus/fake_smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-21T16:37:34Z",
+      "side": 1,
+      "message": "What do other fake implementations typically do? At some point will we use the same fake you use for unit tests here? \n\nWould it be better to return an error here rather than success? It will probably make more difference for other methods.",
+      "revId": "f1cdcf72e3dca1352da5fd017994d51625de7215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeab0d76_52555545",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 7
