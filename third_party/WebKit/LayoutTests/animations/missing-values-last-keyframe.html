@@ -30,12 +30,12 @@
     
     #box1 {
       left: 200px;
-      animation: move-left 2s linear;
+      animation: move-left 10s linear;
     }
     
     #box2 {
       transform: translateX(200px);
-      animation: move-transform 2s linear;
+      animation: move-transform 10s linear;
     }
     
     @keyframes move-left {
@@ -77,8 +77,8 @@
     
     const expectedValues = [
       // [time, element-id, property, expected-value, tolerance]
-      [1.5, "box1", "left", 100, 15],
-      [1.5, "box2", "transform.4", 100, 15],
+      [7.5, "box1", "left", 100, 0],
+      [7.5, "box2", "transform.4", 100, 0],
     ];
     
     var doPixelTest = true;
