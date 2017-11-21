@@ -2451,8 +2451,11 @@ void WebViewImpl::FocusDocumentView(WebFrame* frame) {
   // cross-process frames, and |notifyEmbedder| is disabled to avoid sending
   // duplicate frameFocused updates from FocusController to the browser
   // process, which already knows the latest focused frame.
-  GetPage()->GetFocusController().FocusDocumentView(
-      WebFrame::ToCoreFrame(*frame), false /* notifyEmbedder */);
+  //
+  // TODO: pass |notify_embedder| = false, and rename FocusDocumentView to
+  // something more reasonable.
+  GetPage()->GetFocusController().SetFocusedElement(
+      nullptr, WebFrame::ToCoreFrame(*frame));
 }
 
 void WebViewImpl::SetInitialFocus(bool reverse) {
