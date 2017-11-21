@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ba4b117_97d76494",
+        "filename": "components/autofill/ios/browser/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T19:32:44Z",
+      "side": 1,
+      "message": "Do you need dependency on //base ?",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "95d0e86196045e877d6222ad3a25c5796d536ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b938edb4_32b2c160",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T19:32:44Z",
+      "side": 1,
+      "message": "This is neat.\n\nnit: Do you want to comment that space is not allowed character for HTML name attributes, that\u0027s why it works well as separator?",
+      "range": {
+        "startLine": 97,
+        "startChar": 43,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "95d0e86196045e877d6222ad3a25c5796d536ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
