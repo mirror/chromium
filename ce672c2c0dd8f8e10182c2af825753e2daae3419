@@ -22,6 +22,30 @@
       "revId": "ce672c2c0dd8f8e10182c2af825753e2daae3419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f193745_21373d4a",
+        "filename": "chrome/browser/resources/chromeos/input_method/google_xkb_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-11-21T03:54:19Z",
+      "side": 1,
+      "message": "Make sense \u0026 thanks for catching this.",
+      "parentUuid": "8c40bcf0_16671429",
+      "range": {
+        "startLine": 464,
+        "startChar": 15,
+        "endLine": 464,
+        "endChar": 0
+      },
+      "revId": "ce672c2c0dd8f8e10182c2af825753e2daae3419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
