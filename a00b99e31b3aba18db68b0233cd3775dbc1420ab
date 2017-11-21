@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82622a6_ca834138",
+        "filename": "extensions/renderer/bindings/argument_spec.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T19:23:16Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6074275_ac030f25",
+        "filename": "extensions/renderer/bindings/argument_spec.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T19:23:16Z",
+      "side": 1,
+      "message": "nit: This empty check seems redundant, count will do the right thing event it is empty?",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 33
+      },
+      "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c3a889_2d5220eb",
+        "filename": "extensions/renderer/bindings/argument_spec_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T19:23:16Z",
+      "side": 1,
+      "message": "Though already noted in line 879, I\u0027d find it useful to specify the subtlety here.",
+      "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f833607a_612e5e41",
+        "filename": "extensions/renderer/bindings/argument_spec_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T19:23:16Z",
+      "side": 1,
+      "message": "nit: Also note which types they are: Any/Binary/Function.",
+      "range": {
+        "startLine": 930,
+        "startChar": 3,
+        "endLine": 930,
+        "endChar": 25
+      },
+      "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
