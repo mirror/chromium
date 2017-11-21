@@ -16,6 +16,24 @@
       "revId": "417f0cf7506bf91c82b9e75b0036a2b41ff5b549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44510c62_12eccf26",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-21T15:54:29Z",
+      "side": 1,
+      "message": "I am working on a fix.",
+      "parentUuid": "5b6279e7_9323f0be",
+      "revId": "417f0cf7506bf91c82b9e75b0036a2b41ff5b549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
