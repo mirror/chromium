@@ -34,6 +34,24 @@
       "revId": "6094628bf5efbc2dbcefceeb547b5914055c86d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fede5d6_8659e562",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T20:46:21Z",
+      "side": 1,
+      "message": "Ah, I see. I guess there is something of a chicken-egg situation there since list order is a separate update from state change.\n\nWe should probably modify NSH to send DefaultNetworkChanged if the first network in the list changes. I just made a small adjustment to how we trigger network state change events (https://chromium-review.googlesource.com/c/chromium/src/+/773507), this would be a good time to make any other such adjustments; I will look int that.",
+      "parentUuid": "49fa1831_bd6ca09c",
+      "revId": "6094628bf5efbc2dbcefceeb547b5914055c86d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
