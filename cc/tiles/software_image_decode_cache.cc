@@ -91,13 +91,14 @@ class AutoDrawWithImageFinished {
   const DecodedDrawImage& decoded_draw_image_;
 };
 
-class ImageDecodeTaskImpl : public TileTask {
+class ImageDecodeTaskImplForSoftware : public TileTask {
  public:
-  ImageDecodeTaskImpl(SoftwareImageDecodeCache* cache,
-                      const SoftwareImageDecodeCache::ImageKey& image_key,
-                      const DrawImage& image,
-                      SoftwareImageDecodeCache::DecodeTaskType task_type,
-                      const ImageDecodeCache::TracingInfo& tracing_info)
+  ImageDecodeTaskImplForSoftware(
+      SoftwareImageDecodeCache* cache,
+      const SoftwareImageDecodeCache::ImageKey& image_key,
+      const DrawImage& image,
+      SoftwareImageDecodeCache::DecodeTaskType task_type,
+      const ImageDecodeCache::TracingInfo& tracing_info)
       : TileTask(true),
         cache_(cache),
         image_key_(image_key),
@@ -107,8 +108,8 @@ class ImageDecodeTaskImpl : public TileTask {
 
   // Overridden from Task:
   void RunOnWorkerThread() override {
-    TRACE_EVENT2("cc", "ImageDecodeTaskImpl::RunOnWorkerThread", "mode",
-                 "software", "source_prepare_tiles_id",
+    TRACE_EVENT2("cc", "ImageDecodeTaskImplForSoftware::RunOnWorkerThread",
+                 "mode", "software", "source_prepare_tiles_id",
                  tracing_info_.prepare_tiles_id);
     devtools_instrumentation::ScopedImageDecodeTask image_decode_task(
         image_.paint_image().GetSkImage().get(),
@@ -123,7 +124,7 @@ class ImageDecodeTaskImpl : public TileTask {
   }
 
  protected:
-  ~ImageDecodeTaskImpl() override {}
+  ~ImageDecodeTaskImplForSoftware() override {}
 
  private:
   SoftwareImageDecodeCache* cache_;
@@ -132,7 +133,7 @@ class ImageDecodeTaskImpl : public TileTask {
   SoftwareImageDecodeCache::DecodeTaskType task_type_;
   const ImageDecodeCache::TracingInfo tracing_info_;
 
-  DISALLOW_COPY_AND_ASSIGN(ImageDecodeTaskImpl);
+  DISALLOW_COPY_AND_ASSIGN(ImageDecodeTaskImplForSoftware);
 };
 
 SkSize GetScaleAdjustment(const ImageDecodeCacheKey& key) {
@@ -327,7 +328,7 @@ SoftwareImageDecodeCache::GetTaskForImageAndRefInternal(
   // Actually create the task. RefImage will account for memory on the first
   // ref.
   RefImage(key);
-  existing_task = base::MakeRefCounted<ImageDecodeTaskImpl>(
+  existing_task = base::MakeRefCounted<ImageDecodeTaskImplForSoftware>(
       this, key, image, task_type, tracing_info);
   return TaskResult(existing_task);
 }
