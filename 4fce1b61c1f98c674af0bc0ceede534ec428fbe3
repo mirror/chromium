@@ -16,6 +16,52 @@
       "revId": "4fce1b61c1f98c674af0bc0ceede534ec428fbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ceb97a_08a38d16",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59802,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T05:51:28Z",
+      "side": 1,
+      "message": "nit: Please use BooleanAttached, defining it in enums.xml if needed.",
+      "range": {
+        "startLine": 59802,
+        "startChar": 63,
+        "endLine": 59802,
+        "endChar": 70
+      },
+      "revId": "4fce1b61c1f98c674af0bc0ceede534ec428fbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f2dde6_88f7cf50",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59804,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-21T05:51:28Z",
+      "side": 1,
+      "message": "Please document when this is recorded – presumably a little while after boot, and possibly only on a subset of devices that support a detachable base?",
+      "range": {
+        "startLine": 59804,
+        "startChar": 11,
+        "endLine": 59804,
+        "endChar": 67
+      },
+      "revId": "4fce1b61c1f98c674af0bc0ceede534ec428fbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
