@@ -1608,10 +1608,11 @@ IPC_MESSAGE_ROUTED0(FrameHostMsg_AbortNavigation)
 IPC_MESSAGE_ROUTED1(FrameHostMsg_VisualStateResponse, uint64_t /* id */)
 
 // Reply to the ExtractSmartClipData message.
-IPC_MESSAGE_ROUTED3(FrameHostMsg_SmartClipDataExtracted,
+IPC_MESSAGE_ROUTED4(FrameHostMsg_SmartClipDataExtracted,
                     uint32_t /* id */,
                     base::string16 /* text */,
-                    base::string16 /* html */)
+                    base::string16 /* html */,
+                    gfx::Rect /* rect */)
 
 // Puts the browser into "tab fullscreen" mode for the sending renderer.
 // See the comment in chrome/browser/ui/browser.h for more details.
