@@ -68,7 +68,7 @@ namespace {
 // Callback to run once the profile has been loaded in order to perform a
 // given |operation| in a notification.
 void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationCommon::Type notification_type,
+                           NotificationHandler::Type notification_type,
                            const GURL& origin,
                            const std::string& notification_id,
                            const base::Optional<int>& action_index,
@@ -92,7 +92,7 @@ void ProfileLoadedCallback(NotificationCommon::Operation operation,
 
 // Loads the profile and process the Notification response
 void DoProcessNotificationResponse(NotificationCommon::Operation operation,
-                                   NotificationCommon::Type type,
+                                   NotificationHandler::Type type,
                                    const std::string& profile_id,
                                    bool incognito,
                                    const GURL& origin,
@@ -223,7 +223,7 @@ NotificationPlatformBridge* NotificationPlatformBridge::Create() {
 }
 
 void NotificationPlatformBridgeMac::Display(
-    NotificationCommon::Type notification_type,
+    NotificationHandler::Type notification_type,
     const std::string& profile_id,
     bool incognito,
     const message_center::Notification& notification,
@@ -248,7 +248,7 @@ void NotificationPlatformBridgeMac::Display(
 
   bool requires_attribution =
       notification.context_message().empty() &&
-      notification_type != NotificationCommon::EXTENSION;
+      notification_type != NotificationHandler::Type::EXTENSION;
   [builder setSubTitle:base::SysUTF16ToNSString(CreateNotificationContext(
                            notification, requires_attribution))];
 
@@ -257,7 +257,7 @@ void NotificationPlatformBridgeMac::Display(
   }
 
   [builder setShowSettingsButton:(notification_type !=
-                                  NotificationCommon::EXTENSION)];
+                                  NotificationHandler::Type::EXTENSION)];
   std::vector<message_center::ButtonInfo> buttons = notification.buttons();
   if (!buttons.empty()) {
     DCHECK_LE(buttons.size(), blink::kWebNotificationMaxActions);
@@ -291,7 +291,9 @@ void NotificationPlatformBridgeMac::Display(
   [builder setNotificationId:base::SysUTF8ToNSString(notification.id())];
   [builder setProfileId:base::SysUTF8ToNSString(profile_id)];
   [builder setIncognito:incognito];
-  [builder setNotificationType:[NSNumber numberWithInteger:notification_type]];
+  [builder
+      setNotificationType:[NSNumber numberWithInteger:static_cast<NSInteger>(
+                                                          notification_type)]];
 
   // Send persistent notifications to the XPC service so they
   // can be displayed as alerts. Chrome itself can only display
@@ -384,7 +386,7 @@ void NotificationPlatformBridgeMac::ProcessNotificationResponse(
       base::Bind(DoProcessNotificationResponse,
                  static_cast<NotificationCommon::Operation>(
                      operation.unsignedIntValue),
-                 static_cast<NotificationCommon::Type>(
+                 static_cast<NotificationHandler::Type>(
                      notification_type.unsignedIntValue),
                  profile_id, [is_incognito boolValue],
                  GURL(notification_origin), notification_id, action_index,
@@ -441,7 +443,8 @@ bool NotificationPlatformBridgeMac::VerifyNotificationData(
     return false;
   }
 
-  if (notification_type.unsignedIntValue > NotificationCommon::TYPE_MAX) {
+  if (notification_type.unsignedIntValue >
+      static_cast<unsigned int>(NotificationHandler::Type::MAX)) {
     LOG(ERROR) << notification_type.unsignedIntValue
                << " Does not correspond to a valid operation.";
     return false;

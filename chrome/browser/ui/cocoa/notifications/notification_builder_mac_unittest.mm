@@ -7,7 +7,7 @@
 #include "base/mac/foundation_util.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
-#include "chrome/browser/notifications/notification_common.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/ui/cocoa/notifications/notification_builder_mac.h"
 #include "chrome/browser/ui/cocoa/notifications/notification_constants_mac.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -25,8 +25,9 @@ TEST(NotificationBuilderMacTest, TestNotificationNoButtons) {
   [builder setNotificationId:@"notificationId"];
   [builder setProfileId:@"profileId"];
   [builder setIncognito:false];
-  [builder setNotificationType:
-               [NSNumber numberWithInt:NotificationCommon::NON_PERSISTENT]];
+  [builder
+      setNotificationType:[NSNumber numberWithInt:NotificationHandler::Type::
+                                                      WEB_NON_PERSISTENT]];
   [builder setShowSettingsButton:true];
 
   NSUserNotification* notification = [builder buildUserNotification];
@@ -56,8 +57,8 @@ TEST(NotificationBuilderMacTest, TestNotificationOneButton) {
   [builder setProfileId:@"profileId"];
   [builder setIncognito:false];
   [builder
-      setNotificationType:[NSNumber
-                              numberWithInt:NotificationCommon::PERSISTENT]];
+      setNotificationType:
+          [NSNumber numberWithInt:NotificationHandler::Type::WEB_PERSISTENT]];
   [builder setShowSettingsButton:true];
 
   NSUserNotification* notification = [builder buildUserNotification];
@@ -93,8 +94,8 @@ TEST(NotificationBuilderMacTest, TestNotificationTwoButtons) {
   [builder setProfileId:@"profileId"];
   [builder setIncognito:false];
   [builder
-      setNotificationType:[NSNumber
-                              numberWithInt:NotificationCommon::PERSISTENT]];
+      setNotificationType:
+          [NSNumber numberWithInt:NotificationHandler::Type::WEB_PERSISTENT]];
   [builder setShowSettingsButton:true];
 
   NSUserNotification* notification = [builder buildUserNotification];
@@ -178,8 +179,8 @@ TEST(NotificationBuilderMacTest, TestUserInfo) {
   [builder setNotificationId:@"Notification1"];
   [builder setIncognito:true];
   [builder
-      setNotificationType:[NSNumber
-                              numberWithInt:NotificationCommon::PERSISTENT]];
+      setNotificationType:
+          [NSNumber numberWithInt:NotificationHandler::Type::WEB_PERSISTENT]];
   [builder setShowSettingsButton:true];
 
   NSUserNotification* notification = [builder buildUserNotification];
@@ -214,8 +215,8 @@ TEST(NotificationBuilderMacTest, TestBuildDictionary) {
     [sourceBuilder setProfileId:@"profileId"];
     [sourceBuilder setIncognito:false];
     [sourceBuilder
-        setNotificationType:
-            [NSNumber numberWithInt:NotificationCommon::NON_PERSISTENT]];
+        setNotificationType:[NSNumber numberWithInt:NotificationHandler::Type::
+                                                        WEB_NON_PERSISTENT]];
     [sourceBuilder setShowSettingsButton:true];
 
     notificationData = [sourceBuilder buildDictionary];
