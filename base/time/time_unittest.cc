@@ -17,6 +17,10 @@
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#if defined(OS_IOS)
+#include "base/ios/ios_util.h"
+#endif
+
 namespace base {
 
 namespace {
@@ -112,14 +116,20 @@ class TimeTest : public testing::Test {
 };
 
 // Test conversions to/from time_t and exploding/unexploding.
-#if defined(OS_IOS)
-// TODO(crbug.com/782033): this test seems to be unreliable on the simulator;
-// possibly broken on 10.13?
-#define MAYBE_TimeT DISABLED_TimeT
-#else
-#define MAYBE_TimeT TimeT
+TEST_F(TimeTest, TimeT) {
+#if defined(OS_IOS) && TARGET_OS_SIMULATOR
+  // The function CFTimeZoneCopySystem() fails to determine the system timezone
+  // when running iOS 11.0 simulator on an host running High Sierra and return
+  // the "GMT" timezone. This causes Time::LocalExplode and localtime_r values
+  // to differ by the local timezone offset. Disable the test if simulating
+  // iOS 10.0 as it is not possible to check the version of the host mac.
+  // TODO(crbug.com/782033): remove this once support for iOS pre-11.0 is
+  // dropped or when the bug in CFTimeZoneCopySystem() is fixed.
+  if (ios::IsRunningOnIOS10OrLater() && !ios::IsRunningOnIOS11OrLater()) {
+    return;
+  }
 #endif
-TEST_F(TimeTest, MAYBE_TimeT) {
+
   // C library time and exploded time.
   time_t now_t_1 = time(nullptr);
   struct tm tms;
