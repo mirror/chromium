@@ -16,6 +16,24 @@
       "revId": "25c4b58c71a5e7788b85f40e7edc7c4d5132dc3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13e7496_c841e333",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1151082
+      },
+      "writtenOn": "2017-11-21T02:16:48Z",
+      "side": 1,
+      "message": "FYI, current implementation of ArcInputMethodService.onKeyboardKeyboardBoundsChanging hides dummy VK on ARC side by only relying on an empty bounds send by this RPC.\nThe calling on OnKeyboardWorkspaceOccludedBoundsChanging with empty |new_bounds| happens when a floating keyboard gets on screen, it\u0027s fine from ARC container point of view. Please make sure there is no issue using CrOS floating keyboard with Android app.",
+      "parentUuid": "44a3ed6a_e0dc0d68",
+      "revId": "25c4b58c71a5e7788b85f40e7edc7c4d5132dc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
