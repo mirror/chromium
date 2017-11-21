@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27cbd1b9_3eaec46b",
+        "filename": "chrome/browser/ui/cocoa/app_menu/app_menu_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T23:29:53Z",
+      "side": 1,
+      "message": "\u003e Ooof just realized that we have (at least) 3x copies of bookmark objects floating around.\n\nYah.. I had some success with just detaching the submenu in menuDidClose: -- it\u0027s fine for an NSMenu instance to move between parent menus, just so long as it\u0027s never in two at once. But fixing this properly is a much bigger task.",
+      "parentUuid": "3026c330_5fa562f5",
+      "range": {
+        "startLine": 314,
+        "startChar": 5,
+        "endLine": 314,
+        "endChar": 66
+      },
+      "revId": "e7eefd0c2b2f81b661e120546ff539876e277d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cef4c89_b8473ff9",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_cocoa_controller.mm",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "e7eefd0c2b2f81b661e120546ff539876e277d99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc158cd_77105c9d",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_menu_cocoa_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T23:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cef4c89_b8473ff9",
+      "range": {
+        "startLine": 89,
+        "startChar": 33,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "e7eefd0c2b2f81b661e120546ff539876e277d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
