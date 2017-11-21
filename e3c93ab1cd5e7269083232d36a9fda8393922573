@@ -16,6 +16,24 @@
       "revId": "e3c93ab1cd5e7269083232d36a9fda8393922573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f1c9b0_df7ab5bd",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-21T11:07:39Z",
+      "side": 1,
+      "message": "Done!\n\nThe main reason I went for the suffix was because the comment for GpuImageDecodeTaskImpl mentioned that it didn\u0027t use the gpu so I was afraid that would be seemed as misleading.",
+      "parentUuid": "cfaf0512_78bca086",
+      "revId": "e3c93ab1cd5e7269083232d36a9fda8393922573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
