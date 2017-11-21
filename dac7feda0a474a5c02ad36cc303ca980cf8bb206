@@ -424,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "0dd5d008_6db788e3",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-21T14:40:09Z",
+      "side": 1,
+      "message": "In a separate CL, add observers relevant for possible MAC chage (if hostname contains MAC address template), and update hostname if it happens.",
+      "parentUuid": "0fcf511a_133744ca",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4125b1_76029de4",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
