@@ -23,6 +23,7 @@ class GlobalDumpGraph {
  public:
   class Node;
   class Edge;
+  class PreOrderIterator;
   class PostOrderIterator;
 
   // Graph of dumps either associated with a process or with
@@ -42,6 +43,11 @@ class GlobalDumpGraph {
     // Returns the node in the graph at the given |path| or nullptr
     // if no such node exists in the provided |graph|.
     GlobalDumpGraph::Node* FindNode(base::StringPiece path);
+
+    // Returns an iterator which yields nodes in the nodes in this graph in
+    // pre-order. That is, children and owners of nodes are returned after the
+    // node itself.
+    GlobalDumpGraph::PreOrderIterator VisitInDepthFirstPreOrder();
 
     // Returns an iterator which yields nodes in the nodes in this graph in
     // post-order. That is, children and owners of nodes are returned before the
@@ -142,6 +148,19 @@ class GlobalDumpGraph {
     void set_owning_coefficient(double owning_coefficient) {
       owning_coefficient_ = owning_coefficient;
     }
+    double cumulative_owned_coefficient() const {
+      return cumulative_owned_coefficient_;
+    }
+    void set_cumulative_owned_coefficient(double cumulative_owned_coefficient) {
+      cumulative_owned_coefficient_ = cumulative_owned_coefficient;
+    }
+    double cumulative_owning_coefficient() const {
+      return cumulative_owned_coefficient_;
+    }
+    void set_cumulative_owning_coefficient(
+        double cumulative_owning_coefficient) {
+      cumulative_owning_coefficient_ = cumulative_owning_coefficient;
+    }
     GlobalDumpGraph::Edge* owns_edge() const { return owns_edge_; }
     std::map<std::string, Node*>* children() { return &children_; }
     std::vector<GlobalDumpGraph::Edge*>* owned_by_edges() {
@@ -162,6 +181,8 @@ class GlobalDumpGraph {
     uint64_t not_owned_sub_size_ = 0;
     double owned_coefficient_ = 1;
     double owning_coefficient_ = 1;
+    double cumulative_owned_coefficient_ = 1;
+    double cumulative_owning_coefficient_ = 1;
 
     GlobalDumpGraph::Edge* owns_edge_;
     std::vector<GlobalDumpGraph::Edge*> owned_by_edges_;
@@ -187,6 +208,21 @@ class GlobalDumpGraph {
     const int priority_;
   };
 
+  // An iterator-esque class which yields nodes in a depth-first pre order.
+  class PreOrderIterator {
+   public:
+    PreOrderIterator(Node* root);
+    PreOrderIterator(PreOrderIterator&& other);
+    ~PreOrderIterator();
+
+    // Yields the next node in the DFS post-order traversal.
+    Node* next();
+
+   private:
+    std::deque<Node*> to_visit_;
+    std::set<const Node*> visited_;
+  };
+
   // An iterator-esque class which yields nodes in a depth-first post order.
   class PostOrderIterator {
    public:
@@ -199,8 +235,8 @@ class GlobalDumpGraph {
 
    private:
     std::deque<Node*> to_visit_;
-    std::set<Node*> visited_;
-    std::deque<Node*> path_;
+    std::set<const Node*> visited_;
+    std::deque<const Node*> path_;
   };
 
   using ProcessDumpGraphMap =

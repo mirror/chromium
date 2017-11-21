@@ -179,6 +179,22 @@ void GraphProcessor::CalculateSizesForGraph(GlobalDumpGraph* global_graph) {
       }
     }
   }
+
+  // Eleventh pass: Calculate cumulative owned and owning coefficients of all
+  // nodes.
+  {
+    auto it = global_graph->shared_memory_graph()->VisitInDepthFirstPreOrder();
+    while (Node* node = it.next()) {
+      CalculateDumpCumulativeOwnershipCoefficient(node);
+    }
+
+    for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+      auto it = pid_to_process.second->VisitInDepthFirstPreOrder();
+      while (Node* node = it.next()) {
+        CalculateDumpCumulativeOwnershipCoefficient(node);
+      }
+    }
+  }
 }
 
 // static
@@ -726,6 +742,31 @@ void GraphProcessor::CalculateDumpOwnershipCoefficient(Node* node) {
   if (not_owned_sub_size != 0) {
     node->set_owned_coefficient(static_cast<double>(remainder_sub_size) /
                                 not_owned_sub_size);
+  }
+}
+
+// static
+void GraphProcessor::CalculateDumpCumulativeOwnershipCoefficient(Node* node) {
+  // Completely skip nodes with undefined size.
+  base::Optional<uint64_t> size_opt = GetSizeEntryOfNode(node);
+  if (!size_opt)
+    return;
+
+  double cumulative_owned_coefficient = node->owned_coefficient();
+  if (node->parent()) {
+    cumulative_owned_coefficient *= node->parent()->owned_coefficient();
+  }
+  node->set_cumulative_owned_coefficient(cumulative_owned_coefficient);
+
+  if (node->owns_edge()) {
+    node->set_cumulative_owning_coefficient(
+        node->owning_coefficient() *
+        node->owns_edge()->target()->cumulative_owning_coefficient());
+  } else if (node->parent()) {
+    node->set_cumulative_owning_coefficient(
+        node->parent()->cumulative_owning_coefficient());
+  } else {
+    node->set_cumulative_owning_coefficient(1);
   }
 }
 
