@@ -70,6 +70,12 @@ bool StandardManagementPolicyProvider::UserMayLoad(
   if (extension->is_shared_module())
     return true;
 
+  // Always allow bookmark apps. The fact that bookmark apps are an extension is
+  // an internal implementation detail and hence they should not be controlled
+  // by extension management policies. See crbug.com/786061.
+  if (extension->from_bookmark())
+    return true;
+
   ExtensionManagement::InstallationMode installation_mode =
       settings_->GetInstallationMode(extension);
 
