@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0724c7fd_c281b0ef",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-21T16:01:18Z",
+      "side": 1,
+      "message": "nit: Use the guard clause pattern:\n\n if (!IsAllowed())\n   return;\n Update...",
+      "range": {
+        "startLine": 543,
+        "startChar": 2,
+        "endLine": 543,
+        "endChar": 20
+      },
+      "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1d49c43_7cbb37c5",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
