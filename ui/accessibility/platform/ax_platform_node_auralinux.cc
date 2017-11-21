@@ -515,6 +515,147 @@ static const GInterfaceInfo ImageInfo = {
     reinterpret_cast<GInterfaceInitFunc>(ax_image_interface_base_init), nullptr,
     nullptr};
 
+// AtkValue
+
+static void ax_platform_node_auralinux_get_current_value(AtkValue* atk_value,
+                                                         GValue* value) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  float float_val;
+  if (obj->GetFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE, &float_val)) {
+    memset(value, 0, sizeof(*value));
+    g_value_init(value, G_TYPE_FLOAT);
+    g_value_set_float(value, float_val);
+  }
+}
+
+static void ax_platform_node_auralinux_get_minimum_value(AtkValue* atk_value,
+                                                         GValue* value) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  float float_val;
+  if (obj->GetFloatAttribute(ui::AX_ATTR_MIN_VALUE_FOR_RANGE, &float_val)) {
+    memset(value, 0, sizeof(*value));
+    g_value_init(value, G_TYPE_FLOAT);
+    g_value_set_float(value, float_val);
+  }
+}
+
+static void ax_platform_node_auralinux_get_maximum_value(AtkValue* atk_value,
+                                                         GValue* value) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  float float_val;
+  if (obj->GetFloatAttribute(ui::AX_ATTR_MAX_VALUE_FOR_RANGE, &float_val)) {
+    memset(value, 0, sizeof(*value));
+    g_value_init(value, G_TYPE_FLOAT);
+    g_value_set_float(value, float_val);
+  }
+}
+
+static void ax_platform_node_auralinux_get_minimum_increment(
+    AtkValue* atk_value,
+    GValue* value) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  g_value_set_float(value, obj->GetStepAttribute());
+}
+
+#if defined(ATK_CHECK_VERSION)
+#if ATK_CHECK_VERSION(2, 12, 0)
+static void ax_platform_node_auralinux_get_value_and_text(AtkValue* atk_value,
+                                                          gdouble* value,
+                                                          gchar** text) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  float float_val;
+  if (obj->GetFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE, &float_val) &&
+      value) {
+    *value = float_val;
+  }
+}
+
+static AtkRange* ax_platform_node_auralinux_get_range(AtkValue* atk_value) {
+  g_return_val_if_fail(ATK_VALUE(atk_value), nullptr);
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return nullptr;
+
+  float lower_limit, upper_limit;
+  if (obj->GetFloatAttribute(ui::AX_ATTR_MIN_VALUE_FOR_RANGE, &lower_limit) &&
+      obj->GetFloatAttribute(ui::AX_ATTR_MAX_VALUE_FOR_RANGE, &upper_limit)) {
+    return atk_range_new(lower_limit, upper_limit, NULL);
+  }
+
+  return nullptr;
+}
+
+static gdouble ax_platform_node_auralinux_get_increment(AtkValue* atk_value) {
+  g_return_val_if_fail(ATK_VALUE(atk_value), 0);
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return 0;
+
+  return obj->GetStepAttribute();
+}
+#endif  // ATK_CHECK_VERSION(2, 12, 0)
+#endif  // defined(ATK_CHECK_VERSION)
+
+static void ax_value_interface_base_init(AtkValueIface* iface) {
+  iface->get_current_value = ax_platform_node_auralinux_get_current_value;
+  iface->get_maximum_value = ax_platform_node_auralinux_get_maximum_value;
+  iface->get_minimum_value = ax_platform_node_auralinux_get_minimum_value;
+  iface->get_minimum_increment =
+      ax_platform_node_auralinux_get_minimum_increment;
+#if defined(ATK_CHECK_VERSION)
+#if ATK_CHECK_VERSION(2, 12, 0)
+  iface->get_value_and_text = ax_platform_node_auralinux_get_value_and_text;
+  iface->get_range = ax_platform_node_auralinux_get_range;
+  iface->get_increment = ax_platform_node_auralinux_get_increment;
+#endif
+#endif
+}
+
+static const GInterfaceInfo ValueInfo = {
+    reinterpret_cast<GInterfaceInitFunc>(ax_value_interface_base_init), nullptr,
+    nullptr};
+
 //
 // The rest of the AXPlatformNodeAtk code, not specific to one
 // of the Atk* interfaces.
@@ -619,7 +760,9 @@ int AXPlatformNodeAuraLinux::GetGTypeInterfaceMask() {
 
   // Value Interface
   int role = GetAtkRole();
-  if (role == ATK_ROLE_SCROLL_BAR || role == ATK_ROLE_SLIDER) {
+  if (role == ATK_ROLE_SCROLL_BAR || role == ATK_ROLE_SLIDER ||
+      role == ATK_ROLE_PROGRESS_BAR || role == ATK_ROLE_SEPARATOR ||
+      role == ATK_ROLE_SLIDER || role == ATK_ROLE_SPIN_BUTTON) {
     interface_mask |= 1 << ATK_VALUE_INTERFACE;
   }
 
@@ -664,6 +807,8 @@ GType AXPlatformNodeAuraLinux::GetAccessibilityGType() {
     g_type_add_interface_static(type, ATK_TYPE_DOCUMENT, &DocumentInfo);
   if (interface_mask & (1 << ATK_IMAGE_INTERFACE))
     g_type_add_interface_static(type, ATK_TYPE_IMAGE, &ImageInfo);
+  if (interface_mask & (1 << ATK_VALUE_INTERFACE))
+    g_type_add_interface_static(type, ATK_TYPE_VALUE, &ValueInfo);
 
   return type;
 }
@@ -1034,6 +1179,11 @@ const gchar* AXPlatformNodeAuraLinux::GetDocumentAttributeValue(
     return delegate_->GetTreeData().url.c_str();
 
   return nullptr;
+}
+
+float AXPlatformNodeAuraLinux::GetStepAttribute() {
+  // TODO(jose.dapena): Get Correct value of Step attribute.
+  return 1.0;
 }
 
 }  // namespace ui
