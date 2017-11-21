@@ -34,6 +34,24 @@
       "revId": "7f1ab82945ef6edc74deb1c6f9d29e6bf17fdcf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd024b5e_564f0245",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 10
+      },
+      "lineNbr": 4000,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-21T17:07:50Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "24a2159d_485caa5d",
+      "revId": "7f1ab82945ef6edc74deb1c6f9d29e6bf17fdcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
