@@ -16,6 +16,24 @@
       "revId": "e31f681b4fba7496ac02a316806017973afbf78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aade51f6_09d79f3c",
+        "filename": "testing/buildbot/chromium.clang.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 5646,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T04:28:25Z",
+      "side": 1,
+      "message": "I was just matching the same bots the VR unittests (just above) run on, as this target should continue to work on the same platforms.  Is this particular bot a bad choice for one or either target?",
+      "parentUuid": "2844203f_3f804ff7",
+      "revId": "e31f681b4fba7496ac02a316806017973afbf78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
