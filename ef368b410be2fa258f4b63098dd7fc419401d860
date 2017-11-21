@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "f30e3896_4e86f052",
+        "filename": "chrome/browser/notifications/notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T15:43:29Z",
+      "side": 1,
+      "message": "Ah, I see, thanks!",
+      "parentUuid": "8a945962_3b02822f",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0a25756_efd028ea",
         "filename": "chrome/browser/notifications/notification_handler.h",
         "patchSetId": 3
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "3dc76361_e40240dd",
+        "filename": "chrome/browser/notifications/persistent_notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T15:43:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3447eb02_7fe4a096",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "514bfd41_78f6a566",
         "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
         "patchSetId": 3
@@ -364,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "4dd7bc03_e2a35f22",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T15:43:29Z",
+      "side": 1,
+      "message": "heh thanks",
+      "parentUuid": "f85b3739_b0e4db7b",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 78
+      },
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97a1bb1d_5e0bb61a",
         "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
         "patchSetId": 3
@@ -393,6 +453,24 @@
       "side": 1,
       "message": "I\u0027ve added a line to the header, but don\u0027t think it\u0027s useful here. The reader should familiarize themselves with run loops, which is super useful knowledge in this project :).",
       "parentUuid": "97a1bb1d_5e0bb61a",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6262f4f_782f23e9",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T15:43:29Z",
+      "side": 1,
+      "message": "yeah the reader agrees you are probably right on this, and the reader will go and read up on them next time she gets confused by them ;)",
+      "parentUuid": "f1a90001_74677df6",
       "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -434,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "6b5a0199_9a27d645",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T15:43:29Z",
+      "side": 1,
+      "message": "\\o/ simplicity",
+      "parentUuid": "2a149ab1_db94f823",
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d04ab1b6_4b31f47f",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 3
@@ -469,6 +565,30 @@
       "side": 1,
       "message": "That\u0027s just the way how this code has been written - DoDispatchNotification{Click,Close} event are the success case, the second callback is the failure case. We only invoke the callback once.",
       "parentUuid": "d04ab1b6_4b31f47f",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 80
+      },
+      "revId": "ef368b410be2fa258f4b63098dd7fc419401d860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34448997_9bd39420",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-21T15:43:29Z",
+      "side": 1,
+      "message": "Aha I see, thanks. Could this code could be rewritten to make that clearer?\ne.g. by making a copy of the callback called notification_error_callback here?",
+      "parentUuid": "566d4844_19d36f0d",
       "range": {
         "startLine": 382,
         "startChar": 0,
