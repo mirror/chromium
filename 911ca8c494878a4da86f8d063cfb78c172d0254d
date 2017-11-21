@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "209fc90b_f8614180",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-11-21T14:00:21Z",
+      "side": 1,
+      "message": "nit: Please add \"flag\" here as well. For a second, I thought this was going away :D",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "911ca8c494878a4da86f8d063cfb78c172d0254d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccaf1288_765db320",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-11-21T14:00:21Z",
+      "side": 1,
+      "message": "Replace with \"and the command line switch [for fetching icons]\"?",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "911ca8c494878a4da86f8d063cfb78c172d0254d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
