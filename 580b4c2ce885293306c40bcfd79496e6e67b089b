@@ -389,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "536580f8_bfed710e",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T02:33:43Z",
+      "side": 1,
+      "message": "In that case, either remove the check, or convert it to an assert() statement. Something like\n\nassert(fitWidth || fitHeight, \u0027Invalid parameters\u0027);\n...",
+      "parentUuid": "f241e7b7_d097d42c",
+      "revId": "580b4c2ce885293306c40bcfd79496e6e67b089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02f6f2e9_9cf605eb",
         "filename": "chrome/browser/resources/pdf/viewport.js",
         "patchSetId": 11

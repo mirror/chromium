@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62a918e9_fe4a9fbc",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T02:33:43Z",
+      "side": 1,
+      "message": "Nit (optional):\n\nthis.fireFitToChangedEvent_(\n    this.$[\u0027fit-button\u0027].activeIndex \u003d\u003d FIT_TO_WIDTH_BUTTON_STATE ?\n        Viewport.FittingType.FIT_TO_WIDTH : Viewport.FittingType.FIT_TO_PAGE);",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf7d410_21228270",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T02:33:43Z",
+      "side": 1,
+      "message": "Nit (optional):\nbutton.activeIndex \u003d button.activeIndex \u003d\u003d FIT_TO_WIDTH_BUTTON_STATE ?\n    FIT_TO_PAGE_BUTTON_STATE : FIT_TO_WIDTH_BUTTON_STATE;\n\nand same for nextButtonState below.",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c683b9b_c4614635",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T02:33:43Z",
+      "side": 1,
+      "message": "@private, @param missing.",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959e0318_3cf54e5b",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T02:33:43Z",
+      "side": 1,
+      "message": "Since currently the only payload is the |fittingType|, is the wrapper object adding any value? Maybe just\nthis.fire(\u0027fit-to-changed\u0027, fittingType);",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 60
+      },
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2933aa6b_cce3273b",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T02:33:43Z",
+      "side": 1,
+      "message": "@private, @param missing.\n\nYou can declare e as of CustomEvent type, and type cast e.detail as necessary.",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515047bd_f13c996d",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T02:33:43Z",
+      "side": 1,
+      "message": "Nit: Just to be very clear, I would document the units (assuming px?).",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e39162b_63008694",
+        "filename": "chrome/test/data/pdf/viewport_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-21T02:33:43Z",
+      "side": 1,
+      "message": "There is a lot of redundancy in this test. Can some parts of the code be re-used? For example, how about defining a local helper\n\ntestForSize(pageWidth, pageHeight, expectedWidth, expectedHeight, expectedZoom);\n\nThen call it as follows:\ntestForSize(100, 100, \u0027100px\u0027, \u0027100px\u0027, 1);\ntestForSize(200, 100, \u0027200px\u0027, \u0027100px\u0027, 1);\ntestForSize(100, 200, \u002750px\u0027, \u0027100px\u0027, 0.5);",
+      "revId": "d0729c37a0c8ab0be2b1689261d45bf8a106a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
