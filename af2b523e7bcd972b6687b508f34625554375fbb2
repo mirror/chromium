@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ad8b057_6897c168",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-21T03:25:02Z",
+      "side": 1,
+      "message": "As mentioned elsewhere, this should be the friendly application name, not the package name for display to the user.",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a8f7ac_06446522",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-21T03:25:02Z",
+      "side": 1,
+      "message": "Probably should rename the string resources like Peter suggested.",
+      "range": {
+        "startLine": 30,
+        "startChar": 55,
+        "endLine": 30,
+        "endChar": 76
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf3705d_74ee5368",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-21T03:25:02Z",
+      "side": 1,
+      "message": "Rename the string resource.",
+      "range": {
+        "startLine": 31,
+        "startChar": 44,
+        "endLine": 31,
+        "endChar": 77
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6dd7e4_61409319",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-21T03:25:02Z",
+      "side": 1,
+      "message": "It would be good to make the non-TWA case more explicit here rather than rely on mErrorCode implicitly being its default value.",
+      "range": {
+        "startLine": 164,
+        "startChar": 15,
+        "endLine": 164,
+        "endChar": 25
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c1f5f8_47279d1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-21T03:25:02Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to be very user friendly? The previous code uses mWebappInfo.name(), which should be the user-friendly app name rather than the package name. It\u0027s available for both webapps and WebAPKs.",
+      "range": {
+        "startLine": 197,
+        "startChar": 47,
+        "endLine": 197,
+        "endChar": 62
+      },
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
