@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f2bc0c7_e2b9f990",
+        "filename": "cc/paint/image_transfer_cache_entry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-21T19:19:45Z",
+      "side": 1,
+      "message": "Below you\u0027re casting this to a uint32_t to write, but you\u0027re treating it as a size_t up here?\n\nThat said, we probably could have smaller limits on images than \"fits in a uint32_t\".  Do we have any limits in the image controller (or elsewhere in Chrome) on the size of images we\u0027ll deal with?",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7190a9b_6dc323d0",
+        "filename": "cc/paint/image_transfer_cache_entry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-21T19:19:45Z",
+      "side": 1,
+      "message": "This function has some \"using unassigned variable\" problems.  Reader might not do anything if it\u0027s already run out of memory to read, so width/height/pixel_size etc might all be unassigned.\n\nI think you likely need to check if the reader is valid before handing them to SkImageInfo::Make.  Similarly, ExtractReadableMemory could return null.  Not sure if SkPixmap copes with that or not.\n\nPaintOpSerializationTest.DeserializationFailures in an asan build will find all these for you once you hook up image serialization/deserialization more thoroughly.",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24dee30_45e228d5",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-21T19:19:45Z",
+      "side": 1,
+      "message": "Should this just be valid_ \u003d false?",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b6573f_4e5e9bde",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-21T19:19:45Z",
+      "side": 1,
+      "message": "Seems reasonable to me!",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e75192_bb792c58",
+        "filename": "cc/paint/paint_op_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-21T19:19:45Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
