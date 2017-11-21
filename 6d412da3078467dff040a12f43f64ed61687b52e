@@ -392,6 +392,24 @@
       "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fc4cdd_763ff836",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-21T21:56:35Z",
+      "side": 1,
+      "message": "\u003e Can you do \"g_storage_partition_service_factory.Pointer()\" here instead?\n\nSince you phrased that as a question, let me for now stay on the current patchset and explain my thinking a bit further.  I thought that:\n\n1) future users of base::LazyInstance\u003c...\u003e might benefit from having an inequality operator (and avoid head-scratching I did when I saw that |\u003d\u003d nullptr| works but |!\u003d nullptr| doesn\u0027t)\n\n2) adding an inequality operator would be non-controversial given that the equality operator is already present.  In fact, I was fairly surprised that one of these operators would be implemented without implementing the other one.\n\n\nBut, I did check that your |...Pointer()| suggestion compiles and I can definitely switch if you think adding the inequality operator is harmful.\n\nWDYT?",
+      "parentUuid": "a2967e75_94563b5c",
+      "revId": "6d412da3078467dff040a12f43f64ed61687b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
