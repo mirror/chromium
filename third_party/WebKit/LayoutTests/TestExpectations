@@ -3564,7 +3564,6 @@ crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/Animatable/g
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/Animation/playState.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/Animation/ready.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/AnimationEffectTiming/delay.html [ Failure ]
-crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/AnimationEffectTiming/getAnimations.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/Document/getAnimations.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/DocumentTimeline/constructor.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/KeyframeEffect/composite.html [ Failure ]
