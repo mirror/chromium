@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b47c8a4e_47b84327",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/coverage/coverage-repeated-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T02:30:22Z",
+      "side": 1,
+      "message": "why did it change?",
+      "revId": "ca9fafa12ef1eb81a175e605ec56d169bec5aea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d13bc54_86b80c9b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/coverage/multiple-instances-merge-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T02:30:22Z",
+      "side": 1,
+      "message": "just wondering, why wasn\u0027t this there in the old expectations?",
+      "revId": "ca9fafa12ef1eb81a175e605ec56d169bec5aea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6331123_124d7d93",
+        "filename": "third_party/WebKit/Source/devtools/front_end/coverage_test_runner/CoverageTestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-21T02:30:22Z",
+      "side": 1,
+      "message": "Nice. Perhaps enable closure for this module now? coverage_test_runner/module.json - \"skip_compilation\"",
+      "revId": "ca9fafa12ef1eb81a175e605ec56d169bec5aea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
