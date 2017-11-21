@@ -1924,6 +1924,7 @@ crbug.com/624430 [ Win10 ] fast/text/font-features/caps-casemapping.html [ Failu
 crbug.com/620432 accessibility/aria-activedescendant.html [ Failure ]
 
 crbug.com/399507 virtual/threaded/http/tests/devtools/tracing/timeline-paint/layer-tree.js [ Skip ]
+crbug.com/786995 virtual/threaded/http/tests/devtools/tracing/timeline-style/timeline-style-recalc-all-invalidator-types.js [ Pass Failure ]
 
 crbug.com/636424 [ Win7 Debug ] editing/selection/modify_move/move-by-word-visually-crash-test-5.html [ Pass Timeout ]
 crbug.com/638618 http/tests/devtools/editor/text-editor-search-switch-editor.js [ Skip ]
@@ -2119,6 +2120,7 @@ crbug.com/626703 external/wpt/css/CSS2/text/text-decoration-va-length-002.xht [ 
 crbug.com/626703 external/wpt/css/CSS2/text/white-space-collapsing-bidi-001.xht [ Failure ]
 crbug.com/626703 external/wpt/css/CSS2/text/white-space-mixed-001.xht [ Failure ]
 crbug.com/626703 external/wpt/css/CSS2/text/white-space-mixed-003.xht [ Failure ]
+crbug.com/626703 external/wpt/css/css-display/display-contents-before-after-003.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-display/display-contents-dynamic-before-after-001.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-display/display-contents-dynamic-before-after-first-letter-001.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-fonts/alternates-order.html [ Failure ]
@@ -2775,6 +2777,8 @@ crbug.com/664819 http/tests/security/isolatedWorld/bypass-main-world-csp-iframes
 crbug.com/664819 virtual/mojo-loading/http/tests/security/isolatedWorld/bypass-main-world-csp-iframes.html [ Pass Failure ]
 crbug.com/664819 http/tests/security/isolatedWorld/events.html [ Pass Failure ]
 crbug.com/664819 virtual/mojo-loading/http/tests/security/isolatedWorld/events.html [ Pass Failure ]
+
+crbug.com/787084 http/tests/security/contentSecurityPolicy/report-blocked-data-uri.php [ Skip ]
 
 crbug.com/702837 fast/text/aat-morx.html [ Skip ]
 
