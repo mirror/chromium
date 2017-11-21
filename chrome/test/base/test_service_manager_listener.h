@@ -10,8 +10,10 @@
 #include <string>
 #include <vector>
 
-#include "base/callback_forward.h"
+#include "base/bind.h"
 #include "base/macros.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/test/test_utils.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/interfaces/service_manager.mojom.h"
 

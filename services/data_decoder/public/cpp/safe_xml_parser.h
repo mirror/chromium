@@ -30,15 +30,22 @@ using XmlParserCallback =
     base::OnceCallback<void(std::unique_ptr<base::Value> value,
                             const base::Optional<std::string>& error)>;
 
-// Parses |unsafe_xml| safely in a utility process and invokes |callback| when
-// done. The XML returned in the callback is a JSONified version backed by a
-// base::Value object.
-// |connector| is the connector provided by the service manager and is used to
-// retrieve the XML parser service. It's commonly retrieved from a service
-// manager connection context object that the embedder provides.
+// Parses |unsafe_xml| using the data_decoder service which, whenever feasible,
+// will be run in an isolated sandboxed process. Invokes |callback| when
+// done, with a JSONified version of |unsafe_xml| backed by a base::Value
+// object.
+// |connector| is the Connector to use when connecting to the data_decoder
+// service. This should be retrieved from whichever service is requesting the
+// decode operation.
+// If |batch_id| is non-empty, the system may batch this parse request with
+// other parse requests using the same |batch_id| in an effort to amortize the
+// overhead of a single request. The trade-off is that batch requests may not be
+// well-isolated from each other, so this should be used with appropriate
+// caution.
 void ParseXml(service_manager::Connector* connector,
               const std::string& unsafe_xml,
-              XmlParserCallback callback);
+              XmlParserCallback callback,
+              const std::string& batch_id = "");
 
 // Below are convenience methods for handling the elements returned by
 // ParseXml().
