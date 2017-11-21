@@ -4,7 +4,14 @@ specific_include_rules = {
     # access to that class.
     "+ios/web/webui/url_data_manager_ios_backend.h"
   ],
-  "browser_state_keyed_service_factories.mm": [
+
+  "chrome_browser_state_impl.cc": [
+    # ChromeBrowserStateImpl embeds the Identity Service, but the dependence
+    # should be used *only* for Identity Service creation.
+    "+services/identity/identity_service.h",
+  ],
+
+ "browser_state_keyed_service_factories.mm": [
     # Allow the instantiation of BrowserStateKeyedServiceFactories in ios/clean/
     "+ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h"
   ]
