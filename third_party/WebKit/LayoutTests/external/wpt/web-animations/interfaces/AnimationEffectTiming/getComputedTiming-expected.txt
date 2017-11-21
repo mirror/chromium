@@ -1,14 +1,14 @@
 This is a testharness.js-based test.
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed without any KeyframeEffectOptions object
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by an empty KeyframeEffectOptions object
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by a normal KeyframeEffectOptions object
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by a double value
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by +Infinity
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by an Infinity duration
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by an auto duration
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by an Infinity iterations
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by an auto fill
-PASS values of getComputedTiming() when a KeyframeEffectReadOnly is constructed by a forwards fill
+PASS values of getComputedTiming() when a KeyframeEffect is constructed without any KeyframeEffectOptions object
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by an empty KeyframeEffectOptions object
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by a normal KeyframeEffectOptions object
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by a double value
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by +Infinity
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by an Infinity duration
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by an auto duration
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by an Infinity iterations
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by an auto fill
+PASS values of getComputedTiming() when a KeyframeEffect is constructed by a forwards fill
 PASS getComputedTiming().activeDuration for an empty KeyframeEffectOptions object
 PASS getComputedTiming().activeDuration for a non-zero duration and default iteration count
 PASS getComputedTiming().activeDuration for a non-zero duration and integral iteration count

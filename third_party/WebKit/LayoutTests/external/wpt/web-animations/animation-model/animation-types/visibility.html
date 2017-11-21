@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <meta charset=utf-8>
-<title>Effect value computation tests for 'visibility' property</title>
-<link rel="help" href="https://w3c.github.io/web-animations/#the-effect-value-of-a-keyframe-animation-effect">
+<title>Animation type for the 'visibility' property</title>
+<!-- FIXME: The following spec link should be updated once this definition has
+  been moved to CSS Values & Units. -->
+<link rel="help" href="https://drafts.csswg.org/css-transitions/#animtype-visibility">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
 <script src="../../testcommon.js"></script>
@@ -11,10 +13,10 @@
 <script>
 'use strict';
 
-test(function(t) {
-  var div = createDiv(t);
-  var anim = div.animate({ visibility: ['hidden','visible'] },
-                         { duration: 100 * MS_PER_SEC, fill: 'both' });
+test(t => {
+  const div = createDiv(t);
+  const anim = div.animate({ visibility: ['hidden','visible'] },
+                           { duration: 100 * MS_PER_SEC, fill: 'both' });
 
   anim.currentTime = 0;
   assert_equals(getComputedStyle(div).visibility, 'hidden',
@@ -30,11 +32,11 @@ test(function(t) {
 
 }, 'Visibility clamping behavior');
 
-test(function(t) {
-  var div = createDiv(t);
-  var anim = div.animate({ visibility: ['hidden', 'visible'] },
-                         { duration: 100 * MS_PER_SEC, fill: 'both',
-                           easing: 'cubic-bezier(0.25, -0.6, 0, 0.5)' });
+test(t => {
+  const div = createDiv(t);
+  const anim = div.animate({ visibility: ['hidden', 'visible'] },
+                           { duration: 100 * MS_PER_SEC, fill: 'both',
+                             easing: 'cubic-bezier(0.25, -0.6, 0, 0.5)' });
 
   anim.currentTime = 0;
   assert_equals(getComputedStyle(div).visibility, 'hidden',
