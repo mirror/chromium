@@ -83,14 +83,12 @@
                     </option>
                   </select>
                 </div>
-                <span>
-                  <button class="experiment-disable-link"
-                      jsvalues=".internal_name:internal_name"
-                      jsdisplay="enabled" href="#" tabindex="6">$i18n{disable}</button>
-                  <button class="experiment-enable-link"
-                      jsvalues=".internal_name:internal_name"
-                      jsdisplay="!enabled" href="#" tabindex="6">$i18n{enable}</button>
-                </span>
+                <!-- Represent enable / disable links as a drop down option -->
+                <select class="experiment-enable-disable" tabindex="6" jsdisplay="enabled || !enabled"
+                    jsvalues=".internal_name:internal_name;">
+                  <option jsvalues=".selected:!enabled" value="disable-link">Disabled</option>
+                  <option jsvalues=".selected:enabled" value="enable-link">Enabled</option>
+                </select>
               </div>
             </div>
           </div>
