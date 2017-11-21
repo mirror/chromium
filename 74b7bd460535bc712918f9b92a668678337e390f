@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f054610f_8db64458",
+        "filename": "ios/chrome/browser/ui/settings/BUILD.gn",
+        "patchSetId": 21
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "64bd81b2_a4555c88",
+      "range": {
+        "startLine": 163,
+        "startChar": 48,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "74b7bd460535bc712918f9b92a668678337e390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b55fc25_ea7d972e",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "74b7bd460535bc712918f9b92a668678337e390f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d405a42_91ac64bb",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4b55fc25_ea7d972e",
+      "range": {
+        "startLine": 39,
+        "startChar": 56,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "74b7bd460535bc712918f9b92a668678337e390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ab698ffc_bdce0a6c",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d79cbbc5_334b4bcd",
+      "range": {
+        "startLine": 53,
+        "startChar": 71,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "74b7bd460535bc712918f9b92a668678337e390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4caa89af_14ab66d6",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 21
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-21T12:34:37Z",
       "side": 0,
       "message": "Where is this incrementing done now?\n\nEdit: Answer: down below, line 438. Thanks!",
+      "range": {
+        "startLine": 372,
+        "startChar": 71,
+        "endLine": 372,
+        "endChar": 0
+      },
+      "revId": "74b7bd460535bc712918f9b92a668678337e390f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aeb8ed3_9ad1c392",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 0,
+      "message": "This is now done by the mediator when the sign-in promo view is visible.",
+      "parentUuid": "4caa89af_14ab66d6",
       "range": {
         "startLine": 372,
         "startChar": 71,

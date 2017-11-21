@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ab72608_cdd67f90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 1,
+      "message": "Is it better? That\u0027s a bit weird change. So I wanted to explain it, even though, it is not really important.",
+      "parentUuid": "6ce89207_e0553eef",
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "409d004c_c23175d7",
         "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
         "patchSetId": 21
@@ -39,6 +57,30 @@
       "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f529d4_06b7354b",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409d004c_c23175d7",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,54 @@
     },
     {
       "key": {
+        "uuid": "59ea52c8_8e4a2136",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bbadf87_0fbd8cfd",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2c9457f_e7740b9d",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c432ad25_98c4de98",
+      "range": {
+        "startLine": 35,
+        "startChar": 44,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c3cd0cf_33eb7fc6",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 21
@@ -99,6 +189,24 @@
       "writtenOn": "2017-11-21T12:34:37Z",
       "side": 1,
       "message": "Should you add a RecordSomethingFromAccessPoint() function to the mediator file and encapsulate completely metrics there?",
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569fc787_f20269c1",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 1,
+      "message": "This is the only case where this is done without a mediator. So I can do it, but I\u0027m not sure it is relevant.",
+      "parentUuid": "5c3cd0cf_33eb7fc6",
       "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -125,6 +233,30 @@
       "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31aaee80_e6b96593",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-21T12:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f6f5c02_6bae28ae",
+      "range": {
+        "startLine": 1205,
+        "startChar": 1,
+        "endLine": 1205,
+        "endChar": 7
+      },
+      "revId": "13285bdd4d81ce0b84425cb2e41b4e29e2c1c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
