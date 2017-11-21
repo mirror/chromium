@@ -17,3 +17,7 @@ typemaps = [
   "//mojo/common/values.typemap",
   "//mojo/common/version.typemap",
 ]
+
+if (is_win) {
+  typemaps += [ "//mojo/common/logfont_win.typemap" ]
+}
