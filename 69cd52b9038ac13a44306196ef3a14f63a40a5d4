@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8cd44fe9_07f8fda4",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T01:21:52Z",
+      "side": 1,
+      "message": "I don\u0027t know what the right policy is. I\u0027ll take suggestions. :)\n\nWould be:\n\n  g_browser_process-\u003elocal_state()-\u003eGetString(prefs::kIsolateOrigins) + \",\" + parsed_command_line_.GetSwitchValueASCII(switches::kIsolateOrigins);\n\n, right?",
+      "parentUuid": "d5601f13_0140e524",
+      "range": {
+        "startLine": 1178,
+        "startChar": 4,
+        "endLine": 1180,
+        "endChar": 15
+      },
+      "revId": "69cd52b9038ac13a44306196ef3a14f63a40a5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1967ca41_16302a1b",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 14
