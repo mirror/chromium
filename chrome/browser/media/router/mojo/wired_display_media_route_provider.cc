@@ -38,9 +38,8 @@ MediaSinkInternal CreateSinkForDisplay(const Display& display,
       l10n_util::GetStringFUTF8(IDS_MEDIA_ROUTER_WIRED_DISPLAY_SINK_NAME,
                                 base::FormatNumber(display_index));
   MediaSink sink(sink_id, sink_name, SinkIconType::GENERIC);
+  sink.set_provider_id(MediaRouteProviderId::WIRED_DISPLAY);
   MediaSinkInternal sink_internal;
-  sink_internal.set_sink_id(sink_id);
-  sink_internal.set_name(sink_name);
   sink_internal.set_sink(sink);
   return sink_internal;
 }
@@ -56,9 +55,8 @@ bool CompareDisplayBounds(const Display& display1, const Display& display2) {
 }  // namespace
 
 // static
-const mojom::MediaRouteProvider::Id
-    WiredDisplayMediaRouteProvider::kProviderId =
-        mojom::MediaRouteProvider::Id::WIRED_DISPLAY;
+const MediaRouteProviderId WiredDisplayMediaRouteProvider::kProviderId =
+    MediaRouteProviderId::WIRED_DISPLAY;
 
 // static
 const char WiredDisplayMediaRouteProvider::kSinkPrefix[] = "wired_display_";
