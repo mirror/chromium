@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ad5aa6_12c5c2d8",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-21T08:40:27Z",
+      "side": 1,
+      "message": "Does it really end here for the script? Isn\u0027t there at least an onCompleted event?",
+      "range": {
+        "startLine": 1180,
+        "startChar": 18,
+        "endLine": 1180,
+        "endChar": 34
+      },
+      "revId": "f5ce56bdad32e44a1746de3a02478ba09eaa3309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
