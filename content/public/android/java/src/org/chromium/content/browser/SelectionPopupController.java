@@ -288,8 +288,6 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                                 /* SelectionClient.Result = */ null);
                         break;
                     case MenuSourceType.MENU_SOURCE_TOUCH_HANDLE:
-                        mSelectionMetricsLogger.logSelectionModified(
-                                mLastSelectedText, mLastSelectionOffset, mClassificationResult);
                         break;
                     default:
                         mSelectionMetricsLogger.logSelectionStarted(
@@ -817,7 +815,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (menuItemId == R.id.select_action_menu_share) {
             return SmartSelectionMetricsLogger.ActionType.SHARE;
         }
-        if (menuItemId == R.id.select_action_menu_assist_items) {
+        if (menuItemId == android.R.id.textAssist) {
             return SmartSelectionMetricsLogger.ActionType.SMART_SHARE;
         }
         return SmartSelectionMetricsLogger.ActionType.OTHER;
@@ -1268,6 +1266,11 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                         result.startAdjust, result.endAdjust, /* show_selection_menu = */ true);
                 return;
             }
+
+            // We won't do expansion here, however, we want to 1) log this case to distinguish it
+            // from selection expansion case in metrics log. 2) log selection handle drag events.
+            mSelectionMetricsLogger.logSelectionModified(
+                    mLastSelectedText, mLastSelectionOffset, mClassificationResult);
 
             // Rely on this method to clear |mHidden| and unhide the action mode.
             showActionModeOrClearOnFailure();
