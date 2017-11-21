@@ -94,6 +94,14 @@ class DisplayInfoProvider {
   virtual bool ClearTouchCalibration(const std::string& id, std::string* error);
   virtual bool IsNativeTouchCalibrationActive(std::string* error);
 
+  // Enables mirroring from the source display to the destination display if
+  // |enabled| is true. Disables mirroring otherwise. NOTE: This is only
+  // available to Chrome OS Kiosk apps. See system_display.idl. This returns
+  // false in case any error occurs.
+  virtual bool SetCustomMirrorMode(bool enabled,
+                                   const std::string& source_id,
+                                   const std::string& destination_id);
+
  protected:
   DisplayInfoProvider();
 

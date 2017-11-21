@@ -60,6 +60,13 @@ class ASH_EXPORT DisplayConfigurationController
   // displays.
   void SetMirrorMode(bool mirror);
 
+  // Enables mirroring from the source display to the destination display if
+  // |enabled| is true. Disables mirroring otherwise. NOTE: This is only
+  // available to Chrome OS Kiosk apps.
+  void SetCustomMirrorMode(bool enabled,
+                           int64_t source_id,
+                           int64_t destination_id);
+
   // Sets the display's rotation with animation if available.
   void SetDisplayRotation(int64_t display_id,
                           display::Display::Rotation rotation,

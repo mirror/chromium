@@ -1019,6 +1019,34 @@ bool DisplayInfoProviderChromeOS::IsNativeTouchCalibrationActive(
   return false;
 }
 
+bool DisplayInfoProviderChromeOS::SetCustomMirrorMode(
+    bool enabled,
+    const std::string& source_id,
+    const std::string& destination_id) {
+  const auto* display_manager = ash::Shell::Get()->display_manager();
+  if (enabled == display_manager->IsInMirrorMode())
+    return false;
+
+  ash::DisplayConfigurationController* display_configuration_controller =
+      ash::Shell::Get()->display_configuration_controller();
+  if (!enabled) {
+    display_configuration_controller->SetCustomMirrorMode(
+        false, display::kInvalidDisplayId, display::kInvalidDisplayId);
+    return true;
+  }
+
+  display::Display source_display = GetDisplay(source_id);
+  display::Display destination_display = GetDisplay(destination_id);
+  if (source_display.id() == destination_display.id() ||
+      source_display.id() == display::kInvalidDisplayId ||
+      destination_display.id() == display::kInvalidDisplayId) {
+    return false;
+  }
+  display_configuration_controller->SetCustomMirrorMode(
+      true, source_display.id(), destination_display.id());
+  return true;
+}
+
 ash::OverscanCalibrator* DisplayInfoProviderChromeOS::GetOverscanCalibrator(
     const std::string& id) {
   auto iter = overscan_calibrators_.find(id);
