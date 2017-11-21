@@ -74,6 +74,8 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
     enlarge_pass_texture_amount_ = amount;
   }
 
+  void SetOutputSurfaceColorMatrixForTesting(const SkMatrix44& matrix);
+
   // Public for tests that poke at internals.
   struct VIZ_SERVICE_EXPORT DrawingFrame {
     DrawingFrame();

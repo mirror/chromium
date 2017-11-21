@@ -1896,8 +1896,9 @@ class TestOverlayProcessor : public OverlayProcessor {
     Strategy() = default;
     ~Strategy() override = default;
 
-    MOCK_METHOD4(Attempt,
-                 bool(cc::DisplayResourceProvider* resource_provider,
+    MOCK_METHOD5(Attempt,
+                 bool(const SkMatrix44& output_color_matrix,
+                      cc::DisplayResourceProvider* resource_provider,
                       RenderPass* render_pass,
                       cc::OverlayCandidateList* candidates,
                       std::vector<gfx::Rect>* content_bounds));
@@ -2023,7 +2024,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   // added a fake strategy, so checking for Attempt calls checks if there was
   // any attempt to overlay, which there shouldn't be. We can't use the quad
   // list because the render pass is cleaned up by DrawFrame.
-  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _)).Times(0);
+  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _, _)).Times(0);
   EXPECT_CALL(*validator, AllowCALayerOverlays()).Times(0);
   EXPECT_CALL(*validator, AllowDCLayerOverlays()).Times(0);
   DrawFrame(&renderer, viewport_size);
@@ -2048,7 +2049,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   EXPECT_CALL(*validator, AllowDCLayerOverlays())
       .Times(1)
       .WillOnce(::testing::Return(false));
-  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _)).Times(1);
+  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _, _)).Times(1);
   DrawFrame(&renderer, viewport_size);
 
   // If the CALayerOverlay path is taken, then the ordinary overlay path should
@@ -2067,7 +2068,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   EXPECT_CALL(*validator, AllowCALayerOverlays())
       .Times(1)
       .WillOnce(::testing::Return(true));
-  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _)).Times(0);
+  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _, _)).Times(0);
   DrawFrame(&renderer, viewport_size);
 
   // Transfer resources back from the parent to the child. Set no resources as
@@ -2550,7 +2551,8 @@ class ContentBoundsOverlayProcessor : public OverlayProcessor {
         : content_bounds_(content_bounds) {}
     ~Strategy() override = default;
 
-    bool Attempt(cc::DisplayResourceProvider* resource_provider,
+    bool Attempt(const SkMatrix44& output_color_matrix,
+                 cc::DisplayResourceProvider* resource_provider,
                  RenderPass* render_pass,
                  cc::OverlayCandidateList* candidates,
                  std::vector<gfx::Rect>* content_bounds) override {
