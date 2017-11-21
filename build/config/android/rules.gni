@@ -2092,6 +2092,7 @@ if (enable_java_templates) {
     }
     _generated_proguard_config = "$_base_path.resources.proguard.txt"
     _process_resources_target = "${_template_name}__process_resources"
+    _resources_srcjar_target = _process_resources_target
     process_resources(_process_resources_target) {
       forward_variables_from(invoker,
                              [
@@ -2120,7 +2121,6 @@ if (enable_java_templates) {
         deps += invoker.deps
       }
     }
-    _srcjar_deps += [ ":$_process_resources_target" ]
     _package_resources_target = "${target_name}__package_resources"
     package_resources(_package_resources_target) {
       forward_variables_from(invoker,
@@ -2146,12 +2146,22 @@ if (enable_java_templates) {
       version_name = _version_name
       if (defined(invoker.post_process_package_resources_script)) {
         post_process_script = invoker.post_process_package_resources_script
+        if (defined(invoker.post_process_package_resources_deps) &&
+            defined(invoker.post_process_package_resources_args)) {
+          post_process_deps = invoker.post_process_package_resources_deps
+          post_process_args = invoker.post_process_package_resources_args
+          srcjar_path = "${target_gen_dir}/${target_name}.srcjar"
+        }
       }
       resources_zip = _all_resources_zip_path
       output = _packaged_resources_path
       density_splits = _density_splits
       language_splits = _language_splits
     }
+    if (defined(invoker.post_process_package_resources_deps)) {
+      _resources_srcjar_target = _package_resources_target
+    }
+    _srcjar_deps += [ ":$_resources_srcjar_target" ]
 
     if (_native_libs_deps != []) {
       _enable_chromium_linker_tests = false
