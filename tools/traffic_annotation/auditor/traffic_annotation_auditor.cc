@@ -186,7 +186,9 @@ bool TrafficAnnotationAuditor::RunClangTool(
   base::FilePath original_path;
   base::GetCurrentDirectory(&original_path);
   base::SetCurrentDirectory(source_path_);
+  LOG(ERROR) << "----------------------> BEFORE THE CALL";
   bool result = base::GetAppOutput(cmdline, &clang_tool_raw_output_);
+  LOG(ERROR) << "----------------------> AFTER THE CALL";
 
   if (!result) {
     std::string tool_errors;

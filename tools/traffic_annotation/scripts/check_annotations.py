@@ -17,7 +17,7 @@ import sys
 # If this test starts failing, please set TEST_IS_ENABLED to "False" and file a
 # bug to get this reenabled, and cc the people listed in
 # //tools/traffic_annotation/OWNERS.
-TEST_IS_ENABLED = sys.platform != 'win32'
+TEST_IS_ENABLED = True
 
 
 class NetworkTrafficAnnotationChecker():
@@ -117,6 +117,7 @@ class NetworkTrafficAnnotationChecker():
     if sys.platform.startswith("win"):
       args.insert(0, sys.executable)
 
+    print("CALLING COMMANDS ARE: %s", args)
     command = subprocess.Popen(args, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
     stdout_text, stderr_text = command.communicate()

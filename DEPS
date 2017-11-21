@@ -1170,10 +1170,10 @@ hooks = [
 
 # This is used to ensure that all network operations are properly
 # annotated so we can document what they're for.
-  {
+{
     'name': 'tools_traffic_annotation_windows',
     'pattern': '.',
-    'condition': 'host_os == "windows" and checkout_traffic_annotation_tools',
+    'condition': 'host_os == "win" and checkout_traffic_annotation_tools',
     'action': [ 'vpython',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
