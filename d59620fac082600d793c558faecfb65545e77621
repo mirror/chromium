@@ -81,6 +81,24 @@
       "revId": "d59620fac082600d793c558faecfb65545e77621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab634af3_66335ca7",
+        "filename": "third_party/libxml/chromium/libxml_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-21T22:51:12Z",
+      "side": 1,
+      "message": "Not at all, you\u0027re right. (I don\u0027t know any of this code, despite ridiculously being in OWNERS)!\n\nSorry for the confusion, I missed the call to xmlTextReaderGetAttribute.",
+      "parentUuid": "fbfb9376_6eb31440",
+      "revId": "d59620fac082600d793c558faecfb65545e77621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
