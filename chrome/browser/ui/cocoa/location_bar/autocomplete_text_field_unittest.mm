@@ -33,7 +33,7 @@ class MockDecoration : public LocationBarDecoration {
   virtual CGFloat GetWidthForSpace(CGFloat width) { return 20.0; }
 
   virtual void DrawInFrame(NSRect frame, NSView* control_view) { ; }
-  MOCK_METHOD0(AcceptsMousePress, bool());
+  MOCK_METHOD0(AcceptsMousePress, AcceptsPress());
   MOCK_METHOD2(OnMousePressed, bool(NSRect frame, NSPoint location));
   MOCK_METHOD0(GetMenu, NSMenu*());
 };
@@ -379,8 +379,7 @@ TEST_F(AutocompleteTextFieldTest, ClickRightDecorationPutsCaretRightmost) {
   // Decoration does not handle the mouse event, so the cell should
   // process it.  Called at least once.
   EXPECT_CALL(mock_trailing_decoration_, AcceptsMousePress())
-      .WillOnce(Return(false))
-      .WillRepeatedly(Return(false));
+      .WillRepeatedly(Return(AcceptsPress::NEVER));
 
   // Set the decoration before becoming responder.
   EXPECT_FALSE([field_ currentEditor]);
@@ -414,8 +413,7 @@ TEST_F(AutocompleteTextFieldTest, ClickLeftDecorationPutsCaretLeftmost) {
   // Decoration does not handle the mouse event, so the cell should
   // process it.  Called at least once.
   EXPECT_CALL(mock_leading_decoration_, AcceptsMousePress())
-      .WillOnce(Return(false))
-      .WillRepeatedly(Return(false));
+      .WillRepeatedly(Return(AcceptsPress::NEVER));
 
   // Set the decoration before becoming responder.
   EXPECT_FALSE([field_ currentEditor]);
@@ -562,7 +560,7 @@ TEST_F(AutocompleteTextFieldTest, LeftDecorationMouseDown) {
 
   mock_leading_decoration_.SetVisible(true);
   EXPECT_CALL(mock_leading_decoration_, AcceptsMousePress())
-      .WillRepeatedly(Return(true));
+      .WillRepeatedly(Return(AcceptsPress::ALWAYS));
 
   AutocompleteTextFieldCell* cell = [field_ cell];
   [cell updateMouseTrackingAndToolTipsInRect:[field_ frame] ofView:field_];
@@ -611,7 +609,7 @@ TEST_F(AutocompleteTextFieldTest, RightDecorationMouseDown) {
 
   mock_trailing_decoration_.SetVisible(true);
   EXPECT_CALL(mock_trailing_decoration_, AcceptsMousePress())
-      .WillRepeatedly(Return(true));
+      .WillRepeatedly(Return(AcceptsPress::ALWAYS));
 
   AutocompleteTextFieldCell* cell = [field_ cell];
   [cell updateMouseTrackingAndToolTipsInRect:[field_ frame] ofView:field_];
@@ -800,11 +798,9 @@ TEST_F(AutocompleteTextFieldTest, UpdateTrackingAreas) {
   mock_trailing_decoration_.SetVisible(true);
 
   EXPECT_CALL(mock_leading_decoration_, AcceptsMousePress())
-      .WillOnce(Return(true))
-      .WillRepeatedly(Return(true));
+      .WillRepeatedly(Return(AcceptsPress::ALWAYS));
   EXPECT_CALL(mock_trailing_decoration_, AcceptsMousePress())
-      .WillOnce(Return(false))
-      .WillRepeatedly(Return(false));
+      .WillRepeatedly(Return(AcceptsPress::NEVER));
   [cell updateMouseTrackingAndToolTipsInRect:[field_ bounds] ofView:field_];
 
   EXPECT_EQ([cell mouseTrackingDecorations].size(), 1.0);
@@ -813,8 +809,7 @@ TEST_F(AutocompleteTextFieldTest, UpdateTrackingAreas) {
   EXPECT_TRUE([cell mouseTrackingDecorations].empty());
 
   EXPECT_CALL(mock_trailing_decoration_, AcceptsMousePress())
-      .WillOnce(Return(true))
-      .WillRepeatedly(Return(true));
+      .WillRepeatedly(Return(AcceptsPress::ALWAYS));
 
   [cell updateMouseTrackingAndToolTipsInRect:[field_ bounds] ofView:field_];
   EXPECT_EQ([cell mouseTrackingDecorations].size(), 2.0);
@@ -830,13 +825,13 @@ TEST_F(AutocompleteTextFieldObserverTest,
   MockDecoration noninteractive_decoration;
   noninteractive_decoration.SetVisible(true);
   EXPECT_CALL(noninteractive_decoration, AcceptsMousePress())
-      .WillRepeatedly(testing::Return(false));
+      .WillRepeatedly(Return(AcceptsPress::NEVER));
   [cell addLeadingDecoration:&noninteractive_decoration];
 
   // Set up an interactive decoration.
   MockDecoration interactive_decoration;
   EXPECT_CALL(interactive_decoration, AcceptsMousePress())
-      .WillRepeatedly(testing::Return(true));
+      .WillRepeatedly(Return(AcceptsPress::NEVER));
   interactive_decoration.SetVisible(true);
   [cell addLeadingDecoration:&interactive_decoration];
   [cell updateMouseTrackingAndToolTipsInRect:[field_ frame] ofView:field_];
