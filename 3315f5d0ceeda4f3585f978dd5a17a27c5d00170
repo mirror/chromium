@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eeec2d8_164493d2",
+        "filename": "chrome/browser/ui/views/webshare/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-21T00:44:13Z",
+      "side": 1,
+      "message": "It seems mildly weird to have the owners in chrome and not webkit (typically we don\u0027t have code in webkit include from chrome, I realize this isn\u0027t code, but I like consistency). I\u0027m OK having you as an owner. I don\u0027t see sammc making any commits to this code, but given I\u0027m ok making you an owner if you want to make him an owner that is your decision.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 37
+      },
+      "revId": "3315f5d0ceeda4f3585f978dd5a17a27c5d00170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
