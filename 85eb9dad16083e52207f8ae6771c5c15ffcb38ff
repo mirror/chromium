@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80c39f0a_f860c5ca",
+        "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T20:38:19Z",
+      "side": 1,
+      "message": "Maybe move this above the #if?  Up to you.",
+      "range": {
+        "startLine": 307,
+        "startChar": 14,
+        "endLine": 307,
+        "endChar": 0
+      },
+      "revId": "85eb9dad16083e52207f8ae6771c5c15ffcb38ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513a9fc0_9fe40d87",
+        "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T20:38:19Z",
+      "side": 1,
+      "message": "optional: can just use append(slashes_to_test, base::FilePath::kSeparators[0]) instead of the loop.",
+      "range": {
+        "startLine": 315,
+        "startChar": 6,
+        "endLine": 315,
+        "endChar": 21
+      },
+      "revId": "85eb9dad16083e52207f8ae6771c5c15ffcb38ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
