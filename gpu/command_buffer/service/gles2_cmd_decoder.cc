@@ -200,6 +200,8 @@ bool AnyOtherBitsSet(GLbitfield bits, GLbitfield ref) {
   return ((bits & mask) != 0);
 }
 
+void EmptyPresentation(const gfx::PresentationFeedback&) {}
+
 }  // namespace
 
 class GLES2DecoderImpl;
@@ -12160,7 +12162,8 @@ void GLES2DecoderImpl::DoSwapBuffersWithBoundsCHROMIUM(
     bounds[i] = gfx::Rect(rects[i * 4 + 0], rects[i * 4 + 1], rects[i * 4 + 2],
                           rects[i * 4 + 3]);
   }
-  FinishSwapBuffers(surface_->SwapBuffersWithBounds(bounds));
+  FinishSwapBuffers(
+      surface_->SwapBuffersWithBounds(bounds, base::Bind(&EmptyPresentation)));
 }
 
 error::Error GLES2DecoderImpl::HandlePostSubBufferCHROMIUM(
@@ -12198,7 +12201,8 @@ error::Error GLES2DecoderImpl::HandlePostSubBufferCHROMIUM(
     surface_->PostSubBufferAsync(
         c.x, c.y, c.width, c.height,
         base::Bind(&GLES2DecoderImpl::FinishAsyncSwapBuffers,
-                   weak_ptr_factory_.GetWeakPtr()));
+                   weak_ptr_factory_.GetWeakPtr()),
+        base::Bind(&EmptyPresentation));
   } else {
     // TODO(sunnyps): Remove Alias calls after crbug.com/724999 is fixed.
     gl::GLContext* current = gl::GLContext::GetCurrent();
@@ -12209,7 +12213,8 @@ error::Error GLES2DecoderImpl::HandlePostSubBufferCHROMIUM(
     base::debug::Alias(&context);
     bool is_current = context_->IsCurrent(surface_.get());
     base::debug::Alias(&is_current);
-    FinishSwapBuffers(surface_->PostSubBuffer(c.x, c.y, c.width, c.height));
+    FinishSwapBuffers(surface_->PostSubBuffer(c.x, c.y, c.width, c.height,
+                                              base::Bind(&EmptyPresentation)));
   }
 
   return error::kNoError;
@@ -16006,7 +16011,8 @@ void GLES2DecoderImpl::DoSwapBuffers() {
 
     surface_->SwapBuffersAsync(
         base::Bind(&GLES2DecoderImpl::FinishAsyncSwapBuffers,
-                   weak_ptr_factory_.GetWeakPtr()));
+                   weak_ptr_factory_.GetWeakPtr()),
+        base::Bind(&EmptyPresentation));
   } else {
     // TODO(sunnyps): Remove Alias calls after crbug.com/724999 is fixed.
     gl::GLContext* current = gl::GLContext::GetCurrent();
@@ -16017,7 +16023,7 @@ void GLES2DecoderImpl::DoSwapBuffers() {
     base::debug::Alias(&context);
     bool is_current = context_->IsCurrent(surface_.get());
     base::debug::Alias(&is_current);
-    FinishSwapBuffers(surface_->SwapBuffers());
+    FinishSwapBuffers(surface_->SwapBuffers(base::Bind(&EmptyPresentation)));
   }
 
   // This may be a slow command.  Exit command processing to allow for
@@ -16060,10 +16066,13 @@ void GLES2DecoderImpl::DoCommitOverlayPlanes() {
   ClearScheduleCALayerState();
   ClearScheduleDCLayerState();
   if (supports_async_swap_) {
-    surface_->CommitOverlayPlanesAsync(base::Bind(
-        &GLES2DecoderImpl::FinishSwapBuffers, weak_ptr_factory_.GetWeakPtr()));
+    surface_->CommitOverlayPlanesAsync(
+        base::Bind(&GLES2DecoderImpl::FinishSwapBuffers,
+                   weak_ptr_factory_.GetWeakPtr()),
+        base::Bind(&EmptyPresentation));
   } else {
-    FinishSwapBuffers(surface_->CommitOverlayPlanes());
+    FinishSwapBuffers(
+        surface_->CommitOverlayPlanes(base::Bind(&EmptyPresentation)));
   }
 }
 
