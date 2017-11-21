@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11aa6892_ea160398",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-21T08:15:13Z",
+      "side": 1,
+      "message": "Does this need to be plumbed through mojom in a future CL as well?",
+      "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
