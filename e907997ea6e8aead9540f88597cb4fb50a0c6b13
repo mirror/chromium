@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2bcf925_749bce70",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-21T18:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68bf87b2_75c7b6ac",
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b646a8ba_30382ef5",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 10
@@ -63,6 +81,30 @@
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b0b827_7033de11",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-21T18:52:42Z",
+      "side": 1,
+      "message": "Lets discuss at a separate meeting.",
+      "parentUuid": "fb92de1a_eb22c206",
+      "range": {
+        "startLine": 691,
+        "startChar": 22,
+        "endLine": 691,
+        "endChar": 30
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +175,30 @@
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05a27d0_35797291",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-21T18:52:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d20a3d93_cabc7746",
+      "range": {
+        "startLine": 458,
+        "startChar": 22,
+        "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -333,6 +399,30 @@
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb6ca7b_02178040",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-21T18:52:42Z",
+      "side": 1,
+      "message": "Has been moved to base::bits.",
+      "parentUuid": "9597e1ef_eda31b5e",
+      "range": {
+        "startLine": 1107,
+        "startChar": 11,
+        "endLine": 1107,
+        "endChar": 33
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

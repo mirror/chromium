@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c7abc14b_49f05411",
+        "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-21T18:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342ae27e_09a25f1b",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "707fdf7e_107b0165",
         "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
         "patchSetId": 14
@@ -124,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "5bee0588_23652055",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-21T18:52:42Z",
+      "side": 1,
+      "message": "It can only use this if it is used as a first member. I prefer the explicit handling of this offset.",
+      "parentUuid": "84207c24_4b53ba5c",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fea8a5fb_9e07506d",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 14
@@ -156,6 +192,24 @@
       "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2170768_e0b6ae5e",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-21T18:52:42Z",
+      "side": 1,
+      "message": "(Marking resolved.)",
+      "parentUuid": "610bc865_6ad17891",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -454,6 +508,24 @@
       "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8a9baa_f7457e40",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-21T18:52:42Z",
+      "side": 1,
+      "message": "I made the HeaderLocation a parameter so that we can use the call site information and properly DCHECK invariants.",
+      "parentUuid": "151831d6_06e3e0eb",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
