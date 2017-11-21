@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f0887f11_ede35240",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T19:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6030ba52_9cfb954e",
+      "range": {
+        "startLine": 7,
+        "startChar": 47,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "cf68f48b5d7e1e038f52b9d3dfe93a557d67aa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7772fff_2ba9ecec",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "35725683_eb8c9d1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T19:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7772fff_2ba9ecec",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "cf68f48b5d7e1e038f52b9d3dfe93a557d67aa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e72bdd62_7b2e7a7a",
         "filename": "chrome/browser/payments/DEPS",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-21T17:45:45Z",
       "side": 1,
       "message": "chrome/browser/payments/ is not UI-specific and should not include chrome/browser/ui/views/payments/, which is Views-specific. Please re-arrange your code to avoid this dependency.",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 72
+      },
+      "revId": "cf68f48b5d7e1e038f52b9d3dfe93a557d67aa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841e7d18_fb7740cd",
+        "filename": "chrome/browser/payments/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T19:14:36Z",
+      "side": 1,
+      "message": "I do not find a good way to move the codes, let \u0027chrome/browser/ui/views/payments/\u0027 depends on \u0027chrome/browser/payments/\u0027 by introducing a util class in \u0027chrome/browser/payments/\u0027? or new file in other root directory (src/base/ src/components/payment)?\n\nAny idea?\n\nBTW, I see similar existing dependency,\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/DEPS?rcl\u003dba20b3d134073cf246a3baacded7bc769fd55909\u0026l\u003d92\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/pdf/DEPS?rcl\u003dba20b3d134073cf246a3baacded7bc769fd55909\u0026l\u003d3",
+      "parentUuid": "e72bdd62_7b2e7a7a",
       "range": {
         "startLine": 3,
         "startChar": 3,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "711f40aa_cb0bb581",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T19:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "222154c3_6a8e5fa4",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "cf68f48b5d7e1e038f52b9d3dfe93a557d67aa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e88f39d2_c6dfbf7f",
         "filename": "components/payments/content/service_worker_payment_app_factory.h",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "cf68f48b5d7e1e038f52b9d3dfe93a557d67aa87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c514959_89b868f1",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T19:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e88f39d2_c6dfbf7f",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 6
+      },
+      "revId": "cf68f48b5d7e1e038f52b9d3dfe93a557d67aa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
