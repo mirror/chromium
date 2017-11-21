@@ -150,6 +150,24 @@
     },
     {
       "key": {
+        "uuid": "51c05f63_405dad0d",
+        "filename": "media/mojo/clients/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-21T13:39:57Z",
+      "side": 1,
+      "message": "Ah, sure, done in PS13.",
+      "parentUuid": "f2e59c7e_6d45e318",
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae4c3d6_af22edb6",
         "filename": "media/mojo/clients/gpu_jpeg_decode_accelerator_host.h",
         "patchSetId": 7
@@ -218,6 +236,30 @@
       "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65e6be8_e451fd27",
+        "filename": "media/mojo/clients/gpu_jpeg_decode_accelerator_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-21T13:39:57Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e Is Jpeg decode always tied to the GPU? \n\u003e \u003e Correct.\n\u003e \u003e \n\u003e \u003e \u003e ISTM that this class will provide the ability to host a remote (mojo\n\u003e \u003e \u003e based) JDA. So I can see that it\u0027s tied to mojo, but not necessarily \n\u003e \u003e \u003e tied to GPU. Does that make sense?\n\u003e \u003e \n\u003e \u003e Yeah, the TODO is incorrect, the rename here should be\n\u003e \u003e  MojoJpegDecodeAccelerator\n\u003e \u003e (talking to //media/mojo/services MojoJpegDecodeAccelerator).\n\u003e \u003e \n\u003e \u003e \u003e \n\u003e \u003e \u003e Similarly, it seems JpegDecodeAccelerator should just be JpegDecoder?\n\u003e \u003e \u003e \n\u003e \u003e \u003e These can be in separate CLs, but if you agree, we should add file bug and add TODO to track the work.\n\u003e \u003e \n\u003e \u003e I\u0027m not against this new naming set, i.e.\n\u003e \u003e  JpegDecodeAccelerator and JpegDecodeAcceleratorService.\n\u003e \u003e \n\u003e \u003e Whatever is the custom of the folder and, if possible,\n\u003e \u003e of the //services area. I\u0027d keep the accelerator though,\n\u003e \u003e because there\u0027s unaccelerated versions in use (in Skia).\n\u003e \u003e \n\u003e \u003e Whichever way we can do it in a follow up CL and just\n\u003e \u003e reuse the TODO and bug. WDYT?\n\u003e \n\u003e Yeah, a follow up CL is always fine :)\n\u003e \n\u003e About \"accelerator\":\n\u003e 1. Your mojom file, jpeg_decoder.mojom, should be consistent with the main interface in the file...\n\u003e 2. Typically we treat mojom interface/client/service as a pure transport layer, so it doesn\u0027t care whether the actual implementation is hardware-backed or not. The new video_decoder.mojom follows the same idea and will replace media::VDA interface. So let me ask this question: Is it possible to host a software-based jpeg decoder using jpeg_decoder.mojom?\n\nI\u0027d say no, it isn\u0027t.\n \n\u003e If the answer is no, which means that this specific interface is designed exclusively for hardware-based jpeg decoder, then it\u0027s okay to keep the \"accelerator\" part. Otherwise, we should probably just make the name as generic as possible, e.g. JpegDecoder.\n\n\nOk, will keep the Accelerator. I or c.padhi@ will ping you\nwhen the CL is ready.",
+      "parentUuid": "bf54656e_ea40f6a8",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "93fb825832b71753dbe5d087fbcfe1faa199bf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
