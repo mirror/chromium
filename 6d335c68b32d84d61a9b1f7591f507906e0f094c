@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf4abb69_40fc1ee8",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T05:32:32Z",
+      "side": 1,
+      "message": "Thanks that\u0027s clearer :) I couldn\u0027t remove the else clause easily because the indices into the vector are different depending on the case. I toyed with removing the elements from the vector 1-by-1 but I don\u0027t think it made it clearer.",
+      "parentUuid": "4e38e911_e72df4f6",
+      "range": {
+        "startLine": 1775,
+        "startChar": 44,
+        "endLine": 1775,
+        "endChar": 73
+      },
+      "revId": "6d335c68b32d84d61a9b1f7591f507906e0f094c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f3ed5b6_b0d5c116",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T15:36:11Z",
       "side": 1,
       "message": "Suggested expansion:\n\nsearch_engine_delegate()-\u003eSetDSEOriginForTesting(\"https://something-else.com\");\nsearch_engine_delegate()-\u003eUpdateDSEOrigin();\nBlockUntilBrowsingDataRemoved();\n// Now the DSE exceptions have been removed too.",
+      "range": {
+        "startLine": 1836,
+        "startChar": 0,
+        "endLine": 1836,
+        "endChar": 1
+      },
+      "revId": "6d335c68b32d84d61a9b1f7591f507906e0f094c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087eeb32_c7e61da3",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-21T05:32:32Z",
+      "side": 1,
+      "message": "These types of cases are tested quite thoroughly in search_permissions_service_unittest so I think it\u0027s ok to leave them out here.",
+      "parentUuid": "4f3ed5b6_b0d5c116",
       "range": {
         "startLine": 1836,
         "startChar": 0,
