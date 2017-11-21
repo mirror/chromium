@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db7a2dd5_bd0b133b",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-21T23:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba48c9b_65c5e519",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e52a496_851d2aef",
         "filename": "third_party/openvr/src/headers/openvr.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4d842277_5c712b55",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-21T23:15:58Z",
+      "side": 1,
+      "message": "I\u0027ll add a comment more descriptive to our scenario.  This comment is in the OpenVR source.",
+      "parentUuid": "8e52a496_851d2aef",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "026518f9_6e638ca4",
         "filename": "third_party/openvr/src/headers/openvr.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a31c37_5bc691c1",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-21T23:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026518f9_6e638ca4",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d2298f90_dd7884d4",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-21T23:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8509feac_c1f2b56a",
+      "range": {
+        "startLine": 1153,
+        "startChar": 21,
+        "endLine": 1153,
+        "endChar": 30
+      },
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68528903_e0d342e2",
         "filename": "third_party/openvr/src/headers/openvr.h",
         "patchSetId": 3
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "54e4be7d_db09e6fe",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-21T23:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68528903_e0d342e2",
+      "range": {
+        "startLine": 1164,
+        "startChar": 9,
+        "endLine": 1164,
+        "endChar": 73
+      },
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f6788a6_4db727bc",
         "filename": "third_party/openvr/src/headers/openvr.h",
         "patchSetId": 3
@@ -113,6 +215,24 @@
       "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee88d227_d94a9faa",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-21T23:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f6788a6_4db727bc",
+      "revId": "6fd9981fc13f217ce343e71c3e73dfc54e2ffe36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
