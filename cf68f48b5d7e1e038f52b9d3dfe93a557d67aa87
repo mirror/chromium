@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1f9fa5aa_7931395a",
+        "filename": "chrome/browser/payments/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-21T21:46:09Z",
+      "side": 1,
+      "message": "Done.\n\nI should have mentioned that. I\u0027ve also moved the new interfaces in base class to the browser test class since I do not see their future usage in other tests.",
+      "parentUuid": "f7f89650_12484852",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 72
+      },
+      "revId": "cf68f48b5d7e1e038f52b9d3dfe93a557d67aa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "222154c3_6a8e5fa4",
         "filename": "components/payments/content/payment_request_state.cc",
         "patchSetId": 9
