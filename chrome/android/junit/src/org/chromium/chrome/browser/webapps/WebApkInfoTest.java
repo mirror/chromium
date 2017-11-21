@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.provider.Browser;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -343,5 +344,26 @@ public class WebApkInfoTest {
         WebApkInfo info = WebApkInfo.create(intent);
         Assert.assertEquals(name, info.name());
         Assert.assertEquals(shortName, info.shortName());
+    }
+
+    /**
+     * Test that ShortcutSource#EXTERNAL_INTENT is rewritten to
+     * ShortcutSource#EXTERNAL_INTENT_FROM_CHROME if the WebAPK is launched from Chrome.
+     */
+    @Test
+    public void testOverrideExternalIntentSourceIfLaunchedFromChrome() {
+        Bundle bundle = new Bundle();
+        bundle.putString(WebApkMetaDataKeys.START_URL, START_URL);
+        WebApkTestHelper.registerWebApkWithMetaData(WEBAPK_PACKAGE_NAME, bundle);
+
+        Intent intent = new Intent();
+        intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, WEBAPK_PACKAGE_NAME);
+        intent.putExtra(ShortcutHelper.EXTRA_URL, START_URL);
+        intent.putExtra(ShortcutHelper.EXTRA_SOURCE, ShortcutSource.EXTERNAL_INTENT);
+        intent.putExtra(
+                Browser.EXTRA_APPLICATION_ID, RuntimeEnvironment.application.getPackageName());
+
+        WebApkInfo info = WebApkInfo.create(intent);
+        Assert.assertEquals(ShortcutSource.EXTERNAL_INTENT_FROM_CHROME, info.source());
     }
 }

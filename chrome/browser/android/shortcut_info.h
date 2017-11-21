@@ -58,7 +58,10 @@ struct ShortcutInfo {
     // Used for WebAPK intents received as a result of share events.
     SOURCE_WEBAPK_SHARE_TARGET = 13,
 
-    SOURCE_COUNT = 14
+    // Used for WebAPKs launched via an external intent from Chrome.
+    SOURCE_EXTERNAL_INTENT_FROM_CHROME = 14,
+
+    SOURCE_COUNT = 15
   };
 
   explicit ShortcutInfo(const GURL& shortcut_url);
