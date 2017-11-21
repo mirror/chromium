@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02d3cd84_e0ceb52d",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2371,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "This comment appears to be outdated (and was prior to this change).",
+      "range": {
+        "startLine": 2370,
+        "startChar": 2,
+        "endLine": 2371,
+        "endChar": 35
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8d63f1_5663f3d5",
+        "filename": "components/security_state_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "This seems unlikely to be accurate.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a041a17_a328968c",
+        "filename": "components/security_state_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "The word \"trusted\" seems both redundant and potentially misleading.",
+      "range": {
+        "startLine": 48,
+        "startChar": 10,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a853c8c_0525256e",
+        "filename": "components/security_state_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "This will say \"secure (strong TLS 1.2)\"? Why do we need the word \"strong\" and what does it mean?",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a4b6a9_50c18e11",
+        "filename": "components/security_state_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "Maybe IDS_RESOURCE_SECURITY_TITLE instead, since non-secure resources are listed here too?",
+      "range": {
+        "startLine": 101,
+        "startChar": 17,
+        "endLine": 101,
+        "endChar": 43
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a416fd97_8e6557a5",
+        "filename": "components/security_state_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "Secure resources won\u0027t always be HTTPS. Do we care?",
+      "range": {
+        "startLine": 106,
+        "startChar": 25,
+        "endLine": 106,
+        "endChar": 30
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d73807_b68b1dcd",
+        "filename": "components/security_state_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "Non-secure resources won\u0027t always be HTTP. Do we care?",
+      "range": {
+        "startLine": 112,
+        "startChar": 19,
+        "endLine": 112,
+        "endChar": 23
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9446f6_fe708398",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "This comment seems to be outdated?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425cb086_f83cdf78",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-21T16:45:37Z",
+      "side": 1,
+      "message": "Maybe explain that the title is optional?",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "b19e68e87a25a411f2fdbe33ce796ce7a69baa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
