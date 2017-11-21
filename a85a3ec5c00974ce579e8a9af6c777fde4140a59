@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "302724a6_f66e6892",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-21T19:51:40Z",
+      "side": 1,
+      "message": "Can you avoid doing this GetLatestInFlightSurface() call twice? Maybe just modify the |fallback_surface_id| in the SurfaceDrawQuad?",
+      "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26afb6a9_44236f28",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-21T19:51:40Z",
+      "side": 1,
+      "message": "This else might not be necessary?",
+      "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d66c4a6_e7d72879",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-21T19:51:40Z",
+      "side": 1,
+      "message": "optional: I would think about passing in the active/fallback SurfaceId, just so you can verify they have the same FrameSinkId via DCHECK?",
+      "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac629e90_7169c43b",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-21T19:51:40Z",
+      "side": 1,
+      "message": "Is this a security bug? Looking at this quickly, if you give LocalSurfaceSurface(UINT32_MAX, junk_nonce) then this will return just the latest LocalSurfaceId to embed?\n\nI think you need to specify a range of LocalSurfaceIds in the SurfaceDrawQuad to verify the embedder is allowed to embed them.",
+      "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
