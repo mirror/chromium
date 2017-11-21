@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b971b6e7_313227b1",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-21T15:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c15ae13_e9a4c5c7",
+      "range": {
+        "startLine": 88,
+        "startChar": 34,
+        "endLine": 88,
+        "endChar": 45
+      },
+      "revId": "2dda4fe430a59ae299669ae7c6ae24817d2be652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1324cb_46c18782",
         "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h",
         "patchSetId": 11
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "40712b8d_13f595ed",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-21T15:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1324cb_46c18782",
+      "range": {
+        "startLine": 97,
+        "startChar": 69,
+        "endLine": 97,
+        "endChar": 78
+      },
+      "revId": "2dda4fe430a59ae299669ae7c6ae24817d2be652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6602751f_d7d5f38f",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 11
@@ -82,6 +130,30 @@
       "writtenOn": "2017-11-21T15:25:41Z",
       "side": 1,
       "message": "Should this be:\n\nif (page_event_times_.first_invalidating_input !\u003d 0.0) \n  return;\n\nFeels like we shouldn\u0027t call DidChangePerformanceTiming if we don\u0027t update the fields.",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 58
+      },
+      "revId": "2dda4fe430a59ae299669ae7c6ae24817d2be652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec276643_0aeb6819",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-21T15:58:40Z",
+      "side": 1,
+      "message": "Done - Thanks for catching this!",
+      "parentUuid": "6602751f_d7d5f38f",
       "range": {
         "startLine": 207,
         "startChar": 2,
@@ -114,6 +186,30 @@
       "revId": "2dda4fe430a59ae299669ae7c6ae24817d2be652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058bfa92_1a8433f6",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 39391,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-21T15:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4aa93a6_bcfc7e0a",
+      "range": {
+        "startLine": 39391,
+        "startChar": 59,
+        "endLine": 39391,
+        "endChar": 68
+      },
+      "revId": "2dda4fe430a59ae299669ae7c6ae24817d2be652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
