@@ -7,8 +7,8 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "LayoutSVGPath polygon id='polygon'",
-          "rect": [253, 208, 184, 129],
+          "object": "LayoutSVGPath path id='go'",
+          "rect": [89, 94, 108, 108],
           "reason": "full"
         }
       ]
@@ -16,7 +16,11 @@
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutSVGPath polygon id='polygon'",
+      "object": "LayoutSVGContainer g",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGPath path id='go'",
       "reason": "full"
     }
   ]

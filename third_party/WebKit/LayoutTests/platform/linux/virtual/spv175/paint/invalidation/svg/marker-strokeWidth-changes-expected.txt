@@ -8,21 +8,20 @@
       "paintInvalidations": [
         {
           "object": "LayoutSVGPath path id='path'",
-          "rect": [29, 29, 142, 92],
-          "reason": "subtree"
-        },
-        {
-          "object": "LayoutSVGPath path id='path'",
-          "rect": [179, 29, 122, 92],
-          "reason": "subtree"
+          "rect": [113, 118, 84, 84],
+          "reason": "style change"
         }
       ]
     }
   ],
   "objectPaintInvalidations": [
     {
+      "object": "LayoutSVGContainer g",
+      "reason": "geometry"
+    },
+    {
       "object": "LayoutSVGPath path id='path'",
-      "reason": "subtree"
+      "reason": "style change"
     }
   ]
 }
