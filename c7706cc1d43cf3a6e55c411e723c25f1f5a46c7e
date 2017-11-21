@@ -46,6 +46,30 @@
       "revId": "c7706cc1d43cf3a6e55c411e723c25f1f5a46c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfcd7d64_34d587ff",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-11-21T19:55:22Z",
+      "side": 1,
+      "message": "Yeah, that should be true.\n\nIIRC, the Qualcomm bug also required it to be bound to a framebuffer, but I don\u0027t think I was able to easily determine that here so I didn\u0027t add that check.",
+      "parentUuid": "f4e914c7_9f6fb65c",
+      "range": {
+        "startLine": 155,
+        "startChar": 21,
+        "endLine": 155,
+        "endChar": 37
+      },
+      "revId": "c7706cc1d43cf3a6e55c411e723c25f1f5a46c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
