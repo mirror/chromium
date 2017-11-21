@@ -374,7 +374,8 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       }
 
       return SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(
-          Array.from(patterns), this._interceptionHandlerBound);
+          Array.from(patterns).map(pattern => ({urlPattern: pattern, interceptionStage: 'HeadersReceived'})),
+          this._interceptionHandlerBound);
     }
   }
 
@@ -441,10 +442,18 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     if (!fileSystemUISourceCode)
       return;
 
-    var expectedResourceType = Common.resourceTypes[interceptedRequest.resourceType] || Common.resourceTypes.Other;
-    var mimeType = fileSystemUISourceCode.mimeType();
-    if (Common.ResourceType.fromMimeType(mimeType) !== expectedResourceType)
-      mimeType = expectedResourceType.canonicalMimeType();
+    var mimeType = '';
+    if (interceptedRequest.responseHeaders) {
+      var responseHeaders = SDK.NetworkManager.lowercaseHeaders(interceptedRequest.responseHeaders);
+      mimeType = responseHeaders['content-type'];
+    }
+
+    if (!mimeType) {
+      var expectedResourceType = Common.resourceTypes[interceptedRequest.resourceType] || Common.resourceTypes.Other;
+      mimeType = fileSystemUISourceCode.mimeType();
+      if (Common.ResourceType.fromMimeType(mimeType) !== expectedResourceType)
+        mimeType = expectedResourceType.canonicalMimeType();
+    }
     var project = /** @type {!Persistence.FileSystemWorkspaceBinding.FileSystem} */ (fileSystemUISourceCode.project());
     var blob = await project.requestFileBlob(fileSystemUISourceCode);
     interceptedRequest.continueRequestWithContent(new Blob([blob], {type: mimeType}));
