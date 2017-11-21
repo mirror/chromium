@@ -22,7 +22,6 @@ class DiscardableMemoryImpl : public DiscardableMemory {
   // Overridden from DiscardableMemory:
   bool Lock() override {
     DCHECK(!is_locked_);
-    is_locked_ = true;
     return false;
   }
 
