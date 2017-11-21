@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9154a20a_8ae42a99",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T02:53:52Z",
+      "side": 1,
+      "message": "nit: I think we should use heap allocations and unique_ptrs. That\u0027s what I would expect from the \"Scoped\" prefix and that way reset() functions go away as we simple use ctor/dtor. This can then also be forward declared here and impl kept in .cc file.\n\nAlso, this is not really an observer as the observer is provided as a parameter. Maybe call it \"ScopedDataOfferObservation\" or simply \"ScopedDataOffer\".",
+      "revId": "fc203863b6715737cebf0e15654a214efda27773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54617e98_97bbca1c",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T02:53:52Z",
+      "side": 1,
+      "message": "nit: this is not needed for above suggestion",
+      "revId": "fc203863b6715737cebf0e15654a214efda27773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6de257_d06c9675",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T02:53:52Z",
+      "side": 1,
+      "message": "nit: DataOffer* const data_offer_ with above suggestion.",
+      "revId": "fc203863b6715737cebf0e15654a214efda27773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6852aa90_ce71237c",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-21T02:53:52Z",
+      "side": 1,
+      "message": "nit: DataOfferObserver* const data_offer_observer_ with above suggestion.",
+      "revId": "fc203863b6715737cebf0e15654a214efda27773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
