@@ -34,6 +34,23 @@
       "revId": "c265a441ddab400fba71d5b30c1c27a62a50d3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416f1fce_bf3e0d95",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineController.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-21T21:52:08Z",
+      "side": 1,
+      "message": "Let\u0027s make sure these bear devtools.timeline (or disabled-by-default-devtools.timeline) -- this is a marker of the fact that these events are part of external contract.",
+      "revId": "c265a441ddab400fba71d5b30c1c27a62a50d3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
