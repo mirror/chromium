@@ -4,6 +4,7 @@
 
 #include "core/layout/ScrollAnchor.h"
 
+#include "core/dom/StaticNodeList.h"
 #include "core/frame/VisualViewport.h"
 #include "core/geometry/DOMRect.h"
 #include "core/layout/LayoutBox.h"
@@ -16,6 +17,7 @@
 namespace blink {
 
 using Corner = ScrollAnchor::Corner;
+using SerializedAnchor = ScrollAnchor::SerializedAnchor;
 
 typedef bool TestParamRootLayerScrolling;
 class ScrollAnchorTest
@@ -69,16 +71,30 @@ class ScrollAnchorTest
                                       delta.Height());
   }
 
+  void ValidateSerializedAnchor(const String& expected_selector,
+                                const LayoutPoint& expected_offset) {
+    SerializedAnchor serialized =
+        GetScrollAnchor(LayoutViewport()).GetSerializedAnchor();
+    EXPECT_TRUE(serialized.IsValid());
+    EXPECT_EQ(serialized.selector, expected_selector);
+    EXPECT_EQ(serialized.relative_offset, expected_offset);
+
+    StaticElementList* ele_list =
+        GetDocument().QuerySelectorAll(AtomicString(serialized.selector));
+    EXPECT_EQ(ele_list->length(), 1u);
+  }
+
  private:
   std::unique_ptr<ScopedScrollAnchoringForTest> scroll_anchoring_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, ScrollAnchorTest, ::testing::Bool());
 
-// TODO(ymalik): Currently, this should be the first test in the file to avoid
+// TODO(ymalik):C urrently, this should be the first test in the file to avoid
 // failure when running with other tests. Dig into this more and fix.
 TEST_P(ScrollAnchorTest, UMAMetricUpdated) {
   HistogramTester histogram_tester;
+
   SetBodyInnerHTML(R"HTML(
     <style> body { height: 1000px } div { height: 100px } </style>
     <div id='block1'>abc</div>
@@ -91,6 +107,8 @@ TEST_P(ScrollAnchorTest, UMAMetricUpdated) {
   ScrollLayoutViewport(ScrollOffset(0, 150));
   histogram_tester.ExpectTotalCount("Layout.ScrollAnchor.AdjustedScrollOffset",
                                     0);
+  histogram_tester.ExpectTotalCount("Layout.ScrollAnchor.TimeToSerializeAnchor",
+                                    0);
 
   // Height changed, verify metric updated once.
   SetHeight(GetDocument().getElementById("block1"), 200);
@@ -100,6 +118,13 @@ TEST_P(ScrollAnchorTest, UMAMetricUpdated) {
   EXPECT_EQ(250, viewport->ScrollOffsetInt().Height());
   EXPECT_EQ(GetDocument().getElementById("block2")->GetLayoutObject(),
             GetScrollAnchor(viewport).AnchorObject());
+
+  GetScrollAnchor(viewport).GetSerializedAnchor();
+  histogram_tester.ExpectTotalCount("Layout.ScrollAnchor.TimeToSerializeAnchor",
+                                    1);
+  // 7 == "#block2".length()
+  histogram_tester.ExpectUniqueSample(
+      "Layout.ScrollAnchor.SerializedAnchorSelectorLength", 7, 1);
 }
 
 // TODO(skobes): Convert this to web-platform-tests when visual viewport API is
@@ -465,4 +490,164 @@ TEST_P(ScrollAnchorTest, AnchoringDisabledForPrinting) {
   EXPECT_EQ(nullptr, GetScrollAnchor(viewport).AnchorObject());
 }
 
+TEST_P(ScrollAnchorTest, SerializeAnchorSimple) {
+  SetBodyInnerHTML(
+      "<style> body { height: 1000px; margin: 0; } div { height: 100px } "
+      "</style>"
+      "<div id='block1'>abc</div>"
+      "<div id='block2'>def</div>");
+
+  ScrollLayoutViewport(ScrollOffset(0, 150));
+  ValidateSerializedAnchor("#block2", LayoutPoint(0, -50));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorUsesTagname) {
+  SetBodyInnerHTML(
+      "<style> body { height: 1000px; margin: 0; } p,span { display: block; "
+      "height: 100px; margin: 0; } </style>"
+      "<div id='ancestor'>"
+      "<p>abc</p>"
+      "<span>def</span>"
+      "</div>");
+  ScrollLayoutViewport(ScrollOffset(0, 150));
+  ValidateSerializedAnchor("#ancestor > span", LayoutPoint(0, -50));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorUsesClassname) {
+  SetBodyInnerHTML(
+      "<style> body { height: 1000px; margin: 0; } p,span { display: block; "
+      "height: 100px "
+      "} </style>"
+      "<div id='ancestor'>"
+      "<span class='foobar'>abc</span>"
+      "<span class='barbaz'>def</span>"
+      "</div>");
+
+  ScrollLayoutViewport(ScrollOffset(0, 150));
+  ValidateSerializedAnchor("#ancestor > .barbaz", LayoutPoint(0, -50));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorUsesNthChild) {
+  SetBodyInnerHTML(
+      "<style> body { height: 1000px; margin: 0; } p,span { display: block; "
+      "height: 100px "
+      "} </style>"
+      "<div id='ancestor'>"
+      "<span class='foobar'>abc</span>"
+      "<span class='foobar'>def</span>"
+      "</div>");
+
+  ScrollLayoutViewport(ScrollOffset(0, 150));
+  ValidateSerializedAnchor("#ancestor > :nth-child(2)", LayoutPoint(0, -50));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorUsesLeastSpecificSelector) {
+  SetBodyInnerHTML(
+      "<style> body { height: 1000px; margin: 0; } div.hundred { height: 100px "
+      "} "
+      "div.thousand { height: 1000px} </style>"
+      "<div id='ancestor' class='thousand'>"
+      " <div class='hundred'>abc</div>"
+      " <div class='hundred'>def</div>"
+      " <div class='hundred'>"
+      "   <div class='hundred foobar'>"
+      "     <div class='hundred'>ghi</div>"
+      "   </div>"
+      " <div class='hundred barbaz'></div>"
+      "</div>");
+
+  ScrollLayoutViewport(ScrollOffset(0, 250));
+  ValidateSerializedAnchor("#ancestor > :nth-child(3) > .foobar > div",
+                           LayoutPoint(0, -50));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorWithNoIdAttribute) {
+  SetBodyInnerHTML(
+      "<style> body { height: 1000px; margin: 0; } div.hundred { height: 100px "
+      "} div.thousand { height: 1000px } </style>"
+      "<div class='thousand'>"
+      " <div class='hundred'>abc</div>"
+      " <div class='hundred'>def</div>"
+      " <div class='hundred'>"
+      "   <div class='hundred foobar'>"
+      "     <div class='hundred'>ghi</div>"
+      "   </div>"
+      " <div class='hundred barbaz'></div>"
+      "</div>");
+
+  ScrollLayoutViewport(ScrollOffset(0, 250));
+  ValidateSerializedAnchor("html > body > div > :nth-child(3) > .foobar > div",
+                           LayoutPoint(0, -50));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorChangesWithScroll) {
+  SetBodyInnerHTML(
+      "<style> body { height: 1000px; margin: 0; } span { margin: 0; display: "
+      "block; height: 100px; }"
+      "</style>"
+      "<div id='ancestor'>"
+      "<span class='foobar'>abc</span>"
+      "<span class='barbaz'>def</span>"
+      "</div>");
+
+  ScrollLayoutViewport(ScrollOffset(0, 50));
+  ValidateSerializedAnchor("#ancestor > .foobar", LayoutPoint(0, -50));
+
+  ScrollLayoutViewport(ScrollOffset(0, 100));
+  ValidateSerializedAnchor("#ancestor > .barbaz", LayoutPoint(0, -50));
+
+  ScrollLayoutViewport(ScrollOffset(0, -100));
+  ValidateSerializedAnchor("#ancestor > .foobar", LayoutPoint(0, -50));
+
+  ScrollLayoutViewport(ScrollOffset(0, -49));
+  ValidateSerializedAnchor("#ancestor > .foobar", LayoutPoint(0, -1));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorVerticalWritingMode) {
+  SetBodyInnerHTML(
+      "<style> body { height: 100px; width: 1000px; margin: 0; writing-mode: "
+      "vertical-lr;} div { width: 100px; height: 100px; } "
+      "</style>"
+      "<div class = 'foobar'>abc</div>"
+      "<div class = 'barbaz'>def</div>");
+
+  ScrollLayoutViewport(ScrollOffset(50, 0));
+  ValidateSerializedAnchor("html > body > .foobar", LayoutPoint(-50, 0));
+
+  ScrollLayoutViewport(ScrollOffset(25, 0));
+  ValidateSerializedAnchor("html > body > .foobar", LayoutPoint(-75, 0));
+
+  ScrollLayoutViewport(ScrollOffset(75, 0));
+  ValidateSerializedAnchor("html > body > .barbaz", LayoutPoint(-50, 0));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorQualifiedTagName) {
+  SetBodyInnerHTML(
+      "<style> body { height: 1000px; margin: 0; } ns\\:div { height: 100px; "
+      "display: block; } "
+      "</style>"
+      "<div style='height:100px'>foobar</div>"
+      "<ns:div style='height: 100px; display: block;' "
+      "xmlns:ns='http://www.w3.org/2005/Atom'>abc</ns:div>");
+
+  ScrollLayoutViewport(ScrollOffset(0, 150));
+  ValidateSerializedAnchor("html > body > ns\\:div", LayoutPoint(0, -50));
+}
+
+TEST_P(ScrollAnchorTest, SerializeAnchorLimitsSelectorLength) {
+  StringBuilder builder;
+  builder.Append("<style> body { height: 1000px; margin: 0; }</style>");
+  builder.Append("<div style='height:100px'>foobar</div>");
+  builder.Append("<");
+  for (int i = 0; i <= kMaxSerializedSelectorLength; i++) {
+    builder.Append("a");
+  }
+  builder.Append(" style='display:block; height:100px;'/>");
+  SetBodyInnerHTML(builder.ToString());
+
+  ScrollLayoutViewport(ScrollOffset(0, 150));
+  SerializedAnchor serialized =
+      GetScrollAnchor(LayoutViewport()).GetSerializedAnchor();
+  EXPECT_FALSE(serialized.IsValid());
+}
 }

@@ -30794,6 +30794,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Layout.ScrollAnchor.SerializedAnchorSelectorLength"
+    units="characters">
+  <owner>pnoland@chromium.org</owner>
+  <summary>The time it took to find a suitable anchor element.</summary>
+</histogram>
+
 <histogram name="Layout.ScrollAnchor.SuppressedBySanaclap" enum="BooleanHit">
   <owner>ymalik@chromium.org</owner>
   <summary>
@@ -30805,6 +30811,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Layout.ScrollAnchor.TimeToFindAnchor" units="microseconds">
   <owner>ymalik@chromium.org</owner>
   <summary>The time it took to find a suitable anchor element.</summary>
+</histogram>
+
+<histogram name="Layout.ScrollAnchor.TimeToSerializeAnchor"
+    units="microseconds">
+  <owner>pnoland@chromium.org</owner>
+  <summary>The time it took to serialize anchor element.</summary>
 </histogram>
 
 <histogram name="LevelDB.Open" enum="LevelDBStatus">
