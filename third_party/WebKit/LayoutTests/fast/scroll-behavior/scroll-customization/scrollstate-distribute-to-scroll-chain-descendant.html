@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html>
-<head>
 <meta charset="utf-8">
 <title>ScrollState constructor behaves correctly</title>
 <script src="../../../resources/testharness.js"></script>
 <script src="../../../resources/testharnessreport.js"></script>
-</head>
-<body>
 <script>
 test(function() {
   assert_true('ScrollState' in window, "'ScrollState' in window");
@@ -16,6 +12,7 @@ test(function() {
 
 var elementCount = 10;
 var remainingNumberOfTimesToBeCalled = elementCount;
+var elements = [];
 
 var distributeScroll = function(scrollState) {
   this.calledOrder = elementCount - remainingNumberOfTimesToBeCalled;
@@ -23,33 +20,36 @@ var distributeScroll = function(scrollState) {
   scrollState.distributeToScrollChainDescendant();
 }
 
-var elements = [];
-for (var i = 0; i < elementCount; ++i) {
-  var element = document.createElement("div");
-  element.creationOrder = i;
-  element.setDistributeScroll(distributeScroll.bind(element), "disable-native-scroll");
-  elements.push(element);
+function runTests() {
+  for (var i = 0; i < elementCount; ++i) {
+    var element = document.createElement("div");
+    element.creationOrder = i;
+    element.style.scrollCustomization = 'auto';
+    document.body.appendChild(element);
+    element.setDistributeScroll(distributeScroll.bind(element), "disable-native-scroll");
+    elements.push(element);
+  }
+
+  if ('ScrollState' in window && window.internals) {
+    test(function() {
+      var scrollState = new ScrollState({deltaX: 100, isDirectManipulation: true});
+      window.internals.setScrollChain(scrollState, elements);
+      scrollState.distributeToScrollChainDescendant();
+      assert_equals(0, remainingNumberOfTimesToBeCalled);
+      for (var i = 0; i < elementCount; ++i) {
+        assert_equals(elements[i].creationOrder, elements[i].calledOrder);
+      }
+    }, "distributeToScrollChainDescendant propagates correctly.");
+
+    test(function() {
+      var scrollState = new ScrollState({deltaX: 100, isDirectManipulation: true});
+      window.internals.setScrollChain(scrollState, []);
+      assert_equals(0, remainingNumberOfTimesToBeCalled);
+      scrollState.distributeToScrollChainDescendant();
+      assert_equals(0, remainingNumberOfTimesToBeCalled);
+    }, "distributeToScrollChainDescendant with empty scroll chain does nothing.");
+  }
 }
 
-if ('ScrollState' in window && window.internals) {
-  test(function() {
-    var scrollState = new ScrollState({deltaX: 100, isDirectManipulation: true});
-    window.internals.setScrollChain(scrollState, elements);
-    scrollState.distributeToScrollChainDescendant();
-    assert_equals(0, remainingNumberOfTimesToBeCalled);
-    for (var i = 0; i < elementCount; ++i) {
-      assert_equals(elements[i].creationOrder, elements[i].calledOrder);
-    }
-  }, "distributeToScrollChainDescendant propagates correctly.");
-
-  test(function() {
-    var scrollState = new ScrollState({deltaX: 100, isDirectManipulation: true});
-    window.internals.setScrollChain(scrollState, []);
-    assert_equals(0, remainingNumberOfTimesToBeCalled);
-    scrollState.distributeToScrollChainDescendant();
-    assert_equals(0, remainingNumberOfTimesToBeCalled);
-  }, "distributeToScrollChainDescendant with empty scroll chain does nothing.");
-}
+window.addEventListener('load', runTests);
 </script>
-</body>
-</html>

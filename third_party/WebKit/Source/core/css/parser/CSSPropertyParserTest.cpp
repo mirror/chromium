@@ -4,6 +4,7 @@
 
 #include "core/css/parser/CSSPropertyParser.h"
 
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSParser.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
@@ -264,6 +265,43 @@ TEST(CSSPropertyParserTest, GridPositionLimit8) {
       CSSParser::ParseSingleValue(CSSPropertyGridRowEnd, "-5000000000");
   DCHECK(value);
   EXPECT_EQ(GetGridPositionInteger(*value), -1000);
+}
+
+TEST(CSSPropertyParserTest, ScrollCustomizationPropertySingleValue) {
+  RuntimeEnabledFeatures::SetScrollCustomizationEnabled(true);
+  const CSSValue* value =
+      CSSParser::ParseSingleValue(CSSPropertyScrollCustomization, "pan-down");
+  DCHECK(value);
+  const CSSValueList* list = ToCSSValueList(value);
+  EXPECT_EQ(1U, list->length());
+  EXPECT_EQ(CSSValuePanDown, ToCSSIdentifierValue(list->Item(0U)).GetValueID());
+}
+
+TEST(CSSPropertyParserTest, ScrollCustomizationPropertyTwoValuesCombined) {
+  RuntimeEnabledFeatures::SetScrollCustomizationEnabled(true);
+  const CSSValue* value = CSSParser::ParseSingleValue(
+      CSSPropertyScrollCustomization, "pan-left pan-y");
+  const CSSValueList* list = ToCSSValueList(value);
+  EXPECT_EQ(2U, list->length());
+  EXPECT_EQ(CSSValuePanLeft, ToCSSIdentifierValue(list->Item(0U)).GetValueID());
+  EXPECT_EQ(CSSValuePanY, ToCSSIdentifierValue(list->Item(1U)).GetValueID());
+}
+
+TEST(CSSPropertyParserTest, ScrollCustomizationPropertyInvalidEntries) {
+  // We expect exactly one property value per coordinate.
+  RuntimeEnabledFeatures::SetScrollCustomizationEnabled(true);
+  const CSSValue* value = CSSParser::ParseSingleValue(
+      CSSPropertyScrollCustomization, "pan-left pan-right");
+  EXPECT_FALSE(value);
+  value = CSSParser::ParseSingleValue(CSSPropertyScrollCustomization,
+                                      "pan-up pan-down");
+  EXPECT_FALSE(value);
+  value = CSSParser::ParseSingleValue(CSSPropertyScrollCustomization,
+                                      "pan-x pan-left");
+  EXPECT_FALSE(value);
+  value = CSSParser::ParseSingleValue(CSSPropertyScrollCustomization,
+                                      "pan-x pan-x");
+  EXPECT_FALSE(value);
 }
 
 }  // namespace blink
