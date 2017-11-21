@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "080144ea_f8eff695",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-21T02:57:39Z",
+      "side": 1,
+      "message": "Took another look at a few contextual search test classes where ContentViewCore is overridden for customized behavior, and found that they don\u0027t actually need the whole implementation. Changed TestContentViewCore to a dummy impl. I think this is more usual approach. \n\nThe TestContentViewCore could have been put in chrome tests dir, but then a few more content classes should be put to exception in DEPS - so kept it here.\n\nGrouped all the test-only methods together at the end for clear distinction.",
+      "parentUuid": "9b33325f_24064791",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427f5339_f9474973",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 2
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "\u003e git cl upload says it\u0027s a move with the default similarity 50%.  content/public/android/java/src/org/chromium/content/browser/{ContentViewCore.java \u003d\u003e ContentViewCoreImpl.java} \n\u003e \n\u003e Lowered to 30% but no difference.. will try with lower values later.\n\nUpload a separate CL that shows the diff in this file. This isn\u0027t possible to review",
       "parentUuid": "6a31e438_105f8f87",
+      "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55f35c7_5e3bddee",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-21T02:57:39Z",
+      "side": 1,
+      "message": "Will do. Go ahead with other classes first.",
+      "parentUuid": "cbd818ff_069a7fef",
       "revId": "bb9e8cda0477e1774ba7814ebc4685d0d4056124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

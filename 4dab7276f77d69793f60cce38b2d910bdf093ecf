@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c2c36c06_74d7a7ac",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-21T02:57:39Z",
+      "side": 1,
+      "message": "Annotation at the class? Doesn\u0027t seem to work..",
+      "parentUuid": "4cc502ea_7128b75e",
+      "range": {
+        "startLine": 1860,
+        "startChar": 5,
+        "endLine": 1860,
+        "endChar": 29
+      },
+      "revId": "4dab7276f77d69793f60cce38b2d910bdf093ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f215e33_4c0ec479",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/ContentViewCoreFactory.java",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6602b12e_8e03f029",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ContentViewCoreFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-21T02:57:39Z",
+      "side": 1,
+      "message": "Removed this class.",
+      "parentUuid": "6f215e33_4c0ec479",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4dab7276f77d69793f60cce38b2d910bdf093ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00bb243e_73bfd5dd",
         "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/TestContentViewCore.java",
         "patchSetId": 3
@@ -82,6 +130,30 @@
       "writtenOn": "2017-11-20T18:55:39Z",
       "side": 1,
       "message": "I think this more often speaks of our inability to use any mocking framework in our instrumentation classes.  Ideally here we\u0027d just have a Spy or something on an actual instance and override just the code we want.\n\nIf we do need a TestContentViewCore, I think it should actually just implement the interface and have default methods for everything and allow clients to just override the bits they want (or potentially take in a CVC and delegate into it for each of the calls and allow overriding that way).  But yeah, I\u0027ll defer to Bo here.",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "4dab7276f77d69793f60cce38b2d910bdf093ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d631f663_6c34a1e4",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/TestContentViewCore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-21T02:57:39Z",
+      "side": 1,
+      "message": "Now it became a dummy implementation of the interface ContentViewCore, a convenience class for testing.",
+      "parentUuid": "00bb243e_73bfd5dd",
       "range": {
         "startLine": 15,
         "startChar": 13,
