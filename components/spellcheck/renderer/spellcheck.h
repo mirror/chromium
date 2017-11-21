@@ -20,6 +20,7 @@
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "content/public/renderer/render_thread_observer.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 
 class SpellcheckLanguage;
 struct SpellCheckResult;
@@ -49,8 +50,8 @@ class SpellCheck : public content::RenderThreadObserver,
     USE_NATIVE_CHECKER,  // Use native checker to double-check.
   };
 
-  explicit SpellCheck(
-      service_manager::LocalInterfaceProvider* embedder_provider);
+  SpellCheck(service_manager::BinderRegistry* registry,
+             service_manager::LocalInterfaceProvider* embedder_provider);
   ~SpellCheck() override;
 
   void AddSpellcheckLanguage(base::File file, const std::string& language);
@@ -166,6 +167,8 @@ class SpellCheck : public content::RenderThreadObserver,
 
   // Remember state for spellchecking.
   bool spellcheck_enabled_;
+
+  base::WeakPtrFactory<SpellCheck> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SpellCheck);
 };

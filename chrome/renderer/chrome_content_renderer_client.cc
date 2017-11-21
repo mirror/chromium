@@ -114,6 +114,7 @@
 #include "printing/features/features.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/service_context.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
@@ -233,14 +234,12 @@ void RecordYouTubeRewriteUMA(internal::YouTubeRewriteStatus status) {
 // Whitelist PPAPI for Android Runtime for Chromium. (See crbug.com/383937)
 #if BUILDFLAG(ENABLE_PLUGINS)
 const char* const kPredefinedAllowedCameraDeviceOrigins[] = {
-  "6EAED1924DB611B6EEF2A664BD077BE7EAD33B8F",
-  "4EB74897CB187C7633357C2FE832E0AD6A44883A"
-};
+    "6EAED1924DB611B6EEF2A664BD077BE7EAD33B8F",
+    "4EB74897CB187C7633357C2FE832E0AD6A44883A"};
 
 const char* const kPredefinedAllowedCompositorOrigins[] = {
-  "6EAED1924DB611B6EEF2A664BD077BE7EAD33B8F",
-  "4EB74897CB187C7633357C2FE832E0AD6A44883A"
-};
+    "6EAED1924DB611B6EEF2A664BD077BE7EAD33B8F",
+    "4EB74897CB187C7633357C2FE832E0AD6A44883A"};
 #endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -270,30 +269,6 @@ void AppendParams(
   existing_values->Swap(values);
 }
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
-
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-class SpellCheckReplacer : public content::RenderFrameVisitor {
- public:
-  explicit SpellCheckReplacer(SpellCheck* spellcheck)
-      : spellcheck_(spellcheck) {}
-  ~SpellCheckReplacer() override;
-  bool Visit(content::RenderFrame* render_frame) override;
-
- private:
-  // New shared spellcheck for all frames. Weak Ptr.
-  SpellCheck* const spellcheck_;
-  DISALLOW_COPY_AND_ASSIGN(SpellCheckReplacer);
-};
-
-bool SpellCheckReplacer::Visit(content::RenderFrame* render_frame) {
-  SpellCheckProvider* provider = SpellCheckProvider::Get(render_frame);
-  DCHECK(provider);
-  provider->set_spellcheck(spellcheck_);
-  return true;
-}
-
-SpellCheckReplacer::~SpellCheckReplacer() = default;
-#endif
 
 bool IsStandaloneExtensionProcess() {
 #if !BUILDFLAG(ENABLE_EXTENSIONS)
@@ -391,6 +366,8 @@ ChromeContentRendererClient::ChromeContentRendererClient()
 
   profiling::SetGCHeapAllocationHookFunctions(
       &blink::WebHeap::SetAllocationHook, &blink::WebHeap::SetFreeHook);
+
+  spellcheck_ = std::make_unique<SpellCheck>(&registry_, this);
 }
 
 ChromeContentRendererClient::~ChromeContentRendererClient() = default;
@@ -405,8 +382,8 @@ void ChromeContentRendererClient::RenderThreadStarted() {
 
   {
     startup_metric_utils::mojom::StartupMetricHostPtr startup_metric_host;
-    thread->GetConnector()->BindInterface(chrome::mojom::kServiceName,
-                                          &startup_metric_host);
+    GetConnector()->BindInterface(chrome::mojom::kServiceName,
+                                  &startup_metric_host);
     startup_metric_host->RecordRendererMainEntryTime(main_entry_time_);
   }
 
@@ -442,12 +419,7 @@ void ChromeContentRendererClient::RenderThreadStarted() {
   prescient_networking_dispatcher_.reset(
       new network_hints::PrescientNetworkingDispatcher());
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  // ChromeRenderViewTest::SetUp() creates a Spellcheck and injects it using
-  // SetSpellcheck(). Don't overwrite it.
-  if (!spellcheck_) {
-    spellcheck_.reset(new SpellCheck(this));
-    thread->AddObserver(spellcheck_.get());
-  }
+  thread->AddObserver(spellcheck_.get());
 #endif
 #if defined(FULL_SAFE_BROWSING)
   phishing_classifier_.reset(safe_browsing::PhishingClassifierFilter::Create());
@@ -852,11 +824,8 @@ WebPlugin* ChromeContentRendererClient::CreatePlugin(
           const Extension* extension =
               extensions::RendererExtensionRegistry::Get()
                   ->GetExtensionOrAppByURL(manifest_url);
-          if (!IsNaClAllowed(manifest_url,
-                             app_url,
-                             is_nacl_unrestricted,
-                             extension,
-                             &params)) {
+          if (!IsNaClAllowed(manifest_url, app_url, is_nacl_unrestricted,
+                             extension, &params)) {
             WebString error_message;
             if (is_nacl_mime_type) {
               error_message =
@@ -1034,10 +1003,10 @@ WebPlugin* ChromeContentRendererClient::CreatePlugin(
 
       case chrome::mojom::PluginStatus::kRestartRequired: {
 #if defined(OS_LINUX)
-        placeholder = create_blocked_plugin(
-            IDR_BLOCKED_PLUGIN_HTML,
-            l10n_util::GetStringFUTF16(IDS_PLUGIN_RESTART_REQUIRED,
-                                       group_name));
+        placeholder =
+            create_blocked_plugin(IDR_BLOCKED_PLUGIN_HTML,
+                                  l10n_util::GetStringFUTF16(
+                                      IDS_PLUGIN_RESTART_REQUIRED, group_name));
 #endif
         break;
       }
@@ -1069,22 +1038,32 @@ GURL ChromeContentRendererClient::GetNaClContentHandlerURL(
   return GURL();
 }
 
+void ChromeContentRendererClient::OnStart() {
+  context()->connector()->BindConnectorRequest(std::move(connector_request_));
+}
+
+void ChromeContentRendererClient::OnBindInterface(
+    const service_manager::BindSourceInfo& remote_info,
+    const std::string& name,
+    mojo::ScopedMessagePipeHandle handle) {
+  registry_.TryBindInterface(name, &handle);
+}
+
 void ChromeContentRendererClient::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  RenderThread::Get()->GetConnector()->BindInterface(
+  connector_->BindInterface(
       service_manager::Identity(chrome::mojom::kServiceName), interface_name,
       std::move(interface_pipe));
 }
 
 #if BUILDFLAG(ENABLE_NACL)
 //  static
-bool ChromeContentRendererClient::IsNaClAllowed(
-    const GURL& manifest_url,
-    const GURL& app_url,
-    bool is_nacl_unrestricted,
-    const Extension* extension,
-    WebPluginParams* params) {
+bool ChromeContentRendererClient::IsNaClAllowed(const GURL& manifest_url,
+                                                const GURL& app_url,
+                                                bool is_nacl_unrestricted,
+                                                const Extension* extension,
+                                                WebPluginParams* params) {
   // Temporarily allow these whitelisted apps and WebUIs to use NaCl.
   bool is_whitelisted_web_ui =
       app_url.spec() == chrome::kChromeUIAppListStartPageURL;
@@ -1096,20 +1075,22 @@ bool ChromeContentRendererClient::IsNaClAllowed(
   bool is_extension_from_webstore = extension && extension->from_webstore();
 
   bool is_invoked_by_extension = app_url.SchemeIs(extensions::kExtensionScheme);
-  bool is_invoked_by_hosted_app = extension &&
-      extension->is_hosted_app() &&
-      extension->web_extent().MatchesURL(app_url);
+  bool is_invoked_by_hosted_app = extension && extension->is_hosted_app() &&
+                                  extension->web_extent().MatchesURL(app_url);
 
-  is_invoked_by_webstore_installed_extension = is_extension_from_webstore &&
+  is_invoked_by_webstore_installed_extension =
+      is_extension_from_webstore &&
       (is_invoked_by_extension || is_invoked_by_hosted_app);
 
   // Allow built-in extensions and developer mode extensions.
-  is_extension_unrestricted = extension &&
-       (extensions::Manifest::IsUnpackedLocation(extension->location()) ||
-        extensions::Manifest::IsComponentLocation(extension->location()));
+  is_extension_unrestricted =
+      extension &&
+      (extensions::Manifest::IsUnpackedLocation(extension->location()) ||
+       extensions::Manifest::IsComponentLocation(extension->location()));
   // Allow extensions force installed by admin policy.
-  is_extension_force_installed = extension &&
-       extensions::Manifest::IsPolicyLocation(extension->location());
+  is_extension_force_installed =
+      extension &&
+      extensions::Manifest::IsPolicyLocation(extension->location());
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
   // Allow NaCl under any of the following circumstances:
@@ -1122,8 +1103,7 @@ bool ChromeContentRendererClient::IsNaClAllowed(
   bool is_nacl_allowed_by_location =
       is_whitelisted_web_ui ||
       AppCategorizer::IsWhitelistedApp(manifest_url, app_url) ||
-      is_extension_unrestricted ||
-      is_extension_force_installed ||
+      is_extension_unrestricted || is_extension_force_installed ||
       is_invoked_by_webstore_installed_extension;
   bool is_nacl_allowed = is_nacl_allowed_by_location || is_nacl_unrestricted;
   if (is_nacl_allowed) {
@@ -1348,7 +1328,8 @@ bool ChromeContentRendererClient::IsPrefetchOnly(
 }
 
 unsigned long long ChromeContentRendererClient::VisitedLinkHash(
-    const char* canonical_url, size_t length) {
+    const char* canonical_url,
+    size_t length) {
   return chrome_observer_->visited_link_slave()->ComputeURLFingerprint(
       canonical_url, length);
 }
@@ -1371,19 +1352,6 @@ bool ChromeContentRendererClient::ShouldOverridePageVisibilityState(
   *override_state = blink::mojom::PageVisibilityState::kPrerender;
   return true;
 }
-
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-void ChromeContentRendererClient::SetSpellcheck(SpellCheck* spellcheck) {
-  RenderThread* thread = RenderThread::Get();
-  if (spellcheck_.get() && thread)
-    thread->RemoveObserver(spellcheck_.get());
-  spellcheck_.reset(spellcheck);
-  SpellCheckReplacer replacer(spellcheck_.get());
-  content::RenderFrame::ForEach(&replacer);
-  if (thread)
-    thread->AddObserver(spellcheck_.get());
-}
-#endif
 
 bool ChromeContentRendererClient::IsExternalPepperPlugin(
     const std::string& module_name) {
@@ -1416,8 +1384,7 @@ ChromeContentRendererClient::OverrideSpeechSynthesizer(
   return base::MakeUnique<TtsDispatcher>(client);
 }
 
-bool ChromeContentRendererClient::AllowPepperMediaStreamAPI(
-    const GURL& url) {
+bool ChromeContentRendererClient::AllowPepperMediaStreamAPI(const GURL& url) {
 #if defined(OS_ANDROID)
   return false;
 #else
@@ -1522,7 +1489,7 @@ ChromeContentRendererClient::CreateBrowserPluginDelegate(
     const GURL& original_url) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   return ChromeExtensionsRendererClient::CreateBrowserPluginDelegate(
-    render_frame, mime_type, original_url);
+      render_frame, mime_type, original_url);
 #else
   return nullptr;
 #endif
@@ -1571,7 +1538,7 @@ void ChromeContentRendererClient::RunScriptsAtDocumentStart(
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   ChromeExtensionsRendererClient::GetInstance()->RunScriptsAtDocumentStart(
       render_frame);
-  // |render_frame| might be dead by now.
+// |render_frame| might be dead by now.
 #endif
 }
 
@@ -1580,7 +1547,7 @@ void ChromeContentRendererClient::RunScriptsAtDocumentEnd(
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   ChromeExtensionsRendererClient::GetInstance()->RunScriptsAtDocumentEnd(
       render_frame);
-  // |render_frame| might be dead by now.
+// |render_frame| might be dead by now.
 #endif
 }
 
@@ -1589,7 +1556,7 @@ void ChromeContentRendererClient::RunScriptsAtDocumentIdle(
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   ChromeExtensionsRendererClient::GetInstance()->RunScriptsAtDocumentIdle(
       render_frame);
-  // |render_frame| might be dead by now.
+// |render_frame| might be dead by now.
 #endif
 }
 
@@ -1722,4 +1689,17 @@ bool ChromeContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
       "more information.",
       url::Origin::Create(url).Serialize().c_str(), in_future_string);
   return true;
+}
+
+void ChromeContentRendererClient::CreateRendererService(
+    service_manager::mojom::ServiceRequest service_request) {
+  service_context_ = std::make_unique<service_manager::ServiceContext>(
+      std::make_unique<service_manager::ForwardingService>(this),
+      std::move(service_request));
+}
+
+service_manager::Connector* ChromeContentRendererClient::GetConnector() {
+  if (!connector_)
+    connector_ = service_manager::Connector::Create(&connector_request_);
+  return connector_.get();
 }
