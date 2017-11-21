@@ -40,7 +40,7 @@ const float PhishingClassifier::kPhishyThreshold = 0.5;
 
 namespace {
 // Used for UMA, do not reorder.
-enum SkipClassificationReason {
+enum class SkipClassificationReason : unsigned {
   CLASSIFICATION_PROCEED = 0,
   DEPRECATED_SKIP_HTTPS = 1,
   SKIP_NONE_GET = 2,
@@ -50,9 +50,8 @@ enum SkipClassificationReason {
 
 void RecordReasonForSkippingClassificationToUMA(
     SkipClassificationReason reason) {
-  UMA_HISTOGRAM_ENUMERATION("SBClientPhishing.SkipClassificationReason",
-                            reason,
-                            SKIP_REASON_MAX);
+  UMA_HISTOGRAM_ENUMERATION("SBClientPhishing.SkipClassificationReason", reason,
+                            SkipClassificationReason::SKIP_REASON_MAX);
 }
 
 }  // namespace
@@ -130,7 +129,8 @@ void PhishingClassifier::BeginFeatureExtraction() {
   // Currently, we only classify http/https URLs that are GET requests.
   GURL url(frame->GetDocument().Url());
   if (!url.SchemeIsHTTPOrHTTPS()) {
-    RecordReasonForSkippingClassificationToUMA(SKIP_SCHEME_NOT_SUPPORTED);
+    RecordReasonForSkippingClassificationToUMA(
+        SkipClassificationReason::SKIP_SCHEME_NOT_SUPPORTED);
     RunFailureCallback();
     return;
   }
@@ -139,12 +139,14 @@ void PhishingClassifier::BeginFeatureExtraction() {
   if (!document_loader ||
       document_loader->GetRequest().HttpMethod().Ascii() != "GET") {
     if (document_loader)
-      RecordReasonForSkippingClassificationToUMA(SKIP_NONE_GET);
+      RecordReasonForSkippingClassificationToUMA(
+          SkipClassificationReason::SKIP_NONE_GET);
     RunFailureCallback();
     return;
   }
 
-  RecordReasonForSkippingClassificationToUMA(CLASSIFICATION_PROCEED);
+  RecordReasonForSkippingClassificationToUMA(
+      SkipClassificationReason::CLASSIFICATION_PROCEED);
   features_.reset(new FeatureMap);
   if (!url_extractor_->ExtractFeatures(url, features_.get())) {
     RunFailureCallback();

@@ -58,7 +58,7 @@ struct AutofillFieldCase {
 };
 
 struct WebElementDescriptor {
-  enum RetrievalMethod {
+  enum class RetrievalMethod {
     CSS_SELECTOR,
     ID,
     NONE,
@@ -68,7 +68,7 @@ struct WebElementDescriptor {
   std::string descriptor;
 
   // Which retrieval method to use.
-  RetrievalMethod retrieval_method = NONE;
+  RetrievalMethod retrieval_method = RetrievalMethod::NONE;
 };
 
 const char kFormHtml[] =
@@ -221,11 +221,11 @@ const char kUnownedNonEnglishFormHtml[] =
 std::string RetrievalMethodToString(
     const WebElementDescriptor::RetrievalMethod& method) {
   switch (method) {
-    case WebElementDescriptor::CSS_SELECTOR:
+    case WebElementDescriptor::RetrievalMethod::CSS_SELECTOR:
       return "CSS_SELECTOR";
-    case WebElementDescriptor::ID:
+    case WebElementDescriptor::RetrievalMethod::ID:
       return "ID";
-    case WebElementDescriptor::NONE:
+    case WebElementDescriptor::RetrievalMethod::NONE:
       return "NONE";
   }
   NOTREACHED();
@@ -238,14 +238,14 @@ bool ClickElement(const WebDocument& document,
   blink::WebElement element;
 
   switch (element_descriptor.retrieval_method) {
-    case WebElementDescriptor::CSS_SELECTOR: {
+    case WebElementDescriptor::RetrievalMethod::CSS_SELECTOR: {
       element = document.QuerySelector(web_descriptor);
       break;
     }
-    case WebElementDescriptor::ID:
+    case WebElementDescriptor::RetrievalMethod::ID:
       element = document.GetElementById(web_descriptor);
       break;
-    case WebElementDescriptor::NONE:
+    case WebElementDescriptor::RetrievalMethod::NONE:
       return true;
   }
 
@@ -4344,12 +4344,13 @@ TEST_F(FormAutofillTest, ClickElement) {
 
   // Successful retrieval by id.
   WebElementDescriptor clicker;
-  clicker.retrieval_method = WebElementDescriptor::ID;
+  clicker.retrieval_method = WebElementDescriptor::RetrievalMethod::ID;
   clicker.descriptor = "link";
   EXPECT_TRUE(ClickElement(frame->GetDocument(), clicker));
 
   // Successful retrieval by css selector.
-  clicker.retrieval_method = WebElementDescriptor::CSS_SELECTOR;
+  clicker.retrieval_method =
+      WebElementDescriptor::RetrievalMethod::CSS_SELECTOR;
   clicker.descriptor = "button[name='button']";
   EXPECT_TRUE(ClickElement(frame->GetDocument(), clicker));
 

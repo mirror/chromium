@@ -70,7 +70,7 @@ class PhishingClassifierDelegate : public content::RenderFrameObserver {
   PhishingClassifierDelegate(content::RenderFrame* render_frame,
                              PhishingClassifier* classifier);
 
-  enum CancelClassificationReason {
+  enum class CancelClassificationReason {
     NAVIGATE_AWAY,
     NAVIGATE_WITHIN_PAGE,
     PAGE_RECAPTURED,

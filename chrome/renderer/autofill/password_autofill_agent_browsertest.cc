@@ -239,7 +239,7 @@ void SetElementReadOnly(WebInputElement& element, bool read_only) {
                        read_only ? WebString::FromUTF8("true") : WebString());
 }
 
-enum PasswordFormSourceType {
+enum class PasswordFormSourceType {
   PasswordFormSubmitted,
   PasswordFormInPageNavigation,
 };
@@ -582,12 +582,13 @@ class PasswordAutofillAgentTest : public ChromeRenderViewTest {
           expected_properties_masks) {
     base::RunLoop().RunUntilIdle();
     autofill::PasswordForm form;
-    if (expected_type == PasswordFormSubmitted) {
+    if (expected_type == PasswordFormSourceType::PasswordFormSubmitted) {
       ASSERT_TRUE(fake_driver_.called_password_form_submitted());
       ASSERT_TRUE(static_cast<bool>(fake_driver_.password_form_submitted()));
       form = *(fake_driver_.password_form_submitted());
     } else {
-      ASSERT_EQ(PasswordFormInPageNavigation, expected_type);
+      ASSERT_EQ(PasswordFormSourceType::PasswordFormInPageNavigation,
+                expected_type);
       ASSERT_TRUE(fake_driver_.called_inpage_navigation());
       ASSERT_TRUE(
           static_cast<bool>(fake_driver_.password_form_inpage_navigation()));
@@ -1860,7 +1861,8 @@ TEST_F(PasswordAutofillAgentTest, RememberFieldPropertiesOnSubmit) {
   expected_properties_masks[ASCIIToUTF16("password")] =
       FieldPropertiesFlags::USER_TYPED | FieldPropertiesFlags::HAD_FOCUS;
 
-  ExpectFieldPropertiesMasks(PasswordFormSubmitted, expected_properties_masks);
+  ExpectFieldPropertiesMasks(PasswordFormSourceType::PasswordFormSubmitted,
+                             expected_properties_masks);
 }
 
 TEST_F(PasswordAutofillAgentTest, RememberFieldPropertiesOnInPageNavigation) {
@@ -1885,8 +1887,9 @@ TEST_F(PasswordAutofillAgentTest, RememberFieldPropertiesOnInPageNavigation) {
   expected_properties_masks[ASCIIToUTF16("password")] =
       FieldPropertiesFlags::USER_TYPED | FieldPropertiesFlags::HAD_FOCUS;
 
-  ExpectFieldPropertiesMasks(PasswordFormInPageNavigation,
-                             expected_properties_masks);
+  ExpectFieldPropertiesMasks(
+      PasswordFormSourceType::PasswordFormInPageNavigation,
+      expected_properties_masks);
 }
 
 TEST_F(PasswordAutofillAgentTest, RememberFieldPropertiesOnInPageNavigation_2) {
@@ -1913,8 +1916,9 @@ TEST_F(PasswordAutofillAgentTest, RememberFieldPropertiesOnInPageNavigation_2) {
   expected_properties_masks[ASCIIToUTF16("password")] =
       FieldPropertiesFlags::USER_TYPED | FieldPropertiesFlags::HAD_FOCUS;
 
-  ExpectFieldPropertiesMasks(PasswordFormInPageNavigation,
-                             expected_properties_masks);
+  ExpectFieldPropertiesMasks(
+      PasswordFormSourceType::PasswordFormInPageNavigation,
+      expected_properties_masks);
 }
 
 // The username/password is autofilled by password manager then just before
