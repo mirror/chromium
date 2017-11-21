@@ -16,6 +16,24 @@
       "revId": "6516d4071f13320b87f21a56983258990ff9697f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4040f6_5a9f0e55",
+        "filename": "components/viz/service/display/overlay_strategy_fullscreen.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-11-21T00:12:30Z",
+      "side": 1,
+      "message": "In this case, the buffer covers the screen fully. the removal part is the unnecessary restriction of scaling.\n\nThe below remained condition guarantees the buffer covers the screen fully.\ngfx::ToRoundedSize(candidate.display_rect.size()) !\u003d render_pass-\u003eoutput_rect.size())\n\nThe below removed condition checks if scaling is needed.\nrender_pass-\u003eoutput_rect.size() !\u003d candidate.resource_size_in_pixels\n\nAtomic commit can support scaling by hardware. After this CL, 720p video or 4k video can be overlayed in 1080p screen.",
+      "parentUuid": "9acf7899_c12146b7",
+      "revId": "6516d4071f13320b87f21a56983258990ff9697f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
