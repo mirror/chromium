@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c4c4845_14f5053c",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T17:55:53Z",
+      "side": 1,
+      "message": "That\u0027s a good idea, but these two also differ in the final ContentsToViewport() conversion (see FIXME in WebFrameWidgetImpl). Once we resolve that, I think most of the editing-related methods could go to base class.",
+      "parentUuid": "6e8ef6a7_1ddb0a2f",
+      "revId": "b39d1c69af16b9896c5ec8c61b35615b59e37257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a1c8039_9628f212",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T17:45:37Z",
       "side": 1,
       "message": "This seems unnecessary given line 2178.",
+      "revId": "b39d1c69af16b9896c5ec8c61b35615b59e37257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a567a225_dc6ffbd5",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-21T17:55:53Z",
+      "side": 1,
+      "message": "Nice one. I\u0027ll follow up in a next CL.",
+      "parentUuid": "0a1c8039_9628f212",
       "revId": "b39d1c69af16b9896c5ec8c61b35615b59e37257",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
