@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afaca839_a9ed3ad1",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-21T03:35:03Z",
+      "side": 0,
+      "message": "This branch can be safely removed because an atomic inline must have a box.",
+      "range": {
+        "startLine": 271,
+        "startChar": 2,
+        "endLine": 271,
+        "endChar": 30
+      },
+      "revId": "c282ab4aa09714880e867f5f66b035d06d03e6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99d97cf_0b718b4e",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-21T03:35:03Z",
+      "side": 0,
+      "message": "This branch can be safely removed because a properly set atomic inline (i.e., IsInline() is true) must have a wrapping inline box.",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 18
+      },
+      "revId": "c282ab4aa09714880e867f5f66b035d06d03e6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
