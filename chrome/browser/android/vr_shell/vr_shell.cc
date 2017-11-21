@@ -464,6 +464,16 @@ void VrShell::OnTabRemoved(JNIEnv* env,
   ui_->RemoveTab(incognito, id);
 }
 
+void VrShell::ShowAlertDialog(vr::ContentInputDelegate* delegate) {
+  // TODO We should use it for callbacks + show dialog
+  ui_->SetAlertDialogEnabled(true, delegate);
+}
+
+void VrShell::CloseAlertDialog() {
+  // TODO We should use it for callbacks + show dialog
+  ui_->SetAlertDialogEnabled(false, nullptr);
+}
+
 void VrShell::ConnectPresentingService(
     device::mojom::VRSubmitFrameClientPtr submit_client,
     device::mojom::VRPresentationProviderRequest request,
@@ -486,6 +496,17 @@ base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeContentSurface(
   compositor_->SurfaceChanged(nullptr);
   base::android::ScopedJavaGlobalRef<jobject> surface(env, content_surface_);
   content_surface_ = nullptr;
+  return surface;
+}
+
+base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeUiSurface(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  if (!ui_surface_) {
+    return base::android::ScopedJavaGlobalRef<jobject>(env, nullptr);
+  }
+  base::android::ScopedJavaGlobalRef<jobject> surface(env, ui_surface_);
+  ui_surface_ = nullptr;
   return surface;
 }
 
@@ -517,6 +538,13 @@ void VrShell::ContentSurfaceChanged(jobject surface) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_contentSurfaceChanged(env, j_vr_shell_);
   compositor_->SurfaceChanged(content_surface_);
+}
+
+void VrShell::UiSurfaceChanged(jobject surface) {
+  ui_surface_ = surface;
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaGlobalRef<jobject> ref(env, surface);
+  Java_VrShellImpl_uiSurfaceChanged(env, j_vr_shell_, ref);
 }
 
 void VrShell::GvrDelegateReady(gvr::ViewerType viewer_type) {

@@ -15,6 +15,7 @@
 #include "base/cancelable_callback.h"
 #include "base/macros.h"
 #include "chrome/browser/android/vr_shell/vr_core_info.h"
+#include "chrome/browser/vr/content_input_delegate.h"
 #include "device/vr/android/gvr/gvr_delegate_provider.h"
 #include "device/vr/vr_service.mojom.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"
@@ -53,6 +54,8 @@ class VrShellDelegate : public device::GvrDelegateProvider {
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
 
   device::VRDevice* GetDevice();
+  void AddAlertDialog(vr::ContentInputDelegate* delegate);
+  void CloseAlertDialog();
 
   // device::GvrDelegateProvider implementation.
   void ExitWebVRPresent() override;

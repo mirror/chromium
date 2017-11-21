@@ -35,6 +35,7 @@
 #include "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h"
 #include "chrome/browser/ui/tab_helpers.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
 #include "components/app_modal/javascript_dialog_manager.h"
@@ -275,7 +276,8 @@ void TabWebContentsDelegateAndroid::RequestMediaAccessPermission(
     content::WebContents* web_contents,
     const content::MediaStreamRequest& request,
     const content::MediaResponseCallback& callback) {
-  if (vr::VrTabHelper::IsInVr(web_contents)) {
+  if (vr::VrTabHelper::IsInVr(web_contents) &&
+      !base::FeatureList::IsEnabled(features::kVrBrowsingNativeAndroidUi)) {
     callback.Run(content::MediaStreamDevices(),
                  content::MEDIA_DEVICE_NOT_SUPPORTED, nullptr);
     vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kMediaPermission);

@@ -166,6 +166,12 @@ static constexpr float kTimeoutButtonTextHeight = kCloseButtonHeight * 0.25;
 static constexpr float kTimeoutButtonTextVerticalOffset =
     kTimeoutButtonTextHeight;
 
+static constexpr float kAlertDialogHeightM = 0.2f * kUrlBarDistance;
+static constexpr float kAlertDialogWidthM = 0.64f * kUrlBarDistance;
+
+static constexpr float kAlertDialogVerticalOffsetM =
+    0.5f * kAlertDialogHeightM + kUrlBarHeight;
+
 // If the screen space bounds or the aspect ratio of the content quad change
 // beyond these thresholds we propagate the new content bounds so that the
 // content's resolution can be adjusted.

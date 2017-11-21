@@ -42,6 +42,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
 
   // vr::GlBrowserInterface implementation (GL calling to VrShell).
   void ContentSurfaceChanged(jobject surface) override;
+  void UiSurfaceChanged(jobject surface) override;
   void GvrDelegateReady(gvr::ViewerType viewer_type) override;
   void UpdateGamepadData(device::GvrGamepadData) override;
   void ForceExitVr() override;
@@ -82,6 +83,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
+  void SetAlertDialogEnabled(bool enabled,
+                             vr::ContentInputDelegate* delegate) override;
 
  protected:
   void Init() override;

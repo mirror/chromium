@@ -338,6 +338,20 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   main_content_ = main_content.get();
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(main_content));
 
+  std::unique_ptr<ContentElement> ui_dialog =
+      base::MakeUnique<ContentElement>(delegate);
+  ui_dialog->set_name(k2dDialog);
+  ui_dialog->set_draw_phase(kPhaseForeground);
+  ui_dialog->SetSize(kContentWidth / 2, kContentHeight / 2);
+  ui_dialog->SetVisible(false);
+  ui_dialog->set_requires_layout(false);
+  ui_dialog->set_corner_radius(kContentCornerRadius);
+  ui_dialog->SetTransitionedProperties({BOUNDS});
+  ui_dialog->SetTranslate(0, 0, kTextureOffset + 0.1);
+  ui_dialog_ = ui_dialog.get();
+  //  content_elements_.push_back(ui_dialog.get());
+  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(ui_dialog));
+
   // Limit reticle distance to a sphere based on content distance.
   scene_->set_background_distance(kContentDistance *
                                   kBackgroundDistanceMultiplier);
@@ -1356,8 +1370,10 @@ bool UiSceneManager::ShouldRenderWebVr() {
 void UiSceneManager::OnGlInitialized(
     unsigned int content_texture_id,
     UiElementRenderer::TextureLocation content_location,
+    unsigned int ui_texture_id,
     SkiaSurfaceProvider* provider) {
   main_content_->SetTexture(content_texture_id, content_location);
+  ui_dialog_->SetTexture(ui_texture_id, content_location);
   scene_->OnGlInitialized(provider);
 
   ConfigureScene();
@@ -1385,6 +1401,16 @@ void UiSceneManager::SetFullscreen(bool fullscreen) {
     return;
   fullscreen_ = fullscreen;
   ConfigureScene();
+}
+
+void UiSceneManager::SetAlertDialogEnabled(bool enabled,
+                                           ContentInputDelegate* delegate) {
+  // TODO fill this!
+  ui_dialog_->SetVisible(enabled);
+  ui_dialog_->set_requires_layout(enabled);
+  ui_dialog_->set_hit_testable(enabled);
+  if (delegate != nullptr)
+    ui_dialog_->SetDelegate(delegate);
 }
 
 void UiSceneManager::OnBackButtonClicked() {

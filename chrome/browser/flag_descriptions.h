@@ -1682,6 +1682,9 @@ extern const char kVrBrowsingDescription[];
 extern const char kVrBrowsingExperimentalFeaturesName[];
 extern const char kVrBrowsingExperimentalFeaturesDescription[];
 
+extern const char kVrBrowsingNativeAndroidUiName[];
+extern const char kVrBrowsingNativeAndroidUiDescription[];
+
 extern const char kVrBrowsingExperimentalRenderingName[];
 extern const char kVrBrowsingExperimentalRenderingDescription[];
 

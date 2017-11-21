@@ -247,25 +247,34 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
 
-  unsigned int textures[2];
-  glGenTextures(2, textures);
+  unsigned int textures[3];
+  glGenTextures(3, textures);
   unsigned int content_texture_id = textures[0];
   webvr_texture_id_ = textures[1];
+  ui_texture_id_ = textures[2];
   content_surface_texture_ = gl::SurfaceTexture::Create(content_texture_id);
   webvr_surface_texture_ = gl::SurfaceTexture::Create(webvr_texture_id_);
+  ui_surface_texture_ = gl::SurfaceTexture::Create(ui_texture_id_);
   CreateContentSurface();
+  CreateUiSurface();
   content_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnContentFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
+  ui_surface_texture_->SetFrameAvailableCallback(base::Bind(
+      &VrShellGl::OnUiFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
+
   webvr_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnWebVRFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
   content_surface_texture_->SetDefaultBufferSize(
+      content_tex_physical_size_.width(), content_tex_physical_size_.height());
+  ui_surface_texture_->SetDefaultBufferSize(
       content_tex_physical_size_.width(), content_tex_physical_size_.height());
 
   if (!reinitializing)
     InitializeRenderer();
 
   ui_->OnGlInitialized(content_texture_id,
-                       vr::UiElementRenderer::kTextureLocationExternal, true);
+                       vr::UiElementRenderer::kTextureLocationExternal,
+                       ui_texture_id_, true);
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
@@ -290,6 +299,12 @@ void VrShellGl::CreateContentSurface() {
   content_surface_ =
       base::MakeUnique<gl::ScopedJavaSurface>(content_surface_texture_.get());
   browser_->ContentSurfaceChanged(content_surface_->j_surface().obj());
+}
+
+void VrShellGl::CreateUiSurface() {
+  ui_surface_ =
+      base::MakeUnique<gl::ScopedJavaSurface>(ui_surface_texture_.get());
+  browser_->UiSurfaceChanged(ui_surface_->j_surface().obj());
 }
 
 void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
@@ -394,6 +409,10 @@ void VrShellGl::OnSwapContents(int new_content_id) {
 void VrShellGl::OnContentFrameAvailable() {
   content_surface_texture_->UpdateTexImage();
   content_frame_available_ = true;
+}
+
+void VrShellGl::OnUiFrameAvailable() {
+  ui_surface_texture_->UpdateTexImage();
 }
 
 void VrShellGl::OnWebVRFrameAvailable() {
@@ -1098,8 +1117,10 @@ void VrShellGl::ContentBoundsChanged(int width, int height) {
 }
 
 void VrShellGl::ContentPhysicalBoundsChanged(int width, int height) {
-  if (content_surface_texture_.get())
+  if (content_surface_texture_.get()) {
     content_surface_texture_->SetDefaultBufferSize(width, height);
+    ui_surface_texture_->SetDefaultBufferSize(width, height);
+  }
   content_tex_physical_size_.set_width(width);
   content_tex_physical_size_.set_height(height);
 }

@@ -30,6 +30,7 @@
 #include "chrome/browser/storage/durable_storage_permission_context.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/features.h"
 #include "chrome/common/url_constants.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
@@ -351,7 +352,8 @@ int PermissionManager::RequestPermissions(
   content::WebContents* web_contents =
       content::WebContents::FromRenderFrameHost(render_frame_host);
 
-  if (vr::VrTabHelper::IsInVr(web_contents)) {
+  if (vr::VrTabHelper::IsInVr(web_contents) &&
+      !base::FeatureList::IsEnabled(features::kVrBrowsingNativeAndroidUi)) {
     vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kPermissionRequest);
     callback.Run(
         std::vector<ContentSetting>(permissions.size(), CONTENT_SETTING_BLOCK));

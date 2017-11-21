@@ -150,12 +150,17 @@ void Ui::SetOmniboxSuggestions(
   model_->omnibox_suggestions = suggestions->suggestions;
 }
 
+void Ui::SetAlertDialogEnabled(bool enabled, ContentInputDelegate* delegate) {
+  scene_manager_->SetAlertDialogEnabled(enabled, delegate);
+}
+
 bool Ui::ShouldRenderWebVr() {
   return scene_manager_->ShouldRenderWebVr();
 }
 
 void Ui::OnGlInitialized(unsigned int content_texture_id,
                          UiElementRenderer::TextureLocation content_location,
+                         unsigned int ui_texture_id,
                          bool use_ganesh) {
   ui_element_renderer_ = base::MakeUnique<UiElementRenderer>();
   ui_renderer_ =
@@ -166,7 +171,7 @@ void Ui::OnGlInitialized(unsigned int content_texture_id,
     provider_ = base::MakeUnique<CpuSurfaceProvider>();
   }
   scene_manager_->OnGlInitialized(content_texture_id, content_location,
-                                  provider_.get());
+                                  ui_texture_id, provider_.get());
 }
 
 void Ui::OnAppButtonClicked() {

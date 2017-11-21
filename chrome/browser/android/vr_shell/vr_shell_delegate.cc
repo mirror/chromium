@@ -243,6 +243,14 @@ void VrShellDelegate::OnListeningForActivateChanged(bool listening) {
   }
 }
 
+void VrShellDelegate::AddAlertDialog(vr::ContentInputDelegate* delegate) {
+  vr_shell_->ShowAlertDialog(delegate);
+}
+
+void VrShellDelegate::CloseAlertDialog() {
+  vr_shell_->CloseAlertDialog();
+}
+
 void VrShellDelegate::SetListeningForActivate(bool listening) {
   clear_activate_task_.Cancel();
   JNIEnv* env = AttachCurrentThread();
