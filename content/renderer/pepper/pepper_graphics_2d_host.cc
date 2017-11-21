@@ -703,7 +703,7 @@ bool PepperGraphics2DHost::PrepareTransferableResource(
       gl->TexParameteri(texture_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
       gl->GenMailboxCHROMIUM(gpu_mailbox.name);
-      gl->ProduceTextureCHROMIUM(texture_target, gpu_mailbox.name);
+      gl->ProduceTextureDirectCHROMIUM(texture_id, gpu_mailbox.name);
 
       if (overlay_candidate) {
         gl->TexStorage2DImageCHROMIUM(texture_target, storage_format,

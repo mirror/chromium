@@ -68,7 +68,7 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
     gl->TexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     auto mailbox = resource->GpuMailbox();
-    gl->ProduceTextureDirectCHROMIUM(texture_id, target, mailbox.name);
+    gl->ProduceTextureDirectCHROMIUM(texture_id, mailbox.name);
     const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
     gl->ShallowFlushCHROMIUM();
     gpu::SyncToken sync_token;

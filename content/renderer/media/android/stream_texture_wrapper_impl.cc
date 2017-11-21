@@ -72,8 +72,8 @@ void StreamTextureWrapperImpl::ReallocateVideoFrame(
 
   GLES2Interface* gl = factory_->ContextGL();
   GLuint texture_target = kGLTextureExternalOES;
-  GLuint texture_id_ref = gl->CreateAndConsumeTextureCHROMIUM(
-      texture_target, texture_mailbox_.name);
+  GLuint texture_id_ref =
+      gl->CreateAndConsumeTextureCHROMIUM(texture_mailbox_.name);
   const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
   gl->Flush();
 
