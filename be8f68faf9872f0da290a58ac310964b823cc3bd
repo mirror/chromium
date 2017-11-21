@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5ef3c9_b732681f",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-21T06:34:14Z",
+      "side": 1,
+      "message": "Don\u0027t we have to do a BindTexture before this TexImage2D?  If I\u0027m not mistaken this will clobber whatever texture is currently bound.",
+      "revId": "be8f68faf9872f0da290a58ac310964b823cc3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
