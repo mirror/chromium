@@ -514,7 +514,12 @@ Polymer({
   },
 
   /** @private */
-  onMirroredTap_: function() {
+  onMirroredTap_: function(event) {
+    // There will be a fade-in animation for the entire display when mirror mode
+    // is turned on, after which this active window will be focused and, thus,
+    // this focused control will show a shadow. So prevent the shadow by
+    // blurring the control.
+    event.target.blur();
     var id = '';
     /** @type {!chrome.system.display.DisplayProperties} */ var properties = {};
     if (this.isMirrored_(this.displays)) {
