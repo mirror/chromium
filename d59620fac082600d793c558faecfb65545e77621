@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69d11469_4fd68a5b",
+        "filename": "third_party/libxml/chromium/libxml_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-21T19:52:20Z",
+      "side": 1,
+      "message": "std::string()",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "d59620fac082600d793c558faecfb65545e77621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc52bfb6_18f928f9",
+        "filename": "third_party/libxml/chromium/libxml_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-21T19:52:20Z",
+      "side": 1,
+      "message": "Bleh, this API. I think |names| leaks here if this fails. Would it be possible to do the XmlStringToStdStringWithDelete here instead of in GetAllNodeAttributes() or GetAllDeclaredNamespaces()?",
+      "revId": "d59620fac082600d793c558faecfb65545e77621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
