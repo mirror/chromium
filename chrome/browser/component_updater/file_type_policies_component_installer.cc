@@ -86,6 +86,10 @@ void FileTypePoliciesComponentInstallerPolicy::ComponentReady(
     const base::Version& version,
     const base::FilePath& install_dir,
     std::unique_ptr<base::DictionaryValue> manifest) {
+  LOG(INFO) << "VrAssetsComponent "
+               "FileTypePoliciesComponentInstallerPolicy::ComponentReady "
+            << install_dir;
+
   VLOG(1) << "Component ready, version " << version.GetString() << " in "
           << install_dir.value();
 
