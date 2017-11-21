@@ -403,8 +403,8 @@ const viz::internal::Resource* DisplayResourceProvider::LockForRead(
 
     GLES2Interface* gl = ContextGL();
     DCHECK(gl);
-    resource->gl_id = gl->CreateAndConsumeTextureCHROMIUM(
-        resource->target, resource->mailbox.name);
+    resource->gl_id =
+        gl->CreateAndConsumeTextureCHROMIUM(resource->mailbox.name);
     resource->SetLocallyUsed();
   }
 
