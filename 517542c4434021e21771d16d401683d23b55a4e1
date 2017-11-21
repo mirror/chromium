@@ -199,6 +199,24 @@
       "revId": "517542c4434021e21771d16d401683d23b55a4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d184993c_56672a40",
+        "filename": "sandbox/linux/syscall_broker/broker_process.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-21T18:46:57Z",
+      "side": 1,
+      "message": "Ah, thanks for the pointers.  It looks like we\u0027re going to have to implement the inverse of cp_old_stat() et al. to map our userspace-style result back into whatever the kernel style might be before dismissing the syscall.\n\nCan we count on using any of these kernel headers in all of our build env?",
+      "parentUuid": "fc43c46a_2002bc92",
+      "revId": "517542c4434021e21771d16d401683d23b55a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
