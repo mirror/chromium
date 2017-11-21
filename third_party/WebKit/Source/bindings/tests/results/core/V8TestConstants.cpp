@@ -16,6 +16,7 @@
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
 #include "core/origin_trials/origin_trials.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/runtime_enabled_features.h"

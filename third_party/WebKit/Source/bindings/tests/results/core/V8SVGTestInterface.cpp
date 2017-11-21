@@ -16,6 +16,7 @@
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/html/custom/V0CustomElementProcessingStack.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "core/svg_names.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
@@ -68,6 +69,8 @@ static_assert(
 namespace SVGTestInterfaceV8Internal {
 
 static void typeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   SVGTestInterface* impl = V8SVGTestInterface::ToImpl(holder);
@@ -77,7 +80,7 @@ static void typeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info)
 
 static void typeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);

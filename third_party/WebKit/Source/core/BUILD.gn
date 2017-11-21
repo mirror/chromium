@@ -204,6 +204,7 @@ component("core") {
     "//third_party/WebKit/Source/core/page",
     "//third_party/WebKit/Source/core/paint",
     "//third_party/WebKit/Source/core/plugins",
+    "//third_party/WebKit/Source/core/preemption",
     "//third_party/WebKit/Source/core/probe",
     "//third_party/WebKit/Source/core/resize_observer",
     "//third_party/WebKit/Source/core/streams",

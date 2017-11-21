@@ -27,6 +27,7 @@
 #include "bindings/core/v8/V8Uint8Array.h"
 #include "bindings/core/v8/V8Uint8ClampedArray.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/bindings/V8PrivateProperty.h"
