@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e812e92_b830d1a7",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-11-21T00:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e13bef0_10309208",
+      "revId": "0eeffbd5b68146106c6c26558435d922daa41dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aba3107_ff9e4bf9",
         "filename": "android_webview/browser/aw_content_browser_client.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-17T19:43:41Z",
       "side": 1,
       "message": "Did you verify that indexeddb is always available to regular page contexts? (even if cookies/etc are disabled in the webview?)\n\nI don\u0027t know how idb is controlled normally but we should have the same behaviour in both cases.",
+      "revId": "0eeffbd5b68146106c6c26558435d922daa41dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac78b0c_60b303e0",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-11-21T00:53:40Z",
+      "side": 1,
+      "message": "I tested window.indexedDB.open(\"test\") on example.com in the shell with WebSettings.setAppCacheEnabled, WebSettings.setDatabaseEnabled, WebSettings.setDomStorageEnabled, and CookieManager.setAcceptCookie all false, and it seems to work (using the system image WebView, not a WebView with this change).",
+      "parentUuid": "8aba3107_ff9e4bf9",
       "revId": "0eeffbd5b68146106c6c26558435d922daa41dc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
