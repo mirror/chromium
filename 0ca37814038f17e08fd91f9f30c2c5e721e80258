@@ -16,6 +16,24 @@
       "revId": "0ca37814038f17e08fd91f9f30c2c5e721e80258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457dfd59_2641ee85",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-21T02:31:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5a72780_4a0ffd5a",
+      "revId": "0ca37814038f17e08fd91f9f30c2c5e721e80258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
