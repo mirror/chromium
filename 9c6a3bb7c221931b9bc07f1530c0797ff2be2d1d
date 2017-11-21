@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ea595a2_eff6aee9",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-21T12:04:20Z",
+      "side": 1,
+      "message": "When would this be the case now? I don\u0027t think it should ever be, unless there\u0027s something that I\u0027m missing.",
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9455d89a_2088b83f",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-21T12:04:20Z",
+      "side": 1,
+      "message": "Why do we have to clone the Geoposition here? I\u0027m sure that we do as you wouldn\u0027t have added this call randomly, just curious as to the reason. Also probably worth documenting for the same reason.",
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23a029f_8819f8f0",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-21T12:04:20Z",
+      "side": 1,
+      "message": "Please document that |callback| is a callback that should be called to signify reception of a bad Mojo message *only while processing that message*. That\u0027s really important :).",
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1c9178_d5f961bb",
+        "filename": "services/device/geolocation/public_ip_address_geolocator_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-21T12:04:20Z",
+      "side": 1,
+      "message": "nit: Why this call here? Reporting the bad message will result in the binding associated with the message being closed. Why close any other bindings?",
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9d8e71_f7c7fb3d",
+        "filename": "services/device/geolocation/public_ip_address_geolocator_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-21T12:04:20Z",
+      "side": 1,
+      "message": "nit: \"Verify that the geolocator reported a bad message.\"",
+      "range": {
+        "startLine": 201,
+        "startChar": 7,
+        "endLine": 201,
+        "endChar": 11
+      },
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
