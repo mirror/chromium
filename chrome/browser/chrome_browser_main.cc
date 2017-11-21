@@ -1350,6 +1350,10 @@ void ChromeBrowserMainParts::PostBrowserStart() {
   }
 #endif
 
+#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)
+  g_browser_process->GetTabsTracker();
+#endif
+
   // At this point, StartupBrowserCreator::Start has run creating initial
   // browser windows and tabs, but no progress has been made in loading
   // content as the main message loop hasn't started processing tasks yet.
