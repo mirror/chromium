@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8cae213_ffcabd35",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-flexbox/table-as-item-wide-content.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-21T11:43:36Z",
+      "side": 1,
+      "message": "This one fails in Firefox. But is the test really wrong?",
+      "revId": "ccf70e7b7d035366265bdfd4bcde30e84554a7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
