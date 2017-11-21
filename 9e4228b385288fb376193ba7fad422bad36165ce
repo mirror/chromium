@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd99c61c_ad551a47",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-21T08:58:38Z",
+      "side": 1,
+      "message": "last_activity_time_sec is the local time of the day in sec (see https://cs.chromium.org/chromium/src/chrome/browser/chromeos/power/ml/user_activity_event.proto?q\u003dUserActivityEvent\u0026sq\u003dpackage:chromium\u0026l\u003d62). The last_activity_time from IdleEventNotifier::ActivityData will be the raw TimeTicks, so we\u0027ll need to get (i). local time and (ii). time of the day from it.",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a712a4_cc50dcf6",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-21T08:58:38Z",
+      "side": 1,
+      "message": "Is there no EXPECT_THAT to use?",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 11
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
