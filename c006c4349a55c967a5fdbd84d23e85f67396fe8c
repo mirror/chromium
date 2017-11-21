@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6dcef03_3e2043ac",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-21T23:30:43Z",
+      "side": 1,
+      "message": "Bah, turns out Instant Apps also use this method to determine if we should show an instant apps launch promo (using a different package_name_or_start_url).\n\nThe fix should just involve changing the ShouldShowBanner() call in chrome/browser/android/instantapps/instant_apps_settings.cc to call !HasBeenInstalled() \u0026\u0026 !RecentlyBlocked() \u0026\u0026 !RecentlyIgnored(). That has the added advantage of making sure the instant apps promo isn\u0027t affect by the experimental feature.",
+      "range": {
+        "startLine": 259,
+        "startChar": 30,
+        "endLine": 259,
+        "endChar": 46
+      },
+      "revId": "c006c4349a55c967a5fdbd84d23e85f67396fe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
