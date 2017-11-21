@@ -60,6 +60,10 @@ vars = {
   'checkout_traffic_annotation_tools': 'checkout_configuration == "default"',
   'checkout_instrumented_libraries': 'checkout_linux and checkout_configuration == "default"',
 
+  # By default, do check out android_sdk sources. This can be overridden e.g. with
+  # custom_vars.
+  'checkout_android_sdk_sources': False,
+
   'aomedia_git': 'https://aomedia.googlesource.com',
   'chromium_git': 'https://chromium.googlesource.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
@@ -1182,6 +1186,27 @@ hooks = [
     ],
   },
 
+  # Download public Android SDK via CIPD and put them
+  # in third_party/android_sdk/public directory.
+  {
+    'name': 'Android SDK CIPD Ensure',
+    'pattern': '.',
+    'condition': 'checkout_android',
+    'action': ['src/build/cipd/cipd_wrapper.py',
+               '--chromium-root', 'src',
+               '--ensure-file', 'src/build/args/android/sdk/public.ensure',
+    ],
+  },
+  # Download public Android SDK sources only if the checkout variable is set
+  {
+    'name': 'Android SDK sources CIPD Ensure',
+    'pattern': '.',
+    'condition': 'checkout_android_sdk_sources',
+    'action': ['src/build/cipd/cipd_wrapper.py',
+               '--chromium-root', 'src',
+               '--ensure-file', 'src/build/args/android/sdk/sources.ensure',
+    ],
+  },
   {
     'name': 'Android CIPD Ensure',
     'pattern': '.',

@@ -1,0 +1,13 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Dependencies for Android public SDK.
+
+@Subdir third_party/android_sdk/public
+chromium/third_party/android_sdk/public/build-tools version:26.0.2
+chromium/third_party/android_sdk/public/emulator version:26.0.3
+chromium/third_party/android_sdk/public/extras version:41.0.0
+chromium/third_party/android_sdk/public/platform-tools version:26.0.0
+chromium/third_party/android_sdk/public/platforms version:android-26
+chromium/third_party/android_sdk/public/tools version:26.0.2
