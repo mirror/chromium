@@ -63,18 +63,20 @@ namespace {
 
 // If we don't clamp the maximum width, then very long URLs and titles can make
 // the bubble arbitrarily wide.
-const int kMaxContentsWidth = 500;
+constexpr int kMaxContentsWidth = 500;
 
 // The new default width for the content settings bubble. The review process to
 // the width on per-bubble basis is tracked with https://crbug.com/649650.
-const int kMaxDefaultContentsWidth = 320;
+constexpr int kMaxDefaultContentsWidth = 320;
 
 // When we have multiline labels, we should set a minimum width lest we get very
 // narrow bubbles with lots of line-wrapping.
-const int kMinMultiLineContentsWidth = 250;
+constexpr int kMinMultiLineContentsWidth = 250;
 
 // Display a maximum of 4 visible items in a list before scrolling.
-const int kMaxVisibleListItems = 4;
+constexpr int kMaxVisibleListItems = 4;
+
+constexpr int kSmallSnapPoint = 320;
 
 }  // namespace
 
@@ -358,6 +360,10 @@ base::string16 ContentSettingBubbleContents::GetWindowTitle() const {
 
 bool ContentSettingBubbleContents::ShouldShowCloseButton() const {
   return ChromeLayoutProvider::Get()->IsHarmonyMode();
+}
+
+int ContentSettingBubbleContents::GetPreferredFrameWidth() const {
+  return ChromeLayoutProvider::Get()->IsHarmonyMode() ? kSmallSnapPoint : 0;
 }
 
 void ContentSettingBubbleContents::Init() {

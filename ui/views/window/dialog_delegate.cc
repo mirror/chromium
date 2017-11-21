@@ -145,6 +145,10 @@ bool DialogDelegate::ShouldSnapFrameWidth() const {
   return GetDialogButtons() != ui::DIALOG_BUTTON_NONE;
 }
 
+int DialogDelegate::GetPreferredFrameWidth() const {
+  return 0;
+}
+
 int DialogDelegate::GetDialogButtons() const {
   return ui::DIALOG_BUTTON_OK | ui::DIALOG_BUTTON_CANCEL;
 }
