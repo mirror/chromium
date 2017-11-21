@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53d822db_7f5cdab3",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "nit: move \"flag\" to the previous line",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae713a6_00e3a1bf",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "nit: other descriptions start with a capital letter",
+      "range": {
+        "startLine": 161,
+        "startChar": 19,
+        "endLine": 161,
+        "endChar": 20
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2915bc16_7ea84b80",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "leftover?",
+      "range": {
+        "startLine": 185,
+        "startChar": 69,
+        "endLine": 185,
+        "endChar": 73
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb88ef87_238939ae",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "Should we change the name here? We can run tests, fuzzers, other programs. Let\u0027s use Commands or Targets, or something else?",
+      "range": {
+        "startLine": 209,
+        "startChar": 36,
+        "endLine": 209,
+        "endChar": 41
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d51ef4_cb8de7bf",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "again, we need to switch to a more generic name, maybe program?",
+      "range": {
+        "startLine": 224,
+        "startChar": 40,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d921c489_6a2adcd5",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "is this necessary, if we don\u0027t care about the result anyway?",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 8
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44f93b2_c6a567a9",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "I think that we also need \"-sparse\u003dtrue\" argument here. It doesn\u0027t emit data for functions that have not been executed, so the .profdata output is much smaller.\n\n\"-sparse\u003dtrue\" is the same as \"-sparse\", but let\u0027s use the more explicit one.",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 37
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdd685d_9b328335",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "We don\u0027t handle exceptions from other subprocess.check_call calls (e.g. in _GenerateLineByLineFileCoverageInHtml() or _BuildTargets), should we?",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 19
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da2bb70_b0e48bdd",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T21:14:07Z",
+      "side": 1,
+      "message": "leftover from the local testing?",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 35
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
