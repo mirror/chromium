@@ -91,7 +91,8 @@ void SharedWorkerHost::Start(mojom::SharedWorkerFactoryPtr factory,
       mojo::MakeRequest(&interface_provider)));
 
   mojom::SharedWorkerInfoPtr info(mojom::SharedWorkerInfo::New(
-      instance_->url(), instance_->name(), instance_->content_security_policy(),
+      instance_->url(), instance_->name(), instance_->constructor_origin(),
+      instance_->content_security_policy(),
       instance_->content_security_policy_type(),
       instance_->creation_address_space()));
 

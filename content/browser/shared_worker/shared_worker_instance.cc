@@ -11,6 +11,7 @@ namespace content {
 SharedWorkerInstance::SharedWorkerInstance(
     const GURL& url,
     const std::string& name,
+    const url::Origin& constructor_origin,
     const std::string& content_security_policy,
     blink::WebContentSecurityPolicyType security_policy_type,
     blink::WebAddressSpace creation_address_space,
@@ -20,6 +21,7 @@ SharedWorkerInstance::SharedWorkerInstance(
     const base::UnguessableToken& devtools_worker_token)
     : url_(url),
       name_(name),
+      constructor_origin_(constructor_origin),
       content_security_policy_(content_security_policy),
       content_security_policy_type_(security_policy_type),
       creation_address_space_(creation_address_space),
@@ -36,8 +38,9 @@ SharedWorkerInstance::SharedWorkerInstance(const SharedWorkerInstance& other) =
 
 SharedWorkerInstance::~SharedWorkerInstance() {}
 
-bool SharedWorkerInstance::Matches(const GURL& match_url,
-                                   const std::string& match_name,
+bool SharedWorkerInstance::Matches(const GURL& url,
+                                   const std::string& name,
+                                   const url::Origin& constructor_origin,
                                    const WorkerStoragePartitionId& partition_id,
                                    ResourceContext* resource_context) const {
   // ResourceContext equivalence is being used as a proxy to ensure we only
@@ -50,19 +53,17 @@ bool SharedWorkerInstance::Matches(const GURL& match_url,
   if (!partition_id_.Equals(partition_id))
     return false;
 
-  if (url_.GetOrigin() != match_url.GetOrigin())
+  if (!constructor_origin_.IsSameOriginWith(constructor_origin))
     return false;
 
-  if (name_ != match_name || url_ != match_url)
+  if (name_ != name || url_ != url)
     return false;
   return true;
 }
 
 bool SharedWorkerInstance::Matches(const SharedWorkerInstance& other) const {
-  return Matches(other.url(),
-                 other.name(),
-                 other.partition_id(),
-                 other.resource_context());
+  return Matches(other.url(), other.name(), other.constructor_origin(),
+                 other.partition_id(), other.resource_context());
 }
 
 }  // namespace content

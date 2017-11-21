@@ -90,10 +90,11 @@ void SharedWorkerServiceImpl::ConnectToWorker(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   auto instance = std::make_unique<SharedWorkerInstance>(
-      info->url, info->name, info->content_security_policy,
-      info->content_security_policy_type, info->creation_address_space,
-      resource_context, partition_id, creation_context_type,
-      base::UnguessableToken::Create());
+      info->url, info->name, info->constructor_origin,
+      info->content_security_policy, info->content_security_policy_type,
+      info->creation_address_space, resource_context, partition_id,
+      creation_context_type, base::UnguessableToken::Create());
+  LOG(ERROR) << info->url;
 
   SharedWorkerHost* host = FindAvailableSharedWorkerHost(*instance);
   if (host) {
