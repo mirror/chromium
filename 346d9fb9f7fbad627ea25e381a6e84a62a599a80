@@ -234,6 +234,30 @@
       "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cb6c4c_22d88e73",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-11-21T15:48:02Z",
+      "side": 1,
+      "message": "s/\"cool page\u0027s title 1\"/\"first cool page title\"",
+      "parentUuid": "285a16e8_7e954bd8",
+      "range": {
+        "startLine": 91,
+        "startChar": 55,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
