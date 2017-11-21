@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b2f490_a7a2f4a6",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileCallback.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-21T11:59:07Z",
+      "side": 1,
+      "message": "Confusing.  Do FileCalllback\u0027s return a Blob of File?  Here it returns a Blob, how come?",
+      "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
