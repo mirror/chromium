@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea8f38a_7f5a571a",
+        "filename": "ios/web/public/test/http_server/infinite_pending_response_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-21T17:30:24Z",
+      "side": 1,
+      "message": "I copied the InfinitePendingResponseProvider from progress_indicator_egtest.mm and split it into a .mm and .h.\n\nI made two more significant changes in the class, which I commented in the .mm below.",
+      "revId": "c4c7e96bc0dd57814e08649de092cb29713c06c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e52084_f63c9aae",
+        "filename": "ios/web/public/test/http_server/infinite_pending_response_provider.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-21T17:30:24Z",
+      "side": 1,
+      "message": "I removed the contents of the previous destructor, which GREYAsserted on terminated_.\n\nThis file doesn\u0027t depend on EG. If this condition is critical, would you like a DCHECK (not great for tests), or something else?",
+      "revId": "c4c7e96bc0dd57814e08649de092cb29713c06c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bda28b1_bada7dbd",
+        "filename": "ios/web/public/test/http_server/infinite_pending_response_provider.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-21T17:30:24Z",
+      "side": 1,
+      "message": "I added this helper so tests could access the text contents of the page.",
+      "revId": "c4c7e96bc0dd57814e08649de092cb29713c06c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
