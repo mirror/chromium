@@ -42,7 +42,7 @@ UiSceneManagerTest::UiSceneManagerTest() {}
 UiSceneManagerTest::~UiSceneManagerTest() {}
 
 void UiSceneManagerTest::SetUp() {
-  browser_ = base::MakeUnique<testing::NiceMock<MockBrowserInterface>>();
+  browser_ = base::MakeUnique<testing::NiceMock<MockUiBrowserInterface>>();
   content_input_delegate_ =
       base::MakeUnique<testing::NiceMock<MockContentInputDelegate>>();
 }
