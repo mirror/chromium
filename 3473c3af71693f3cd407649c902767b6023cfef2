@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "36510aa0_95ea90e6",
+        "filename": "base/observer_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003205
+      },
+      "writtenOn": "2017-11-21T23:56:47Z",
+      "side": 1,
+      "message": "Actually, we implement a clang plugin warning so that if \u0027auto\u0027 is deduced to a pointer type, we require explicit qualification: https://cs.chromium.org/chromium/src/tools/clang/plugins/FindBadConstructsConsumer.cpp?rcl\u003d5c6beea98845bd10f2cad495de4376eb5de55b88\u0026l\u003d1024\n\n(I don\u0027t feel strongly about this change, though I mildly prefer auto\u0026 myself.)",
+      "parentUuid": "78ef2ff3_07819c0b",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "3473c3af71693f3cd407649c902767b6023cfef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb57638f_0c9c9dda",
         "filename": "base/observer_list.h",
         "patchSetId": 8
