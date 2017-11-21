@@ -39,7 +39,8 @@ class HoverButton : public views::LabelButton {
   HoverButton(views::ButtonListener* button_listener,
               std::unique_ptr<views::View> icon_view,
               const base::string16& title,
-              const base::string16& subtitle);
+              const base::string16& subtitle,
+              const bool white_text_color = false);
 
   ~HoverButton() override;
 
