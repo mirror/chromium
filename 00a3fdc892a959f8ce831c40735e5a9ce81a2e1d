@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d873cc0d_0f974744",
+        "filename": "net/log/net_log_event_type_list.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-21T21:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57862108_73e03287",
+      "range": {
+        "startLine": 2035,
+        "startChar": 53,
+        "endLine": 2035,
+        "endChar": 0
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1010fdc8_4810982b",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da2f236_8da7593a",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1929,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-21T21:57:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1010fdc8_4810982b",
+      "range": {
+        "startLine": 1929,
+        "startChar": 37,
+        "endLine": 1929,
+        "endChar": 0
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "43f3b5ab_287f9433",
+        "filename": "net/quic/core/quic_connection.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-21T21:57:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7708b874_641a8ecd",
+      "range": {
+        "startLine": 1027,
+        "startChar": 43,
+        "endLine": 1027,
+        "endChar": 44
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "502e0e1a_4504d055",
         "filename": "net/quic/core/quic_connection.cc",
         "patchSetId": 15
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "addff12f_fb6a1602",
+        "filename": "net/quic/core/quic_connection.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2507,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-21T21:57:30Z",
+      "side": 1,
+      "message": "Fair point, as we discussed this should be moved to the caller...",
+      "parentUuid": "502e0e1a_4504d055",
+      "range": {
+        "startLine": 2507,
+        "startChar": 16,
+        "endLine": 2507,
+        "endChar": 0
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a083a29b_a1154072",
         "filename": "net/quic/core/quic_connection.cc",
         "patchSetId": 15
@@ -128,6 +224,30 @@
       "writtenOn": "2017-11-21T20:35:55Z",
       "side": 1,
       "message": "How \u0027bout returning WriteResult instead of bool? (Or perhaps as we discussed, letting the caller do the writing. \n\nIn particular, it\u0027s *very* commons for writes in chrome to be async (return ERR_IO_PENDING and hence WRITE_STATUS_BLOCKED) but this is not a failure.",
+      "range": {
+        "startLine": 2527,
+        "startChar": 14,
+        "endLine": 2527,
+        "endChar": 0
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7126e499_743e8c5c",
+        "filename": "net/quic/core/quic_connection.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2527,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-21T21:57:30Z",
+      "side": 1,
+      "message": "Thanks for the suggestions on packet write, I wasn\u0027t so deep here, I thought the writer will just return something like WRITE_STATUS_PENDING here, which is not in the code...\n\nI think you\u0027re right, BLOCKED should be treated as ok here. When packet writer finishes async, it will notify manager on error, (which declares probe failed), if it\u0027s successful, it will unblock it self to be writable. \n\nI will clean this up in the follow up CL and add unittests.",
+      "parentUuid": "a083a29b_a1154072",
       "range": {
         "startLine": 2527,
         "startChar": 14,
