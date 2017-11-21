@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a2916b_0e611dc2",
+        "filename": "third_party/WebKit/Source/modules/filesystem/ErrorCallback.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-21T10:00:40Z",
+      "side": 1,
+      "message": "nit: This change looks independent from the objective of this CL.",
+      "revId": "3f2d212fefd0a4a6d568751067d5ccf61a68d8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
