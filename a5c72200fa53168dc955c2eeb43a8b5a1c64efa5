@@ -22,6 +22,30 @@
       "revId": "a5c72200fa53168dc955c2eeb43a8b5a1c64efa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336e0585_e624ce03",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SmartClipCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1206959
+      },
+      "writtenOn": "2017-11-21T03:42:26Z",
+      "side": 1,
+      "message": "I think this needs to be returned in dip as this Rect was present earlier and was being returned in dip which was serving the purpose fine.",
+      "parentUuid": "1c14bf2f_5b6ad25d",
+      "range": {
+        "startLine": 14,
+        "startChar": 60,
+        "endLine": 14,
+        "endChar": 73
+      },
+      "revId": "a5c72200fa53168dc955c2eeb43a8b5a1c64efa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

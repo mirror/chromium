@@ -22,6 +22,30 @@
       "revId": "3266e2f53e9570623c83cd45b58c20dd885b94eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd423aef_2b87042a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SmartClipProviderTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1206959
+      },
+      "writtenOn": "2017-11-21T03:42:26Z",
+      "side": 0,
+      "message": "In the earlier patch( https://codereview.chromium.org/2667283007/ ), which removed sending this clipRect from blink, the Rect requested for extraction was simply passed back in the callback. Hence, this test was simply saving the requested Rect and checking whether it is equal to what is returned.\nHowever, now this patch is returning the actual clip rect in the HTML which would be extracted, which shall be different depending on the extraction.\nAlso, I\u0027m simply reverting this - https://codereview.chromium.org/2667283007/patch/80001/90003",
+      "parentUuid": "001a2bb9_a7134c7b",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 79
+      },
+      "revId": "3266e2f53e9570623c83cd45b58c20dd885b94eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
