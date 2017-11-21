@@ -16,6 +16,24 @@
       "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6261ccbf_e0140ab8",
+        "filename": "content/renderer/loader/web_url_request_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-21T02:29:55Z",
+      "side": 1,
+      "message": "The history serialization callsite is worrying and I want to understand it better. I haven\u0027t been able to create a test showing that history serialization is broken with data pipes.\n\nIn my test site which uploads a file \u003chttps://aware-flame.glitch.me/test-main-resource\u003e, NetworkService Chrome still seems to work since the body contains a FILE not BLOB element, so the data pipe conversion doesn\u0027t occur.\n\nIs there a way for a navigation to have a ResourceRequestBody with a BLOB type?",
+      "parentUuid": "a59a7537_4d58181e",
+      "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
