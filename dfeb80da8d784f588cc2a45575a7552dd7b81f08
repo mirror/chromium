@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "887c7e74_df2c3e1a",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-21T16:49:58Z",
+      "side": 1,
+      "message": "This is posted on the UI thread. The task will be run on the same UI thread. Before any newly posted tasks can be run, the current task needs to finish.\n\n+Bernhard to keep me honest.",
+      "parentUuid": "09eab2ee_6abc743a",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 54
+      },
+      "revId": "dfeb80da8d784f588cc2a45575a7552dd7b81f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0769ed2_76a525f2",
         "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T15:48:02Z",
       "side": 1,
       "message": "Is this a proxy for \"fetching all bookmarks only once\"?\nIs there a more direct test to ensure this?",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 60
+      },
+      "revId": "dfeb80da8d784f588cc2a45575a7552dd7b81f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372c6c3e_feb81298",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-21T16:49:58Z",
+      "side": 1,
+      "message": "Yes.\n\nI do not see any more direct (and reasonably simple and correct) way. \n\n_Every_ call to FetchBookmarksInternal leads to:\n - one call to GetRecentlyVisitedBookmarks. This is what I need to test but it is a static function. I could try to mock the BookmarksModel but then I would be assuming something about the internals of GetRecentlyVisitedBookmarks which is wrong.\n - one call to observer()-\u003eOnNewSuggestions. This is what I test for.",
+      "parentUuid": "f0769ed2_76a525f2",
       "range": {
         "startLine": 88,
         "startChar": 7,
