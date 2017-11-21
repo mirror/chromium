@@ -209,6 +209,30 @@
     },
     {
       "key": {
+        "uuid": "078eb780_793d0e61",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-21T20:49:40Z",
+      "side": 1,
+      "message": "Actually, the specification considers \"none\" to be a strictness value. [1]\nSo you can ignore my previous suggestion. If anything you get rid of \nis_none and introduce a new strictness type \"none but it is not that important.\n\n\n[1] https://drafts.csswg.org/css-scroll-snap/#snap-strictness",
+      "parentUuid": "89a0c2af_a42a74a8",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "cd3ca77332bd5ccf5f160dc9c8d5bf423267f42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c133d206_d349589c",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollTypes.h",
         "patchSetId": 15
