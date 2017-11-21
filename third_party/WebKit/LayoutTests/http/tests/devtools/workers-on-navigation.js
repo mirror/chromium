@@ -4,7 +4,6 @@
 
 (async function() {
   TestRunner.addResult(`Tests that workers are correctly detached upon navigation.\n`);
-  TestRunner.printDevToolsConsole();
 
   var workerTargetId;
   var navigated = false;

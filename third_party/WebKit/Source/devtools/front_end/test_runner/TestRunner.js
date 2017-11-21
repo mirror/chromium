@@ -1256,7 +1256,7 @@ TestRunner._consoleOutputHook = function(messageType) {
  * messages are shown in the right places, instead of having all of the console
  * messages printed at the top of the test expectation file (default behavior).
  */
-TestRunner.printDevToolsConsole = function() {
+TestRunner._printDevToolsConsole = function() {
   console.log = TestRunner._consoleOutputHook.bind(TestRunner, 'log');
   console.error = TestRunner._consoleOutputHook.bind(TestRunner, 'error');
   console.info = TestRunner._consoleOutputHook.bind(TestRunner, 'info');
@@ -1285,6 +1285,7 @@ TestRunner.TestObserver = class {
     if (TestRunner._startedTest)
       return;
     TestRunner._startedTest = true;
+    TestRunner._printDevToolsConsole();
     TestRunner._setupTestHelpers(target);
     TestRunner.runTest();
   }
