@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aaebc407_b145d9a8",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-21T17:07:56Z",
+      "side": 1,
+      "message": "I replaced should_paint_focus_rect with the already existing is_active. I match button which by default has no focus painter.",
+      "parentUuid": "e55a074d_aeb71cb4",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cd90c9_10c9a8f5",
         "filename": "ui/views/controls/slider.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed98405a_0294ad3c",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-21T17:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51cd90c9_10c9a8f5",
+      "range": {
+        "startLine": 314,
+        "startChar": 6,
+        "endLine": 314,
+        "endChar": 17
+      },
+      "revId": "7a18265758b1ce6bb2a48e481216ca8dc4977f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
