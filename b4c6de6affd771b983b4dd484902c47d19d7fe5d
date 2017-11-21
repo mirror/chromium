@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05be484a_3cd45530",
+        "filename": "chrome/browser/resources/print_preview/data/margins.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-21T23:57:15Z",
+      "side": 1,
+      "message": "Moved to prevent circular dependency, since print_preview.ticket_items.CustomMargins depends on this class.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
