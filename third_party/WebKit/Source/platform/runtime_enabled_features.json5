@@ -834,7 +834,8 @@
       status: "stable",
     },
     {
-      name: "PWAFullCodeCache"
+      name: "PWAFullCodeCache",
+      origin_trial_feature_name: "PWAFullCodeCache",
     },
     {
       name: "ReducedReferrerGranularity",
