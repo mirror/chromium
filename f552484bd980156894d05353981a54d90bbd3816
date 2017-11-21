@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "f4f7e3e5_ea2ae4c7",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-21T07:56:06Z",
+      "side": 1,
+      "message": "Yes, but the point is that if style_ is non-null at the beginning of this method, it\u0027s already the non-attached style that we try to retrieve here. I went through the initialization of resolved_style passed into LayoutTreeBuilderForElement and the only exception I found was for options (take a look at HTMLOptionElement::AttachLayoutTree). Could the missing if-check here actually be the reason for the option test failure?\n\nIf it weren\u0027t for the option case, I think you could\u0027ve added this DCHECK here:\n\nDCHECK(!style_ || style_ \u003d\u003d node_-\u003eGetNonAttachedStyle());",
+      "parentUuid": "ce1de015_2258d0c6",
+      "revId": "f552484bd980156894d05353981a54d90bbd3816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "041331c3_92e8687f",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 3
