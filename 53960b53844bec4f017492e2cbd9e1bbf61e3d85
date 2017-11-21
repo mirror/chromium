@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "84c3af90_6f579a53",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-21T01:46:21Z",
+      "side": 1,
+      "message": "I recommend you refactoring |bool GetUpperLeftCorner(FloatPoint\u0026 point)| to\n|Optional\u003cFloatPoint\u003e GetUpperLeftCorner()| so that |if (o-\u003eIsText() \u0026\u0026 !o-\u003eIsBR()){}| statement\ncan be more simple.",
+      "revId": "53960b53844bec4f017492e2cbd9e1bbf61e3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bae0635_364b7870",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 5
