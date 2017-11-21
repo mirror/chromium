@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2dfebabd_05533832",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-21T01:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c1c70ec_2b2db7e9",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e65063e_2b93be3d",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 10
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It\u0027s like documentation that we\u0027re sure it\u0027s OK to static_cast here.\n\nThe one in SWDispatcherHost is to defend against bad IPCs.\nI don\u0027t see one in ServiceWorkerVersion::CountFeature so we should add one there too.",
       "parentUuid": "65df31e9_351f38be",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf5920fd_909aa5bc",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-21T01:04:10Z",
+      "side": 1,
+      "message": "Got it, done",
+      "parentUuid": "1823ccd3_5e071e43",
       "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -125,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "7ab3871d_a75a5ea2",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-21T01:04:10Z",
+      "side": 1,
+      "message": "Done. Yes, checked_cast can\u0027t be used for enum types.",
+      "parentUuid": "11336d3d_bee88151",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35cd782f_4ddd4bf2",
         "filename": "content/browser/service_worker/service_worker_storage.cc",
         "patchSetId": 10
@@ -139,6 +193,24 @@
       "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a59c05_6995332c",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-21T01:04:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35cd782f_4ddd4bf2",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "967248c5_3fd54438",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-21T01:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a66cde_bad32cfd",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09bb9419_c4752b87",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 10
@@ -173,6 +263,24 @@
       "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e987d055_140e8635",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-21T01:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09bb9419_c4752b87",
+      "revId": "657808fdc9a465498331578fbd2fc2502f0430a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
