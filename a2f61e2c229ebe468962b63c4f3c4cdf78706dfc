@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "85f303f4_1cee88b1",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/cssScale-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-21T12:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f8b014d_cab85466",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab360a84_b183899e",
         "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-subclasses/cssScale.html",
         "patchSetId": 11
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "95436650_c1ba1944",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-subclasses/cssScale.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-21T12:35:22Z",
+      "side": 1,
+      "message": "thanks for make clearly.",
+      "parentUuid": "2ebabd9b_ce8540da",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aabf50d_e2b78f0a",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSScale.cpp",
         "patchSetId": 11
@@ -113,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "c311157a_c2c5823d",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSScale.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-21T12:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aabf50d_e2b78f0a",
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "448e8d47_1d13577f",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSScale.h",
         "patchSetId": 11
@@ -124,6 +190,24 @@
       "writtenOn": "2017-11-20T21:36:02Z",
       "side": 1,
       "message": "If it makes it easier for you, feel free to add a static method on CSSUnitValue for creating numbers (so you don\u0027t have to keep typing CSSPrimitiveValue::UnitType::kNumber), or make the unit type default to number.",
+      "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fbd7f7d_44c57211",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSScale.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-21T12:35:22Z",
+      "side": 1,
+      "message": "i made the unit type default to number.",
+      "parentUuid": "448e8d47_1d13577f",
       "revId": "a2f61e2c229ebe468962b63c4f3c4cdf78706dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
