@@ -51,6 +51,7 @@ TextInputClientMessageFilter::~TextInputClientMessageFilter() {}
 void TextInputClientMessageFilter::OnGotStringAtPoint(
     const mac::AttributedStringCoder::EncodedString& encoded_string,
     const gfx::Point& point) {
+  NOTREACHED();
   TextInputClientMac* service = TextInputClientMac::GetInstance();
   NSAttributedString* string =
       mac::AttributedStringCoder::Decode(&encoded_string);
@@ -58,6 +59,7 @@ void TextInputClientMessageFilter::OnGotStringAtPoint(
 }
 
 void TextInputClientMessageFilter::OnGotCharacterIndexForPoint(uint32_t index) {
+  NOTREACHED();
   TextInputClientMac* service = TextInputClientMac::GetInstance();
   // |index| could be WTF::notFound (-1) and its value is different from
   // NSNotFound so we need to convert it.
@@ -72,6 +74,7 @@ void TextInputClientMessageFilter::OnGotCharacterIndexForPoint(uint32_t index) {
 
 void TextInputClientMessageFilter::OnGotFirstRectForRange(
     const gfx::Rect& rect) {
+  NOTREACHED();
   TextInputClientMac* service = TextInputClientMac::GetInstance();
   service->SetFirstRectAndSignal(NSRectFromCGRect(rect.ToCGRect()));
 }
@@ -79,6 +82,7 @@ void TextInputClientMessageFilter::OnGotFirstRectForRange(
 void TextInputClientMessageFilter::OnGotStringFromRange(
     const mac::AttributedStringCoder::EncodedString& encoded_string,
     const gfx::Point& point) {
+  NOTREACHED();
   TextInputClientMac* service = TextInputClientMac::GetInstance();
   NSAttributedString* string =
       mac::AttributedStringCoder::Decode(&encoded_string);

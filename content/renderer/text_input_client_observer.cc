@@ -101,6 +101,7 @@ PepperPluginInstanceImpl* TextInputClientObserver::GetFocusedPepperPlugin()
 #endif
 
 void TextInputClientObserver::OnStringAtPoint(gfx::Point point) {
+  NOTREACHED();
 #if defined(OS_MACOSX)
   blink::WebPoint baselinePoint;
   NSAttributedString* string = nil;
@@ -120,6 +121,7 @@ void TextInputClientObserver::OnStringAtPoint(gfx::Point point) {
 }
 
 void TextInputClientObserver::OnCharacterIndexForPoint(gfx::Point point) {
+  NOTREACHED();
   blink::WebPoint web_point(point);
   uint32_t index = 0U;
   if (auto* frame = GetFocusedFrame())
@@ -130,6 +132,7 @@ void TextInputClientObserver::OnCharacterIndexForPoint(gfx::Point point) {
 }
 
 void TextInputClientObserver::OnFirstRectForCharacterRange(gfx::Range range) {
+  NOTREACHED();
   gfx::Rect rect;
 #if BUILDFLAG(ENABLE_PLUGINS)
   PepperPluginInstanceImpl* focused_plugin = GetFocusedPepperPlugin();
@@ -156,6 +159,7 @@ void TextInputClientObserver::OnFirstRectForCharacterRange(gfx::Range range) {
 }
 
 void TextInputClientObserver::OnStringForRange(gfx::Range range) {
+  NOTREACHED();
 #if defined(OS_MACOSX)
   blink::WebPoint baselinePoint;
   NSAttributedString* string = nil;
