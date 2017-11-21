@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaa36deb_60b4f096",
+        "filename": "chrome/browser/safe_xml_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T20:05:52Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b835adf5ce32d1ac05725d6b815dd4ae85fd3e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a23b0bf_ef1ef40d",
+        "filename": "chrome/browser/safe_xml_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T20:05:52Z",
+      "side": 1,
+      "message": "Use base::StringPiece if possible. e.g. base::JSONReader::Read() will take that.",
+      "revId": "b835adf5ce32d1ac05725d6b815dd4ae85fd3e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a4eff6_27b1075e",
+        "filename": "chrome/browser/safe_xml_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T20:05:52Z",
+      "side": 1,
+      "message": "Will this ever evaluate to false?",
+      "revId": "b835adf5ce32d1ac05725d6b815dd4ae85fd3e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccc05c6_05a26ab4",
+        "filename": "chrome/browser/safe_xml_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T20:05:52Z",
+      "side": 1,
+      "message": "Does this produce a better output than what EXPECT_EQ() returns already?",
+      "revId": "b835adf5ce32d1ac05725d6b815dd4ae85fd3e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae962098_e0d68b96",
+        "filename": "chrome/test/base/test_service_manager_listener.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T20:05:52Z",
+      "side": 1,
+      "message": "nit: If it doesn\u0027t make a difference, can you consistenyl use {} or \u003d default?",
+      "range": {
+        "startLine": 11,
+        "startChar": 58,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "b835adf5ce32d1ac05725d6b815dd4ae85fd3e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d04c2e_8fce8593",
+        "filename": "chrome/test/base/test_service_manager_listener.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T20:05:52Z",
+      "side": 1,
+      "message": "Not used in the header?",
+      "revId": "b835adf5ce32d1ac05725d6b815dd4ae85fd3e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdd943a_e2987013",
+        "filename": "chrome/test/base/test_service_manager_listener.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-21T20:05:52Z",
+      "side": 1,
+      "message": "Same for these two, as there\u0027s not \"content::\" in the header.",
+      "revId": "b835adf5ce32d1ac05725d6b815dd4ae85fd3e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
