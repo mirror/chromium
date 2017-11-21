@@ -2,6 +2,143 @@
   "comments": [
     {
       "key": {
+        "uuid": "ff0812fe_9b2957a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "end with period",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655a038d_78848f2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "note that \"per verification vs per request\" are not clear when reading this.\nI think saying per-URLRequest vs per CertVerifyProc::Verify() or some such thing would clarify.",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79763c6f_db453ed9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "This paragraph seems to describe consequences of how CertVerifyProc is layered by CachingCertVerifier (not a 1:1 relationship between URLRequestJobs and CertVerifyProc::Verify() calls).\n\nI don\u0027t think all the justification is needed in the CL description. Rather these differences would be better explained in the histogram description for the corresponding metrics.",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e1c170_d6149602",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "Can you link to a bug motivating this change?\n\nThere may be some risk to this being reverted due to binary size increase for all the cert hashes (how much rodata does it add?), I think it would be helpful to have a bug on file for the change acknowledging this cost.",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321be0f6_23076776",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "From the name I would have expected it to histogram the chain\u0027s root.\nHave you considered names like \"HistogramFirstKnownRoot\", or \"MostSpecificTrustAnchor\" as this is called in the histogram description?",
+      "range": {
+        "startLine": 275,
+        "startChar": 5,
+        "endLine": 275,
+        "endChar": 28
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31c9055_27f9ff67",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "I think we may as well histogram the zero value too (outside of this loop, when no known root was identified).\n\nCould help validate that we have enumerated the full set of known roots; especially if we have a histogram for CertVerifyResult::is_issued_by_known_root to compare it against.",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96364f64_7bf25a30",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "nit \"Usage\" makes me think key usage / EKU. May just all this \"KnownRoot\"?",
+      "range": {
+        "startLine": 280,
+        "startChar": 49,
+        "endLine": 280,
+        "endChar": 62
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5197ec_877f5d4f",
         "filename": "net/cert/known_roots.cc",
         "patchSetId": 4
@@ -41,6 +178,189 @@
         "startChar": 75,
         "endLine": 37,
         "endChar": 0
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535161bd_2ee360fd",
+        "filename": "net/cert/known_roots.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "for the global int32_t (rather than std::int32_t), shouldn\u0027t we be including \u003cstdint.h\u003e instead? (which is what you use in root_cert_list_generated.h).",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a368142_d4c5029f",
+        "filename": "net/cert/known_roots.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "nit: Instead of \"ForHashValue\" how about \"ForSPKI\" or \"FromSPKI\". And the parameter can then be named |spki_hash| instead of just |hash|.",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 56
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c11943b_23ed7106",
+        "filename": "net/cert/root_cert_list_generated.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "nit: generated by.\n\nSplitting ends on language, but I don\u0027t think \"auto-generated\" is the right term given this is a manually run process, and not something the build would do automatically.",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17119714_773299e7",
+        "filename": "net/cert/root_cert_list_generated.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "can we save some bytes by using an int16_t?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d516aa53_c87a830e",
+        "filename": "net/data/ssl/root_stores/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "nit: mention that this is hex-encoded somewhere.",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c41933f_ba2be918",
+        "filename": "net/data/ssl/root_stores/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "Useful documentation in this file!",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5d4f62_e7ce4608",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "same comment as in other locatio: spki_hashes",
+      "range": {
+        "startLine": 89,
+        "startChar": 50,
+        "endLine": 89,
+        "endChar": 56
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c5922d_c51839fc",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "Is this intentionally different in terms of errors? The per-verification logging only happens on successful verifications, whereas I believe this runs on failed cert verifications. Or is |transaction_| expected to be null in those cases?",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a156e1_c919353f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 40052,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-21T00:19:14Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same comment as below? I expect you mean to distinguish between per-[URL]request vs per-cert verify",
+      "range": {
+        "startLine": 40052,
+        "startChar": 4,
+        "endLine": 40052,
+        "endChar": 16
       },
       "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
