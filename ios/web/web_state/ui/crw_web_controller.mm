@@ -16,6 +16,7 @@
 
 #include "base/callback.h"
 #include "base/containers/mru_cache.h"
+#include "base/feature_list.h"
 #import "base/ios/block_types.h"
 #include "base/ios/ios_util.h"
 #import "base/ios/ns_error_util.h"
@@ -49,6 +50,7 @@
 #include "ios/web/public/browser_state.h"
 #import "ios/web/public/download/download_controller.h"
 #include "ios/web/public/favicon_url.h"
+#include "ios/web/public/features.h"
 #import "ios/web/public/java_script_dialog_presenter.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
@@ -1929,7 +1931,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (void)loadCancelled {
-  [_passKitDownloader cancelPendingDownload];
+  if (!base::FeatureList::IsEnabled(web::features::kNewPassKitDownload)) {
+    [_passKitDownloader cancelPendingDownload];
+  }
   if (_loadPhase != web::PAGE_LOADED) {
     _loadPhase = web::PAGE_LOADED;
     if (!_isHalted) {
@@ -2102,6 +2106,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (CRWPassKitDownloader*)passKitDownloader {
+  DCHECK(!base::FeatureList::IsEnabled(web::features::kNewPassKitDownload));
   if (_passKitDownloader) {
     return _passKitDownloader;
   }
@@ -2887,8 +2892,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (void)handleLoadError:(NSError*)error
           forNavigation:(WKNavigation*)navigation {
   NSString* MIMEType = [_pendingNavigationInfo MIMEType];
-  if ([_passKitDownloader isMIMETypePassKitType:MIMEType])
+  if (!base::FeatureList::IsEnabled(web::features::kNewPassKitDownload) &&
+      [_passKitDownloader isMIMETypePassKitType:MIMEType]) {
     return;
+  }
   if ([error code] == NSURLErrorUnsupportedURL)
     return;
   // In cases where a Plug-in handles the load do not take any further action.
@@ -2920,28 +2927,35 @@ registerLoadRequestForURL:(const GURL&)requestURL
       error.code == web::kWebKitErrorFrameLoadInterruptedByPolicyChange) {
     NSString* errorURLSpec = error.userInfo[NSURLErrorFailingURLStringErrorKey];
     NSURL* errorURL = [NSURL URLWithString:errorURLSpec];
-    const GURL errorGURL = net::GURLWithNSURL(errorURL);
-
-    // See if the delegate wants to handle this case.
-    if (errorGURL.is_valid() &&
-        [_delegate
-            respondsToSelector:@selector(
-                                   controllerForUnhandledContentAtURL:)]) {
-      id<CRWNativeContent> controller =
-          [_delegate controllerForUnhandledContentAtURL:errorGURL];
-      if (controller) {
-        [self loadCompleteWithSuccess:NO forNavigation:navigation];
-        [self removeWebView];
-        [self setNativeController:controller];
-        [self loadNativeViewWithSuccess:YES
-                      navigationContext:navigationContext];
-        return;
+    if (!base::FeatureList::IsEnabled(web::features::kNewFileDownload)) {
+      // See if the delegate wants to handle this case.
+      const GURL errorGURL = net::GURLWithNSURL(errorURL);
+      if (errorGURL.is_valid() &&
+          [_delegate respondsToSelector:@selector
+                     (controllerForUnhandledContentAtURL:)]) {
+        id<CRWNativeContent> controller =
+            [_delegate controllerForUnhandledContentAtURL:errorGURL];
+        if (controller) {
+          [self loadCompleteWithSuccess:NO forNavigation:navigation];
+          [self removeWebView];
+          [self setNativeController:controller];
+          [self loadNativeViewWithSuccess:YES
+                        navigationContext:navigationContext];
+          return;
+        }
       }
     }
 
     // Ignore errors that originate from URLs that are opened in external apps.
     if ([_openedApplicationURL containsObject:errorURL])
       return;
+
+    if (base::FeatureList::IsEnabled(web::features::kNewPassKitDownload) ||
+        base::FeatureList::IsEnabled(web::features::kNewFileDownload)) {
+      // This navigation was a download navigation and embedder now has a chance
+      // to start the download task.
+      return;
+    }
 
     // The wrapper error uses the URL of the error and not the requested URL
     // (which can be different in case of a redirect) to match desktop Chrome
@@ -4280,24 +4294,32 @@ registerLoadRequestForURL:(const GURL&)requestURL
         ->CreateDownloadTask(_webStateImpl, [NSUUID UUID].UUIDString,
                              responseURL, contentDisposition, contentLength,
                              base::SysNSStringToUTF8(MIMEType));
-  }
-  if ([self.passKitDownloader isMIMETypePassKitType:MIMEType]) {
-    [self.passKitDownloader downloadPassKitFileWithURL:responseURL];
-    allowNavigation = NO;
 
-    // Discard the pending PassKit entry to ensure that the current URL is not
-    // different from what is displayed on the view. If there is no previous
-    // committed URL, which can happen when a link is opened in a new tab via a
-    // context menu or window.open, the pending entry should not be
-    // discarded so that the NavigationManager is never empty. Also, URLs loaded
-    // in a native view should be excluded to avoid an ugly animation where the
-    // web view is inserted and quickly removed.
-    GURL lastCommittedURL = self.webState->GetLastCommittedURL();
-    BOOL isFirstLoad = lastCommittedURL.is_empty();
-    BOOL previousItemWasLoadedInNativeView =
-        [self shouldLoadURLInNativeView:lastCommittedURL];
-    if (!isFirstLoad && !previousItemWasLoadedInNativeView)
-      self.navigationManagerImpl->DiscardNonCommittedItems();
+    BOOL downloadItem =
+        (base::FeatureList::IsEnabled(web::features::kNewPassKitDownload) ||
+         base::FeatureList::IsEnabled(web::features::kNewFileDownload));
+
+    if (!base::FeatureList::IsEnabled(web::features::kNewPassKitDownload) &&
+        [self.passKitDownloader isMIMETypePassKitType:MIMEType]) {
+      [self.passKitDownloader downloadPassKitFileWithURL:responseURL];
+      downloadItem = YES;
+    }
+
+    if (downloadItem) {
+      // Discard the pending item to ensure that the current URL is not
+      // different from what is displayed on the view. If there is no previous
+      // committed URL, which can happen when a link is opened in a new tab via
+      // a context menu or window.open, the pending entry should not be
+      // discarded so that the NavigationManager is never empty. Also, URLs
+      // loaded in a native view should be excluded to avoid an ugly animation
+      // where the web view is inserted and quickly removed.
+      GURL lastCommittedURL = self.webState->GetLastCommittedURL();
+      BOOL isFirstLoad = lastCommittedURL.is_empty();
+      BOOL previousItemWasLoadedInNativeView =
+          [self shouldLoadURLInNativeView:lastCommittedURL];
+      if (!isFirstLoad && !previousItemWasLoadedInNativeView)
+        self.navigationManagerImpl->DiscardNonCommittedItems();
+    }
   }
 
   // Although the Apple documentation says that |handler| can be called
