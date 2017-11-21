@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5a50d77_130bdd00",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cdf3a5c_55bb5fb0",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "383157ad_0c303652",
         "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "291bef79d008876a25895d524620daf864d9b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a287734_d4fcf21f",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "383157ad_0c303652",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "60727613_8592adf7",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0347a257_d230291d",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b129ef_4caade14",
         "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
         "patchSetId": 11
@@ -73,6 +133,24 @@
       "revId": "291bef79d008876a25895d524620daf864d9b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e524f3c_5758e7c5",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "I made this a local variable. Would it be less dangerous if autocomplete_controller remained a member variable, but became a unique_ptr instead of a raw pointer?",
+      "parentUuid": "a3b129ef_4caade14",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "31f4c61c_cab474ba",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f706774_7eeb55b6",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c8a6c9_bdae5049",
         "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
         "patchSetId": 11
@@ -104,6 +200,24 @@
       "writtenOn": "2017-11-21T00:46:24Z",
       "side": 1,
       "message": "Can you add a comment about this suggestion? Would improve readability of the test.",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db7b8d5_276e9638",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "I need do double check with Mark about this.",
+      "parentUuid": "e0c8a6c9_bdae5049",
       "revId": "291bef79d008876a25895d524620daf864d9b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "441aca2d_69d6429b",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Resolved per other related change.",
+      "parentUuid": "d0802e43_8404bcdb",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1b0c88b_6ee6da3a",
         "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
         "patchSetId": 11
@@ -141,6 +273,24 @@
       "revId": "291bef79d008876a25895d524620daf864d9b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517a41ff_6be1d119",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1b0c88b_6ee6da3a",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,23 @@
     },
     {
       "key": {
+        "uuid": "b1b4da04_c070282b",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/basic/manifest.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Nice catch. We do need to delete those files.",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d932572_ef491465",
         "filename": "chrome/test/data/extensions/api_test/omnibox/basic/test.js",
         "patchSetId": 11
@@ -175,6 +342,24 @@
       "revId": "291bef79d008876a25895d524620daf864d9b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385f65f3_4926ee31",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/basic/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d932572_ef491465",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +397,24 @@
     },
     {
       "key": {
+        "uuid": "157c26d9_b53e77c9",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/keyword_entered/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c21ea25e_daab3ed1",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bda2c4a_17844932",
         "filename": "chrome/test/data/extensions/api_test/omnibox/keyword_entered/test.js",
         "patchSetId": 11
@@ -226,6 +429,24 @@
       "revId": "291bef79d008876a25895d524620daf864d9b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5cb0b8_924f0b39",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/keyword_entered/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bda2c4a_17844932",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +470,30 @@
       "revId": "291bef79d008876a25895d524620daf864d9b8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1a28f8_231902a3",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-21T03:26:42Z",
+      "side": 1,
+      "message": "Resolved per comment in basic/manifest.json.",
+      "parentUuid": "2412da9b_44e0dea0",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
