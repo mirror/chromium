@@ -117,6 +117,30 @@
       "revId": "5c4c6676a6d9a46806fef1435a8659791b3d196c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5a2338d_94bc0a9b",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-21T02:23:40Z",
+      "side": 1,
+      "message": "Not as hilarious as the few times we got random crashes because the ABI unexpectedly changed between minor versions \u003e_\u003c",
+      "parentUuid": "ec5978ce_1b12638a",
+      "range": {
+        "startLine": 262,
+        "startChar": 6,
+        "endLine": 262,
+        "endChar": 40
+      },
+      "revId": "5c4c6676a6d9a46806fef1435a8659791b3d196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
