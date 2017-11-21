@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "827ff07a_06daf052",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-21T00:19:40Z",
+      "side": 1,
+      "message": "OK, I suppose. I think it\u0027s harder to reason about locally: \"if we got a GPU_ACCESS_DENIED result, then GpuProcessHost::Get() will return null from now on\" is not obvious, and depends on the exact behavior of GpuDataManagerImpl and GpuProcessHost. But you\u0027re right that it works correctly currently.",
+      "parentUuid": "7b3898e0_f2f4161e",
+      "revId": "431a2e48e834e0835f7e9133dd948ef69fdee8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0139df3c_a4feba5f",
         "filename": "content/browser/gpu/gpu_client.h",
         "patchSetId": 5
