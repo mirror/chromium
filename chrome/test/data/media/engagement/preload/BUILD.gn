@@ -1,0 +1,20 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/compiled_action.gni")
+
+# Generates a header file based on the real list.
+compiled_action("generate_preload_list") {
+  tool = "//tools/media_engagement_preload:generator"
+
+  # Inputs in order expected by the command line of the tool.
+  inputs = [
+    "test.json",
+  ]
+  outputs = [
+    "$target_gen_dir/media_engagement_preload_test.output",
+  ]
+  args =
+      rebase_path(inputs, root_build_dir) + rebase_path(outputs, root_build_dir)
+}
