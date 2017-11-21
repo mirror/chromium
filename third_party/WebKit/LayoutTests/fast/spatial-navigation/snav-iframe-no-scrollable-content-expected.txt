@@ -1,6 +1,7 @@
 a
 
 
+ k
 a
 PASS successfullyParsed is true
 
@@ -10,6 +11,7 @@ PASS gFocusedDocument.activeElement.getAttribute("id") is "2"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "3"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "7"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "6"
+PASS gFocusedDocument.activeElement.getAttribute("id") is "9"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "end"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "4"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "5"

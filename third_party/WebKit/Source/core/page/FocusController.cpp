@@ -1346,7 +1346,8 @@ void FocusController::FindFocusCandidateInContainer(
     Node& container,
     const LayoutRect& starting_rect,
     WebFocusType type,
-    FocusCandidate& closest) {
+    FocusCandidate& closest,
+    SkippedNodeSet& skipped_list) {
   Element* focused_element =
       (FocusedFrame() && FocusedFrame()->GetDocument())
           ? FocusedFrame()->GetDocument()->FocusedElement()
@@ -1369,6 +1370,9 @@ void FocusController::FindFocusCandidateInContainer(
     if (!element->IsKeyboardFocusable() && !IsNavigableContainer(element, type))
       continue;
 
+    if (skipped_list.Contains(element))
+      continue;
+
     FocusCandidate candidate = FocusCandidate(element, type);
     if (candidate.IsNull())
       continue;
@@ -1376,6 +1380,50 @@ void FocusController::FindFocusCandidateInContainer(
     candidate.enclosing_scrollable_box = &container;
     UpdateFocusCandidateIfNeeded(type, current, candidate, closest);
   }
+}
+
+bool FocusController::AdvanceFocusDirectionallyInDiscoveredContainer(
+    FocusCandidate& container,
+    WebFocusType type) {
+  if (container.IsNull())
+    return false;
+
+  HTMLFrameOwnerElement* frame_element = FrameOwnerElement(container);
+  if (frame_element && frame_element->ContentFrame()->IsLocalFrame()) {
+    if (container.is_offscreen_after_scrolling) {
+      ScrollInDirection(&container.visible_node->GetDocument(), type);
+      return true;
+    }
+    // Navigate into a new frame.
+    LayoutRect rect;
+    Element* focused_element =
+        ToLocalFrame(FocusedOrMainFrame())->GetDocument()->FocusedElement();
+    if (focused_element && !HasOffscreenRect(focused_element)) {
+      rect = NodeRectInAbsoluteCoordinates(focused_element,
+                                           true /* ignore border */);
+    }
+    ToLocalFrame(frame_element->ContentFrame())
+        ->GetDocument()
+        ->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+    return AdvanceFocusDirectionallyInContainer(
+        ToLocalFrame(frame_element->ContentFrame())->GetDocument(), rect, type);
+  }
+
+  if (container.is_offscreen_after_scrolling) {
+    ScrollInDirection(container.visible_node, type);
+    return true;
+  }
+
+  // Navigate into a new scrollable container.
+  LayoutRect starting_rect;
+  Element* focused_element =
+      ToLocalFrame(FocusedOrMainFrame())->GetDocument()->FocusedElement();
+  if (focused_element && !HasOffscreenRect(focused_element))
+    starting_rect = NodeRectInAbsoluteCoordinates(focused_element, true);
+
+  return AdvanceFocusDirectionallyInContainer(container.visible_node,
+                                              starting_rect, type);
 }
 
 bool FocusController::AdvanceFocusDirectionallyInContainer(
@@ -1394,60 +1442,32 @@ bool FocusController::AdvanceFocusDirectionallyInContainer(
   // Find the closest node within current container in the direction of the
   // navigation.
   FocusCandidate focus_candidate;
-  FindFocusCandidateInContainer(*container, new_starting_rect, type,
-                                focus_candidate);
+  SkippedNodeSet skipped_list;
+  bool found_focusable_element = false;
 
-  if (focus_candidate.IsNull()) {
-    // Nothing to focus, scroll if possible.
-    // NOTE: If no scrolling is performed (i.e. scrollInDirection returns
-    // false), the spatial navigation algorithm will skip this container.
-    return ScrollInDirection(container, type);
-  }
+  do {
+    FocusCandidate next_closest;
+    FindFocusCandidateInContainer(*container, new_starting_rect, type,
+                                  next_closest, skipped_list);
 
-  if (IsNavigableContainer(focus_candidate.visible_node, type)) {
-    HTMLFrameOwnerElement* frame_element = FrameOwnerElement(focus_candidate);
-    if (frame_element && frame_element->ContentFrame()->IsLocalFrame()) {
-      if (focus_candidate.is_offscreen_after_scrolling) {
-        ScrollInDirection(&focus_candidate.visible_node->GetDocument(), type);
+    if (next_closest.IsNull()) {
+      // Nothing to focus, scroll if possible.
+      // NOTE: If no scrolling is performed (i.e. scrollInDirection returns
+      // false), the spatial navigation algorithm will skip this container.
+      return ScrollInDirection(container, type);
+    }
+
+    if (IsNavigableContainer(next_closest.visible_node, type)) {
+      if (AdvanceFocusDirectionallyInDiscoveredContainer(next_closest, type))
         return true;
-      }
-      // Navigate into a new frame.
-      LayoutRect rect;
-      Element* focused_element =
-          ToLocalFrame(FocusedOrMainFrame())->GetDocument()->FocusedElement();
-      if (focused_element && !HasOffscreenRect(focused_element)) {
-        rect = NodeRectInAbsoluteCoordinates(focused_element,
-                                             true /* ignore border */);
-      }
-      ToLocalFrame(frame_element->ContentFrame())
-          ->GetDocument()
-          ->UpdateStyleAndLayoutIgnorePendingStylesheets();
-      if (!AdvanceFocusDirectionallyInContainer(
-              ToLocalFrame(frame_element->ContentFrame())->GetDocument(), rect,
-              type)) {
-        // The new frame had nothing interesting, need to find another
-        // candidate.
-        return AdvanceFocusDirectionallyInContainer(
-            container,
-            NodeRectInAbsoluteCoordinates(focus_candidate.visible_node, true),
-            type);
-      }
-      return true;
+
+      skipped_list.insert(next_closest.visible_node);
+      continue;
     }
 
-    if (focus_candidate.is_offscreen_after_scrolling) {
-      ScrollInDirection(focus_candidate.visible_node, type);
-      return true;
-    }
-    // Navigate into a new scrollable container.
-    LayoutRect starting_rect;
-    Element* focused_element =
-        ToLocalFrame(FocusedOrMainFrame())->GetDocument()->FocusedElement();
-    if (focused_element && !HasOffscreenRect(focused_element))
-      starting_rect = NodeRectInAbsoluteCoordinates(focused_element, true);
-    return AdvanceFocusDirectionallyInContainer(focus_candidate.visible_node,
-                                                starting_rect, type);
-  }
+    found_focusable_element = true;
+    focus_candidate = next_closest;
+  } while (!found_focusable_element);
 
   if (focus_candidate.is_offscreen_after_scrolling) {
     Node* container = focus_candidate.enclosing_scrollable_box;
