@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97af6f9e_7141e657",
+        "filename": "ui/app_list/pagination_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-21T00:10:42Z",
+      "side": 1,
+      "message": "Currently it is only called when transition_animation_ is not nullptr. But maybe I can double check it here and return 0 if nullptr?\n\nThere is still overscroll, when at the max page, and try to scroll up will trigger this 50ms animation. Another corner case is that we might use default slide duration [1]. Seems not possible because transition_duration_ms_ and overscroll_transition_duration_ms_ are both \u003e 0.\n[1] https://cs.chromium.org/chromium/src/ui/app_list/pagination_model.cc?l\u003d235\u0026rcl\u003d0366f1a82a0d2c4e0b82a3632e1dff5ee0b35690",
+      "parentUuid": "20077ae2_fa71c48d",
+      "revId": "5754927b24f86b7fc2844fd49e018d4fda2d788f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6621afaf_16f2f67f",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5754927b24f86b7fc2844fd49e018d4fda2d788f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231481e6_2609b467",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-21T00:10:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6621afaf_16f2f67f",
+      "revId": "5754927b24f86b7fc2844fd49e018d4fda2d788f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "274e35df_56a0bacd",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-21T00:10:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be0afb08_a9b6b4e5",
+      "range": {
+        "startLine": 286,
+        "startChar": 51,
+        "endLine": 286,
+        "endChar": 55
+      },
+      "revId": "5754927b24f86b7fc2844fd49e018d4fda2d788f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03ac8734_2b7ab605",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 1
@@ -70,6 +130,30 @@
       "writtenOn": "2017-11-20T23:19:59Z",
       "side": 1,
       "message": "nit: The name is a bit confusing. It feels like |actual_duration| is |ideal_duration| as |duration| is the actual duration that the animation runs.",
+      "range": {
+        "startLine": 295,
+        "startChar": 14,
+        "endLine": 295,
+        "endChar": 29
+      },
+      "revId": "5754927b24f86b7fc2844fd49e018d4fda2d788f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2beac3f1_42909488",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-21T00:10:42Z",
+      "side": 1,
+      "message": "It is confusing. I will change the way to say it: actual_frames and ideal_frames. Then the smoothness is the actual_frames/ideal_frames.",
+      "parentUuid": "03ac8734_2b7ab605",
       "range": {
         "startLine": 295,
         "startChar": 14,
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ea0802fa_7a36fd46",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2660,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-21T00:10:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af5ab6ab_6423fca9",
+      "revId": "5754927b24f86b7fc2844fd49e018d4fda2d788f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d78e29_d8e25058",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 1
@@ -119,6 +221,30 @@
       "revId": "5754927b24f86b7fc2844fd49e018d4fda2d788f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfcf60e0_60694c38",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-21T00:10:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d78e29_d8e25058",
+      "range": {
+        "startLine": 90,
+        "startChar": 25,
+        "endLine": 90,
+        "endChar": 36
+      },
+      "revId": "5754927b24f86b7fc2844fd49e018d4fda2d788f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
