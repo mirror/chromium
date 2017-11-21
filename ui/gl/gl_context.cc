@@ -9,6 +9,8 @@
 #include "base/bind.h"
 #include "base/cancelable_callback.h"
 #include "base/command_line.h"
+#include "base/debug/crash_logging.h"
+#include "base/debug/stack_trace.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -244,6 +246,10 @@ std::unique_ptr<gl::GLVersionInfo> GLContext::GenerateGLVersionInfo() {
 }
 
 void GLContext::SetCurrent(GLSurface* surface) {
+  // TODO(sunnyps): Remove after fixing crbug.com/724999.
+  base::debug::SetCrashKeyToStackTrace("gl-context-set-current-stack-trace",
+                                       base::debug::StackTrace());
+
   current_context_.Pointer()->Set(surface ? this : nullptr);
   GLSurface::SetCurrent(surface);
   // Leave the real GL api current so that unit tests work correctly.
