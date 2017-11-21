@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16d5193e_2c226e96",
+        "filename": "ios/chrome/browser/metrics/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6014a1f5_08f85ef1",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 47
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f099582_d51ce67c",
         "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552d5482_fca51d15",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f099582_d51ce67c",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b0905dc9_8e4cbc9a",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly. The reason I chose class constant is because its meaning is more closely tied to this class. Given that this class is defined in the global scope, I didn\u0027t want to add more symbols there.",
+      "parentUuid": "99f0b793_29bcb7f6",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64725b6d_0bee08a8",
         "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.mm",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f655c4_88ec8af9",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "I was thinking of LOADING_STARTED event type when I wrote the non-mutually-exclusive comment. I think it will be easier to make sense of the numbers if all the *NAVIGATION event types are mutually exclusive. I tweaked the enum names and comments to clarify.",
+      "parentUuid": "64725b6d_0bee08a8",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 11
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b23dd01d_239db639",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19cabb20_e18cece3",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d72a39df_2878b01e",
         "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3564521d_6d6c61e6",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "Changed prefs_ to be stack allocated.",
+      "parentUuid": "d72a39df_2878b01e",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ff4ee040_ffd9dd35",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc9bc1a0_35cc517f",
+      "range": {
+        "startLine": 31,
+        "startChar": 28,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbcd573e_ef34f0d2",
         "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab584637_32ed9c92",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbcd573e_ef34f0d2",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "93d4e316_ea5ad4d3",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "Fair point. Line 42 has the same problem. Once we inline both expectations, this helper is only saving the provider initialization. So I decided to get rid of this helper and inline it in each test case.",
+      "parentUuid": "d50b61a6_fe9a3aa8",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ddc83fe_58a183ce",
         "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
         "patchSetId": 3
@@ -220,6 +436,30 @@
       "writtenOn": "2017-11-20T17:20:20Z",
       "side": 1,
       "message": "Could you please add comments for all test methods",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "6978d40194422a99316f55e64c8eb1e2173c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3876984e_95b35c28",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_stability_metrics_provider_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-21T16:41:37Z",
+      "side": 1,
+      "message": "Do you find that the test names not sufficiently self-explanatory? I could add comments, but they wouldn\u0027t be very different from the test names...",
+      "parentUuid": "5ddc83fe_58a183ce",
       "range": {
         "startLine": 64,
         "startChar": 7,
