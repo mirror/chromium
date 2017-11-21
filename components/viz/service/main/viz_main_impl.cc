@@ -233,8 +233,8 @@ void VizMainImpl::CreateFrameSinkManagerInternal(
   DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
   gpu_command_service_ = base::MakeRefCounted<gpu::GpuInProcessThreadService>(
       gpu_thread_task_runner_, gpu_service_->sync_point_manager(),
-      gpu_service_->mailbox_manager(), gpu_service_->share_group(),
-      gpu_service_->gpu_feature_info());
+      gpu_service_->scheduler(), gpu_service_->mailbox_manager(),
+      gpu_service_->share_group(), gpu_service_->gpu_feature_info());
 
   compositor_thread_task_runner_->PostTask(
       FROM_HERE,
