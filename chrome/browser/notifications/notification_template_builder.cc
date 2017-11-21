@@ -21,6 +21,8 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+#include <algorithm>
+
 namespace {
 
 // Constants used for the XML element names and their attributes.
@@ -93,6 +95,8 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
                             TextType::NORMAL);
   builder->WriteTextElement(base::UTF16ToUTF8(notification.message()),
                             TextType::NORMAL);
+  if (!notification.items().empty())
+    builder->WriteItems(notification.items());
   builder->WriteTextElement(builder->FormatOrigin(notification.origin_url()),
                             TextType::ATTRIBUTION);
 
@@ -205,6 +209,25 @@ void NotificationTemplateBuilder::WriteTextElement(const std::string& content,
     xml_writer_->AddAttribute(kPlacement, kAttribution);
   xml_writer_->AppendElementContent(content);
   xml_writer_->EndElement();
+}
+
+void NotificationTemplateBuilder::WriteItems(
+    const std::vector<message_center::NotificationItem>& items) {
+  // A toast can have a maximum of three text items, of which one is reserved
+  // for the title. The remaining two can each handle up to four lines of text,
+  // but the toast can only show four lines total, so there's no point in having
+  // more than one text item. Therefore, we show them all in one and hope there
+  // is no truncation at the bottom. There will never be room for items 5 and up
+  // so we don't make an attempt to show them. Note that the subtitle can also
+  // cause fewer items to appear.
+  size_t entries = std::min(4U, items.size());
+  std::string item_list;
+  for (size_t i = 0; i < entries; ++i) {
+    auto item = items[i];
+    item_list += base::UTF16ToUTF8(item.title) + " - " +
+                 base::UTF16ToUTF8(item.message) + "\n";
+  }
+  WriteTextElement(item_list, TextType::NORMAL);
 }
 
 void NotificationTemplateBuilder::WriteIconElement(
