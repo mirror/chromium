@@ -45,8 +45,6 @@ const char kProxyAuthChallenge[] = "challenge";
 const char kProxyAuthPassword1[] = "password 1";
 const char kProxyAuthPassword2[] = "password 2";
 
-const char kGAIACookieURL[] = "https://google.com/";
-const char kSAMLIdPCookieURL[] = "https://example.com/";
 const char kCookieName[] = "cookie";
 const char kCookieValue1[] = "value 1";
 const char kCookieValue2[] = "value 2";
@@ -221,22 +219,32 @@ void ProfileAuthDataTest::PopulateBrowserContext(
       base::BindOnce(&ProfileAuthDataTest::QuitLoop, base::Unretained(this)));
   run_loop_->Run();
 
-  cookies->SetCookieWithDetailsAsync(
-      GURL(kSAMLIdPCookieURL), kCookieName, cookie_value,
-      kSAMLIdPCookieDomainWithWildcard, std::string(), base::Time(),
+  std::unique_ptr<net::CanonicalCookie> cc(
+      std::make_unique<net::CanonicalCookie>(
+          kCookieName, cookie_value, kSAMLIdPCookieDomainWithWildcard,
+          std::string(), base::Time(), base::Time(), base::Time(), true, false,
+          net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT));
+  DCHECK(cc->IsCanonical());
+  cookies->SetCanonicalCookieAsync(std::move(cc), true /*secure_source*/,
+                                   true /*modify_http_only*/,
+                                   net::CookieStore::SetCookiesCallback());
+
+  cc = std::make_unique<net::CanonicalCookie>(
+      kCookieName, cookie_value, "example.com", std::string(), base::Time(),
       base::Time(), base::Time(), true, false,
-      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
-      net::CookieStore::SetCookiesCallback());
-  cookies->SetCookieWithDetailsAsync(
-      GURL(kSAMLIdPCookieURL), kCookieName, cookie_value, std::string(),
-      std::string(), base::Time(), base::Time(), base::Time(), true, false,
-      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
-      net::CookieStore::SetCookiesCallback());
-  cookies->SetCookieWithDetailsAsync(
-      GURL(kGAIACookieURL), kCookieName, cookie_value, std::string(),
-      std::string(), base::Time(), base::Time(), base::Time(), true, false,
-      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
-      net::CookieStore::SetCookiesCallback());
+      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT);
+  DCHECK(cc->IsCanonical());
+  cookies->SetCanonicalCookieAsync(std::move(cc), true /*secure_source*/,
+                                   true /*modify_http_only*/,
+                                   net::CookieStore::SetCookiesCallback());
+
+  cc = std::make_unique<net::CanonicalCookie>(
+      kCookieName, cookie_value, "google.com", std::string(), base::Time(),
+      base::Time(), base::Time(), true, false,
+      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT);
+  cookies->SetCanonicalCookieAsync(std::move(cc), true /*secure_source*/,
+                                   true /*modify_http_only*/,
+                                   net::CookieStore::SetCookiesCallback());
 
   GetChannelIDs(browser_context)
       ->SetChannelID(base::MakeUnique<net::ChannelIDStore::ChannelID>(
