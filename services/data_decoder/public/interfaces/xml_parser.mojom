@@ -2,9 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Interface used to parse simple XML files.
-//
-// Ignores namespaces, node attributes, comments and white-spaces.
+// Interface used to parse XML files into a base::Value tree.
+// Ignores comments and white-spaces.
 // Note also that the text content of elements is returned as base::Value of
 // type STRING: no effort is made by the parser to parse numeric values.
 
@@ -15,31 +14,35 @@ import "mojo/common/values.mojom";
 interface XmlParser {
   const string kTagKey = "tag";
   const string kTextKey = "text";
+  const string kAttributesKey = "attributes";
   const string kChildrenKey = "children";
+  const string kNamespacesKey = "namespaces";
 
   // Parses the input XML and returns a Value with its content. If parsing
   // failed that value is empty and an error is set:
   //
   // For example the following XML:
   //
-  // <library>
-  //   <book id="k123">
+  // <library xmlns='http://library' xmlns:foo='http://foo.com'>
+  //   <book foo:id="k123">
   //     <author>Isaac Newton</author>
   //     <title>Philosophiae Naturalis Principia Mathematica</title>
   //   </book>
-  //   <book id="k456">
+  //   <book foo:id="k456">
   //     <author>Dr. Seuss</author>
   //     <author>Theodor Seuss Geisel</author>
   //     <title>Green Eggs and Ham</title>
-  //     <kids/>
+  //     <foo:kids/>
   //   </book>
   // </library>
   //
   // becomes (base::Value's represented as JSON):
   //
   // {"tag": "library",
+  //  "namespaces": {"": "http://library", "foo": "http://foo.com"},
   //  "children":["
   //     {"tag": "book",
+  //      "attributes": {"foo:id": "k123"},
   //      "children": [
   //        {"tag": "author", "text": "Isaac Newton"},
   //        {"tag": "title",
@@ -49,11 +52,12 @@ interface XmlParser {
   //        {"tag": "publish_date", "text": "1947-9-03"}
   //    ]},
   //    {"tag": "book",
+  //     "attributes": {"foo:id": "k456"},
   //     "children": [
   //        {"tag": "author", "text": "Dr. Seuss"},
   //        {"tag": "title", "text": "Green Eggs and Ham"},
   //        {"tag": "genre", "text": "Kid"},
-  //        {"tag": "kids"},
+  //        {"tag": "foo:kids"},
   //        {"tag": "price", "text": "4.95"},
   //        {"tag": "publish_date", "text": "1960-8-12"}
   //    ]}

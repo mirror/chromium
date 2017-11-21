@@ -74,7 +74,19 @@ void SafeXmlParser::ReportResults(std::unique_ptr<base::Value> parsed_xml,
   delete this;
 }
 
+const base::Value* GetChildren(const base::Value& element) {
+  if (!element.is_dict())
+    return nullptr;
+  return element.FindKeyOfType(mojom::XmlParser::kChildrenKey,
+                               base::Value::Type::LIST);
+}
+
 }  // namespace
+
+std::string GetXmlQualifiedName(const std::string& name_space,
+                                const std::string& name) {
+  return name_space.empty() ? name : name_space + ":" + name;
+}
 
 void ParseXml(service_manager::Connector* connector,
               const std::string& unsafe_xml,
@@ -114,12 +126,29 @@ bool GetXmlElementText(const base::Value& element, std::string* text) {
   return true;
 }
 
+bool GetXmlElementNamespacePrefix(const base::Value& element,
+                                  const std::string& namespace_uri,
+                                  std::string* prefix) {
+  prefix->clear();
+  const base::Value* namespaces = element.FindKeyOfType(
+      mojom::XmlParser::kNamespacesKey, base::Value::Type::DICTIONARY);
+  if (!namespaces)
+    return false;
+
+  // The namespaces dictionary is prefix -> URI, so we have to do a reverse
+  // lookup.
+  for (const auto& item : namespaces->DictItems()) {
+    if (item.second.GetString() == namespace_uri) {
+      *prefix = item.first;
+      return true;
+    }
+  }
+  return false;
+}
+
 int GetXmlElementChildrenCount(const base::Value& element,
                                const std::string& name) {
-  if (!element.is_dict())
-    return 0;
-  const base::Value* children = element.FindKeyOfType(
-      mojom::XmlParser::kChildrenKey, base::Value::Type::LIST);
+  const base::Value* children = GetChildren(element);
   if (!children)
     return 0;
   int child_count = 0;
@@ -136,10 +165,7 @@ int GetXmlElementChildrenCount(const base::Value& element,
 
 const base::Value* GetXmlElementChildWithName(const base::Value& element,
                                               const std::string& name) {
-  if (!element.is_dict())
-    return nullptr;
-  const base::Value* children = element.FindKeyOfType(
-      mojom::XmlParser::kChildrenKey, base::Value::Type::LIST);
+  const base::Value* children = GetChildren(element);
   if (!children)
     return nullptr;
   for (const base::Value& value : children->GetList()) {
@@ -148,6 +174,24 @@ const base::Value* GetXmlElementChildWithName(const base::Value& element,
       return &value;
   }
   return nullptr;
+}
+
+bool GetAllXmlElementChildrenWithName(
+    const base::Value& element,
+    const std::string& name,
+    std::vector<const base::Value*>* children_out) {
+  const base::Value* children = GetChildren(element);
+  if (!children)
+    return false;
+  bool found = false;
+  for (const base::Value& child : children->GetList()) {
+    DCHECK(child.is_dict());
+    if (IsXmlElementNamed(child, name)) {
+      found = true;
+      children_out->push_back(&child);
+    }
+  }
+  return found;
 }
 
 const base::Value* FindXmlElementPath(
@@ -179,6 +223,21 @@ const base::Value* FindXmlElementPath(
     cur = new_cur;
   }
   return cur;
+}
+
+std::string GetXmlElementAttribute(const base::Value& element,
+                                   const std::string& element_name) {
+  if (!element.is_dict())
+    return "";
+
+  const base::Value* attributes = element.FindKeyOfType(
+      mojom::XmlParser::kAttributesKey, base::Value::Type::DICTIONARY);
+  if (!attributes)
+    return "";
+
+  const base::Value* value =
+      attributes->FindKeyOfType(element_name, base::Value::Type::STRING);
+  return value ? value->GetString() : "";
 }
 
 }  // namespace data_decoder

@@ -1,4 +1,4 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -48,7 +48,7 @@ class SafeXmlParserTest : public InProcessBrowserTest {
 
   // Parses |xml| and compares its parsed representation with |expected_json|.
   // If |expected_json| is empty, the XML parsing is expected to fail.
-  void TestParse(base::StringPiece xml, base::StringPiece expected_json) {
+  void TestParse(const std::string& xml, const std::string& expected_json) {
     SCOPED_TRACE(xml);
 
     base::RunLoop run_loop;
@@ -59,8 +59,7 @@ class SafeXmlParserTest : public InProcessBrowserTest {
     }
 
     data_decoder::ParseXml(
-        content::ServiceManagerConnection::GetForProcess()->GetConnector(),
-        xml.as_string(),
+        content::ServiceManagerConnection::GetForProcess()->GetConnector(), xml,
         base::BindOnce(&SafeXmlParserTest::XmlParsingDone,
                        base::Unretained(this), run_loop.QuitClosure(),
                        std::move(expected_value)));
@@ -80,7 +79,8 @@ class SafeXmlParserTest : public InProcessBrowserTest {
     }
     EXPECT_FALSE(error);
     ASSERT_TRUE(actual_value);
-    EXPECT_EQ(*expected_value, *actual_value);
+    EXPECT_EQ(*expected_value, *actual_value)
+        << "Expected: " << *expected_value << " Actual: " << *actual_value;
   }
 
   data_decoder::mojom::XmlParserPtr xml_parser_ptr_;

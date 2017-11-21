@@ -4,14 +4,11 @@
 
 #include "chrome/test/base/test_service_manager_listener.h"
 
-#include "base/run_loop.h"
-#include "content/public/browser/browser_thread.h"
-#include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 TestServiceManagerListener::TestServiceManagerListener() : binding_(this) {}
 
-TestServiceManagerListener::~TestServiceManagerListener() {}
+TestServiceManagerListener::~TestServiceManagerListener() = default;
 
 void TestServiceManagerListener::Init() {
   DCHECK(!binding_.is_bound());
