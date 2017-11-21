@@ -1666,16 +1666,13 @@ void PaintPropertyTreeBuilder::UpdateFragmentPropertiesForSelf(
       is_actually_needed, fragment_context, full_context.force_subtree_update,
       paint_offset_translation);
 
-  RarePaintData* rare_paint_data = fragment_data.GetRarePaintData();
-
-  if (rare_paint_data && rare_paint_data->PaintProperties()) {
-    ObjectPaintProperties& properties = *rare_paint_data->PaintProperties();
-
+  auto* properties = fragment_data.PaintProperties();
+  if (properties) {
     UpdateFragmentClip(
-        object, properties, fragment_context, *full_context.painting_layer,
+        object, *properties, fragment_context, *full_context.painting_layer,
         full_context.force_subtree_update, full_context.clip_changed);
     UpdatePaintOffsetTranslation(object, paint_offset_translation,
-                                 fragment_context, properties,
+                                 fragment_context, *properties,
                                  full_context.force_subtree_update);
   }
 
@@ -1684,8 +1681,7 @@ void PaintPropertyTreeBuilder::UpdateFragmentPropertiesForSelf(
       object, fragment_data, full_context.force_subtree_update);
 #endif
 
-  if (rare_paint_data && rare_paint_data->PaintProperties()) {
-    ObjectPaintProperties* properties = rare_paint_data->PaintProperties();
+  if (properties) {
     UpdateTransform(object, *properties, fragment_context,
                     full_context.force_subtree_update);
     UpdateCssClip(object, *properties, fragment_context,
@@ -1721,9 +1717,7 @@ void PaintPropertyTreeBuilder::UpdatePropertiesForChildren(
         object, *fragment_data, context.force_subtree_update);
 #endif
 
-    RarePaintData* rare_paint_data = fragment_data->GetRarePaintData();
-    if (rare_paint_data && rare_paint_data->PaintProperties()) {
-      ObjectPaintProperties* properties = rare_paint_data->PaintProperties();
+    if (auto* properties = fragment_data->PaintProperties()) {
       UpdateOverflowClip(object, *properties, fragment_context,
                          context.force_subtree_update, context.clip_changed);
       UpdatePerspective(object, *properties, fragment_context,
@@ -1734,10 +1728,9 @@ void PaintPropertyTreeBuilder::UpdatePropertiesForChildren(
                                        context.force_subtree_update);
     }
 
-    UpdateOutOfFlowContext(
-        object, fragment_context,
-        rare_paint_data ? rare_paint_data->PaintProperties() : nullptr,
-        context.force_subtree_update);
+    UpdateOutOfFlowContext(object, fragment_context,
+                           fragment_data->PaintProperties(),
+                           context.force_subtree_update);
 
     context.force_subtree_update |= object.SubtreeNeedsPaintPropertyUpdate();
   }
