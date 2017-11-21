@@ -1158,6 +1158,17 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   // tasks.
   SetupFieldTrials();
 
+  if (g_browser_process->local_state()->GetBoolean(prefs::kSitePerProcess)) {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kSitePerProcess);
+  }
+
+  if (g_browser_process->local_state()->HasPrefPath(prefs::kIsolateOrigins)) {
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kIsolateOrigins,
+        g_browser_process->local_state()->GetString(prefs::kIsolateOrigins));
+  }
+
   // ChromeOS needs ui::ResourceBundle::InitSharedInstance to be called before
   // this.
   browser_process_->PreCreateThreads(parsed_command_line());
