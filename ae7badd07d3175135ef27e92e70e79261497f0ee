@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad22bf3_74d22486",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T06:28:15Z",
+      "side": 1,
+      "message": "This is a bit confusing to me.\n\nOrigin trial features are not installed in V8ContextSnapshot::InstallConditionalFeatures, however, origin trial features are installed in LocalWindowProxy::InstallConditionalFeatures.\n\n|not included in \"conditional features\"| reads like that it\u0027s a general fact.",
+      "range": {
+        "startLine": 257,
+        "startChar": 5,
+        "endLine": 257,
+        "endChar": 76
+      },
+      "revId": "ae7badd07d3175135ef27e92e70e79261497f0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9747543d_0104994c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-21T06:28:15Z",
+      "side": 1,
+      "message": "Please emphasize that it\u0027s done iff the snapshot case.  And also it would be good to note that |return false| \u003d\u003d noop is guaranteed.",
+      "range": {
+        "startLine": 47,
+        "startChar": 65,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "ae7badd07d3175135ef27e92e70e79261497f0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
