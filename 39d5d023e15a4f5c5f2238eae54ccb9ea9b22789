@@ -16,6 +16,24 @@
       "revId": "39d5d023e15a4f5c5f2238eae54ccb9ea9b22789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0da191c_27f094ab",
+        "filename": "third_party/WebKit/LayoutTests/css3/flexbox/bug782948.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-21T03:29:04Z",
+      "side": 1,
+      "message": "Needed so that it is a containing block, so that data-offset-x does the right thing",
+      "parentUuid": "43faea44_2a396327",
+      "revId": "39d5d023e15a4f5c5f2238eae54ccb9ea9b22789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
