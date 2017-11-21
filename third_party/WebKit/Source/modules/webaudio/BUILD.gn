@@ -125,8 +125,6 @@ blink_modules_sources("webaudio") {
     "WaveShaperNode.h",
     "WaveShaperProcessor.cpp",
     "WaveShaperProcessor.h",
-    "WindowAudioWorklet.cpp",
-    "WindowAudioWorklet.h",
   ]
 
   if (is_win) {
@@ -135,7 +133,7 @@ blink_modules_sources("webaudio") {
       # other files use Supplement<LocalDOMWindow> with
       # CORE_EXPORT. Mixing those in the same compilation unit
       # triggers link errors in Windows. https://crbug.com/739340
-      "WindowAudioWorklet.cpp",
+      # "WindowAudioWorklet.cpp",
     ]
 
     # Result of 32-bit shift implicitly converted to 64 bits.
