@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7b712b5_1c2f58fc",
+        "filename": "components/browser_watcher/stability_debugging.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-11-21T18:57:43Z",
+      "side": 1,
+      "message": "This is not set for SyzyASAN:\n\n  * https://cs.chromium.org/chromium/src/build/config/BUILD.gn?l\u003d92\n\n  if (is_asan) {\n    defines +\u003d [ \"ADDRESS_SANITIZER\" ]\n  }\n\n  * https://cs.chromium.org/chromium/src/build/config/BUILD.gn?l\u003d128\n\n  if (is_syzyasan) {\n    defines +\u003d [\n      \"SYZYASAN\",\n      \"MEMORY_SANITIZER_INITIAL_SIZE\",\n    ]\n  }\n\n\nSyzyASAN x64 will use a vector exception handler too?\nBut, it is not yet ported for x64 bit.\n\nI can add the define, in case.",
+      "parentUuid": "134ffb83_d5d9a0ae",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "eff829a1bb667f1138e65539edd2cbe4043237f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da909a88_fbdb6d30",
         "filename": "components/browser_watcher/stability_debugging.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "eff829a1bb667f1138e65539edd2cbe4043237f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362b9a93_99bd1019",
+        "filename": "components/browser_watcher/stability_debugging.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-11-21T18:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da909a88_fbdb6d30",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "eff829a1bb667f1138e65539edd2cbe4043237f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
