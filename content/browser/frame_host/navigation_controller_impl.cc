@@ -398,7 +398,7 @@ void NavigationControllerImpl::Reload(ReloadType reload_type,
       pending_entry_->SetTransitionType(ui::PAGE_TRANSITION_RELOAD);
     }
 
-    NavigateToPendingEntry(reload_type);
+    NavigateToPendingEntry(reload_type, nullptr /* navigation_ui_data */);
   }
 }
 
@@ -434,7 +434,8 @@ NavigationControllerImpl::GetEntryWithUniqueID(int nav_entry_id) const {
 }
 
 void NavigationControllerImpl::LoadEntry(
-    std::unique_ptr<NavigationEntryImpl> entry) {
+    std::unique_ptr<NavigationEntryImpl> entry,
+    std::unique_ptr<NavigationUIData> navigation_ui_data) {
   // Remember the last pending entry for which we haven't received a response
   // yet. This will be deleted in the NavigateToPendingEntry() function.
   DCHECK_EQ(nullptr, last_pending_entry_);
@@ -449,7 +450,7 @@ void NavigationControllerImpl::LoadEntry(
   // end up leaving the current page.  The new page load could for example
   // result in a download or a 'no content' response (e.g., a mailto: URL).
   SetPendingEntry(std::move(entry));
-  NavigateToPendingEntry(ReloadType::NONE);
+  NavigateToPendingEntry(ReloadType::NONE, std::move(navigation_ui_data));
 }
 
 void NavigationControllerImpl::SetPendingEntry(
@@ -620,7 +621,7 @@ void NavigationControllerImpl::GoToIndex(int index) {
   pending_entry_index_ = index;
   pending_entry_->SetTransitionType(ui::PageTransitionFromInt(
       pending_entry_->GetTransitionType() | ui::PAGE_TRANSITION_FORWARD_BACK));
-  NavigateToPendingEntry(ReloadType::NONE);
+  NavigateToPendingEntry(ReloadType::NONE, nullptr /* navigation_ui_data */);
 }
 
 void NavigationControllerImpl::GoToOffset(int offset) {
@@ -787,8 +788,14 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
       break;
   };
 
+  // TODO(clamy): NavigationEntry is meant for information that will be kept
+  // after the navigation ended and therefore is not appropriate for
+  // started_from_context_menu. Move started_from_context_menu to
+  // NavigationUIData.
   entry->set_started_from_context_menu(params.started_from_context_menu);
-  LoadEntry(std::move(entry));
+  LoadEntry(std::move(entry), params.navigation_ui_data
+                                  ? params.navigation_ui_data->Clone()
+                                  : nullptr);
 }
 
 bool NavigationControllerImpl::PendingEntryMatchesHandle(
@@ -1906,7 +1913,9 @@ void NavigationControllerImpl::PruneOldestEntryIfFull() {
   }
 }
 
-void NavigationControllerImpl::NavigateToPendingEntry(ReloadType reload_type) {
+void NavigationControllerImpl::NavigateToPendingEntry(
+    ReloadType reload_type,
+    std::unique_ptr<NavigationUIData> navigation_ui_data) {
   DCHECK(pending_entry_);
   needs_reload_ = false;
 
@@ -2011,7 +2020,8 @@ void NavigationControllerImpl::NavigateToPendingEntry(ReloadType reload_type) {
   // This call does not support re-entrancy.  See http://crbug.com/347742.
   CHECK(!in_navigate_to_pending_entry_);
   in_navigate_to_pending_entry_ = true;
-  bool success = NavigateToPendingEntryInternal(reload_type);
+  bool success = NavigateToPendingEntryInternal(reload_type,
+                                                std::move(navigation_ui_data));
   in_navigate_to_pending_entry_ = false;
 
   if (!success)
@@ -2019,7 +2029,8 @@ void NavigationControllerImpl::NavigateToPendingEntry(ReloadType reload_type) {
 }
 
 bool NavigationControllerImpl::NavigateToPendingEntryInternal(
-    ReloadType reload_type) {
+    ReloadType reload_type,
+    std::unique_ptr<NavigationUIData> navigation_ui_data) {
   DCHECK(pending_entry_);
   FrameTreeNode* root = delegate_->GetFrameTree()->root();
 
@@ -2049,13 +2060,17 @@ bool NavigationControllerImpl::NavigateToPendingEntryInternal(
   // Send all the same document frame loads before the different document loads.
   for (const auto& item : same_document_loads) {
     FrameTreeNode* frame = item.first;
-    success |= frame->navigator()->NavigateToPendingEntry(frame, *item.second,
-                                                          reload_type, true);
+    success |= frame->navigator()->NavigateToPendingEntry(
+        frame, *item.second, reload_type, true,
+        nullptr /* navigation_ui_data */);
   }
   for (const auto& item : different_document_loads) {
     FrameTreeNode* frame = item.first;
-    success |= frame->navigator()->NavigateToPendingEntry(frame, *item.second,
-                                                          reload_type, false);
+    success |= frame->navigator()->NavigateToPendingEntry(
+        frame, *item.second, reload_type, false,
+        // If the NavigationUIData is initialized, it is only for the main
+        // frame, therefore we should not pass it to subframes.
+        frame->IsMainFrame() ? std::move(navigation_ui_data) : nullptr);
   }
   return success;
 }
@@ -2162,11 +2177,11 @@ void NavigationControllerImpl::LoadIfNecessary() {
   // Explicitly use NavigateToPendingEntry so that the renderer uses the
   // cached state.
   if (pending_entry_) {
-    NavigateToPendingEntry(ReloadType::NONE);
+    NavigateToPendingEntry(ReloadType::NONE, nullptr /* navigation_ui_data */);
   } else if (last_committed_entry_index_ != -1) {
     pending_entry_ = entries_[last_committed_entry_index_].get();
     pending_entry_index_ = last_committed_entry_index_;
-    NavigateToPendingEntry(ReloadType::NONE);
+    NavigateToPendingEntry(ReloadType::NONE, nullptr /* navigation_ui_data */);
   } else {
     // If there is something to reload, the successful reload will clear the
     // |needs_reload_| flag. Otherwise, just do it here.

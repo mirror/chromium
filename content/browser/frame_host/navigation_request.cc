@@ -219,7 +219,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
     bool is_history_navigation_in_new_child,
     const scoped_refptr<ResourceRequestBody>& post_body,
     const base::TimeTicks& navigation_start,
-    NavigationControllerImpl* controller) {
+    NavigationControllerImpl* controller,
+    std::unique_ptr<NavigationUIData> navigation_ui_data) {
   // A form submission happens either because the navigation is a
   // renderer-initiated form submission that took the OpenURL path or a
   // back/forward/reload navigation the does a form resubmission.
@@ -275,7 +276,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
                             is_form_submission, initiator),
       request_params, browser_initiated,
       false,  // from_begin_navigation
-      &frame_entry, &entry));
+      &frame_entry, &entry, std::move(navigation_ui_data)));
   return navigation_request;
 }
 
@@ -321,7 +322,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
       frame_tree_node, common_params, begin_params, request_params,
       false,  // browser_initiated
       true,   // from_begin_navigation
-      nullptr, entry));
+      nullptr, entry,
+      nullptr));  // navigation_ui_data
   return navigation_request;
 }
 
@@ -333,12 +335,14 @@ NavigationRequest::NavigationRequest(
     bool browser_initiated,
     bool from_begin_navigation,
     const FrameNavigationEntry* frame_entry,
-    const NavigationEntryImpl* entry)
+    const NavigationEntryImpl* entry,
+    std::unique_ptr<NavigationUIData> navigation_ui_data)
     : frame_tree_node_(frame_tree_node),
       common_params_(common_params),
       begin_params_(begin_params),
       request_params_(request_params),
       browser_initiated_(browser_initiated),
+      navigation_ui_data_(std::move(navigation_ui_data)),
       state_(NOT_STARTED),
       restore_type_(RestoreType::NONE),
       is_view_source_(false),
@@ -545,15 +549,15 @@ void NavigationRequest::CreateNavigationHandle() {
   redirect_chain.push_back(common_params_.url);
 
   std::unique_ptr<NavigationHandleImpl> navigation_handle =
-      NavigationHandleImpl::Create(common_params_.url, redirect_chain,
-                                   frame_tree_node_, !browser_initiated_,
-                                   FrameMsg_Navigate_Type::IsSameDocument(
-                                       common_params_.navigation_type),
-                                   common_params_.navigation_start,
-                                   nav_entry_id_,
-                                   common_params_.started_from_context_menu,
-                                   common_params_.should_check_main_world_csp,
-                                   begin_params_.is_form_submission);
+      NavigationHandleImpl::Create(
+          common_params_.url, redirect_chain, frame_tree_node_,
+          !browser_initiated_,
+          FrameMsg_Navigate_Type::IsSameDocument(
+              common_params_.navigation_type),
+          common_params_.navigation_start, nav_entry_id_,
+          common_params_.started_from_context_menu,
+          common_params_.should_check_main_world_csp,
+          begin_params_.is_form_submission, std::move(navigation_ui_data_));
 
   if (!frame_tree_node->navigation_request()) {
     // A callback could have cancelled this request synchronously in which case
@@ -1035,8 +1039,8 @@ void NavigationRequest::OnStartChecksComplete(
                                   : frame_tree_node_->parent()->IsMainFrame();
 
   std::unique_ptr<NavigationUIData> navigation_ui_data;
-  if (navigation_handle_->navigation_ui_data())
-    navigation_ui_data = navigation_handle_->navigation_ui_data()->Clone();
+  if (navigation_handle_->GetNavigationUIData())
+    navigation_ui_data = navigation_handle_->GetNavigationUIData()->Clone();
 
   bool is_for_guests_only =
       navigation_handle_->GetStartingSiteInstance()->GetSiteURL().

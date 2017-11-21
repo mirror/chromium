@@ -47,8 +47,8 @@ void InterstitialPageNavigatorImpl::DidStartProvisionalLoad(
       0,                     /* pending_nav_entry_id */
       false,                 /* started_in_context_menu */
       CSPDisposition::CHECK, /* should_check_main_world_csp */
-      false                  /* is_form_submission */
-      ));
+      false,                 /* is_form_submission */
+      nullptr));             /* navigation_ui_data */
 }
 
 void InterstitialPageNavigatorImpl::DidNavigate(
