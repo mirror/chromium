@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b4388b8_a04499c4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 47510,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-11-21T01:07:02Z",
+      "side": 1,
+      "message": "Suggest adding something like: \"Shows the old frequency band and the new frequency band.\"",
+      "revId": "a928001d3a29546db56f19a67edf6ab87cd936e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
