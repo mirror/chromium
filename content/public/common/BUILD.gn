@@ -355,6 +355,8 @@ mojom("interfaces") {
     "//content/common/*",
     "//chrome/common:mojo_bindings",
     "//chrome/common:mojo_bindings_blink",
+    "//services/device/public/interfaces:interfaces",
+    "//services/device/public/interfaces:interfaces_blink",
   ]
 
   sources = [
