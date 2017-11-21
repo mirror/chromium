@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "984b634f_d4523b4c",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-11-21T19:09:08Z",
+      "side": 1,
+      "message": "Is it slightly better that we use a variable for this argument so we don\u0027t have to use #if defined twice?",
+      "revId": "06cd6157968290eb5fad115252bd562e9763dccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
