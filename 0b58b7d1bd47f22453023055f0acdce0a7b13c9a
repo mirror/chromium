@@ -22,6 +22,30 @@
       "revId": "0b58b7d1bd47f22453023055f0acdce0a7b13c9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d098c7b_78251f79",
+        "filename": "ios/chrome/browser/ui/broadcaster/chrome_broadcast_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-21T10:52:11Z",
+      "side": 0,
+      "message": "It\u0027s still used in toolbar_mediator and the broadcaster unit tests.",
+      "parentUuid": "f7e07fdc_e2be57cf",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "0b58b7d1bd47f22453023055f0acdce0a7b13c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
