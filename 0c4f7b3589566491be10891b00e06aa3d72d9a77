@@ -22,6 +22,30 @@
       "revId": "0c4f7b3589566491be10891b00e06aa3d72d9a77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71299908_c47750a6",
+        "filename": "chrome/browser/resources/chromeos/login/update_required_card.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-21T18:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f885957_ad8bbc56",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "0c4f7b3589566491be10891b00e06aa3d72d9a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
