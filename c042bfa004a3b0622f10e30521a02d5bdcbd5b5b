@@ -34,6 +34,24 @@
       "revId": "c042bfa004a3b0622f10e30521a02d5bdcbd5b5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896202fe_a26d0c0a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-21T18:46:23Z",
+      "side": 1,
+      "message": "Alright, tightened up the code a bit and added a big comment.",
+      "parentUuid": "db7b6ffa_2155eb14",
+      "revId": "c042bfa004a3b0622f10e30521a02d5bdcbd5b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
