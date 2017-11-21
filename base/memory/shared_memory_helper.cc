@@ -28,15 +28,52 @@ struct ScopedPathUnlinkerTraits {
 using ScopedPathUnlinker =
     ScopedGeneric<const FilePath*, ScopedPathUnlinkerTraits>;
 
+#if defined(OS_LINUX) || defined(OS_CHROMEOS)
+bool CreateMemFDSharedMemory(const SharedMemoryCreateOptions& options,
+                             ScopedFILE* fp,
+                             ScopedFD* readonly_fd,
+                             FilePath* path) {
+  static bool can_memfd_create = true;
+
+  if (!can_memfd_create)
+    return false;
+
+  int fd = memfd_create(path->BaseName().value().c_str(), MFD_ALLOW_SEALING);
+  if (fd < 0) {
+    DPLOG(ERROR) << "memfd(create) failed";
+    if (errno == ENOSYS)
+      can_memfd_create = false;
+    return false;
+  }
+  fp->reset(fdopen(fd, "a+"));
+
+  if (options.share_read_only) {
+    // memfd anonymous files do not support dropping write access for a
+    // single fd.
+    int fd_read_only = dup(fd);
+    readonly_fd->reset(fd_read_only);
+    if (!readonly_fd->is_valid()) {
+      DPLOG(ERROR) << "memfd(duplicate) failed";
+      fp->reset();
+      return false;
+    }
+  }
+  return true;
+}
+
+#endif  // defined(OS_LINUX) || defined(OS_CHROMEOS)
+
 #if !defined(OS_ANDROID)
 bool CreateAnonymousSharedMemory(const SharedMemoryCreateOptions& options,
                                  ScopedFILE* fp,
                                  ScopedFD* readonly_fd,
                                  FilePath* path) {
-#if !(defined(OS_MACOSX) && !defined(OS_IOS)) && !defined(OS_FUCHSIA)
+#if defined(OS_LINUX) || defined(OS_CHROMEOS)
   // It doesn't make sense to have a open-existing private piece of shmem
   DCHECK(!options.open_existing_deprecated);
-#endif  // !(defined(OS_MACOSX) && !defined(OS_IOS)
+  if (CreateMemFDSharedMemory(options, fp, readonly_fd, path))
+    return true;
+#endif  // defined(OS_LINUX) || defined(OS_CHROMEOS)
   // Q: Why not use the shm_open() etc. APIs?
   // A: Because they're limited to 4mb on OS X.  FFFFFFFUUUUUUUUUUU
   FilePath directory;
