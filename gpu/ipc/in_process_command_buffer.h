@@ -31,6 +31,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/image_manager.h"
+#include "gpu/command_buffer/service/sequence_id.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 #include "gpu/command_buffer/service/service_transfer_cache.h"
 #include "gpu/config/gpu_feature_info.h"
@@ -58,6 +59,7 @@ class Size;
 namespace gpu {
 
 class ServiceDiscardableManager;
+class Scheduler;
 class SyncPointClientState;
 class SyncPointOrderData;
 class SyncPointManager;
@@ -222,6 +224,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
 
     virtual bool UseVirtualizedGLContexts() = 0;
     virtual SyncPointManager* sync_point_manager() = 0;
+    virtual Scheduler* scheduler() = 0;
     virtual bool BlockThreadOnWaitSyncToken() const = 0;
 
     const GpuPreferences& gpu_preferences();
@@ -293,7 +296,6 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   bool MakeCurrent();
   base::Closure WrapCallback(const base::Closure& callback);
   void QueueTask(bool out_of_order, const base::Closure& task);
-  void ProcessTasksOnGpuThread();
   void CheckSequencedThread();
   void OnWaitSyncTokenCompleted(const SyncToken& sync_token);
   void SignalSyncTokenOnGpuThread(const SyncToken& sync_token,
@@ -327,7 +329,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   std::unique_ptr<gles2::GLES2Decoder> decoder_;
   scoped_refptr<gl::GLContext> context_;
   scoped_refptr<gl::GLSurface> surface_;
-  scoped_refptr<SyncPointOrderData> sync_point_order_data_;
+  SequenceId sequence_id_;
   scoped_refptr<SyncPointClientState> sync_point_client_state_;
   base::Closure context_lost_callback_;
   // Used to throttle PerformDelayedWorkOnGpuThread.
@@ -377,6 +379,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
 
   SwapBuffersCompletionCallback swap_buffers_completion_callback_;
   UpdateVSyncParametersCallback update_vsync_parameters_completion_callback_;
+
+  std::vector<SyncToken> pending_wait_syncs_;
 
   base::WeakPtr<InProcessCommandBuffer> client_thread_weak_ptr_;
   base::WeakPtr<InProcessCommandBuffer> gpu_thread_weak_ptr_;

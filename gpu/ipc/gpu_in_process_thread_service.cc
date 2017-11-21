@@ -12,6 +12,7 @@ namespace gpu {
 GpuInProcessThreadService::GpuInProcessThreadService(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     gpu::SyncPointManager* sync_point_manager,
+    gpu::Scheduler* scheduler,
     gpu::gles2::MailboxManager* mailbox_manager,
     scoped_refptr<gl::GLShareGroup> share_group,
     const GpuFeatureInfo& gpu_feature_info)
@@ -20,7 +21,8 @@ GpuInProcessThreadService::GpuInProcessThreadService(
                                            share_group,
                                            gpu_feature_info),
       task_runner_(task_runner),
-      sync_point_manager_(sync_point_manager) {}
+      sync_point_manager_(sync_point_manager),
+      scheduler_(scheduler) {}
 
 void GpuInProcessThreadService::ScheduleTask(const base::Closure& task) {
   task_runner_->PostTask(FROM_HERE, task);
@@ -36,6 +38,10 @@ bool GpuInProcessThreadService::UseVirtualizedGLContexts() {
 
 gpu::SyncPointManager* GpuInProcessThreadService::sync_point_manager() {
   return sync_point_manager_;
+}
+
+gpu::Scheduler* GpuInProcessThreadService::scheduler() {
+  return scheduler_;
 }
 
 void GpuInProcessThreadService::AddRef() const {

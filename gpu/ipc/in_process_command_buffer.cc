@@ -40,6 +40,7 @@
 #include "gpu/command_buffer/service/memory_program_cache.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "gpu/command_buffer/service/query_manager.h"
+#include "gpu/command_buffer/service/scheduler.h"
 #include "gpu/command_buffer/service/service_utils.h"
 #include "gpu/command_buffer/service/sync_point_manager.h"
 #include "gpu/command_buffer/service/transfer_buffer_manager.h"
@@ -95,7 +96,8 @@ class GpuInProcessThreadHolder : public base::Thread {
   const scoped_refptr<InProcessCommandBuffer::Service>& GetGpuThreadService() {
     if (!gpu_thread_service_) {
       gpu_thread_service_ = new GpuInProcessThreadService(
-          task_runner(), sync_point_manager_.get(), nullptr, nullptr,
+          // FIXME(backer): passing nullptr gpu::Scheduler
+          task_runner(), sync_point_manager_.get(), nullptr, nullptr, nullptr,
           gpu_feature_info_);
     }
     return gpu_thread_service_;
@@ -353,12 +355,13 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
     return gpu::ContextResult::kFatalFailure;
   }
 
-  sync_point_order_data_ =
-      service_->sync_point_manager()->CreateSyncPointOrderData();
+  // FIXME(backer): Not sure that this should always be high priority...
+  sequence_id_ =
+      service_->scheduler()->CreateSequence(SchedulingPriority::kHigh);
+
   sync_point_client_state_ =
       service_->sync_point_manager()->CreateSyncPointClientState(
-          GetNamespaceID(), GetCommandBufferID(),
-          sync_point_order_data_->sequence_id());
+          GetNamespaceID(), GetCommandBufferID(), sequence_id_);
 
   use_virtualized_gl_context_ =
       service_->UseVirtualizedGLContexts() || decoder_->GetContextGroup()
@@ -470,9 +473,9 @@ bool InProcessCommandBuffer::DestroyOnGpuThread() {
   command_buffer_.reset();
   context_ = nullptr;
   surface_ = nullptr;
-  if (sync_point_order_data_) {
-    sync_point_order_data_->Destroy();
-    sync_point_order_data_ = nullptr;
+  if (!sequence_id_.is_null()) {
+    service_->scheduler()->DestroySequence(sequence_id_);
+    sequence_id_.FromUnsafeValue(0);
   }
   if (sync_point_client_state_) {
     sync_point_client_state_->Destroy();
@@ -524,38 +527,10 @@ void InProcessCommandBuffer::QueueTask(bool out_of_order,
     service_->ScheduleTask(task);
     return;
   }
-  // Release the |task_queue_lock_| before calling ScheduleTask because
-  // the callback may get called immediately and attempt to acquire the lock.
-  uint32_t order_num = sync_point_order_data_->GenerateUnprocessedOrderNumber();
-  {
-    base::AutoLock lock(task_queue_lock_);
-    task_queue_.push(std::make_unique<GpuTask>(task, order_num));
-  }
-  service_->ScheduleTask(base::Bind(
-      &InProcessCommandBuffer::ProcessTasksOnGpuThread, gpu_thread_weak_ptr_));
-}
 
-void InProcessCommandBuffer::ProcessTasksOnGpuThread() {
-  // TODO(sunnyps): Should this use ScopedCrashKey instead?
-  base::debug::SetCrashKeyValue(crash_keys::kGPUGLContextIsVirtual,
-                                use_virtualized_gl_context_ ? "1" : "0");
-  while (command_buffer_->scheduled()) {
-    base::AutoLock lock(task_queue_lock_);
-    if (task_queue_.empty())
-      break;
-    GpuTask* task = task_queue_.front().get();
-    sync_point_order_data_->BeginProcessingOrderNumber(task->order_number);
-    task->callback.Run();
-    if (!command_buffer_->scheduled() &&
-        !service_->BlockThreadOnWaitSyncToken()) {
-      sync_point_order_data_->PauseProcessingOrderNumber(task->order_number);
-      // Don't pop the task if it was preempted - it may have been preempted, so
-      // we need to execute it again later.
-      return;
-    }
-    sync_point_order_data_->FinishProcessingOrderNumber(task->order_number);
-    task_queue_.pop();
-  }
+  Scheduler::Task scheduler_task(sequence_id_, task, pending_wait_syncs_);
+  service_->scheduler()->ScheduleTask(std::move(scheduler_task));
+  pending_wait_syncs_.clear();
 }
 
 CommandBuffer::State InProcessCommandBuffer::GetLastState() {
@@ -594,6 +569,8 @@ void InProcessCommandBuffer::FlushOnGpuThread(int32_t put_offset,
   // pump idle work until the query is passed.
   if (put_offset == command_buffer_->GetState().get_offset &&
       (decoder_->HasMoreIdleWork() || decoder_->HasPendingQueries())) {
+    // FIXME(backer): Should we use scheduler here? GpuCmdBuffStub updates
+    // an order_num.
     ScheduleDelayedWorkOnGpuThread();
   }
 }
@@ -882,6 +859,7 @@ void InProcessCommandBuffer::OnFenceSyncRelease(uint64_t release) {
 }
 
 bool InProcessCommandBuffer::OnWaitSyncToken(const SyncToken& sync_token) {
+  // FIXME(backer): Is this the right logic now that we have a scheduler?
   DCHECK(!waiting_for_sync_point_);
   SyncPointManager* sync_point_manager = service_->sync_point_manager();
   DCHECK(sync_point_manager);
@@ -913,6 +891,8 @@ bool InProcessCommandBuffer::OnWaitSyncToken(const SyncToken& sync_token) {
   }
 
   command_buffer_->SetScheduled(false);
+  service_->scheduler()->DisableSequence(sequence_id_);
+
   return true;
 }
 
@@ -924,8 +904,7 @@ void InProcessCommandBuffer::OnWaitSyncTokenCompleted(
   mailbox_manager->PullTextureUpdates(sync_token);
   waiting_for_sync_point_ = false;
   command_buffer_->SetScheduled(true);
-  service_->ScheduleTask(base::Bind(
-      &InProcessCommandBuffer::ProcessTasksOnGpuThread, gpu_thread_weak_ptr_));
+  service_->scheduler()->EnableSequence(sequence_id_);
 }
 
 void InProcessCommandBuffer::OnDescheduleUntilFinished() {
@@ -934,6 +913,7 @@ void InProcessCommandBuffer::OnDescheduleUntilFinished() {
     DCHECK(decoder_->HasPollingWork());
 
     command_buffer_->SetScheduled(false);
+    service_->scheduler()->DisableSequence(sequence_id_);
   }
 }
 
@@ -942,7 +922,7 @@ void InProcessCommandBuffer::OnRescheduleAfterFinished() {
     DCHECK(!command_buffer_->scheduled());
 
     command_buffer_->SetScheduled(true);
-    ProcessTasksOnGpuThread();
+    service_->scheduler()->EnableSequence(sequence_id_);
   }
 }
 
@@ -1024,7 +1004,9 @@ void InProcessCommandBuffer::SignalSyncToken(const SyncToken& sync_token,
                  base::Unretained(this), sync_token, WrapCallback(callback)));
 }
 
-void InProcessCommandBuffer::WaitSyncTokenHint(const SyncToken& sync_token) {}
+void InProcessCommandBuffer::WaitSyncTokenHint(const SyncToken& sync_token) {
+  pending_wait_syncs_.push_back(sync_token);
+}
 
 bool InProcessCommandBuffer::CanWaitUnverifiedSyncToken(
     const SyncToken& sync_token) {

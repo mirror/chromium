@@ -88,6 +88,8 @@ class VIZ_SERVICE_EXPORT GpuServiceImpl : public gpu::GpuChannelManagerDelegate,
 
   gpu::SyncPointManager* sync_point_manager() { return sync_point_manager_; }
 
+  gpu::Scheduler* scheduler() { return scheduler_.get(); }
+
   gpu::GpuWatchdogThread* watchdog_thread() { return watchdog_thread_.get(); }
 
   const gpu::GpuFeatureInfo& gpu_feature_info() const {
