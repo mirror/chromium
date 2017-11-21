@@ -22,6 +22,30 @@
       "revId": "4ed21648e0ae492d012615c1e97e96f32c835574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5674cf_c06ee3d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-21T21:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7a162e8_3f16ff6a",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 5
+      },
+      "revId": "4ed21648e0ae492d012615c1e97e96f32c835574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
