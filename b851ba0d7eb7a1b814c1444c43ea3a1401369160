@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "301fe540_78316a1d",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-11-21T22:26:13Z",
+      "side": 0,
+      "message": "We already had a test case that was testing for the wrong behavior :)",
+      "revId": "b851ba0d7eb7a1b814c1444c43ea3a1401369160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
