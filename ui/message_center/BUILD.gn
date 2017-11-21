@@ -137,6 +137,8 @@ component("message_center") {
         "views/notification_control_buttons_view.h",
         "views/notification_header_view.cc",
         "views/notification_header_view.h",
+        "views/notification_menu_model.cc",
+        "views/notification_menu_model.h",
         "views/notification_view.cc",
         "views/notification_view.h",
         "views/notification_view_md.cc",
