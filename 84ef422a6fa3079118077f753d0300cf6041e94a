@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73d2a2a_1b82e74d",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-21T20:10:52Z",
+      "side": 1,
+      "message": "Are these now two different categories of flags, some for HitTestRegion and some for HitTestRegionList? It\u0027s not clear if that is the case or not.",
+      "revId": "84ef422a6fa3079118077f753d0300cf6041e94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
