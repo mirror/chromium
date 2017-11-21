@@ -16,6 +16,24 @@
       "revId": "a0873abc6eb3179fd15b59221f127f188d0064bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb9a587_2ed7b058",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-21T11:18:02Z",
+      "side": 1,
+      "message": "\u003e Alternatively, we could ifdef OS_MAC, and do SetShowHighlightOnHover(true) if full keyboard access is off?\n\nNah - I think this is correct behavior for things that are meant to behave like a menu. That\u0027s certainly true for the user menu / profile switcher.\n\nI\u0027m on the fence about the behavior for the new page info popup though, since only the bottom is menu-like. We can worry about that later though - this is probably a good default.",
+      "parentUuid": "9948333a_d1e7ba84",
+      "revId": "a0873abc6eb3179fd15b59221f127f188d0064bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
