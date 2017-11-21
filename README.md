@@ -15,17 +15,28 @@ Initial setup:
 mkdir config
 cd config
 git init
-git remote add origin https://chromium.googlesource.com/chromium/src
-git fetch origin infra/config
-git reset --hard origin/infra/config
+git remote add -t infra/config origin https://chromium.googlesource.com/chromium/src
+git fetch origin
 git config depot-tools.upstream origin/infra/config
+git checkout -b master origin/infra/config
 ```
 
 Now you can create a new branch to make changes:
 
 ```
-git new-branch add-new-builder
+git checkout master
+# The --track option is needed to make CL uploads work.
+# Alternatively, you can use "git branch --set-upstream-to" later.
+git checkout -b your_branch_name --track
 # edit cr-buildbucket.cfg
 git commit -a
 git cl upload
+```
+
+To update your branches:
+
+```
+git checkout master
+git pull
+git rebase master your_branch_name
 ```
