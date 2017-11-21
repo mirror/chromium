@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b6279e7_9323f0be",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-21T05:49:10Z",
+      "side": 1,
+      "message": "I missed this in review, sorry. This causes an attempted connection from the renderer process for every renderer (since ui::Gpu is used there). The connection attempt is blocked by service_manager. But we should avoid making the unnecessary attempt. Can this be done only if some param is set in ::Create()?",
+      "revId": "417f0cf7506bf91c82b9e75b0036a2b41ff5b549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
