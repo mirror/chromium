@@ -248,9 +248,10 @@ class FlashComponentInstallerPolicy : public ComponentInstallerPolicy {
   // The following methods override ComponentInstallerPolicy.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
+  void OnCustomInstall(
       const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
+      const base::FilePath& install_dir,
+      std::unique_ptr<CustomInstallRunner> custom_install_runner) override;
   void OnCustomUninstall() override;
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
@@ -277,13 +278,15 @@ bool FlashComponentInstallerPolicy::RequiresNetworkEncryption() const {
   return false;
 }
 
-update_client::CrxInstaller::Result
-FlashComponentInstallerPolicy::OnCustomInstall(
+void FlashComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
+    const base::FilePath& install_dir,
+    std::unique_ptr<CustomInstallRunner> custom_install_runner) {
   std::string version;
   if (!manifest.GetString("version", &version)) {
-    return ToInstallerResult(FlashError::MISSING_VERSION_IN_MANIFEST);
+    custom_install_runner->Run(
+        ToInstallerResult(FlashError::MISSING_VERSION_IN_MANIFEST));
+    return;
   }
 
 #if defined(OS_CHROMEOS)
@@ -297,10 +300,13 @@ FlashComponentInstallerPolicy::OnCustomInstall(
   // locate and preload the latest version of flash.
   if (!component_flash_hint_file::RecordFlashUpdate(flash_path, flash_path,
                                                     version)) {
-    return ToInstallerResult(FlashError::HINT_FILE_RECORD_ERROR);
+    custom_install_runner->Run(
+        ToInstallerResult(FlashError::HINT_FILE_RECORD_ERROR));
+    return;
   }
 #endif  // defined(OS_LINUX)
-  return update_client::CrxInstaller::Result(update_client::InstallError::NONE);
+  custom_install_runner->Run(
+      update_client::CrxInstaller::Result(update_client::InstallError::NONE));
 }
 
 void FlashComponentInstallerPolicy::OnCustomUninstall() {}

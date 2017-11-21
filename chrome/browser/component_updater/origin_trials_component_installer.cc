@@ -11,6 +11,7 @@
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/chrome_switches.h"
@@ -72,11 +73,12 @@ bool OriginTrialsComponentInstallerPolicy::RequiresNetworkEncryption() const {
   return false;
 }
 
-update_client::CrxInstaller::Result
-OriginTrialsComponentInstallerPolicy::OnCustomInstall(
+void OriginTrialsComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);
+    const base::FilePath& install_dir,
+    std::unique_ptr<CustomInstallRunner> custom_install_runner) {
+  custom_install_runner->Run(
+      update_client::CrxInstaller::Result(update_client::InstallError::NONE));
 }
 
 void OriginTrialsComponentInstallerPolicy::OnCustomUninstall() {}

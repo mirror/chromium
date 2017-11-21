@@ -262,9 +262,10 @@ class SupervisedUserWhitelistComponentInstallerPolicy
                           const base::FilePath& install_dir) const override;
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
-      const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
+  void OnCustomInstall(const base::DictionaryValue& manifest,
+                       const base::FilePath& install_dir,
+                       std::unique_ptr<CustomInstallRunner> cir) override;
+  // update_client::CrxInstaller::Callback callback) override;
   void OnCustomUninstall() override;
   void ComponentReady(const base::Version& version,
                       const base::FilePath& install_dir,
@@ -300,16 +301,29 @@ bool SupervisedUserWhitelistComponentInstallerPolicy::
   return true;
 }
 
-update_client::CrxInstaller::Result
-SupervisedUserWhitelistComponentInstallerPolicy::OnCustomInstall(
+void SupervisedUserWhitelistComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
+    const base::FilePath& install_dir,
+    // update_client::CrxInstaller::Callback callback) {
+    std::unique_ptr<CustomInstallRunner> cir) {
   // Delete the existing sanitized whitelist.
   const bool success =
       base::DeleteFile(GetSanitizedWhitelistPath(crx_id_), false);
-  return update_client::CrxInstaller::Result(
-      success ? update_client::InstallError::NONE
-              : update_client::InstallError::GENERIC_ERROR);
+  if (success) {
+    // base::PostTask(FROM_HERE,
+    //               base::BindOnce(std::move(callback),
+    cir->Run(
+        update_client::CrxInstaller::Result(update_client::InstallError::NONE));
+  } else {
+    // base::PostTask(
+    //    FROM_HERE,
+    //    base::BindOnce(std::move(callback),
+    cir->Run(update_client::CrxInstaller::Result(
+        update_client::InstallError::GENERIC_ERROR));
+  }
+  // return update_client::CrxInstaller::Result(
+  //    success ? update_client::InstallError::NONE
+  //            : update_client::InstallError::GENERIC_ERROR);
 }
 
 void SupervisedUserWhitelistComponentInstallerPolicy::OnCustomUninstall() {}

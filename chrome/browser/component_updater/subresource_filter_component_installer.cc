@@ -10,6 +10,7 @@
 #include "base/files/file_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/version.h"
 #include "chrome/browser/browser_process.h"
 #include "components/component_updater/component_updater_paths.h"
@@ -56,11 +57,12 @@ bool SubresourceFilterComponentInstallerPolicy::RequiresNetworkEncryption()
   return false;
 }
 
-update_client::CrxInstaller::Result
-SubresourceFilterComponentInstallerPolicy::OnCustomInstall(
+void SubresourceFilterComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);  // Nothing custom here.
+    const base::FilePath& install_dir,
+    std::unique_ptr<CustomInstallRunner> custom_install_runner) {
+  custom_install_runner->Run(
+      update_client::CrxInstaller::Result(update_client::InstallError::NONE));
 }
 
 void SubresourceFilterComponentInstallerPolicy::OnCustomUninstall() {}
