@@ -77,6 +77,7 @@ class NavigationURLLoaderImplCore
   void NotifyResponseStarted(ResourceResponse* response,
                              std::unique_ptr<StreamHandle> body,
                              const SSLStatus& ssl_status,
+                             const base::Optional<net::SSLInfo>& ssl_info,
                              std::unique_ptr<NavigationData> navigation_data,
                              const GlobalRequestID& request_id,
                              bool is_download,

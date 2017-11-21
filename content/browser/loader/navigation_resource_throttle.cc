@@ -146,6 +146,7 @@ void WillProcessResponseOnUIThread(
     net::HttpResponseInfo::ConnectionInfo connection_info,
     const net::HostPortPair& socket_address,
     const SSLStatus& ssl_status,
+    const base::Optional<net::SSLInfo>& ssl_info,
     const GlobalRequestID& request_id,
     bool should_replace_current_entry,
     bool is_download,
@@ -171,8 +172,9 @@ void WillProcessResponseOnUIThread(
   DCHECK(render_frame_host);
   navigation_handle->WillProcessResponse(
       render_frame_host, headers, connection_info, socket_address, ssl_status,
-      request_id, should_replace_current_entry, is_download, is_stream,
-      transfer_callback, base::Bind(&SendCheckResultToIOThread, callback));
+      ssl_info, request_id, should_replace_current_entry, is_download,
+      is_stream, transfer_callback,
+      base::Bind(&SendCheckResultToIOThread, callback));
 }
 
 }  // namespace
@@ -316,13 +318,18 @@ void NavigationResourceThrottle::WillProcessResponse(bool* defer) {
                                                       &ssl_status);
   }
 
+  base::Optional<net::SSLInfo> ssl_info;
+  if (net::IsCertStatusError(request_->ssl_info().cert_status)) {
+    ssl_info = request_->ssl_info();
+  }
+
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&WillProcessResponseOnUIThread, callback,
                      render_process_id, render_frame_id, response_headers,
                      request_->response_info().connection_info,
                      request_->response_info().socket_address, ssl_status,
-                     info->GetGlobalRequestID(),
+                     ssl_info, info->GetGlobalRequestID(),
                      info->should_replace_current_entry(), info->IsDownload(),
                      info->is_stream(), transfer_callback,
                      base::Passed(&cloned_data)));

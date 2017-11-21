@@ -150,9 +150,15 @@ void NavigationResourceHandler::OnResponseStarted(
   if (request()->ssl_info().cert.get())
     GetSSLStatusForRequest(request()->ssl_info(), &ssl_status);
 
-  core_->NotifyResponseStarted(
-      response, std::move(stream_handle_), ssl_status, std::move(cloned_data),
-      info->GetGlobalRequestID(), info->IsDownload(), info->is_stream());
+  base::Optional<net::SSLInfo> ssl_info;
+  if (net::IsCertStatusError(request()->ssl_info().cert_status)) {
+    ssl_info = request()->ssl_info();
+  }
+
+  core_->NotifyResponseStarted(response, std::move(stream_handle_), ssl_status,
+                               ssl_info, std::move(cloned_data),
+                               info->GetGlobalRequestID(), info->IsDownload(),
+                               info->is_stream());
   HoldController(std::move(controller));
   response_ = response;
 }

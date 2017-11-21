@@ -682,7 +682,7 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
   // delegate until PlzNavigate has shipped and we can be comfortable fully
   // switching to the data pipe.
   delegate_->OnResponseStarted(
-      response_, nullptr, std::move(body), ssl_status_,
+      response_, nullptr, std::move(body), ssl_status_, ssl_info_,
       std::unique_ptr<NavigationData>(), GlobalRequestID(-1, g_next_request_id),
       IsDownload(), false /* is_stream */,
       request_controller_->TakeSubresourceLoaderParams());

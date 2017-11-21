@@ -467,8 +467,8 @@ NavigationHandleImpl::CallWillProcessResponseForTesting(
   NavigationThrottle::ThrottleCheckResult result = NavigationThrottle::DEFER;
   WillProcessResponse(static_cast<RenderFrameHostImpl*>(render_frame_host),
                       headers, net::HttpResponseInfo::CONNECTION_INFO_UNKNOWN,
-                      net::HostPortPair(), SSLStatus(), GlobalRequestID(),
-                      false, false, false, base::Closure(),
+                      net::HostPortPair(), SSLStatus(), base::nullopt,
+                      GlobalRequestID(), false, false, false, base::Closure(),
                       base::Bind(&UpdateThrottleCheckResult, &result));
 
   // Reset the callback to ensure it will not be called later.
@@ -730,6 +730,7 @@ void NavigationHandleImpl::WillProcessResponse(
     net::HttpResponseInfo::ConnectionInfo connection_info,
     const net::HostPortPair& socket_address,
     const SSLStatus& ssl_status,
+    base::Optional<net::SSLInfo> ssl_info,
     const GlobalRequestID& request_id,
     bool should_replace_current_entry,
     bool is_download,
@@ -749,6 +750,7 @@ void NavigationHandleImpl::WillProcessResponse(
   is_stream_ = is_stream;
   state_ = WILL_PROCESS_RESPONSE;
   ssl_status_ = ssl_status;
+  ssl_info_ = ssl_info;
   socket_address_ = socket_address;
   complete_callback_ = callback;
   transfer_callback_ = transfer_callback;

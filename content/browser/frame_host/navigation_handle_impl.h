@@ -331,6 +331,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       net::HttpResponseInfo::ConnectionInfo connection_info,
       const net::HostPortPair& socket_address,
       const SSLStatus& ssl_status,
+      base::Optional<net::SSLInfo> ssl_info,
       const GlobalRequestID& request_id,
       bool should_replace_current_entry,
       bool is_download,

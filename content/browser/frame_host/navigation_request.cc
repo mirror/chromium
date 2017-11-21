@@ -724,6 +724,7 @@ void NavigationRequest::OnResponseStarted(
     std::unique_ptr<StreamHandle> body,
     mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
+    const base::Optional<net::SSLInfo>& ssl_info,
     std::unique_ptr<NavigationData> navigation_data,
     const GlobalRequestID& request_id,
     bool is_download,
@@ -838,8 +839,8 @@ void NavigationRequest::OnResponseStarted(
   navigation_handle_->WillProcessResponse(
       render_frame_host, response->head.headers.get(),
       response->head.connection_info, response->head.socket_address, ssl_status,
-      request_id, common_params_.should_replace_current_entry, is_download,
-      is_stream, base::Closure(),
+      ssl_info, request_id, common_params_.should_replace_current_entry,
+      is_download, is_stream, base::Closure(),
       base::Bind(&NavigationRequest::OnWillProcessResponseChecksComplete,
                  base::Unretained(this)));
 }
