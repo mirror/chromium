@@ -2299,6 +2299,11 @@ const char kMediaRouterEnableCloudServices[] =
 // user.
 const char kMediaRouterFirstRunFlowAcknowledged[] =
     "media_router.firstrunflow.acknowledged";
+// Whether or not the user has enabled Media Remoting. Defaults to true. This is
+// a dictionary so that the user can control this setting on a per-origin basis
+// if we decide to support it. Currently only the key "default" is used.
+const char kMediaRouterMediaRemotingEnabled[] =
+    "media_router.media_remoting_enabled";
 // A list of website origins on which the user has chosen to use tab mirroring.
 const char kMediaRouterTabMirroringSources[] =
     "media_router.tab_mirroring_sources";
