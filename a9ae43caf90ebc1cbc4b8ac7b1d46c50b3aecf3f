@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a22ef9c_52e87a99",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-21T21:44:52Z",
+      "side": 1,
+      "message": "nit: this is usually the last thing listed",
+      "revId": "a9ae43caf90ebc1cbc4b8ac7b1d46c50b3aecf3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
