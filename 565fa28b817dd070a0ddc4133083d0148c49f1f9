@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddc469cd_1e264338",
+        "filename": "chrome/browser/tabs/tab_logger.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T02:56:25Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e52973c6_8e47a998",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 41
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db867fc8_b1518891",
         "filename": "chrome/browser/tabs/tabs_tracker.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T00:55:43Z",
       "side": 1,
       "message": "I actually think it would be better if you track this at the WebContents level. In particular using WasShown and WasHidden. I think you\u0027ll catch more cases then you have by way of listening to the TabStripModel.",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253dbabe_bd3ec93f",
+        "filename": "chrome/browser/tabs/tabs_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T02:56:25Z",
+      "side": 1,
+      "message": "Interesting... having a helper class override WebContentsObserver/WebContentsUserData seemed like an unnecessary layer of abstraction and forwarding to me (and +1 object per WebContents), but maybe that\u0027s ok.\n\nI do still want to find the Browser* the tab resides in. Any thoughts on how to do that besides chrome::FindBrowserWithWebContents()?\n\nI suppose TabTracker could set the Browser* on the WebContentsUserData when it sees tabs moving between browsers. WDYT?",
+      "parentUuid": "db867fc8_b1518891",
       "range": {
         "startLine": 27,
         "startChar": 18,
@@ -106,6 +154,30 @@
       "writtenOn": "2017-11-21T00:55:43Z",
       "side": 1,
       "message": "I\u0027m mildly confused as to why you would log here. I get that you\u0027re logging the pinned tab in LogBackgroundTab(), but you aren\u0027t logging when the content type or other state that you are logging changes. So, why do you care when the pinned state changes?",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62cab08d_da28743e",
+        "filename": "chrome/browser/tabs/tabs_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-21T02:56:25Z",
+      "side": 1,
+      "message": "Good question. Ideally we\u0027d create a new UKM entry upon any change in the state that we log. For now, I\u0027m focusing on indicators that are likely particularly indicative of tab usage and are reasonably likely to change in the background.\n\nAnother point we\u0027ll definitely log is when a background tab navigates. I think that would cover the majority of changes to ContentType (because I don\u0027t expect the mime type of a page to change without a navigation, but I\u0027ll look into it).",
+      "parentUuid": "62d01be0_a02e2470",
       "range": {
         "startLine": 56,
         "startChar": 15,
