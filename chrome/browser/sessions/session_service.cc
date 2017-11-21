@@ -312,12 +312,10 @@ void SessionService::TabInserted(WebContents* contents) {
                session_tab_helper->session_id());
   extensions::TabHelper* extensions_tab_helper =
       extensions::TabHelper::FromWebContents(contents);
-  if (extensions_tab_helper &&
-      extensions_tab_helper->extension_app()) {
-    SetTabExtensionAppID(
-        session_tab_helper->window_id(),
-        session_tab_helper->session_id(),
-        extensions_tab_helper->extension_app()->id());
+  if (extensions_tab_helper && extensions_tab_helper->GetExtensionApp()) {
+    SetTabExtensionAppID(session_tab_helper->window_id(),
+                         session_tab_helper->session_id(),
+                         extensions_tab_helper->GetExtensionApp()->id());
   }
 
   // Record the association between the SessionStorageNamespace and the
@@ -620,11 +618,10 @@ void SessionService::BuildCommandsForTab(const SessionID& window_id,
 
   extensions::TabHelper* extensions_tab_helper =
       extensions::TabHelper::FromWebContents(tab);
-  if (extensions_tab_helper->extension_app()) {
+  if (extensions_tab_helper->GetExtensionApp()) {
     base_session_service_->AppendRebuildCommand(
         sessions::CreateSetTabExtensionAppIDCommand(
-            session_id,
-            extensions_tab_helper->extension_app()->id()));
+            session_id, extensions_tab_helper->GetExtensionApp()->id()));
   }
 
   const std::string& ua_override = tab->GetUserAgentOverride();

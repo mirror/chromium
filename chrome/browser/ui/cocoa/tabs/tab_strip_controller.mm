@@ -1538,7 +1538,7 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
                          atIndex:(NSInteger)modelIndex {
   extensions::TabHelper* extensions_tab_helper =
       extensions::TabHelper::FromWebContents(contents);
-  BOOL isApp = extensions_tab_helper->is_app();
+  BOOL isApp = extensions_tab_helper->IsApp();
   NSImage* image = nil;
   // Favicons come from the renderer, and the renderer draws everything in the
   // system color space.

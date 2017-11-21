@@ -69,7 +69,7 @@ bool TabContentsSyncedTabDelegate::IsBeingDestroyed() const {
 std::string TabContentsSyncedTabDelegate::GetExtensionAppId() const {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   const scoped_refptr<const extensions::Extension> extension_app(
-      extensions::TabHelper::FromWebContents(web_contents_)->extension_app());
+      extensions::TabHelper::FromWebContents(web_contents_)->GetExtensionApp());
   if (extension_app.get())
     return extension_app->id();
 #endif
