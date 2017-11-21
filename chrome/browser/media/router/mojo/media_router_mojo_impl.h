@@ -121,6 +121,11 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // Creates a binding between |this| and |request|.
   void BindToMojoRequest(mojo::InterfaceRequest<mojom::MediaRouter> request);
 
+  // Returns the ID of the provider associated with the presentation ID, or
+  // nullopt if not found.
+  virtual base::Optional<mojom::MediaRouteProvider::Id>
+  GetProviderIdForPresentation(const std::string& presentation_id);
+
   content::BrowserContext* context() const { return context_; }
 
   // Mojo pointers to media route providers. Providers are added via
@@ -180,6 +185,10 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                            ObserveRoutesFromMultipleProviders);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest,
                            SyncStateToMediaRouteProvider);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest,
+                           SendAutoJoinRequestToExtension);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest,
+                           SendCastSdkJoinRequestToExtension);
   FRIEND_TEST_ALL_PREFIXES(ExtensionMediaRouteProviderProxyTest,
                            StartAndStopObservingMediaSinks);
 
@@ -386,17 +395,13 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // routes do not appear in |routes|.
   void RemoveInvalidRouteControllers(const std::vector<MediaRoute>& routes);
 
-  // Methods for obtaining a pointer to the provider associated with the given
-  // object. They return a nullptr when such a provider is not found. The
-  // returned pointer should not be stored or passed to another object, as the
-  // Mojo connection may be terminated at any later time.
+  // Methods for obtaining the ID of the provider associated with the given
+  // object. They return a nullopt when such a provider is not found.
   base::Optional<mojom::MediaRouteProvider::Id> GetProviderIdForRoute(
       const MediaRoute::Id& route_id);
   base::Optional<mojom::MediaRouteProvider::Id> GetProviderIdForSink(
       const MediaSink::Id& sink_id,
       const MediaSource::Id& source_id);
-  base::Optional<mojom::MediaRouteProvider::Id> GetProviderIdForPresentation(
-      const std::string& presentation_id);
 
   base::flat_map<MediaSource::Id, std::unique_ptr<MediaSinksQuery>>
       sinks_queries_;

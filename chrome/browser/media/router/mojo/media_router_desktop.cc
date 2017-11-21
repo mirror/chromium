@@ -4,6 +4,7 @@
 
 #include "chrome/browser/media/router/mojo/media_router_desktop.h"
 
+#include "base/strings/string_util.h"
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h"
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
 #include "chrome/browser/media/router/media_router_factory.h"
@@ -19,6 +20,11 @@
 #endif
 
 namespace media_router {
+
+namespace {
+constexpr char kAutoJoinPresentationId[] = "auto-join";
+constexpr char kCastPresentationIdPrefix[] = "cast-session_";
+}  // namespace
 
 MediaRouterDesktop::~MediaRouterDesktop() {
   if (dial_media_sink_service_proxy_) {
@@ -57,6 +63,17 @@ void MediaRouterDesktop::OnUserGesture() {
 #if defined(OS_WIN)
   EnsureMdnsDiscoveryEnabled();
 #endif
+}
+
+base::Optional<mojom::MediaRouteProvider::Id>
+MediaRouterDesktop::GetProviderIdForPresentation(
+    const std::string& presentation_id) {
+  if (presentation_id == kAutoJoinPresentationId ||
+      base::StartsWith(presentation_id, kCastPresentationIdPrefix,
+                       base::CompareCase::SENSITIVE)) {
+    return mojom::MediaRouteProvider::Id::EXTENSION;
+  }
+  return MediaRouterMojoImpl::GetProviderIdForPresentation(presentation_id);
 }
 
 MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
