@@ -6,24 +6,176 @@ cr.exportPath('print_preview_new');
 
 /**
  * @typedef {{
+ *   value: (string | number | boolean | Array | Object),
+ *   valid: boolean,
+ *   available: boolean,
+ *   updatesPreview: boolean
+ * }}
+ */
+print_preview_new.Setting;
+
+/**
+ * @typedef {{
  *   previewLoading: boolean,
  *   previewFailed: boolean,
  *   cloudPrintError: string,
  *   privetExtensionError: string,
  *   invalidSettings: boolean,
- *   destinationId: string,
- *   destinationHint: string,
- *   destinationOfflineStatus: string,
- *   destinationIcon: string,
- *   copies: number,
- *   pageRange: !Array<number>,
- *   duplex: boolean,
- *   copiesInvalid: boolean,
- *   scalingInvalid: boolean,
- *   pagesInvalid: boolean,
- *   isPdfDocument: boolean,
- *   fitToPageScaling: string,
- *   documentNumPages: number,
  * }}
  */
-print_preview_new.Model;
+print_preview_new.State;
+
+Polymer({
+  is: 'print-preview-model',
+
+  properties: {
+    /**
+     * Object containing current settings of Print Preview, for use by Polymer
+     * controls.
+     * @type {!Object}
+     */
+    settings: {
+      type: Object,
+      notify: true,
+      value: {
+        pages: {
+          value: [1, 2, 3, 4, 5],
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        copies: {
+          value: '1',
+          valid: true,
+          available: true,
+          updatesPreview: false,
+        },
+        collate: {
+          value: true,
+          valid: true,
+          available: true,
+          updatesPreview: false,
+        },
+        layout: {
+          value: false, /* portrait */
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        color: {
+          value: true, /* color */
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        media_size: {
+          value: {
+            width_microns: 215900,
+            height_microns: 279400,
+          },
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        margins: {
+          value: 0,
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        dpi: {
+          value: {},
+          valid: true,
+          available: true,
+          updatesPreview: false,
+        },
+        fitToPage: {
+          value: false,
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        scaling: {
+          value: '100',
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        duplex: {
+          value: true,
+          valid: true,
+          available: true,
+          updatesPreview: false,
+        },
+        cssBackground: {
+          value: false,
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        selectionOnly: {
+          value: false,
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        headerFooter: {
+          value: true,
+          valid: true,
+          available: true,
+          updatesPreview: true,
+        },
+        rasterize: {
+          value: false,
+          valid: true,
+          available: true,
+          updatesPreview: false,
+        },
+        vendorItems: {
+          value: {},
+          valid: true,
+          available: true,
+          updatesPreview: false,
+        },
+      },
+    },
+
+    /** @type {print_preview.Destination} */
+    destination: {
+      type: Object,
+      notify: true,
+      value: new print_preview.Destination(
+          'Foo Printer', print_preview.DestinationType.LOCAL,
+          print_preview.DestinationOrigin.LOCAL, 'Foo Printer', true, '',
+          {description: 'PrinterBrandAA 12345'}),
+    },
+
+    /** @type {print_preview.DocumentInfo} */
+    documentInfo: {
+      type: Object,
+      notify: true,
+      value: new print_preview.DocumentInfo(),
+    },
+
+    /** @type {!print_preview_new.State} */
+    state: {
+      type: Object,
+      notify: true,
+      value: {
+        previewLoading: false,
+        previewFailed: false,
+        cloudPrintError: '',
+        privetExtensionError: '',
+        invalidSettings: false,
+      },
+    },
+  },
+
+  ready: function() {
+    const info = new print_preview.DocumentInfo();
+    info.init(false, 'DocumentTitle', true);
+    info.updatePageCount(5);
+    info.fitToPageScaling_ = 94;
+    this.set('documentInfo', info);
+  },
+});

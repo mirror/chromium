@@ -5,11 +5,5 @@
 Polymer({
   is: 'print-preview-other-options-settings',
 
-  properties: {
-    /** @type {!print_preview_new.Model} */
-    model: {
-      type: Object,
-      notify: true,
-    },
-  },
+  behaviors: [SettingsBehavior],
 });
