@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1ab5e64_85a18e0d",
+        "filename": "content/browser/loader/upload_data_stream_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T15:49:42Z",
+      "side": 1,
+      "message": "So this CL doesn\u0027t actually add consumers of either codepath.  Could a consumer that really wanted to reach this codepath?  Probably?  It could just grab a URLLoaderFactory in the browser process for the legacy path and use it.  Code probably wouldn\u0027t want to do that, though.\n\nI added this because the bug assigned to me indicated that blink would want to use the path I was adding.  I\u0027ve gone ahead and removed it from this CL.",
+      "parentUuid": "d9f9a334_1cf0e539",
+      "revId": "44856bfcfe387a6c34dd4d1edf4fea6ee0fb0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecef7b1e_575e16c3",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T06:06:55Z",
       "side": 1,
       "message": "It looks for this particular call site we\u0027ll likely be safe",
+      "revId": "44856bfcfe387a6c34dd4d1edf4fea6ee0fb0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f65184_352c99c2",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T15:49:42Z",
+      "side": 1,
+      "message": "It\u0027s not safety I\u0027m concerned about, it\u0027s overhead of the duplicate operation.  Ideally, we\u0027d just take the one passed in to us and run with it.  It\u0027s unclear how expensive the extra copy+delete is.",
+      "parentUuid": "ecef7b1e_575e16c3",
       "revId": "44856bfcfe387a6c34dd4d1edf4fea6ee0fb0de7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "44856bfcfe387a6c34dd4d1edf4fea6ee0fb0de7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b975890_b6adf7b0",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-21T15:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5bb4a25_d34967be",
+      "revId": "44856bfcfe387a6c34dd4d1edf4fea6ee0fb0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
