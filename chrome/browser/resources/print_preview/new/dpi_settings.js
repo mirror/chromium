@@ -4,4 +4,6 @@
 
 Polymer({
   is: 'print-preview-dpi-settings',
+
+  behaviors: [SettingsBehavior],
 });
