@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f25766d_08b45a42",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-21T18:41:11Z",
+      "side": 1,
+      "message": "Added a CreateHistoryNavigation function and rebased all the direct navigation functions on top of their detailed counterpart instead of repeating the raw NavigationSimulator constructor.",
+      "parentUuid": "da10023b_38d0c62e",
+      "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e399ffb3_0303e136",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea3e9a5_18e51024",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-21T18:41:11Z",
+      "side": 1,
+      "message": "I do not think this is strictly necessary since this commit function will only be called for the first commit stage of any redirect chain. To me that means that server redirects will be taken into account but never client side code. If we want to support these navigations later we could have internal state associated with such cases that would make identification easier than guessing from raw params.\nLet me know what you think about that though!",
+      "parentUuid": "e399ffb3_0303e136",
+      "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +140,24 @@
       "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71afed0e_829dc1fc",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-21T18:41:11Z",
+      "side": 1,
+      "message": "Reworked everything on top of GoToOffset(). Used offset instead of index to match the naming in NavigationController. This is public in case tests need to have specific offsets.",
+      "parentUuid": "bd92f290_70a1d94b",
+      "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
