@@ -2,6 +2,256 @@
   "comments": [
     {
       "key": {
+        "uuid": "1cdf3a5c_55bb5fb0",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "(applies to other changes in the CL)\nnit: multiline if should use {}",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383157ad_0c303652",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "auto args \u003d std::make_unique\u003cListValue\u003e();, also prefer std::make_unique over base::MakeUnique.",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0347a257_d230291d",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "RenderViewHost is kind of deprecated and we shouldn\u0027t use them in new code. Have you looked at ExtensionBrowserTest::ExecuteScriptInBackgroundPage and can we use that instead of CallAPI?\n\n(ExecuteScriptInBackgroundPage returns a string instead of bool, but that shouldn\u0027t be a problem).",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b129ef_4caade14",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "Keeping a bare pointer around without clearing it seems a bit dangerous. There isn\u0027t anything wrong here, but it increases the chances of future bugs. I would make this a local variable inside each test and pass those pointers into the VerifyOn* methods below.",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f706774_7eeb55b6",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "I would combine these two VerifyOn* methods into one:\n\nstruct ExpectedEntry {\n  std::string keyword;\n  AutocompleteProvider::Type type;\n};\n\nvoid VerifyResult(const std::vector\u003cExpectedEntry\u003e\u0026 entries) {\n  int i \u003d 0;\n  for (auto\u0026 entry : entries) {\n    EXPECT_EQ(base::ASCIIToUTF16(entry.keyword), result.match_at(i).fill_into_edit);\n    EXPECT_EQ(entry.type, result.match_at(i).provider-\u003etype());\n    ++i;\n  } \n}\n\nThen from the tests you can call:\n\nVerifyResult({{\"kw\", AutocompleteProvider::TYPE_SEARCH},\n              {\"kw entered 1\", AutocompleteProvider::TYPE_KEYWORD},\n              {\"kw entered 2\", AutocompleteProvider::TYPE_KEYWORD}});",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c8a6c9_bdae5049",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "Can you add a comment about this suggestion? Would improve readability of the test.",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0802e43_8404bcdb",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "AutocompleteController* autocomplete_controller_ \u003d nullptr;\n\n(disregard if you end up making the other change related to this).",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b0c88b_6ee6da3a",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "Is there a reason we don\u0027t call SetupOmnibox() at the beginning of the test? I ask because setup methods are generally called right at beginning.",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4195a078_b3e66991",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/basic/manifest.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "This directory (/basic) is copied from chrome/test/data/extensions/api_test/omnibox, right? Do we need to delete the old files?",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d932572_ef491465",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/basic/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "Since you\u0027re already here, all JS strings -\u003e single quote instead of \"\"",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21ea25e_daab3ed1",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/keyword_entered/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "This is a new file so // Copyright 2017 ...\n(No (c) required).",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06a3821_22c5fd79",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/keyword_entered/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "This is a new file so // Copyright 2017 ...\n(No (c) required).",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bda2c4a_17844932",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/keyword_entered/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "nit: var hasError \u003d ...",
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2412da9b_44e0dea0",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-21T00:46:24Z",
+      "side": 1,
+      "message": "(related to the comment in chrome/test/data/extensions/api_test/omnibox/basic/manifest.json)\nAre we still using this file? I see all old tests were changed from \"omnibox\" directory to specific subdirectory. I could have missed something though.",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "291bef79d008876a25895d524620daf864d9b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fab35672_46e8da22",
         "filename": "components/omnibox/browser/keyword_provider.cc",
         "patchSetId": 11
