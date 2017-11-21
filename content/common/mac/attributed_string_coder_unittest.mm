@@ -110,18 +110,12 @@ TEST_F(AttributedStringCoderTest, NilString) {
 TEST_F(AttributedStringCoderTest, OutOfRange) {
   AttributedStringCoder::EncodedString encoded(
       base::ASCIIToUTF16("Hello World"));
-  encoded.attributes()->push_back(
-      AttributedStringCoder::FontAttribute(
-          FontDescriptor([NSFont systemFontOfSize:12]),
-          gfx::Range(0, 5)));
-  encoded.attributes()->push_back(
-      AttributedStringCoder::FontAttribute(
-          FontDescriptor([NSFont systemFontOfSize:14]),
-          gfx::Range(5, 100)));
-  encoded.attributes()->push_back(
-      AttributedStringCoder::FontAttribute(
-          FontDescriptor([NSFont systemFontOfSize:16]),
-          gfx::Range(100, 5)));
+  encoded.attributes()->push_back(AttributedStringCoder::FontAttribute(
+      base::ASCIIToUTF16("Courier"), 12, gfx::Range(0, 5)));
+  encoded.attributes()->push_back(AttributedStringCoder::FontAttribute(
+      base::ASCIIToUTF16("Courier"), 14, gfx::Range(5, 100)));
+  encoded.attributes()->push_back(AttributedStringCoder::FontAttribute(
+      base::ASCIIToUTF16("Courier"), 16, gfx::Range(100, 5)));
 
   NSAttributedString* decoded = AttributedStringCoder::Decode(&encoded);
   EXPECT_TRUE(decoded);

@@ -12,7 +12,7 @@
 #include "base/logging.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/memory/shared_memory.h"
-#include "content/common/mac/font_descriptor.h"
+#include "base/strings/utf_string_conversions.h"
 #include "content/common/mac/font_loader.h"
 #include "content/common/sandbox_mac_unittest_helper.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
@@ -112,10 +112,8 @@ TEST_F(MacSandboxTest, FontLoadingTest) {
   ASSERT_TRUE(temp_file);
   base::ScopedFILE temp_file_closer(temp_file);
 
-  NSFont* srcFont = [NSFont fontWithName:@"Geeza Pro" size:16.0];
-  FontDescriptor descriptor(srcFont);
   std::unique_ptr<FontLoader::ResultInternal> result =
-      FontLoader::LoadFontForTesting(descriptor);
+      FontLoader::LoadFontForTesting(base::ASCIIToUTF16("Geeza Pro"), 16);
   EXPECT_GT(result->font_data_size, 0U);
   EXPECT_GT(result->font_id, 0U);
 
