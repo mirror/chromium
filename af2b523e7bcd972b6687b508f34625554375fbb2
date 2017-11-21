@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "dfe18635_a21f0751",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-21T20:43:05Z",
+      "side": 1,
+      "message": "Instead of adding a new state can we change the WebappInfo display mode to MINIMAL_UI?\n\nWe will need to spec out how a TWA behaves when verification fails.  For instance, does a TWA for which verification fails show the disclosure UI?",
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6dd7e4_61409319",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 2

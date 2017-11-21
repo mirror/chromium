@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9fc19984_2d788a20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkOfflineDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-21T20:43:05Z",
+      "side": 1,
+      "message": "WebappInfo#name() should be always non-empty for webapps. Not sure about TWAs",
+      "parentUuid": "27495a2e_18eec4fb",
+      "revId": "a0b4102bf7371aa5463953dab87d6df809c056be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "148a69e9_d9b84292",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 1
