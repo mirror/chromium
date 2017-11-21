@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a79c556_279b086f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T20:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd12b4b4_73d9aad6",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8985fd87_d517d859",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 20
@@ -57,6 +81,24 @@
       "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792090c8_1877720c",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T20:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "681b7e18_eb33b04a",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "a010a743_79213154",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T20:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "793c40ea_92858d32",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24763435_1a8a9f20",
         "filename": "chrome/browser/chrome_content_browser_client.h",
         "patchSetId": 20
@@ -118,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "e04ac31b_408bb894",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T20:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24763435_1a8a9f20",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5343226_9180e354",
         "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
         "patchSetId": 20
@@ -129,6 +213,30 @@
       "writtenOn": "2017-11-21T04:30:19Z",
       "side": 1,
       "message": "Maybe it\u0027s worth declaring this as scoped_refptr\u003cSiteInstance\u003e instance?  Not sure if it\u0027s necessary, but SiteInstance is ref counted and we wouldn\u0027t want it to leak.",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 19
+      },
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27dc6084_6ed4b7d4",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T20:48:25Z",
+      "side": 1,
+      "message": "That\u0027s what `auto` means here; the function is declared as:\n\n  static scoped_refptr\u003cSiteInstance\u003e CreateForURL(...);\n\nIn fact, Chromium presubmit checks stop you from using `auto` where it would deduce to a naked pointer; it makes you say `auto*`. Probably to protect against things like such leak bugs.",
+      "parentUuid": "a5343226_9180e354",
       "range": {
         "startLine": 36,
         "startChar": 6,
@@ -158,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "4442d239_831b7cda",
+        "filename": "chrome/browser/policy/site_isolation_policy_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T20:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8b54e72_d61c082a",
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "025597d5_904c1d35",
         "filename": "chrome/test/data/policy/policy_test_cases.json",
         "patchSetId": 20
@@ -181,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "52b2171d_467faede",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T20:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "025597d5_904c1d35",
+      "range": {
+        "startLine": 876,
+        "startChar": 2,
+        "endLine": 876,
+        "endChar": 21
+      },
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73a342c2_c712bde1",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 20
@@ -201,6 +351,30 @@
       "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff71bbf_c3c9eddf",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 10648,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T20:48:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73a342c2_c712bde1",
+      "range": {
+        "startLine": 10648,
+        "startChar": 41,
+        "endLine": 10648,
+        "endChar": 54
+      },
+      "revId": "930c9719e69ebbe587fc6f98993ffb539c25c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
