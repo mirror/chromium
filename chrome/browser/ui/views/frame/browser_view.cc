@@ -2599,6 +2599,10 @@ bool BrowserView::IsVisibleOnAllWorkspaces() const {
   return frame_->IsVisibleOnAllWorkspaces();
 }
 
+void BrowserView::UpdateCustomFrameButtons() const {
+  frame_->GetFrameView()->UpdateHostedAppButtonContainer();
+}
+
 bool BrowserView::DoCutCopyPasteForWebContents(
     WebContents* contents,
     void (WebContents::*method)()) {

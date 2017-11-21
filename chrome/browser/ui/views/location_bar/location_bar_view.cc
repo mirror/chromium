@@ -223,6 +223,7 @@ void LocationBarView::Init() {
     ContentSettingImageView* image_view =
         new ContentSettingImageView(std::move(model), this, font_list);
     content_setting_views_.push_back(image_view);
+    image_view->set_next_element_interior_padding(kIconInteriorPadding);
     image_view->SetVisible(false);
     AddChildView(image_view);
   }
@@ -655,6 +656,18 @@ WebContents* LocationBarView::GetWebContents() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// LocationBarView, public ContentSettingImageView::Delegate implementation:
+
+content::WebContents* LocationBarView::GetContentSettingWebContents() {
+  return GetToolbarModel()->input_in_progress() ? nullptr : GetWebContents();
+}
+
+ContentSettingBubbleModelDelegate*
+LocationBarView::GetContentSettingBubbleModelDelegate() {
+  return delegate_->GetContentSettingBubbleModelDelegate();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // LocationBarView, private:
 
 int LocationBarView::IncrementalMinimumWidth(views::View* view) const {
@@ -698,12 +711,10 @@ void LocationBarView::RefreshLocationIcon() {
 
 bool LocationBarView::RefreshContentSettingViews() {
   bool visibility_changed = false;
-  for (ContentSettingViews::const_iterator i(content_setting_views_.begin());
-       i != content_setting_views_.end(); ++i) {
-    const bool was_visible = (*i)->visible();
-    (*i)->Update(GetToolbarModel()->input_in_progress() ? nullptr
-                                                        : GetWebContents());
-    if (was_visible != (*i)->visible())
+  for (auto* v : content_setting_views_) {
+    const bool was_visible = v->visible();
+    v->Update();
+    if (was_visible != v->visible())
       visibility_changed = true;
   }
   return visibility_changed;

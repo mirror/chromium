@@ -11,6 +11,11 @@
 
 class BrowserFrame;
 class BrowserView;
+class HostedAppButtonContainer;
+
+namespace gfx {
+class FontList;
+}
 
 // A specialization of the NonClientFrameView object that provides additional
 // Browser-specific methods.
@@ -66,6 +71,10 @@ class BrowserNonClientFrameView : public views::NonClientFrameView,
   // Provided for mus to update the minimum window size property.
   virtual void UpdateMinimumSize();
 
+  // Updates the visibility of buttons inside the HostedAppButtonContainer, if
+  // it exists.
+  void UpdateHostedAppButtonContainer();
+
   // Overriden from views::View.
   void ChildPreferredSizeChanged(views::View* child) override;
   void VisibilityChanged(views::View* starting_from, bool is_visible) override;
@@ -96,11 +105,20 @@ class BrowserNonClientFrameView : public views::NonClientFrameView,
 
   void PaintToolbarBackground(gfx::Canvas* canvas) const;
 
+  // Creates the View for extra buttons displayed in the Hosted App frame.
+  void CreateHostedAppButtonContainer(SkColor active_icon_color,
+                                      SkColor inactive_icon_color,
+                                      const gfx::FontList& font_list);
+
   const views::View* profile_indicator_icon() const {
     return profile_indicator_icon_;
   }
   views::View* profile_indicator_icon() {
     return profile_indicator_icon_;
+  }
+
+  HostedAppButtonContainer* hosted_app_button_container() {
+    return hosted_app_button_container_;
   }
 
   // views::NonClientFrameView:
@@ -137,6 +155,10 @@ class BrowserNonClientFrameView : public views::NonClientFrameView,
   // On desktop, this is used to show an incognito icon. On CrOS, it's also used
   // for teleported windows (in multi-profile mode).
   ProfileIndicatorIcon* profile_indicator_icon_;
+
+  // Container for extra frame buttons shown for hosted app windows.
+  // Owned by views hierarchy.
+  HostedAppButtonContainer* hosted_app_button_container_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserNonClientFrameView);
 };
