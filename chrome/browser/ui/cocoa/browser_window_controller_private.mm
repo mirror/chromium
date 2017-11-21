@@ -657,6 +657,14 @@ willPositionSheet:(NSWindow*)sheet
     shouldExitAfterEnteringFullscreen_ = NO;
     [self exitAppKitFullscreen];
   }
+
+  if (base::mac::IsAtMostOS10_12()) {
+    WebContents* webContents = [self webContents];
+    if (webContents && webContents->GetRenderWidgetHostView()) {
+      [webContents->GetRenderWidgetHostView()->GetNativeView()
+              updateTrackingAreas];
+    }
+  }
 }
 
 - (void)windowWillExitFullScreen:(NSNotification*)notification {
