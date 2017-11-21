@@ -8,6 +8,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.ContentViewCoreImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content_public.browser.WebContents;
 
@@ -45,7 +46,7 @@ public class TextSuggestionHost {
 
         hidePopups();
         mSpellCheckPopupWindow = new SpellCheckPopupWindow(mContentViewCore.getContext(), this,
-                mContentViewCore.getContainerView(), mContentViewCore);
+                mContentViewCore.getContainerView(), (ContentViewCoreImpl) mContentViewCore);
 
         mSpellCheckPopupWindow.show(caretXPx,
                 caretYPx + getContentOffsetYPix(mContentViewCore.getWebContents()), markedText,
@@ -64,7 +65,7 @@ public class TextSuggestionHost {
 
         hidePopups();
         mTextSuggestionsPopupWindow = new TextSuggestionsPopupWindow(mContentViewCore.getContext(),
-                this, mContentViewCore.getContainerView(), mContentViewCore);
+                this, mContentViewCore.getContainerView(), (ContentViewCoreImpl) mContentViewCore);
 
         mTextSuggestionsPopupWindow.show(caretXPx,
                 caretYPx + getContentOffsetYPix(mContentViewCore.getWebContents()), markedText,

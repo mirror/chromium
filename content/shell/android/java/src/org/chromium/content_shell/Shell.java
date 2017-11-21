@@ -296,7 +296,7 @@ public class Shell extends LinearLayout {
     @CalledByNative
     private void initFromNativeTabContents(WebContents webContents) {
         Context context = getContext();
-        mContentViewCore = new ContentViewCore(context, "");
+        mContentViewCore = ContentViewCore.create(context, "");
         ContentView cv = ContentView.createContentView(context, mContentViewCore);
         mViewAndroidDelegate = new ShellViewAndroidDelegate(cv);
         mContentViewCore.initialize(mViewAndroidDelegate, cv, webContents, mWindow);
