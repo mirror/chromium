@@ -317,6 +317,17 @@ public class InstantAppsHandler {
     }
 
     /**
+     * Returns whether we should show the open instant app button in the page info popup.
+     *
+     * @param context An Android {@link Context}.
+     * @param url The URL we're displaying page info for.
+     * @return Whether or not we should show the instant app button in the page info popup.
+     */
+    public boolean shouldShowOpenInstantAppButton(Context context, String url) {
+        return false;
+    }
+
+    /**
      * @return Whether the intent was fired from Chrome. This happens when the user gets a
      *         disambiguation dialog and chooses to stay in Chrome.
      */
