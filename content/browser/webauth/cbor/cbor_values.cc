@@ -21,7 +21,10 @@ CBORValue::CBORValue(Type type) : type_(type) {
   // Initialize with the default value.
   switch (type_) {
     case Type::UNSIGNED:
-      unsigned_value_ = 0;
+      integer_value_magnitude_ = 0;
+      return;
+    case Type::NEGATIVE:
+      integer_value_magnitude_ = 0;
       return;
     case Type::BYTE_STRING:
       new (&bytestring_value_) BinaryValue();
@@ -41,8 +44,10 @@ CBORValue::CBORValue(Type type) : type_(type) {
   NOTREACHED();
 }
 
-CBORValue::CBORValue(uint64_t in_unsigned)
-    : type_(Type::UNSIGNED), unsigned_value_(in_unsigned) {}
+CBORValue::CBORValue(uint64_t integer_magnitude, IntegerType sign)
+    : integer_value_magnitude_(integer_magnitude) {
+  type_ = sign == IntegerType::POSITIVE ? Type::UNSIGNED : Type::NEGATIVE;
+}
 
 CBORValue::CBORValue(const BinaryValue& in_bytes)
     : type_(Type::BYTE_STRING), bytestring_value_(in_bytes) {}
@@ -96,7 +101,9 @@ CBORValue CBORValue::Clone() const {
     case Type::NONE:
       return CBORValue();
     case Type::UNSIGNED:
-      return CBORValue(unsigned_value_);
+      return CBORValue(integer_value_magnitude_, IntegerType::POSITIVE);
+    case Type::NEGATIVE:
+      return CBORValue(integer_value_magnitude_, IntegerType::NEGATIVE);
     case Type::BYTE_STRING:
       return CBORValue(bytestring_value_);
     case Type::STRING:
@@ -113,7 +120,12 @@ CBORValue CBORValue::Clone() const {
 
 uint64_t CBORValue::GetUnsigned() const {
   CHECK(is_unsigned());
-  return unsigned_value_;
+  return integer_value_magnitude_;
+}
+
+uint64_t CBORValue::GetNegativeIntMagnitude() const {
+  CHECK(is_negative());
+  return integer_value_magnitude_;
 }
 
 const std::string& CBORValue::GetString() const {
@@ -141,7 +153,10 @@ void CBORValue::InternalMoveConstructFrom(CBORValue&& that) {
 
   switch (type_) {
     case Type::UNSIGNED:
-      unsigned_value_ = that.unsigned_value_;
+      integer_value_magnitude_ = that.integer_value_magnitude_;
+      return;
+    case Type::NEGATIVE:
+      integer_value_magnitude_ = that.integer_value_magnitude_;
       return;
     case Type::BYTE_STRING:
       new (&bytestring_value_) BinaryValue(std::move(that.bytestring_value_));
@@ -177,6 +192,7 @@ void CBORValue::InternalCleanup() {
       break;
     case Type::NONE:
     case Type::UNSIGNED:
+    case Type::NEGATIVE:
       break;
   }
   type_ = Type::NONE;
