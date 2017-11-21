@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5df2a63c_d1c2dae9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-21T16:54:40Z",
+      "side": 1,
+      "message": "dmps -\u003e dumps",
+      "revId": "1f11528eebab7bbff6d9d08bf7929b8c010b2467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
