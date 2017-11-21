@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7e46d88_a4a8fcf3",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-21T05:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9154a20a_8ae42a99",
+      "revId": "fc203863b6715737cebf0e15654a214efda27773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54617e98_97bbca1c",
         "filename": "components/exo/data_device.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "fc203863b6715737cebf0e15654a214efda27773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8bdd80_e8fd7e4c",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-21T05:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54617e98_97bbca1c",
+      "revId": "fc203863b6715737cebf0e15654a214efda27773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9858df6b_c64c1f02",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-21T05:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6de257_d06c9675",
+      "revId": "fc203863b6715737cebf0e15654a214efda27773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6852aa90_ce71237c",
         "filename": "components/exo/data_device.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "fc203863b6715737cebf0e15654a214efda27773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de878e9_7bec13b1",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-21T05:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6852aa90_ce71237c",
+      "revId": "fc203863b6715737cebf0e15654a214efda27773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
