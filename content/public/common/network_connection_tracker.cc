@@ -133,11 +133,14 @@ void NetworkConnectionTracker::OnInitialConnectionType(
   }
 }
 
-void NetworkConnectionTracker::OnNetworkChanged(mojom::ConnectionType type) {
-  base::subtle::NoBarrier_Store(&connection_type_,
-                                static_cast<base::subtle::Atomic32>(type));
+void NetworkConnectionTracker::OnNetworkChanged(
+    mojom::ConnectionType broadcast_type,
+    mojom::ConnectionType actual_type) {
+  base::subtle::NoBarrier_Store(
+      &connection_type_, static_cast<base::subtle::Atomic32>(actual_type));
   network_change_observer_list_->Notify(
-      FROM_HERE, &NetworkConnectionObserver::OnConnectionChanged, type);
+      FROM_HERE, &NetworkConnectionObserver::OnConnectionChanged,
+      broadcast_type);
 }
 
 }  // namespace content

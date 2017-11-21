@@ -58,9 +58,10 @@ void NetworkChangeManager::NotificationPipeBroken(
 
 void NetworkChangeManager::OnNetworkChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
-  connection_type_ = mojom::ConnectionType(type);
+  connection_type_ =
+      mojom::ConnectionType(net::NetworkChangeNotifier::GetConnectionType());
   for (const auto& client : clients_) {
-    client->OnNetworkChanged(connection_type_);
+    client->OnNetworkChanged(mojom::ConnectionType(type), connection_type_);
   }
 }
 

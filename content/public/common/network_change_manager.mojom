@@ -40,7 +40,7 @@ interface NetworkChangeManagerClient {
   // primary network connection after the change.  OnNetworkChanged will always
   // be called with CONNECTION_NONE immediately prior to being called with an
   // online state.
-  OnNetworkChanged(ConnectionType type);
+  OnNetworkChanged(ConnectionType broadcast_type, ConnectionType actual_type);
 };
 
 // An interface that broadcasts network change events.
