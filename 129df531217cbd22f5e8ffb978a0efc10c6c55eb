@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fad555b3_b7ddd291",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-21T20:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3674dfb4_0dad897b",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60a48cc1_a033c41b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9476d3c8_08e23041",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4697,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-21T20:31:59Z",
+      "side": 1,
+      "message": "Yes, thanks. Added.",
+      "parentUuid": "60a48cc1_a033c41b",
+      "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "46decea1_bc302210",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4698,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-21T20:31:59Z",
+      "side": 1,
+      "message": "(mooted)",
+      "parentUuid": "f20c4e6a_923c79ab",
+      "range": {
+        "startLine": 4698,
+        "startChar": 252,
+        "endLine": 4698,
+        "endChar": 262
+      },
+      "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c39c237_03409a7b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a694635b_edff17fe",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4701,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-21T20:31:59Z",
+      "side": 1,
+      "message": "Have updated this to be clear about behaviour when this option is not configured.",
+      "parentUuid": "3c39c237_03409a7b",
+      "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
