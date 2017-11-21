@@ -286,6 +286,9 @@ bool AndroidVideoDecodeAccelerator::Initialize(const Config& config,
   DCHECK(thread_checker_.CalledOnValidThread());
   base::AutoReset<bool> scoper(&during_initialize_, true);
 
+  // force sw fallback
+  return false;
+
   if (make_context_current_cb_.is_null() || get_gles2_decoder_cb_.is_null()) {
     DLOG(ERROR) << "GL callbacks are required for this VDA";
     return false;
@@ -942,6 +945,7 @@ void AndroidVideoDecodeAccelerator::SendDecodedFrameToClient(
 void AndroidVideoDecodeAccelerator::Decode(
     const BitstreamBuffer& bitstream_buffer) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  LOG(ERROR) << "AVDA: " << __func__;
 
   // If we deferred getting a surface, then start getting one now.
   if (defer_surface_creation_) {
