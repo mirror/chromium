@@ -600,6 +600,9 @@ void HTMLDocumentParser::PumpPendingSpeculations() {
   }
 
   probe::ParseHTML probe(GetDocument(), this);
+  ResourceFetcher* fetcher = nullptr;
+  if (GetDocument()->Loader())
+    fetcher = GetDocument()->Loader()->Fetcher();
 
   SpeculationsPumpSession session(pump_speculations_session_nesting_level_);
   while (!speculations_.IsEmpty()) {
@@ -607,6 +610,11 @@ void HTMLDocumentParser::PumpPendingSpeculations() {
     size_t element_token_count =
         ProcessTokenizedChunkFromBackgroundParser(speculations_.TakeFirst());
     session.AddedElementTokens(element_token_count);
+    if (fetcher) {
+      fetcher->PreloadScannerProcessedChunk();
+      // We only need to call this once.
+      fetcher = nullptr;
+    }
 
     // Always check isParsing first as m_document may be null. Surprisingly,
     // isScheduledForUnpause() may be set here as a result of

@@ -1,6 +1,6 @@
 <?php
     header("Link: </resources/dummy.css>;rel=preload;as=style", false);
-    header("Link: </resources/square.png>;rel=preload;as=image;media=(min-width: 1px)", false);
+    header("Link: </resources/dummy.css?media>;rel=preload;as=style;media=(min-width: 1px)", false);
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,7 +17,7 @@
       var nonMediaHeader = performance.getEntriesByName(
         "http://127.0.0.1:8000/resources/dummy.css")[0];
       var mediaHeader = performance.getEntriesByName(
-        "http://127.0.0.1:8000/resources/square.png")[0];
+        "http://127.0.0.1:8000/resources/dummy.css?media")[0];
       var markup = performance.getEntriesByName(
         "http://127.0.0.1:8000/resources/dummy.js")[0];
       var normalResource = performance.getEntriesByName(
