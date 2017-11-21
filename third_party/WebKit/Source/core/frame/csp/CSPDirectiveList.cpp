@@ -203,6 +203,10 @@ bool CSPDirectiveList::CheckEval(SourceListDirective* directive) const {
   return !directive || directive->AllowEval();
 }
 
+bool CSPDirectiveList::CheckWasmEval(SourceListDirective* directive) const {
+  return !directive || directive->AllowWasmEval();
+}
+
 bool CSPDirectiveList::IsMatchingNoncePresent(SourceListDirective* directive,
                                               const String& nonce) const {
   return directive && directive->AllowNonce(nonce);
@@ -395,6 +399,34 @@ bool CSPDirectiveList::CheckEvalAndReportViolation(
     suffix =
         " Note that 'script-src' was not explicitly set, so 'default-src' is "
         "used as a fallback.";
+
+  ReportEvalViolation(
+      directive->GetText(), ContentSecurityPolicy::DirectiveType::kScriptSrc,
+      console_message + "\"" + directive->GetText() + "\"." + suffix + "\n",
+      KURL(), script_state, exception_status,
+      directive->AllowReportSample() ? content : g_empty_string);
+  if (!IsReportOnly()) {
+    policy_->ReportBlockedScriptExecutionToInspector(directive->GetText());
+    return false;
+  }
+  return true;
+}
+
+bool CSPDirectiveList::CheckWasmEvalAndReportViolation(
+    SourceListDirective* directive,
+    const String& console_message,
+    ScriptState* script_state,
+    ContentSecurityPolicy::ExceptionStatus exception_status,
+    const String& content) const {
+  if (CheckWasmEval(directive))
+    return true;
+
+  String suffix = String();
+  if (directive == default_src_) {
+    suffix =
+        " Note that 'script-src' was not explicitly set, so 'default-src' is "
+        "used as a fallback.";
+  }
 
   ReportEvalViolation(
       directive->GetText(), ContentSecurityPolicy::DirectiveType::kScriptSrc,
@@ -664,6 +696,22 @@ bool CSPDirectiveList::AllowEval(
         script_state, exception_status, content);
   }
   return CheckEval(OperativeDirective(script_src_.Get()));
+}
+
+bool CSPDirectiveList::AllowWasmEval(
+    ScriptState* script_state,
+    SecurityViolationReportingPolicy reporting_policy,
+    ContentSecurityPolicy::ExceptionStatus exception_status,
+    const String& content) const {
+  if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
+    return CheckWasmEvalAndReportViolation(
+        OperativeDirective(script_src_.Get()),
+        "Refused to compile or instantiate WebAssembly module because "
+        "'wasm-eval' is not an allowed source of script in the following "
+        "Content Security Policy directive: ",
+        script_state, exception_status, content);
+  }
+  return CheckWasmEval(OperativeDirective(script_src_.Get()));
 }
 
 bool CSPDirectiveList::AllowPluginType(
