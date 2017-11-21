@@ -16,6 +16,24 @@
       "revId": "3fe40449a98a5689ecc9b961b929e7ddcb491086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c2eaef_2235b839",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-21T00:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fbd38fb_6f88c084",
+      "revId": "3fe40449a98a5689ecc9b961b929e7ddcb491086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
