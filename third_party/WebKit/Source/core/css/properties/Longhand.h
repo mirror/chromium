@@ -23,6 +23,13 @@ class Longhand : public CSSProperty {
                                            const CSSParserLocalContext&) const {
     return nullptr;
   }
+  virtual const CSSValue* CSSValueFromComputedStyle(const ComputedStyle&,
+                                                    const LayoutObject*,
+                                                    Node*,
+                                                    bool) const {
+    NOTREACHED();
+    return nullptr;
+  }
   virtual void ApplyInitial(StyleResolverState&) const { NOTREACHED(); }
   virtual void ApplyInherit(StyleResolverState&) const { NOTREACHED(); }
   virtual void ApplyValue(StyleResolverState&, const CSSValue&) const {

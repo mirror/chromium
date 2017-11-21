@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
  *           (C) 2000 Antti Koivisto (koivisto@kde.org)
@@ -32,6 +33,8 @@
 #include "core/CoreExport.h"
 #include "core/css/StyleAutoColor.h"
 #include "core/css/StyleColor.h"
+// #include "core/css/properties/CSSProperty.h"
+// #include "core/css/properties/longhands/FloodColor.h"
 #include "core/style/BorderValue.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "core/style/ComputedStyleInitialValues.h"
@@ -65,6 +68,7 @@ struct BorderEdge;
 class ContentData;
 class CounterDirectives;
 class CSSAnimationData;
+class FloodColor;
 class CSSTransitionData;
 class CSSVariableData;
 class FilterOperations;
@@ -152,6 +156,24 @@ class ComputedStyle : public ComputedStyleBase,
   // Used by CSS animations. We can't allow them to animate based off visited
   // colors.
   friend class CSSPropertyEquality;
+
+  friend class CSSProperty;
+  friend class BackgroundColor;
+  friend class OutlineColor;
+  friend class BorderTopColor;
+  friend class BorderRightColor;
+  friend class BorderBottomColor;
+  friend class BorderLeftColor;
+  friend class ColumnRuleColor;
+  friend class TextDecorationColor;
+  friend class WebkitTextStrokeColor;
+  friend class WebkitTextFillColor;
+  friend class WebkitTextEmphasisColor;
+  friend class WebkitTapHighlightColor;
+  friend class FloodColor;
+  friend class LightingColor;
+  friend class StopColor;
+  friend class CaretColor;
   // Editing has to only reveal unvisited info.
   friend class ApplyStyleCommand;
   // Editing has to only reveal unvisited info.
