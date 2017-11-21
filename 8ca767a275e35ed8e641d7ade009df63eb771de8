@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "89f90051_80ed155b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "127 to exclude DEL?",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc28777_18762ee6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "{ and } should be also excluded",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1cc9b9_dfd905c2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "add a note here saying that we omit the index reverting logic as it\u0027s unnecessary",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da43089e_0c5c8964",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "how about using undefined for token so that misuse would make the result easier to notice?",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb595bc_11ef110e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "the contents do not necessarily conform to token. how about using \"result\" or \"contents\"?",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3479e0dc_6e1d6ef4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "use isDone()?",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c175d43b_cd3b06e7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -49,6 +151,40 @@
     },
     {
       "key": {
+        "uuid": "9179cc66_5e668456",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "I think we don\u0027t want to accept a MIME type including spaces around / between the type and subtype field. I checked the RFC 2045 but it looks it\u0027s saying nothing about that.",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0c3c9b_9b1c8b54",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "substype -\u003e subtype",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c6a1b84_c52a163a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -60,6 +196,23 @@
       "writtenOn": "2017-11-21T07:33:35Z",
       "side": 1,
       "message": "I\u0027m not sure if this is correct - https://tools.ietf.org/html/rfc2045#section-5.1 doesn\u0027t allow to omit parameter values, so it may be good to return undefined if tokenize.ConsumeChar(\u0027\u003d\u0027) returns false, but that\u0027s not Firefox / Chrome is doing. What do you think?",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65b763d_81f5bc6e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T07:54:10Z",
+      "side": 1,
+      "message": "substype -\u003e subtype",
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
