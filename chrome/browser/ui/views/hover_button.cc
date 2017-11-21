@@ -90,7 +90,8 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
 HoverButton::HoverButton(views::ButtonListener* button_listener,
                          std::unique_ptr<views::View> icon_view,
                          const base::string16& title,
-                         const base::string16& subtitle)
+                         const base::string16& subtitle,
+                         const bool white_text_color)
     : HoverButton(button_listener, base::string16()) {
   label()->SetHandlesTooltips(false);
   ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
@@ -104,6 +105,8 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
           ? layout_provider->GetDistanceMetric(DISTANCE_CONTROL_LIST_VERTICAL)
           : layout_provider->GetDistanceMetric(
                 views::DISTANCE_CONTROL_VERTICAL_TEXT_PADDING);
+  // TODO
+  remaining_vert_spacing = 12;
   const int total_height = icon_height + remaining_vert_spacing * 2;
 
   // If the padding given to the top and bottom of the HoverButton (i.e., on
@@ -121,8 +124,9 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   SetBorder(CreateBorderWithVerticalSpacing(remaining_vert_spacing));
 
   views::GridLayout* grid_layout = views::GridLayout::CreateAndInstall(this);
-  const int icon_label_spacing = layout_provider->GetDistanceMetric(
-      views::DISTANCE_RELATED_LABEL_HORIZONTAL);
+  // TODO
+  const int icon_label_spacing = 12;  // layout_provider->GetDistanceMetric(
+  // views::DISTANCE_RELATED_LABEL_HORIZONTAL);
 
   constexpr float kFixed = 0.f;
   constexpr float kStretchy = 1.f;
@@ -165,10 +169,18 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   title_wrapper->set_can_process_events_within_subtree(false);
   grid_layout->AddView(title_wrapper);
 
+  if (white_text_color) {
+    //    title_->SetEnabledColor(SkColorSetRGB(0xFF,0xFF,0xFF));
+    //    title_->SetAutoColorReadabilityEnabled(false);
+  }
+
   if (!subtitle.empty()) {
     grid_layout->StartRow(0, kColumnSetId, row_height);
     subtitle_ = new views::Label(subtitle, views::style::CONTEXT_BUTTON,
                                  STYLE_SECONDARY);
+    if (white_text_color) {
+      subtitle_->SetEnabledColor(SkColorSetRGB(0xFF, 0xFF, 0xFF));
+    }
     subtitle_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     subtitle_->SetAutoColorReadabilityEnabled(false);
     grid_layout->SkipColumns(1);

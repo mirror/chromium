@@ -101,7 +101,8 @@ namespace {
 
 const int kButtonHeight = 32;
 const int kFixedAccountRemovalViewWidth = 280;
-const int kFixedMenuWidth = 240;
+// TODO
+const int kFixedMenuWidth = 280;
 
 // Spacing between the edge of the material design user menu and the
 // top/bottom or left/right of the menu items.
@@ -837,31 +838,39 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   views::View* view = new views::View();
+  // TODO
+  views::View* view2 = new views::View();
+  view2->SetBackground(views::CreateSolidBackground(gfx::kGoogleRed700));
   bool account_consistency_enabled =
       signin::IsAccountConsistencyMirrorEnabled();
   int content_list_vert_spacing =
       account_consistency_enabled
           ? provider->GetDistanceMetric(DISTANCE_CONTENT_LIST_VERTICAL_MULTI)
           : provider->GetDistanceMetric(DISTANCE_CONTENT_LIST_VERTICAL_SINGLE);
+  view2->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(0, 0), 0));
   view->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical,
-                           gfx::Insets(content_list_vert_spacing, 0), 0));
+                           gfx::Insets(content_list_vert_spacing + 12, 16), 0));
+  GetProfileBadgeType(browser_->profile());
 
   auto current_profile_photo = std::make_unique<BadgedProfilePhoto>(
-      GetProfileBadgeType(browser_->profile()), avatar_item.icon);
+      // GetProfileBadgeType(browser_->profile()),
+      BadgedProfilePhoto::BADGE_TYPE_SYNC_ERROR, avatar_item.icon);
   const base::string16 profile_name =
       profiles::GetAvatarNameForProfile(browser_->profile()->GetPath());
 
   // Show the profile name by itself if not signed in or account consistency is
   // disabled. Otherwise, show the email attached to the profile.
   bool show_email = avatar_item.signed_in && !account_consistency_enabled;
-  HoverButton* profile_card =
-      new HoverButton(this, std::move(current_profile_photo), profile_name,
-                      show_email ? avatar_item.username : base::string16());
+  HoverButton* profile_card = new HoverButton(
+      this, std::move(current_profile_photo), profile_name,
+      show_email ? avatar_item.username : base::string16(), true);
   if (show_email)
     profile_card->SetSubtitleElideBehavior(gfx::ELIDE_EMAIL);
   current_profile_card_ = profile_card;
-  view->AddChildView(current_profile_card_);
+  view2->AddChildView(current_profile_card_);
+  view->AddChildView(view2);
 
   if (is_guest) {
     current_profile_card_->SetEnabled(false);
