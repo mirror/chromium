@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57862108_73e03287",
+        "filename": "net/log/net_log_event_type_list.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-21T20:35:55Z",
+      "side": 1,
+      "message": "Unless these are identical to QUIC_CONNECTION_MIGRATION_SUCCESS, can you add comments?",
+      "range": {
+        "startLine": 2035,
+        "startChar": 53,
+        "endLine": 2035,
+        "endChar": 0
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1010fdc8_4810982b",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1929,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-21T20:35:55Z",
+      "side": 1,
+      "message": "nit: it would be good to factor the bulk of this into a common helper. Perhaps in a followup.",
+      "range": {
+        "startLine": 1929,
+        "startChar": 37,
+        "endLine": 1929,
+        "endChar": 0
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd8a9ee_4bb30999",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-21T20:35:55Z",
+      "side": 1,
+      "message": "nit: no need for ()s",
+      "range": {
+        "startLine": 342,
+        "startChar": 12,
+        "endLine": 342,
+        "endChar": 50
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7708b874_641a8ecd",
+        "filename": "net/quic/core/quic_connection.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-21T20:35:55Z",
+      "side": 1,
+      "message": "As discussed, this should probably go away. We don\u0027t need to talk to old servers, and clients can know their self address before the first packet is received. But this can be done in a follow up",
+      "range": {
+        "startLine": 1027,
+        "startChar": 43,
+        "endLine": 1027,
+        "endChar": 44
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502e0e1a_4504d055",
+        "filename": "net/quic/core/quic_connection.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2507,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-21T20:35:55Z",
+      "side": 1,
+      "message": "This seems like a bug, because the caller can ensure that the writer is not write blocked, right?",
+      "range": {
+        "startLine": 2507,
+        "startChar": 16,
+        "endLine": 2507,
+        "endChar": 0
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a083a29b_a1154072",
+        "filename": "net/quic/core/quic_connection.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2527,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-21T20:35:55Z",
+      "side": 1,
+      "message": "How \u0027bout returning WriteResult instead of bool? (Or perhaps as we discussed, letting the caller do the writing. \n\nIn particular, it\u0027s *very* commons for writes in chrome to be async (return ERR_IO_PENDING and hence WRITE_STATUS_BLOCKED) but this is not a failure.",
+      "range": {
+        "startLine": 2527,
+        "startChar": 14,
+        "endLine": 2527,
+        "endChar": 0
+      },
+      "revId": "00a3fdc892a959f8ce831c40735e5a9ce81a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
