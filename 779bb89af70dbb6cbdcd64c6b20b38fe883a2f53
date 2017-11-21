@@ -16,6 +16,24 @@
       "revId": "779bb89af70dbb6cbdcd64c6b20b38fe883a2f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3bb01a_cba1db2a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3552,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-11-21T01:12:18Z",
+      "side": 1,
+      "message": "Did you mean the ifdefs just in this file or the two other files in this CL?",
+      "parentUuid": "975b9a35_d6a69457",
+      "revId": "779bb89af70dbb6cbdcd64c6b20b38fe883a2f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
