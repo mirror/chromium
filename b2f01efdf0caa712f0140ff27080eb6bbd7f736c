@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89863980_f087cb5e",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 4284,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-21T17:41:46Z",
+      "side": 1,
+      "message": "What would happen if both \"[self.passKitDownloader isMIMETypePassKitType:MIMEType]\" is YES and \"allowNavigation\" is NO? Will we both start the download and invoke the passkit downloader? If this is impossible, should there be an \"else if\" here instead? Or maybe a DCHECK in one of the two \"if\" statements.",
+      "revId": "b2f01efdf0caa712f0140ff27080eb6bbd7f736c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
