@@ -791,6 +791,24 @@
             ]
         }
     ],
+    "ChromeHomeBottomNavLabels": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Default"
+                },
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "ChromeHomeBottomNavLabels"
+                    ]
+                }
+            ]
+        }
+    ],
     "ChromeHomePromo": [
         {
             "platforms": [
