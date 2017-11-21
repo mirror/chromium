@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e83bedaa_31c82ccb",
+        "filename": "media/mojo/interfaces/video_decoder.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-21T00:23:44Z",
+      "side": 1,
+      "message": "not sure that it\u0027s particularly magic; the service doesn\u0027t treat it any differently than any other int32 .  it just doesn\u0027t happen to refer to a cdm.  nobody calling this should need to memorize it; one may send in any int one likes for unencrypted streams.\n\ni\u0027ll add a comment to that effect.",
+      "parentUuid": "c27dc06a_8cfe6cda",
+      "range": {
+        "startLine": 52,
+        "startChar": 62,
+        "endLine": 52,
+        "endChar": 68
+      },
+      "revId": "4834747d6fa95b42d5b7401ec046b7b04f3cbce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0a6339a_09111593",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 7
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9f479e9f_5244ec94",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-21T00:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b3dc47_a26fd330",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "4834747d6fa95b42d5b7401ec046b7b04f3cbce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d924573_6b552733",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 7
@@ -92,6 +140,30 @@
       "revId": "4834747d6fa95b42d5b7401ec046b7b04f3cbce1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cb4536_5bf9bf0f",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-21T00:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d924573_6b552733",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 14
+      },
+      "revId": "4834747d6fa95b42d5b7401ec046b7b04f3cbce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
