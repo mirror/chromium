@@ -245,6 +245,9 @@ Persistence.FileSystemWorkspaceBinding.FileSystem = class extends Workspace.Proj
    * @return {string}
    */
   mimeType(uiSourceCode) {
+    var mimeType = Persistence.networkPersistenceManager.mimeTypeForUISourceCode(uiSourceCode);
+    if (mimeType)
+      return mimeType;
     return Common.ResourceType.mimeFromURL(uiSourceCode.url()) || 'text/plain';
   }
 

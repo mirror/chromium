@@ -292,6 +292,16 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
 
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {?string}
+   */
+  mimeTypeForUISourceCode(uiSourceCode) {
+    if (uiSourceCode.project() !== this._activeProject || !uiSourceCode[this._bindingSymbol])
+      return null;
+    return uiSourceCode[this._bindingSymbol].network.mimeType();
+  }
+
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
    */
   async saveUISourceCodeForOverrides(uiSourceCode) {
     if (!this.canSaveUISourceCodeForOverrides(uiSourceCode))

@@ -18,7 +18,7 @@ Persistence.Persistence = class extends Common.Object {
     /** @type {!Map<string, number>} */
     this._filePathPrefixesToBindingCount = new Map();
 
-    /** @type {!Multimap<!Workspace.UISourceCode, function()>} */
+    /** @type {!Multimap<!Workspace.UISourceCode, function(!Workspace.UISourceCode)>} */
     this._subscribedBindingEventListeners = new Multimap();
 
     if (Runtime.experiments.isEnabled('persistence2')) {
@@ -312,7 +312,7 @@ Persistence.Persistence = class extends Common.Object {
 
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
-   * @param {function()} listener
+   * @param {function(!Workspace.UISourceCode)} listener
    */
   subscribeForBindingEvent(uiSourceCode, listener) {
     this._subscribedBindingEventListeners.set(uiSourceCode, listener);
@@ -320,7 +320,7 @@ Persistence.Persistence = class extends Common.Object {
 
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
-   * @param {function()} listener
+   * @param {function(!Workspace.UISourceCode)} listener
    */
   unsubscribeFromBindingEvent(uiSourceCode, listener) {
     this._subscribedBindingEventListeners.delete(uiSourceCode, listener);
@@ -334,7 +334,7 @@ Persistence.Persistence = class extends Common.Object {
       return;
     var listeners = Array.from(this._subscribedBindingEventListeners.get(uiSourceCode));
     for (var listener of listeners)
-      listener.call(null);
+      listener.call(null, uiSourceCode);
   }
 
   /**

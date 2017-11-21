@@ -370,6 +370,7 @@ Sources.SourcesView = class extends UI.VBox {
     }
     var widget = /** @type {!UI.Widget} */ (sourceFrame || sourceView);
     this._sourceViewByUISourceCode.set(uiSourceCode, widget);
+    Persistence.persistence.subscribeForBindingEvent(uiSourceCode, this._bindingChangeBound);
     uiSourceCode.addEventListener(Workspace.UISourceCode.Events.TitleChanged, this._uiSourceCodeTitleChanged, this);
     return widget;
   }
@@ -423,13 +424,20 @@ Sources.SourcesView = class extends UI.VBox {
    */
   _removeSourceFrame(uiSourceCode) {
     var sourceView = this._sourceViewByUISourceCode.get(uiSourceCode);
-    this._sourceViewByUISourceCode.remove(uiSourceCode);
+    Persistence.persistence.unsubscribeFromBindingEvent(uiSourceCode, this._bindingChangeBound);
+    this._sourceViewByUISourceCode.delete(uiSourceCode);
     uiSourceCode.removeEventListener(Workspace.UISourceCode.Events.TitleChanged, this._uiSourceCodeTitleChanged, this);
     if (sourceView && sourceView instanceof Sources.UISourceCodeFrame)
       /** @type {!Sources.UISourceCodeFrame} */ (sourceView).dispose();
   }
 
-  _onBindingChanged() {
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   */
+  _onBindingChanged(uiSourceCode) {
+    this._recreateSourceFrameIfNeeded(uiSourceCode);
+    if (!this._executionLocation)
+      return;
     this.setExecutionLocation(this._executionLocation);
     this.showSourceLocation(
         this._executionLocation.uiSourceCode, this._executionLocation.lineNumber, this._executionLocation.columnNumber);
@@ -438,7 +446,6 @@ Sources.SourcesView = class extends UI.VBox {
   clearCurrentExecutionLine() {
     if (!this._executionLocation)
       return;
-    Persistence.persistence.unsubscribeFromBindingEvent(this._executionLocation.uiSourceCode, this._bindingChangeBound);
     this._executionSourceFrame.clearExecutionLine();
     this._executionSourceFrame = null;
     this._executionLocation = null;
@@ -454,7 +461,6 @@ Sources.SourcesView = class extends UI.VBox {
     var sourceView = this._getOrCreateSourceView(uiSourceCode);
     if (!(sourceView instanceof Sources.UISourceCodeFrame))
       return;
-    Persistence.persistence.subscribeForBindingEvent(uiLocation.uiSourceCode, this._bindingChangeBound);
     var sourceFrame = /** @type {!Sources.JavaScriptSourceFrame} */ (sourceView);
     sourceFrame.setExecutionLocation(
         new Workspace.UILocation(uiSourceCode, uiLocation.lineNumber, uiLocation.columnNumber));
