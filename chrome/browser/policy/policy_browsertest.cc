@@ -96,6 +96,7 @@
 #include "chrome/common/extensions/extension_test_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/common/web_application_info.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/search_test_utils.h"
@@ -713,6 +714,23 @@ class PolicyTest : public InProcessBrowserTest {
         extensions::NOTIFICATION_CRX_INSTALLER_DONE,
         content::NotificationService::AllSources());
     installer->InstallCrx(extension_path);
+    observer.Wait();
+    content::Details<const extensions::Extension> details = observer.details();
+    return details.ptr();
+  }
+
+  const extensions::Extension* InstallBookmarkApp() {
+    WebApplicationInfo web_app;
+    web_app.title = base::ASCIIToUTF16("Bookmark App");
+    web_app.app_url = GURL("http://www.google.com");
+
+    scoped_refptr<extensions::CrxInstaller> installer =
+        extensions::CrxInstaller::CreateSilent(extension_service());
+
+    content::WindowedNotificationObserver observer(
+        extensions::NOTIFICATION_CRX_INSTALLER_DONE,
+        content::NotificationService::AllSources());
+    installer->InstallWebApp(web_app);
     observer.Wait();
     content::Details<const extensions::Extension> details = observer.details();
     return details.ptr();
@@ -1467,6 +1485,45 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallBlacklistSelective) {
   EXPECT_EQ(kAdBlockCrxId, adblock->id());
   EXPECT_EQ(adblock,
             service->GetExtensionById(kAdBlockCrxId, true));
+}
+
+// Ensure that bookmark apps are not blocked by the ExtensionInstallBlacklist
+// and ExtensionAllowedTypes policies.
+IN_PROC_BROWSER_TEST_F(PolicyTest, BookmarkApp_ExtensionBlacklistPolicies) {
+  const extensions::Extension* bookmark_app = InstallBookmarkApp();
+  ASSERT_TRUE(bookmark_app);
+  EXPECT_TRUE(InstallExtension(kGoodCrxName));
+
+  ExtensionService* service = extension_service();
+  EXPECT_TRUE(service->IsExtensionEnabled(kGoodCrxId));
+  EXPECT_TRUE(service->IsExtensionEnabled(bookmark_app->id()));
+
+  // Now set ExtensionInstallBlacklist policy to block all extensions.
+  base::ListValue blacklist;
+  blacklist.AppendString("*");
+  PolicyMap policies;
+  policies.Set(key::kExtensionInstallBlacklist, POLICY_LEVEL_MANDATORY,
+               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+               blacklist.CreateDeepCopy(), nullptr);
+  UpdateProviderPolicy(policies);
+
+  // The bookmark app should still be enabled, with |kGoodCrxId| being disabled.
+  EXPECT_FALSE(service->IsExtensionEnabled(kGoodCrxId));
+  EXPECT_TRUE(service->IsExtensionEnabled(bookmark_app->id()));
+
+  // Now set policy to only allow extensions. Note: Bookmark apps are hosted
+  // apps.
+  policies.Clear();
+  base::ListValue allowed_types;
+  allowed_types.AppendString("extension");
+  policies.Set(key::kExtensionAllowedTypes, POLICY_LEVEL_MANDATORY,
+               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+               allowed_types.CreateDeepCopy(), nullptr);
+  UpdateProviderPolicy(policies);
+
+  // Both the bookmark app and |kGoodCrxId| should be enabled now.
+  EXPECT_TRUE(service->IsExtensionEnabled(kGoodCrxId));
+  EXPECT_TRUE(service->IsExtensionEnabled(bookmark_app->id()));
 }
 
 // Flaky on windows; http://crbug.com/307994.
