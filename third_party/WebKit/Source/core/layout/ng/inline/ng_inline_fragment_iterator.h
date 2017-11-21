@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/ng/geometry/ng_physical_offset.h"
+#include "core/layout/ng/geometry/ng_physical_offset_rect.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Vector.h"
@@ -18,6 +19,7 @@ class NGPhysicalBoxFragment;
 class NGPhysicalContainerFragment;
 class NGPhysicalFragment;
 struct NGPhysicalOffset;
+struct NGPhysicalOffsetRect;
 
 // Iterate through inline descendant fragments.
 class CORE_EXPORT NGInlineFragmentIterator {
@@ -33,6 +35,8 @@ class CORE_EXPORT NGInlineFragmentIterator {
   struct Result {
     const NGPhysicalFragment* fragment;
     NGPhysicalOffset offset_to_container_box;
+
+    NGPhysicalOffsetRect FragementRectInContainerBox() const;
   };
   using Results = Vector<Result, 1>;
   using LayoutObjectMap = HashMap<const LayoutObject*, Results>;
