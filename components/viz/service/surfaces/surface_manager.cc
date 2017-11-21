@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/containers/adapters.h"
 #include "base/containers/queue.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
@@ -460,6 +461,36 @@ void SurfaceManager::RemoveTemporaryReference(const SurfaceId& surface_id,
   // range tracking map entry.
   if (frame_sink_temp_refs.empty())
     temporary_reference_ranges_.erase(frame_sink_id);
+}
+
+Surface* SurfaceManager::GetLatestInFlightSurface(
+    uint32_t primary_local_id,
+    const SurfaceId& fallback_surface_id) {
+  if (!using_surface_references())
+    return nullptr;
+
+  auto it =
+      temporary_reference_ranges_.find(fallback_surface_id.frame_sink_id());
+  if (it != temporary_reference_ranges_.end() && !it->second.empty()) {
+    const std::vector<LocalSurfaceId>& temp_surfaces = it->second;
+    for (const LocalSurfaceId& local_surface_id :
+         base::Reversed(temp_surfaces)) {
+      if (local_surface_id.local_id() > primary_local_id)
+        continue;
+
+      SurfaceId surface_id(fallback_surface_id.frame_sink_id(),
+                           local_surface_id);
+      Surface* surface = GetSurfaceForId(surface_id);
+      if (surface && surface->HasActiveFrame())
+        return surface;
+    }
+  }
+
+  Surface* surface = GetSurfaceForId(fallback_surface_id);
+  if (surface && surface->HasActiveFrame())
+    return surface;
+
+  return nullptr;
 }
 
 void SurfaceManager::MarkOldTemporaryReference() {

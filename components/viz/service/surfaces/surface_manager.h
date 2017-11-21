@@ -197,6 +197,11 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
     return lifetime_type_ == LifetimeType::REFERENCES;
   }
 
+  // Returns the most recent surface associated with the |fallback_surface_id|'s
+  // FrameSinkId that was created prior to the current primary surface.
+  Surface* GetLatestInFlightSurface(uint32_t primary_local_id,
+                                    const SurfaceId& fallback_surface_id);
+
   // Called by SurfaceAggregator notifying us that it will use |surface| in the
   // next display frame. We will notify SurfaceObservers accordingly.
   void SurfaceWillBeDrawn(Surface* surface);

@@ -212,8 +212,14 @@ void SurfaceAggregator::HandleSurfaceQuad(
     return;
   }
 
-  SurfaceId fallback_surface_id = *surface_quad->fallback_surface_id;
-  Surface* fallback_surface = manager_->GetSurfaceForId(fallback_surface_id);
+  SurfaceId fallback_surface_id;
+  Surface* fallback_surface = manager_->GetLatestInFlightSurface(
+      primary_surface_id.local_surface_id().local_id(),
+      *surface_quad->fallback_surface_id);
+  if (fallback_surface)
+    fallback_surface_id = fallback_surface->surface_id();
+  else
+    fallback_surface_id = *surface_quad->fallback_surface_id;
 
   // If the fallback is specified and missing then that's an error. Report the
   // error to console, and log the UMA.
@@ -983,13 +989,14 @@ gfx::Rect SurfaceAggregator::PrewalkTree(Surface* surface,
     Surface* surface = manager_->GetSurfaceForId(surface_info.primary_id);
     gfx::Rect surface_damage;
     if (!surface || !surface->HasActiveFrame()) {
-      // If the primary surface si not available then we assume the damage is
+      // If the primary surface is not available then we assume the damage is
       // the full size of the SurfaceDrawQuad because we might need to introduce
       // gutter.
       surface_damage = surface_info.quad_rect;
       if (surface_info.fallback_id) {
-        Surface* fallback_surface =
-            manager_->GetSurfaceForId(*surface_info.fallback_id);
+        Surface* fallback_surface = manager_->GetLatestInFlightSurface(
+            surface_info.primary_id.local_surface_id().local_id(),
+            *surface_info.fallback_id);
         if (fallback_surface && fallback_surface->HasActiveFrame())
           surface = fallback_surface;
       }
