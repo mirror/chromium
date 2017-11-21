@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "00c5775e_ff62d56a",
+        "filename": "chromeos/dbus/fake_upstart_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-21T20:48:27Z",
+      "side": 1,
+      "message": "The idea is to mimic the asyncronous nature of the actual implementation. This will improve the robustness of any tests as well. e.g.\n\n base::ThreadTaskRunnerHandle::Get()-\u003ePostTask(\n          FROM_HERE, base::BindOnce(std::move(callback), true)));",
+      "parentUuid": "c2a3df5f_8e8d378c",
+      "revId": "8943c95a8871ab8f89d0efa1f66383486b39d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6cadaa_8759764b",
         "filename": "chromeos/dbus/upstart_client.cc",
         "patchSetId": 14
