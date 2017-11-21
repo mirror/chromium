@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3771a4d6_c11d25a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "nit: This seems an unnecessary detail for the CL description!",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "454fcb24e7dcd7377a4655f731d1b3a2c68c23ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

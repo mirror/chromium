@@ -19,6 +19,98 @@
     },
     {
       "key": {
+        "uuid": "f7d3cc73_52aaffae",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "You could bind the reply TaskRunner in to the Callback (e.g. grab it with SequenceTaskRunnerHandle::Get()) to avoid the need to explicitly mention the UI thread here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86874694_492d4385",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "Note that these implementations mean that a called that invokes Stop() can still find itself being called-back at some later time, if these tasks were in-flight at the time.\n\nYou could avoid that by moving these to be methods on DialMediaSinkService and posting them through a WeakPtr, which you invalidate in Stop().",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675eb480_f74d1a1b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "Is there actually a UI-thread requirement, or just a requirement that it\u0027s the same thread as the rest of the calls?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86866422_18e8c48c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "Under what circumstances do we expect Start() to be called multiple times?  Won\u0027t this early-exit confuse callers, since the second and subsequent pairs of callbacks won\u0027t get invoked?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "665bb06b_cafafd8e",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -81,6 +173,24 @@
       "writtenOn": "2017-11-20T17:39:57Z",
       "side": 1,
       "message": "Could impl_-\u003eStop() cause impl_ to destroy itself to reduce the number of tasks by one (you would still have to release the unique_ptr first)?",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3873a93_49061820",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "Is there any need for Stop() at all, given that it neither has a return-value nor any sort of completion-callback, presumably the work could just be done in the destructor?",
+      "parentUuid": "ec207460_452b357f",
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +401,29 @@
     },
     {
       "key": {
+        "uuid": "fb30ecfd_957ce6f1",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "As noted for DIAL, this implementation means that callers may see their callback invoked _after_ Stop() has returned - we should either prevent that, by posting via the CastMediaSinkService\u0027 WeakPtr, or document it.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c792743_450d25d6",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 8
@@ -319,6 +452,70 @@
       "writtenOn": "2017-11-20T17:39:57Z",
       "side": 1,
       "message": "Do we really need the IO -\u003e UI -\u003e IO hop to pass a DIAL sink from the DIAL discovery impl to the Cast discovery impl?\n\nCan the DialMediaSinkService hand a callback directly from its impl to register with the Cast impl?  I imagine they will always share the same task sequence.",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2828f3b1_6bf69518",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "This seems to be an artefact of having the TaskRunner associated with the objects themselves, rather than having them use SequenceTaskRunnerHandle or similar to post to their own TaskRunner, and requiring the calling code to manage the actual thread assignments?",
+      "parentUuid": "786ef0fe_0bf27453",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88fab3a_09da3b72",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "Why is it desirable to no-op if already started? What happens if we re-start with a different callback, then?",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "014f273c_30e87138",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "Do we actually need this API, or could we just do the work in the destructor?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 14
+      },
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -359,6 +556,52 @@
     },
     {
       "key": {
+        "uuid": "1687829a_3cb3954d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "nit: Why quantize to 100ms granularity? Is this just to avoid inadvertently triggering high-precision timers?",
+      "range": {
+        "startLine": 283,
+        "startChar": 40,
+        "endLine": 283,
+        "endChar": 66
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed4bf95_ab2e7172",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "This is rather vague; can we be more specific, e.g. \"on which methods are called\" or \"on which work is done\" or similar?\n\nWhy do we have methods in this class which _don\u0027t_ run on this task-runner?",
+      "range": {
+        "startLine": 322,
+        "startChar": 29,
+        "endLine": 322,
+        "endChar": 58
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53775ee2_5ba027c7",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 8
@@ -387,6 +630,52 @@
       "writtenOn": "2017-11-20T17:39:57Z",
       "side": 1,
       "message": "throttle invocations of the callback",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82b7ed3_03dde2e0",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "This needs to be virtual, since you have virtual methods.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c6781c_9a8f0431",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "nit: Looks like some of this comment went missing?",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 63
+      },
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -489,6 +778,162 @@
       "writtenOn": "2017-11-20T17:39:57Z",
       "side": 1,
       "message": "Maybe: \"Timer for completing the current round of discovery.\"\nIt\u0027s not clear what is being \"fetched\" in this API.",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d9d763_a89d30c2",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "\"finish\" is also a little strange terminology; is this a _timeout_ or actually the timer for stopping discovery, for example?",
+      "parentUuid": "53f1367e_abf26686",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7fd072_f8208365",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN here.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 2
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebe7845_772f8d73",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "If this is leaked then can we just use a static here, e.g:\n\nCastSocketService::GetInstance() {\n  static CastSocketService* instance \u003d new CastSocketService;\n  return instance;\n}",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 79
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb7cc21_79633112",
+        "filename": "components/cast_channel/cast_socket_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "nit: It seems a little strange to associate this with the CastSocketService itself, if it is then the callers that must arrange to use it.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 3
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105e18fc_c8012fad",
+        "filename": "components/cast_channel/cast_socket_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "nit: You could just do:\n\nDCHECK(task_runner_-\u003eBelongsToCurrentThread())\n\nto avoid the need for this.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac351d4_04e6e64a",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "Is it valid for this instance to be torn-down via delete, or should we just DCHECK(!observer_) here?",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37af24db_e12dc96c",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-21T01:23:45Z",
+      "side": 1,
+      "message": "nit: Now that this is a handler rather than one-of-many \"observers\", can we rename it accordingly?",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 11
+      },
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
