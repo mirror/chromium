@@ -74,7 +74,7 @@ enum class DeletePageResult {
   RESULT_COUNT,
 };
 
-// Controls how to search on differnt URLs for pages.
+// Controls how to search on different URLs for pages.
 enum class URLSearchMode {
   // Match against the last committed URL only.
   SEARCH_BY_FINAL_URL_ONLY,
