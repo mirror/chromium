@@ -16,6 +16,24 @@
       "revId": "b2f01efdf0caa712f0140ff27080eb6bbd7f736c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43834215_b6403fe4",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 4284,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-21T18:29:51Z",
+      "side": 1,
+      "message": "Actually if |[self.passKitDownloader isMIMETypePassKitType:MIMEType]| is YES, then |allowNavigation| is always NO. I don\u0027t know why the line 4286 exists (I will clean it up later). \n\nNo one sets DownloadControllerDelegate, so the download will not start. In the subsequent CLs I\u0027m going to guard old PassKit code with feature flags. Please note that CL description says: \"Embedder does not set DownloadController delegate yet, so this CL does not trigger the second download.\"\n\nIs it OK, if I land this?",
+      "parentUuid": "89863980_f087cb5e",
+      "revId": "b2f01efdf0caa712f0140ff27080eb6bbd7f736c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
