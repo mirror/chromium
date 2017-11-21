@@ -22,6 +22,30 @@
       "revId": "9e5f81425367589ff57813c5ca8d96fbf8ab7df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5516c1f0_d07fe546",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-21T10:32:36Z",
+      "side": 1,
+      "message": "Yes, otherwise the strict comparison below will fail in Windows. I suspect there are plenty of that kind of bugs in presubmit tests.",
+      "parentUuid": "edc68bae_af35d3c6",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "9e5f81425367589ff57813c5ca8d96fbf8ab7df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
