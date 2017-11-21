@@ -196,12 +196,13 @@ SelectionState InlineTextBox::GetSelectionState() const {
     // kStartAndEnd is invalid operation.
     bool start =
         (state != SelectionState::kEnd &&
-         selection.LayoutSelectionStart().value_or(0) >= start_ &&
-         selection.LayoutSelectionStart().value_or(0) <=
+         (int)selection.LayoutSelectionStart().value_or(0) >= start_ &&
+         (int)selection.LayoutSelectionStart().value_or(0) <=
              start_ + len_ + end_of_line_adjustment_for_css_line_break);
-    bool end = (state != SelectionState::kStart &&
-                selection.LayoutSelectionEnd().value_or(0) > start_ &&
-                selection.LayoutSelectionEnd().value_or(0) <= last_selectable);
+    bool end =
+        (state != SelectionState::kStart &&
+         (int)selection.LayoutSelectionEnd().value_or(0) > start_ &&
+         (int)selection.LayoutSelectionEnd().value_or(0) <= last_selectable);
     if (start && end)
       state = SelectionState::kStartAndEnd;
     else if (start)
@@ -209,9 +210,10 @@ SelectionState InlineTextBox::GetSelectionState() const {
     else if (end)
       state = SelectionState::kEnd;
     else if ((state == SelectionState::kEnd ||
-              selection.LayoutSelectionStart().value_or(0) < start_) &&
+              (int)selection.LayoutSelectionStart().value_or(0) < start_) &&
              (state == SelectionState::kStart ||
-              selection.LayoutSelectionEnd().value_or(0) > last_selectable))
+              (int)selection.LayoutSelectionEnd().value_or(0) >
+                  last_selectable))
       state = SelectionState::kInside;
     else if (state == SelectionState::kStartAndEnd)
       state = SelectionState::kNone;

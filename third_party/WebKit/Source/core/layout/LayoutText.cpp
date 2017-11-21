@@ -1874,7 +1874,7 @@ LayoutRect LayoutText::LocalSelectionRect() const {
 
   // Now calculate startPos and endPos for painting selection.
   // We include a selection while endPos > 0
-  int start_pos, end_pos;
+  unsigned int start_pos, end_pos;
   if (GetSelectionState() == SelectionState::kInside) {
     // We are fully selected.
     start_pos = 0;

@@ -68,24 +68,24 @@ class SelectionPaintRange {
 
   SelectionPaintRange() = default;
   SelectionPaintRange(LayoutObject* start_layout_object,
-                      WTF::Optional<int> start_offset,
+                      WTF::Optional<unsigned int> start_offset,
                       LayoutObject* end_layout_object,
-                      WTF::Optional<int> end_offset);
+                      WTF::Optional<unsigned int> end_offset);
 
   bool operator==(const SelectionPaintRange& other) const;
 
   LayoutObject* StartLayoutObject() const;
-  WTF::Optional<int> StartOffset() const;
+  WTF::Optional<unsigned int> StartOffset() const;
   LayoutObject* EndLayoutObject() const;
-  WTF::Optional<int> EndOffset() const;
+  WTF::Optional<unsigned int> EndOffset() const;
 
   bool IsNull() const { return !start_layout_object_; }
 
  private:
   LayoutObject* start_layout_object_ = nullptr;
-  WTF::Optional<int> start_offset_ = WTF::nullopt;
+  WTF::Optional<unsigned int> start_offset_ = WTF::nullopt;
   LayoutObject* end_layout_object_ = nullptr;
-  WTF::Optional<int> end_offset_ = WTF::nullopt;
+  WTF::Optional<unsigned int> end_offset_ = WTF::nullopt;
 };
 
 class LayoutSelection final : public GarbageCollected<LayoutSelection> {
@@ -102,8 +102,8 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   void InvalidatePaintForSelection();
 
   void ClearSelection();
-  WTF::Optional<int> SelectionStart() const;
-  WTF::Optional<int> SelectionEnd() const;
+  WTF::Optional<unsigned int> SelectionStart() const;
+  WTF::Optional<unsigned int> SelectionEnd() const;
   void OnDocumentShutdown();
 
   void Trace(blink::Visitor*);
