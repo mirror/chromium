@@ -38,6 +38,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/arc/arc_data_remover.h"
+#include "components/arc/arc_features.h"
 #include "components/arc/arc_instance_mode.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/arc_session_runner.h"
@@ -539,8 +540,12 @@ void ArcSessionManager::CancelAuthCode() {
 void ArcSessionManager::RecordArcState() {
   // Only record Enabled state if ARC is allowed in the first place, so we do
   // not split the ARC population by devices that cannot run ARC.
-  if (IsAllowed())
-    UpdateEnabledStateUMA(enable_requested_);
+  if (!IsAllowed())
+    return;
+
+  UpdateEnabledStateUMA(enable_requested_);
+  UpdateNativeBridgeExperimentEnabledUMA(
+      base::FeatureList::IsEnabled(arc::kNativeBridgeExperimentFeature));
 }
 
 void ArcSessionManager::RequestEnable() {

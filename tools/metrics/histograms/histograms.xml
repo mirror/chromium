@@ -2455,6 +2455,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The elapsed time to last low memory kill event.</summary>
 </histogram>
 
+<histogram name="Arc.NativeBridgeExperiment" enum="BooleanEnabled">
+  <owner>elijahtaylor@google.com</owner>
+  <owner>levarum@google.com</owner>
+  <summary>
+    Whether NativeBridgeExperiment for ARC is enabled or not. This is collected
+    along with Arc.State during every metrics recording interval, so it is in
+    every record uploaded to the server.  This is required because this value is
+    used to categorize all other data in the dashboard as collected with
+    NativeBridgeExperiment enabled or not.
+  </summary>
+</histogram>
+
 <histogram name="Arc.OOMKills.Count" units="kills">
   <owner>elijahtaylor@google.com</owner>
   <owner>shihuis@google.com</owner>
