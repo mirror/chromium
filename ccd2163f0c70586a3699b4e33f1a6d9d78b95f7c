@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "072c50a3_906661d6",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-21T01:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf92808_a78bb68b",
+      "range": {
+        "startLine": 291,
+        "startChar": 25,
+        "endLine": 291,
+        "endChar": 35
+      },
+      "revId": "ccd2163f0c70586a3699b4e33f1a6d9d78b95f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca49565_ef741412",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-20T20:20:07Z",
       "side": 1,
       "message": "When is it omitted/undefined?",
+      "range": {
+        "startLine": 292,
+        "startChar": 16,
+        "endLine": 292,
+        "endChar": 26
+      },
+      "revId": "ccd2163f0c70586a3699b4e33f1a6d9d78b95f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd8f1fd_18be722e",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-21T01:30:37Z",
+      "side": 1,
+      "message": "For now there is no omiited case. I modified it to a non-optional parameter.",
+      "parentUuid": "9ca49565_ef741412",
       "range": {
         "startLine": 292,
         "startChar": 16,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "3c5dd84e_8a54a0c8",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-21T01:30:37Z",
+      "side": 1,
+      "message": "Yes I think it\u0027s used on iOS. Changed to use .bind(this).",
+      "parentUuid": "b19d12db_32f7f1cd",
+      "revId": "ccd2163f0c70586a3699b4e33f1a6d9d78b95f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3003937e_e28dc9c1",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "ccd2163f0c70586a3699b4e33f1a6d9d78b95f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3507a229_2dfc345c",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-21T01:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3003937e_e28dc9c1",
+      "range": {
+        "startLine": 308,
+        "startChar": 29,
+        "endLine": 308,
+        "endChar": 54
+      },
+      "revId": "ccd2163f0c70586a3699b4e33f1a6d9d78b95f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
