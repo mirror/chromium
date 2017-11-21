@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45731f8b_c44eed48",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T14:06:16Z",
+      "side": 1,
+      "message": "It didn\u0027t work for this one but it worked for the move constructor.",
+      "parentUuid": "ee93658e_7f3d0712",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88ff3987_09d40358",
         "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1078bf74_0e4cd39a",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T14:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ff3987_09d40358",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8485a2f1_6038cc33",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T14:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06c9831_fd173142",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 64
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33373128_c9de4271",
         "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510c991e_e14f5ee5",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T14:06:16Z",
+      "side": 1,
+      "message": "No, DISALLOW_COPY_AND_ASSIGNED added on all classes and structs of the file.",
+      "parentUuid": "33373128_c9de4271",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 62
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3a766a68_8c32052a",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T14:06:16Z",
+      "side": 1,
+      "message": "Oh yes that is the preferred way to do this. Done.",
+      "parentUuid": "526a786a_93a17b9b",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d12357e7_1dbd9ee6",
         "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer_unittest.cc",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32fa337_50393a47",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-21T14:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d12357e7_1dbd9ee6",
+      "range": {
+        "startLine": 126,
+        "startChar": 28,
+        "endLine": 126,
+        "endChar": 37
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
