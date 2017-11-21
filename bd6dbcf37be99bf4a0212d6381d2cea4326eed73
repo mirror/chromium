@@ -16,6 +16,24 @@
       "revId": "bd6dbcf37be99bf4a0212d6381d2cea4326eed73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c0979f_01555a9a",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-21T22:01:26Z",
+      "side": 1,
+      "message": "Indeed, removing the check makes the enterprise policy setting take precedence over the command line option. For policy harmony, I removed it, and added a comment explaining why we don\u0027t call `HasSwitch` like we do for the above.",
+      "parentUuid": "57b841db_44be467f",
+      "revId": "bd6dbcf37be99bf4a0212d6381d2cea4326eed73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
