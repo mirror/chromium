@@ -22,6 +22,30 @@
       "revId": "f9846037e9c8a169a32ee0a3d2ee663717da9a17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57896688_f4ffc03b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-21T04:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d42d40_8b81f2b0",
+      "range": {
+        "startLine": 244,
+        "startChar": 61,
+        "endLine": 244,
+        "endChar": 84
+      },
+      "revId": "f9846037e9c8a169a32ee0a3d2ee663717da9a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
