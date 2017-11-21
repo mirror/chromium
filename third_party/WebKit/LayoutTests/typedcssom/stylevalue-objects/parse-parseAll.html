@@ -9,6 +9,8 @@
 <script>
 'use strict';
 
+const gTestUrl = '../resources/1x1-green.png';
+
 for (const parseMethod of ['parse', 'parseAll']) {
   test(() => {
     assert_throws(new TypeError(), () => CSSStyleValue[parseMethod]('', 'foo'));
@@ -31,6 +33,8 @@ const gValidNonListTests = [
   { property: 'width', value: '10px', expected: CSS.px(10), desc: 'a valid cssText for the given property' },
   { property: 'wIdTh', value: '10px', expected: CSS.px(10), desc: 'a mixed case cssText' },
   { property: '--foo', value: '10%', expected: CSS.percent(10), desc: 'a custom property' },
+  { property: 'background-image', value: gTestUrl, expected: new CSSURLImageValue(gTestUrl) ,desc: 'a relative url'}
+  { property: 'content', value: gTestUrl, expected: new CSSURLImageValue(gTestUrl) ,desc: 'a relative url'}
 ];
 
 for (const {property, value, expected, desc} of gValidNonListTests) {
