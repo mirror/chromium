@@ -16,6 +16,8 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/policy/cloud/device_cloud_policy_service.h"
 #include "chrome/browser/policy/configuration_policy_handler_list_factory.h"
 #include "chrome/browser/policy/device_management_service_configuration.h"
 #include "chrome/common/chrome_paths.h"
@@ -83,6 +85,9 @@ void ChromeBrowserPolicyConnector::Init(
   device_management_service->ScheduleInitialization(
       kServiceInitializationStartupDelay);
 
+  device_policy_service_ = std::make_unique<DeviceCloudPolicyService>(
+      device_management_service.get(),
+      g_browser_process->system_request_context());
   InitInternal(local_state, std::move(device_management_service));
 }
 
@@ -103,8 +108,8 @@ ChromeBrowserPolicyConnector::CreatePlatformProvider() {
   return base::MakeUnique<AsyncPolicyProvider>(GetSchemaRegistry(),
                                                std::move(loader));
 #elif defined(OS_POSIX) && !defined(OS_ANDROID)
-  base::FilePath config_dir_path;
-  if (PathService::Get(chrome::DIR_POLICY_FILES, &config_dir_path)) {
+  base::FilePath config_dir_path if (PathService::Get(chrome::DIR_POLICY_FILES,
+                                                      &config_dir_path)) {
     std::unique_ptr<AsyncPolicyLoader> loader(new ConfigDirPolicyLoader(
         base::CreateSequencedTaskRunnerWithTraits(
             {base::MayBlock(), base::TaskPriority::BACKGROUND}),
