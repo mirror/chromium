@@ -46,6 +46,30 @@
       "revId": "ab83661f74e90bcbc21baa2af2ed938be6e8b40c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3021e555_88aa47e2",
+        "filename": "ios/third_party/motion_interchange_objc/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-21T15:26:41Z",
+      "side": 1,
+      "message": "Thanks for the reply! I believe the description is fine, it\u0027s just me slightly being out of context + wanted to explicitly verify :)",
+      "parentUuid": "7623b4c4_a246d7e7",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "ab83661f74e90bcbc21baa2af2ed938be6e8b40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
