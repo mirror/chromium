@@ -118,6 +118,30 @@
       "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f20fe0_2e4cf04b",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_broadcast_forwarder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-21T17:19:36Z",
+      "side": 1,
+      "message": "We don\u0027t have a hard and fast rule about C++ vs. ObjC, and we absolutely haven\u0027t identified that having as much code as possible in either language is (or serves) any architectural goals we have. My preference is to avoid introducing bridge classes if it can be avoided.\n\nThe general pattern I was steering for in clean/ was that mediators acted as the primary C++-to-ObjC bridge point and everything else was ObjC, but that\u0027s not where we are anymore. My feeling is that most UI code should be in ObjC, since that\u0027s what the native UI libraries are in, and the intent for the broadcaster was that it would be plumbing from one UI-layer object to another and thus we could expect both ends would be ObjC; the availability of runtime shenanigans is also convenient. \n\nBut: if you feel that the C++ model is the right decision overall (and it will produce an implementation that is as flexible, maintainable, and intelligible as possible), I\u0027m OK with it.",
+      "parentUuid": "32b413cf_63c7536d",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "28ef64c58c011d161214b09e4d6bcfbd20cbe22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
