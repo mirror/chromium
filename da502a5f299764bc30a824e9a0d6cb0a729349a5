@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c3e350_f6f09059",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-21T00:10:02Z",
+      "side": 1,
+      "message": "could you change this so that repeated runs of a test will always get the same value? i\u0027m a bit nervous to see randomness in code used by tests.",
+      "revId": "da502a5f299764bc30a824e9a0d6cb0a729349a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
