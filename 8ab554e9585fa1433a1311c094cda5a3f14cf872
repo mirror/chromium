@@ -16,6 +16,24 @@
       "revId": "8ab554e9585fa1433a1311c094cda5a3f14cf872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6dcfe9_6a105476",
+        "filename": "chrome/browser/chromeos/first_run/drive_first_run_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-21T16:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd8f2efb_a867a23c",
+      "revId": "8ab554e9585fa1433a1311c094cda5a3f14cf872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
