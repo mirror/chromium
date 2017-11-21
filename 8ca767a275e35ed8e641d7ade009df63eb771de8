@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "cbabf733_aeae1efd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T09:44:32Z",
+      "side": 1,
+      "message": "Ah, ok.\n\nCould you please add a comment to clarify which spec this is based on?",
+      "parentUuid": "b8a0b275_4f9f9145",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf1cc9b9_dfd905c2",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -276,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "0af685c0_d74f8124",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T09:44:32Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "33933055_3d02fb7c",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe0c3c9b_9b1c8b54",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
         "patchSetId": 5
@@ -322,6 +358,24 @@
       "writtenOn": "2017-11-21T07:33:35Z",
       "side": 1,
       "message": "I\u0027m not sure if this is correct - https://tools.ietf.org/html/rfc2045#section-5.1 doesn\u0027t allow to omit parameter values, so it may be good to return undefined if tokenize.ConsumeChar(\u0027\u003d\u0027) returns false, but that\u0027s not Firefox / Chrome is doing. What do you think?",
+      "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cec7e42_dadd2272",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/send-content-type-charset.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-21T09:44:32Z",
+      "side": 1,
+      "message": "Let\u0027s start from stricter rule and then think about relaxing them",
+      "parentUuid": "8c6a1b84_c52a163a",
       "revId": "8ca767a275e35ed8e641d7ade009df63eb771de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
