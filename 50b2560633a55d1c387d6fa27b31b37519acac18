@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a60ba5b9_c9581c2d",
+        "filename": "content/network/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-21T15:50:03Z",
+      "side": 1,
+      "message": "perhaps also make it clear that this is a separate prefs store from any embedder?",
+      "revId": "50b2560633a55d1c387d6fa27b31b37519acac18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
