@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a9b303f_42fcc244",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-21T19:42:16Z",
+      "side": 1,
+      "message": "Brian, including ui_java here results in the Android tests missing the ui ResourceBundle at runtime.  That makes no sense to me, but this change should get us rolling.",
+      "revId": "3a7ceffba509651733ff80ec1f1031de218d4038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
