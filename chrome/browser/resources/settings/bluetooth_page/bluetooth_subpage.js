@@ -3,6 +3,18 @@
 // found in the LICENSE file.
 
 /**
+ * Update frequency of the bluetooth list.
+ * @const {number}
+ */
+var LIST_UPDATE_FREQUENCY_MS = 1000;
+
+/**
+ * Maximum number of bluetooth devices shown in bluetooth subpage.
+ * @const {number}
+ */
+var MAX_NUMBER_DEVICE_SHOWN = 50;
+
+/**
  * @fileoverview
  * 'settings-bluetooth-subpage' is the settings subpage for managing bluetooth
  *  properties and devices.
@@ -128,6 +140,16 @@ Polymer({
       type: Object,
       value: chrome.bluetoothPrivate,
     },
+
+    /**
+     * Timer ID for bluetooth list update.
+     * @private
+     */
+    updateTimerId_: {
+      type: Number,
+      value: -1,
+    },
+
   },
 
   observers: [
@@ -243,9 +265,7 @@ Polymer({
       this.deviceList_ = [];
       return;
     }
-    this.bluetooth.getDevices(devices => {
-      this.deviceList_ = devices;
-    });
+    this.requestListUpdate_();
   },
 
   /**
@@ -266,7 +286,7 @@ Polymer({
       this.set('deviceList_.' + index, device);
       return;
     }
-    this.push('deviceList_', device);
+    this.requestListUpdate_();
   },
 
   /**
@@ -452,5 +472,66 @@ Polymer({
     var device = this.$$('#unpairedContainer bluetooth-device-list-item');
     if (device)
       device.focus();
+  },
+
+  /**
+   * Requests update for bluetooth list.
+   * @private
+   */
+  requestListUpdate_: function() {
+    if (this.updateTimerId_ == -1) {
+      this.updateTimerId_ = window.setTimeout(() => {
+        if (settings.getCurrentRoute() != settings.routes.BLUETOOTH_DEVICES) {
+          this.stopListUpdate_();
+          return;
+        }
+
+        this.bluetooth.getDevices(devices => {
+          this.populateDeviceList_(devices);
+        });
+        this.updateTimerId_ = -1;
+      }, LIST_UPDATE_FREQUENCY_MS);
+    }
+  },
+
+  /**
+   * Stops update for bluetooth list.
+   * @private
+   */
+  stopListUpdate_: function() {
+    if (this.updateTimerId_ != -1) {
+      window.clearTimeout(this.updateTimerId_);
+      this.updateTimerId_ = -1;
+    }
+  },
+
+  /**
+   * Populate the device list from chrome.bluetooth.getDevices
+   * If the device number exceed MAX_NUMBER_DEVICE_SHOWN,
+   * we will try to show paired devices first, then unpaired devices.
+   * @param {!Array<!chrome.bluetooth.Device>} devices
+   * @private
+   */
+  populateDeviceList_: function(devices) {
+    if (devices.length <= MAX_NUMBER_DEVICE_SHOWN) {
+      this.deviceList_ = devices;
+      return;
+    }
+
+    var tempList = [];
+    var i;
+    for (i = 0; i < devices.length && tempList.length < MAX_NUMBER_DEVICE_SHOWN;
+         i++) {
+      if (!!devices[i].paired || !!devices[i].connecting)
+        tempList.push(devices[i]);
+    }
+
+    for (i = 0; i < devices.length && tempList.length < MAX_NUMBER_DEVICE_SHOWN;
+         i++) {
+      if (!devices[i].paired)
+        tempList.push(devices[i]);
+    }
+
+    this.deviceList_ = tempList;
   },
 });

@@ -18,6 +18,9 @@
 namespace ash {
 namespace {
 
+// System tray shows a limited number of bluetooth devices.
+const int kMaximumDevicesShown = 50;
+
 void BluetoothSetDiscoveringError() {
   LOG(ERROR) << "BluetoothSetDiscovering failed.";
 }
@@ -27,6 +30,17 @@ void BluetoothDeviceConnectError(
 
 ash::SystemTrayNotifier* GetSystemTrayNotifier() {
   return Shell::Get()->system_tray_notifier();
+}
+
+BluetoothDeviceInfo transform(device::BluetoothDevice* device) {
+  BluetoothDeviceInfo info;
+  info.address = device->GetAddress();
+  info.display_name = device->GetNameForDisplay();
+  info.connected = device->IsConnected();
+  info.connecting = device->IsConnecting();
+  info.paired = device->IsPaired();
+  info.device_type = device->GetDeviceType();
+  return info;
 }
 
 }  // namespace
@@ -61,16 +75,21 @@ void TrayBluetoothHelper::InitializeOnAdapterReady(
 
 BluetoothDeviceList TrayBluetoothHelper::GetAvailableBluetoothDevices() const {
   BluetoothDeviceList list;
-  for (device::BluetoothDevice* device : adapter_->GetDevices()) {
-    BluetoothDeviceInfo info;
-    info.address = device->GetAddress();
-    info.display_name = device->GetNameForDisplay();
-    info.connected = device->IsConnected();
-    info.connecting = device->IsConnecting();
-    info.paired = device->IsPaired();
-    info.device_type = device->GetDeviceType();
-    list.push_back(info);
+  device::BluetoothAdapter::DeviceList devices = adapter_->GetDevices();
+  for (std::size_t i = 0;
+       i < devices.size() && list.size() < kMaximumDevicesShown; i++) {
+    if (devices[i]->IsPaired() || devices[i]->IsConnecting()) {
+      list.push_back(transform(devices[i]));
+    }
   }
+
+  for (std::size_t i = 0;
+       i < devices.size() && list.size() < kMaximumDevicesShown; i++) {
+    if (!devices[i]->IsPaired()) {
+      list.push_back(transform(devices[i]));
+    }
+  }
+
   return list;
 }
 

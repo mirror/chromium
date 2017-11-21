@@ -47,6 +47,8 @@ namespace ash {
 namespace tray {
 namespace {
 
+const int kUpdateFrequencyMs = 1000;
+
 // Updates bluetooth device |device| in the |list|. If it is new, append to the
 // end of the |list|; otherwise, keep it at the same place, but update the data
 // with new device info provided by |device|.
@@ -189,7 +191,8 @@ class BluetoothDetailedView : public TrayDetailsView {
         login_(login),
         toggle_(nullptr),
         settings_(nullptr),
-        disabled_panel_(nullptr) {
+        disabled_panel_(nullptr),
+        update_frequency_(kUpdateFrequencyMs) {
     CreateItems();
   }
 
@@ -199,13 +202,12 @@ class BluetoothDetailedView : public TrayDetailsView {
   }
 
   void Update() {
-    BluetoothStartDiscovering();
-    UpdateBluetoothDeviceList();
-
-    // Update UI.
-    UpdateDeviceScrollList();
-    UpdateHeaderEntry();
-    Layout();
+    if (timer_.IsRunning())
+      return;
+    timer_.Start(FROM_HERE,
+                 base::TimeDelta::FromMilliseconds(update_frequency_), this,
+                 &BluetoothDetailedView::DoUpdate);
+    DoUpdate();
   }
 
  private:
@@ -507,6 +509,16 @@ class BluetoothDetailedView : public TrayDetailsView {
     }
   }
 
+  void DoUpdate() {
+    BluetoothStartDiscovering();
+    UpdateBluetoothDeviceList();
+
+    // Update UI.
+    UpdateDeviceScrollList();
+    UpdateHeaderEntry();
+    Layout();
+  }
+
   // TODO(jamescook): Don't cache this.
   LoginStatus login_;
 
@@ -523,6 +535,13 @@ class BluetoothDetailedView : public TrayDetailsView {
   // The container of the message "Bluetooth is disabled" and an icon. It should
   // be shown instead of Bluetooth device list when Bluetooth is disabled.
   views::View* disabled_panel_;
+
+  // Update frequency of the bluetooth detailed view. This avoids
+  // unnecessarily frequent UI updates (which can be expensive).
+  int update_frequency_;
+
+  // Timer used to limit the update frequency.
+  base::OneShotTimer timer_;
 
   DISALLOW_COPY_AND_ASSIGN(BluetoothDetailedView);
 };
