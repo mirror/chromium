@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a190181_6bc005d4",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-21T22:49:44Z",
+      "side": 1,
+      "message": "That\u0027s tricky. That requires that we update the CompositorFrame here and it\u0027s readonly. I\u0027m not particularly fond of introducing an accessor on Surface that gives you a non-const CompositorFrame ref because that will likely get abused elsewhere. I\u0027ve added a TODO.",
+      "parentUuid": "302724a6_f66e6892",
+      "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26afb6a9_44236f28",
         "filename": "components/viz/service/display/surface_aggregator.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T19:51:40Z",
       "side": 1,
       "message": "This else might not be necessary?",
+      "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8536fae7_73c1e282",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-21T22:49:44Z",
+      "side": 1,
+      "message": "It is necessary because the fallback may not exist at all which is an error but we should catch the error case and report it correctly: see below.",
+      "parentUuid": "26afb6a9_44236f28",
       "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f6c69e96_a32ab848",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-21T22:49:44Z",
+      "side": 1,
+      "message": "They are not guaranteed to be the same. This is an interesting corner case and ordering below doesn\u0027t work in that case. I\u0027ll just use the provided fallback in this case. We could be a bit more clever in the future and look for the latest temporary reference from the primary surface IDs\u0027 FrameSinkId but I won\u0027t worry about that optimization for now.",
+      "parentUuid": "7d66c4a6_e7d72879",
+      "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac629e90_7169c43b",
         "filename": "components/viz/service/surfaces/surface_manager.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-21T19:51:40Z",
       "side": 1,
       "message": "Is this a security bug? Looking at this quickly, if you give LocalSurfaceSurface(UINT32_MAX, junk_nonce) then this will return just the latest LocalSurfaceId to embed?\n\nI think you need to specify a range of LocalSurfaceIds in the SurfaceDrawQuad to verify the embedder is allowed to embed them.",
+      "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447578c2_fe949e6f",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-21T22:49:44Z",
+      "side": 1,
+      "message": "This is absolutely a security bug! Thank you for catching this! I\u0027ve fixed this as follows:\n\n1. Look up the fallback surface first. If it doesn\u0027t exist (or doesn\u0027t have an active frame), then just give up and return a nullptr.\n\n2. Only pick a temporary ref surface if its owner is |parent|.\n\n3. If the primary FrameSinkId !\u003d fallback FrameSinkId then just return the fallback_surface.",
+      "parentUuid": "ac629e90_7169c43b",
       "revId": "a85a3ec5c00974ce579e8a9af6c777fde4140a59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
