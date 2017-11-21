@@ -382,7 +382,6 @@ TEST(PermissionsTest, CreateUnion) {
   EXPECT_TRUE(union_set->Contains(*set1));
   EXPECT_TRUE(union_set->Contains(*set2));
 
-  EXPECT_FALSE(union_set->HasEffectiveFullAccess());
   EXPECT_EQ(expected_apis, union_set->apis());
   EXPECT_EQ(expected_explicit_hosts, union_set->explicit_hosts());
   EXPECT_EQ(expected_scriptable_hosts, union_set->scriptable_hosts());
@@ -392,7 +391,6 @@ TEST(PermissionsTest, CreateUnion) {
   apis2.insert(APIPermission::kTab);
   apis2.insert(APIPermission::kProxy);
   apis2.insert(APIPermission::kClipboardWrite);
-  apis2.insert(APIPermission::kPlugin);
 
   permission = permission_info->CreateAPIPermission();
   {
@@ -406,7 +404,6 @@ TEST(PermissionsTest, CreateUnion) {
   expected_apis.insert(APIPermission::kTab);
   expected_apis.insert(APIPermission::kProxy);
   expected_apis.insert(APIPermission::kClipboardWrite);
-  expected_apis.insert(APIPermission::kPlugin);
 
   permission = permission_info->CreateAPIPermission();
   {
@@ -439,7 +436,6 @@ TEST(PermissionsTest, CreateUnion) {
   EXPECT_TRUE(union_set->Contains(*set1));
   EXPECT_TRUE(union_set->Contains(*set2));
 
-  EXPECT_TRUE(union_set->HasEffectiveFullAccess());
   EXPECT_TRUE(union_set->HasEffectiveAccessToAllHosts());
   EXPECT_EQ(expected_apis, union_set->apis());
   EXPECT_EQ(expected_explicit_hosts, union_set->explicit_hosts());
@@ -501,7 +497,6 @@ TEST(PermissionsTest, CreateIntersection) {
   EXPECT_TRUE(new_set->Contains(*set2));
 
   EXPECT_TRUE(new_set->IsEmpty());
-  EXPECT_FALSE(new_set->HasEffectiveFullAccess());
   EXPECT_EQ(expected_apis, new_set->apis());
   EXPECT_EQ(expected_explicit_hosts, new_set->explicit_hosts());
   EXPECT_EQ(expected_scriptable_hosts, new_set->scriptable_hosts());
@@ -511,7 +506,6 @@ TEST(PermissionsTest, CreateIntersection) {
   apis2.insert(APIPermission::kTab);
   apis2.insert(APIPermission::kProxy);
   apis2.insert(APIPermission::kClipboardWrite);
-  apis2.insert(APIPermission::kPlugin);
   permission = permission_info->CreateAPIPermission();
   {
     std::unique_ptr<base::ListValue> value(new base::ListValue());
@@ -551,7 +545,6 @@ TEST(PermissionsTest, CreateIntersection) {
   EXPECT_FALSE(new_set->Contains(*set1));
   EXPECT_FALSE(new_set->Contains(*set2));
 
-  EXPECT_FALSE(new_set->HasEffectiveFullAccess());
   EXPECT_FALSE(new_set->HasEffectiveAccessToAllHosts());
   EXPECT_EQ(expected_apis, new_set->apis());
   EXPECT_EQ(expected_explicit_hosts, new_set->explicit_hosts());
@@ -611,7 +604,6 @@ TEST(PermissionsTest, CreateDifference) {
   apis2.insert(APIPermission::kTab);
   apis2.insert(APIPermission::kProxy);
   apis2.insert(APIPermission::kClipboardWrite);
-  apis2.insert(APIPermission::kPlugin);
   permission = permission_info->CreateAPIPermission();
   {
     std::unique_ptr<base::ListValue> value(new base::ListValue());
@@ -646,7 +638,6 @@ TEST(PermissionsTest, CreateDifference) {
   EXPECT_TRUE(set1->Contains(*new_set));
   EXPECT_FALSE(set2->Contains(*new_set));
 
-  EXPECT_FALSE(new_set->HasEffectiveFullAccess());
   EXPECT_FALSE(new_set->HasEffectiveAccessToAllHosts());
   EXPECT_EQ(expected_apis, new_set->apis());
   EXPECT_EQ(expected_explicit_hosts, new_set->explicit_hosts());
