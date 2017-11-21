@@ -52,6 +52,24 @@
       "revId": "92de6d67d3e324b60b69658d4d1805d8450ec213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43127285_37cc516b",
+        "filename": "chromeos/cryptohome/homedir_methods.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-11-21T01:34:38Z",
+      "side": 1,
+      "message": "I\u0027ll do it in two :)",
+      "parentUuid": "5401fdde_a655d740",
+      "revId": "92de6d67d3e324b60b69658d4d1805d8450ec213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
