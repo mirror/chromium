@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "49be011a_b43be003",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-21T17:45:45Z",
+      "side": 1,
+      "message": "Let\u0027s try to follow the Chromium C++ style guide:\n\n\"Function declaration order should match function definition order.\"\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting",
+      "parentUuid": "56a86680_bab7da06",
+      "range": {
+        "startLine": 234,
+        "startChar": 37,
+        "endLine": 234,
+        "endChar": 54
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21f2fead_23bf6dbf",
         "filename": "components/payments/content/service_worker_payment_app_factory.cc",
         "patchSetId": 6
@@ -304,6 +328,30 @@
       "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e9a34a_4417dfc2",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-21T17:45:45Z",
+      "side": 1,
+      "message": "What you have now looks good. Well done!",
+      "parentUuid": "60960753_728d4834",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 71
+      },
+      "revId": "b670a6eb9261ee16bc940fe133a7171aef39672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
