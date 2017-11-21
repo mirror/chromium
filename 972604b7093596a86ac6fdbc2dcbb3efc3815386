@@ -16,6 +16,24 @@
       "revId": "972604b7093596a86ac6fdbc2dcbb3efc3815386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79fc7d5b_bf04d25d",
+        "filename": "components/offline_items_collection/core/android/offline_item_bridge.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-21T17:03:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69aca1f7_e8f8726d",
+      "revId": "972604b7093596a86ac6fdbc2dcbb3efc3815386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
