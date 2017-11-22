@@ -41,6 +41,7 @@
 namespace blink {
 
 class SimpleFontData;
+class TextRun;
 
 struct HarfBuzzRunGlyphData {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
@@ -49,8 +50,6 @@ struct HarfBuzzRunGlyphData {
   float advance;
   FloatSize offset;
 };
-
-enum AdjustMidCluster { kAdjustToStart, kAdjustToEnd };
 
 struct ShapeResult::RunInfo {
   USING_FAST_MALLOC(RunInfo);
@@ -83,8 +82,8 @@ struct ShapeResult::RunInfo {
   bool IsHorizontal() const { return HB_DIRECTION_IS_HORIZONTAL(direction_); }
   unsigned NextSafeToBreakOffset(unsigned) const;
   unsigned PreviousSafeToBreakOffset(unsigned) const;
-  float XPositionForVisualOffset(unsigned, AdjustMidCluster) const;
-  float XPositionForOffset(unsigned, AdjustMidCluster) const;
+  float XPositionForVisualOffset(const TextRun&, unsigned) const;
+  float XPositionForOffset(const TextRun&, unsigned) const;
   int CharacterIndexForXPosition(float, bool include_partial_glyphs) const;
   void SetGlyphAndPositions(unsigned index,
                             uint16_t glyph_id,
