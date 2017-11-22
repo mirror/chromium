@@ -307,6 +307,7 @@ class CORE_EXPORT WebLocalFrameImpl final
                              WebRect* selection_rect) override;
   float DistanceToNearestFindMatch(const WebFloatPoint&) override;
   void SetTickmarks(const WebVector<WebRect>&) override;
+  WebNode ContextMenuNode() const override;
   WebFrameWidgetBase* FrameWidget() const override;
   void CopyImageAt(const WebPoint&) override;
   void SaveImageAt(const WebPoint&) override;
@@ -424,10 +425,6 @@ class CORE_EXPORT WebLocalFrameImpl final
     return web_dev_tools_frontend_;
   }
 
-  WebNode ContextMenuNode() const { return context_menu_node_.Get(); }
-  void SetContextMenuNode(Node* node) { context_menu_node_ = node; }
-  void ClearContextMenuNode() { context_menu_node_.Clear(); }
-
   std::unique_ptr<WebURLLoaderFactory> CreateURLLoaderFactory() override;
 
   WebFrameWidgetBase* LocalRootFrameWidget();
@@ -465,6 +462,8 @@ class CORE_EXPORT WebLocalFrameImpl final
   // A helper for DispatchBeforePrintEvent() and DispatchAfterPrintEvent().
   void DispatchPrintEventRecursively(const AtomicString& event_type);
 
+  Node* ContextMenuNodeInner() const;
+
   Member<LocalFrameClient> local_frame_client_;
 
   // The embedder retains a reference to the WebCore LocalFrame while it is
@@ -500,8 +499,6 @@ class CORE_EXPORT WebLocalFrameImpl final
   blink::InterfaceRegistry* interface_registry_;
 
   WebDevToolsFrontendImpl* web_dev_tools_frontend_;
-
-  Member<Node> context_menu_node_;
 
   WebInputMethodControllerImpl input_method_controller_;
 
