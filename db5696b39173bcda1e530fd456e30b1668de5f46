@@ -46,6 +46,30 @@
       "revId": "db5696b39173bcda1e530fd456e30b1668de5f46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaea54cb_f56ea813",
+        "filename": "chrome/browser/notifications/arc_application_notifier_controller_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-22T04:27:36Z",
+      "side": 0,
+      "message": "Resetting the notification controller before L1197 is sgtm.",
+      "parentUuid": "c2bd47ef_cd2121e0",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 76
+      },
+      "revId": "db5696b39173bcda1e530fd456e30b1668de5f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
