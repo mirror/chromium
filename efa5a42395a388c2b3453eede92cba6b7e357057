@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fbd4273_37b85216",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-22T02:57:05Z",
+      "side": 1,
+      "message": "nit: Surface* const",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9683eb_971f60f2",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-22T02:57:05Z",
+      "side": 1,
+      "message": "nit: SurfaceObserver* const",
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ff78bb_8d471b47",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-22T02:57:05Z",
+      "side": 1,
+      "message": "nit: Surface* next_focused_surface \u003d surface \u0026\u0026 delegate_-\u003eCanAcceptDataEventsForSurface(surface) ? surface : nullptr;\n\nand then remove \u0027last_focus\u0027 below and simple early out if \"next_focused_surface \u003d\u003d focused_surface_-\u003eget() ?",
+      "range": {
+        "startLine": 155,
+        "startChar": 7,
+        "endLine": 155,
+        "endChar": 20
+      },
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1212ff13_bf953918",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-22T02:57:05Z",
+      "side": 1,
+      "message": "nit: why is this check needed when you have the early out above? please remove if not needed.",
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d48270_f5b50166",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-22T02:57:05Z",
+      "side": 1,
+      "message": "nit: why is this needed? please remove if not",
+      "revId": "efa5a42395a388c2b3453eede92cba6b7e357057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
