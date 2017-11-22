@@ -52,6 +52,24 @@
       "revId": "ae1391c29dcb0183ead69d74e744f786377d4290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e2c75b_cee97c4a",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3210,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-22T21:18:11Z",
+      "side": 1,
+      "message": "Yeah...I didn\u0027t notice that the presubmit script failed :(\n\nTested locally, which is good, because I had the code in content_switches_internal.cc wrong.",
+      "parentUuid": "a3267969_e8fcc25f",
+      "revId": "ae1391c29dcb0183ead69d74e744f786377d4290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
