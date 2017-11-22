@@ -32,8 +32,6 @@ effectPropertyTreeAsString(const blink::LocalFrameView& rootFrame);
 CORE_EXPORT String
 scrollPropertyTreeAsString(const blink::LocalFrameView& rootFrame);
 
-CORE_EXPORT String paintPropertyTreeGraph(const blink::LocalFrameView&);
-
 #endif  // if DCHECK_IS_ON()
 
 #endif  // PaintPropertyTreePrinter_h
