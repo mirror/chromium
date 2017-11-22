@@ -7,6 +7,7 @@
 
 namespace prefs {
 
+extern const char kAccountConsistencyMirrorRequired[];
 extern const char kAccountIdMigrationState[];
 extern const char kAutologinEnabled[];
 extern const char kGaiaCookieHash[];

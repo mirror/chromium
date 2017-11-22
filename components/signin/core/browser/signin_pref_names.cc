@@ -6,6 +6,10 @@
 
 namespace prefs {
 
+// Stores whether account consistency is required.
+const char kAccountConsistencyMirrorRequired[] =
+    "account_consistency_mirror.required";
+
 // An integer property indicating the state of account id migration from
 // email to gaia id for the the profile.  See account_tracker_service.h
 // for possible values.
