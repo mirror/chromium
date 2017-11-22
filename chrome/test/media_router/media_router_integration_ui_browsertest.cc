@@ -85,7 +85,8 @@ IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest, MANUAL_Dialog_Basic) {
       "domAutomationController.send("
       "window.document.getElementById('media-router-container').shadowRoot."
       "getElementById('route-details').shadowRoot.getElementById("
-      "'route-description').innerText)");
+      "'route-controls').shadowRoot.getElementById('route-description')."
+      "innerText)");
   std::string route_information = ExecuteScriptAndExtractString(
       dialog_contents, route_script);
   ASSERT_EQ("Test Route", route_information);
