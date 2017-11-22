@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bedeed04_0ac65529",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-22T16:17:26Z",
+      "side": 1,
+      "message": "You don\u0027t really need |fallback_surface_id|. It\u0027s only used to report failure, and in that case it\u0027s always surface_quad-\u003efallback_surface_id.value().",
+      "revId": "d32a1b564d6d95f147cd9b0e4b398d8f52a03487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4df97c_3330080a",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-22T16:17:26Z",
+      "side": 1,
+      "message": "Can you separate the tests into two, one for GetLatestInFlightSurface() gets a newer SurfaceId and one for GetLatestInFlightSurface() works properly when the fallback/primary have different FrameSinkIds? That would make it clearer what is happening.",
+      "revId": "d32a1b564d6d95f147cd9b0e4b398d8f52a03487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966b9a43_5ac11dd9",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-22T16:17:26Z",
+      "side": 1,
+      "message": "Can you also make a test for client guessed fallback/primary surface id for the right FrameSinkId to make sure it returns nullptr.",
+      "revId": "d32a1b564d6d95f147cd9b0e4b398d8f52a03487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d674b2f_94a542bd",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-22T16:17:26Z",
+      "side": 1,
+      "message": "Maybe something explaining this better \"|fallback_surface_id| so it can\u0027t guess at SurfaceIds.\"",
+      "range": {
+        "startLine": 475,
+        "startChar": 5,
+        "endLine": 475,
+        "endChar": 10
+      },
+      "revId": "d32a1b564d6d95f147cd9b0e4b398d8f52a03487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304ba388_89fd371f",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-22T16:17:26Z",
+      "side": 1,
+      "message": "Is the local_id ordering guaranteed to be increasing?",
+      "revId": "d32a1b564d6d95f147cd9b0e4b398d8f52a03487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
