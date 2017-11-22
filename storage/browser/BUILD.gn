@@ -210,7 +210,7 @@ component("browser") {
     "//base/third_party/dynamic_annotations",
     "//mojo/public/cpp/bindings",
     "//net",
-    "//services/network/public/cpp",
+    "//services/network/public/cpp:network_cpp",
     "//sql",
     "//third_party/leveldatabase",
     "//third_party/sqlite",
