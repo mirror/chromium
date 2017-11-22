@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7a2e7a7_3c5a9ccc",
+        "filename": "extensions/renderer/bindings/js_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T17:07:40Z",
+      "side": 1,
+      "message": "We use TLS for service worker data, but I wouldn\u0027t call it \"common\" (and actually, I wonder if we necessarily need to use TLS for SW data, even?).  Storing this on PerContextData sounds reasonable to me, because we *shouldn\u0027t* ever run after teardown, I think (it\u0027s only asking for bad things to happen).\n\nI\u0027ve per-context-ified this, which actually cleans up a bit more.  Please take another look.",
+      "parentUuid": "0189d02e_03b25dab",
+      "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b9367d2_cd335e57",
         "filename": "extensions/renderer/extension_js_runner.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e47bd54_a08ce05d",
+        "filename": "extensions/renderer/extension_js_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T17:07:40Z",
+      "side": 1,
+      "message": "Moot, since now we just store the ScriptContext on the ExtensionJSRunner, but this was needed in order to determine where to find the ScriptContext (since there isn\u0027t a thread-local ScriptContextSet).",
+      "parentUuid": "5b9367d2_cd335e57",
+      "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d499bfd_db03f5ce",
+        "filename": "extensions/renderer/extension_js_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T17:07:40Z",
+      "side": 1,
+      "message": "moot now, but there was a case where we could have nested ExtensionJSRunners (due to tests that instantiated a dispatcher + NativeBindingsSystemTestBase).",
+      "parentUuid": "acecc976_51dbddc9",
+      "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "600fc45f_4ec3471a",
         "filename": "extensions/renderer/extension_js_runner.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9ab6ef_79fcda35",
+        "filename": "extensions/renderer/extension_js_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T17:07:40Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "600fc45f_4ec3471a",
+      "revId": "b7663c6c68c36bf6370e613b56dda4289d11e5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
