@@ -40,8 +40,6 @@ class FeatureSwitch {
   static FeatureSwitch* embedded_extension_options();
   static FeatureSwitch* trace_app_source();
   static FeatureSwitch* load_media_router_component_extension();
-  static FeatureSwitch* native_crx_bindings();
-  static FeatureSwitch* yield_between_content_script_runs();
 
   enum DefaultValue {
     DEFAULT_ENABLED,
@@ -69,15 +67,8 @@ class FeatureSwitch {
   // by the default and override values.
   FeatureSwitch(const char* switch_name,
                 DefaultValue default_value);
-  FeatureSwitch(const char* switch_name,
-                const char* field_trial_name,
-                DefaultValue default_value);
   FeatureSwitch(const base::CommandLine* command_line,
                 const char* switch_name,
-                DefaultValue default_value);
-  FeatureSwitch(const base::CommandLine* command_line,
-                const char* switch_name,
-                const char* field_trial_name,
                 DefaultValue default_value);
 
   // Consider using ScopedOverride instead.
@@ -94,7 +85,6 @@ class FeatureSwitch {
 
   const base::CommandLine* command_line_;
   const char* switch_name_;
-  const char* field_trial_name_;
   bool default_value_;
   OverrideValue override_value_;
   mutable base::Optional<bool> cached_value_;
