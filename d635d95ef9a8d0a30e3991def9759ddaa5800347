@@ -1,0 +1,282 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d305a2_8b814395",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "This seems like it will cause unpacked_dir to unconditionally be deleted, rather than only if delete_source_ is true (which is what the comment in the .h file describes)?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4b3ea6_178ccbdb",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Is there a reason to not just use extension-\u003ecreation_flags()?  It looks like some values aren\u0027t present here, e.g. MAY_BE_UNTRUSTED (extension::may_be_untrusted()) - is that intentional?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbb61d4_5bd99a82",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "any reason to not just set directly?\nextension_id_ \u003d extension_id;\ninstall_source_ \u003d extension-\u003elocation();\n...",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fc9858_bb098424",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Are extension prefs null in any of the unittests?  If not, we should replace this with a DCHECK().  If so, we should add a comment:\n// ExtensionPrefs can be null in unittests.",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09302c84_edcd05fc",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Rather than doing a Take() and Set(), could we just have UnpackedCrxTempDir() return a std::unique_ptr\u003cbase::ScopedTempDir\u003e?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531eea7f_d81284c6",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "nit: does run_loop.Run() not work?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eec756d_08f7ddbd",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "These callbacks all look the same - maybe make a helper function to avoid redfining them all?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c355fb_a093c66a",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "nit: just inline extension_service() here (and elsewhere)",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2cef50_24560952",
+        "filename": "chrome/browser/extensions/extension_system_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Does this file test anything that crx_installer_browsertest doesn\u0027t?  It seems like the coverage is almost identical, and ExtensionSystem really isn\u0027t the place to test it.",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d53d1a_dbc48257",
+        "filename": "extensions/browser/updater/extension_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Why not just\nui_thread-\u003ePostTask(\n    FROM_HERE,\n    base::Bind(std::move(extension_installer_callback_),\n               extension_id_, public_key, unpacked_dir,\n               std::move(update_client_callback_)));\n\nand get rid of RunInstallCallbackOnUIThread?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a766d7f_d053b1cf",
+        "filename": "extensions/browser/updater/extension_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "We should comment on threading here - it\u0027s not clear to me on which thread this is supposed to run.",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7d55fe_83a82b07",
+        "filename": "extensions/browser/updater/extension_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Normally, we would not add more comments for overridden methods, instead simply declaring them all so:\n\n// update_client::CrxInstaller:\nvoid OnUpdateError(int error) override;\nvoid Install(const base::FilePath\u0026 unpack_path,\n             const std::string\u0026 public_key,\n             UpdateClientCallback update_client_callback) override;\nbool GetInstalledFile(const std::string\u0026 file,\n                      base::FilePath* installed_file) override;\nbool GetInstalledFile(const std::string\u0026 file,\n                      base::FilePath* installed_file) override;\nbool Uninstall() override;\n\nThe comments in the update_client::CrxInstaller parent class should be sufficient.  If they aren\u0027t, we should probably update them, rather than try and add the information here.  Implementation details can go in the cc file.",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bb6bbe_9bf10a91",
+        "filename": "extensions/browser/updater/extension_installer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Are all these includes necessary?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0999a9c7_80ed9998",
+        "filename": "extensions/browser/updater/extension_installer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "trailing underscore",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18adda61_a8738b3f",
+        "filename": "extensions/browser/updater/update_data_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Which thread will this be called on?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d53924_73b9af0b",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Is there a reason we have to run this async?",
+      "revId": "d635d95ef9a8d0a30e3991def9759ddaa5800347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

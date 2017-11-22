@@ -495,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "1200b901_8e1a986a",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T22:18:27Z",
+      "side": 1,
+      "message": "Does that ever happen?",
+      "parentUuid": "edc26bc1_bcfd41a0",
+      "revId": "2ae44890645e68bcf4919c4d452138fc1af315ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8dac291_54b58bcd",
         "filename": "extensions/browser/updater/update_data_provider.h",
         "patchSetId": 3
