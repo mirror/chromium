@@ -45,22 +45,6 @@ cr.define('route_details', function() {
             details.$$('#' + elementId).querySelector('span').innerText);
       };
 
-      // Checks whether |expected| and the text in the element in the
-      // |elementId| element are equal.
-      var checkElementText = function(expected, elementId) {
-        assertEquals(
-            expected,
-            details.$$('#' + elementId).innerText);
-      };
-
-      // Checks the default route view is shown.
-      var checkDefaultViewIsShown = function() {
-        assertFalse(details.$$('#route-description').hasAttribute('hidden'));
-        assertTrue(
-            !details.$$('extension-view-wrapper') ||
-            details.$$('extension-view-wrapper').hasAttribute('hidden'));
-      };
-
       // Checks the start button is shown.
       var checkStartCastButtonIsShown = function() {
         assertFalse(details.$$('#start-casting-to-route-button')
@@ -71,19 +55,6 @@ cr.define('route_details', function() {
       var checkStartCastButtonIsNotShown = function() {
         assertTrue(details.$$('#start-casting-to-route-button')
                        .hasAttribute('hidden'));
-      };
-
-      // Checks the custom controller is shown.
-      var checkCustomControllerIsShown = function() {
-        assertTrue(details.$$('#route-description').hasAttribute('hidden'));
-        assertFalse(
-            details.$$('extension-view-wrapper').hasAttribute('hidden'));
-      };
-
-      // Checks whether |expected| and the text in the |elementId| element
-      // are equal given an id.
-      var checkElementTextWithId = function(expected, elementId) {
-        assertEquals(expected, details.$$('#' + elementId).innerText);
       };
 
       // Import route_details.html before running suite.
@@ -190,71 +161,22 @@ cr.define('route_details', function() {
         checkSpanText(
             loadTimeData.getString('startCastingButtonText').toUpperCase(),
             'start-casting-to-route-button');
-        checkElementText('', 'route-description');
       });
 
       // Tests when |route| is undefined or set.
       test('route is undefined or set', function() {
         // |route| is initially undefined.
         assertEquals(undefined, details.route);
-        checkDefaultViewIsShown();
 
         // Set |route|.
         details.route = fakeRouteOne;
         assertEquals(fakeRouteOne, details.route);
-        checkElementText(fakeRouteOne.description, 'route-description');
-        checkDefaultViewIsShown();
         checkStartCastButtonIsNotShown();
 
         // Set |route| to a different route.
         details.route = fakeRouteTwo;
         assertEquals(fakeRouteTwo, details.route);
-        checkElementText(fakeRouteTwo.description, 'route-description');
-        checkDefaultViewIsShown();
         checkStartCastButtonIsShown();
-      });
-
-      // Tests when |route| exists, has a custom controller, and it loads.
-      test('route has custom controller and loading succeeds', function(done) {
-        // Get the extension-view-wrapper stamped first, so that we can mock out
-        // the load method.
-        details.route = fakeRouteTwo;
-
-        setTimeout(function() {
-          details.$$('extension-view-wrapper').$$('#custom-controller').load =
-              function(url) {
-            setTimeout(function() {
-              assertEquals(
-                  fakeRouteOneControllerPath,
-                  url.substring(0, fakeRouteOneControllerPath.length));
-              checkCustomControllerIsShown();
-              done();
-            });
-            return Promise.resolve();
-          };
-
-          details.route = fakeRouteOne;
-        });
-      });
-
-      // Tests when |route| exists, has a custom controller, but fails to load.
-      test('route has custom controller but loading fails', function(done) {
-        // Get the extension-view-wrapper stamped first, so that we can mock out
-        // the load method.
-        details.route = fakeRouteTwo;
-
-        setTimeout(function() {
-          details.$$('extension-view-wrapper').$$('#custom-controller').load =
-              function(url) {
-            setTimeout(function() {
-              checkDefaultViewIsShown();
-              done();
-            });
-            return Promise.reject();
-          };
-
-          details.route = fakeRouteOne;
-        });
       });
     });
   }
