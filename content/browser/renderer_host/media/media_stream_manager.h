@@ -15,7 +15,7 @@
 //    users to select which devices to use and send callback to
 //    MediaStreamManager with the result.
 // 5. MediaStreamManager will call the proper media device manager to open the
-//    device and let the MediaStreamRequester know it has been done.
+//    device and run the corresponding callback with result.
 
 // If either user or test harness selects --use-fake-device-for-media-stream,
 // a fake video device or devices are used instead of real ones.
@@ -68,16 +68,22 @@ class VideoCaptureProvider;
 
 // MediaStreamManager is used to generate and close new media devices, not to
 // start the media flow. The classes requesting new media streams are answered
-// using MediaStreamRequester.
+// using callbacks.
 class CONTENT_EXPORT MediaStreamManager
     : public MediaStreamProviderListener,
       public base::MessageLoop::DestructionObserver,
       public base::PowerObserver {
  public:
-  // Callback to deliver the result of a media request.
-  using MediaRequestResponseCallback =
+  // Callback to deliver the result of a media access request.
+  using MediaAccessRequestCallback =
       base::OnceCallback<void(const MediaStreamDevices& devices,
                               std::unique_ptr<MediaStreamUIProxy> ui)>;
+
+  using GenerateStreamCallback =
+      base::OnceCallback<void(MediaStreamRequestResult result,
+                              const std::string& label,
+                              const MediaStreamDevices& audio_devices,
+                              const MediaStreamDevices& video_devices)>;
 
   using OpenDeviceCallback =
       base::OnceCallback<void(bool success,
@@ -139,20 +145,21 @@ class CONTENT_EXPORT MediaStreamManager
                                      int page_request_id,
                                      const StreamControls& controls,
                                      const url::Origin& security_origin,
-                                     MediaRequestResponseCallback callback);
+                                     MediaAccessRequestCallback callback);
 
   // GenerateStream opens new media devices according to |components|.  It
   // creates a new request which is identified by a unique string that's
   // returned to the caller.  |render_process_id| and |render_frame_id| are used
   // to determine where the infobar will appear to the user.
-  void GenerateStream(base::WeakPtr<MediaStreamRequester> requester,
-                      int render_process_id,
+  void GenerateStream(int render_process_id,
                       int render_frame_id,
                       const std::string& salt,
                       int page_request_id,
                       const StreamControls& controls,
                       const url::Origin& security_origin,
-                      bool user_gesture);
+                      bool user_gesture,
+                      GenerateStreamCallback callback,
+                      base::WeakPtr<MediaStreamRequester> requester = nullptr);
 
   void CancelRequest(int render_process_id,
                      int render_frame_id,
