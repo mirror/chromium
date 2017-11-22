@@ -459,24 +459,25 @@ const LocalizedErrorMap* LookupErrorMap(const std::string& error_domain,
     return FindErrorMapInArray(net_error_options,
                                arraysize(net_error_options),
                                error_code);
-  } else if (error_domain == Error::kHttpErrorDomain) {
+  }
+  if (error_domain == Error::kHttpErrorDomain) {
     const LocalizedErrorMap* map = FindErrorMapInArray(
         http_error_options, arraysize(http_error_options), error_code);
     // Handle miscellaneous 400/500 errors.
     return !map && error_code >= 400 && error_code < 600
                ? &generic_4xx_5xx_error
                : map;
-  } else if (error_domain == Error::kDnsProbeErrorDomain) {
+  }
+  if (error_domain == Error::kDnsProbeErrorDomain) {
     const LocalizedErrorMap* map =
         FindErrorMapInArray(dns_probe_error_options,
                             arraysize(dns_probe_error_options),
                             error_code);
     DCHECK(map);
     return map;
-  } else {
-    NOTREACHED();
-    return nullptr;
   }
+  NOTREACHED();
+  return nullptr;
 }
 
 // Returns a dictionary containing the strings for the settings menu under the
@@ -1084,8 +1085,7 @@ base::string16 LocalizedError::GetErrorDetails(const std::string& error_domain,
       LookupErrorMap(error_domain, error_code, is_post);
   if (error_map)
     return l10n_util::GetStringUTF16(error_map->summary_resource_id);
-  else
-    return l10n_util::GetStringUTF16(IDS_ERRORPAGES_SUMMARY_NOT_AVAILABLE);
+  return l10n_util::GetStringUTF16(IDS_ERRORPAGES_SUMMARY_NOT_AVAILABLE);
 }
 
 bool LocalizedError::HasStrings(const std::string& error_domain,

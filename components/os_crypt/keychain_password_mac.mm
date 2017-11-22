@@ -22,20 +22,14 @@ std::string AddRandomPasswordToKeychain(const AppleKeychain& keychain,
                                         const std::string& service_name,
                                         const std::string& account_name) {
   // Generate a password with 128 bits of randomness.
-  const int kBytes = 128 / 8;
+  static constexpr int kBytes = 128 / 8;
   std::string password;
   base::Base64Encode(base::RandBytesAsString(kBytes), &password);
-  void* password_data =
-      const_cast<void*>(static_cast<const void*>(password.data()));
+  const void* password_data = password.data();
 
-  OSStatus error = keychain.AddGenericPassword(NULL,
-                                               service_name.size(),
-                                               service_name.data(),
-                                               account_name.size(),
-                                               account_name.data(),
-                                               password.size(),
-                                               password_data,
-                                               NULL);
+  OSStatus error = keychain.AddGenericPassword(
+      nullptr, service_name.size(), service_name.data(), account_name.size(),
+      account_name.data(), password.size(), password_data, nullptr);
 
   if (error != noErr) {
     OSSTATUS_DLOG(ERROR, error) << "Keychain add failed";
@@ -60,20 +54,21 @@ const char KeychainPassword::account_name[] = "Chromium";
 
 std::string KeychainPassword::GetPassword() const {
   UInt32 password_length = 0;
-  void* password_data = NULL;
+  void* password_data = nullptr;
   OSStatus error = keychain_.FindGenericPassword(
       nullptr, strlen(service_name), service_name, strlen(account_name),
-      account_name, &password_length, &password_data, NULL);
+      account_name, &password_length, &password_data, nullptr);
 
-  if (error == noErr) {
-    std::string password =
-        std::string(static_cast<char*>(password_data), password_length);
-    keychain_.ItemFreeContent(NULL, password_data);
-    return password;
-  } else if (error == errSecItemNotFound) {
+  if (error == errSecItemNotFound)
     return AddRandomPasswordToKeychain(keychain_, service_name, account_name);
-  } else {
+
+  if (error != noErr) {
     OSSTATUS_DLOG(ERROR, error) << "Keychain lookup failed";
     return std::string();
   }
+
+  std::string password =
+      std::string(static_cast<char*>(password_data), password_length);
+  keychain_.ItemFreeContent(nullptr, password_data);
+  return password;
 }
