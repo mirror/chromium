@@ -46,6 +46,7 @@ class WebVrRenderer;
 // quad renderer). It also is a central point of contact that can let all
 // renderers know to recreate their state in the event of a GL context
 // loss/recreation.
+
 class UiElementRenderer {
  public:
   enum TextureLocation {

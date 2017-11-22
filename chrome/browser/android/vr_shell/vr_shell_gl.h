@@ -16,6 +16,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/android/vr_shell/android_vsync_helper.h"
+#include "chrome/browser/android/vr_shell/gvr_keyboard_delegate.h"
+#include "chrome/browser/android/vr_shell/gvr_text_input_delegate.h"
 #include "chrome/browser/android/vr_shell/vr_controller.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/controller_mesh.h"
@@ -86,8 +88,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void OnTriggerEvent();
   void OnPause();
   void OnResume();
-  void DrawKeyboard();
-  void CreateKeyboard();
+  // void DrawKeyboard();
+  // void CreateKeyboard();
 
   base::WeakPtr<vr::BrowserUiInterface> GetBrowserUiWeakPtr();
 
@@ -225,6 +227,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   std::unique_ptr<VrController> controller_;
   gvr_keyboard_context* gvr_keyboard_ = nullptr;
+  std::unique_ptr<GvrKeyboardDelegate> keyboard_delegate_;
+  std::unique_ptr<GvrTextInputDelegate> text_input_delegate_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 

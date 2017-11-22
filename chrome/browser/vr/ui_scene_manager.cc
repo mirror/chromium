@@ -21,6 +21,7 @@
 #include "chrome/browser/vr/elements/full_screen_rect.h"
 #include "chrome/browser/vr/elements/grid.h"
 #include "chrome/browser/vr/elements/invisible_hit_target.h"
+#include "chrome/browser/vr/elements/keyboard.h"
 #include "chrome/browser/vr/elements/laser.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/rect.h"
@@ -28,6 +29,7 @@
 #include "chrome/browser/vr/elements/spinner.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
 #include "chrome/browser/vr/elements/text.h"
+#include "chrome/browser/vr/elements/text_input.h"
 #include "chrome/browser/vr/elements/throbber.h"
 #include "chrome/browser/vr/elements/transient_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -37,6 +39,7 @@
 #include "chrome/browser/vr/elements/vector_icon.h"
 #include "chrome/browser/vr/elements/viewport_aware_root.h"
 #include "chrome/browser/vr/elements/webvr_url_toast.h"
+#include "chrome/browser/vr/keyboard_delegate.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/target_property.h"
@@ -177,6 +180,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateSplashScreen(model);
   CreateUnderDevelopmentNotice();
   CreateVoiceSearchUiGroup(model);
+  CreateKeyboard(model);
   CreateController(model);
 
   ConfigureScene();
@@ -830,6 +834,44 @@ void UiSceneManager::CreateController(Model* model) {
   scene_->AddUiElement(kControllerGroup, std::move(reticle));
 }
 
+void UiSceneManager::CreateKeyboard(Model* model) {
+  LOG(ERROR) << "lolk creatking kb";
+  auto keyboard = base::MakeUnique<Keyboard>();
+  keyboard->set_draw_phase(kPhaseForeground);
+  keyboard->SetTranslate(0.0, kKeyboardVerticalOffset, -kKeyboardDistance);
+  keyboard->AddBinding(VR_BIND_FUNC(bool, Model, model, editing_input,
+                                    UiElement, keyboard.get(), SetVisible));
+  keyboard_ = keyboard.get();
+  scene_->AddUiElement(kRoot, std::move(keyboard));
+
+  auto focus_changed_callback = base::Bind(
+      [](Model* model, bool focused) { model->editing_input = focused; },
+      base::Unretained(model));
+  auto input_edit_callback = base::Bind(
+      [](Model* model, const TextInputInfo& text_input_info) {
+        LOG(ERROR) << "lolk input_edit_callback: text: "
+                   << text_input_info.text;
+        model->text_input_info = text_input_info;
+      },
+      base::Unretained(model));
+  auto text_input =
+      base::MakeUnique<TextInput>(focus_changed_callback, input_edit_callback);
+  text_input->AddBinding(base::MakeUnique<Binding<TextInputInfo>>(
+      base::Bind([](Model* m) { return m->text_input_info; },
+                 base::Unretained(model)),
+      base::Bind(
+          [](TextInput* e, const TextInputInfo& value) { e->EditInput(value); },
+          base::Unretained(text_input.get()))));
+  text_input->SetTranslate(0, kContentVerticalOffset, -kContentDistance / 2);
+  text_input->set_draw_phase(kPhaseForeground);
+  text_input->set_name(kTestTextField);
+  text_input->set_hit_testable(true);
+  text_input->SetSize(kContentWidth / 6, kContentHeight / 6);
+  text_input->SetColor(0xFFFFFFFF);
+  text_input_ = text_input.get();
+  scene_->AddUiElement(k2dBrowsingForeground, std::move(text_input));
+}
+
 void UiSceneManager::CreateUrlBar(Model* model) {
   auto url_bar = base::MakeUnique<UrlBar>(
       512,
@@ -1165,6 +1207,14 @@ void UiSceneManager::OnWebVrTimedOut() {
   browser_->ExitPresent();
 }
 
+void UiSceneManager::SetKeyboardDelegate(KeyboardDelegate* delegate) {
+  keyboard_->SetKeyboardDelegate(delegate);
+}
+
+void UiSceneManager::SetTextInputDelegate(TextInputDelegate* delegate) {
+  text_input_->SetTextInputDelegate(delegate);
+}
+
 void UiSceneManager::OnSplashScreenHidden(TransientElementHideReason reason) {
   showing_web_vr_splash_screen_ = false;
   if (reason == TransientElementHideReason::kTimeout) {
@@ -1356,9 +1406,11 @@ bool UiSceneManager::ShouldRenderWebVr() {
 void UiSceneManager::OnGlInitialized(
     unsigned int content_texture_id,
     UiElementRenderer::TextureLocation content_location,
-    SkiaSurfaceProvider* provider) {
+    SkiaSurfaceProvider* provider,
+    KeyboardDelegate* keyboard_delegate,
+    TextInputDelegate* text_input_delegate) {
   main_content_->SetTexture(content_texture_id, content_location);
-  scene_->OnGlInitialized(provider);
+  scene_->OnGlInitialized(provider, keyboard_delegate, text_input_delegate);
 
   ConfigureScene();
 }

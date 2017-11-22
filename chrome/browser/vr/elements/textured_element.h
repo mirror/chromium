@@ -25,7 +25,9 @@ class TexturedElement : public UiElement {
   explicit TexturedElement(int maximum_width);
   ~TexturedElement() override;
 
-  void Initialize(SkiaSurfaceProvider* provider) final;
+  void Initialize(SkiaSurfaceProvider* provider,
+                  KeyboardDelegate* keyboard_delegate,
+                  TextInputDelegate* text_input_delegate) final;
 
   void Render(UiElementRenderer* renderer,
               const CameraModel& model) const final;

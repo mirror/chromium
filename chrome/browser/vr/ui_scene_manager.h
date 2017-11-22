@@ -20,7 +20,11 @@ namespace vr {
 class ContentElement;
 class ContentInputDelegate;
 class Grid;
+class KeyboardDelegate;
+class Keyboard;
 class Rect;
+class TextInput;
+class TextInputDelegate;
 class TransientElement;
 class WebVrUrlToast;
 class UiBrowserInterface;
@@ -136,13 +140,17 @@ class UiSceneManager {
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
                        UiElementRenderer::TextureLocation content_location,
-                       SkiaSurfaceProvider* provider);
+                       SkiaSurfaceProvider* provider,
+                       KeyboardDelegate* keyboard_delegate,
+                       TextInputDelegate* text_input_delegate);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
       PlatformController::SwipeDirection direction);
   void OnProjMatrixChanged(const gfx::Transform& proj_matrix);
   void OnWebVrFrameAvailable();
   void OnWebVrTimedOut();
+  void SetKeyboardDelegate(KeyboardDelegate* delegate);
+  void SetTextInputDelegate(TextInputDelegate* delegate);
 
   void OnSplashScreenHidden(TransientElementHideReason);
   void OnSecurityIconClickedForTesting();
@@ -180,6 +188,7 @@ class UiSceneManager {
   void CreateToasts(Model* model);
   void CreateVoiceSearchUiGroup(Model* model);
   void CreateController(Model* model);
+  void CreateKeyboard(Model* model);
 
   void ConfigureScene();
   void ConfigureIndicators();
@@ -221,6 +230,9 @@ class UiSceneManager {
   UrlBar* url_bar_ = nullptr;
   TransientElement* webvr_url_toast_transient_parent_ = nullptr;
   WebVrUrlToast* webvr_url_toast_ = nullptr;
+
+  Keyboard* keyboard_ = nullptr;
+  TextInput* text_input_ = nullptr;
 
   std::vector<UiElement*> system_indicators_;
 
