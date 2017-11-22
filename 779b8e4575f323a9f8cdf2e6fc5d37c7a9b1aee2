@@ -195,6 +195,24 @@
       "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9e6ed7_3556f556",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-22T18:17:58Z",
+      "side": 1,
+      "message": "I don\u0027t think the ukm-recorder or KeyboardController know if the text input client belongs to web content, an android app, or chrome browser ui; so the client may need to provide the scheme itself, and at that point it may as well provide a fully-formed url. Just noting my thoughts before the timezone round-trip and thanksgiving break. lgtm either way, it can always be changed later on.",
+      "parentUuid": "e0054f44_b57f3e59",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
