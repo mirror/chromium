@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9873b794_3883f6bb",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-22T23:59:41Z",
+      "side": 1,
+      "message": "micro nit: s/accessed/dereferenced/ since it gets accessed on the IO thread as you post to the UI thread.",
+      "range": {
+        "startLine": 108,
+        "startChar": 15,
+        "endLine": 108,
+        "endChar": 23
+      },
+      "revId": "35ee28e268ffed1de6443ba309bd82972d3e6a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

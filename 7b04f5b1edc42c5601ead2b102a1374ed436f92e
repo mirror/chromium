@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f465baaa_809a8b0c",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-22T23:59:41Z",
+      "side": 1,
+      "message": "You\u0027ve solved this, so I\u0027m resolving this comment.",
+      "parentUuid": "eb061f98_2895934e",
+      "range": {
+        "startLine": 212,
+        "startChar": 10,
+        "endLine": 212,
+        "endChar": 16
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6315497c_9e2533cc",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 15
@@ -375,6 +399,30 @@
       "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83445a09_3e5f1fa9",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-22T23:59:41Z",
+      "side": 1,
+      "message": "Nvm, looks like you solved this in the most recent patchset.",
+      "parentUuid": "686fe3fd_45c313b4",
+      "range": {
+        "startLine": 238,
+        "startChar": 36,
+        "endLine": 238,
+        "endChar": 51
+      },
+      "revId": "7b04f5b1edc42c5601ead2b102a1374ed436f92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
