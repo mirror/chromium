@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ccd1938e_b225c47b",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-22T19:34:59Z",
+      "side": 1,
+      "message": "I cant build chrome after changing to label. Is label a reserved keyword in .idl file?",
+      "parentUuid": "ea99d0bc_4b96a85b",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 26
+      },
+      "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a35ac3c9_5d8e6a60",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0047753c_add5ee64",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-22T19:34:59Z",
+      "side": 1,
+      "message": "This name is also used in the proto file so I prefer to use the same name.",
+      "parentUuid": "a35ac3c9_5d8e6a60",
+      "range": {
+        "startLine": 161,
+        "startChar": 13,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3d71efb6_af09dc43",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-22T19:34:59Z",
+      "side": 1,
+      "message": "This really refers to the processing latency of the packet.\n\nIn our computer vision backend, each packet is processed by a couple of drishti calculators. Processing latency is the delta of timestamp between the output packet and the input packet (a.k.a. reference packet) of each calculator.\n\nTo avoid further confusion, I have changed the comments here.",
+      "parentUuid": "bf3ff9a2_4ecfafed",
+      "range": {
+        "startLine": 165,
+        "startChar": 49,
+        "endLine": 165,
+        "endChar": 58
+      },
+      "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191c8a79_a6cca53c",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a51b25_38f5cc21",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-22T19:34:59Z",
+      "side": 1,
+      "message": "Drishti is a framework being used in our computer vision backend to process packets, and this is just the processing latency of each packet. I have changed the comments to avoid further confusion.",
+      "parentUuid": "191c8a79_a6cca53c",
+      "range": {
+        "startLine": 183,
+        "startChar": 59,
+        "endLine": 183,
+        "endChar": 66
+      },
+      "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
