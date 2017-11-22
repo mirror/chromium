@@ -16,6 +16,24 @@
       "revId": "1f32bf602c5d9eb9dd1e591fe669b003b81c8126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61489cbc_83ce8695",
+        "filename": "chrome/browser/vr/test/mock_browser_ui_interface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-22T17:26:27Z",
+      "side": 1,
+      "message": "git thinks mock_ui_browser_interface.h is a rename for mock_browser_interface.h. The common code in mock_browser_interface.h and mock_ui_browser_interface.h is probably larger than the default threshold. So it is considered as rename.",
+      "parentUuid": "732a771a_bf061c02",
+      "revId": "1f32bf602c5d9eb9dd1e591fe669b003b81c8126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
