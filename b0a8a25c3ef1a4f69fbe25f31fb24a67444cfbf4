@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eefb080_a888d707",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-22T19:54:39Z",
+      "side": 1,
+      "message": "Is there a BUG to reference here, or is this just some ownership safety?\n\nIf this is an ongoing fix to ownership safety, that\u0027s a bug itself.",
+      "revId": "b0a8a25c3ef1a4f69fbe25f31fb24a67444cfbf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8816122f_629e0500",
+        "filename": "content/test/layouttest_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-22T19:54:39Z",
+      "side": 1,
+      "message": "You totally could do \"for (const auto\u0026 file : files)\" while you\u0027re here.",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 64
+      },
+      "revId": "b0a8a25c3ef1a4f69fbe25f31fb24a67444cfbf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
