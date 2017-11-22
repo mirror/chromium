@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afacc5f7_cadce9ae",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T09:34:25Z",
+      "side": 1,
+      "message": "Is this about implementation? Should mojom file have this comment?",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9905be3_cd93bb88",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T09:34:25Z",
+      "side": 1,
+      "message": "Why can\u0027t we do this now?",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87f3373_0ab843b2",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T09:34:25Z",
+      "side": 1,
+      "message": "This is used by both browser- and renderer-side code, this should go to WebKit/common.",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c3ba6f_2904251b",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T09:34:25Z",
+      "side": 1,
+      "message": "Could we eventually remove this ID too after we migrate to per-execution-context interface?",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebf8463_85897885",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T09:34:25Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587ed246_5ee6fa30",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T09:34:25Z",
+      "side": 1,
+      "message": "quota_messages_ -\u003e quota_dispatcher_host_ (or maybe just quota_host_)",
+      "revId": "e436396a5b607a64df726c57e62204419a76f8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
