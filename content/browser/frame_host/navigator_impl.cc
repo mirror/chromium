@@ -597,6 +597,8 @@ void NavigatorImpl::DidNavigate(
     render_frame_host->ResetContentSecurityPolicies();
     frame_tree_node->ResetCspHeaders();
     frame_tree_node->ResetFeaturePolicyHeader();
+    // Clear any CSP-set sandbox flags in the frame
+    frame_tree_node->UpdateActiveSandboxFlags(blink::WebSandboxFlags::kNone);
   }
 
   frame_tree_node->render_manager()->DidNavigateFrame(
