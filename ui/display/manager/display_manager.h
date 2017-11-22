@@ -331,6 +331,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
 
+  // Enables mirroring from the source display to the destination display if
+  // |enabled| is true. Disables mirroring otherwise. NOTE: This is only
+  // available to Chrome OS Kiosk apps.
+  void SetCustomMirrorMode(bool enabled,
+                           int64_t source_id,
+                           int64_t destination_id);
+
   // Sets/gets if the unified desktop feature is enabled.
   void SetUnifiedDesktopEnabled(bool enabled);
   bool unified_desktop_enabled() const { return unified_desktop_enabled_; }
@@ -459,12 +466,18 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     change_display_upon_host_resize_ = value;
   }
 
-  // Creates software mirroring display related information. The display used to
-  // mirror the content is removed from the |display_info_list|.
-  void CreateSoftwareMirroringDisplayInfo(DisplayInfoList* display_info_list);
+  // Creates display related information for either software mirror mode or
+  // unified desktop mode. The display used to mirror the content is removed
+  // from the |display_info_list|.
+  void CreateDisplayInfo(DisplayInfoList* display_info_list);
 
-  // Same as above but for Unified Desktop.
+  // Creates display related information for unified desktop mode. The display
+  // used to mirror the content is removed from the |display_info_list|.
   void CreateUnifiedDesktopDisplayInfo(DisplayInfoList* display_info_list);
+
+  // Creates display related information for software mirror mode. The display
+  // used to mirror the content is removed from the |display_info_list|.
+  void CreateSoftwareMirroringDisplayInfo(DisplayInfoList* display_info_list);
 
   Display* FindDisplayForId(int64_t id);
 
@@ -507,6 +520,12 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   void ApplyDisplayLayout(DisplayLayout* layout,
                           Displays* display_list,
                           std::vector<int64_t>* updated_ids);
+
+  // Returns true if the request for custom mirror mode is set.
+  bool IsCustomMirrorModeRequested() const;
+
+  // Clears the request for custom mirror mode.
+  void ClearCustomMirrorModeRequest();
 
   Delegate* delegate_ = nullptr;  // not owned.
 
@@ -577,8 +596,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // There's no source and destination display in hardware mirroring, so we
   // treat the first mirroring display as source and store its id in
   // |mirroring_source_id_| and treat the rest of mirroring displays as
-  // destination and store their ids in this list.
-  DisplayIdList hardware_mirroring_display_id_list_;
+  // destination and store them in this list.
+  Displays hardware_mirroring_display_list_;
 
   // True if the user turns on mirror mode. This stays true until the user turns
   // mirror mode off or reboot. This is used to make mirror mode stay on when a
@@ -617,6 +636,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   // Whether mirroring across multiple displays is enabled.
   bool is_multi_mirroring_enabled_;
+
+  // The stored parameters when SetCustomMirrorMode() is called. These will be
+  // used to do customized software mirroring from the source display identified
+  // by |request_mirroring_source_id_| to the destination display identified by
+  // |request_mirroring_destination_id_|.
+  int64_t request_mirroring_source_id_ = kInvalidDisplayId;
+  int64_t request_mirroring_destination_id_ = kInvalidDisplayId;
 
   base::WeakPtrFactory<DisplayManager> weak_ptr_factory_;
 

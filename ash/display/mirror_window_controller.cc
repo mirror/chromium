@@ -135,27 +135,25 @@ MirrorWindowController::~MirrorWindowController() {
 
 void MirrorWindowController::UpdateWindow(
     const std::vector<display::ManagedDisplayInfo>& display_info_list) {
-  static int mirror_host_count = 0;
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
-  const display::Display& primary =
-      display::Screen::GetScreen()->GetPrimaryDisplay();
-  const display::ManagedDisplayInfo& source_display_info =
-      display_manager->GetDisplayInfo(primary.id());
+  CHECK(display_manager->IsInSoftwareMirrorMode() ||
+        display_manager->IsInUnifiedMode());
+  static int mirror_host_count = 0;
 
   multi_display_mode_ = GetCurrentMultiDisplayMode();
 
   for (const display::ManagedDisplayInfo& display_info : display_info_list) {
     std::unique_ptr<RootWindowTransformer> transformer;
-    if (display_manager->IsInMirrorMode()) {
+    if (display_manager->IsInSoftwareMirrorMode()) {
       transformer.reset(CreateRootWindowTransformerForMirroredDisplay(
-          source_display_info, display_info));
-    } else if (display_manager->IsInUnifiedMode()) {
+          display_manager->GetDisplayInfo(
+              display_manager->mirroring_source_id()),
+          display_info));
+    } else {  // Unified desktop mode
       display::Display display =
           display_manager->GetMirroringDisplayById(display_info.id());
       transformer.reset(CreateRootWindowTransformerForUnifiedDesktop(
-          primary.bounds(), display));
-    } else {
-      NOTREACHED();
+          display::Screen::GetScreen()->GetPrimaryDisplay().bounds(), display));
     }
 
     if (mirroring_host_info_map_.find(display_info.id()) ==
@@ -215,12 +213,15 @@ void MirrorWindowController::UpdateWindow(
       if (reflector_) {
         reflector_->AddMirroringLayer(mirror_window->layer());
       } else if (aura::Env::GetInstance()->context_factory_private()) {
-        reflector_ =
-            aura::Env::GetInstance()
-                ->context_factory_private()
-                ->CreateReflector(
-                    Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
-                    mirror_window->layer());
+        aura::Window* root_window =
+            display_manager->IsInSoftwareMirrorMode()
+                ? Shell::GetRootWindowForDisplayId(
+                      display_manager->mirroring_source_id())
+                : Shell::GetPrimaryRootWindow();
+        reflector_ = aura::Env::GetInstance()
+                         ->context_factory_private()
+                         ->CreateReflector(root_window->GetHost()->compositor(),
+                                           mirror_window->layer());
       } else {
         // TODO: Config::MUS needs to support reflector.
         // http://crbug.com/601869.
