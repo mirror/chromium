@@ -29,7 +29,8 @@ class MemoryPressureObserver {
   void RemoveObserver(MemoryPressureListener* listener) {
     async_observers_->RemoveObserver(listener);
     AutoLock lock(sync_observers_lock_);
-    sync_observers_->RemoveObserver(listener);
+    if (sync_observers_->HasObserver(listener))
+      sync_observers_->RemoveObserver(listener);
   }
 
   void Notify(MemoryPressureListener::MemoryPressureLevel
