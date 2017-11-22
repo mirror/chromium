@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "a09a0394_573d3136",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T14:52:21Z",
+      "side": 1,
+      "message": "Done. I\u0027ll upload it with the next revision (I\u0027m working on fixing WebrtcEventLogApiTest).",
+      "parentUuid": "07a13706_75d24c6f",
+      "range": {
+        "startLine": 74,
+        "startChar": 48,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13471b6c_a43e4f66",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 16
@@ -403,6 +427,30 @@
     },
     {
       "key": {
+        "uuid": "83977a34_7fb66b8c",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T14:52:21Z",
+      "side": 1,
+      "message": "I\u0027m afraid a comment without a TODO is more likely to get the comment left behind when the TODO is removed. Would you mind if I keep this as it is?",
+      "parentUuid": "939dd70a_946c760a",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f690cf27_05fae119",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 16
@@ -556,6 +604,30 @@
       "side": 1,
       "message": "unit-tests is grammatically incorrect the way you are using it.\nYou need the hyphen if you say something like \"unit-test runner\".",
       "parentUuid": "0af7dd66_da0b81dc",
+      "range": {
+        "startLine": 130,
+        "startChar": 13,
+        "endLine": 130,
+        "endChar": 14
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd14ba56_541fce0a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T14:52:21Z",
+      "side": 1,
+      "message": "It feels to me like otherwise, one might at first glance assume I mean \"For unit, (this) tests only that...\"\nI\u0027ll look up Strunk\u0027s guidelines about hyphenating later. Would be interesting to see what The Elements of Style has to say on the subject.",
+      "parentUuid": "cbace597_43313ee1",
       "range": {
         "startLine": 130,
         "startChar": 13,
