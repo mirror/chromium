@@ -42,3 +42,23 @@ interface AudioOutputStreamProvider {
   Acquire(AudioOutputStream& output_stream, AudioOutputStreamClient client, AudioParameters params)
   => (handle<shared_buffer> shared_buffer, handle socket_descriptor);
 };
+
+// An AudioOutputStreamObserver gets notifications about events related to an
+// AudioOutputStream.
+interface AudioOutputStreamObserver {
+  // This notification indicates that the stream started playing. Upon receiving
+  // this notification, the stream should be considered not audible. This is the
+  // first notification an observer will receive for a given stream.
+  DidStartPlaying();
+  // This notification indicates that the stream stopped playing. After this
+  // notification the stream should be considered not audible and no
+  // audible-state change notification will be issued. It is possible for the
+  // stream to start playing again after being stopped, which will cause 
+  // a DidStartPlaying() notification. A DidStartPlaying() notification is
+  // always eventually followed by a DidStopPlaying() one. 
+  DidStopPlaying();
+  // This notification carries the latest value of the audible state of the
+  // stream. Multiple instances of this notification may occur after
+  // DidStartPlaying() and before DidStopPlaying(). 
+  DidChangeAudibleState(bool is_audible);
+};
