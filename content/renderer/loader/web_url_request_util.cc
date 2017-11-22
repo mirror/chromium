@@ -19,6 +19,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_util.h"
+#include "services/network/public/interfaces/data_pipe_getter.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/common/blob/blob.mojom.h"
@@ -102,6 +103,83 @@ class HeaderFlattener : public blink::WebHTTPHeaderVisitor {
 
  private:
   std::string buffer_;
+};
+
+class DataPipeGetter : public blink::mojom::BlobReaderClient,
+                       public network::mojom::DataPipeGetter {
+ public:
+  DataPipeGetter(blink::mojom::BlobPtr blob,
+                 network::mojom::DataPipeGetterRequest request)
+      : blob_(std::move(blob)) {
+// XXX: This looks needed but causes errors:
+// Check failed: task_runner_->RunsTasksInCurrentSequence().
+// mojo::SimpleWatcher::SimpleWatcher()
+// mojo::internal::InterfacePtrStateBase::InitializeEndpointClient()
+// content::(anonymous namespace)::DataPipeGetter::Read()
+#if 0
+    // If a sync XHR is doing the upload, then the main thread will be blocked.
+    // So we must bind on a background thread, otherwise the methods will never
+    // be called and the process will hang.
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+        base::CreateSingleThreadTaskRunnerWithTraits(
+            {base::TaskPriority::USER_VISIBLE,
+             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+    task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(&DataPipeGetter::BindInternal, base::Unretained(this),
+                       std::move(request)));
+#endif
+    BindInternal(std::move(request));
+  }
+
+  ~DataPipeGetter() override = default;
+  /*
+    void Clone(network::mojom::DataPipeGetterRequest request) {
+      bindings_.AddBinding(this, std::move(request));
+    }
+    */
+
+  void OnConnectionError() {
+    if (!bindings_.empty())
+      return;
+    delete this;
+  }
+
+  void BindInternal(network::mojom::DataPipeGetterRequest request) {
+    bindings_.AddBinding(this, std::move(request));
+    bindings_.set_connection_error_handler(
+        base::Bind(&DataPipeGetter::OnConnectionError, base::Unretained(this)));
+  }
+
+  // DataPipeGetter:
+  void Read(mojo::ScopedDataPipeProducerHandle handle,
+            ReadCallback callback) override {
+    blink::mojom::BlobReaderClientPtr blob_reader_client_ptr;
+    blob_reader_client_bindings_.AddBinding(
+        this, mojo::MakeRequest(&blob_reader_client_ptr));
+    callbacks_.push_back(std::move(callback));
+    blob_->ReadAll(std::move(handle), std::move(blob_reader_client_ptr));
+  }
+
+  // BlobReaderClient:
+  void OnCalculatedSize(uint64_t total_size,
+                        uint64_t expected_content_size) override {
+    std::vector<ReadCallback> callbacks;
+    callbacks_.swap(callbacks);
+    for (auto& callback : callbacks) {
+      std::move(callback).Run(total_size);
+    }
+  }
+  void OnComplete(int32_t status, uint64_t data_length) override {}
+
+ private:
+  blink::mojom::BlobPtr blob_;
+
+  mojo::BindingSet<blink::mojom::BlobReaderClient> blob_reader_client_bindings_;
+  mojo::BindingSet<network::mojom::DataPipeGetter> bindings_;
+  std::vector<ReadCallback> callbacks_;
+
+  DISALLOW_COPY_AND_ASSIGN(DataPipeGetter);
 };
 
 // A helper class which allows a holder of a data pipe for a blob to know how
@@ -474,18 +552,12 @@ scoped_refptr<ResourceRequestBody> GetRequestBodyForWebHTTPBody(
           blob_registry->GetBlobFromUUID(MakeRequest(&blob_ptr),
                                          element.blob_uuid.Utf8());
 
-          blink::mojom::BlobReaderClientPtr blob_reader_client_ptr;
-          blink::mojom::SizeGetterPtr size_getter_ptr;
+          network::mojom::DataPipeGetterPtr data_pipe_getter_ptr;
           // Object deletes itself.
-          new BlobSizeGetter(MakeRequest(&blob_reader_client_ptr),
-                             MakeRequest(&size_getter_ptr));
+          new DataPipeGetter(std::move(blob_ptr),
+                             MakeRequest(&data_pipe_getter_ptr));
 
-          mojo::DataPipe data_pipe;
-          request_body->AppendDataPipe(std::move(data_pipe.consumer_handle),
-                                       std::move(size_getter_ptr));
-
-          blob_ptr->ReadAll(std::move(data_pipe.producer_handle),
-                            std::move(blob_reader_client_ptr));
+          request_body->AppendDataPipe(std::move(data_pipe_getter_ptr));
         } else {
           request_body->AppendBlob(element.blob_uuid.Utf8());
         }
