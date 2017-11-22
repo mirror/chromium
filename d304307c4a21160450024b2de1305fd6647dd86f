@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf2f555d_bdfe9580",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-22T14:24:46Z",
+      "side": 1,
+      "message": "optional: I would prefer using an enum if possible, since it leaves us open to expanding the callback in the future. Also, std::move(callback).Run(true) leaves a lot to be desired imo.",
+      "range": {
+        "startLine": 69,
+        "startChar": 36,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "d304307c4a21160450024b2de1305fd6647dd86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847204a8_987fa270",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-22T14:24:46Z",
+      "side": 1,
+      "message": "Can you clarify that this only gets logged when the message is closed (and not simply minimized).",
+      "revId": "d304307c4a21160450024b2de1305fd6647dd86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40732208_1ed4e56d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 40614,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-22T14:24:46Z",
+      "side": 1,
+      "message": "Probably needs to mention that the infobar was closed.",
+      "revId": "d304307c4a21160450024b2de1305fd6647dd86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
