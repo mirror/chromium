@@ -82,6 +82,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   void SetLocalSurfaceId(const LocalSurfaceId& id, float device_scale_factor);
   void SetVisible(bool visible);
   void Resize(const gfx::Size& new_size);
+  void SetColorMatrix(const SkMatrix44& matrix);
   void SetColorSpace(const gfx::ColorSpace& blending_color_space,
                      const gfx::ColorSpace& device_color_space);
   void SetOutputIsSecure(bool secure);

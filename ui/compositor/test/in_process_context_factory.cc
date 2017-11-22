@@ -359,6 +359,11 @@ void InProcessContextFactory::ResizeDisplay(ui::Compositor* compositor,
   per_compositor_data_[compositor]->display->Resize(size);
 }
 
+void InProcessContextFactory::SetDisplayColorMatrix(ui::Compositor* compositor,
+                                                    const SkMatrix44& matrix) {
+  output_color_matrix_ = matrix;
+}
+
 const viz::ResourceSettings& InProcessContextFactory::GetResourceSettings()
     const {
   return renderer_settings_.resource_settings;

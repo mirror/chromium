@@ -19,6 +19,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/compositor/test/context_factories_for_test.h"
 #include "ui/compositor/test/draw_waiter_for_test.h"
+#include "ui/compositor/test/in_process_context_factory.h"
 
 using testing::Mock;
 using testing::_;
@@ -123,6 +124,20 @@ class MockCompositorLockClient : public ui::CompositorLockClient {
 };
 
 }  // namespace
+
+TEST_F(CompositorTestWithMockedTime, OutputColorMatrix) {
+  SkMatrix44 color_matrix(SkMatrix44::kIdentity_Constructor);
+  color_matrix.set(1, 1, 0.7f);
+  color_matrix.set(2, 2, 0.4f);
+  compositor()->SetDisplayColorMatrix(color_matrix);
+  InProcessContextFactory* context_factory_private =
+      static_cast<InProcessContextFactory*>(
+          compositor()->context_factory_private());
+  EXPECT_EQ(color_matrix, context_factory_private->output_color_matrix());
+
+  // TODO(afakhry): Simulate a lost context and make sure the color matrix is
+  // reset.
+}
 
 TEST_F(CompositorTestWithMockedTime, LocksAreObserved) {
   std::unique_ptr<CompositorLock> lock;

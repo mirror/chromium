@@ -13,6 +13,7 @@
 #include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/ranges.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/filter_operation.h"
 #include "cc/base/filter_operations.h"
@@ -103,8 +104,6 @@ Layer::Layer()
       layer_inverted_(false),
       layer_blur_sigma_(0.0f),
       layer_temperature_(0.0f),
-      layer_blue_scale_(1.0f),
-      layer_green_scale_(1.0f),
       layer_mask_(nullptr),
       layer_mask_back_link_(nullptr),
       zoom_(1),
@@ -133,8 +132,6 @@ Layer::Layer(LayerType type)
       layer_inverted_(false),
       layer_blur_sigma_(0.0f),
       layer_temperature_(0.0f),
-      layer_blue_scale_(1.0f),
-      layer_green_scale_(1.0f),
       layer_mask_(nullptr),
       layer_mask_back_link_(nullptr),
       zoom_(1),
@@ -499,15 +496,6 @@ void Layer::SetLayerFilters() {
   if (layer_grayscale_) {
     filters.Append(cc::FilterOperation::CreateGrayscaleFilter(
         layer_grayscale_));
-  }
-  if (layer_temperature_) {
-    float color_matrix[] = {
-        1.0f,               0.0f,              0.0f, 0.0f, 0.0f,
-        0.0f, layer_green_scale_,              0.0f, 0.0f, 0.0f,
-        0.0f,               0.0f, layer_blue_scale_, 0.0f, 0.0f,
-        0.0f,               0.0f,              0.0f, 1.0f, 0.0f
-    };
-    filters.Append(cc::FilterOperation::CreateColorMatrixFilter(color_matrix));
   }
   if (layer_inverted_)
     filters.Append(cc::FilterOperation::CreateInvertFilter(1.0));
@@ -1195,12 +1183,28 @@ void Layer::SetTemperatureFromAnimation(float temperature,
                                         PropertyChangeReason reason) {
   layer_temperature_ = temperature;
 
-  // If we only tone down the blue scale, the screen will look very green so we
-  // also need to tone down the green, but with a less value compared to the
-  // blue scale to avoid making things look very red.
-  layer_blue_scale_ = 1.0f - temperature;
-  layer_green_scale_ = 1.0f - 0.3f * temperature;
-  SetLayerFilters();
+  DCHECK_EQ(parent(), nullptr)
+      << "Color temperatures are supported only on root layers.";
+
+  SkMatrix44 matrix(SkMatrix44::kIdentity_Constructor);
+  if (layer_temperature_) {
+    // If we only tone down the blue scale, the screen will look very green so
+    // we also need to tone down the green, but with a less value compared to
+    // the blue scale to avoid making things look very red.
+    const float layer_blue_scale =
+        base::ClampToRange(1.0f - temperature, 0.0f, 1.0f);
+    const float layer_green_scale =
+        base::ClampToRange(1.0f - 0.3f * temperature, 0.0f, 1.0f);
+
+    matrix.set(1, 1, layer_green_scale);
+    matrix.set(2, 2, layer_blue_scale);
+  }
+
+  Compositor* compositor = GetCompositor();
+  if (compositor) {
+    compositor->SetDisplayColorMatrix(matrix);
+    compositor->ScheduleFullRedraw();
+  }
 }
 
 void Layer::ScheduleDrawForAnimation() {

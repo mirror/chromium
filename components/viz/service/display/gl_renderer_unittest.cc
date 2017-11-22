@@ -1896,8 +1896,9 @@ class TestOverlayProcessor : public OverlayProcessor {
     Strategy() = default;
     ~Strategy() override = default;
 
-    MOCK_METHOD4(Attempt,
-                 bool(cc::DisplayResourceProvider* resource_provider,
+    MOCK_METHOD5(Attempt,
+                 bool(const SkMatrix44& output_color_matrix,
+                      cc::DisplayResourceProvider* resource_provider,
                       RenderPass* render_pass,
                       cc::OverlayCandidateList* candidates,
                       std::vector<gfx::Rect>* content_bounds));
@@ -2023,7 +2024,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   // added a fake strategy, so checking for Attempt calls checks if there was
   // any attempt to overlay, which there shouldn't be. We can't use the quad
   // list because the render pass is cleaned up by DrawFrame.
-  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _)).Times(0);
+  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _, _)).Times(0);
   EXPECT_CALL(*validator, AllowCALayerOverlays()).Times(0);
   EXPECT_CALL(*validator, AllowDCLayerOverlays()).Times(0);
   DrawFrame(&renderer, viewport_size);
@@ -2048,7 +2049,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   EXPECT_CALL(*validator, AllowDCLayerOverlays())
       .Times(1)
       .WillOnce(::testing::Return(false));
-  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _)).Times(1);
+  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _, _)).Times(1);
   DrawFrame(&renderer, viewport_size);
 
   // If the CALayerOverlay path is taken, then the ordinary overlay path should
@@ -2067,7 +2068,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   EXPECT_CALL(*validator, AllowCALayerOverlays())
       .Times(1)
       .WillOnce(::testing::Return(true));
-  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _)).Times(0);
+  EXPECT_CALL(processor->strategy(), Attempt(_, _, _, _, _)).Times(0);
   DrawFrame(&renderer, viewport_size);
 
   // Transfer resources back from the parent to the child. Set no resources as
@@ -2237,6 +2238,63 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   // being in use.
   parent_resource_provider->DeclareUsedResourcesFromChild(child_id,
                                                           ResourceIdSet());
+}
+
+class OutputColorMatrixMockGLES2Interface : public cc::TestGLES2Interface {
+ public:
+  OutputColorMatrixMockGLES2Interface() = default;
+
+  MOCK_METHOD4(UniformMatrix4fv,
+               void(GLint location,
+                    GLsizei count,
+                    GLboolean transpose,
+                    const GLfloat* value));
+};
+
+TEST_F(GLRendererTest, OutputColorMatrixTest) {
+  auto gl_owned = std::make_unique<OutputColorMatrixMockGLES2Interface>();
+  auto* gl = gl_owned.get();
+
+  auto provider = cc::TestContextProvider::Create(std::move(gl_owned));
+  provider->BindToCurrentThread();
+
+  cc::FakeOutputSurfaceClient output_surface_client;
+  std::unique_ptr<cc::FakeOutputSurface> output_surface(
+      cc::FakeOutputSurface::Create3d(std::move(provider)));
+  output_surface->BindToClient(&output_surface_client);
+
+  std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
+      cc::FakeResourceProvider::CreateDisplayResourceProvider(
+          output_surface->context_provider(), nullptr);
+
+  RendererSettings settings;
+  FakeRendererGL renderer(&settings, output_surface.get(),
+                          resource_provider.get());
+  renderer.Initialize();
+  renderer.SetVisible(true);
+
+  SkMatrix44 color_matrix(SkMatrix44::kIdentity_Constructor);
+  color_matrix.set(0, 0, 0.7f);
+  color_matrix.set(1, 1, 0.4f);
+  color_matrix.set(2, 2, 0.5f);
+  output_surface->set_color_matrix(color_matrix);
+
+  gfx::Size viewport_size(100, 100);
+  gfx::Rect quad_rect = gfx::Rect(20, 20, 20, 20);
+
+  int root_pass_id = 1;
+  RenderPass* root_pass = cc::AddRenderPass(
+      &render_passes_in_draw_order_, root_pass_id, gfx::Rect(viewport_size),
+      gfx::Transform(), cc::FilterOperations());
+  root_pass->damage_rect = gfx::Rect(0, 0, 25, 25);
+  cc::AddQuad(root_pass, quad_rect, SK_ColorGREEN);
+
+  EXPECT_CALL(*gl, UniformMatrix4fv(_, 1, false, _)).Times(testing::AtLeast(1));
+
+  renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+  DrawFrame(&renderer, viewport_size);
+
+  Mock::VerifyAndClearExpectations(gl);
 }
 
 class PartialSwapMockGLES2Interface : public cc::TestGLES2Interface {
@@ -2550,7 +2608,8 @@ class ContentBoundsOverlayProcessor : public OverlayProcessor {
         : content_bounds_(content_bounds) {}
     ~Strategy() override = default;
 
-    bool Attempt(cc::DisplayResourceProvider* resource_provider,
+    bool Attempt(const SkMatrix44& output_color_matrix,
+                 cc::DisplayResourceProvider* resource_provider,
                  RenderPass* render_pass,
                  cc::OverlayCandidateList* candidates,
                  std::vector<gfx::Rect>* content_bounds) override {

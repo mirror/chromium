@@ -906,6 +906,70 @@ TEST_F(GLRendererPixelTest, SolidColorBlend) {
       cc::FuzzyPixelOffByOneComparator(true)));
 }
 
+TEST_F(GLRendererPixelTest, SolidColorWithTemperature) {
+  gfx::Rect rect(this->device_viewport_size_);
+
+  int id = 1;
+  std::unique_ptr<RenderPass> pass = CreateTestRootRenderPass(id, rect);
+
+  SharedQuadState* shared_state =
+      CreateTestSharedQuadState(gfx::Transform(), rect, pass.get());
+
+  auto* color_quad = pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  color_quad->SetNew(shared_state, rect, rect, SK_ColorYELLOW, false);
+
+  RenderPassList pass_list;
+  pass_list.push_back(std::move(pass));
+
+  SkMatrix44 color_matrix(SkMatrix44::kIdentity_Constructor);
+  color_matrix.set(0, 0, 0.7f);
+  color_matrix.set(1, 1, 0.4f);
+  color_matrix.set(2, 2, 0.5f);
+  output_surface_->set_color_matrix(color_matrix);
+
+  EXPECT_TRUE(this->RunPixelTest(
+      &pass_list, base::FilePath(FILE_PATH_LITERAL("temperature_brown.png")),
+      cc::FuzzyPixelOffByOneComparator(true)));
+}
+
+TEST_F(GLRendererPixelTest, SolidColorWithTemperature_NonRootRenderPass) {
+  gfx::Rect rect(this->device_viewport_size_);
+
+  int root_id = 1;
+  std::unique_ptr<RenderPass> root_pass =
+      CreateTestRootRenderPass(root_id, rect);
+  SharedQuadState* root_shared_state =
+      CreateTestSharedQuadState(gfx::Transform(), rect, root_pass.get());
+  auto* root_color_quad =
+      root_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  root_color_quad->SetNew(root_shared_state, rect, rect, SK_ColorYELLOW, false);
+
+  int child_id = 2;
+  std::unique_ptr<RenderPass> child_pass =
+      CreateTestRenderPass(child_id, rect, gfx::Transform());
+  SharedQuadState* child_shared_state =
+      CreateTestSharedQuadState(gfx::Transform(), rect, child_pass.get());
+  auto* child_color_quad =
+      child_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  child_color_quad->SetNew(child_shared_state, rect, rect, SK_ColorGREEN,
+                           false);
+
+  SkMatrix44 color_matrix(SkMatrix44::kIdentity_Constructor);
+  color_matrix.set(0, 0, 0.7f);
+  color_matrix.set(1, 1, 0.4f);
+  color_matrix.set(2, 2, 0.5f);
+  output_surface_->set_color_matrix(color_matrix);
+
+  RenderPassList pass_list;
+  pass_list.push_back(std::move(child_pass));
+  pass_list.push_back(std::move(root_pass));
+
+  EXPECT_TRUE(this->RunPixelTest(
+      &pass_list,
+      base::FilePath(FILE_PATH_LITERAL("temperature_brown_non_root.png")),
+      cc::FuzzyPixelOffByOneComparator(true)));
+}
+
 TEST_F(GLRendererPixelTest,
        PremultipliedTextureWithBackgroundAndVertexOpacity) {
   gfx::Rect rect(this->device_viewport_size_);
