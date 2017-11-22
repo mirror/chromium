@@ -69,6 +69,30 @@
       "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcffe58_7b2f7e01",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_result.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T18:34:32Z",
+      "side": 1,
+      "message": "I think it\u0027s out-of-line on the wire, but I\u0027m not sure if that will significantly affect serialization / deserialization speed. And it does have the advantage of logically grouping the fields that are tied to RGBA_TEXTURE.\n\nYou\u0027re also right that this would either:\n- require adding the C++ nested struct to the typemap\n- or using the mojo struct directly\n\nIf we took the typemap route, I think we\u0027d still have the temporary problem. I guess one way to work around that is to create a static for the empty Optional\u003cTextureResult\u003e...",
+      "parentUuid": "eee965e4_e0c72e98",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
