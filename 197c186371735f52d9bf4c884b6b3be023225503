@@ -22,6 +22,30 @@
       "revId": "197c186371735f52d9bf4c884b6b3be023225503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafc5afb_abdf0857",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-22T16:58:03Z",
+      "side": 1,
+      "message": "ResourceDispatcherHostImpl::DidReceiveResponse() is actually the point I was hoping to do this (so that I can also consider flywheel headers in final PreviewsState (beyond this immediate bug)).\n\nThe DidReceiveResponse() and DidReceiveRedirect() delegate calls happen after the Loader has built the response via PopulateResourceResponse() here. So if that order could be switched or the ResourceLoader surfaced a way to mutate the response PreviewsState value, that could work.",
+      "parentUuid": "f8dde668_7c0fbbc4",
+      "range": {
+        "startLine": 652,
+        "startChar": 11,
+        "endLine": 652,
+        "endChar": 24
+      },
+      "revId": "197c186371735f52d9bf4c884b6b3be023225503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
