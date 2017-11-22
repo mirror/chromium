@@ -22,6 +22,30 @@
       "revId": "9695e2e5f69f0d754b2be2b7e2c96d8ac3cdeabf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaa31d1_dbe24771",
+        "filename": "third_party/openvr/src/headers/openvr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-22T01:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6980bf5d_d7e313a9",
+      "range": {
+        "startLine": 1143,
+        "startChar": 47,
+        "endLine": 1143,
+        "endChar": 67
+      },
+      "revId": "9695e2e5f69f0d754b2be2b7e2c96d8ac3cdeabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
