@@ -620,7 +620,7 @@ static const V8DOMConfiguration::AttributeConfiguration constructor_configuratio
     {% endfor %}
 };
 V8DOMConfiguration::InstallAttributes(
-    isolate, world, global_object, prototype_object,
+    isolate, world, instanceObject, prototypeObject,
     constructor_configurations, WTF_ARRAY_LENGTH(constructor_configurations));
 {% endfilter %}{# runtime_enabled #}
 {% endfor %}{# secure_context_attribute_list grouped by runtime_enabled #}
