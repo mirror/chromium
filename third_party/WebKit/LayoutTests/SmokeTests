@@ -514,6 +514,7 @@ fast/events/pointerevents/mouse-pointer-transition-events.html
 fast/events/reveal-link-when-focused.html
 fast/events/simulated-click-on-anchor-with-target-blank.html
 fast/events/touch/gesture/context-menu-on-two-finger-tap.html
+fast/events/touch/gesture/synthetic-pinch-zoom-gesture.html
 fast/events/touch/touch-scaled-scrolled.html
 fast/events/wheel/wheelevent-in-text-node.html
 fast/files/blob-slice-overflow.html
