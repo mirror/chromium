@@ -3529,16 +3529,9 @@ void CompositedLayerMapping::PaintScrollableArea(
                                                       CullRect(interest_rect));
     }
   } else if (graphics_layer == LayerForScrollCorner()) {
-    // Note that scroll corners always paint into local space, whereas
-    // scrollbars paint in the space of their containing frame.
-    IntPoint scroll_corner_and_resizer_location =
-        scrollable_area->ScrollCornerAndResizerRect().Location();
-    CullRect cull_rect(interest_rect);
     ScrollableAreaPainter(*scrollable_area)
-        .PaintScrollCorner(context, -scroll_corner_and_resizer_location,
-                           cull_rect);
-    ScrollableAreaPainter(*scrollable_area)
-        .PaintResizer(context, -scroll_corner_and_resizer_location, cull_rect);
+        .PaintCompositedScrollCornerAndResizer(context,
+                                               CullRect(interest_rect));
   }
 }
 
