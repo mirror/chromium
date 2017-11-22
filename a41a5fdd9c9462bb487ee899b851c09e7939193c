@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abb18dc2_ea6b5dcb",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-22T19:22:34Z",
+      "side": 1,
+      "message": "If we always return a valid value, is it possible that it might cover a real problem and make the debug harder?",
+      "revId": "a41a5fdd9c9462bb487ee899b851c09e7939193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
