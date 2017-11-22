@@ -739,6 +739,12 @@ class TestURLRequestContextWithProxy : public TestURLRequestContext {
   ~TestURLRequestContextWithProxy() override {}
 };
 
+class MockRequireCTDelegate : public TransportSecurityState::RequireCTDelegate {
+ public:
+  MOCK_METHOD1(IsCTRequiredForHost,
+               CTRequirementLevel(const std::string& host));
+};
+
 // A mock ReportSenderInterface that just remembers the latest report
 // URI and report to be sent.
 class MockCertificateReportSender
@@ -7006,6 +7012,217 @@ TEST_F(URLRequestTestHTTP, MultipleExpectCTHeaders) {
       transport_security_state.GetDynamicExpectCTState(url.host(), &state));
   EXPECT_TRUE(state.enforce);
   EXPECT_EQ(GURL("https://example.test"), state.report_uri);
+}
+
+// Test that the CT compliance histogram is recorded, even if CT is not
+// required.
+TEST_F(URLRequestTestHTTP, CTComplianceHistogram) {
+  base::HistogramTester histograms;
+  const char kComplianceHistogramName[] =
+      "Net.CertificateTransparency.RequestComplianceStatus";
+  const char kRequiredHistogramName[] =
+      "Net.CertificateTransparency.CTRequiredRequestComplianceStatus";
+
+  EmbeddedTestServer https_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_test_server.SetSSLConfig(
+      net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
+  https_test_server.ServeFilesFromSourceDirectory(
+      base::FilePath(kTestFilePath));
+  ASSERT_TRUE(https_test_server.Start());
+
+  // Set up a MockCertVerifier to accept the certificate that the server sends.
+  scoped_refptr<X509Certificate> cert = https_test_server.GetCertificate();
+  ASSERT_TRUE(cert);
+  MockCertVerifier cert_verifier;
+  CertVerifyResult verify_result;
+  verify_result.verified_cert = cert;
+  verify_result.is_issued_by_known_root = true;
+  cert_verifier.AddResultForCert(cert.get(), verify_result, OK);
+
+  // Set up a DoNothingCTVerifier and MockCTPolicyEnforcer to simulate CT
+  // non-compliance.
+  DoNothingCTVerifier ct_verifier;
+  MockCTPolicyEnforcer ct_policy_enforcer;
+  ct_policy_enforcer.set_default_result(
+      ct::CertPolicyCompliance::CERT_POLICY_NOT_DIVERSE_SCTS);
+
+  // Set up the TransportSecurityState so that CT is not required for the host.
+  TransportSecurityState transport_security_state;
+  MockRequireCTDelegate require_ct_delegate;
+  transport_security_state.SetRequireCTDelegate(&require_ct_delegate);
+  EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(testing::_))
+      .WillRepeatedly(
+          testing::Return(TransportSecurityState::RequireCTDelegate::
+                              CTRequirementLevel::NOT_REQUIRED));
+
+  TestNetworkDelegate network_delegate;
+  // Use a MockHostResolver (which by default maps all hosts to
+  // 127.0.0.1).
+  MockHostResolver host_resolver;
+  TestURLRequestContext context(true);
+  context.set_host_resolver(&host_resolver);
+  context.set_transport_security_state(&transport_security_state);
+  context.set_network_delegate(&network_delegate);
+  context.set_cert_verifier(&cert_verifier);
+  context.set_cert_transparency_verifier(&ct_verifier);
+  context.set_ct_policy_enforcer(&ct_policy_enforcer);
+  context.Init();
+
+  // Now send a request.
+  TestDelegate d;
+  GURL url = https_test_server.GetURL("/");
+  std::unique_ptr<URLRequest> request(context.CreateRequest(
+      url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
+  request->Start();
+  base::RunLoop().Run();
+
+  histograms.ExpectUniqueSample(
+      kComplianceHistogramName,
+      static_cast<int>(ct::CertPolicyCompliance::CERT_POLICY_NOT_DIVERSE_SCTS),
+      1);
+  // CTRequiredRequestComplianceStatus should *not* have been recorded because
+  // it is only recorded for requests which are required to be compliant.
+  histograms.ExpectTotalCount(kRequiredHistogramName, 0);
+}
+
+// Test that the CT compliance histogram is recorded for requests where CT is
+// required but not compliant.
+TEST_F(URLRequestTestHTTP, CTRequiredComplianceHistogram) {
+  base::HistogramTester histograms;
+  const char kComplianceHistogramName[] =
+      "Net.CertificateTransparency.RequestComplianceStatus";
+  const char kRequiredHistogramName[] =
+      "Net.CertificateTransparency.CTRequiredRequestComplianceStatus";
+
+  EmbeddedTestServer https_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_test_server.SetSSLConfig(
+      net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
+  https_test_server.ServeFilesFromSourceDirectory(
+      base::FilePath(kTestFilePath));
+  ASSERT_TRUE(https_test_server.Start());
+
+  // Set up a MockCertVerifier to accept the certificate that the server sends.
+  scoped_refptr<X509Certificate> cert = https_test_server.GetCertificate();
+  ASSERT_TRUE(cert);
+  MockCertVerifier cert_verifier;
+  CertVerifyResult verify_result;
+  verify_result.verified_cert = cert;
+  verify_result.is_issued_by_known_root = true;
+  cert_verifier.AddResultForCert(cert.get(), verify_result, OK);
+
+  // Set up a DoNothingCTVerifier and MockCTPolicyEnforcer to simulate CT
+  // non-compliance.
+  DoNothingCTVerifier ct_verifier;
+  MockCTPolicyEnforcer ct_policy_enforcer;
+  ct_policy_enforcer.set_default_result(
+      ct::CertPolicyCompliance::CERT_POLICY_NOT_DIVERSE_SCTS);
+
+  // Set up the TransportSecurityState so that CT is required for the host.
+  TransportSecurityState transport_security_state;
+  MockRequireCTDelegate require_ct_delegate;
+  transport_security_state.SetRequireCTDelegate(&require_ct_delegate);
+  EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(testing::_))
+      .WillRepeatedly(
+          testing::Return(TransportSecurityState::RequireCTDelegate::
+                              CTRequirementLevel::REQUIRED));
+
+  TestNetworkDelegate network_delegate;
+  // Use a MockHostResolver (which by default maps all hosts to
+  // 127.0.0.1).
+  MockHostResolver host_resolver;
+  TestURLRequestContext context(true);
+  context.set_host_resolver(&host_resolver);
+  context.set_transport_security_state(&transport_security_state);
+  context.set_network_delegate(&network_delegate);
+  context.set_cert_verifier(&cert_verifier);
+  context.set_cert_transparency_verifier(&ct_verifier);
+  context.set_ct_policy_enforcer(&ct_policy_enforcer);
+  context.Init();
+
+  // Now send a request.
+  TestDelegate d;
+  GURL url = https_test_server.GetURL("/");
+  std::unique_ptr<URLRequest> request(context.CreateRequest(
+      url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
+  request->Start();
+  base::RunLoop().Run();
+
+  histograms.ExpectUniqueSample(
+      kComplianceHistogramName,
+      static_cast<int>(ct::CertPolicyCompliance::CERT_POLICY_NOT_DIVERSE_SCTS),
+      1);
+  histograms.ExpectUniqueSample(
+      kRequiredHistogramName,
+      static_cast<int>(ct::CertPolicyCompliance::CERT_POLICY_NOT_DIVERSE_SCTS),
+      1);
+}
+
+// Test that the CT compliance histograms are not recorded when there is an
+// unrelated certificate error.
+TEST_F(URLRequestTestHTTP, CTHistogramsWithCertError) {
+  base::HistogramTester histograms;
+  const char kComplianceHistogramName[] =
+      "Net.CertificateTransparency.RequestComplianceStatus";
+  const char kRequiredHistogramName[] =
+      "Net.CertificateTransparency.CTRequiredRequestComplianceStatus";
+
+  EmbeddedTestServer https_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_test_server.SetSSLConfig(
+      net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
+  https_test_server.ServeFilesFromSourceDirectory(
+      base::FilePath(kTestFilePath));
+  ASSERT_TRUE(https_test_server.Start());
+
+  // Set up a MockCertVerifier to simulate an error on the certificate that the
+  // server sends.
+  scoped_refptr<X509Certificate> cert = https_test_server.GetCertificate();
+  ASSERT_TRUE(cert);
+  MockCertVerifier cert_verifier;
+  CertVerifyResult verify_result;
+  verify_result.verified_cert = cert;
+  verify_result.is_issued_by_known_root = true;
+  cert_verifier.AddResultForCert(cert.get(), verify_result,
+                                 net::ERR_CERT_DATE_INVALID);
+
+  // Set up a DoNothingCTVerifier and MockCTPolicyEnforcer to simulate CT
+  // non-compliance.
+  DoNothingCTVerifier ct_verifier;
+  MockCTPolicyEnforcer ct_policy_enforcer;
+  ct_policy_enforcer.set_default_result(
+      ct::CertPolicyCompliance::CERT_POLICY_NOT_DIVERSE_SCTS);
+
+  // Set up the TransportSecurityState so that CT is required for the host.
+  TransportSecurityState transport_security_state;
+  MockRequireCTDelegate require_ct_delegate;
+  transport_security_state.SetRequireCTDelegate(&require_ct_delegate);
+  EXPECT_CALL(require_ct_delegate, IsCTRequiredForHost(testing::_))
+      .WillRepeatedly(
+          testing::Return(TransportSecurityState::RequireCTDelegate::
+                              CTRequirementLevel::REQUIRED));
+
+  TestNetworkDelegate network_delegate;
+  // Use a MockHostResolver (which by default maps all hosts to
+  // 127.0.0.1).
+  MockHostResolver host_resolver;
+  TestURLRequestContext context(true);
+  context.set_host_resolver(&host_resolver);
+  context.set_transport_security_state(&transport_security_state);
+  context.set_network_delegate(&network_delegate);
+  context.set_cert_verifier(&cert_verifier);
+  context.set_cert_transparency_verifier(&ct_verifier);
+  context.set_ct_policy_enforcer(&ct_policy_enforcer);
+  context.Init();
+
+  // Now send a request.
+  TestDelegate d;
+  GURL url = https_test_server.GetURL("/");
+  std::unique_ptr<URLRequest> request(context.CreateRequest(
+      url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
+  request->Start();
+  base::RunLoop().Run();
+
+  histograms.ExpectTotalCount(kComplianceHistogramName, 0);
+  histograms.ExpectTotalCount(kRequiredHistogramName, 0);
 }
 
 #endif  // !defined(OS_IOS)
