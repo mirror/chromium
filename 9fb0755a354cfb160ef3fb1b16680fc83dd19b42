@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d5311ca_9d2be021",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve added member fns on ButtonColors to return the right foreground and background colors given the button state and I\u0027ve removed these redundant functions (here and in the other UiTextures where we\u0027re fishing around in the ButtonColors for the right fields).",
+      "parentUuid": "2afee99e_007c4e39",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d167525b_ec1d8c23",
         "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T22:47:38Z",
       "side": 1,
       "message": "Interesting that this check should never be false in practice, because the binding won\u0027t fire without a change, but I guess we can\u0027t depend on that.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7069b351_d8a3d465",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Yeah, this should be true for all setters fired via bindings. I think we did this safeguard just to be extra sure we didn\u0027t cause the textures with text to reraster. I\u0027m tempted to leave it this way so that tests can poke at these methods without fear rather than switching to DCHECKs, though.",
+      "parentUuid": "d167525b_ec1d8c23",
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8ea70174_19a24bae",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b8b0ea_58ba3ed9",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5776e8ae_78acf7ce",
         "filename": "chrome/browser/vr/elements/button.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a539865_6575c0bf",
+        "filename": "chrome/browser/vr/elements/button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5776e8ae_78acf7ce",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "7cb4d501_7ba5bb82",
+        "filename": "chrome/browser/vr/elements/content_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Sg.",
+      "parentUuid": "987724e1_f59ae615",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1af8d600_7b4b55eb",
         "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
         "patchSetId": 7
@@ -173,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "61c8a355_2604e867",
+        "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "I really like this. I\u0027ve added this and updated all the UiTextures.",
+      "parentUuid": "1e805469_7f72e658",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d741349_46117d3b",
         "filename": "chrome/browser/vr/elements/textured_element.h",
         "patchSetId": 7
@@ -184,6 +292,24 @@
       "writtenOn": "2017-11-21T22:47:38Z",
       "side": 1,
       "message": "Err, why not an enum?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d685a663_0a248ccb",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Needed types for the template stuff I do in simple_textured_element.h. Added a comment to this effect.",
+      "parentUuid": "6d741349_46117d3b",
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -207,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "136d5a2f_aa61e18d",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95b08085_589ca315",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7566d7a1_0d5faf6e",
         "filename": "chrome/browser/vr/elements/textured_element.h",
         "patchSetId": 7
@@ -218,6 +362,24 @@
       "writtenOn": "2017-11-21T22:47:38Z",
       "side": 1,
       "message": "I can see the value of these, but FTR, they feel too specific for this class (and texture) IMO.  Hopefully these are it.",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5a37fd_1ac24b45",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Yep, this is it. Foreground and background colors are pervasive in textured elements (and have analogs to color/background-color in CSS). Anything more specific sits on the associated textures. Added a comment here and in the UiTexture.",
+      "parentUuid": "7566d7a1_0d5faf6e",
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "1c0a3341_3ac5a317",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "765ca27c_0b75c772",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b157c1b2_e58e46d0",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 7
@@ -255,6 +435,24 @@
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27f8c6a_a18c4acb",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b157c1b2_e58e46d0",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +490,24 @@
     },
     {
       "key": {
+        "uuid": "87d71d1b_41ccbcfb",
+        "filename": "chrome/browser/vr/elements/ui_texture.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4008d567_54d106b9",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b22c2820_98f60e45",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 7
@@ -306,6 +522,24 @@
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a5875c_0be78cb9",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b22c2820_98f60e45",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +560,24 @@
     },
     {
       "key": {
+        "uuid": "a29c7e02_09834bc5",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1027beb_29218fb5",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85b33749_af4396ce",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 7
@@ -340,6 +592,24 @@
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdc11c1_b0d1ea2b",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b33749_af4396ce",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -360,6 +630,24 @@
     },
     {
       "key": {
+        "uuid": "00a301d7_62b6e178",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db791f0_53fcb220",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5b2db3_33e536f2",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 7
@@ -371,6 +659,24 @@
       "writtenOn": "2017-11-21T22:47:38Z",
       "side": 1,
       "message": "What\u0027s special about video capture?",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241e7e53_b00c9af6",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Nothing, really. I just wanted to check that the linear layout responded correctly when one of the permissions came and went. I picked this one arbitrarily.",
+      "parentUuid": "fa5b2db3_33e536f2",
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -394,6 +700,24 @@
     },
     {
       "key": {
+        "uuid": "86f2a0fc_6927f066",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Kinda :) I did replace it with something better, though!",
+      "parentUuid": "e6356483_6d65a84c",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d525f7af_aedd0887",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 7
@@ -411,6 +735,24 @@
     },
     {
       "key": {
+        "uuid": "160f044b_2a9934bb",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done. (Missed this one, but I think I\u0027d already removed the other).",
+      "parentUuid": "d525f7af_aedd0887",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a64b4d9d_d8430c05",
         "filename": "chrome/browser/vr/ui_scene_unittest.cc",
         "patchSetId": 7
@@ -425,6 +767,24 @@
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e0948b_c71016ea",
+        "filename": "chrome/browser/vr/ui_scene_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a64b4d9d_d8430c05",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

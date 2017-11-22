@@ -16,6 +16,24 @@
       "revId": "00beee50fd2914808cb81187f767bb2d333da2df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6db4772_a41a2884",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T13:29:39Z",
+      "side": 0,
+      "message": "No, but I should have made a comment about this. I\u0027m fixing 766318 with this CL as well (by computing the target combined transform), so the brittle configuration on which the old code relied no longer needs to be protected with this test.",
+      "parentUuid": "27babe55_1feb431e",
+      "revId": "00beee50fd2914808cb81187f767bb2d333da2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
