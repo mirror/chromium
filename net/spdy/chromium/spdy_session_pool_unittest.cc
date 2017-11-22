@@ -109,8 +109,6 @@ TEST_F(SpdySessionPoolTest, CloseCurrentSessions) {
   const char kTestHost[] = "www.foo.com";
   const int kTestPort = 80;
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   HostPortPair test_host_port_pair(kTestHost, kTestPort);
   SpdySessionKey test_key =
       SpdySessionKey(
@@ -159,8 +157,6 @@ TEST_F(SpdySessionPoolTest, CloseCurrentIdleSessions) {
   MockRead reads[] = {
       MockRead(SYNCHRONOUS, ERR_IO_PENDING)  // Stall forever.
   };
-
-  session_deps_.host_resolver->set_synchronous_mode(true);
 
   StaticSocketDataProvider data1(reads, arraysize(reads), nullptr, 0);
   data1.set_connect_data(connect_data);
@@ -281,8 +277,6 @@ TEST_F(SpdySessionPoolTest, CloseAllSessions) {
   const char kTestHost[] = "www.foo.com";
   const int kTestPort = 80;
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
-
   HostPortPair test_host_port_pair(kTestHost, kTestPort);
   SpdySessionKey test_key =
       SpdySessionKey(
@@ -360,9 +354,10 @@ void SpdySessionPoolTest::RunIPPoolingTest(
     // This test requires that the HostResolver cache be populated.  Normal
     // code would have done this already, but we do it manually.
     HostResolver::RequestInfo info(HostPortPair(test_hosts[i].name, kTestPort));
-    session_deps_.host_resolver->Resolve(
+    int rv = session_deps_.host_resolver->Resolve(
         info, DEFAULT_PRIORITY, &test_hosts[i].addresses, CompletionCallback(),
         &request[i], NetLogWithSource());
+    EXPECT_THAT(rv, IsOk());
 
     // Setup a SpdySessionKey.
     test_hosts[i].key = SpdySessionKey(
@@ -546,9 +541,10 @@ TEST_F(SpdySessionPoolTest, IPPoolingNetLog) {
         test_hosts[i].name, test_hosts[i].iplist, SpdyString());
 
     HostResolver::RequestInfo info(HostPortPair(test_hosts[i].name, kTestPort));
-    session_deps_.host_resolver->Resolve(
+    int rv = session_deps_.host_resolver->Resolve(
         info, DEFAULT_PRIORITY, &test_hosts[i].addresses, CompletionCallback(),
         &test_hosts[i].request, NetLogWithSource());
+    EXPECT_THAT(rv, IsOk());
 
     test_hosts[i].key =
         SpdySessionKey(HostPortPair(test_hosts[i].name, kTestPort),
@@ -625,9 +621,10 @@ TEST_F(SpdySessionPoolTest, IPPoolingDisabled) {
         test_hosts[i].name, test_hosts[i].iplist, SpdyString());
 
     HostResolver::RequestInfo info(HostPortPair(test_hosts[i].name, kTestPort));
-    session_deps_.host_resolver->Resolve(
+    int rv = session_deps_.host_resolver->Resolve(
         info, DEFAULT_PRIORITY, &test_hosts[i].addresses, CompletionCallback(),
         &test_hosts[i].request, NetLogWithSource());
+    EXPECT_THAT(rv, IsOk());
 
     test_hosts[i].key =
         SpdySessionKey(HostPortPair(test_hosts[i].name, kTestPort),

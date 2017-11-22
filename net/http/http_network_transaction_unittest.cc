@@ -12781,7 +12781,6 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   session_deps_.http_auth_handler_factory.reset(auth_factory);
   session_deps_.proxy_service = ProxyService::CreateDirect();
   session_deps_.host_resolver->rules()->AddRule("www.example.com", "10.0.0.1");
-  session_deps_.host_resolver->set_synchronous_mode(true);
 
   HttpAuthHandlerMock* auth_handler(new HttpAuthHandlerMock());
   auth_handler->set_connection_based(true);
@@ -13096,7 +13095,6 @@ TEST_F(HttpNetworkTransactionTest, SimpleCancel) {
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
 
-  session_deps_.host_resolver->set_synchronous_mode(true);
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   auto trans =
       std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
