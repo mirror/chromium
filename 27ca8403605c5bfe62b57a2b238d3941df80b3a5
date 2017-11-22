@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d6072f_2fe06217",
+        "filename": "chrome/browser/offline_pages/android/downloads/offline_page_infobar_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-22T04:21:07Z",
+      "side": 1,
+      "message": "See failure in https://build.chromium.org/p/chromium/builders/Android/builds/78745\n  \n  ../../chrome/browser/offline_pages/android/downloads/offline_page_infobar_delegate.h:26:14: error: unknown class name \n    \u0027DuplicateDownloadInfoBarDelegate\u0027; did you mean \n    \u0027::android::DuplicateDownloadInfoBarDelegate\u0027?\n        : public android::DuplicateDownloadInfoBarDelegate {\n                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n                 ::android::DuplicateDownloadInfoBarDelegate\n\nI think this suggestion is correct; you need \"::\" before \"android\" in order to reference `android` in the top-level namespace, not `offline_pages::android`.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "27ca8403605c5bfe62b57a2b238d3941df80b3a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
