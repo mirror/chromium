@@ -419,7 +419,7 @@ bool AccessibilityTablePredicate(
 
 bool AccessibilityTextfieldPredicate(
     BrowserAccessibility* start, BrowserAccessibility* node) {
-  return (node->IsSimpleTextControl() || node->IsRichTextControl());
+  return (node->IsPlainTextField() || node->IsRichTextField());
 }
 
 bool AccessibilityTextStyleBoldPredicate(
@@ -442,7 +442,7 @@ bool AccessibilityTextStyleUnderlinePredicate(
 
 bool AccessibilityTreePredicate(
     BrowserAccessibility* start, BrowserAccessibility* node) {
-  return (node->IsSimpleTextControl() || node->IsRichTextControl());
+  return (node->IsPlainTextField() || node->IsRichTextField());
 }
 
 bool AccessibilityUnvisitedLinkPredicate(
