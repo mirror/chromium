@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb8019ba_89952ffd",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T17:01:06Z",
+      "side": 1,
+      "message": "nit: extra line",
+      "revId": "fed91dcd6fe76d4cf273b964f14433c4f3ff2acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
