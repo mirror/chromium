@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "987cf9b1_0d2f6822",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-22T15:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf2f555d_bdfe9580",
+      "range": {
+        "startLine": 69,
+        "startChar": 36,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "d304307c4a21160450024b2de1305fd6647dd86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "847204a8_987fa270",
         "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-22T14:24:46Z",
       "side": 1,
       "message": "Can you clarify that this only gets logged when the message is closed (and not simply minimized).",
+      "revId": "d304307c4a21160450024b2de1305fd6647dd86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec86a356_bf5a28c2",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-22T15:56:11Z",
+      "side": 1,
+      "message": "Not sure what you mean by minimized, but I added some additional details.",
+      "parentUuid": "847204a8_987fa270",
       "revId": "d304307c4a21160450024b2de1305fd6647dd86f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "d304307c4a21160450024b2de1305fd6647dd86f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5bcf28_cbdae73a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 40614,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-22T15:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40732208_1ed4e56d",
+      "revId": "d304307c4a21160450024b2de1305fd6647dd86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
