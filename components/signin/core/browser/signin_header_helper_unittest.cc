@@ -61,9 +61,9 @@ class SigninHeaderHelperTest : public testing::Test {
     std::unique_ptr<net::URLRequest> url_request =
         url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                            TRAFFIC_ANNOTATION_FOR_TESTS);
-    AppendOrRemoveMirrorRequestHeader(url_request.get(), GURL(), account_id,
-                                      cookie_settings_.get(),
-                                      PROFILE_MODE_DEFAULT);
+    AppendOrRemoveMirrorRequestHeader(
+        url_request.get(), GURL(), account_id, cookie_settings_.get(),
+        IsAccountConsistencyMirrorEnabled(), PROFILE_MODE_DEFAULT);
     AppendOrRemoveDiceRequestHeader(url_request.get(), GURL(), account_id,
                                     sync_enabled_, sync_has_auth_error_,
                                     dice_enabled_pref_member_.get(),
@@ -166,6 +166,43 @@ TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleCom) {
       GURL("https://www.google.com"), "0123456789",
       "id=0123456789:mode=0:enable_account_consistency=true");
 }
+
+// If the flag is set, we can't use ScopedAccountConsistencyDisabled.
+#if !BUILDFLAG(ENABLE_MIRROR)
+
+// No header sent when account consistency is disabled and profile doesn't
+// require it.
+TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleComNoProfileConsistency) {
+  ScopedAccountConsistencyDisabled scoped_no_consistency;
+  ASSERT_FALSE(IsAccountConsistencyMirrorEnabled());
+  std::unique_ptr<net::URLRequest> url_request =
+      url_request_context_.CreateRequest(GURL("https://www.google.com"),
+                                         net::DEFAULT_PRIORITY, nullptr,
+                                         TRAFFIC_ANNOTATION_FOR_TESTS);
+  AppendOrRemoveMirrorRequestHeader(
+      url_request.get(), GURL(), "0123456789", cookie_settings_.get(),
+      IsAccountConsistencyMirrorEnabled(), PROFILE_MODE_DEFAULT);
+  CheckAccountConsistencyHeaderRequest(url_request.get(),
+                                       kChromeConnectedHeader, "");
+}
+
+// Header sent when account consistency is disabled, but required by profile.
+TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleComProfileConsistency) {
+  ScopedAccountConsistencyDisabled scoped_no_consistency;
+  ASSERT_FALSE(IsAccountConsistencyMirrorEnabled());
+  std::unique_ptr<net::URLRequest> url_request =
+      url_request_context_.CreateRequest(GURL("https://www.google.com"),
+                                         net::DEFAULT_PRIORITY, nullptr,
+                                         TRAFFIC_ANNOTATION_FOR_TESTS);
+  AppendOrRemoveMirrorRequestHeader(url_request.get(), GURL(), "0123456789",
+                                    cookie_settings_.get(), true,
+                                    PROFILE_MODE_DEFAULT);
+  CheckAccountConsistencyHeaderRequest(
+      url_request.get(), kChromeConnectedHeader,
+      "mode=0,enable_account_consistency=true");
+}
+
+#endif  // !BUILDFLAG(ENABLE_MIRROR)
 
 // Mirror is always enabled on Android and iOS, so these tests are only relevant
 // on Desktop.
@@ -401,9 +438,9 @@ TEST_F(SigninHeaderHelperTest, TestMirrorHeaderEligibleRedirectURL) {
   std::unique_ptr<net::URLRequest> url_request =
       url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
-  AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
-                                    cookie_settings_.get(),
-                                    PROFILE_MODE_DEFAULT);
+  AppendOrRemoveMirrorRequestHeader(
+      url_request.get(), redirect_url, account_id, cookie_settings_.get(),
+      IsAccountConsistencyMirrorEnabled(), PROFILE_MODE_DEFAULT);
   EXPECT_TRUE(
       url_request->extra_request_headers().HasHeader(kChromeConnectedHeader));
 }
@@ -418,9 +455,9 @@ TEST_F(SigninHeaderHelperTest, TestMirrorHeaderNonEligibleRedirectURL) {
   std::unique_ptr<net::URLRequest> url_request =
       url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
-  AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
-                                    cookie_settings_.get(),
-                                    PROFILE_MODE_DEFAULT);
+  AppendOrRemoveMirrorRequestHeader(
+      url_request.get(), redirect_url, account_id, cookie_settings_.get(),
+      IsAccountConsistencyMirrorEnabled(), PROFILE_MODE_DEFAULT);
   EXPECT_FALSE(
       url_request->extra_request_headers().HasHeader(kChromeConnectedHeader));
 }
@@ -438,9 +475,9 @@ TEST_F(SigninHeaderHelperTest, TestIgnoreMirrorHeaderNonEligibleURLs) {
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
   url_request->SetExtraRequestHeaderByName(kChromeConnectedHeader, fake_header,
                                            false);
-  AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
-                                    cookie_settings_.get(),
-                                    PROFILE_MODE_DEFAULT);
+  AppendOrRemoveMirrorRequestHeader(
+      url_request.get(), redirect_url, account_id, cookie_settings_.get(),
+      IsAccountConsistencyMirrorEnabled(), PROFILE_MODE_DEFAULT);
   std::string header;
   EXPECT_TRUE(url_request->extra_request_headers().GetHeader(
       kChromeConnectedHeader, &header));

@@ -6,6 +6,8 @@
 
 namespace supervised_users {
 
+const char kAccountConsistencyMirrorRequired[] =
+    "AccountConsistencyMirrorRequired";
 const char kApprovedExtensions[] = "ApprovedExtensions";
 const char kCameraMicDisabled[] = "CameraMicDisabled";
 const char kContentPackDefaultFilteringBehavior[] =
