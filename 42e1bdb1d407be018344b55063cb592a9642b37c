@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647da688_2306dcc8",
+        "filename": "ash/system/session/tray_session_length_limit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-22T15:30:31Z",
+      "side": 1,
+      "message": "I believe this adds a static initializer. Use \u0027constexpr\u0027 instead of \u0027const\u0027.",
+      "revId": "42e1bdb1d407be018344b55063cb592a9642b37c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
