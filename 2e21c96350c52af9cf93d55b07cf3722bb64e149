@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "612a0125_0df4a64d",
+        "filename": "ios/web_view/shell/shell_autofill_delegate.m",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T03:59:09Z",
+      "side": 1,
+      "message": "nit: Maybe completionHandler?",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "2e21c96350c52af9cf93d55b07cf3722bb64e149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050adefc_6b81f346",
+        "filename": "ios/web_view/shell/shell_autofill_delegate.m",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T03:59:09Z",
+      "side": 1,
+      "message": "Would it be better to extract alert controller creation into a separate method?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "2e21c96350c52af9cf93d55b07cf3722bb64e149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
