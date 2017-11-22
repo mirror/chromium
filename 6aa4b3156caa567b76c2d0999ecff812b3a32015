@@ -136,6 +136,24 @@
       "revId": "6aa4b3156caa567b76c2d0999ecff812b3a32015",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4f671c_b2f78183",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-22T22:34:33Z",
+      "side": 1,
+      "message": "As discussed offline, we need to use mIBinderDelegate to get the private member from the backed in the dex file.",
+      "parentUuid": "0b677e51_22aa020f",
+      "revId": "6aa4b3156caa567b76c2d0999ecff812b3a32015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
