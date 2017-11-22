@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea9efc36_343adbc9",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-22T19:14:14Z",
+      "side": 1,
+      "message": "It seems calls like this are the ones causing the problem. We\u0027d be creating a binary in a newer linux distro that would be incompatible with old distros because they don\u0027t ship a recent enough ATK.\n\nProblem is that it will block introducing the new ATK 2.12 APIs. I will remove this code meanwhile, at least while we support Ubuntu 14.04.",
+      "revId": "0cbde17744cbf2c0011feaddd3cbca4ec4b0221c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
