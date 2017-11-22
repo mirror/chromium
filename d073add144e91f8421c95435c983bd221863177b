@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e336010_11734eec",
+        "filename": "components/sync/user_events/trial_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-22T22:15:56Z",
+      "side": 1,
+      "message": "int should be replaced with variations::VariationID",
+      "revId": "d073add144e91f8421c95435c983bd221863177b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
