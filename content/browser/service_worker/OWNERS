@@ -8,6 +8,7 @@
 #   //third_party/WebKit/public/web/modules/serviceworker/
 #   //third_party/WebKit/public/platform/modules/serviceworker/
 #   //third_party/WebKit/Source/modules/serviceworkers/
+file://third_party/WebKit/common/serviceworker/OWNERS
 
 falken@chromium.org
 horo@chromium.org
