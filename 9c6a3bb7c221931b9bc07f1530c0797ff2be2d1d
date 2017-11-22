@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3694ef34_35aa8a2c",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T04:32:05Z",
+      "side": 1,
+      "message": "Done. That\u0027s right, changed to DCHECK just in case the passed in notifier is a nullptr. :)",
+      "parentUuid": "6ea595a2_eff6aee9",
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9455d89a_2088b83f",
         "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e43bcf_8f205690",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T04:32:05Z",
+      "side": 1,
+      "message": "documented. query_next_position_callback_ will need a GeopositionPtr as a parameter in this case. :)",
+      "parentUuid": "9455d89a_2088b83f",
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ef4ca3b6_ef756afc",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T04:32:05Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "b23a029f_8819f8f0",
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef1c9178_d5f961bb",
         "filename": "services/device/geolocation/public_ip_address_geolocator_unittest.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab13138_c41a4366",
+        "filename": "services/device/geolocation/public_ip_address_geolocator_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T04:32:05Z",
+      "side": 1,
+      "message": "got it! thanks for that!",
+      "parentUuid": "ef1c9178_d5f961bb",
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee94c75_e7bb3184",
+        "filename": "services/device/geolocation/public_ip_address_geolocator_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T04:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f9d8e71_f7c7fb3d",
+      "range": {
+        "startLine": 201,
+        "startChar": 7,
+        "endLine": 201,
+        "endChar": 11
+      },
+      "revId": "9c6a3bb7c221931b9bc07f1530c0797ff2be2d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
