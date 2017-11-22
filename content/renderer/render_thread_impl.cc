@@ -877,6 +877,9 @@ void RenderThreadImpl::Init(
       command_line.GetSwitchValueASCII(switches::kContentImageTextureTarget);
   buffer_to_texture_target_map_ =
       viz::StringToBufferToTextureTargetMap(image_texture_target_string);
+  LOG(ERROR) << "Got map\n"
+             << viz::BufferToTextureTargetMapToString(
+                    buffer_to_texture_target_map_);
 
   if (command_line.HasSwitch(switches::kDisableLCDText)) {
     is_lcd_text_enabled_ = false;
