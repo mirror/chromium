@@ -158,6 +158,30 @@
     },
     {
       "key": {
+        "uuid": "860c63f0_d7650b0c",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-22T19:16:44Z",
+      "side": 1,
+      "message": "Fully agree that we want to be forward-looking. My suggestion to use \"tag\" as a fixed key here comes from a place of XML ignorance. Do you think it is sufficiently extensible if we add a \"type\": \"tag\" property to all of the parsed tag nodes?",
+      "parentUuid": "96a4bb74_3efd98a6",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22d504ba_083f07d9",
         "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
         "patchSetId": 10
