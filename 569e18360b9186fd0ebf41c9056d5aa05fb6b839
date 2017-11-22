@@ -214,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "ac2dd9f2_97b7907d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T01:31:29Z",
+      "side": 1,
+      "message": "Got it. We should still change this to case kAll instead of case kLast now.",
+      "parentUuid": "461402db_fda2a91b",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "469d2079_c9b89b3a",
         "filename": "third_party/WebKit/common/serviceworker/OWNERS",
         "patchSetId": 2
