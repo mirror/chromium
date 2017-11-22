@@ -273,11 +273,9 @@ enum WebFeature {
   kHTMLImportsAsyncAttribute = 463,
   kXMLHttpRequestSynchronous = 465,
   kCSSSelectorPseudoUnresolved = 466,
-  kCSSSelectorPseudoShadow = 467,
   kCSSSelectorPseudoContent = 468,
   kCSSSelectorPseudoHost = 469,
   kCSSSelectorPseudoHostContext = 470,
-  kCSSDeepCombinator = 471,
   // The above items are available in M37 branch.
 
   kUseAsm = 473,

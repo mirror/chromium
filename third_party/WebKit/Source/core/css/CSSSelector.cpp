@@ -541,14 +541,8 @@ void CSSSelector::UpdatePseudoType(const AtomicString& value,
         pseudo_type_ = kPseudoUnknown;
       break;
     case kPseudoShadow:
-      if (RuntimeEnabledFeatures::
-              ShadowPseudoElementInCSSDynamicProfileEnabled()) {
-        if (match_ != kPseudoElement)
-          pseudo_type_ = kPseudoUnknown;
-      } else {
-        if (match_ != kPseudoElement || context.IsDynamicProfile())
-          pseudo_type_ = kPseudoUnknown;
-      }
+      if (match_ != kPseudoElement || context.IsDynamicProfile())
+        pseudo_type_ = kPseudoUnknown;
       break;
     case kPseudoBlinkInternalElement:
       if (match_ != kPseudoElement || mode != kUASheetMode)
@@ -816,10 +810,6 @@ String CSSSelector::SelectorText() const {
       case kChild:
         result = " > " + builder.ToString() + result;
         break;
-      case kShadowDeep:
-      case kShadowDeepAsDescendant:
-        result = " /deep/ " + builder.ToString() + result;
-        break;
       case kShadowPiercingDescendant:
         result = " >>> " + builder.ToString() + result;
         break;
@@ -829,9 +819,10 @@ String CSSSelector::SelectorText() const {
       case kIndirectAdjacent:
         result = " ~ " + builder.ToString() + result;
         break;
+      case kShadowDeep:
+      case kShadowPseudo:
       case kSubSelector:
         NOTREACHED();
-      case kShadowPseudo:
       case kShadowSlot:
         result = builder.ToString() + result;
         break;
