@@ -16,6 +16,24 @@
       "revId": "d8418f4a2e4c8e8e21f31cf8048586cc44816ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2be031e_90e72868",
+        "filename": "chrome/browser/extensions/standard_management_policy_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-22T23:25:40Z",
+      "side": 1,
+      "message": "Thanks for the prompt review emaxx@. Let me investigate the codepaths involved a bit more, and then you can review this tomorrow morning (Munich time).",
+      "parentUuid": "56488d3e_001f6a76",
+      "revId": "d8418f4a2e4c8e8e21f31cf8048586cc44816ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
