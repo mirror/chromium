@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc227fc5_54fbfd44",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-22T20:11:34Z",
+      "side": 1,
+      "message": "What exactly does this do?  The devices aren\u0027t promises, and you aren\u0027t asserting anything.\n\nI think it would make sense to just do the assert after we have each device since we can\u0027t do it in parallel.",
+      "revId": "aed6f08e3697d2a13b05339cea37b1def0eaba45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

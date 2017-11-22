@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6d3b98c_48132b9a",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-22T20:11:34Z",
+      "side": 0,
+      "message": "This still seems to apply.",
+      "revId": "4f83209aba1659d95ffe3140880f4ef7656f562d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
