@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f1edc58_ab1b304e",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-22T13:05:50Z",
+      "side": 1,
+      "message": "Kept this consistent with similar checks at other places in the file. Anyway, it looks cleaner without is_null(). Doing the same elsewhere as well.",
+      "parentUuid": "f88d6940_10c5de3c",
+      "range": {
+        "startLine": 844,
+        "startChar": 13,
+        "endLine": 844,
+        "endChar": 20
+      },
+      "revId": "57e578c50ae0cee9d89ffeb3af118eca4c9f5cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a6c9cee_d9dd1e39",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 2
