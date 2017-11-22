@@ -191,6 +191,20 @@ class UI_BASE_EXPORT PropertyHelper {
 
 }  // namespace ui
 
+// Macros to declare the property getter/setter template functions.
+#define ACTUALLY_DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(EXPORT, T)          \
+  namespace ui {                                                             \
+  template <>                                                                \
+  EXPORT void PropertyHandler::SetProperty(const ClassProperty<T>* property, \
+                                           T value);                         \
+  template <>                                                                \
+  EXPORT T                                                                   \
+  PropertyHandler::GetProperty(const ClassProperty<T>* property) const;      \
+  template <>                                                                \
+  EXPORT void PropertyHandler::ClearProperty(                                \
+      const ClassProperty<T>* property);                                     \
+  }
+
 // Macros to instantiate the property getter/setter template functions.
 #define DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(EXPORT, T)                   \
   namespace ui {                                                             \
