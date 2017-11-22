@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ce95622_7da91d36",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-22T23:55:20Z",
+      "side": 1,
+      "message": "That\u0027s what I started with, but I wanted a bit more control than it provided.\n\nThere is a stronger argument for replacing it with my version (the shared mock is clearly outdated), but I did not investigate how difficult that would be.\n\nTODO added.",
+      "parentUuid": "e3418f12_e2c4ccff",
+      "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be05fb02_a5261fcc",
         "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b99158_69e3f2cf",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-22T23:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be05fb02_a5261fcc",
+      "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7ee94f09_b4f49af7",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-22T23:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e30daf08_94d4f4a3",
+      "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6111bac5_2e685cf5",
         "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-22T23:32:31Z",
       "side": 1,
       "message": "nit: put these under \"protected\" so that only tests can access them? Also, since the test is still a class, use trailing underscore for class variable names? Maybe I am missing some style guide though :)",
+      "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626ee179_6d458004",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-22T23:55:20Z",
+      "side": 1,
+      "message": "It does seem that the style guide decides on underscores based on struct vs. class, rather than visibility. Which is crazy, but there you are.\n\nThere is no such ambiguity for protected members.\n\nDone.",
+      "parentUuid": "6111bac5_2e685cf5",
       "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
