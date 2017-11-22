@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bb34165_14ee43a3",
+        "filename": "components/pdf/common/pdf.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-22T19:55:11Z",
+      "side": 1,
+      "message": "Do we not care about the new coordinates or the scroll position or can we figure that out in the embedder already?",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "617fb77e6e0cc6f8e221af50bfcd923e0c75d0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
