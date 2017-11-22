@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/ng_out_of_flow_layout_part.h"
 
+#include "core/layout/LayoutObject.h"
 #include "core/layout/ng/ng_absolute_utils.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_box_fragment.h"
@@ -51,11 +52,12 @@ void NGOutOfFlowLayoutPart::Run(bool update_legacy) {
       &descendant_candidates);
 
   while (descendant_candidates.size() > 0) {
+    ComputeInlineContainingBlocks(descendant_candidates);
     for (auto& candidate : descendant_candidates) {
-      if (IsContainingBlockForDescendant(candidate.node.Style())) {
+      if (IsContainingBlockForDescendant(candidate)) {
         NGLogicalOffset offset;
-        scoped_refptr<NGLayoutResult> result = LayoutDescendant(
-            candidate.node, candidate.static_position, &offset);
+        scoped_refptr<NGLayoutResult> result =
+            LayoutDescendant(candidate, &offset);
         container_builder_->AddChild(std::move(result), offset);
         if (update_legacy)
           candidate.node.UseOldOutOfFlowPositioning();
@@ -71,50 +73,74 @@ void NGOutOfFlowLayoutPart::Run(bool update_legacy) {
   }
 }
 
-scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
-    NGBlockNode descendant,
-    NGStaticPosition static_position,
-    NGLogicalOffset* offset) {
-  DCHECK(descendant);
+NGOutOfFlowLayoutPart::ContainerInfo NGOutOfFlowLayoutPart::GetContainerInfo(
+    const NGOutOfFlowPositionedDescendant& descendant) const {
+  return ContainerInfo{container_style_, container_size_, content_offset_,
+                       content_physical_offset_};
+}
 
-  WritingMode container_writing_mode(container_style_.GetWritingMode());
-  WritingMode descendant_writing_mode(descendant.Style().GetWritingMode());
+void NGOutOfFlowLayoutPart::ComputeInlineContainingBlocks(
+    Vector<NGOutOfFlowPositionedDescendant> descendants) {
+  HashMap<const LayoutObject*, NGContainerFragmentBuilder::FragmentPair>
+      inline_container_fragments;
+  for (auto& descendant : descendants) {
+    if (descendant.inline_container &&
+        !inline_container_fragments.Contains(descendant.inline_container)) {
+      NGContainerFragmentBuilder::FragmentPair fragment_pair;
+      inline_container_fragments.insert(descendant.inline_container,
+                                        fragment_pair);
+    }
+  }
+  container_builder_->ComputeInlineContainerFragments(
+      &inline_container_fragments);
+}
+
+scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
+    const NGOutOfFlowPositionedDescendant& descendant,
+    NGLogicalOffset* offset) {
+  ContainerInfo container_info = GetContainerInfo(descendant);
+
+  WritingMode container_writing_mode(container_info.style.GetWritingMode());
+  WritingMode descendant_writing_mode(descendant.node.Style().GetWritingMode());
 
   // Adjust the static_position origin. The static_position coordinate origin is
   // relative to the container's border box, ng_absolute_utils expects it to be
   // relative to the container's padding box.
-  static_position.offset -= content_physical_offset_;
+  NGStaticPosition static_position(descendant.static_position);
+  static_position.offset -= container_info.content_physical_offset;
 
   // The block estimate is in the descendant's writing mode.
   scoped_refptr<NGConstraintSpace> descendant_constraint_space =
       NGConstraintSpaceBuilder(container_writing_mode, icb_size_)
-          .SetTextDirection(container_style_.Direction())
-          .SetAvailableSize(container_size_)
-          .SetPercentageResolutionSize(container_size_)
+          .SetTextDirection(container_info.style.Direction())
+          .SetAvailableSize(container_info.content_size)
+          .SetPercentageResolutionSize(container_info.content_size)
           .ToConstraintSpace(descendant_writing_mode);
   Optional<MinMaxSize> min_max_size;
   Optional<LayoutUnit> block_estimate;
 
   scoped_refptr<NGLayoutResult> layout_result = nullptr;
 
-  if (AbsoluteNeedsChildInlineSize(descendant.Style()) ||
-      NeedMinMaxSize(descendant.Style())) {
-    min_max_size = descendant.ComputeMinMaxSize();
+  NGBlockNode node = descendant.node;
+  if (AbsoluteNeedsChildInlineSize(descendant.node.Style()) ||
+      NeedMinMaxSize(descendant.node.Style())) {
+    min_max_size = node.ComputeMinMaxSize();
   }
 
   Optional<NGLogicalSize> replaced_size;
-  if (descendant.IsReplaced())
+  if (descendant.node.IsReplaced())
     replaced_size = ComputeReplacedSize(
-        descendant, *descendant_constraint_space, min_max_size);
+        descendant.node, *descendant_constraint_space, min_max_size);
 
   NGAbsolutePhysicalPosition node_position =
       ComputePartialAbsoluteWithChildInlineSize(
-          *descendant_constraint_space, descendant.Style(), static_position,
-          min_max_size, replaced_size, container_writing_mode,
-          container_style_.Direction());
+          *descendant_constraint_space, descendant.node.Style(),
+          static_position, min_max_size, replaced_size, container_writing_mode,
+          container_info.style.Direction());
 
-  if (AbsoluteNeedsChildBlockSize(descendant.Style())) {
-    layout_result = GenerateFragment(descendant, block_estimate, node_position);
+  if (AbsoluteNeedsChildBlockSize(descendant.node.Style())) {
+    layout_result = GenerateFragment(descendant.node, container_info,
+                                     block_estimate, node_position);
 
     DCHECK(layout_result->PhysicalFragment().get());
     NGFragment fragment(descendant_writing_mode,
@@ -124,21 +150,22 @@ scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
   }
 
   ComputeFullAbsoluteWithChildBlockSize(
-      *descendant_constraint_space, descendant.Style(), static_position,
+      *descendant_constraint_space, descendant.node.Style(), static_position,
       block_estimate, replaced_size, container_writing_mode,
-      container_style_.Direction(), &node_position);
+      container_info.style.Direction(), &node_position);
 
   // Skip this step if we produced a fragment when estimating the block size.
   if (!layout_result) {
     block_estimate =
         node_position.size.ConvertToLogical(descendant_writing_mode).block_size;
-    layout_result = GenerateFragment(descendant, block_estimate, node_position);
+    layout_result = GenerateFragment(descendant.node, container_info,
+                                     block_estimate, node_position);
   }
 
   // Compute logical offset, NGAbsolutePhysicalPosition is calculated relative
   // to the padding box so add back the container's borders.
   NGBoxStrut inset = node_position.inset.ConvertToLogical(
-      container_writing_mode, container_style_.Direction());
+      container_writing_mode, container_info.style.Direction());
   offset->inline_offset = inset.inline_start + content_offset_.inline_offset;
   offset->block_offset = inset.block_start + content_offset_.block_offset;
 
@@ -146,8 +173,12 @@ scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
 }
 
 bool NGOutOfFlowLayoutPart::IsContainingBlockForDescendant(
-    const ComputedStyle& descendant_style) {
-  EPosition position = descendant_style.GetPosition();
+    const NGOutOfFlowPositionedDescendant& descendant) {
+  if (descendant.inline_container) {
+    LOG(INFO) << "Got inline container";
+    return true;
+  }
+  EPosition position = descendant.node.Style().GetPosition();
   return (contains_absolute_ && position == EPosition::kAbsolute) ||
          (contains_fixed_ && position == EPosition::kFixed);
 }
@@ -159,13 +190,15 @@ bool NGOutOfFlowLayoutPart::IsContainingBlockForDescendant(
 //    position calculation.
 scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::GenerateFragment(
     NGBlockNode descendant,
+    const ContainerInfo& container_info,
     const Optional<LayoutUnit>& block_estimate,
     const NGAbsolutePhysicalPosition node_position) {
   // As the block_estimate is always in the descendant's writing mode, we build
   // the constraint space in the descendant's writing mode.
   WritingMode writing_mode(descendant.Style().GetWritingMode());
   NGLogicalSize container_size(
-      container_size_.ConvertToPhysical(container_style_.GetWritingMode())
+      container_info.content_size
+          .ConvertToPhysical(container_style_.GetWritingMode())
           .ConvertToLogical(writing_mode));
 
   LayoutUnit inline_size =

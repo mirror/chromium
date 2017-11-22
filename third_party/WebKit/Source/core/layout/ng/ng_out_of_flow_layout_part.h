@@ -37,15 +37,27 @@ class CORE_EXPORT NGOutOfFlowLayoutPart {
   void Run(bool update_legacy = true);
 
  private:
+  struct ContainerInfo {
+    const ComputedStyle& style;
+    NGLogicalSize content_size;
+    NGLogicalOffset content_offset;  // content offset wrt border box
+    NGPhysicalOffset content_physical_offset;
+  };
+
+  ContainerInfo GetContainerInfo(const NGOutOfFlowPositionedDescendant&) const;
+
+  void ComputeInlineContainingBlocks(Vector<NGOutOfFlowPositionedDescendant>);
+
   scoped_refptr<NGLayoutResult> LayoutDescendant(
-      NGBlockNode descendant,
-      NGStaticPosition static_position,
+      const NGOutOfFlowPositionedDescendant&,
       NGLogicalOffset* offset);
 
-  bool IsContainingBlockForDescendant(const ComputedStyle& descendant_style);
+  bool IsContainingBlockForDescendant(
+      const NGOutOfFlowPositionedDescendant& descendant);
 
   scoped_refptr<NGLayoutResult> GenerateFragment(
       NGBlockNode node,
+      const ContainerInfo&,
       const Optional<LayoutUnit>& block_estimate,
       const NGAbsolutePhysicalPosition node_position);
 
