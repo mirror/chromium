@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7753503_4614e13a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:08:26Z",
+      "side": 1,
+      "message": "We\u0027re trending away from the vr_ prefix on new files/classes (ie. the directory and namespace are sufficient).  Eg. vr::AutocompleteController",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08415ae5_0a21cd56",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:08:26Z",
+      "side": 1,
+      "message": "Minor general naming nit/suggestion:  Code \"stuttering\" is Asset-\u003eLoadAsset().  This could be LoadWhenComponentReady(), if you like.",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e319271d_ce655819",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:08:26Z",
+      "side": 1,
+      "message": "Rather than a string, could we jump straight to providing a class or struct that contains the string?  Then these methods don\u0027t have to change as stuff is added to the set of assets.",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8c3f7f_2402c4ba",
+        "filename": "chrome/browser/vr/vr_assets.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:08:26Z",
+      "side": 1,
+      "message": "Do you think you could add some class-level explanation of how the initialization dance happens, to make digesting these methods easier?  Specifically, WRT threads, async tasks, etc.",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225fd8d8_ade5c63f",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:08:26Z",
+      "side": 1,
+      "message": "Needs auto-format to fix wrapping.",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52169f44_1cbe3848",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:08:26Z",
+      "side": 1,
+      "message": "These thread-safe comments should be above the function, but also more detailed.  What about a class-level comment describe the thread safety of the class, instead?",
+      "range": {
+        "startLine": 42,
+        "startChar": 57,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b8f3aa_64460018",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:08:26Z",
+      "side": 1,
+      "message": "Probably should be passing by const\u0026?",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc94b15_4836b385",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:08:26Z",
+      "side": 1,
+      "message": "const\u0026",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
