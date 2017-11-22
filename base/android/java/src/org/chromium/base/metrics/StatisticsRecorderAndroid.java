@@ -15,11 +15,14 @@ public final class StatisticsRecorderAndroid {
     private StatisticsRecorderAndroid() {}
 
     /**
-      * @return All the registered histograms as JSON text.
-      */
-    public static String toJson() {
-        return nativeToJson();
+     * @param omitBuckets Set to true if the serialization of buckets should be omitted during the
+     * serialization of the histograms. Should be set to true when it is critical to reduce the
+     * memory pressure during the serialization.
+     * @return All the registered histograms as JSON text.
+     */
+    public static String toJson(boolean omitBuckets) {
+        return nativeToJson(omitBuckets);
     }
 
-    private static native String nativeToJson();
+    private static native String nativeToJson(boolean omitBuckets);
 }

@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.feedback;
 
 import android.util.Pair;
 
+import org.chromium.base.SysUtils;
 import org.chromium.base.metrics.StatisticsRecorderAndroid;
 import org.chromium.chrome.browser.profiles.Profile;
 
@@ -24,6 +25,7 @@ public class HistogramFeedbackSource implements FeedbackSource {
     @Override
     public Pair<String, String> getLogs() {
         if (mIsOffTheRecord) return null;
-        return Pair.create(HISTOGRAMS_KEY, StatisticsRecorderAndroid.toJson());
+        return Pair.create(
+                HISTOGRAMS_KEY, StatisticsRecorderAndroid.toJson(SysUtils.isLowEndDevice()));
     }
 }
