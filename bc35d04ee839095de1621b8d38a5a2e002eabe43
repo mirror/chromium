@@ -52,6 +52,24 @@
       "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5776643e_2fb6d624",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T08:58:38Z",
+      "side": 0,
+      "message": "I\u0027m not sure if passing move-only value as a pointer and optionally taking it is a bad pattern, or at least I\u0027ve seen the pattern multiple times before in chromium, and I didn\u0027t feel I had problems following the flow.\n\nI\u0027m fine with us taking other options, while my preference is still not using macros.",
+      "parentUuid": "1a8bf8ab_d2f013f2",
+      "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
