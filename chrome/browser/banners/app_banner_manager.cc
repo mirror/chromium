@@ -176,10 +176,12 @@ void AppBannerManager::SendBannerAccepted() {
 void AppBannerManager::SendBannerDismissed() {
   if (event_.is_bound())
     event_->BannerDismissed();
+}
 
+void AppBannerManager::Reprompt() {
   if (IsExperimentalAppBannersEnabled()) {
     ResetBindings();
-    SendBannerPromptRequest();  // Reprompt.
+    SendBannerPromptRequest();
   }
 }
 

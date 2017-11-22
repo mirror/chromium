@@ -50,10 +50,10 @@ void AppBannerManagerDesktop::DidFinishCreatingBookmarkApp(
   content::WebContents* contents = web_contents();
   if (contents) {
     // A null extension pointer indicates that the bookmark app install was not
-    // successful. Call Terminate() to terminate the flow but don't record a
+    // successful. Call Reprompt() to restart the flow but don't record a
     // dismiss metric here because the banner isn't necessarily dismissed.
     if (extension == nullptr) {
-      Terminate();
+      Reprompt();
     } else {
       SendBannerAccepted();
 
