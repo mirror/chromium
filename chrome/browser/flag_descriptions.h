@@ -1696,6 +1696,11 @@ extern const char kWebVrAutopresentFromIntentDescription[];
 
 #endif  // OS_ANDROID
 
+#if BUILDFLAG(ENABLE_OPENVR)
+extern const char kOpenVRName[];
+extern const char kOpenVRDescription[];
+#endif  // ENABLE_OPENVR
+
 #endif  // ENABLE_VR
 
 #if BUILDFLAG(ENABLE_NACL)
