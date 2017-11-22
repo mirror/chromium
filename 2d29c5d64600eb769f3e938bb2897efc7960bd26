@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7663a5bc_df8b8168",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "Renamed it to account_consistency_mirror_required()\n(I want to emphasize it\u0027s not just possible to use, but required by policy/account type of the user.)",
+      "parentUuid": "68ae7aca_fd11fee0",
+      "range": {
+        "startLine": 412,
+        "startChar": 15,
+        "endLine": 412,
+        "endChar": 45
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bae7ead_521c7a6a",
         "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
         "patchSetId": 19
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "b43f4e85_b8893004",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "It\u0027s a Chrome OS only test.",
+      "parentUuid": "e1447853_f158bd1f",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06dd7d44_d58d82f4",
         "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
         "patchSetId": 19
@@ -85,6 +133,30 @@
       "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec71019_dc744dbf",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06dd7d44_d58d82f4",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 26
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "2d594289_628303e5",
+        "filename": "chrome/browser/supervised_user/supervised_user_constants.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "Done, kAccountConsistencyMirrorRequired",
+      "parentUuid": "738e062c_4c978a14",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4290484b_285cb3b2",
         "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
         "patchSetId": 19
@@ -131,6 +227,30 @@
       "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9f9fd8_e9fcd796",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4290484b_285cb3b2",
+      "range": {
+        "startLine": 128,
+        "startChar": 9,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +349,30 @@
     },
     {
       "key": {
+        "uuid": "81decd91_95b86886",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "As discussed in email, we\u0027re not enabling AccountReconcilor right now, but will do something about it (either sign out or automatically signing back in) later.",
+      "parentUuid": "7d40055c_b7a308fd",
+      "range": {
+        "startLine": 129,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51d21dd1_4fb29699",
         "filename": "components/signin/core/browser/signin_header_helper_unittest.cc",
         "patchSetId": 19
@@ -249,6 +393,30 @@
       "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7d780e_c47e70d3",
+        "filename": "components/signin/core/browser/signin_header_helper_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "Had to change to IsAccountConsistencyMirrorEnabled(), so only added the comment in L178 and L191.",
+      "parentUuid": "51d21dd1_4fb29699",
+      "range": {
+        "startLine": 459,
+        "startChar": 60,
+        "endLine": 459,
+        "endChar": 65
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -322,6 +490,54 @@
     },
     {
       "key": {
+        "uuid": "53776ac5_8e6fb881",
+        "filename": "components/signin/core/browser/signin_manager_base.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bef53dae_aae6a480",
+      "range": {
+        "startLine": 45,
+        "startChar": 39,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a09a422_23909312",
+        "filename": "components/signin/core/browser/signin_manager_base.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "Discussed in email - not implementing it in this CL.",
+      "parentUuid": "e018f9cd_bc03853c",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed0847b8_2363d014",
         "filename": "components/signin/core/browser/signin_pref_names.h",
         "patchSetId": 19
@@ -342,6 +558,30 @@
       "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b164730_aada2c03",
+        "filename": "components/signin/core/browser/signin_pref_names.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T18:17:40Z",
+      "side": 1,
+      "message": "Done, kAccountConsistencyMirrorRequired",
+      "parentUuid": "ed0847b8_2363d014",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "2d29c5d64600eb769f3e938bb2897efc7960bd26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
