@@ -99,11 +99,11 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   // more vertical spacing.
   constexpr int kLargeIconHeight = 20;
   const int icon_height = icon_view->GetPreferredSize().height();
+  const bool is_small_icon = icon_height > kLargeIconHeight;
   int remaining_vert_spacing =
-      icon_height <= kLargeIconHeight
+      is_small_icon
           ? layout_provider->GetDistanceMetric(DISTANCE_CONTROL_LIST_VERTICAL)
-          : layout_provider->GetDistanceMetric(
-                views::DISTANCE_CONTROL_VERTICAL_TEXT_PADDING);
+          : 12;
   const int total_height = icon_height + remaining_vert_spacing * 2;
 
   // If the padding given to the top and bottom of the HoverButton (i.e., on
@@ -121,8 +121,13 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   SetBorder(CreateBorderWithVerticalSpacing(remaining_vert_spacing));
 
   views::GridLayout* grid_layout = views::GridLayout::CreateAndInstall(this);
+  // If the |icon_view| is not badged it should be a square and therefore
+  // badge spacing is 0. Otherwise we have to adjust the spacing between
+  // the icon and the label(s).
+  const int kBadgeSpacing = icon_view->GetPreferredSize().width() - icon_height;
   const int icon_label_spacing = layout_provider->GetDistanceMetric(
-      views::DISTANCE_RELATED_LABEL_HORIZONTAL);
+                                     views::DISTANCE_RELATED_LABEL_HORIZONTAL) -
+                                 kBadgeSpacing;
 
   constexpr float kFixed = 0.f;
   constexpr float kStretchy = 1.f;
@@ -266,4 +271,9 @@ void HoverButton::OnBoundsChanged(const gfx::Rect& previous_bounds) {
     SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
                                 taken_width_);
   }
+}
+
+void HoverButton::SetTextColor(SkColor color) {
+  // DO NOT SUBMIT before changing color of |title_|
+  subtitle_->SetEnabledColor(color);
 }
