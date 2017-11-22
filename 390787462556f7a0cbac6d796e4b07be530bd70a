@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33300a78_a2496e53",
+        "filename": "ui/base/class_property.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-22T17:25:51Z",
+      "side": 1,
+      "message": "The right thing to do is to rename this to DEFINE_EXPORTED_UI_CLASS_PROPERTY_TYPE but that patch is a bit bigger (about 30 places inside and outside ui need to be fixed) so I wanted you to see the actual fix first.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 58
+      },
+      "revId": "390787462556f7a0cbac6d796e4b07be530bd70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
