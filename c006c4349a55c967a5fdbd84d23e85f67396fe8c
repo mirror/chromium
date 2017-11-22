@@ -22,6 +22,30 @@
       "revId": "c006c4349a55c967a5fdbd84d23e85f67396fe8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7da7d42_e9d1de17",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-22T00:30:00Z",
+      "side": 1,
+      "message": "I\u0027m curious about the !HasBeenInstalled() part: I don\u0027t really know much about the instant apps installation model, but I thought they were ephemeral and had presumed that an instant app would either be \"installed\" once per use (in which case, we don\u0027t want to check whether it was previously installed, because that would result in each app only being able to be used once), or not installed at all (in which case, there\u0027s no point in checking whether it was previously installed).  Can you clarify?",
+      "parentUuid": "f6dcef03_3e2043ac",
+      "range": {
+        "startLine": 259,
+        "startChar": 30,
+        "endLine": 259,
+        "endChar": 46
+      },
+      "revId": "c006c4349a55c967a5fdbd84d23e85f67396fe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
