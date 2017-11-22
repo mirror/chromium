@@ -22,6 +22,30 @@
       "revId": "a9837f4eaf827fbaeefa8a34dabfa1f0a196829e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fdfb62_b41e1c82",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/MotionEventSynthesizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-22T20:52:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "287296e8_1214873b",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "a9837f4eaf827fbaeefa8a34dabfa1f0a196829e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
