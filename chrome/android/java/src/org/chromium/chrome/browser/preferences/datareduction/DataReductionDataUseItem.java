@@ -61,8 +61,9 @@ public class DataReductionDataUseItem {
      * @param context An Android context.
      * @return A formatted string of the data used.
      */
-    public String getFormattedDataUsed(Context context) {
-        return Formatter.formatFileSize(context, mDataUsed);
+    public CharSequence getFormattedDataUsed(Context context) {
+        String formatted = Formatter.formatFileSize(context, mDataUsed);
+        return DataReductionUtils.setSpanForBytes(formatted);
     }
 
     /**
@@ -72,8 +73,9 @@ public class DataReductionDataUseItem {
      * @param context An Android context.
      * @return A formatted string of the data saved.
      */
-    public String getFormattedDataSaved(Context context) {
+    public CharSequence getFormattedDataSaved(Context context) {
         if (mDataUsed > mOriginalSize) return Formatter.formatFileSize(context, 0);
-        return Formatter.formatFileSize(context, mOriginalSize - mDataUsed);
+        String formatted = Formatter.formatFileSize(context, mOriginalSize - mDataUsed);
+        return DataReductionUtils.setSpanForBytes(formatted);
     }
 }

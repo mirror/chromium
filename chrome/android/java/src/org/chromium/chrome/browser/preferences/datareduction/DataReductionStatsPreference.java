@@ -64,9 +64,9 @@ public class DataReductionStatsPreference extends Preference {
     private long mLeftPosition;
     private long mRightPosition;
     private Long mCurrentTime;
-    private String mOriginalTotalPhrase;
-    private String mSavingsTotalPhrase;
-    private String mReceivedTotalPhrase;
+    private CharSequence mOriginalTotalPhrase;
+    private CharSequence mSavingsTotalPhrase;
+    private CharSequence mReceivedTotalPhrase;
     private String mPercentReductionPhrase;
     private String mStartDatePhrase;
     private String mEndDatePhrase;
@@ -292,12 +292,14 @@ public class DataReductionStatsPreference extends Preference {
         final Context context = getContext();
 
         final long compressedTotalBytes = mReceivedNetworkStatsHistory.getTotalBytes();
-        mReceivedTotalPhrase = Formatter.formatFileSize(context, compressedTotalBytes);
-
+        String receivedTotal = Formatter.formatFileSize(context, compressedTotalBytes);
+        mReceivedTotalPhrase = DataReductionUtils.setSpanForBytes(receivedTotal);
         final long originalTotalBytes = mOriginalNetworkStatsHistory.getTotalBytes();
-        mOriginalTotalPhrase = Formatter.formatFileSize(context, originalTotalBytes);
-        mSavingsTotalPhrase =
+        String originalTotal = Formatter.formatFileSize(context, originalTotalBytes);
+        mOriginalTotalPhrase = DataReductionUtils.setSpanForBytes(originalTotal);
+        String savingsTotal =
                 Formatter.formatFileSize(context, originalTotalBytes - compressedTotalBytes);
+        mSavingsTotalPhrase = DataReductionUtils.setSpanForBytes(savingsTotal);
 
         float percentage = 0.0f;
         if (originalTotalBytes > 0L && originalTotalBytes > compressedTotalBytes) {
