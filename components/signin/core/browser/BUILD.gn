@@ -202,7 +202,6 @@ source_set("unit_tests") {
     "account_info_unittest.cc",
     "account_investigator_unittest.cc",
     "account_tracker_service_unittest.cc",
-    "dice_account_reconcilor_delegate_unittest.cc",
     "gaia_cookie_manager_service_unittest.cc",
     "profile_management_switches_unittest.cc",
     "refresh_token_annotation_request_unittest.cc",
@@ -230,10 +229,6 @@ source_set("unit_tests") {
       "account_investigator_unittest.cc",
       "signin_status_metrics_provider_unittest.cc",
     ]
-  }
-
-  if (!enable_dice_support) {
-    sources -= [ "dice_account_reconcilor_delegate_unittest.cc" ]
   }
 }
 
