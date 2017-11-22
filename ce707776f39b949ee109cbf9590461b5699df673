@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a40ea7e6_37845616",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-22T23:12:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd67dfd7_5b8c6145",
+      "range": {
+        "startLine": 209,
+        "startChar": 36,
+        "endLine": 209,
+        "endChar": 41
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3d51ef4_cb8de7bf",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "I think \"run a target\" (without test) makes sense to me, WDYT? I\u0027ve also went through the script one more time to update the names.",
       "parentUuid": "b3d51ef4_cb8de7bf",
+      "range": {
+        "startLine": 224,
+        "startChar": 40,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccdb266_9e00f6ee",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-22T23:12:35Z",
+      "side": 1,
+      "message": "Awesome, thanks for updating other occurrences!",
+      "parentUuid": "4a960dfc_fdae2f6c",
       "range": {
         "startLine": 224,
         "startChar": 40,
@@ -281,6 +329,30 @@
       "revId": "ce707776f39b949ee109cbf9590461b5699df673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceca8d76_61395cb7",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-22T23:12:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c06b9f02_75825aab",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 8
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -472,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "536314c7_d171a891",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-22T23:12:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "23ea323e_d7d0aece",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 19
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9da2bb70_b0e48bdd",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
@@ -516,6 +612,30 @@
       "revId": "ce707776f39b949ee109cbf9590461b5699df673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e675a60_b128ee6a",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-22T23:12:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18741b88_409604af",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 35
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
