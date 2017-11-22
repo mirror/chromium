@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "053d371e_127b2430",
+        "filename": "media/mojo/clients/gpu_jpeg_decode_accelerator_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-22T16:28:04Z",
+      "side": 1,
+      "message": "Added TODO.",
+      "parentUuid": "50814c2e_9fccbb2f",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "4b09fcbb7262b26b33d75b772894b79abd67715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea79596_e07dd157",
         "filename": "media/mojo/services/gpu_jpeg_decode_accelerator.h",
         "patchSetId": 6
@@ -63,6 +87,24 @@
       "revId": "4b09fcbb7262b26b33d75b772894b79abd67715f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c13648_c70a9923",
+        "filename": "media/mojo/services/gpu_jpeg_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-22T16:28:04Z",
+      "side": 1,
+      "message": "Correct. Another CL TBD by either of us two.",
+      "parentUuid": "3ea79596_e07dd157",
+      "revId": "4b09fcbb7262b26b33d75b772894b79abd67715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
