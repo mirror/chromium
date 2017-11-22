@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "417acbc6_8ceace88",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_function.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T09:07:04Z",
+      "side": 1,
+      "message": "I think that this should be |return_cpp_type| rather than |idl_type.cpp_type|.\n\nMy understanding is that this part of code is written here unhappily due to restrictions and/or old design.  Ideally, we\u0027d like to write this part in the template, where idl_type.cpp_type is not available.  [minor reason]\n\nPlus, the type that we\u0027d like to use here is the return type of the callback.  |idl_type| here is ambiguous to me (idl_type of what??, maybe it\u0027s idl_type of the callback function.  In that case, the type is a *function type*.  I knew it\u0027s not, of course).  As we resolved the return type into |return_cpp_type|, why don\u0027t we use it consistently?  The template is using v8::Maybe\u003c{{return_cpp_type}}\u003e.  [major reason]",
+      "parentUuid": "290e2013_35f420b5",
+      "range": {
+        "startLine": 56,
+        "startChar": 59,
+        "endLine": 56,
+        "endChar": 85
+      },
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0182c80_58423e34",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-22T01:57:13Z",
       "side": 1,
       "message": "However, it\u0027s possible that the context is already detached (until we fix the problem). Then CallbackRelevantScriptState()-\u003eGetContext() will return an empty handle, won\u0027t it?\n\nIn the first place, it looks strange that we have to enter a Context::Scope here because the caller site should have already entered a right context (since the caller site wants to use v8::Maybe).",
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e50b46_c71bb3b9",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T09:07:04Z",
+      "side": 1,
+      "message": "\u003e However, it\u0027s possible that the context is already detached (until we fix the problem). Then CallbackRelevantScriptState()-\u003eGetContext() will return an empty handle, won\u0027t it?\n\nFortunately(?), v8::Context is available as long as the ScriptState is alive.\n\n\u003e In the first place, it looks strange that we have to enter a Context::Scope here because the caller site should have already entered a right context (since the caller site wants to use v8::Maybe).\n\nIt\u0027s not guaranteed, and it\u0027s actually not, I think.\n\nWe need a v8::HandleScope when using v8::MaybeLocal, but it\u0027s not true that we need to enter a v8::Context.  Without entering a context, we can hold a V8 handle.\n\nWe do not need a v8::HandleScope when using v8::Maybe because, unlike v8::MaybeLocal, v8::Maybe does not use a V8 handle (i.e. v8::Local\u003cT\u003e).\n\nThus, I think that entering an appropriate v8::Context is one of responsibility of this callback function.",
+      "parentUuid": "d0182c80_58423e34",
       "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "a15db618_113d79cf",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T09:07:04Z",
+      "side": 1,
+      "message": "a) Those who have already been familiar with Haskell\u0027s wouldn\u0027t feel like that.\n\nb) It\u0027s not easy to distinguish v8::Maybe\u003ctype\u003e(value) from v8::Maybe\u003ctype\u003e().  Totally different names like Just and Nothing make it much more distinguishable.  Don\u0027t you feel that v8::True\u003ctype\u003e(value) and v8::False\u003ctype\u003e() are more readable than v8::Maybe\u003ctype\u003e(value) and v8::Maybe\u003ctype\u003e()?  The latter is confusing.\n\nc) Maybe is not Boolean (e.g. Maybe doesn\u0027t support Boolean algebra, etc).  Thus, v8::True and v8::False above are confusing, too.  We need another pair of names.  Maybe is a kind of new concept compared to Boolean, so maybe it\u0027s worth giving their own names, for example... Just and Nothing?  Anyway, new names might look like \"magical\" names because it\u0027s a new concept and new names.",
+      "parentUuid": "494f8814_56ff7f57",
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68ef52b3_31fa5f83",
         "filename": "third_party/WebKit/Source/modules/webdatabase/WindowWebDatabase.idl",
         "patchSetId": 6
@@ -70,6 +130,30 @@
       "writtenOn": "2017-11-21T23:40:41Z",
       "side": 1,
       "message": "Should it be a callback interface?",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c268153b_30161921",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/WindowWebDatabase.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T09:07:04Z",
+      "side": 1,
+      "message": "Maybe.  The spec says so, but it\u0027s not updated since 2010.  :(",
+      "parentUuid": "68ef52b3_31fa5f83",
       "range": {
         "startLine": 28,
         "startChar": 9,
