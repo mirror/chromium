@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "23c24ddb_47e810cf",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-22T20:59:45Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. I\u0027m surprised we don\u0027t encounter this elsewhere. It seems like Profile should be able to provide a unique identifier and we should not need to do this here.\n\nAlso, do we need to consider OTR profile here? See ProfileImpl::IsSameProfile.",
+      "parentUuid": "f2a24353_5488f7f8",
+      "revId": "9f012bccf217b73c352f557c1441009fa52cde69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35d8d28_3c190409",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 2
