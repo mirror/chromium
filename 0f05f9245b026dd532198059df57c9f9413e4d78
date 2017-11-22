@@ -190,6 +190,30 @@
       "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ec673e_b290d124",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-22T16:02:25Z",
+      "side": 1,
+      "message": "Can you check the location referenced in patch set 1 of the CL that Robert mentioned:\nhttps://codereview.chromium.org/2510923003/diff/1/content/renderer/renderer.sb\n\n\"/System/Library/Assets/com_apple_MobileAsset_Font3*\"",
+      "parentUuid": "8a64fec7_1a5df75a",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
