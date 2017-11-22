@@ -55,23 +55,21 @@ bool TracingManager::GetTraceData(int id, const TraceDataCallback& callback) {
   // complete.
   if (current_trace_id_) {
     // Only allow one trace data request at a time.
-    if (trace_callback_.is_null()) {
-      trace_callback_ = callback;
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    std::map<int, scoped_refptr<base::RefCountedString> >::iterator data =
-        trace_data_.find(id);
-    if (data == trace_data_.end())
+    if (trace_callback_)
       return false;
 
-    // Always return the data asychronously, so the behavior is consistant.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, data->second));
+    trace_callback_ = callback;
     return true;
   }
+
+  auto data_it = trace_data_.find(id);
+  if (data_it == trace_data_.end())
+    return false;
+
+  // Always return the data asychronously, so the behavior is consistant.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, data_it->second));
+  return true;
 }
 
 void TracingManager::DiscardTraceData(int id) {

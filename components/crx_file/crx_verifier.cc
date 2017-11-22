@@ -272,15 +272,16 @@ VerifierResult Verify(
       ReadAndHashLittleEndianUInt32(&file, file_hash.get());
   VerifierResult result;
   if (format == VerifierFormat::CRX2_OR_CRX3 &&
-      (version == 2 || (diff && version == 0)))
+      (version == 2 || (diff && version == 0))) {
     result = VerifyCrx2(&file, file_hash.get(), required_key_hashes,
                         &public_key_local, &crx_id_local);
-  else if (version == 3)
+  } else if (version == 3) {
     result = VerifyCrx3(&file, file_hash.get(), required_key_hashes,
                         &public_key_local, &crx_id_local,
                         format == VerifierFormat::CRX3_WITH_PUBLISHER_PROOF);
-  else
+  } else {
     result = VerifierResult::ERROR_HEADER_INVALID;
+  }
   if (result != VerifierResult::OK_FULL)
     return result;
 
