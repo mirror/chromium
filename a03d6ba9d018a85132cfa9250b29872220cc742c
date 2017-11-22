@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a04497dd_a9361e9f",
+        "filename": "chrome/browser/autofill/autofill_interactive_uitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-22T15:44:25Z",
+      "side": 1,
+      "message": "It seems that, given this was flaky on !Windows platforms and disabled for all platforms, maybe the source of the flakiness isn\u0027t something that can be fixed with a tweak to just Windows? On the other hand, it may not be flaky on any platform any more due to some change in the last 4 years.",
+      "range": {
+        "startLine": 1644,
+        "startChar": 8,
+        "endLine": 1645,
+        "endChar": 46
+      },
+      "revId": "a03d6ba9d018a85132cfa9250b29872220cc742c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
