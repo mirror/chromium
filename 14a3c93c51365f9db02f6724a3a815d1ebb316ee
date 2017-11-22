@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a50961a_16e72c71",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T22:53:02Z",
+      "side": 1,
+      "message": "nit: Very likely this method will grow in size. Suggest moving this to a separate method.",
+      "range": {
+        "startLine": 805,
+        "startChar": 5,
+        "endLine": 805,
+        "endChar": 11
+      },
+      "revId": "14a3c93c51365f9db02f6724a3a815d1ebb316ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac2addb_7baf42a0",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T22:53:02Z",
+      "side": 1,
+      "message": "Should this method also handle the case where the original URL was http, the preview state was LITE_PAGES, and then the page redirects to an https:// webpage. In that case, we need to clear the preview state?",
+      "range": {
+        "startLine": 810,
+        "startChar": 40,
+        "endLine": 810,
+        "endChar": 52
+      },
+      "revId": "14a3c93c51365f9db02f6724a3a815d1ebb316ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1959e5ee_19d6b64d",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T22:53:02Z",
+      "side": 1,
+      "message": "nit:\nconsider returning immediately after setting previews_state, and changing the \"else if\" below to an \"if\".\nMakes it slightly easier to read.",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "14a3c93c51365f9db02f6724a3a815d1ebb316ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
