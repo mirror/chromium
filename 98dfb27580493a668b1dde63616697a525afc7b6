@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "280875a7_fac30e5f",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T12:30:51Z",
+      "side": 1,
+      "message": "If you have this constructor you should also have the move-assignment operator.",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "98dfb27580493a668b1dde63616697a525afc7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

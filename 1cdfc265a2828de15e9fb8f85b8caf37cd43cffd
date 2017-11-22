@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ba2eba2f_970d2f12",
+        "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T12:30:51Z",
+      "side": 1,
+      "message": "Of course. I meant the move constructor and the move-assignment operator :)",
+      "parentUuid": "45731f8b_c44eed48",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "1cdfc265a2828de15e9fb8f85b8caf37cd43cffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88ff3987_09d40358",
         "filename": "content/renderer/media/webrtc/webrtc_set_remote_description_observer.cc",
         "patchSetId": 8
