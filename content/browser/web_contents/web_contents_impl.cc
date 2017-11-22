@@ -3428,8 +3428,10 @@ void WebContentsImpl::DidGetResourceResponseStart(
 
 void WebContentsImpl::DidGetRedirectForResourceRequest(
   const ResourceRedirectDetails& details) {
+  /*
   for (auto& observer : observers_)
     observer.DidGetRedirectForResourceRequest(details);
+    */
 }
 
 void WebContentsImpl::NotifyWebContentsFocused(
