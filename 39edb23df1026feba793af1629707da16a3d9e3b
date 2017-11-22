@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2fb52c5_116d9a17",
+        "filename": "chrome/browser/chrome_network_service_restart_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-22T23:54:17Z",
+      "side": 1,
+      "message": "It appears that |network_service_test.FlushForTesting()| always timeout on \"win_chromium_dbg_ng\" (i.e. \u0027Win7 Tests (dbg)(1)\u0027).\n\nRemoving the |CHECK(false)| in |NetworkServiceTestHelper::SimulateCrash()| could fix the timeout, which means |mojom::NetworkServiceTest| should be loaded correctly.\n\nWill do more research on why it\u0027s hanging here.",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "39edb23df1026feba793af1629707da16a3d9e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
