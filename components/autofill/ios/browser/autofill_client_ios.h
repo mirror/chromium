@@ -74,6 +74,8 @@ class AutofillClientIOS : public AutofillClient {
       const std::vector<Suggestion>& suggestions,
       base::WeakPtr<AutofillPopupDelegate> delegate) override;
   void HideAutofillPopup() override;
+  void OnAutofillPopupDelegateDestruction(
+      AutofillPopupDelegate* delegate) override;
   bool IsAutocompleteEnabled() override;
   void UpdateAutofillPopupDataListValues(
       const std::vector<base::string16>& values,

@@ -55,6 +55,9 @@ class WebState;
 - (void)renderAutofillTypePredictions:
     (const std::vector<autofill::FormStructure*>&)forms;
 
+// Returns true if the pop-up delegate used by this agent is |delegate|.
+- (BOOL)usesDelegate:(autofill::AutofillPopupDelegate*)delegate;
+
 @end
 
 #endif  // COMPONENTS_AUTOFILL_IOS_BROWSER_AUTOFILL_AGENT_H

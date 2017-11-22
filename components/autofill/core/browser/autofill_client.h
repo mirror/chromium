@@ -166,6 +166,11 @@ class AutofillClient : public RiskDataLoader {
   // Hide the Autofill popup if one is currently showing.
   virtual void HideAutofillPopup() = 0;
 
+  // This is called when |delegate| is about to be destroyed. The client needs
+  // to ensure that pop-up controllers using this delegate are hidden.
+  virtual void OnAutofillPopupDelegateDestruction(
+      AutofillPopupDelegate* delegate) = 0;
+
   // Whether the Autocomplete feature of Autofill should be enabled.
   virtual bool IsAutocompleteEnabled() = 0;
 
