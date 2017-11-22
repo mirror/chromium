@@ -41,9 +41,6 @@ MediaRemotingInterstitial::MediaRemotingInterstitial(
 
   cast_text_message_ = new MediaRemotingCastMessageElement(*this);
   AppendChild(cast_text_message_);
-
-  exit_button_ = new MediaRemotingExitButtonElement(*this);
-  AppendChild(exit_button_);
 }
 
 void MediaRemotingInterstitial::Show(
@@ -66,7 +63,6 @@ void MediaRemotingInterstitial::Show(
     toggle_insterstitial_timer_.Stop();
   should_be_visible_ = true;
   RemoveInlineStyleProperty(CSSPropertyDisplay);
-  exit_button_->OnShown();
   toggle_insterstitial_timer_.StartOneShot(kStyleChangeTransSeconds,
                                            BLINK_FROM_HERE);
 }
@@ -79,7 +75,6 @@ void MediaRemotingInterstitial::Hide() {
   should_be_visible_ = false;
   SetInlineStyleProperty(CSSPropertyOpacity, 0,
                          CSSPrimitiveValue::UnitType::kNumber);
-  exit_button_->OnHidden();
   toggle_insterstitial_timer_.StartOneShot(kHiddenAnimationSeconds,
                                            BLINK_FROM_HERE);
 }
@@ -109,7 +104,6 @@ void MediaRemotingInterstitial::OnPosterImageChanged() {
 void MediaRemotingInterstitial::Trace(blink::Visitor* visitor) {
   visitor->Trace(video_element_);
   visitor->Trace(background_image_);
-  visitor->Trace(exit_button_);
   visitor->Trace(cast_icon_);
   visitor->Trace(cast_text_message_);
   HTMLDivElement::Trace(visitor);
