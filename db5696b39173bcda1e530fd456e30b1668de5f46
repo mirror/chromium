@@ -22,6 +22,30 @@
       "revId": "db5696b39173bcda1e530fd456e30b1668de5f46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bd47ef_cd2121e0",
+        "filename": "chrome/browser/notifications/arc_application_notifier_controller_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-22T03:57:00Z",
+      "side": 0,
+      "message": "oh I see. Unfortunately the stack trace in the crash linked in that bug is out of date because the message center no longer owns a MessageCenterSettingsControllerChromeOs (that class no longer even exists). So my impression from reading through the code is we should be ok if we reset the notification controller before L1197, i.e. before ChromeBrowserMainPartsLinux::PostMainMessageLoopRun(); which is actually ChromeBrowserMainParts::PostMainMessageLoopRun which calls g_browser_process-\u003eStartTearDown which destroy the profile manager. Does that sound right?",
+      "parentUuid": "91dc0b1b_0d518d3c",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 76
+      },
+      "revId": "db5696b39173bcda1e530fd456e30b1668de5f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
