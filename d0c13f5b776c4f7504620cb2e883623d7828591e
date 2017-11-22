@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c714181b_5c96bf6e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T21:13:41Z",
+      "side": 1,
+      "message": "if the available area for snapped window is smaller than...",
+      "revId": "d0c13f5b776c4f7504620cb2e883623d7828591e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a57e1c_b822fd8f",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2835,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T21:13:41Z",
+      "side": 1,
+      "message": "optional: you may use auto",
+      "revId": "d0c13f5b776c4f7504620cb2e883623d7828591e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cbb5a6_492ddea3",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T21:13:41Z",
+      "side": 1,
+      "message": "nit: use new style /*is_dragging\u003d*/",
+      "revId": "d0c13f5b776c4f7504620cb2e883623d7828591e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66d6188_5344ec39",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T21:13:41Z",
+      "side": 1,
+      "message": "optional: define local lambda to get minimum length for given window.",
+      "revId": "d0c13f5b776c4f7504620cb2e883623d7828591e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
