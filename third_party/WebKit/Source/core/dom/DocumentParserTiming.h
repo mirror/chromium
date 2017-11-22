@@ -5,6 +5,7 @@
 #ifndef DocumentParserTiming_h
 #define DocumentParserTiming_h
 
+#include "base/macros.h"
 #include "core/dom/Document.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
@@ -17,7 +18,6 @@ namespace blink {
 class DocumentParserTiming final
     : public GarbageCollectedFinalized<DocumentParserTiming>,
       public Supplement<Document> {
-  WTF_MAKE_NONCOPYABLE(DocumentParserTiming);
   USING_GARBAGE_COLLECTED_MIXIN(DocumentParserTiming);
 
  public:
@@ -108,6 +108,7 @@ class DocumentParserTiming final
   double parser_blocked_on_script_execution_duration_ = 0.0;
   double parser_blocked_on_script_execution_from_document_write_duration_ = 0.0;
   bool parser_detached_ = false;
+  DISALLOW_COPY_AND_ASSIGN(DocumentParserTiming);
 };
 
 }  // namespace blink

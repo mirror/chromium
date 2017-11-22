@@ -31,6 +31,7 @@
 #ifndef ScopedEventQueue_h
 #define ScopedEventQueue_h
 
+#include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
 #include "core/dom/events/Event.h"
@@ -41,7 +42,6 @@
 namespace blink {
 
 class CORE_EXPORT ScopedEventQueue {
-  WTF_MAKE_NONCOPYABLE(ScopedEventQueue);
   USING_FAST_MALLOC(ScopedEventQueue);
 
  public:
@@ -64,10 +64,11 @@ class CORE_EXPORT ScopedEventQueue {
   unsigned scoping_level_;
 
   static ScopedEventQueue* instance_;
+  DISALLOW_COPY_AND_ASSIGN(ScopedEventQueue);
 };
 
 class EventQueueScope {
-  WTF_MAKE_NONCOPYABLE(EventQueueScope);
+  DISALLOW_COPY_AND_ASSIGN(EventQueueScope);
   STACK_ALLOCATED();
 
  public:

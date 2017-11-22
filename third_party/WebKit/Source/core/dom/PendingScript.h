@@ -26,6 +26,7 @@
 #ifndef PendingScript_h
 #define PendingScript_h
 
+#include "base/macros.h"
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "core/CoreExport.h"
 #include "core/dom/Script.h"
@@ -61,8 +62,6 @@ class CORE_EXPORT PendingScriptClient : public GarbageCollectedMixin {
 class CORE_EXPORT PendingScript
     : public GarbageCollectedFinalized<PendingScript>,
       public TraceWrapperBase {
-  WTF_MAKE_NONCOPYABLE(PendingScript);
-
  public:
   virtual ~PendingScript();
 
@@ -130,6 +129,7 @@ class CORE_EXPORT PendingScript
   double parser_blocking_load_start_time_;
 
   Member<PendingScriptClient> client_;
+  DISALLOW_COPY_AND_ASSIGN(PendingScript);
 };
 
 }  // namespace blink

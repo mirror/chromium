@@ -5,6 +5,7 @@
 #ifndef ScopedWindowFocusAllowedIndicator_h
 #define ScopedWindowFocusAllowedIndicator_h
 
+#include "base/macros.h"
 #include "core/dom/ExecutionContext.h"
 #include "platform/wtf/Noncopyable.h"
 
@@ -12,7 +13,6 @@ namespace blink {
 
 class ScopedWindowFocusAllowedIndicator final {
   USING_FAST_MALLOC(ScopedWindowFocusAllowedIndicator);
-  WTF_MAKE_NONCOPYABLE(ScopedWindowFocusAllowedIndicator);
 
  public:
   explicit ScopedWindowFocusAllowedIndicator(
@@ -28,6 +28,7 @@ class ScopedWindowFocusAllowedIndicator final {
   // This doesn't create a cycle because ScopedWindowFocusAllowedIndicator
   // is used only on a machine stack.
   Persistent<ExecutionContext> execution_context_;
+  DISALLOW_COPY_AND_ASSIGN(ScopedWindowFocusAllowedIndicator);
 };
 
 }  // namespace blink

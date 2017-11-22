@@ -5,6 +5,7 @@
 #ifndef AnimationWorkletProxyClient_h
 #define AnimationWorkletProxyClient_h
 
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/workers/WorkerClients.h"
 #include "platform/wtf/Noncopyable.h"
@@ -15,8 +16,6 @@ class WorkletGlobalScope;
 
 class CORE_EXPORT AnimationWorkletProxyClient
     : public Supplement<WorkerClients> {
-  WTF_MAKE_NONCOPYABLE(AnimationWorkletProxyClient);
-
  public:
   AnimationWorkletProxyClient() {}
 
@@ -25,6 +24,7 @@ class CORE_EXPORT AnimationWorkletProxyClient
 
   virtual void SetGlobalScope(WorkletGlobalScope*) = 0;
   virtual void Dispose() = 0;
+  DISALLOW_COPY_AND_ASSIGN(AnimationWorkletProxyClient);
 };
 
 CORE_EXPORT void ProvideAnimationWorkletProxyClientTo(
