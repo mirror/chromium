@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8dde668_7c0fbbc4",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T01:18:55Z",
+      "side": 1,
+      "message": "How about instead do this in:\nResourceDispatcherHostImpl::DidReceiveRedirect() method?\n\nWe already call DeterminePreviewsState() in that file at couple of places, specifically in:\nContinuePendingBeginRequest() and in BeginNavigationRequest().\n\nSo, it seems cleaner to have that file handle the redirect logic.",
+      "range": {
+        "startLine": 652,
+        "startChar": 11,
+        "endLine": 652,
+        "endChar": 24
+      },
+      "revId": "197c186371735f52d9bf4c884b6b3be023225503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
