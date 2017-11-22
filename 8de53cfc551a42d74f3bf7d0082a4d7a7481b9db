@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99c5b252_42ec3cb2",
+        "filename": "base/android/java/src/org/chromium/base/metrics/StatisticsRecorderAndroid.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-22T16:48:45Z",
+      "side": 1,
+      "message": "Nit: I think having an opaque name like \"lossy\" just obfuscates the function. I would suggest to still have it be a \"boolean omitBuckets\".\n\nIf you make the change, also update statistics_recorder_android.cc accordingly.",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "8de53cfc551a42d74f3bf7d0082a4d7a7481b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916d9b49_eca4fae4",
+        "filename": "base/metrics/histogram_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-22T16:48:45Z",
+      "side": 1,
+      "message": "Nit: Maybe kOmitBuckets?",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "8de53cfc551a42d74f3bf7d0082a4d7a7481b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
