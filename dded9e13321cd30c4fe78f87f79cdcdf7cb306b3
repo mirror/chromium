@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df30c875_1f8fe65d",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-22T02:31:53Z",
+      "side": 1,
+      "message": "I don\u0027t think so, given the known roots on some platforms are already implemented SPKI checks, rather than root cert checks :)",
+      "parentUuid": "e6c792cf_b6b74472",
+      "revId": "dded9e13321cd30c4fe78f87f79cdcdf7cb306b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18c4108b_57f152ed",
         "filename": "net/cert/known_roots.h",
         "patchSetId": 8

@@ -236,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "85cd650c_66bd9f90",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-22T02:31:53Z",
+      "side": 1,
+      "message": "I see. This is similar to the AuthRootConsistency check we have on Windows (which measures the delta between whether we believe it\u0027s a known root versus whether our programmatic attempt via undocumented API believes its a known root).\n\nFor the purposes of the histogram, because local trust anchors are a thing, I don\u0027t think we can set a reasonable baseline from the 0 value or draw conclusions from it. As to the risk of additional roots, I am also not concerned about that for the goals of this metric. The Microsoft store is already substantially more liberal than any other store (as captured in the bug and root_stores.json), and for the past decade has been the \u0027first to add\u0027 new roots. Because of this, we only need to worry about when Microsoft updates, and the next scheduled update is not until February 2018, which would still take a 12-18 week cycle to roll out to Chrome users with updated metrics. However, even if the Microsoft store added additional trust anchors, the lack of ubiquity in other stores means that the large-scale deployment is unlikely.\n\nThe main value in recording this would be understanding the percentage of \u0027overall\u0027 validations versus the percentage of \u0027recognized\u0027 validations, and that\u0027s useful enough that I\u0027ve gone ahead and added this.",
+      "parentUuid": "6bc1c8da_680ca6c9",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96364f64_7bf25a30",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 4
@@ -439,6 +457,30 @@
     },
     {
       "key": {
+        "uuid": "654da067_531a4cbb",
+        "filename": "net/cert/root_cert_list_generated.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-22T02:31:53Z",
+      "side": 1,
+      "message": "Huh. Looks like it does save (at least in local testing). I didn\u0027t expect it to because each struct overall (despite being POD) could potentially be accessed via array operators and thus need to be aligned, but it looks like that\u0027s not the case.\n\nWent ahead with int16_t",
+      "parentUuid": "eba96180_4172a0eb",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d516aa53_c87a830e",
         "filename": "net/data/ssl/root_stores/README.md",
         "patchSetId": 4
@@ -542,6 +584,24 @@
       "writtenOn": "2017-11-22T00:29:21Z",
       "side": 1,
       "message": "Why doesn\u0027t the generated data make use of histogram_id\u003d1?\nDoesn\u0027t matter for correctness, but curious if that is intentional.",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ee0929_c82f3b7a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 28457,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-22T02:31:53Z",
+      "side": 1,
+      "message": "The script I used to generate root_stores.json from my local copy of all the root stores used pre-increment rather than post-increment. Went ahead and renumbered everything :)",
+      "parentUuid": "7b523146_c1ebd926",
       "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
