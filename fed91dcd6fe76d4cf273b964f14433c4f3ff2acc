@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "87c9c17b_6ca6267f",
+        "filename": "content/browser/renderer_host/render_message_filter.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-22T17:29:33Z",
+      "side": 1,
+      "message": "Rephrase the comment: \"Only used on the Mac\" or the like.\n\nIf LoadFont is Mac-only, why not put it into the #if block below? Does Mojo not allow it?",
+      "range": {
+        "startLine": 116,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 57
+      },
+      "revId": "fed91dcd6fe76d4cf273b964f14433c4f3ff2acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb8019ba_89952ffd",
         "filename": "content/common/render_message_filter.mojom",
         "patchSetId": 18
