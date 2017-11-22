@@ -67,6 +67,8 @@ void EllipsisBoxPainter::PaintEllipsis(const PaintInfo& paint_info,
       box_origin.X(), box_origin.Y() + font_data->GetFontMetrics().Ascent());
   TextPainter text_painter(context, font, text_run, text_origin, box_rect,
                            ellipsis_box_.IsHorizontal());
+  text_painter.SetContainsOnlyWhitespace(
+      ellipsis_box_.EllipsisStr().GetString().ContainsOnlyWhitespace());
   text_painter.Paint(0, ellipsis_box_.EllipsisStr().length(),
                      ellipsis_box_.EllipsisStr().length(), text_style);
 }

@@ -314,12 +314,13 @@ struct TextRunPaintInfo {
 
  public:
   explicit TextRunPaintInfo(const TextRun& r)
-      : run(r), from(0), to(r.length()) {}
+      : run(r), from(0), to(r.length()), contains_only_whitespace(false) {}
 
   const TextRun& run;
   unsigned from;
   unsigned to;
   FloatRect bounds;
+  bool contains_only_whitespace;
 };
 
 }  // namespace blink

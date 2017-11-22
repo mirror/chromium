@@ -109,7 +109,8 @@ static void ComputeOriginAndWidthForBox(const InlineTextBox& box,
 }
 
 void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
-                                 const LayoutPoint& paint_offset) {
+                                 const LayoutPoint& paint_offset,
+                                 bool contains_only_whitespace) {
   if (!ShouldPaintTextBox(paint_info))
     return;
 
@@ -309,6 +310,7 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
 
   TextPainter text_painter(context, font, text_run, text_origin, box_rect,
                            inline_text_box_.IsHorizontal());
+  text_painter.SetContainsOnlyWhitespace(contains_only_whitespace);
   TextEmphasisPosition emphasis_mark_position;
   bool has_text_emphasis = inline_text_box_.GetEmphasisMarkPosition(
       style_to_use, emphasis_mark_position);

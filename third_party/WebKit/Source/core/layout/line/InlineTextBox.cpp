@@ -540,7 +540,9 @@ void InlineTextBox::Paint(const PaintInfo& paint_info,
                           const LayoutPoint& paint_offset,
                           LayoutUnit /*lineTop*/,
                           LayoutUnit /*lineBottom*/) const {
-  InlineTextBoxPainter(*this).Paint(paint_info, paint_offset);
+  InlineTextBoxPainter(*this).Paint(
+      paint_info, paint_offset,
+      GetLineLayoutItem().ContainsOnlyWhitespace(Start(), Len()));
 }
 
 void InlineTextBox::SelectionStartEnd(int& s_pos, int& e_pos) const {
