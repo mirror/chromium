@@ -45,6 +45,30 @@
       "revId": "50e8cb1ef7dd2183da55e49fd03c46aa2b76a313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa0a264_d6161b79",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-22T08:30:08Z",
+      "side": 1,
+      "message": "I was thinking to do this, but it makes the unit tests messy, cause I hit the same functions in every test. Maintaining the extra cache has no extra cost (cause it points to the same refptr)",
+      "parentUuid": "49d67209_39e8525f",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "50e8cb1ef7dd2183da55e49fd03c46aa2b76a313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
