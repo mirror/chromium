@@ -95,16 +95,25 @@ void InputMethodMus::OnTextInputTypeChanged(const ui::TextInputClient* client) {
     UpdateTextInputType();
   InputMethodBase::OnTextInputTypeChanged(client);
 
+  if (!IsTextInputClientFocused(client))
+    return;
+
   if (input_method_)
     input_method_->OnTextInputTypeChanged(client->GetTextInputType());
 }
 
 void InputMethodMus::OnCaretBoundsChanged(const ui::TextInputClient* client) {
+  if (!IsTextInputClientFocused(client))
+    return;
+
   if (input_method_)
     input_method_->OnCaretBoundsChanged(client->GetCaretBounds());
 }
 
 void InputMethodMus::CancelComposition(const ui::TextInputClient* client) {
+  if (!IsTextInputClientFocused(client))
+    return;
+
   if (input_method_)
     input_method_->CancelComposition();
 }
