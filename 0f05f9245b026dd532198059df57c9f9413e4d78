@@ -238,6 +238,30 @@
       "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8881ad9a_b9cf9c6a",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-22T21:00:51Z",
+      "side": 1,
+      "message": "With the OS condition removed (i.e. the line is activated on 10.13 as well), I got the correct font in DOM inspector (ie. when HanziPen TC is specified, I got it instead of HanziPen SC). \n\nSo, I\u0027ll remove the condition.",
+      "parentUuid": "2e4a4dd7_6724ad37",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
