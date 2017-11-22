@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca52a991_0f50c7f3",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-22T12:29:31Z",
+      "side": 1,
+      "message": "Since we now only use this internally, this should never be called for a 0 offset, removing all other checks that do not make sense anymore and simply keeping this one.",
+      "revId": "06f7947c08cc8254acc6b100db59c8c3f8ed1e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

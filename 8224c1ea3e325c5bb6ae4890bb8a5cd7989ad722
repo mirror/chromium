@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "135919be_df927a7e",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-22T12:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49966d8b_2609c0f0",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99c40e14_70610292",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72b5de1_fb79a064",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-22T12:29:31Z",
+      "side": 1,
+      "message": "Set it in a private method (setSessinHistoryOffset moved as helper) instead of touching the constructor.",
+      "parentUuid": "99c40e14_70610292",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a88c446_b8d9d284",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-22T12:29:31Z",
+      "side": 1,
+      "message": "Now a private helper method.",
+      "parentUuid": "a5f2e6c9_40464cdd",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e82d194_de29adce",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 15
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "deb8b888_fbef1f3f",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-22T12:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e82d194_de29adce",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a55468bf_fa715dd8",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 15
@@ -84,6 +156,24 @@
       "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e96f4cc_5d98031d",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-22T12:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a55468bf_fa715dd8",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
