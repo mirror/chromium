@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37cde4b0_93f8c008",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-22T21:38:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bca4a12f_6a683974",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 6
+      },
+      "revId": "bf84b6cf79d1c2aacb116fac2de51a77391edc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd48ea8f_1d950d36",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T23:35:48Z",
       "side": 1,
       "message": "Optional: I tend to prefer more human-friendly names, e.g. \"Submitted\".",
+      "range": {
+        "startLine": 4453,
+        "startChar": 24,
+        "endLine": 4453,
+        "endChar": 40
+      },
+      "revId": "bf84b6cf79d1c2aacb116fac2de51a77391edc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22863d5_06e6c4a7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4453,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-22T21:38:18Z",
+      "side": 1,
+      "message": "Done. Also removed REPORT_ prefix from the enum values since it\u0027s now an enum class.",
+      "parentUuid": "bd48ea8f_1d950d36",
       "range": {
         "startLine": 4453,
         "startChar": 24,
@@ -68,6 +116,30 @@
       "revId": "bf84b6cf79d1c2aacb116fac2de51a77391edc68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3aec94_149f160b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 81722,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-22T21:38:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6b07e64_b27b187c",
+      "range": {
+        "startLine": 81721,
+        "startChar": 0,
+        "endLine": 81722,
+        "endChar": 65
+      },
+      "revId": "bf84b6cf79d1c2aacb116fac2de51a77391edc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
