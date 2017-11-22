@@ -44648,10 +44648,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Net.QuicSession.HostResolution.HandshakeConfirmedTime"
     units="Milliseconds">
+  <obsolete>
+    Deprecated 11/2017.
+  </obsolete>
   <owner>rch@chromium.org</owner>
   <summary>
     The elapsed time between the end of resolving the DNS name of the server for
     a QUIC connection, and receiving crypto handshake confirmation from the
+    server. Logged after crypto handshake is confirmed.
+  </summary>
+</histogram>
+
+<histogram name="Net.QuicSession.HostResolutionAndHandshakeTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    The elapsed time between the start of resolving the DNS name of the server
+    for a QUIC connection, and receiving crypto handshake confirmation from the
     server. Logged after crypto handshake is confirmed.
   </summary>
 </histogram>

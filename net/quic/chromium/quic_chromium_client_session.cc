@@ -1297,12 +1297,11 @@ void QuicChromiumClientSession::OnCryptoHandshakeEvent(
     UMA_HISTOGRAM_TIMES(
         "Net.QuicSession.HandshakeConfirmedTime",
         connect_timing_.connect_end - connect_timing_.connect_start);
-    // Track how long it has taken to finish handshake after we have finished
+    // Track how long it has taken to finish handshake including time spent in
     // DNS host resolution.
-    if (!connect_timing_.dns_end.is_null()) {
-      UMA_HISTOGRAM_TIMES(
-          "Net.QuicSession.HostResolution.HandshakeConfirmedTime",
-          base::TimeTicks::Now() - connect_timing_.dns_end);
+    if (!connect_timing_.dns_start.is_null()) {
+      UMA_HISTOGRAM_TIMES("Net.QuicSession.HostResolutionAndHandshakeTime",
+                          base::TimeTicks::Now() - connect_timing_.dns_start);
     }
 
     HandleSet::iterator it = handles_.begin();
