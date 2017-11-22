@@ -22,6 +22,30 @@
       "revId": "fb0e27b6f10c20b732aab3f289dc648f4eb4ab92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31dc87f_b0a9a4b0",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_blocking_page.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-22T05:54:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2aef1ca8_b193985c",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 44
+      },
+      "revId": "fb0e27b6f10c20b732aab3f289dc648f4eb4ab92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
