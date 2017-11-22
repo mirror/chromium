@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9aac1d85_50524141",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-22T00:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b289488e_4deb2082",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c46b38_37618a55",
         "filename": "media/base/ipc/media_param_traits_macros.h",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "44895bea_80876fdb",
+        "filename": "media/base/ipc/media_param_traits_macros.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-22T00:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c46b38_37618a55",
+      "range": {
+        "startLine": 160,
+        "startChar": 24,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ade514b9_ae333c86",
         "filename": "media/mojo/interfaces/cdm_proxy.mojom",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-21T22:49:15Z",
       "side": 1,
       "message": "In any class values outside the enum range would not work. Do you want to say those values are not allowed and will trigger failure?",
+      "range": {
+        "startLine": 17,
+        "startChar": 74,
+        "endLine": 17,
+        "endChar": 77
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ca2123_a43a2892",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-22T00:31:06Z",
+      "side": 1,
+      "message": "This sentence is probably not required since this is a mojom file.\nIn C++, an integer may be casted to the enum type, even with enum-class. But mojo checks that it is in the range.",
+      "parentUuid": "ade514b9_ae333c86",
       "range": {
         "startLine": 17,
         "startChar": 74,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b1cd4ca8_711df1d9",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-22T00:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2620836_a72fce9e",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62eb2b32_54e9e59f",
         "filename": "media/mojo/interfaces/cdm_proxy.mojom",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57f3c3c_3b539e2e",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-22T00:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62eb2b32_54e9e59f",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "872ffa2a4f3213595e1a9c9c134a2f675b1814dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
