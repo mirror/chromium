@@ -910,8 +910,8 @@ void WebMediaPlayerMS::ResetCanvasCache() {
   video_renderer_.ResetCache();
 }
 
-void WebMediaPlayerMS::TriggerResize() {
-  if (HasVideo())
+void WebMediaPlayerMS::TriggerResize(bool is_first_frame) {
+  if (HasVideo() && !is_first_frame)
     get_client()->SizeChanged();
 
   delegate_->DidPlayerSizeChange(delegate_id_, NaturalSize());

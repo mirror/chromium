@@ -115,7 +115,7 @@ class CONTENT_EXPORT WebMediaPlayerMS
   void ResetCanvasCache();
 
   // Methods to trigger resize event.
-  void TriggerResize();
+  void TriggerResize(bool is_first_frame);
 
   // True if the loaded media has a playable video/audio track.
   bool HasVideo() const override;
