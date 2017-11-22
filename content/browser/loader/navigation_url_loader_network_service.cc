@@ -106,6 +106,31 @@ const net::NetworkTrafficAnnotationTag kNavigationUrlLoaderTrafficAnnotation =
         "combination of both) limits the scope of these requests."
       )");
 
+// TODO(arthursonzogni): IsDownload can't be determined only by the response's
+// headers's. The response's body might contains information to guess it.
+// See MimeSniffingResourceHandler.
+bool IsDownload(const ResourceResponse& response) {
+  if (response.head.headers) {
+    std::string disposition;
+    if (response.head.headers->GetNormalizedHeader("content-disposition",
+                                                   &disposition) &&
+        !disposition.empty() &&
+        net::HttpContentDisposition(disposition, std::string())
+            .is_attachment()) {
+      return true;
+    }
+    // TODO(qinmin): Check whether this is special-case user script that needs
+    // to be downloaded.
+  }
+
+  if (blink::IsSupportedMimeType(response.head.mime_type))
+    return false;
+
+  // TODO(qinmin): Check whether there is a plugin handler.
+  return (!response.head.headers ||
+          response.head.headers->response_code() / 100 == 2);
+}
+
 }  // namespace
 
 // Kept around during the lifetime of the navigation request, and is
@@ -367,6 +392,11 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     // for the response. e.g. AppCache.
     if (MaybeCreateLoaderForResponse(head))
       return;
+
+    mojom::URLLoaderPtrInfo url_loader;
+    mojom::URLLoaderClientRequest url_loader_client;
+    url_loader_->UnBind(&url_loader, &url_loader_client);
+
     scoped_refptr<ResourceResponse> response(new ResourceResponse());
     response->head = head;
 
@@ -379,8 +409,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnReceiveResponse,
-                       owner_, response->DeepCopy(), ssl_info,
-                       base::Passed(&downloaded_file)));
+                       owner_, std::move(url_loader),
+                       std::move(url_loader_client), response->DeepCopy(),
+                       ssl_info, base::Passed(&downloaded_file)));
   }
 
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
@@ -419,11 +450,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(
-            &NavigationURLLoaderNetworkService::OnStartLoadingResponseBody,
-            owner_, base::Passed(&body)));
+    NOTREACHED();
   }
 
   void OnComplete(const network::URLLoaderCompletionStatus& status) override {
@@ -652,16 +679,31 @@ void NavigationURLLoaderNetworkService::InterceptNavigation(
 }
 
 void NavigationURLLoaderNetworkService::OnReceiveResponse(
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     scoped_refptr<ResourceResponse> response,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
+  TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
+                         "&NavigationURLLoaderNetworkService", this, "success",
+                         true);
+
   // TODO(scottmg): This needs to do more of what
-  // NavigationResourceHandler::OnResponseStarted() does. Or maybe in
-  // OnStartLoadingResponseBody().
+  // NavigationResourceHandler::OnResponseStarted() does.
+
+  SSLStatus ssl_status;
   if (ssl_info && ssl_info->cert)
-    NavigationResourceHandler::GetSSLStatusForRequest(*ssl_info, &ssl_status_);
-  response_ = std::move(response);
-  ssl_info_ = ssl_info;
+    NavigationResourceHandler::GetSSLStatusForRequest(*ssl_info, &ssl_status);
+
+  DCHECK(response);
+  bool is_download = allow_download_ && IsDownload(*response.get());
+
+  delegate_->OnResponseStarted(
+      std::move(response), std::move(url_loader), std::move(url_loader_client),
+      nullptr, std::move(ssl_status), std::unique_ptr<NavigationData>(),
+      GlobalRequestID(-1, g_next_request_id), is_download,
+      false /* is_stream */,
+      request_controller_->TakeSubresourceLoaderParams());
 }
 
 void NavigationURLLoaderNetworkService::OnReceiveRedirect(
@@ -669,24 +711,6 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
     scoped_refptr<ResourceResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   delegate_->OnRequestRedirected(redirect_info, std::move(response));
-}
-
-void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
-    mojo::ScopedDataPipeConsumerHandle body) {
-  DCHECK(response_);
-
-  TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
-                         "&NavigationURLLoaderNetworkService", this, "success",
-                         true);
-
-  // Temporarily, we pass both a stream (null) and the data pipe to the
-  // delegate until PlzNavigate has shipped and we can be comfortable fully
-  // switching to the data pipe.
-  delegate_->OnResponseStarted(
-      response_, nullptr, std::move(body), ssl_status_,
-      std::unique_ptr<NavigationData>(), GlobalRequestID(-1, g_next_request_id),
-      IsDownload(), false /* is_stream */,
-      request_controller_->TakeSubresourceLoaderParams());
 }
 
 void NavigationURLLoaderNetworkService::OnComplete(
@@ -698,40 +722,15 @@ void NavigationURLLoaderNetworkService::OnComplete(
                          "&NavigationURLLoaderNetworkService", this, "success",
                          false);
 
+  // TODO(arthursonzogni): Pass SSLInfo in OnComplete.
+  net::SSLInfo ssl_info;
+
   // TODO(https://crbug.com/757633): Pass real values in the case of cert
   // errors.
   bool should_ssl_errors_be_fatal = true;
 
   delegate_->OnRequestFailed(status.exists_in_cache, status.error_code,
-                             ssl_info_, should_ssl_errors_be_fatal);
-}
-
-bool NavigationURLLoaderNetworkService::IsDownload() const {
-  DCHECK(response_);
-
-  if (!allow_download_)
-    return false;
-
-  if (response_->head.headers) {
-    std::string disposition;
-    if (response_->head.headers->GetNormalizedHeader("content-disposition",
-                                                     &disposition) &&
-        !disposition.empty() &&
-        net::HttpContentDisposition(disposition, std::string())
-            .is_attachment()) {
-      return true;
-    }
-    // TODO(qinmin): Check whether this is special-case user script that needs
-    // to be downloaded.
-  }
-
-  if (blink::IsSupportedMimeType(response_->head.mime_type))
-    return false;
-
-  // TODO(qinmin): Check whether there is a plugin handler.
-
-  return (!response_->head.headers ||
-          response_->head.headers->response_code() / 100 == 2);
+                             ssl_info, should_ssl_errors_be_fatal);
 }
 
 void NavigationURLLoaderNetworkService::BindNonNetworkURLLoaderFactoryRequest(

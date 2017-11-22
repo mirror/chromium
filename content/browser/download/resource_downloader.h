@@ -36,12 +36,11 @@ class ResourceDownloader : public UrlDownloadHandler,
       base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
       std::unique_ptr<ResourceRequest> resource_request,
       const scoped_refptr<ResourceResponse>& response,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle,
       const SSLStatus& ssl_status,
+      mojom::URLLoaderPtrInfo url_loader,
+      mojom::URLLoaderClientRequest url_loader_client,
       int frame_tree_node_id,
-      std::unique_ptr<ThrottlingURLLoader> url_loader,
-      std::vector<GURL> url_chain,
-      base::Optional<network::URLLoaderCompletionStatus> status);
+      std::vector<GURL> url_chain);
 
   ResourceDownloader(base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
                      std::unique_ptr<ResourceRequest> resource_request,
@@ -64,16 +63,6 @@ class ResourceDownloader : public UrlDownloadHandler,
   void Start(mojom::URLLoaderFactoryPtr* factory,
              scoped_refptr<storage::FileSystemContext> file_system_context,
              std::unique_ptr<DownloadUrlParameters> download_url_parameters);
-
-  // Intercepts the navigation response and takes ownership of the |url_loader|.
-  void InterceptResponse(
-      std::unique_ptr<ThrottlingURLLoader> url_loader,
-      const scoped_refptr<ResourceResponse>& response,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle,
-      const SSLStatus& ssl_status,
-      int frame_tree_node_id,
-      std::vector<GURL> url_chain,
-      base::Optional<network::URLLoaderCompletionStatus> status);
 
   base::WeakPtr<UrlDownloadHandler::Delegate> delegate_;
 

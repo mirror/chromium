@@ -81,19 +81,30 @@ ResourceDownloader::InterceptNavigationResponse(
     base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
     std::unique_ptr<ResourceRequest> resource_request,
     const scoped_refptr<ResourceResponse>& response,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     int frame_tree_node_id,
-    std::unique_ptr<ThrottlingURLLoader> url_loader,
-    std::vector<GURL> url_chain,
-    base::Optional<network::URLLoaderCompletionStatus> status) {
+    std::vector<GURL> url_chain) {
   auto downloader = std::make_unique<ResourceDownloader>(
       delegate, std::move(resource_request),
       std::make_unique<DownloadSaveInfo>(), content::DownloadItem::kInvalidId,
       std::string(), false, false, false);
-  downloader->InterceptResponse(
-      std::move(url_loader), response, std::move(consumer_handle), ssl_status,
-      frame_tree_node_id, std::move(url_chain), std::move(status));
+
+  downloader->frame_tree_node_id_ = frame_tree_node_id;
+  downloader->response_handler_.SetURLChain(std::move(url_chain));
+
+  net::SSLInfo info;
+  info.cert_status = ssl_status.cert_status;
+  downloader->response_handler_.OnReceiveResponse(
+      response->head, base::Optional<net::SSLInfo>(info),
+      mojom::DownloadedTempFilePtr());
+
+  downloader->url_loader_ =
+      ThrottlingURLLoader::InterceptLoadingAfterResponseStarted(
+          &downloader->response_handler_, std::move(url_loader),
+          std::move(url_loader_client));
+
   return downloader;
 }
 
@@ -147,28 +158,6 @@ void ResourceDownloader::Start(
   }
 }
 
-void ResourceDownloader::InterceptResponse(
-    std::unique_ptr<ThrottlingURLLoader> url_loader,
-    const scoped_refptr<ResourceResponse>& response,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle,
-    const SSLStatus& ssl_status,
-    int frame_tree_node_id,
-    std::vector<GURL> url_chain,
-    base::Optional<network::URLLoaderCompletionStatus> status) {
-  url_loader_ = std::move(url_loader);
-  url_loader_->set_forwarding_client(&response_handler_);
-  net::SSLInfo info;
-  info.cert_status = ssl_status.cert_status;
-  frame_tree_node_id_ = frame_tree_node_id;
-  response_handler_.SetURLChain(std::move(url_chain));
-  response_handler_.OnReceiveResponse(response->head,
-                                      base::Optional<net::SSLInfo>(info),
-                                      mojom::DownloadedTempFilePtr());
-  response_handler_.OnStartLoadingResponseBody(std::move(consumer_handle));
-  if (status.has_value())
-    response_handler_.OnComplete(status.value());
-}
-
 void ResourceDownloader::OnResponseStarted(
     std::unique_ptr<DownloadCreateInfo> download_create_info,
     mojom::DownloadStreamHandlePtr stream_handle) {
@@ -188,6 +177,7 @@ void ResourceDownloader::OnResponseStarted(
 }
 
 void ResourceDownloader::OnReceiveRedirect() {
+  DCHECK(url_loader_);
   url_loader_->FollowRedirect();
 }
 

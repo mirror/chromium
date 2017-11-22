@@ -255,8 +255,11 @@ class FileURLDirectoryLoader
       completion_status = net::ERR_FAILED;
     }
 
+    data_producer_.reset();
+
     client_->OnComplete(network::URLLoaderCompletionStatus(completion_status));
     client_.reset();
+
     MaybeDeleteSelf();
   }
 
@@ -517,6 +520,8 @@ class FileURLLoader : public mojom::URLLoader {
   }
 
   void OnFileWritten(MojoResult result) {
+    data_producer_.reset();
+
     if (result == MOJO_RESULT_OK)
       client_->OnComplete(network::URLLoaderCompletionStatus(net::OK));
     else

@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
+#include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/public/browser/javascript_dialog_manager.h"
@@ -17,6 +18,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
@@ -514,9 +516,12 @@ class DropStreamHandleConsumedFilter : public BrowserMessageFilter {
 // After a renderer crash, the StreamHandle must be released.
 IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
                        StreamHandleReleasedOnRendererCrash) {
-  // |stream_handle_| is only used with PlzNavigate.
-  if (!IsBrowserSideNavigationEnabled())
+  // Disable this test when the |stream_handle_| is not used.
+  if (!IsBrowserSideNavigationEnabled() ||
+      base::FeatureList::IsEnabled(features::kNetworkService) ||
+      IsNavigationMojoResponseEnabled()) {
     return;
+  }
 
   GURL url_1(embedded_test_server()->GetURL("a.com", "/title1.html"));
   GURL url_2(embedded_test_server()->GetURL("a.com", "/title2.html"));
@@ -872,6 +877,75 @@ IN_PROC_BROWSER_TEST_F(
   std::string second_part_received;
   EXPECT_TRUE(dom_message_queue.WaitForMessage(&second_part_received));
   EXPECT_EQ("\"Second part received\"", second_part_received);
+}
+
+// Navigation are started in the browser process. After the headers are
+// received, the URLLoaderClient is transfered from the browser process to the
+// renderer process. This test ensures that if the the URLLoader is deleted (in
+// the browser process), the URLLoaderClient (in the renderer process) stops
+// properly.
+IN_PROC_BROWSER_TEST_F(ContentBrowserTest, CancelRequestAfterReadyToCommit) {
+  // This test cancels the request using the ResourceDispatchHost. With the
+  // NetworkService, it is not used so the request is not canceled.
+  // TODO(arthursonzogni): Find a way to cancel a request from the browser
+  // with the NetworkService.
+  if (base::FeatureList::IsEnabled(features::kNetworkService))
+    return;
+
+  // This test doesn't pass with the old code path for navigation.
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  ControllableHttpResponse response(embedded_test_server(), "/main_document");
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  // 1) Load a new document. It reaches the ReadyToCommit stage and then is slow
+  //    to load.
+  GURL url(embedded_test_server()->GetURL("/main_document"));
+  TestNavigationManager navigation_manager(shell()->web_contents(), url);
+  shell()->LoadURL(url);
+
+  // Let the navigation starts.
+  EXPECT_TRUE(navigation_manager.WaitForRequestStart());
+  navigation_manager.ResumeNavigation();
+
+  // The server sends the first part of the response and waits.
+  response.WaitForRequest();
+  response.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "<html>"
+      "  <body>"
+      "    <script>"
+      "      domAutomationController.send('First part received')"
+      "    </script>");
+
+  EXPECT_TRUE(navigation_manager.WaitForResponse());
+  RenderFrameHostImpl* main_rfh = static_cast<RenderFrameHostImpl*>(
+      shell()->web_contents()->GetMainFrame());
+  DOMMessageQueue dom_message_queue(WebContents::FromRenderFrameHost(main_rfh));
+  NavigationHandle* handle(navigation_manager.GetNavigationHandle());
+  DCHECK(handle);
+  GlobalRequestID global_id = handle->GetGlobalRequestID();
+  navigation_manager.ResumeNavigation();
+
+  // Wait for the renderer to load the first part of the response.
+  std::string first_part_received;
+  EXPECT_TRUE(dom_message_queue.WaitForMessage(&first_part_received));
+  EXPECT_EQ("\"First part received\"", first_part_received);
+
+  // 2) The ResourceDispatcherHost cancels the request.
+  auto cancel_request = [](GlobalRequestID global_id) {
+    ResourceDispatcherHostImpl* rdh =
+        static_cast<ResourceDispatcherHostImpl*>(ResourceDispatcherHost::Get());
+    rdh->CancelRequest(global_id.child_id, global_id.request_id);
+  };
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(cancel_request, global_id));
+
+  // 3) Check that the load stops.
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
 }
 
 }  // namespace content

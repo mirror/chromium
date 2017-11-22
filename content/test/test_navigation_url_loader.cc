@@ -76,8 +76,8 @@ void TestNavigationURLLoader::CallOnResponseStarted(
           ->GetProcess()
           ->GetID();
   GlobalRequestID global_id(child_id, ++request_id);
-  delegate_->OnResponseStarted(response, std::move(body),
-                               mojo::ScopedDataPipeConsumerHandle(),
+  delegate_->OnResponseStarted(response, mojom::URLLoaderPtrInfo(),
+                               mojom::URLLoaderClientRequest(), std::move(body),
                                SSLStatus(), std::move(navigation_data),
                                global_id, false, false, base::nullopt);
 }
