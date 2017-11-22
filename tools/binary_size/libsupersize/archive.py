@@ -29,6 +29,9 @@ import ninja_parser
 import nm
 import path_util
 
+sys.path.insert(1, os.path.join(path_util.SRC_ROOT, 'tools', 'grit'))
+from grit.format import data_pack
+
 
 # Effect of _MAX_SAME_NAME_ALIAS_COUNT (as of Oct 2017, with min_pss = max):
 # 1: shared .text symbols = 1772874 bytes, file size = 9.43MiB (645476 symbols).
@@ -381,7 +384,7 @@ def _CreateMergeStringsReplacements(merge_string_syms,
       for offset, size in positions:
         address = merge_sym_address + offset
         symbol = models.Symbol(
-            '.rodata', size, address, STRING_LITERAL_NAME,
+            models.SECTION_RODATA, size, address, STRING_LITERAL_NAME,
             object_path=object_path)
         new_symbols.append(symbol)
 
@@ -450,7 +453,8 @@ def _CalculatePadding(raw_symbols):
           'Input symbols must be sorted by section, then address.')
       seen_sections.append(symbol.section_name)
       continue
-    if symbol.address <= 0 or prev_symbol.address <= 0:
+    if (symbol.address <= 0 or prev_symbol.address <= 0 or
+        symbol.IsPak() or prev_symbol.IsPak()):
       continue
 
     if symbol.address == prev_symbol.address:
@@ -585,9 +589,10 @@ def CreateMetadata(map_path, elf_path, apk_path, tool_prefix, output_directory):
   return metadata
 
 
-def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
-                   normalize_names=True, track_string_literals=True):
-  """Creates a SizeInfo.
+def CreateSectionSizesAndSymbols(
+    map_path, elf_path, tool_prefix, output_directory, normalize_names=True,
+    track_string_literals=True):
+  """Creates sections sizes and symbols for a SizeInfo.
 
   Args:
     map_path: Path to the linker .map(.gz) file to parse.
@@ -723,13 +728,64 @@ def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
     _NormalizeNames(raw_symbols)
 
   logging.info('Processed %d symbols', len(raw_symbols))
-  size_info = models.SizeInfo(section_sizes, raw_symbols)
+  return section_sizes, raw_symbols
 
-  if logging.getLogger().isEnabledFor(logging.INFO):
-    for line in describe.DescribeSizeInfoCoverage(size_info):
-      logging.info(line)
-  logging.info('Recorded info for %d symbols', len(size_info.raw_symbols))
-  return size_info
+
+def _ComputePakFileSymbols(zip_info, pak_data, res_info, symbols_by_name):
+  total = 12 + 6  # Header size plus extra offset
+  contents = data_pack.ReadDataPackFromString(pak_data)
+  id_map = {id(v): k
+            for k, v in sorted(contents.resources.items(), reverse=True)}
+  alias_map = {k: id_map[id(v)] for k, v in contents.resources.iteritems()
+               if id_map[id(v)] != k}
+  # Longest locale pak is es-419.pak
+  if len(os.path.basename(zip_info.filename)) <= 9:
+    section_name = models.SECTION_PAK_TRANSLATIONS
+  else:
+    section_name = models.SECTION_PAK_NONTRANSLATED
+  object_path = path_util.ToSrcRootRelative(zip_info.filename)
+  for resource_id in sorted(contents.resources):
+    if resource_id in alias_map:
+      # 4 extra bytes of metadata (2 16-bit ints)
+      size = 4
+      name = res_info[alias_map[resource_id]][0]
+    else:
+      # 6 extra bytes of metadata (1 32-bit int, 1 16-bit int)
+      size = len(contents.resources[resource_id]) + 6
+      name, path = res_info[resource_id]
+      source_path = path_util.ToSrcRootRelative(path)
+      if name not in symbols_by_name:
+        full_name = '{}: {}'.format(source_path, name)
+        symbols_by_name[name] = models.Symbol(
+            section_name, 0, address=resource_id, full_name=full_name,
+            name=name, source_path=source_path, object_path=object_path)
+    symbols_by_name[name].size += size
+    total += size
+  assert zip_info.file_size == total, (
+      '{} bytes in pak file not accounted for'.format(
+          zip_info.file_size - total))
+
+
+def _AddPakSymbolsAndSections(section_sizes, raw_symbols, apk_path,
+                              output_directory):
+  with zipfile.ZipFile(apk_path) as z:
+    pak_files = [f for f in z.infolist() if f.filename.endswith('.pak')]
+    apk_info_name = os.path.basename(apk_path) + '.pak.info'
+    pak_info_path = os.path.join(output_directory, 'size-info', apk_info_name)
+    with open(pak_info_path, 'r') as info_file:
+      res_info = {}
+      for line in info_file.readlines():
+        name, res_id, path = line.split(',')
+        res_info[int(res_id)] = (name, path.strip())
+    symbols_by_name = {}
+    for pak_file in pak_files:
+      _ComputePakFileSymbols(pak_file, z.read(pak_file), res_info,
+                             symbols_by_name)
+
+  for name, symbol in symbols_by_name.iteritems():
+    prev = section_sizes.setdefault(symbol.section_name, 0)
+    section_sizes[symbol.section_name] = prev + symbol.size
+    raw_symbols.append(symbol)
 
 
 def _DetectGitRevision(directory):
@@ -888,37 +944,46 @@ def Run(args, parser):
     apk_elf_result = concurrent.ForkAndCall(
         _ElfInfoFromApk, (apk_path, apk_so_path, tool_prefix))
 
-  size_info = CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
-                             normalize_names=False,
-                             track_string_literals=args.track_string_literals)
+  section_sizes, raw_symbols = CreateSectionSizesAndSymbols(
+      map_path, elf_path, tool_prefix, output_directory, normalize_names=False,
+      track_string_literals=args.track_string_literals)
 
+  if metadata and apk_path:
+    logging.debug('Extracting section sizes from .so within .apk')
+    unstripped_section_sizes = section_sizes
+    apk_build_id, section_sizes = apk_elf_result.get()
+    assert apk_build_id == metadata[models.METADATA_ELF_BUILD_ID], (
+        'BuildID for %s within %s did not match the one at %s' %
+        (apk_so_path, apk_path, elf_path))
+
+    packed_section_name = None
+    architecture = metadata[models.METADATA_ELF_ARCHITECTURE]
+    # Packing occurs enabled only arm32 & arm64.
+    if architecture == 'arm':
+      packed_section_name = '.rel.dyn'
+    elif architecture == 'arm64':
+      packed_section_name = '.rela.dyn'
+
+    if packed_section_name:
+      logging.debug('Recording size of unpacked relocations')
+      if packed_section_name not in section_sizes:
+        logging.warning('Packed section not present: %s', packed_section_name)
+      else:
+        section_sizes['%s (unpacked)' % packed_section_name] = (
+            unstripped_section_sizes.get(packed_section_name))
+
+  if apk_path:
+    _AddPakSymbolsAndSections(section_sizes, raw_symbols, apk_path,
+                              output_directory)
+
+  size_info = models.SizeInfo(section_sizes, raw_symbols)
   if metadata:
     size_info.metadata = metadata
 
-    if apk_path:
-      logging.debug('Extracting section sizes from .so within .apk')
-      unstripped_section_sizes = size_info.section_sizes
-      apk_build_id, size_info.section_sizes = apk_elf_result.get()
-      assert apk_build_id == metadata[models.METADATA_ELF_BUILD_ID], (
-          'BuildID for %s within %s did not match the one at %s' %
-          (apk_so_path, apk_path, elf_path))
-
-      packed_section_name = None
-      architecture = metadata[models.METADATA_ELF_ARCHITECTURE]
-      # Packing occurs enabled only arm32 & arm64.
-      if architecture == 'arm':
-        packed_section_name = '.rel.dyn'
-      elif architecture == 'arm64':
-        packed_section_name = '.rela.dyn'
-
-      if packed_section_name:
-        logging.debug('Recording size of unpacked relocations')
-        if packed_section_name not in size_info.section_sizes:
-          logging.warning('Packed section not present: %s', packed_section_name)
-        else:
-          size_info.section_sizes['%s (unpacked)' % packed_section_name] = (
-              unstripped_section_sizes.get(packed_section_name))
-
+  if logging.getLogger().isEnabledFor(logging.INFO):
+    for line in describe.DescribeSizeInfoCoverage(size_info):
+      logging.info(line)
+  logging.info('Recorded info for %d symbols', len(size_info.raw_symbols))
   logging.info('Recording metadata: \n  %s',
                '\n  '.join(describe.DescribeMetadata(size_info.metadata)))
   logging.info('Saving result to %s', args.size_file)

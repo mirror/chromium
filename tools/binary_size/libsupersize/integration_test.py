@@ -104,8 +104,10 @@ class IntegrationTest(unittest.TestCase):
     if not IntegrationTest.cached_size_info[i]:
       elf_path = _TEST_ELF_PATH if use_elf else None
       output_directory = _TEST_OUTPUT_DIR if use_output_directory else None
-      IntegrationTest.cached_size_info[i] = archive.CreateSizeInfo(
+      section_sizes, raw_symbols = archive.CreateSectionSizesAndSymbols(
           _TEST_MAP_PATH, elf_path, _TEST_TOOL_PREFIX, output_directory)
+      IntegrationTest.cached_size_info[i] = models.SizeInfo(
+          section_sizes, raw_symbols)
       if use_elf:
         with _AddMocksToPath():
           IntegrationTest.cached_size_info[i].metadata = archive.CreateMetadata(
@@ -292,7 +294,7 @@ class IntegrationTest(unittest.TestCase):
   def test_Diff_Clustering(self):
     size_info1 = self._CloneSizeInfo()
     size_info2 = self._CloneSizeInfo()
-    S = '.text'
+    S = models.SECTION_TEXT
     size_info1.symbols += [
         models.Symbol(S, 11, name='.L__unnamed_1193', object_path='a'), # 1
         models.Symbol(S, 22, name='.L__unnamed_1194', object_path='a'), # 2
