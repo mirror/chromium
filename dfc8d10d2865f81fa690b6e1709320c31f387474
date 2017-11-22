@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c15c91_b60a851d",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T04:27:47Z",
+      "side": 1,
+      "message": "I think we expect response URL, final referrer and final method here?\n\nIf so, request_info-\u003eurl --\u003e request_info-\u003eresponse_url\n\nWe could also save response_referrer and response_method in OnReceiveRedirect and use them here.",
+      "revId": "dfc8d10d2865f81fa690b6e1709320c31f387474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
