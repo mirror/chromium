@@ -14,9 +14,9 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "extensions/renderer/bindings/js_runner.h"
 #include "extensions/renderer/native_handler.h"
 #include "extensions/renderer/object_backed_native_handler.h"
-#include "extensions/renderer/script_injection_callback.h"
 #include "gin/modules/module_registry_observer.h"
 #include "v8/include/v8.h"
 
@@ -99,12 +99,11 @@ class ModuleSystem : public ObjectBackedNativeHandler,
                             const std::string& method_name,
                             int argc,
                             v8::Local<v8::Value> argv[]);
-  void CallModuleMethodSafe(
-      const std::string& module_name,
-      const std::string& method_name,
-      int argc,
-      v8::Local<v8::Value> argv[],
-      const ScriptInjectionCallback::CompleteCallback& callback);
+  void CallModuleMethodSafe(const std::string& module_name,
+                            const std::string& method_name,
+                            int argc,
+                            v8::Local<v8::Value> argv[],
+                            JSRunner::ResultCallback callback);
 
   // Register |native_handler| as a potential target for requireNative(), so
   // calls to requireNative(|name|) from JS will return a new object created by

@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "extensions/renderer/bindings/js_runner.h"
 #include "gin/wrappable.h"
 #include "v8/include/v8.h"
 
@@ -37,7 +38,8 @@ class EventEmitter final : public gin::Wrappable<EventEmitter> {
 
   void Fire(v8::Local<v8::Context> context,
             std::vector<v8::Local<v8::Value>>* args,
-            const EventFilteringInfo* filter);
+            const EventFilteringInfo* filter,
+            JSRunner::ResultCallback callback);
 
   // Removes all listeners and marks this object as invalid so that no more
   // are added.
@@ -62,7 +64,8 @@ class EventEmitter final : public gin::Wrappable<EventEmitter> {
                     std::vector<v8::Local<v8::Value>>* args,
                     const EventFilteringInfo* filter,
                     bool run_sync,
-                    std::vector<v8::Global<v8::Value>>* out_values);
+                    std::vector<v8::Global<v8::Value>>* out_values,
+                    JSRunner::ResultCallback callback);
 
   // Whether or not this object is still valid; false upon context release.
   // When invalid, no listeners can be added or removed.

@@ -21,6 +21,7 @@
 #include "extensions/renderer/native_extension_bindings_system.h"
 #include "extensions/renderer/script_context.h"
 #include "gin/arguments.h"
+#include "gin/dictionary.h"
 #include "gin/handle.h"
 #include "gin/per_context_data.h"
 #include "ipc/ipc_message.h"
@@ -102,6 +103,44 @@ void OneTimeMessageResponseHelper(
   std::unique_ptr<OneTimeMessageCallback> callback = std::move(*iter);
   data->pending_callbacks.erase(iter);
   std::move(*callback).Run(&arguments);
+}
+
+bool WasCallbackPreserved(v8::Local<v8::Context> context,
+                          v8::Local<v8::Value> results) {
+  LOG(WARNING) << "Results: " << results.IsEmpty();
+  LOG(WARNING) << "Results: " << (!results.IsEmpty() && results->IsObject());
+  if (results.IsEmpty() || !results->IsObject())
+    return false;
+
+  v8::Isolate* isolate = context->GetIsolate();
+  v8::Local<v8::Value> results_property;
+  if (!results.As<v8::Object>()
+           ->Get(context, gin::StringToSymbol(isolate, "results"))
+           .ToLocal(&results_property) ||
+      !results_property->IsArray()) {
+    LOG(WARNING) << "Fail array";
+    return false;
+  }
+
+  v8::Local<v8::Array> array = results_property.As<v8::Array>();
+  uint32_t length = array->Length();
+  LOG(WARNING) << "Length: " << length;
+  for (uint32_t i = 0; i < length; ++i) {
+    v8::Local<v8::Value> val;
+    LOG(WARNING) << "Checking val: " << i;
+    if (!array->Get(context, i).ToLocal(&val)) {
+      LOG(WARNING) << "Fail";
+      return false;
+    }
+
+    if (val->IsBoolean() && val->BooleanValue()) {
+      LOG(WARNING) << "True!";
+      return true;
+    }
+  }
+  LOG(WARNING) << "Done";
+
+  return false;
 }
 
 }  // namespace
@@ -258,7 +297,9 @@ bool OneTimeMessageHandler::DeliverMessageToReceiver(
 
   data->pending_callbacks.push_back(std::move(callback));
   bindings_system_->api_system()->event_handler()->FireEventInContext(
-      port.event_name, context, &args, nullptr);
+      port.event_name, context, &args, nullptr,
+      base::BindOnce(&OneTimeMessageHandler::OnEventFired,
+                     weak_factory_.GetWeakPtr(), target_port_id));
 
   return handled;
 }
@@ -349,9 +390,13 @@ void OneTimeMessageHandler::OnOneTimeMessageResponse(
   v8::Isolate* isolate = arguments->isolate();
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
   OneTimeMessageContextData* data = GetPerContextData(context, false);
-  DCHECK(data);
+  if (!data)
+    return;
+
   auto iter = data->receivers.find(port_id);
-  DCHECK(iter != data->receivers.end());
+  if (iter == data->receivers.end())
+    return;
+
   int routing_id = iter->second.routing_id;
   data->receivers.erase(iter);
 
@@ -372,6 +417,36 @@ void OneTimeMessageHandler::OnOneTimeMessageResponse(
   IPCMessageSender* ipc_sender = bindings_system_->GetIPCMessageSender();
   ipc_sender->SendPostMessageToPort(routing_id, port_id, *message);
   bool close_channel = true;
+  ipc_sender->SendCloseMessagePort(routing_id, port_id, close_channel);
+}
+
+void OneTimeMessageHandler::OnEventFired(const PortId& port_id,
+                                         v8::Local<v8::Context> context,
+                                         v8::Local<v8::Value> result) {
+  LOG(WARNING) << "Event fired!";
+  if (WasCallbackPreserved(context, result))
+    return;
+
+  OneTimeMessageContextData* data = GetPerContextData(context, false);
+  // ScriptContext invalidation and PerContextData cleanup happen "around" the
+  // same time, but there aren't strict guarantees about ordering. It's possible
+  // the data was collected.
+  if (!data)
+    return;
+
+  auto iter = data->receivers.find(port_id);
+  // The channel may already be closed (if the receiver replied before the reply
+  // callback was collected).
+  if (iter == data->receivers.end())
+    return;
+
+  int routing_id = iter->second.routing_id;
+  data->receivers.erase(iter);
+
+  // Close the message port. There's no way to send a reply anymore. Don't
+  // close the channel because another listener may reply.
+  IPCMessageSender* ipc_sender = bindings_system_->GetIPCMessageSender();
+  bool close_channel = false;
   ipc_sender->SendCloseMessagePort(routing_id, port_id, close_channel);
 }
 

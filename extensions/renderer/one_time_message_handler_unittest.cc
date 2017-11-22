@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/strings/stringprintf.h"
 #include "extensions/common/api/messaging/message.h"
 #include "extensions/common/api/messaging/port_id.h"
 #include "extensions/common/extension.h"
@@ -214,6 +215,7 @@ TEST_F(OneTimeMessageHandlerTest, DeliverMessageToReceiverWithNoReply) {
       "      function(message, sender, reply) {\n"
       "    this.eventMessage = message;\n"
       "    this.eventSender = sender;\n"
+      "    return true;\n"
       "  });\n"
       "})";
   v8::Local<v8::Function> add_listener =
@@ -303,6 +305,7 @@ TEST_F(OneTimeMessageHandlerTest, TryReplyingMultipleTimes) {
       "  chrome.runtime.onMessage.addListener(\n"
       "      function(message, sender, reply) {\n"
       "    this.sendReply = reply;\n"
+      "    return true;  // Reply later\n"
       "  });\n"
       "})";
   v8::Local<v8::Function> add_listener =
@@ -340,6 +343,44 @@ TEST_F(OneTimeMessageHandlerTest, TryReplyingMultipleTimes) {
   // TODO(devlin): Add an error message.
   RunFunction(reply.As<v8::Function>(), context, arraysize(args), args);
   EXPECT_FALSE(message_handler()->HasPort(script_context(), port_id));
+}
+
+TEST_F(OneTimeMessageHandlerTest, ChannelClosedIfTrueNotReturned) {
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  auto register_listener = [context](const char* listener) {
+    constexpr char kRegisterListenerTemplate[] =
+        "(function() { chrome.runtime.onMessage.addListener(%s); })";
+    v8::Local<v8::Function> add_listener = FunctionFromString(
+        context, base::StringPrintf(kRegisterListenerTemplate, listener));
+    RunFunctionOnGlobal(add_listener, context, 0, nullptr);
+  };
+
+  register_listener("function(message, reply, sender) { }");
+
+  base::UnguessableToken other_context_id = base::UnguessableToken::Create();
+  const PortId port_id(other_context_id, 0, false);
+
+  v8::Local<v8::Object> sender = v8::Object::New(isolate());
+  message_handler()->AddReceiver(script_context(), port_id, sender,
+                                 messaging_util::kOnMessageEvent);
+  EXPECT_TRUE(message_handler()->HasPort(script_context(), port_id));
+
+  const Message message("\"Hi\"", false);
+  EXPECT_CALL(*ipc_message_sender(),
+              SendCloseMessagePort(MSG_ROUTING_NONE, port_id, false));
+  message_handler()->DeliverMessage(script_context(), message, port_id);
+  ::testing::Mock::VerifyAndClearExpectations(ipc_message_sender());
+  EXPECT_FALSE(message_handler()->HasPort(script_context(), port_id));
+
+  register_listener("function(message, reply, sender) { return true; }");
+  message_handler()->AddReceiver(script_context(), port_id, sender,
+                                 messaging_util::kOnMessageEvent);
+  EXPECT_TRUE(message_handler()->HasPort(script_context(), port_id));
+
+  message_handler()->DeliverMessage(script_context(), message, port_id);
+  EXPECT_TRUE(message_handler()->HasPort(script_context(), port_id));
 }
 
 }  // namespace extensions

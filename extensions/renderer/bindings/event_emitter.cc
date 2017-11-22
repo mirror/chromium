@@ -6,14 +6,85 @@
 
 #include <algorithm>
 
+#include "extensions/renderer/bindings/api_binding_util.h"
 #include "extensions/renderer/bindings/api_event_listeners.h"
 #include "extensions/renderer/bindings/exception_handler.h"
-#include "extensions/renderer/bindings/js_runner.h"
 #include "gin/data_object_builder.h"
 #include "gin/object_template_builder.h"
 #include "gin/per_context_data.h"
 
 namespace extensions {
+
+namespace {
+
+void RunListenersHelper(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  v8::Isolate* isolate = info.GetIsolate();
+  v8::HandleScope handle_scope(isolate);
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
+  if (!binding::IsContextValid(context))
+    return;
+
+  v8::Local<v8::Value> data_value = info.Data();
+  DCHECK(data_value->IsObject());
+  v8::Local<v8::Object> data = data_value.As<v8::Object>();
+
+  // TODO(devlin): Crazy case: what if by the time JS executes, the listener
+  // was removed from the object? Do we have to find a way to deal with that?
+  v8::Local<v8::Value> listeners_value =
+      data->Get(context, gin::StringToSymbol(isolate, "listeners"))
+          .ToLocalChecked();
+  DCHECK(listeners_value->IsArray());
+  v8::Local<v8::Array> listeners = listeners_value.As<v8::Array>();
+
+  v8::Local<v8::Value> exception_handler_value =
+      data->Get(context, gin::StringToSymbol(isolate, "handler"))
+          .ToLocalChecked();
+  DCHECK(exception_handler_value->IsExternal());
+  ExceptionHandler* exception_handler = static_cast<ExceptionHandler*>(
+      exception_handler_value.As<v8::External>()->Value());
+
+  v8::Local<v8::Value> arguments_value =
+      data->Get(context, gin::StringToSymbol(isolate, "arguments"))
+          .ToLocalChecked();
+  DCHECK(arguments_value->IsArray());
+  v8::Local<v8::Array> arguments_array = arguments_value.As<v8::Array>();
+  std::vector<v8::Local<v8::Value>> arguments;
+  uint32_t arguments_count = arguments_array->Length();
+  arguments.reserve(arguments_count);
+  for (uint32_t i = 0; i < arguments_count; ++i)
+    arguments.push_back(arguments_array->Get(context, i).ToLocalChecked());
+
+  v8::Local<v8::Array> results = v8::Array::New(isolate);
+  uint32_t length = listeners->Length();
+  for (uint32_t i = 0; i < length; ++i) {
+    v8::TryCatch try_catch(isolate);
+    v8::Local<v8::Value> listener_value =
+        listeners->Get(context, i).ToLocalChecked();
+    DCHECK(listener_value->IsFunction());
+    v8::Global<v8::Value> listener_result =
+        JSRunner::Get(context)->RunJSFunctionSync(
+            listener_value.As<v8::Function>(), context, arguments.size(),
+            arguments.data());
+    if (!listener_result.IsEmpty()) {
+      v8::Local<v8::Value> result_value = listener_result.Get(isolate);
+      if (!result_value->IsUndefined()) {
+        CHECK(
+            results->CreateDataProperty(context, i, result_value).ToChecked());
+      }
+    }
+
+    if (try_catch.HasCaught()) {
+      exception_handler->HandleException(context, "Error in event handler",
+                                         &try_catch);
+    }
+  }
+
+  info.GetReturnValue().Set(gin::DataObjectBuilder(isolate)
+                                .Set("results", results.As<v8::Value>())
+                                .Build());
+}
+
+}  // namespace
 
 gin::WrapperInfo EventEmitter::kWrapperInfo = {gin::kEmbedderNativeGin};
 
@@ -42,9 +113,10 @@ gin::ObjectTemplateBuilder EventEmitter::GetObjectTemplateBuilder(
 
 void EventEmitter::Fire(v8::Local<v8::Context> context,
                         std::vector<v8::Local<v8::Value>>* args,
-                        const EventFilteringInfo* filter) {
+                        const EventFilteringInfo* filter,
+                        JSRunner::ResultCallback callback) {
   bool run_sync = false;
-  DispatchImpl(context, args, filter, run_sync, nullptr);
+  DispatchImpl(context, args, filter, run_sync, nullptr, std::move(callback));
 }
 
 void EventEmitter::Invalidate(v8::Local<v8::Context> context) {
@@ -136,7 +208,8 @@ void EventEmitter::Dispatch(gin::Arguments* arguments) {
   // also means we should never use this for security decisions).
   bool run_sync = true;
   std::vector<v8::Global<v8::Value>> listener_responses;
-  DispatchImpl(context, &v8_args, nullptr, run_sync, &listener_responses);
+  DispatchImpl(context, &v8_args, nullptr, run_sync, &listener_responses,
+               JSRunner::ResultCallback());
 
   if (!listener_responses.size()) {
     // Return nothing if there are no responses. This is the behavior of the
@@ -166,20 +239,54 @@ void EventEmitter::Dispatch(gin::Arguments* arguments) {
   arguments->Return(result);
 }
 
-void EventEmitter::DispatchImpl(
-    v8::Local<v8::Context> context,
-    std::vector<v8::Local<v8::Value>>* args,
-    const EventFilteringInfo* filter,
-    bool run_sync,
-    std::vector<v8::Global<v8::Value>>* out_values) {
+void EventEmitter::DispatchImpl(v8::Local<v8::Context> context,
+                                std::vector<v8::Local<v8::Value>>* args,
+                                const EventFilteringInfo* filter,
+                                bool run_sync,
+                                std::vector<v8::Global<v8::Value>>* out_values,
+                                JSRunner::ResultCallback callback) {
   // Note that |listeners_| can be modified during handling.
   std::vector<v8::Local<v8::Function>> listeners =
       listeners_->GetListeners(filter, context);
 
-  v8::Isolate* isolate = context->GetIsolate();
-  v8::TryCatch try_catch(isolate);
   JSRunner* js_runner = JSRunner::Get(context);
+  v8::Isolate* isolate = context->GetIsolate();
+  if (callback) {
+    v8::HandleScope handle_scope(isolate);
+    v8::Local<v8::Array> args_array = v8::Array::New(isolate, args->size());
+    for (size_t i = 0; i < args->size(); ++i) {
+      CHECK(
+          args_array->CreateDataProperty(context, i, args->at(i)).ToChecked());
+    }
+
+    v8::Local<v8::Array> listeners_array =
+        v8::Array::New(isolate, listeners.size());
+    for (size_t i = 0; i < listeners.size(); ++i) {
+      CHECK(listeners_array->CreateDataProperty(context, i, listeners[i])
+                .ToChecked());
+    }
+
+    v8::Local<v8::Object> data =
+        gin::DataObjectBuilder(isolate)
+            .Set("listeners", listeners_array.As<v8::Value>())
+            .Set("handler", v8::External::New(isolate, exception_handler_))
+            .Set("arguments", args_array.As<v8::Value>())
+            .Build();
+    v8::Local<v8::Function> function;
+    if (!v8::Function::New(context, &RunListenersHelper, data)
+             .ToLocal(&function)) {
+      // TODO(devlin): When does function construction fail?
+      NOTREACHED();
+      return;
+    }
+
+    js_runner->RunJSFunction(function, context, 0, nullptr,
+                             std::move(callback));
+    return;
+  }
+
   for (const auto& listener : listeners) {
+    v8::TryCatch try_catch(isolate);
     if (run_sync) {
       DCHECK(out_values);
       v8::Global<v8::Value> result = js_runner->RunJSFunctionSync(
@@ -190,6 +297,7 @@ void EventEmitter::DispatchImpl(
       js_runner->RunJSFunction(listener, context, args->size(), args->data());
     }
 
+    // TODO(devlin): This try-catch won't help if JS runs asynchronously.
     if (try_catch.HasCaught()) {
       exception_handler_->HandleException(context, "Error in event handler",
                                           &try_catch);

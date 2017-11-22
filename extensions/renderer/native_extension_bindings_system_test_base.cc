@@ -41,10 +41,18 @@ NativeExtensionBindingsSystemUnittest::GetV8ExtensionConfiguration() {
 void NativeExtensionBindingsSystemUnittest::SetUp() {
   render_thread_ = std::make_unique<content::MockRenderThread>();
   script_context_set_ = std::make_unique<ScriptContextSet>(&extension_ids_);
-  auto ipc_message_sender = std::make_unique<TestIPCMessageSender>();
-  ipc_message_sender_ = ipc_message_sender.get();
+  std::unique_ptr<TestIPCMessageSender> message_sender;
+  if (UseStrictIPCMessageSender()) {
+    LOG(WARNING) << "Strict mock!";
+    message_sender =
+        std::make_unique<testing::StrictMock<TestIPCMessageSender>>();
+  } else {
+    LOG(WARNING) << "Lazy mock";
+    message_sender = std::make_unique<TestIPCMessageSender>();
+  }
+  ipc_message_sender_ = message_sender.get();
   bindings_system_ = std::make_unique<NativeExtensionBindingsSystem>(
-      std::move(ipc_message_sender));
+      std::move(message_sender));
   APIBindingTest::SetUp();
 }
 
