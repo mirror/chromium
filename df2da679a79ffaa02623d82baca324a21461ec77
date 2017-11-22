@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "8199731c_11ce1fed",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-22T17:02:19Z",
+      "side": 1,
+      "message": "Done: https://chromium-review.googlesource.com/#/c/chromium/src/+/786130\n\nPlease review both CLs.",
+      "parentUuid": "bea08a9d_467f1566",
+      "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10bb968f_8ce9e436",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
         "patchSetId": 5
