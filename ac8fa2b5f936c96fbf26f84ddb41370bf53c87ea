@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a455f1_76ce7dbb",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-22T17:15:10Z",
+      "side": 1,
+      "message": "nit: add a private GetCardNumberStatus(...) helper?\n\nif (empty)\n  return...;\nif (!CorrectLength())\n  return...;",
+      "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2b6012_ac3c04e3",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-22T17:15:10Z",
+      "side": 1,
+      "message": "Move the NOTREACHED out of the switch and delete the default: case. This will let the compiler catch an error if someone adds a new event and forgets to update this helper.\n\nAlso return UNKNOWN_CARD or EMPTY_CARD after the NOTREACHED() assertion. It\u0027s good (?) that we\u0027re consolidating compilers... it used to be that some platforms would complain that this code had a non-returning control path.",
+      "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c82c6a6_6b3826e2",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-22T17:15:10Z",
+      "side": 1,
+      "message": "Should this be \"... per submit\"? This is both a question about the comment as well as about the actual book-keeping we should be doing for this logging.",
+      "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4215335_fbc1db8c",
+        "filename": "components/autofill/core/browser/validation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-22T17:15:10Z",
+      "side": 1,
+      "message": "nit: no curly braces needed",
+      "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
