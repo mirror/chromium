@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c9781a9_9a20c3cc",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-22T01:43:08Z",
+      "side": 1,
+      "message": "Ack. Yes, it also relies on the assumption that only one mirroring session can be active (and therefore only one MirroringMediaRouteController instance exists) per profile at a time (which is also true).",
+      "parentUuid": "64cf9d16_8d90a71e",
+      "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a682879_414e20b4",
         "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee91d725_c54a7ea3",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-22T01:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a682879_414e20b4",
+      "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ff67b8a3_49355bdb",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-22T01:43:08Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "73a3ec8c_62ac79b3",
+      "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7c2525_d51f3f0c",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 4
@@ -85,6 +139,24 @@
       "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f2fae3_e5aba2a8",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-22T01:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a7c2525_d51f3f0c",
+      "revId": "a2b965c84a6b4a38c6c1edb872913ffbfcddd6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
