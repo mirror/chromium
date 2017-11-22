@@ -16,6 +16,24 @@
       "revId": "2f8e5e3a171d1973c9e683645b4f54e9ebb730bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bb3d36_7f4ed129",
+        "filename": "docs/win_order_files.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-22T16:08:36Z",
+      "side": 1,
+      "message": "Right, only problematic in the slightly non-optimal sense; I don\u0027t expect it to make a huge difference.",
+      "parentUuid": "85a49fd1_0311d53d",
+      "revId": "2f8e5e3a171d1973c9e683645b4f54e9ebb730bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
