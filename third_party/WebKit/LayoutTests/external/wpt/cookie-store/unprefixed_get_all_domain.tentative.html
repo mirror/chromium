@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="timeout" content="long">
+<title>Set unprefixed cookies and getAll (domain shadowing)</title>
+<meta name="help"
+      href="https://github.com/WICG/cookie-store/blob/gh-pages/explainer.md">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/testharness-helpers.js"></script>
+<script>
+'use strict';
+
+const kMyDomain = document.domain;
+
+// Cookie names: name1, name2, name3
+// Cookie values: value1, value2 + suffix codes, value3
+// Suffix codes for value2:
+// - _implied_domain_<domain> - Implicit domain=<domain>
+//    NOTE: not actually the same as explicit except in IE/Edge
+// - _explicit_domain_<domain> - Explicit domain=<domain>
+
+promise_test(async testCase => {
+  await cookieStore.set('name1', 'value1_implied_domain_' + kMyDomain);
+  await cookieStore.set('name2', 'value2_implied_domain_' + kMyDomain);
+  await cookieStore.set('name3', 'value3_implied_domain_' + kMyDomain);
+  await cookieStore.set('name2', 'value2_explicit_domain_' + kMyDomain, {
+    domain: kMyDomain,
+  });
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'name2=value2_explicit_domain_' + kMyDomain + '; ' +
+          'name1=value1_implied_domain_' + kMyDomain + '; ' +
+          'name2=value2_implied_domain_' + kMyDomain + '; ' +
+          'name3=value3_implied_domain_' + kMyDomain);
+  } finally {
+    await cookieStore.delete('name1');
+    await cookieStore.delete('name2');
+    await cookieStore.delete('name3');
+    await cookieStore.delete('name2', {domain: kMyDomain});
+  }
+}, 'getAll item order with domain shadowing and unshadowed cookies');
+
+</script>
