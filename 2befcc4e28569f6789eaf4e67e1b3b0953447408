@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b21c966f_cbb1fced",
+        "filename": "ui/file_manager/file_manager/background/js/background.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T05:12:58Z",
+      "side": 1,
+      "message": "Just wondering, but wouldn\u0027t it be easier to handle this in foreground? At least we wouldn\u0027t need a special event. WDYT?",
+      "range": {
+        "startLine": 171,
+        "startChar": 14,
+        "endLine": 173,
+        "endChar": 18
+      },
+      "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322e0052_b53533b0",
+        "filename": "ui/file_manager/file_manager/background/js/background.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T05:12:58Z",
+      "side": 1,
+      "message": "nit: By -\u003e In?",
+      "range": {
+        "startLine": 226,
+        "startChar": 52,
+        "endLine": 226,
+        "endChar": 54
+      },
+      "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2246a96b_8a16a73a",
+        "filename": "ui/file_manager/file_manager/common/js/util.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T05:12:58Z",
+      "side": 1,
+      "message": "I\u0027m not very up to date with recent JS OO standards, but this looks iffy.\nShould constructor return an object?\n\nShould it be:\n\nutil.ChangeDirectoryRequestEvent \u003d function(directory) {\n  Event.call(this, util.CHANGE_DIRECTORY_REQUEST_EVENT_TYPE_;\n  this.directoryEntry \u003d directory;\n}\n\nChangeDirectoryRequestEvent.prototype \u003d Object.create(Event.prototype);\nChangeDirectoryRequestEvent.prototype.constructor \u003d util.ChangeDirectoryRequestEvent;\n\n?",
+      "range": {
+        "startLine": 1304,
+        "startChar": 0,
+        "endLine": 1304,
+        "endChar": 56
+      },
+      "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8127a1_d5706aa8",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T05:12:58Z",
+      "side": 1,
+      "message": "As mentioned earlier, we could just listen to already mounted event here and just check if the current window is focused, and avoid all of the complexity. WDYT?",
+      "range": {
+        "startLine": 543,
+        "startChar": 4,
+        "endLine": 543,
+        "endChar": 24
+      },
+      "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
