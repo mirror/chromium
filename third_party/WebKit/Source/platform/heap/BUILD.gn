@@ -80,6 +80,7 @@ test("blink_heap_unittests") {
     "HeapTest.cpp",
     "HeapTestUtilities.cpp",
     "HeapTestUtilities.h",
+    "ObjectStartBitmapTest.cpp",
     "PersistentTest.cpp",
     "RunAllTests.cpp",
   ]
