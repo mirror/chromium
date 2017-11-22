@@ -168,7 +168,7 @@ void AccountFetcherService::MaybeEnableNetworkFetches() {
     ScheduleNextRefresh();
   }
   RefreshAllAccountInfo(true);
-  UpdateChildInfo();
+  //UpdateChildInfo();
 }
 
 void AccountFetcherService::RefreshAllAccountsAndScheduleNext() {
@@ -316,7 +316,7 @@ void AccountFetcherService::OnRefreshTokenAvailable(
   if (!network_fetches_enabled_)
     return;
   RefreshAccountInfo(account_id, true);
-  UpdateChildInfo();
+  //UpdateChildInfo();
 }
 
 void AccountFetcherService::OnRefreshTokenRevoked(
@@ -330,7 +330,7 @@ void AccountFetcherService::OnRefreshTokenRevoked(
   if (!network_fetches_enabled_)
     return;
   user_info_requests_.erase(account_id);
-  UpdateChildInfo();
+  //UpdateChildInfo();
   account_tracker_service_->StopTrackingAccount(account_id);
 }
 

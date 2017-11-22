@@ -5,6 +5,7 @@
 #include "chrome/browser/chromeos/login/signin/oauth2_token_initializer.h"
 
 #include "chrome/browser/browser_process.h"
+#include "google_apis/gaia/oauth2_id_token_decoder.h"
 
 namespace chromeos {
 
@@ -31,6 +32,12 @@ void OAuth2TokenInitializer::OnOAuth2TokensAvailable(
   user_context_.SetAuthCode(std::string());
   user_context_.SetRefreshToken(oauth2_tokens.refresh_token);
   user_context_.SetAccessToken(oauth2_tokens.access_token);
+//  bool is_child_account =
+//      OAuth2IdTokenDecoder::IsChildAccount(oauth2_tokens.id_token);
+//  LOG(ERROR) << "Is child account: " << is_child_account;
+//  if (is_child_account) {
+  user_context_.SetUserType(user_manager::USER_TYPE_CHILD);
+//  }
   callback_.Run(true, user_context_);
 }
 

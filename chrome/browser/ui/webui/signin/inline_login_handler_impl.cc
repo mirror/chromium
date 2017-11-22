@@ -222,9 +222,13 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
   about_signin_internals->OnRefreshTokenReceived("Successful");
 
   // Prime the account tracker with this combination of gaia id/display email.
+  AccountTrackerService *account_tracker_service =
+      AccountTrackerServiceFactory::GetForProfile(profile_);
   std::string account_id =
-      AccountTrackerServiceFactory::GetForProfile(profile_)
-          ->SeedAccountInfo(gaia_id_, email_);
+      account_tracker_service->SeedAccountInfo(gaia_id_, email_);
+//  bool is_child_account = OAuthIdTokenDecoder::IsChildAccount(result.id_token); 
+//  LOG(ERROR) << "Is child account: " << is_child_account;
+//  account_tracker_service->SetIsChildAccount(is_child_account);
 
   signin_metrics::AccessPoint access_point =
       signin::GetAccessPointForPromoURL(current_url_);
