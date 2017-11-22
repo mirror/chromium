@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "370b5803_3d37f696",
+        "filename": "components/sync/protocol/proto_visitors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-22T13:51:57Z",
+      "side": 1,
+      "message": "Added, thanks!",
+      "parentUuid": "8ecd57f1_32cd6ead",
+      "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3da7cbd_c070e66c",
         "filename": "components/sync/protocol/user_event_specifics.proto",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T21:25:09Z",
       "side": 1,
       "message": "Does this need to be a string? Seems like a number could carry the same information but be smaller.",
+      "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f428c5b6_a5aec26b",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-22T13:51:57Z",
+      "side": 1,
+      "message": "This could probably be an int as well but then we would need a different id for local consents and gaia consents and some place to organize all the integer ids? \nOnly very few of these events will be recorded per user, so it wouldn\u0027t be much data.",
+      "parentUuid": "b3da7cbd_c070e66c",
       "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6de0c254_e6d4ee66",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-22T13:51:57Z",
+      "side": 1,
+      "message": "I improved the comments. I guess we could create a more complex structures but I think most clients won\u0027t need this at all.",
+      "parentUuid": "a2af09aa_90acb9e8",
+      "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58f1efba_5a16756f",
         "filename": "components/sync/protocol/user_event_specifics.proto",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-21T21:25:09Z",
       "side": 1,
       "message": "This shouldn\u0027t be needed. Not sure about locale, +bartekg to weigh in on what exactly we already have in user agent.",
+      "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2ab7f9_91f6a1dc",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-22T13:51:57Z",
+      "side": 1,
+      "message": "I removed \u0027version\u0027",
+      "parentUuid": "58f1efba_5a16756f",
       "revId": "3933559bc10f86bfcbb3243bbb11da2b85130c9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
