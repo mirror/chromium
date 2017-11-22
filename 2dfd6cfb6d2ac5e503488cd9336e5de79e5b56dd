@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eddb99db_7d9c1d47",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "s/import/include",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152c07de_0cc55b14",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "Could you please elaborate in the comments why we collecting these metrics",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e32b8f_40a540bb",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "How about using DidStartNavigation and DidFinishNavigation? Loading callbacks exists for supporting network indicator.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a490669b_ff25cfd8",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac5964e_92958f54",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "We need \"base/macros.h\" include for this",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07743bd_3ee48f8d",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "s/import/include But you probably want to use NSURLConstants here",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d974e99_e124cba3",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "s/include/import",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566e0c6f_0f7ccb6b",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "Please add comments for the metrics",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852db330_a3dbcf9f",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc31dd1_84f07b32",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "nit: do we need this method?",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff696f39_5cc69783",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "nit: Do we need blocks here? How about using C++ callbacks so this code looks more like Chromium code?",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b86b51_c4f89fec",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "I would expect this code to crash, because error can be nil. Would it be better to swap NSURLErrorDomain and NSURLErrorDomain ?",
+      "range": {
+        "startLine": 125,
+        "startChar": 24,
+        "endLine": 125,
+        "endChar": 45
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca3b394_d7eac472",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T19:41:02Z",
+      "side": 1,
+      "message": "How about using kNSURLErrorSecureConnectionFailed which actually belong to NSURLErrorDomain?",
+      "range": {
+        "startLine": 126,
+        "startChar": 20,
+        "endLine": 126,
+        "endChar": 53
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
