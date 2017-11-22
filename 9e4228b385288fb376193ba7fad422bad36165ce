@@ -439,6 +439,30 @@
     },
     {
       "key": {
+        "uuid": "b15cded0_8917d70a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T16:06:14Z",
+      "side": 1,
+      "message": "the one downside to this approach is that i think that your error messages will have confusing line numbers unless you start using SCOPED_TRACE. it\u0027s not a big deal except when you call EqualEvent multiple times in a single test.",
+      "parentUuid": "0f3370f7_5027edb7",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 11
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4beb51_19a2d388",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
         "patchSetId": 4

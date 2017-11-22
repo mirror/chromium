@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dc94aa7_4371f333",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T16:06:14Z",
+      "side": 1,
+      "message": "for example, if either of these calls fails, you may have a hard time figuring out which one it was.",
+      "revId": "f5b7b83466cffa03303acef75093effa4e3fa8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
