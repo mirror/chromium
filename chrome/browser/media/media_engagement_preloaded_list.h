@@ -20,6 +20,8 @@ class Origin;
 
 class MediaEngagementPreloadedList {
  public:
+  static MediaEngagementPreloadedList* GetInstance();
+
   MediaEngagementPreloadedList();
   ~MediaEngagementPreloadedList();
 
@@ -29,6 +31,9 @@ class MediaEngagementPreloadedList {
   // Checks whether |origin| has a high global engagement and is present in the
   // preloaded list.
   bool CheckOriginIsPresent(url::Origin origin);
+
+  // Check whether we have loaded a list.
+  bool IsLoaded() const { return trie_bits_; }
 
  private:
   // Sets |result| to true if |input| is present in the list. If there was an

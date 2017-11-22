@@ -3070,13 +3070,6 @@ void RenderFrameImpl::SetEngagementLevel(const url::Origin& origin,
 // blink::mojom::MediaEngagementClient implementation --------------------------
 
 void RenderFrameImpl::SetHasHighMediaEngagement(const url::Origin& origin) {
-  // Set the HasHighMediaEngagement bit on |frame| if the origin matches
-  // the one we were provided.
-  if (frame_ && url::Origin(frame_->GetSecurityOrigin()) == origin) {
-    frame_->SetHasHighMediaEngagement(true);
-    return;
-  }
-
   high_media_engagement_origin_ = origin;
 }
 
@@ -5171,8 +5164,8 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   if (url::Origin(frame_->GetSecurityOrigin()) ==
       high_media_engagement_origin_) {
     frame_->SetHasHighMediaEngagement(true);
-    high_media_engagement_origin_ = url::Origin();
   }
+  high_media_engagement_origin_ = url::Origin();
 
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params =
       std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>();
