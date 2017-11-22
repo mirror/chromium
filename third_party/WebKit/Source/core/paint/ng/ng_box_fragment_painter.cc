@@ -15,6 +15,7 @@
 #include "core/paint/AdjustPaintOffsetScope.h"
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BoxDecorationData.h"
+#include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintPhase.h"
@@ -338,10 +339,17 @@ void NGBoxFragmentPainter::PaintChildren(
     if (fragment.Type() == NGPhysicalFragment::kFragmentBox) {
       if (child->HasSelfPaintingLayer())
         continue;
-      if (RequiresLegacyFallback(fragment))
-        fragment.GetLayoutObject()->Paint(paint_info, paint_offset);
-      else
+      if (RequiresLegacyFallback(fragment)) {
+        LayoutObject* layout_object = fragment.GetLayoutObject();
+        if (layout_object->IsInline()) {
+          ObjectPainter(*layout_object)
+              .PaintAllPhasesAtomically(paint_info, paint_offset);
+        } else {
+          layout_object->Paint(paint_info, paint_offset);
+        }
+      } else {
         NGBoxFragmentPainter(*child).Paint(paint_info, paint_offset);
+      }
     } else if (fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
       PaintLineBox(*child, paint_info, paint_offset);
     } else if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
