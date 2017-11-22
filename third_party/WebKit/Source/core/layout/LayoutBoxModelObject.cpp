@@ -32,6 +32,7 @@
 #include "core/layout/LayoutFlexibleBox.h"
 #include "core/layout/LayoutGeometryMap.h"
 #include "core/layout/LayoutInline.h"
+#include "core/layout/LayoutTableCell.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/ObjectPaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
@@ -933,6 +934,10 @@ void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
                     ToFloatSize(sticky_location),
                 flipped_sticky_box_rect.Size()));
 
+  // TODO(crbug.com/787908): Browsers disagree on the containing block for table
+  // cells. Blink chooses the row box, others choose the table.
+  LayoutObject* location_container_for_sticky =
+      IsTableCell() ? ToLayoutTableCell(this)->Row() : location_container;
   // To correctly compute the offsets, the constraints need to know about any
   // nested position:sticky elements between themselves and their
   // containingBlock, and between the containingBlock and their scrollAncestor.
@@ -940,7 +945,7 @@ void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
   // The respective search ranges are [container, containingBlock) and
   // [containingBlock, scrollAncestor).
   constraints.SetNearestStickyLayerShiftingStickyBox(
-      FindFirstStickyBetween(location_container, containing_block));
+      FindFirstStickyBetween(location_container_for_sticky, containing_block));
   // We cannot use |scrollAncestor| here as it disregards the root
   // ancestorOverflowLayer(), which we should include.
   constraints.SetNearestStickyLayerShiftingContainingBlock(
