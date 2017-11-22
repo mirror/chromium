@@ -16,6 +16,24 @@
       "revId": "8c2ae1fbd00fa92ad8619f8078757f35e6179dde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d481296_a3888bd1",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/compositing/iframes/invisible-nested-iframe-show-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-22T22:36:25Z",
+      "side": 1,
+      "message": "This is because PLC::overflow_controls_host_layer_ is a parent of PLC::container_layer_ and therefore an ancestor of the scrolling content, but CLM::overflow_controls_host_layer_ is a sibling of CLM::scrolling_layer_, and therefore follows the scrolling content in a preorder traversal of the layer tree.  See PLC::EnsureRootLayer() and CLM::UpdateInternalHierarchy() for the code that establishes these relationships.",
+      "parentUuid": "2207fb0d_e5023124",
+      "revId": "8c2ae1fbd00fa92ad8619f8078757f35e6179dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
