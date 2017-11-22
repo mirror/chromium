@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "51d6d745_0995cbf5",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T21:42:13Z",
+      "side": 1,
+      "message": "Thanks for your input. Yes, looks like we can safely use pointer here.",
+      "parentUuid": "066213be_fd47dfd1",
+      "revId": "9f012bccf217b73c352f557c1441009fa52cde69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35d8d28_3c190409",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 2

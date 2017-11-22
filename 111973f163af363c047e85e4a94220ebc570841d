@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3cb87f0_8ff7ff6c",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T21:42:13Z",
+      "side": 1,
+      "message": "Removed ProfileId per last comments",
+      "parentUuid": "8b21f2c0_0589d6f0",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 75
+      },
+      "revId": "111973f163af363c047e85e4a94220ebc570841d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9eac596_0a2a5b03",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T21:06:19Z",
       "side": 1,
       "message": "Can these two be const?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "111973f163af363c047e85e4a94220ebc570841d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fdac8d_96ad9be7",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T21:42:13Z",
+      "side": 1,
+      "message": "Removed ProfileId per last comments",
+      "parentUuid": "c9eac596_0a2a5b03",
       "range": {
         "startLine": 64,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "53362195_a444c930",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T21:42:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e55991_ad07a0ca",
+      "range": {
+        "startLine": 201,
+        "startChar": 41,
+        "endLine": 201,
+        "endChar": 54
+      },
+      "revId": "111973f163af363c047e85e4a94220ebc570841d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a5185e9_49fe2358",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-22T21:06:19Z",
       "side": 1,
       "message": "Can you make this LOG(ERROR)? Also, can you add an UMA stat for this?",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 294,
+        "endChar": 48
+      },
+      "revId": "111973f163af363c047e85e4a94220ebc570841d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5d9675_0d81adb5",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T21:42:13Z",
+      "side": 1,
+      "message": "LOG(ERROR) is not caught in tests. I would prefer to have it NOTREACHED because of that.\nUMA is nice idea. I will talk to UMA devs how to do it better in separate CL",
+      "parentUuid": "5a5185e9_49fe2358",
       "range": {
         "startLine": 291,
         "startChar": 0,
@@ -114,6 +210,30 @@
       "revId": "111973f163af363c047e85e4a94220ebc570841d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446a922a_c5a4045c",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T21:42:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f0553c_ac1866b9",
+      "range": {
+        "startLine": 84,
+        "startChar": 13,
+        "endLine": 84,
+        "endChar": 22
+      },
+      "revId": "111973f163af363c047e85e4a94220ebc570841d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
