@@ -34,6 +34,24 @@
       "revId": "fb685c3c1b8f83d8d77826d86937d63c18e3ebb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac7b73e_711c5e4a",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-22T23:24:39Z",
+      "side": 1,
+      "message": "A separate bug/CL would be preferable here.",
+      "parentUuid": "6b93ab92_b012ede5",
+      "revId": "fb685c3c1b8f83d8d77826d86937d63c18e3ebb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
