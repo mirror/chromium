@@ -211,6 +211,30 @@
       "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d64020a_3f01192f",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T09:02:19Z",
+      "side": 1,
+      "message": "Got it. OK, let\u0027s keep it in background. I\u0027ll take another look at the CL.",
+      "parentUuid": "eba1facc_4c7a990b",
+      "range": {
+        "startLine": 543,
+        "startChar": 4,
+        "endLine": 543,
+        "endChar": 24
+      },
+      "revId": "2befcc4e28569f6789eaf4e67e1b3b0953447408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
