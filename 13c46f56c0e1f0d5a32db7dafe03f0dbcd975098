@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca54efdc_b8579916",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T15:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9804a238_b425255b",
+      "range": {
+        "startLine": 38,
+        "startChar": 51,
+        "endLine": 38,
+        "endChar": 66
+      },
+      "revId": "13c46f56c0e1f0d5a32db7dafe03f0dbcd975098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881da2d0_c791dbcd",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "13c46f56c0e1f0d5a32db7dafe03f0dbcd975098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc8f2ca_4999d803",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T15:24:14Z",
+      "side": 1,
+      "message": "I now abort by invalidating the weak ptrs",
+      "parentUuid": "881da2d0_c791dbcd",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "13c46f56c0e1f0d5a32db7dafe03f0dbcd975098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "485f238e_02930863",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T15:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53b51a7_5f9ac1f0",
+      "range": {
+        "startLine": 72,
+        "startChar": 43,
+        "endLine": 72,
+        "endChar": 55
+      },
+      "revId": "13c46f56c0e1f0d5a32db7dafe03f0dbcd975098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6529d9f5_9b5ed632",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter_unittest.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "13c46f56c0e1f0d5a32db7dafe03f0dbcd975098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c7da51_5e33755e",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T15:24:14Z",
+      "side": 1,
+      "message": "Exporter is owned by the settings page, not the export dialog. It may be asked to export multiple times. These tests verify that that cancelling doesn\u0027t block all future exporting. I added the comment.\n\nAlternatively, we can also have the settings page create an Exporter only when needed and destroy it when it\u0027s done or cancelled. In that case Cancel() can be dropped, but we would be pushing part of the logic up the hierarchy.",
+      "parentUuid": "6529d9f5_9b5ed632",
+      "range": {
+        "startLine": 177,
+        "startChar": 36,
+        "endLine": 177,
+        "endChar": 66
+      },
+      "revId": "13c46f56c0e1f0d5a32db7dafe03f0dbcd975098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
