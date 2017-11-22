@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "88005c81_603acde6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:59:35Z",
+      "side": 1,
+      "message": "That\u0027s what I wanted to have a comment somewhere, though it doesn\u0027t need to be on a header file. I\u0027m still confused what is installed on where (and thus I\u0027m not really confident if this CL is correct or not).\n\na) When a context is created from a snapshot\n- Where are conditional / origin-trial features installed?\n\nb) When a context is not created from a snapshot\n- Where are conditional / origin-trial features installed?",
+      "parentUuid": "52e76f92_021deeb9",
+      "revId": "1ff9d0ba35d798f18553ac26488d258e480d3895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fc5cde6_4fb9b8e5",
         "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.h",
         "patchSetId": 7
