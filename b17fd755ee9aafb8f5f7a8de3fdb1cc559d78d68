@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f7583f_2e3fa8a0",
+        "filename": "content/renderer/media/media_stream_dispatcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T09:39:10Z",
+      "side": 1,
+      "message": "nit: notification -\u003e notifications\nforwards the same -\u003e forwards them",
+      "range": {
+        "startLine": 29,
+        "startChar": 68,
+        "endLine": 29,
+        "endChar": 80
+      },
+      "revId": "b17fd755ee9aafb8f5f7a8de3fdb1cc559d78d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
