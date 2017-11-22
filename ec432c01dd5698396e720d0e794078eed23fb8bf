@@ -129,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "1656af82_de4f95af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-22T15:53:50Z",
+      "side": 1,
+      "message": "I am sorry, I thought the discussion was in the webapk permission bug, but I can\u0027t find it now. There is discussion in the WebAPK Permission PRD file(https://docs.google.com/document/d/1BYUGZuctAC5Xcj_Xun-jQevNnYaGE6TaByKXo5TuoLk/edit?ts\u003d59f7befe#heading\u003dh.3s18l9ym8bsc), see the \"Notification\" section. In summary, we don\u0027t do anything special for WebAPKs\u0027 notification permissions. Chrome still check whether the origin has notification permission in ContentSettings, and send the notification if yes. If that WebAPK\u0027s notifications are blocked, Android will block all the notifications that Chrome sent, so user won\u0027t see them, which is as expected.",
+      "parentUuid": "8476b69b_487152a0",
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea1150b1_278482cc",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
         "patchSetId": 3
