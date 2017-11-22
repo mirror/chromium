@@ -205,9 +205,9 @@ DWORD IATPatchFunction::PatchFromModule(HMODULE module,
                                         const char* imported_from_module,
                                         const char* function_name,
                                         void* new_function) {
-  DCHECK_EQ(static_cast<void*>(NULL), original_function_);
-  DCHECK_EQ(static_cast<IMAGE_THUNK_DATA*>(NULL), iat_thunk_);
-  DCHECK_EQ(static_cast<void*>(NULL), intercept_function_);
+  DCHECK_EQ(nullptr, original_function_);
+  DCHECK_EQ(nullptr, iat_thunk_);
+  DCHECK_EQ(nullptr, intercept_function_);
   DCHECK(module);
 
   DWORD error = InterceptImportedFunction(module,
@@ -237,12 +237,11 @@ DWORD IATPatchFunction::Unpatch() {
   // patch. In this case its better to be hands off the intercept as
   // trying to unpatch again in the destructor of IATPatchFunction is
   // not going to be any safer
-  if (module_handle_)
-    FreeLibrary(module_handle_);
-  module_handle_ = NULL;
-  intercept_function_ = NULL;
-  original_function_ = NULL;
-  iat_thunk_ = NULL;
+  FreeLibrary(module_handle_);
+  module_handle_ = nullptr;
+  intercept_function_ = nullptr;
+  original_function_ = nullptr;
+  iat_thunk_ = nullptr;
 
   return error;
 }

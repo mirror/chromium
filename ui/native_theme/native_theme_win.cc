@@ -264,12 +264,11 @@ NativeThemeWin::NativeThemeWin()
 }
 
 NativeThemeWin::~NativeThemeWin() {
-  if (theme_dll_) {
-    // todo (cpu): fix this soon.  Making a call to CloseHandles() here breaks
-    // certain tests and the reliability bots.
-    // CloseHandles();
-    FreeLibrary(theme_dll_);
-  }
+  // TODO(https://crbug.com/787692): fix this soon.  Making a call to
+  // CloseHandles() here breaks certain tests and the reliability bots.
+  // CloseHandles();
+
+  FreeLibrary(theme_dll_);
 }
 
 bool NativeThemeWin::IsUsingHighContrastThemeInternal() {

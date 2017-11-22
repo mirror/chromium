@@ -47,8 +47,6 @@ class ModuleWatcherTest : public testing::Test {
   }
 
   void UnloadModule() {
-    if (!module_)
-      return;
     ::FreeLibrary(module_);
     module_ = nullptr;
   }

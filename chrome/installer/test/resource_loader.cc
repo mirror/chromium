@@ -54,10 +54,8 @@ ResourceLoader::ResourceLoader() : module_(NULL) {
 }
 
 ResourceLoader::~ResourceLoader() {
-  if (module_ != NULL) {
-    BOOL result = FreeLibrary(module_);
-    DPCHECK(result != 0) << "FreeLibrary failed";
-  }
+  BOOL result = FreeLibrary(module_);
+  DPCHECK(result) << "FreeLibrary failed";
 }
 
 bool ResourceLoader::Initialize(const base::FilePath& pe_image_path) {

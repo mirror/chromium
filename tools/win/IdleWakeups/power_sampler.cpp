@@ -70,6 +70,5 @@ PowerSampler::PowerSampler() {
 }
 
 PowerSampler::~PowerSampler() {
-  if (energy_lib_)
-    FreeLibrary(energy_lib_);
+  FreeLibrary(energy_lib_);
 }

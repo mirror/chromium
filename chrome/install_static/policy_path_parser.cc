@@ -60,10 +60,7 @@ struct ScopedFunctionHelper {
     }
   }
 
-  ~ScopedFunctionHelper() {
-    if (library_)
-      FreeLibrary(library_);
-  }
+  ~ScopedFunctionHelper() { FreeLibrary(library_); }
 
   template <class... Args> auto operator()(Args... a) {
     return function_(a...);

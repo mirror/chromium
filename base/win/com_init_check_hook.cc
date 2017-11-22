@@ -195,10 +195,8 @@ class HookManager {
 
     hotpatch_placeholder_format_ = HotpatchPlaceholderFormat::UNKNOWN;
 
-    if (ole32_library_) {
-      ::FreeLibrary(ole32_library_);
-      ole32_library_ = nullptr;
-    }
+    ::FreeLibrary(ole32_library_);
+    ole32_library_ = nullptr;
 
     co_create_instance_padded_address_ = 0;
     original_co_create_instance_body_function_ = nullptr;
