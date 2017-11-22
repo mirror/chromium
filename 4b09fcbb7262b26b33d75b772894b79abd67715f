@@ -22,6 +22,47 @@
       "revId": "4b09fcbb7262b26b33d75b772894b79abd67715f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50814c2e_9fccbb2f",
+        "filename": "media/mojo/clients/gpu_jpeg_decode_accelerator_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-22T14:13:07Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "daf5c142_81345c7b",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "4b09fcbb7262b26b33d75b772894b79abd67715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea79596_e07dd157",
+        "filename": "media/mojo/services/gpu_jpeg_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-22T14:13:07Z",
+      "side": 1,
+      "message": "This renaming in another CL?",
+      "revId": "4b09fcbb7262b26b33d75b772894b79abd67715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
