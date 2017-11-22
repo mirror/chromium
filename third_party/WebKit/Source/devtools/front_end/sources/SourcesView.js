@@ -348,35 +348,55 @@ Sources.SourcesView = class extends UI.VBox {
 
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
-   * @return {!UI.Widget}
+   * @return {!Sources.SourcesView.ViewTypes}
    */
-  _createSourceView(uiSourceCode) {
-    var sourceFrame;
-    var sourceView;
-    var contentType = uiSourceCode.contentType();
-
+  _frameTypeForUISourceCode(uiSourceCode) {
+    var contentType = Common.ResourceType.fromMimeType(uiSourceCode.mimeType());
+    if (!contentType === Common.resourceTypes.Other)
+      contentType = uiSourceCode.resourceType();
     if (contentType.hasScripts())
-      sourceFrame = new Sources.JavaScriptSourceFrame(uiSourceCode);
-    else if (contentType === Common.resourceTypes.Image)
-      sourceView = new SourceFrame.ImageView(uiSourceCode.mimeType(), uiSourceCode);
-    else if (contentType === Common.resourceTypes.Font)
-      sourceView = new SourceFrame.FontView(uiSourceCode.mimeType(), uiSourceCode);
-    else
-      sourceFrame = new Sources.UISourceCodeFrame(uiSourceCode);
-
-    if (sourceFrame) {
-      sourceFrame.setHighlighterType(uiSourceCode.mimeType());
-      this._historyManager.trackSourceFrameCursorJumps(sourceFrame);
-    }
-    var widget = /** @type {!UI.Widget} */ (sourceFrame || sourceView);
-    this._sourceViewByUISourceCode.set(uiSourceCode, widget);
-    uiSourceCode.addEventListener(Workspace.UISourceCode.Events.TitleChanged, this._uiSourceCodeTitleChanged, this);
-    return widget;
+      return Sources.SourcesView.ViewTypes.SourceView;
+    if (contentType === Common.resourceTypes.Image)
+      return Sources.SourcesView.ViewTypes.ImageView;
+    if (contentType === Common.resourceTypes.Font)
+      return Sources.SourcesView.ViewTypes.FontView;
+    return Sources.SourcesView.ViewTypes.SourceFrame;
   }
 
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
    * @return {!UI.Widget}
+   */
+  _createSourceView(uiSourceCode) {
+    /** @type {!UI.Widget} */
+    var sourceView;
+    switch(this._frameTypeForUISourceCode(uiSourceCode)) {
+      case Sources.SourcesView.ViewTypes.ImageView:
+        sourceView = new SourceFrame.ImageView(uiSourceCode.mimeType(), uiSourceCode);
+        break;
+      case Sources.SourcesView.ViewTypes.FontView:
+        sourceView = new SourceFrame.FontView(uiSourceCode.mimeType(), uiSourceCode);
+        break;
+      default:
+        sourceView = new Sources.JavaScriptSourceFrame(uiSourceCode);
+        sourceView.setHighlighterType(uiSourceCode.mimeType());
+        this._historyManager.trackSourceFrameCursorJumps(sourceView);
+        break;
+    }
+<<<<<<< Updated upstream
+    var widget = /** @type {!UI.Widget} */ (sourceFrame || sourceView);
+    this._sourceViewByUISourceCode.set(uiSourceCode, widget);
+=======
+    this._sourceViewByUISourceCode.set(uiSourceCode, sourceView);
+    Persistence.persistence.subscribeForBindingEvent(uiSourceCode, this._bindingChangeBound);
+>>>>>>> Stashed changes
+    uiSourceCode.addEventListener(Workspace.UISourceCode.Events.TitleChanged, this._uiSourceCodeTitleChanged, this);
+    return sourceView;
+  }
+
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+ * @return {!UI.Widget}
    */
   _getOrCreateSourceView(uiSourceCode) {
     return this._sourceViewByUISourceCode.get(uiSourceCode) || this._createSourceView(uiSourceCode);
@@ -388,6 +408,7 @@ Sources.SourcesView = class extends UI.VBox {
    * @return {boolean}
    */
   _sourceFrameMatchesUISourceCode(sourceFrame, uiSourceCode) {
+    this._frameTypeForUISourceCode(uiSourceCode)
     if (uiSourceCode.contentType().hasScripts())
       return sourceFrame instanceof Sources.JavaScriptSourceFrame;
     return !(sourceFrame instanceof Sources.JavaScriptSourceFrame);
@@ -682,6 +703,13 @@ Sources.SourcesView = class extends UI.VBox {
   toggleBreakpointsActiveState(active) {
     this._editorContainer.view.element.classList.toggle('breakpoints-deactivated', !active);
   }
+};
+
+/** @enum {symbol} */
+Sources.SourcesView.ViewTypes = {
+  SourceView: Symbol('SourceView'),
+  ImageView: Symbol('ImageView'),
+  FontView: Symbol('FontView')
 };
 
 /** @enum {symbol} */

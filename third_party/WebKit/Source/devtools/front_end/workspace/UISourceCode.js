@@ -211,6 +211,13 @@ Workspace.UISourceCode = class extends Common.Object {
   }
 
   /**
+   * @param {!Common.ResourceType} contentType
+   */
+  setContentType(contentType) {
+    this._contentType = contentType;
+  }
+
+  /**
    * @override
    * @return {!Common.ResourceType}
    */
