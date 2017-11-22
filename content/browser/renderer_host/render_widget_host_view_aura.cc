@@ -1496,6 +1496,13 @@ bool RenderWidgetHostViewAura::IsTextEditCommandEnabled(
 void RenderWidgetHostViewAura::SetTextEditCommandForNextKeyEvent(
     ui::TextEditCommand command) {}
 
+const std::string& RenderWidgetHostViewAura::GetClientSourceInfo() const {
+  return RenderViewHost::From(host_)
+      ->GetMainFrame()
+      ->GetLastCommittedURL()
+      .spec();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, display::DisplayObserver implementation:
 
