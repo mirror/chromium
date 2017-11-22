@@ -7,10 +7,13 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
+#include "content/public/common/service_manager_connection.h"
 #include "device/vr/features/features.h"
+#include "device/vr/orientation/orientation_device_provider.h"
 
 #if defined(OS_ANDROID)
 #include "device/vr/android/gvr/gvr_device_provider.h"
@@ -24,7 +27,29 @@ namespace vr {
 
 namespace {
 VRDeviceManager* g_vr_device_manager = nullptr;
+
+std::unique_ptr<device::OrientationDeviceProvider> CreateDefaultProvider() {
+  content::ServiceManagerConnection* connection =
+      content::ServiceManagerConnection::GetForProcess();
+
+  if (!connection) {
+    // If there is no service manager connection we cannot supply a default
+    // device.
+    return nullptr;
+  }
+
+  return std::make_unique<device::OrientationDeviceProvider>(
+      connection->GetConnector());
 }
+
+void ProvideDevice(VRServiceImpl* service,
+                   base::OnceClosure callback,
+                   device::VRDevice* device) {
+  service->ConnectDevice(device);
+  std::move(callback).Run();
+}
+
+} // namespace
 
 VRDeviceManager* VRDeviceManager::GetInstance() {
   if (!g_vr_device_manager) {
@@ -49,6 +74,9 @@ bool VRDeviceManager::HasInstance() {
 VRDeviceManager::VRDeviceManager(ProviderList providers)
     : providers_(std::move(providers)) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  default_provider_ = CreateDefaultProvider();
+
   CHECK(!g_vr_device_manager);
   g_vr_device_manager = this;
 }
@@ -58,7 +86,8 @@ VRDeviceManager::~VRDeviceManager() {
   g_vr_device_manager = nullptr;
 }
 
-void VRDeviceManager::AddService(VRServiceImpl* service) {
+void VRDeviceManager::AddService(VRServiceImpl* service,
+                                 base::OnceClosure callback) {
   // Loop through any currently active devices and send Connected messages to
   // the service. Future devices that come online will send a Connected message
   // when they are created.
@@ -70,17 +99,25 @@ void VRDeviceManager::AddService(VRServiceImpl* service) {
   for (const auto& provider : providers_)
     provider->GetDevices(&devices);
 
-  for (auto* device : devices) {
-    if (device->GetId() == device::VR_DEVICE_LAST_ID)
-      continue;
+  // If there are no devices, try to at least provide the orientation API.
+  if (devices.size() == 0 && default_provider_) {
+    default_provider_->GetDevice(
+        base::BindOnce(&ProvideDevice, service, std::move(callback)));
+  } else {
+    for (auto* device : devices) {
+      if (device->GetId() == device::VR_DEVICE_LAST_ID)
+        continue;
 
-    if (devices_.find(device->GetId()) == devices_.end())
-      devices_[device->GetId()] = device;
+      if (devices_.find(device->GetId()) == devices_.end())
+        devices_[device->GetId()] = device;
 
-    service->ConnectDevice(device);
+      service->ConnectDevice(device);
+    }
+
+    services_.insert(service);
+
+    std::move(callback).Run();
   }
-
-  services_.insert(service);
 }
 
 void VRDeviceManager::RemoveService(VRServiceImpl* service) {
@@ -111,6 +148,10 @@ void VRDeviceManager::InitializeProviders() {
 
   for (const auto& provider : providers_)
     provider->Initialize();
+
+  if (default_provider_) {
+    default_provider_->Initialize();
+  }
 
   vr_initialized_ = true;
 }

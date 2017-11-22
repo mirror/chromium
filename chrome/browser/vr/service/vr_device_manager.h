@@ -11,11 +11,13 @@
 #include <memory>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/vr/service/vr_service_impl.h"
+#include "device/vr/orientation/orientation_device_provider.h"
 #include "device/vr/vr_device.h"
 #include "device/vr/vr_device_provider.h"
 #include "device/vr/vr_service.mojom.h"
@@ -38,7 +40,7 @@ class VRDeviceManager {
   // Automatically connects all currently available VR devices by querying
   // the device providers and, for each returned device, calling
   // VRServiceImpl::ConnectDevice.
-  void AddService(VRServiceImpl* service);
+  void AddService(VRServiceImpl* service, base::OnceClosure callback);
   void RemoveService(VRServiceImpl* service);
 
   device::VRDevice* GetDevice(unsigned int index);
@@ -55,6 +57,7 @@ class VRDeviceManager {
   void InitializeProviders();
 
   ProviderList providers_;
+  std::unique_ptr<device::OrientationDeviceProvider> default_provider_;
 
   // Devices are owned by their providers.
   using DeviceMap = std::map<unsigned int, device::VRDevice*>;
