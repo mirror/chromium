@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "271ffffc_1f3e6e72",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T21:29:31Z",
+      "side": 1,
+      "message": "IMO I think the tests in URLLoader that you added are sufficient. If we want to test multiple things together (i.e. NavigationURLLoaderNetworkService \u0026 URLLoader), then the existing browser tests are more than enough.",
+      "parentUuid": "b19fbe56_d337dd43",
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7082f8c_c254f930",
         "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
         "patchSetId": 4
