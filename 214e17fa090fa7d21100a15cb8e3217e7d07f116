@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a79fc9ef_c0a1b6d6",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-22T15:51:54Z",
+      "side": 1,
+      "message": "nit: rewrap",
+      "range": {
+        "startLine": 268,
+        "startChar": 67,
+        "endLine": 268,
+        "endChar": 73
+      },
+      "revId": "214e17fa090fa7d21100a15cb8e3217e7d07f116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
