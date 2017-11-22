@@ -201,9 +201,25 @@ class CONTENT_EXPORT ServiceWorkerRegistration
 
   const GURL pattern_;
   const int64_t registration_id_;
+
+  // This registration does not exist in the database (technically, set to true
+  // once a database task has been posted to delete the registration, so it
+  // might still exist but will be deleted soon, and either way once true any
+  // new database task will not see it). This generally implies
+  // |is_uninstalling_| or |is_uninstalled_|, but sometimes the registration may
+  // have been forcibly deleted without uninstallation (DeleteVersion()),
   bool is_deleted_;
+  // This registration is in the process of being uninstalled.
+  // |is_uninstalling_| implies |is_deleted_|. The registration is still
+  // somewhat usable in this state: if a page has an existing controller from
+  // this registration, the controller will continue to function until all such
+  // pages are unloaded. The registration may also be resurrected if register()
+  // is called while in this state.
   bool is_uninstalling_;
+  // This registration is completely uninstalled. It cannot be resurrected or
+  // reused. |is_uninstalled_| implies |is_deleted_|.
   bool is_uninstalled_;
+
   bool should_activate_when_ready_;
   blink::mojom::NavigationPreloadState navigation_preload_state_;
   base::Time last_update_check_;
