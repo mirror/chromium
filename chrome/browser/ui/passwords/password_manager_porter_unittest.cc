@@ -27,6 +27,7 @@
 #include "ui/shell_dialogs/select_file_dialog_factory.h"
 
 using ::testing::_;
+using ::testing::StrictMock;
 
 namespace {
 class TestSelectFileDialog : public ui::SelectFileDialog {
@@ -91,41 +92,11 @@ class TestSelectFileDialogFactory : public ui::SelectFileDialogFactory {
   DISALLOW_ASSIGN(TestSelectFileDialogFactory);
 };
 
-class TestCredentialProviderInterface
-    : public password_manager::CredentialProviderInterface {
- public:
-  TestCredentialProviderInterface() {}
-
-  void SetPasswordList(
-      const std::vector<std::unique_ptr<autofill::PasswordForm>>&
-          password_list) {
-    password_list_.clear();
-    for (const auto& form : password_list) {
-      password_list_.push_back(std::make_unique<autofill::PasswordForm>(*form));
-    }
-  }
-
-  // password_manager::CredentialProviderInterface:
-  std::vector<std::unique_ptr<autofill::PasswordForm>> GetAllPasswords()
-      override {
-    std::vector<std::unique_ptr<autofill::PasswordForm>> ret_val;
-    for (const auto& form : password_list_) {
-      ret_val.push_back(std::make_unique<autofill::PasswordForm>(*form));
-    }
-    return ret_val;
-  }
-
- private:
-  std::vector<std::unique_ptr<autofill::PasswordForm>> password_list_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestCredentialProviderInterface);
-};
-
 class TestPasswordManagerPorter : public PasswordManagerPorter {
  public:
   TestPasswordManagerPorter(
-      TestCredentialProviderInterface* password_manager_presenter)
-      : PasswordManagerPorter(password_manager_presenter) {}
+      std::unique_ptr<password_manager::PasswordManagerExporter> exporter)
+      : PasswordManagerPorter(std::move(exporter)) {}
 
   MOCK_METHOD1(ImportPasswordsFromPath, void(const base::FilePath& path));
 
@@ -133,6 +104,27 @@ class TestPasswordManagerPorter : public PasswordManagerPorter {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestPasswordManagerPorter);
+};
+
+class MockPasswordManagerExporter
+    : public password_manager::PasswordManagerExporter {
+ public:
+  MockPasswordManagerExporter()
+      : password_manager::PasswordManagerExporter(nullptr) {}
+  ~MockPasswordManagerExporter() override = default;
+
+  MOCK_METHOD0(PreparePasswordsForExport, void());
+  MOCK_METHOD0(Cancel, void());
+
+  void SetDestination(
+      std::unique_ptr<password_manager::Destination> destination) override {
+    SetDestination_(destination);
+  }
+  MOCK_METHOD1(SetDestination_,
+               void(std::unique_ptr<password_manager::Destination>&));
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockPasswordManagerExporter);
 };
 
 class PasswordManagerPorterTest : public testing::Test {
@@ -143,21 +135,17 @@ class PasswordManagerPorterTest : public testing::Test {
   ~PasswordManagerPorterTest() override = default;
 
   void SetUp() override {
-    credential_provider_interface_.reset(new TestCredentialProviderInterface());
-    password_manager_porter_.reset(
-        new TestPasswordManagerPorter(credential_provider_interface_.get()));
+    password_manager_porter_.reset(new TestPasswordManagerPorter(nullptr));
     profile_.reset(new TestingProfile());
     web_contents_.reset(content::WebContentsTester::CreateTestWebContents(
         profile_.get(), nullptr));
     // SelectFileDialog::SetFactory is responsible for freeing the memory
     // associated with a new factory.
-    ASSERT_TRUE(base::CreateTemporaryFile(&temp_file_));
-    temp_file_ = temp_file_.ReplaceExtension(FILE_PATH_LITERAL("csv"));
     ui::SelectFileDialog::SetFactory(
-        new TestSelectFileDialogFactory(temp_file_));
+        new TestSelectFileDialogFactory(base::FilePath()));
   }
 
-  void TearDown() override { ASSERT_TRUE(base::DeleteFile(temp_file_, false)); }
+  void TearDown() override {}
 
   TestPasswordManagerPorter* password_manager_porter() const {
     return password_manager_porter_.get();
@@ -165,10 +153,6 @@ class PasswordManagerPorterTest : public testing::Test {
 
   content::WebContents* web_contents() const { return web_contents_.get(); }
 
-  std::unique_ptr<TestCredentialProviderInterface>
-      credential_provider_interface_;
-  // A file path that will be selected by any file selection dialog.
-  base::FilePath temp_file_;
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 
  private:
@@ -177,7 +161,6 @@ class PasswordManagerPorterTest : public testing::Test {
   std::unique_ptr<TestPasswordManagerPorter> password_manager_porter_;
   std::unique_ptr<TestingProfile> profile_;
   std::unique_ptr<content::WebContents> web_contents_;
-  scoped_refptr<password_manager::PasswordStore> store_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerPorterTest);
 };
@@ -185,18 +168,6 @@ class PasswordManagerPorterTest : public testing::Test {
 // Password importing and exporting using a |SelectFileDialog| is not yet
 // supported on Android.
 #if !defined(OS_ANDROID)
-
-std::vector<std::unique_ptr<autofill::PasswordForm>>
-ConstructTestPasswordForms() {
-  auto password_form = std::make_unique<autofill::PasswordForm>();
-  password_form->origin = GURL("http://accounts.google.com/a/LoginAuth");
-  password_form->username_value = base::ASCIIToUTF16("test@gmail.com");
-  password_form->password_value = base::ASCIIToUTF16("test1");
-
-  std::vector<std::unique_ptr<autofill::PasswordForm>> password_forms;
-  password_forms.push_back(std::move(password_form));
-  return password_forms;
-}
 
 TEST_F(PasswordManagerPorterTest, PasswordImport) {
   EXPECT_CALL(*password_manager_porter(), ImportPasswordsFromPath(_));
@@ -206,28 +177,17 @@ TEST_F(PasswordManagerPorterTest, PasswordImport) {
 }
 
 TEST_F(PasswordManagerPorterTest, PasswordExport) {
-#if defined(OS_WIN)
-  const char kLineEnding[] = "\r\n";
-#else
-  const char kLineEnding[] = "\n";
-#endif
-  const std::string kExpectedCSVOutput = base::StringPrintf(
-      "name,url,username,password%s"
-      "accounts.google.com,http://accounts.google.com/a/"
-      "LoginAuth,test@gmail.com,test1%s",
-      kLineEnding, kLineEnding);
+  // PasswordManagerPorter will take ownership of this, but we keep a pointer.
+  MockPasswordManagerExporter* mock_password_manager_exporter_ =
+      new StrictMock<MockPasswordManagerExporter>();
+  PasswordManagerPorter porter((std::unique_ptr<MockPasswordManagerExporter>(
+      mock_password_manager_exporter_)));
 
-  credential_provider_interface_->SetPasswordList(ConstructTestPasswordForms());
-  PasswordManagerPorter porter(credential_provider_interface_.get());
+  EXPECT_CALL(*mock_password_manager_exporter_, PreparePasswordsForExport());
+  EXPECT_CALL(*mock_password_manager_exporter_, SetDestination_(_));
+
   porter.set_web_contents(web_contents());
-
   porter.Store();
-
-  scoped_task_environment_.RunUntilIdle();
-
-  std::string output;
-  base::ReadFileToString(temp_file_, &output);
-  EXPECT_EQ(kExpectedCSVOutput, output);
 }
 
 #endif
