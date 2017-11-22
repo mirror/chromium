@@ -22,6 +22,30 @@
       "revId": "971a23dc9a9b8451a76a35900a6b5ad9d9b8df41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2556ab06_c55555c5",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-22T01:37:42Z",
+      "side": 1,
+      "message": "I think so. My only concern is if the animation makes the IsVisible state asynchronous. From the code it doesn\u0027t seem to. Let me double check tomorrow.",
+      "parentUuid": "0543872b_2b0b4f33",
+      "range": {
+        "startLine": 90,
+        "startChar": 13,
+        "endLine": 90,
+        "endChar": 51
+      },
+      "revId": "971a23dc9a9b8451a76a35900a6b5ad9d9b8df41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
