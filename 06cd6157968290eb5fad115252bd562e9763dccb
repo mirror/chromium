@@ -52,6 +52,24 @@
       "revId": "06cd6157968290eb5fad115252bd562e9763dccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547004e5_ebb42bb6",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T16:58:05Z",
+      "side": 1,
+      "message": "You are right. The |printable_area_in_dpi| vector is just storing copies of |printable_area_|, so I simplified this further.",
+      "parentUuid": "36bfec6a_bd005c8e",
+      "revId": "06cd6157968290eb5fad115252bd562e9763dccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
