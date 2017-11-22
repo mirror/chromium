@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf899d57_b5fd2c53",
+        "filename": "content/common/mac/attributed_string_coder.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-22T07:44:32Z",
+      "side": 1,
+      "message": "For consistency with surrounding code, I\u0027ve chosen to add font_name_ with default initializer.",
+      "parentUuid": "bb554984_3b27478c",
+      "revId": "f6fcc98a5861066f455dbe9949a62f3840e6bc63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "150fae8e_a5b20fe0",
         "filename": "third_party/WebKit/Source/platform/fonts/mac/FontPlatformDataMac.mm",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "f6fcc98a5861066f455dbe9949a62f3840e6bc63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f577f90_e31d2018",
+        "filename": "third_party/WebKit/Source/platform/fonts/mac/FontPlatformDataMac.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-22T07:44:32Z",
+      "side": 1,
+      "message": "Thanks.  After doing this testing, I have found that the mojo definition needed to be changed to make the mem handle optional so that a null value can be passed back when browser fails to load font.",
+      "parentUuid": "150fae8e_a5b20fe0",
+      "revId": "f6fcc98a5861066f455dbe9949a62f3840e6bc63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
