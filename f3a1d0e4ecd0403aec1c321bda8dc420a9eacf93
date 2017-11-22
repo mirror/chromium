@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac514ed7_14ab085b",
+        "filename": "chrome/browser/browser_process.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "does this need to be on BrowserProcess? (comment?)\n\nWhy not just \n\n // static\n TabsTracker\u0026 TabsTracker::GetInstance() {\n   CR_DEFINE_STATIC_LOCAL(TabsTracker, instance, ());\n   return instance;\n }",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fe826b_1d090a55",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "You could probably move this to ChromeBrowserMainExtraPartsViews -- that keeps everything under c/b/ui\n\nTabsTracker::GetInstance().StartWatchingBrowsers(); ?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e77dac3_dd1a1733",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 3573,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "don\u0027t we already guarantee c/b/ui/* is only compiled on Windows/Mac/Linux/CrOS? Can this just be added as a runtime feature or does it need to be disabled separately?\n\nIs there a plan to remove this feature? Maybe this was discussed already. To me, adding this as a build flag is distracting - seems we just want to add this to desktop platforms without a buildflag.",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368437e3_e80b1532",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "I\u0027d just make all these `return TabEvent::CONTENT_TYPE_UNKNOWN;` and do the static cast when passing to TabManager_Tab::SetContentType()",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d43fdb6_a7e8f5f4",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "comment why the rounding is necessary?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e5d962_995c9aba",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "DCHECK_LE? pretty sure that\u0027s a thing",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b3de4f_aacd5729",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "nit: |contents| |web_contents| should match",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2ac26c_4925ae32",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "this method doesn\u0027t seem to use |browser| yet - remove?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c7a7dd_84b2da71",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "calling TimeTicks::Now() is quite slow - you shouldn\u0027t call it twice. Also you always need the entry - you can avoid looking it up twice with something like\n\n base::TimeTicks\u0026 last_entry \u003d last_log_times_[ukm_source_id];\n if (!last_entry.is_null()) { ... }  // or just omit -- diffing Now() with a default constructed TimeTicks should just give a big value\n\ni.e.\n\n base::TimeTicks\u0026 last_entry \u003d last_log_times_[ukm_source_id];\n const base::TimeTicks now \u003d base::TimeTicks::Now();\n if (now - last_entry \u003e kMinimumTimeBetweenTabLogs)\n   return;\n last_entry \u003d now;",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44c090c_b92c6c2c",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "Why do you need a separate TabLogger? (can TabsTracker just do all the logging?)",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b055805f_1d7c7900",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "do you need the separate tab_strip_model, or can you just use browser-\u003etab_strip_model()?  (can you even just pass in web_contents, and determine |browser| inside the logger?)",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e1fe14_9ae44680",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb69187_9fbe975b",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "Maybe this was discussed... but this whole thing looks a lot like TabUsageRecorder::WebContentsData -- can we augment that with WebContentsObserver stuff rather than having two tab loggers in Chrome?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa44778_f0e4d431",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "note I don\u0027t think this gets called on Mac when the web contents is destroyed - is that important?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8786bc42_e9c0186b",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "are these normally at the top of a file?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1709e783_4b772ed2",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "comment?\n\nalso only factory functions come before constructor/destructor per go/cppguide#Declaration_Order",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7005971_8be73d60",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58f4c65_261e338d",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T08:59:30Z",
+      "side": 1,
+      "message": "DISALLOW",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
