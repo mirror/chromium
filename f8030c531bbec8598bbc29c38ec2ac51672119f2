@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7216b5a9_f8b687af",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-22T18:43:09Z",
+      "side": 0,
+      "message": "Is this TODO still valid? It seems like maybe you need a result-\u003eGetTextureResult() check here since CopyLayerTree below uses GetTextureResult without checking it.  Same question for the other place that this is removed.",
+      "revId": "f8030c531bbec8598bbc29c38ec2ac51672119f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
