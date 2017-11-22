@@ -551,6 +551,24 @@
     },
     {
       "key": {
+        "uuid": "f9bbe808_5561c647",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-22T00:07:27Z",
+      "side": 1,
+      "message": "BTW, if this didn\u0027t trip test failures we should add a test. It wouldn\u0027t surprise me - most tests probably just chain calls rather than racing them if they even do more than one.\n\nI\u0027ve uploaded https://chromium-review.googlesource.com/c/chromium/src/+/783520 - can you either review that or (if it looks good) pull it into this CL ?",
+      "parentUuid": "0fee84d6_26bec3f5",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a04fb24_b0c6bd21",
         "filename": "content/renderer/quota_dispatcher.cc",
         "patchSetId": 6
