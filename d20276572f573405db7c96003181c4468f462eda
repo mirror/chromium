@@ -34,6 +34,24 @@
       "revId": "d20276572f573405db7c96003181c4468f462eda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe96b2d_ff3b633b",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-22T19:15:27Z",
+      "side": 1,
+      "message": "Having 2 copies of a constant sounds like a recipe for bugs in the future. Can we consolidate these?\n\nWould it make sense to define these in gpu/command_buffer/common? ui/gl would need to add a dep on it but I don\u0027t see a cycle, and ui/gl is basically gpu/command_buffer/service and plan is to move it. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d741213",
+      "parentUuid": "bdc25e1b_637bec19",
+      "revId": "d20276572f573405db7c96003181c4468f462eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
