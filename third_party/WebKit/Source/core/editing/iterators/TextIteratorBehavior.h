@@ -95,6 +95,9 @@ class CORE_EXPORT TextIteratorBehavior final {
       bool skips_unselectable_content : 1;
     } bits;
   } values_;
+
+  static_assert(sizeof(TextIteratorBehavior::values_) <= sizeof(unsigned),
+                "All flags should fit into unsigned");
 };
 
 class CORE_EXPORT TextIteratorBehavior::Builder final {

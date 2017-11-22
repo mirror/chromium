@@ -650,8 +650,8 @@ bool HTMLFormControlElement::IsSuccessfulSubmitButton() const {
   return CanBeSuccessfulSubmitButton() && !IsDisabledFormControl();
 }
 
-HTMLFormControlElement* HTMLFormControlElement::EnclosingFormControlElement(
-    Node* node) {
+const HTMLFormControlElement*
+HTMLFormControlElement::EnclosingFormControlElement(const Node* node) {
   if (!node)
     return nullptr;
   return Traversal<HTMLFormControlElement>::FirstAncestorOrSelf(*node);
