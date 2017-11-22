@@ -7,6 +7,7 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
+#include "core/css/properties/CSSProperty.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/text/AtomicString.h"
@@ -21,7 +22,6 @@ class Node;
 class PropertyRegistry;
 class ShadowData;
 class ShadowList;
-class StyleColor;
 
 class ComputedStyleCSSValueMapping {
   STATIC_ONLY(ComputedStyleCSSValueMapping);
@@ -29,7 +29,7 @@ class ComputedStyleCSSValueMapping {
  public:
   // FIXME: Resolve computed auto alignment in applyProperty/ComputedStyle and
   // remove this non-const styledNode parameter.
-  static const CSSValue* Get(CSSPropertyID,
+  static const CSSValue* Get(const CSSProperty&,
                              const ComputedStyle&,
                              const LayoutObject* = nullptr,
                              Node* styled_node = nullptr,
@@ -41,8 +41,6 @@ class ComputedStyleCSSValueMapping {
   GetVariables(const ComputedStyle&);
 
  private:
-  static CSSValue* CurrentColorOrValidColor(const ComputedStyle&,
-                                            const StyleColor&);
   static CSSValue* ValueForShadowData(const ShadowData&,
                                       const ComputedStyle&,
                                       bool use_spread);
