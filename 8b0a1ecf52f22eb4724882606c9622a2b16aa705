@@ -22,6 +22,30 @@
       "revId": "8b0a1ecf52f22eb4724882606c9622a2b16aa705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cf53a7_236b61e0",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-22T08:58:40Z",
+      "side": 1,
+      "message": "Yeah, I think I\u0027d have to make Trigger public, which I\u0027d like to avoid. static it is!",
+      "parentUuid": "847289ba_57bde7eb",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "8b0a1ecf52f22eb4724882606c9622a2b16aa705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
