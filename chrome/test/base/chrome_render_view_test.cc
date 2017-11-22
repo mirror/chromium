@@ -129,6 +129,10 @@ void ChromeRenderViewTest::SetUp() {
   autofill_agent_ = new NiceMock<MockAutofillAgent>(
       view_->GetMainRenderFrame(), password_autofill_agent_,
       password_generation_, registry_.get());
+
+#if BUILDFLAG(ENABLE_SPELLCHECK)
+  client_->InitSpellCheck();
+#endif
 }
 
 void ChromeRenderViewTest::TearDown() {
@@ -154,9 +158,9 @@ ChromeRenderViewTest::CreateContentBrowserClient() {
 
 content::ContentRendererClient*
 ChromeRenderViewTest::CreateContentRendererClient() {
-  ChromeContentRendererClient* client = new ChromeContentRendererClient();
-  InitChromeContentRendererClient(client);
-  return client;
+  client_ = new ChromeContentRendererClient();
+  InitChromeContentRendererClient(client_);
+  return client_;
 }
 
 void ChromeRenderViewTest::RegisterMainFrameRemoteInterfaces() {}
@@ -169,9 +173,6 @@ void ChromeRenderViewTest::InitChromeContentRendererClient(
   ext_client->SetExtensionDispatcherForTest(
       base::MakeUnique<extensions::Dispatcher>(
           std::make_unique<ChromeExtensionsDispatcherDelegate>()));
-#endif
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-  client->SetSpellcheck(new SpellCheck(nullptr));
 #endif
 }
 

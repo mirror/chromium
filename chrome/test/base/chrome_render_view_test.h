@@ -48,6 +48,8 @@ class ChromeRenderViewTest : public content::RenderViewTest {
   autofill::TestPasswordGenerationAgent* password_generation_;
   autofill::AutofillAgent* autofill_agent_;
 
+  ChromeContentRendererClient* client_ = nullptr;
+
   std::unique_ptr<service_manager::BinderRegistry> registry_;
 
   // Naked pointer as ownership is with content::RenderViewTest::render_thread_.
