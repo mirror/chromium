@@ -317,7 +317,8 @@ blink::Animation* InspectorAnimationAgent::AnimationClone(
     }
 
     KeyframeEffect* new_effect = KeyframeEffect::Create(
-        old_effect->Target(), new_model, old_effect->SpecifiedTiming());
+        old_effect->Target(), new_model, old_effect->compositeInternal(),
+        old_effect->SpecifiedTiming());
     is_cloning_ = true;
     blink::Animation* clone =
         blink::Animation::Create(new_effect, animation->timeline());

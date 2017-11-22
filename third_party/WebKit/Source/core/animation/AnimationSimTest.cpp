@@ -73,7 +73,8 @@ TEST_F(AnimationSimTest, CustomPropertyBaseComputedStyle) {
   Timing timing;
   timing.iteration_duration = 1;  // Seconds.
   ElementAnimation::animateInternal(
-      *target, StringKeyframeEffectModel::Create(keyframes), timing);
+      *target, StringKeyframeEffectModel::Create(keyframes),
+      EffectModel::kCompositeReplace, timing);
 
   // This sets the baseComputedStyle on the animation exit frame.
   Compositor().BeginFrame(1);
@@ -93,7 +94,8 @@ TEST_F(AnimationSimTest, CustomPropertyBaseComputedStyle) {
   timing = Timing::Defaults();
   timing.iteration_duration = 1;  // Seconds.
   ElementAnimation::animateInternal(
-      *target, StringKeyframeEffectModel::Create(keyframes), timing);
+      *target, StringKeyframeEffectModel::Create(keyframes),
+      EffectModel::kCompositeReplace, timing);
 
   // This (previously) would not clear the existing baseComputedStyle and would
   // crash on the equality assertion in the exit frame when it tried to update

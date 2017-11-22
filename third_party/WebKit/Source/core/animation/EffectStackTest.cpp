@@ -70,7 +70,8 @@ class AnimationEffectStackTest : public ::testing::Test {
     Timing timing;
     timing.fill_mode = Timing::FillMode::BOTH;
     timing.iteration_duration = duration;
-    return KeyframeEffect::Create(element.Get(), effect, timing);
+    return KeyframeEffect::Create(element.Get(), effect,
+                                  EffectModel::kCompositeReplace, timing);
   }
 
   double GetFontSizeValue(

@@ -32,6 +32,7 @@ class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
 
   static KeyframeEffectReadOnly* Create(Element*,
                                         EffectModel*,
+                                        EffectModel::CompositeOperation,
                                         const Timing&,
                                         Priority = kDefaultPriority,
                                         EventDelegate* = nullptr);
@@ -53,7 +54,12 @@ class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
   bool IsKeyframeEffectReadOnly() const override { return true; }
 
   // IDL implementation.
+  String composite() const;
   Vector<ScriptValue> getKeyframes(ScriptState*);
+
+  EffectModel::CompositeOperation compositeInternal() const {
+    return composite_;
+  }
 
   bool Affects(const PropertyHandle&) const;
   const EffectModel* Model() const { return model_.Get(); }
@@ -94,6 +100,7 @@ class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
  protected:
   KeyframeEffectReadOnly(Element*,
                          EffectModel*,
+                         EffectModel::CompositeOperation,
                          const Timing&,
                          Priority,
                          EventDelegate*);
@@ -119,6 +126,10 @@ class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
   Priority priority_;
 
   Vector<int> compositor_animation_ids_;
+
+  // TODO(smcgruer): This perhaps should be part of the model_? But it always
+  // exists, whilst the model can be null.
+  EffectModel::CompositeOperation composite_;
 };
 
 DEFINE_TYPE_CASTS(KeyframeEffectReadOnly,

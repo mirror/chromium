@@ -99,8 +99,8 @@ class AnimationDocumentTimelineTest : public ::testing::Test {
 TEST_F(AnimationDocumentTimelineTest, EmptyKeyframeAnimation) {
   StringKeyframeEffectModel* effect =
       StringKeyframeEffectModel::Create(StringKeyframeVector());
-  KeyframeEffect* keyframe_effect =
-      KeyframeEffect::Create(element.Get(), effect, timing);
+  KeyframeEffect* keyframe_effect = KeyframeEffect::Create(
+      element.Get(), effect, EffectModel::kCompositeReplace, timing);
 
   timeline->Play(keyframe_effect);
 
@@ -116,8 +116,8 @@ TEST_F(AnimationDocumentTimelineTest, EmptyForwardsKeyframeAnimation) {
   StringKeyframeEffectModel* effect =
       StringKeyframeEffectModel::Create(StringKeyframeVector());
   timing.fill_mode = Timing::FillMode::FORWARDS;
-  KeyframeEffect* keyframe_effect =
-      KeyframeEffect::Create(element.Get(), effect, timing);
+  KeyframeEffect* keyframe_effect = KeyframeEffect::Create(
+      element.Get(), effect, EffectModel::kCompositeReplace, timing);
 
   timeline->Play(keyframe_effect);
 
@@ -351,10 +351,10 @@ TEST_F(AnimationDocumentTimelineTest, PauseForTesting) {
   timing.fill_mode = Timing::FillMode::FORWARDS;
   KeyframeEffect* anim1 = KeyframeEffect::Create(
       element.Get(), StringKeyframeEffectModel::Create(StringKeyframeVector()),
-      timing);
+      EffectModel::kCompositeReplace, timing);
   KeyframeEffect* anim2 = KeyframeEffect::Create(
       element.Get(), StringKeyframeEffectModel::Create(StringKeyframeVector()),
-      timing);
+      EffectModel::kCompositeReplace, timing);
   Animation* animation1 = timeline->Play(anim1);
   Animation* animation2 = timeline->Play(anim2);
   timeline->PauseAnimationsForTesting(seek_time);
@@ -367,8 +367,8 @@ TEST_F(AnimationDocumentTimelineTest, DelayBeforeAnimationStart) {
   timing.iteration_duration = 2;
   timing.start_delay = 5;
 
-  KeyframeEffect* keyframe_effect =
-      KeyframeEffect::Create(element.Get(), nullptr, timing);
+  KeyframeEffect* keyframe_effect = KeyframeEffect::Create(
+      element.Get(), nullptr, EffectModel::kCompositeReplace, timing);
 
   timeline->Play(keyframe_effect);
 
@@ -402,8 +402,8 @@ TEST_F(AnimationDocumentTimelineTest, PlayAfterDocumentDeref) {
   timeline = &document->Timeline();
   document = nullptr;
 
-  KeyframeEffect* keyframe_effect =
-      KeyframeEffect::Create(nullptr, nullptr, timing);
+  KeyframeEffect* keyframe_effect = KeyframeEffect::Create(
+      nullptr, nullptr, EffectModel::kCompositeReplace, timing);
   // Test passes if this does not crash.
   timeline->Play(keyframe_effect);
 }

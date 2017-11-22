@@ -30,10 +30,11 @@ namespace blink {
 KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
     Element* target,
     EffectModel* model,
+    EffectModel::CompositeOperation composite,
     const Timing& timing,
     Priority priority,
     EventDelegate* event_delegate) {
-  return new KeyframeEffectReadOnly(target, model, timing, priority,
+  return new KeyframeEffectReadOnly(target, model, composite, timing, priority,
                                     event_delegate);
 }
 
@@ -53,10 +54,20 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
   Document* document = element ? &element->GetDocument() : nullptr;
   if (!TimingInput::Convert(options, timing, document, exception_state))
     return nullptr;
+
+  EffectModel::CompositeOperation composite = EffectModel::kCompositeReplace;
+  if (options.IsKeyframeEffectOptions()) {
+    if (!EffectModel::StringToCompositeOperation(
+            options.GetAsKeyframeEffectOptions().composite(), composite)) {
+      exception_state.ThrowTypeError("Invalide composite");
+      return nullptr;
+    }
+  }
+
   return Create(element,
                 EffectInput::Convert(element, effect_input, execution_context,
                                      exception_state),
-                timing);
+                composite, timing);
 }
 
 KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
@@ -73,19 +84,22 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
   return Create(element,
                 EffectInput::Convert(element, effect_input, execution_context,
                                      exception_state),
-                Timing());
+                EffectModel::kCompositeReplace, Timing());
 }
 
-KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,
-                                               EffectModel* model,
-                                               const Timing& timing,
-                                               Priority priority,
-                                               EventDelegate* event_delegate)
+KeyframeEffectReadOnly::KeyframeEffectReadOnly(
+    Element* target,
+    EffectModel* model,
+    EffectModel::CompositeOperation composite,
+    const Timing& timing,
+    Priority priority,
+    EventDelegate* event_delegate)
     : AnimationEffectReadOnly(timing, event_delegate),
       target_(target),
       model_(model),
       sampled_effect_(nullptr),
-      priority_(priority) {
+      priority_(priority),
+      composite_(composite) {
   DCHECK(!model_ || model_->IsKeyframeEffectModel());
 }
 
@@ -316,6 +330,11 @@ void KeyframeEffectReadOnly::StartAnimationOnCompositor(
   DCHECK(!compositor_animation_ids_.IsEmpty());
 }
 
+String KeyframeEffectReadOnly::composite() const {
+  // TODO(smcgruer): Track the composite op.
+  return EffectModel::CompositeOperationToString(composite_);
+}
+
 Vector<ScriptValue> KeyframeEffectReadOnly::getKeyframes(
     ScriptState* script_state) {
   Vector<ScriptValue> computed_keyframes;
@@ -335,7 +354,7 @@ Vector<ScriptValue> KeyframeEffectReadOnly::getKeyframes(
   ScriptState::Scope scope(script_state);
   for (size_t i = 0; i < keyframes.size(); i++) {
     V8ObjectBuilder object_builder(script_state);
-    keyframes[i]->AddKeyframePropertiesToV8Object(object_builder);
+    keyframes[i]->AddKeyframePropertiesToV8Object(object_builder, composite_);
     object_builder.Add("computedOffset", computed_offsets[i]);
     computed_keyframes.push_back(object_builder.GetScriptValue());
   }

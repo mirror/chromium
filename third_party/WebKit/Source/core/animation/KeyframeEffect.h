@@ -50,6 +50,7 @@ class CORE_EXPORT KeyframeEffect final : public KeyframeEffectReadOnly {
  public:
   static KeyframeEffect* Create(Element*,
                                 EffectModel*,
+                                EffectModel::CompositeOperation,
                                 const Timing&,
                                 KeyframeEffectReadOnly::Priority =
                                     KeyframeEffectReadOnly::kDefaultPriority,
@@ -76,6 +77,7 @@ class CORE_EXPORT KeyframeEffect final : public KeyframeEffectReadOnly {
  private:
   KeyframeEffect(Element*,
                  EffectModel*,
+                 EffectModel::CompositeOperation,
                  const Timing&,
                  KeyframeEffectReadOnly::Priority,
                  EventDelegate*);

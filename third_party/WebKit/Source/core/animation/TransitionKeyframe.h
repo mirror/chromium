@@ -31,7 +31,9 @@ class CORE_EXPORT TransitionKeyframe : public Keyframe {
   void SetCompositorValue(scoped_refptr<AnimatableValue>);
   PropertyHandleSet Properties() const final;
 
-  void AddKeyframePropertiesToV8Object(V8ObjectBuilder&) const override;
+  void AddKeyframePropertiesToV8Object(
+      V8ObjectBuilder&,
+      EffectModel::CompositeOperation) const override;
 
   class PropertySpecificKeyframe : public Keyframe::PropertySpecificKeyframe {
    public:

@@ -292,8 +292,8 @@ void HTMLMarqueeElement::ContinueAnimation() {
       timing, UnrestrictedDoubleOrString::FromUnrestrictedDouble(duration),
       ASSERT_NO_EXCEPTION);
 
-  KeyframeEffect* keyframe_effect =
-      KeyframeEffect::Create(mover_, effect_model, timing);
+  KeyframeEffect* keyframe_effect = KeyframeEffect::Create(
+      mover_, effect_model, EffectModel::kCompositeReplace, timing);
   Animation* player = mover_->GetDocument().Timeline().Play(keyframe_effect);
   player->setId(g_empty_string);
   player->setOnfinish(new AnimationFinished(this));

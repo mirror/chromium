@@ -496,7 +496,8 @@ void CSSAnimations::MaybeApplyPendingUpdate(Element* element) {
     AnimationEventDelegate* event_delegate =
         new AnimationEventDelegate(element, entry.name);
     KeyframeEffect* effect = KeyframeEffect::Create(
-        element, inert_animation->Model(), inert_animation->SpecifiedTiming(),
+        element, inert_animation->Model(), EffectModel::kCompositeReplace,
+        inert_animation->SpecifiedTiming(),
         KeyframeEffectReadOnly::kDefaultPriority, event_delegate);
     Animation* animation = element->GetDocument().Timeline().Play(effect);
     animation->setId(entry.name);
@@ -606,7 +607,8 @@ void CSSAnimations::MaybeApplyPendingUpdate(Element* element) {
     }
 
     KeyframeEffect* transition = KeyframeEffect::Create(
-        element, model, inert_animation->SpecifiedTiming(),
+        element, model, EffectModel::kCompositeReplace,
+        inert_animation->SpecifiedTiming(),
         KeyframeEffectReadOnly::kTransitionPriority, event_delegate);
     Animation* animation = element->GetDocument().Timeline().Play(transition);
     if (property.IsCSSCustomProperty()) {

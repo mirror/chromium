@@ -1211,8 +1211,8 @@ TEST_F(AnimationCompositorAnimationsTest,
   timing.iteration_duration = 1.f;
 
   // The first animation for opacity is ok to run on compositor.
-  KeyframeEffect* keyframe_effect1 =
-      KeyframeEffect::Create(element.Get(), animation_effect1, timing);
+  KeyframeEffect* keyframe_effect1 = KeyframeEffect::Create(
+      element.Get(), animation_effect1, EffectModel::kCompositeReplace, timing);
   Animation* animation1 = timeline_->Play(keyframe_effect1);
   auto style = ComputedStyle::Create();
   animation_effect1->SnapshotAllCompositorKeyframes(*element_.Get(), *style,
@@ -1229,8 +1229,8 @@ TEST_F(AnimationCompositorAnimationsTest,
   EXPECT_TRUE(animation1->HasActiveAnimationsOnCompositor());
 
   // The second animation for opacity is not ok to run on compositor.
-  KeyframeEffect* keyframe_effect2 =
-      KeyframeEffect::Create(element.Get(), animation_effect2, timing);
+  KeyframeEffect* keyframe_effect2 = KeyframeEffect::Create(
+      element.Get(), animation_effect2, EffectModel::kCompositeReplace, timing);
   Animation* animation2 = timeline_->Play(keyframe_effect2);
   animation_effect2->SnapshotAllCompositorKeyframes(*element_.Get(), *style,
                                                     nullptr);

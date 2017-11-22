@@ -46,10 +46,12 @@ namespace blink {
 KeyframeEffect* KeyframeEffect::Create(
     Element* target,
     EffectModel* model,
+    EffectModel::CompositeOperation composite,
     const Timing& timing,
     KeyframeEffectReadOnly::Priority priority,
     EventDelegate* event_delegate) {
-  return new KeyframeEffect(target, model, timing, priority, event_delegate);
+  return new KeyframeEffect(target, model, composite, timing, priority,
+                            event_delegate);
 }
 
 KeyframeEffect* KeyframeEffect::Create(
@@ -68,10 +70,20 @@ KeyframeEffect* KeyframeEffect::Create(
   Document* document = element ? &element->GetDocument() : nullptr;
   if (!TimingInput::Convert(options, timing, document, exception_state))
     return nullptr;
+
+  EffectModel::CompositeOperation composite = EffectModel::kCompositeReplace;
+  if (options.IsKeyframeEffectOptions()) {
+    if (!EffectModel::StringToCompositeOperation(
+            options.GetAsKeyframeEffectOptions().composite(), composite)) {
+      exception_state.ThrowTypeError("Invalide composite");
+      return nullptr;
+    }
+  }
+
   return Create(element,
                 EffectInput::Convert(element, effect_input, execution_context,
                                      exception_state),
-                timing);
+                composite, timing);
 }
 
 KeyframeEffect* KeyframeEffect::Create(
@@ -88,15 +100,21 @@ KeyframeEffect* KeyframeEffect::Create(
   return Create(element,
                 EffectInput::Convert(element, effect_input, execution_context,
                                      exception_state),
-                Timing());
+                EffectModel::kCompositeReplace, Timing());
 }
 
 KeyframeEffect::KeyframeEffect(Element* target,
                                EffectModel* model,
+                               EffectModel::CompositeOperation composite,
                                const Timing& timing,
                                KeyframeEffectReadOnly::Priority priority,
                                EventDelegate* event_delegate)
-    : KeyframeEffectReadOnly(target, model, timing, priority, event_delegate) {}
+    : KeyframeEffectReadOnly(target,
+                             model,
+                             composite,
+                             timing,
+                             priority,
+                             event_delegate) {}
 
 KeyframeEffect::~KeyframeEffect() {}
 

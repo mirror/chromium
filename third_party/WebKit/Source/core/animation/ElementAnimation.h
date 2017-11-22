@@ -71,12 +71,23 @@ class ElementAnimation {
                               exception_state))
       return nullptr;
 
+    EffectModel::CompositeOperation composite = EffectModel::kCompositeReplace;
     if (options.IsKeyframeAnimationOptions()) {
-      Animation* animation = animateInternal(element, effect, timing);
+      // TODO(smcgruer): This conversion is repeated everywhere; refactor to
+      // avoid.
+      if (!EffectModel::StringToCompositeOperation(
+              options.GetAsKeyframeAnimationOptions().composite(), composite)) {
+        exception_state.ThrowTypeError("Invalid composite");
+        return nullptr;
+      }
+
+      Animation* animation =
+          animateInternal(element, effect, composite, timing);
       animation->setId(options.GetAsKeyframeAnimationOptions().id());
       return animation;
     }
-    return animateInternal(element, effect, timing);
+
+    return animateInternal(element, effect, composite, timing);
   }
 
   static Animation* animate(ScriptState* script_state,
@@ -88,7 +99,8 @@ class ElementAnimation {
         exception_state);
     if (exception_state.HadException())
       return nullptr;
-    return animateInternal(element, effect, Timing());
+    return animateInternal(element, effect, EffectModel::kCompositeReplace,
+                           Timing());
   }
 
   static HeapVector<Member<Animation>> getAnimations(Element& element) {
@@ -113,9 +125,10 @@ class ElementAnimation {
 
   static Animation* animateInternal(Element& element,
                                     EffectModel* effect,
+                                    EffectModel::CompositeOperation composite,
                                     const Timing& timing) {
     KeyframeEffect* keyframe_effect =
-        KeyframeEffect::Create(&element, effect, timing);
+        KeyframeEffect::Create(&element, effect, composite, timing);
     return element.GetDocument().Timeline().Play(keyframe_effect);
   }
 };
