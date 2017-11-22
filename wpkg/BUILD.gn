@@ -1,0 +1,30 @@
+component("wpkg") {
+  sources = [
+    "../content/browser/webauth/cbor/cbor_binary.h",
+    "../content/browser/webauth/cbor/cbor_reader.cc",
+    "../content/browser/webauth/cbor/cbor_reader.h",
+    "../content/browser/webauth/cbor/cbor_values.cc",
+    "../content/browser/webauth/cbor/cbor_values.h",
+    "../content/browser/webauth/cbor/cbor_writer.cc",
+    "../content/browser/webauth/cbor/cbor_writer.h",
+    "webpackage_reader.cc",
+    "webpackage_reader.h",
+  ]
+  defines = [ "WPKG_IMPLEMENTATION" ]
+  public_deps = [
+    "//base",
+    "//buildtools/third_party/libc++",
+    "//net",
+  ]
+}
+executable("wpkgtest") {
+  sources = [
+    "main.cc",
+  ]
+  public_deps = [
+    ":wpkg",
+    "//base",
+    "//buildtools/third_party/libc++",
+    "//net",
+  ]
+}
