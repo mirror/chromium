@@ -208,4 +208,26 @@ const int styleCount = 2;
   return starButton;
 }
 
+- (NSArray<UIImage*>*)voiceSearchImages {
+  //  int imageID;
+  //  if(!ios::GetChromeBrowserProvider()
+  //  ->GetBrandedImageProvider()
+  //     ->GetToolbarVoiceSearchButtonImageId(&imageID)) {
+  //
+  //  }
+  int voiceSearchImages[styleCount][TOOLBAR_STATE_COUNT] =
+      TOOLBAR_IDR_TWO_STATE(VOICE);
+  return [NSArray
+      arrayWithObjects:NativeImage(voiceSearchImages[self.style][DEFAULT]),
+                       NativeImage(voiceSearchImages[self.style][PRESSED]),
+                       nil];
+}
+
+- (NSArray<UIImage*>*)TTSImages {
+  int TTSImages[styleCount][TOOLBAR_STATE_COUNT] = TOOLBAR_IDR_TWO_STATE(TTS);
+  return [NSArray arrayWithObjects:NativeImage(TTSImages[self.style][DEFAULT]),
+                                   NativeImage(TTSImages[self.style][PRESSED]),
+                                   nil];
+}
+
 @end
