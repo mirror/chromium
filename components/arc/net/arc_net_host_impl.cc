@@ -82,6 +82,18 @@ arc::mojom::SecurityType TranslateONCWifiSecurityType(
     return arc::mojom::SecurityType::NONE;
 }
 
+arc::mojom::TetheringState TranslateTetheringState(
+    const std::string& tethering_state) {
+  if (tethering_state == onc::tethering_state::kTetheringConfirmedState)
+    return arc::mojom::TetheringState::CONFIRMED;
+  else if (tethering_state == onc::tethering_state::kTetheringNotDetectedState)
+    return arc::mojom::TetheringState::NOT_DETECTED;
+  else if (tethering_state == onc::tethering_state::kTetheringSuspectedState)
+    return arc::mojom::TetheringState::SUSPECTED;
+  NOTREACHED();
+  return arc::mojom::TetheringState::NOT_DETECTED;
+}
+
 arc::mojom::WiFiPtr TranslateONCWifi(const base::DictionaryValue* dict) {
   arc::mojom::WiFiPtr wifi = arc::mojom::WiFi::New();
 
@@ -101,6 +113,9 @@ arc::mojom::WiFiPtr TranslateONCWifi(const base::DictionaryValue* dict) {
   // Optional; defaults to 0.
   dict->GetInteger(onc::wifi::kSignalStrength, &wifi->signal_strength);
 
+  std::string tethering_state;
+  dict->GetString(onc::wifi::kTetheringState, &tethering_state);
+  wifi->tethering_state = TranslateTetheringState(tethering_state);
   return wifi;
 }
 

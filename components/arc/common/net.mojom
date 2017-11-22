@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 8
+// Next MinVersion: 9
 
 module arc.mojom;
 
@@ -65,6 +65,13 @@ enum SecurityType {
   WPA_EAP,
 };
 
+[Extensible]
+enum TetheringState {
+  CONFIRMED,
+  NOT_DETECTED,
+  SUSPECTED,
+};
+
 struct WiFi {
   string bssid;
   int32 frequency;
@@ -72,6 +79,7 @@ struct WiFi {
   bool hidden_ssid;
   SecurityType security;
   int32 signal_strength;
+  [MinVersion=8] TetheringState tethering_state;
 };
 
 [Extensible]
