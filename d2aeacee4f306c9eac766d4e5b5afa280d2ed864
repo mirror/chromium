@@ -52,6 +52,24 @@
       "revId": "d2aeacee4f306c9eac766d4e5b5afa280d2ed864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483a55e4_5d8e329a",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/filter-matches.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-22T22:45:16Z",
+      "side": 1,
+      "message": "Thank you for the suggestion. I found that setUpPreconnectedDevice from bluetooth-helpers.js can be used and it can still make the properties of the device clear.",
+      "parentUuid": "3ed7a22c_f6725760",
+      "revId": "d2aeacee4f306c9eac766d4e5b5afa280d2ed864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
