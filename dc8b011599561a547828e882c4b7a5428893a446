@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12a957be_3d61e55b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-22T19:53:44Z",
+      "side": 1,
+      "message": "Seems out of date, since you verify a 10x10 rect below?",
+      "range": {
+        "startLine": 1660,
+        "startChar": 17,
+        "endLine": 1660,
+        "endChar": 34
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc0d4f2_50944a6a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-22T19:53:44Z",
+      "side": 1,
+      "message": "10x10 seems kind of arbitrary.  Any reason for using that vs, for example, the \u003cinput\u003e\u0027s width and height from its getBoundingClientRect()?",
+      "range": {
+        "startLine": 1673,
+        "startChar": 22,
+        "endLine": 1673,
+        "endChar": 39
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d934813_2751fcfb",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2494,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-22T19:53:44Z",
+      "side": 1,
+      "message": "nit: should this have a TODO(ekaramad)?",
+      "range": {
+        "startLine": 2494,
+        "startChar": 0,
+        "endLine": 2494,
+        "endChar": 80
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
