@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b4c8a24_2f377dbb",
+        "filename": "third_party/WebKit/Source/core/svg/graphics/SVGImage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-22T19:21:48Z",
+      "side": 1,
+      "message": "This looks a bit awkward - why can\u0027t LocalFrame::ForceSynchronousDocumentInstall handle this (directly or indirectly)? Isn\u0027t this relevant for other users of that functionality? I\u0027m also a bit worried that this is an indication that other things are also no longer happening as expected...\n\nRegardless, this still misses the case handle by the case above. (Doing the above would fix that, otherwise this ought to be hoisted - preferably to just after ForceSynch...)",
+      "range": {
+        "startLine": 808,
+        "startChar": 6,
+        "endLine": 810,
+        "endChar": 74
+      },
+      "revId": "a44edd753fbcc0834fa96cfc1c564d2b987da4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
