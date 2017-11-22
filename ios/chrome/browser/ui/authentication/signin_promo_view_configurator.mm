@@ -20,22 +20,26 @@
   NSString* _userEmail;
   NSString* _userFullName;
   UIImage* _userImage;
+  BOOL _hasCloseButton;
 }
 
 - (instancetype)initWithUserEmail:(NSString*)userEmail
                      userFullName:(NSString*)userFullName
-                        userImage:(UIImage*)userImage {
+                        userImage:(UIImage*)userImage
+                   hasCloseButton:(BOOL)hasCloseButton {
   self = [super init];
   if (self) {
     DCHECK(userEmail || (!userEmail && !userFullName && !userImage));
     _userFullName = [userFullName copy];
     _userEmail = [userEmail copy];
     _userImage = [userImage copy];
+    _hasCloseButton = hasCloseButton;
   }
   return self;
 }
 
 - (void)configureSigninPromoView:(SigninPromoView*)signinPromoView {
+  signinPromoView.closeButton.hidden = !_hasCloseButton;
   if (!_userEmail) {
     signinPromoView.mode = SigninPromoViewModeColdState;
   } else {
