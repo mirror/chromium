@@ -118,6 +118,30 @@
       "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bdf37b_13552b2d",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-11-22T15:33:09Z",
+      "side": 1,
+      "message": "Yeah, Dominik, do you have an automated test for downloaded fonts that would verify this on 10.13. Actually, since downloaded fonts appear to have regressed multiple times now, isn\u0027t this something we should add a browser test for with this CL? I assume browser tests run in a sandboxed browser.",
+      "parentUuid": "63ec7fa2_2b7849a9",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
