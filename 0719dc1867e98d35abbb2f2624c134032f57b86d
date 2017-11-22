@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "dcc59272_64ca28eb",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T09:11:20Z",
+      "side": 1,
+      "message": "Sounds reasonable.",
+      "parentUuid": "17e50b46_c71bb3b9",
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "494f8814_56ff7f57",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 6
