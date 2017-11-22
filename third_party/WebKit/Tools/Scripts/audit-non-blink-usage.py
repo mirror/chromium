@@ -122,6 +122,17 @@ _CONFIG = [
         # WTF::RefCounted should be used instead.
         'allowed': ['(?!base::RefCounted).+'],
     },
+    {
+        'paths': [
+            'third_party/WebKit/Source/core/exported/',
+            'third_party/WebKit/Source/modules/exported/',
+        ],
+        'allowed': [
+            'base::Time',
+            'base::TimeTicks',
+            'base::TimeDelta',
+        ],
+    },
 ]
 
 
