@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71b4ae8e_2db56be2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-22T07:16:15Z",
+      "side": 1,
+      "message": "I\u0027d rather have InspectorFrontendHost.showItemFolder to accept either fileURL or platform path.\nIt currently accepts something in-between.\n\nWe already have the Common.ParsedURL.platformPathToURL method.\nI\u0027d do similar here, introducing Common.ParsedURL.urlToPlatformPath(path, isWin) and call it here. This will hide the `substr` inside; the \"normalizePathSeparators\" won\u0027t be needed as well.",
+      "revId": "e5814b505f6d5724160d175f2ff438d9c7ba1f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
