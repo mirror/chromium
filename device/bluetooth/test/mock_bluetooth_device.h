@@ -35,6 +35,13 @@ class MockBluetoothDevice : public BluetoothDevice {
                       bool connected);
   virtual ~MockBluetoothDevice();
 
+  // This workaround is needed because GMock currently does not support
+  // move-only types.
+  // TODO(crbug.com/759710): Remove this once support for move-only types is
+  // added to GMock.
+  template <class OnceCallback>
+  using Repeating = base::RepeatingCallback<typename OnceCallback::RunType>;
+
   MOCK_CONST_METHOD0(GetBluetoothClass, uint32_t());
   MOCK_CONST_METHOD0(GetType, BluetoothTransport());
   MOCK_CONST_METHOD0(GetIdentifier, std::string());
@@ -58,43 +65,42 @@ class MockBluetoothDevice : public BluetoothDevice {
   MOCK_CONST_METHOD0(ExpectingPinCode, bool());
   MOCK_CONST_METHOD0(ExpectingPasskey, bool());
   MOCK_CONST_METHOD0(ExpectingConfirmation, bool());
-  MOCK_METHOD1(GetConnectionInfo, void(const ConnectionInfoCallback& callback));
+  MOCK_METHOD1(GetConnectionInfo,
+               void(Repeating<ConnectionInfoCallback> callback));
   MOCK_METHOD3(SetConnectionLatency,
                void(ConnectionLatency connection_latency,
-                    const base::Closure& callback,
-                    const ErrorCallback& error_callback));
+                    base::Closure callback,
+                    Repeating<ErrorCallback> error_callback));
   MOCK_METHOD3(Connect,
                void(BluetoothDevice::PairingDelegate* pairing_delegate,
-                    const base::Closure& callback,
-                    const BluetoothDevice::ConnectErrorCallback&
-                        error_callback));
-  MOCK_METHOD3(
-      Pair,
-      void(BluetoothDevice::PairingDelegate* pairing_delegate,
-           const base::Closure& callback,
-           const BluetoothDevice::ConnectErrorCallback& error_callback));
+                    base::Closure callback,
+                    Repeating<ConnectErrorCallback> error_callback));
+  MOCK_METHOD3(Pair,
+               void(BluetoothDevice::PairingDelegate* pairing_delegate,
+                    base::Closure callback,
+                    Repeating<ConnectErrorCallback> error_callback));
   MOCK_METHOD1(SetPinCode, void(const std::string&));
   MOCK_METHOD1(SetPasskey, void(uint32_t));
   MOCK_METHOD0(ConfirmPairing, void());
   MOCK_METHOD0(RejectPairing, void());
   MOCK_METHOD0(CancelPairing, void());
   MOCK_METHOD2(Disconnect,
-               void(const base::Closure& callback,
-                    const BluetoothDevice::ErrorCallback& error_callback));
+               void(base::Closure callback,
+                    Repeating<ErrorCallback> error_callback));
   MOCK_METHOD2(Forget,
-               void(const base::Closure& callback,
-                    const BluetoothDevice::ErrorCallback& error_callback));
+               void(base::Closure callback,
+                    Repeating<ErrorCallback> error_callback));
   MOCK_METHOD3(ConnectToService,
                void(const BluetoothUUID& uuid,
-                    const ConnectToServiceCallback& callback,
-                    const ConnectToServiceErrorCallback& error_callback));
+                    Repeating<ConnectToServiceCallback> callback,
+                    Repeating<ConnectToServiceErrorCallback> error_callback));
   MOCK_METHOD3(ConnectToServiceInsecurely,
                void(const BluetoothUUID& uuid,
-                    const ConnectToServiceCallback& callback,
-                    const ConnectToServiceErrorCallback& error_callback));
+                    Repeating<ConnectToServiceCallback> callback,
+                    Repeating<ConnectToServiceErrorCallback> error_callback));
   MOCK_METHOD2(CreateGattConnection,
-               void(const GattConnectionCallback& callback,
-                    const ConnectErrorCallback& error_callback));
+               void(Repeating<GattConnectionCallback> callback,
+                    Repeating<ConnectErrorCallback> error_callback));
 
   MOCK_METHOD1(SetGattServicesDiscoveryComplete, void(bool));
   MOCK_CONST_METHOD0(IsGattServicesDiscoveryComplete, bool());
@@ -105,6 +111,42 @@ class MockBluetoothDevice : public BluetoothDevice {
                      BluetoothRemoteGattService*(const std::string&));
   MOCK_METHOD0(CreateGattConnectionImpl, void());
   MOCK_METHOD0(DisconnectGatt, void());
+
+  // This workaround is needed because GMock currently does not support
+  // move-only types.
+  // TODO(crbug.com/759710): Remove this once support for move-only types is
+  // added to GMock.
+  void GetConnectionInfo(ConnectionInfoCallback callback) override;
+
+  void SetConnectionLatency(ConnectionLatency connection_latency,
+                            base::OnceClosure callback,
+                            ErrorCallback error_callback) override;
+
+  void Connect(BluetoothDevice::PairingDelegate* pairing_delegate,
+               base::OnceClosure callback,
+               ConnectErrorCallback error_callback) override;
+
+  void Pair(BluetoothDevice::PairingDelegate* pairing_delegate,
+            base::OnceClosure callback,
+            ConnectErrorCallback error_callback) override;
+
+  void Disconnect(base::OnceClosure callback,
+                  ErrorCallback error_callback) override;
+
+  void Forget(base::OnceClosure callback,
+              ErrorCallback error_callback) override;
+
+  void ConnectToService(const BluetoothUUID& uuid,
+                        ConnectToServiceCallback callback,
+                        ConnectToServiceErrorCallback error_callback) override;
+
+  void ConnectToServiceInsecurely(
+      const BluetoothUUID& uuid,
+      ConnectToServiceCallback callback,
+      ConnectToServiceErrorCallback error_callback) override;
+
+  void CreateGattConnection(GattConnectionCallback callback,
+                            ConnectErrorCallback error_callback) override;
 
   // BluetoothDevice manages the lifetime of its BluetoothGATTServices.
   // This method takes ownership of the MockBluetoothGATTServices. This is only

@@ -931,11 +931,12 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
   ON_CALL(*device, CreateGattConnection(_, _))
       .WillByDefault(Invoke(
           [adapter_ptr, device_ptr](
-              const BluetoothDevice::GattConnectionCallback& callback,
+              BluetoothDevice::GattConnectionCallback callback,
               const BluetoothDevice::ConnectErrorCallback& error_callback) {
             device_ptr->SetConnected(true);
-            callback.Run(std::make_unique<NiceMockBluetoothGattConnection>(
-                adapter_ptr, device_ptr->GetAddress()));
+            std::move(callback).Run(
+                std::make_unique<NiceMockBluetoothGattConnection>(
+                    adapter_ptr, device_ptr->GetAddress()));
             device_ptr->RunPendingCallbacks();
           }));
 
@@ -1096,11 +1097,12 @@ scoped_refptr<NiceMockBluetoothAdapter> LayoutTestBluetoothAdapterProvider::
   ON_CALL(*device, CreateGattConnection(_, _))
       .WillByDefault(Invoke(
           [adapter_ptr, device_ptr](
-              const BluetoothDevice::GattConnectionCallback& callback,
+              BluetoothDevice::GattConnectionCallback callback,
               const BluetoothDevice::ConnectErrorCallback& error_callback) {
             device_ptr->SetConnected(true);
-            callback.Run(std::make_unique<NiceMockBluetoothGattConnection>(
-                adapter_ptr, device_ptr->GetAddress()));
+            std::move(callback).Run(
+                std::make_unique<NiceMockBluetoothGattConnection>(
+                    adapter_ptr, device_ptr->GetAddress()));
             device_ptr->RunPendingCallbacks();
           }));
 
