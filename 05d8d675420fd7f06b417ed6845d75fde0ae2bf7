@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4a7c3c_aed76e8a",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-22T20:50:34Z",
+      "side": 1,
+      "message": "I\u0027m thinking if I should remove this set. This is only used in AnimateForSyncTree. That step is always preceded by a DrawProperties update which always calls UpdateStateFromDrivers that generates this set by iterating through all registered_animations_.\n\nSo might as well not do UpdateStateFromDrivers if the draw properties is happening immediately after commit, instead update state from drivers and animate in one pass?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 45
+      },
+      "revId": "05d8d675420fd7f06b417ed6845d75fde0ae2bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
