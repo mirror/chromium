@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83019a66_18dcadfb",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-22T18:57:49Z",
+      "side": 1,
+      "message": "Consider adding an API to impl to capture this pattern:\n\nimpl_-\u003ePostTaskToSelf(\u0026Impl::Method)",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc236f1_e598b449",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-22T18:57:49Z",
+      "side": 1,
+      "message": "Can this be rephrased as follows:\n\n\"Service to discover DIAL media sinks.  All public methods must be invoked on the UI thread.  \nDelegates to DialMediaSinkServiceImpl by posting tasks to its SequencedTaskRunner.  The impl posts tasks back to this class via the OnSequence* methods.\"",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6507eda8_1aa4d848",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-22T18:57:49Z",
+      "side": 1,
+      "message": "Maybe the () comment belongs in the .cc since it\u0027s more about the implementation?",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1f4adb_b29c38fd",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-22T18:57:49Z",
+      "side": 1,
+      "message": "Remove comment fragment ?",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8601da49_679e1b3f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-22T18:57:49Z",
+      "side": 1,
+      "message": "Typo in \"is to be\"",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3c61e5_1076c39a",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-22T18:57:49Z",
+      "side": 1,
+      "message": "Or just \"InvokeSinkDiscoveryCallback\" ?",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efeb006_c2c5f82d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-22T18:57:49Z",
+      "side": 1,
+      "message": "...to initiate discovery immediately in response to a user gesture (i.e., opening the Media Router dialog).",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4418876e_36076df6",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-22T18:57:49Z",
+      "side": 1,
+      "message": "Maybe |task_runner_| should be passed to the impl so that the callbacks can be invoked directly upon it, instead of having to maintain a trampoline callback API for the impl back to the service.\n\nThis would reduce coupling between the two classes and might simplify unit testing (the test could provide an alternative task runner and mock callback).",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
