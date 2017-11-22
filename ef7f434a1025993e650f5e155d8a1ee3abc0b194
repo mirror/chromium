@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95d5f7d4_b0021d3b",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-22T10:16:56Z",
+      "side": 1,
+      "message": "Really want to eliminate these calls forwarding, any ideas? ;-)",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 3
+      },
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
