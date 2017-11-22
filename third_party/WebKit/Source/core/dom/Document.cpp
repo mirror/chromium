@@ -5201,6 +5201,10 @@ void Document::setDomain(const String& raw_domain,
                       GetSecurityOrigin()->Port() == 0
                           ? WebFeature::kDocumentDomainSetWithDefaultPort
                           : WebFeature::kDocumentDomainSetWithNonDefaultPort);
+    AddConsoleMessage(ConsoleMessage::Create(
+        kJSMessageSource, kWarningMessageLevel,
+        "Relaxing domain via assignment to document.domain may be deprecated"
+        " in the future."));
     bool was_cross_domain = frame_->IsCrossOriginSubframe();
     GetSecurityOrigin()->SetDomainFromDOM(new_domain);
     if (View() && (was_cross_domain != frame_->IsCrossOriginSubframe()))
