@@ -6,7 +6,7 @@
 // scale factor devices.
 CANVAS_DIMENSIONS, 16,
 STROKE, 1.765f,
-MOVE_TO, 4, 6,
-R_LINE_TO, 4, 4,
-R_LINE_TO, 4, -4,
+MOVE_TO, 2, 4,
+R_LINE_TO, 6, 6,
+R_LINE_TO, 6, -6,
 END,
