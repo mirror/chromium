@@ -810,17 +810,10 @@ void KURL::InitProtocolMetadata() {
   }
 
   DCHECK(!string_.IsNull());
-  StringView protocol = ComponentStringView(parsed_.scheme);
-  protocol_is_in_http_family_ = true;
-  if (protocol == WTF::g_https_atom) {
-    protocol_ = WTF::g_https_atom;
-  } else if (protocol == WTF::g_http_atom) {
-    protocol_ = WTF::g_http_atom;
-  } else {
-    protocol_ = protocol.ToAtomicString();
-    protocol_is_in_http_family_ =
-        protocol_ == "http-so" || protocol_ == "https-so";
-  }
+  protocol_ = ComponentString(parsed_.scheme);
+  protocol_is_in_http_family_ =
+      protocol_ == WTF::g_https_atom || protocol_ == WTF::g_http_atom ||
+      protocol_ == "http-so" || protocol_ == "https-so";
   DCHECK_EQ(protocol_, protocol_.DeprecatedLower());
 }
 
