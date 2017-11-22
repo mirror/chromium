@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70e31879_6ac5ecaa",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T16:54:32Z",
+      "side": 1,
+      "message": "this is a chrome-only thing, so not needed in content",
+      "revId": "fa9d4d917218076cc670900dbd50f86115c7b8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163af543_415fd954",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T16:54:32Z",
+      "side": 1,
+      "message": "where is the equivalent of kForceFieldTrials setting in src/chrome? I couldn\u0027t find its handling through searching, so wondering if we need it in content shell?",
+      "revId": "fa9d4d917218076cc670900dbd50f86115c7b8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
