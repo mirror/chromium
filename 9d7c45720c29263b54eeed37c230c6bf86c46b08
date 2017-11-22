@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "20daf448_d19f20c6",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T02:18:25Z",
+      "side": 1,
+      "message": "\u003e Going to add a static method to create an INVALID provider\n\nSounds good. However, if we have that static method, then we should remove the default constructor. Alternatively we can remove the static method and rely on the default constructor to always create an invalid provider id.\n\n\u003e Seems like in the current implementation we never actually set this to an empty string, just as uninitialized memory. \n\nThe default constructor of std::string would make it an empty string. No need to initialize in the constructor. We only need that for plain types and objects without default constructor.",
+      "parentUuid": "2885a927_6d77415b",
+      "range": {
+        "startLine": 154,
+        "startChar": 1,
+        "endLine": 155,
+        "endChar": 47
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3496b7dc_6b808e21",
         "filename": "chrome/browser/chromeos/file_system_provider/mount_path_util_unittest.cc",
         "patchSetId": 9
@@ -234,6 +258,29 @@
       "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "988d4410_84951e8e",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T02:18:25Z",
+      "side": 1,
+      "message": "Type_ must be initialized to some default value as it\u0027s a plain type.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

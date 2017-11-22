@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "076c5a02_8a01fdaa",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T02:18:25Z",
+      "side": 1,
+      "message": "Sorry, could you clarify?",
+      "parentUuid": "4b19e6b6_31b22a5f",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e9c8b07_6af1a65c",
         "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
         "patchSetId": 7
@@ -322,6 +346,30 @@
       "side": 1,
       "message": "Definitely makes the code more readable- but wouldn\u0027t the crash from the initializer list calling GetExtensionId on 147 happen before the body of the constructor on 151?",
       "parentUuid": "a4496b90_a3a792e6",
+      "range": {
+        "startLine": 150,
+        "startChar": 31,
+        "endLine": 150,
+        "endChar": 32
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0200bb54_ce1df281",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T02:18:25Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. But I think it\u0027s OK. It\u0027s just for better readability.",
+      "parentUuid": "2bdfe33b_8a4ace96",
       "range": {
         "startLine": 150,
         "startChar": 31,
