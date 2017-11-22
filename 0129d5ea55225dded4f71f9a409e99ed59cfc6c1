@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77cc2c2_73285a10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-11-22T14:45:04Z",
+      "side": 1,
+      "message": "Please also add\n\nBug: 778164",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "0129d5ea55225dded4f71f9a409e99ed59cfc6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c28916d_d5579bc4",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-11-22T14:45:04Z",
+      "side": 1,
+      "message": "This needs to take into account the alpha type of the frame. It can be read from the FrameInfo. Then you\u0027ll need to add\n\n  .makeAlphaType(frame_info.fAlpha \u003d\u003d SkEncodedInfo::kOpaque_Alpha ?\n                 kOpaque_SkAlphaType : kPremul_SkAlpaType);\n\nThe regression test in https://chromium-review.googlesource.com/c/chromium/src/+/753841 should catch this. Sorry I have not landed that yet!",
+      "range": {
+        "startLine": 255,
+        "startChar": 37,
+        "endLine": 255,
+        "endChar": 44
+      },
+      "revId": "0129d5ea55225dded4f71f9a409e99ed59cfc6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
