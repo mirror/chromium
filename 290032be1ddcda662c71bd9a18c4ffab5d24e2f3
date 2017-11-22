@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9997d0ca_bfaaaaf0",
+        "filename": "services/data_decoder/xml_parser_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-22T18:05:35Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t know about string literals!\nChanged to use them where appropriate.",
+      "parentUuid": "0f87cc3c_f452de11",
+      "revId": "290032be1ddcda662c71bd9a18c4ffab5d24e2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ba52c8f_30348ffb",
         "filename": "services/data_decoder/xml_parser_unittest.cc",
         "patchSetId": 9
@@ -51,6 +69,24 @@
       "revId": "290032be1ddcda662c71bd9a18c4ffab5d24e2f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e361f0_86663dc7",
+        "filename": "services/data_decoder/xml_parser_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-22T18:05:35Z",
+      "side": 1,
+      "message": "Good idea, added the ones you suggested (but for the duplicate attributes which I\u0027ll add in my follow up CL that adds attribute and namespace support).",
+      "parentUuid": "6ba52c8f_30348ffb",
+      "revId": "290032be1ddcda662c71bd9a18c4ffab5d24e2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
