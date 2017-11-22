@@ -16,6 +16,24 @@
       "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704b9919_94afd1f7",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T01:20:12Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem to work. When I remove the \"--track\" argument from \"git checkout -b\" below, and make a whitespace change to README.md, the error in https://pastebin.com/zAuc22pY is generated upon \"git cl upload\".",
+      "parentUuid": "20022887_9fc75e3f",
+      "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
