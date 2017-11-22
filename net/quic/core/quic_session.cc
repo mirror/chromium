@@ -1006,4 +1006,6 @@ uint128 QuicSession::GetStatelessResetToken() const {
   return kStatelessResetToken;
 }
 
+#undef ENDPOINT
+
 }  // namespace net

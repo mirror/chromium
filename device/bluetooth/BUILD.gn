@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 
 if (is_android) {
   import("//build/config/android/rules.gni")  # For generate_jni().
@@ -20,7 +21,7 @@ config("bluetooth_config") {
   }
 }
 
-source_set("mojo") {
+jumbo_source_set("mojo") {
   sources = [
     "//device/bluetooth/public/interfaces/connect_result_type_converter.h",
     "//device/bluetooth/public/interfaces/gatt_result_type_converter.h",
@@ -41,7 +42,7 @@ source_set("mojo") {
   ]
 }
 
-source_set("fake_bluetooth") {
+jumbo_source_set("fake_bluetooth") {
   sources = [
     "test/fake_bluetooth.cc",
     "test/fake_bluetooth.h",
@@ -66,7 +67,7 @@ source_set("fake_bluetooth") {
   ]
 }
 
-component("bluetooth") {
+jumbo_component("bluetooth") {
   sources = [
     "android/wrappers.cc",
     "android/wrappers.h",
@@ -185,6 +186,11 @@ component("bluetooth") {
     "bluetooth_uuid.h",
     "string_util_icu.cc",
     "string_util_icu.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "bluetooth_adapter_factory_wrapper.cc",
   ]
 
   defines = [ "DEVICE_BLUETOOTH_IMPLEMENTATION" ]
@@ -369,6 +375,19 @@ component("bluetooth") {
         "dbus/fake_bluetooth_profile_service_provider.cc",
         "dbus/fake_bluetooth_profile_service_provider.h",
       ]
+
+      jumbo_excluded_sources += [
+        # Symbols
+        "dbus/bluetooth_gatt_characteristic_service_provider.cc",
+        "dbus/bluetooth_gatt_characteristic_service_provider_impl.cc",
+        "dbus/bluetooth_gatt_descriptor_service_provider_impl.cc",
+        "dbus/bluetooth_le_advertisement_service_provider.cc",
+        "dbus/bluetooth_media_transport_client.cc",
+        "dbus/fake_bluetooth_device_client.cc",
+        "dbus/fake_bluetooth_gatt_descriptor_service_provider.cc",
+        "bluez/bluetooth_gatt_descriptor_bluez.cc",
+        "bluez/bluetooth_remote_gatt_descriptor_bluez.cc",
+      ]
       if (is_linux) {
         sources += [
           "dbus/dbus_bluez_manager_wrapper_linux.cc",
@@ -390,7 +409,7 @@ component("bluetooth") {
   }
 }
 
-static_library("mocks") {
+jumbo_static_library("mocks") {
   testonly = true
   sources = [
     "test/mock_bluetooth_adapter.cc",
