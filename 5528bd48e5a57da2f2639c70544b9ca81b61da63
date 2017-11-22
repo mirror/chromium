@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5572182a_c83b7c69",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T05:48:40Z",
+      "side": 1,
+      "message": "nit: Is this necessary to check for each invocation? Or can this be checked only once, like in a ctor?",
+      "revId": "5528bd48e5a57da2f2639c70544b9ca81b61da63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b225e6b_6da7e46a",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T05:48:40Z",
+      "side": 1,
+      "message": "(off topic): while you\u0027re here, could you s/base::Passed/std::move/ ?\nDitto for below.",
+      "revId": "5528bd48e5a57da2f2639c70544b9ca81b61da63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83de004_0ac0d3fc",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T05:48:40Z",
+      "side": 1,
+      "message": "Could you do this in the member init list?",
+      "revId": "5528bd48e5a57da2f2639c70544b9ca81b61da63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bef608f_6f37ce91",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T05:48:40Z",
+      "side": 1,
+      "message": "clarification: Can added bindings be removed at sometime?\nIf it\u0027s automatically done, could you document it?",
+      "revId": "5528bd48e5a57da2f2639c70544b9ca81b61da63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
