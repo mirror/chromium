@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f51c5678_b168442b",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-22T14:07:46Z",
+      "side": 1,
+      "message": "I wonder if we should just use a GUID instead of a sequential number here. That way we avoid the worst case of a very large linear search and greatly simplifies the code.\n\nhttps://cs.chromium.org/chromium/src/base/guid.h?type\u003dcs\u0026q\u003dbase::GenerateGUID\u0026sq\u003dpackage:chromium\u0026l\u003d26",
+      "range": {
+        "startLine": 145,
+        "startChar": 28,
+        "endLine": 145,
+        "endChar": 50
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "889e4d9f_4d338e94",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 16
