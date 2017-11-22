@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e40b96e5_9bbf6f65",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T16:01:46Z",
+      "side": 1,
+      "message": "Ack. The idea of the current approach was to keep it side-effect free.",
+      "parentUuid": "ca1ad9a0_85637e57",
+      "revId": "e60228c6da6d2d779d1a8aade7f06378d5e1b649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b06620ae_a54605e2",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 27
@@ -39,6 +57,30 @@
       "revId": "e60228c6da6d2d779d1a8aade7f06378d5e1b649",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855f3310_dffa0926",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T16:01:46Z",
+      "side": 1,
+      "message": "Terminology is a bit off here. We could also check the bits in the header here.",
+      "parentUuid": "b06620ae_a54605e2",
+      "range": {
+        "startLine": 1629,
+        "startChar": 26,
+        "endLine": 1629,
+        "endChar": 41
+      },
+      "revId": "e60228c6da6d2d779d1a8aade7f06378d5e1b649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
