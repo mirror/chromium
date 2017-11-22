@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd0715a9_5f603cdb",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-22T22:09:28Z",
+      "side": 1,
+      "message": "That makes sense. Done.",
+      "parentUuid": "df747bba_c6863b94",
+      "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9f170c_41c444bd",
         "filename": "chrome/browser/permissions/permission_request_manager.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T00:37:14Z",
       "side": 1,
       "message": "This will return the empty string if there is no found enabled extension, which is not what your commit message says. I don\u0027t think it should ever happen though, so perhaps just have a DCHECK here or in the dialog implementation that the display origin isn\u0027t empty.",
+      "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a091b36_08fc42ec",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-22T22:09:28Z",
+      "side": 1,
+      "message": "I\u0027d prefer to fall back on the extension url if there\u0027s no extension name, in case it\u0027s possible to make an extension with an empty name. I didn\u0027t mean to lose that in a refactor.\n\nI suppose, if we really wanted to be sure that something visible was returned here we would have to check for displayable characters. This should be sufficient, if the extension title is sanitized.",
+      "parentUuid": "ec9f170c_41c444bd",
       "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e07efe_583c44f4",
+        "filename": "chrome/browser/ui/extensions/extension_name.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-22T22:09:28Z",
+      "side": 1,
+      "message": "Done. Thanks for the clear guidance on this!\n\nThis makes way more sense than making a file for that one function. I was looking for something like extension_ui_util, but I was looking in c/b/ui/extensions.",
+      "parentUuid": "c440f05a_f562a19e",
+      "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
