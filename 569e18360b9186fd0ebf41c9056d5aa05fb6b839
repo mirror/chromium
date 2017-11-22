@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f01d500f_2b314703",
+        "filename": "content/browser/service_worker/service_worker_client_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-22T01:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9769d172_0e25a352",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7de73f0_5d148017",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 2
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "736fa143_844a1df4",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-22T01:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d7df345_449cfcba",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a38ee7e6_50d7acbf",
         "filename": "content/common/service_worker/service_worker_messages.h",
         "patchSetId": 2
@@ -95,6 +137,24 @@
       "writtenOn": "2017-11-21T14:15:56Z",
       "side": 1,
       "message": "Question, do we still use these enums in traditional IPC? (If not we should remove this)",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278576be_51c1117e",
+        "filename": "content/common/service_worker/service_worker_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-22T01:29:13Z",
+      "side": 1,
+      "message": "Yes, it still be used in line 115 of content::ServiceWorkerClientInfo, and it our next step to mojofy content::ServiceWorkerClientInfo and then remove that.",
+      "parentUuid": "a38ee7e6_50d7acbf",
       "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "461402db_fda2a91b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-22T01:29:13Z",
+      "side": 1,
+      "message": "Ack, we can remove it when mojofy content::ServiceWorkerClientInfo",
+      "parentUuid": "b515f08a_938279f1",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "469d2079_c9b89b3a",
         "filename": "third_party/WebKit/common/serviceworker/OWNERS",
         "patchSetId": 2
@@ -150,6 +228,24 @@
       "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bef938_532f632b",
+        "filename": "third_party/WebKit/common/serviceworker/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-22T01:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "469d2079_c9b89b3a",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
