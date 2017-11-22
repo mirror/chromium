@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fd9496b9_201dc105",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-22T05:44:59Z",
+      "side": 1,
+      "message": "Yes, I agree to have an explanation for dynamically enabled features, but I think it should be somewhere else (maybe in a .md file?)\nThis part can have a pointer to the reference, but having all cases covered in this \"if\" brunch is too complex.\n\nFor now, let me answer your question in this comment.\n\n\n* \"constructor\"-like properties of interfaces in origin trial features are installed in InstallOriginTrialFeaturesOnGlobal, regardless snapshot is used or not.\n\nOther than constructor-like properties, we can take \"origin-trial features\" same as \"conditional features\". So I use \"conditional features\" for them all.\n\na) When a context is created from a snapshot,\n - conditional features are installed in V8ContextSnapshot::InstallConditionalFeatures()\n\nb) When a context is not created from a snapshot,\n - conditional features are installed on the global object here.\n - conditional features are installed on prototype/interface objects in V8PerContextData::ConstructorForTypeSlowCase().",
+      "parentUuid": "88005c81_603acde6",
+      "revId": "1ff9d0ba35d798f18553ac26488d258e480d3895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fc5cde6_4fb9b8e5",
         "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.h",
         "patchSetId": 7
