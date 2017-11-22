@@ -16,6 +16,24 @@
       "revId": "5486d848266436ba5f29e7f16576d5cac2d8ef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41939c89_79c44eba",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/filter-matches.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-22T20:25:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3edeccbf_59d40b3f",
+      "revId": "5486d848266436ba5f29e7f16576d5cac2d8ef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
