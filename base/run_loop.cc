@@ -50,16 +50,24 @@ RunLoop::Delegate::~Delegate() {
 bool RunLoop::Delegate::Client::ShouldQuitWhenIdle() const {
   DCHECK_CALLED_ON_VALID_THREAD(outer_->bound_thread_checker_);
   DCHECK(outer_->bound_);
-  return outer_->active_run_loops_.top()->quit_when_idle_received_;
-}
-
-bool RunLoop::Delegate::Client::IsNested() const {
-  DCHECK_CALLED_ON_VALID_THREAD(outer_->bound_thread_checker_);
-  DCHECK(outer_->bound_);
-  return outer_->active_run_loops_.size() > 1;
+  return outer_->was_overriden_ ||
+         outer_->active_run_loops_.top()->quit_when_idle_received_;
 }
 
 RunLoop::Delegate::Client::Client(Delegate* outer) : outer_(outer) {}
+
+void RunLoop::OverridenDelegateControllerForTesting::Run(
+    bool application_tasks_allowed) {
+  overriden_delegate_->Run(application_tasks_allowed);
+}
+
+void RunLoop::OverridenDelegateControllerForTesting::Quit() {
+  overriden_delegate_->Quit();
+}
+
+void RunLoop::OverridenDelegateControllerForTesting::EnsureWorkScheduled() {
+  overriden_delegate_->EnsureWorkScheduled();
+}
 
 // static
 RunLoop::Delegate::Client* RunLoop::RegisterDelegateForCurrentThread(
@@ -74,6 +82,30 @@ RunLoop::Delegate::Client* RunLoop::RegisterDelegateForCurrentThread(
   delegate->bound_ = true;
 
   return &delegate->client_interface_;
+}
+
+// static
+std::pair<RunLoop::Delegate::Client*,
+          std::unique_ptr<RunLoop::OverridenDelegateControllerForTesting>>
+RunLoop::OverrideDelegateForCurrentThreadForTesting(Delegate* delegate) {
+  // Bind |delegate| to this thread.
+  DCHECK(!delegate->bound_);
+  DCHECK_CALLED_ON_VALID_THREAD(delegate->bound_thread_checker_);
+
+  // Overriding cannot be performed while running.
+  DCHECK(!IsRunningOnCurrentThread());
+
+  // Override the current Delegate (there must be one).
+  Delegate* overriden_delegate = tls_delegate.Get().Get();
+  DCHECK(overriden_delegate);
+  DCHECK(overriden_delegate->bound_);
+  overriden_delegate->was_overriden_ = true;
+  tls_delegate.Get().Set(delegate);
+  delegate->bound_ = true;
+
+  return std::make_pair(&delegate->client_interface_,
+                        std::make_unique<OverridenDelegateControllerForTesting>(
+                            overriden_delegate));
 }
 
 RunLoop::RunLoop(Type type)
@@ -245,7 +277,8 @@ RunLoop::ScopedDisallowRunningForTesting::ScopedDisallowRunningForTesting()
 }
 
 RunLoop::ScopedDisallowRunningForTesting::~ScopedDisallowRunningForTesting() {
-  DCHECK_EQ(current_delegate_, tls_delegate.Get().Get());
+  DCHECK(current_delegate_ == tls_delegate.Get().Get() ||
+         current_delegate_->was_overriden_);
   if (current_delegate_)
     current_delegate_->allow_running_for_testing_ = previous_run_allowance_;
 }
