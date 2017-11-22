@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ef8449a_5dfc51bb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/referrer-origin-when-cross-origin.sub.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-22T05:10:47Z",
+      "side": 1,
+      "message": "Same as the comment for referrer-origin.sub.html.",
+      "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8184c64a_9e2716bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/referrer-origin.sub.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-22T05:10:47Z",
+      "side": 1,
+      "message": "The same question as one for referrer-unsafe-url.sub.html, though since the data exchanged is origin for this case, it\u0027s not incorrect.",
+      "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59215a0b_4132fc56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/referrer-unsafe-url.sub.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-22T05:10:47Z",
+      "side": 1,
+      "message": "Looks \"of the descendant script\" is incorrect if this means \"Referrer containing the descendant script\u0027s URL\". It\u0027s one of the top-level script?\n\nFor consistency with L41 and L51, I think we can just omit this part.",
+      "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396e082c_11dc1f19",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/resources/referrer-checker.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-22T05:10:47Z",
+      "side": 1,
+      "message": "add spaces around the last \"+\"",
+      "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
