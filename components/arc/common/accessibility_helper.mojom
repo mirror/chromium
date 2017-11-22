@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 9
+// Next MinVersion: 10
 
 module arc.mojom;
 
@@ -290,9 +290,13 @@ interface AccessibilityHelperHost {
   OnAccessibilityEvent@1(AccessibilityEventData event_data);
 };
 
-// Next method ID: 7
+// Next method ID: 8
 interface AccessibilityHelperInstance {
-  Init@0(AccessibilityHelperHost host);
+  // DEPRECATED: Please use Init@7 instead.
+  InitDeprecated@0(AccessibilityHelperHost host);
+
+  // Establishes full-duplex communication with the host.
+  [MinVersion=9] Init@7(AccessibilityHelperHost host) => ();
 
   PerformActionDeprecated@1(int32 id, AccessibilityActionType action);
 

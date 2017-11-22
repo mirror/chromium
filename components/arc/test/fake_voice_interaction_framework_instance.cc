@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/bind.h"
+
 namespace arc {
 
 FakeVoiceInteractionFrameworkInstance::FakeVoiceInteractionFrameworkInstance() =
@@ -14,9 +16,16 @@ FakeVoiceInteractionFrameworkInstance::FakeVoiceInteractionFrameworkInstance() =
 FakeVoiceInteractionFrameworkInstance::
     ~FakeVoiceInteractionFrameworkInstance() = default;
 
-void FakeVoiceInteractionFrameworkInstance::Init(
+void FakeVoiceInteractionFrameworkInstance::InitDeprecated(
     mojom::VoiceInteractionFrameworkHostPtr host_ptr) {
+  Init(std::move(host_ptr), base::BindOnce([]() { /* do nothing */ }));
+}
+
+void FakeVoiceInteractionFrameworkInstance::Init(
+    mojom::VoiceInteractionFrameworkHostPtr host_ptr,
+    InitCallback callback) {
   host_ = std::move(host_ptr);
+  std::move(callback).Run();
 }
 
 void FakeVoiceInteractionFrameworkInstance::StartVoiceInteractionSession(

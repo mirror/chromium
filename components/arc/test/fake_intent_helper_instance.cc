@@ -69,7 +69,13 @@ void FakeIntentHelperInstance::HandleUrlList(
     mojom::ActivityNamePtr activity,
     mojom::ActionType action) {}
 
-void FakeIntentHelperInstance::Init(mojom::IntentHelperHostPtr host_ptr) {}
+void FakeIntentHelperInstance::InitDeprecated(
+    mojom::IntentHelperHostPtr host_ptr) {}
+
+void FakeIntentHelperInstance::Init(mojom::IntentHelperHostPtr host_ptr,
+                                    InitCallback callback) {
+  std::move(callback).Run();
+}
 
 void FakeIntentHelperInstance::OpenFileToReadDeprecated(
     const std::string& url,

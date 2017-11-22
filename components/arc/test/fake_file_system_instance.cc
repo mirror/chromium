@@ -279,11 +279,17 @@ void FakeFileSystemInstance::GetRecentDocuments(
                                 base::make_optional(std::move(recents))));
 }
 
-void FakeFileSystemInstance::Init(mojom::FileSystemHostPtr host) {
+void FakeFileSystemInstance::InitDeprecated(mojom::FileSystemHostPtr host) {
+  Init(std::move(host), base::BindOnce([]() { /* do nothing */ }));
+}
+
+void FakeFileSystemInstance::Init(mojom::FileSystemHostPtr host,
+                                  InitCallback callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(host);
   DCHECK(!host_);
   host_ = std::move(host);
+  std::move(callback).Run();
 }
 
 void FakeFileSystemInstance::RemoveWatcher(int64_t watcher_id,

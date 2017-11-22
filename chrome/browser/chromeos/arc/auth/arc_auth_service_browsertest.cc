@@ -58,7 +58,14 @@ namespace arc {
 class FakeAuthInstance : public mojom::AuthInstance {
  public:
   // mojom::AuthInstance:
-  void Init(mojom::AuthHostPtr host) override { host_ = std::move(host); }
+  void InitDeprecated(mojom::AuthHostPtr host) override {
+    Init(std::move(host), base::BindOnce([]() { /* do nothing */ }));
+  }
+
+  void Init(mojom::AuthHostPtr host, InitCallback callback) override {
+    host_ = std::move(host);
+    std::move(callback).Run();
+  }
 
   void OnAccountInfoReady(mojom::AccountInfoPtr account_info,
                           mojom::ArcSignInStatus status) override {
