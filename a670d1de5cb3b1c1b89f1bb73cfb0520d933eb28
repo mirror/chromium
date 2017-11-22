@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8598d405_3ab29dac",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-22T22:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e74f8463_a39eda36",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed71e388_b984bc9b",
         "filename": "ash/display/mirror_window_controller.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c39d180_703e2b40",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-22T22:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed71e388_b984bc9b",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27ef4232_dd26d324",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-22T22:53:52Z",
+      "side": 1,
+      "message": "It seems I could not merge two functions. The above function takes in const vector and could only return const info, while this function takes in non-const vector and returns non-const info.",
+      "parentUuid": "c084367a_b6b6ef12",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f85db134_dff2bd0f",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5aa64b7_882cca31",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-22T22:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f85db134_dff2bd0f",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
