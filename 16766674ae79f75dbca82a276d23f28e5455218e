@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3e92b18_7ea6f5c7",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T19:50:51Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(packet_latency_three.latency_usec);",
+      "revId": "16766674ae79f75dbca82a276d23f28e5455218e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2998ca39_fff59d63",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T19:50:51Z",
+      "side": 1,
+      "message": "Packet processing latency..?",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 17
+      },
+      "revId": "16766674ae79f75dbca82a276d23f28e5455218e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
