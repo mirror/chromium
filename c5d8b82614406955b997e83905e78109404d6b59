@@ -52,6 +52,24 @@
       "revId": "c5d8b82614406955b997e83905e78109404d6b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a600784_71179752",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-22T23:01:45Z",
+      "side": 1,
+      "message": "A. That is my understanding from the docs (although admittedly, they aren\u0027t clear, and all I have is the reference in the UWP docs)\nB. That is my understanding from experience (it certainly seems to be the case given that I can crash the browser, bring it up and connect again)\nC. That is my understanding given that I don\u0027t see how it could be otherwise (how else could you reconnect?  The user would have to unpair/pair, which seems very odd.)\n\nHowever, I\u0027ve not actually simulated a device that actually disconnects itself.  Also, I haven\u0027t been able to connect our BLE peripheral simulator on Windows, because Android asks for a pairing key and Windows doesn\u0027t give me one (0000 and 1234 don\u0027t work), so I\u0027m not sure how I could conduct this test.",
+      "parentUuid": "c8310a62_513184b8",
+      "revId": "c5d8b82614406955b997e83905e78109404d6b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
