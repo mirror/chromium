@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c6eb3cb_588bff64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T19:41:23Z",
+      "side": 1,
+      "message": "nit: rename",
+      "revId": "3b5473bb0144c1edbbe1228f9900e8136a328848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
