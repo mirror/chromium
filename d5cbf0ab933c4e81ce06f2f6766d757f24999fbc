@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ecdd04e_9b5f9c73",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:30:28Z",
+      "side": 1,
+      "message": "button_out is a bit confusing - is there a better name, or can you comment here?",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f051044_9010a975",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:30:28Z",
+      "side": 1,
+      "message": "Can you explain why hover_button-\u003eSetBackground(..) doesn\u0027t work? I thought inkdrop stuff is in a separate layer, so shouldn\u0027t interfere. If you need a margin, perhaps CreateEmptyBorder will help.\n\nMaybe you can even do this on |hover_button| directly, and `return hover_button;` directly rather than putting it in a container.",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee659cd_644a5c57",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:30:28Z",
+      "side": 1,
+      "message": "nit gfx::Insets(0, 0) -\u003e gfx::Insets(). But is this just a FillLayout?",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4700a99b_7f790597",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:30:28Z",
+      "side": 1,
+      "message": "just `return view;`?\n\n`else` not required. Less indenting is good.\n\nEven better would be a helper function\n\nCreateSyncErrorViewForDice(..)\n\nbut perhaps it will be simpler with fewer nested views.",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fbe9db3_4ea25708",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:30:28Z",
+      "side": 1,
+      "message": "keep the new line above?",
+      "revId": "d5cbf0ab933c4e81ce06f2f6766d757f24999fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
