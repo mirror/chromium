@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6ef23d_a5c7945a",
+        "filename": "base/memory/shared_memory_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-22T03:07:06Z",
+      "side": 1,
+      "message": "there\u0027s an obvious race condition here. can you explain in a comment why that\u0027s OK?",
+      "revId": "42fcaff98660ca79566f391ae2621ee555ce28c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0190141_d8611355",
+        "filename": "base/memory/shared_memory_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-22T03:07:06Z",
+      "side": 1,
+      "message": "hm, creating a ScopedFILE doesn\u0027t really make sense in this case. Should this memfd case hook in at a higher level? ie. in SharedMemory::Create before we start assuming that a ScopedFILE is needed.",
+      "revId": "42fcaff98660ca79566f391ae2621ee555ce28c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9a535a_a584d56f",
+        "filename": "base/memory/shared_memory_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-22T03:07:06Z",
+      "side": 1,
+      "message": "HANDLE_EINTR?",
+      "revId": "42fcaff98660ca79566f391ae2621ee555ce28c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
