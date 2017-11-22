@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1382356_39a536aa",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "Is this an expected case. If not, then we should at least log this using VLOG(1).",
+      "range": {
+        "startLine": 22,
+        "startChar": 34,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd2d737_b3a5455d",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "Should this return a std::unique_ptr\u003cbase::Value\u003e. It could return nullptr in case of error.",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efebd9a_51e88700",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "s/decoded_payload/out_decoded_payload",
+      "range": {
+        "startLine": 33,
+        "startChar": 34,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2efe005_1f9242da",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "Let\u0027s use VLOG() as we have it in production if we ever need to debug this on a client (e.g. if GAIA eng are making changes and need to test this).",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fede533_e286f06b",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "Ditto about log.",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc805fd_942a34f1",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "Ditto about log.",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 47
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5bf463_14db4898",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "Optional: DCHECK(service_flags.empty());",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfe2529_c4dd32c4",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "s/service_flags/out_service_flags",
+      "range": {
+        "startLine": 62,
+        "startChar": 30,
+        "endLine": 62,
+        "endChar": 43
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb45b86_00c375ff",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "It looks like this class is not a real class, just a collection of static methods. I think we should do the following:\n1. Add a namespace gaia to this file (this lives in /google_apis/gaia/, so it should have namespace gaia - this was not done initially, but I think that is bad).\n\nOption 1:\n2. Remove the class and just keep one method IsChildAccountFromIdToken(const std::string\u0026 id_token). Maybe my proposed name is not the best (let me know if you have a better one).\n3. Move all internal static methods and constants in an anonymous namespace in the implementation file.\n\nOption 2:\n2. Keep the OAuth2IdTokenDecoder, make the constructor and destructor private.\n3. Make methods DecodeIdToken and GetServiceFlags non-static.\n4. Instantiate a Decoder in IsChildAccount and use it to decode the token.\n\nOption 2 is more extendable in the future if we want to use more than the big IsChildAccount. Option 1 is probably easier to implement now.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ecd091_9b07c497",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "This should be a reference:\nconst std::string\u0026 id_token",
+      "range": {
+        "startLine": 22,
+        "startChar": 29,
+        "endLine": 22,
+        "endChar": 46
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c36fed5_6911963c",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "This function requires a comment.",
+      "range": {
+        "startLine": 22,
+        "startChar": 14,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594e8b8d_de705e5c",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:48:32Z",
+      "side": 1,
+      "message": "These constants are not needed in the header file - move the to the .cc file.",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
