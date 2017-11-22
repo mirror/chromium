@@ -61,7 +61,14 @@ namespace arc {
 class FakeArcCertStoreInstance : public mojom::CertStoreInstance {
  public:
   // mojom::CertStoreInstance:
-  void Init(mojom::CertStoreHostPtr host) override { host_ = std::move(host); }
+  void InitDeprecated(mojom::CertStoreHostPtr host) override {
+    Init(std::move(host), base::BindOnce([]() { /* do nothing */ }));
+  }
+
+  void Init(mojom::CertStoreHostPtr host, InitCallback callback) override {
+    host_ = std::move(host);
+    std::move(callback).Run();
+  }
 
   void OnKeyPermissionsChanged(
       const std::vector<std::string>& permissions) override {

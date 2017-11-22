@@ -16,8 +16,14 @@ FakePowerInstance::SuspendCallback FakePowerInstance::GetSuspendCallback() {
   return std::move(suspend_callback_);
 }
 
-void FakePowerInstance::Init(mojom::PowerHostPtr host_ptr) {
+void FakePowerInstance::InitDeprecated(mojom::PowerHostPtr host_ptr) {
+  Init(std::move(host_ptr), base::BindOnce([]() { /* do nothing */ }));
+}
+
+void FakePowerInstance::Init(mojom::PowerHostPtr host_ptr,
+                             InitCallback callback) {
   host_ptr_ = std::move(host_ptr);
+  std::move(callback).Run();
 }
 
 void FakePowerInstance::SetInteractive(bool enabled) {

@@ -4,6 +4,8 @@
 
 #include "components/arc/test/fake_notifications_instance.h"
 
+#include "base/bind.h"
+
 namespace arc {
 
 FakeNotificationsInstance::FakeNotificationsInstance() = default;
@@ -24,7 +26,13 @@ void FakeNotificationsInstance::CloseNotificationWindow(
 void FakeNotificationsInstance::OpenNotificationSettings(
     const std::string& key) {}
 
-void FakeNotificationsInstance::Init(mojom::NotificationsHostPtr host_ptr) {}
+void FakeNotificationsInstance::InitDeprecated(
+    mojom::NotificationsHostPtr host_ptr) {}
+
+void FakeNotificationsInstance::Init(mojom::NotificationsHostPtr host_ptr,
+                                     InitCallback callback) {
+  std::move(callback).Run();
+}
 
 const std::vector<std::pair<std::string, mojom::ArcNotificationEvent>>&
 FakeNotificationsInstance::events() const {
