@@ -22,6 +22,30 @@
       "revId": "617fb77e6e0cc6f8e221af50bfcd923e0c75d0d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effbf4db_e222067a",
+        "filename": "components/pdf/common/pdf.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-22T21:06:22Z",
+      "side": 1,
+      "message": "Yes, the embedder already remembers the (local) selection coords, and can transform them to the global coords in a way that takes into account the scroll (via RenderWidgetHostViewGuest), so all we need to do is provide a hint to the embedder that it needs to do this.",
+      "parentUuid": "8bb34165_14ee43a3",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "617fb77e6e0cc6f8e221af50bfcd923e0c75d0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
