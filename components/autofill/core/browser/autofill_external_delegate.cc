@@ -56,7 +56,9 @@ AutofillExternalDelegate::AutofillExternalDelegate(AutofillManager* manager,
   DCHECK(manager);
 }
 
-AutofillExternalDelegate::~AutofillExternalDelegate() {}
+AutofillExternalDelegate::~AutofillExternalDelegate() {
+  manager_->client()->OnAutofillPopupDelegateDestruction(this);
+}
 
 void AutofillExternalDelegate::OnQuery(int query_id,
                                        const FormData& form,

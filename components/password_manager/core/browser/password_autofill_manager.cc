@@ -178,6 +178,8 @@ PasswordAutofillManager::PasswordAutofillManager(
       weak_ptr_factory_(this) {}
 
 PasswordAutofillManager::~PasswordAutofillManager() {
+  if (autofill_client_)
+    autofill_client_->OnAutofillPopupDelegateDestruction(this);
 }
 
 bool PasswordAutofillManager::FillSuggestion(int key,

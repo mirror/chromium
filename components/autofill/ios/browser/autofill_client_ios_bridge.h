@@ -27,6 +27,8 @@ struct Suggestion;
 
 - (void)hideAutofillPopup;
 
+- (void)onDelegateDestruction:(AutofillPopupDelegate*)delegate;
+
 - (void)onFormDataFilled:(uint16_t)query_id
                   result:(const autofill::FormData&)result;
 

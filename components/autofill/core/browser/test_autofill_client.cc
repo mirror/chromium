@@ -113,6 +113,9 @@ void TestAutofillClient::UpdateAutofillPopupDataListValues(
 void TestAutofillClient::HideAutofillPopup() {
 }
 
+void TestAutofillClient::OnAutofillPopupDelegateDestruction(
+    AutofillPopupDelegate* delegate) {}
+
 bool TestAutofillClient::IsAutocompleteEnabled() {
   return true;
 }

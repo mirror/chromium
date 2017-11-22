@@ -174,6 +174,11 @@ void AwAutofillClient::HideAutofillPopup() {
   Java_AwAutofillClient_hideAutofillPopup(env, obj);
 }
 
+void AwAutofillClient::OnAutofillPopupDelegateDestruction(
+    autofill::AutofillPopupDelegate* delegate) {
+  // TODO(crbug.com/705552) Implement for WebView as well.
+}
+
 bool AwAutofillClient::IsAutocompleteEnabled() {
   return GetSaveFormData();
 }

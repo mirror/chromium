@@ -895,4 +895,8 @@ void GetFormAndField(autofill::FormData* form,
   [jsAutofillManager_ fillPredictionData:base::SysUTF8ToNSString(dataString)];
 }
 
+- (BOOL)usesDelegate:(autofill::AutofillPopupDelegate*)delegate {
+  return delegate == popupDelegate_.get();
+}
+
 @end
