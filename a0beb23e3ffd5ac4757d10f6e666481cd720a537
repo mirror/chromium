@@ -2,6 +2,159 @@
   "comments": [
     {
       "key": {
+        "uuid": "eca6776a_4b55f7bf",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "clock_(std::make_unique\u003cbase::DefaultClock\u003e())\n\n(and #include \u003cutility\u003e for this, i think)",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8721b5_c1669854",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "why wouldn\u0027t it be running? (by \"running\", do you mean \"initialized\"?)",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74ab74a_22271242",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "why support this?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b12b0ce_4277ea5d",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "same comment here. please make sure the singletons you need are always initialized (and add DCHECKs to assert that they are if Get() doesn\u0027t already DCHECK for you)",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66cf75a_402822ba",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "nit: delete unnecessary comment",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cfe33a_f118d789",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "nit: delete unnecessary comment",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a821416_5ca1e823",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b41ebc9_11ed8478",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "you need to handle null events here. from ui/base/user_activity/user_activity_observer.h:\n\n  // Invoked periodically while the user is active (i.e. generating input\n  // events). |event| is the event that triggered the notification; it may\n  // be NULL in some cases (e.g. testing or synthetic invocations).\n  virtual void OnUserActivity(const ui::Event* event) \u003d 0;",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de01b7d1_67123ebf",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "delete unnecessary comment",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e6b6b85_64e4eac4",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -36,6 +189,23 @@
     },
     {
       "key": {
+        "uuid": "2797a6f2_5985cc90",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "delete unnecessary comment. (when the code is self-explanatory, it\u0027s more useful to explain *why* you\u0027re doing things instead of what you\u0027re doing.)",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c57e8fa3_0ad774d6",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -47,6 +217,40 @@
       "writtenOn": "2017-11-22T12:02:30Z",
       "side": 1,
       "message": "why it needs to pass in now?\n\ncan\u0027t it get now inside the function?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7c2281_435e4c1b",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "delete unnecessary comment",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f63d5c_0e6803f6",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "this code is challenging to follow. please use a switch statement:\n\n  if (type \u003d\u003d ActivityType::VIDEO)\n    return;\n\n  // All other activity is user-initiated.\n  last_user_activity_time_ \u003d now;\n\n  switch (type) {\n    case ActivityType::KEY:\n      last_key_time_ \u003d now;\n      break;\n    case ActivityType::MOUSE:\n      last_mouse_time_ \u003d now;\n      break;\n    default:\n      // We don\u0027t track other activity types.\n  }",
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +274,23 @@
     },
     {
       "key": {
+        "uuid": "e3fec1b5_2d8e7187",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "adding james to verify, but i think we\u0027re trying to avoid adding chrome-\u003eash dependencies like this since they run counter to the mustash project (separating chrome and ash into separate processes).\n\njames, should this class implement viz::mojom::VideoDetectorObserver instead (e.g. similar to what ash::VideoDetector does now)?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6263762_481a7c07",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 4
@@ -81,6 +302,142 @@
       "writtenOn": "2017-11-22T12:02:30Z",
       "side": 1,
       "message": "if multiple fields are not required, maybe just don\u0027t put them in the constructor, but set them later",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f44d7f_af552631",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "do you actually need these default args, or even any of these c\u0027tors? see http://en.cppreference.com/w/c/language/struct_initialization -- if you just use {time1, time2}, do these default to base::nullopt?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f1b23c_1ede175e",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "nit: add blank line after this one",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afc6b56_190b47fc",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "nit: add blank line after this one",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e2c792_8721f38f",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "does this really need to be public? i only see it getting passed to a private method.",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8dea67_8a5ab559",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "nit: add a blank line between each of these signatures and the next comment",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b26ddd9_2e217400",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "nit: Updates all activity-related timestamps.",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a367b443_0096442e",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "can you just replace these with an ActivityData member?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f355e4_47a91a88",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-22T20:56:44Z",
+      "side": 1,
+      "message": "why a mutex? i don\u0027t see any indication that this class is accessed by multiple threads.",
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
