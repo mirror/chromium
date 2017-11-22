@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e94987f_29e01238",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/grid-items/explicitly-sized-grid-item-as-table.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-22T10:33:33Z",
+      "side": 1,
+      "message": "When I open the test on a browser without the patch I don\u0027t see the red area. Shouldn\u0027t we add something so that we see \u0027red\u0027 in case of failure ?",
+      "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c649d8fb_104e8998",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-22T10:33:33Z",
+      "side": 1,
+      "message": "Grid does only 2 things regarding the grid item\u0027s size:\n  - set the OverrideContainingBlock size (width and height)\n  - set the item\u0027s override size (the one used when \u0027stretch\u0027 alignment is used)\n\nIn the case of the override size, I think it shouldn\u0027t be applied to tables, according to the CSS Box Alignment spec:\n\nhttps://drafts.csswg.org/css-align/#justify-cell\nhttps://drafts.csswg.org/css-align/#align-cell\n\nThe LayoutBlock logic already considers the OverrideContainingBlock when computing the available size, so I guess this change could make sense. However, it also considers whether the item is stretched or not, so we may want to ensure it\u0027s not applied to tables; if it is, we should add some special case in the LayoutBlock or LayoutBox logic to prevent it.\n\nFinally, since grid doesn\u0027t do anything else regarding the grid item\u0027s sizing, I wonder if the rest of the logic we are not going to execute because of the early return is still needed or not; is it equivalent to what LayoutBlock does ?",
+      "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
