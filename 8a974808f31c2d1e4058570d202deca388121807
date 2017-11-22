@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48284787_6443ca10",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-11-22T02:48:26Z",
+      "side": 1,
+      "message": "first_rect.MaxX() - 1, for right aligned case?\n\nBut what\u0027s wrong with taking the midpoint for X?",
+      "range": {
+        "startLine": 1813,
+        "startChar": 28,
+        "endLine": 1813,
+        "endChar": 45
+      },
+      "revId": "8a974808f31c2d1e4058570d202deca388121807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
