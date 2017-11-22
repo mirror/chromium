@@ -41,6 +41,15 @@ enum HistogramType {
   SPARSE_HISTOGRAM,
 };
 
+// Controls the verbosity of the information when the histogram is serialized to
+// a JSON.
+enum class JSONVerbosityLevel {
+  // The histogram is completely serialized.
+  kFull,
+  // The bucket information is skipped.
+  kSkipBuckets,
+};
+
 std::string HistogramTypeToString(HistogramType type);
 
 // This enum is used for reporting how many histograms and of what types and
@@ -216,10 +225,11 @@ class BASE_EXPORT HistogramBase {
   virtual bool ValidateHistogramContents(bool crash_if_invalid,
                                          int corrupted_count) const;
 
-  // Produce a JSON representation of the histogram. This is implemented with
-  // the help of GetParameters and GetCountAndBucketData; overwrite them to
-  // customize the output.
-  void WriteJSON(std::string* output) const;
+  // Produce a JSON representation of the histogram with |verbosity_level| as
+  // the serialization verbosity. This is implemented with the help of
+  // GetParameters and GetCountAndBucketData; overwrite them to customize the
+  // output.
+  void WriteJSON(std::string* output, JSONVerbosityLevel verbosity_level) const;
 
  protected:
   enum ReportActivity { HISTOGRAM_CREATED, HISTOGRAM_LOOKUP };
