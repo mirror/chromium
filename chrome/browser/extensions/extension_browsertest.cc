@@ -31,6 +31,7 @@
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_install_prompt_show_params.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/extension_test_util.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/unpacked_installer.h"
 #include "chrome/browser/extensions/updater/extension_cache_fake.h"
@@ -305,18 +306,7 @@ const Extension* ExtensionBrowserTest::LoadAndLaunchApp(
 
 Browser* ExtensionBrowserTest::LaunchAppBrowser(
     const extensions::Extension* extension) {
-  EXPECT_TRUE(OpenApplication(AppLaunchParams(
-      profile(), extension, extensions::LAUNCH_CONTAINER_WINDOW,
-      WindowOpenDisposition::CURRENT_TAB, extensions::SOURCE_CHROME_INTERNAL)));
-
-  const BrowserList& browser_list = *BrowserList::GetInstance();
-  auto iter = std::find_if(
-      browser_list.begin(), browser_list.end(), [extension](Browser* b) {
-        return web_app::GetExtensionIdFromApplicationName(b->app_name()) ==
-               extension->id();
-      });
-  EXPECT_FALSE(iter == browser_list.end());
-  return iter == browser_list.end() ? nullptr : *iter;
+  return extension_test_util::LaunchAppBrowser(profile(), extension);
 }
 
 base::FilePath ExtensionBrowserTest::PackExtension(
@@ -390,19 +380,7 @@ const Extension* ExtensionBrowserTest::UpdateExtensionWaitForIdle(
 
 const Extension* ExtensionBrowserTest::InstallBookmarkApp(
     WebApplicationInfo info) {
-  size_t num_extensions =
-      ExtensionRegistry::Get(profile())->enabled_extensions().size();
-
-  content::WindowedNotificationObserver windowed_observer(
-      extensions::NOTIFICATION_CRX_INSTALLER_DONE,
-      content::NotificationService::AllSources());
-  extensions::CreateOrUpdateBookmarkApp(extension_service(), &info);
-  windowed_observer.Wait();
-
-  EXPECT_EQ(++num_extensions,
-            ExtensionRegistry::Get(profile())->enabled_extensions().size());
-
-  return content::Details<const Extension>(windowed_observer.details()).ptr();
+  return extension_test_util::InstallBookmarkApp(profile(), std::move(info));
 }
 
 const Extension* ExtensionBrowserTest::InstallExtensionFromWebstore(
