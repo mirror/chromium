@@ -187,7 +187,6 @@ crbug.com/243871 virtual/threaded/fast/scroll-behavior/ [ Slow ]
 crbug.com/243871 virtual/threaded/fast/idle-callback/idle_periods.html [ Slow ]
 crbug.com/664857 virtual/threaded/animations/responsive/transform-responsive-neutral-keyframe.html [ Slow ]
 
-
 # These html5lib tests are generated tests that test a huge amount of permutations so they need a bit more time.
 crbug.com/453312 html5lib/generated/run-doctype01-data.html [ Slow ]
 crbug.com/453312 html5lib/generated/run-domjs-unsafe-data.html [ Slow ]
@@ -531,3 +530,11 @@ crbug.com/779965 external/wpt/beacon/headers/header-content-type.html [ Slow ]
 
 # This page loads slow in real browser, and can timeout in SPv2 layout test.
 crbug.com/779366 fast/shapes/crash-allocating-very-large-raster-shape.html [ Slow ]
+
+# These key generation tests are slow on all platforms (most noticeably on Mac).
+crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/successes_RSA-OAEP.https.worker.html [ Slow ]
+crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/successes_RSA-PSS.https.worker.html [ Slow ]
+crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/successes_RSASSA-PKCS1-v1_5.https.worker.html [ Slow ]
+crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-OAEP.https.html [ Slow ]
+crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-PSS.https.html [ Slow ]
+crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/test_successes_RSASSA-PKCS1-v1_5.https.html [ Slow ]
