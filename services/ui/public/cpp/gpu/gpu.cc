@@ -235,7 +235,7 @@ void Gpu::CreateArcProtectedBufferManager(
 #endif  // OS_CHROMEOS
 
 void Gpu::CreateJpegDecodeAccelerator(
-    media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
+    media::mojom::JpegDecodeAcceleratorRequest jda_request) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   (*gpu_)->CreateJpegDecodeAccelerator(std::move(jda_request));
 }
