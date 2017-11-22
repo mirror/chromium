@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac383ba_886f3a33",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T22:18:08Z",
+      "side": 1,
+      "message": "Is just nulling out the Display pointer here completely correct? If GLSurfaceGLX::InitializeOneOff is called again, it\u0027ll call gfx::InitializeThreadedX11(), which will call XInitThreads() a second time (since the X display connection will still be open), which will end up returning false. The return value from this call isn\u0027t being checked and maybe this won\u0027t happen except in tests.",
+      "range": {
+        "startLine": 482,
+        "startChar": 2,
+        "endLine": 482,
+        "endChar": 11
+      },
+      "revId": "556dbf1e5a3413212c28530ba5b399c16205ba46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
