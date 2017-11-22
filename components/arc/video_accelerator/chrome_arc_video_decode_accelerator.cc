@@ -65,7 +65,6 @@ ChromeArcVideoDecodeAccelerator::ChromeArcVideoDecodeAccelerator(
     : arc_client_(nullptr),
       next_bitstream_buffer_id_(0),
       output_pixel_format_(media::PIXEL_FORMAT_UNKNOWN),
-      output_buffer_size_(0),
       requested_num_of_output_buffers_(0),
       gpu_preferences_(gpu_preferences),
       protected_buffer_manager_(protected_buffer_manager) {}
@@ -88,11 +87,25 @@ ArcVideoDecodeAccelerator::Result ChromeArcVideoDecodeAccelerator::Initialize(
   return result;
 }
 
+static media::VideoPixelFormat HalPixelFormatToVideoPixelFormat(
+    uint32_t format) {
+  switch (format) {
+    case ::arc::HAL_PIXEL_FORMAT_YV12:
+      return media::PIXEL_FORMAT_YV12;
+    case ::arc::HAL_PIXEL_FORMAT_NV12:
+      return media::PIXEL_FORMAT_NV12;
+    default:
+      DLOG(ERROR) << "Unknown pixel format: " << format;
+      return media::PIXEL_FORMAT_UNKNOWN;
+  }
+}
+
 ArcVideoDecodeAccelerator::Result
 ChromeArcVideoDecodeAccelerator::InitializeTask(
     const Config& config,
     ArcVideoDecodeAccelerator::Client* client) {
   DVLOG(5) << "Initialize(input_pixel_format=" << config.input_pixel_format
+           << ", output_pixel_fomrat=" << config.output_pixel_format
            << ", num_input_buffers=" << config.num_input_buffers << ")";
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(client);
@@ -116,6 +129,11 @@ ChromeArcVideoDecodeAccelerator::InitializeTask(
   }
 
   secure_mode_ = config.secure_mode;
+  output_pixel_format_ =
+      HalPixelFormatToVideoPixelFormat(config.output_pixel_format);
+  if (output_pixel_format_ == media::PIXEL_FORMAT_UNKNOWN) {
+    return INVALID_ARGUMENT;
+  }
 
   if (config.num_input_buffers > kMaxBufferCount) {
     DLOG(ERROR) << "Request too many buffers: " << config.num_input_buffers;
@@ -412,7 +430,7 @@ void ChromeArcVideoDecodeAccelerator::UseBuffer(
       // is_null() is false the first time the buffer is passed to the VDA.
       // In that case, VDA needs to import the buffer first.
       if (!output_info->gpu_memory_buffer_handle.is_null()) {
-        vda_->ImportBufferForPicture(index,
+        vda_->ImportBufferForPicture(index, output_pixel_format_,
                                      output_info->gpu_memory_buffer_handle);
         // VDA takes ownership, so just clear out, don't close the handle.
         output_info->gpu_memory_buffer_handle = gfx::GpuMemoryBufferHandle();
@@ -459,40 +477,13 @@ void ChromeArcVideoDecodeAccelerator::ProvidePictureBuffers(
   // By default, use an empty rect to indicate the visible rectangle is not
   // available.
   visible_rect_ = gfx::Rect();
-  if ((output_pixel_format_ != media::PIXEL_FORMAT_UNKNOWN) &&
-      (output_pixel_format_ != output_pixel_format)) {
-    arc_client_->OnError(PLATFORM_FAILURE);
-    return;
-  }
-  output_pixel_format_ = output_pixel_format;
   requested_num_of_output_buffers_ = requested_num_of_buffers;
-  output_buffer_size_ =
-      media::VideoFrame::AllocationSize(output_pixel_format_, coded_size_);
 
   NotifyOutputFormatChanged();
 }
 
 void ChromeArcVideoDecodeAccelerator::NotifyOutputFormatChanged() {
   VideoFormat video_format;
-  switch (output_pixel_format_) {
-    case media::PIXEL_FORMAT_I420:
-    case media::PIXEL_FORMAT_YV12:
-    case media::PIXEL_FORMAT_NV12:
-    case media::PIXEL_FORMAT_NV21:
-      // HAL_PIXEL_FORMAT_YCbCr_420_888 is the flexible pixel format in Android
-      // which handles all 420 formats, with both orderings of chroma (CbCr and
-      // CrCb) as well as planar and semi-planar layouts.
-      video_format.pixel_format = HAL_PIXEL_FORMAT_YCbCr_420_888;
-      break;
-    case media::PIXEL_FORMAT_ARGB:
-      video_format.pixel_format = HAL_PIXEL_FORMAT_BGRA_8888;
-      break;
-    default:
-      DLOG(ERROR) << "Format not supported: " << output_pixel_format_;
-      arc_client_->OnError(PLATFORM_FAILURE);
-      return;
-  }
-  video_format.buffer_size = output_buffer_size_;
   video_format.min_num_buffers = requested_num_of_output_buffers_;
   video_format.coded_width = coded_size_.width();
   video_format.coded_height = coded_size_.height();
@@ -531,7 +522,6 @@ void ChromeArcVideoDecodeAccelerator::PictureReady(
 
   BufferMetadata metadata;
   metadata.timestamp = input_record->timestamp;
-  metadata.bytes_used = output_buffer_size_;
   arc_client_->OnBufferDone(PORT_OUTPUT, picture.picture_buffer_id(), metadata);
 }
 

@@ -845,6 +845,7 @@ static void CloseGpuMemoryBufferHandle(
 
 void VaapiVideoDecodeAccelerator::ImportBufferForPicture(
     int32_t picture_buffer_id,
+    VideoPixelFormat pixel_format,
     const gfx::GpuMemoryBufferHandle& gpu_memory_buffer_handle) {
   VLOGF(2) << "Importing picture id: " << picture_buffer_id;
   DCHECK(task_runner_->BelongsToCurrentThread());
@@ -869,8 +870,9 @@ void VaapiVideoDecodeAccelerator::ImportBufferForPicture(
     return;
   }
 
-  if (!picture->ImportGpuMemoryBufferHandle(output_format_,
-                                            gpu_memory_buffer_handle)) {
+  if (!picture->ImportGpuMemoryBufferHandle(
+          VideoPixelFormatToGfxBufferFormat(pixel_format),
+          gpu_memory_buffer_handle)) {
     // ImportGpuMemoryBufferHandle will close the handles even on failure, so
     // we don't need to do this ourselves.
     VLOGF(1) << "Failed to import GpuMemoryBufferHandle";

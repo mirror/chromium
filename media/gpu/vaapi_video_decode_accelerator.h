@@ -71,6 +71,7 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
 #if defined(USE_OZONE)
   void ImportBufferForPicture(
       int32_t picture_buffer_id,
+      VideoPixelFormat pixel_format,
       const gfx::GpuMemoryBufferHandle& gpu_memory_buffer_handle) override;
 #endif
   void ReusePictureBuffer(int32_t picture_buffer_id) override;

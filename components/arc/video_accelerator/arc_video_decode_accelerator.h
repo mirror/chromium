@@ -9,6 +9,7 @@
 
 #include "base/files/scoped_file.h"
 #include "components/arc/video_accelerator/video_frame_plane.h"
+#include "media/base/video_types.h"
 
 namespace arc {
 
@@ -17,6 +18,8 @@ enum HalPixelFormatExtension {
   // in "system/core/include/system/graphics.h"
   HAL_PIXEL_FORMAT_BGRA_8888 = 5,
   HAL_PIXEL_FORMAT_YCbCr_420_888 = 0x23,
+  HAL_PIXEL_FORMAT_YV12 = 0x32315659,
+  HAL_PIXEL_FORMAT_NV12 = 0x3231564e,
 
   // The following formats are not defined in Android, but used in
   // ArcVideoDecodeAccelerator to identify the input format.
@@ -37,8 +40,6 @@ struct BufferMetadata {
 };
 
 struct VideoFormat {
-  uint32_t pixel_format = 0;
-  uint32_t buffer_size = 0;
 
   // Minimum number of buffers required to decode/encode the stream.
   uint32_t min_num_buffers = 0;
@@ -71,10 +72,9 @@ class ArcVideoDecodeAccelerator {
   struct Config {
     size_t num_input_buffers = 0;
     uint32_t input_pixel_format = 0;
+    uint32_t output_pixel_format = 0;
     // If true, only buffers created via AllocateProtectedBuffer() may be used.
     bool secure_mode = false;
-    // TODO(owenlin): Add output_pixel_format. For now only the native pixel
-    //                format of each VDA on Chromium is supported.
   };
 
   // The callbacks of the ArcVideoDecodeAccelerator. The user of this class

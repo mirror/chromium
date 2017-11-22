@@ -117,7 +117,7 @@ bool IsImageFromGpuMemoryBufferFormatSupported(
     case gfx::BufferFormat::RGBA_F16:
       return capabilities.texture_half_float_linear;
     case gfx::BufferFormat::YUV_420_BIPLANAR:
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)
+#if defined(OS_CHROMEOS)
       // TODO(dcastagna): Determine ycbcr_420v_image on CrOS at runtime
       // querying minigbm. crbug.com/646148
       return true;

@@ -74,8 +74,6 @@ template <>
 struct TypeConverter<arc::mojom::VideoFormatPtr, arc::VideoFormat> {
   static arc::mojom::VideoFormatPtr Convert(const arc::VideoFormat& input) {
     arc::mojom::VideoFormatPtr result = arc::mojom::VideoFormat::New();
-    result->pixel_format_deprecated = input.pixel_format;
-    result->buffer_size_deprecated = input.buffer_size;
     result->min_num_buffers = input.min_num_buffers;
     result->coded_width = input.coded_width;
     result->coded_height = input.coded_height;
@@ -96,6 +94,7 @@ struct TypeConverter<arc::ArcVideoDecodeAccelerator::Config,
     result.num_input_buffers = input->num_input_buffers;
     result.input_pixel_format = input->input_pixel_format;
     result.secure_mode = input->secure_mode;
+    result.output_pixel_format = input->output_pixel_format;
     return result;
   }
 };

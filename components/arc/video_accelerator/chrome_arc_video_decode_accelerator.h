@@ -176,7 +176,6 @@ class ChromeArcVideoDecodeAccelerator
   std::vector<std::unique_ptr<OutputBufferInfo>> buffers_pending_import_;
 
   THREAD_CHECKER(thread_checker_);
-  size_t output_buffer_size_;
 
   // The minimal number of requested output buffers.
   uint32_t requested_num_of_output_buffers_;
