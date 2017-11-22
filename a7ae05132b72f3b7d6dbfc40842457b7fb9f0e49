@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "664531f7_11c7afec",
+        "filename": "content/browser/service_worker/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T11:02:32Z",
+      "side": 1,
+      "message": "This should be a comment referring to the file, like the lines above.",
+      "revId": "a7ae05132b72f3b7d6dbfc40842457b7fb9f0e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
