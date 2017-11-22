@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ca5baf9_5fbe95d5",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T05:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f05c98b_31df5107",
+      "revId": "374c0eac4094e9ff981461c430951164caa957d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ab8b698_b416831f",
         "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "52d46304_8aaf7a10",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T05:00:22Z",
+      "side": 1,
+      "message": "Yep, this was an intentional change (at least, intentional insofar as I know it\u0027s a behavior change, and made the conscious decision to accept it).\n\nThis was significantly more elegant than trying to mangle the properties on the listener itself, etc.  Additionally, the likelihood that an extension will access the property without either calling it or trying to add a listener is very low, I\u0027d think.  And, most importantly, as you mentioned - unpacked extensions are pretty rare, and throwing \"this is deprecated\" errors in them is acceptable.",
+      "parentUuid": "8ab8b698_b416831f",
+      "revId": "374c0eac4094e9ff981461c430951164caa957d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "117346e0_d68a31be",
         "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "374c0eac4094e9ff981461c430951164caa957d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1378eb8e_377ae87e",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T05:00:22Z",
+      "side": 1,
+      "message": "Correct. I\u0027ve added an additional comment calling that out explicitly.",
+      "parentUuid": "117346e0_d68a31be",
+      "revId": "374c0eac4094e9ff981461c430951164caa957d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
