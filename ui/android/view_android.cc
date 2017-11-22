@@ -19,6 +19,7 @@
 #include "ui/android/window_android.h"
 #include "ui/base/layout.h"
 #include "ui/events/android/drag_event_android.h"
+#include "ui/events/android/gesture_event_android.h"
 #include "ui/events/android/motion_event_android.h"
 #include "ui/gfx/android/java_bitmap.h"
 #include "url/gurl.h"
@@ -475,6 +476,17 @@ bool ViewAndroid::OnMouseWheelEvent(const MotionEventAndroid& event) {
 bool ViewAndroid::SendMouseWheelEventToClient(ViewClient* client,
                                               const MotionEventAndroid& event) {
   return client->OnMouseWheelEvent(event);
+}
+
+bool ViewAndroid::OnGestureEvent(const GestureEventAndroid& event) {
+  return HitTest(base::Bind(&ViewAndroid::SendGestureEventToClient), event,
+                 event.location());
+}
+
+// static
+bool ViewAndroid::SendGestureEventToClient(ViewClient* client,
+                                           const GestureEventAndroid& event) {
+  return client->OnGestureEvent(event);
 }
 
 template <typename E>
