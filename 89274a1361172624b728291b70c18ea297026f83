@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6f9f2a49_652e3f4a",
+        "filename": "services/resource_coordinator/observers/metrics_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-22T22:45:17Z",
+      "side": 1,
+      "message": "I\u0027ve added a param to ukm::kUkmFeature (I think).",
+      "parentUuid": "21cbc2ec_39a670c8",
+      "range": {
+        "startLine": 227,
+        "startChar": 52,
+        "endLine": 227,
+        "endChar": 76
+      },
+      "revId": "89274a1361172624b728291b70c18ea297026f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "272c9b56_1a12f5d4",
         "filename": "services/resource_coordinator/observers/metrics_collector_unittest.cc",
         "patchSetId": 4
@@ -117,6 +141,30 @@
       "revId": "89274a1361172624b728291b70c18ea297026f83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2231c1c_632def93",
+        "filename": "services/resource_coordinator/observers/metrics_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-22T22:45:17Z",
+      "side": 1,
+      "message": "Done\nI just initially thought it was not possible. Several methods explicitly asking for MojoUkmRecorder needed to be changed.",
+      "parentUuid": "4e8f631d_3c06eed5",
+      "range": {
+        "startLine": 399,
+        "startChar": 18,
+        "endLine": 399,
+        "endChar": 37
+      },
+      "revId": "89274a1361172624b728291b70c18ea297026f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
