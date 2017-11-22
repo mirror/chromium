@@ -17,6 +17,7 @@
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
+#include "chrome/browser/extensions/extension_ui_util.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
@@ -814,8 +815,10 @@ base::string16 LocationBarView::GetLocationIconText() const {
   if (GetToolbarModel()->GetURL().SchemeIs(content::kChromeUIScheme))
     return l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_NAME);
 
-  const base::string16 extension_name = GetExtensionName(
-      GetToolbarModel()->GetURL(), delegate_->GetWebContents());
+  const base::string16 extension_name =
+      extensions::ui_util::GetEnabledExtensionNameForUrl(
+          GetToolbarModel()->GetURL(),
+          delegate_->GetWebContents()->GetBrowserContext());
   if (!extension_name.empty())
     return extension_name;
 
