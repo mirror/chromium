@@ -47,28 +47,23 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
   void ProceedWithResponse() override;
   void InterceptNavigation(NavigationInterceptionCB callback) override;
 
-  void OnReceiveResponse(scoped_refptr<ResourceResponse> response,
+  void OnReceiveResponse(mojom::URLLoaderPtrInfo url_loader,
+                         mojom::URLLoaderClientRequest url_loader_client,
+                         scoped_refptr<ResourceResponse> response,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file);
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          scoped_refptr<ResourceResponse> response);
-  void OnStartLoadingResponseBody(mojo::ScopedDataPipeConsumerHandle body);
   void OnComplete(const network::URLLoaderCompletionStatus& status);
 
  private:
   class URLLoaderRequestController;
-
-  bool IsDownload() const;
 
   void BindNonNetworkURLLoaderFactoryRequest(
       const GURL& url,
       mojom::URLLoaderFactoryRequest factory);
 
   NavigationURLLoaderDelegate* delegate_;
-
-  scoped_refptr<ResourceResponse> response_;
-  base::Optional<net::SSLInfo> ssl_info_;
-  SSLStatus ssl_status_;
 
   // Lives on the IO thread.
   std::unique_ptr<URLLoaderRequestController> request_controller_;
