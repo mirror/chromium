@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13a9dc94_fc67fceb",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-22T23:39:15Z",
+      "side": 1,
+      "message": "The page \u0027page_with_input_field.html\u0027 has a focus handler for the \u003cinput/\u003e. Executing the script will focus the input and in the handler we have:\n\ndomAutomationController.send(\"input-focus\");\nhttps://cs.chromium.org/chromium/src/content/test/data/page_with_input_field.html?rcl\u003d96d5ba4896cb76a6d1f09f4e557b45da41eec214\u0026l\u003d17\n\nThis same set of lines is used in another test:\nhttps://cs.chromium.org/chromium/src/content/browser/site_per_process_browsertest.cc?rcl\u003dac06f06510f555acd580cac6cf787ef8649efb71\u0026l\u003d5750",
+      "parentUuid": "92541b0b_16958b49",
+      "range": {
+        "startLine": 1646,
+        "startChar": 3,
+        "endLine": 1646,
+        "endChar": 32
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cfd75c5_00a926de",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T20:37:21Z",
       "side": 1,
       "message": "I\u0027m not seeing how either frame gets scrolling in this test case. iframe_out_of_view has just an iframe and it looks like it\u0027d be in view, at least the top left part of it, on load.\n\npage_with_input_field also has the input box near the top so I\u0027d assume that\u0027s in view too. Even if there\u0027s overflow, you\u0027re not scrolling the input box out of view before you call ScrollFocusedEditableNodeIntoRect.\n\nIf I am just missing it, you might want to add an assert at the beginning of the test to make sure the input box starts off out of view, to make it sure your test isn\u0027t passing because the setup is broken.",
+      "range": {
+        "startLine": 1648,
+        "startChar": 39,
+        "endLine": 1648,
+        "endChar": 72
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03baa9c2_1208e0d9",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-22T23:39:15Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not seeing how either frame gets scrolling in this test case. iframe_out_of_view has just an iframe and it looks like it\u0027d be in view, at least the top left part of it, on load.\n\nI am not sure if this is true. Please take a look at:\nhttps://ehsan-karamad.github.io/iframe_out_of_view.html\nwhich is the same file. The iframe is way out of bounds on my screen. \n\n\u003e page_with_input_field also has the input box near the top so I\u0027d assume that\u0027s in view too. Even if there\u0027s overflow, you\u0027re not scrolling the input box out of view before you call ScrollFocusedEditableNodeIntoRect.\n\u003e \nThis call is actually scrolling the \u003cinput/\u003e _into_ view. We have first made sure the \u003ciframe\u003e is not visible. Then when asking to scroll the \u003cinput/\u003e inside the \u003ciframe\u003e to scroll into view the expectation is that the \u003ciframe\u003e is scrolled.\n\n\u003e If I am just missing it, you might want to add an assert at the beginning of the test to make sure the input box starts off out of view, to make it sure your test isn\u0027t passing because the setup is broken.\n\nScrolling the \u003cinput/\u003e itself was not part of the test. It is just there for the setup so that ScrollFocusedEditableNodeIntoRect can work. So for the purpose of the CL I think having only the \u003ciframe\u003e scroll should be fine.\n\nIn the new CL the test waits until the precondition for child frame being initially out of view holds true (similarly to the other test: SitePerProcessBrowserTest.ScrollElementIntoView). Also manually testing and logging locally, the child frame view bounds changes from \"7863x5923...\" to \"486x496...\" from before to after ScrollFocusedEditableNodeIntoRect() call.",
+      "parentUuid": "3cfd75c5_00a926de",
       "range": {
         "startLine": 1648,
         "startChar": 39,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3d89f789_81ffafc2",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-22T23:39:15Z",
+      "side": 1,
+      "message": "Yes thanks!",
+      "parentUuid": "12a957be_3d61e55b",
+      "range": {
+        "startLine": 1660,
+        "startChar": 17,
+        "endLine": 1660,
+        "endChar": 34
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc0d4f2_50944a6a",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-22T19:53:44Z",
       "side": 1,
       "message": "10x10 seems kind of arbitrary.  Any reason for using that vs, for example, the \u003cinput\u003e\u0027s width and height from its getBoundingClientRect()?",
+      "range": {
+        "startLine": 1673,
+        "startChar": 22,
+        "endLine": 1673,
+        "endChar": 39
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2070dfa3_264fdf79",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-22T23:39:15Z",
+      "side": 1,
+      "message": "The reason was that here:\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_view_aura.cc?rcl\u003d910a824266ff9c6e912ee664cfd93c2754ec1b61\u0026l\u003d208\n\nwe consider a square of size 10 at the point touched by the user as the rect we would like the \u003cinput\u003e to be scrolled into (!!!). Interestingly, we completely ignore this value in the renderer (hence the removal of |rect| from the API in WebView.h) and use the caret bounds of the focused editable element. This is quite sensible except that we use the \"focused editable element\" which might not necessarily be the same input element as the one user touched (I have a test page in ehsan-karamad.github.io/bad_input.html which demonstrates this -- zoom into the top left input element and tap into it on windows or android -- the keyboard appears but we zoom into the bottom right element which has stolen focus).\n\nHaving said all of this, I now use the bounding box of the \u003cinput/\u003e. This is a more generic condition but a condition which must hold regardless of our understanding of where to scroll to (the same argument can be made for checking for \u003ciframe/\u003e bounds changing due to scroll).",
+      "parentUuid": "6bc0d4f2_50944a6a",
       "range": {
         "startLine": 1673,
         "startChar": 22,
