@@ -31,6 +31,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.DeferredStartupHandler;
+import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.infobar.InfoBar;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
@@ -51,6 +52,7 @@ import org.chromium.chrome.test.util.MenuUtils;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
 import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content.browser.test.util.RenderProcessLimit;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -612,8 +614,12 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
         return mCurrentTestName;
     }
 
-    public void setActivity(T chromeActivity) {
+    public void setActivity(final T chromeActivity) {
         mSetActivity = chromeActivity;
+        DOMUtils.setTopOffsetCallable(() -> {
+            CompositorViewHolder cvh = chromeActivity.getCompositorViewHolder();
+            return cvh.controlsResizeView() ? cvh.getTopControlsHeightPixels() : 0;
+        });
     }
 
     private class ChromeUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
