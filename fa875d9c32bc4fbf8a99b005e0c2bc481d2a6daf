@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efe1daa9_be1cbb10",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6982aca7_5e7816f5",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ed34592_f3cb78df",
         "filename": "content/browser/media/audio_stream_monitor.cc",
         "patchSetId": 6
@@ -45,6 +69,54 @@
       "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2f391d_db6c0362",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed34592_f3cb78df",
+      "range": {
+        "startLine": 94,
+        "startChar": 22,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9b58348_5eec21f9",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed34592_f3cb78df",
+      "range": {
+        "startLine": 94,
+        "startChar": 22,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +143,54 @@
     },
     {
       "key": {
+        "uuid": "5f2a6847_2a6bb0f8",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8109891_a7f97e68",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 65
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77920467_8eec7088",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8109891_a7f97e68",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 65
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82cec960_5ff1e5b3",
         "filename": "content/browser/media/audio_stream_monitor.cc",
         "patchSetId": 6
@@ -91,6 +211,30 @@
       "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed356c3d_33bf14d6",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82cec960_5ff1e5b3",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 56
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +261,54 @@
     },
     {
       "key": {
+        "uuid": "b70faeca_be0408d6",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c824e7e_82f99153",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36f87b0d_d50db747",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c824e7e_82f99153",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cf6e2ba_284d3cb7",
         "filename": "content/browser/media/audio_stream_monitor.cc",
         "patchSetId": 6
@@ -128,6 +320,30 @@
       "writtenOn": "2017-11-16T23:27:45Z",
       "side": 1,
       "message": "I don\u0027t see the point in building-up the |audible_frame_map|. Let\u0027s simplify this to:\n\n  if (is_stream_audible !\u003d render_frame_host_impl-\u003eis_audible())\n    render_frame_host_impl-\u003eOnAudibleStateChanged(is_stream_audible);\n\n...and then delete the |audible_frame_map| and the loop that iterates over it below.",
+      "range": {
+        "startLine": 237,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 67
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81847f4c_912f6c2a",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this introduce the same bug from a few lines above?\n(mark the frame as audible/not audible based on a single stream and not the whole set of streams in the frame)",
+      "parentUuid": "3cf6e2ba_284d3cb7",
       "range": {
         "startLine": 237,
         "startChar": 4,
@@ -163,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "3605e23e_5fe796c6",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done. Based on this recommendation I updated this CL so that the timer starts when the tab becomes inaudible, which is equivalent (modulo notification latency) to the last blurt time.",
+      "parentUuid": "390e2d16_1e727873",
+      "range": {
+        "startLine": 262,
+        "startChar": 1,
+        "endLine": 262,
+        "endChar": 49
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f073d627_e97ccd25",
         "filename": "content/browser/media/audio_stream_monitor.h",
         "patchSetId": 6
@@ -186,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "c2a7874a_b17aff10",
+        "filename": "content/browser/media/audio_stream_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f073d627_e97ccd25",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 3
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cee4895_13328062",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
         "patchSetId": 6
@@ -197,6 +461,30 @@
       "writtenOn": "2017-11-16T23:27:45Z",
       "side": 1,
       "message": "Now that this is much \"closer\" (in a code factoring sense) to AudioOutputController, in a future change we should consider just getting rid of this poll timer. Instead, we could add a method to AOC like:\n\n  // Every approximately |interval| amount of audio signal, invoke |callback| with the current power monitor level.\n  void BeginPowerMonitoring(base::TimeDelta interval, base::RepeatingCallback callback);\n\nThen, in AudioOutputDelegateImpl, just rely on AOC calling our |callback| 15 times a second:\n\n  controller_-\u003eBeginPowerMonitoring(\n      base::TimeDelta::FromSecondsD(1.0 / 15.0),\n      base::BindRepeating(\u0026AudioOutputDelegateImpl::UpdateAudibleState, ...));\n\nNow, no polling and no timer are needed. :)",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba66f35c_067e42fd",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "maxmorin@\u0027s suggestion of removing the polling and inspecting every sample has similarities to this. Instead of inspecting every sample we can implement a scheme that results in 15 checks per second without actually polling (or maybe moving the polling to AOC).\nWill defer this to a follow-up CL.",
+      "parentUuid": "3cee4895_13328062",
       "range": {
         "startLine": 104,
         "startChar": 2,
@@ -280,6 +568,30 @@
     },
     {
       "key": {
+        "uuid": "873a8dfc_eb549ab3",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "It\u0027s still relevant, but I will pass on this suggestion for at least this iteration.\nI don\u0027t see much extra value in encapsulating those fields in this class yet, but I\u0027ll do it in the next patchset if you think it\u0027s really important.",
+      "parentUuid": "91590bc3_04006200",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6880c122_a8b0fef0",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
         "patchSetId": 6
@@ -314,6 +626,24 @@
     },
     {
       "key": {
+        "uuid": "5bdb3c73_1473bd96",
+        "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do anything in this destructor since this object is deliberately stateless.",
+      "parentUuid": "9e029e87_800f173f",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0872250f_1e90bc09",
         "filename": "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h",
         "patchSetId": 6
@@ -337,6 +667,30 @@
     },
     {
       "key": {
+        "uuid": "5274f258_9c40682b",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0872250f_1e90bc09",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 40
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e03cea4d_e27f8066",
         "filename": "media/mojo/interfaces/audio_output_stream.mojom",
         "patchSetId": 6
@@ -354,6 +708,24 @@
     },
     {
       "key": {
+        "uuid": "d83a6764_f5cf869d",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e03cea4d_e27f8066",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "680ada0b_f0f2f07d",
         "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
         "patchSetId": 6
@@ -368,6 +740,24 @@
       "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db2e0b2_40e9047b",
+        "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T19:59:34Z",
+      "side": 1,
+      "message": "Yes, it can. Fixed.",
+      "parentUuid": "680ada0b_f0f2f07d",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
