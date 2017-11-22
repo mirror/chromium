@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "d6250547_19b0ef77",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-22T21:19:31Z",
+      "side": 1,
+      "message": "Done. Moved the logic from ResetCspHeaders and ResetFeaturePolicyHeader into it, as it was the only place this was called.",
+      "parentUuid": "2ee27bad_74900f6b",
+      "range": {
+        "startLine": 601,
+        "startChar": 21,
+        "endLine": 601,
+        "endChar": 45
+      },
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c98b186a_b8bf0214",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 20
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "53217332_32e873d1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-22T21:19:31Z",
+      "side": 1,
+      "message": "That can be cleaned up now; the important thing here was to update |active_sandbox_flags_| to match the FTN, so I\u0027ve changed it to just do that. (And removed the now unused ResetActiveSandboxFlags)",
+      "parentUuid": "c98b186a_b8bf0214",
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c29b3064_5671202f",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 20
@@ -73,6 +115,24 @@
       "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c01767_38312cf5",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-22T21:19:31Z",
+      "side": 1,
+      "message": "Yes, this is only sent to proxies. Local frames don\u0027t need this as they track their own state accurately. I\u0027ve updated the description to make that clearer.",
+      "parentUuid": "c29b3064_5671202f",
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +156,30 @@
       "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180a0731_11957971",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-22T21:19:31Z",
+      "side": 1,
+      "message": "DCHECK is probably okay; this was by analogy with RenderFrameHostManager::CommitPendingFramePolicy, but if it\u0027s not necessary, I can switch. Done.",
+      "parentUuid": "abd292c0_ad8dc0b7",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 7
+      },
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

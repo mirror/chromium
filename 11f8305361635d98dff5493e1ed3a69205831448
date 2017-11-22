@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "98f37b82_fbdb93e9",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-22T21:19:31Z",
+      "side": 1,
+      "message": "Alex? Any thoughts on that? I haven\u0027t tried it, and I don\u0027t know if reusing the RSC was just an optimization or if replacing it, like we do with the SecurityContext on the local frame, would cause any problems.\n\nI was a little hesitant, but this seems like the best way to allow it to be reset *only* from a RemoteSecurityContext instance. (I considered adding IsLocal/IsRemote, and implementing  ResetSandboxFlags on this class instead -- failing/crashing unless IsRemote -- but that doesn\u0027t actually seem any safer)",
+      "parentUuid": "e27953d4_dc220a16",
+      "revId": "11f8305361635d98dff5493e1ed3a69205831448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78b281d8_363e5fa2",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 19
@@ -174,6 +192,24 @@
       "revId": "11f8305361635d98dff5493e1ed3a69205831448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b55fcaf_4098dd32",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-22T21:19:31Z",
+      "side": 1,
+      "message": "It\u0027s a bit indirect, but if the CSP header sets sandbox flags on the document, then they will be seen by ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() and enforced by  Document::EnforceSandboxFlags. Then Document::SetFeaturePolicy (an unfortunate place, I know) will see that SecurityContext::GetSandboxFlags returns non-default flags, and triggers the sending of this message.\n\nIt is sent if *either* feature-policy or CSP sandbox flags are non-default, hence the rename.",
+      "parentUuid": "78b281d8_363e5fa2",
+      "revId": "11f8305361635d98dff5493e1ed3a69205831448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
