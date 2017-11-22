@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d16fa33d_5d0c2630",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-22T15:43:06Z",
+      "side": 1,
+      "message": "Instead of checking for non-null pose, you should check that the magic window pose callback was fired at least once because you could just get null poses indefinitely. Or maybe to be more general that the most recent pose is, say, less than 100ms old in case you stop and start magic window.",
+      "range": {
+        "startLine": 989,
+        "startChar": 6,
+        "endLine": 989,
+        "endChar": 34
+      },
+      "revId": "01a8d9b7eea43838b7127c7c846e9cfe3dd82ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5720b3e7_b1681da2",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 1
