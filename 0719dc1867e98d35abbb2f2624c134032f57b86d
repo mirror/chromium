@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8c2299c4_91b4de39",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_function.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-22T09:22:58Z",
+      "side": 1,
+      "message": "Ah, I\u0027m sorry to put \"optional\" on the comment.\nWhat I concerned here was https://crbug.com/698440.\nCode as-is is acceptable, but how about having a local variable |return_cpp_type|?",
+      "parentUuid": "417acbc6_8ceace88",
+      "range": {
+        "startLine": 56,
+        "startChar": 59,
+        "endLine": 56,
+        "endChar": 85
+      },
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0182c80_58423e34",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 6
