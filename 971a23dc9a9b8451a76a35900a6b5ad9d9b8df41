@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0543872b_2b0b4f33",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-22T01:20:56Z",
+      "side": 1,
+      "message": "This should only happen if it\u0027s visible per the ShowForInputEntryMethod below right? It might be good to DCHECK(IsVisible())",
+      "range": {
+        "startLine": 90,
+        "startChar": 13,
+        "endLine": 90,
+        "endChar": 51
+      },
+      "revId": "971a23dc9a9b8451a76a35900a6b5ad9d9b8df41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
