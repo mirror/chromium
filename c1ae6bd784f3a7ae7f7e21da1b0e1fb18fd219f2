@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab5acf50_e742647c",
+        "filename": "components/viz/common/frame_sinks/copy_output_result.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T18:18:14Z",
+      "side": 1,
+      "message": "Nit: though -\u003e when?\n\n(My impression is that this can in fact return null, but it\u0027s not 100% clear to me)",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 16
+      },
+      "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598bf3fc_d469fd8f",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_result.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T18:18:14Z",
+      "side": 1,
+      "message": "Would it make sense to add a mojo TextureResult struct? That way, we wouldn\u0027t need to construct an Optional temporary every time we serialize.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
