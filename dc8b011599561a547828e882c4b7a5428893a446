@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "92541b0b_16958b49",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-22T20:37:21Z",
+      "side": 1,
+      "message": "Where is this coming from? Unless I\u0027m missing something, focusInputField() doesn\u0027t return anything.",
+      "range": {
+        "startLine": 1646,
+        "startChar": 3,
+        "endLine": 1646,
+        "endChar": 32
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfd75c5_00a926de",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-22T20:37:21Z",
+      "side": 1,
+      "message": "I\u0027m not seeing how either frame gets scrolling in this test case. iframe_out_of_view has just an iframe and it looks like it\u0027d be in view, at least the top left part of it, on load.\n\npage_with_input_field also has the input box near the top so I\u0027d assume that\u0027s in view too. Even if there\u0027s overflow, you\u0027re not scrolling the input box out of view before you call ScrollFocusedEditableNodeIntoRect.\n\nIf I am just missing it, you might want to add an assert at the beginning of the test to make sure the input box starts off out of view, to make it sure your test isn\u0027t passing because the setup is broken.",
+      "range": {
+        "startLine": 1648,
+        "startChar": 39,
+        "endLine": 1648,
+        "endChar": 72
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12a957be_3d61e55b",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8

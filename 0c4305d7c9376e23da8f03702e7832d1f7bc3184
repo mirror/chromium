@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1b4a0606_5268c149",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-22T20:37:21Z",
+      "side": 1,
+      "message": "A more specific test for when zoom works that includes a non-unity PSF sounds good to me. This looks fine for now (when you do add that, the visual viewport is exposed to the page via window.visualViewport, so you can use a similar method to extract it as you do for getBoundingClientRect()).",
+      "parentUuid": "25d0b312_09bc84c2",
+      "range": {
+        "startLine": 225,
+        "startChar": 10,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de94c41a_0b9621c6",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 6
@@ -211,6 +235,30 @@
       "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905c2b46_73db1391",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-22T20:37:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "185f6251_46ec043e",
+      "range": {
+        "startLine": 1667,
+        "startChar": 6,
+        "endLine": 1667,
+        "endChar": 17
+      },
+      "revId": "0c4305d7c9376e23da8f03702e7832d1f7bc3184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
