@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dac5c97b_f67ade88",
+        "filename": "chrome/browser/browser_process.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Cool macro. Done.",
+      "parentUuid": "ac514ed7_14ab085b",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74fe826b_1d090a55",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T08:59:30Z",
       "side": 1,
       "message": "You could probably move this to ChromeBrowserMainExtraPartsViews -- that keeps everything under c/b/ui\n\nTabsTracker::GetInstance().StartWatchingBrowsers(); ?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88aaac0_050cec1d",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Will come back to this after figuring out whether TabsTracker itself will be merged into something like TabUsageRecorder.",
+      "parentUuid": "74fe826b_1d090a55",
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "372d4ea2_e701ff3e",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 3573,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "I\u0027ve seen feature flags used lately instead of OS_FOO \u0026\u0026 OS_BAR \u0026\u0026 (!OS_BAZ || OS_BAT) monstrosities.\n\nI\u0027m not sure where all c/b/ui is compiled (I thought it was excluded for is_chromecast, but I see a check for is_chromecast in this file).\n\nAnyway, I can move this into !is_android if you prefer. Android folks have shown interested in using this, so we may have to shuffle it around later, but that\u0027s not concrete right now.",
+      "parentUuid": "9e77dac3_dd1a1733",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "368437e3_e80b1532",
         "filename": "chrome/browser/ui/tabs/tab_logger.cc",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff68c22e_5f05d09a",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "368437e3_e80b1532",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "32018dd5_7afc1551",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d43fdb6_a7e8f5f4",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e5d962_995c9aba",
         "filename": "chrome/browser/ui/tabs/tab_logger.cc",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74619cf_b891dcaf",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e5d962_995c9aba",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6bad6a84_5bf75c0c",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18b3de4f_aacd5729",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad2ac26c_4925ae32",
         "filename": "chrome/browser/ui/tabs/tab_logger.cc",
         "patchSetId": 14
@@ -135,6 +261,24 @@
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7a0929_4f60a679",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2ac26c_4925ae32",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "122875b5_aec77832",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c7a7dd_84b2da71",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d44c090c_b92c6c2c",
         "filename": "chrome/browser/ui/tabs/tab_logger.h",
         "patchSetId": 14
@@ -166,6 +328,24 @@
       "writtenOn": "2017-11-22T08:59:30Z",
       "side": 1,
       "message": "Why do you need a separate TabLogger? (can TabsTracker just do all the logging?)",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf62935_3cbca1cb",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Just separation of concerns. Separating the tracking and the logging makes each behavior easier to unit test, simplifies the tracker\u0027s implementation, makes it easier to reuse some functionality. And we don\u0027t want to set the logging mechanism (UKM) in stone.\n\nBut I should probably move more of the TabLogger\u0027s functionality into the WebContentsData.  These features will also be used to calculate tab rankings in the future. TabLogger would then only be concerned with the bridge from that data to UKMs.",
+      "parentUuid": "d44c090c_b92c6c2c",
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "37ee573d_f8a4565b",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "I asked sky@ but haven\u0027t heard back: Isn\u0027t chrome::FindBrowserWithWebContents potentially expensive? Sometimes the caller will have a Browser* already.\n\nIs there a better way to get |browser| from |web_contents|? I don\u0027t need the Browser here now, but will at some point.",
+      "parentUuid": "b055805f_1d7c7900",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57e1fe14_9ae44680",
         "filename": "chrome/browser/ui/tabs/tab_logger.h",
         "patchSetId": 14
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "e14501c7_6630c99e",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57e1fe14_9ae44680",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb69187_9fbe975b",
         "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
         "patchSetId": 14
@@ -217,6 +433,24 @@
       "writtenOn": "2017-11-22T08:59:30Z",
       "side": 1,
       "message": "Maybe this was discussed... but this whole thing looks a lot like TabUsageRecorder::WebContentsData -- can we augment that with WebContentsObserver stuff rather than having two tab loggers in Chrome?",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d15e10b_5a893ebc",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Probably. I\u0027d like to run that by someone from chrisha\u0027s team first.",
+      "parentUuid": "dbb69187_9fbe975b",
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "982d54f4_3c8bc27a",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "hrm, if the WebContents is being destroyed we don\u0027t need to log here at all. I\u0027ll see if IsBeingDestroyed() tells me that (but that\u0027s a scary thought...)",
+      "parentUuid": "faa44778_f0e4d431",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8786bc42_e9c0186b",
         "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
         "patchSetId": 14
@@ -254,6 +506,24 @@
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04925ea6_a6b1f2ca",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "yeah, looks like it\u0027s usually above the class implementation, which puts it at the top if it needs to be outside the namespace",
+      "parentUuid": "8786bc42_e9c0186b",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "0c80e9ee_9d098332",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1709e783_4b772ed2",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7005971_8be73d60",
         "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
         "patchSetId": 14
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "320472d3_a9cacd8e",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7005971_8be73d60",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a58f4c65_261e338d",
         "filename": "chrome/browser/ui/tabs/tabs_tracker_unittest.cc",
         "patchSetId": 14
@@ -305,6 +611,24 @@
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb61662_69c4299e",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T23:44:36Z",
+      "side": 1,
+      "message": "Done. didn\u0027t see that in the examples I checked, but it looks like a mixed bag.",
+      "parentUuid": "a58f4c65_261e338d",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
