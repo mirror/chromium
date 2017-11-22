@@ -8,14 +8,12 @@
 #include "public/platform/WebCommon.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
-class SkFontMgr;
 class SkTypeface;
 
 namespace blink {
 
 class WebFontRendering {
  public:
-  BLINK_EXPORT static void SetSkiaFontManager(sk_sp<SkFontMgr>);
   BLINK_EXPORT static void SetDeviceScaleFactor(float);
   BLINK_EXPORT static void AddSideloadedFontForTesting(SkTypeface*);
   BLINK_EXPORT static void SetMenuFontMetrics(const wchar_t* family_name,

@@ -42,7 +42,6 @@ class WebFontRendering {
  public:
   // Set global font renderering preferences.
 
-  BLINK_EXPORT static void SetSkiaFontManager(sk_sp<SkFontMgr>);
   BLINK_EXPORT static void SetHinting(SkPaint::Hinting);
   BLINK_EXPORT static void SetAutoHint(bool);
   BLINK_EXPORT static void SetUseBitmaps(bool);

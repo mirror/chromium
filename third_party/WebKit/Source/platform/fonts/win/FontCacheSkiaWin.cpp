@@ -38,6 +38,7 @@
 #include "platform/fonts/BitmapGlyphsBlacklist.h"
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/FontFaceCreationParams.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/fonts/FontPlatformData.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/fonts/win/FontFallbackWin.h"
@@ -102,10 +103,6 @@ void FontCache::SetStatusFontMetrics(const wchar_t* family_name,
 }
 
 FontCache::FontCache() : purge_prevent_count_(0) {
-  font_manager_ = sk_ref_sp(static_font_manager_);
-  if (!font_manager_)
-    font_manager_ = SkFontMgr_New_DirectWrite();
-  DCHECK(font_manager_.get());
 }
 
 // Given the desired base font, this will create a SimpleFontData for a specific
@@ -115,6 +112,8 @@ scoped_refptr<SimpleFontData> FontCache::FallbackFontForCharacter(
     UChar32 character,
     const SimpleFontData* original_font_data,
     FontFallbackPriority fallback_priority) {
+  DEFINE_STATIC_LOCAL
+
   // First try the specified font with standard style & weight.
   if (fallback_priority != FontFallbackPriority::kEmojiEmoji &&
       (font_description.Style() == ItalicSlopeValue() ||
@@ -126,9 +125,10 @@ scoped_refptr<SimpleFontData> FontCache::FallbackFontForCharacter(
   }
 
   UScriptCode script;
-  const wchar_t* family = GetFallbackFamily(
-      character, font_description.GenericFamily(), font_description.Locale(),
-      &script, fallback_priority, font_manager_.get());
+  sk_sp<SkFontMgr> const wchar_t* family =
+      GetFallbackFamily(character, font_description.GenericFamily(),
+                        font_description.Locale(), &script, fallback_priority,
+                        FontGlobalContext::GetFontManagerDirectWrite());
   FontPlatformData* data = nullptr;
   if (family) {
     FontFaceCreationParams create_by_family(
@@ -151,9 +151,11 @@ scoped_refptr<SimpleFontData> FontCache::FallbackFontForCharacter(
 
     CString family_name = font_description.Family().Family().Utf8();
 
-    SkTypeface* typeface = font_manager_->matchFamilyStyleCharacter(
-        family_name.data(), font_description.SkiaFontStyle(), &bcp47_locale,
-        locale_count, character);
+    SkTypeface* typeface =
+        FontGlobalContext::GetFontManagerDirectWrite()
+            ->matchFamilyStyleCharacter(family_name.data(),
+                                        font_description.SkiaFontStyle(),
+                                        &bcp47_locale, locale_count, character);
     if (typeface) {
       SkString skia_family;
       typeface->getFamilyName(&skia_family);

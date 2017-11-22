@@ -9,11 +9,6 @@
 namespace blink {
 
 // static
-void WebFontRendering::SetSkiaFontManager(sk_sp<SkFontMgr> font_mgr) {
-  FontCache::SetFontManager(std::move(font_mgr));
-}
-
-// static
 void WebFontRendering::SetDeviceScaleFactor(float device_scale_factor) {
   FontCache::SetDeviceScaleFactor(device_scale_factor);
 }
