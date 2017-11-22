@@ -26,9 +26,6 @@ mojom("common_custom_types") {
     "values.mojom",
     "version.mojom",
   ]
-
-  # TODO(crbug.com/699569): Convert to use the new JS bindings.
-  js_bindings_mode = "both"
 }
 
 mojom("read_only_buffer") {
