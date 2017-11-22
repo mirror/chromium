@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f4f9f9d9_2e433381",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T01:32:49Z",
+      "side": 1,
+      "message": "I suppose we can\u0027t convert TimeTicks to Time, then we\u0027ll need to record last activity time as Time instead of TimeTicks.",
+      "parentUuid": "22ab123f_7b628442",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0200d764_daca1c70",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
         "patchSetId": 4
