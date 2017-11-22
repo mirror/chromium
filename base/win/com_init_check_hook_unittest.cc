@@ -65,6 +65,14 @@ TEST(ComInitCheckHook, MultipleHooks) {
 #endif
 }
 
+TEST(ComInitCheckHook, FreeTest) {
+  const DWORD magic_error = 0x12345678;
+  ::SetLastError(magic_error);
+  BOOL result = ::FreeLibrary(nullptr);
+  EXPECT_TRUE(result);
+  EXPECT_EQ(magic_error, ::GetLastError());
+}
+
 TEST(ComInitCheckHook, UnexpectedHook) {
 #if defined(COM_INIT_CHECK_HOOK_ENABLED)
   HMODULE ole32_library = ::LoadLibrary(L"ole32.dll");
