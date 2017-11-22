@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="timeout" content="long">
+<title>Set unprefixed cookies and getAll (path shadowing)</title>
+<meta name="help"
+      href="https://github.com/WICG/cookie-store/blob/gh-pages/explainer.md">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/testharness-helpers.js"></script>
+<script>
+'use strict';
+
+const kMyPath = location.pathname.replace(/[^\/]+$/, '');
+
+// Cookie names: name1, name2, name3
+// Cookie values: value1, value2 + suffix codes, value3
+// Suffix codes for value2:
+// - _implicit_path_<path> - Implicit path=<path>
+// - _explicit_path_<path> - Explicit path=<path>
+
+promise_test(async testCase => {
+  await cookieStore.set('name1', 'value1_implicit_path_/');
+  await cookieStore.set('name2', 'value2_implicit_path_/');
+  await cookieStore.set('name3', 'value3_implicit_path_/');
+  await cookieStore.set('name2', 'value2_explicit_path_' + kMyPath, {
+    path: kMyPath,
+  });
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'name2=value2_explicit_path_' + kMyPath + '; ' +
+          'name1=value1_implicit_path_/; ' +
+          'name2=value2_implicit_path_/; ' +
+          'name3=value3_implicit_path_/');
+  } finally {
+    await cookieStore.delete('name1');
+    await cookieStore.delete('name2');
+    await cookieStore.delete('name3');
+    await cookieStore.delete('name2', {path: kMyPath});
+  }
+}, 'getAll item order with implicit path shadowing and unshadowed cookies');
+
+promise_test(async testCase => {
+  await cookieStore.set('name1', 'value1_explicit_path_/', {path: '/'});
+  await cookieStore.set('name2', 'value2_explicit_path_/', {path: '/'});
+  await cookieStore.set('name3', 'value3_explicit_path_/', {path: '/'});
+  await cookieStore.set('name2', 'value2_explicit_path_' + kMyPath, {
+    path: kMyPath,
+  });
+  try {
+    assert_equals(
+        cookieString(await cookieStore.getAll()),
+        'name2=value2_explicit_path_' + kMyPath + '; ' +
+          'name1=value1_explicit_path_/; ' +
+          'name2=value2_explicit_path_/; ' +
+          'name3=value3_explicit_path_/');
+  } finally {
+    await cookieStore.delete('name1', {path: '/'});
+    await cookieStore.delete('name2', {path: '/'});
+    await cookieStore.delete('name3', {path: '/'});
+    await cookieStore.delete('name2', {path: kMyPath});
+  }
+}, 'getAll item order with explicit path shadowing and unshadowed cookies');
+
+</script>
