@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "095a5284_15661243",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-22T16:16:32Z",
+      "side": 1,
+      "message": "false /* by_user */, true /* silent */",
+      "revId": "8045ea6258494f80f10ac210dbd46098d7da5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7033c6ee_3a7aa40c",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-22T16:16:32Z",
+      "side": 1,
+      "message": "false /* by_user */, false /* silent */\n\nThis is a behaviour change, but it matches what message center does, so sgtm from that point of view.",
+      "revId": "8045ea6258494f80f10ac210dbd46098d7da5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09fe47e9_93671098",
+        "filename": "chrome/browser/usb/web_usb_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-22T16:16:32Z",
+      "side": 1,
+      "message": "I don\u0027t think this is safe *now*: GetLastUsedProfileAllowedByPolicy() can return an Incognito profile too, which we definitely do delete. Once TRANSIENT notifications are deleted automatically on profile shutdown this would become safe, however, the lifetime of the notification may feel arbitrary if the window goes away.\n\nShould we use and store GetLastUsedProfile(), which is safer? We could still use GetLastUsedProfileAllowedByPolicy() when opening a new tab.",
+      "revId": "8045ea6258494f80f10ac210dbd46098d7da5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
