@@ -142,6 +142,30 @@
       "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b97d64_c3d3ccec",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-22T15:42:08Z",
+      "side": 1,
+      "message": "Unfortunately, at this point I don\u0027t, since this would somehow involve telling the mac OS bots to download those fonts. As far as I can tell, this is something that usually requires a user action on the machine that the font is downloaded, too, i.e. going to FontBook and enabling/downloading them. I can ask someone at Apple if there is an API to trigger such downloads.",
+      "parentUuid": "d5bdf37b_13552b2d",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
