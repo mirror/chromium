@@ -280,6 +280,15 @@ class AutofillMetrics {
     // as an aggregate (non-type-specific) log entry.
     FALSE_NEGATIVE_MISMATCH,
 
+    // The field has fill_only_when_focused==true , yet was found to be of
+    // type T, which matches the predicted type,
+    // i.e. actual_type == predicted type == T
+    // This means we would have got it right if there was no rationalization.
+    //
+    // This is captured as a type-specific log entry for T. Is is also captured
+    // as an aggregate (non-type-specific) log entry.
+    UNNECCESSARY_RATIONALIZATION,
+
     // This must be last.
     NUM_FIELD_TYPE_QUALITY_METRICS
   };
