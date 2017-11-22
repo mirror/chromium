@@ -450,6 +450,11 @@ TouchEventManager::DispatchTouchEventFromAccumulatdTouchPoints() {
     const AtomicString& event_name(TouchEventNameForPointerEventType(
         static_cast<WebInputEvent::Type>(action)));
 
+    std::unique_ptr<UserGestureIndicator> holder;
+    if (event_name == EventTypeNames::touchend) {
+      holder =
+          Frame::NotifyUserActivation(touch_sequence_document_->GetFrame());
+    }
     for (const auto& event_target : changed_touches[action_idx].targets_) {
       EventTarget* touch_event_target = event_target;
       TouchEvent* touch_event = TouchEvent::Create(

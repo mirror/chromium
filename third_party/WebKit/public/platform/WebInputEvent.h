@@ -186,7 +186,8 @@ class WebInputEvent {
     kPointerUp,
     kPointerMove,
     kPointerCancel,
-    kPointerTypeLast = kPointerCancel,
+    kPointerInterrupted,
+    kPointerTypeLast = kPointerInterrupted,
 
     kTypeLast = kTouchTypeLast
   };
@@ -380,6 +381,7 @@ class WebInputEvent {
       CASE_TYPE(PointerUp);
       CASE_TYPE(PointerMove);
       CASE_TYPE(PointerCancel);
+      CASE_TYPE(PointerInterrupted);
     }
 #undef CASE_TYPE
     NOTREACHED();
