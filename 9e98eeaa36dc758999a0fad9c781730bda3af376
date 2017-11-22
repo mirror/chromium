@@ -22,6 +22,30 @@
       "revId": "9e98eeaa36dc758999a0fad9c781730bda3af376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805974a5_6f0519fd",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-11-22T07:23:26Z",
+      "side": 1,
+      "message": "Maybe. Logically, yes.\n\nHowever purely from a static analysis perspective, it is conceivable that the KeyboardController could get into an odd (and undesireable) state where there are bounds, but the state_ field is set to something other than SHOWN. In which case that would change the behavior, and so I\u0027m a little nervous to introduce a regression that won\u0027t be roll-back friendly considering I\u0027m planning to follow up immediately with another CL that will use this new function. \n\nHow about I add it in a separate CL that will be rollback friendly?",
+      "parentUuid": "5350ae6e_dbf42cfa",
+      "range": {
+        "startLine": 720,
+        "startChar": 6,
+        "endLine": 720,
+        "endChar": 24
+      },
+      "revId": "9e98eeaa36dc758999a0fad9c781730bda3af376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
