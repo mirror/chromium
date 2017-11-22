@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ad0332b_2cf1e216",
+        "filename": "ios/chrome/browser/ui/toolbar/public/abstract_web_toolbar.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-22T13:03:55Z",
+      "side": 1,
+      "message": "nit convenience",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "8e991b9c8ca79eefd1de63f0462476af65423841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
