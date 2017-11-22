@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "df59d9c7_a184ee52",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-22T01:51:18Z",
+      "side": 1,
+      "message": "I just talked with cernekee@. It seems we never remove the Arc VPN entry from networkList even it\u0027s disconnected.",
+      "parentUuid": "825c7485_a9d72829",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ff539f_3fdf4633",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 19
