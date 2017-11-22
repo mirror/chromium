@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "8cd1368b_a2dd5b27",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "The coalescing is kind of a light-weight GC. This is really important to reduce # of GCs in a certain set of benchmarks.\n\nIf we don\u0027t have the coalescing, a GC is triggered when mutator creates lots of promptly freed objects. This happens often in the following code:\n\nvoid func() {\n  HeapVector\u003c\u003e vector;\n  ...;\n}  // The vector is marked as promptly freed.",
+      "parentUuid": "d5b0b827_7033de11",
+      "range": {
+        "startLine": 691,
+        "startChar": 22,
+        "endLine": 691,
+        "endChar": 30
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f831089b_6823d007",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 10

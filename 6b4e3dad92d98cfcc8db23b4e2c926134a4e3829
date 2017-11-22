@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a5a94b1_984d8d87",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "kBitmapSize \u003d\u003e kReservedForBitmap",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fe1ece_106fcd0a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "Add DCHECK(current_allocation_point_ \u003d\u003d address).",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b286b098_3450619d",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "This is kind of tricky...\n\nIf the allocation point happens to be equal to the beginning address of a free list entry (which can happen), the bit should be set. Otherwise, the bit should not be set.",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b741be1f_24e7e3b8",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "Nit: current_allocation_point_ \u003d\u003e point",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0f5f1a_0c8972be",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "Yeah, it would be nice to have the check.",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7857225a_336ade73",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "return object_offset + offset_;",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fbe79dd_598b48ad",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "I think we must have the following check:\n\n  DCHECK(header-\u003ePayload() \u003c\u003d address);\n  if (header-\u003ePayload() + header-\u003eSize() \u003c\u003d address) {\n    // address should be in the allocation point region.\n    DCHECK(allocation_point_ \u003c\u003d address);\n    DCHECK(address \u003c allocation_point_ + remaining_allocation_size_);\n    return nullptr;\n  }\n\nThe if statement is important because if the address is pointing to the allocation point region, it\u0027s possible that the returned header may be pointing to an object that exits prior to the allocation point.\n\n  | object | allocation point region | ... |",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2afcbb5_1e5fcb62",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "Add a comment about when these magic values are used.",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183bf308_0a6772db",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "Add DISALLOW_NEW().\n\nCan we drop PLATFORM_EXPORT?",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946ab7b1_bfcf4b59",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "Add: The object following the returned address is a valid object or a free list entry.",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e6b28c_f3279609",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T04:55:14Z",
+      "side": 1,
+      "message": "Can we add DCHECK(CheckBit(header_address)) before setting the bit?",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
