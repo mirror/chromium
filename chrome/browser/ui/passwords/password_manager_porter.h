@@ -5,6 +5,9 @@
 #ifndef CHROME_BROWSER_UI_PASSWORDS_PASSWORD_MANAGER_PORTER_H_
 #define CHROME_BROWSER_UI_PASSWORDS_PASSWORD_MANAGER_PORTER_H_
 
+#include <memory>
+
+#include "components/password_manager/core/browser/export/password_manager_exporter.h"
 #include "components/password_manager/core/browser/import/password_importer.h"
 #include "components/password_manager/core/browser/ui/export_flow.h"
 #include "components/password_manager/core/browser/ui/import_flow.h"
@@ -12,10 +15,6 @@
 
 namespace content {
 class WebContents;
-}
-
-namespace password_manager {
-class CredentialProviderInterface;
 }
 
 class Profile;
@@ -26,8 +25,8 @@ class PasswordManagerPorter : public ui::SelectFileDialog::Listener,
                               public password_manager::ExportFlow,
                               public password_manager::ImportFlow {
  public:
-  explicit PasswordManagerPorter(password_manager::CredentialProviderInterface*
-                                     credential_provider_interface);
+  explicit PasswordManagerPorter(
+      std::unique_ptr<password_manager::PasswordManagerExporter> exporter);
 
   ~PasswordManagerPorter() override;
 
@@ -62,7 +61,7 @@ class PasswordManagerPorter : public ui::SelectFileDialog::Listener,
 
   virtual void ExportPasswordsToPath(const base::FilePath& path);
 
-  password_manager::CredentialProviderInterface* credential_provider_interface_;
+  std::unique_ptr<password_manager::PasswordManagerExporter> exporter_;
   scoped_refptr<ui::SelectFileDialog> select_file_dialog_;
   Profile* profile_ = nullptr;
 
