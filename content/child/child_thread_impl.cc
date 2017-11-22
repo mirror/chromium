@@ -663,11 +663,18 @@ bool ChildThreadImpl::Send(IPC::Message* msg) {
 
 #if defined(OS_WIN)
 void ChildThreadImpl::PreCacheFont(const LOGFONT& log_font) {
-  Send(new ChildProcessHostMsg_PreCacheFont(log_font));
+  GetFontCacheWin()->PreCacheFont(log_font);
 }
 
 void ChildThreadImpl::ReleaseCachedFonts() {
-  Send(new ChildProcessHostMsg_ReleaseCachedFonts());
+  GetFontCacheWin()->ReleaseCachedFonts();
+}
+
+mojom::FontCacheWin* ChildThreadImpl::GetFontCacheWin() {
+  if (!font_cache_win_) {
+    GetConnector()->BindInterface(mojom::kBrowserServiceName, &font_cache_win_);
+  }
+  return font_cache_win_.get();
 }
 #endif
 
