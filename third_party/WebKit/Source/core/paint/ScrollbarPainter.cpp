@@ -39,7 +39,8 @@ void ScrollbarPainter::PaintIntoRect(
 
   PaintInfo paint_info(graphics_context, PixelSnappedIntRect(rect),
                        PaintPhase::kForeground, kGlobalPaintNormalPhase,
-                       kPaintLayerNoFlag);
+                       kPaintLayerNoFlag,
+                       layout_scrollbar_part.FirstFragment());
   ObjectPainter(layout_scrollbar_part)
       .PaintAllPhasesAtomically(paint_info, paint_offset);
 }
