@@ -70,6 +70,23 @@
       "revId": "3e97d9f7ef50694e69d3bfcdeb02d06d91a31591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07199864_13c26a9a",
+        "filename": "base/test/android/junit/src/org/chromium/base/test/params/ExampleParameterizedTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-22T16:21:19Z",
+      "side": 1,
+      "message": "Curious -- what\u0027s the motivation behind this being private? (I\u0027m thinking about this in comparison w/ Rules, which are required to be public.)",
+      "revId": "3e97d9f7ef50694e69d3bfcdeb02d06d91a31591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
