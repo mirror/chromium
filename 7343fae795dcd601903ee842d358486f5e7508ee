@@ -46,6 +46,30 @@
       "revId": "7343fae795dcd601903ee842d358486f5e7508ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d319bed_5e7895ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T06:12:14Z",
+      "side": 1,
+      "message": "Since the last patch set, I have fixed things so that if the WebappActivity is closed that the CCT is launched as a new activity so that it does not get lost in recents",
+      "parentUuid": "365583cc_287abee8",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 66
+      },
+      "revId": "7343fae795dcd601903ee842d358486f5e7508ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
