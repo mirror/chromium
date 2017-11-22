@@ -8,6 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "content/common/frame.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/renderer/loader/resource_dispatcher.h"
 #include "content/renderer/loader/test_request_peer.h"
@@ -37,7 +38,7 @@ class URLLoaderClientImplTest : public ::testing::Test,
         blink::WebURLRequest::LoadingIPCType::kMojo,
         url_loader_factory_proxy_.get(),
         std::vector<std::unique_ptr<URLLoaderThrottle>>(),
-        mojo::ScopedDataPipeConsumerHandle());
+        mojom::MainResourceLoaderParamsPtr());
     request_peer_context_.request_id = request_id_;
 
     base::RunLoop().RunUntilIdle();

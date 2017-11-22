@@ -65,6 +65,14 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner =
           base::ThreadTaskRunnerHandle::Get());
 
+  // Create a ThrottlingURLLoader that will continue a load that has already
+  // reached the OnResponseStarted step.
+  static std::unique_ptr<ThrottlingURLLoader>
+  InterceptLoadingAfterResponseStarted(
+      mojom::URLLoaderClient* forwarding_client,
+      mojom::URLLoaderPtrInfo url_loader,
+      mojom::URLLoaderClientRequest url_loader_client);
+
   ~ThrottlingURLLoader() override;
 
   void FollowRedirect();
@@ -72,6 +80,11 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
 
   // Disconnects the client connection and releases the URLLoader.
   void DisconnectClient();
+
+  // Disconnect the forwarding URLLoaderClient and the URLLoader. Move the
+  // datapipe endpoints into |url_loader_client| and |url_loader|.
+  void UnBind(mojom::URLLoaderPtrInfo* url_loader,
+              mojom::URLLoaderClientRequest* url_loader_client);
 
   // Sets the forwarding client to receive all subsequent notifications.
   void set_forwarding_client(mojom::URLLoaderClient* client) {
@@ -83,8 +96,13 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
 
   ThrottlingURLLoader(
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-      mojom::URLLoaderClient* client,
+      mojom::URLLoaderClient* forwarding_client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation);
+
+  // Called by InterceptLoadingAfterResponseStarted.
+  ThrottlingURLLoader(mojom::URLLoaderClient* forwarding_client,
+                      mojom::URLLoaderPtrInfo url_loader,
+                      mojom::URLLoaderClientRequest url_loader_client);
 
   // Either of the two sets of arguments below is valid but not both:
   // - |factory|, |routing_id|, |request_id| and |options|;
@@ -238,7 +256,8 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   // Set if request is deferred and SetPriority() is called.
   std::unique_ptr<PriorityInfo> priority_info_;
 
-  const net::NetworkTrafficAnnotationTag traffic_annotation_;
+  const base::Optional<const net::NetworkTrafficAnnotationTag>
+      traffic_annotation_;
 
   uint32_t inside_delegate_calls_ = 0;
 

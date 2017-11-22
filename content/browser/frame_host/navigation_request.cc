@@ -41,6 +41,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/appcache_info.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
@@ -726,8 +727,9 @@ void NavigationRequest::OnRequestRedirected(
 
 void NavigationRequest::OnResponseStarted(
     const scoped_refptr<ResourceResponse>& response,
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     std::unique_ptr<StreamHandle> body,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
     std::unique_ptr<NavigationData> navigation_data,
     const GlobalRequestID& request_id,
@@ -804,7 +806,8 @@ void NavigationRequest::OnResponseStarted(
   // Store the response and the StreamHandle until checks have been processed.
   response_ = response;
   body_ = std::move(body);
-  handle_ = std::move(consumer_handle);
+  url_loader_ = std::move(url_loader);
+  url_loader_client_ = std::move(url_loader_client);
   ssl_status_ = ssl_status;
   is_download_ = is_download;
 
@@ -1124,14 +1127,22 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
     // DownloadManager, and cancel the navigation.
     if (is_download_ &&
         base::FeatureList::IsEnabled(features::kNetworkService)) {
+      // TODO(arthursonzogni): If it is really needed, pass the "real"
+      // ResourceRequest here.
+      auto resource_request = std::make_unique<ResourceRequest>();
+      resource_request->url = navigation_handle_->GetURL();
+      resource_request->referrer = common_params_.referrer.url;
+
       BrowserContext* browser_context =
           frame_tree_node_->navigator()->GetController()->GetBrowserContext();
       DownloadManagerImpl* download_manager = static_cast<DownloadManagerImpl*>(
           BrowserContext::GetDownloadManager(browser_context));
-      loader_->InterceptNavigation(
-          download_manager->GetNavigationInterceptionCB(
-              response_, std::move(handle_), ssl_status_,
-              frame_tree_node_->frame_tree_node_id()));
+      download_manager->InterceptNavigation(
+          std::move(resource_request), navigation_handle_->GetRedirectChain(),
+          response_, ssl_status_, std::move(url_loader_),
+          std::move(url_loader_client_),
+          frame_tree_node_->frame_tree_node_id());
+
       OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
       return;
     }
@@ -1197,10 +1208,18 @@ void NavigationRequest::CommitNavigation() {
 
   TransferNavigationHandleOwnership(render_frame_host);
 
+  mojom::MainResourceLoaderParamsPtr main_resource_params;
+  if ((base::FeatureList::IsEnabled(features::kNetworkService) ||
+       IsNavigationMojoResponseEnabled()) &&
+      loader_) {
+    main_resource_params = mojom::MainResourceLoaderParams::New(
+        std::move(url_loader_), std::move(url_loader_client_));
+  }
+
   render_frame_host->CommitNavigation(
-      response_.get(), std::move(body_), std::move(handle_), common_params_,
-      request_params_, is_view_source_, std::move(subresource_loader_params_),
-      devtools_navigation_token_);
+      response_.get(), std::move(main_resource_params), std::move(body_),
+      common_params_, request_params_, is_view_source_,
+      std::move(subresource_loader_params_), devtools_navigation_token_);
 
   frame_tree_node_->ResetNavigationRequest(true, true);
 }
