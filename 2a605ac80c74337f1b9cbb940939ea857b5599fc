@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e9d5ae9_8d6d78d6",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-22T08:02:47Z",
+      "side": 1,
+      "message": "Nit: \"layoutObject\" should now be \"LayoutObject\" or \"layout object\".",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506bf4c8_d7181028",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-22T08:02:47Z",
+      "side": 1,
+      "message": "Nit: don\u0027t we typically use capital first letter in test names?",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5126d2b_6eab9adb",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-22T08:02:47Z",
+      "side": 1,
+      "message": "Could this be done with GetDocument().LazyReattachIfAttached() instead?",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb348b6_36a1cb08",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-22T08:02:47Z",
+      "side": 1,
+      "message": "The expectation is the first argument for EXPECT_* and ASSERT_*.",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
