@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f0ee734b_463f4651",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T06:30:06Z",
+      "side": 1,
+      "message": "Cool, it was just a thought.",
+      "parentUuid": "bad52548_9c001116",
+      "range": {
+        "startLine": 77,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7117d5b_1f7c2237",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 14
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "This param is never used by the function :)",
       "parentUuid": "655290dc_bb939e94",
+      "range": {
+        "startLine": 112,
+        "startChar": 52,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efcd2002_d4012a32",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T06:30:06Z",
+      "side": 1,
+      "message": "yeah, but I\u0027d prefer if we consistently use the test time in these tests. I guess if derat@ hasn\u0027t said anything it\u0027s fine.",
+      "parentUuid": "bcf9a35d_1d2893b7",
       "range": {
         "startLine": 112,
         "startChar": 52,
