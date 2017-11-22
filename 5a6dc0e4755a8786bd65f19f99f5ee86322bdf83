@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6beab5a_c02d344e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-22T09:56:20Z",
+      "side": 1,
+      "message": "All of them in these files.  I\u0027ve updated the message.",
+      "parentUuid": "bc5197f3_1151e55b",
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ddc0685_87eb39c0",
         "filename": "content/common/mac/font_loader.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7946152b_9b7224f8",
+        "filename": "content/common/mac/font_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-22T09:56:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ddc0685_87eb39c0",
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aff6b9d_a8cd7b57",
         "filename": "content/common/mac/font_loader.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047d35bf_5d91bc4c",
+        "filename": "content/common/mac/font_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-22T09:56:20Z",
+      "side": 1,
+      "message": "Yes, I guess it is good to keep the LoadedCallback definition here, especially with its nice documentation.",
+      "parentUuid": "8aff6b9d_a8cd7b57",
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "e7253f08_f1a88218",
+        "filename": "content/common/mac/font_loader.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-22T09:56:20Z",
+      "side": 1,
+      "message": "Done.  That is strange.  I had that before and it was failing to compile.  Maybe it is related to setting the CONTENT_EXPORT.",
+      "parentUuid": "e8f1d8a0_f7e747ce",
+      "range": {
+        "startLine": 128,
+        "startChar": 45,
+        "endLine": 128,
+        "endChar": 47
+      },
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "122f1ec6_a90cfc85",
         "filename": "content/common/mac/font_loader.mm",
         "patchSetId": 2
@@ -96,6 +174,30 @@
       "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ab5ada_26de5cf0",
+        "filename": "content/common/mac/font_loader.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-22T09:56:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122f1ec6_a90cfc85",
+      "range": {
+        "startLine": 130,
+        "startChar": 46,
+        "endLine": 130,
+        "endChar": 48
+      },
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
