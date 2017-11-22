@@ -69,8 +69,25 @@ public class ListMenuButton extends TintedImageButton {
         void onItemSelected(Item item);
     }
 
+    /** A decorator used to customize the menu layout and item views. */
+    public static interface MenuDecorator {
+        /**
+         * Will be called every time after the menu is created.
+         * @param popupMenu The {@link ListPopupWindow} instance that was created.
+         */
+        void decorateMenu(ListPopupWindow popupMenu);
+
+        /**
+         * Will be called when an item was populated.
+         * @param position The position of the item.
+         * @param itemView The {@link View} that was populated.
+         */
+        void decorateItem(int position, View itemView);
+    }
+
     private ListPopupWindow mPopupMenu;
     private Delegate mDelegate;
+    private MenuDecorator mMenuDecorator;
 
     /**
      * Creates a new {@link ListMenuButton}.
@@ -90,6 +107,15 @@ public class ListMenuButton extends TintedImageButton {
     public void setDelegate(Delegate delegate) {
         dismiss();
         mDelegate = delegate;
+    }
+
+    /**
+     * Sets a decorator that customizes the PopupMenu. This is optional.
+     *
+     * @param menuDecorator The {@link MenuDecorator} to decorate the PupupMenu.
+     */
+    public void setDecorator(MenuDecorator menuDecorator) {
+        mMenuDecorator = menuDecorator;
     }
 
     /** Called to dismiss any popup menu that might be showing for this button. */
@@ -141,6 +167,11 @@ public class ListMenuButton extends TintedImageButton {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 view.setEnabled(isEnabled(position));
+
+                // Customizes the menu item.
+                if (mMenuDecorator != null) {
+                    mMenuDecorator.decorateItem(position, view);
+                }
                 return view;
             }
         });
@@ -150,6 +181,12 @@ public class ListMenuButton extends TintedImageButton {
         mPopupMenu.setWidth(getResources().getDimensionPixelSize(R.dimen.list_menu_width));
         mPopupMenu.setVerticalOffset(-getHeight());
         mPopupMenu.setModal(true);
+
+        // Customizes the memu.
+        if (mMenuDecorator != null) {
+            mMenuDecorator.decorateMenu(mPopupMenu);
+        }
+
         mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
             if (mDelegate != null) mDelegate.onItemSelected(items[position]);
 
