@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6900061_51596468",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-22T15:48:38Z",
+      "side": 1,
+      "message": "My first thought was that this should be pulled out into its own file rather than living in this anonymous namespace of an unrelated file. My second thought was that we already have a ton of Huffman code already in Chrome; can we reuse any of it?\n\nhttps://cs.chromium.org/search/?q\u003dhuffman",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 20
+      },
+      "revId": "75d240646bbb5c2aed65d83c0faace29ffbeccd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
