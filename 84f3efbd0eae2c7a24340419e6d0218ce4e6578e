@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcbf1a04_ffef2384",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T02:34:54Z",
+      "side": 1,
+      "message": "What would have happened if the std::move had been forgotten?",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 22
+      },
+      "revId": "84f3efbd0eae2c7a24340419e6d0218ce4e6578e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a32293_75559b64",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T02:34:54Z",
+      "side": 1,
+      "message": "The use of base::Passed(\u0026callback) is a little magical, what would have happened if this had been forgotten?",
+      "range": {
+        "startLine": 389,
+        "startChar": 57,
+        "endLine": 389,
+        "endChar": 63
+      },
+      "revId": "84f3efbd0eae2c7a24340419e6d0218ce4e6578e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
