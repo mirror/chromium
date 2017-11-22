@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d06692c3_db92d3a8",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-11-22T20:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f543ead9_5f5fad72",
+      "range": {
+        "startLine": 666,
+        "startChar": 8,
+        "endLine": 666,
+        "endChar": 33
+      },
+      "revId": "4cdfb47fecda0d834db55a153ee431d728edd8fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8653af53_bf9042a9",
         "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ab708d97_76b72b78",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-11-22T20:07:44Z",
+      "side": 1,
+      "message": "I had used the human readable string, so the date could be known. I\u0027ve now switched it to an actual Date type (as double), so that should be even easier to work with, and irrespective of browser.",
+      "parentUuid": "8653af53_bf9042a9",
+      "range": {
+        "startLine": 773,
+        "startChar": 58,
+        "endLine": 773,
+        "endChar": 76
+      },
+      "revId": "4cdfb47fecda0d834db55a153ee431d728edd8fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9d04179_37d98253",
         "filename": "third_party/WebKit/Source/core/frame/DeprecationReport.idl",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "4cdfb47fecda0d834db55a153ee431d728edd8fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f888216_4da5f7af",
+        "filename": "third_party/WebKit/Source/core/frame/DeprecationReport.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-11-22T20:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d04179_37d98253",
+      "revId": "4cdfb47fecda0d834db55a153ee431d728edd8fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
