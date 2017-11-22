@@ -88,6 +88,24 @@
       "revId": "c5d8b82614406955b997e83905e78109404d6b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1113c887_6f1da96a",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-22T23:25:48Z",
+      "side": 1,
+      "message": "Cool.  Yea, I actually have played with the BB-8, but I\u0027m not sure what it would mean to force a disconnection here.\n\nAnyway, this is the last change in this set.  So with this change in, you can now use (at least) the BB-8 and the puckjs from Windows, so that\u0027s cool.",
+      "parentUuid": "3a945d3b_3b41900d",
+      "revId": "c5d8b82614406955b997e83905e78109404d6b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
