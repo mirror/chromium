@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc1fe310_8d82fa04",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-22T19:01:53Z",
+      "side": 1,
+      "message": "Is this gauranteed to be safe? It seems like a lot of assumption to make at this level, especially in a key event handler. \n\nAlso, I\u0027ve been out of Views for a while and I\u0027m fuzzy about the difference between the logic abopve and tray_bubble_view_-\u003eparent()-\u003eContains()?\n\nEither way, I think this would be more clear and safer as something like:\nparent \u003d tray_bubble_view_-\u003eGetParent();\nif (parent \u0026\u0026 parent-\u003eContains(target))\n\nWith |parent| being a Window or a View depending on which is more correct. sky@ will know the answer and may have a better solution.",
+      "revId": "b3c82b2bb6d24ca42efe4e286fe45886a65075de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756e1884_a1738f31",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-22T19:01:53Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "b3c82b2bb6d24ca42efe4e286fe45886a65075de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
