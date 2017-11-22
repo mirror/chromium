@@ -99,7 +99,12 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
                     CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
             customTabIntent.intent.putExtra(CustomTabIntentDataProvider.EXTRA_BROWSER_LAUNCH_SOURCE,
                     mActivity.getActivityType());
+            if (shouldCloseContentsOnOverrideUrlLoadingAndLaunchIntent()) {
+                customTabIntent.intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
             customTabIntent.launchUrl(mActivity, Uri.parse(navigationParams.url));
+
+            onOverrideUrlLoadingAndLaunchIntent();
             return true;
         }
 
