@@ -151,6 +151,20 @@ public class Website implements Serializable {
     }
 
     /**
+     * Returns the Autoplay exception info for this Website.
+     */
+    public ContentSettingException getAutoplayException() {
+        return mAutoplayExceptionInfo;
+    }
+
+    /**
+     * Returns the background sync exception info for this Website.
+     */
+    public ContentSettingException getBackgroundSyncException() {
+        return mBackgroundSyncExceptionInfo;
+    }
+
+    /**
      * Sets the background sync setting exception info for this website.
      */
     public void setBackgroundSyncException(ContentSettingException exception) {
