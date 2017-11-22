@@ -24,6 +24,7 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "ui/gfx/buffer_format_util.h"
 
 namespace cc {
@@ -115,13 +116,14 @@ OneCopyRasterBufferProvider::AcquireBufferForRaster(
 void OneCopyRasterBufferProvider::OrderingBarrier() {
   TRACE_EVENT0("cc", "OneCopyRasterBufferProvider::OrderingBarrier");
 
-  gpu::gles2::GLES2Interface* gl = compositor_context_provider_->ContextGL();
+  gpu::raster::RasterInterface* rs =
+      compositor_context_provider_->RasterContext();
   if (async_worker_context_enabled_) {
-    gpu::SyncToken sync_token = ResourceProvider::GenerateSyncTokenHelper(gl);
+    gpu::SyncToken sync_token = ResourceProvider::GenerateSyncTokenHelper(rs);
     for (RasterBufferImpl* buffer : pending_raster_buffers_)
       buffer->set_sync_token(sync_token);
   } else {
-    gl->OrderingBarrierCHROMIUM();
+    rs->OrderingBarrierCHROMIUM();
   }
   pending_raster_buffers_.clear();
 }
@@ -306,9 +308,11 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
   viz::ContextProvider::ScopedContextLock scoped_context(
       worker_context_provider_);
   gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
+  gpu::raster::RasterInterface* rs = scoped_context.RasterContext();
   DCHECK(gl);
+  DCHECK(rs);
 
-  GLuint texture_id = resource_lock->ConsumeTexture(gl);
+  GLuint texture_id = resource_lock->ConsumeTexture(rs);
 
   GLenum image_target = resource_provider_->GetImageTextureTarget(
       StagingBufferUsage(), staging_buffer->format);
@@ -400,7 +404,7 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
   gl->DeleteTextures(1, &texture_id);
 
   // Generate sync token for cross context synchronization.
-  resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(gl));
+  resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(rs));
 
   // Mark resource as synchronized when worker and compositor are in same stream
   // to prevent extra wait sync token calls.

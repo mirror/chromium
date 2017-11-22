@@ -7,10 +7,10 @@
 #include "base/trace_event/trace_event.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 
-using gpu::gles2::GLES2Interface;
+using gpu::raster::RasterInterface;
 
 namespace cc {
 
@@ -40,8 +40,8 @@ DisplayResourceProvider::~DisplayResourceProvider() {
 #if defined(OS_ANDROID)
 void DisplayResourceProvider::SendPromotionHints(
     const OverlayCandidateList::PromotionHintInfoMap& promotion_hints) {
-  GLES2Interface* gl = ContextGL();
-  if (!gl)
+  RasterInterface* rs = RasterContext();
+  if (!rs)
     return;
 
   for (const auto& id : wants_promotion_hints_set_) {
@@ -60,7 +60,7 @@ void DisplayResourceProvider::SendPromotionHints(
       DCHECK(resource->gl_id);
       auto iter = promotion_hints.find(id);
       bool promotable = iter != promotion_hints.end();
-      gl->OverlayPromotionHintCHROMIUM(resource->gl_id, promotable,
+      rs->OverlayPromotionHintCHROMIUM(resource->gl_id, promotable,
                                        promotable ? iter->second.x() : 0,
                                        promotable ? iter->second.y() : 0,
                                        promotable ? iter->second.width() : 0,
@@ -164,7 +164,7 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
   std::vector<GLbyte*> unverified_sync_tokens;
   std::vector<size_t> to_return_indices_unverified;
 
-  GLES2Interface* gl = ContextGL();
+  RasterInterface* rs = RasterContext();
 
   for (viz::ResourceId local_id : unused) {
     ResourceMap::iterator it = resources_.find(local_id);
@@ -202,11 +202,11 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
         resource.filter != resource.original_filter) {
       DCHECK(resource.target);
       DCHECK(resource.gl_id);
-      DCHECK(gl);
-      gl->BindTexture(resource.target, resource.gl_id);
-      gl->TexParameteri(resource.target, GL_TEXTURE_MIN_FILTER,
+      DCHECK(rs);
+      rs->BindTexture(resource.target, resource.gl_id);
+      rs->TexParameteri(resource.target, GL_TEXTURE_MIN_FILTER,
                         resource.original_filter);
-      gl->TexParameteri(resource.target, GL_TEXTURE_MAG_FILTER,
+      rs->TexParameteri(resource.target, GL_TEXTURE_MAG_FILTER,
                         resource.original_filter);
       resource.SetLocallyUsed();
     }
@@ -241,17 +241,17 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
   gpu::SyncToken new_sync_token;
   if (!need_synchronization_resources.empty()) {
     DCHECK(child_info->needs_sync_tokens);
-    DCHECK(gl);
-    const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
+    DCHECK(rs);
+    const uint64_t fence_sync = rs->InsertFenceSyncCHROMIUM();
+    rs->OrderingBarrierCHROMIUM();
+    rs->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
     unverified_sync_tokens.push_back(new_sync_token.GetData());
   }
 
   if (!unverified_sync_tokens.empty()) {
     DCHECK(child_info->needs_sync_tokens);
-    DCHECK(gl);
-    gl->VerifySyncTokensCHROMIUM(unverified_sync_tokens.data(),
+    DCHECK(rs);
+    rs->VerifySyncTokensCHROMIUM(unverified_sync_tokens.data(),
                                  unverified_sync_tokens.size());
   }
 
@@ -272,7 +272,7 @@ void DisplayResourceProvider::ReceiveFromChild(
     int child,
     const std::vector<viz::TransferableResource>& resources) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  GLES2Interface* gl = ContextGL();
+  RasterInterface* rs = RasterContext();
   Child& child_info = children_.find(child)->second;
   DCHECK(!child_info.marked_for_deletion);
   for (std::vector<viz::TransferableResource>::const_iterator it =
@@ -288,7 +288,7 @@ void DisplayResourceProvider::ReceiveFromChild(
       continue;
     }
 
-    if ((!it->is_software && !gl) ||
+    if ((!it->is_software && !rs) ||
         (it->is_software && !shared_bitmap_manager_)) {
       TRACE_EVENT0(
           "cc", "DisplayResourceProvider::ReceiveFromChild dropping invalid");
@@ -401,9 +401,9 @@ const viz::internal::Resource* DisplayResourceProvider::LockForRead(
     DCHECK(resource->origin != viz::internal::Resource::INTERNAL);
     DCHECK(!resource->mailbox.IsZero());
 
-    GLES2Interface* gl = ContextGL();
-    DCHECK(gl);
-    resource->gl_id = gl->CreateAndConsumeTextureCHROMIUM(
+    RasterInterface* rs = RasterContext();
+    DCHECK(rs);
+    resource->gl_id = rs->CreateAndConsumeTextureCHROMIUM(
         resource->target, resource->mailbox.name);
     resource->SetLocallyUsed();
   }
