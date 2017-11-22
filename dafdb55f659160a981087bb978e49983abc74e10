@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8f68a8b_6facbd15",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T18:32:01Z",
+      "side": 1,
+      "message": "This is done elsewhere as well.  It makes sense for simple elements IMO.",
+      "parentUuid": "5f89efa5_b75a8ca7",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "dafdb55f659160a981087bb978e49983abc74e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17bea2a2_b7a40e8b",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T17:36:36Z",
       "side": 1,
       "message": "Where is this defined? I can\u0027t find it in codesearch.",
+      "range": {
+        "startLine": 24,
+        "startChar": 45,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "dafdb55f659160a981087bb978e49983abc74e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a568928a_68b9c0e2",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T18:32:01Z",
+      "side": 1,
+      "message": "It\u0027s part of Ian\u0027s patch, now landed.",
+      "parentUuid": "17bea2a2_b7a40e8b",
       "range": {
         "startLine": 24,
         "startChar": 45,
