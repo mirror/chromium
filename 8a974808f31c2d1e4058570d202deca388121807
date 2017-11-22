@@ -46,6 +46,30 @@
       "revId": "8a974808f31c2d1e4058570d202deca388121807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53991128_5666d15d",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-11-22T05:13:40Z",
+      "side": 1,
+      "message": "I don\u0027t think the current comment matches the logic, then. You can either\n1) Generalize the logic such that the location is always inside the selection.\n2) Update the comment to explain Android-specific rationale better.\n\nBut I\u0027m also wondering if you can change contextmenuclient / contextmenucontroller.\nIs it the hit test logic that is hard to change?",
+      "parentUuid": "87214377_e71d1790",
+      "range": {
+        "startLine": 1813,
+        "startChar": 28,
+        "endLine": 1813,
+        "endChar": 45
+      },
+      "revId": "8a974808f31c2d1e4058570d202deca388121807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
