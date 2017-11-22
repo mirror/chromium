@@ -22,6 +22,30 @@
       "revId": "a696f54cbf9ff3abec6adf36a653c7b7c69c093e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d20940_0120da52",
+        "filename": "content/browser/media/media_canplaytype_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-22T01:16:09Z",
+      "side": 1,
+      "message": "No, we want both of these tests.",
+      "parentUuid": "ff52e32c_d62942c4",
+      "range": {
+        "startLine": 606,
+        "startChar": 66,
+        "endLine": 606,
+        "endChar": 77
+      },
+      "revId": "a696f54cbf9ff3abec6adf36a653c7b7c69c093e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
