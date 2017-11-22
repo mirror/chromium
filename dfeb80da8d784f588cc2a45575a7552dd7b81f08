@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a1742d61_8d4bd0c3",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-22T11:53:52Z",
+      "side": 1,
+      "message": "\u003e Are you sure that this task won\u0027t be executed before new duplicative FetchBookmarks calls?\n\nLike Jan said, if those additional calls happen e.g. on the same iteration of the message loop as the first one, FetchBookmarksInternal() won\u0027t have been called yet, so they will return early. Any additional calls *after* FetchBookmarksInternal() would indeed post a new task, but those calls would have to happen on different message loop iterations.\n\n\u003e (I am just not extremely familiar with multiple threads in Chrome)\n\nMaybe it helps to note that multiple *threads* are not actually in play here -- all of this happens on a single thread, and posted tasks (without delay) are guaranteed to be executed after the current task finishes (by definition if there is only a single thread), and in order (because ThreadTaskRunnerHandle returns a sequential task runner).",
+      "parentUuid": "cd184bf6_62ed53e0",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 54
+      },
+      "revId": "dfeb80da8d784f588cc2a45575a7552dd7b81f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0769ed2_76a525f2",
         "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
         "patchSetId": 3
