@@ -2,29 +2,30 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/longhands/OutlineColor.h"
+#include "core/css/properties/longhands/BorderBottomColor.h"
 
-#include "core/CSSValueKeywords.h"
+#include "core/CSSPropertyNames.h"
 #include "core/css/CSSColorValue.h"
-#include "core/css/parser/CSSParserContext.h"
-#include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/ComputedStyleUtils.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
+
+class CSSParserContext;
+class CSSParserLocalContext;
+class CSSParserTokenRange;
+
 namespace CSSLonghand {
 
-const CSSValue* OutlineColor::ParseSingleValue(
+const CSSValue* BorderBottomColor::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) const {
-  // Allow the special focus color even in HTML Standard parsing mode.
-  if (range.Peek().Id() == CSSValueWebkitFocusRingColor)
-    return CSSPropertyParserHelpers::ConsumeIdent(range);
-  return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
+    const CSSParserLocalContext& local_context) const {
+  return ComputedStyleUtils::ParseBorderColorSide(range, context,
+                                                  local_context);
 }
 
-const CSSValue* OutlineColor::CSSValueFromComputedStyle(
+const CSSValue* BorderBottomColor::CSSValueFromComputedStyle(
     const ComputedStyle& style,
     const LayoutObject* layout_object,
     Node* styled_node,
@@ -33,7 +34,7 @@ const CSSValue* OutlineColor::CSSValueFromComputedStyle(
              ? cssvalue::CSSColorValue::Create(
                    style.VisitedDependentColor(PropertyID()).Rgb())
              : ComputedStyleUtils::CurrentColorOrValidColor(
-                   style, style.OutlineColor());
+                   style, style.BorderBottomColor());
 }
 
 }  // namespace CSSLonghand

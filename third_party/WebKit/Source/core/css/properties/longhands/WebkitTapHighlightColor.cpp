@@ -2,38 +2,33 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/longhands/OutlineColor.h"
+#include "core/css/properties/longhands/WebkitTapHighlightColor.h"
 
-#include "core/CSSValueKeywords.h"
-#include "core/css/CSSColorValue.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/ComputedStyleUtils.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
+
+class CSSParserLocalContext;
+
 namespace CSSLonghand {
 
-const CSSValue* OutlineColor::ParseSingleValue(
+const CSSValue* WebkitTapHighlightColor::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
-  // Allow the special focus color even in HTML Standard parsing mode.
-  if (range.Peek().Id() == CSSValueWebkitFocusRingColor)
-    return CSSPropertyParserHelpers::ConsumeIdent(range);
   return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
 }
 
-const CSSValue* OutlineColor::CSSValueFromComputedStyle(
+const CSSValue* WebkitTapHighlightColor::CSSValueFromComputedStyle(
     const ComputedStyle& style,
     const LayoutObject* layout_object,
     Node* styled_node,
     bool allow_visited_style) const {
-  return allow_visited_style
-             ? cssvalue::CSSColorValue::Create(
-                   style.VisitedDependentColor(PropertyID()).Rgb())
-             : ComputedStyleUtils::CurrentColorOrValidColor(
-                   style, style.OutlineColor());
+  return ComputedStyleUtils::CurrentColorOrValidColor(
+      style, style.TapHighlightColor());
 }
 
 }  // namespace CSSLonghand

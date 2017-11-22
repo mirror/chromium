@@ -6,6 +6,8 @@
 
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
+#include "core/css/properties/ComputedStyleUtils.h"
+#include "core/style/ComputedStyle.h"
 
 namespace blink {
 
@@ -18,6 +20,15 @@ const CSSValue* WebkitTextStrokeColor::ParseSingleValue(
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
   return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
+}
+
+const CSSValue* WebkitTextStrokeColor::CSSValueFromComputedStyle(
+    const ComputedStyle& style,
+    const LayoutObject* layout_object,
+    Node* styled_node,
+    bool allow_visited_style) const {
+  return ComputedStyleUtils::CurrentColorOrValidColor(style,
+                                                      style.TextStrokeColor());
 }
 
 }  // namespace CSSLonghand
