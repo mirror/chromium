@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1f66cc6_85d45a89",
+        "filename": "services/resource_coordinator/observers/metrics_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-22T20:33:45Z",
+      "side": 1,
+      "message": "The overhead of a Finch parameter makes this pretty painful. Long term, I think we may want to have a special light weight Finch process for this use case, if we want to do a Finch parameter per UKM.\n\nCan we land this with a default parameter which is quite low, and then land the Finch parameter in a followup patch?",
+      "parentUuid": "4c61aa68_ed7aa980",
+      "range": {
+        "startLine": 227,
+        "startChar": 52,
+        "endLine": 227,
+        "endChar": 76
+      },
+      "revId": "89274a1361172624b728291b70c18ea297026f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "272c9b56_1a12f5d4",
         "filename": "services/resource_coordinator/observers/metrics_collector_unittest.cc",
         "patchSetId": 4
