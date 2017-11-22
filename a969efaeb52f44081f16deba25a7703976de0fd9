@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21803c87_60afa377",
+        "filename": "printing/backend/cups_ipp_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T19:16:16Z",
+      "side": 1,
+      "message": "BTW, base::Optional\u003cgfx::Size\u003e is available, if you prefer to combine the returned bool with |size|.",
+      "revId": "a969efaeb52f44081f16deba25a7703976de0fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e494d4a9_c16ac3d6",
+        "filename": "printing/backend/cups_ipp_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T19:16:16Z",
+      "side": 1,
+      "message": "nit: 1 declaration per line.",
+      "revId": "a969efaeb52f44081f16deba25a7703976de0fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
