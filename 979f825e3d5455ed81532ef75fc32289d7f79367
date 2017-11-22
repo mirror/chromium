@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "825c7485_a9d72829",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-22T01:32:03Z",
+      "side": 1,
+      "message": "That means it is still in the list of Shill networks cached in NetworkStateHandler (i.e. it is the third entry). Perhaps there is a delay? Check chrome://device-log to ensure that NOTIFY:NetworkListChanged is getting triggered after the VPN is removed by Shill.",
+      "parentUuid": "72d7fc59_32ab9eb0",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ff539f_3fdf4633",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 19
