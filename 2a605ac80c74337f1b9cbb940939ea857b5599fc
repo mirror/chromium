@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "6d0545b3_ec8d39d0",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-22T20:43:24Z",
+      "side": 1,
+      "message": "That goes through, but somehow doesn\u0027t force \u003cstop\u003e style calc in UpdateStyleAndLayout() - and we crash further down in element-\u003eComputedStyleRef():\n\n\n[12676:12676:1122/153730.070827:535478392182:FATAL:NodeComputedStyle.h(59)] Check failed: style. \n#0 0x7fe26d79cecd base::debug::StackTrace::StackTrace()\n#1 0x7fe26d79b2fc base::debug::StackTrace::StackTrace()\n#2 0x7fe26d822dba logging::LogMessage::~LogMessage()\n#3 0x00000189aec7 blink::Node::ComputedStyleRef()\n#4 0x000001b1d7a5 blink::DocumentLoadingRenderingTest_StableSVGStopStylingWhileLoadingImport_Test::TestBody()::$_0::operator()()\n#5 0x000001b1d570 blink::DocumentLoadingRenderingTest_StableSVGStopStylingWhileLoadingImport_Test::TestBody()\n\n\nIs this something unexpected that we need to worry about?  If so, I can investigate separately.",
+      "parentUuid": "c01b0fb1_c88aee58",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feb348b6_36a1cb08",
         "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
         "patchSetId": 4
