@@ -66,11 +66,11 @@ void LogTabUnderAttempt(content::NavigationHandle* handle,
 
 void ShowUI(content::WebContents* web_contents,
             const GURL& url,
-            base::OnceClosure click_closure) {
+            base::OnceCallback<void(bool)> intervention_callback) {
 #if defined(OS_ANDROID)
-  FramebustBlockInfoBar::Show(web_contents,
-                              base::MakeUnique<FramebustBlockMessageDelegate>(
-                                  web_contents, url, std::move(click_closure)));
+  FramebustBlockInfoBar::Show(
+      web_contents, base::MakeUnique<FramebustBlockMessageDelegate>(
+                        web_contents, url, std::move(intervention_callback)));
 #else
   NOTIMPLEMENTED() << "The BlockTabUnders experiment does not currently have a "
                       "UI implemented on desktop platforms.";
@@ -149,8 +149,10 @@ TabUnderNavigationThrottle::MaybeBlockNavigation() {
       contents->GetMainFrame()->AddMessageToConsole(
           content::CONSOLE_MESSAGE_LEVEL_ERROR, error.c_str());
       LogAction(Action::kBlocked);
-      ShowUI(contents, url,
-             base::BindOnce(&LogAction, Action::kClickedThrough));
+      ShowUI(contents, url, base::BindOnce([](bool accepted) {
+               LogAction(accepted ? Action::kAcceptedIntervention
+                                  : Action::kClickedThrough);
+             }));
       return content::NavigationThrottle::CANCEL;
     }
   }
