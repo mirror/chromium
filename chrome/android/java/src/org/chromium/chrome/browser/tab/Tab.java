@@ -409,6 +409,10 @@ public class Tab
     /** Whether or not the tab closing the tab can send the user back to the app that opened it. */
     private boolean mIsAllowedToReturnToExternalApp;
 
+    private int mTopControlsHeight;
+    private int mBottomControlsHeight;
+    private boolean mControlsResizeView;
+
     private GestureStateListener createGestureStateListener() {
         return new GestureStateListener() {
             @Override
@@ -2547,7 +2551,6 @@ public class Tab
         // (zero) to the renderer process, although the new size will be set soon.
         // However, this size fluttering may confuse Blink and rendered result can be broken
         // (see http://crbug.com/340987).
-        newContentViewCore.onSizeChanged(originalWidth, originalHeight, 0, 0);
         newContentViewCore.getWebContents().setSize(originalWidth, originalHeight);
 
         if (!bounds.isEmpty()) {
@@ -2834,6 +2837,29 @@ public class Tab
             constraints = BrowserControlsState.SHOWN;
         }
         return constraints;
+    }
+
+    public void setTopControlsHeight(int height, boolean controlsResizeView) {
+        float scale = getWindowAndroid().getDisplay().getDipScale();
+        mTopControlsHeight = (int) (height / scale);
+        mControlsResizeView = controlsResizeView;
+    }
+
+    public void setBottomControlsHeight(int height) {
+        float scale = getWindowAndroid().getDisplay().getDipScale();
+        mBottomControlsHeight = (int) (height / scale);
+    }
+
+    int getTopControlsHeight() {
+        return mTopControlsHeight;
+    }
+
+    int getBottomControlsHeight() {
+        return mBottomControlsHeight;
+    }
+
+    boolean controlsResizeView() {
+        return mControlsResizeView;
     }
 
     /**
@@ -3157,7 +3183,6 @@ public class Tab
         Rect bounds = getEstimatedContentSize(context);
         int width = bounds.right - bounds.left;
         int height = bounds.bottom - bounds.top;
-        tab.getContentViewCore().onSizeChanged(width, height, 0, 0);
         tab.getWebContents().setSize(width, height);
 
         tab.detach();

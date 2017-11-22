@@ -509,7 +509,6 @@ public class VrShellImpl
         mContentVirtualDisplay.update(size, dpr, null, null, null, null, null);
         assert mTab != null;
         if (mTab.getContentViewCore() != null) {
-            mTab.getContentViewCore().onSizeChanged(surfaceWidth, surfaceHeight, 0, 0);
             nativeOnPhysicalBackingSizeChanged(
                     mNativeVrShell, mTab.getWebContents(), surfaceWidth, surfaceHeight);
         }
@@ -585,7 +584,7 @@ public class VrShellImpl
         assert mTab != null;
         if (mTab.getContentViewCore() != null) {
             View parent = mTab.getContentViewCore().getContainerView();
-            mTab.getContentViewCore().onSizeChanged(parent.getWidth(), parent.getHeight(), 0, 0);
+            mTab.getWebContents().setSize(parent.getWidth(), parent.getHeight());
         }
         mTab.updateBrowserControlsState(BrowserControlsState.SHOWN, true);
 
