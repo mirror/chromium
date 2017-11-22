@@ -6,20 +6,22 @@
 <script src="../../../resources/bluetooth/bluetooth-helpers.js"></script>
 <script>
 'use strict';
-bluetooth_test(() => {
-  return setBluetoothFakeAdapter('HeartRateAdapter')
-    .then(() => requestDeviceWithTrustedClick({
-      filters: [{services: ['heart_rate']}]}))
-    .then(device => {
-      return device.gatt.connect()
-      .then(gattServer => {
-        gattServer.disconnect();
-        assert_false(gattServer.connected);
-      })
-      .then(() => device.gatt.connect()).then(gattServer => {
-        gattServer.disconnect();
-        assert_false(gattServer.connected);
-      });
+const test_desc = 'Connect + Disconnect twice still results in ' +
+  '\'connected\' being false.';
+
+bluetooth_test(() =>
+  getHealthThermometerDevice()
+  .then(() => requestDeviceWithTrustedClick({
+    filters: [{services: ['health_thermometer']}]}))
+  .then(device => {
+    return device.gatt.connect()
+    .then(gattServer => {
+      gattServer.disconnect();
+      assert_false(gattServer.connected);
+    })
+    .then(() => device.gatt.connect()).then(gattServer => {
+      gattServer.disconnect();
+      assert_false(gattServer.connected);
     });
-}, 'Connect + Disconnect twice still results in \'connected\' being false.');
+}), test_desc);
 </script>
