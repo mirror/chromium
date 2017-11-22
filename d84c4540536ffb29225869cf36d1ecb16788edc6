@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cdfea787_7a147ea6",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-22T16:08:06Z",
+      "side": 1,
+      "message": "Yes, inside SimpleCacheDeleteFile:\nhttps://cs.chromium.org/chromium/src/net/disk_cache/simple/simple_util_win.cc?q\u003dSimpleCacheDeleteFile\u0026sq\u003dpackage:chromium\u0026l\u003d19\n(which is why I stopped using it elsewhere, as the rename bit isn\u0027t needed)\n\n... the problem is that that code also deleted files; so it didn\u0027t have to worry about what would happen if there were a collision quite as much, since there is no risk of opening the wrong resource. (I think worst that could happen was CreateEntry failing, which is tolerable).",
+      "parentUuid": "db034b98_1643ecb5",
+      "range": {
+        "startLine": 145,
+        "startChar": 28,
+        "endLine": 145,
+        "endChar": 50
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "889e4d9f_4d338e94",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 16
