@@ -1,0 +1,266 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bf0cc3a_2356a392",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "should this be in defined(OS_CHROMEOS)?",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9730f6_39fba287",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_cros_component_delegate_chromeos.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "I\u0027d rename this to MediaPerceptionAPIDelegate.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa6e2c1_76250326",
+        "filename": "extensions/browser/api/extensions_api_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "remove the new line",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e3b2cd_e9b8c73b",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "Can you add API tests for this?\n(you can inject a fake MediaPerceptionCrOSComponentDelegateChromeOS to handle component loading)",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ae9ac8_5559aeef",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "check that the state is STOPPED.",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f4cea4_29d47c64",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "!delegate",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069d891c_7f427701",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "is this really needed? The app will be notified.\nAnd I\u0027d say it\u0027s more of a WARNING than an ERROR",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37582c03_12d609b7",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "it might make more sense not to override old mount_point_ in the case component load fails (if SetAnalyticsClient fails, I would expect that the previous component is not reset)",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 14
+      },
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ddc0e9_502f170b",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "I think it would be better to inline this (for both usages checking mount_point_.empty() seems appropriate)",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2db9e52_323256ff",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "potential follow-up:\nOn STOPPED request, it might make sense to run Start request callback here, and call |GetUpstartClient()-\u003eStopMediaAnalytics()| instead of returning busy error.\n\nThough, I\u0027m not sure how useful this would be for the API clients.\n\n(I imagine this could apply for all states that call into upstart service)",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a04a645_6aa28662",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "maybe rename LAUNCHING to something like CHANGING_MEDIA_ANALYTICS, and move to that state here.",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0487ea90_88a66d6b",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "if you need to be able to run a custom binary, can we make that more explicit?\nMaybe add another component type - PREINSTALLED, or CUSTOM_DEV (and restrict its usage to dev channel), or maybe add a Chrome switch to force a locally installed media analytics binary.",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 39
+      },
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570f017a_1b881c8b",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2c8533_d543ddc0",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:20:02Z",
+      "side": 1,
+      "message": "can you rename this to OnAnalyticsComponentSet\n(so it\u0027s clearer that this is actual callback, not a method to set a callback)",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 36
+      },
+      "revId": "998219dc4c5a24ab9e6ac3e34cbf227f4bd46b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
