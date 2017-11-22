@@ -62,6 +62,28 @@ Security.SecurityPanel = class extends UI.PanelWithSidebar {
   }
 
   /**
+   * @param {!Element} param
+   * @param {string} url
+   * @param {string} schemeCssId
+   * @param {string} schemeSeparatorCssId
+   */
+  static addHighlightedUrl(parent, url, schemeCssId, schemeSeparatorCssId) {
+    var schemeSeparator = '://';
+    var index = url.search(schemeSeparator);
+
+    if (index === -1) {
+      parent.createChild('span').textContent = content;
+      return;
+    }
+
+    var scheme = url.substr(0, index);
+    var content = url.slice(index + schemeSeparator.length);
+    parent.createChild('span', schemeCssId).textContent = scheme;
+    parent.createChild('span', schemeSeparatorCssId).textContent = schemeSeparator;
+    parent.createChild('span').textContent = content;
+  }
+
+  /**
    * @param {!Protocol.Security.SecurityState} securityState
    */
   setRanInsecureContentStyle(securityState) {
@@ -410,8 +432,10 @@ Security.SecurityPanelSidebarTree = class extends UI.TreeOutlineInShadow {
    */
   addOrigin(origin, securityState) {
     var originElement = new Security.SecurityPanelSidebarTreeElement(
-        origin, this._showOriginInPanel.bind(this, origin), 'security-sidebar-tree-item', 'security-property');
-    originElement.listItemElement.title = origin;
+        '', this._showOriginInPanel.bind(this, origin), 'security-sidebar-tree-item', 'security-property');
+    Security.SecurityPanel.addHighlightedUrl(
+        originElement.listItemElement, origin, 'url-scheme-' + securityState, 'url-scheme-separator');
+
     this._elementsByOrigin.set(origin, originElement);
     this.updateOrigin(origin, securityState);
   }
@@ -566,7 +590,8 @@ Security.SecurityMainView = class extends UI.VBox {
     this._summarySection = this.contentElement.createChild('div', 'security-summary');
 
     // Info explanations should appear after all others.
-    this._securityExplanationsMain = this.contentElement.createChild('div', 'security-explanation-list');
+    this._securityExplanationsMain =
+        this.contentElement.createChild('div', 'security-explanation-list security-explanations-main');
     this._securityExplanationsExtra =
         this.contentElement.createChild('div', 'security-explanation-list security-explanations-extra');
 
@@ -598,7 +623,17 @@ Security.SecurityMainView = class extends UI.VBox {
     explanationSection.createChild('div', 'security-property')
         .classList.add('security-property-' + explanation.securityState);
     var text = explanationSection.createChild('div', 'security-explanation-text');
-    text.createChild('div', 'security-explanation-title').textContent = explanation.summary;
+
+    var explanationHeader = text.createChild('div', 'security-explanation-title');
+
+    if (explanation.title) {
+      explanationHeader.createChild('span').textContent = explanation.title + ' - ';
+      explanationHeader.createChild('span', 'security-explanation-title-' + explanation.securityState).textContent =
+          explanation.summary;
+    } else {
+      explanationHeader.textContent = explanation.summary;
+    }
+
     text.createChild('div').textContent = explanation.description;
 
     if (explanation.certificate.length) {
@@ -739,21 +774,23 @@ Security.SecurityOriginView = class extends UI.VBox {
     this.registerRequiredCSS('security/lockIcon.css');
 
     var titleSection = this.element.createChild('div', 'title-section');
+    titleSection.createChild('div', 'title-section-header').textContent = 'Origin';
     var originDisplay = titleSection.createChild('div', 'origin-display');
     this._originLockIcon = originDisplay.createChild('span', 'security-property');
     this._originLockIcon.classList.add('security-property-' + originState.securityState);
-    // TODO(lgarron): Highlight the origin scheme. https://crbug.com/523589
-    originDisplay.createChild('span', 'origin').textContent = origin;
-    var originNetworkLink = titleSection.createChild('div', 'link');
-    originNetworkLink.textContent = Common.UIString('View requests in Network Panel');
-    function showOriginRequestsInNetworkPanel() {
+
+    Security.SecurityPanel.addHighlightedUrl(
+        originDisplay, origin, 'url-scheme-' + originState.securityState, 'url-scheme-separator');
+
+    var originNetworkLink = titleSection.createChild('div', 'view-network-button');
+    originNetworkLink.appendChild(UI.createTextButton('View requests in Network Panel', async e => {
+      e.consume();
       var parsedURL = new Common.ParsedURL(origin);
       Network.NetworkPanel.revealAndFilter([
         {filterType: Network.NetworkLogView.FilterType.Domain, filterValue: parsedURL.host},
         {filterType: Network.NetworkLogView.FilterType.Scheme, filterValue: parsedURL.scheme}
       ]);
-    }
-    originNetworkLink.addEventListener('click', showOriginRequestsInNetworkPanel, false);
+    }, 'security-certificate-button'));
 
     if (originState.securityDetails) {
       var connectionSection = this.element.createChild('div', 'origin-view-section');
@@ -767,7 +804,8 @@ Security.SecurityOriginView = class extends UI.VBox {
       if (originState.securityDetails.keyExchangeGroup)
         table.addRow(Common.UIString('Key exchange group'), originState.securityDetails.keyExchangeGroup);
       table.addRow(
-          Common.UIString('Cipher'), originState.securityDetails.cipher +
+          Common.UIString('Cipher'),
+          originState.securityDetails.cipher +
               (originState.securityDetails.mac ? ' with ' + originState.securityDetails.mac : ''));
 
       // Create the certificate section outside the callback, so that it appears in the right place.
@@ -843,7 +881,7 @@ Security.SecurityOriginView = class extends UI.VBox {
       }
       toggleSctsDetailsLink.addEventListener('click', toggleSctDetailsDisplay, false);
 
-      var noteSection = this.element.createChild('div', 'origin-view-section');
+      var noteSection = this.element.createChild('div', 'origin-view-section origin-view-notes');
       // TODO(lgarron): Fix the issue and then remove this section. See comment in SecurityPanel._processRequest().
       noteSection.createChild('div').textContent =
           Common.UIString('The security details above are from the first inspected response.');
