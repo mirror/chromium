@@ -275,6 +275,20 @@ void ScrollableAreaPainter::PaintCompositedScrollbar(
   scrollbar.Paint(context, cull_rect);
 }
 
+void ScrollableAreaPainter::PaintCompositedScrollCornerAndResizer(
+    GraphicsContext& context,
+    const CullRect& cull_rect_arg) {
+  const IntRect& scroll_corner_rect =
+      GetScrollableArea().ScrollCornerAndResizerRect();
+  CullRect cull_rect(cull_rect_arg, scroll_corner_rect.Location());
+  AffineTransform translation = AffineTransform::Translation(
+      -scroll_corner_rect.X(), -scroll_corner_rect.Y());
+  TransformRecorder transform_recorder(context, GetScrollableArea().Box(),
+                                       translation);
+  PaintScrollCorner(context, IntPoint(), cull_rect);
+  PaintResizer(context, IntPoint(), cull_rect);
+}
+
 PaintLayerScrollableArea& ScrollableAreaPainter::GetScrollableArea() const {
   return *scrollable_area_;
 }

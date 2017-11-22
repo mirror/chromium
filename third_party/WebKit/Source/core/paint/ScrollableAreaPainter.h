@@ -41,6 +41,7 @@ class ScrollableAreaPainter {
   static void PaintCompositedScrollbar(const Scrollbar&,
                                        GraphicsContext&,
                                        const CullRect&);
+  void PaintCompositedScrollCornerAndResizer(GraphicsContext&, const CullRect&);
 
  private:
   void DrawPlatformResizerImage(GraphicsContext&, IntRect resizer_corner_rect);

@@ -101,22 +101,13 @@ void FramePainter::Paint(GraphicsContext& context,
 
     Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      if (const PropertyTreeState* contents_state =
-              frame_view_->TotalPropertyTreeStateForContents()) {
-        // The scrollbar's property nodes are similar to the frame view's
-        // contents state but we want to exclude the content-specific
-        // properties. This prevents the scrollbars from scrolling, for example.
-        PaintChunkProperties properties(
-            context.GetPaintController().CurrentPaintChunkProperties());
-        properties.property_tree_state.SetTransform(
-            frame_view_->PreTranslation());
-        properties.property_tree_state.SetClip(
-            frame_view_->ContentClip()->Parent());
-        properties.property_tree_state.SetEffect(contents_state->Effect());
-        scoped_paint_chunk_properties.emplace(context.GetPaintController(),
-                                              *GetFrameView().GetLayoutView(),
-                                              properties);
-      }
+      PaintChunkProperties properties(
+          context.GetPaintController().CurrentPaintChunkProperties());
+      properties.property_tree_state =
+          GetFrameView().PreContentClipProperties();
+      scoped_paint_chunk_properties.emplace(context.GetPaintController(),
+                                            *GetFrameView().GetLayoutView(),
+                                            properties);
     }
 
     TransformRecorder transform_recorder(
@@ -220,16 +211,14 @@ void FramePainter::PaintScrollbars(GraphicsContext& context,
   if (GetFrameView().HorizontalScrollbar() &&
       !GetFrameView().LayerForHorizontalScrollbar())
     PaintScrollbar(context, *GetFrameView().HorizontalScrollbar(), rect);
+
   if (GetFrameView().VerticalScrollbar() &&
       !GetFrameView().LayerForVerticalScrollbar())
     PaintScrollbar(context, *GetFrameView().VerticalScrollbar(), rect);
 
-  if (GetFrameView().LayerForScrollCorner() ||
-      !GetFrameView().IsScrollCornerVisible()) {
-    return;
-  }
-
-  PaintScrollCorner(context, GetFrameView().ScrollCornerRect());
+  if (!GetFrameView().LayerForScrollCorner() &&
+      GetFrameView().IsScrollCornerVisible())
+    PaintScrollCorner(context, GetFrameView().ScrollCornerRect());
 }
 
 void FramePainter::PaintScrollCorner(GraphicsContext& context,
