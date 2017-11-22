@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a682c11_e2020a72",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-22T22:45:00Z",
+      "side": 1,
+      "message": "What\u0027s the relationship between full_context\u0027s \u0027fragments\u0027 and the local \u0027context\u0027?",
+      "revId": "262a96dca186bb5d6a56460fed141e1b50da6b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff9b3c2_1b0132b3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-22T22:45:00Z",
+      "side": 1,
+      "message": "Should these have underscores (e.g., context_)?",
+      "revId": "262a96dca186bb5d6a56460fed141e1b50da6b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5596fe51_d24b0d7b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-22T22:45:00Z",
+      "side": 1,
+      "message": "Because this updates the context (in the root layer scrolling case, below), WDYT of renaming this to Update[something]?",
+      "revId": "262a96dca186bb5d6a56460fed141e1b50da6b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
