@@ -1795,6 +1795,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kAppsGalleryURL,
       switches::kCloudPrintURL,
       switches::kCloudPrintXmppEndpoint,
+      switches::kCommittedInterstitials,
       switches::kDisableBundledPpapiFlash,
       switches::kDisableCastStreamingHWEncoding,
       switches::kDisableJavaScriptHarmonyShipping,
