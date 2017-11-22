@@ -159,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "384b0dbd_e82ac1b2",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-22T00:29:21Z",
+      "side": 1,
+      "message": "\u003e How do you feel about RecordTrustAnchorHistogram?\n\nSGTM",
+      "parentUuid": "4363c5bf_5b228bb9",
+      "range": {
+        "startLine": 275,
+        "startChar": 5,
+        "endLine": 275,
+        "endChar": 28
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b31c9055_27f9ff67",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 4
@@ -188,6 +212,24 @@
       "side": 1,
       "message": "It\u0027s intentional that this isn\u0027t histogrammed.\n\nFor example, in a certificate chain of \u0027leaf\u0027, \u0027intermediate\u0027, \u0027root\u0027, where root is a trust anchor, both \u0027leaf\u0027 and \u0027intermediate\u0027 would return 0.\n\nThis is because of working in a bottom-up approach, but the same concern would apply in a top-down approach of \u0027leaf\u0027, \u0027intermediate\u0027, \u0027trust-anchor 1\u0027, \u0027bridge\u0027, \u0027trust anchor 2\u0027 - simply walking down from TA2 to the first zero value (bridge) would miss \u0027trust anchor 1\u0027.\n\nFinally, there\u0027s the enterprise scenario of only a single trusted root (the organization\u0027s \u0027trust store\u0027 key), which goes \u0027leaf\u0027, \u0027intermediate\u0027, \u0027public trust anchor\u0027, \u0027private enterprise key\u0027. This is an existing deficiency of \u0027is_issued_by_known_root\u0027 for those organizations, but it\u0027s why this approach was chosen. There\u0027s no interest in knowing about \u0027leaf\u0027, \u0027intermediate\u0027, or \u0027bridge\u0027",
       "parentUuid": "b31c9055_27f9ff67",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc1c8da_680ca6c9",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-22T00:29:21Z",
+      "side": 1,
+      "message": "I don\u0027t think we are talking about the same thing.\n\nMy suggestion is to count cases where we don\u0027t identify a known root for the purposes of histogramming. Which would end up counting chains anchored in a locally installed trust certificate, OR a situation where we messed up and didn\u0027t properly enumerate all the possible public trust anchors for the platform. It would serve as an additional sanity check that we are correctly histogramming roots, if we find that the number of 0 chains is much higher than expected.",
+      "parentUuid": "4f2b3709_d59a4e30",
       "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -373,6 +415,30 @@
     },
     {
       "key": {
+        "uuid": "eba96180_4172a0eb",
+        "filename": "net/cert/root_cert_list_generated.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-22T00:29:21Z",
+      "side": 1,
+      "message": "Padding shouldn\u0027t an issue here (sha256_spki_hash is a byte array, just needs to be byte aligned).\n\nSo using a uint16_t means will be the difference between sizeof(RootCertData) \u003d\u003d 34 bytes vs 36 when using a int32_t, which given the close to 500 entries would be close to 1Kb of savings in the image.",
+      "parentUuid": "fd04f1cb_603bd89a",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d516aa53_c87a830e",
         "filename": "net/data/ssl/root_stores/README.md",
         "patchSetId": 4
@@ -459,6 +525,23 @@
       "side": 1,
       "message": "Good point; it doesn\u0027t necessarily reset transaction_, so this would count those cases (and miss cases where transaction_ had been reset as part of error processing)\n\nI\u0027ve since moved this up to OnStartCompleted and updated the error parsing and checking.",
       "parentUuid": "30c5922d_c51839fc",
+      "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b523146_c1ebd926",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 28457,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-22T00:29:21Z",
+      "side": 1,
+      "message": "Why doesn\u0027t the generated data make use of histogram_id\u003d1?\nDoesn\u0027t matter for correctness, but curious if that is intentional.",
       "revId": "6bb05a716c2f115df24b8870931413b668a34cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
