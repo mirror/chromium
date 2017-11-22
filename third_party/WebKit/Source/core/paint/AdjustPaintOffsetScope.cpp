@@ -7,7 +7,7 @@
 namespace blink {
 
 bool AdjustPaintOffsetScope::ShouldAdjustForPaintOffsetTranslation(
-    const LayoutBox& box) {
+    const LayoutBoxModelObject& box) {
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
   if (box.HasSelfPaintingLayer())
     return false;
