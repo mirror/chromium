@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "84e1b0fe_c0464366",
+        "filename": "chrome/browser/vr/elements/content_element.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T14:24:30Z",
+      "side": 1,
+      "message": "Looks like auto-formatting is still needed.",
+      "parentUuid": "471cf6db_caf4cdfb",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed29ee5a_9411bb95",
         "filename": "chrome/browser/vr/elements/content_element.cc",
         "patchSetId": 7
@@ -281,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ec0c66ff_09b5cec6",
+        "filename": "chrome/browser/vr/elements/exit_prompt_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T14:24:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61c8a355_2604e867",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d741349_46117d3b",
         "filename": "chrome/browser/vr/elements/textured_element.h",
         "patchSetId": 7
@@ -313,6 +349,24 @@
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3d4d0d_e9b34c05",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T14:24:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d685a663_0a248ccb",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -383,6 +437,24 @@
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd11948_ef695495",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T14:24:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5f5a37fd_1ac24b45",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -470,6 +542,24 @@
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca02a62_23e43073",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T14:24:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1914719_ca23a35d",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -572,6 +662,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "a1027beb_29218fb5",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "233f072c_52a740e6",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T14:24:30Z",
+      "side": 1,
+      "message": "What did you think of this approach?  Sans reflection, I\u0027m not sure if there are other ways.",
+      "parentUuid": "a29c7e02_09834bc5",
       "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
