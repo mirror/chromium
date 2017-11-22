@@ -79,6 +79,40 @@ TEST_F(SafeXmlParserTest, TextAccessor) {
   ExpectElementTextEq(*text_element, "bonjour bonjour");
 }
 
+TEST_F(SafeXmlParserTest, QualifiedName) {
+  EXPECT_EQ(GetXmlQualifiedName("foo", "bar"), "foo:bar");
+  EXPECT_EQ(GetXmlQualifiedName("", "foo"), "foo");
+}
+
+TEST_F(SafeXmlParserTest, NamespacePrefix) {
+  // Fails with no namespace.
+  std::unique_ptr<base::Value> no_ns_element = ParseXml("<a/>");
+  std::string prefix;
+  EXPECT_FALSE(
+      GetXmlElementNamespacePrefix(*no_ns_element, "http://a", &prefix));
+  EXPECT_TRUE(prefix.empty());
+  prefix.clear();
+
+  // Multiple namespaces.
+  std::unique_ptr<base::Value> multiple_ns_element = ParseXml(
+      "<a xmlns='http://a' xmlns:b='http://b' xmlns:test='http://c'/>");
+  EXPECT_TRUE(
+      GetXmlElementNamespacePrefix(*multiple_ns_element, "http://a", &prefix));
+  EXPECT_TRUE(prefix.empty());  // Default namespace has an empty prefix.
+  prefix.clear();
+  EXPECT_TRUE(
+      GetXmlElementNamespacePrefix(*multiple_ns_element, "http://b", &prefix));
+  EXPECT_EQ(prefix, "b");
+  prefix.clear();
+  EXPECT_TRUE(
+      GetXmlElementNamespacePrefix(*multiple_ns_element, "http://c", &prefix));
+  EXPECT_EQ(prefix, "test");
+  prefix.clear();
+  EXPECT_FALSE(
+      GetXmlElementNamespacePrefix(*multiple_ns_element, "http://d", &prefix));
+  EXPECT_TRUE(prefix.empty());
+}
+
 TEST_F(SafeXmlParserTest, ChildAccessor) {
   // Test that the API does not choke on non XML element values.
   base::Value not_an_xml_value;
@@ -90,9 +124,14 @@ TEST_F(SafeXmlParserTest, ChildAccessor) {
   ASSERT_TRUE(childless_element);
   EXPECT_EQ(0, GetXmlElementChildrenCount(*childless_element, "fr"));
   EXPECT_FALSE(GetXmlElementChildWithName(*childless_element, "fr"));
+  std::vector<const base::Value*> children;
+  EXPECT_FALSE(
+      GetAllXmlElementChildrenWithName(*childless_element, "fr", &children));
   childless_element = ParseXml("<hello>bonjour</hello>");
   EXPECT_EQ(0, GetXmlElementChildrenCount(*childless_element, "fr"));
   EXPECT_FALSE(GetXmlElementChildWithName(*childless_element, "fr"));
+  EXPECT_FALSE(
+      GetAllXmlElementChildrenWithName(*childless_element, "fr", &children));
 
   // Element with children case.
   std::unique_ptr<base::Value> element =
@@ -106,10 +145,20 @@ TEST_F(SafeXmlParserTest, ChildAccessor) {
   // The first matching element is returned.
   ExpectElementTextEq(*value, "bonjour");
 
+  EXPECT_TRUE(GetAllXmlElementChildrenWithName(*element, "fr", &children));
+  ASSERT_EQ(children.size(), 2U);
+  ExpectElementTextEq(*children[0], "bonjour");
+  ExpectElementTextEq(*children[1], "salut");
+  children.clear();
+
   value = GetXmlElementChildWithName(*element, "es");
   ExpectElementTextEq(*value, "hola");
+  EXPECT_TRUE(GetAllXmlElementChildrenWithName(*element, "es", &children));
+  ASSERT_EQ(children.size(), 1U);
+  ExpectElementTextEq(*children[0], "hola");
 
   EXPECT_FALSE(GetXmlElementChildWithName(*element, "jp"));
+  EXPECT_FALSE(GetAllXmlElementChildrenWithName(*element, "jp", &children));
 }
 
 TEST_F(SafeXmlParserTest, FindByPath) {
