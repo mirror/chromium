@@ -981,6 +981,22 @@ void PaintLayerPainter::PaintFragmentWithPhase(
     ClipState clip_state) {
   DCHECK(paint_layer_.IsSelfPaintingLayer());
 
+  Optional<ScopedPaintChunkProperties> fragment_paint_chunk_properties;
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+      fragment.fragment_data !=
+          &paint_layer_.GetLayoutObject().FirstFragment()) {
+    PaintChunkProperties properties(
+        context.GetPaintController().CurrentPaintChunkProperties());
+    properties.property_tree_state =
+        *fragment.fragment_data->GetRarePaintData()->LocalBorderBoxProperties();
+    properties.property_tree_state.SetEffect(context.GetPaintController()
+                                                 .CurrentPaintChunkProperties()
+                                                 .property_tree_state.Effect());
+    fragment_paint_chunk_properties.emplace(
+        context.GetPaintController(), paint_layer_,
+        DisplayItem::PaintPhaseToDrawingType(phase), properties);
+  }
+
   DisplayItemClient* client = &paint_layer_.GetLayoutObject();
   Optional<LayerClipRecorder> clip_recorder;
   if (clip_state != kHasClipped &&
@@ -1060,6 +1076,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   }
   PaintInfo paint_info(context, PixelSnappedIntRect(new_cull_rect), phase,
                        painting_info.GetGlobalPaintFlags(), paint_flags,
+                       *fragment.fragment_data,
                        &painting_info.root_layer->GetLayoutObject());
 
   paint_layer_.GetLayoutObject().Paint(paint_info, paint_offset);
@@ -1112,8 +1129,8 @@ void PaintLayerPainter::PaintForegroundForFragments(
         PaintPhase::kSelection, layer_fragments, context, local_painting_info,
         paint_flags, clip_state);
   } else {
-    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
-        paint_layer_.NeedsPaintPhaseDescendantBlockBackgrounds()) {
+    if (paint_layer_.NeedsPaintPhaseDescendantBlockBackgrounds() ||
+        RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
       PaintForegroundForFragmentsWithPhase(
@@ -1131,8 +1148,8 @@ void PaintLayerPainter::PaintForegroundForFragments(
       }
     }
 
-    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
-        paint_layer_.NeedsPaintPhaseFloat()) {
+    if (paint_layer_.NeedsPaintPhaseFloat() ||
+        RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
       PaintForegroundForFragmentsWithPhase(PaintPhase::kFloat, layer_fragments,
@@ -1149,8 +1166,8 @@ void PaintLayerPainter::PaintForegroundForFragments(
         PaintPhase::kForeground, layer_fragments, context, local_painting_info,
         paint_flags, clip_state);
 
-    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
-        paint_layer_.NeedsPaintPhaseDescendantOutlines()) {
+    if (paint_layer_.NeedsPaintPhaseDescendantOutlines() ||
+        RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
       PaintForegroundForFragmentsWithPhase(

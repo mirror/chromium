@@ -150,7 +150,7 @@ class PaintPropertyTreeBuilder {
                                    PaintPropertyTreeBuilderContext&);
 
  private:
-  ALWAYS_INLINE void UpdateFragmentPropertiesForSelf(
+  ALWAYS_INLINE static void UpdateFragmentPropertiesForSelf(
       const LayoutObject&,
       PaintPropertyTreeBuilderContext& full_context,
       PaintPropertyTreeBuilderFragmentContext&,
@@ -206,7 +206,7 @@ class PaintPropertyTreeBuilder {
       ObjectPaintProperties&,
       PaintPropertyTreeBuilderFragmentContext&,
       bool& force_subtree_update);
-  ALWAYS_INLINE void UpdateFragmentClip(
+  ALWAYS_INLINE static void UpdateFragmentClip(
       const LayoutObject&,
       ObjectPaintProperties&,
       PaintPropertyTreeBuilderFragmentContext&,

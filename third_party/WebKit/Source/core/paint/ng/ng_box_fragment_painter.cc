@@ -440,7 +440,8 @@ void NGBoxFragmentPainter::PaintFillLayerTextFillBox(
   // they should just add their contents to the clip.
   context.BeginLayer(1, SkBlendMode::kDstIn);
   PaintInfo paint_info(context, mask_rect, PaintPhase::kTextClip,
-                       kGlobalPaintNormalPhase, 0);
+                       kGlobalPaintNormalPhase, 0,
+                       box_fragment_.GetLayoutObject()->FirstFragment());
 
   // TODO(eae): Paint text child fragments.
 
