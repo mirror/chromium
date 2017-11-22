@@ -67,6 +67,9 @@ void ArcAppTest::SetUp(Profile* profile) {
       base::CommandLine::ForCurrentProcess());
   DCHECK(!profile_);
   profile_ = profile;
+
+  arc::ResetArcAllowanceCheckForTesting(profile_);
+
   const user_manager::User* user = CreateUserAndLogin();
 
   // If for any reason the garbage collector kicks in while we are waiting for
