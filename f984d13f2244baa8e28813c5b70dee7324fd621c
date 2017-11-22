@@ -16,6 +16,24 @@
       "revId": "f984d13f2244baa8e28813c5b70dee7324fd621c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38258f8_4812feda",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-22T20:06:09Z",
+      "side": 1,
+      "message": "\u003e Wrong thread to use the client right? Also globals x.x\n\nHmm. I did have a comment on AllowGpuLaunch that it\u0027s called on IO thread. Guess I removed it in a local revision, oops. In general ContentFooClients won\u0027t change after threads start, and there\u0027s already a bunch of existing methods that are documented to be non-UI, or even \"any thread\" kind of thing.\n\nAnd fwiw, the chrome implementation is thread safe.\n\n\u003e \n\u003e Can we pass this value into EstablishRequest?\n\nWe don\u0027t want to do that because we really want the most up to date state of whether the app is in the background or not, and passing that information from the UI thread adds delays from thread hop, gpu launch, and potentially retries as well.",
+      "parentUuid": "f5cb148d_ffcaa176",
+      "revId": "f984d13f2244baa8e28813c5b70dee7324fd621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
