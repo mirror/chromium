@@ -22,6 +22,30 @@
       "revId": "289e3a179fc8ebb2aeec22ab1bffef411c801445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b0cccc_c3e1fef9",
+        "filename": "chrome/common/render_messages.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T18:58:31Z",
+      "side": 1,
+      "message": "The url \u0026 referrer are used as strings in the receiving side.\nFor IP, we always use string",
+      "parentUuid": "f7dd04f3_dbd1a6d2",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 33
+      },
+      "revId": "289e3a179fc8ebb2aeec22ab1bffef411c801445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
