@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d67f875_dd681511",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 0,
+      "message": "did this mac-specific logic move somewhere?",
+      "revId": "969f8f8310b6dec35a17c7dc5d3fb170219bc96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

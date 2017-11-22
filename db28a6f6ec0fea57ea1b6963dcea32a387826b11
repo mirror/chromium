@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff3e4054_b772c789",
+        "filename": "ash/frame/caption_buttons/frame_caption_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 1,
+      "message": "I think static methods are meant to come after the constructor/destructor unless they are \"factory static methods\". go/cppguide has something about this. Also, comment?",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d05d7d_fdb293ce",
+        "filename": "ash/frame/default_frame_header.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 1,
+      "message": "ditto nit re: order",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e90967_b3022bbe",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 1,
+      "message": "is there already a back button? (how is that updated?)\n\nThere\u0027s also BrowserWindow::UpdateTitleBar() to update the title on navigations -- what triggers that?",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8ffce2_0ea52972",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 1,
+      "message": "Did you see frame/browser_non_client_frame_view_ash.cc:void BrowserNonClientFrameViewAsh::ResetWindowControls()?\n\nI think these can and should be linked.",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a09d872_9f97d602",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 1,
+      "message": "Document |font_list|. Or.. can you use views::NativeWidgetPrivate::GetWindowTitleFontList() directly?",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9deb2d6b_66b17fb2",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 1,
+      "message": "Can this change be moved to a separate CL? - I tried to grok all the moving parts at once, but I\u0027m struggling.",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05ec81f_a6d63fd4",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 1,
+      "message": "call super::ResetWindowControls() ?",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfdafcaf_3b0deafb",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T05:11:26Z",
+      "side": 1,
+      "message": "I don\u0027t think auto is allowed in lambda args -- see \"Generic lambdas\" at https://chromium-cpp.appspot.com/\n\nconst content_setting_views::value_type\u0026 v\n\nor something might do it",
+      "range": {
+        "startLine": 533,
+        "startChar": 23,
+        "endLine": 533,
+        "endChar": 29
+      },
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
