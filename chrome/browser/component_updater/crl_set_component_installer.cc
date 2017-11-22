@@ -52,9 +52,10 @@ class CRLSetPolicy : public ComponentInstallerPolicy {
   // ComponentInstallerPolicy implementation.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
+  void OnCustomInstall(
       const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
+      const base::FilePath& install_dir,
+      std::unique_ptr<CustomInstallRunner> custom_install_runner) override;
   void OnCustomUninstall() override;
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
@@ -82,10 +83,12 @@ bool CRLSetPolicy::RequiresNetworkEncryption() const {
   return false;
 }
 
-update_client::CrxInstaller::Result CRLSetPolicy::OnCustomInstall(
+void CRLSetPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
-  return update_client::CrxInstaller::Result(0);  // Nothing custom here.
+    const base::FilePath& install_dir,
+    std::unique_ptr<CustomInstallRunner> custom_install_runner) {
+  custom_install_runner->Run(
+      update_client::CrxInstaller::Result(update_client::InstallError::NONE));
 }
 
 void CRLSetPolicy::OnCustomUninstall() {}

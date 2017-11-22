@@ -58,9 +58,10 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
                           const base::FilePath& dir) const override;
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
+  void OnCustomInstall(
       const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
+      const base::FilePath& install_dir,
+      std::unique_ptr<CustomInstallRunner> custom_install_runner) override;
   void OnCustomUninstall() override;
   void ComponentReady(const base::Version& version,
                       const base::FilePath& install_dir,

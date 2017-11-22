@@ -262,9 +262,9 @@ class SupervisedUserWhitelistComponentInstallerPolicy
                           const base::FilePath& install_dir) const override;
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  update_client::CrxInstaller::Result OnCustomInstall(
-      const base::DictionaryValue& manifest,
-      const base::FilePath& install_dir) override;
+  void OnCustomInstall(const base::DictionaryValue& manifest,
+                       const base::FilePath& install_dir,
+                       std::unique_ptr<CustomInstallRunner> cir) override;
   void OnCustomUninstall() override;
   void ComponentReady(const base::Version& version,
                       const base::FilePath& install_dir,
@@ -300,16 +300,20 @@ bool SupervisedUserWhitelistComponentInstallerPolicy::
   return true;
 }
 
-update_client::CrxInstaller::Result
-SupervisedUserWhitelistComponentInstallerPolicy::OnCustomInstall(
+void SupervisedUserWhitelistComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
-    const base::FilePath& install_dir) {
+    const base::FilePath& install_dir,
+    std::unique_ptr<CustomInstallRunner> custom_install_runner) {
   // Delete the existing sanitized whitelist.
   const bool success =
       base::DeleteFile(GetSanitizedWhitelistPath(crx_id_), false);
-  return update_client::CrxInstaller::Result(
-      success ? update_client::InstallError::NONE
-              : update_client::InstallError::GENERIC_ERROR);
+  if (success) {
+    custom_install_runner->Run(
+        update_client::CrxInstaller::Result(update_client::InstallError::NONE));
+  } else {
+    custom_install_runner->Run(update_client::CrxInstaller::Result(
+        update_client::InstallError::GENERIC_ERROR));
+  }
 }
 
 void SupervisedUserWhitelistComponentInstallerPolicy::OnCustomUninstall() {}
