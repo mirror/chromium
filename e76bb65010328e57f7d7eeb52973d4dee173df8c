@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73bcc844_9c36e06b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-11-22T18:41:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab8f7861_1788bed5",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "e76bb65010328e57f7d7eeb52973d4dee173df8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "841116d0_da2c138a",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "e76bb65010328e57f7d7eeb52973d4dee173df8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f926f2d_96a13de1",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-11-22T18:41:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "841116d0_da2c138a",
+      "range": {
+        "startLine": 661,
+        "startChar": 2,
+        "endLine": 661,
+        "endChar": 37
+      },
+      "revId": "e76bb65010328e57f7d7eeb52973d4dee173df8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
