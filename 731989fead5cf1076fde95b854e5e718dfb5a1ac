@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6b6455c5_1ce41f71",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-22T04:01:52Z",
+      "side": 1,
+      "message": "Added explicit tests for network usage (which is what this flag controls).",
+      "parentUuid": "cf98b88b_6aed2246",
+      "revId": "731989fead5cf1076fde95b854e5e718dfb5a1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fc9c540_d8474255",
         "filename": "components/translate/core/browser/translate_prefs.h",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "731989fead5cf1076fde95b854e5e718dfb5a1ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b73ef2_d0d06144",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-22T04:01:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fc9c540_d8474255",
+      "range": {
+        "startLine": 180,
+        "startChar": 36,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "731989fead5cf1076fde95b854e5e718dfb5a1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
