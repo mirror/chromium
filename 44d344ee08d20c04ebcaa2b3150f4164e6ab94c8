@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa249b8e_f4f8b76a",
+        "filename": "net/nqe/proto/network_id_proto.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-22T22:34:17Z",
+      "side": 1,
+      "message": "where are the values defined? Might be good to include mention of that here.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "44d344ee08d20c04ebcaa2b3150f4164e6ab94c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
