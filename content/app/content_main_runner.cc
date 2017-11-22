@@ -613,21 +613,24 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     }
 #endif
 
-    RegisterPathProvider();
-    RegisterContentSchemes(true);
+    bool is_gpu = process_type == switches::kGpuProcess;
+    if (!is_gpu) {
+      RegisterPathProvider();
+      RegisterContentSchemes(true);
 
 #if defined(OS_ANDROID) && (ICU_UTIL_DATA_IMPL == ICU_UTIL_DATA_FILE)
-    int icudata_fd = g_fds->MaybeGet(kAndroidICUDataDescriptor);
-    if (icudata_fd != -1) {
-      auto icudata_region = g_fds->GetRegion(kAndroidICUDataDescriptor);
-      CHECK(base::i18n::InitializeICUWithFileDescriptor(icudata_fd,
-                                                        icudata_region));
-    } else {
-      CHECK(base::i18n::InitializeICU());
-    }
+      int icudata_fd = g_fds->MaybeGet(kAndroidICUDataDescriptor);
+      if (icudata_fd != -1) {
+        auto icudata_region = g_fds->GetRegion(kAndroidICUDataDescriptor);
+        CHECK(base::i18n::InitializeICUWithFileDescriptor(icudata_fd,
+                                                          icudata_region));
+      } else {
+        CHECK(base::i18n::InitializeICU());
+      }
 #else
-    CHECK(base::i18n::InitializeICU());
+      CHECK(base::i18n::InitializeICU());
 #endif  // OS_ANDROID && (ICU_UTIL_DATA_IMPL == ICU_UTIL_DATA_FILE)
+    }
 
     base::StatisticsRecorder::Initialize();
 

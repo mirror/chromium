@@ -909,7 +909,8 @@ void ChromeMainDelegate::PreSandboxStartup() {
     ChromeContentUtilityClient::PreSandboxStartup();
   }
 
-  InitializePDF();
+  if (process_type != switches::kGpuProcess)
+    InitializePDF();
 #endif
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
