@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af54d248_74fcca88",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-22T22:44:43Z",
+      "side": 1,
+      "message": "This isn\u0027t needed for the regression IIUC? If so please remove.",
+      "revId": "fb685c3c1b8f83d8d77826d86937d63c18e3ebb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
