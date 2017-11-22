@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34ac7a6_066207a6",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-11-22T14:55:26Z",
+      "side": 1,
+      "message": "Is there supposed to be a space here? Methods below don\u0027t have it.",
+      "range": {
+        "startLine": 299,
+        "startChar": 16,
+        "endLine": 299,
+        "endChar": 17
+      },
+      "revId": "40f8bc23f44e338a6c23cfbb8cc85b7dede5a008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
