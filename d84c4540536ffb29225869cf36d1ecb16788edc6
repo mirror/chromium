@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "954f45d2_805e379d",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-22T14:31:40Z",
+      "side": 1,
+      "message": "How expensive is it? I definitely agree that this bit of complexity just kinda muddies the waters, especially as the CL has other complicated parts that probably deserve more focus (the actual doom bits are also tricky...)",
+      "parentUuid": "f51c5678_b168442b",
+      "range": {
+        "startLine": 145,
+        "startChar": 28,
+        "endLine": 145,
+        "endChar": 50
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "889e4d9f_4d338e94",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 16
