@@ -425,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "f2a79368_3f7bdf62",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-22T21:56:28Z",
+      "side": 1,
+      "message": "Mihai Sardarescu\n\u003e It looks like this class is not a real class, just a collection of static methods.\n\n\nI above suggested just adding a function to anonymous namespace in gaia_auth_fetcher.cc , so we would not need this file at all. We could include decoded id_token to GaiaAuthConsumer::ClientOAuthResult , so that consumers will receive full data and can later fetch any information from it they want.\n\nI still believe this is simpler, shorter and more flexible solution. It will supply consumers of GaiaAuthFetcher() with fully decoded response data.\n\nMihai, WDYT?",
+      "parentUuid": "c766a236_28f6862a",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45ecd091_9b07c497",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
         "patchSetId": 11
