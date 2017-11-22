@@ -207,6 +207,7 @@ void VRDisplay::RequestVSync() {
     return;
 
   if (!is_presenting_) {
+    pending_vsync_waiting_for_pose_.Reset();
     magic_window_provider_->GetPose(ConvertToBaseCallback(
         WTF::Bind(&VRDisplay::OnMagicWindowPose, WrapWeakPersistent(this))));
     pending_vsync_ = true;
@@ -983,9 +984,17 @@ void VRDisplay::OnMagicWindowVSync(double timestamp) {
   pending_vsync_ = false;
   pending_vsync_id_ = -1;
   vr_frame_id_ = -1;
-  Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&VRDisplay::ProcessScheduledAnimations,
-                                 WrapWeakPersistent(this), timestamp));
+  auto vsync_exec = WTF::Bind(&VRDisplay::ProcessScheduledAnimations,
+                              WrapWeakPersistent(this), timestamp);
+  if (frame_pose_ || pending_pose_) {
+    Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
+        BLINK_FROM_HERE, std::move(vsync_exec));
+  } else {
+    // The VSync got triggered before ever getting a pose. Defer
+    // the animation until a pose arrives to avoid passing null
+    // poses to the application.
+    pending_vsync_waiting_for_pose_ = std::move(vsync_exec);
+  }
 }
 
 void VRDisplay::OnMagicWindowPose(device::mojom::blink::VRPosePtr pose) {
@@ -993,6 +1002,11 @@ void VRDisplay::OnMagicWindowPose(device::mojom::blink::VRPosePtr pose) {
     frame_pose_ = std::move(pose);
   } else {
     pending_pose_ = std::move(pose);
+  }
+  if (pending_vsync_waiting_for_pose_) {
+    Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
+        BLINK_FROM_HERE, std::move(pending_vsync_waiting_for_pose_));
+    pending_vsync_waiting_for_pose_.Reset();
   }
 }
 

@@ -16,6 +16,7 @@
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Functional.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
 
@@ -209,6 +210,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   bool pending_vrdisplay_raf_ = false;
   bool pending_vsync_ = false;
   int pending_vsync_id_ = -1;
+  WTF::Closure pending_vsync_waiting_for_pose_;
   bool in_animation_frame_ = false;
   bool did_submit_this_frame_ = false;
   bool display_blurred_ = false;
