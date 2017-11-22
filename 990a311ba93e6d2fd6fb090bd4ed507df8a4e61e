@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed739e8f_cf3faa48",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-22T23:14:21Z",
+      "side": 1,
+      "message": "This test is rather complex and involves frames. Why are frames needed at all?\n\nIt would be good to land a test atomically with this change. Can you add a simple unit test that fails without this change and passes with?",
+      "revId": "990a311ba93e6d2fd6fb090bd4ed507df8a4e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2fb03b_378c22e0",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineTextBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-22T23:14:21Z",
+      "side": 1,
+      "message": "I\u0027d be okay with landing and seeing if this affects perf but this seems very likely to regress performance since it does an additional walk of all text.",
+      "revId": "990a311ba93e6d2fd6fb090bd4ed507df8a4e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faec82ad_bc7d1270",
+        "filename": "third_party/WebKit/Source/core/paint/TextPainter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-22T23:14:21Z",
+      "side": 1,
+      "message": "The painter classes are really just wrappers around static functions and don\u0027t typically store any state since they are alive a very short time. I think it would be best to pass this state down in a different way.\n\nWe typically paint a LayoutObject more than we lay it out so I think it would be better to store the contains_only_whitespace bit on the LayoutObject itself, when the text is set, then use the bit when painting. Another approach would be to store the bit on the DOM node.",
+      "revId": "990a311ba93e6d2fd6fb090bd4ed507df8a4e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
