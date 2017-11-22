@@ -17,12 +17,11 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "chrome/browser/android/vr_shell/gl_browser_interface.h"
+#include "chrome/browser/android/vr_shell/gvr_metrics_util.h"
 #include "chrome/browser/android/vr_shell/gvr_util.h"
 #include "chrome/browser/android/vr_shell/mailbox_to_surface_bridge.h"
 #include "chrome/browser/android/vr_shell/vr_controller.h"
-#include "chrome/browser/android/vr_shell/vr_metrics_util.h"
 #include "chrome/browser/android/vr_shell/vr_shell.h"
-#include "chrome/browser/android/vr_shell/vr_usage_monitor.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/fps_meter.h"
 #include "chrome/browser/vr/model/camera_model.h"
@@ -32,6 +31,7 @@
 #include "chrome/browser/vr/ui_element_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/vr_gl_util.h"
+#include "chrome/browser/vr/vr_usage_monitor.h"
 #include "chrome/common/chrome_features.h"
 #include "content/public/common/content_features.h"
 #include "device/vr/android/gvr/gvr_delegate.h"
@@ -496,8 +496,6 @@ void VrShellGl::GvrInit(gvr_context* gvr_api) {
   gvr_api_ = gvr::GvrApi::WrapNonOwned(gvr_api);
   controller_.reset(new VrController(gvr_api));
   ui_->OnPlatformControllerInitialized(controller_.get());
-
-  VrMetricsUtil::LogVrViewerType(gvr_api_->GetViewerType());
 
   cardboard_ =
       (gvr_api_->GetViewerType() == gvr::ViewerType::GVR_VIEWER_TYPE_CARDBOARD);

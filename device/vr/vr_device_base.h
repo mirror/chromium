@@ -24,6 +24,7 @@ class DEVICE_VR_EXPORT VRDeviceBase : public VRDevice {
   ~VRDeviceBase() override;
 
   // VRDevice Implementation
+  ViewerType GetViewerType() const override;
   unsigned int GetId() const override;
   void PauseTracking() override;
   void ResumeTracking() override;

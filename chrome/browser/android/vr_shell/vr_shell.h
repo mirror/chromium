@@ -42,6 +42,7 @@ namespace vr {
 class AutocompleteController;
 class BrowserUiInterface;
 class ToolbarHelper;
+class VrMetricsHelper;
 class WebContentsEventForwarder;
 }  // namespace vr
 
@@ -50,7 +51,6 @@ namespace vr_shell {
 class AndroidUiGestureTarget;
 class VrCompositor;
 class VrGLThread;
-class VrMetricsHelper;
 class VrShellDelegate;
 class VrWebContentsObserver;
 
@@ -243,7 +243,7 @@ class VrShell : device::GvrGamepadDataProvider,
 
   std::unique_ptr<vr::WebContentsEventForwarder> web_contents_event_forwarder_;
   std::unique_ptr<AndroidUiGestureTarget> android_ui_gesture_target_;
-  std::unique_ptr<VrMetricsHelper> metrics_helper_;
+  std::unique_ptr<vr::VrMetricsHelper> metrics_helper_;
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   std::unique_ptr<VrGLThread> gl_thread_;

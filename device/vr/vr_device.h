@@ -14,6 +14,18 @@ namespace device {
 
 const unsigned int VR_DEVICE_LAST_ID = 0xFFFFFFFF;
 
+enum class ViewerType {
+  UNKNOWN_TYPE = 0,
+  CARDBOARD = 1,
+  DAYDREAM = 2,
+  GVR_UNKNOWN = 3,
+  FAKE_DEVICE = 4,
+  OPENVR_UNKNOWN = 5,
+  OPENVR_VIVE = 6,
+  OPENVR_RIFT_CV1 = 7,
+  VIEWER_TYPE_MAX,
+};
+
 // Represents one of the platform's VR devices. Owned by the respective
 // VRDeviceProvider.
 // TODO(mthiesse, crbug.com/769373): Remove DEVICE_VR_EXPORT.
@@ -21,6 +33,7 @@ class DEVICE_VR_EXPORT VRDevice {
  public:
   virtual ~VRDevice() {}
 
+  virtual ViewerType GetViewerType() const = 0;
   virtual unsigned int GetId() const = 0;
   virtual void PauseTracking() = 0;
   virtual void ResumeTracking() = 0;
