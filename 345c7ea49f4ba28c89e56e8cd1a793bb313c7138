@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da3d455_20720772",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "Native",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d13d20_6124fbd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "This means mojo::EmbeddedWorkerStartParams?",
+      "range": {
+        "startLine": 11,
+        "startChar": 52,
+        "endLine": 11,
+        "endChar": 76
+      },
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859ae7e1_9a4b83f7",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "I don\u0027t understand what these changes do, but I guess it\u0027s needed?",
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88a1365_37015168",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "// The id of the embedded worker. This changes when the service worker is stopped and restarted.",
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b45a21_a5d48ce1",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "// The id of the service worker being started. This remains fixed even if the worker is stopped and restarted, or even if the browser restarts.",
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4896b340_916783fc",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "// This service worker\u0027s registration\u0027s scope (link to scope in the spec?)",
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0bc21f_6ba0dfed",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "// The service worker\u0027s script URL.",
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ea5cd4_51da37b5",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "etc etc",
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88073791_ccbd5807",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:44:20Z",
+      "side": 1,
+      "message": "Could we document all these?",
+      "revId": "345c7ea49f4ba28c89e56e8cd1a793bb313c7138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
