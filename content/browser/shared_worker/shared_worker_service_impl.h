@@ -36,8 +36,6 @@ class CONTENT_EXPORT SharedWorkerServiceImpl {
   // Returns the SharedWorkerServiceImpl singleton.
   static SharedWorkerServiceImpl* GetInstance();
 
-  // Terminates the given worker. Returns true if the process was found.
-  bool TerminateWorker(int process_id, int route_id);
   void TerminateAllWorkersForTesting(base::OnceClosure callback);
 
   // Creates the worker if necessary or connects to an already existing worker.
