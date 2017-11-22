@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/scoped_refptr.h"
 #include "base/memory/weak_ptr.h"
 #include "base/unguessable_token.h"
 #include "media/base/decode_status.h"
@@ -16,10 +17,7 @@
 #include "media/base/video_decoder.h"
 #include "media/mojo/interfaces/video_decoder.mojom.h"
 #include "media/mojo/services/mojo_media_client.h"
-
-namespace gpu {
-struct SyncToken;
-}
+#include "mojo/public/cpp/bindings/associated_binding.h"
 
 namespace media {
 
@@ -29,11 +27,12 @@ class MojoCdmServiceContext;
 class MojoDecoderBufferReader;
 class MojoMediaClient;
 class MojoMediaLog;
+class MojoVideoFrameHandleReleaserService;
 class VideoFrame;
 
 // Implementation of a mojom::VideoDecoder which runs in the GPU process,
 // and wraps a media::VideoDecoder.
-class MojoVideoDecoderService : public mojom::VideoDecoder {
+class MojoVideoDecoderService final : public mojom::VideoDecoder {
  public:
   explicit MojoVideoDecoderService(
       MojoMediaClient* mojo_media_client,
@@ -43,6 +42,8 @@ class MojoVideoDecoderService : public mojom::VideoDecoder {
   // mojom::VideoDecoder implementation
   void Construct(mojom::VideoDecoderClientAssociatedPtrInfo client,
                  mojom::MediaLogAssociatedPtrInfo media_log,
+                 mojom::VideoFrameHandleReleaserAssociatedRequest
+                     video_frame_handle_releaser,
                  mojo::ScopedDataPipeConsumerHandle decoder_buffer_pipe,
                  mojom::CommandBufferIdPtr command_buffer_id) final;
   void Initialize(const VideoDecoderConfig& config,
@@ -51,8 +52,6 @@ class MojoVideoDecoderService : public mojom::VideoDecoder {
                   InitializeCallback callback) final;
   void Decode(mojom::DecoderBufferPtr buffer, DecodeCallback callback) final;
   void Reset(ResetCallback callback) final;
-  void OnReleaseMailbox(const base::UnguessableToken& release_token,
-                        const gpu::SyncToken& release_sync_token) final;
   void OnOverlayInfoChanged(const OverlayInfo& overlay_info) final;
 
  private:
@@ -67,24 +66,25 @@ class MojoVideoDecoderService : public mojom::VideoDecoder {
                      scoped_refptr<DecoderBuffer> buffer);
   void OnDecoderDecoded(DecodeCallback callback, DecodeStatus status);
   void OnDecoderReset(ResetCallback callback);
-  void OnDecoderOutputWithReleaseCB(
-      MojoMediaClient::ReleaseMailboxCB release_cb,
-      const scoped_refptr<VideoFrame>& frame);
-  void OnDecoderOutput(base::Optional<base::UnguessableToken> release_token,
-                       const scoped_refptr<VideoFrame>& frame);
+  void OnDecoderOutput(const scoped_refptr<VideoFrame>& frame);
 
   void OnDecoderRequestedOverlayInfo(
       bool restart_for_transitions,
       const ProvideOverlayInfoCB& provide_overlay_info_cb);
 
+  MojoMediaClient* mojo_media_client_;
+
   mojom::VideoDecoderClientAssociatedPtr client_;
   std::unique_ptr<MojoMediaLog> media_log_;
-  std::unique_ptr<MojoDecoderBufferReader> mojo_decoder_buffer_reader_;
 
-  MojoMediaClient* mojo_media_client_;
+  // Owned by |this| until |this| is destructed, at which point we call
+  // Destroy() to pass ownership to the MojoVideoFrameHandleReleaserService.
+  MojoVideoFrameHandleReleaserService*
+      mojo_video_frame_handle_releaser_service_ = nullptr;
+
+  std::unique_ptr<MojoDecoderBufferReader> mojo_decoder_buffer_reader_;
   std::unique_ptr<media::VideoDecoder> decoder_;
-  std::map<base::UnguessableToken, MojoMediaClient::ReleaseMailboxCB>
-      release_mailbox_cbs_;
+
   ProvideOverlayInfoCB provide_overlay_info_cb_;
 
   // A helper object required to get CDM from CDM id.
