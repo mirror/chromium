@@ -22,6 +22,29 @@
 
 namespace syncer {
 
+namespace {
+
+bool CompareProtoTimeStamp(const int64_t left, const int64_t right) {
+  return left > right;
+}
+
+// This function use quick select algorithm (std::nth_element) to find the |n|th
+// bigest number in the vector |time_stamps|, be aware, this function will
+// change the order of the values in |time_stamps|.
+int64_t FindTheNthBigestProtoTimeStamp(std::vector<int64_t>& time_stamps,
+                                       size_t n) {
+  DCHECK(n);
+
+  if (n > time_stamps.size())
+    return 0;
+
+  std::nth_element(time_stamps.begin(), time_stamps.begin() + n - 1,
+                   time_stamps.end(), &CompareProtoTimeStamp);
+
+  return time_stamps[n - 1];
+}
+}  // namespace
+
 SharedModelTypeProcessor::SharedModelTypeProcessor(
     ModelType type,
     ModelTypeSyncBridge* bridge,
@@ -808,6 +831,7 @@ void SharedModelTypeProcessor::ExpireEntriesIfNeeded(
     cached_gc_directive_version_ = new_gc_directive.version_watermark();
     has_expired_changes = true;
   }
+
   if (new_gc_directive.has_age_watermark_in_days()) {
     DCHECK(new_gc_directive.age_watermark_in_days());
     // For saving resource purpose(ex. cpu, battery), We round up garbage
@@ -822,6 +846,13 @@ void SharedModelTypeProcessor::ExpireEntriesIfNeeded(
       cached_gc_directive_aged_out_day_ = to_be_expired;
       has_expired_changes = true;
     }
+  }
+
+  if (new_gc_directive.has_max_number_of_items()) {
+    DCHECK(new_gc_directive.max_number_of_items());
+    ExpireEntriesByItemLimit(new_gc_directive.max_number_of_items(),
+                             metadata_changes.get());
+    has_expired_changes = true;
   }
 
   if (has_expired_changes)
@@ -870,6 +901,36 @@ void SharedModelTypeProcessor::ExpireEntriesByAge(
     if (entity && !entity->IsUnsynced() &&
         ProtoTimeToTime(entity->metadata().modification_time()) <=
             to_be_expired) {
+      storage_key_to_be_deleted.push_back(entity->storage_key());
+    }
+  }
+
+  ClearMetadataForEntries(storage_key_to_be_deleted, metadata_changes);
+}
+
+void SharedModelTypeProcessor::ExpireEntriesByItemLimit(
+    int32_t max_number_of_items,
+    MetadataChangeList* metadata_changes) {
+  DCHECK(metadata_changes);
+
+  size_t limited_number = max_number_of_items;
+  if (limited_number >= entities_.size())
+    return;
+
+  std::vector<int64_t> all_proto_times;
+  for (const auto& kv : entities_) {
+    ProcessorEntityTracker* entity = kv.second.get();
+    if (entity)
+      all_proto_times.push_back(entity->metadata().modification_time());
+  }
+  int64_t expired_proto_time =
+      FindTheNthBigestProtoTimeStamp(all_proto_times, limited_number);
+
+  std::vector<std::string> storage_key_to_be_deleted;
+  for (const auto& kv : entities_) {
+    ProcessorEntityTracker* entity = kv.second.get();
+    if (entity && !entity->IsUnsynced() &&
+        entity->metadata().modification_time() < expired_proto_time) {
       storage_key_to_be_deleted.push_back(entity->storage_key());
     }
   }
