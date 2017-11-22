@@ -142,9 +142,12 @@ struct SameSizeAsNode : EventTarget {
 NodeRenderingData::NodeRenderingData(
     LayoutObject* layout_object,
     scoped_refptr<ComputedStyle> non_attached_style)
-    : layout_object_(layout_object), non_attached_style_(non_attached_style) {}
+    : layout_object_(layout_object), non_attached_style_(non_attached_style) {
+      //LOG(ERROR) << "NodeRenderingData::NodeRenderingData " << static_cast<void*>(this);
+    }
 
 NodeRenderingData::~NodeRenderingData() {
+  //LOG(ERROR) << "NodeRenderingData::~NodeRenderingData " << static_cast<void*>(this) << " layout_object_ " << layout_object_;
   CHECK(!layout_object_);
 }
 
@@ -318,6 +321,7 @@ Node::Node(TreeScope* tree_scope, ConstructionType type)
 }
 
 Node::~Node() {
+  //LOG(ERROR) << "Node::~Node " << static_cast<void*>(this);
   if (!HasRareData() && !data_.node_layout_data_->IsSharedEmptyData())
     delete data_.node_layout_data_;
   InstanceCounters::DecrementCounter(InstanceCounters::kNodeCounter);
@@ -329,6 +333,7 @@ NodeRareData* Node::RareData() const {
 }
 
 NodeRareData& Node::EnsureRareData() {
+  //LOG(ERROR) << "Node::EnsureRareData " << static_cast<void*>(this);
   if (HasRareData())
     return *RareData();
 
@@ -636,6 +641,7 @@ LayoutBox* Node::GetLayoutBox() const {
 }
 
 void Node::SetLayoutObject(LayoutObject* layout_object) {
+    //LOG(ERROR) << "Node::SetLayoutObject " << static_cast<void*>(this) << " layout_object " << layout_object;
   NodeRenderingData* node_layout_data =
       HasRareData() ? data_.rare_data_->GetNodeRenderingData()
                     : data_.node_layout_data_;
@@ -654,9 +660,10 @@ void Node::SetLayoutObject(LayoutObject* layout_object) {
   // the static SharedEmptyData instance.
   DCHECK(!node_layout_data->GetNonAttachedStyle());
   node_layout_data = new NodeRenderingData(layout_object, nullptr);
-  if (HasRareData())
+  if (HasRareData()) {
+    //LOG(ERROR) << "Node::SetLayoutObject HasRareData " << static_cast<void*>(this) << " data_.rare_data_ " << data_.rare_data_;
     data_.rare_data_->SetNodeRenderingData(node_layout_data);
-  else
+  } else
     data_.node_layout_data_ = node_layout_data;
 }
 

@@ -2124,6 +2124,10 @@ void HashTable<Key,
     // http://dl.acm.org/citation.cfm?doid=263698.263733 - see also
     // http://www.jucs.org/jucs_14_21/eliminating_cycles_in_weak
 #if DCHECK_IS_ON()
+    if (!(!Enqueued() || Allocator::WeakTableRegistered(visitor, this))) {
+      LOG(ERROR) << !Enqueued();
+      LOG(ERROR) << Allocator::WeakTableRegistered(visitor, this);
+    }
     DCHECK(!Enqueued() || Allocator::WeakTableRegistered(visitor, this));
 #endif
     if (!Enqueued()) {

@@ -6,6 +6,7 @@
 #define CallbackStack_h
 
 #include "platform/heap/BlinkGC.h"
+#include "platform/heap/HeapPage.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Threading.h"
@@ -29,10 +30,16 @@ class CallbackStack final {
    public:
     Item() {}
     Item(void* object, VisitorCallback callback)
-        : object_(object), callback_(callback) {}
+        : object_(object), callback_(callback) {
+          // object_ maybe a Persistent so not appropriate to check header
+        }
     void* Object() { return object_; }
     VisitorCallback Callback() { return callback_; }
-    void Call(Visitor* visitor) { callback_(visitor, object_); }
+    void Call(Visitor* visitor) {
+      CHECK(object_);
+      // object_ maybe a Persistent so not appropriate to check header
+      callback_(visitor, object_);
+    }
 
    private:
     void* object_;

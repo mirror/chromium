@@ -267,7 +267,9 @@ void ModulesInitializer::ProvideModulesToPage(Page& page,
   MediaKeysController::ProvideMediaKeysTo(page);
   ::blink::ProvideContextFeaturesTo(page, ContextFeaturesClientImpl::Create());
   ::blink::ProvideDatabaseClientTo(page, new DatabaseClient);
+  ThreadState::Current()->Heap().CheckIntegrity();
   ::blink::ProvideStorageQuotaClientTo(page, StorageQuotaClient::Create());
+  ThreadState::Current()->Heap().CheckIntegrity();
   StorageNamespaceController::ProvideStorageNamespaceTo(page, client);
   ::blink::ProvideSpeechRecognitionTo(
       page, SpeechRecognitionClientProxy::Create(

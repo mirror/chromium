@@ -165,6 +165,7 @@ class NodeRareData : public GarbageCollectedFinalized<NodeRareData>,
         element_flags_(0),
         restyle_flags_(0),
         is_element_rare_data_(false) {
+    //LOG(ERROR) << "NodeRareData::NodeRareData " << static_cast<void*>(this);
     CHECK_NE(node_layout_data, nullptr);
   }
 

@@ -14,17 +14,17 @@ void HeapAllocator::BackingFree(void* address) {
   if (state->SweepForbidden())
     return;
   DCHECK(!state->IsInGC());
-
   // Don't promptly free large objects because their page is never reused.
   // Don't free backings allocated on other threads.
   BasePage* page = PageFromObject(address);
-  if (page->IsLargeObjectPage() || page->Arena()->GetThreadState() != state)
+  //if (page->IsLargeObjectPage() || page->Arena()->GetThreadState() != state)
     return;
 
   HeapObjectHeader* header = HeapObjectHeader::FromPayload(address);
   NormalPageArena* arena = static_cast<NormalPage*>(page)->ArenaForNormalPage();
   state->Heap().PromptlyFreed(header->GcInfoIndex());
   arena->PromptlyFreeObject(header);
+  ThreadState::Current()->Heap().CheckIntegrity();
 }
 
 void HeapAllocator::FreeVectorBacking(void* address) {
@@ -40,6 +40,7 @@ void HeapAllocator::FreeHashTableBacking(void* address) {
 }
 
 bool HeapAllocator::BackingExpand(void* address, size_t new_size) {
+  ThreadState::Current()->Heap().CheckIntegrity();
   if (!address)
     return false;
 
@@ -61,6 +62,7 @@ bool HeapAllocator::BackingExpand(void* address, size_t new_size) {
   bool succeed = arena->ExpandObject(header, new_size);
   if (succeed)
     state->Heap().AllocationPointAdjusted(arena->ArenaIndex());
+  ThreadState::Current()->Heap().CheckIntegrity();
   return succeed;
 }
 

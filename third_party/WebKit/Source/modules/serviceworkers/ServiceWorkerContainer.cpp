@@ -144,10 +144,12 @@ ServiceWorkerContainer* ServiceWorkerContainer::Create(
 }
 
 ServiceWorkerContainer::~ServiceWorkerContainer() {
+  LOG(ERROR) << "ServiceWorkerContainer::~ServiceWorkerContainer " << this;
   DCHECK(!provider_);
 }
 
 void ServiceWorkerContainer::ContextDestroyed(ExecutionContext*) {
+  LOG(ERROR) << "ServiceWorkerContainer::ContextDestroyed " << this;
   if (provider_) {
     provider_->SetClient(nullptr);
     provider_ = nullptr;
@@ -506,6 +508,7 @@ ServiceWorkerContainer::ServiceWorkerContainer(
     : ContextLifecycleObserver(execution_context),
       provider_(nullptr),
       navigator_(navigator) {
+  LOG(ERROR) << "ServiceWorkerContainer::ServiceWorkerContainer " << this;
   if (!execution_context)
     return;
 

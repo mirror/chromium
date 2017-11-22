@@ -156,6 +156,7 @@ ThreadHeap::ThreadHeap(ThreadState* thread_state)
       post_marking_callback_stack_(CallbackStack::Create()),
       weak_callback_stack_(CallbackStack::Create()),
       ephemeron_stack_(CallbackStack::Create()),
+      ephemeron_done_stack_(CallbackStack::Create()),
       vector_backing_arena_index_(BlinkGC::kVector1ArenaIndex),
       current_arena_ages_(0),
       should_flush_heap_does_not_contain_cache_(false) {
@@ -229,7 +230,7 @@ Address ThreadHeap::CheckAndMarkPointer(
 #endif
 
 void ThreadHeap::PushTraceCallback(void* object, TraceCallback callback) {
-  DCHECK(thread_state_->IsInGC());
+  //DCHECK(thread_state_->IsInGC());
 
   CallbackStack::Item* slot = marking_stack_->AllocateEntry();
   *slot = CallbackStack::Item(object, callback);
@@ -258,6 +259,12 @@ bool ThreadHeap::PopAndInvokePostMarkingCallback(Visitor* visitor) {
   return false;
 }
 
+void ThreadHeap::InvokeEphemeronDoneCallback(Visitor* visitor) {
+  while (CallbackStack::Item* item = ephemeron_done_stack_->Pop()) {
+    item->Call(visitor);
+  }
+}
+
 void ThreadHeap::PushWeakCallback(void* closure, WeakCallback callback) {
   DCHECK(thread_state_->IsInGC());
 
@@ -283,7 +290,8 @@ void ThreadHeap::RegisterWeakTable(void* table,
 
   // Register a post-marking callback to tell the tables that
   // ephemeron iteration is complete.
-  PushPostMarkingCallback(table, iteration_done_callback);
+  CallbackStack::Item* slot2 = ephemeron_done_stack_->AllocateEntry();
+  *slot2 = CallbackStack::Item(table, iteration_done_callback);
 }
 
 #if DCHECK_IS_ON()
@@ -298,6 +306,7 @@ void ThreadHeap::CommitCallbackStacks() {
   post_marking_callback_stack_->Commit();
   weak_callback_stack_->Commit();
   ephemeron_stack_->Commit();
+  ephemeron_done_stack_->Commit();
 }
 
 HeapCompact* ThreadHeap::Compaction() {
@@ -325,6 +334,7 @@ void ThreadHeap::DecommitCallbackStacks() {
   post_marking_callback_stack_->Decommit();
   weak_callback_stack_->Decommit();
   ephemeron_stack_->Decommit();
+  ephemeron_done_stack_->Decommit();
 }
 
 void ThreadHeap::ProcessMarkingStack(Visitor* visitor) {
@@ -372,6 +382,7 @@ void ThreadHeap::PostMarkingProcessing(Visitor* visitor) {
   //    (specifically to clear the queued bits for weak hash tables), and
   // 2. the markNoTracing callbacks on collection backings to mark them
   //    if they are only reachable from their front objects.
+  InvokeEphemeronDoneCallback(visitor);
   while (PopAndInvokePostMarkingCallback(visitor)) {
   }
 
@@ -541,7 +552,7 @@ void ThreadHeap::VisitStackRoots(Visitor* visitor) {
 }
 
 BasePage* ThreadHeap::LookupPageForAddress(Address address) {
-  DCHECK(thread_state_->IsInGC());
+  //DCHECK(thread_state_->IsInGC());
   if (PageMemoryRegion* region = region_tree_->Lookup(address)) {
     return region->PageFromAddress(address);
   }
@@ -570,6 +581,12 @@ void ThreadHeap::MakeConsistentForMutator() {
   DCHECK(thread_state_->IsInGC());
   for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
     arenas_[i]->MakeConsistentForMutator();
+}
+
+void ThreadHeap::UnmarkAll() {
+  //DCHECK(thread_state_->IsInGC());
+  for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
+    arenas_[i]->UnmarkAll();
 }
 
 void ThreadHeap::Compact() {
@@ -807,6 +824,11 @@ void ThreadHeap::DisableIncrementalMarkingBarrier() {
   thread_state_->SetIncrementalMarking(false);
   for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
     arenas_[i]->DisableIncrementalMarkingBarrier();
+}
+
+void ThreadHeap::CheckIntegrity() {
+  for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
+    arenas_[i]->CheckIntegrity();
 }
 
 ThreadHeap* ThreadHeap::main_thread_heap_ = nullptr;

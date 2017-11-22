@@ -256,7 +256,9 @@ LocalDOMWindow::LocalDOMWindow(LocalFrame& frame)
       unused_preloads_timer_(frame.GetTaskRunner(TaskType::kUnspecedTimer),
                              this,
                              &LocalDOMWindow::WarnUnusedPreloads),
-      should_print_when_finished_loading_(false) {}
+      should_print_when_finished_loading_(false) {
+        //LOG(ERROR) << "LocalDOMWindow::LocalDOMWindow " << static_cast<void*>(this) << " GCInfoTrait::Index " << blink::GCInfoTrait<LocalDOMWindow>::Index() << " HeapObjectHeader::GcInfoIndex " << HeapObjectHeader::FromPayload(this)->GcInfoIndex();
+      }
 
 void LocalDOMWindow::ClearDocument() {
   if (!document_)
@@ -432,11 +434,13 @@ void LocalDOMWindow::StatePopped(
 }
 
 LocalDOMWindow::~LocalDOMWindow() {
+        //LOG(ERROR) << "LocalDOMWindow::~LocalDOMWindow " << static_cast<void*>(this);
   // Cleared when detaching document.
   DCHECK(!event_queue_);
 }
 
 void LocalDOMWindow::Dispose() {
+        //LOG(ERROR) << "LocalDOMWindow::Dispose " << static_cast<void*>(this);
   // Oilpan: should the LocalDOMWindow be GCed along with its LocalFrame without
   // the frame having first notified its observers of imminent destruction, the
   // LocalDOMWindow will not have had an opportunity to remove event listeners.
@@ -1596,6 +1600,7 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
 }
 
 void LocalDOMWindow::Trace(blink::Visitor* visitor) {
+        //LOG(ERROR) << "LocalDOMWindow::Trace " << static_cast<void*>(this);
   visitor->Trace(document_);
   visitor->Trace(screen_);
   visitor->Trace(history_);

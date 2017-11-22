@@ -220,6 +220,7 @@ class PLATFORM_EXPORT ThreadState {
 
   bool IsMainThread() const { return this == MainThreadState(); }
   bool CheckThread() const { return thread_ == CurrentThread(); }
+  bool wb_forbidden() const { return wb_forbidden_; }
 
   ThreadHeap& Heap() const { return *heap_; }
   ThreadIdentifier ThreadId() const { return thread_; }
@@ -247,6 +248,7 @@ class PLATFORM_EXPORT ThreadState {
   void SetGCState(GCState);
   GCState GcState() const { return gc_state_; }
   bool IsInGC() const { return GcState() == kGCRunning; }
+  bool IsMarkingInProgress() const { return GcState() == kIncrementalMarkingStepScheduled || GcState() == kIncrementalMarkingStepScheduled; }
   bool IsSweepingInProgress() const {
     return GcState() == kSweeping ||
            GcState() == kSweepingAndPreciseGCScheduled ||
@@ -291,6 +293,7 @@ class PLATFORM_EXPORT ThreadState {
   void MarkPhaseVisitRoots();
   bool MarkPhaseAdvanceMarking(double deadline_seconds);
   void MarkPhaseEpilogue();
+  void MarkPhaseAbort();
   void CompleteSweep();
   void PreSweep(BlinkGC::GCType);
   void PostSweep();
@@ -520,6 +523,8 @@ class PLATFORM_EXPORT ThreadState {
 
   int GcAge() const { return gc_age_; }
 
+  Visitor* CurrentVisitor() { return current_gc_data_.visitor.get(); }
+
  private:
   template <typename T>
   friend class PrefinalizerRegistration;
@@ -609,6 +614,7 @@ class PLATFORM_EXPORT ThreadState {
   BlinkGC::StackState stack_state_;
   intptr_t* start_of_stack_;
   intptr_t* end_of_stack_;
+  bool wb_forbidden_;
 
   void* safe_point_scope_marker_;
   Vector<Address> safe_point_stack_copy_;

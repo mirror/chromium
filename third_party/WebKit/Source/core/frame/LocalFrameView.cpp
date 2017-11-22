@@ -241,6 +241,7 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       main_thread_scrolling_reasons_(0),
       paint_frame_count_(0),
       unique_id_(NewUniqueObjectId()) {
+  LOG(ERROR) << "LocalFrameView::LocalFrameView " << static_cast<void*>(this);
   Init();
 }
 
@@ -261,12 +262,14 @@ LocalFrameView* LocalFrameView::Create(LocalFrame& frame,
 }
 
 LocalFrameView::~LocalFrameView() {
+  LOG(ERROR) << "LocalFrameView::~LocalFrameView " << static_cast<void*>(this) << " has_been_disposed_ " << has_been_disposed_;
 #if DCHECK_IS_ON()
-  DCHECK(has_been_disposed_);
+  DCHECK(has_been_disposed_) << static_cast<void*>(this);
 #endif
 }
 
 void LocalFrameView::Trace(blink::Visitor* visitor) {
+  LOG(ERROR) << "LocalFrameView::Trace " << static_cast<void*>(this);
   visitor->Trace(frame_);
   visitor->Trace(parent_);
   visitor->Trace(fragment_anchor_);

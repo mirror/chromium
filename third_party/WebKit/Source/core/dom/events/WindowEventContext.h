@@ -37,11 +37,12 @@ class EventTarget;
 class Event;
 class NodeEventContext;
 
-class WindowEventContext : public GarbageCollected<WindowEventContext> {
+class WindowEventContext : public GarbageCollectedFinalized<WindowEventContext> {
   WTF_MAKE_NONCOPYABLE(WindowEventContext);
 
  public:
   WindowEventContext(Event&, const NodeEventContext& top_node_event_context);
+  ~WindowEventContext();
 
   LocalDOMWindow* Window() const;
   EventTarget* Target() const;

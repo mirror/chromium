@@ -9,6 +9,7 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/HashTraits.h"
+#include "platform/heap/TraceTraits.h"
 
 namespace blink {
 
@@ -242,16 +243,47 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     return *this;
   }
 
- protected:
+ private:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
 #if defined(HEAP_INCREMENTAL_MARKING)
     if (value) {
-      BasePage const* const page = PageFromObject(value);
-      if (page->IsIncrementalMarking()) {
-        DCHECK(ThreadState::Current()->IsIncrementalMarking());
-        // TODO(mlippautz): Add to marking work list once include-cycles have
-        // been resolved.
+      CHECK(reinterpret_cast<intptr_t>(value) % kAllocationGranularity == 0);
+      BasePage* page = PageFromObject(value);
+      CHECK(page);
+
+      if (!page->IsIncrementalMarking()) {
+        return;
       }
+
+      ThreadState* thread_state =
+          ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
+      DCHECK(thread_state);
+      DCHECK(!thread_state->wb_forbidden());
+      BasePage* rt_page = thread_state->Heap().LookupPageForAddress(reinterpret_cast<Address>(reinterpret_cast<intptr_t>(value)));
+      CHECK(page == rt_page);
+      // Bail out if tracing is not in progress.
+      if (!thread_state->CurrentVisitor())
+        return;
+
+      HeapObjectHeader* header;
+      if (page->IsLargeObjectPage()) {
+        header = static_cast<LargeObjectPage*>(page)->GetHeapObjectHeader();
+      } else {
+        header = static_cast<NormalPage*>(page)->FindHeaderFromAddress(reinterpret_cast<Address>(reinterpret_cast<intptr_t>(value)));
+      }
+
+      // If the wrapper is already marked we can bail out here.
+      if (header->IsMarked())
+        return;
+
+      // Otherwise, eagerly mark the wrapper header and put the object on the
+      // marking deque for further processing.
+      header->Mark();
+      const GCInfo* gc_info = ThreadHeap::GcInfo(header->GcInfoIndex());
+      //thread_state->Heap().PushTraceCallback(reinterpret_cast<void*>(const_cast<Member<T>*>(this)), gc_info->trace_);
+      //LOG(ERROR) << "WriteBarrier value" << reinterpret_cast<void*>(reinterpret_cast<intptr_t>(value));
+      if (gc_info->trace_)
+        thread_state->Heap().PushTraceCallback(reinterpret_cast<void*>(reinterpret_cast<intptr_t>(header->Payload())), gc_info->trace_);
     }
 #endif  // HEAP_INCREMENTAL_MARKING
   }
