@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2032ada5_cb3fd65e",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-22T17:31:08Z",
+      "side": 1,
+      "message": "This works, so I don\u0027t want to touch it at this late date. :) I\u0027ll add a TODO.",
+      "parentUuid": "ba213c0b_1e5f85cd",
+      "range": {
+        "startLine": 1163,
+        "startChar": 6,
+        "endLine": 1163,
+        "endChar": 23
+      },
+      "revId": "5e744f3966c92535199402ee10b40d4f22944610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73701fa1_4eea63e6",
         "filename": "chrome/browser/chrome_content_browser_client.h",
         "patchSetId": 24
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T11:26:07Z",
       "side": 1,
       "message": "Plain hostname without https://? Tsk ;-)",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "5e744f3966c92535199402ee10b40d4f22944610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6698725_d4985b02",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-22T17:31:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73701fa1_4eea63e6",
       "range": {
         "startLine": 69,
         "startChar": 10,
@@ -82,6 +130,54 @@
       "writtenOn": "2017-11-22T17:09:43Z",
       "side": 1,
       "message": "Per off-review discussion, can you add a TODO with a filed bug to use one single place to store this information? (Ideally not the command line). Thanks!",
+      "parentUuid": "6fd1d01b_1e523345",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "5e744f3966c92535199402ee10b40d4f22944610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa083f7a_11866d38",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-22T17:31:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5ed94b_1830e8b7",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "5e744f3966c92535199402ee10b40d4f22944610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d2cebe7_b43f1cdc",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-22T17:31:08Z",
+      "side": 1,
+      "message": "It\u0027s weird, but it works for now, and pastarmovj has reviewed it carefully. I\u0027ll add a TODO about cleaning it up later, as discussed with bauerb in chat.",
       "parentUuid": "6fd1d01b_1e523345",
       "range": {
         "startLine": 51,
