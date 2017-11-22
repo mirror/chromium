@@ -34,6 +34,24 @@
       "revId": "83b3d3c2fa087be62d6bbe37e190289ac380459d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784ada7f_13acc61a",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-11-22T03:49:11Z",
+      "side": 1,
+      "message": "Could you please try to see why it is still failing? Anything unclear could eventually bite you again in the future.\n\nYes, this class is complex so let\u0027s try not to make it more complicated. I believe in the original design, there should be only one ServiceDeviceTask() or DevicePollTask() scheduled. We should keep it that way.",
+      "parentUuid": "283574c7_c0e6da4d",
+      "revId": "83b3d3c2fa087be62d6bbe37e190289ac380459d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
