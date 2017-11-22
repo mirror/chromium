@@ -779,7 +779,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                           uint32_t end_offset);
   void OnDidAccessInitialDocument();
   void OnDidChangeOpener(int32_t opener_routing_id);
-  void OnDidChangeName(const std::string& name, const std::string& unique_name);
   void OnDidSetFeaturePolicyHeader(
       const blink::ParsedFeaturePolicy& parsed_header);
 
@@ -867,6 +866,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DidCommitProvisionalLoad(
       std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
           validated_params) override;
+  void DidChangeName(const std::string& name,
+                     const std::string& unique_name) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();

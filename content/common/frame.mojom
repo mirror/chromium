@@ -170,4 +170,7 @@ interface FrameHost {
   // Sent by the renderer when a navigation commits in the frame.
   DidCommitProvisionalLoad(
       DidCommitProvisionalLoadParams params);
+
+  // Sent when the frame changes its window.name.
+  DidChangeName(string name, string unique_name);
 };

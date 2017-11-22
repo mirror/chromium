@@ -1167,11 +1167,6 @@ IPC_MESSAGE_ROUTED0(FrameHostMsg_DidStopLoading)
 // Notifies the browser that this frame has new session history information.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateState, content::PageState /* state */)
 
-// Sent when the frame changes its window.name.
-IPC_MESSAGE_ROUTED2(FrameHostMsg_DidChangeName,
-                    std::string /* name */,
-                    std::string /* unique_name */)
-
 // Notifies the browser process that a non-empty Feature-Policy HTTP header was
 // delivered with the document being loaded into the frame. |parsed_header| is
 // a list of an origin whitelist for each feature in the policy.
