@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "0edfed41_a3cd5a75",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-22T19:05:51Z",
+      "side": 1,
+      "message": "Oh, right, you want to hide the details page as soon as it disconnects. (I was thinking about Tether which is considering hiding the page if the Tether network is turned off or goes out of range and disappears from the list).\n\nThat would be handled in a similar way in get{State|Properties}Callback. Once guid_ is cleared we will not request any further updates.",
+      "parentUuid": "df59d9c7_a184ee52",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ff539f_3fdf4633",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 19
