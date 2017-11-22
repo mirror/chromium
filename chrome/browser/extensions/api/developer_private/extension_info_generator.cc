@@ -25,6 +25,7 @@
 #include "chrome/browser/extensions/shared_module_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/extensions/extension_icon_source.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/extensions/command.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
 #include "chrome/common/pref_names.h"
@@ -579,6 +580,13 @@ const std::string& ExtensionInfoGenerator::GetDefaultIconUrl(
     bool is_app,
     bool is_greyscale) {
   std::string* str;
+
+  // Ignore |is_greyscale| if MD Extensions are enabled.
+  // TODO(dpapad): Remove is_greyscale logic once non-MD Extensions UI is
+  // removed.
+  is_greyscale = is_greyscale && !base::FeatureList::IsEnabled(
+                                     features::kMaterialDesignExtensions);
+
   if (is_app) {
     str = is_greyscale ? &default_disabled_app_icon_url_ :
         &default_app_icon_url_;
