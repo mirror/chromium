@@ -39,13 +39,13 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
   enum ResourceClientType {
     kBaseResourceType,
     kFontType,
-    kStyleSheetType,
-    kDocumentType,
     kRawResourceType,
-    kScriptType
   };
 
   virtual ~ResourceClient() {}
+  virtual void DataReceived(Resource*,
+                            const char* /* data */,
+                            size_t /* length */) {}
   virtual void NotifyFinished(Resource*) {}
 
   static bool IsExpectedType(ResourceClient*) { return true; }
