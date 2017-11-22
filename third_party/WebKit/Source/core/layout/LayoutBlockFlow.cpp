@@ -1107,6 +1107,7 @@ static bool ShouldSetStrutOnBlock(const LayoutBlockFlow& block,
                                   LayoutUnit line_logical_offset,
                                   int line_index,
                                   LayoutUnit page_logical_height) {
+  DCHECK(CanUseInlineBox(block));
   if (line_box == block.FirstRootBox()) {
     // This is the first line in the block. We can take the whole block with us
     // to the next page or column, rather than keeping a content-less portion of
@@ -1158,6 +1159,7 @@ void LayoutBlockFlow::AdjustLinePositionForPagination(RootInlineBox& line_box,
   // width may change (because of floats). Technically if the location we move
   // the line to has a different line width than our old position, then we need
   // to dirty the line and all following lines.
+  DCHECK(CanUseInlineBox(*this));
   LayoutUnit logical_offset = line_box.LineTopWithLeading();
   LayoutUnit line_height = line_box.LineBottomWithLeading() - logical_offset;
   logical_offset += delta;
@@ -2506,6 +2508,7 @@ void LayoutBlockFlow::ComputeOverflow(LayoutUnit old_client_after_edge,
 void LayoutBlockFlow::ComputeSelfHitTestRects(
     Vector<LayoutRect>& rects,
     const LayoutPoint& layer_offset) const {
+  DCHECK(CanUseInlineBox(*this));
   LayoutBlock::ComputeSelfHitTestRects(rects, layer_offset);
 
   if (!HasHorizontalLayoutOverflow() && !HasVerticalLayoutOverflow())
@@ -2574,6 +2577,7 @@ LayoutObject* LayoutBlockFlow::HoverAncestor() const {
 }
 
 RootInlineBox* LayoutBlockFlow::CreateAndAppendRootInlineBox() {
+  DCHECK(CanUseInlineBox(*this));
   RootInlineBox* root_box = CreateRootInlineBox();
   line_boxes_.AppendLineBox(root_box);
 
@@ -2583,12 +2587,14 @@ RootInlineBox* LayoutBlockFlow::CreateAndAppendRootInlineBox() {
 void LayoutBlockFlow::DeleteLineBoxTree() {
   if (ContainsFloats())
     floating_objects_->ClearLineBoxTreePointers();
-
+  if (!CanUseInlineBox(*this))
+    return;
   line_boxes_.DeleteLineBoxTree();
 }
 
 int LayoutBlockFlow::LineCount(
     const RootInlineBox* stop_root_inline_box) const {
+  DCHECK(CanUseInlineBox(*this));
 #ifndef NDEBUG
   DCHECK(!stop_root_inline_box ||
          stop_root_inline_box->Block().DebugPointer() == this);
@@ -2860,6 +2866,7 @@ void LayoutBlockFlow::WillBeDestroyed() {
     // TODO(mstensho): figure out if we need this. We have no test coverage for
     // it. It looks like all line boxes have been removed at this point.
     if (FirstLineBox()) {
+      DCHECK(CanUseInlineBox(*this));
       // We can't wait for LayoutBox::destroy to clear the selection,
       // because by then we will have nuked the line boxes.
       // FIXME: The FrameSelection should be responsible for this when it
@@ -4416,6 +4423,7 @@ LayoutUnit LayoutBlockFlow::LogicalRightSelectionOffset(
 }
 
 RootInlineBox* LayoutBlockFlow::CreateRootInlineBox() {
+  DCHECK(CanUseInlineBox(*this));
   return new RootInlineBox(LineLayoutItem(this));
 }
 
@@ -4548,6 +4556,7 @@ void LayoutBlockFlow::PositionDialog() {
 }
 
 void LayoutBlockFlow::SimplifiedNormalFlowInlineLayout() {
+  DCHECK(CanUseInlineBox(*this));
   DCHECK(ChildrenInline());
   ListHashSet<RootInlineBox*> line_boxes;
   for (InlineWalker walker(LineLayoutBlockFlow(this)); !walker.AtEnd();
@@ -4577,6 +4586,7 @@ void LayoutBlockFlow::SimplifiedNormalFlowInlineLayout() {
 }
 
 bool LayoutBlockFlow::RecalcInlineChildrenOverflowAfterStyleChange() {
+  DCHECK(CanUseInlineBox(*this));
   DCHECK(ChildrenInline());
   bool children_overflow_changed = false;
   ListHashSet<RootInlineBox*> line_boxes;
@@ -4620,6 +4630,7 @@ PositionWithAffinity LayoutBlockFlow::PositionForPoint(
   if (!IsHorizontalWritingMode())
     point_in_logical_contents = point_in_logical_contents.TransposedPoint();
 
+  DCHECK(CanUseInlineBox(*this));
   if (!FirstRootBox())
     return CreatePositionWithAffinity(0);
 
@@ -4739,6 +4750,7 @@ void LayoutBlockFlow::ShowLineTreeAndMark(const InlineBox* marked_box1,
                                           const InlineBox* marked_box2,
                                           const char* marked_label2,
                                           const LayoutObject* obj) const {
+  DCHECK(CanUseInlineBox(*this));
   ShowLayoutObject();
   for (const RootInlineBox* root = FirstRootBox(); root;
        root = root->NextRootBox())
@@ -4784,6 +4796,7 @@ void LayoutBlockFlow::AddOutlineRects(
 
   if (include_block_overflows == kIncludeBlockVisualOverflow &&
       !HasOverflowClip() && !HasControlClip()) {
+    DCHECK(!FirstRootBox() || CanUseInlineBox(*this));
     for (RootInlineBox* curr = FirstRootBox(); curr;
          curr = curr->NextRootBox()) {
       LayoutUnit top = std::max<LayoutUnit>(curr->LineTop(), curr->Y());

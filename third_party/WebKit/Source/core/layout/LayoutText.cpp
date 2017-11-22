@@ -45,6 +45,7 @@
 #include "core/layout/line/EllipsisBox.h"
 #include "core/layout/line/GlyphOverflow.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
@@ -229,8 +230,11 @@ void LayoutText::StyleDidChange(StyleDifference diff,
 }
 
 void LayoutText::RemoveAndDestroyTextBoxes() {
+  // Note: When this node is being destroyed, we can't use |CanUseInlineBox()|
+  // since this node may not have enclosing block.
   if (!DocumentBeingDestroyed()) {
     if (FirstTextBox()) {
+      DCHECK(CanUseInlineBox(*this));
       if (IsBR()) {
         RootInlineBox* next = FirstTextBox()->Root().NextRootBox();
         if (next)
@@ -281,6 +285,7 @@ void LayoutText::AttachTextBox(InlineTextBox* box) {
 }
 
 void LayoutText::RemoveTextBox(InlineTextBox* box) {
+  DCHECK(CanUseInlineBox(*this));
   if (box == first_text_box_)
     first_text_box_ = box->NextTextBox();
   if (box == last_text_box_)
@@ -293,6 +298,7 @@ void LayoutText::RemoveTextBox(InlineTextBox* box) {
 
 void LayoutText::DeleteTextBoxes() {
   if (FirstTextBox()) {
+    DCHECK(CanUseInlineBox(*this));
     InlineTextBox* next;
     for (InlineTextBox* curr = FirstTextBox(); curr; curr = next) {
       next = curr->NextTextBox();
@@ -304,6 +310,18 @@ void LayoutText::DeleteTextBoxes() {
 
 Optional<FloatPoint> LayoutText::GetUpperLeftCorner() const {
   DCHECK(!IsBR());
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    // TODO(yosin): We should remove a call of ShowFragmentTree()
+    box_fragment->ShowFragmentTree();
+    NGInlineFragmentIterator children(*box_fragment, this);
+    NGPhysicalOffsetRect bounding_box;
+    for (const auto& child : children)
+      bounding_box.Unite(child.FragementRectInContainerBox());
+    if (bounding_box.IsEmpty())
+      return WTF::nullopt;
+    return FloatPoint(bounding_box.offset.ToLayoutPoint());
+  }
   if (!HasTextBoxes())
     return WTF::nullopt;
   return FloatPoint(LinesBoundingBox().X(),
@@ -395,26 +413,44 @@ void LayoutText::Quads(Vector<FloatQuad>& quads,
                        ClippingOption option,
                        LocalOrAbsoluteOption local_or_absolute,
                        MapCoordinatesFlags mode) const {
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      // TODO(layout-dev): We should have NG version of |EllipsisRectForBox()|
+      AccumlateQuads(quads, IntRect(), local_or_absolute, mode,
+                     child.FragementRectInContainerBox().ToLayoutRect());
+    }
+    return;
+  }
   for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
-    FloatRect boundaries(box->FrameRect());
-
     // Shorten the width of this text box if it ends in an ellipsis.
     // FIXME: ellipsisRectForBox should switch to return FloatRect soon with the
     // subpixellayout branch.
-    IntRect ellipsis_rect = (option == kClipToEllipsis)
-                                ? EllipsisRectForBox(box, 0, TextLength())
-                                : IntRect();
-    if (!ellipsis_rect.IsEmpty()) {
-      if (Style()->IsHorizontalWritingMode())
-        boundaries.SetWidth(ellipsis_rect.MaxX() - boundaries.X());
-      else
-        boundaries.SetHeight(ellipsis_rect.MaxY() - boundaries.Y());
-    }
-    if (local_or_absolute == kAbsoluteQuads)
-      quads.push_back(LocalToAbsoluteQuad(boundaries, mode));
-    else
-      quads.push_back(boundaries);
+    const IntRect ellipsis_rect = (option == kClipToEllipsis)
+                                      ? EllipsisRectForBox(box, 0, TextLength())
+                                      : IntRect();
+    AccumlateQuads(quads, ellipsis_rect, local_or_absolute, mode,
+                   box->FrameRect());
   }
+}
+
+void LayoutText::AccumlateQuads(Vector<FloatQuad>& quads,
+                                const IntRect& ellipsis_rect,
+                                LocalOrAbsoluteOption local_or_absolute,
+                                MapCoordinatesFlags mode,
+                                const LayoutRect& passed_boundaries) const {
+  FloatRect boundaries(passed_boundaries);
+  if (!ellipsis_rect.IsEmpty()) {
+    if (Style()->IsHorizontalWritingMode())
+      boundaries.SetWidth(ellipsis_rect.MaxX() - boundaries.X());
+    else
+      boundaries.SetHeight(ellipsis_rect.MaxY() - boundaries.Y());
+  }
+  if (local_or_absolute == kAbsoluteQuads)
+    quads.push_back(LocalToAbsoluteQuad(boundaries, mode));
+  else
+    quads.push_back(boundaries);
 }
 
 void LayoutText::AbsoluteQuads(Vector<FloatQuad>& quads,
@@ -655,6 +691,8 @@ CreatePositionWithAffinityForBoxAfterAdjustingOffsetForBiDi(
 }
 
 PositionWithAffinity LayoutText::PositionForPoint(const LayoutPoint& point) {
+  DCHECK(CanUseInlineBox(*this));
+
   if (!FirstTextBox() || TextLength() == 0)
     return CreatePositionWithAffinity(0);
 
@@ -1451,6 +1489,12 @@ void LayoutText::SetTextWithOffset(scoped_refptr<StringImpl> text,
   if (!force && Equal(text_.Impl(), text.get()))
     return;
 
+  if (CanUseInlineBox(*this)) {
+    // TODO(layout-dev): We'll implement text fragment level dirtiness.
+    SetText(std::move(text), true);
+    return;
+  }
+
   unsigned old_len = TextLength();
   unsigned new_len = text->length();
   int delta = new_len - old_len;
@@ -1664,14 +1708,17 @@ void LayoutText::SetText(scoped_refptr<StringImpl> text, bool force) {
 }
 
 void LayoutText::DirtyOrDeleteLineBoxesIfNeeded(bool full_layout) {
-  if (full_layout)
-    DeleteTextBoxes();
-  else if (!lines_dirty_)
-    DirtyLineBoxes();
+  if (CanUseInlineBox(*this)) {
+    if (full_layout)
+      DeleteTextBoxes();
+    else if (!lines_dirty_)
+      DirtyLineBoxes();
+  }
   lines_dirty_ = false;
 }
 
 void LayoutText::DirtyLineBoxes() {
+  DCHECK(CanUseInlineBox(*this));
   for (InlineTextBox* box : InlineTextBoxesOf(*this))
     box->DirtyLineBoxes();
   lines_dirty_ = false;
@@ -1695,6 +1742,7 @@ InlineTextBox* LayoutText::CreateInlineTextBox(int start,
 }
 
 void LayoutText::PositionLineBox(InlineBox* box) {
+  DCHECK(CanUseInlineBox(*this));
   InlineTextBox* s = ToInlineTextBox(box);
 
   // FIXME: should not be needed!!!
@@ -1787,8 +1835,18 @@ float LayoutText::Width(unsigned from,
 }
 
 LayoutRect LayoutText::LinesBoundingBox() const {
-  LayoutRect result;
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    // TODO(yosin): We should remove a call of ShowFragmentTree()
+    box_fragment->ShowFragmentTree();
+    NGPhysicalOffsetRect result;
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children)
+      result.Unite(child.FragementRectInContainerBox());
+    return result.ToLayoutRect();
+  }
 
+  LayoutRect result;
   DCHECK_EQ(!FirstTextBox(),
             !LastTextBox());  // Either both are null or both exist.
   if (FirstTextBox() && LastTextBox()) {
@@ -1817,6 +1875,17 @@ LayoutRect LayoutText::LinesBoundingBox() const {
 }
 
 LayoutRect LayoutText::VisualOverflowRect() const {
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    NGPhysicalOffsetRect rect;
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      rect.Unite(child.fragment->SelfVisualRect() +
+                 child.offset_to_container_box);
+    }
+    return rect.ToLayoutRect();
+  }
+
   if (!FirstTextBox())
     return LayoutRect();
 
@@ -1909,6 +1978,7 @@ LayoutRect LayoutText::LocalSelectionRect() const {
   if (start_pos == end_pos)
     return rect;
 
+  DCHECK(CanUseInlineBox(*this));
   for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
     rect.Unite(box->LocalSelectionRect(start_pos, end_pos));
     rect.Unite(LayoutRect(EllipsisRectForBox(box, start_pos, end_pos)));
@@ -2081,6 +2151,7 @@ bool LayoutText::ContainsCaretOffset(int text_offset) const {
 static bool CanNotContinueOnNextLine(const LayoutText& text_layout_object,
                                      InlineBox* box,
                                      unsigned text_offset) {
+  DCHECK(CanUseInlineBox(text_layout_object));
   InlineTextBox* const last_text_box = text_layout_object.LastTextBox();
   if (box == last_text_box)
     return true;
@@ -2094,6 +2165,7 @@ static bool CanNotContinueOnNextLine(const LayoutText& text_layout_object,
 static bool DoesContinueOnNextLine(const LayoutText& text_layout_object,
                                    InlineBox* box,
                                    unsigned text_offset) {
+  DCHECK(CanUseInlineBox(text_layout_object));
   InlineTextBox* const last_text_box = text_layout_object.LastTextBox();
   DCHECK_NE(box, last_text_box);
   for (InlineBox* runner = box->NextLeafChild(); runner;

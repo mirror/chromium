@@ -306,6 +306,76 @@ TEST_P(ParameterizedLayoutTextTest, IsBeforeAfterNonCollapsedLineWrapSpace) {
   EXPECT_TRUE(GetLayoutTextById("space")->IsAfterNonCollapsedCharacter(1));
 }
 
+TEST_P(ParameterizedLayoutTextTest, GetUpperLeftCorner) {
+  LoadAhem();
+  SetBasicBody(
+      "<style>"
+      "div {"
+      "  font-family:Ahem;"
+      "  font-size: 13px;"
+      "  line-height: 19px;"
+      "  padding: 3px;"
+      "}"
+      "</style>"
+      "<div id=div>"
+      "  012"
+      "  <span id=one>345</span>"
+      "  <br>"
+      "  <span style='padding: 20px'>"
+      "    <span id=two style='padding: 5px'>678</span>"
+      "  </span>"
+      "</div>");
+  const Element& div = *GetDocument().getElementById("div");
+  const Element& one = *GetDocument().getElementById("one");
+  const Element& two = *GetDocument().getElementById("two");
+  EXPECT_EQ(FloatPoint(3, 6), ToLayoutText(div.firstChild()->GetLayoutObject())
+                                  ->GetUpperLeftCorner()
+                                  .value());
+  EXPECT_EQ(FloatPoint(55, 6), ToLayoutText(one.firstChild()->GetLayoutObject())
+                                   ->GetUpperLeftCorner()
+                                   .value());
+  // TODO(layout-dev): We'll revise return value of GetUpperLeftCorner() based
+  // on its use cases. We're not sure whether returning RootInlineBox::LineTop()
+  // is correct or not.
+  EXPECT_EQ(LayoutNGEnabled() ? FloatPoint(28, 25) : FloatPoint(28, 5),
+            ToLayoutText(two.firstChild()->GetLayoutObject())
+                ->GetUpperLeftCorner()
+                .value());
+}
+
+TEST_P(ParameterizedLayoutTextTest, LinesBoundingBox) {
+  LoadAhem();
+  SetBasicBody(
+      "<style>"
+      "div {"
+      "  font-family:Ahem;"
+      "  font-size: 13px;"
+      "  line-height: 19px;"
+      "  padding: 3px;"
+      "}"
+      "</style>"
+      "<div id=div>"
+      "  012"
+      "  <span id=one>345</span>"
+      "  <br>"
+      "  <span style='padding: 20px'>"
+      "    <span id=two style='padding: 5px'>678</span>"
+      "  </span>"
+      "</div>");
+  const Element& div = *GetDocument().getElementById("div");
+  const Element& one = *GetDocument().getElementById("one");
+  const Element& two = *GetDocument().getElementById("two");
+  EXPECT_EQ(
+      LayoutRect(LayoutPoint(3, 6), LayoutSize(52, 13)),
+      ToLayoutText(div.firstChild()->GetLayoutObject())->LinesBoundingBox());
+  EXPECT_EQ(
+      LayoutRect(LayoutPoint(55, 6), LayoutSize(39, 13)),
+      ToLayoutText(one.firstChild()->GetLayoutObject())->LinesBoundingBox());
+  EXPECT_EQ(
+      LayoutRect(LayoutPoint(28, 25), LayoutSize(39, 13)),
+      ToLayoutText(two.firstChild()->GetLayoutObject())->LinesBoundingBox());
+}
+
 TEST_P(ParameterizedLayoutTextTest, IsBeforeAfterNonCollapsedCharacterBR) {
   SetBasicBody("<br>");
   EXPECT_TRUE(GetBasicText()->IsBeforeNonCollapsedCharacter(0));
