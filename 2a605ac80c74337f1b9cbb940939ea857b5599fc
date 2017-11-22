@@ -190,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "5a42c47b_3fd0dee8",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-22T21:07:55Z",
+      "side": 1,
+      "message": "Subtree or Reattach recalc on Document() is special because it triggers style recalc of every element through kForce (which might explain the difference here):\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?q\u003dkForce+Document\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d2213\n\nI\u0027m not sure I understand what real situation we\u0027re trying to mimic with kNeedsReattachStyleChange on Document here. This can never happen in production afaict. kNeedsReattachStyleChange is initially set on Document, but the only place we otherwise set it is during DetachLayoutTree, but as you figured out, that\u0027s not allowed on Document.",
+      "parentUuid": "6d0545b3_ec8d39d0",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feb348b6_36a1cb08",
         "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
         "patchSetId": 4
