@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "6ecd74fa_e1580f10",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:19:21Z",
+      "side": 1,
+      "message": "Was thinking about this more.  The UI will get this call when the component is loaded and assets are available.  But, lets say there are 4 or 5 big background images, and we\u0027ll be showing only one at a time (and some, very rarely).  Could the UI go fishing for assets only when needed?  For example, when we enter incognito, could the UI load the incognito background file, create a texture, then close the file?  Looking at the prototype, it looks like the UI would receive a single set of assets on startup, and that\u0027s it (at least I think so).",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e319271d_ce655819",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 4
