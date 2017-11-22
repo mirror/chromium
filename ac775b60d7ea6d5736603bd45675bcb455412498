@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d654a167_29734a5f",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Looks like no-one. But was this a memory leak before as well? Can\u0027t seem to find who deletes it before either.\n\nI think we can remove QueryUsageAndQuotaDispatcher altogether anyway.",
+      "parentUuid": "3a2b3855_ef54c5b5",
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d120df6f_29cc2226",
         "filename": "content/browser/quota_dispatcher_host.cc",
         "patchSetId": 9
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "fefdb922_b76ab473",
+        "filename": "content/browser/quota_dispatcher_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2bec98d_6b1fc74e",
+      "range": {
+        "startLine": 22,
+        "startChar": 35,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2597a66b_0839ed7d",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 9
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "ef3cdf6b_f418aa22",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Changed to WebKit/public.",
+      "parentUuid": "2597a66b_0839ed7d",
+      "range": {
+        "startLine": 17,
+        "startChar": 58,
+        "endLine": 17,
+        "endChar": 64
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6082ea44_f665ddaa",
         "filename": "content/renderer/quota_dispatcher.cc",
         "patchSetId": 9
@@ -96,6 +162,24 @@
       "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1869c9_2300fac6",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6082ea44_f665ddaa",
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "388ae8aa_f138a88d",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40e8f8a1_79b6b4b0",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d11dd27f_bd0dca98",
         "filename": "content/renderer/quota_dispatcher.cc",
         "patchSetId": 9
@@ -142,6 +250,30 @@
       "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eee815b_e4721def",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "d11dd27f_bd0dca98",
+      "range": {
+        "startLine": 123,
+        "startChar": 27,
+        "endLine": 123,
+        "endChar": 36
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "9b6d7935_b2d6457d",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62cb645e_72e0c8d5",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e980bfd_c78fc82a",
         "filename": "content/renderer/quota_dispatcher.h",
         "patchSetId": 9
@@ -191,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "8616209a_f2fd82dd",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e980bfd_c78fc82a",
+      "range": {
+        "startLine": 86,
+        "startChar": 13,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83606fad_784aabc8",
         "filename": "storage/OWNERS",
         "patchSetId": 9
@@ -205,6 +385,24 @@
       "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fcc61a_a6ee444d",
+        "filename": "storage/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T02:16:34Z",
+      "side": 1,
+      "message": "Nope, thanks :) Removed.",
+      "parentUuid": "83606fad_784aabc8",
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
