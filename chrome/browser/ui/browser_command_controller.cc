@@ -71,6 +71,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "ash/accelerators/accelerator_commands_classic.h"  // mash-ok
+#include "ash/public/cpp/window_pin_type.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_context_menu.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
@@ -278,6 +279,22 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
 
   DCHECK(command_updater_.IsCommandEnabled(id)) << "Invalid/disabled command "
                                                 << id;
+
+#if defined(OS_CHROMEOS)
+  // Disable most keyboard shortcuts in locked fullscreen mode (allow a few
+  // whitelisted ones).
+  constexpr int kWhitelistedIds[] = {
+    IDC_CUT, IDC_COPY, IDC_PASTE,
+    IDC_FIND, IDC_FIND_NEXT, IDC_FIND_PREVIOUS,
+    IDC_ZOOM_PLUS, IDC_ZOOM_NORMAL, IDC_ZOOM_MINUS,
+    IDC_TOGGLE_REQUEST_TABLET_SITE,
+  };
+  if (ash::IsWindowTrustedPinned(browser_->window()) &&
+      std::find(std::begin(kWhitelistedIds), std::end(kWhitelistedIds), id) ==
+          std::end(kWhitelistedIds)) {
+    return;
+  }
+#endif  // defined(OS_CHROMEOS)
 
   // The order of commands in this switch statement must match the function
   // declaration order in browser.h!
