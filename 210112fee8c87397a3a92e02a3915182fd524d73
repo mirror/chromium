@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b318b1fc_94811cd3",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-22T12:12:36Z",
+      "side": 1,
+      "message": "Actually, it would mean dispatchers are added twice.\nhttps://cs.chromium.org/chromium/src/ui/platform_window/x11/x11_window_ozone.cc?sq\u003dpackage:chromium\u0026l\u003d26\n\nAn additional step of checking if a dispatcher is already in the list will be needed. Wouldn\u0027t it be more confusing then? The main idea of the current implementation is that XEventDispatcher can be also a PlatformEventDispatcher. If it is not like that, we don\u0027t care.",
+      "parentUuid": "2a7ee0dd_1b64f835",
+      "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57576068_3c8a4eca",
         "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-20T19:10:08Z",
       "side": 1,
       "message": "How about WillDispatchXEvent() and DidDispatchXEvent()?",
+      "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e0969c_3acba747",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-22T12:12:36Z",
+      "side": 1,
+      "message": "But it\u0027s not actually an XEvent. It\u0027s a translated event based on the XEvent.",
+      "parentUuid": "57576068_3c8a4eca",
       "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
