@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8f8939f_87b746ca",
+        "filename": "extensions/renderer/bindings/argument_spec.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T03:24:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82622a6_ca834138",
+      "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6074275_ac030f25",
         "filename": "extensions/renderer/bindings/argument_spec.cc",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "720a7fd6_95d9cb7b",
+        "filename": "extensions/renderer/bindings/argument_spec.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T03:24:20Z",
+      "side": 1,
+      "message": "Not quite - if enum_values_ is empty, then it means there is no enum list for this argument, i.e., it could be anything.  In that case, though the entry won\u0027t be in the enum set, it will still be valid.  Example:\n\n// accepted values are only \u0027foo\u0027 and \u0027bar\u0027; enum_values_ will contain \u0027foo\u0027 and \u0027bar\u0027.\n{\n  type: \u0027string\u0027,\n  enums: [\u0027foo\u0027, \u0027bar\u0027]\n}\n\n// any string is an accepted value; enum_values_ will be empty.\n{ type: \u0027string\u0027 }\n\nPossibly, it would be better to have enum_values_ be a base::Optional\u003c\u003e, but that\u0027s probably a separate discussion.",
+      "parentUuid": "d6074275_ac030f25",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 33
+      },
+      "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c3a889_2d5220eb",
         "filename": "extensions/renderer/bindings/argument_spec_unittest.cc",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c34265_b24f4bea",
+        "filename": "extensions/renderer/bindings/argument_spec_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T03:24:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c3a889_2d5220eb",
+      "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340f3aa9_705e5576",
+        "filename": "extensions/renderer/bindings/argument_spec_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T03:24:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f833607a_612e5e41",
+      "range": {
+        "startLine": 930,
+        "startChar": 3,
+        "endLine": 930,
+        "endChar": 25
+      },
+      "revId": "a00b99e31b3aba18db68b0233cd3775dbc1420ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
