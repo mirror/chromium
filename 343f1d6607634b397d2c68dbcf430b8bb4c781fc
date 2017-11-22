@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df747bba_c6863b94",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-22T00:37:14Z",
+      "side": 1,
+      "message": "Can you just DCHECK(!requests_.empty()) instead of this? It shouldn\u0027t ever be called without any requests.",
+      "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9f170c_41c444bd",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-22T00:37:14Z",
+      "side": 1,
+      "message": "This will return the empty string if there is no found enabled extension, which is not what your commit message says. I don\u0027t think it should ever happen though, so perhaps just have a DCHECK here or in the dialog implementation that the display origin isn\u0027t empty.",
+      "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c440f05a_f562a19e",
+        "filename": "chrome/browser/ui/extensions/extension_name.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-22T00:37:14Z",
+      "side": 1,
+      "message": "Could you:\n1. Move this into an existing util file. I think c/b/extensions/extension_ui_util makes sense.\n2. Rename it to something like GetEnabledExtensionNameForUrl\n3. Have it take a BrowserContext instead of WebContents. That way it will be a bit more generally useful.",
+      "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
