@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a161b62_d7172338",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "this is fine (old style), but we now prefer:\n\nvar commands \u003d requests.map(this._generatePowerShellCommand.bind(this));",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684c932a_872a6de2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "Lets use:\n\nvar ignoredHeaders \u003d new Set([\u0027host\u0027, \u0027connection\u0027, \u0027proxy-connection\u0027, \u0027content-length\u0027, \u0027expect\u0027, \u0027range\u0027]);",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e67c4b_984bf93d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "Lets annotate this... (Closure will turn this into ?\u0027s if it\u0027s not):\n\n@param... @return",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29baa720_693e1958",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "Lets simplify:\n\nreturn \u0027\"\u0027 + str.replace(/([`\\$\"])/g, \u0027`$1\u0027).replace(/[^\\x20-\\x7E]/g, char \u003d\u003e \u0027$([char]\u0027 + char.charCodeAt(0) + \u0027)\u0027) + \u0027\"\u0027;",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7ec6a8_1e193d51",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1789,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "Any reason we cant just merge this with \u0027command\u0027?",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed26d37_323dae00",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "we now prefer (unless it\u0027s performant code):\nfor (var header of request.requestHeaders()) {",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3b5a77_374b63fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "lets change this to \u0027h2 headers\u0027.",
+      "range": {
+        "startLine": 1800,
+        "startChar": 62,
+        "endLine": 1800,
+        "endChar": 69
+      },
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff45306_3e9c5b66",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1803,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "This won\u0027t escape \u0027}\u0027 which (I believe) is allowed by spec in headers and line 1807 will probably cause a failure.",
+      "range": {
+        "startLine": 1803,
+        "startChar": 59,
+        "endLine": 1803,
+        "endChar": 71
+      },
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9cbb17_c8c28aa1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1805,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T20:13:20Z",
+      "side": 1,
+      "message": "nit: if (headerNameValuePairs.length) {",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
