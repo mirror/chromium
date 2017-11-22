@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e95a968_7928a141",
+        "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T23:52:20Z",
+      "side": 1,
+      "message": "ooh - I realised from https://github.com/google/googletest/blob/master/googlemock/docs/ForDummies.md#cardinalities-how-many-times-will-it-be-called that it\u0027s actually correct here to have .WillOnce().WillRepeatedly() chained together. The difference is \u003e\u003d1 or \u003e\u003d0.   (seems WillRepeatedly() works the same as Times(AnyNumber()), which isnt\u0027 talked about much in that doc :/",
+      "revId": "db4d9c5242ec9df60d4cea1a345cb6cb5dee5025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6308505_a9ac4086",
         "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_unittest.mm",
         "patchSetId": 6
@@ -25,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "eb6c2fa7_77a63440",
+        "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T23:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6308505_a9ac4086",
+      "range": {
+        "startLine": 888,
+        "startChar": 22,
+        "endLine": 888,
+        "endChar": 35
+      },
+      "revId": "db4d9c5242ec9df60d4cea1a345cb6cb5dee5025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "577e2327_06aa2009",
         "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_unittest.mm",
         "patchSetId": 6
@@ -36,6 +77,24 @@
       "writtenOn": "2017-11-22T17:31:42Z",
       "side": 1,
       "message": "Are you verifying that nothing is happening?",
+      "revId": "db4d9c5242ec9df60d4cea1a345cb6cb5dee5025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371aac32_f7603923",
+        "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T23:52:20Z",
+      "side": 1,
+      "message": "\u003e Are you verifying that nothing is happening?\n\nYeah - gmock takes care of that, because the EXPECT_CALL to OnMousePressed is \"saturated\". e.g. if I repeat the next line, gmock throws a fit because we haven\u0027t told it what to return the next time AutocompleteTextFieldCell calls OnMousePressed.\n\n../../chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_unittest.mm:900: Failure\nMock function called more times than expected - returning default value.\n    Function call: OnMousePressed(32-byte object \u003c00-00 00-00 00-00 F0-3F 00-00 00-00 00-00 00-00 00-00 00-00 00-00 34-40 00-00 00-00 00-00 3E-40\u003e, 16-byte object \u003c00-00 00-00 00-00 24-40 00-00 00-00 00-00 2E-40\u003e)\n          Returns: false\n         Expected: to be called once\n           Actual: called twice - over-saturated and active\n\n\nBut we can be more explicit and get better log output by adding EXPECT_CALL(...Times(0)); [Done]. That changes the output to\n\n          Returns: false\n         Expected: to be never called\n           Actual: called once - over-saturated and active\n\nAlso done for line 893.",
+      "parentUuid": "577e2327_06aa2009",
       "revId": "db4d9c5242ec9df60d4cea1a345cb6cb5dee5025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
