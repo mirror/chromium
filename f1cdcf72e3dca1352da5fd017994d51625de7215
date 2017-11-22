@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "975ab9e3_8ddd737c",
+        "filename": "chromeos/dbus/fake_smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-22T18:25:38Z",
+      "side": 1,
+      "message": "I see. I will change it to return a success for mount and unmount for now. Thanks!",
+      "parentUuid": "d11c7507_98d564ee",
+      "revId": "f1cdcf72e3dca1352da5fd017994d51625de7215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeab0d76_52555545",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 7
