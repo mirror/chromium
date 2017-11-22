@@ -998,12 +998,8 @@ class LayerTreeHostCopyRequestTestCreatesTexture
   void CopyOutputCallback(std::unique_ptr<viz::CopyOutputResult> result) {
     EXPECT_FALSE(result->IsEmpty());
     EXPECT_EQ(result->format(), viz::CopyOutputResult::Format::RGBA_TEXTURE);
-    viz::TextureMailbox texture_mailbox;
-    if (auto* mailbox = result->GetTextureMailbox()) {
-      texture_mailbox = *mailbox;
-      release_ = result->TakeTextureOwnership();
-    }
-    EXPECT_TRUE(texture_mailbox.IsTexture());
+    ASSERT_NE(nullptr, result->GetTextureMailbox());
+    release_ = result->TakeTextureOwnership();
     EXPECT_TRUE(release_);
   }
 
@@ -1034,13 +1030,10 @@ class LayerTreeHostCopyRequestTestProvideTexture
   void CopyOutputCallback(std::unique_ptr<viz::CopyOutputResult> result) {
     EXPECT_FALSE(result->IsEmpty());
     EXPECT_EQ(result->format(), viz::CopyOutputResult::Format::RGBA_TEXTURE);
-    viz::TextureMailbox texture_mailbox;
-    std::unique_ptr<viz::SingleReleaseCallback> release_callback;
-    if (auto* mailbox = result->GetTextureMailbox()) {
-      texture_mailbox = *mailbox;
-      release_callback = result->TakeTextureOwnership();
-    }
-    EXPECT_TRUE(texture_mailbox.IsTexture());
+    ASSERT_NE(nullptr, result->GetTextureMailbox());
+
+    std::unique_ptr<viz::SingleReleaseCallback> release_callback =
+        result->TakeTextureOwnership();
     ASSERT_TRUE(release_callback);
     release_callback->Run(gpu::SyncToken(), false);
   }
