@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a2b3855_ef54c5b5",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "Who deletes dispatcher?",
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d120df6f_29cc2226",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "Who deletes dispatcher?",
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2bec98d_6b1fc74e",
+        "filename": "content/browser/quota_dispatcher_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 22,
+        "startChar": 35,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2597a66b_0839ed7d",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "Which public/?",
+      "range": {
+        "startLine": 17,
+        "startChar": 58,
+        "endLine": 17,
+        "endChar": 64
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6082ea44_f665ddaa",
         "filename": "content/renderer/quota_dispatcher.cc",
         "patchSetId": 9
@@ -13,6 +93,115 @@
       "writtenOn": "2017-11-22T00:25:20Z",
       "side": 1,
       "message": "Since QuotaDispatcher and IPC is now entirely per-thread, do we need the lock?\n\nAnd do we need request_id_map_? It appears unused apart from here. In other words, can GenerateRequestid() just be next_request_id_++ ?",
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e8f8a1_79b6b4b0",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to be used anywhere else.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11dd27f_bd0dca98",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "Use Add() to let the map generate IDs.",
+      "range": {
+        "startLine": 123,
+        "startChar": 27,
+        "endLine": 123,
+        "endChar": 36
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62cb645e_72e0c8d5",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e980bfd_c78fc82a",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "QuotaDispatcher is thread-local so you shouldn\u0027t need to lock anything.",
+      "range": {
+        "startLine": 86,
+        "startChar": 13,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83606fad_784aabc8",
+        "filename": "storage/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "Are these necessary here?",
       "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

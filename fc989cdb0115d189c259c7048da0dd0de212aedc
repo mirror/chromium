@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8237bd2e_0acd7f76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "Yes. Maybe refer to this as the mojo interface rather than just API, which could be ambiguous.",
+      "parentUuid": "597150fb_8035c678",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8b2a32b_a088d588",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -446,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "8b56bdb4_f0f5cb68",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "No, but there is a bug: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d780263",
+      "parentUuid": "5dd180b0_be019c3f",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9a4a09f_8761a748",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 6
@@ -668,6 +704,24 @@
       "side": 1,
       "message": "Changed to be \u0027per execution context\u0027. I think that refactor should happen before onion souping, to make sure the file goes to the right place.",
       "parentUuid": "9faddf52_05b0054f",
+      "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "954e2db0_966af673",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T00:37:41Z",
+      "side": 1,
+      "message": "Per-worker InterfaceProviders aren\u0027t exposed outside blink.",
+      "parentUuid": "f9f49241_73a82c6c",
       "revId": "fc989cdb0115d189c259c7048da0dd0de212aedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
