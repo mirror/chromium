@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "a6c1b485_81b6b6c2",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-22T08:45:24Z",
+      "side": 1,
+      "message": "Could you update the comments in the header file and make it clear that this will not match placeholder_element visibility?",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 61
+      },
+      "revId": "0dd05831fcabc474d8ef3e3091d41b468f9b09ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f64d56cc_6ac89a45",
         "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
         "patchSetId": 5
