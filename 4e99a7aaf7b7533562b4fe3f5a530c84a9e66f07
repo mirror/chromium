@@ -93,6 +93,30 @@
       "revId": "4e99a7aaf7b7533562b4fe3f5a530c84a9e66f07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ace7b2_824ea3cd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-22T17:48:52Z",
+      "side": 1,
+      "message": "crbug.com/787878",
+      "parentUuid": "babab82a_c6cfe259",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 45
+      },
+      "revId": "4e99a7aaf7b7533562b4fe3f5a530c84a9e66f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
