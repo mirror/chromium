@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e720b566_13f992f4",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-22T10:08:34Z",
+      "side": 1,
+      "message": "I did consider that, but decided against it. Not only success, but also some of the failure cases are determined elsewhere, so having this return an outcome seems more confusing than helpful to me.",
+      "parentUuid": "012b3e80_b236979a",
+      "range": {
+        "startLine": 238,
+        "startChar": 70,
+        "endLine": 238,
+        "endChar": 0
+      },
+      "revId": "ff832b14c8a5bea506cc3ab04806dfd4212f558d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1a9d90_3fb87d92",
         "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "ff832b14c8a5bea506cc3ab04806dfd4212f558d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df6a5f1_2f12a9a0",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-22T10:08:34Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "6a1a9d90_3fb87d92",
+      "range": {
+        "startLine": 36,
+        "startChar": 20,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "ff832b14c8a5bea506cc3ab04806dfd4212f558d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
