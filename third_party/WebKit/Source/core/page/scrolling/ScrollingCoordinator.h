@@ -96,7 +96,7 @@ class CORE_EXPORT ScrollingCoordinator final
   // Called when any layoutBox has transform changed
   void NotifyTransformChanged(const LayoutBox&);
 
-  void UpdateAfterCompositingChangeIfNeeded();
+  void UpdateAfterCompositingChangeIfNeeded(LocalFrameView*);
 
   // Should be called whenever a frameview visibility is changed.
   void FrameViewVisibilityDidChange();
@@ -186,7 +186,8 @@ class CORE_EXPORT ScrollingCoordinator final
   void SetShouldUpdateScrollLayerPositionOnMainThread(
       MainThreadScrollingReasons);
 
-  void SetShouldHandleScrollGestureOnMainThreadRegion(const Region&);
+  void SetShouldHandleScrollGestureOnMainThreadRegion(const Region&,
+                                                      LocalFrameView*);
   void SetTouchEventTargetRects(LayerHitTestRects&);
   void ComputeTouchEventTargetRects(LayerHitTestRects&);
 
