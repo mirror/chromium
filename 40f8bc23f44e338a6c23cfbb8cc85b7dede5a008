@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "443b7054_146fc4d0",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T17:45:25Z",
+      "side": 1,
+      "message": "Done. Replaced all occurrences in this CL.",
+      "parentUuid": "e99cb644_863c4505",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 66
+      },
+      "revId": "40f8bc23f44e338a6c23cfbb8cc85b7dede5a008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c34ac7a6_066207a6",
         "filename": "components/arc/common/accessibility_helper.mojom",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T14:55:26Z",
       "side": 1,
       "message": "Is there supposed to be a space here? Methods below don\u0027t have it.",
+      "range": {
+        "startLine": 299,
+        "startChar": 16,
+        "endLine": 299,
+        "endChar": 17
+      },
+      "revId": "40f8bc23f44e338a6c23cfbb8cc85b7dede5a008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a46de09_99a318e5",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T17:45:25Z",
+      "side": 1,
+      "message": "Other mojom files has a whitespace between [MinVersion\u003d\\d+] and the following name.\nSo I\u0027ve done in this file, too.",
+      "parentUuid": "c34ac7a6_066207a6",
       "range": {
         "startLine": 299,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5237a65c_b2d85870",
+        "filename": "components/arc/common/tts.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T17:45:25Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "1973b8e5_0960ae61",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "40f8bc23f44e338a6c23cfbb8cc85b7dede5a008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8391e7cc_9a8b35d2",
         "filename": "components/arc/common/video.mojom",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-22T17:08:56Z",
       "side": 1,
       "message": "2",
+      "range": {
+        "startLine": 23,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "40f8bc23f44e338a6c23cfbb8cc85b7dede5a008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2c082d_70522643",
+        "filename": "components/arc/common/video.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T17:45:25Z",
+      "side": 1,
+      "message": "Done.\n\n(off topic): Maybe we want to have a linter... Eye check was tough to me.",
+      "parentUuid": "8391e7cc_9a8b35d2",
       "range": {
         "startLine": 23,
         "startChar": 19,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ea95c142_9f36f2fb",
+        "filename": "components/arc/test/fake_bluetooth_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T17:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c9b54aa_bdf48995",
+      "range": {
+        "startLine": 71,
+        "startChar": 38,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "40f8bc23f44e338a6c23cfbb8cc85b7dede5a008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e062600_45429b50",
         "filename": "components/arc/test/fake_notifications_instance.h",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6ccfb7fb_1711df20",
+        "filename": "components/arc/test/fake_notifications_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T17:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e062600_45429b50",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "40f8bc23f44e338a6c23cfbb8cc85b7dede5a008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9a5291_b47eaa49",
         "filename": "components/arc/test/fake_wallpaper_instance.h",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-22T17:08:56Z",
       "side": 1,
       "message": "Should we standardize these in another change?",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 45
+      },
+      "revId": "40f8bc23f44e338a6c23cfbb8cc85b7dede5a008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fe27fe_0174b00b",
+        "filename": "components/arc/test/fake_wallpaper_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T17:45:25Z",
+      "side": 1,
+      "message": "Looks like a off-topic. So I filed a tracking issue. Let\u0027s move the discuss to there.\ncrbug.com/787875.",
+      "parentUuid": "ad9a5291_b47eaa49",
       "range": {
         "startLine": 23,
         "startChar": 5,
