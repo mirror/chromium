@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4e9d2b5_30007e1b",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-22T21:33:29Z",
+      "side": 1,
+      "message": "This is what I didn\u0027t like.\nIs that acceptable(maybe with TODO)?\nLooks like it a common case: pass a |const Node| object and then return non-const Node.\nBut if we can return the same input Node, problem occurs.",
+      "range": {
+        "startLine": 1436,
+        "startChar": 17,
+        "endLine": 1436,
+        "endChar": 27
+      },
+      "revId": "8ece9258269d658a5e0e4800d23b01f4d9064559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
