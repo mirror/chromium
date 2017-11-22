@@ -68,10 +68,7 @@ void PopulateResourceResponse(
       response_info.alpn_negotiated_protocol;
   response->head.connection_info = response_info.connection_info;
   response->head.socket_address = response_info.socket_address;
-  const content::ResourceRequestInfo* request_info =
-      content::ResourceRequestInfo::ForRequest(request);
-  if (request_info)
-    response->head.previews_state = request_info->GetPreviewsState();
+  response->head.previews_state = info->GetPreviewsState();
   if (info->ShouldReportRawHeaders()) {
     response->head.devtools_info =
         BuildDevToolsInfo(*request, raw_request_headers, raw_response_headers);
