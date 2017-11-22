@@ -83,9 +83,13 @@ HostedAppButtonContainer::HostedAppButtonContainer(
 
   app_menu_button_->SetIconColor(active_icon_color);
   AddChildView(app_menu_button_);
+
+  browser_view->immersive_mode_controller()->AddObserver(this);
 }
 
-HostedAppButtonContainer::~HostedAppButtonContainer() {}
+HostedAppButtonContainer::~HostedAppButtonContainer() {
+  browser_view_->immersive_mode_controller()->RemoveObserver(this);
+}
 
 content::WebContents* HostedAppButtonContainer::GetContentSettingWebContents() {
   return browser_view_->GetActiveWebContents();
@@ -112,4 +116,12 @@ void HostedAppButtonContainer::SetPaintAsActive(bool active) {
 
   app_menu_button_->SetIconColor(active ? active_icon_color_
                                         : inactive_icon_color_);
+}
+
+void HostedAppButtonContainer::OnImmersiveRevealStarted() {
+  app_menu_button_->SetInkDropMode(AppMenuButton::InkDropMode::OFF);
+}
+
+void HostedAppButtonContainer::OnImmersiveRevealEnded() {
+  app_menu_button_->SetInkDropMode(AppMenuButton::InkDropMode::ON);
 }

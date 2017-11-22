@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/button/menu_button_listener.h"
@@ -19,6 +20,7 @@ class BrowserView;
 
 // A container for hosted app buttons in the title bar.
 class HostedAppButtonContainer : public views::View,
+                                 public ImmersiveModeController::Observer,
                                  public ContentSettingImageView::Delegate {
  public:
   // |active_icon_color| and |inactive_icon_color| indicate the colors to use
@@ -75,6 +77,10 @@ class HostedAppButtonContainer : public views::View,
 
   // views::View:
   void ChildVisibilityChanged(views::View* child) override;
+
+  // ImmersiveModeController::Observer
+  void OnImmersiveRevealStarted() override;
+  void OnImmersiveRevealEnded() override;
 
   // The containing browser view.
   BrowserView* browser_view_;
