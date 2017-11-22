@@ -336,34 +336,15 @@ AdjustSelectionToAvoidCrossingEditingBoundaries(
              : builder.SetAsBackwardSelection(editing_adjusted_range).Build();
 }
 
+// TODO(editing-dev): Move this to SelectionAdjuster.
 template <typename Strategy>
-static SelectionTemplate<Strategy> ComputeVisibleSelection(
-    const SelectionTemplate<Strategy>& passed_selection,
-    TextGranularity granularity) {
-  DCHECK(!NeedsLayoutTreeUpdate(passed_selection.Base()));
-  DCHECK(!NeedsLayoutTreeUpdate(passed_selection.Extent()));
-
-  const SelectionTemplate<Strategy>& canonicalized_selection =
-      CanonicalizeSelection(passed_selection);
-
-  if (canonicalized_selection.IsNone())
-    return SelectionTemplate<Strategy>();
-
-  const SelectionTemplate<Strategy>& granularity_adjusted_selection =
-      SelectionAdjuster::AdjustSelectionRespectingGranularity(
-          canonicalized_selection, granularity);
-  const SelectionTemplate<Strategy>& shadow_adjusted_selection =
-      AdjustSelectionToAvoidCrossingShadowBoundaries(
-          granularity_adjusted_selection);
-  const SelectionTemplate<Strategy>& editing_adjusted_selection =
-      AdjustSelectionToAvoidCrossingEditingBoundaries(
-          shadow_adjusted_selection);
+static SelectionTemplate<Strategy> AdjustSelectionCanonicalize(
+    const SelectionTemplate<Strategy>& editing_adjusted_selection,
+    TextAffinity affinity,
+    bool is_directional) {
   const EphemeralRangeTemplate<Strategy> editing_adjusted_range(
       editing_adjusted_selection.ComputeStartPosition(),
       editing_adjusted_selection.ComputeEndPosition());
-  // TODO(editing-dev): Implement
-  // const SelectionTemplate<Strategy>& adjusted_selection =
-  // AdjustSelectionType(editing_adjusted_range);
   const SelectionType selection_type =
       ComputeSelectionType(editing_adjusted_range.StartPosition(),
                            editing_adjusted_range.EndPosition());
@@ -387,21 +368,50 @@ static SelectionTemplate<Strategy> ComputeVisibleSelection(
           : editing_adjusted_range;
   if (selection_type == kCaretSelection) {
     return typename SelectionTemplate<Strategy>::Builder()
-        .Collapse(PositionWithAffinityTemplate<Strategy>(
-            range.StartPosition(), passed_selection.Affinity()))
-        .SetIsDirectional(passed_selection.IsDirectional())
+        .Collapse(PositionWithAffinityTemplate<Strategy>(range.StartPosition(),
+                                                         affinity))
+        .SetIsDirectional(is_directional)
         .Build();
   }
-  if (canonicalized_selection.IsBaseFirst()) {
+  if (editing_adjusted_selection.IsBaseFirst()) {
     return typename SelectionTemplate<Strategy>::Builder()
-        .SetIsDirectional(passed_selection.IsDirectional())
+        .SetIsDirectional(is_directional)
         .SetAsForwardSelection(range)
         .Build();
   }
   return typename SelectionTemplate<Strategy>::Builder()
-      .SetIsDirectional(passed_selection.IsDirectional())
+      .SetIsDirectional(is_directional)
       .SetAsBackwardSelection(range)
       .Build();
+}
+
+template <typename Strategy>
+static SelectionTemplate<Strategy> ComputeVisibleSelection(
+    const SelectionTemplate<Strategy>& passed_selection,
+    TextGranularity granularity) {
+  DCHECK(!NeedsLayoutTreeUpdate(passed_selection.Base()));
+  DCHECK(!NeedsLayoutTreeUpdate(passed_selection.Extent()));
+
+  const SelectionTemplate<Strategy>& canonicalized_selection =
+      CanonicalizeSelection(passed_selection);
+
+  if (canonicalized_selection.IsNone())
+    return SelectionTemplate<Strategy>();
+
+  const SelectionTemplate<Strategy>& granularity_adjusted_selection =
+      SelectionAdjuster::AdjustSelectionRespectingGranularity(
+          canonicalized_selection, granularity);
+  const SelectionTemplate<Strategy>& shadow_adjusted_selection =
+      AdjustSelectionToAvoidCrossingShadowBoundaries(
+          granularity_adjusted_selection);
+  const SelectionTemplate<Strategy>& editing_adjusted_selection =
+      AdjustSelectionToAvoidCrossingEditingBoundaries(
+          shadow_adjusted_selection);
+  const SelectionTemplate<Strategy>& adjusted_selection =
+      AdjustSelectionCanonicalize(editing_adjusted_selection,
+                                  passed_selection.Affinity(),
+                                  passed_selection.IsDirectional());
+  return adjusted_selection;
 }
 
 template <typename Strategy>
