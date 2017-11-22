@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6a06fbc_b5d7bbe6",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-22T21:58:00Z",
+      "side": 1,
+      "message": "Why does this communicate the rects through the ChromeClient? I think it should be setting properties on the graphics layers like the touch event handler regions.",
+      "revId": "b3f0fa84853013495c12dc63d6086fd5408b1d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
