@@ -105,6 +105,24 @@
       "revId": "4b09fcbb7262b26b33d75b772894b79abd67715f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "227b8303_8a2cc605",
+        "filename": "media/mojo/services/gpu_jpeg_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-22T17:06:57Z",
+      "side": 1,
+      "message": "In viz, the naming convention is to use Impl suffix, instead of the Mojo prefix, for implementations of mojom interfaces. (see details in https://chromium.googlesource.com/chromium/src/+/2183b6c54e93e62dcf30ef711098525e760f21b3/components/viz/README.md#naming-guidelines)",
+      "parentUuid": "67c13648_c70a9923",
+      "revId": "4b09fcbb7262b26b33d75b772894b79abd67715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
