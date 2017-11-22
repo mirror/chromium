@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12fcc27a_f1f3a5df",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53d822db_7f5cdab3",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ae713a6_00e3a1bf",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "ce707776f39b949ee109cbf9590461b5699df673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dac8072_e542383b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae713a6_00e3a1bf",
+      "range": {
+        "startLine": 161,
+        "startChar": 19,
+        "endLine": 161,
+        "endChar": 20
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f178f9bb_06e080fc",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2915bc16_7ea84b80",
+      "range": {
+        "startLine": 185,
+        "startChar": 69,
+        "endLine": 185,
+        "endChar": 73
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb88ef87_238939ae",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-21T21:14:07Z",
       "side": 1,
       "message": "Should we change the name here? We can run tests, fuzzers, other programs. Let\u0027s use Commands or Targets, or something else?",
+      "range": {
+        "startLine": 209,
+        "startChar": 36,
+        "endLine": 209,
+        "endChar": 41
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd67dfd7_5b8c6145",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "Good point! _GetProfileRawDataPathsByExecutingCommands sounds reasonable to me, WDYT?",
+      "parentUuid": "bb88ef87_238939ae",
       "range": {
         "startLine": 209,
         "startChar": 36,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4a960dfc_fdae2f6c",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "I think \"run a target\" (without test) makes sense to me, WDYT? I\u0027ve also went through the script one more time to update the names.",
+      "parentUuid": "b3d51ef4_cb8de7bf",
+      "range": {
+        "startLine": 224,
+        "startChar": 40,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d921c489_6a2adcd5",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-21T21:14:07Z",
       "side": 1,
       "message": "is this necessary, if we don\u0027t care about the result anyway?",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 8
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06b9f02_75825aab",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "The original intention was to avoid cluttering users\u0027 terminal. But this also hides the error messages if the user happens to checkout a bad revision and the tests don\u0027t run at all. Maybe I should just display everything, and if in the future users complain, we can hide the output again.",
+      "parentUuid": "d921c489_6a2adcd5",
       "range": {
         "startLine": 236,
         "startChar": 4,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "990b60fd_c2f826c5",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "103f02b6_15bc64ac",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 243,
+        "endChar": 21
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfad323c_f79e26ec",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "ce707776f39b949ee109cbf9590461b5699df673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7596982_44ff42da",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfad323c_f79e26ec",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 48
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6723c74d_5b29616b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d44f93b2_c6a567a9",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 37
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcdd685d_9b328335",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "23ea323e_d7d0aece",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "check_call shouldn\u0027t need to handle exceptions, I handled it here only because the returned error messages from llvm-profdata is not very useful, for example, here is what llvm-profdata prints out when merging a defect profraw file:\n\nerror: out/Coverage/default.profraw: Failed to uncompress data (zlib)\n\nYou and I understand what it means, but for people who are not familiar with the details, they would have no idea which step went wrong, so I\u0027m printing out one more error message to make it more obvious what went wrong.",
+      "parentUuid": "bcdd685d_9b328335",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 19
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da2bb70_b0e48bdd",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 5
@@ -243,6 +483,30 @@
       "writtenOn": "2017-11-21T21:14:07Z",
       "side": 1,
       "message": "leftover from the local testing?",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 35
+      },
+      "revId": "ce707776f39b949ee109cbf9590461b5699df673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18741b88_409604af",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-22T19:17:35Z",
+      "side": 1,
+      "message": "Sorry about that :(",
+      "parentUuid": "9da2bb70_b0e48bdd",
       "range": {
         "startLine": 403,
         "startChar": 2,
