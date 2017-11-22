@@ -44,15 +44,20 @@ METADATA_ELF_BUILD_ID = 'elf_build_id'
 METADATA_GN_ARGS = 'gn_args'
 METADATA_TOOL_PREFIX = 'tool_prefix'  # Path relative to SRC_ROOT.
 
+SECTION_BSS = '.bss'
+SECTION_PAK_NONTRANSLATED = '.pak.nontranslated'
+SECTION_PAK_TRANSLATIONS = '.pak.translations'
 
 # Used by SymbolGroup when they contain a mix of sections.
 SECTION_NAME_MULTIPLE = '.*'
 
 SECTION_NAME_TO_SECTION = {
-    '.bss': 'b',
+    SECTION_BSS: 'b',
     '.data': 'd',
     '.data.rel.ro.local': 'R',
     '.data.rel.ro': 'R',
+    SECTION_PAK_NONTRANSLATED: 'P',
+    SECTION_PAK_TRANSLATIONS: 'p',
     '.rodata': 'r',
     '.text': 't',
     SECTION_NAME_MULTIPLE: '*',
@@ -63,7 +68,9 @@ SECTION_TO_SECTION_NAME = collections.OrderedDict((
     ('r', '.rodata'),
     ('R', '.data.rel.ro'),
     ('d', '.data'),
-    ('b', '.bss'),
+    ('b', SECTION_BSS),
+    ('p', SECTION_PAK_TRANSLATIONS),
+    ('P', SECTION_PAK_NONTRANSLATED),
 ))
 
 
@@ -181,15 +188,7 @@ class BaseSymbol(object):
 
   @property
   def section(self):
-    """Returns the one-letter section.
-
-    Mappings:
-      'b': '.bss'
-      'd': '.data'
-      'R': '.data.rel.ro'
-      'r': '.rodata'
-      't': '.text'
-    """
+    """Returns the one-letter section."""
     # Fallback to section_name if there is no short-form defined.
     return SECTION_NAME_TO_SECTION.get(self.section_name, self.section_name)
 
@@ -243,7 +242,7 @@ class BaseSymbol(object):
     return '{%s}' % ','.join(parts)
 
   def IsBss(self):
-    return self.section_name == '.bss'
+    return self.section_name == SECTION_BSS
 
   def IsGroup(self):
     return False

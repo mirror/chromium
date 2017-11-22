@@ -100,17 +100,20 @@ def ReadDataPackFromString(data):
   return DataPackContents(resources, encoding)
 
 
-def WriteDataPackToString(resources, encoding):
-  """Returns a string with a map of id=>data in the data pack format."""
-  ret = []
-
+def ComputeAliasMap(resources):
   # Compute alias map.
   resource_ids = sorted(resources)
   # Use reversed() so that for duplicates lower IDs clobber higher ones.
   id_by_data = {resources[k]: k for k in reversed(resource_ids)}
   # Map of resource_id -> resource_id, where value < key.
-  alias_map = {k: id_by_data[v] for k, v in resources.iteritems()
+  return {k: id_by_data[v] for k, v in resources.iteritems()
                if id_by_data[v] != k}
+
+
+def WriteDataPackToString(resources, encoding):
+  """Returns a string with a map of id=>data in the data pack format."""
+  ret = []
+  alias_map = ComputeAliasMap(resources)
 
   # Write file header.
   resource_count = len(resources) - len(alias_map)
@@ -127,7 +130,7 @@ def WriteDataPackToString(resources, encoding):
   index_by_id = {}
   deduped_data = []
   index = 0
-  for resource_id in resource_ids:
+  for resource_id in sorted(resources):
     if resource_id in alias_map:
       continue
     data = resources[resource_id]

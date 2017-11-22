@@ -52,7 +52,7 @@ def _Divide(a, b):
 
 
 def _IncludeInTotals(section_name):
-  return section_name != '.bss' and '(' not in section_name
+  return section_name != models.SECTION_BSS and '(' not in section_name
 
 
 def _GetSectionSizeInfo(section_sizes):
@@ -464,6 +464,8 @@ class DescriberText(Describer):
 def DescribeSizeInfoCoverage(size_info):
   """Yields lines describing how accurate |size_info| is."""
   for section, section_name in models.SECTION_TO_SECTION_NAME.iteritems():
+    if section_name not in size_info.section_sizes:
+      continue
     expected_size = size_info.section_sizes[section_name]
 
     in_section = size_info.raw_symbols.WhereInSection(section_name)
