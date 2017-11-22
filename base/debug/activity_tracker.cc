@@ -1310,6 +1310,36 @@ bool GlobalActivityTracker::CreateWithLocalMemory(size_t size,
 }
 
 // static
+bool GlobalActivityTracker::CreateWithSharedMemory(
+    std::unique_ptr<SharedMemory> shm,
+    uint64_t id,
+    StringPiece name,
+    int stack_depth) {
+  if (shm->mapped_size() == 0 ||
+      !SharedPersistentMemoryAllocator::IsSharedMemoryAcceptable(*shm)) {
+    return false;
+  }
+  CreateWithAllocator(std::make_unique<SharedPersistentMemoryAllocator>(
+                          std::move(shm), id, name, false),
+                      stack_depth, 0);
+  return true;
+}
+
+// static
+bool GlobalActivityTracker::CreateWithSharedMemoryHandle(
+    const SharedMemoryHandle& handle,
+    size_t size,
+    uint64_t id,
+    StringPiece name,
+    int stack_depth) {
+  std::unique_ptr<SharedMemory> shm(
+      new SharedMemory(handle, /*readonly=*/false));
+  if (!shm->Map(size))
+    return false;
+  return CreateWithSharedMemory(std::move(shm), id, name, stack_depth);
+}
+
+// static
 void GlobalActivityTracker::SetForTesting(
     std::unique_ptr<GlobalActivityTracker> tracker) {
   CHECK(!subtle::NoBarrier_Load(&g_tracker_));
