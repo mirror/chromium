@@ -38,6 +38,7 @@ void ImageAnimationController::RegisterAnimationDriver(
   auto it = animation_state_map_.find(paint_image_id);
   DCHECK(it != animation_state_map_.end());
   it->second.AddDriver(driver);
+  registered_animations_.insert(paint_image_id);
 }
 
 void ImageAnimationController::UnregisterAnimationDriver(
@@ -46,6 +47,8 @@ void ImageAnimationController::UnregisterAnimationDriver(
   auto it = animation_state_map_.find(paint_image_id);
   DCHECK(it != animation_state_map_.end());
   it->second.RemoveDriver(driver);
+  if (!it->second.has_drivers())
+    registered_animations_.erase(paint_image_id);
 }
 
 const PaintImageIdFlatSet& ImageAnimationController::AnimateForSyncTree(
@@ -99,8 +102,9 @@ void ImageAnimationController::UpdateStateFromDrivers(base::TimeTicks now) {
   TRACE_EVENT0("cc", "UpdateStateFromAnimationDrivers");
 
   base::Optional<base::TimeTicks> next_invalidation_time;
-  for (auto& it : animation_state_map_) {
-    AnimationState& state = it.second;
+  for (auto image_id : registered_animations_) {
+    auto it = animation_state_map_.find(image_id);
+    AnimationState& state = it->second;
     state.UpdateStateFromDrivers();
 
     // If we don't need to animate this image anymore, remove it from the list
@@ -109,11 +113,11 @@ void ImageAnimationController::UpdateStateFromDrivers(base::TimeTicks now) {
     // here, we will cancel any pending invalidation scheduled for this image
     // when updating the |notifier_| at the end of this loop.
     if (!state.ShouldAnimate()) {
-      active_animations_.erase(it.first);
+      active_animations_.erase(image_id);
       continue;
     }
 
-    active_animations_.insert(it.first);
+    active_animations_.insert(image_id);
     if (!next_invalidation_time.has_value()) {
       next_invalidation_time.emplace(state.next_desired_frame_time());
     } else {
