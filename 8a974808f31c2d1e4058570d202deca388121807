@@ -70,6 +70,30 @@
       "revId": "8a974808f31c2d1e4058570d202deca388121807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd566ad_da8cab89",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-22T07:50:00Z",
+      "side": 1,
+      "message": "Sorry, I meant it will make the location of top-left of the selection menu on other platforms such as Linux one pixel right. Android is not using this information for the location of the selection menu. However, it uses this coordinates to determine if it should pass current selection text to Java side.\n\nChange the hit test logic is kind of hard because this function won\u0027t take hit test result location as the function name suggested. On the other hand, We also depend on WebMenuSourceType to know the event is reset.",
+      "parentUuid": "53991128_5666d15d",
+      "range": {
+        "startLine": 1813,
+        "startChar": 28,
+        "endLine": 1813,
+        "endChar": 45
+      },
+      "revId": "8a974808f31c2d1e4058570d202deca388121807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
