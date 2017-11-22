@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "086c1e51_bd0a0e0c",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 0,
+      "message": "Processing of the command line portion was moved here by r518725, because we needed enterprise-policy to be processed *before* processing the isolate origins cmdline flag.  Luckily, this move also ensures that field trials are also processed *before* this code executes.",
+      "range": {
+        "startLine": 917,
+        "startChar": 0,
+        "endLine": 922,
+        "endChar": 3
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89f1b708_a628da8a",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 0,
+      "message": "I think detection of duplicate isolated origins is not that important and can be safely removed.  Making the detection work after the changes would require not using std::set\u003c...\u003e::insert(begin, end), but instead iterating and inserting (and checking) origins one-by-one.",
+      "range": {
+        "startLine": 1155,
+        "startChar": 4,
+        "endLine": 1155,
+        "endChar": 79
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1a2e76a_386efbeb",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 0,
+      "message": "Moved into SiteIsolationPolicy::ParseIsolatedOrigins",
+      "range": {
+        "startLine": 1164,
+        "startChar": 0,
+        "endLine": 1170,
+        "endChar": 3
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e21cd426_437ab9e9",
+        "filename": "content/browser/child_process_security_policy_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 0,
+      "message": "This test is moved into site_isolation_policy_unittest.cc (and slightly refactored to use gmock).",
+      "range": {
+        "startLine": 977,
+        "startChar": 7,
+        "endLine": 977,
+        "endChar": 68
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57f6117b_79047434",
+        "filename": "content/browser/site_instance_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 0,
+      "message": "|git cl lint| made me to it...",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "966d7596_c84c8da0",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 0,
+      "message": "I think this part of the comment is not applicable anymore?",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5832bca4_9932d51c",
+        "filename": "content/common/site_isolation_policy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 0,
+      "message": "I\u0027ve removed this part of the comment, because I think it can be confusing (it can be read as saying that cross-process iframes are *not* possible if AreIsolatedOriginsEnabled is false -\n such reading would be incorrect because OOPIFs are always possible because of --isolate-extensions).",
+      "range": {
+        "startLine": 31,
+        "startChar": 42,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "ac7d75648d323f2e08afd117b09318a4290e52a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c4c967_e0b3e457",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 1,
+      "message": "The vector will be *moved* into the callee (since the argument is a temporary value).  OTOH, if this is non-obvious, maybe I can change the type of the parameter to |const std::vector\u003c...\u003e\u0026| (instead of |std::vector\u003c...\u003e|).",
+      "range": {
+        "startLine": 913,
+        "startChar": 29,
+        "endLine": 913,
+        "endChar": 70
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00ce2182_801ec479",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 1,
+      "message": "I think this *copies* individual origins into the target set.  I don\u0027t know how to trigger a *move* here.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 20,
+        "endLine": 1154,
+        "endChar": 26
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4540ea6_ad9d0e56",
+        "filename": "content/browser/site_instance_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 1,
+      "message": "|git cl lint| made me to it...",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77299a60_207e5096",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-22T22:00:09Z",
+      "side": 1,
+      "message": "Here (in AreIsolatedOriginsEnabled) and in GetIsolatedOrigins we check things in the same order as in UseDedicatedProcessesForAllSites:\n- First checking cmdline flags\n- Then checking feature / field trial\n\nThis means that cmdline flags consistently take precedence for --site-per-process and for --isolate-origins.  It also means that the enterprise policy (see palmer@\u0027s r518725) will also take precedence over the feature/field-trial.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 65
+      },
+      "revId": "3d2fc7821f5cf0bfae33620791799a648b9491b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
