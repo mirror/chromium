@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bee0191d_4e9c457b",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-22T21:49:21Z",
+      "side": 1,
+      "message": "nit: g_profile_status_check",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "488fb52fadb7d5fee4b1c764b6eea45240fcb292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83fc8a4_b95c7501",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-22T21:49:21Z",
+      "side": 1,
+      "message": "nit: std::map::erase() already checks if it is container. This can be simplified to:\n\n g_profile_check_status.Get().erase(profile);",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 41
+      },
+      "revId": "488fb52fadb7d5fee4b1c764b6eea45240fcb292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
