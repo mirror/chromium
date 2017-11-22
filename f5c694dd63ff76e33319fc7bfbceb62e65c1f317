@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9aab4d3_9e8a2a6a",
+        "filename": "content/browser/download/download_request_core.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T00:53:40Z",
+      "side": 1,
+      "message": "nit: return std::string() per convention",
+      "revId": "f5c694dd63ff76e33319fc7bfbceb62e65c1f317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9811f522_00a550c6",
+        "filename": "content/public/browser/download_request_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T00:53:40Z",
+      "side": 1,
+      "message": "nit: no need for this file, just put the one method definition in content/browser/download/download_request_core.cc and then you can also avoid changing content/browser/download/download_request_core.h",
+      "revId": "f5c694dd63ff76e33319fc7bfbceb62e65c1f317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7168e94f_33f49f8a",
+        "filename": "content/public/browser/download_request_utils.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T00:53:40Z",
+      "side": 1,
+      "message": "just say \"Returns the request origin of the download\". No need to mention CCT in content/, which doesn\u0027t know about that part of the code (this is a chrome concept).",
+      "revId": "f5c694dd63ff76e33319fc7bfbceb62e65c1f317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
