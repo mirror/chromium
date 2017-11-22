@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb57a13e_b057beaa",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-22T21:41:55Z",
+      "side": 1,
+      "message": "nit: const ?",
+      "revId": "aa32259bc16d333b81523e1de139741720f9ff77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fadc8eb8_44d8ae38",
         "filename": "ash/public/interfaces/login_screen.mojom",
         "patchSetId": 8
@@ -13,6 +30,46 @@
       "writtenOn": "2017-11-20T13:12:26Z",
       "side": 1,
       "message": "Are there any restrictions on when this can be called? E.g., does this log the user out? Can it fail (e.g. ShowLockScreen can)?",
+      "revId": "aa32259bc16d333b81523e1de139741720f9ff77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfb888d_5100ecb5",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-22T21:41:55Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "aa32259bc16d333b81523e1de139741720f9ff77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d402fab7_60d324f1",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_views.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-22T21:41:55Z",
+      "side": 1,
+      "message": "nit: const poiner",
       "revId": "aa32259bc16d333b81523e1de139741720f9ff77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
