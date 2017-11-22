@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "368de4c9_6524670c",
+        "filename": "content/renderer/render_widget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-22T16:49:43Z",
+      "side": 1,
+      "message": "I wonder if we really should pass an explicit task runner here. Could we just obtain one from the WebLocalFrame reference we have here? (We could continue requiring an explicit task runner for CreateForPopup).\n\nAlso, what task type should we use here? I\u0027m thinking again about kInternalInitialisation. Kentaro-san, WDYT?",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 61
+      },
+      "revId": "879b5c279912b8cf31feafaea92397dd364df07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
