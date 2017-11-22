@@ -127,7 +127,7 @@ class PaymentRequestDetailsTest
 
 TEST_P(PaymentRequestDetailsTest, ValidatesDetails) {
   V8TestingScope scope;
-  scope.GetDocument().SetSecurityOrigin(
+  scope.GetDocument().UpdateSecurityOrigin(
       SecurityOrigin::Create(KURL(NullURL(), "https://www.example.com/")));
   PaymentOptions options;
   options.setRequestShipping(true);

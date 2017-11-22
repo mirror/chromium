@@ -48,7 +48,7 @@ TEST(CredentialsContainerTest, TestGetWithDocumentDestroyed) {
   V8TestingScope scope;
   {
     // Set up.
-    scope.GetDocument().SetSecurityOrigin(
+    scope.GetDocument().UpdateSecurityOrigin(
         SecurityOrigin::CreateFromString("https://example.test"));
     ::testing::StrictMock<MockCredentialManagerClient> mock_client;
     ProvideCredentialManagerClientTo(scope.GetPage(),

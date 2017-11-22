@@ -6275,6 +6275,8 @@ String Document::suborigin() const {
 }
 
 void Document::DidUpdateSecurityOrigin() {
+  is_secure_context_ = WTF::nullopt;
+
   if (!frame_)
     return;
   frame_->GetScriptController().UpdateSecurityOrigin(GetSecurityOrigin());
@@ -7055,16 +7057,20 @@ bool Document::IsSecureContext(String& error_message) const {
 }
 
 bool Document::IsSecureContext() const {
-  bool is_secure = IsSecureContextImpl();
-  if (GetSandboxFlags() != kSandboxNone) {
-    UseCounter::Count(
-        *this, is_secure
-                   ? WebFeature::kSecureContextCheckForSandboxedOriginPassed
-                   : WebFeature::kSecureContextCheckForSandboxedOriginFailed);
+  if (!is_secure_context_.has_value()) {
+    is_secure_context_ = IsSecureContextImpl();
+    if (GetSandboxFlags() != kSandboxNone) {
+      UseCounter::Count(
+          *this, is_secure_context_.value()
+                     ? WebFeature::kSecureContextCheckForSandboxedOriginPassed
+                     : WebFeature::kSecureContextCheckForSandboxedOriginFailed);
+    }
+    UseCounter::Count(*this, is_secure_context_.value()
+                                 ? WebFeature::kSecureContextCheckPassed
+                                 : WebFeature::kSecureContextCheckFailed);
   }
-  UseCounter::Count(*this, is_secure ? WebFeature::kSecureContextCheckPassed
-                                     : WebFeature::kSecureContextCheckFailed);
-  return is_secure;
+
+  return is_secure_context_.value();
 }
 
 void Document::EnforceInsecureRequestPolicy(WebInsecureRequestPolicy policy) {
