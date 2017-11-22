@@ -6,6 +6,7 @@
 #define BASE_MEMORY_SHARED_MEMORY_HELPER_H_
 
 #include "base/memory/shared_memory.h"
+#include "build/build_config.h"
 
 #include <fcntl.h>
 
@@ -28,7 +29,7 @@ bool PrepareMapFile(ScopedFILE fp,
                     ScopedFD readonly_fd,
                     int* mapped_file,
                     int* readonly_mapped_file);
-#endif
+#endif  // !defined(OS_ANDROID)
 
 }  // namespace base
 
