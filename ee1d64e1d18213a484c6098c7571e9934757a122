@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ada52a12_4ddb27e1",
+        "filename": "content/network/throttling/throttling_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-22T18:42:29Z",
+      "side": 1,
+      "message": "We should do this unconditionally.",
+      "revId": "ee1d64e1d18213a484c6098c7571e9934757a122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6dc89a5_4f202b73",
+        "filename": "content/network/throttling/throttling_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-22T18:42:29Z",
+      "side": 1,
+      "message": "Place this before message_loop_, since it\u0027s used by message loop.",
+      "revId": "ee1d64e1d18213a484c6098c7571e9934757a122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
