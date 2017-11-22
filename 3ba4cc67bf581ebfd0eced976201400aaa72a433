@@ -436,6 +436,24 @@
     },
     {
       "key": {
+        "uuid": "00e0fb2e_d8c5efe4",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-11-22T21:19:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you asking for here.\n\nDo you want me to essentially move the code below to inside the test class?",
+      "parentUuid": "6ec6ee89_cdffe2ba",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21402732_a289cf8b",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 17
