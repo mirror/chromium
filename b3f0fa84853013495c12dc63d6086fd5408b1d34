@@ -16,6 +16,24 @@
       "revId": "b3f0fa84853013495c12dc63d6086fd5408b1d34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73e7364_938938d2",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-11-22T22:03:13Z",
+      "side": 1,
+      "message": "I think we need only one wheel region for a LTI? Do we want a region for every layer?",
+      "parentUuid": "d6a06fbc_b5d7bbe6",
+      "revId": "b3f0fa84853013495c12dc63d6086fd5408b1d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
