@@ -85,6 +85,30 @@
       "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b56afa_a542aa45",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-22T23:10:45Z",
+      "side": 1,
+      "message": "Yeah, this wasn\u0027t what I had in mind. Sorry for not being clear.\n\nI was suggesting to add a new histogram entirely, not an additional value to this enum.\n\nThis enum and it\u0027s named histograms capture how good we are at predicting field types.\n\nWe should log a separate histogram to capture good vs bad \"suppression\" of autofill based on the only_fill_when_focused rationalization heuristic.\n\ni.e.,\n\nFor a field marked only-fill-when-focused, we had one of the following outcomes:\n\n  the user left it empty\n      -\u003e only-fill-when-focused wasn\u0027t detrimental\n  the user entered unknown data\n      -\u003e only-fill-when-focused wasn\u0027t detrimental\n  the user put a known value\n    if the value was the same as the automatically-filled value\n      -\u003e only-fill-when-focused WAS detrimental\n    if the value was different from (but same type as) the automatically-filled value\n      -\u003e only-fill-when-focused WAS NOT detrimental\n    if the value was of a different type\n      -\u003e prediction was bad",
+      "parentUuid": "ce6030cb_c48de8d0",
+      "range": {
+        "startLine": 290,
+        "startChar": 4,
+        "endLine": 290,
+        "endChar": 32
+      },
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
