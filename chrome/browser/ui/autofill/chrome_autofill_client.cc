@@ -320,6 +320,11 @@ void ChromeAutofillClient::DidAttachInterstitialPage() {
   HideAutofillPopup();
 }
 
+base::WeakPtr<AutofillPopupControllerImpl>
+ChromeAutofillClient::PopupControllerForTesting() {
+  return popup_controller_;
+}
+
 #if !defined(OS_ANDROID)
 void ChromeAutofillClient::OnZoomChanged(
     const zoom::ZoomController::ZoomChangedEventData& data) {
