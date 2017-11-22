@@ -22,6 +22,30 @@
       "revId": "9d2bc3eaf729a97bab085062151676e5e8a374a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef9c60e_aaa8a0da",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1582,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-22T21:57:05Z",
+      "side": 0,
+      "message": "Hmm. Thats strange, because I didn\u0027t touch this line.\nMaybe I need a rebase.\nThanks!",
+      "parentUuid": "00132742_72de164d",
+      "range": {
+        "startLine": 1580,
+        "startChar": 0,
+        "endLine": 1582,
+        "endChar": 49
+      },
+      "revId": "9d2bc3eaf729a97bab085062151676e5e8a374a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
