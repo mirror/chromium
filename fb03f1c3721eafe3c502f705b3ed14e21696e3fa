@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e431aa34_793b6cbe",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T11:42:28Z",
+      "side": 1,
+      "message": "IIUC, the spec requires this step quite early.  Should be between line 19 and line 21.\n\nPlus, we need to confirm that we have only one CEReactionsScope.  i.e. We don\u0027t have the following CEReactionsScope as a dupe.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl?rcl\u003d420aa00b86f48a73f4de759049fec08a73f04d59\u0026l\u003d535",
+      "revId": "fb03f1c3721eafe3c502f705b3ed14e21696e3fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
