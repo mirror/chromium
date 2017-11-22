@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "018b8434_76baf49c",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:18:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use the client here to get the account consistency method?",
+      "range": {
+        "startLine": 73,
+        "startChar": 18,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ee5ab3_f1aaee8f",
+        "filename": "chrome/browser/signin/chrome_signin_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:18:31Z",
+      "side": 1,
+      "message": "Do we still need to keep the GetAccountConsistency methods in //components/signin?",
+      "range": {
+        "startLine": 420,
+        "startChar": 17,
+        "endLine": 420,
+        "endChar": 44
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7bce68_7c547744",
+        "filename": "chrome/browser/signin/chrome_signin_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:18:31Z",
+      "side": 1,
+      "message": "The methods signin::IsDice... and signin::IsMirror should be removed from the component. We may want to keep GetAccountConsistencyMethod if we really need it, but otherwise we should remove that one as well.",
+      "range": {
+        "startLine": 428,
+        "startChar": 9,
+        "endLine": 428,
+        "endChar": 41
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f8a00a_faa37843",
+        "filename": "components/signin/core/browser/dice_account_reconcilor_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:18:31Z",
+      "side": 1,
+      "message": "I am wondering whether we want to move this method to the client as well. We could also move to the client the logic to migrate to DICE on start-up.",
+      "range": {
+        "startLine": 68,
+        "startChar": 36,
+        "endLine": 68,
+        "endChar": 61
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68695e9_dc2e58f7",
+        "filename": "components/signin/core/browser/signin_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:18:31Z",
+      "side": 1,
+      "message": "Should we add this inside an #ifdef BUILDFLAG(ENABLE_DICE_SUPPORT). Maybe that way we would not pollute the clients of the component that do not depend on DICE. WDYT?",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 8
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d867aa2d_dade6ee3",
+        "filename": "components/signin/core/browser/signin_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:18:31Z",
+      "side": 1,
+      "message": "I think these methods can be implemented in the SigninClient (not in its subclasses) based on the value returned by GetAccountConsistency method.",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
