@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f625eeff_bbc83dea",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T02:30:06Z",
+      "side": 1,
+      "message": "Previously, the QuotaDispatcherHost owned the dispatchers (taking ownership in the RequestDispatcher constructor).",
+      "parentUuid": "d654a167_29734a5f",
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d120df6f_29cc2226",
         "filename": "content/browser/quota_dispatcher_host.cc",
         "patchSetId": 9
