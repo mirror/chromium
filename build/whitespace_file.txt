@@ -93,7 +93,7 @@ WUBWUBWUBWUBWUB
 
 I want a 1917 build and you will give me what I want.
 
-This sentence is false.
+This sentence is falsy.
 
 Beauty is in the eyes of a Beholder.
 
