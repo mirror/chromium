@@ -16,7 +16,7 @@ namespace net {
 
 namespace {
 
-const size_t kHeaderSize = sizeof(dns_protocol::Header);
+const size_t kHeaderSize2 = sizeof(dns_protocol::Header);
 
 // Size of the fixed part of an OPT RR:
 // https://tools.ietf.org/html/rfc6891#section-6.1.2
@@ -41,7 +41,7 @@ DnsQuery::DnsQuery(uint16_t id,
                    uint16_t qtype,
                    const OptRecordRdata* opt_rdata)
     : qname_size_(qname.size()),
-      io_buffer_(new IOBufferWithSize(kHeaderSize + question_size() +
+      io_buffer_(new IOBufferWithSize(kHeaderSize2 + question_size() +
                                       OptRecordSize(opt_rdata))),
       header_(reinterpret_cast<dns_protocol::Header*>(io_buffer_->data())) {
   DCHECK(!DNSDomainToString(qname).empty());
@@ -51,8 +51,8 @@ DnsQuery::DnsQuery(uint16_t id,
   header_->qdcount = base::HostToNet16(1);
 
   // Write question section after the header.
-  base::BigEndianWriter writer(io_buffer_->data() + kHeaderSize,
-                               io_buffer_->size() - kHeaderSize);
+  base::BigEndianWriter writer(io_buffer_->data() + kHeaderSize2,
+                               io_buffer_->size() - kHeaderSize2);
   writer.WriteBytes(qname.data(), qname.size());
   writer.WriteU16(qtype);
   writer.WriteU16(dns_protocol::kClassIN);
@@ -87,18 +87,18 @@ uint16_t DnsQuery::id() const {
 }
 
 base::StringPiece DnsQuery::qname() const {
-  return base::StringPiece(io_buffer_->data() + kHeaderSize, qname_size_);
+  return base::StringPiece(io_buffer_->data() + kHeaderSize2, qname_size_);
 }
 
 uint16_t DnsQuery::qtype() const {
   uint16_t type;
-  base::ReadBigEndian<uint16_t>(io_buffer_->data() + kHeaderSize + qname_size_,
+  base::ReadBigEndian<uint16_t>(io_buffer_->data() + kHeaderSize2 + qname_size_,
                                 &type);
   return type;
 }
 
 base::StringPiece DnsQuery::question() const {
-  return base::StringPiece(io_buffer_->data() + kHeaderSize, question_size());
+  return base::StringPiece(io_buffer_->data() + kHeaderSize2, question_size());
 }
 
 void DnsQuery::set_flags(uint16_t flags) {
