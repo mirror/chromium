@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f014bdee_b7122fbe",
+        "filename": "services/viz/public/cpp/compositing/copy_output_request_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T20:54:39Z",
+      "side": 1,
+      "message": "It seems like it\u0027d be better to read both the mailbox and sync token and then return false if mailbox_.has_value() !\u003d sync_token_.has_value()",
+      "revId": "946ef33000021c2f0923f79fab06b7a025b6102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
