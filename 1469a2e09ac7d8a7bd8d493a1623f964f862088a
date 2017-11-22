@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a935f30c_9059fab9",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3132,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-22T21:46:56Z",
+      "side": 1,
+      "message": "I\u0027m introducing |expected_header_index| instead of relying on |iter| because (1) |iter| is incremented by EnumerateHeaderLines(), so I would need to write |iter-1| everywhere, which is cumbersome, (2) |iter| is incremented by two for the test case where the value has two entries separated by a comma, so one pair of elements in |expected_headers| would be skipped.  These would need a lot of explanation in comments, it seems easier to use a separate variable.",
+      "range": {
+        "startLine": 3132,
+        "startChar": 11,
+        "endLine": 3132,
+        "endChar": 32
+      },
+      "revId": "1469a2e09ac7d8a7bd8d493a1623f964f862088a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
