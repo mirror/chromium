@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3627a6_39c3cc0f",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-22T02:51:20Z",
+      "side": 1,
+      "message": "nit: \n\n/* Comments\n * like this\n * always starting with a star. */",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "c8add6f6a8d5acb285e02ba2744eb23a4b8e217f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
