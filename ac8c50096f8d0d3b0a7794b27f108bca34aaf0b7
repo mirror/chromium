@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "652aad75_e831c95d",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-22T18:19:00Z",
+      "side": 1,
+      "message": "You can use |ssl_info| here from line 876",
+      "revId": "ac8c50096f8d0d3b0a7794b27f108bca34aaf0b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03437149_ccca7af2",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-22T18:19:00Z",
+      "side": 1,
+      "message": "pedantry: The type is base::HistogramBase::Sample, which is a typedef of int32_t.",
+      "revId": "ac8c50096f8d0d3b0a7794b27f108bca34aaf0b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
