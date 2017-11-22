@@ -89,22 +89,58 @@ var tests = [
     paramsParser.getViewportFromUrlParams(
         url + '#view=Fit', function(viewportPosition) {
           chrome.test.assertEq(FittingType.FIT_TO_PAGE, viewportPosition.view);
+          chrome.test.assertEq(undefined, viewportPosition.viewPosition);
         });
     // Checking #view=FitH.
     paramsParser.getViewportFromUrlParams(
         url + '#view=FitH', function(viewportPosition) {
           chrome.test.assertEq(FittingType.FIT_TO_WIDTH, viewportPosition.view);
+          chrome.test.assertEq(undefined, viewportPosition.viewPosition);
+        });
+    // Checking #view=FitH,[int position].
+    paramsParser.getViewportFromUrlParams(
+        url + '#view=FitH,789', function(viewportPosition) {
+          chrome.test.assertEq(FittingType.FIT_TO_WIDTH, viewportPosition.view);
+          chrome.test.assertEq(789, viewportPosition.viewPosition);
+        });
+    // Checking #view=FitH,[float position].
+    paramsParser.getViewportFromUrlParams(
+        url + '#view=FitH,7.89', function(viewportPosition) {
+          chrome.test.assertEq(FittingType.FIT_TO_WIDTH, viewportPosition.view);
+          chrome.test.assertEq(7.89, viewportPosition.viewPosition);
         });
     // Checking #view=FitV.
     paramsParser.getViewportFromUrlParams(
         url + '#view=FitV', function(viewportPosition) {
           chrome.test.assertEq(
               FittingType.FIT_TO_HEIGHT, viewportPosition.view);
+          chrome.test.assertEq(undefined, viewportPosition.viewPosition);
+        });
+    // Checking #view=FitV,[int position].
+    paramsParser.getViewportFromUrlParams(
+        url + '#view=FitV,123', function(viewportPosition) {
+          chrome.test.assertEq(
+              FittingType.FIT_TO_HEIGHT, viewportPosition.view);
+          chrome.test.assertEq(123, viewportPosition.viewPosition);
+        });
+    // Checking #view=FitV,[float position].
+    paramsParser.getViewportFromUrlParams(
+        url + '#view=FitV,1.23', function(viewportPosition) {
+          chrome.test.assertEq(
+              FittingType.FIT_TO_HEIGHT, viewportPosition.view);
+          chrome.test.assertEq(1.23, viewportPosition.viewPosition);
         });
     // Checking #view=[wrong parameter].
     paramsParser.getViewportFromUrlParams(
         url + '#view=FitW', function(viewportPosition) {
           chrome.test.assertEq(undefined, viewportPosition.view);
+          chrome.test.assertEq(undefined, viewportPosition.viewPosition);
+        });
+    // Checking #view=[wrong parameter],[position].
+    paramsParser.getViewportFromUrlParams(
+        url + '#view=FitW,555', function(viewportPosition) {
+          chrome.test.assertEq(undefined, viewportPosition.view);
+          chrome.test.assertEq(undefined, viewportPosition.viewPosition);
         });
 
     // Checking #toolbar=0 to disable the toolbar.
