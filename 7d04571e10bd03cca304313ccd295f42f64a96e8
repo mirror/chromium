@@ -70,6 +70,24 @@
       "revId": "7d04571e10bd03cca304313ccd295f42f64a96e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57548bc1_d0570ccb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T13:09:00Z",
+      "side": 1,
+      "message": "I understand the willingness to be fair but as-is, no one will be able to understand what\u0027s up with the font-size unless they find this comment. The minimum would be to add a comment in the CSS file explaining what you did explain above. Because of the comment, it might not hurt to simply put the simplified version as a value and write the long version in the comment.",
+      "parentUuid": "2891a5dc_222c3356",
+      "revId": "7d04571e10bd03cca304313ccd295f42f64a96e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
