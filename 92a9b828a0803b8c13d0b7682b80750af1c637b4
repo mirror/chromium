@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bb2f762_dea353b7",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-22T22:51:21Z",
+      "side": 1,
+      "message": "It seems to me that for these two cases here (line 821 and line 824), the detected printers that failed parsing should not be added to the printers_list? Since the user won\u0027t be able to setup the printer successfully anyway.",
+      "revId": "92a9b828a0803b8c13d0b7682b80750af1c637b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
