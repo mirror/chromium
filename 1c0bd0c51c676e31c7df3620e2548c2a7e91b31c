@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94faf7b3_839ddd98",
+        "filename": "ash/public/cpp/window_pin_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-22T17:38:50Z",
+      "side": 1,
+      "message": "I\u0027ve actually used the same code in 2-3 other places, and figured out by this point that I might as well find a nice place to host this function. I plan on adding it here now, and then refactoring the other uses afterwards. I can also add it in a follow-up refactor CL, but I don\u0027t see why I shouldn\u0027t start doing the right thing right now :-)",
+      "parentUuid": "1165bbab_62d9948e",
+      "revId": "1c0bd0c51c676e31c7df3620e2548c2a7e91b31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "226bc762_3123d91e",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T17:25:59Z",
       "side": 1,
       "message": "The common pattern is to enable/disable commands via CommandUpdater when the window state changes, see BrowserCommandController::UpdateCommandsForFullscreenMode. Adding a separate early-return during execution doesn\u0027t seem right.",
+      "revId": "1c0bd0c51c676e31c7df3620e2548c2a7e91b31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce41356_71462795",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-22T17:38:50Z",
+      "side": 1,
+      "message": "Yeah it doesn\u0027t seem right. Thanks for the suggestion, will update the code tomorrow.",
+      "parentUuid": "226bc762_3123d91e",
       "revId": "1c0bd0c51c676e31c7df3620e2548c2a7e91b31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
