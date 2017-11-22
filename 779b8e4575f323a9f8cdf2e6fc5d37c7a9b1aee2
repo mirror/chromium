@@ -177,6 +177,24 @@
       "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0054f44_b57f3e59",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-22T17:35:45Z",
+      "side": 1,
+      "message": "I still kind of think a string probably makes more sense. The caller (ukm-recorder, from what I understand) can then construct the URL as appropriate (e.g. if the info is not a valid URL, then use chrome-ui:// scheme, or android-app:// scheme, etc.). So each client separately does not need to figure out how to construct the URL.\n\nThis is somewhat nitty though maybe. I don\u0027t feel too strongly about this.",
+      "parentUuid": "5820f517_72a86a92",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
