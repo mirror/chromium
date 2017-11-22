@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf231d10_e5da0e16",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-22T03:56:17Z",
+      "side": 1,
+      "message": "Please do same thing in |FrameSelection::Clear()|.",
+      "revId": "e448bfd4b0f40f30d01b2d54679755ed556d798b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
