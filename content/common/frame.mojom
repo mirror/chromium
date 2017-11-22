@@ -4,11 +4,13 @@
 
 module content.mojom;
 
+import "content/common/navigation_params.mojom";
 import "content/common/url_loader_factory_bundle.mojom";
 import "content/public/common/url_loader.mojom";
 import "content/public/common/window_container_type.mojom";
 import "mojo/common/unguessable_token.mojom";
 import "services/service_manager/public/interfaces/interface_provider.mojom";
+import "third_party/WebKit/public/platform/mixed_content_context_type.mojom";
 import "third_party/WebKit/public/platform/referrer.mojom";
 import "third_party/WebKit/public/web/window_features.mojom";
 import "ui/base/mojo/window_open_disposition.mojom";
@@ -170,4 +172,10 @@ interface FrameHost {
   // Sent by the renderer when a navigation commits in the frame.
   DidCommitProvisionalLoad(
       DidCommitProvisionalLoadParams params);
+
+  // Sent by the renderer to request a navigation.
+  BeginNavigation(
+      CommonNavigationParams common_params,
+      BeginNavigationParams begin_params);
 };
+

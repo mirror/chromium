@@ -453,19 +453,19 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
       GURL(), PREVIEWS_UNSPECIFIED, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(), CSPDisposition::CHECK,
       false /* started_from_context_menu */, false /* has_user_gesture */);
-  BeginNavigationParams begin_params(
-      std::string(), net::LOAD_NORMAL, false, REQUEST_CONTEXT_TYPE_LOCATION,
-      blink::WebMixedContentContextType::kBlockable, false,
-      url::Origin::Create(data_url));
-  FrameHostMsg_BeginNavigation msg(rfh->GetRoutingID(), common_params,
-                                   begin_params);
+  mojom::BeginNavigationParamsPtr begin_params =
+      mojom::BeginNavigationParams::New(
+          std::string(), net::LOAD_NORMAL, false, REQUEST_CONTEXT_TYPE_LOCATION,
+          blink::WebMixedContentContextType::kBlockable, false, GURL(),
+          std::string(), url::Origin::Create(data_url), GURL());
 
   // Receiving the invalid IPC message should lead to renderer process
   // termination.
   RenderProcessHostWatcher process_exit_observer(
       rfh->GetProcess(), RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
-  IPC::IpcSecurityTestUtil::PwnMessageReceived(rfh->GetProcess()->GetChannel(),
-                                               msg);
+
+  frame_host_associated_binding_.impl()->BeginNavigation(
+      common_params, std::move(begin_params));
   process_exit_observer.Wait();
 
   EXPECT_FALSE(ChildProcessSecurityPolicyImpl::GetInstance()->CanReadFile(
