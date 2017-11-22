@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "577487a9_e4111514",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af358bae_0cefa208",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d3263b_6d2c9b86",
         "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T15:24:50Z",
       "side": 1,
       "message": "\"Redirect to NTP.\"\n\nWhy apps?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb84085_5c4018af",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Done (copy/paste is evil).",
+      "parentUuid": "07d3263b_6d2c9b86",
       "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0ec3166f_75cdc3b9",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fdaaf8f_dd675a7a",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e35cb7_7639fabe",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134be80d_34204b05",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e35cb7_7639fabe",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5f27acf0_706b4f21",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70bd92d3_ed5b9eb1",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c04778d8_b36b7c5f",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f5583b5a_750be7ef",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c04778d8_b36b7c5f",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "750cf1c4_7b7993c2",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-21T15:24:50Z",
       "side": 1,
       "message": "why is this in webui? Should it be in ui instead?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e13cad_16fb570f",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "The problem is that we do not have a folder /chrome/browser/ui/signin (there is one chrome/browser/ui/sync). I think we need to create one /chrome/browser/ui/signin, but I\u0027d like to do it as a clean-up in a following CL. We would need to move a bunch of code in that folder.\n\nNote that we have used the webui folder in the past for these kinds of helpers.\n\nI can move it to the sync folder if you think that would be better (I\u0027d like to avoid creating the new signin folder now as it requires additional code reviews from OWNERS of chrome/browser/ui).",
+      "parentUuid": "750cf1c4_7b7993c2",
       "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "fae8e368_e1ae6b8a",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Keeping sync for now (I don\u0027t think Sync is a brand here).",
+      "parentUuid": "18a10a72_4be46a7b",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12010874_d04a16fc",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
         "patchSetId": 7
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "c4f39a18_4c9379cf",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "I think the destructors should always be virtual.",
+      "parentUuid": "12010874_d04a16fc",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f88e3c8b_a6fd621a",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
         "patchSetId": 7
@@ -166,6 +328,24 @@
       "writtenOn": "2017-11-21T15:24:50Z",
       "side": 1,
       "message": "Not sure:\ns/sync/Sync/\n?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc56689_d7163759",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Not done (same as above).",
+      "parentUuid": "f88e3c8b_a6fd621a",
       "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +375,30 @@
     },
     {
       "key": {
+        "uuid": "09c28419_79a2ca59",
+        "filename": "chrome/browser/ui/webui/signin/signin_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Yes - it is required by IDS_SYNC_USER_NAME_IN_USE_ERROR -\n see https://cs.chromium.org/chromium/src/chrome/app/generated_resources.grd?rcl\u003d1aefaa49310f7813c8e4403128761112d32367c1\u0026l\u003d7774",
+      "parentUuid": "26e3879a_2620bf34",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c6dc586_a10d17f5",
         "filename": "chrome/browser/ui/webui/signin/signin_utils.cc",
         "patchSetId": 7
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "9fc8d4e3_1e9f6f87",
+        "filename": "chrome/browser/ui/webui/signin/signin_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "I prefer leaving this change to a separate CL as this would be a behavioral change for the existing sign-in flow and I cannot evaluate what the side effects would be.",
+      "parentUuid": "2c6dc586_a10d17f5",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddac1f40_17937599",
         "filename": "chrome/browser/ui/webui/signin/signin_utils.cc",
         "patchSetId": 7
@@ -223,6 +445,24 @@
       "writtenOn": "2017-11-21T15:24:50Z",
       "side": 1,
       "message": "Is it possible that there is no profile_manager? Could we DCHECK(profile_manager) instead?",
+      "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53643bcc_6c4bf784",
+        "filename": "chrome/browser/ui/webui/signin/signin_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-22T10:03:05Z",
+      "side": 1,
+      "message": "Same as above - I\u0027ll do this in a follow-up CL.",
+      "parentUuid": "ddac1f40_17937599",
       "revId": "ebcd5942c69727a222bdb89302d27da081dd6de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
