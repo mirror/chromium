@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d11c7507_98d564ee",
+        "filename": "chromeos/dbus/fake_smb_provider_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-22T11:04:40Z",
+      "side": 1,
+      "message": "The fake clients pretend to be real, functioning implementations, but they take a lot of shortcuts like using hard-coded values. Thus, it shouldn\u0027t just fail, but it should pretend it worked. Once you add more methods like fetching directory contents, you could return empty folders or better hard-coded folders and files for each mount. This way, you\u0027d be able to test your UI in Linux.\n\nNote that you should return 1 as first valid ID instead of 0 to be consistent with the real client.",
+      "parentUuid": "36aaee2e_c7216967",
+      "revId": "f1cdcf72e3dca1352da5fd017994d51625de7215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeab0d76_52555545",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 7
