@@ -20,6 +20,7 @@
 #include "ui/base/l10n/l10n_util.h"
 
 using safe_browsing::ChromeCleanerController;
+using safe_browsing::ChromeCleanerScannerResults;
 
 namespace settings {
 
@@ -124,16 +125,18 @@ void ChromeCleanupHandler::OnScanning() {
                          base::Value("chrome-cleanup-on-scanning"));
 }
 
-void ChromeCleanupHandler::OnInfected(const std::set<base::FilePath>& files) {
-  CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::Value("chrome-cleanup-on-infected"),
-                         GetFilesAsListStorage(files));
+void ChromeCleanupHandler::OnInfected(
+    const ChromeCleanerScannerResults& scanner_results) {
+  CallJavascriptFunction(
+      "cr.webUIListenerCallback", base::Value("chrome-cleanup-on-infected"),
+      GetFilesAsListStorage(scanner_results.files_to_delete()));
 }
 
-void ChromeCleanupHandler::OnCleaning(const std::set<base::FilePath>& files) {
-  CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::Value("chrome-cleanup-on-cleaning"),
-                         GetFilesAsListStorage(files));
+void ChromeCleanupHandler::OnCleaning(
+    const ChromeCleanerScannerResults& scanner_results) {
+  CallJavascriptFunction(
+      "cr.webUIListenerCallback", base::Value("chrome-cleanup-on-cleaning"),
+      GetFilesAsListStorage(scanner_results.files_to_delete()));
 }
 
 void ChromeCleanupHandler::OnRebootRequired() {
