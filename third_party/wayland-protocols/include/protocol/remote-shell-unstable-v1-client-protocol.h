@@ -496,6 +496,60 @@ enum zcr_remote_surface_v1_window_type {
 };
 #endif /* ZCR_REMOTE_SURFACE_V1_WINDOW_TYPE_ENUM */
 
+#ifndef ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_ENUM
+#define ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_ENUM
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * bounds chnage mode
+ *
+ * The mode of bounds change event.
+ */
+enum zcr_remote_surface_v1_bounds_change_mode {
+	/**
+	 * window is resized by window manager
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_WINDOW_MANAGER = 1,
+	/**
+	 * window is being dragged
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_DRAG = 2,
+	/**
+	 * window is being resized
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_RESIZE = 3,
+	/**
+	 * window is being resized
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_FINISHED_RESIZE = 4,
+	/**
+	 * window is resized in left snapped
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_LEFT_SNAPPED = 5,
+	/**
+	 * window is resized in right snapped
+	 */
+	ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_RIGHT_SNAPPED = 6,
+};
+#endif /* ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_ENUM */
+
+#ifndef ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_ENUM
+#define ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_ENUM
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * resize direction
+ */
+enum zcr_remote_surface_v1_resize_direction {
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_LEFT = 1,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPLEFT = 2,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOP = 3,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPRIGHT = 4,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_RIGHT = 5,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMRIGHT = 6,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOM = 7,
+	ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMLEFT = 8,
+};
+#endif /* ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_ENUM */
+
 /**
  * @ingroup iface_zcr_remote_surface_v1
  * @struct zcr_remote_surface_v1_listener
@@ -556,6 +610,27 @@ struct zcr_remote_surface_v1_listener {
 			  int32_t origin_offset_y,
 			  struct wl_array *states,
 			  uint32_t serial);
+	/**
+	 * @since 8
+	 */
+	void (*bounds_changed)(void *data,
+			       struct zcr_remote_surface_v1 *zcr_remote_surface_v1,
+			       int32_t x,
+			       int32_t y,
+			       int32_t width,
+			       int32_t height,
+			       uint32_t bounds_change_mode);
+	/**
+	 * @since 8
+	 */
+	void (*start_resize)(void *data,
+			     struct zcr_remote_surface_v1 *zcr_remote_surface_v1,
+			     uint32_t direction);
+	/**
+	 * @since 8
+	 */
+	void (*end_resize)(void *data,
+			   struct zcr_remote_surface_v1 *zcr_remote_surface_v1);
 };
 
 /**
@@ -608,6 +683,18 @@ zcr_remote_surface_v1_add_listener(struct zcr_remote_surface_v1 *zcr_remote_surf
  * @ingroup iface_zcr_remote_surface_v1
  */
 #define ZCR_REMOTE_SURFACE_V1_CONFIGURE_SINCE_VERSION 5
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGED_SINCE_VERSION 8
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_START_RESIZE_SINCE_VERSION 8
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_END_RESIZE_SINCE_VERSION 8
 
 /**
  * @ingroup iface_zcr_remote_surface_v1
@@ -827,7 +914,7 @@ zcr_remote_surface_v1_set_rectangular_shadow(struct zcr_remote_surface_v1 *zcr_r
 /**
  * @ingroup iface_zcr_remote_surface_v1
  *
- * Suggests the window's background opacity when the shadow is requested.
+ * [Deprecated] Suggests the window's background opacity when the shadow is requested.
  */
 static inline void
 zcr_remote_surface_v1_set_rectangular_shadow_background_opacity(struct zcr_remote_surface_v1 *zcr_remote_surface_v1, wl_fixed_t opacity)

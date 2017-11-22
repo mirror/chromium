@@ -22,6 +22,7 @@ DefaultWindowResizer* DefaultWindowResizer::Create(
 
 void DefaultWindowResizer::Drag(const gfx::Point& location, int event_flags) {
   gfx::Rect bounds(CalculateBoundsForDrag(location));
+  LOG(ERROR) << "DefaultWindowResizer: " << bounds.ToString() << ", loc=" << location.ToString();
   if (bounds != GetTarget()->bounds()) {
     if (!did_move_or_resize_ && !details().restore_bounds.IsEmpty())
       window_state_->ClearRestoreBounds();

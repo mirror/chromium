@@ -34,6 +34,7 @@ HeaderView::HeaderView(views::Widget* target_widget,
       target_widget_, this, caption_button_container_, nullptr, window_style);
 
   Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  LOG(ERROR) << "HeaderView::HeaderView(" << this << ")";
 }
 
 HeaderView::~HeaderView() {
@@ -138,6 +139,8 @@ void HeaderView::Layout() {
 }
 
 void HeaderView::OnPaint(gfx::Canvas* canvas) {
+  LOG(ERROR) << "HeaderView::OnPaint(" << this << ") should paint="
+             << should_paint_;
   if (!should_paint_)
     return;
 
@@ -178,9 +181,9 @@ views::View* HeaderView::avatar_icon() const {
 }
 
 void HeaderView::SetShouldPaintHeader(bool paint) {
+  LOG(ERROR) << "SetShouldPaintHeader:("<< this << ")=" << paint;
   if (should_paint_ == paint)
     return;
-
   should_paint_ = paint;
   caption_button_container_->SetVisible(should_paint_);
   SchedulePaint();

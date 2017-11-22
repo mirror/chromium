@@ -11,6 +11,7 @@
 
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/wm/window_state_observer.h"
+#include "ash/wm/drag_details.h"
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/optional.h"
@@ -47,6 +48,7 @@ class CompositorLock;
 
 namespace exo {
 class Surface;
+class ShellSurfaceWidgetWrapper;
 
 enum class Orientation { PORTRAIT, LANDSCAPE };
 
@@ -104,6 +106,32 @@ class ShellSurface : public SurfaceTreeHost,
   void set_state_changed_callback(
       const StateChangedCallback& state_changed_callback) {
     state_changed_callback_ = state_changed_callback;
+  }
+
+  // Set the callback to run when the surface bounds changed.
+  using BoundsChangedCallback =
+      base::Callback<void(ash::mojom::WindowStateType current_state_type,
+                          const gfx::Rect& bounds,
+                          bool drag,
+                          bool resize)>;
+  void set_bounds_changed_callback(
+      const BoundsChangedCallback& bounds_changed_callback) {
+    bounds_changed_callback_ = bounds_changed_callback;
+  }
+
+  // Set the callback to run when the surface bounds changed.
+  using StartResizeCallback =
+      base::Callback<void(int direction)>;
+  void set_start_resize_callback(
+      const StartResizeCallback& start_resize_callback) {
+    start_resize_callback_ = start_resize_callback;
+  }
+  // Set the callback to run when the surface bounds changed.
+  using EndResizeCallback =
+      base::Callback<void()>;
+  void set_end_resize_callback(
+      const EndResizeCallback& end_resize_callback) {
+    end_resize_callback_ = end_resize_callback;
   }
 
   // Set the callback to run when the client is asked to configure the surface.
@@ -300,6 +328,18 @@ class ShellSurface : public SurfaceTreeHost,
   // Overridden from ui::CompositorLockClient:
   void CompositorLockTimedOut() override;
 
+  // Sends the state change event to client.
+  void SendWindowStateChangeEvent(ash::mojom::WindowStateType current_state,
+                                  ash::mojom::WindowStateType next_state);
+  void SendBoundsChangeEvent(ash::mojom::WindowStateType current_state,
+                             const gfx::Rect& bounds,
+                             bool drag,
+                             bool resize);
+  void StartDrag(int component);
+  void EndDrag();
+
+  BoundsMode bounds_mode() const { return bounds_mode_; }
+
   Surface* surface_for_testing() { return root_surface(); }
 
  private:
@@ -360,7 +400,7 @@ class ShellSurface : public SurfaceTreeHost,
   // crbug.com/765954
   void EnsureCompositorIsLockedForOrientationChange();
 
-  views::Widget* widget_ = nullptr;
+  std::unique_ptr<ShellSurfaceWidgetWrapper> widget_wrapper_;
   aura::Window* parent_;
   BoundsMode bounds_mode_ = BoundsMode::SHELL;
   int64_t primary_display_id_;
@@ -380,6 +420,9 @@ class ShellSurface : public SurfaceTreeHost,
   base::Closure close_callback_;
   base::Closure surface_destroyed_callback_;
   StateChangedCallback state_changed_callback_;
+  BoundsChangedCallback bounds_changed_callback_;
+  StartResizeCallback start_resize_callback_;
+  EndResizeCallback end_resize_callback_;
   ConfigureCallback configure_callback_;
   ScopedConfigure* scoped_configure_ = nullptr;
   std::unique_ptr<ui::CompositorLock> configure_compositor_lock_;
@@ -408,6 +451,8 @@ class ShellSurface : public SurfaceTreeHost,
   gfx::Size pending_minimum_size_;
   gfx::Size maximum_size_;
   gfx::Size pending_maximum_size_;
+
+  std::unique_ptr<ash::DragDetails> drag_details_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellSurface);
 };
