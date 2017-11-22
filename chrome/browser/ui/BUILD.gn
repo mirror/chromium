@@ -2643,6 +2643,7 @@ split_static_library("ui") {
     sources += [
       "autofill/save_card_bubble_controller_impl.cc",
       "autofill/save_card_bubble_controller_impl.h",
+      "autofill/save_card_bubble_view.cc",
       "autofill/save_card_bubble_view.h",
       "bubble_anchor_util.h",
       "desktop_ios_promotion/desktop_ios_promotion_footnote_delegate.h",
