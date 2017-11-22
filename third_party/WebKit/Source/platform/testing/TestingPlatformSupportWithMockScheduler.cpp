@@ -13,6 +13,7 @@
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/wtf/ThreadSpecific.h"
 #include "public/platform/scheduler/child/webthread_base.h"
+#include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
 
 namespace blink {
 
@@ -95,6 +96,11 @@ void TestingPlatformSupportWithMockScheduler::RunSingleTask() {
 
 void TestingPlatformSupportWithMockScheduler::RunUntilIdle() {
   mock_task_runner_->RunUntilIdle();
+}
+
+void TestingPlatformSupportWithMockScheduler::ExecuteIdleTasks() {
+  blink::scheduler::RunIdleTasksForTesting(scheduler_.get(), base::Bind([] {}));
+  RunUntilIdle();
 }
 
 void TestingPlatformSupportWithMockScheduler::RunForPeriodSeconds(

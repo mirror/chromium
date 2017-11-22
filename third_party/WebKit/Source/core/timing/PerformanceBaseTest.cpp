@@ -5,6 +5,7 @@
 #include "core/timing/Performance.h"
 
 #include "bindings/core/v8/V8BindingForTesting.h"
+#include "bindings/core/v8/V8PerformanceObserverEntryList.h"
 #include "bindings/core/v8/v8_performance_observer_callback.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/testing/DummyPageHolder.h"
@@ -12,9 +13,13 @@
 #include "core/timing/PerformanceBase.h"
 #include "core/timing/PerformanceLongTaskTiming.h"
 #include "core/timing/PerformanceObserver.h"
+#include "core/timing/PerformanceObserverEntryList.h"
 #include "core/timing/PerformanceObserverInit.h"
 #include "platform/loader/fetch/ResourceResponse.h"
+#include "platform/testing/TestingPlatformSupport.h"
+#include "platform/testing/TestingPlatformSupportWithMockScheduler.h"
 #include "public/platform/TaskType.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -42,16 +47,37 @@ class TestPerformanceBase : public PerformanceBase {
 
 class PerformanceBaseTest : public ::testing::Test {
  protected:
+  static void ObserverCallback(
+      const v8::FunctionCallbackInfo<v8::Value>& info) {
+    PerformanceObserverEntryList* entry_list(
+        V8PerformanceObserverEntryList::ToImplWithTypeCheck(info.GetIsolate(),
+                                                            info[0]));
+
+    PerformanceBaseTest* external_this = static_cast<PerformanceBaseTest*>(
+        v8::Local<v8::External>::Cast(info.Data())->Value());
+
+    for (const Member<PerformanceEntry>& entry : entry_list->getEntries())
+      external_this->observed_performance_entry_names_.push_back(entry->name());
+  };
+
   void Initialize(ScriptState* script_state) {
-    v8::Local<v8::Function> callback =
-        v8::Function::New(script_state->GetContext(), nullptr).ToLocalChecked();
+    v8::Local<v8::Value> external_this =
+        v8::External::New(script_state->GetIsolate(), static_cast<void*>(this));
+
+    v8::Local<v8::Function> callback_function =
+        v8::Function::New(script_state->GetContext(), &ObserverCallback,
+                          external_this)
+            .ToLocalChecked();
     base_ = new TestPerformanceBase(script_state);
-    cb_ = V8PerformanceObserverCallback::Create(callback);
+    cb_ = V8PerformanceObserverCallback::Create(callback_function);
     observer_ = new PerformanceObserver(ExecutionContext::From(script_state),
                                         base_, cb_);
   }
 
   void SetUp() override {
+    platform_->SetAutoAdvanceNowToPendingTasks(false);
+    // Advance timer manually as we sometimes expect the time to be non-zero.
+    platform_->AdvanceClockSeconds(1.);
     page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
     execution_context_ = new NullExecutionContext();
   }
@@ -60,6 +86,12 @@ class PerformanceBaseTest : public ::testing::Test {
 
   int NumPerformanceEntriesInObserver() {
     return observer_->performance_entries_.size();
+  }
+
+  void ExecuteIdleTasks() { platform_->ExecuteIdleTasks(); }
+
+  const Vector<String>& ObservedPerformanceEntryNames() {
+    return observed_performance_entry_names_;
   }
 
   static bool AllowsTimingRedirect(
@@ -71,11 +103,14 @@ class PerformanceBaseTest : public ::testing::Test {
         redirect_chain, final_response, initiator_security_origin, context);
   }
 
+  ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
+      platform_;
   Persistent<TestPerformanceBase> base_;
   Persistent<ExecutionContext> execution_context_;
   Persistent<PerformanceObserver> observer_;
   std::unique_ptr<DummyPageHolder> page_holder_;
   Persistent<V8PerformanceObserverCallback> cb_;
+  Vector<String> observed_performance_entry_names_;
 };
 
 TEST_F(PerformanceBaseTest, Register) {
@@ -138,6 +173,108 @@ TEST_F(PerformanceBaseTest, AddLongTaskTiming) {
   base_->AddLongTaskTiming(1234, 5678, "same-origin", "www.foo.com/bar", "", "",
                            sub_task_attributions);
   EXPECT_EQ(1, NumPerformanceEntriesInObserver());  // added an entry
+}
+
+TEST_F(PerformanceBaseTest, DeliveryDelayedUntilTimeout) {
+  V8TestingScope scope;
+  Initialize(scope.GetScriptState());
+
+  // Make a mark observer.
+  NonThrowableExceptionState exception_state;
+  PerformanceObserverInit options;
+  Vector<String> entry_type_vec;
+  entry_type_vec.push_back("mark");
+  options.setEntryTypes(entry_type_vec);
+
+  observer_->observe(options, exception_state);
+
+  EXPECT_TRUE(base_->HasPerformanceObserverFor(PerformanceEntry::kMark));
+  EXPECT_EQ(0, NumPerformanceEntriesInObserver());
+
+  base_->mark("A", scope.GetExceptionState());
+  EXPECT_EQ(1, NumPerformanceEntriesInObserver());
+
+  platform_->RunUntilIdle();
+  EXPECT_EQ(1, NumPerformanceEntriesInObserver());
+  EXPECT_THAT(ObservedPerformanceEntryNames(), testing::ElementsAre());
+
+  // Advance clock past 0.1 second timeout.
+  platform_->AdvanceClockSeconds(0.12);
+  platform_->RunUntilIdle();
+  EXPECT_EQ(0, NumPerformanceEntriesInObserver());
+  EXPECT_THAT(ObservedPerformanceEntryNames(), testing::ElementsAre("A"));
+}
+
+TEST_F(PerformanceBaseTest, DeliveryDelayedUntilIdle) {
+  V8TestingScope scope;
+  Initialize(scope.GetScriptState());
+
+  // Make a mark observer.
+  NonThrowableExceptionState exception_state;
+  PerformanceObserverInit options;
+  Vector<String> entry_type_vec;
+  entry_type_vec.push_back("mark");
+  options.setEntryTypes(entry_type_vec);
+
+  observer_->observe(options, exception_state);
+
+  EXPECT_TRUE(base_->HasPerformanceObserverFor(PerformanceEntry::kMark));
+  EXPECT_EQ(0, NumPerformanceEntriesInObserver());
+
+  base_->mark("A", scope.GetExceptionState());
+  EXPECT_EQ(1, NumPerformanceEntriesInObserver());
+
+  platform_->RunUntilIdle();
+  EXPECT_EQ(1, NumPerformanceEntriesInObserver());
+  EXPECT_THAT(ObservedPerformanceEntryNames(), testing::ElementsAre());
+
+  ExecuteIdleTasks();
+  EXPECT_EQ(0, NumPerformanceEntriesInObserver());
+  EXPECT_THAT(ObservedPerformanceEntryNames(), testing::ElementsAre("A"));
+}
+
+TEST_F(PerformanceBaseTest, LoadDeliveryNotDelayed) {
+  V8TestingScope scope;
+  Initialize(scope.GetScriptState());
+
+  // Make a paint and mark observer.
+  NonThrowableExceptionState exception_state;
+  PerformanceObserverInit options;
+  Vector<String> entry_type_vec;
+  entry_type_vec.push_back("paint");
+  entry_type_vec.push_back("mark");
+  options.setEntryTypes(entry_type_vec);
+
+  observer_->observe(options, exception_state);
+
+  // This entry will be flushed by the load entry.
+  base_->mark("A", scope.GetExceptionState());
+  EXPECT_EQ(1, NumPerformanceEntriesInObserver());
+
+  base_->AddFirstPaintTiming(1);
+  EXPECT_EQ(2, NumPerformanceEntriesInObserver());
+
+  // Don't need to delay, the paint entry flushes the mark.
+  platform_->RunUntilIdle();
+  EXPECT_EQ(0, NumPerformanceEntriesInObserver());
+  EXPECT_THAT(ObservedPerformanceEntryNames(),
+              testing::ElementsAre("A", "first-paint"));
+
+  // Verify that a mark dispatched after a paint entry is delayed.
+  base_->mark("B", scope.GetExceptionState());
+  EXPECT_EQ(1, NumPerformanceEntriesInObserver());
+
+  platform_->RunUntilIdle();
+  EXPECT_EQ(1, NumPerformanceEntriesInObserver());
+  EXPECT_THAT(ObservedPerformanceEntryNames(),
+              testing::ElementsAre("A", "first-paint"));
+
+  // Advance clock past 0.1 second timeout.
+  platform_->AdvanceClockSeconds(0.12);
+  platform_->RunUntilIdle();
+  EXPECT_EQ(0, NumPerformanceEntriesInObserver());
+  EXPECT_THAT(ObservedPerformanceEntryNames(),
+              testing::ElementsAre("A", "first-paint", "B"));
 }
 
 TEST_F(PerformanceBaseTest, AllowsTimingRedirect) {

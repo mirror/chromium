@@ -47,9 +47,11 @@
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/Time.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
@@ -91,6 +93,7 @@ PerformanceBase::PerformanceBase(double time_origin,
     : frame_timing_buffer_size_(kDefaultFrameTimingBufferSize),
       resource_timing_buffer_size_(kDefaultResourceTimingBufferSize),
       user_timing_(nullptr),
+      last_delivered_entry_index_(-1),
       time_origin_(time_origin),
       observer_filter_options_(PerformanceEntry::kInvalid),
       deliver_observations_timer_(
@@ -522,11 +525,13 @@ void PerformanceBase::UpdatePerformanceObserverFilterOptions() {
   UpdateLongTaskInstrumentation();
 }
 
-void PerformanceBase::NotifyObserversOfEntry(PerformanceEntry& entry) const {
+void PerformanceBase::NotifyObserversOfEntry(PerformanceEntry& entry) {
   bool observer_found = false;
   for (auto& observer : observers_) {
     if (observer->FilterOptions() & entry.EntryTypeEnum()) {
       observer->EnqueuePerformanceEntry(entry);
+      last_delivered_entry_index_ =
+          std::max(last_delivered_entry_index_, entry.index());
       observer_found = true;
     }
   }
@@ -547,8 +552,31 @@ bool PerformanceBase::HasObserverFor(
 }
 
 void PerformanceBase::ActivateObserver(PerformanceObserver& observer) {
-  if (active_observers_.IsEmpty())
+  bool has_load_timing_entry_pending =
+      (first_paint_timing_ &&
+       first_paint_timing_->index() > last_delivered_entry_index_) ||
+      (first_contentful_paint_timing_ &&
+       first_contentful_paint_timing_->index() > last_delivered_entry_index_);
+
+  if (active_observers_.IsEmpty()) {
+    if (has_load_timing_entry_pending) {
+      // Paint timing information should be delivered immediately. If there are
+      // other performance entries, we deliver them at the same time in order to
+      // preserve their order, and because once the main thread is processing
+      // performance entries, it isn't much more expensive to deliver all of
+      // them.
+      deliver_observations_timer_.StartOneShot(0, BLINK_FROM_HERE);
+    } else {
+      deliver_observations_timer_.StartOneShot(0.1, BLINK_FROM_HERE);
+      Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
+          BLINK_FROM_HERE,
+          WTF::Bind(&PerformanceBase::DeliverObservationsIdleCallback,
+                    WrapPersistent(this)));
+    }
+  } else if (has_load_timing_entry_pending) {
+    active_observers_.insert(&observer);
     deliver_observations_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  }
 
   active_observers_.insert(&observer);
 }
@@ -567,7 +595,7 @@ void PerformanceBase::ResumeSuspendedObservers() {
   }
 }
 
-void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
+void PerformanceBase::DeliverObservations() {
   PerformanceObservers observers;
   active_observers_.Swap(observers);
   for (const auto& observer : observers) {
@@ -576,6 +604,18 @@ void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
     else
       observer->Deliver();
   }
+}
+
+void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
+  DeliverObservations();
+}
+
+void PerformanceBase::DeliverObservationsIdleCallback(double deadline) {
+  // If the timer has already delivered the observations, we don't need to.
+  if (!deliver_observations_timer_.IsActive())
+    return;
+  deliver_observations_timer_.Stop();
+  DeliverObservations();
 }
 
 // static

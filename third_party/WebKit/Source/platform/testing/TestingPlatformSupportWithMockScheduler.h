@@ -50,6 +50,9 @@ class TestingPlatformSupportWithMockScheduler : public TestingPlatformSupport {
   // instead.
   void RunUntilIdle() override;
 
+  // Executes all pending idle tasks.
+  void ExecuteIdleTasks();
+
   // Runs for |seconds| the testing clock is advanced by |seconds|.  Note real
   // time elapsed will typically much less than |seconds| because delays between
   // timers are fast forwarded.
