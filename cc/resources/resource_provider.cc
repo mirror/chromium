@@ -33,6 +33,7 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "skia/ext/texture_handle.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
@@ -689,7 +690,7 @@ GrPixelConfig ResourceProvider::ScopedWriteLockGL::PixelConfig() const {
 }
 
 GLuint ResourceProvider::ScopedWriteLockGL::GetTexture() {
-  LazyAllocate(resource_provider_->ContextGL(), texture_id_);
+  LazyAllocate(resource_provider_->RasterContext(), texture_id_);
   return texture_id_;
 }
 
@@ -703,21 +704,21 @@ void ResourceProvider::ScopedWriteLockGL::CreateMailbox() {
 }
 
 GLuint ResourceProvider::ScopedWriteLockGL::ConsumeTexture(
-    gpu::gles2::GLES2Interface* gl) {
-  DCHECK(gl);
+    gpu::raster::RasterInterface* rs) {
+  DCHECK(rs);
   DCHECK(!mailbox_.IsZero());
 
   GLuint texture_id =
-      gl->CreateAndConsumeTextureCHROMIUM(target_, mailbox_.name);
+      rs->CreateAndConsumeTextureCHROMIUM(target_, mailbox_.name);
   DCHECK(texture_id);
 
-  LazyAllocate(gl, texture_id);
+  LazyAllocate(rs, texture_id);
 
   return texture_id;
 }
 
 void ResourceProvider::ScopedWriteLockGL::LazyAllocate(
-    gpu::gles2::GLES2Interface* gl,
+    gpu::raster::RasterInterface* rs,
     GLuint texture_id) {
   // ETC1 resources cannot be preallocated.
   if (format_ == viz::ETC1)
@@ -727,32 +728,10 @@ void ResourceProvider::ScopedWriteLockGL::LazyAllocate(
     return;
   allocated_ = true;
 
-  const ResourceProvider::Settings& settings = resource_provider_->settings_;
-
-  gl->BindTexture(target_, texture_id);
-
-  if (is_overlay_) {
-    DCHECK(settings.use_texture_storage_image);
-    gl->TexStorage2DImageCHROMIUM(target_, viz::TextureStorageFormat(format_),
-                                  GL_SCANOUT_CHROMIUM, size_.width(),
-                                  size_.height());
-    if (color_space_.IsValid()) {
-      gl->SetColorSpaceMetadataCHROMIUM(
-          texture_id, reinterpret_cast<GLColorSpace>(&color_space_));
-    }
-  } else if (settings.use_texture_storage) {
-    GLint levels = 1;
-    if (settings.use_texture_npot &&
-        (hint_ & viz::ResourceTextureHint::kMipmap)) {
-      levels += base::bits::Log2Floor(std::max(size_.width(), size_.height()));
-    }
-    gl->TexStorage2DEXT(target_, levels, viz::TextureStorageFormat(format_),
-                        size_.width(), size_.height());
-  } else {
-    gl->TexImage2D(target_, 0, GLInternalFormat(format_), size_.width(),
-                   size_.height(), 0, GLDataFormat(format_),
-                   GLDataType(format_), nullptr);
-  }
+  rs->BindTexture(target_, texture_id);
+  rs->TexStorageForRaster(
+      target_, ToRasterTextureFormat(format_), size_.width(), size_.height(),
+      is_overlay_ ? gpu::raster::kOverlay : gpu::raster::kNone);
 }
 
 ResourceProvider::ScopedSkSurface::ScopedSkSurface(GrContext* gr_context,
@@ -1005,19 +984,19 @@ GLint ResourceProvider::GetActiveTextureUnit(gpu::gles2::GLES2Interface* gl) {
 }
 
 gpu::SyncToken ResourceProvider::GenerateSyncTokenHelper(
-    gpu::gles2::GLES2Interface* gl) {
-  DCHECK(gl);
-  const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
+    gpu::raster::RasterInterface* rs) {
+  DCHECK(rs);
+  const uint64_t fence_sync = rs->InsertFenceSyncCHROMIUM();
 
   // Barrier to sync worker context output to cc context.
-  gl->OrderingBarrierCHROMIUM();
+  rs->OrderingBarrierCHROMIUM();
 
   // Generate sync token after the barrier for cross context synchronization.
   gpu::SyncToken sync_token;
-  gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  rs->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
 
   DCHECK(sync_token.HasData() ||
-         gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR);
+         rs->GetGraphicsResetStatusKHR() != GL_NO_ERROR);
 
   return sync_token;
 }
@@ -1035,6 +1014,11 @@ GLenum ResourceProvider::GetImageTextureTarget(
 GLES2Interface* ResourceProvider::ContextGL() const {
   viz::ContextProvider* context_provider = compositor_context_provider_;
   return context_provider ? context_provider->ContextGL() : nullptr;
+}
+
+gpu::raster::RasterInterface* ResourceProvider::RasterContext() const {
+  viz::ContextProvider* context_provider = compositor_context_provider_;
+  return context_provider ? context_provider->RasterContext() : nullptr;
 }
 
 bool ResourceProvider::IsGLContextLost() const {
