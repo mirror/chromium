@@ -75,6 +75,7 @@
   (path (user-homedir-path "/.CFUserTextEncoding"))
   (path (user-homedir-path "/Library/Preferences/com.apple.universalaccess.plist"))
   (path (user-homedir-path "/Library/Preferences/.GlobalPreferences.plist"))
+  (path (user-homedir-path "/Library/Fonts"))
   (regex (user-homedir-path #"/Library/Preferences/ByHost/.GlobalPreferences.*")))
 
 ; Reads of /dev devices.
