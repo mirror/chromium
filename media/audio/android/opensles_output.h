@@ -23,12 +23,12 @@
 
 // On L+, we want to use floating point output for better fidelity.
 #if __ANDROID_API__ < 21
-#define SL_ANDROID_PCM_REPRESENTATION_SIGNED_INT ((SLuint32)0x00000001)
+/*#define SL_ANDROID_PCM_REPRESENTATION_SIGNED_INT ((SLuint32)0x00000001)
 #define SL_ANDROID_PCM_REPRESENTATION_UNSIGNED_INT ((SLuint32)0x00000002)
 #define SL_ANDROID_PCM_REPRESENTATION_FLOAT ((SLuint32)0x00000003)
-#define SL_ANDROID_DATAFORMAT_PCM_EX ((SLuint32)0x00000004)
+#define SL_ANDROID_DATAFORMAT_PCM_EX ((SLuint32)0x00000004)*/
 
-typedef struct SLAndroidDataFormat_PCM_EX_ {
+/*typedef struct SLAndroidDataFormat_PCM_EX_ {
   SLuint32 formatType;
   SLuint32 numChannels;
   SLuint32 sampleRate;
@@ -37,7 +37,7 @@ typedef struct SLAndroidDataFormat_PCM_EX_ {
   SLuint32 channelMask;
   SLuint32 endianness;
   SLuint32 representation;
-} SLAndroidDataFormat_PCM_EX;
+} SLAndroidDataFormat_PCM_EX;*/
 #endif
 
 namespace media {
