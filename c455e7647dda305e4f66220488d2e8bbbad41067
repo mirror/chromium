@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d61f242_5474cf53",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3710,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-22T22:09:30Z",
+      "side": 1,
+      "message": "The author can put AX_ROLE_SPIN_BUTTON on literally anything.\nCan we do this only if it has EDITABLE set?\n\nShouldn\u0027t we update IsSimpleTextControl() to return true for\na spin button so that any other code that calls IsSimpleTextControl\ndoes the right thing?",
+      "revId": "c455e7647dda305e4f66220488d2e8bbbad41067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
