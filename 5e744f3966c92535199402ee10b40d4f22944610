@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba213c0b_1e5f85cd",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-22T11:26:07Z",
+      "side": 1,
+      "message": "This is also |browser_process_|, no? You could also pull out Local State to a variable.",
+      "range": {
+        "startLine": 1163,
+        "startChar": 6,
+        "endLine": 1163,
+        "endChar": 23
+      },
+      "revId": "5e744f3966c92535199402ee10b40d4f22944610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73701fa1_4eea63e6",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-22T11:26:07Z",
+      "side": 1,
+      "message": "Plain hostname without https://? Tsk ;-)",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "5e744f3966c92535199402ee10b40d4f22944610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fd1d01b_1e523345",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-22T11:26:07Z",
+      "side": 1,
+      "message": "I find this a bit weird. We add this to the command line pref store, so setting the command line switch will set the preference, and then on startup we read the pref and add the command line switch if necessary. Which one of these is supposed to be the canonical representation of whether this feature should be enabled?",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "5e744f3966c92535199402ee10b40d4f22944610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
