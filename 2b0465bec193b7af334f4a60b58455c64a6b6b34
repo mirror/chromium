@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5767c437_b5d2c37f",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T22:21:59Z",
+      "side": 1,
+      "message": "Actually, one question: is this in any way needed in order to handle the URLs that are uploaded for crash reporting, or are those always treated as raw strings in the GPU process?",
+      "revId": "2b0465bec193b7af334f4a60b58455c64a6b6b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
