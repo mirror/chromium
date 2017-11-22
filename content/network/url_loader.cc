@@ -171,14 +171,14 @@ class RawFileElementReader : public net::UploadFileElementReader {
 // A subclass of net::UploadElementReader to read data pipes.
 class DataPipeElementReader : public net::UploadElementReader {
  public:
-  DataPipeElementReader(mojo::ScopedDataPipeConsumerHandle data_pipe,
-                        blink::mojom::SizeGetterPtr size_getter)
-      : data_pipe_(std::move(data_pipe)),
+  DataPipeElementReader(
+      scoped_refptr<ResourceRequestBody> resource_request_body,
+      const ResourceRequestBody::Element& element)
+      : resource_request_body_(std::move(resource_request_body)),
         handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
-        size_getter_(std::move(size_getter)),
         weak_factory_(this) {
-    size_getter_->GetSize(base::Bind(&DataPipeElementReader::GetSizeCallback,
-                                     weak_factory_.GetWeakPtr()));
+    data_pipe_ = element.GetDataPipe(base::BindOnce(
+        &DataPipeElementReader::GetSizeCallback, weak_factory_.GetWeakPtr()));
     handle_watcher_.Watch(data_pipe_.get(), MOJO_HANDLE_SIGNAL_READABLE,
                           base::Bind(&DataPipeElementReader::OnHandleReadable,
                                      base::Unretained(this)));
@@ -244,6 +244,7 @@ class DataPipeElementReader : public net::UploadElementReader {
     return net::ERR_FAILED;
   }
 
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
   mojo::ScopedDataPipeConsumerHandle data_pipe_;
   mojo::SimpleWatcher handle_watcher_;
   scoped_refptr<net::IOBuffer> buf_;
@@ -287,12 +288,8 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
         break;
       }
       case ResourceRequestBody::Element::TYPE_DATA_PIPE: {
-        blink::mojom::SizeGetterPtr size_getter;
-        mojo::ScopedDataPipeConsumerHandle data_pipe =
-            const_cast<storage::DataElement*>(&element)->ReleaseDataPipe(
-                &size_getter);
-        element_readers.push_back(std::make_unique<DataPipeElementReader>(
-            std::move(data_pipe), std::move(size_getter)));
+        element_readers.push_back(
+            std::make_unique<DataPipeElementReader>(body, element));
         break;
       }
       case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
@@ -326,6 +323,7 @@ URLLoader::URLLoader(NetworkContext* context,
       connected_(true),
       binding_(this, std::move(url_loader_request)),
       url_loader_client_(std::move(url_loader_client)),
+      resource_request_body_(request.request_body),
       writable_handle_watcher_(FROM_HERE,
                                mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       peer_closed_handle_watcher_(FROM_HERE,
@@ -348,12 +346,12 @@ URLLoader::URLLoader(NetworkContext* context,
   url_request_->SetExtraRequestHeaders(request.headers);
 
   // Resolve elements from request_body and prepare upload data.
-  if (request.request_body.get()) {
+  if (resource_request_body_) {
     scoped_refptr<base::SequencedTaskRunner> task_runner =
         base::CreateSequencedTaskRunnerWithTraits(
             {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
-    url_request_->set_upload(
-        CreateUploadDataStream(request.request_body.get(), task_runner.get()));
+    url_request_->set_upload(CreateUploadDataStream(
+        resource_request_body_.get(), task_runner.get()));
 
     if (request.enable_upload_progress) {
       upload_progress_tracker_ = std::make_unique<UploadProgressTracker>(
@@ -419,6 +417,15 @@ void URLLoader::FollowRedirect() {
     return;
   }
 
+  // Repopulate the upload data stream since it was consumed during the original
+  // request.
+  if (url_request_->get_upload()) {
+    scoped_refptr<base::SequencedTaskRunner> task_runner =
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
+    url_request_->set_upload(CreateUploadDataStream(
+        resource_request_body_.get(), task_runner.get()));
+  }
   url_request_->FollowDeferredRedirect();
 }
 
