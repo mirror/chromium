@@ -115,6 +115,7 @@ void LocalWindowProxy::DisposeContext(Lifecycle next_status,
 }
 
 void LocalWindowProxy::Initialize() {
+  base::debug::StackTrace().Print();
   TRACE_EVENT1("v8", "LocalWindowProxy::Initialize", "IsMainFrame",
                GetFrame()->IsMainFrame());
   DEFINE_STATIC_LOCAL(
