@@ -52,6 +52,24 @@
       "revId": "83b3d3c2fa087be62d6bbe37e190289ac380459d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e39e82_55ef961a",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1250517
+      },
+      "writtenOn": "2017-11-22T13:58:32Z",
+      "side": 1,
+      "message": "I found the issue. It\u0027s more rare and it\u0027s caused by another code path, as I suspected.\n\nThere is another restart of the device_poll_thread_ happening from NotifyFlushDoneIfNeeded(), which is being called from various places, including the Dequeue() function, which is called from ServiceDeviceTask().\n\nHaving added an additional VLOGF(3) \u003c\u003c \"out\"; as the last line of DevicePollTask(), I have recorded some logs, from which I got this excerpt:\n\nhttps://pastebin.com/ics33Fbr\n\nNotice that the first DevicePollTask() (which is exiting at this point) runs on thread 5507, then ServiceDeviceTask() runs on 5496 and it calls Dequeue(), which calls NotifyFlushDoneIfNeeded(), which restarts the device_poll_task_. Then there is a new call to DevicePollTask() on thread 5567, but ServiceDeviceTask() really hasn\u0027t reached the point where it schedules it (there is still activity on thread 5496 before we reach the buffer counts printout, which happens right after scheduling DevicePollTask())",
+      "parentUuid": "784ada7f_13acc61a",
+      "revId": "83b3d3c2fa087be62d6bbe37e190289ac380459d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
