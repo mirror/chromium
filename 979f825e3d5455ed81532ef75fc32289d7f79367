@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72d7fc59_32ab9eb0",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-22T00:48:16Z",
+      "side": 1,
+      "message": "This seems not working.\n\nWhen arc vpn is disconnected, networkIds.indexOf(this.guid) returns non -1 value (In my case it returns 2).",
+      "parentUuid": "c06ad4ca_b07d98f3",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ff539f_3fdf4633",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252405de_ce4b6d0c",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-22T00:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ff539f_3fdf4633",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "1168bdd5_8ae5ec7f",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-22T00:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "029c2875_bc883c73",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7534247_e77abd4c",
         "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
         "patchSetId": 19
@@ -103,6 +157,24 @@
       "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a15aa9b_0652e33d",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-22T00:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7534247_e77abd4c",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "94abab19_1632cd4f",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-22T00:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be7f792a_ba27c375",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db006178_bf0f6b82",
         "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
         "patchSetId": 19
@@ -137,6 +227,24 @@
       "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f0d630_a83a8c69",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-22T00:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db006178_bf0f6b82",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
