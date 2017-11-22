@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dcb1493_51c14a36",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T22:28:17Z",
+      "side": 1,
+      "message": "Have you confirmed that the new computations are similar or identical to the earlier ones, at least for WebGL? The V8 team\u0027s already not too happy with using this mechanism to apply memory pressure to the VM, and we should avoid significantly increasing the amount of pressure. In the long run we should probably look for alternative mechanisms for releasing GPU resources earlier.",
+      "range": {
+        "startLine": 1572,
+        "startChar": 2,
+        "endLine": 1572,
+        "endChar": 30
+      },
+      "revId": "79b9a74f532a4e9b3404fdef8156173e332c5d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
