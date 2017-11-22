@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09cddb72_0fdc31dd",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T06:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91da83a2_a069fa52",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 36
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "523df7fb_a11da93a",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T05:39:35Z",
       "side": 1,
       "message": "optional: These two lines are always together AFAICT; you never call ResetIdleDelayTimer() without setting last_activity_item_ to Now() or vice versa. Maybe group them in one function?",
+      "range": {
+        "startLine": 77,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad52548_9c001116",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T06:04:02Z",
+      "side": 1,
+      "message": "Thanks for the suggestions! In the subsequent cl, I\u0027ll introduce another function that changes last_activity_time and other new stuff. We could discuss later whether to combine the two functions in the next cl or keep them separate (as each has sufficiently complex logic).",
+      "parentUuid": "523df7fb_a11da93a",
       "range": {
         "startLine": 77,
         "startChar": 41,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "50fd3843_d1d0df89",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T06:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7117d5b_1f7c2237",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba308172_1e5f53e5",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a4894a_ad4d7d52",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T06:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba308172_1e5f53e5",
+      "range": {
+        "startLine": 66,
+        "startChar": 37,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0eb263b8_71f59d9d",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T06:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5209f0_48d57a71",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655290dc_bb939e94",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
         "patchSetId": 14
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-22T05:39:35Z",
       "side": 1,
       "message": "I might be confused, but is there any reason not to use |now| (the virtual time from the task_runner_) in these calls?\n\nIf we mix and match the real time with the mock time, it\u0027s harder to reason about the order of events and what the expected behavior is.",
+      "range": {
+        "startLine": 112,
+        "startChar": 52,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf9a35d_1d2893b7",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T06:04:02Z",
+      "side": 1,
+      "message": "This param is never used by the function :)",
+      "parentUuid": "655290dc_bb939e94",
       "range": {
         "startLine": 112,
         "startChar": 52,
