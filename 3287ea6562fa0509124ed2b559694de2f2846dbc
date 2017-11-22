@@ -34,6 +34,24 @@
       "revId": "3287ea6562fa0509124ed2b559694de2f2846dbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145e120e_2608a5b3",
+        "filename": "third_party/WebKit/Source/core/html/parser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-22T20:50:13Z",
+      "side": 1,
+      "message": "\u003e nit: Would be worth filing a bug and linking to it here so that there\u0027s some context around why this is worth it.\n\nDone.\n\n\u003e +1 to a comment of some sort.\n\u003e \n\u003e Is it necessary/possible to also remove the default flag config?\n\u003e \n\u003e The usual way is:\n\u003e \n\u003e   configs -\u003d [ \"//build/config/compiler:default_optimization\" ]\n\u003e \n\u003e but I\u0027m not sure if the blink_core_sources template would cause any issue. You might need to do this conditionally, because apparently win official builds always get optimize_max (see core.gni). Otherwise I\u0027d expect this to actually emit both sets of flags and rely on the compiler to pick the right ones (you can use \"ninja -t commands\" to check).\n\n\nDone.",
+      "parentUuid": "2a6e874a_a3149b1b",
+      "revId": "3287ea6562fa0509124ed2b559694de2f2846dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
