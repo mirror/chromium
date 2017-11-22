@@ -4,7 +4,6 @@
 
 #include "content/browser/service_worker/service_worker_registration_object_host.h"
 
-#include "base/memory/ptr_util.h"
 #include "content/browser/service_worker/service_worker_consts.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_handle.h"
@@ -16,9 +15,49 @@
 
 namespace content {
 
+class ServiceWorkerRegistrationObjectHost::Receiver
+    : public blink::mojom::ServiceWorkerRegistrationObjectHost {
+ public:
+  Receiver(scoped_refptr<content::ServiceWorkerRegistrationObjectHost> host)
+      : registration_object_host_(std::move(host)) {
+    DCHECK(registration_object_host_);
+  }
+  ~Receiver() override = default;
+
+ private:
+  // Implements blink::mojom::ServiceWorkerRegistrationObjectHost.
+  void Update(UpdateCallback callback) override {
+    registration_object_host_->Update(std::move(callback));
+  }
+  void Unregister(UnregisterCallback callback) override {
+    registration_object_host_->Unregister(std::move(callback));
+  }
+  void EnableNavigationPreload(
+      bool enable,
+      EnableNavigationPreloadCallback callback) override {
+    registration_object_host_->EnableNavigationPreload(enable,
+                                                       std::move(callback));
+  }
+  void GetNavigationPreloadState(
+      GetNavigationPreloadStateCallback callback) override {
+    registration_object_host_->GetNavigationPreloadState(std::move(callback));
+  }
+  void SetNavigationPreloadHeader(
+      const std::string& value,
+      SetNavigationPreloadHeaderCallback callback) override {
+    registration_object_host_->SetNavigationPreloadHeader(value,
+                                                          std::move(callback));
+  }
+
+  scoped_refptr<content::ServiceWorkerRegistrationObjectHost>
+      registration_object_host_;
+
+  DISALLOW_COPY_AND_ASSIGN(Receiver);
+};
+
 ServiceWorkerRegistrationObjectHost::ServiceWorkerRegistrationObjectHost(
     base::WeakPtr<ServiceWorkerContextCore> context,
-    ServiceWorkerProviderHost* provider_host,
+    base::WeakPtr<ServiceWorkerProviderHost> provider_host,
     scoped_refptr<ServiceWorkerRegistration> registration)
     : provider_host_(provider_host),
       context_(context),
@@ -27,23 +66,28 @@ ServiceWorkerRegistrationObjectHost::ServiceWorkerRegistrationObjectHost(
   DCHECK(registration_.get());
   DCHECK(provider_host_);
   registration_->AddListener(this);
-  bindings_.set_connection_error_handler(
-      base::Bind(&ServiceWorkerRegistrationObjectHost::OnConnectionError,
-                 base::Unretained(this)));
 }
 
 ServiceWorkerRegistrationObjectHost::~ServiceWorkerRegistrationObjectHost() {
   DCHECK(registration_.get());
   registration_->RemoveListener(this);
+  if (provider_host_) {
+    provider_host_->RemoveServiceWorkerRegistrationObjectHost(
+        registration_->id());
+  }
 }
 
 blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
 ServiceWorkerRegistrationObjectHost::CreateObjectInfo() {
+  DCHECK(provider_host_);
   auto info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
   info->options = blink::mojom::ServiceWorkerRegistrationOptions::New(
       registration_->pattern());
   info->registration_id = registration_->id();
-  bindings_.AddBinding(this, mojo::MakeRequest(&info->host_ptr_info));
+  bindings_.AddBinding(
+      std::make_unique<Receiver>(
+          scoped_refptr<ServiceWorkerRegistrationObjectHost>(this)),
+      mojo::MakeRequest(&info->host_ptr_info));
   if (!remote_registration_)
     info->request = mojo::MakeRequest(&remote_registration_);
 
@@ -100,7 +144,7 @@ void ServiceWorkerRegistrationObjectHost::Update(UpdateCallback callback) {
 
   context_->UpdateServiceWorker(
       registration_.get(), false /* force_bypass_cache */,
-      false /* skip_script_comparison */, provider_host_,
+      false /* skip_script_comparison */, provider_host_.get(),
       base::AdaptCallbackForRepeating(
           base::BindOnce(&ServiceWorkerRegistrationObjectHost::UpdateComplete,
                          weak_ptr_factory_.GetWeakPtr(), std::move(callback))));
@@ -270,6 +314,8 @@ void ServiceWorkerRegistrationObjectHost::SetVersionAttributes(
     ServiceWorkerVersion* installing_version,
     ServiceWorkerVersion* waiting_version,
     ServiceWorkerVersion* active_version) {
+  if (!provider_host_)
+    return;
   if (!changed_mask.changed())
     return;
 
@@ -290,21 +336,12 @@ void ServiceWorkerRegistrationObjectHost::SetVersionAttributes(
       std::move(active));
 }
 
-void ServiceWorkerRegistrationObjectHost::OnConnectionError() {
-  // If there are still bindings, |this| is still being used.
-  if (!bindings_.empty())
-    return;
-  // Will destroy |this|.
-  provider_host_->RemoveServiceWorkerRegistrationObjectHost(
-      registration()->id());
-}
-
 template <typename CallbackType, typename... Args>
 bool ServiceWorkerRegistrationObjectHost::CanServeRegistrationObjectHostMethods(
     CallbackType* callback,
     const char* error_prefix,
     Args... args) {
-  if (!context_) {
+  if (!provider_host_ || !context_) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
         std::string(error_prefix) +

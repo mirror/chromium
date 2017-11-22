@@ -470,9 +470,12 @@ TEST_F(BackgroundSyncManagerTest, RegisterWithoutLiveSWRegistration) {
       sw_registration_1_->active_version()->provider_host();
   ASSERT_TRUE(provider_host);
 
-  // Remove the registration object host.
-  provider_host->registration_object_hosts_.clear();
-
+  // Stop the running worker to release reference to the registration's object
+  // host.
+  EXPECT_EQ(1UL, provider_host->registration_object_hosts_.size());
+  sw_registration_1_->active_version()->StopWorker(
+      base::BindOnce(&base::DoNothing));
+  base::RunLoop().RunUntilIdle();
   // Ensure |sw_registration_1_| is the last reference to the registration.
   ASSERT_TRUE(sw_registration_1_->HasOneRef());
   sw_registration_1_ = nullptr;
