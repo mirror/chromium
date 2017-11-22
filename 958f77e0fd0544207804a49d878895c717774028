@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63c10ab9_4d0354d5",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T01:35:59Z",
+      "side": 1,
+      "message": "kAll",
+      "revId": "958f77e0fd0544207804a49d878895c717774028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
