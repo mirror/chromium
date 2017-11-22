@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "770c0a9c_06d0de75",
+        "filename": "content/common/render_process_messages.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-22T18:48:31Z",
+      "side": 0,
+      "message": "lets remove this constant from ipc/ipc_message_start.h if it is no longer used.",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 47
+      },
+      "revId": "8ad6e6d023f43d68f7bb69d3aaab4c401b1157d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
