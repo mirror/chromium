@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d91c045_c750e145",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-22T02:00:54Z",
+      "side": 1,
+      "message": "So why not just make all callers of SavePageLater provide a callback instead of overloading this?  They can pass null if they want.  \n\nWe could even go one farther and do that for all overloads while we are visiting them, and get down to just one version of savePageLater, but I\u0027ll leave that as optional.",
+      "range": {
+        "startLine": 410,
+        "startChar": 60,
+        "endLine": 410,
+        "endChar": 64
+      },
+      "revId": "5f62ea8514f1c63f3b1724ee1288a741f00dcc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a764868_b34d803b",
+        "filename": "components/offline_pages/core/background/request_coordinator_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-22T02:00:54Z",
+      "side": 1,
+      "message": "Let\u0027s test that the callback is actually called if one is provided.",
+      "range": {
+        "startLine": 266,
+        "startChar": 48,
+        "endLine": 266,
+        "endChar": 55
+      },
+      "revId": "5f62ea8514f1c63f3b1724ee1288a741f00dcc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
