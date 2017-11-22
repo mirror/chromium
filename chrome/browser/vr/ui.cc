@@ -21,7 +21,7 @@
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
-#include "chrome/browser/vr/ui_scene_manager.h"
+#include "chrome/browser/vr/ui_scene_creator.h"
 #include "chrome/common/chrome_features.h"
 
 namespace vr {
@@ -54,7 +54,7 @@ Ui::Ui(UiBrowserInterface* browser,
   model_->in_cct = ui_initial_state.in_cct;
   model_->browsing_disabled = ui_initial_state.browsing_disabled;
 
-  UiSceneManager(browser, scene_.get(), content_input_delegate_.get(),
+  UiSceneCreator(browser, scene_.get(), content_input_delegate_.get(),
                  model_.get())
       .CreateScene();
 }
