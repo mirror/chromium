@@ -290,8 +290,10 @@ void AppBannerInfoBarDelegateAndroid::InfoBarDismissed() {
   content::WebContents* web_contents =
       InfoBarService::WebContentsFromInfoBar(infobar());
 
-  if (weak_manager_)
+  if (weak_manager_) {
     weak_manager_->SendBannerDismissed();
+    weak_manager_->Reprompt();
+  }
 
   if (native_app_data_.is_null()) {
     if (is_webapk_)
