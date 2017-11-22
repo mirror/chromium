@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f363046_660624d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T23:31:56Z",
+      "side": 1,
+      "message": "Is this parameter still necessary?",
+      "revId": "61732b76eb41b188769621f56d6a7c316e25b9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd59339_a7a7daf0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T23:31:56Z",
+      "side": 1,
+      "message": "Can\u0027t you:\n- get the name via webappInfo.name()\n- pass the activity type as a parameter",
+      "revId": "61732b76eb41b188769621f56d6a7c316e25b9dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
