@@ -14,6 +14,9 @@
 #include "chromeos/dbus/power_manager/power_supply_properties.pb.h"
 #include "chromeos/dbus/power_manager/suspend.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/user_activity/user_activity_detector.h"
+#include "ui/events/event.h"
+#include "ui/events/event_constants.h"
 
 namespace chromeos {
 namespace power {
@@ -25,7 +28,11 @@ namespace {
 // equality comparison below for tests.
 bool operator==(const IdleEventNotifier::ActivityData& x,
                 const IdleEventNotifier::ActivityData& y) {
-  return x.last_activity_time == y.last_activity_time;
+  return x.last_activity_time == y.last_activity_time &&
+         x.last_user_activity_time == y.last_user_activity_time &&
+         x.last_mouse_time == y.last_mouse_time &&
+         x.last_key_time == y.last_key_time &&
+         x.earliest_activity_time == y.earliest_activity_time;
 }
 
 class TestObserver : public IdleEventNotifier::Observer {
@@ -60,8 +67,8 @@ class IdleEventNotifierTest : public testing::Test {
             base::TestMockTimeTaskRunner::Type::kBoundToThread)),
         scoped_context_(task_runner_.get()) {
     chromeos::DBusThreadManager::Initialize();
-    idle_event_notifier_ =
-        std::make_unique<IdleEventNotifier>(base::TimeDelta::FromSeconds(1));
+    idle_event_notifier_ = std::make_unique<IdleEventNotifier>(
+        base::TimeDelta::FromSeconds(10), nullptr /* video_detector */);
     idle_event_notifier_->SetClockForTesting(task_runner_->GetMockClock());
     idle_event_notifier_->AddObserver(&test_observer_);
     ac_power_.set_external_power(
@@ -92,6 +99,7 @@ class IdleEventNotifierTest : public testing::Test {
   std::unique_ptr<IdleEventNotifier> idle_event_notifier_;
   power_manager::PowerSupplyProperties ac_power_;
   power_manager::PowerSupplyProperties disconnected_power_;
+  ui::UserActivityDetector detector_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(IdleEventNotifierTest);
@@ -109,14 +117,15 @@ TEST_F(IdleEventNotifierTest, LidOpenEventReceived) {
   base::Time now = task_runner_->Now();
   idle_event_notifier_->LidEventReceived(
       chromeos::PowerManagerClient::LidState::OPEN, base::TimeTicks::Now());
-  FastForwardAndCheckResults(1, {now});
+  FastForwardAndCheckResults(
+      1, {now /* last_activity_time */, now /* earliest_activity_time */,
+          now /* last_user_activity_time */});
 }
 
 // Lid-closed event will not trigger any future idle event to be generated.
 TEST_F(IdleEventNotifierTest, LidClosedEventReceived) {
   idle_event_notifier_->LidEventReceived(
       chromeos::PowerManagerClient::LidState::CLOSED, base::TimeTicks::Now());
-  IdleEventNotifier::ActivityData expected_activity_data;
   FastForwardAndCheckResults(0, {});
 }
 
@@ -126,7 +135,9 @@ TEST_F(IdleEventNotifierTest, LidClosedEventReceived) {
 TEST_F(IdleEventNotifierTest, PowerChangedFirstSet) {
   base::Time now = task_runner_->Now();
   idle_event_notifier_->PowerChanged(ac_power_);
-  FastForwardAndCheckResults(1, {now});
+  FastForwardAndCheckResults(
+      1, {now /* last_activity_time */, now /* earliest_activity_time */,
+          now /* last_user_activity_time */});
 }
 
 // PowerChanged signal is received but source isn't changed, so it won't trigger
@@ -134,9 +145,13 @@ TEST_F(IdleEventNotifierTest, PowerChangedFirstSet) {
 TEST_F(IdleEventNotifierTest, PowerSourceNotChanged) {
   base::Time now = task_runner_->Now();
   idle_event_notifier_->PowerChanged(ac_power_);
-  FastForwardAndCheckResults(1, {now});
+  FastForwardAndCheckResults(
+      1, {now /* last_activity_time */, now /* earliest_activity_time */,
+          now /* last_user_activity_time */});
   idle_event_notifier_->PowerChanged(ac_power_);
-  FastForwardAndCheckResults(1, {now});
+  FastForwardAndCheckResults(
+      1, {now /* last_activity_time */, now /* earliest_activity_time */,
+          now /* last_user_activity_time */});
 }
 
 // PowerChanged signal is received and source is changed, so it will trigger
@@ -144,11 +159,15 @@ TEST_F(IdleEventNotifierTest, PowerSourceNotChanged) {
 TEST_F(IdleEventNotifierTest, PowerSourceChanged) {
   base::Time now_1 = task_runner_->Now();
   idle_event_notifier_->PowerChanged(ac_power_);
-  FastForwardAndCheckResults(1, {now_1});
+  FastForwardAndCheckResults(
+      1, {now_1 /* last_activity_time */, now_1 /* earliest_activity_time */,
+          now_1 /* last_user_activity_time */});
   task_runner_->FastForwardBy(base::TimeDelta::FromSeconds(100));
   base::Time now_2 = task_runner_->Now();
   idle_event_notifier_->PowerChanged(disconnected_power_);
-  FastForwardAndCheckResults(2, {now_2});
+  FastForwardAndCheckResults(
+      2, {now_2 /* last_activity_time */, now_2 /* earliest_activity_time */,
+          now_2 /* last_user_activity_time */});
 }
 
 // SuspendImminent will not trigger any future idle event.
@@ -165,7 +184,77 @@ TEST_F(IdleEventNotifierTest, SuspendImminent) {
 TEST_F(IdleEventNotifierTest, SuspendDone) {
   base::Time now = task_runner_->Now();
   idle_event_notifier_->SuspendDone(base::TimeDelta::FromSeconds(1));
-  FastForwardAndCheckResults(1, {now});
+  FastForwardAndCheckResults(
+      1, {now /* last_activity_time */, now /* earliest_activity_time */,
+          now /* last_user_activity_time */});
+}
+
+TEST_F(IdleEventNotifierTest, UserActivityKey) {
+  base::Time now = task_runner_->Now();
+  ui::KeyEvent key_event(ui::ET_KEY_PRESSED, ui::VKEY_A, ui::EF_NONE);
+  idle_event_notifier_->OnUserActivity(&key_event);
+  FastForwardAndCheckResults(
+      1, {now /* last_activity_time */, now /* earliest_activity_time */,
+          now /* last_user_activity_time */,
+          base::nullopt /* last_mouse_time */, now /* last_key_time */});
+}
+
+TEST_F(IdleEventNotifierTest, UserActivityMouse) {
+  base::Time now = task_runner_->Now();
+  ui::MouseEvent mouse_event(ui::ET_MOUSE_EXITED, gfx::Point(0, 0),
+                             gfx::Point(0, 0), base::TimeTicks(), 0, 0);
+
+  idle_event_notifier_->OnUserActivity(&mouse_event);
+  FastForwardAndCheckResults(
+      1, {now /* last_activity_time */, now /* earliest_activity_time */,
+          now /* last_user_activity_time */, now /* last_mouse_time */});
+}
+
+TEST_F(IdleEventNotifierTest, UserActivityOther) {
+  base::Time now = task_runner_->Now();
+  ui::GestureEvent gesture_event(0, 0, 0, base::TimeTicks(),
+                                 ui::GestureEventDetails(ui::ET_GESTURE_TAP));
+
+  idle_event_notifier_->OnUserActivity(&gesture_event);
+  FastForwardAndCheckResults(
+      1, {now /* last_activity_time */, now /* earliest_activity_time */,
+          now /* last_user_activity_time */});
+}
+
+TEST_F(IdleEventNotifierTest, TwoQuickUserActivities) {
+  base::Time now_1 = task_runner_->Now();
+  ui::MouseEvent mouse_event(ui::ET_MOUSE_EXITED, gfx::Point(0, 0),
+                             gfx::Point(0, 0), base::TimeTicks(), 0, 0);
+  idle_event_notifier_->OnUserActivity(&mouse_event);
+  task_runner_->FastForwardBy(base::TimeDelta::FromSeconds(2));
+  base::Time now_2 = task_runner_->Now();
+  CHECK_NE(now_1, now_2);
+  ui::KeyEvent key_event(ui::ET_KEY_PRESSED, ui::VKEY_A, ui::EF_NONE);
+  idle_event_notifier_->OnUserActivity(&key_event);
+  FastForwardAndCheckResults(
+      1, {now_2 /* last_activity_time */, now_1 /* earliest_activity_time */,
+          now_2 /* last_user_activity_time */, now_1 /* last_mouse_time */,
+          now_2 /* last_key_time */});
+}
+
+TEST_F(IdleEventNotifierTest, ActivityWhileVideoPlaying) {
+  ui::MouseEvent mouse_event(ui::ET_MOUSE_EXITED, gfx::Point(0, 0),
+                             gfx::Point(0, 0), base::TimeTicks(), 0, 0);
+  idle_event_notifier_->OnVideoStateChanged(
+      ash::VideoDetector::State::PLAYING_FULLSCREEN);
+  idle_event_notifier_->OnUserActivity(&mouse_event);
+  FastForwardAndCheckResults(0, {});
+}
+
+TEST_F(IdleEventNotifierTest, ActivityBeforeVideoStarts) {
+  ui::MouseEvent mouse_event(ui::ET_MOUSE_EXITED, gfx::Point(0, 0),
+                             gfx::Point(0, 0), base::TimeTicks(), 0, 0);
+  idle_event_notifier_->OnVideoStateChanged(
+      ash::VideoDetector::State::NOT_PLAYING);
+  idle_event_notifier_->OnUserActivity(&mouse_event);
+  idle_event_notifier_->OnVideoStateChanged(
+      ash::VideoDetector::State::PLAYING_FULLSCREEN);
+  FastForwardAndCheckResults(0, {});
 }
 
 }  // namespace ml
