@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcdb8de4_1cbefc50",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-22T15:55:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we can (or want) pass appropriate task type here — this is implementation of base::TaskRunner interface and for direct usages (in content/) we won\u0027t be able to pass anything here.\n\nSo I wonder if this patch really is needed given that we don\u0027t be able to replace all base::nullopts (at least not at this level).",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 52
+      },
+      "revId": "a4af6625fd22ff587af1ea1394110f29b4dc783d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
