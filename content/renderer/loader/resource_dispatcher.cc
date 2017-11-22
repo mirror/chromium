@@ -175,8 +175,9 @@ void ResourceDispatcher::OnReceivedResponse(
 
   if (delegate_) {
     std::unique_ptr<RequestPeer> new_peer = delegate_->OnReceivedResponse(
-        std::move(request_info->peer), response_head.mime_type,
-        request_info->url);
+        std::move(request_info->peer), request_info->render_frame_id,
+        request_info->url, request_info->referrer, request_info->method,
+        request_info->resource_type, response_head);
     DCHECK(new_peer);
     request_info->peer = std::move(new_peer);
   }
@@ -479,14 +480,20 @@ void ResourceDispatcher::OnTransferSizeUpdated(int request_id,
 ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
     std::unique_ptr<RequestPeer> peer,
     ResourceType resource_type,
+    int render_frame_id,
     int origin_pid,
     const url::Origin& frame_origin,
     const GURL& request_url,
+    const std::string& method,
+    const GURL& referrer,
     bool download_to_file)
     : peer(std::move(peer)),
       resource_type(resource_type),
+      render_frame_id(render_frame_id),
       origin_pid(origin_pid),
       url(request_url),
+      method(method),
+      referrer(referrer),
       frame_origin(frame_origin),
       response_url(request_url),
       download_to_file(download_to_file),
@@ -627,8 +634,9 @@ int ResourceDispatcher::StartAsync(
   // Compute a unique request_id for this renderer process.
   int request_id = MakeRequestID();
   pending_requests_[request_id] = std::make_unique<PendingRequestInfo>(
-      std::move(peer), request->resource_type, request->origin_pid,
-      frame_origin, request->url, request->download_to_file);
+      std::move(peer), request->resource_type, request->render_frame_id,
+      request->origin_pid, frame_origin, request->url, request->method,
+      request->referrer, request->download_to_file);
 
   if (resource_scheduling_filter_.get() && loading_task_runner) {
     resource_scheduling_filter_->SetRequestIdTaskRunner(request_id,
