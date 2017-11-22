@@ -34,6 +34,24 @@
       "revId": "ccf70e7b7d035366265bdfd4bcde30e84554a7ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a0ac28_9e3d310d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-flexbox/table-as-item-wide-content.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-22T13:31:31Z",
+      "side": 1,
+      "message": "The table becomes 500px wide, so it will become a 500x100 rectangle, rather than a 100x100 square.",
+      "parentUuid": "0bfc53aa_0d2e91db",
+      "revId": "ccf70e7b7d035366265bdfd4bcde30e84554a7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

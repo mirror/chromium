@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0677716d_fe3acd07",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/grid-items/explicitly-sized-grid-item-as-table.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-22T13:31:31Z",
+      "side": 1,
+      "message": "I\u0027ll remove it from the pass condition instead. I really only wanted to state that I want a green square. There\u0027s another test in this CL that typically will produce a wide rectangle rather than a square if it fails (it would require quite some noise in the test to cause any red), so I\u0027ll just remove the redness part, for the sake of simplicity and consistency, and add another reference in ../../reference/ that suits my needs. :)",
+      "parentUuid": "9e94987f_29e01238",
+      "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c649d8fb_104e8998",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T10:33:33Z",
       "side": 1,
       "message": "Grid does only 2 things regarding the grid item\u0027s size:\n  - set the OverrideContainingBlock size (width and height)\n  - set the item\u0027s override size (the one used when \u0027stretch\u0027 alignment is used)\n\nIn the case of the override size, I think it shouldn\u0027t be applied to tables, according to the CSS Box Alignment spec:\n\nhttps://drafts.csswg.org/css-align/#justify-cell\nhttps://drafts.csswg.org/css-align/#align-cell\n\nThe LayoutBlock logic already considers the OverrideContainingBlock when computing the available size, so I guess this change could make sense. However, it also considers whether the item is stretched or not, so we may want to ensure it\u0027s not applied to tables; if it is, we should add some special case in the LayoutBlock or LayoutBox logic to prevent it.\n\nFinally, since grid doesn\u0027t do anything else regarding the grid item\u0027s sizing, I wonder if the rest of the logic we are not going to execute because of the early return is still needed or not; is it equivalent to what LayoutBlock does ?",
+      "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086526f3_7b4834bc",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-22T13:31:31Z",
+      "side": 1,
+      "message": "I suppose we could handle the grid part of this problem in a separate CL. Without the grid hook here, external/wpt/css/css-grid/grid-items/explicitly-sized-grid-item-as-table.html fails (becomes 10px wide instead of 100px).",
+      "parentUuid": "c649d8fb_104e8998",
       "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
