@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e01e6319_07385d4d",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-22T15:46:58Z",
+      "side": 1,
+      "message": "nit: The \"_\" at the end of the method is almost invisible. While it might have been the intention to make this name look like SetDestination, I would prefer making it clear that those are different methods. A pattern seen in password_manager unittests is appending \"Ptr\", because the method gets a raw pointer (see my next comment). Or if you decide to pass no argument, than just SetDestinationCalled might be good.",
+      "range": {
+        "startLine": 123,
+        "startChar": 15,
+        "endLine": 123,
+        "endChar": 30
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdb788a_5fe6380f",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-22T15:46:58Z",
+      "side": 1,
+      "message": "Style guide forbids passing non-const references. If you plan tests where you need to access the destination, pass the Destination* (destination.get()). If you just need to detect that SetDestination was called, remove the argument.",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8deb90c4_0c744ccf",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-22T15:46:58Z",
+      "side": 1,
+      "message": "Hmm, abort_ seems not to be defined.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511e29f5_effe0cc4",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-22T15:46:58Z",
+      "side": 1,
+      "message": "It seems wasteful to copy the list on line 43 and clear it here. What about moving line 43 after the \"if (abort_)\" block?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d934ecf5_bb09b2b5",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-22T15:46:58Z",
+      "side": 1,
+      "message": "If I read WeakReferenceOwner::Invalidate() and the meaning of WeakReferenceOwner::flag_ correctly, after the first call to this, weak_factory_ will never produce a valid pointer again. Is that expected? I understood that the exporter is to be reused for subsequent exports.",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 34
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b06137d_23903ec6",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-22T15:46:58Z",
+      "side": 1,
+      "message": "We should also comment on why we need the same task runner through all possible executions. If we don\u0027t have a specific reason, we should use the PostTaskWithTraits to allow the scheduler more flexibility.",
+      "range": {
+        "startLine": 72,
+        "startChar": 43,
+        "endLine": 72,
+        "endChar": 55
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
