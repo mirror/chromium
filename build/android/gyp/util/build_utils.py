@@ -38,12 +38,13 @@ _HERMETIC_FILE_ATTR = (0644 << 16L)
 
 
 @contextlib.contextmanager
-def TempDir():
+def TempDir(delete=True):
   dirname = tempfile.mkdtemp()
   try:
     yield dirname
   finally:
-    shutil.rmtree(dirname)
+    if delete:
+      shutil.rmtree(dirname)
 
 
 def IterFiles(root_dir):
