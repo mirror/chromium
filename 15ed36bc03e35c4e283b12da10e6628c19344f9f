@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0a9359d_a0b10e22",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-22T23:10:04Z",
+      "side": 1,
+      "message": "We might be able shortly add method for retrieving a shared source ID from a web_contents, so it may be better to wait for that than add another use of UpdateSourceURL here.",
+      "range": {
+        "startLine": 167,
+        "startChar": 4,
+        "endLine": 167,
+        "endChar": 55
+      },
+      "revId": "15ed36bc03e35c4e283b12da10e6628c19344f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a797e1_2a5ee5f9",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-22T23:10:04Z",
+      "side": 1,
+      "message": "Please update your tests to use the new testing API, as in\nhttps://chromium-review.googlesource.com/c/chromium/src/+/770751",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 75
+      },
+      "revId": "15ed36bc03e35c4e283b12da10e6628c19344f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
