@@ -100,6 +100,10 @@ class CONTENT_EXPORT BlinkPlatformImpl : public blink::Platform {
       blink::WebGestureDevice device_source,
       const blink::WebFloatPoint& velocity,
       const blink::WebSize& cumulative_scroll) override;
+  std::unique_ptr<blink::WebGestureCurve> CreateFlingAnimationCurveFromDistance(
+      blink::WebGestureDevice device_source,
+      const blink::WebFloatPoint& distance,
+      const blink::WebSize& cumulative_scroll) override;
   bool AllowScriptExtensionForServiceWorker(
       const blink::WebURL& script_url) override;
   blink::WebCrypto* Crypto() override;

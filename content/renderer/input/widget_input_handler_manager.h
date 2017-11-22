@@ -50,6 +50,10 @@ class CONTENT_EXPORT WidgetInputHandlerManager
       blink::WebGestureDevice device_source,
       const blink::WebFloatPoint& velocity,
       const blink::WebSize& cumulative_scroll) override;
+  std::unique_ptr<blink::WebGestureCurve> CreateFlingAnimationCurveFromDistance(
+      blink::WebGestureDevice device_source,
+      const blink::WebFloatPoint& distance,
+      const blink::WebSize& cumulative_scroll) override;
 
   void DidOverscroll(
       const gfx::Vector2dF& accumulated_overscroll,
