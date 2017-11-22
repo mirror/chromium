@@ -112,6 +112,12 @@ class OneTimeMessageHandler {
   void OnOneTimeMessageResponse(const PortId& port_id,
                                 gin::Arguments* arguments);
 
+  // Called when the messaging event has been dispatched with the result of the
+  // listeners.
+  void OnEventFired(const PortId& port_id,
+                    v8::Local<v8::Context> context,
+                    v8::Local<v8::Value> result);
+
   // The associated bindings system. Outlives this object.
   NativeExtensionBindingsSystem* const bindings_system_;
 

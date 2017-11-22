@@ -17,10 +17,16 @@ void ExtensionJSRunner::RunJSFunction(v8::Local<v8::Function> function,
                                       v8::Local<v8::Context> context,
                                       int argc,
                                       v8::Local<v8::Value> argv[]) {
-  DCHECK(script_context_->v8_context() == context);
+  RunJSFunction(function, context, argc, argv, ResultCallback());
+}
 
+void ExtensionJSRunner::RunJSFunction(v8::Local<v8::Function> function,
+                                      v8::Local<v8::Context> context,
+                                      int argc,
+                                      v8::Local<v8::Value> argv[],
+                                      ResultCallback callback) {
   // TODO(devlin): Move ScriptContext::SafeCallFunction() into here?
-  script_context_->SafeCallFunction(function, argc, argv);
+  script_context_->SafeCallFunction(function, argc, argv, std::move(callback));
 }
 
 v8::Global<v8::Value> ExtensionJSRunner::RunJSFunctionSync(
@@ -33,17 +39,15 @@ v8::Global<v8::Value> ExtensionJSRunner::RunJSFunctionSync(
   bool did_complete = false;
   v8::Global<v8::Value> result;
   auto callback = base::Bind(
-      [](v8::Isolate* isolate, bool* did_complete_out,
-         v8::Global<v8::Value>* result_out,
-         const std::vector<v8::Local<v8::Value>>& results) {
+      [](bool* did_complete_out, v8::Global<v8::Value>* result_out,
+         v8::Local<v8::Context> context, v8::Local<v8::Value> result) {
         *did_complete_out = true;
         // The locals are released after the callback is executed, so we need to
         // grab a persistent handle.
-        if (!results.empty() && !results[0].IsEmpty())
-          result_out->Reset(isolate, results[0]);
+        if (!result.IsEmpty())
+          result_out->Reset(context->GetIsolate(), result);
       },
-      base::Unretained(context->GetIsolate()), base::Unretained(&did_complete),
-      base::Unretained(&result));
+      base::Unretained(&did_complete), base::Unretained(&result));
 
   script_context_->SafeCallFunction(function, argc, argv, callback);
   CHECK(did_complete) << "expected script to execute synchronously";
