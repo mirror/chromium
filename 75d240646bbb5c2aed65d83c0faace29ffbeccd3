@@ -22,6 +22,30 @@
       "revId": "75d240646bbb5c2aed65d83c0faace29ffbeccd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0d6457_3e681e1b",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-22T16:05:25Z",
+      "side": 1,
+      "message": "A lot of the other implementations are specific to what they are doing so they cannot be reused. We did copy this from https://cs.chromium.org/chromium/src/net/http/transport_security_state.cc?q\u003dhuffman+-f:third_party\u0026l\u003d359\u0026dr\u003dCSs so we could split that out into it\u0027s own file and reuse it for both implementations.",
+      "parentUuid": "d6900061_51596468",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 20
+      },
+      "revId": "75d240646bbb5c2aed65d83c0faace29ffbeccd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
