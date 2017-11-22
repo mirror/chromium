@@ -16,6 +16,24 @@
       "revId": "4afe4161a16fcc19facc1f2fa5ede1aece35c5e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818332a6_b620d0aa",
+        "filename": "cc/test/layer_tree_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-22T00:26:15Z",
+      "side": 1,
+      "message": "Thanks for pointing that out!\n\nI added it for everything other than pixel tests. It didn\u0027t look like these tests need to care about the mode, they are more for verifying rendering correctness. They don\u0027t run for single-threaded vs threaded in most cases either. Wdyt?",
+      "parentUuid": "7519f32f_71e8f1e3",
+      "revId": "4afe4161a16fcc19facc1f2fa5ede1aece35c5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
