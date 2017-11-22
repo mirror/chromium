@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "06e99736_e9e6ec6f",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T05:30:10Z",
+      "side": 1,
+      "message": "In a following migration, I would;\n- Rename Init() to InitDeprecated()\n- Add another Init() with callback.\n\nSo, I think we can simply rename Init() at L92 in base to InitDeprecated().\n\nOnce it\u0027s done, we can add async Init() with callback.\nConsidering the migration, I\u0027m thinking to add fallback, e.g.;\n\nif (instance_version_ \u003e\u003d InstanceType::kInitMinVersion) {\n  instance_-\u003eInit(std::move(host_proxy), base::BindOnce(OnConnectionReady, ...));\n  return;\n}\nif (instance_version_ \u003e\u003d InstanceType::kInitDeprecatedMinVersion) {\n  instance_-\u003eInitDeprecated(std::move(host_proxy));\n  OnConnectionReady();\n  return;\n}\nNOTREACHED();\n\nSo, I think we can skip counting args here.\n\nAs for static_assert for single direction mojo connection case,\nwe can simplify the template, I think.\n\ntemplate \u003ctypename T\u003e\nstruct HasInit {\n private:\n  template \u003ctypename U\u003e\n  static auto check(U x) -\u003e decltype(\u0026U::Init, std::true_type{});\n  static std::false_type check(...);\n\n public:\n  static constexpr bool value \u003d decltype(check(std::declval\u003cT\u003e()))::value;\n};\nstatic_assert(!HasInit\u003cInstanceType\u003e::value,\n              \"... appropriate error message...\");\n\n(I haven\u0027t checked if it matches our style guide yet, though).\n\nWDYT?",
+      "revId": "6f94288cf84a1ccd40f161c882420566a4f3797b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fb268e7_8bb6ee9e",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 1
