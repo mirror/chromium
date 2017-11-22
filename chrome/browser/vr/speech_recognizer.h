@@ -48,6 +48,13 @@ enum SpeechRecognitionState {
   SPEECH_RECOGNITION_NETWORK_ERROR,
 };
 
+enum SpeechRecognitionEndReason {
+  RESULT_BACK = 0,
+  CANCEL_BEFORE_RESULT = 1,
+  SHOW_TRY_AGAIN = 2,
+  COUNT,
+};
+
 class VoiceResultDelegate {
  public:
   virtual void OnVoiceResults(const base::string16& result) = 0;

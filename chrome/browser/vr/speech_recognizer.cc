@@ -5,6 +5,7 @@
 #include "chrome/browser/vr/speech_recognizer.h"
 
 #include "base/bind.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
 #include "chrome/grit/generated_resources.h"
@@ -322,8 +323,11 @@ void SpeechRecognizer::Stop() {
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&SpeechRecognizerOnIO::Stop,
                      base::Unretained(speech_recognizer_on_io_.get())));
-  if (ui_)
+  if (ui_) {
     ui_->SetSpeechRecognitionEnabled(false);
+    UMA_HISTOGRAM_ENUMERATION("VRVoiceSearchEndState", CANCEL_BEFORE_RESULT,
+                              COUNT);
+  }
 }
 
 void SpeechRecognizer::OnSpeechResult(const base::string16& query,
@@ -360,6 +364,8 @@ void SpeechRecognizer::OnSpeechRecognitionStateChanged(
       if (ui_) {
         ui_->SetRecognitionResult(
             l10n_util::GetStringUTF16(IDS_VR_NO_SPEECH_RECOGNITION_RESULT));
+        UMA_HISTOGRAM_ENUMERATION("VRVoiceSearchEndState", SHOW_TRY_AGAIN,
+                                  COUNT);
       }
       break;
     case SPEECH_RECOGNITION_OFF:
