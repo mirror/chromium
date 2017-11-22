@@ -23,7 +23,9 @@ namespace internal {
 struct NET_EXPORT_PRIVATE NetworkID {
   static NetworkID FromString(const std::string& network_id);
 
-  NetworkID(NetworkChangeNotifier::ConnectionType type, const std::string& id);
+  NetworkID(NetworkChangeNotifier::ConnectionType type,
+            const std::string& id,
+            int signal_strength);
   NetworkID(const NetworkID& other);
   ~NetworkID();
 
@@ -50,6 +52,8 @@ struct NET_EXPORT_PRIVATE NetworkID {
   // - An empty string in all other cases or if the network name is not
   //   exposed by platform APIs.
   std::string id;
+
+  int signal_strength;
 };
 
 }  // namespace internal

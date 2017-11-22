@@ -32,6 +32,14 @@ net::NetworkChangeNotifier::ConnectionType ConvertStringToConnectionType(
       connection_type_int);
 }
 
+int ConvertStringToSignalStrength(const std::string& signal_strength_string) {
+  int signal_strength_int = 0;
+  bool available =
+      base::StringToInt(signal_strength_string, &signal_strength_int);
+
+  return available ? signal_strength_int : 0;
+}
+
 }  // namespace
 
 namespace net {
@@ -40,27 +48,43 @@ namespace internal {
 
 // static
 NetworkID NetworkID::FromString(const std::string& network_id) {
-  size_t separator_index = network_id.find(kValueSeparator);
-  DCHECK_NE(std::string::npos, separator_index);
-  if (separator_index == std::string::npos) {
-    return NetworkID(NetworkChangeNotifier::CONNECTION_UNKNOWN, std::string());
+  size_t first_separator_index = network_id.find(kValueSeparator);
+  DCHECK_NE(std::string::npos, first_separator_index);
+  if (first_separator_index == std::string::npos) {
+    return NetworkID(NetworkChangeNotifier::CONNECTION_UNKNOWN, std::string(),
+                     0);
   }
 
-  return NetworkID(
-      ConvertStringToConnectionType(network_id.substr(separator_index + 1)),
-      network_id.substr(0, separator_index));
+  size_t second_separator_index =
+      network_id.find(kValueSeparator, first_separator_index + 1);
+
+  if (second_separator_index == std::string::npos) {
+    return NetworkID(ConvertStringToConnectionType(
+                         network_id.substr(first_separator_index + 1)),
+                     network_id.substr(0, first_separator_index), 0);
+  }
+
+  return NetworkID(ConvertStringToConnectionType(network_id.substr(
+                       first_separator_index + 1,
+                       second_separator_index - first_separator_index - 1)),
+                   network_id.substr(0, first_separator_index),
+                   ConvertStringToSignalStrength(
+                       network_id.substr(second_separator_index + 1)));
 }
 
 NetworkID::NetworkID(NetworkChangeNotifier::ConnectionType type,
-                     const std::string& id)
-    : type(type), id(id) {}
+                     const std::string& id,
+                     int signal_strength)
+    : type(type), id(id), signal_strength(signal_strength) {}
 
-NetworkID::NetworkID(const NetworkID& other) : type(other.type), id(other.id) {}
+NetworkID::NetworkID(const NetworkID& other)
+    : type(other.type), id(other.id), signal_strength(other.signal_strength) {}
 
 NetworkID::~NetworkID() {}
 
 bool NetworkID::operator==(const NetworkID& other) const {
-  return type == other.type && id == other.id;
+  return type == other.type && id == other.id &&
+         signal_strength == other.signal_strength;
 }
 
 bool NetworkID::operator!=(const NetworkID& other) const {
@@ -70,16 +94,19 @@ bool NetworkID::operator!=(const NetworkID& other) const {
 NetworkID& NetworkID::operator=(const NetworkID& other) {
   type = other.type;
   id = other.id;
+  signal_strength = other.signal_strength;
   return *this;
 }
 
 // Overloaded to support ordered collections.
 bool NetworkID::operator<(const NetworkID& other) const {
-  return std::tie(type, id) < std::tie(other.type, other.id);
+  return std::tie(type, id, signal_strength) <
+         std::tie(other.type, other.id, other.signal_strength);
 }
 
 std::string NetworkID::ToString() const {
-  return id + kValueSeparator + base::IntToString(static_cast<int>(type));
+  return id + kValueSeparator + base::IntToString(static_cast<int>(type)) +
+         kValueSeparator + base::IntToString(signal_strength);
 }
 
 }  // namespace internal
