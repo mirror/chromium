@@ -3237,6 +3237,31 @@
             ]
         }
     ],
+    "SavePreviousDocumentResources": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "save-previous-document-resource-until-onload",
+                    "params": {
+                        "until": "onload"
+                    }
+                },
+                {
+                    "name": "save-previous-document-resource-until-dcl",
+                    "params": {
+                        "until": "onDOMContentLoaded"
+                    }
+                }
+            ]
+        }
+    ],
     "SearchEnginePromo": [
         {
             "platforms": [
