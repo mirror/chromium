@@ -43,7 +43,8 @@ class CONTENT_EXPORT SyntheticTouchscreenPinchGesture
                           const base::TimeTicks& timestamp);
 
   void SetupCoordinatesAndStopTime(SyntheticGestureTarget* target);
-  float GetDeltaForPointer0AtTime(const base::TimeTicks& timestamp) const;
+  float GetDeltaForPointer0AtTime(const base::TimeTicks& timestamp,
+                                  SyntheticGestureTarget* target);
   base::TimeTicks ClampTimestamp(const base::TimeTicks& timestamp) const;
   bool HasReachedTarget(const base::TimeTicks& timestamp) const;
 
@@ -56,6 +57,8 @@ class CONTENT_EXPORT SyntheticTouchscreenPinchGesture
   GestureState state_;
   base::TimeTicks start_time_;
   base::TimeTicks stop_time_;
+
+  bool slop_sent_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SyntheticTouchscreenPinchGesture);
