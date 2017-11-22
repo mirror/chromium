@@ -52,6 +52,24 @@
       "revId": "6094628bf5efbc2dbcefceeb547b5914055c86d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de16a87f_4ea31fb4",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-11-22T23:21:24Z",
+      "side": 1,
+      "message": "OK.  For the record, the case I\u0027m trying to handle here is where the #1 network is VPN, and the #2 network changes between ethernet\u003c-\u003ewifi.",
+      "parentUuid": "7fede5d6_8659e562",
+      "revId": "6094628bf5efbc2dbcefceeb547b5914055c86d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
