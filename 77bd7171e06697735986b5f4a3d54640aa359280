@@ -34,6 +34,24 @@
       "revId": "77bd7171e06697735986b5f4a3d54640aa359280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53383a52_32b083ff",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_headers.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-22T05:03:16Z",
+      "side": 1,
+      "message": "This looks good :)",
+      "parentUuid": "1df43495_3841594c",
+      "revId": "77bd7171e06697735986b5f4a3d54640aa359280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
