@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb554984_3b27478c",
+        "filename": "content/common/mac/attributed_string_coder.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T04:34:22Z",
+      "side": 1,
+      "message": "I\u0027m not _super_ familiar with style in src/content, but I think all these initializers should be dropped, and font_point_size_ should be declared \u003d 0 in the .h.  |effective_range_()| and |string_()| don\u0027t need to appear in the initializer lists when they are default-initialized.\n\nBut if all of that is wrong, then here, and on line 80, |font_name_()| *should* appear in the initializer list to be consistent.",
+      "revId": "f6fcc98a5861066f455dbe9949a62f3840e6bc63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150fae8e_a5b20fe0",
+        "filename": "third_party/WebKit/Source/platform/fonts/mac/FontPlatformDataMac.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-22T04:34:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure how well tested this stuff is -- the use case is a bit obscure. But a good way to ensure it still works would be to `return false;` from this function. Then start Chrome and ensure things look correct in the renderer. Returning false from here will just cause all fonts to load over IPC rather than just those that require reading from users\u0027 home directories.",
+      "revId": "f6fcc98a5861066f455dbe9949a62f3840e6bc63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
