@@ -75,12 +75,6 @@ class ContentViewCore : public WebContentsObserver {
       jlong selectPopupSourceFrame,
       const base::android::JavaParamRef<jintArray>& indices);
 
-  // Returns the amount of the top controls height if controls are in the state
-  // of shrinking Blink's view size, otherwise 0.
-  int GetTopControlsShrinkBlinkHeightPixForTesting(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-
   void SendOrientationChangeEvent(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
