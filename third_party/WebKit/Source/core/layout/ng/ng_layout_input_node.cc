@@ -94,6 +94,10 @@ bool NGLayoutInputNode::IsFixedContainer() const {
   return box_->CanContainFixedPositionObjects();
 }
 
+bool NGLayoutInputNode::IsTable() const {
+  return box_->IsTable();
+}
+
 bool NGLayoutInputNode::CreatesNewFormattingContext() const {
   return IsBlock() && box_->AvoidsFloats();
 }
