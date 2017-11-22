@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a080974e_bac6c8af",
+        "filename": "third_party/WebKit/Source/platform/fonts/skia/FontCacheSkia.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-22T01:44:44Z",
+      "side": 1,
+      "message": "matchFamilyStyle() is supposed to pass ownership to the caller [1], so I believe prev adoption is correct.\n\n[1] https://cs.chromium.org/chromium/src/third_party/skia/include/ports/SkFontMgr.h?rcl\u003dbff5a98cdfda84a94a1f592c638a809daaba2924\u0026l\u003d59",
+      "revId": "8150ce6b6943b69f6f3462fffa8e0b683e2bb5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096babd2_db9ca7f6",
+        "filename": "third_party/WebKit/Source/platform/fonts/win/FontCacheSkiaWin.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-22T01:44:44Z",
+      "side": 1,
+      "message": "This only interesting caller I can find for this method also seems to pass typeface ownership, so prev adoption looks correct: https://cs.chromium.org/chromium/src/content/test/layouttest_support.cc?rcl\u003d81c74e23a9ef607ad3598d6f243fe4786da10b86\u0026l\u003d164\n\nProbably a good idea to update the API and avoid this confusion.",
+      "revId": "8150ce6b6943b69f6f3462fffa8e0b683e2bb5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
