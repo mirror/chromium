@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/common/navigation_params.mojom.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_renderer_host.h"
@@ -182,6 +183,7 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   CreateStubInterfaceProviderRequest();
 
  private:
+  friend class NavigationSimulator;
   class NavigationInterceptor;
 
   void SendNavigateWithParameters(int nav_entry_id,
@@ -194,6 +196,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
 
   void PrepareForCommitInternal(const GURL& redirect_url,
                                 const net::HostPortPair& socket_address);
+
+  void SimulateBeginNavigation(const CommonNavigationParams& common_params,
+                               mojom::BeginNavigationParamsPtr begin_params);
 
   // Computes the page ID for a pending navigation in this RenderFrameHost;
   int32_t ComputeNextPageID();
