@@ -813,12 +813,18 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
   ProjectRectsToGraphicsLayerSpace(page_->DeprecatedLocalMainFrame(),
                                    layer_rects, graphics_layer_rects);
 
+  fprintf(stderr, "HitTestRects: \n");
   for (const auto& layer_rect : graphics_layer_rects) {
     const GraphicsLayer* graphics_layer = layer_rect.key;
     WebVector<WebTouchInfo> touch(layer_rect.value.size());
+    fprintf(stderr, "\tLayer %s: \n",
+            graphics_layer->DebugName().Utf8().data());
     for (size_t i = 0; i < layer_rect.value.size(); ++i) {
       touch[i].rect = EnclosingIntRect(layer_rect.value[i].rect);
       touch[i].touch_action = layer_rect.value[i].whitelisted_touch_action;
+      fprintf(stderr, "\t\tRect = %d, %d %dX%d, touch_action = %d\n",
+              touch[i].rect.x, touch[i].rect.y, touch[i].rect.width,
+              touch[i].rect.height, touch[i].touch_action);
     }
     graphics_layer->PlatformLayer()->SetTouchEventHandlerRegion(touch);
   }
