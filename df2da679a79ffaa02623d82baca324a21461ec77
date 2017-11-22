@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "effab412_a575409a",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-22T00:37:33Z",
+      "side": 1,
+      "message": "CompositedLayerMapping passes -285,-185 paintOffset to ScrollableAreaPainter::PaintScrollCorner(). A lot of tests covers this, e.g. the tests whose failure expectations are removed in https://chromium-review.googlesource.com/c/chromium/src/+/780376/6/third_party/WebKit/LayoutTests/TestExpectations. With a wrong offset or OffsetFromLayoutObject(), the scroll corners will paint at wrong places or disappear. We can also paint scroll corners in the same way as scrollbars.",
+      "parentUuid": "a5058f54_d891277f",
+      "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10bb968f_8ce9e436",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
         "patchSetId": 5

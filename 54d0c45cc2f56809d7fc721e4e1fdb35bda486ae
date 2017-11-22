@@ -16,6 +16,24 @@
       "revId": "54d0c45cc2f56809d7fc721e4e1fdb35bda486ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dee695c_5cf4eaab",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-22T00:37:33Z",
+      "side": 1,
+      "message": "There are a lot of layout tests testing scrollbars in various configurations. All layout tests passed for SPv1 and there are no regressions for SPv175 with this CL. Anyway I will look into the details of visual rect change.",
+      "parentUuid": "3ce20650_4b35d028",
+      "revId": "54d0c45cc2f56809d7fc721e4e1fdb35bda486ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
