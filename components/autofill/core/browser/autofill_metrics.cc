@@ -382,14 +382,70 @@ void LogPredictionQualityMetrics(
   // purposes, but remember whether or not it was empty for more precise logging
   // later.
   bool is_empty = (actual_type == EMPTY_TYPE);
-  // TODO(crbug.com/780471): Do not log anything if a field is empty and is not
-  // supposed to be automatically filled for now. Long term solution is add a
-  // server enum to capture this case to accurately collect metrics.
-  if (is_empty && field.only_fill_when_focused())
-    return;
   bool is_ambiguous = (actual_type == AMBIGUOUS_TYPE);
   if (is_empty || is_ambiguous)
     actual_type = UNKNOWN_TYPE;
+
+  // Log metrics for a field that is |only_fill_when_focoused|==true. Basically
+  // autofill might have a field prediction but it also thinks it should not
+  // be filled automatically unless user focused on the field. This requires
+  // different metrics logging than normal fields.
+  if (field.only_fill_when_focused()) {
+    // If it is filled with values unknown, it is a true negative.
+    if (actual_type == UNKNOWN_TYPE) {
+      // Only log aggregate true negative; do not log type specific metrics
+      // for UNKNOWN/EMPTY.
+      DVLOG(2) << "TRUE NEGATIVE";
+      LogUMAHistogramEnumeration(
+          aggregate_histogram,
+          (is_empty ? AutofillMetrics::TRUE_NEGATIVE_EMPTY
+                    : (is_ambiguous ? AutofillMetrics::TRUE_NEGATIVE_AMBIGUOUS
+                                    : AutofillMetrics::TRUE_NEGATIVE_UNKNOWN)),
+          AutofillMetrics::NUM_FIELD_TYPE_QUALITY_METRICS);
+      return;
+    }
+
+    // If it is filled with same type as predicted, it is a true psotive. We
+    // also log an UNNECCESSARY_RATIONALIZATION to indicate we could have
+    // got it right if no rationalization is performed.
+    if (predicted_type == actual_type) {
+      DVLOG(2) << "TRUE POSITIVE";
+      LogUMAHistogramEnumeration(
+          aggregate_histogram, AutofillMetrics::TRUE_POSITIVE,
+          AutofillMetrics::NUM_FIELD_TYPE_QUALITY_METRICS);
+      LogUMAHistogramEnumeration(
+          type_specific_histogram,
+          GetFieldTypeGroupMetric(actual_type, AutofillMetrics::TRUE_POSITIVE),
+          KMaxFieldTypeGroupMetric);
+
+      DVLOG(2) << "UNNECCESSARY_RATIONALIZATION";
+      LogUMAHistogramEnumeration(
+          aggregate_histogram, AutofillMetrics::UNNECCESSARY_RATIONALIZATION,
+          AutofillMetrics::NUM_FIELD_TYPE_QUALITY_METRICS);
+      LogUMAHistogramEnumeration(
+          type_specific_histogram,
+          GetFieldTypeGroupMetric(
+              actual_type, AutofillMetrics::UNNECCESSARY_RATIONALIZATION),
+          KMaxFieldTypeGroupMetric);
+      return;
+    }
+
+    DVLOG(2) << "MISMATCH";
+    // Here the prediction is wrong, but user has to provide some value still.
+    // This should be a false negative.
+    LogUMAHistogramEnumeration(aggregate_histogram,
+                               AutofillMetrics::FALSE_NEGATIVE_MISMATCH,
+                               AutofillMetrics::NUM_FIELD_TYPE_QUALITY_METRICS);
+    // Log FALSE_NEGATIVE_MISMATCH for predicted type if it did predicted
+    // something but actual type is different.
+    if (predicted_type != UNKNOWN_TYPE)
+      LogUMAHistogramEnumeration(
+          type_specific_histogram,
+          GetFieldTypeGroupMetric(predicted_type,
+                                  AutofillMetrics::FALSE_NEGATIVE_MISMATCH),
+          KMaxFieldTypeGroupMetric);
+    return;
+  }
 
   // If the predicted and actual types match then it's either a true positive
   // or a true negative (if they are both unknown). Do not log type specific
