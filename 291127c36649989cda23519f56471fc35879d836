@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493e9e4b_9b21b27d",
+        "filename": "components/arc/video_accelerator/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-11-22T10:38:51Z",
+      "side": 1,
+      "message": "just curious, we no longer support ARGB format since this CL?",
+      "revId": "291127c36649989cda23519f56471fc35879d836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
