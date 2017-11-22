@@ -157,9 +157,8 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   //    activated.
   //
   // Must be called from the IO thread.
-  void FindReadyRegistrationForDocument(
-      const GURL& document_url,
-      const FindRegistrationCallback& callback);
+  void FindReadyRegistrationForDocument(const GURL& document_url,
+                                        FindRegistrationCallback callback);
 
   // Returns the registration for |scope|. It is guaranteed that the returned
   // registration has the activated worker.
@@ -172,9 +171,8 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   //    activated.
   //
   // Must be called from the IO thread.
-  void FindReadyRegistrationForPattern(
-      const GURL& scope,
-      const FindRegistrationCallback& callback);
+  void FindReadyRegistrationForPattern(const GURL& scope,
+                                       FindRegistrationCallback callback);
 
   // Returns the registration for |registration_id|. It is guaranteed that the
   // returned registration has the activated worker.
@@ -189,7 +187,7 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   // Must be called from the IO thread.
   void FindReadyRegistrationForId(int64_t registration_id,
                                   const GURL& origin,
-                                  const FindRegistrationCallback& callback);
+                                  FindRegistrationCallback callback);
 
   // Returns the registration for |registration_id|. It is guaranteed that the
   // returned registration has the activated worker.
@@ -207,20 +205,20 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   //
   // Must be called from the IO thread.
   void FindReadyRegistrationForIdOnly(int64_t registration_id,
-                                      const FindRegistrationCallback& callback);
+                                      FindRegistrationCallback callback);
 
   // All these methods must be called from the IO thread.
-  void GetAllRegistrations(const GetRegistrationsInfosCallback& callback);
+  void GetAllRegistrations(GetRegistrationsInfosCallback callback);
   void GetRegistrationUserData(int64_t registration_id,
                                const std::vector<std::string>& keys,
-                               const GetUserDataCallback& callback);
+                               GetUserDataCallback callback);
   void GetRegistrationUserDataByKeyPrefix(int64_t registration_id,
                                           const std::string& key_prefix,
-                                          const GetUserDataCallback& callback);
+                                          GetUserDataCallback callback);
   void GetRegistrationUserKeysAndDataByKeyPrefix(
       int64_t registration_id,
       const std::string& key_prefix,
-      const GetUserKeysAndDataCallback& callback);
+      GetUserKeysAndDataCallback callback);
   void StoreRegistrationUserData(
       int64_t registration_id,
       const GURL& origin,
@@ -235,10 +233,10 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
       const StatusCallback& callback);
   void GetUserDataForAllRegistrations(
       const std::string& key,
-      const GetUserDataForAllRegistrationsCallback& callback);
+      GetUserDataForAllRegistrationsCallback callback);
   void GetUserDataForAllRegistrationsByKeyPrefix(
       const std::string& key_prefix,
-      const GetUserDataForAllRegistrationsCallback& callback);
+      GetUserDataForAllRegistrationsCallback callback);
 
   // This function can be called from any thread, but the callback will always
   // be called on the UI thread.
@@ -284,11 +282,11 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   void ShutdownOnIO();
 
   void DidFindRegistrationForFindReady(
-      const FindRegistrationCallback& callback,
+      FindRegistrationCallback callback,
       ServiceWorkerStatusCode status,
       scoped_refptr<ServiceWorkerRegistration> registration);
   void OnStatusChangedForFindReadyRegistration(
-      const FindRegistrationCallback& callback,
+      FindRegistrationCallback callback,
       scoped_refptr<ServiceWorkerRegistration> registration);
 
   void DidDeleteAndStartOver(ServiceWorkerStatusCode status);

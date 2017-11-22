@@ -49,8 +49,8 @@ SaveFoundRegistrations(
     bool* called,
     std::vector<ServiceWorkerRegistrationInfo>* registrations) {
   *called = false;
-  return base::Bind(&SaveFoundRegistrationsCallback, expected_status, called,
-                    registrations);
+  return base::BindOnce(&SaveFoundRegistrationsCallback, expected_status,
+                        called, registrations);
 }
 
 }  // namespace
