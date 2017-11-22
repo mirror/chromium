@@ -449,10 +449,8 @@ void BookmarkChangeProcessor::BookmarkNodeFaviconChanged(
     return;
   }
 
-  // Ignore favicons that are being loaded.
-  if (!node->is_favicon_loaded()) {
-    // Sutble way to trigger a load of the favicon.
-    model->GetFavicon(node);
+  if (!model->EnsureFaviconLoad(node)) {
+    // Ignore favicons that are being loaded.
     return;
   }
 
