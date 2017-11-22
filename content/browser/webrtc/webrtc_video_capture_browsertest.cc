@@ -37,7 +37,8 @@ namespace {
 static const char kVideoCaptureHtmlFile[] = "/media/video_capture_test.html";
 static const char kStartVideoCaptureAndVerifySize[] =
     "startVideoCaptureAndVerifySize()";
-static const char kWaitForVideoToTurnBlack[] = "waitForVideoToTurnBlack()";
+static const char kWaitForVideoToTurnBlack[] =
+    "detectBlackVideo().then(reportTestSuccess)";
 static const char kVerifyHasReceivedTrackEndedEvent[] =
     "verifyHasReceivedTrackEndedEvent()";
 
