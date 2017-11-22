@@ -170,4 +170,16 @@ interface FrameHost {
   // Sent by the renderer when a navigation commits in the frame.
   DidCommitProvisionalLoad(
       DidCommitProvisionalLoadParams params);
+
+  // Sent when the frame changes its window.name.
+  DidChangeName(string name, string unique_name);
+
+  // Sent when the frame starts enforcing an insecure request policy. Sending
+  // this information in DidCommitProvisionalLoad isn't sufficient; this
+  // message is needed because, for example, a document can dynamically insert
+  // a <meta> tag that causes strict mixed content checking to be enforced.
+  // policy type is actually blink::WebInsecureRequestPolicy which just an
+  // to uint8 which we use here as the wire format.
+  EnforceInsecureRequestPolicy(
+      /*blink::WebInsecureRequestPolicy*/ uint8 policy);
 };

@@ -489,7 +489,7 @@ void TestRenderFrameHost::DidChangeOpener(int opener_routing_id) {
 
 void TestRenderFrameHost::DidEnforceInsecureRequestPolicy(
     blink::WebInsecureRequestPolicy policy) {
-  OnEnforceInsecureRequestPolicy(policy);
+  EnforceInsecureRequestPolicy(policy);
 }
 
 void TestRenderFrameHost::PrepareForCommit() {

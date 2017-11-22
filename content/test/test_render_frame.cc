@@ -53,6 +53,12 @@ class MockFrameHost : public mojom::FrameHost {
     last_commit_params_ = std::move(params);
   }
 
+  void DidChangeName(const std::string& name,
+                     const std::string& unique_name) override {}
+
+  void EnforceInsecureRequestPolicy(
+      blink::WebInsecureRequestPolicy policy) override {}
+
  private:
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
       last_commit_params_;
