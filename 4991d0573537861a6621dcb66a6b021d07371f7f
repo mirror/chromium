@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fc73207_d8278da1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T22:30:56Z",
+      "side": 1,
+      "message": "Do we ever expect a well-behaved renderer to send this scheme?",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88844f4_060d0277",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T22:30:56Z",
+      "side": 1,
+      "message": "Why does this need to be imported here?",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83cc4b1_464d385a",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T22:30:56Z",
+      "side": 1,
+      "message": "Is it valid for the renderer to send a BeginNavigation with no initiator?",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5150930a_d80c9f41",
+        "filename": "third_party/WebKit/public/platform/mixed_content_context_type.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T22:30:56Z",
+      "side": 1,
+      "message": "I would suggest just marking this a [Native] enum for now. In a followup, we can convert this to mojom, use it everywhere, and delete WebMixedContentContextType.h.",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
