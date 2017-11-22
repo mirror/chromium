@@ -23,13 +23,12 @@ OpenPDFParamsParser = function(getNamedDestinationsFunction) {
 OpenPDFParamsParser.prototype = {
   /**
    * @private
-   * Parse zoom parameter of open PDF parameters. If this
-   * parameter is passed while opening PDF then PDF should be opened
-   * at the specified zoom level.
+   * Parse zoom parameter of open PDF parameters. The PDF should be opened at
+   * the specified zoom level.
    * @param {string} paramValue zoom value.
-   * @param {Object} viewportPosition to store zoom and position value.
+   * @param {Object} params Object to store zoom and position value.
    */
-  parseZoomParam_: function(paramValue, viewportPosition) {
+  parseZoomParam_: function(paramValue, params) {
     var paramValueSplit = paramValue.split(',');
     if ((paramValueSplit.length != 1) && (paramValueSplit.length != 3))
       return;
@@ -41,7 +40,7 @@ OpenPDFParamsParser.prototype = {
 
     // Handle #zoom=scale.
     if (paramValueSplit.length == 1) {
-      viewportPosition['zoom'] = zoomFactor;
+      params['zoom'] = zoomFactor;
       return;
     }
 
@@ -50,8 +49,41 @@ OpenPDFParamsParser.prototype = {
       x: parseFloat(paramValueSplit[1]),
       y: parseFloat(paramValueSplit[2])
     };
-    viewportPosition['position'] = position;
-    viewportPosition['zoom'] = zoomFactor;
+    params['position'] = position;
+    params['zoom'] = zoomFactor;
+  },
+
+  /**
+   * @private
+   * Parse view parameter of open PDF parameters. The PDF should be opened at
+   * the specified fitting type mode and position.
+   * @param {string} paramValue view value.
+   * @param {Object} params Object to store fitting mode and position value.
+   */
+  parseViewParam_: function(paramValue, params) {
+    var viewModeComponents = paramValue.toLowerCase().split(',');
+    if (viewModeComponents.length < 1)
+      return;
+
+    var viewMode = viewModeComponents[0];
+    var acceptsPositionParam;
+    if (viewMode === 'fit') {
+      params['view'] = FittingType.FIT_TO_PAGE;
+      acceptsPositionParam = false;
+    } else if (viewMode === 'fith') {
+      params['view'] = FittingType.FIT_TO_WIDTH;
+      acceptsPositionParam = true;
+    } else if (viewMode === 'fitv') {
+      params['view'] = FittingType.FIT_TO_HEIGHT;
+      acceptsPositionParam = true;
+    }
+
+    if (!acceptsPositionParam || viewModeComponents.length < 2)
+      return;
+
+    var position = parseFloat(viewModeComponents[1]);
+    if (!isNaN(position))
+      params['viewPosition'] = position;
   },
 
   /**
@@ -112,8 +144,8 @@ OpenPDFParamsParser.prototype = {
    * @param {Function} callback function to be called with viewport info.
    */
   getViewportFromUrlParams: function(url, callback) {
-    var viewportPosition = {};
-    viewportPosition['url'] = url;
+    var params = {};
+    params['url'] = url;
 
     var paramsDictionary = this.parseUrlParams_(url);
 
@@ -121,29 +153,20 @@ OpenPDFParamsParser.prototype = {
       // |pageNumber| is 1-based, but goToPage() take a zero-based page number.
       var pageNumber = parseInt(paramsDictionary['page'], 10);
       if (!isNaN(pageNumber) && pageNumber > 0)
-        viewportPosition['page'] = pageNumber - 1;
+        params['page'] = pageNumber - 1;
     }
 
-    if ('view' in paramsDictionary) {
-      var viewMode = paramsDictionary['view'].toLowerCase();
-      if (viewMode === 'fit')
-        viewportPosition['view'] = FittingType.FIT_TO_PAGE;
-      else if (viewMode === 'fith')
-        viewportPosition['view'] = FittingType.FIT_TO_WIDTH;
-      else if (viewMode === 'fitv')
-        viewportPosition['view'] = FittingType.FIT_TO_HEIGHT;
-    }
+    if ('view' in paramsDictionary)
+      this.parseViewParam_(paramsDictionary['view'], params);
 
     if ('zoom' in paramsDictionary)
-      this.parseZoomParam_(paramsDictionary['zoom'], viewportPosition);
+      this.parseZoomParam_(paramsDictionary['zoom'], params);
 
-    if (viewportPosition.page === undefined &&
-        'nameddest' in paramsDictionary) {
-      this.outstandingRequests_.push(
-          {callback: callback, viewportPosition: viewportPosition});
+    if (params.page === undefined && 'nameddest' in paramsDictionary) {
+      this.outstandingRequests_.push({callback: callback, params: params});
       this.getNamedDestinationsFunction_(paramsDictionary['nameddest']);
     } else {
-      callback(viewportPosition);
+      callback(params);
     }
   },
 
@@ -156,8 +179,8 @@ OpenPDFParamsParser.prototype = {
   onNamedDestinationReceived: function(pageNumber) {
     var outstandingRequest = this.outstandingRequests_.shift();
     if (pageNumber != -1)
-      outstandingRequest.viewportPosition.page = pageNumber;
-    outstandingRequest.callback(outstandingRequest.viewportPosition);
+      outstandingRequest.params.page = pageNumber;
+    outstandingRequest.callback(outstandingRequest.params);
   },
 };
 
