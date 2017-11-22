@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcac4bcf_2fb93239",
+        "filename": "chrome/browser/ui/webui/translate_internals/translate_internals_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-22T07:26:16Z",
+      "side": 1,
+      "message": "\"* const web_contents\" and maybe even \"const *\"?",
+      "revId": "9e4f76fd0e6987672cef27ea33418fd633505a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dab7f70_c7d76c59",
+        "filename": "chrome/browser/ui/webui/translate_internals/translate_internals_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-22T07:26:16Z",
+      "side": 1,
+      "message": "Profile* const profile",
+      "revId": "9e4f76fd0e6987672cef27ea33418fd633505a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
