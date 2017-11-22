@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba4b328d_fb10e83f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-22T22:32:52Z",
+      "side": 1,
+      "message": "nit: positive",
+      "range": {
+        "startLine": 408,
+        "startChar": 65,
+        "endLine": 408,
+        "endChar": 72
+      },
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e44c890_8fb2b237",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-22T22:32:52Z",
+      "side": 1,
+      "message": "nit: that the prediction was good but the rationalization was not.",
+      "range": {
+        "startLine": 409,
+        "startChar": 60,
+        "endLine": 410,
+        "endChar": 55
+      },
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998746bd_e5386f17",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-22T22:32:52Z",
+      "side": 1,
+      "message": "For this I think we could log a third value for the rationalization metric. Wrong predicted.\n\nSince we can\u0027t really assert if the rationalization was good since it depends on the prediction.\n\nSo you\u0027d have\n\nGOOD_RATIONALIZATION\nBAD_RATIONALIZATION\nWRONG_PREDICTED_TYPE\n\nThat way we have exactly one log for each field. And we can evaluate what to improve.\n\nWDYT?",
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6030cb_c48de8d0",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-22T22:32:52Z",
+      "side": 1,
+      "message": "I think this should be logged separately. Since the rationalization metric log is additionnal to what we already log. You could add a new metric that logs whether the \"fill_only_when_focused\" was a good call or not.\n\nThat way we keep the \"only one log per field\" that this metric currently has.\n\nWDYT?",
+      "range": {
+        "startLine": 290,
+        "startChar": 4,
+        "endLine": 290,
+        "endChar": 32
+      },
+      "revId": "16c265001f74e26d16a1c9cea32b34e7a90f0252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
