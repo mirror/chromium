@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "0c6890c9_7568a85a",
+        "filename": "components/sync/user_events/trial_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-22T22:41:13Z",
+      "side": 1,
+      "message": "Nit: Seems base:: is a pretty short prefix to just include at the call site - rather than having these using declarations.",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "d073add144e91f8421c95435c983bd221863177b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4229792_8672b2c8",
+        "filename": "components/sync/user_events/trial_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-22T22:41:13Z",
+      "side": 1,
+      "message": "This activates the trial, which doesn\u0027t seem optimal. Marking trials as active unnecessarily pollutes metrics, since now the state is tagged with those trials even if no client code (besides this) checked their state - so you\u0027ll get UMA data from users who don\u0027t interact with the relevant features.\n\nI think it would be better to use GetActiveFieldTrialGroups() and check the existence of the trial there.\n\nAlso, to double check, is the event_trial_deps_ association needed - or could we log all CHROME_SYNC_SERVICE variation ids here?\n\nSeparately, let\u0027s rename CHROME_SYNC_SERVICE to CHROME_SYNC_EVENT_LOGGER.",
+      "range": {
+        "startLine": 87,
+        "startChar": 48,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "d073add144e91f8421c95435c983bd221863177b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8afab9_98104956",
+        "filename": "components/sync/user_events/trial_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-22T22:41:13Z",
+      "side": 1,
+      "message": "Nit: Can you add a short comment describing the class?",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "d073add144e91f8421c95435c983bd221863177b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e336010_11734eec",
         "filename": "components/sync/user_events/trial_recorder.h",
         "patchSetId": 12
