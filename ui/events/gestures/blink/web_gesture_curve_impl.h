@@ -29,6 +29,12 @@ class WebGestureCurveImpl : public blink::WebGestureCurve {
       const gfx::Vector2dF& initial_velocity,
       const gfx::Vector2dF& initial_offset,
       bool on_main_thread);
+  static std::unique_ptr<blink::WebGestureCurve>
+  CreateFromDefaultPlatformCurveByDistance(
+      blink::WebGestureDevice device_source,
+      const gfx::Vector2dF& total_distance,
+      const gfx::Vector2dF& initial_offset,
+      bool on_main_thread);
   static std::unique_ptr<blink::WebGestureCurve> CreateFromUICurveForTesting(
       std::unique_ptr<GestureCurve> curve,
       const gfx::Vector2dF& initial_offset);
@@ -37,6 +43,8 @@ class WebGestureCurveImpl : public blink::WebGestureCurve {
 
   // WebGestureCurve implementation.
   bool Apply(double time, blink::WebGestureCurveTarget* target) override;
+
+  gfx::Vector2dF GetFinalOffset() override;
 
  private:
   enum class ThreadType {
