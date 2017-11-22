@@ -127,7 +127,7 @@ void UpdateFromSystemSettings(content::RendererPreferences* prefs,
 #endif
 
 #if defined(TOOLKIT_VIEWS)
-  prefs->caret_blink_interval = views::Textfield::GetCaretBlinkMs() / 1000.0;
+  prefs->caret_blink_interval = views::Textfield::GetCaretBlinkInterval();
 #endif
 
 #if defined(OS_MACOSX)
