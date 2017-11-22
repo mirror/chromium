@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce276ac_392bacbc",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-22T21:23:19Z",
+      "side": 1,
+      "message": "Actually, I think Textfield::PaintTextAndCursor should check if \"SkColorGetA(GetBackgroundColor()) !\u003d SK_AlphaOPAQUE\" and then pass \"placeholder_text_draw_flags_ | gfx::Canvas::NO_SUBPIXEL_RENDERING\" for the placeholder DrawStringRectWithFlags call, similar to Textfield::UpdateBackgroundColor. Also, please confirm that UpdateBackgroundColor is already doing the right thing (disabling subpixel rendering) when this password textfield is *not* showing placeholder text, thanks!",
+      "revId": "2fce9ff5e24b23bd814a972d964bbb6da67d68b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
