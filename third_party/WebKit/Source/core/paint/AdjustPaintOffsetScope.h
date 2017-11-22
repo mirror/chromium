@@ -7,6 +7,7 @@
 
 #include "core/layout/LayoutBox.h"
 #include "core/paint/PaintInfo.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 
 namespace blink {
@@ -28,6 +29,31 @@ class AdjustPaintOffsetScope {
     }
 
     AdjustForPaintOffsetTranslation(box);
+  }
+
+  AdjustPaintOffsetScope(const NGPaintFragment& paint_fragment,
+                         const PaintInfo& paint_info,
+                         const LayoutPoint& paint_offset)
+      : old_paint_info_(paint_info) {
+    const LayoutObject* layout_object = paint_fragment.GetLayoutObject();
+    DCHECK(layout_object && layout_object->IsBoxModelObject());
+    if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() ||
+        !layout_object->IsBox() ||
+        !ShouldAdjustForPaintOffsetTranslation(ToLayoutBox(*layout_object))) {
+      adjusted_paint_offset_ = paint_offset;
+      if (layout_object->IsTableCell()) {
+        // TODO(kojii): LayoutNGTableCell does not set fragment.Offset(), and
+        // that we need to use LayoutBox::Location() instead. We should use
+        // fragment offset once it's fixed.
+        adjusted_paint_offset_ += ToLayoutBox(*layout_object).Location();
+      } else {
+        adjusted_paint_offset_ += LayoutSize(paint_fragment.Offset().left,
+                                             paint_fragment.Offset().top);
+      }
+      return;
+    }
+
+    AdjustForPaintOffsetTranslation(ToLayoutBox(*layout_object));
   }
 
   const PaintInfo& GetPaintInfo() const {
