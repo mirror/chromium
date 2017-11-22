@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f772e42e_e9bfa227",
+        "filename": "base/android/statistics_recorder_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T00:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c88d04f_f0cde04d",
+      "range": {
+        "startLine": 19,
+        "startChar": 54,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "2cd89a3c052ee8f5dec6a402c0a533d82bcb49fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "451b4c66_85ce5bc2",
         "filename": "base/android/statistics_recorder_android.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "2cd89a3c052ee8f5dec6a402c0a533d82bcb49fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005d144e_0bd4b716",
+        "filename": "base/android/statistics_recorder_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T00:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "451b4c66_85ce5bc2",
+      "range": {
+        "startLine": 25,
+        "startChar": 40,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "2cd89a3c052ee8f5dec6a402c0a533d82bcb49fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
