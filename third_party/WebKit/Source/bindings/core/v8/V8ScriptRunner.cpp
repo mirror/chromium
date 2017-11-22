@@ -266,11 +266,13 @@ v8::MaybeLocal<v8::Script> PostStreamCompile(
 
     case kV8CacheOptionsDefault:
     case kV8CacheOptionsCode:
+    case kV8CacheOptionsFullCode:
       V8ScriptRunner::SetCacheTimeStamp(cache_handler);
       break;
 
-    case kV8CacheOptionsAlways:
-      // Currently V8CacheOptionsAlways doesn't support streaming.
+    case kV8CacheOptionsCodeWithoutHeatCheck:
+    case kV8CacheOptionsFullCodeWithoutHeatCheck:
+      // Currently WithoutHeatCheck doesn't support streaming.
       NOTREACHED();
     case kV8CacheOptionsNone:
       break;
@@ -331,7 +333,9 @@ static CompileFn SelectCompileFunction(
 
     case kV8CacheOptionsDefault:
     case kV8CacheOptionsCode:
-    case kV8CacheOptionsAlways: {
+    case kV8CacheOptionsFullCode:
+    case kV8CacheOptionsCodeWithoutHeatCheck:
+    case kV8CacheOptionsFullCodeWithoutHeatCheck: {
       uint32_t code_cache_tag = V8ScriptRunner::TagForCodeCache(cache_handler);
       // Use code caching for recently seen resources.
       // Use compression depending on the cache option.
@@ -342,15 +346,20 @@ static CompileFn SelectCompileFunction(
                          std::move(code_cache),
                          v8::ScriptCompiler::kConsumeCodeCache);
       }
-      if (cache_options != kV8CacheOptionsAlways &&
+      if (cache_options != kV8CacheOptionsCodeWithoutHeatCheck &&
+          cache_options != kV8CacheOptionsFullCodeWithoutHeatCheck &&
           !IsResourceHotForCaching(cache_handler, kHotHours)) {
         V8ScriptRunner::SetCacheTimeStamp(cache_handler);
         return WTF::Bind(CompileWithoutOptions,
                          v8::ScriptCompiler::kNoCacheBecauseCacheTooCold);
       }
-      return WTF::Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
-                       code_cache_tag, v8::ScriptCompiler::kProduceCodeCache,
-                       CachedMetadataHandler::kSendToPlatform);
+      return WTF::Bind(
+          CompileAndProduceCache, WrapPersistent(cache_handler), code_cache_tag,
+          (cache_options == kV8CacheOptionsFullCode ||
+           cache_options == kV8CacheOptionsFullCodeWithoutHeatCheck)
+              ? v8::ScriptCompiler::kProduceFullCodeCache
+              : v8::ScriptCompiler::kProduceCodeCache,
+          CachedMetadataHandler::kSendToPlatform);
       break;
     }
 
@@ -831,5 +840,7 @@ STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsDefault, kV8CacheOptionsDefault);
 STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsNone, kV8CacheOptionsNone);
 STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsParse, kV8CacheOptionsParse);
 STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsCode, kV8CacheOptionsCode);
+STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsFullCode,
+                   kV8CacheOptionsFullCode);
 
 }  // namespace blink

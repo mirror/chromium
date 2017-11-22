@@ -65,6 +65,7 @@ class WebSettings {
     kV8CacheOptionsNone,
     kV8CacheOptionsParse,
     kV8CacheOptionsCode,
+    kV8CacheOptionsFullCode,
   };
 
   enum class ProgressBarCompletion {

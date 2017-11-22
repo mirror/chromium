@@ -926,6 +926,7 @@ extern const char kV8CacheOptionsName[];
 extern const char kV8CacheOptionsDescription[];
 extern const char kV8CacheOptionsParse[];
 extern const char kV8CacheOptionsCode[];
+extern const char kV8CacheOptionsFullCode[];
 
 extern const char kV8ContextSnapshotName[];
 extern const char kV8ContextSnapshotDescription[];

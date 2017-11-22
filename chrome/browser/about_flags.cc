@@ -579,6 +579,8 @@ const FeatureEntry::Choice kV8CacheOptionsChoices[] = {
     {flag_descriptions::kV8CacheOptionsParse, switches::kV8CacheOptions,
      "parse"},
     {flag_descriptions::kV8CacheOptionsCode, switches::kV8CacheOptions, "code"},
+    {flag_descriptions::kV8CacheOptionsCode, switches::kV8CacheOptions,
+     "full-code"},
 };
 
 #if defined(OS_ANDROID)
