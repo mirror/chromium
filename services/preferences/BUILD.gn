@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//services/catalog/public/tools/catalog.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//testing/test.gni")
@@ -16,7 +17,7 @@ service_manifest("local_state_manifest") {
   source = "local_state_manifest.json"
 }
 
-source_set("preferences") {
+jumbo_source_set("preferences") {
   visibility = [
     ":*",
     "//services/preferences/public/cpp:service_main",

@@ -2480,4 +2480,6 @@ QuicStringPiece QuicFramer::TruncateErrorString(QuicStringPiece error) {
   return QuicStringPiece(error.data(), kMaxErrorStringLength);
 }
 
+#undef ENDPOINT
+
 }  // namespace net

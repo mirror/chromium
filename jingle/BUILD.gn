@@ -3,11 +3,12 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//media/media_options.gni")
 import("//testing/test.gni")
 
 if (enable_webrtc || !is_android) {
-  static_library("jingle_glue") {
+  jumbo_static_library("jingle_glue") {
     sources = [
       "glue/chrome_async_socket.cc",
       "glue/chrome_async_socket.h",
@@ -46,7 +47,7 @@ if (enable_webrtc || !is_android) {
   }
 
   # A library for sending and receiving peer-issued notifications.
-  static_library("notifier") {
+  jumbo_static_library("notifier") {
     sources = [
       "notifier/base/const_communicator.h",
       "notifier/base/gaia_constants.cc",

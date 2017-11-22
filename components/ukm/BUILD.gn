@@ -2,12 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//testing/test.gni")
 
 # The Url-Keyed Metrics (UKM) service is responsible for gathering and
 # uploading reports that contain fine grained performance metrics including
 # URLs for top-level navigations.
-static_library("ukm") {
+jumbo_static_library("ukm") {
   sources = [
     "persisted_logs_metrics_impl.cc",
     "persisted_logs_metrics_impl.h",
