@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b6b4028_7a2cc289",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-22T06:24:36Z",
+      "side": 1,
+      "message": "That will fail to compile.",
+      "parentUuid": "dcbf1a04_ffef2384",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 22
+      },
+      "revId": "84f3efbd0eae2c7a24340419e6d0218ce4e6578e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30a32293_75559b64",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T02:34:54Z",
       "side": 1,
       "message": "The use of base::Passed(\u0026callback) is a little magical, what would have happened if this had been forgotten?",
+      "range": {
+        "startLine": 389,
+        "startChar": 57,
+        "endLine": 389,
+        "endChar": 63
+      },
+      "revId": "84f3efbd0eae2c7a24340419e6d0218ce4e6578e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e52e44_72aec549",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-22T06:24:36Z",
+      "side": 1,
+      "message": "That will fail to compile too, as base::Bind without base::Passed passes |callback| as const lvalue, and OnceCallback is not copyable. With base::Passed, base::Bind passes it as non-const rvalue so that it passes its ownership to the target function.",
+      "parentUuid": "30a32293_75559b64",
       "range": {
         "startLine": 389,
         "startChar": 57,
