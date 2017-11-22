@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d205f84c_c2424b19",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-22T10:56:57Z",
+      "side": 1,
+      "message": "scheib@: In https://bugs.chromium.org/p/chromium/issues/detail?id\u003d137486#c5 you remarked that fullscreen browser tests are manual-only. Is this because of the flakes, or were there other reasons?",
+      "revId": "308834fdb273202288d12f9a8aa8fd4bb91ec67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
