@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "066213be_fd47dfd1",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-22T21:21:57Z",
+      "side": 1,
+      "message": "A ProfileImpl is only released when chrome starts to shutdown (BrowserProcessImpl resets ProfileManager). So comparing Profile* for the original profile should be safe.\n\nOtr profiles can come and go and could hit what Yury is concerned. But I don\u0027t think we should track them since we should always return false (not allowed).\n\nThen if we are dealing with only original profile, we can use Profile* as id and quite a few places in chrome depends on that already.",
+      "parentUuid": "9dfe2047_1d7d2814",
+      "revId": "9f012bccf217b73c352f557c1441009fa52cde69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35d8d28_3c190409",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 2
