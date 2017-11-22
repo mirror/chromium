@@ -16,6 +16,24 @@
       "revId": "a46b8b5767c81972d2a1346be1cecba1c99d5119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8595081a_f11d11c0",
+        "filename": "content/common/clipboard_messages.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-11-22T00:47:44Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2e34e335_b3d802ab",
+      "revId": "a46b8b5767c81972d2a1346be1cecba1c99d5119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
