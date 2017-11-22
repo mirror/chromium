@@ -1621,6 +1621,7 @@ def _CheckIpcOwners(input_api, output_api):
   """Checks that affected files involving IPC have an IPC OWNERS rule."""
   to_check = _GetOwnersFilesToCheckForIpcOwners(input_api)
 
+  print 'Running IPC check...'
   if to_check:
     # If there are any OWNERS files to check, there are IPC-related changes in
     # this CL. Auto-CC the review list.
@@ -2734,6 +2735,7 @@ def _CheckSyslogUseWarning(input_api, output_api, source_file_filter=None,
 
 def CheckChangeOnUpload(input_api, output_api):
   results = []
+  print 'Umm...'
   results.extend(_CommonChecks(input_api, output_api))
   results.extend(_CheckValidHostsInDEPS(input_api, output_api))
   results.extend(
