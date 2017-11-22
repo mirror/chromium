@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e74f8463_a39eda36",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T20:59:41Z",
+      "side": 1,
+      "message": "DCHECK\n\n(CHECK is for securiy/privacy issues and if you need to troubleshoot a crash which is otherwise very difficult to diagnose.",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed71e388_b984bc9b",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T20:59:41Z",
+      "side": 1,
+      "message": "could you please add DCHECK for unified mode?",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c084367a_b6b6ef12",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T20:59:41Z",
+      "side": 1,
+      "message": "can you use const cast instead?",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85db134_dff2bd0f",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T20:59:41Z",
+      "side": 1,
+      "message": "This is currently used by Kiosk apps only.",
+      "revId": "a670d1de5cb3b1c1b89f1bb73cfb0520d933eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
