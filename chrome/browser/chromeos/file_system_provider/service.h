@@ -20,10 +20,12 @@
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/file_system_provider/extension_provider.h"
 #include "chrome/browser/chromeos/file_system_provider/observer.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_observer.h"
+#include "chrome/browser/chromeos/file_system_provider/provider_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/watcher.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/extensions/api/file_system_provider.h"
@@ -170,8 +172,8 @@ class Service : public KeyedService,
                             const Watchers& watchers) override;
 
   // Registers a FileSystemFactory for the passed |provider_id|.
-  void RegisterFileSystemFactory(const ProviderId& provider_id,
-                                 FileSystemFactoryCallback file_system_factory);
+  void RegisterNativeProvider(const ProviderId& provider_id,
+                              std::unique_ptr<ProviderInterface> provider);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(FileSystemProviderServiceTest, RememberFileSystem);
@@ -206,19 +208,19 @@ class Service : public KeyedService,
   void RestoreFileSystems(const ProviderId& provider_id);
 
   // Returns a file system factory for the passed |provider_id|.
-  FileSystemFactoryCallback GetFileSystemFactory(const ProviderId& provider_id);
+  std::unique_ptr<ProviderInterface> GetProvider(const ProviderId& provider_id);
 
   Profile* profile_;
   extensions::ExtensionRegistry* extension_registry_;  // Not owned.
-  FileSystemFactoryCallback extension_file_system_factory_;
   base::ObserverList<Observer> observers_;
   std::map<FileSystemKey, std::unique_ptr<ProvidedFileSystemInterface>>
       file_system_map_;
   std::map<std::string, FileSystemKey> mount_point_name_to_key_map_;
   std::unique_ptr<RegistryInterface> registry_;
   base::ThreadChecker thread_checker_;
-  std::unordered_map<std::string, FileSystemFactoryCallback>
-      native_file_system_factory_map_;
+  std::unordered_map<std::string, std::unique_ptr<ProviderInterface>>
+      native_provider_map_;
+  std::unique_ptr<ProviderInterface> extension_provider_;
 
   base::WeakPtrFactory<Service> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(Service);

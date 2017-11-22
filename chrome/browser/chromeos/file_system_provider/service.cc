@@ -14,6 +14,7 @@
 #include "chrome/browser/chromeos/file_system_provider/mount_path_util.h"
 #include "chrome/browser/chromeos/file_system_provider/observer.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system.h"
+#include "chrome/browser/chromeos/file_system_provider/provider_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/registry.h"
 #include "chrome/browser/chromeos/file_system_provider/registry_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/service_factory.h"
@@ -58,6 +59,8 @@ Service::Service(Profile* profile,
       extension_registry_(extension_registry),
       extension_file_system_factory_(base::Bind(&CreateProvidedFileSystem)),
       registry_(new Registry(profile)),
+      extension_provider_(
+          base::MakeUnique<ExtensionProvider>(ExtensionProvider())),
       weak_ptr_factory_(this) {
   extension_registry_->AddObserver(this);
 }
@@ -189,10 +192,10 @@ base::File::Error Service::MountFileSystemInternal(
     return base::File::FILE_ERROR_INVALID_OPERATION;
   }
 
-  Service::FileSystemFactoryCallback factory =
-      GetFileSystemFactory(file_system_info.provider_id());
+  std::unique_ptr<ProviderInterface> provider =
+      GetProvider(file_system_info.provider_id());
   std::unique_ptr<ProvidedFileSystemInterface> file_system =
-      factory.Run(profile_, file_system_info);
+      provider->CreateProvidedFileSystem(profile_, file_system_info);
   DCHECK(file_system);
   ProvidedFileSystemInterface* file_system_ptr = file_system.get();
   file_system_map_[FileSystemKey(
@@ -464,26 +467,25 @@ void Service::OnWatcherListChanged(
   registry_->RememberFileSystem(file_system_info, watchers);
 }
 
-void Service::RegisterFileSystemFactory(
+void Service::RegisterNativeProvider(
     const ProviderId& provider_id,
-    FileSystemFactoryCallback file_system_factory) {
+    std::unique_ptr<ProviderInterface> provider) {
   DCHECK_EQ(provider_id.GetType(), ProviderId::NATIVE);
-  native_file_system_factory_map_[provider_id.GetNativeId()] =
-      file_system_factory;
+  native_provider_map_[provider_id.GetNativeId()] = std::move(provider);
 }
 
-Service::FileSystemFactoryCallback Service::GetFileSystemFactory(
+std::unique_ptr<ProviderInterface> Service::GetProvider(
     const ProviderId& provider_id) {
   DCHECK_NE(provider_id.GetType(), ProviderId::INVALID);
 
   if (provider_id.GetType() == ProviderId::EXTENSION)
-    return extension_file_system_factory_;
+    return std::move(extension_provider_);
 
-  auto it = native_file_system_factory_map_.find(provider_id.GetNativeId());
+  auto it = native_provider_map_.find(provider_id.GetNativeId());
 
-  DCHECK(it != native_file_system_factory_map_.end());
+  DCHECK(it != native_provider_map_.end());
 
-  return it->second;
+  return std::move(it->second);
 }
 
 }  // namespace file_system_provider
