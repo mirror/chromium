@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2a24353_5488f7f8",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T20:51:34Z",
+      "side": 1,
+      "message": "Profile* can be deleted and new Profile* can use the same address. It probably could be done by tracking profile for deletion but this would require relative complicated solution for singleton.",
+      "parentUuid": "5dc6cf10_3d770311",
+      "revId": "9f012bccf217b73c352f557c1441009fa52cde69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35d8d28_3c190409",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "45646655_b381a0c9",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T20:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f35d8d28_3c190409",
+      "revId": "9f012bccf217b73c352f557c1441009fa52cde69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8ce37e4_63407f81",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "9f012bccf217b73c352f557c1441009fa52cde69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc298f5a_80c2100c",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T20:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ce37e4_63407f81",
+      "revId": "9f012bccf217b73c352f557c1441009fa52cde69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
