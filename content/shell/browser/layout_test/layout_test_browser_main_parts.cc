@@ -23,6 +23,7 @@
 #include "content/shell/browser/shell_devtools_manager_delegate.h"
 #include "content/shell/browser/shell_net_log.h"
 #include "content/shell/common/shell_switches.h"
+#include "media/base/mime_util.h"
 #include "net/base/filename_util.h"
 #include "net/base/net_module.h"
 #include "net/grit/net_resources.h"
@@ -68,6 +69,14 @@ void LayoutTestBrowserMainParts::InitializeMessageLoopContext() {
   PluginService* plugin_service = PluginService::GetInstance();
   plugin_service_filter_.reset(new ShellPluginServiceFilter);
   plugin_service->SetFilter(plugin_service_filter_.get());
+#endif
+
+// Unless/until WebM files are added to the media layout tests, we need to
+// avoid removing MP4/H264/AAC so that layout tests can run on Android.
+// TODO(chcunningham): We should fix the tests to always use non-proprietary
+// codecs and just delete this code. http://crbug.com/787575
+#if !defined(OS_ANDROID)
+  media::RemoveProprietaryMediaTypesAndCodecsForTests();
 #endif
 }
 
