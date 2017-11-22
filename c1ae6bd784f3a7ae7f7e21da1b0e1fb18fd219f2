@@ -45,6 +45,30 @@
       "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee965e4_e0c72e98",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_result.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-22T18:23:38Z",
+      "side": 1,
+      "message": "Maybe.. but then it will be out of line in the wire format right? And the struct is a nested implementation detail kinda of CopyOutputResult. I don\u0027t really wanna tie the mojo format to the c++ details like that, and I don\u0027t know that I can make the mojom struct without tying it to that c++ thing can I?",
+      "parentUuid": "598bf3fc_d469fd8f",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
