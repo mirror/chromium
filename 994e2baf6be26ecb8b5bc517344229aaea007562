@@ -124,6 +124,24 @@
       "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83ea258_a1bc1f7a",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T03:13:57Z",
+      "side": 1,
+      "message": "Got it, already had the git fetch in there. Thanks. Uploading a new patch set basically documenting your workflow.",
+      "parentUuid": "d80fb6cd_e6de0b5b",
+      "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
