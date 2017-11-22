@@ -1665,5 +1665,84 @@ TEST_F(DisplayInfoProviderChromeosTouchviewTest, GetTabletMode) {
   EXPECT_FALSE(result[1].is_tablet_mode);
 }
 
+class DisplayInfoProviderChromeosMultiMirroringTest
+    : public DisplayInfoProviderChromeosTest {
+ public:
+  DisplayInfoProviderChromeosMultiMirroringTest() {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kEnableMultiMirroring);
+  }
+
+  ~DisplayInfoProviderChromeosMultiMirroringTest() override = default;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(DisplayInfoProviderChromeosMultiMirroringTest);
+};
+
+TEST_F(DisplayInfoProviderChromeosMultiMirroringTest, SetCustomMirrorMode) {
+  UpdateDisplay("200x200,600x600,700x700");
+  display::DisplayIdList id_list = display_manager()->GetCurrentDisplayIdList();
+  EXPECT_EQ(3U, id_list.size());
+
+  // Source id cannot be the same as destination id, when |enabled| is true.
+  bool success = DisplayInfoProvider::Get()->SetCustomMirrorMode(
+      true, base::NumberToString(id_list[1]), base::NumberToString(id_list[1]));
+  EXPECT_FALSE(success);
+
+  // Both ids cannot be invalid, when |enabled| is true.
+  success = DisplayInfoProvider::Get()->SetCustomMirrorMode(true, "-1", "-1");
+  EXPECT_FALSE(success);
+
+  // Mirror from the second display to the third display.
+  success = DisplayInfoProvider::Get()->SetCustomMirrorMode(
+      true, base::NumberToString(id_list[1]), base::NumberToString(id_list[2]));
+  EXPECT_TRUE(success);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_EQ(id_list[1], display_manager()->mirroring_source_id());
+  display::Displays software_mirroring_display_list =
+      display_manager()->software_mirroring_display_list();
+  EXPECT_EQ(1U, software_mirroring_display_list.size());
+  EXPECT_EQ(id_list[2], software_mirroring_display_list[0].id());
+  display::Displays active_display_list =
+      display_manager()->active_display_list();
+  EXPECT_EQ(2U, active_display_list.size());
+  EXPECT_EQ(id_list[0], active_display_list[0].id());
+  EXPECT_EQ(id_list[1], active_display_list[1].id());
+
+  // Cannot set mirror mode when mirror mode is already on.
+  success = DisplayInfoProvider::Get()->SetCustomMirrorMode(
+      true, base::NumberToString(id_list[2]), base::NumberToString(id_list[0]));
+  EXPECT_FALSE(success);
+
+  // Turn off mirror mode.
+  success = DisplayInfoProvider::Get()->SetCustomMirrorMode(
+      false, base::NumberToString(display::kInvalidDisplayId),
+      base::NumberToString(display::kInvalidDisplayId));
+  EXPECT_TRUE(success);
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+
+  // Mirror from the third display to the first display.
+  success = DisplayInfoProvider::Get()->SetCustomMirrorMode(
+      true, base::NumberToString(id_list[2]), base::NumberToString(id_list[0]));
+  EXPECT_TRUE(success);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_EQ(id_list[2], display_manager()->mirroring_source_id());
+  software_mirroring_display_list =
+      display_manager()->software_mirroring_display_list();
+  EXPECT_EQ(1U, software_mirroring_display_list.size());
+  EXPECT_EQ(id_list[0], software_mirroring_display_list[0].id());
+  active_display_list = display_manager()->active_display_list();
+  EXPECT_EQ(2U, active_display_list.size());
+  EXPECT_EQ(id_list[1], active_display_list[0].id());
+  EXPECT_EQ(id_list[2], active_display_list[1].id());
+
+  // Turn off mirror mode.
+  success = DisplayInfoProvider::Get()->SetCustomMirrorMode(
+      false, base::NumberToString(display::kInvalidDisplayId),
+      base::NumberToString(display::kInvalidDisplayId));
+  EXPECT_TRUE(success);
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+}
+
 }  // namespace
 }  // namespace extensions

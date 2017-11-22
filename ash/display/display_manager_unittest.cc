@@ -4067,4 +4067,122 @@ TEST_F(MultiMirroringTest, RestoreMirrorMode) {
   EXPECT_FALSE(display_manager()->IsInMirrorMode());
 }
 
+TEST_F(MultiMirroringTest, RestoreCustomMirrorMode) {
+  const int64_t internal_display_id =
+      display::test::DisplayManagerTestApi(display_manager())
+          .SetFirstDisplayAsInternalDisplay();
+  constexpr int first_external_id = 11;
+  constexpr int second_external_id = 12;
+  std::vector<display::ManagedDisplayInfo> display_info_list;
+  display_info_list.push_back(
+      CreateDisplayInfo(internal_display_id, gfx::Rect(0, 0, 100, 100)));
+  display_info_list.push_back(
+      CreateDisplayInfo(first_external_id, gfx::Rect(1, 1, 500, 500)));
+  display_info_list.push_back(
+      CreateDisplayInfo(second_external_id, gfx::Rect(2, 2, 500, 500)));
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+
+  // Do custom mirroring from the first external display to the second external
+  // display.
+  display_manager()->SetCustomMirrorMode(true, first_external_id,
+                                         second_external_id);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  display::Displays software_mirroring_display_list =
+      display_manager()->software_mirroring_display_list();
+  EXPECT_EQ(1U, software_mirroring_display_list.size());
+  EXPECT_EQ(second_external_id, software_mirroring_display_list[0].id());
+  display::Displays active_display_list =
+      display_manager()->active_display_list();
+  EXPECT_EQ(2U, active_display_list.size());
+  EXPECT_EQ(internal_display_id, active_display_list[0].id());
+  EXPECT_EQ(first_external_id, active_display_list[1].id());
+
+  // Remove the second external display, mirror mode ends.
+  display_info_list.erase(display_info_list.end() - 1);
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+
+  // Add the removed display, custom mirror mode restores.
+  display_info_list.push_back(
+      CreateDisplayInfo(second_external_id, gfx::Rect(2, 2, 500, 500)));
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  software_mirroring_display_list =
+      display_manager()->software_mirroring_display_list();
+  EXPECT_EQ(1U, software_mirroring_display_list.size());
+  EXPECT_EQ(second_external_id, software_mirroring_display_list[0].id());
+  active_display_list = display_manager()->active_display_list();
+  EXPECT_EQ(2U, active_display_list.size());
+  EXPECT_EQ(internal_display_id, active_display_list[0].id());
+  EXPECT_EQ(first_external_id, active_display_list[1].id());
+
+  // Turn off custom mirroring.
+  display_manager()->SetCustomMirrorMode(false, display::kInvalidDisplayId,
+                                         display::kInvalidDisplayId);
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+}
+
+TEST_F(MultiMirroringTest, MirrorModeWithCustomMirroring) {
+  UpdateDisplay("400x400,200x200,100x100");
+  display::DisplayIdList id_list = display_manager()->GetCurrentDisplayIdList();
+  EXPECT_EQ(3U, id_list.size());
+
+  // Do custom mirroring from the second display to the third display.
+  display_manager()->SetCustomMirrorMode(true, id_list[1], id_list[2]);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  display::Displays software_mirroring_display_list =
+      display_manager()->software_mirroring_display_list();
+  EXPECT_EQ(1U, software_mirroring_display_list.size());
+  EXPECT_EQ(id_list[2], software_mirroring_display_list[0].id());
+  display::Displays active_display_list =
+      display_manager()->active_display_list();
+  EXPECT_EQ(2U, active_display_list.size());
+  EXPECT_EQ(id_list[0], active_display_list[0].id());
+  EXPECT_EQ(id_list[1], active_display_list[1].id());
+
+  // Turn on mirror mode, but nothing changes.
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  software_mirroring_display_list =
+      display_manager()->software_mirroring_display_list();
+  EXPECT_EQ(1U, software_mirroring_display_list.size());
+  EXPECT_EQ(id_list[2], software_mirroring_display_list[0].id());
+  active_display_list = display_manager()->active_display_list();
+  EXPECT_EQ(2U, active_display_list.size());
+  EXPECT_EQ(id_list[0], active_display_list[0].id());
+  EXPECT_EQ(id_list[1], active_display_list[1].id());
+
+  // Turn off custom mirroring.
+  display_manager()->SetCustomMirrorMode(false, display::kInvalidDisplayId,
+                                         display::kInvalidDisplayId);
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+
+  // Turn on mirror mode.
+  display_manager()->SetMirrorMode(true);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  software_mirroring_display_list =
+      display_manager()->software_mirroring_display_list();
+  EXPECT_EQ(2U, software_mirroring_display_list.size());
+  EXPECT_EQ(id_list[1], software_mirroring_display_list[0].id());
+  EXPECT_EQ(id_list[2], software_mirroring_display_list[1].id());
+  active_display_list = display_manager()->active_display_list();
+  EXPECT_EQ(1U, active_display_list.size());
+  EXPECT_EQ(id_list[0], active_display_list[0].id());
+
+  // Turn on custom mirroring, but nothing changes.
+  display_manager()->SetCustomMirrorMode(true, id_list[1], id_list[2]);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  software_mirroring_display_list =
+      display_manager()->software_mirroring_display_list();
+  EXPECT_EQ(2U, software_mirroring_display_list.size());
+  EXPECT_EQ(id_list[1], software_mirroring_display_list[0].id());
+  EXPECT_EQ(id_list[2], software_mirroring_display_list[1].id());
+  active_display_list = display_manager()->active_display_list();
+  EXPECT_EQ(1U, active_display_list.size());
+  EXPECT_EQ(id_list[0], active_display_list[0].id());
+
+  // Turn off mirror mode.
+  display_manager()->SetMirrorMode(false);
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+}
+
 }  // namespace ash
