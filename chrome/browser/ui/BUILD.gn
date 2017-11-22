@@ -529,6 +529,10 @@ split_static_library("ui") {
   ]
   allow_circular_includes_from = []
 
+  if (is_win || is_mac || is_desktop_linux || is_chromeos) {
+    deps += [ "//chrome/browser/ui/webui/discards:mojo_bindings" ]
+  }
+
   if (!is_fuchsia) {
     # TODO(crbug.com/753619): Enable crash reporting on Fuchsia.
     deps += [
@@ -1542,6 +1546,13 @@ split_static_library("ui") {
     if (use_cras) {
       defines += [ "USE_CRAS" ]
     }
+  }
+
+  if (is_win || is_mac || is_desktop_linux || is_chromeos) {
+    sources += [
+      "webui/discards/discards_ui.cc",
+      "webui/discards/discards_ui.h",
+    ]
   }
 
   if (is_win || is_mac || is_desktop_linux) {
