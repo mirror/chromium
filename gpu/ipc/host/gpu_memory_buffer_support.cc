@@ -94,6 +94,8 @@ uint32_t GetImageTextureTarget(gfx::BufferFormat format,
       GetNativeGpuMemoryBufferConfigurations();
   if (native_configurations.find(std::make_pair(format, usage)) ==
       native_configurations.end()) {
+    LOG(ERROR) << "format " << (int)format << " usage " << (int)usage
+               << " not found -> GL_TEXTURE_2D";
     return GL_TEXTURE_2D;
   }
 
@@ -102,14 +104,22 @@ uint32_t GetImageTextureTarget(gfx::BufferFormat format,
     case gfx::ANDROID_HARDWARE_BUFFER:
       // GPU memory buffers that are shared with the GL using EGLImages
       // require TEXTURE_EXTERNAL_OES.
+      LOG(ERROR) << "format " << (int)format << " usage " << (int)usage
+                 << " -> GL_TEXTURE_EXTERNAL_OES";
       return GL_TEXTURE_EXTERNAL_OES;
     case gfx::IO_SURFACE_BUFFER:
       // IOSurface backed images require GL_TEXTURE_RECTANGLE_ARB.
+      LOG(ERROR) << "format " << (int)format << " usage " << (int)usage
+                 << " -> GL_TEXTURE_RECTANGLE_ARB";
       return GL_TEXTURE_RECTANGLE_ARB;
     case gfx::SHARED_MEMORY_BUFFER:
     case gfx::EMPTY_BUFFER:
+      LOG(ERROR) << "format " << (int)format << " usage " << (int)usage
+                 << " -> ERRORRRRR";
       break;
     case gfx::DXGI_SHARED_HANDLE:
+      LOG(ERROR) << "format " << (int)format << " usage " << (int)usage
+                 << " -> GL_TEXTURE_2D";
       return GL_TEXTURE_2D;
   }
   NOTREACHED();
