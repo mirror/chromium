@@ -143,12 +143,15 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       int render_frame_route_id,
       bool do_not_prompt_for_login);
 
-  // Returns the callback to intercept the navigation response.
-  NavigationURLLoader::NavigationInterceptionCB GetNavigationInterceptionCB(
-      const scoped_refptr<ResourceResponse>& response,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle,
-      const SSLStatus& ssl_status,
-      int frame_tree_node_id);
+  // Continue a navigation that ends up to be a download after it reaches the
+  // OnResponseStarted() step. It has to be called on the UI thread.
+  void InterceptNavigation(std::unique_ptr<ResourceRequest> resource_request,
+                           const std::vector<GURL>& url_chain,
+                           const scoped_refptr<ResourceResponse>& response,
+                           const SSLStatus& ssl_status,
+                           mojom::URLLoaderPtrInfo url_loader,
+                           mojom::URLLoaderClientRequest url_loader_client,
+                           int frame_tree_node_id);
 
  private:
   using DownloadSet = std::set<DownloadItem*>;
@@ -212,6 +215,17 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   void BeginDownloadInternal(
       std::unique_ptr<content::DownloadUrlParameters> params,
       uint32_t id);
+
+  // Implementation of InterceptNavigation. Called on the IO thread.
+  static void InterceptNavigationOnIOThread(
+      base::WeakPtr<DownloadManagerImpl> download_manager,
+      std::unique_ptr<ResourceRequest> resource_request,
+      const std::vector<GURL>& url_chain,
+      const scoped_refptr<ResourceResponse>& response,
+      const SSLStatus& ssl_status,
+      mojom::URLLoaderPtrInfo url_loader,
+      mojom::URLLoaderClientRequest url_loader_client,
+      int frame_tree_node_id);
 
   // Factory for creation of downloads items.
   std::unique_ptr<DownloadItemFactory> item_factory_;

@@ -15,12 +15,12 @@
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/common/content_export.h"
+#include "content/common/frame.mojom.h"
 #include "content/common/frame_message_enums.h"
 #include "content/common/navigation_params.h"
 #include "content/common/navigation_subresource_loader_params.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/common/previews_state.h"
-#include "mojo/public/cpp/system/data_pipe.h"
 
 namespace content {
 
@@ -220,8 +220,9 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       const net::RedirectInfo& redirect_info,
       const scoped_refptr<ResourceResponse>& response) override;
   void OnResponseStarted(const scoped_refptr<ResourceResponse>& response,
+                         mojom::URLLoaderPtrInfo url_loader,
+                         mojom::URLLoaderClientRequest url_loader_client,
                          std::unique_ptr<StreamHandle> body,
-                         mojo::ScopedDataPipeConsumerHandle consumer_handle,
                          const SSLStatus& ssl_status,
                          std::unique_ptr<NavigationData> navigation_data,
                          const GlobalRequestID& request_id,
@@ -346,12 +347,16 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
 
   std::unique_ptr<NavigationHandleImpl> navigation_handle_;
 
-  // Holds the ResourceResponse and the StreamHandle (or
-  // DataPipeConsumerHandle) for the navigation while the WillProcessResponse
-  // checks are performed by the NavigationHandle.
+  // Holds objects used to continue a navigation while the WillProcessResponse
+  // checks are performed by the NavigationHandle. That's the ones received from
+  // OnResponseStarted.
+  // The URLLoaderPtr / URLLoaderClientRequest pair is used when the Network
+  // Service or NavigationMojoResponse is enabled. In the other cases, the
+  // StreamHandle is used.
   scoped_refptr<ResourceResponse> response_;
   std::unique_ptr<StreamHandle> body_;
-  mojo::ScopedDataPipeConsumerHandle handle_;
+  mojom::URLLoaderPtrInfo url_loader_;
+  mojom::URLLoaderClientRequest url_loader_client_;
   SSLStatus ssl_status_;
   bool is_download_;
 

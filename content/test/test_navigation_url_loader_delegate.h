@@ -12,7 +12,6 @@
 #include "base/optional.h"
 #include "base/time/time.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
-#include "mojo/public/cpp/system/data_pipe.h"
 #include "net/url_request/redirect_info.h"
 
 namespace base {
@@ -62,8 +61,9 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
       const net::RedirectInfo& redirect_info,
       const scoped_refptr<ResourceResponse>& response) override;
   void OnResponseStarted(const scoped_refptr<ResourceResponse>& response,
+                         mojom::URLLoaderPtrInfo url_loader,
+                         mojom::URLLoaderClientRequest url_loader_client,
                          std::unique_ptr<StreamHandle> body,
-                         mojo::ScopedDataPipeConsumerHandle consumer_handle,
                          const SSLStatus& ssl_status,
                          std::unique_ptr<NavigationData> navigation_data,
                          const GlobalRequestID& request_id,
@@ -80,9 +80,10 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
  private:
   net::RedirectInfo redirect_info_;
   scoped_refptr<ResourceResponse> redirect_response_;
+  mojom::URLLoaderPtrInfo url_loader_;
+  mojom::URLLoaderClientRequest url_loader_client_;
   scoped_refptr<ResourceResponse> response_;
   std::unique_ptr<StreamHandle> body_;
-  mojo::ScopedDataPipeConsumerHandle handle_;
   int net_error_;
   base::Optional<net::SSLInfo> ssl_info_;
   bool should_ssl_errors_be_fatal_;

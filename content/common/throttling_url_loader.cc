@@ -162,6 +162,16 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
   return loader;
 }
 
+// static
+std::unique_ptr<ThrottlingURLLoader>
+ThrottlingURLLoader::InterceptLoadingAfterResponseStarted(
+    mojom::URLLoaderClient* forwarding_client,
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client) {
+  return std::unique_ptr<ThrottlingURLLoader>(new ThrottlingURLLoader(
+      forwarding_client, std::move(url_loader), std::move(url_loader_client)));
+}
+
 ThrottlingURLLoader::~ThrottlingURLLoader() {
   if (inside_delegate_calls_ > 0) {
     // A throttle is calling into this object. In this case, delay destruction
@@ -202,16 +212,39 @@ void ThrottlingURLLoader::DisconnectClient() {
   loader_cancelled_ = true;
 }
 
+void ThrottlingURLLoader::UnBind(
+    mojom::URLLoaderPtrInfo* url_loader,
+    mojom::URLLoaderClientRequest* url_loader_client) {
+  *url_loader = url_loader_.PassInterface();
+  *url_loader_client = client_binding_.Unbind();
+}
+
 ThrottlingURLLoader::ThrottlingURLLoader(
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-    mojom::URLLoaderClient* client,
+    mojom::URLLoaderClient* forwarding_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation)
-    : forwarding_client_(client),
+    : forwarding_client_(forwarding_client),
       client_binding_(this),
       traffic_annotation_(traffic_annotation) {
   throttles_.reserve(throttles.size());
   for (auto& throttle : throttles)
     throttles_.emplace_back(this, std::move(throttle));
+}
+
+// Used only by InterceptLoadingAfterResponseStarted. This method is called
+// after the response has started. There is no need to provide any |throttles|
+// or a |traffic_annotation|, they will not be used.
+ThrottlingURLLoader::ThrottlingURLLoader(
+    mojom::URLLoaderClient* forwarding_client,
+    mojom::URLLoaderPtrInfo url_loader,
+    mojom::URLLoaderClientRequest url_loader_client)
+    : forwarding_client_(forwarding_client),
+      client_binding_(this),
+      traffic_annotation_() {
+  url_loader_.Bind(std::move(url_loader));
+  client_binding_.Bind(std::move(url_loader_client));
+  client_binding_.set_connection_error_handler(base::Bind(
+      &ThrottlingURLLoader::OnClientConnectionError, base::Unretained(this)));
 }
 
 void ThrottlingURLLoader::Start(
@@ -270,10 +303,11 @@ void ThrottlingURLLoader::StartNow(
   if (factory) {
     DCHECK(!start_loader_callback);
 
+    DCHECK(traffic_annotation_);
     factory->CreateLoaderAndStart(
         mojo::MakeRequest(&url_loader_), routing_id, request_id, options,
         url_request, std::move(client),
-        net::MutableNetworkTrafficAnnotationTag(traffic_annotation_));
+        net::MutableNetworkTrafficAnnotationTag(traffic_annotation_.value()));
   } else {
     std::move(start_loader_callback)
         .Run(mojo::MakeRequest(&url_loader_), std::move(client));
