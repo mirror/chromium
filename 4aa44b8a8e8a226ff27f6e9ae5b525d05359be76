@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73ca610_3378ba26",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T19:24:12Z",
+      "side": 1,
+      "message": "This could use a comment explaining why the callback is a no-op",
+      "revId": "4aa44b8a8e8a226ff27f6e9ae5b525d05359be76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a568933a_38cc1458",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T19:24:12Z",
+      "side": 1,
+      "message": "This doesn\u0027t match the code below that checks that ERROR_MISSING_PARAMS was logged. (The comment should probably say \"an error should be logged through UMA\".)\n\nI don\u0027t think the handling of missing launch_params should change until https://chromium-review.googlesource.com/c/chromium/src/+/779302. I guess we\u0027re racing to see which of us lands first and which has to rebase...",
+      "revId": "4aa44b8a8e8a226ff27f6e9ae5b525d05359be76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5f0008_dff556ed",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T19:24:12Z",
+      "side": 1,
+      "message": "Nit: this function could be implemented as just:\n\nRunReporterQueue(exit_code_to_report, expected_result, SwReporterInvocationSequence::Queue({CreateInvocation(exe_path)}));",
+      "revId": "4aa44b8a8e8a226ff27f6e9ae5b525d05359be76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecefee0_18d9c769",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T19:24:12Z",
+      "side": 1,
+      "message": "Please rename this to something like RunReporterQueueSynchonously or RunReporterQueueAndWait (and rename RunSingleReporter to match) to make it more clear that it has different semantics from the RunReporterQueue below and isn\u0027t just another override.",
+      "revId": "4aa44b8a8e8a226ff27f6e9ae5b525d05359be76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244969eb_4d94e567",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T19:24:12Z",
+      "side": 1,
+      "message": "What about kSwReporterDelayedPostRebootCleanupNeeded?",
+      "revId": "4aa44b8a8e8a226ff27f6e9ae5b525d05359be76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c40a67_b7475881",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T19:24:12Z",
+      "side": 1,
+      "message": "As discussed, this is obsolete now because ReporterRunner is only deleted right after a Notify call.",
+      "revId": "4aa44b8a8e8a226ff27f6e9ae5b525d05359be76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b638b74_dc25da4c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T19:24:12Z",
+      "side": 1,
+      "message": "Nit: I would name this BEHAVIOURS to make it clear that it\u0027s a mask.",
+      "revId": "4aa44b8a8e8a226ff27f6e9ae5b525d05359be76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
