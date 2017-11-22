@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e14f1f02_82bf7dde",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-22T18:56:30Z",
+      "side": 1,
+      "message": "I\u0027d expand a bit more with something like:\n\n\"This permits stat (and its variants like stat64) and rename in the broker process, with corresponding traps in the sandboxed process.\"",
+      "revId": "7ee0bca6a0dbcf7e8858df281b820cd39ac5135b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24fc29e4_b7fa0eba",
+        "filename": "services/service_manager/sandbox/linux/bpf_broker_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-22T18:56:30Z",
+      "side": 1,
+      "message": "Do we actually need unlink or was this leftover from a copy-paste?",
+      "revId": "7ee0bca6a0dbcf7e8858df281b820cd39ac5135b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
