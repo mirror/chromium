@@ -214,6 +214,30 @@
       "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4a4dd7_6724ad37",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-22T19:33:49Z",
+      "side": 1,
+      "message": "On my macOS 10.13 MB,  I have \"/System/Library/Assets/com_apple_MobileAsset_Font4* (instead of Font3).  With \u0027strings /System/Library/Assets/com_apple_MobileAsset_Font4.{plist,xml} | grep Hanzi\u0027, I can find multiple instances of HanziPen fonts. \n\nIn the test I used (taken from the bug you fixed for sandbox v1), \u0027HanziPen TC\u0027 is specified, but DOM Inspector says that it\u0027s using \u0027HanziPen SC\u0027. On macOS 10.12 (where the access to fonts.com.apple is allowed), DOM Inspector says that \u0027HanziPen TC\u0027 is used as specified in the test html. \n\n\nLet me get rid of the OS-check and see if that makes any difference on macOS 10.13.",
+      "parentUuid": "c4ec673e_b290d124",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
