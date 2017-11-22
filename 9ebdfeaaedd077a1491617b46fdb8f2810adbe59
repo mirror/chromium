@@ -69,6 +69,24 @@
       "revId": "9ebdfeaaedd077a1491617b46fdb8f2810adbe59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70cf70a8_3f475306",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-22T02:57:28Z",
+      "side": 1,
+      "message": "It\u0027s okay to leave like this. These are really just small nits.\n\nIn general, for readability, I think it is good to avoid long indented scopes either by returning early, or by extracting them into a separate method.",
+      "parentUuid": "41df1813_ad83cdfe",
+      "revId": "9ebdfeaaedd077a1491617b46fdb8f2810adbe59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
