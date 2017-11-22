@@ -271,21 +271,20 @@ CSSPreloaderResourceClient::CSSPreloaderResourceClient(
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}
 
-void CSSPreloaderResourceClient::SetCSSStyleSheet(
-    const String& href,
-    const KURL& base_url,
-    ReferrerPolicy referrer_policy,
-    const WTF::TextEncoding&,
-    const CSSStyleSheetResource*) {
+void CSSPreloaderResourceClient::NotifyFinished(Resource*) {
   ClearResource();
 }
 
 // Only attach for one appendData call, as that's where most imports will likely
 // be (according to spec).
-void CSSPreloaderResourceClient::DidAppendFirstData(
-    const CSSStyleSheetResource* resource) {
+void CSSPreloaderResourceClient::DataReceived(Resource* resource,
+                                              const char*,
+                                              size_t) {
+  if (received_first_data_)
+    return;
+  received_first_data_ = true;
   if (preloader_)
-    ScanCSS(resource);
+    ScanCSS(ToCSSStyleSheetResource(resource));
   ClearResource();
 }
 
@@ -366,7 +365,7 @@ void CSSPreloaderResourceClient::ClearResource() {
 void CSSPreloaderResourceClient::Trace(blink::Visitor* visitor) {
   visitor->Trace(preloader_);
   visitor->Trace(resource_);
-  StyleSheetResourceClient::Trace(visitor);
+  ResourceClient::Trace(visitor);
 }
 
 }  // namespace blink
