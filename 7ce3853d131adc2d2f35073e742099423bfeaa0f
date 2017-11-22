@@ -16,6 +16,24 @@
       "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652beb5b_80f0a299",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-22T17:44:33Z",
+      "side": 1,
+      "message": "First, I believe it\u0027s an uncommon scenario where users will frequently create and stop tracks, and only do that. So I wouldn\u0027t be concerned by the GC triggers caused by this code. Other parts of the application will usually manipulate data and I believe those will eventually trigger some GC.\n\nThis is an approximation that came from various manual experiments and is in the same order of magnitude. It is a bit pessimistic for audio tracks and optimistic for video ones. For the later, opening a video device is so slow that it\u0027s unlikely to be a concern though.\n\nAs for getting an exact value, tracks can be local (using a hardware device) or remote (over RTCPeerConnection) and be backed by an audio or video source. Video sources are quite varied: capture from a hardware device, screen, tab, video element or canvas. Each can have various buffers involved for various features, for example an audio one can do echo cancellation.\nAll that makes it quite impractical to query a size, let alone be precise.",
+      "parentUuid": "a69ecd02_58018f60",
+      "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
