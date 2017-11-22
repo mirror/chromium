@@ -80,19 +80,11 @@ class SignalEventTask : public history::HistoryDBTask {
 class FaviconChangeObserver : public bookmarks::BookmarkModelObserver {
  public:
   FaviconChangeObserver(BookmarkModel* model, const BookmarkNode* node)
-      : model_(model),
-        node_(node),
-        wait_for_load_(false) {
+      : model_(model), node_(node) {
     model->AddObserver(this);
   }
   ~FaviconChangeObserver() override { model_->RemoveObserver(this); }
-  void WaitForGetFavicon() {
-    wait_for_load_ = true;
-    content::RunMessageLoop();
-    ASSERT_TRUE(node_->is_favicon_loaded());
-  }
   void WaitForSetFavicon() {
-    wait_for_load_ = false;
     content::RunMessageLoop();
   }
 
@@ -125,16 +117,13 @@ class FaviconChangeObserver : public bookmarks::BookmarkModelObserver {
                                      const BookmarkNode* node) override {}
   void BookmarkNodeFaviconChanged(BookmarkModel* model,
                                   const BookmarkNode* node) override {
-    if (model == model_ && node == node_) {
-      if (!wait_for_load_ || (wait_for_load_ && node->is_favicon_loaded()))
-        base::RunLoop::QuitCurrentWhenIdleDeprecated();
-    }
+    if (model == model_ && node == node_)
+      base::RunLoop::QuitCurrentWhenIdleDeprecated();
   }
 
  private:
   BookmarkModel* model_;
   const BookmarkNode* node_;
-  bool wait_for_load_;
   DISALLOW_COPY_AND_ASSIGN(FaviconChangeObserver);
 };
 
@@ -218,22 +207,24 @@ struct FaviconData {
   GURL icon_url;
 };
 
-// Gets the favicon and icon URL associated with |node| in |model|.
-FaviconData GetFaviconData(BookmarkModel* model,
-                           const BookmarkNode* node) {
+// Gets the favicon and icon URL associated with |node| in |model|. Returns
+// nullopt if the favicon is still loading.
+base::Optional<FaviconData> GetFaviconData(BookmarkModel* model,
+                                           const BookmarkNode* node) {
   // If a favicon wasn't explicitly set for a particular URL, simply return its
   // blank favicon.
   if (!urls_with_favicons_ ||
       urls_with_favicons_->find(node->url()) == urls_with_favicons_->end()) {
     return FaviconData();
   }
-  // If a favicon was explicitly set, we may need to wait for it to be loaded
-  // via BookmarkModel::GetFavicon(), which is an asynchronous operation.
-  if (!node->is_favicon_loaded()) {
-    FaviconChangeObserver observer(model, node);
-    model->GetFavicon(node);
-    observer.WaitForGetFavicon();
+
+  // Make sure a favicon is either loaded or loading.
+  if (!model->EnsureFaviconLoad(node)) {
+    // Favicon still loading, no data available just yet.
+    return base::nullopt;
   }
+
+  // Favicon loaded: return actual image.
   return FaviconData(model->GetFavicon(node),
                      node->icon_url() ? *node->icon_url() : GURL());
 }
@@ -263,9 +254,7 @@ void SetFaviconImpl(Profile* profile,
 
     // Wait for the favicon for |node| to be invalidated.
     observer.WaitForSetFavicon();
-    // Wait for the BookmarkModel to fetch the updated favicon and for the new
-    // favicon to be sent to BookmarkChangeProcessor.
-    GetFaviconData(model, node);
+    model->GetFavicon(node);
 }
 
 // Expires the favicon for |profile| and |node|. |profile| may be
@@ -312,9 +301,7 @@ void DeleteFaviconMappingsImpl(Profile* profile,
 
   // Wait for the favicon for |node| to be invalidated.
   observer.WaitForSetFavicon();
-  // Wait for the BookmarkModel to fetch the updated favicon and for the new
-  // favicon to be sent to BookmarkChangeProcessor.
-  GetFaviconData(model, node);
+  model->GetFavicon(node);
 }
 
 // Wait for all currently scheduled tasks on the history thread for all
@@ -357,14 +344,19 @@ bool FaviconsMatch(BookmarkModel* model_a,
                    BookmarkModel* model_b,
                    const BookmarkNode* node_a,
                    const BookmarkNode* node_b) {
-  FaviconData favicon_data_a = GetFaviconData(model_a, node_a);
-  FaviconData favicon_data_b = GetFaviconData(model_b, node_b);
+  base::Optional<FaviconData> favicon_data_a = GetFaviconData(model_a, node_a);
+  base::Optional<FaviconData> favicon_data_b = GetFaviconData(model_b, node_b);
 
-  if (favicon_data_a.icon_url != favicon_data_b.icon_url)
+  // If either of the two favicons is still loading, let's return false now
+  // because observers will get notified when the load completes.
+  if (!favicon_data_a.has_value() || !favicon_data_b.has_value())
     return false;
 
-  gfx::Image image_a = favicon_data_a.image;
-  gfx::Image image_b = favicon_data_b.image;
+  if (favicon_data_a->icon_url != favicon_data_b->icon_url)
+    return false;
+
+  gfx::Image image_a = favicon_data_a->image;
+  gfx::Image image_b = favicon_data_b->image;
 
   if (image_a.IsEmpty() && image_b.IsEmpty())
     return true;  // Two empty images are equivalent.
