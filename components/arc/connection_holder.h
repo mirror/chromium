@@ -35,6 +35,27 @@ namespace arc {
 
 namespace internal {
 
+// Small helper to implement HasInit<> traits below.
+// Note that only Check() declaration is needed.
+// - If InstanceType::Init exists, Check(InstanceType()) would return
+//   std::true_type, because 1) the template param is successfully substituted,
+//   and 2) Check(...) is weaker than the template's so there is no overload
+//   conflict.
+// - If not, Check(InstanceType()) would return std::false_type, because
+//   template param substitution is failed, but it won't be compile error
+//   thanks to SFINAE, thus Check(...) is the only candidate.
+struct HasInitImpl {
+  template <typename InstanceType>
+  static auto Check(InstanceType* v)
+      -> decltype(&InstanceType::Init, std::true_type());
+  static std::false_type Check(...);
+};
+
+// Type tratis to return whether InstanceType has Init() or not.
+template <typename InstanceType>
+using HasInit =
+    decltype(HasInitImpl::Check(static_cast<InstanceType*>(nullptr)));
+
 // Full duplex Mojo connection holder implementation.
 // InstanceType and HostType are Mojo interface types (arc::mojom::XxxInstance,
 // and arc::mojom::XxxHost respectively).
@@ -89,6 +110,8 @@ class ConnectionHolderImpl {
       binding_ = std::make_unique<mojo::Binding<HostType>>(host_);
       mojo::InterfacePtr<HostType> host_proxy;
       binding_->Bind(mojo::MakeRequest(&host_proxy));
+      binding_->set_connection_error_handler(base::BindOnce(
+          &mojo::Binding<HostType>::Close, base::Unretained(binding_.get())));
       instance_->Init(std::move(host_proxy));
 
       connection_notifier_->NotifyConnectionReady();
@@ -120,7 +143,10 @@ class ConnectionHolderImpl {
 template <typename InstanceType>
 class ConnectionHolderImpl<InstanceType, void> {
  public:
-  // TODO(hidehiko): Check if InstanceType does not have Init() method.
+  // InstanceType must not have Init() method, which should be for a
+  // full-duplex connection.
+  static_assert(!HasInit<InstanceType>::value,
+                "Full duplex ConnectionHolderImpl should be used instead");
 
   explicit ConnectionHolderImpl(ConnectionNotifier* connection_notifier)
       : connection_notifier_(connection_notifier) {}
