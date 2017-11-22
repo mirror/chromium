@@ -93,6 +93,30 @@
       "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf47cde_475f3927",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_result.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-22T18:48:12Z",
+      "side": 1,
+      "message": "For option 2, putting a mojo struct into the C++ object seems like the wrong layering. These objects are used without mojo, and we\u0027re building a mojo transport mechanism. I don\u0027t want to involve mojo as a data type into non-mojo related code paths, I don\u0027t think?",
+      "parentUuid": "7fcffe58_7b2f7e01",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
