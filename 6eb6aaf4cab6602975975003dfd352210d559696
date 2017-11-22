@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3704523_5de3abcf",
+        "filename": "components/sync/mojo/syncer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T17:52:05Z",
+      "side": 1,
+      "message": "Can you add some comments that describe what this type is supposed to represent? Also, is there a followup CL that uses it?",
+      "revId": "6eb6aaf4cab6602975975003dfd352210d559696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b557dda_6a6dd532",
+        "filename": "components/sync/mojo/syncer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T17:52:05Z",
+      "side": 1,
+      "message": "IMO bytes should really be array\u003cuint8\u003e, but maybe the design of Ordinal doesn\u0027t make that easy?",
+      "revId": "6eb6aaf4cab6602975975003dfd352210d559696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3418d4f_f9c4d167",
+        "filename": "components/sync/mojo/syncer_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T17:52:05Z",
+      "side": 1,
+      "message": "Per https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#StructTraits-getters-should-be-simple, this should return a const ref if possible.\n\nSince that doesn\u0027t seem easy atm... maybe we can change Ordinal\u0027s storage to use base::Optional\u003c\u003e internally, and then change this field to be nullable in the mojom?",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "6eb6aaf4cab6602975975003dfd352210d559696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
