@@ -16,6 +16,24 @@
       "revId": "ab29f60fde4946d5af529f0fd7b6e2b3088c1f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e00e94_1489d360",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 2149,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-11-22T20:45:23Z",
+      "side": 1,
+      "message": "Could make downstream set these to empty lists to avoid this check, but we still need to know what R.javas to use in _srcjar_deps on line 2164 right? \n\nWe could just always use the package_resources target and then have the default behavior (i.e. if post_process_package_resources_deps \u003d\u003d []) just copy the process_resources srcjar over?",
+      "parentUuid": "b989f095_c2cbc3f7",
+      "revId": "ab29f60fde4946d5af529f0fd7b6e2b3088c1f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
