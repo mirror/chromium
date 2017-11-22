@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb72534e_b20e2894",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autocomplete-empty-suggested-value-after-suggested-value.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-22T08:42:46Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this. Is this here for a reason?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "0dd05831fcabc474d8ef3e3091d41b468f9b09ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52590459_ff570df8",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autocomplete-empty-suggested-value-after-suggested-value.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-22T08:42:46Z",
+      "side": 1,
+      "message": "nit: Remove",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 8
+      },
+      "revId": "0dd05831fcabc474d8ef3e3091d41b468f9b09ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022d5111_87f4cf72",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autocomplete-fill-value-after-suggested-value.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-22T08:42:46Z",
+      "side": 1,
+      "message": "nit: Remove",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 8
+      },
+      "revId": "0dd05831fcabc474d8ef3e3091d41b468f9b09ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64d56cc_6ac89a45",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-22T08:42:46Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 1004,
+        "startChar": 74,
+        "endLine": 1005,
+        "endChar": 27
+      },
+      "revId": "0dd05831fcabc474d8ef3e3091d41b468f9b09ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8f7ded_4e37fb53",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-22T08:42:46Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 1007,
+        "startChar": 7,
+        "endLine": 1007,
+        "endChar": 34
+      },
+      "revId": "0dd05831fcabc474d8ef3e3091d41b468f9b09ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2955ec44_1e49202d",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-22T08:42:46Z",
+      "side": 1,
+      "message": "nit: What if we do this in UpdatePlaceholderVisibility()?\n\nplaceholder-\u003eSetInlineStyleProperty(\n      CSSPropertyDisplay,\n      IsPlaceholderVisible() || !SuggestedValue().IsEmpty() ?\n      CSSValueBlock : CSSValueNone,\n      true);\n\nThen everything visibility related will be in UpdatePlaceholderVisibility.",
+      "range": {
+        "startLine": 1012,
+        "startChar": 0,
+        "endLine": 1013,
+        "endChar": 46
+      },
+      "revId": "0dd05831fcabc474d8ef3e3091d41b468f9b09ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
