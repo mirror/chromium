@@ -16,6 +16,24 @@
       "revId": "33f13c3bef1b42dd2d6bcac813dd73f14123ed31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66305253_03a33d18",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-22T19:28:29Z",
+      "side": 1,
+      "message": "I see. Thanks for the analysis.\n\nI\u0027ll file another bug for the lifecycle violation issue.",
+      "parentUuid": "4880fd77_68070b3e",
+      "revId": "33f13c3bef1b42dd2d6bcac813dd73f14123ed31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
