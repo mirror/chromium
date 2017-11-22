@@ -89,6 +89,15 @@ public class WebApkServiceImplWrapper extends IWebApkApi.Stub {
     }
 
     @Override
+    @SuppressWarnings("NewApi")
+    public void notifyNotificationWithChannel(
+            String platformTag, int platformID, Notification notification, String channelName) {
+        Log.w(TAG,
+                "Should NOT reach WebApkServiceImplWrapper#notifyNotificationWithChannel("
+                        + "String, int, Notification, String)");
+    }
+
+    @Override
     public void cancelNotification(String platformTag, int platformID) {
         Log.w(TAG, "Should NOT reach WebApkServiceImplWrapper#cancelNotification(String, int).");
     }

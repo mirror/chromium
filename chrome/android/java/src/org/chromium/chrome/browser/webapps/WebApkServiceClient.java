@@ -72,7 +72,7 @@ public class WebApkServiceClient {
      */
     public void notifyNotification(final String webApkPackage,
             final NotificationBuilderBase notificationBuilder, final String platformTag,
-            final int platformID) {
+            final int platformID, final String channelName) {
         final ApiUseCallback connectionCallback = new ApiUseCallback() {
             @Override
             public void useApi(IWebApkApi api) throws RemoteException {
@@ -93,7 +93,13 @@ public class WebApkServiceClient {
                 }
                 boolean notificationPermissionEnabled = api.notificationPermissionEnabled();
                 if (notificationPermissionEnabled) {
-                    api.notifyNotification(platformTag, platformID, notificationBuilder.build());
+                    if (channelName == null) {
+                        api.notifyNotification(
+                                platformTag, platformID, notificationBuilder.build());
+                    } else {
+                        api.notifyNotificationWithChannel(
+                                platformTag, platformID, notificationBuilder.build(), channelName);
+                    }
                 }
                 WebApkUma.recordNotificationPermissionStatus(notificationPermissionEnabled);
             }
@@ -122,6 +128,23 @@ public class WebApkServiceClient {
         if (sInstance == null) return;
 
         sInstance.mConnectionManager.disconnectAll(ContextUtils.getApplicationContext());
+    }
+
+    /**
+     * Returns whether the WebAPK supports notification channel. WebAPKs targeting SDK >= 26
+     * support notification channel.
+     */
+    public static boolean supportNotificationChannel(String webApkPackage) {
+        if (webApkPackage == null) return false;
+
+        PackageManager packageManager = ContextUtils.getApplicationContext().getPackageManager();
+        try {
+            return packageManager.getApplicationInfo(webApkPackage, 0).targetSdkVersion
+                    >= Build.VERSION_CODES.O;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /** Decodes bitmap from WebAPK's resources. */

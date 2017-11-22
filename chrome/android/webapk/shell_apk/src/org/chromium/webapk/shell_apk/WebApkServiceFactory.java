@@ -36,6 +36,12 @@ public class WebApkServiceFactory extends Service {
      */
     private static final String KEY_SMALL_ICON_ID = "small_icon_id";
 
+    /** The user visible name of the default notification channel of a WebAPK. */
+    private static final String KEY_DEFAULT_CHANNEL_NAME = "default_channel_name";
+
+    /** The target SDK of this WebAPK. */
+    private static final String KEY_TARGET_SDK = "target_sdk";
+
     @Override
     public IBinder onBind(Intent intent) {
         ClassLoader webApkClassLoader =
@@ -54,6 +60,9 @@ public class WebApkServiceFactory extends Service {
             Bundle bundle = new Bundle();
             bundle.putInt(KEY_SMALL_ICON_ID, R.drawable.notification_badge);
             bundle.putInt(KEY_HOST_BROWSER_UID, hostBrowserUid);
+            bundle.putString(
+                    KEY_DEFAULT_CHANNEL_NAME, getString(R.string.notification_channel_name));
+            bundle.putInt(KEY_TARGET_SDK, getApplicationInfo().targetSdkVersion);
             IBinder webApkServiceImpl =
                     (IBinder) webApkServiceImplConstructor.newInstance(new Object[] {this, bundle});
             return new WebApkServiceImplWrapper(this, webApkServiceImpl, hostBrowserUid);

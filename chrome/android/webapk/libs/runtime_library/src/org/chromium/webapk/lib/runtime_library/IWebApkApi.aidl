@@ -19,6 +19,10 @@ interface IWebApkApi {
     // Display a notification.
     void notifyNotification(String platformTag, int platformID, in Notification notification);
 
+    // Display a notification in the specified channel on Android O+.
+    void notifyNotificationWithChannel(String platformTag, int platformID,
+                                       in Notification notification, String channelId);
+
     // Cancel a notification.
     void cancelNotification(String platformTag, int platformID);
 }
