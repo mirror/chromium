@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "a037e9b4_85a06b88",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T22:08:08Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to do anything in this CL; let\u0027s poke at it in a followup. I think it might be nice in some ways, but might also require other changes.",
+      "parentUuid": "98f37b82_fbdb93e9",
+      "revId": "11f8305361635d98dff5493e1ed3a69205831448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78b281d8_363e5fa2",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 19
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "It\u0027s a bit indirect, but if the CSP header sets sandbox flags on the document, then they will be seen by ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() and enforced by  Document::EnforceSandboxFlags. Then Document::SetFeaturePolicy (an unfortunate place, I know) will see that SecurityContext::GetSandboxFlags returns non-default flags, and triggers the sending of this message.\n\nIt is sent if *either* feature-policy or CSP sandbox flags are non-default, hence the rename.",
       "parentUuid": "78b281d8_363e5fa2",
+      "revId": "11f8305361635d98dff5493e1ed3a69205831448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fd62f2c_9509f147",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T22:08:08Z",
+      "side": 1,
+      "message": "I see--it\u0027s a bit unintuitive that this is dispatched from SetFeaturePolicy, since it relies on this being called after CSP is set.\n\nWould it make sense to move this call up into the Document ctor, after calling InitSecurityContext(), to avoid the subtlety?",
+      "parentUuid": "1b55fcaf_4098dd32",
       "revId": "11f8305361635d98dff5493e1ed3a69205831448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
