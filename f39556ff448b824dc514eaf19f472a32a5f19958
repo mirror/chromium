@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c5e77a8_f0d4e837",
+        "filename": "gpu/command_buffer/client/context_support.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T02:38:16Z",
+      "side": 1,
+      "message": "Here and throughout, have the callers been audited so that they expect that this will take ownership of the passed callback? What would happen if they get the lifetime wrong and use the callback themselves after calling SetErrorMessageCallback and passing it by value? (per https://chromium.googlesource.com/chromium/src/+/master/docs/callback.md )",
+      "revId": "f39556ff448b824dc514eaf19f472a32a5f19958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
