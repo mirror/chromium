@@ -5,6 +5,7 @@
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/account_consistency_manager.h"
 #include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 
@@ -34,4 +35,9 @@ KeyedService* ChromeSigninClientFactory::BuildServiceInstanceFor(
   ChromeSigninClient* client = new ChromeSigninClient(
       profile, SigninErrorControllerFactory::GetForProfile(profile));
   return client;
+}
+
+void ChromeSigninClientFactory::RegisterProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+  AccountConsistencyManager::RegisterProfilePrefs(registry);
 }
