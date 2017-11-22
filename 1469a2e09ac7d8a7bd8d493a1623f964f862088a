@@ -22,6 +22,29 @@
       "revId": "1469a2e09ac7d8a7bd8d493a1623f964f862088a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c25a34eb_56dee77e",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-22T22:06:37Z",
+      "side": 1,
+      "message": "I think I\u0027m having a bad brain day, but I don\u0027t understand if the test expectations are changing in this test. In particular, you\u0027re changing a test-only .cc file so that shouldn\u0027t change chrome behavior, obviously. But you\u0027re also changing a test and this one is a bit opaque so I can\u0027t quite figure out what\u0027s effectively changing in this test. Can you walk me through it?",
+      "range": {
+        "startLine": 3143,
+        "startChar": 14,
+        "endLine": 3143,
+        "endChar": 35
+      },
+      "revId": "1469a2e09ac7d8a7bd8d493a1623f964f862088a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
