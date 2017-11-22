@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8978d063_76529cbb",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-22T22:41:04Z",
+      "side": 1,
+      "message": "Done, thanks. Removed SetUp/TearDown.",
+      "parentUuid": "e208ffcc_e5ce4e37",
+      "revId": "344dc0dca7bca9230d010a6f44b6fe221ff48a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1d4bd9a_de6b14c1",
         "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "344dc0dca7bca9230d010a6f44b6fe221ff48a18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccb94a0_c90a3476",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-22T22:41:04Z",
+      "side": 1,
+      "message": "Ack, and removed the TODO for now. We have a b/ bug anyway.",
+      "parentUuid": "f1d4bd9a_de6b14c1",
+      "revId": "344dc0dca7bca9230d010a6f44b6fe221ff48a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "22a70f95_26642518",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-22T22:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "469c5345_2ac5cdf9",
+      "revId": "344dc0dca7bca9230d010a6f44b6fe221ff48a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94f67e1a_9a3c4fbf",
         "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "344dc0dca7bca9230d010a6f44b6fe221ff48a18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8621d6c_82e1189a",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-22T22:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94f67e1a_9a3c4fbf",
+      "revId": "344dc0dca7bca9230d010a6f44b6fe221ff48a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

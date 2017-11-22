@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957ff6f8_cf3b79cb",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-22T22:41:04Z",
+      "side": 1,
+      "message": "Added this to fix the bot with DCHECK enabled.",
+      "revId": "68ba35af48935ac00d9ba96506b8db97be3fbb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
