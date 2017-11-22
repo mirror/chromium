@@ -721,7 +721,10 @@ Sources.NavigatorView = class extends UI.VBox {
     Sources.NavigatorView.appendSearchItem(contextMenu, path);
     if (project.type() !== Workspace.projectTypes.FileSystem)
       return;
-
+    var folderPath =
+        Persistence.FileSystemWorkspaceBinding.completeURL(project, path || '').substr(7);  // Strip off 'file://'.
+    contextMenu.saveSection().appendItem(
+        Common.UIString('Open folder'), () => InspectorFrontendHost.showItemInFolder(folderPath));
     contextMenu.defaultSection().appendItem(
         Common.UIString('New file'), this._handleContextMenuCreate.bind(this, project, path));
     contextMenu.defaultSection().appendItem(
