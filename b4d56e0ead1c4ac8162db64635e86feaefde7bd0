@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdf3f0a6_b127d118",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-22T17:10:30Z",
+      "side": 1,
+      "message": "This should be updated even if there are no observers for the entry, right?",
+      "range": {
+        "startLine": 533,
+        "startChar": 6,
+        "endLine": 533,
+        "endChar": 33
+      },
+      "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406b7c12_6c947b15",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-22T17:10:30Z",
+      "side": 1,
+      "message": "|has_paint_timing_entry_pending|",
+      "range": {
+        "startLine": 555,
+        "startChar": 7,
+        "endLine": 555,
+        "endChar": 36
+      },
+      "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec75f5e_c60e6553",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-22T17:10:30Z",
+      "side": 1,
+      "message": "If there were no observers before then this should do nothing? The new |observer| will not have any PerformanceEntry.",
+      "range": {
+        "startLine": 578,
+        "startChar": 4,
+        "endLine": 578,
+        "endChar": 65
+      },
+      "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815d3715_57161113",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBaseTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-22T17:10:30Z",
+      "side": 1,
+      "message": "Maybe also a test that advances the clock AND executes idle tasks?",
+      "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
