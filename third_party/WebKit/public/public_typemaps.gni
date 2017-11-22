@@ -8,6 +8,7 @@ typemaps = [
   "//third_party/WebKit/public/platform/content_security_policy.typemap",
   "//third_party/WebKit/public/platform/display_mode.typemap",
   "//third_party/WebKit/public/platform/referrer_policy.typemap",
+  "//third_party/WebKit/public/platform/mixed_content_context_type.typemap",
   "//third_party/WebKit/public/platform/modules/screen_orientation/screen_orientation_lock_types.typemap",
   "//third_party/WebKit/public/web/console_message.typemap",
 ]
