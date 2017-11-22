@@ -17,6 +17,16 @@ namespace viz {
 // the last element and end of the list.
 constexpr int32_t kEndOfList = -1;
 
+struct HitTestRect {
+  HitTestRect(uint32_t flags, gfx::Rect rect) : flags(flags), rect(rect) {}
+
+  // Flags to indicate the event source.
+  uint32_t flags;
+
+  // The rect of the region in the coordinate space of the parent.
+  gfx::Rect rect;
+};
+
 // An array of AggregatedHitTestRegion elements is used to define the
 // aggregated hit-test data for the Display.
 //
@@ -26,14 +36,14 @@ constexpr int32_t kEndOfList = -1;
 struct AggregatedHitTestRegion {
   AggregatedHitTestRegion(FrameSinkId frame_sink_id,
                           uint32_t flags,
-                          gfx::Rect rect,
                           gfx::Transform transform,
-                          int32_t child_count)
+                          int32_t child_count,
+                          uint16_t num_rects)
       : frame_sink_id(frame_sink_id),
         flags(flags),
-        rect(rect),
         transform(transform),
-        child_count(child_count) {}
+        child_count(child_count),
+        num_rects(num_rects) {}
 
   // The FrameSinkId corresponding to this region.  Events that match
   // are routed to this surface.
@@ -43,9 +53,6 @@ struct AggregatedHitTestRegion {
   // mojom::HitTestRegion
   uint32_t flags;
 
-  // The rectangle that defines the region in parent region's coordinate space.
-  gfx::Rect rect;
-
   // The transform applied to the rect in parent region's coordinate space.
   gfx::Transform transform;
 
@@ -53,6 +60,9 @@ struct AggregatedHitTestRegion {
   // If this element is not matched then child_count elements can be skipped
   // to move to the next entry.
   int32_t child_count;
+
+  // The number of HitTestRects this region contains.
+  uint16_t num_rects;
 };
 
 }  // namespace viz

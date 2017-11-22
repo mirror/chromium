@@ -11,9 +11,9 @@
 
 namespace {
 
-viz::mojom::HitTestRegionPtr CreateHitTestRegion(const aura::Window* window,
-                                                 uint32_t flags,
-                                                 const gfx::Rect& rect) {
+viz::mojom::HitTestRegionPtr CreateHitTestRegion(
+    const aura::Window* window,
+    std::vector<viz::mojom::HitTestRectPtr> hit_test_rects) {
   const ui::Layer* layer = window->layer();
   DCHECK(layer);
 
@@ -25,14 +25,22 @@ viz::mojom::HitTestRegionPtr CreateHitTestRegion(const aura::Window* window,
   if (window->IsEmbeddingClient()) {
     DCHECK(window->GetLocalSurfaceId().is_valid());
     hit_test_region->local_surface_id = window->GetLocalSurfaceId();
-    hit_test_region->flags = flags | viz::mojom::kHitTestChildSurface;
+    hit_test_region->flags = viz::mojom::kHitTestChildSurface;
   } else {
-    hit_test_region->flags = flags | viz::mojom::kHitTestMine;
+    hit_test_region->flags = viz::mojom::kHitTestMine;
   }
-  hit_test_region->rect = rect;
   hit_test_region->transform = layer->transform();
+  hit_test_region->rects = std::move(hit_test_rects);
 
   return hit_test_region;
+}
+
+viz::mojom::HitTestRectPtr CreateHitTestRect(uint32_t flags,
+                                             const gfx::Rect& rect) {
+  auto hit_test_rect = viz::mojom::HitTestRect::New();
+  hit_test_rect->flags = flags;
+  hit_test_rect->rect = rect;
+  return hit_test_rect;
 }
 
 }  // namespace
@@ -86,6 +94,7 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
       continue;
     if (event_targeting_policy !=
         ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY) {
+      std::vector<viz::mojom::HitTestRectPtr> hit_test_rects;
       gfx::Rect rect_mouse(child->bounds());
       gfx::Rect rect_touch;
       bool touch_and_mouse_are_same = true;
@@ -112,24 +121,26 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
           rect.Intersect(rect_mouse);
           if (rect.IsEmpty())
             continue;
-          hit_test_region_list->regions.push_back(CreateHitTestRegion(
-              child, viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch,
-              rect));
+          hit_test_rects.push_back(CreateHitTestRect(
+              viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch, rect));
         }
       } else {
         // The |child| has possibly same mouse and touch hit-test areas.
         if (!rect_mouse.IsEmpty()) {
-          hit_test_region_list->regions.push_back(CreateHitTestRegion(
-              child,
+          hit_test_rects.push_back(CreateHitTestRect(
               touch_and_mouse_are_same
                   ? (viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch)
                   : viz::mojom::kHitTestMouse,
               rect_mouse));
         }
         if (!touch_and_mouse_are_same && !rect_touch.IsEmpty()) {
-          hit_test_region_list->regions.push_back(CreateHitTestRegion(
-              child, viz::mojom::kHitTestTouch, rect_touch));
+          hit_test_rects.push_back(
+              CreateHitTestRect(viz::mojom::kHitTestTouch, rect_touch));
         }
+      }
+      if (hit_test_rects.size()) {
+        hit_test_region_list->regions.push_back(
+            CreateHitTestRegion(child, std::move(hit_test_rects)));
       }
     }
     if (event_targeting_policy != ui::mojom::EventTargetingPolicy::TARGET_ONLY)

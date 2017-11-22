@@ -43,6 +43,41 @@ class VIZ_SERVICE_EXPORT HitTestAggregator {
  private:
   friend class TestHitTestAggregator;
 
+  struct NextRegionStatus {
+    AggregatedHitTestRegion* next_region = nullptr;
+    int32_t child_count_so_far = 0;
+  };
+
+  // Allocates memory for the AggregatedHitTestRegion array.
+  void AllocateHitTestRegionArray();
+
+  // Resizes memory for the AggregatedHitTestRegion array. |size| indicates the
+  // number of elements.
+  void ResizeHitTestRegionArray(uint32_t size);
+
+  void GrowRegionList();
+  void SwapHandles();
+
+  // Appends the root element to the AggregatedHitTestRegion array.
+  void AppendRoot(const SurfaceId& surface_id);
+
+  // Appends a |region| to the HitTestRegionList structure to recursively
+  // build the tree. |region_ptr| indicates the place to put this |region|.
+  NextRegionStatus AppendRegion(AggregatedHitTestRegion* region_ptr,
+                                const mojom::HitTestRegionPtr& region);
+
+  // Populates the HitTestRegion element at the given element |region|.
+  // Access to the HitTestRegion list is localized to this call
+  // in order to prevent errors if the array is resized during aggregation.
+  AggregatedHitTestRegion* SetRegionAt(AggregatedHitTestRegion* region,
+                                       const FrameSinkId& frame_sink_id,
+                                       uint32_t flags,
+                                       const gfx::Transform& transform,
+                                       std::vector<HitTestRect> rects,
+                                       int32_t child_count);
+  // Marks the element at the given index as the end of list.
+  void MarkEndAt(AggregatedHitTestRegion* region_end);
+
   const HitTestManager* const hit_test_manager_;
 
   mojo::ScopedSharedBufferHandle read_handle_;
@@ -61,37 +96,6 @@ class VIZ_SERVICE_EXPORT HitTestAggregator {
   uint8_t active_handle_index_ = 0;
 
   HitTestAggregatorDelegate* const delegate_;
-
-  // Allocates memory for the AggregatedHitTestRegion array.
-  void AllocateHitTestRegionArray();
-
-  // Resizes memory for the AggregatedHitTestRegion array. |size| indicates the
-  // number of elements.
-  void ResizeHitTestRegionArray(uint32_t size);
-
-  void GrowRegionList();
-  void SwapHandles();
-
-  // Appends the root element to the AggregatedHitTestRegion array.
-  void AppendRoot(const SurfaceId& surface_id);
-
-  // Appends a |region| to the HitTestRegionList structure to recursively
-  // build the tree.  |region_index| indicates the current index of the end of
-  // the list.
-  size_t AppendRegion(size_t region_index,
-                      const mojom::HitTestRegionPtr& region);
-
-  // Populates the HitTestRegion element at the given element |index|.
-  // Access to the HitTestRegion list is localized to this call
-  // in order to prevent errors if the array is resized during aggregation.
-  void SetRegionAt(size_t index,
-                   const FrameSinkId& frame_sink_id,
-                   uint32_t flags,
-                   const gfx::Rect& rect,
-                   const gfx::Transform& transform,
-                   int32_t child_count);
-  // Marks the element at the given index as the end of list.
-  void MarkEndAt(size_t index);
 
   // Handles the case when this object is deleted after
   // the PostTaskAggregation call is scheduled but before invocation.
