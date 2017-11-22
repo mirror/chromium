@@ -435,10 +435,10 @@ WebContents* TabManager::DiscardTabById(int64_t target_web_contents_id,
 WebContents* TabManager::DiscardTabByExtension(content::WebContents* contents) {
   if (contents) {
     return DiscardTabById(IdFromWebContents(contents),
-                          DiscardCondition::kProactive);
+                          DiscardCondition::kExtension);
   }
 
-  return DiscardTabImpl(DiscardCondition::kProactive);
+  return DiscardTabImpl(DiscardCondition::kExtension);
 }
 
 void TabManager::LogMemoryAndDiscardTab(DiscardCondition condition) {
