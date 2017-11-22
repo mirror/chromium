@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc5197f3_1151e55b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T09:17:11Z",
+      "side": 1,
+      "message": "All of them!?",
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ddc0685_87eb39c0",
+        "filename": "content/common/mac/font_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T09:17:11Z",
+      "side": 1,
+      "message": "Methods before fields.",
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aff6b9d_a8cd7b57",
+        "filename": "content/common/mac/font_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T09:17:11Z",
+      "side": 1,
+      "message": "It feels like a bit of a layering violation for this to depend on the mojo interface that\u0027s implemented by forwarding to this.",
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f1d8a0_f7e747ce",
+        "filename": "content/common/mac/font_loader.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T09:17:11Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 128,
+        "startChar": 45,
+        "endLine": 128,
+        "endChar": 47
+      },
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122f1ec6_a90cfc85",
+        "filename": "content/common/mac/font_loader.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T09:17:11Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 130,
+        "startChar": 46,
+        "endLine": 130,
+        "endChar": 48
+      },
+      "revId": "5a6dc0e4755a8786bd65f19f99f5ee86322bdf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
