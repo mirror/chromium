@@ -24,7 +24,7 @@ def main_run(args):
 
   json.dump({
       'valid': True,
-      'failures': ['Please refer to stdout for errors.'] if rc else [],
+      'failures': ['failure'] if rc else [],
   }, args.output)
 
   return rc

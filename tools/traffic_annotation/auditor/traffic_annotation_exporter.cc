@@ -161,15 +161,11 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
     int content_hash_code = TrafficAnnotationAuditor::ComputeHashValue(content);
 
     // If annotation unique id is already in the reported list, just check if
-    // platform is correct and content is not changed.
+    // platform is correct.
     if (base::ContainsKey(report_items_, annotation.proto.unique_id())) {
       ReportItem* current = &report_items_[annotation.proto.unique_id()];
       if (!base::ContainsValue(current->os_list, platform)) {
         current->os_list.push_back(platform);
-        modified_ = true;
-      }
-      if (current->content_hash_code != content_hash_code) {
-        current->content_hash_code = content_hash_code;
         modified_ = true;
       }
     } else {
