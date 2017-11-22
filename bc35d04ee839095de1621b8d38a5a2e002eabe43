@@ -16,6 +16,24 @@
       "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a670d00_a73afca2",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T01:00:38Z",
+      "side": 0,
+      "message": "That looks good if it works.",
+      "parentUuid": "4538cdc0_5c1ffa0c",
+      "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
