@@ -16,6 +16,24 @@
       "revId": "144e9f990aeba209d7d3b05de269070606de6e9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ae0371_45b00abe",
+        "filename": "OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1128941
+      },
+      "writtenOn": "2017-11-22T04:08:00Z",
+      "side": 1,
+      "message": "Is this used or is it just informational? I feel like I haven\u0027t needed specific reviewers. I guess because we don\u0027t have CQ for this branch?",
+      "parentUuid": "a99ca9e5_5535a59d",
+      "revId": "144e9f990aeba209d7d3b05de269070606de6e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
