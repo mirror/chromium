@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "07a13706_75d24c6f",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T14:26:34Z",
+      "side": 1,
+      "message": "nit: also unit-tests -\u003e unit tests",
+      "parentUuid": "965e3b58_638ed0b4",
+      "range": {
+        "startLine": 74,
+        "startChar": 48,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13471b6c_a43e4f66",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 16
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "This should really not happen. We can make it a DCHECK if you want, but recovery seems to me unnecessary.\n(Note that this derives the path; it doesn\u0027t attempt to do anything on the filesystem yet. Getting this to return false would be like concatenating two non-empty strings and getting the empty string as the result.)",
       "parentUuid": "f69d3a2a_fa450092",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 7
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "243c5aa7_69db6e09",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T14:26:34Z",
+      "side": 1,
+      "message": "Let\u0027s keep it a CHECK and change it if a bug gets reported.",
+      "parentUuid": "34367bf2_52b66c59",
       "range": {
         "startLine": 162,
         "startChar": 2,
@@ -328,6 +376,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "939dd70a_946c760a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T14:26:34Z",
+      "side": 1,
+      "message": "This still needs work. I suggest:\n  // Currently, we only support manual logs initiated by the user\n  // through WebRTCInternals, which are stored locally. \n  // TODO(eladalon): Allow starting/stopping an RTC event log\n  // that will be uploaded to the server. https://crbug.com/775415",
+      "parentUuid": "b1f5e152_d31ed65e",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -460,6 +532,30 @@
       "side": 1,
       "message": "Three cases, actually (elsewhere in the file).\nDone, though I would prefer \"unit-tests\" really.",
       "parentUuid": "d9d59596_f32099de",
+      "range": {
+        "startLine": 130,
+        "startChar": 13,
+        "endLine": 130,
+        "endChar": 14
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbace597_43313ee1",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T14:26:34Z",
+      "side": 1,
+      "message": "unit-tests is grammatically incorrect the way you are using it.\nYou need the hyphen if you say something like \"unit-test runner\".",
+      "parentUuid": "0af7dd66_da0b81dc",
       "range": {
         "startLine": 130,
         "startChar": 13,
