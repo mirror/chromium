@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ec361373_16bb60b8",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-22T17:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "720910cb_3a078a59",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 37
+      },
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2be7e160_2590d738",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 4
@@ -83,6 +107,24 @@
       "writtenOn": "2017-11-22T01:33:30Z",
       "side": 1,
       "message": "one of the design principles of the network service is that it knows as little as possible (eventually I hope we remove resource type from this altogether). so can we move this logic to the caller? i.e. similar to kURLLoadOptionSendSSLInfo, have an kURLLoadOptionSendSSLInfoOnCertError that\u0027s documented to only send it on major cert errors. then only navigation_url_loader_network_service.cc sets this option.\n\nAlso, can we move the histograming to navigation_url_loader_network_service.cc, to further simplify this file?",
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19fbe56_d337dd43",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-22T17:16:10Z",
+      "side": 1,
+      "message": "Done, but I don\u0027t see a way to unit-test the new code in NavigationURLLoaderNetworkService. I tried writing a unit test in navigation_url_loader_network_service_unittest.cc but it doesn\u0027t seem like there is a URLLoaderFactory hooked up in unit tests. (?) I\u0027m thinking about trying a browser test in navigation_handle_impl_browsertest that installs a NavigationThrottle and observes whether or not the SSLInfo is present, which might work but seems a little roundabout.",
+      "parentUuid": "2be7e160_2590d738",
       "revId": "e701d14fe88704418c365e53552249ef73701eb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
