@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a7d06f3_a0cc45a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-22T20:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c0d9c65_0b168392",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3e3552e_18950531",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817602b7_ef1cb0c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-22T20:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3e3552e_18950531",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c3bd06b0_183fdf48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-22T20:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "972f82d8_f95cf071",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b37600_b1573d22",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91fc1bc_dc16305c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-22T20:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3b37600_b1573d22",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c036d358_6e210a3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-22T20:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c6af81c_21ba75f0",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ad2db33_02ea1ab8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappBrowserControlsDelegate.java",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb681c9f_6811b254",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappBrowserControlsDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-22T20:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ad2db33_02ea1ab8",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "aee9600e_9d836ab2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-22T20:29:25Z",
+      "side": 1,
+      "message": "Good catch! Did notice this is called before things get initialized, so modified getActivityType(), but didn\u0027t notice that the webappinfo is dummy. Actually looking at it more getIntent() inside the constructor might not even work... Your solution of passing this down in show.. is a better one anyway.",
+      "parentUuid": "42d9f38f_2d1f9fa6",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e18133b5_113a61d1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-22T19:23:21Z",
       "side": 1,
       "message": "Can we show the dialog for webapps too? I am ok if this is done in a separate CL. Showing the offline dialog does not hurt and gives us less code paths",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843c9de6_d1df55e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-22T20:29:25Z",
+      "side": 1,
+      "message": "I would prefer to do it in a separate CL and keep this about giving parity to TWAs.",
+      "parentUuid": "e18133b5_113a61d1",
       "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
