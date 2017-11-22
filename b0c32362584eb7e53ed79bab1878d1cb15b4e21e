@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31b2feee_02a9d911",
+        "filename": "chrome/browser/autofill/autofill_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-22T15:58:44Z",
+      "side": 1,
+      "message": "This is not optimal. I tried to answer the question \"Is the popup showing?\" in the interactive UI test and ended up introducing internal state observation into ChromeAutofillClient.\n\nI spent some hours looking into how to check the visibility through inspecting the view hierarchy, but I could not get hold of the views::Widget corresponding to the pop-up. The closest I got was the top-level views::Widget for the iframe.\n\nBefore I also tried to just mimic the real scenario and send the \"pressing Enter\" key event to the popup. However, for that I needed a RenderWidget to route it. The one for the iframe (used before deleting the iframe) is gone with the iframe, and the one for the main frame does not route the events, because the popup did not register with it. So there is no way to route keypress events to the popup after the frame is gone.",
+      "range": {
+        "startLine": 1758,
+        "startChar": 7,
+        "endLine": 1758,
+        "endChar": 19
+      },
+      "revId": "b0c32362584eb7e53ed79bab1878d1cb15b4e21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ba6e63_1013c6a1",
+        "filename": "components/autofill/core/browser/autofill_popup_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-22T15:58:44Z",
+      "side": 1,
+      "message": "Personally, I would love to make this non-virtual and keep the deletion_callback in AutofillPopupDelegate. That would get rid of duplicating the code in both implementations. However, I\u0027m not sure how strongly I should feel about keeping this a pure virtual interface. For the first iteration I kept the pure virtuality, but am willing to change that. :)",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "b0c32362584eb7e53ed79bab1878d1cb15b4e21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
