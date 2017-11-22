@@ -77,6 +77,9 @@
   (path (user-homedir-path "/Library/Preferences/.GlobalPreferences.plist"))
   (regex (user-homedir-path #"/Library/Preferences/ByHost/.GlobalPreferences.*")))
 
+(if (>= os-version 1013)
+  (allow file-read-data (path (user-homedir-path "/Library/Fonts"))))
+
 ; Reads of /dev devices.
 (allow file-read-data
   (path "/dev/autofs_nowait")
