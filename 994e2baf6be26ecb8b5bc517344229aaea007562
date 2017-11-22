@@ -70,6 +70,24 @@
       "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6304742e_d9967ddf",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T02:14:32Z",
+      "side": 1,
+      "message": "To be honest I\u0027ve never used the new-branch or rebase-update commands in my Chromium development.\n\nAndrii, your workflow looks good because it theoretically supports rebasing -- which is what I\u0027m trying to document here -- but if doing the following:\n\ngit new-branch --upstream origin/infra/config some_feature\ngit new-branch --upstream origin/infra/config foo2\ngit rebase-update\n\nthen the error at https://pastebin.com/tK2BKjuD is generated. Do you have a solution?",
+      "parentUuid": "3bf2e5df_e85a441d",
+      "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
