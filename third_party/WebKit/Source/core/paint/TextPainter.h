@@ -35,6 +35,10 @@ class CORE_EXPORT TextPainter : public TextPainterBase {
     has_combined_text_ = combined_text_ ? true : false;
   }
 
+  void SetContainsOnlyWhitespace(bool contains_only_whitespace) {
+    contains_only_whitespace_ = contains_only_whitespace;
+  }
+
   void ClipDecorationsStripe(float upper,
                              float stripe_width,
                              float dilation) override;
@@ -56,6 +60,7 @@ class CORE_EXPORT TextPainter : public TextPainterBase {
 
   const TextRun& run_;
   LayoutTextCombine* combined_text_;
+  bool contains_only_whitespace_ = false;
 };
 
 }  // namespace blink

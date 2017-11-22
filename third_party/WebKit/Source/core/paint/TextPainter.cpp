@@ -61,6 +61,7 @@ void TextPainter::PaintInternalRun(TextRunPaintInfo& text_run_paint_info,
 
   text_run_paint_info.from = from;
   text_run_paint_info.to = to;
+  text_run_paint_info.contains_only_whitespace = contains_only_whitespace_;
 
   if (step == kPaintEmphasisMark) {
     graphics_context_.DrawEmphasisMarks(
