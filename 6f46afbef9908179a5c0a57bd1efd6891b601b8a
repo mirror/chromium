@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9525abd3_7cf91ca3",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-22T17:07:40Z",
+      "side": 1,
+      "message": "nit: last_quad is technically end-1. maybe name this end?",
+      "revId": "6f46afbef9908179a5c0a57bd1efd6891b601b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
