@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7072d2_f9fb7248",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-22T22:07:10Z",
+      "side": 1,
+      "message": "nit: update comment too",
+      "revId": "20c4baa8d9052725b13270065e24504457458fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
