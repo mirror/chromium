@@ -50,7 +50,7 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
 
     @Override
     public boolean onTransact(int arg0, Parcel arg1, Parcel arg2, int arg3) throws RemoteException {
-        int callingUid = Binder.getCallingUid();
+        int callingUid = getCallingUidFromBinder();
         if (mHostUid != callingUid) {
             throw new RemoteException("Unauthorized caller " + callingUid
                     + " does not match expected host=" + mHostUid);
@@ -76,6 +76,10 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
     @Override
     public boolean notificationPermissionEnabled() {
         return NotificationManagerCompat.from(mContext).areNotificationsEnabled();
+    }
+
+    protected int getCallingUidFromBinder() {
+        return Binder.getCallingUid();
     }
 
     private NotificationManager getNotificationManager() {
