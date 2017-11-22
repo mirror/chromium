@@ -222,7 +222,8 @@ NetworkQualityEstimator::NetworkQualityEstimator(
       last_connection_change_(tick_clock_->NowTicks()),
       current_network_id_(nqe::internal::NetworkID(
           NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN,
-          std::string())),
+          std::string(),
+          0)),
       http_downstream_throughput_kbps_observations_(
           params_.get(),
           tick_clock_.get(),
@@ -413,7 +414,8 @@ void NetworkQualityEstimator::NotifyHeadersReceived(const URLRequest& request) {
     return;
   DCHECK_GE(observed_http_rtt, base::TimeDelta());
   Observation http_rtt_observation(observed_http_rtt.InMilliseconds(),
-                                   tick_clock_->NowTicks(), signal_strength_,
+                                   tick_clock_->NowTicks(),
+                                   current_network_id_.signal_strength,
                                    NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP);
   AddAndNotifyObserversOfRTT(http_rtt_observation);
   throughput_analyzer_->NotifyBytesRead(request);
@@ -785,7 +787,7 @@ void NetworkQualityEstimator::OnConnectionTypeChanged(
     }
   }
 #endif  // OS_ANDROID
-  signal_strength_.reset();
+  current_network_id_.signal_strength = 0;
   min_signal_strength_since_connection_change_.reset();
   max_signal_strength_since_connection_change_.reset();
   network_quality_ = nqe::internal::NetworkQuality();
@@ -841,29 +843,38 @@ void NetworkQualityEstimator::MaybeQueryExternalEstimateProvider() const {
   external_estimate_provider_->Update();
 }
 
+int32_t NetworkQualityEstimator::GetCurrentSignalStrength() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+#if defined(OS_ANDROID)
+  if (params_->weight_multiplier_per_signal_strength_level() >= 1.0)
+    return 0;
+  if (!NetworkChangeNotifier::IsConnectionCellular(current_network_id_.type))
+    return 0;
+  return android::cellular_signal_strength::GetSignalStrengthLevel();
+#endif  // OS_ANDROID
+
+  return 0;
+}
+
 void NetworkQualityEstimator::UpdateSignalStrength() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  signal_strength_.reset();
-#if defined(OS_ANDROID)
-  if (params_->weight_multiplier_per_signal_strength_level() >= 1.0)
-    return;
-  if (!NetworkChangeNotifier::IsConnectionCellular(current_network_id_.type))
-    return;
+  int32_t past_signal_strength = current_network_id_.signal_strength;
+  int32_t new_signal_strength = GetCurrentSignalStrength();
 
-  signal_strength_ =
-      android::cellular_signal_strength::GetSignalStrengthLevel();
-
-  if (!signal_strength_)
+  if (past_signal_strength == new_signal_strength) {
     return;
+  }
+
+  current_network_id_.signal_strength = new_signal_strength;
 
   min_signal_strength_since_connection_change_ =
       std::min(min_signal_strength_since_connection_change_.value_or(INT32_MAX),
-               signal_strength_.value());
+               current_network_id_.signal_strength);
   max_signal_strength_since_connection_change_ =
       std::max(max_signal_strength_since_connection_change_.value_or(INT32_MIN),
-               signal_strength_.value());
-#endif  // OS_ANDROID
+               current_network_id_.signal_strength);
 }
 
 void NetworkQualityEstimator::RecordMetricsOnConnectionTypeChanged() const {
@@ -1475,14 +1486,14 @@ base::TimeDelta NetworkQualityEstimator::GetRTTEstimateInternal(
       case nqe::internal::ObservationCategory::kHttp:
         return base::TimeDelta::FromMilliseconds(
             http_rtt_ms_observations_
-                .GetPercentile(start_time, signal_strength_, percentile,
-                               observations_count)
+                .GetPercentile(start_time, current_network_id_.signal_strength,
+                               percentile, observations_count)
                 .value_or(nqe::internal::INVALID_RTT_THROUGHPUT));
       case nqe::internal::ObservationCategory::kTransport:
         return base::TimeDelta::FromMilliseconds(
             transport_rtt_ms_observations_
-                .GetPercentile(start_time, signal_strength_, percentile,
-                               observations_count)
+                .GetPercentile(start_time, current_network_id_.signal_strength,
+                               percentile, observations_count)
                 .value_or(nqe::internal::INVALID_RTT_THROUGHPUT));
     }
   }
@@ -1506,7 +1517,8 @@ int32_t NetworkQualityEstimator::GetDownlinkThroughputKbpsEstimateInternal(
   // Throughput observations are sorted by kbps from slowest to fastest,
   // thus a higher percentile throughput will be faster than a lower one.
   return http_downstream_throughput_kbps_observations_
-      .GetPercentile(start_time, signal_strength_, 100 - percentile, nullptr)
+      .GetPercentile(start_time, current_network_id_.signal_strength,
+                     100 - percentile, nullptr)
       .value_or(nqe::internal::INVALID_RTT_THROUGHPUT);
 }
 
@@ -1524,7 +1536,7 @@ nqe::internal::NetworkID NetworkQualityEstimator::GetCurrentNetworkID() const {
   // (that are approximate to begin with).
   while (true) {
     nqe::internal::NetworkID network_id(
-        NetworkChangeNotifier::GetConnectionType(), std::string());
+        NetworkChangeNotifier::GetConnectionType(), std::string(), 0);
 
     switch (network_id.type) {
       case NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN:
@@ -1549,8 +1561,10 @@ nqe::internal::NetworkID NetworkQualityEstimator::GetCurrentNetworkID() const {
         break;
     }
 
-    if (network_id.type == NetworkChangeNotifier::GetConnectionType())
+    if (network_id.type == NetworkChangeNotifier::GetConnectionType()) {
+      network_id.signal_strength = 0;
       return network_id;
+    }
   }
   NOTREACHED();
 }
@@ -1631,7 +1645,8 @@ void NetworkQualityEstimator::OnUpdatedEstimateAvailable(
         EXTERNAL_ESTIMATE_PROVIDER_STATUS_RTT_AVAILABLE);
     UMA_HISTOGRAM_TIMES("NQE.ExternalEstimateProvider.RTT", rtt);
     Observation rtt_observation(
-        rtt.InMilliseconds(), tick_clock_->NowTicks(), signal_strength_,
+        rtt.InMilliseconds(), tick_clock_->NowTicks(),
+        current_network_id_.signal_strength,
         NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_EXTERNAL_ESTIMATE);
     external_estimate_provider_quality_.set_http_rtt(rtt);
     AddAndNotifyObserversOfRTT(rtt_observation);
@@ -1643,7 +1658,8 @@ void NetworkQualityEstimator::OnUpdatedEstimateAvailable(
     UMA_HISTOGRAM_COUNTS_1M("NQE.ExternalEstimateProvider.DownlinkBandwidth",
                             downstream_throughput_kbps);
     Observation throughput_observation(
-        downstream_throughput_kbps, tick_clock_->NowTicks(), signal_strength_,
+        downstream_throughput_kbps, tick_clock_->NowTicks(),
+        current_network_id_.signal_strength,
         NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_EXTERNAL_ESTIMATE);
     external_estimate_provider_quality_.set_downstream_throughput_kbps(
         downstream_throughput_kbps);
@@ -1675,7 +1691,7 @@ void NetworkQualityEstimator::OnUpdatedTransportRTTAvailable(
   DCHECK_NE(nqe::internal::InvalidRTT(), rtt);
 
   Observation observation(rtt.InMilliseconds(), tick_clock_->NowTicks(),
-                          signal_strength_,
+                          current_network_id_.signal_strength,
                           ProtocolSourceToObservationSource(protocol), host);
   AddAndNotifyObserversOfRTT(observation);
 
@@ -1776,7 +1792,7 @@ void NetworkQualityEstimator::OnNewThroughputObservationAvailable(
   DCHECK_NE(nqe::internal::INVALID_RTT_THROUGHPUT, downstream_kbps);
 
   Observation throughput_observation(downstream_kbps, tick_clock_->NowTicks(),
-                                     signal_strength_,
+                                     current_network_id_.signal_strength,
                                      NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP);
   AddAndNotifyObserversOfThroughput(throughput_observation);
 }
