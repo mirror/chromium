@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b96b9a12_4886cd1f",
+        "filename": "content/browser/quota_dispatcher_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T05:08:09Z",
+      "side": 1,
+      "message": "Consider putting this back where it was before.",
+      "revId": "b82b76375fd21eab755ea856230b23aa3a5c7f00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffeedad_c84dfe14",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T05:08:09Z",
+      "side": 1,
+      "message": "crbug.com/775358",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "b82b76375fd21eab755ea856230b23aa3a5c7f00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
