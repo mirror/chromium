@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8300d5fb_d9289bb7",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/DOMUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-22T17:23:07Z",
+      "side": 0,
+      "message": "this still needs to be somewhere",
+      "range": {
+        "startLine": 480,
+        "startChar": 19,
+        "endLine": 480,
+        "endChar": 30
+      },
+      "revId": "276f0bfed01fe015037c53fe0060d61ea219c982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
