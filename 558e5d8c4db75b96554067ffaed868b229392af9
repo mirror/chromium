@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cb52832_b70940ee",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:45:20Z",
+      "side": 1,
+      "message": "nit: rename pak_file-\u003ezip_info. With python being untyped, it\u0027s often more helpful to have the type in the name.",
+      "range": {
+        "startLine": 733,
+        "startChar": 27,
+        "endLine": 733,
+        "endChar": 35
+      },
+      "revId": "558e5d8c4db75b96554067ffaed868b229392af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b035983_4491b93b",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:45:20Z",
+      "side": 1,
+      "message": "This is actually still subtly wrong, since the logic in data_pack.ComputeAliasMap() happens when writing the file, but at this point we\u0027re reading the file. E.g. if the encoder one day choses to create aliases only for strings of size \u003e 1, then this would break.\n\nHere\u0027s an example of how to detect aliases base on what was read:\nhttps://cs.chromium.org/chromium/src/tools/grit/pak_util.py?rcl\u003de064a33b9d8d0ce54a1b0a0d5eadb021709669c6\u0026l\u003d36",
+      "revId": "558e5d8c4db75b96554067ffaed868b229392af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a9923e_f2880863",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:45:20Z",
+      "side": 1,
+      "message": "nit: avoid unused variable via:\nname \u003d res_info[alias_map[resource_id]][0]",
+      "revId": "558e5d8c4db75b96554067ffaed868b229392af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2f012a_4a09d7eb",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:45:20Z",
+      "side": 1,
+      "message": "nit: keep name the same: \"symbols_by_name\"",
+      "range": {
+        "startLine": 776,
+        "startChar": 4,
+        "endLine": 776,
+        "endChar": 15
+      },
+      "revId": "558e5d8c4db75b96554067ffaed868b229392af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1028d211_219b0bf4",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:45:20Z",
+      "side": 1,
+      "message": "nit: a bit more concise to do:\n\nprev \u003d section_sizes.setdefault(symbol.section_name, 0)\nsection_sizes[symbol.section_name] \u003d prev + symbol.size",
+      "revId": "558e5d8c4db75b96554067ffaed868b229392af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73df3d5f_9cb48435",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:45:20Z",
+      "side": 1,
+      "message": "I think this will give an inconsistent symbol ordering since it relies on iteration order of a dict.\n\nI\u0027d guess that it would make the most sense to sort by resource id, although it doesn\u0027t look like the symbols have that info currently. Probably easiest to encode the resource_id in the address field of the Symbol, and then add logic to CalculatePadding() to ignore pak symbols",
+      "revId": "558e5d8c4db75b96554067ffaed868b229392af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cad68c4_51906254",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:45:20Z",
+      "side": 1,
+      "message": "nit: Not sure it makes sense to create a constant for .bss, but not for other elf sections. I think I\u0027d prefer not having .bss as a constant since it\u0027s not a name that we\u0027ve created. However, I\u0027d also be fine if you wanted to create constants for the other ones. Just looks strange to have it for bss and not for the others.",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "558e5d8c4db75b96554067ffaed868b229392af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a233a3a8_1640e707",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:45:20Z",
+      "side": 1,
+      "message": "nit: either rename this to \"SECTION_MULTIPLE\" or rename the other ones to \"SECTION_NAME_FOO\".",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "558e5d8c4db75b96554067ffaed868b229392af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
