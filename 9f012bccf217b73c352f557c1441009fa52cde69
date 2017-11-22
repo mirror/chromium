@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9dfe2047_1d7d2814",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-22T21:04:42Z",
+      "side": 1,
+      "message": "\"we don\u0027t encounter this elsewhere.\" I think it is very rare case to face this issue and once this happens this may lead to unknown crash or unexpected behavior which is hard to explain.\n\nOTR profile is actually checked here. It has type INCOGNITO vs REGULAR",
+      "parentUuid": "23c24ddb_47e810cf",
+      "revId": "9f012bccf217b73c352f557c1441009fa52cde69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35d8d28_3c190409",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 2
