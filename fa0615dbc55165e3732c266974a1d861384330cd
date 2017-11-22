@@ -329,6 +329,30 @@
       "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22615f49_877b5499",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T06:38:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "efcd2002_d4012a32",
+      "range": {
+        "startLine": 112,
+        "startChar": 52,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
