@@ -88,11 +88,11 @@ ScopedJavaLocalRef<jintArray> SBThreatTypeSetToJavaArray(
 //   Careful note: this can be called on multiple threads, so make sure there is
 //   nothing thread unsafe happening here.
 void JNI_SafeBrowsingApiBridge_OnUrlCheckDone(
-    JNIEnv* env,
     const JavaParamRef<jclass>& context,
     jlong callback_id,
     jint result_status,
-    const JavaParamRef<jstring>& metadata) {
+    const JavaParamRef<jstring>& metadata,
+    jlong check_delta) {
   DCHECK(callback_id);
   TRACE_EVENT0("safe_browsing", "SafeBrowsingApiHandlerBridge::OnUrlCheckDone");
 
