@@ -4746,6 +4746,8 @@ static void PositionScrollbarLayer(GraphicsLayer* graphics_layer,
 
   IntRect scrollbar_rect = scrollbar->FrameRect();
   graphics_layer->SetPosition(scrollbar_rect.Location());
+  graphics_layer->SetOffsetFromLayoutObject(
+      ToIntSize(scrollbar_rect.Location()));
 
   if (scrollbar_rect.Size() == graphics_layer->Size())
     return;

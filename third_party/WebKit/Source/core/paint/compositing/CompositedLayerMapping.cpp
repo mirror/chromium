@@ -2150,10 +2150,12 @@ void CompositedLayerMapping::PositionOverflowControlsLayers() {
   if (GraphicsLayer* layer = LayerForHorizontalScrollbar()) {
     Scrollbar* h_bar = owning_layer_.GetScrollableArea()->HorizontalScrollbar();
     if (h_bar) {
-      layer->SetPosition(h_bar->FrameRect().Location());
-      layer->SetSize(FloatSize(h_bar->FrameRect().Size()));
+      IntRect frame_rect = h_bar->FrameRect();
+      layer->SetPosition(frame_rect.Location());
+      layer->SetOffsetFromLayoutObject(ToIntSize(frame_rect.Location()));
+      layer->SetSize(FloatSize(frame_rect.Size()));
       if (layer->HasContentsLayer())
-        layer->SetContentsRect(IntRect(IntPoint(), h_bar->FrameRect().Size()));
+        layer->SetContentsRect(IntRect(IntPoint(), frame_rect.Size()));
     }
     layer->SetDrawsContent(h_bar && !layer->HasContentsLayer());
   }
@@ -2161,10 +2163,12 @@ void CompositedLayerMapping::PositionOverflowControlsLayers() {
   if (GraphicsLayer* layer = LayerForVerticalScrollbar()) {
     Scrollbar* v_bar = owning_layer_.GetScrollableArea()->VerticalScrollbar();
     if (v_bar) {
-      layer->SetPosition(v_bar->FrameRect().Location());
-      layer->SetSize(FloatSize(v_bar->FrameRect().Size()));
+      IntRect frame_rect = v_bar->FrameRect();
+      layer->SetPosition(frame_rect.Location());
+      layer->SetOffsetFromLayoutObject(ToIntSize(frame_rect.Location()));
+      layer->SetSize(FloatSize(frame_rect.Size()));
       if (layer->HasContentsLayer())
-        layer->SetContentsRect(IntRect(IntPoint(), v_bar->FrameRect().Size()));
+        layer->SetContentsRect(IntRect(IntPoint(), frame_rect.Size()));
     }
     layer->SetDrawsContent(v_bar && !layer->HasContentsLayer());
   }
@@ -2173,6 +2177,8 @@ void CompositedLayerMapping::PositionOverflowControlsLayers() {
     const IntRect& scroll_corner_and_resizer =
         owning_layer_.GetScrollableArea()->ScrollCornerAndResizerRect();
     layer->SetPosition(FloatPoint(scroll_corner_and_resizer.Location()));
+    layer->SetOffsetFromLayoutObject(
+        ToIntSize(scroll_corner_and_resizer.Location()));
     layer->SetSize(FloatSize(scroll_corner_and_resizer.Size()));
     layer->SetDrawsContent(!scroll_corner_and_resizer.IsEmpty());
   }
