@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4ff0ce_94ce7c5e",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5206,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-22T22:56:54Z",
+      "side": 1,
+      "message": "Well, until we have a documented plan, or at least an I2D sent, this string isn\u0027t quite right. Maybe there is a good canonical URL we can point people to about why it\u0027s a security anti-pattern? Or we could write one. Or point people to *The Tangled Web*.",
+      "revId": "720a918f017dc1c28b04595fe2a13fb8a1e51a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
