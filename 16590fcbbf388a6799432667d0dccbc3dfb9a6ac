@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3418f12_e2c4ccff",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-22T23:32:31Z",
+      "side": 1,
+      "message": "Can you use the MockVideoDecoder declared in mock_filters.h?",
+      "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be05fb02_a5261fcc",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-22T23:32:31Z",
+      "side": 1,
+      "message": "Add a TODO to test other types of VideoFrames, e.g. shared memory based.",
+      "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30daf08_94d4f4a3",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-22T23:32:31Z",
+      "side": 1,
+      "message": "Do you actually need VP9, will any of those TestVideoConfig work for you?\n\nhttps://cs.chromium.org/chromium/src/media/base/test_helpers.h?rcl\u003ddbecbfc2e03790c5505e9ac7436a5f29631dda4b\u0026l\u003d84",
+      "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6111bac5_2e685cf5",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-22T23:32:31Z",
+      "side": 1,
+      "message": "nit: put these under \"protected\" so that only tests can access them? Also, since the test is still a class, use trailing underscore for class variable names? Maybe I am missing some style guide though :)",
+      "revId": "16590fcbbf388a6799432667d0dccbc3dfb9a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
