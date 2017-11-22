@@ -686,6 +686,24 @@
     },
     {
       "key": {
+        "uuid": "ee614104_b18d577c",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T14:43:01Z",
+      "side": 1,
+      "message": "I like it and I also couldn\u0027t think of an alternative. Thanks for suggesting this!",
+      "parentUuid": "233f072c_52a740e6",
+      "revId": "9fb0755a354cfb160ef3fb1b16680fc83dd19b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85b33749_af4396ce",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 7
