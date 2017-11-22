@@ -16,6 +16,24 @@
       "revId": "3499c03a577e50cb2587a713aa7479f373d29e7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0ff0d2_012e64dd",
+        "filename": "chrome/browser/media/media_engagement_preload.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-22T14:47:23Z",
+      "side": 1,
+      "message": "Protobuf does not support uint8. It does use variable length encoding so it is not a full 24 bits wasted.",
+      "parentUuid": "0cc2fe16_28c63c09",
+      "revId": "3499c03a577e50cb2587a713aa7479f373d29e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
