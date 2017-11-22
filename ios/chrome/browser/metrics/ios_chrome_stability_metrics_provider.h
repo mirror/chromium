@@ -22,8 +22,8 @@ class IOSChromeStabilityMetricsProvider : public metrics::MetricsProvider,
                                           public web::GlobalWebStateObserver {
  public:
   // Buckets for the histogram that counts events relevant for counting page
-  // loads. The *_NAVIGATION events are mutually exclusive.
-  enum class StabilityMetricEventType {
+  // loads. These events are mutually exclusive.
+  enum class PageLoadCountNavigationType {
     // A chrome:// URL navigation. This is not counted for page load.
     CHROME_URL_NAVIGATION = 0,
     // A same-document web (i.e. not chrome:// URL) navigation. This is not
@@ -32,10 +32,6 @@ class IOSChromeStabilityMetricsProvider : public metrics::MetricsProvider,
     // A navigation that is not SAME_DOCUMENT_WEB or CHROME_URL. It is counted
     // as a page load.
     PAGE_LOAD_NAVIGATION = 2,
-    // A loading start event. This is the legacy page load count.
-    // TODO(crbug.com/786547): Deprecate this counter after page load count cuts
-    // over to be based on DidStartNavigation.
-    LOADING_STARTED = 3,
     COUNT
   };
 
@@ -59,7 +55,8 @@ class IOSChromeStabilityMetricsProvider : public metrics::MetricsProvider,
   // Records a renderer process crash.
   void LogRendererCrash();
 
-  static const char kPageLoadCountMigrationEventKey[];
+  static const char kPageLoadCountLoadingStartedMetric[];
+  static const char kPageLoadCountMetric[];
 
  private:
   metrics::StabilityMetricsHelper helper_;
