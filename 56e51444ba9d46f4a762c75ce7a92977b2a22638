@@ -22,6 +22,40 @@
       "revId": "56e51444ba9d46f4a762c75ce7a92977b2a22638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9385902b_82cda701",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-22T01:58:44Z",
+      "side": 1,
+      "message": "L1239-1253 statement is really weird and hard to understand.\nCould you introduce appropriately named function so that we can write:\nif (IsLayoutObjectHasValidHeight(layout_object)) // I\u0027m not sure if this is good naming.\n return  HasEditableStyle(*anchor_node) \u0026\u0026 AtEditingBoundary(position);",
+      "revId": "56e51444ba9d46f4a762c75ce7a92977b2a22638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7489714a_3b350c77",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-22T01:58:44Z",
+      "side": 1,
+      "message": "Could you use Selection().SetSelection(SetSelectionTextToBody(\"\u003ctable contenteditable\u003e\u003ccolgroup \"style\u003d\u0027-webkit-appearance:radio;\u0027\u003e|\u003c/colgroup\u003e\u003c/table\u003e\")) instead of L76-80?",
+      "revId": "56e51444ba9d46f4a762c75ce7a92977b2a22638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
