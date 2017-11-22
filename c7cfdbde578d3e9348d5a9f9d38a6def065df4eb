@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05ca631d_13294988",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-22T22:09:37Z",
+      "side": 1,
+      "message": "Put this test above line 315 and add a comment, e.g.:\n// Details page was closed while request was in progress, ignore the result.",
+      "revId": "c7cfdbde578d3e9348d5a9f9d38a6def065df4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1d0d5b_1ea5d232",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-22T22:09:37Z",
+      "side": 1,
+      "message": "Note: this will sort the arc vpn providers arbitrarily. That\u0027s probably fine, but I would think that a std::map would be slightly better so that the order is at least predictable/consistent.",
+      "revId": "c7cfdbde578d3e9348d5a9f9d38a6def065df4eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
