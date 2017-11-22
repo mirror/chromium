@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ed4ea03b_13effd47",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/BackwardsCharacterIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-22T18:47:15Z",
+      "side": 1,
+      "message": "Oh. You are quite right.\nCan\u0027t say why I decide that \u003d(\nThought that the Position ctor should take a |Node*| because it holds a |Member\u003cNode\u003e| at the moment.\nWill fix, thank you!",
+      "parentUuid": "c6108dd7_c77bd703",
+      "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfb4a0ab_47a0df62",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
         "patchSetId": 1
@@ -100,6 +118,24 @@
       "writtenOn": "2017-11-22T17:36:12Z",
       "side": 1,
       "message": "Seems better to split it into another patch, since you need a different reviewer for this part.",
+      "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201307f1_76fbc45f",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-22T18:47:15Z",
+      "side": 1,
+      "message": "OK then, I will make a couple of CLs for markers/ and forms/\nWhen they land, I\u0027ll rebase this.",
+      "parentUuid": "6db2cbb7_d2bbc5f0",
       "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
