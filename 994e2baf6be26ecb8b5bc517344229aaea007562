@@ -52,6 +52,24 @@
       "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf2e5df_e85a441d",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-22T01:58:01Z",
+      "side": 1,
+      "message": "tl;dr I think Robbie\u0027s proposal is best for one-time use.\n\n\nI used the above, but I got routinely confused with origin/master.\nSo I switched to:\n\n  $ mkdir somedir\n  $ cd somedir\n  $ git init\n  $ git remote add -t infra/config origin https://chromium.googlesource.com/chromium/src\n  $ git new-branch --upstream origin/infra/config some_feature   # note extra --upstream flag.\n  $ $EDITOR README.md\n  $ git commit -am \u0027Some message\u0027\n  $ git cl upload\n\nAfter this, most usual commands work, too, including git rebase-update and git tb[1]\nThe only thing that doesn\u0027t is\n$ git map-branches -vvv   # 3 -v flags are important, it works with all other options just fine.\n\n[1] git tb \u003d alias for git new-branch --upstream_current",
+      "parentUuid": "cc09ddd4_8dc9d268",
+      "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
