@@ -16,6 +16,24 @@
       "revId": "c96de67f252e03baa0b381ba6ec098b6ada0fef7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba0856c_c2859290",
+        "filename": "services/viz/public/cpp/compositing/copy_output_result_struct_traits.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-22T19:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f8a637_266f5ee7",
+      "revId": "c96de67f252e03baa0b381ba6ec098b6ada0fef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

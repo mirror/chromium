@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "648ae1e8_0a681c30",
+        "filename": "components/viz/common/frame_sinks/copy_output_result.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-22T19:17:48Z",
+      "side": 1,
+      "message": "Right it returns null if the result isn\u0027t a texture format. Most code now checks the format() instead of checking for null. Done.",
+      "parentUuid": "ab5acf50_e742647c",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 16
+      },
+      "revId": "c1ae6bd784f3a7ae7f7e21da1b0e1fb18fd219f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "598bf3fc_d469fd8f",
         "filename": "services/viz/public/interfaces/compositing/copy_output_result.mojom",
         "patchSetId": 8
