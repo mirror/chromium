@@ -44,7 +44,11 @@ class CONTENT_EXPORT DesktopCaptureDevice : public media::VideoCaptureDevice {
   void StopAndDeAllocate() override;
 
   // Set the platform-dependent window id for the notification window.
-  void SetNotificationWindowId(gfx::NativeViewId window_id);
+  virtual void SetNotificationWindowId(gfx::NativeViewId window_id);
+
+ protected:
+  // Default constructor for creating fake desktopCapture device for tests.
+  DesktopCaptureDevice();
 
  private:
   friend class DesktopCaptureDeviceTest;

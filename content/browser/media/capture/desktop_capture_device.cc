@@ -467,6 +467,9 @@ std::unique_ptr<media::VideoCaptureDevice> DesktopCaptureDevice::Create(
   return result;
 }
 
+DesktopCaptureDevice::DesktopCaptureDevice()
+    : thread_("desktopCaptureThread") {}
+
 DesktopCaptureDevice::~DesktopCaptureDevice() {
   DCHECK(!core_);
 }

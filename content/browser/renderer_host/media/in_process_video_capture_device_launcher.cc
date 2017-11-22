@@ -6,6 +6,7 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
+#include "build/build_config.h"
 #include "content/browser/media/capture/desktop_capture_device_uma_types.h"
 #include "content/browser/media/capture/web_contents_video_capture_device.h"
 #include "content/browser/renderer_host/media/in_process_launched_video_capture_device.h"
@@ -23,6 +24,7 @@
 
 #if defined(ENABLE_SCREEN_CAPTURE) && !defined(OS_ANDROID)
 #include "content/browser/media/capture/desktop_capture_device.h"
+#include "content/browser/media/capture/fake_desktop_capture_device.h"
 #if defined(USE_AURA)
 #include "content/browser/media/capture/desktop_capture_device_aura.h"
 #endif
@@ -40,6 +42,21 @@ std::unique_ptr<media::VideoCaptureJpegDecoder> CreateGpuJpegDecoder(
   return std::make_unique<content::VideoCaptureGpuJpegDecoder>(
       std::move(decode_done_cb), std::move(send_log_message_cb));
 }
+
+#if defined(ENABLE_SCREEN_CAPTURE) && !defined(OS_ANDROID)
+bool MaybeCreateFakeCapturerForTest(content::DesktopMediaID desktop_id) {
+  bool createFakeCapturer = false;
+  if (desktop_id.type == content::DesktopMediaID::TYPE_WEB_CONTENTS) {
+    content::WebContentsMediaCaptureId media_id = desktop_id.web_contents_id;
+    if (media_id.render_process_id == content::DesktopMediaID::kFakeId &&
+        media_id.main_render_frame_id == content::DesktopMediaID::kFakeId)
+      createFakeCapturer = true;
+  } else if (desktop_id.id == content::DesktopMediaID::kFakeId) {
+    createFakeCapturer = true;
+  }
+  return createFakeCapturer;
+}
+#endif
 
 // The maximum number of video frame buffers in-flight at any one time. This
 // value should be based on the logical capacity of the capture pipeline, and
@@ -271,6 +288,16 @@ void InProcessVideoCaptureDeviceLauncher::DoStartDesktopCaptureOnDeviceThread(
     result_callback.Run(nullptr);
     return;
   }
+
+#if !defined(OS_ANDROID)
+  // Create and start a fake desktop catpure device for testing purpose.
+  if (MaybeCreateFakeCapturerForTest(desktop_id)) {
+    video_capture_device = FakeDesktopCaptureDevice::Create(desktop_id);
+    video_capture_device->AllocateAndStart(params, std::move(device_client));
+    result_callback.Run(std::move(video_capture_device));
+    return;
+  }
+#endif
 
   if (desktop_id.type == DesktopMediaID::TYPE_WEB_CONTENTS) {
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
