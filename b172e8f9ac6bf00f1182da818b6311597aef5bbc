@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f0e49d4e_71e60d3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T08:18:55Z",
+      "side": 1,
+      "message": "nit: reuissing reissuing",
+      "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fad1e5_1323f1ad",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T08:18:55Z",
+      "side": 1,
+      "message": "Per our chat it looks we can remove this as far as we keep it in the URLLoader.",
+      "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6eb996_5b5390ca",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T08:18:55Z",
+      "side": 1,
+      "message": "Would this error go away if we re-bind this blob ptr on the task runner?",
+      "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c299fb_11ea807e",
         "filename": "storage/common/data_element.h",
         "patchSetId": 4
@@ -13,6 +64,24 @@
       "writtenOn": "2017-11-22T07:32:41Z",
       "side": 1,
       "message": "(reposting to put this on the latest patchset)\nThis breaks \"gn check\" so I might have to move the interface into Blink... or I guess just put into storage/?\n\nERROR at //storage/common/data_element.h:23:11: Can\u0027t include this header from here.\n#include \"services/network/public/interfaces/data_pipe_getter.mojom.h\"\n          ^----------------------------------------------------------\nThe target:\n  //storage/common:common\nis including a file from the target:\n  //services/network/public/interfaces:interfaces__generator\nIt\u0027s usually best to depend directly on the destination target.\nIn some cases, the destination target is considered a subcomponent\nof an intermediate target. In this case, the intermediate target\nshould depend publicly on the destination to forward the ability\nto include headers.\n\nDependency chain (there may also be others):\n  //storage/common:common --\u003e\n  //third_party/WebKit/public:blink_headers --[private]--\u003e\n  //services/network/public/interfaces:interfaces --\u003e\n  //services/network/public/interfaces:interfaces__generator",
+      "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19615958_7a41bd77",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T08:18:55Z",
+      "side": 1,
+      "message": "Currently storage doesn\u0027t explicitly depend on services/network while this file makes it, if we do so storage/common/BUILD.gn should explicitly list it as a dependency.",
+      "parentUuid": "49c299fb_11ea807e",
       "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
