@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "85c028de_5b1bca10",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-22T21:24:30Z",
+      "side": 1,
+      "message": "Done in getPropertiesCallback\n\nFor getStateCallback, we don\u0027t currently support Arc VPN in settings page for secondary user. So I am not touching that part.",
+      "parentUuid": "0edfed41_a3cd5a75",
+      "revId": "979f825e3d5455ed81532ef75fc32289d7f79367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ff539f_3fdf4633",
         "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
         "patchSetId": 19
