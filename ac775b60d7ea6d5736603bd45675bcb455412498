@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6082ea44_f665ddaa",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-22T00:25:20Z",
+      "side": 1,
+      "message": "Since QuotaDispatcher and IPC is now entirely per-thread, do we need the lock?\n\nAnd do we need request_id_map_? It appears unused apart from here. In other words, can GenerateRequestid() just be next_request_id_++ ?",
+      "revId": "ac775b60d7ea6d5736603bd45675bcb455412498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
