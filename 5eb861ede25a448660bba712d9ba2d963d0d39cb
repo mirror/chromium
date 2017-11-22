@@ -527,6 +527,24 @@
     },
     {
       "key": {
+        "uuid": "f2e3c3e1_888609e9",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T13:42:58Z",
+      "side": 1,
+      "message": "In the filter_texture case, ApplyImageFilter should be execute inside the same scope as ScopedReadLockGL. So can not move the ApplyImageFilter out of the else scope.",
+      "parentUuid": "e5627394_888927bc",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98071407_c61cb904",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
