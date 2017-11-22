@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f680e2d_f0e96365",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2883,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T04:51:08Z",
+      "side": 1,
+      "message": "Should we have a comment about why this is done three times?",
+      "revId": "f982ae8544dd7c05c36b03f8e7dac32aa2650035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
