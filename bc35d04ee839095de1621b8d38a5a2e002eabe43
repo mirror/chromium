@@ -70,6 +70,24 @@
       "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c977dc_c6e5aaf3",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T11:13:30Z",
+      "side": 0,
+      "message": "Hmm yeah I guess I\u0027m OK with either patchset 7 with the explicit switch-preamble or Kinuko\u0027s suggestion. Slightly prefer the latter but it\u0027d hard to be sure without seeing code and I\u0027m OK with patchset 7.\n\nI\u0027m not too worried about pattern being abused but it looks like we wouldn\u0027t save that much more code at the beginning of each function so just being explicit may be fine.\n\nI would like to avoid the macro as well.",
+      "parentUuid": "5776643e_2fb6d624",
+      "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
