@@ -21,6 +21,7 @@
 #include <link.h>
 #include <stddef.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "android_dlext.h"
 #include "linker_jni.h"
