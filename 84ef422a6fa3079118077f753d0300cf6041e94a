@@ -16,6 +16,24 @@
       "revId": "84ef422a6fa3079118077f753d0300cf6041e94a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c24c79_24873376",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-22T01:43:35Z",
+      "side": 1,
+      "message": "They are two different categories: event source flags are only in the array of HitTestRect in HitTestRegion, region type (e.g. child surface) flags are in HitTestRegionList.flags and HitTestRegion.flags. Will update comment.",
+      "parentUuid": "e73d2a2a_1b82e74d",
+      "revId": "84ef422a6fa3079118077f753d0300cf6041e94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
