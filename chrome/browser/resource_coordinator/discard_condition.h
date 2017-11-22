@@ -8,9 +8,13 @@
 namespace resource_coordinator {
 
 enum class DiscardCondition {
-  // The discard happens proactively when the machine is in a good state.
+  // The discard is triggered by an extension.
+  kExtension,
+  // The discard is triggered proactively by TabManager when the system is in a
+  // good state.
   kProactive,
-  // The discard happens because the machine is in a critical condition.
+  // The discard is triggered urgently by TabManager when the system is in a
+  // critical condition.
   kUrgent,
 };
 
