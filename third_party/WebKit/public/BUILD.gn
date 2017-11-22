@@ -775,6 +775,7 @@ mojom("mojo_bindings") {
     "platform/media_download_in_product_help.mojom",
     "platform/media_engagement.mojom",
     "platform/mime_registry.mojom",
+    "platform/mixed_content_context_type.mojom",
     "platform/modules/app_banner/app_banner.mojom",
     "platform/modules/background_fetch/background_fetch.mojom",
     "platform/modules/background_sync/background_sync.mojom",
