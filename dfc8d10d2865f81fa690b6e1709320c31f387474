@@ -16,6 +16,24 @@
       "revId": "dfc8d10d2865f81fa690b6e1709320c31f387474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3dcba2_d7520e3b",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T17:35:38Z",
+      "side": 1,
+      "message": "Good catch, updated all to be response and added comments. The one existing user, extensions, doesn\u0027t care so I\u0027ve made it clear it\u0027s using response_url.",
+      "parentUuid": "a0c15c91_b60a851d",
+      "revId": "dfc8d10d2865f81fa690b6e1709320c31f387474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
