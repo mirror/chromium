@@ -22,6 +22,30 @@
       "revId": "8a974808f31c2d1e4058570d202deca388121807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87214377_e71d1790",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-22T03:29:58Z",
+      "side": 1,
+      "message": "right_aligned case is only on Windows.\n\nThis is affecting other platforms too, it will actually make the menu one pixel. I am thinking to minimize the appearance change.",
+      "parentUuid": "48284787_6443ca10",
+      "range": {
+        "startLine": 1813,
+        "startChar": 28,
+        "endLine": 1813,
+        "endChar": 45
+      },
+      "revId": "8a974808f31c2d1e4058570d202deca388121807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
