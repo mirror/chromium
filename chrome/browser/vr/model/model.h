@@ -10,6 +10,7 @@
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/reticle_model.h"
 #include "chrome/browser/vr/model/speech_recognition_model.h"
+#include "chrome/browser/vr/model/text_input_info.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
 #include "chrome/browser/vr/model/web_vr_timeout_state.h"
 
@@ -24,6 +25,9 @@ struct Model {
 
   WebVrTimeoutState web_vr_timeout_state = kWebVrNoTimeoutPending;
   bool started_for_autopresentation = false;
+
+  bool editing_input = false;
+  TextInputInfo text_input_info;
 
   SpeechRecognitionModel speech;
   ControllerModel controller;

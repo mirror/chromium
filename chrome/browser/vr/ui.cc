@@ -9,7 +9,9 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/cpu_surface_provider.h"
+#include "chrome/browser/vr/elements/text_input.h"
 #include "chrome/browser/vr/ganesh_surface_provider.h"
+#include "chrome/browser/vr/keyboard_delegate.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/speech_recognizer.h"
@@ -156,6 +158,8 @@ bool Ui::ShouldRenderWebVr() {
 
 void Ui::OnGlInitialized(unsigned int content_texture_id,
                          UiElementRenderer::TextureLocation content_location,
+                         KeyboardDelegate* keyboard_delegate,
+                         TextInputDelegate* text_input_delegate,
                          bool use_ganesh) {
   ui_element_renderer_ = base::MakeUnique<UiElementRenderer>();
   ui_renderer_ =
@@ -166,7 +170,18 @@ void Ui::OnGlInitialized(unsigned int content_texture_id,
     provider_ = base::MakeUnique<CpuSurfaceProvider>();
   }
   scene_manager_->OnGlInitialized(content_texture_id, content_location,
-                                  provider_.get());
+                                  provider_.get(), keyboard_delegate,
+                                  text_input_delegate);
+}
+
+void Ui::OnInputEdited(const TextInputInfo& info) {
+  LOG(ERROR) << "lolk Ui::OnInputEdited";
+  input_manager_->OnInputEdited(info);
+}
+
+void Ui::RequestFocus(const UiElementName name) {
+  LOG(ERROR) << "lolk Ui::RequestFocus: " << name;
+  input_manager_->RequestFocus(name);
 }
 
 void Ui::OnAppButtonClicked() {
