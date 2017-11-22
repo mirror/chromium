@@ -22,6 +22,30 @@
       "revId": "7aec79da6d987e0c834b36d575bd90d358697a51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95a91fe_3ac734ba",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T14:20:31Z",
+      "side": 1,
+      "message": "Hmm... I don\u0027t know better approach now...",
+      "parentUuid": "f36a32d9_17a64221",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 61
+      },
+      "revId": "7aec79da6d987e0c834b36d575bd90d358697a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
