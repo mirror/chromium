@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef14495_c298c60e",
+        "filename": "tools/media_engagement_preload/generator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:01:54Z",
+      "side": 1,
+      "message": "We would want someone who wrote/reviewed this to review the usage of it.",
+      "revId": "f4de49153e3386da069b1f718f0e6225d7fafce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648463e5_fd224a44",
+        "filename": "tools/media_engagement_preload/generator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:01:54Z",
+      "side": 1,
+      "message": "coding style requires:\n```\nif (condition)\n  statement;\n```\n\ninstead of:\n```\nif (condition) {\n  statement;\n}\n```\n\nIgnore if //tools has an exception :)",
+      "revId": "f4de49153e3386da069b1f718f0e6225d7fafce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d6780a_b4ec3114",
+        "filename": "tools/media_engagement_preload/generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:01:54Z",
+      "side": 1,
+      "message": "Can you explain what the return values means?",
+      "revId": "f4de49153e3386da069b1f718f0e6225d7fafce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d2dcaa0_a3f48403",
+        "filename": "tools/media_engagement_preload/trie_writer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:01:54Z",
+      "side": 1,
+      "message": "nit: `\u003d default;`",
+      "revId": "f4de49153e3386da069b1f718f0e6225d7fafce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3c84b6_dda45688",
+        "filename": "tools/media_engagement_preload/trie_writer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:01:54Z",
+      "side": 1,
+      "message": "nit: instead of `(*it).` you can write `it-\u003e`. It\u0027s slightly readable IMO but feel free to ignore if you disagree ;)",
+      "revId": "f4de49153e3386da069b1f718f0e6225d7fafce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54dbc69_30a10ba6",
+        "filename": "tools/media_engagement_preload/trie_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:01:54Z",
+      "side": 1,
+      "message": "This seems to be using an old style copyright header.",
+      "revId": "f4de49153e3386da069b1f718f0e6225d7fafce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
