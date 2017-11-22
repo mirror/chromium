@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a382ad12_586619ef",
+        "filename": "components/arc/common/notifications.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-22T05:47:30Z",
+      "side": 1,
+      "message": "Does (0, 0) mean the left-top of the screen or the left-top of the notification view?",
+      "range": {
+        "startLine": 133,
+        "startChar": 49,
+        "endLine": 133,
+        "endChar": 63
+      },
+      "revId": "b44faf4afcb1e80a1572c7dadcfb9300cf0ff278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
