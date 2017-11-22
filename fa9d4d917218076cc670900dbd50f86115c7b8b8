@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f35d711c_fa2a922c",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-22T18:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70e31879_6ac5ecaa",
+      "revId": "fa9d4d917218076cc670900dbd50f86115c7b8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "163af543_415fd954",
         "filename": "content/shell/browser/shell_browser_main_parts.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "fa9d4d917218076cc670900dbd50f86115c7b8b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4889b18_0610fd02",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-22T18:02:39Z",
+      "side": 1,
+      "message": "This is the main part we miss in shell.\n\nChrome: in VariationsFieldTrialCreator::SetupFieldTrials call from ChromeBrowserMainParts::PreCreateThreadsImpl \nhttps://cs.chromium.org/chromium/src/components/variations/service/variations_field_trial_creator.cc?rcl\u003df8030c531bbec8598bbc29c38ec2ac51672119f2\u0026l\u003d371\n\nTest: https://cs.chromium.org/chromium/src/content/public/test/browser_test_base.cc?rcl\u003db6397da22ea826f692c67867ff6d097b8d84b928\u0026l\u003d279",
+      "parentUuid": "163af543_415fd954",
+      "revId": "fa9d4d917218076cc670900dbd50f86115c7b8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
