@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e813a59d_98440fe6",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T18:42:22Z",
+      "side": 1,
+      "message": "That sounds totally fair.",
+      "parentUuid": "5f97e315_9b084bb9",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e319271d_ce655819",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 4
@@ -377,6 +395,24 @@
       "side": 1,
       "message": "You are right (https://cs.chromium.org/chromium/src/docs/callback.md?rcl\u003df74c4ebdabcfb1271337ae5cda7f017072174e95\u0026l\u003d359). Fixed.",
       "parentUuid": "a88a3d95_8a57eac6",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a666fe0a_8d820734",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T18:42:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d47f8b1_ff1488a7",
       "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
