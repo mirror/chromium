@@ -14,6 +14,7 @@
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/benchmarks/benchmark_instrumentation.h"
 #include "cc/resources/ui_resource_manager.h"
+#include "cc/trees/latency_info_swap_promise.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/mutator_host.h"
@@ -123,6 +124,13 @@ void ProxyMain::BeginMainFrame(
   benchmark_instrumentation::ScopedBeginFrameTask begin_frame_task(
       benchmark_instrumentation::kDoBeginFrame,
       begin_main_frame_state->begin_frame_id);
+
+  ui::LatencyInfo new_latency_info(ui::SourceEventType::FRAME);
+  new_latency_info.AddLatencyNumberWithTimestamp(
+      ui::LATENCY_BEGIN_FRAME_RENDERER_MAIN_COMPONENT, 0, 0,
+      begin_main_frame_state->begin_frame_args.frame_time, 1);
+  layer_tree_host_->QueueSwapPromise(
+      std::make_unique<LatencyInfoSwapPromise>(new_latency_info));
 
   base::TimeTicks begin_main_frame_start_time = base::TimeTicks::Now();
 

@@ -13,6 +13,7 @@
 #include "cc/scheduler/commit_earlyout_reason.h"
 #include "cc/scheduler/compositor_timing_history.h"
 #include "cc/scheduler/scheduler.h"
+#include "cc/trees/latency_info_swap_promise.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_host_common.h"
@@ -689,6 +690,13 @@ void SingleThreadProxy::BeginMainFrame(
   // Note: We do not want to prevent SetNeedsAnimate from requesting
   // a commit here.
   commit_requested_ = true;
+
+  ui::LatencyInfo new_latency_info(ui::SourceEventType::FRAME);
+  new_latency_info.AddLatencyNumberWithTimestamp(
+      ui::LATENCY_BEGIN_FRAME_UI_MAIN_COMPONENT, 0, 0,
+      begin_frame_args.frame_time, 1);
+  layer_tree_host_->QueueSwapPromise(
+      std::make_unique<LatencyInfoSwapPromise>(new_latency_info));
 
   DoBeginMainFrame(begin_frame_args);
 
