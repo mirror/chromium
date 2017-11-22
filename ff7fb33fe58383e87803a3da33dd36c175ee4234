@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff81b6b3_07b2de1d",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-22T22:32:53Z",
+      "side": 1,
+      "message": "Hmm, isn\u0027t this only necessary if input_element-\u003einput_type_view_-\u003eNeedsShadowSubtree()? If we don\u0027t create this shadow root for parser-created input elements, we should probably match that with document.createElement(\u0027input\u0027).\n\nEither qualifying this with a check of NeedsShadowSubtree, or having it call a CreateShadowSubtreeIfNeeded which encapsulates the NeedsShadowSubtree check, the optional creation of a shadow root and the population of the shadow subtree ought to work.",
+      "revId": "ff7fb33fe58383e87803a3da33dd36c175ee4234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
