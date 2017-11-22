@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52576928_e4e0e7fa",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-11-22T04:07:54Z",
+      "side": 1,
+      "message": "Done. Renamed to |kSettingsTransitionDurationMs|. 500ms is specified by UX.",
+      "parentUuid": "841ff991_f8311cd9",
+      "range": {
+        "startLine": 224,
+        "startChar": 28,
+        "endLine": 224,
+        "endChar": 55
+      },
+      "revId": "2dada21bdff006a106ae79d4779eeac862a217df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "775310fc_021938ef",
         "filename": "ash/message_center/message_center_button_bar.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "2dada21bdff006a106ae79d4779eeac862a217df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d79996d_0a82a706",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-11-22T04:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775310fc_021938ef",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 282,
+        "endChar": 67
+      },
+      "revId": "2dada21bdff006a106ae79d4779eeac862a217df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
