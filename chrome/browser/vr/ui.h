@@ -43,6 +43,11 @@ class Ui : public BrowserUiInterface {
   Ui(UiBrowserInterface* browser,
      ContentInputForwarder* content_input_forwarder,
      const UiInitialState& ui_initial_state);
+
+  Ui(UiBrowserInterface* browser,
+     std::unique_ptr<ContentInputDelegate> content_input_delegate,
+     const UiInitialState& ui_initial_state);
+
   ~Ui() override;
 
   // TODO(crbug.com/767957): Refactor to hide these behind the UI interface.
@@ -95,6 +100,8 @@ class Ui : public BrowserUiInterface {
   void OnPlatformControllerInitialized(PlatformController* controller);
 
   Model* model_for_test() { return model_.get(); }
+
+  void Dump();
 
  private:
   UiBrowserInterface* browser_;
