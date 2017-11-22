@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac8394f_dd5d7af2",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-22T15:03:00Z",
+      "side": 1,
+      "message": "This is not sufficient, as we\u0027d still end up showing the extension ID for extension-sourced notifications that don\u0027t supply a context message (which are most).\n\nPlease use a decision tree like this:\n  1. notification-\u003eUseOriginAsContextMessage()? Use the origin.\n  2. notification.context_message() non-empty? Use the context message.\n  3. Don\u0027t add attribution at all.",
+      "revId": "d95c40dee1f9ba13726b55666cb4f630cdee4649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
