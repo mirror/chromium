@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5918576_cfef63bf",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2768,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T04:22:41Z",
+      "side": 1,
+      "message": "\u003d default?",
+      "revId": "06f768cf07ce8955ad60a81aa1394aad95d58fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f695de5f_c06f1fbe",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2769,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T04:22:41Z",
+      "side": 1,
+      "message": "\u003d default?",
+      "revId": "06f768cf07ce8955ad60a81aa1394aad95d58fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf46101_ab64da72",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2857,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T04:22:41Z",
+      "side": 1,
+      "message": "Maybe easier to understand if the comments are arranged like this:\n\n// First load: fetch_event_response_via_cache.js returns |cloned_response|. The V8 code cache should not be stored in CacheStorage.\nNavigateToTestPage();\nWaitUntilSizdeData();\n\n// Second load: The V8 code cache should be stored in CacheStorage. It must have size greater than 12 bytes.\nNavigateToTestPage();\nWaitUntilSizdeData();\n\n// Third load: explain why are we doing third load?",
+      "revId": "06f768cf07ce8955ad60a81aa1394aad95d58fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42fc23a_16abd949",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T04:22:41Z",
+      "side": 1,
+      "message": "resouce -\u003e resource\ngenerates -\u003e generate",
+      "revId": "06f768cf07ce8955ad60a81aa1394aad95d58fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
