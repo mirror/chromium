@@ -115,6 +115,41 @@
       "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b515f08a_938279f1",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T00:52:41Z",
+      "side": 1,
+      "message": "Good point. We should never refer to kLast in a switch. Is it only needed for IPC_ENUM_TRAITS_MAX_VALUE? If so we may be able to remove kLast?",
+      "parentUuid": "3aa666c1_ce98abfd",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469d2079_c9b89b3a",
+        "filename": "third_party/WebKit/common/serviceworker/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T00:52:41Z",
+      "side": 1,
+      "message": "Also update /content/browser/service_worker/OWNERS to refer to this file.",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
