@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12a14088_317b9641",
+        "filename": "ios/chrome/browser/ui/browser_view_controller_dependency_factory.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-22T12:09:43Z",
+      "side": 1,
+      "message": "Having kPropertyAnimationsToolbar was a mistake in the first place. We should be able to enable kPropertyAnimationsToolbar without enabling CleanToolbar.\nBut the CleanToolbar would only have the PropertyAnimations (no flag needed).",
+      "parentUuid": "de336fb2_fea5da70",
+      "range": {
+        "startLine": 71,
+        "startChar": 35,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "cdf860dcf392a89243488218a7079d63f361e82a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "469db436_a662a580",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a917a435_b433a7af",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-22T12:09:43Z",
+      "side": 1,
+      "message": "I don\u0027t think it is doable.\nHave\n|@property(nonatomic,strong,readonly)UIViewController* vc|\nin the .h and\n|@property(nonatomic,strong,readwrite)ToolbarViewController* vc|\nin the .mm does not work. The property is treated as a UIViewController by the compiler.",
+      "parentUuid": "469db436_a662a580",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "cdf860dcf392a89243488218a7079d63f361e82a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c48bd42_581a9906",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "cdf860dcf392a89243488218a7079d63f361e82a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08ae963_384d15b1",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-22T12:09:43Z",
+      "side": 1,
+      "message": "The locationBarViewController does not exist in current bling. This is a legacy from Bling*.\nOnce the locationBar has a ViewController, this will become a VC again.",
+      "parentUuid": "4c48bd42_581a9906",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "cdf860dcf392a89243488218a7079d63f361e82a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
