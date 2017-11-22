@@ -26,6 +26,7 @@ class DEVICE_VR_EXPORT GvrDevice : public VRDeviceBase {
   ~GvrDevice() override;
 
   // VRDeviceBase
+  ViewerType GetViewerType() const override;
   void RequestPresent(
       VRDisplayImpl* display,
       mojom::VRSubmitFrameClientPtr submit_client,

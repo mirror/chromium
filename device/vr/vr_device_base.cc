@@ -19,6 +19,10 @@ VRDeviceBase::VRDeviceBase() : id_(next_id_) {
 
 VRDeviceBase::~VRDeviceBase() = default;
 
+ViewerType VRDeviceBase::GetViewerType() const {
+  return ViewerType::UNKNOWN_TYPE;
+}
+
 unsigned int VRDeviceBase::GetId() const {
   return id_;
 }

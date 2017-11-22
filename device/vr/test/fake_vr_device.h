@@ -19,6 +19,7 @@ class DEVICE_VR_EXPORT FakeVRDevice : public VRDeviceBase {
   FakeVRDevice();
   ~FakeVRDevice() override;
 
+  ViewerType GetViewerType() const override;
   void RequestPresent(
       VRDisplayImpl* display,
       mojom::VRSubmitFrameClientPtr submit_client,

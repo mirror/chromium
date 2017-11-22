@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
+#include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
 #include "device/vr/features/features.h"
 
@@ -74,8 +75,13 @@ void VRDeviceManager::AddService(VRServiceImpl* service) {
     if (device->GetId() == device::VR_DEVICE_LAST_ID)
       continue;
 
-    if (devices_.find(device->GetId()) == devices_.end())
+    if (devices_.find(device->GetId()) == devices_.end()) {
       devices_[device->GetId()] = device;
+
+      UMA_HISTOGRAM_ENUMERATION(
+          "VRViewerType", static_cast<int>(device->GetViewerType()),
+          static_cast<int>(device::ViewerType::VIEWER_TYPE_MAX));
+    }
 
     service->ConnectDevice(device);
   }

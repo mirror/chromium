@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/vr_shell/vr_metrics_util.h"
+#include "chrome/browser/android/vr_shell/gvr_metrics_util.h"
 
 #include "base/metrics/histogram_macros.h"
 
@@ -13,9 +13,9 @@ static constexpr int kGvrTooOld = -1;
 
 namespace vr_shell {
 
-bool VrMetricsUtil::has_logged_vr_runtime_version_ = false;
+bool GvrMetricsUtil::has_logged_vr_runtime_version_ = false;
 
-void VrMetricsUtil::LogGvrVersionForVrViewerType(
+void GvrMetricsUtil::LogGvrVersionForVrViewerType(
     gvr::ViewerType viewer_type,
     const VrCoreInfo& vr_core_info) {
   if (has_logged_vr_runtime_version_) {
@@ -46,12 +46,12 @@ void VrMetricsUtil::LogGvrVersionForVrViewerType(
       break;
   }
 
-  switch (GetVrViewerType(viewer_type)) {
-    case ViewerType::CARDBOARD:
+  switch (viewer_type) {
+    case gvr::ViewerType::GVR_VIEWER_TYPE_CARDBOARD:
       UMA_HISTOGRAM_SPARSE_SLOWLY("VRRuntimeVersion.GVR.Cardboard",
                                   encoded_version);
       break;
-    case ViewerType::DAYDREAM:
+    case gvr::ViewerType::GVR_VIEWER_TYPE_DAYDREAM:
       UMA_HISTOGRAM_SPARSE_SLOWLY("VRRuntimeVersion.GVR.Daydream",
                                   encoded_version);
       break;
@@ -62,24 +62,6 @@ void VrMetricsUtil::LogGvrVersionForVrViewerType(
   }
 
   has_logged_vr_runtime_version_ = true;
-}
-
-void VrMetricsUtil::LogVrViewerType(gvr::ViewerType viewer_type) {
-  UMA_HISTOGRAM_ENUMERATION("VRViewerType",
-                            static_cast<int>(GetVrViewerType(viewer_type)),
-                            static_cast<int>(ViewerType::VIEWER_TYPE_MAX));
-}
-
-ViewerType VrMetricsUtil::GetVrViewerType(gvr::ViewerType viewer_type) {
-  switch (viewer_type) {
-    case gvr::ViewerType::GVR_VIEWER_TYPE_DAYDREAM:
-      return ViewerType::DAYDREAM;
-    case gvr::ViewerType::GVR_VIEWER_TYPE_CARDBOARD:
-      return ViewerType::CARDBOARD;
-    default:
-      NOTREACHED();
-      return ViewerType::UNKNOWN_TYPE;
-  }
 }
 
 }  // namespace vr_shell

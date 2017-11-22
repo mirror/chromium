@@ -49,6 +49,10 @@ mojom::VREyeParametersPtr FakeVRDevice::InitEye(float fov,
   return eye;
 }
 
+ViewerType FakeVRDevice::GetViewerType() const {
+  return ViewerType::FAKE_DEVICE;
+}
+
 void FakeVRDevice::RequestPresent(
     VRDisplayImpl* display,
     mojom::VRSubmitFrameClientPtr submit_client,

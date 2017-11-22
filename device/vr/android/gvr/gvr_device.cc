@@ -144,6 +144,18 @@ GvrDevice::~GvrDevice() {
   Java_NonPresentingGvrContext_shutdown(env, non_presenting_context_);
 }
 
+ViewerType GvrDevice::GetViewerType() const {
+  switch (gvr_api_->GetViewerType()) {
+    case GVR_VIEWER_TYPE_CARDBOARD:
+      return ViewerType::CARDBOARD;
+    case GVR_VIEWER_TYPE_DAYDREAM:
+      return ViewerType::DAYDREAM;
+    default:
+      NOTREACHED();
+      return ViewerType::GVR_UNKNOWN;
+  }
+}
+
 void GvrDevice::RequestPresent(
     VRDisplayImpl* display,
     mojom::VRSubmitFrameClientPtr submit_client,

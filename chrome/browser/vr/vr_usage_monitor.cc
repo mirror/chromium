@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/vr_shell/vr_usage_monitor.h"
+#include "chrome/browser/vr/vr_usage_monitor.h"
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -12,7 +12,7 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 
-namespace vr_shell {
+namespace vr {
 
 namespace {
 
@@ -364,4 +364,4 @@ void VrMetricsHelper::DidToggleFullscreenModeForTab(bool entered_fullscreen,
   UpdateMode();
 }
 
-}  // namespace vr_shell
+}  // namespace vr

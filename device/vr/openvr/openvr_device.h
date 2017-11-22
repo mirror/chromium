@@ -26,7 +26,8 @@ class OpenVRDevice : public VRDeviceBase {
   OpenVRDevice(vr::IVRSystem* vr);
   ~OpenVRDevice() override;
 
-  // VRDeviceBase
+  // VRDeviceBase:
+  ViewerType GetViewerType() const override;
   void RequestPresent(
       VRDisplayImpl* display,
       mojom::VRSubmitFrameClientPtr submit_client,

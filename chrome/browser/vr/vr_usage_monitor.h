@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_ANDROID_VR_SHELL_VR_USAGE_MONITOR_H_
-#define CHROME_BROWSER_ANDROID_VR_SHELL_VR_USAGE_MONITOR_H_
+#ifndef CHROME_BROWSER_VR_VR_USAGE_MONITOR_H_
+#define CHROME_BROWSER_VR_VR_USAGE_MONITOR_H_
 
 #include <memory>
 
 #include "base/time/time.h"
 #include "content/public/browser/web_contents_observer.h"
 
-namespace vr_shell {
+namespace vr {
 
 enum class VRMode {
   NO_VR = 0,
@@ -94,6 +94,6 @@ class VrMetricsHelper : public content::WebContentsObserver {
   GURL origin_;
 };
 
-}  // namespace vr_shell
+}  // namespace vr
 
-#endif  // CHROME_BROWSER_ANDROID_VR_SHELL_VR_USAGE_MONITOR_H_
+#endif  // CHROME_BROWSER_VR_VR_USAGE_MONITOR_H_

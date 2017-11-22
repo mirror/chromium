@@ -154,6 +154,21 @@ OpenVRDevice::OpenVRDevice(vr::IVRSystem* vr)
 
 OpenVRDevice::~OpenVRDevice() {}
 
+ViewerType OpenVRDevice::GetViewerType() const {
+  std::map<std::string, ViewerType> viewer_types = {
+      {"Oculus Rift CV1", ViewerType::OPENVR_RIFT_CV1},
+      {"Vive MV", ViewerType::OPENVR_VIVE},
+  };
+
+  std::string model = GetOpenVRString(vr_system_, vr::Prop_ModelNumber_String);
+  auto it = viewer_types.find(model);
+  if (it != viewer_types.end()) {
+    return it->second;
+  }
+
+  return ViewerType::OPENVR_UNKNOWN;
+}
+
 void OpenVRDevice::RequestPresent(
     VRDisplayImpl* display,
     mojom::VRSubmitFrameClientPtr submit_client,
