@@ -2969,7 +2969,7 @@ TEST_P(ParameterizedWebFrameTest, AtViewportAffectingAtMediaRecalcCount) {
   EXPECT_EQ(10u, document->GetStyleEngine().StyleForElementCount());
   EXPECT_EQ(Color(0, 128, 0),
             document->body()->GetComputedStyle()->VisitedDependentColor(
-                CSSPropertyColor));
+                GetCSSPropertyColor()));
 }
 
 TEST_P(ParameterizedWebFrameTest, AtViewportWithViewportLengths) {
