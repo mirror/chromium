@@ -166,6 +166,30 @@
       "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a64fec7_1a5df75a",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-22T16:00:12Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure if 10.13 is fine with this in all cases. Excluding 10.13 is based on \nmy local test (see https://bugs.chromium.org/p/chromium/issues/detail?id\u003d786777#c24 ). \n\nBTW, I didn\u0027t have to download the font in question on either of my Macs (10.12 or 10.13), but the font is somewhere else (or I couldn\u0027t find it) other than regular places ( /System/Librray/Fonts, /Library/Fonts or ~/Library/FOnts) on both machines.",
+      "parentUuid": "84b97d64_c3d3ccec",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
