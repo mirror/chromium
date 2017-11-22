@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52330e62_52b25a4f",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-22T17:20:28Z",
+      "side": 1,
+      "message": "I renamed this flag to distinguish it from the new one",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "d0cee9867e7ed0dd09715d2b96a30ada897b4567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
