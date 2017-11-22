@@ -256,7 +256,7 @@ TEST_F(VolumeManagerTest, OnDriveFileSystemUnmountWithoutMount) {
   volume_manager()->RemoveObserver(&observer);
 }
 
-TEST_F(VolumeManagerTest, OnDiskEvent_Hidden) {
+TEST_F(VolumeManagerTest, OnDiskAutoMountableEvent_Hidden) {
   LoggingObserver observer;
   volume_manager()->AddObserver(&observer);
 
@@ -266,22 +266,22 @@ TEST_F(VolumeManagerTest, OnDiskEvent_Hidden) {
       chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, false, false, false,
       kIsHidden, "", "");
 
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_ADDED, &kDisk);
   EXPECT_EQ(0U, observer.events().size());
 
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_REMOVED, &kDisk);
   EXPECT_EQ(0U, observer.events().size());
 
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_CHANGED, &kDisk);
   EXPECT_EQ(0U, observer.events().size());
 
   volume_manager()->RemoveObserver(&observer);
 }
 
-TEST_F(VolumeManagerTest, OnDiskEvent_Added) {
+TEST_F(VolumeManagerTest, OnAutoMountableDiskEvent_Added) {
   // Enable external storage.
   profile()->GetPrefs()->SetBoolean(prefs::kExternalStorageDisabled, false);
 
@@ -293,7 +293,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_Added) {
       "", false, "", "", "", "", "", "", "", "", "", "",
       chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, false, false, false,
       false, "", "");
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_ADDED, &kEmptyDevicePathDisk);
   EXPECT_EQ(0U, observer.events().size());
 
@@ -302,7 +302,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_Added) {
       "device1", "", false, "", "", "", "", "", "", "", "", "", "",
       chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, kHasMedia, false, false,
       false, "", "");
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_ADDED, &kMediaDisk);
   ASSERT_EQ(1U, observer.events().size());
   const LoggingObserver::Event& event = observer.events()[0];
@@ -321,7 +321,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_Added) {
   volume_manager()->RemoveObserver(&observer);
 }
 
-TEST_F(VolumeManagerTest, OnDiskEvent_AddedNonMounting) {
+TEST_F(VolumeManagerTest, OnAutoMountableDiskEvent_AddedNonMounting) {
   // Enable external storage.
   profile()->GetPrefs()->SetBoolean(prefs::kExternalStorageDisabled, false);
 
@@ -335,7 +335,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_AddedNonMounting) {
         "device1", "mounted", false, "", "", "", "", "", "", "", "", "", "",
         chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, kHasMedia, false, false,
         false, "", "");
-    volume_manager()->OnDiskEvent(
+    volume_manager()->OnAutoMountableDiskEvent(
         chromeos::disks::DiskMountManager::DISK_ADDED, &kMountedMediaDisk);
     ASSERT_EQ(1U, observer.events().size());
     const LoggingObserver::Event& event = observer.events()[0];
@@ -358,7 +358,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_AddedNonMounting) {
         "device1", "", false, "", "", "", "", "", "", "", "", "", "",
         chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, kWithoutMedia, false,
         false, false, "", "");
-    volume_manager()->OnDiskEvent(
+    volume_manager()->OnAutoMountableDiskEvent(
         chromeos::disks::DiskMountManager::DISK_ADDED, &kNoMediaDisk);
     ASSERT_EQ(1U, observer.events().size());
     const LoggingObserver::Event& event = observer.events()[0];
@@ -383,7 +383,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_AddedNonMounting) {
         "device1", "", false, "", "", "", "", "", "", "", "", "", "",
         chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, kHasMedia, false, false,
         false, "", "");
-    volume_manager()->OnDiskEvent(
+    volume_manager()->OnAutoMountableDiskEvent(
         chromeos::disks::DiskMountManager::DISK_ADDED, &kMediaDisk);
     ASSERT_EQ(1U, observer.events().size());
     const LoggingObserver::Event& event = observer.events()[0];
@@ -397,7 +397,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_AddedNonMounting) {
   }
 }
 
-TEST_F(VolumeManagerTest, OnDiskEvent_Removed) {
+TEST_F(VolumeManagerTest, OnDiskAutoMountableEvent_Removed) {
   LoggingObserver observer;
   volume_manager()->AddObserver(&observer);
 
@@ -405,7 +405,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_Removed) {
       "device1", "mount_path", false, "", "", "", "", "", "", "", "", "", "",
       chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, false, false, false,
       false, "", "");
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_REMOVED, &kMountedDisk);
 
   ASSERT_EQ(1U, observer.events().size());
@@ -422,7 +422,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_Removed) {
   volume_manager()->RemoveObserver(&observer);
 }
 
-TEST_F(VolumeManagerTest, OnDiskEvent_RemovedNotMounted) {
+TEST_F(VolumeManagerTest, OnAutoMountableDiskEvent_RemovedNotMounted) {
   LoggingObserver observer;
   volume_manager()->AddObserver(&observer);
 
@@ -430,7 +430,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_RemovedNotMounted) {
       "device1", "", false, "", "", "", "", "", "", "", "", "", "",
       chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, false, false, false,
       false, "", "");
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_REMOVED, &kNotMountedDisk);
 
   ASSERT_EQ(1U, observer.events().size());
@@ -443,7 +443,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_RemovedNotMounted) {
   volume_manager()->RemoveObserver(&observer);
 }
 
-TEST_F(VolumeManagerTest, OnDiskEvent_Changed) {
+TEST_F(VolumeManagerTest, OnAutoMountableDiskEvent_Changed) {
   // Changed event should cause mounting (if possible).
   LoggingObserver observer;
   volume_manager()->AddObserver(&observer);
@@ -452,7 +452,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_Changed) {
       "device1", "", false, "", "", "", "", "", "", "", "", "", "",
       chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, true, false, false, false,
       "", "");
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_CHANGED, &kDisk);
 
   EXPECT_EQ(1U, observer.events().size());
@@ -465,7 +465,7 @@ TEST_F(VolumeManagerTest, OnDiskEvent_Changed) {
   volume_manager()->RemoveObserver(&observer);
 }
 
-TEST_F(VolumeManagerTest, OnDiskEvent_ChangedInReadonly) {
+TEST_F(VolumeManagerTest, OnAutoMountableDiskEvent_ChangedInReadonly) {
   profile()->GetPrefs()->SetBoolean(prefs::kExternalStorageReadOnly, true);
 
   // Changed event should cause mounting (if possible).
@@ -476,8 +476,8 @@ TEST_F(VolumeManagerTest, OnDiskEvent_ChangedInReadonly) {
       "device1", "", false, "", "", "", "", "", "", "", "", "", "",
       chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, true, false, false, false,
       "", "");
-  volume_manager()->OnDiskEvent(chromeos::disks::DiskMountManager::DISK_CHANGED,
-                                &kDisk);
+  volume_manager()->OnAutoMountableDiskEvent(
+      chromeos::disks::DiskMountManager::DISK_CHANGED, &kDisk);
 
   EXPECT_EQ(1U, observer.events().size());
   EXPECT_EQ(1U, disk_mount_manager_->mount_requests().size());
@@ -782,9 +782,9 @@ TEST_F(VolumeManagerTest, ExternalStorageDisabledPolicyMultiProfile) {
       "device1", "", false, "", "", "", "", "", "", "", "", "", "",
       chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, true, false, false, false,
       "", "");
-  volume_manager()->OnDiskEvent(
+  volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_ADDED, &kMediaDisk);
-  secondary.volume_manager()->OnDiskEvent(
+  secondary.volume_manager()->OnAutoMountableDiskEvent(
       chromeos::disks::DiskMountManager::DISK_ADDED, &kMediaDisk);
 
   // The profile with external storage enabled should have mounted the volume.
