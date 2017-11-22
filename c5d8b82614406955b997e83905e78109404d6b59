@@ -106,6 +106,24 @@
       "revId": "c5d8b82614406955b997e83905e78109404d6b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdd80b40_da30dbde",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-22T23:31:09Z",
+      "side": 1,
+      "message": "That\u0027s so cool :)",
+      "parentUuid": "1113c887_6f1da96a",
+      "revId": "c5d8b82614406955b997e83905e78109404d6b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
