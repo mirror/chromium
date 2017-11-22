@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8a790ca_3fb79b57",
+        "filename": "base/android/java/src/org/chromium/base/metrics/StatisticsRecorderAndroid.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T17:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99c5b252_42ec3cb2",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "8de53cfc551a42d74f3bf7d0082a4d7a7481b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "916d9b49_eca4fae4",
         "filename": "base/metrics/histogram_base.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "8de53cfc551a42d74f3bf7d0082a4d7a7481b9db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16db72e1_091f5596",
+        "filename": "base/metrics/histogram_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T17:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "916d9b49_eca4fae4",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "8de53cfc551a42d74f3bf7d0082a4d7a7481b9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
