@@ -16,6 +16,24 @@
       "revId": "f8030c531bbec8598bbc29c38ec2ac51672119f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78497d6_b320a0f5",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-22T18:44:58Z",
+      "side": 0,
+      "message": "No, this is ash so chromeos so always GPU compositing, so if it\u0027s not empty then it won\u0027t be null. This was trying to handle software compositing AFAICT.",
+      "parentUuid": "7216b5a9_f8b687af",
+      "revId": "f8030c531bbec8598bbc29c38ec2ac51672119f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
