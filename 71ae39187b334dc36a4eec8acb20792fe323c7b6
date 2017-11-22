@@ -140,6 +140,30 @@
       "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ea867_7dccbabc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-22T03:23:42Z",
+      "side": 1,
+      "message": "They should appear if they are being emitted to, yes.  Are you sure that they are being emitted to prior to your loading the chrome://histograms page?",
+      "parentUuid": "927e3aad_6d8f3413",
+      "range": {
+        "startLine": 2462,
+        "startChar": 61,
+        "endLine": 2462,
+        "endChar": 0
+      },
+      "revId": "71ae39187b334dc36a4eec8acb20792fe323c7b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
