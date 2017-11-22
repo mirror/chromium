@@ -34,6 +34,24 @@
       "revId": "ff7fb33fe58383e87803a3da33dd36c175ee4234",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd4c1e5_84031e0b",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-22T22:44:08Z",
+      "side": 1,
+      "message": "Ah, good point (and possibly be a reason to more aggressively pursue being lazy about making the shadow root in the future).\n\nMaybe a DCHECK(input_element-\u003einput_type_view_-\u003eNeedsShadowSubtree()) or just a comment explaining this would suffice for now? I don\u0027t feel super strongly, but this wasn\u0027t intuitively obvious to me.",
+      "parentUuid": "6e65b4c8_9be32ae2",
+      "revId": "ff7fb33fe58383e87803a3da33dd36c175ee4234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
