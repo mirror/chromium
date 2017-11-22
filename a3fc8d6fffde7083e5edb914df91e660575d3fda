@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88243bae_b5430872",
+        "filename": "extensions/renderer/bindings/test_js_runner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-22T20:47:19Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "a3fc8d6fffde7083e5edb914df91e660575d3fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
