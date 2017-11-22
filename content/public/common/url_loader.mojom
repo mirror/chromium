@@ -107,7 +107,8 @@ interface URLLoaderClient {
   OnStartLoadingResponseBody(handle<data_pipe_consumer> body);
 
   // Called when the loading completes. No notification will be dispatched for
-  // this client after this message arrives.
+  // this client after this message arrives. |status| has its |ssl_info| field
+  // set only in the case of main-frame requests with certificate errors.
   OnComplete(URLLoaderCompletionStatus status);
 };
 
