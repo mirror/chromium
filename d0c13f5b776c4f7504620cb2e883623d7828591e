@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f6ff6a3b_c458b316",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2835,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-22T23:30:33Z",
+      "side": 1,
+      "message": "auto can\u0027t be used here as CreateWindowWithMinimumSize(..) returns a raw pointer but we need an unique_ptr here.",
+      "parentUuid": "c0a57e1c_b822fd8f",
+      "revId": "d0c13f5b776c4f7504620cb2e883623d7828591e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17cbb5a6_492ddea3",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "643da7ba_509d7afc",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-22T23:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17cbb5a6_492ddea3",
+      "revId": "d0c13f5b776c4f7504620cb2e883623d7828591e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c66d6188_5344ec39",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "d0c13f5b776c4f7504620cb2e883623d7828591e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27e0cd2_7f423f74",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-22T23:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c66d6188_5344ec39",
+      "revId": "d0c13f5b776c4f7504620cb2e883623d7828591e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
