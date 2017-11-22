@@ -22,6 +22,30 @@
       "revId": "fbcc09282dc8cd984d220f1bf5135d6f3c44701f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31673d4f_275a9075",
+        "filename": "content/public/common/mutable_network_traffic_annotation_tag.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T17:37:33Z",
+      "side": 0,
+      "message": "I think the R in Gerrit indicates that it was deleted from the original location and renamed. But I\u0027m not 100% sure either, since I can\u0027t actually see the raw patch diff...",
+      "parentUuid": "06173ea0_13ffc4b5",
+      "range": {
+        "startLine": 1,
+        "startChar": 21,
+        "endLine": 1,
+        "endChar": 30
+      },
+      "revId": "fbcc09282dc8cd984d220f1bf5135d6f3c44701f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
