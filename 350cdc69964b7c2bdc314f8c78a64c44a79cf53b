@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08c7c064_64304d73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-22T00:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc4fa08_9bed3404",
+      "range": {
+        "startLine": 190,
+        "startChar": 41,
+        "endLine": 190,
+        "endChar": 50
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3cdce65_1decb509",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c1de5b_b1b06488",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-22T00:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3cdce65_1decb509",
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "806c49ba_35d0290a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-22T00:28:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0e1c7da7_2b79ae01",
+      "range": {
+        "startLine": 1087,
+        "startChar": 52,
+        "endLine": 1087,
+        "endChar": 58
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a0b7f1_f98800fc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 6
@@ -76,6 +142,30 @@
       "writtenOn": "2017-11-21T18:33:37Z",
       "side": 1,
       "message": "getWidth() won\u0027t be defined until after the first layout pass and may change on rotation. Does the popup dismiss on rotation?",
+      "range": {
+        "startLine": 135,
+        "startChar": 33,
+        "endLine": 135,
+        "endChar": 41
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36afc47e_3cbdb6b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-22T00:28:06Z",
+      "side": 1,
+      "message": "Yes, popup will be dismissed on rotation. And popup menu will be initialized after users click the menu icon, so container\u0027s getWidth() should work all the time.\nAny other corner case I could try?",
+      "parentUuid": "31a0b7f1_f98800fc",
       "range": {
         "startLine": 135,
         "startChar": 33,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "162f5f15_316f59c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-22T00:28:06Z",
+      "side": 1,
+      "message": "Done. Move code from \"Google Translate\" settings.",
+      "parentUuid": "b0fed70e_6b0db99e",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa8dc584_89a7e1f0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
         "patchSetId": 6
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "a9d3ae8d_19e12753",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-22T00:28:06Z",
+      "side": 1,
+      "message": "What about supporting different item types, because icon is a part of the customization. I also need to add a divider for the first menu item.\n\nMocks : https://docs.google.com/presentation/d/1856cTXJZ0P5pWt8X4snD6px6wx0Za91tl7h6b6OgR3Y/edit#slide\u003did.g24d7072b42_0_34",
+      "parentUuid": "fa8dc584_89a7e1f0",
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56ae7180_ffb57f0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
         "patchSetId": 6
@@ -139,6 +271,30 @@
       "writtenOn": "2017-11-21T18:33:37Z",
       "side": 1,
       "message": "Based on this comment, it sounds like an attribute or parameter was the desired way to customize menu width.",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 181,
+        "endChar": 91
+      },
+      "revId": "350cdc69964b7c2bdc314f8c78a64c44a79cf53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194a9102_4a95c19f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-22T00:28:06Z",
+      "side": 1,
+      "message": "Can we add a width check here? So we can avoid the popup is wider than screen or its container.",
+      "parentUuid": "56ae7180_ffb57f0b",
       "range": {
         "startLine": 179,
         "startChar": 7,
