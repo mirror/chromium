@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a916b29a_65873ad9",
+        "filename": "chrome/browser/media/webrtc/webrtc_text_log_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-22T10:01:59Z",
+      "side": 1,
+      "message": "ClearLogMessageCallback doesn\u0027t read or modify |logging_state_|, right?. It just calls UnregisterNativeLogCallback which posts a task which erases an element from a container. All other accesses to |logging_state_| is DCHECKED to happen on the IO thread. Since this function is running on the IO thread, nobody else can access the variable until this function has returned, so the order should not matter.",
+      "parentUuid": "79cb2a8d_67672656",
+      "range": {
+        "startLine": 270,
+        "startChar": 7,
+        "endLine": 270,
+        "endChar": 24
+      },
+      "revId": "8dfdf2edff2dc354f99d3c8123960c8a852c910a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37e1ee4b_026db4f4",
         "filename": "content/public/browser/webrtc_log.h",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "8dfdf2edff2dc354f99d3c8123960c8a852c910a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3046b056_55ff0608",
+        "filename": "content/public/browser/webrtc_log.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-22T10:01:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a4fe32d_c403c37d",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "8dfdf2edff2dc354f99d3c8123960c8a852c910a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
