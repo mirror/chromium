@@ -75,7 +75,8 @@
   (path (user-homedir-path "/.CFUserTextEncoding"))
   (path (user-homedir-path "/Library/Preferences/com.apple.universalaccess.plist"))
   (path (user-homedir-path "/Library/Preferences/.GlobalPreferences.plist"))
-  (regex (user-homedir-path #"/Library/Preferences/ByHost/.GlobalPreferences.*")))
+  (regex (user-homedir-path #"/Library/Preferences/ByHost/.GlobalPreferences.*"))
+  (subpath (user-homedir-path "/Library/Fonts")))
 
 ; Reads of /dev devices.
 (allow file-read-data
@@ -155,6 +156,10 @@
 ; but 10.9 through 10.11 use FontServer.
 (if (< os-version 1012)
   (allow mach-lookup (global-name "com.apple.FontServer")))
+
+; To allow accessing downloaded fonts (https://crbug.com/662686)
+(if (< os-version 1013)
+  (allow file-read* (extension "com.apple.app-sandbox.read")))
 
 ; sysctl
 (if (= os-version 1009)
