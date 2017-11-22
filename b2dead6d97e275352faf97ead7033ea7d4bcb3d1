@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "700ac742_49ce49f9",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-22T14:15:18Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "b2dead6d97e275352faf97ead7033ea7d4bcb3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
