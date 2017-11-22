@@ -636,6 +636,8 @@ void ChromotingInstance::HandleConnect(const base::DictionaryValue& data) {
   } else {
     DCHECK(key_filter.empty());
     normalizing_input_filter_.reset(new protocol::InputFilter(&key_mapper_));
+    // TODO(jamiewalch): Revert this change once crbug.com/787523 is fixed.
+    input_handler_.set_detect_stuck_modifiers(true);
   }
   input_tracker_.set_input_stub(normalizing_input_filter_.get());
 
