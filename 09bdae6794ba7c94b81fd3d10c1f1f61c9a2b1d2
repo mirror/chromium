@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "999ae529_aa902e73",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-22T18:25:11Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by our solution here, because CreateFromExtensionId(extension_id()) from the newest patchset means that even if the file_system_info is of type Native, this conditional will not be true. \n\nWhat i\u0027m asking is whether that seems correct, that we never execute the code from lines 193-203 for Native, only for Extension",
+      "parentUuid": "076c5a02_8a01fdaa",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e9c8b07_6af1a65c",
         "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
         "patchSetId": 7
@@ -379,6 +403,30 @@
       "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2db86e4_825e91ad",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-22T18:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0200bb54_ce1df281",
+      "range": {
+        "startLine": 150,
+        "startChar": 31,
+        "endLine": 150,
+        "endChar": 32
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

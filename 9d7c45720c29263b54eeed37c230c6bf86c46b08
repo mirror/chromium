@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d4319213_1e43a50d",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-22T18:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20daf448_d19f20c6",
+      "range": {
+        "startLine": 154,
+        "startChar": 1,
+        "endLine": 155,
+        "endChar": 47
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3496b7dc_6b808e21",
         "filename": "chrome/browser/chromeos/file_system_provider/mount_path_util_unittest.cc",
         "patchSetId": 9
@@ -284,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "eddcfb0f_3e44182c",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-22T18:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "988d4410_84951e8e",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c5078a3_cf116f55",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.cc",
         "patchSetId": 9
@@ -392,6 +440,24 @@
       "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9910a3_156248d5",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-22T18:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "373d5a08_c82250ed",
+      "revId": "9d7c45720c29263b54eeed37c230c6bf86c46b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
