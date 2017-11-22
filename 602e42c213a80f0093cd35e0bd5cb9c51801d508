@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "84783e46_ef95ab54",
+        "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-11-22T17:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c126255_df1bf0ab",
+      "revId": "602e42c213a80f0093cd35e0bd5cb9c51801d508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d15627e_be28a9e1",
         "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "602e42c213a80f0093cd35e0bd5cb9c51801d508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667e0ede_7dd415c4",
+        "filename": "components/printing/service/public/cpp/pdf_service_mojo_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-11-22T17:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d15627e_be28a9e1",
+      "revId": "602e42c213a80f0093cd35e0bd5cb9c51801d508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
