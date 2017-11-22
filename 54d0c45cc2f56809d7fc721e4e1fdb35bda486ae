@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ce20650_4b35d028",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-22T00:12:13Z",
+      "side": 1,
+      "message": "It is a little bit scary, since GraphicsLayer use this to adjust visual rects of converted display items. Will need to verify the visual rects are still correct in both SPv1 and SPv175.",
+      "revId": "54d0c45cc2f56809d7fc721e4e1fdb35bda486ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

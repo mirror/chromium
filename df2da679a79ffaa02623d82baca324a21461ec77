@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f024f89a_04a494b8",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-22T00:12:13Z",
+      "side": 1,
+      "message": "That\u0027s an alternative I was thinking. Before your latest change, OffsetFromLayoutObject() really meant offset from the \"widget\", now it is really relative to the layout object (that owns the widget).",
+      "parentUuid": "945f192e_20025ea6",
+      "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "384f3c30_daf52fa3",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
         "patchSetId": 5
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "Scroll corners are painted differently from scrollbars. It uses paint offset.",
       "parentUuid": "191fd57b_e511d3e8",
+      "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5058f54_d891277f",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-22T00:12:13Z",
+      "side": 1,
+      "message": "I think it is the same from the perspective of PC2CL. Let\u0027s say we have\n\u003cdiv style\u003d\"width:300px; height:200px; overflow:scroll;\"\u003e\u003c/div\u003e\n\nThe scroll corner will be associated with the offset\u0027d transform node, and its drawing display item will have visual rect of (x\u003d285, y\u003d185, w\u003d15, h\u003d15). The composited layer will have to counter that, because the layer origin is at (285, 185) of that transform space too.\n\nIs there an easy way to verify scroll corner painting correctly?",
+      "parentUuid": "6bfcfc79_4970dfa0",
       "revId": "df2da679a79ffaa02623d82baca324a21461ec77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
