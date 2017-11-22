@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5445d0d4_d6a5381e",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-22T10:35:51Z",
+      "side": 1,
+      "message": "nit: s/to be/should be",
+      "revId": "d42057bc9232f695186d8780e547ca85efcfcaa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96af9eac_fe947174",
         "filename": "device/geolocation/geolocation_provider_impl.h",
         "patchSetId": 10
@@ -19,6 +36,23 @@
         "endLine": 29,
         "endChar": 31
       },
+      "revId": "d42057bc9232f695186d8780e547ca85efcfcaa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e8d4c7_eda128f4",
+        "filename": "device/geolocation/geolocation_provider_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-22T10:35:51Z",
+      "side": 1,
+      "message": "nit: Remove the reference to ContentBrowserClient here.",
       "revId": "d42057bc9232f695186d8780e547ca85efcfcaa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
