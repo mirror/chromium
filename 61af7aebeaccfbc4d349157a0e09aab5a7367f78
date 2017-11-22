@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82874817_836344d3",
+        "filename": "chrome/browser/ui/views/chrome_views_delegate_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T21:20:28Z",
+      "side": 1,
+      "message": "How do you feel about:\n\n#if defined(GOOGLE_CHROME_BUILD)\n  switch (chrome::GetChannel()) {\n    case version_info::Channel::DEV:\n      return IDR_PRODUCT_LOGO_128_DEV;\n    case version_info::Channel::BETA:\n      return IDR_PRODUCT_LOGO_128_BETA;\n    default:\n      break;\n  }\n#endif\n  return IDR_PRODUCT_LOGO_128;",
+      "revId": "61af7aebeaccfbc4d349157a0e09aab5a7367f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
