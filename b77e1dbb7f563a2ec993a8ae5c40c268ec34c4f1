@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f63339a8_4be988b0",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T00:30:57Z",
+      "side": 1,
+      "message": "\u003e Since hosted apps\u0027 site instances have a chrome-extension:// scheme URL, it might be worth mentioning here that hosted apps will still be added to the process map (as desired). By just reading this comment, it\u0027s a bit misleading.\n\nSure, I\u0027ve clarified the comment to make it clear that most hosted apps will still be added.",
+      "parentUuid": "f60fc2bb_6c45bc9b",
+      "revId": "b77e1dbb7f563a2ec993a8ae5c40c268ec34c4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ea2909c_962bd487",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 2
