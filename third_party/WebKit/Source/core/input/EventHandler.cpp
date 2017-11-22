@@ -1808,7 +1808,9 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
         selection.ComputeVisibleSelectionInDOMTree()
             .ToNormalizedEphemeralRange());
 
-    int x = right_aligned ? first_rect.MaxX() : first_rect.X();
+    // Add extra pixel to x to make sure this coordinates is inside of current
+    // selection. Android is relying on this to get selection text correctly.
+    int x = right_aligned ? first_rect.MaxX() : first_rect.X() + 1;
     // In a multiline edit, firstRect.maxY() would end up on the next line, so
     // take the midpoint.
     int y = (first_rect.MaxY() + first_rect.Y()) / 2;
