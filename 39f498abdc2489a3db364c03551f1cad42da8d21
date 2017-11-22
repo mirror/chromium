@@ -206,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "2d981520_a8437834",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-22T19:24:28Z",
+      "side": 1,
+      "message": "Follow-up then. Does it make sense to have a \"text\" property at all, or would inner text be more correctly modeled as a child \"text\"-type node?",
+      "parentUuid": "9310d0a1_539ed3ca",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22d504ba_083f07d9",
         "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
         "patchSetId": 10
