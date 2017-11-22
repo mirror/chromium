@@ -805,6 +805,9 @@ Image::SizeAvailability SVGImage::DataChanged(bool all_data_received) {
       return kSizeAvailableAndLoadingAsynchronously;
 
     case kLoadCompleted:
+      // Inform the UseCounter for the page that an SVG image has been loaded.
+      if (frame->GetDocument())
+        page_->GetUseCounter().DidCommitLoad(frame->GetDocument()->Url());
       return kSizeAvailable;
 
     case kDataChangedNotStarted:
