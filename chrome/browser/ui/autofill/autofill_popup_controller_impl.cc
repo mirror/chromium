@@ -193,10 +193,7 @@ void AutofillPopupControllerImpl::Hide() {
         ->RemoveKeyPressHandler();
   }
 
-  if (view_)
-    view_->Hide();
-
-  delete this;
+  HideViewAndDie();
 }
 
 void AutofillPopupControllerImpl::ViewDestroyed() {
@@ -242,6 +239,15 @@ bool AutofillPopupControllerImpl::HandleKeyPressEvent(
     default:
       return false;
   }
+}
+
+void AutofillPopupControllerImpl::HideOnDestroyedDelegate(
+    AutofillPopupDelegate* delegate) {
+  // Assume that |delegate_| is not null. It should have been created non-null
+  // and any time it was about to be deleted, this method should had been
+  // called.
+  if (delegate_.get() == delegate)
+    HideViewAndDie();
 }
 
 void AutofillPopupControllerImpl::OnSuggestionsChanged() {
@@ -518,6 +524,13 @@ void AutofillPopupControllerImpl::ClearState() {
   elided_labels_.clear();
 
   selected_line_.reset();
+}
+
+void AutofillPopupControllerImpl::HideViewAndDie() {
+  if (view_)
+    view_->Hide();
+
+  delete this;
 }
 
 }  // namespace autofill
