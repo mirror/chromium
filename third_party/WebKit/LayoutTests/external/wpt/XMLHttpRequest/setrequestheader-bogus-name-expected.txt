@@ -1,5 +1,4 @@
 This is a testharness.js-based test.
-Found 71 tests; 69 PASS, 2 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS setRequestHeader should throw with header name "(".
 PASS setRequestHeader should throw with header name ")".
 PASS setRequestHeader should throw with header name "<".
@@ -69,7 +68,7 @@ PASS setRequestHeader should throw with header name "\x1c".
 PASS setRequestHeader should throw with header name "\x1d".
 PASS setRequestHeader should throw with header name "\x1e".
 PASS setRequestHeader should throw with header name "\x1f".
-FAIL setRequestHeader should throw with header name "ﾃｽﾄ". assert_throws: function "function () { client.setRequestHeader(name, 'x-value') }" threw object "SyntaxError: Failed to execute 'setRequestHeader' on 'XMLHttpRequest': 'ﾃｽﾄ' is not a valid HTTP header field name." ("SyntaxError") expected object "TypeError" ("TypeError")
-FAIL setRequestHeader should throw with header name "X-ﾃｽﾄ". assert_throws: function "function () { client.setRequestHeader(name, 'x-value') }" threw object "SyntaxError: Failed to execute 'setRequestHeader' on 'XMLHttpRequest': 'X-ﾃｽﾄ' is not a valid HTTP header field name." ("SyntaxError") expected object "TypeError" ("TypeError")
+PASS setRequestHeader should throw with header name "ﾃｽﾄ".
+PASS setRequestHeader should throw with header name "X-ﾃｽﾄ".
 Harness: the test ran to completion.
 
