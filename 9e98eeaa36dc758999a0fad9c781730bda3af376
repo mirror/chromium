@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5350ae6e_dbf42cfa",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-22T07:17:51Z",
+      "side": 1,
+      "message": "If this check is needed, should we add the same check to current_keyboard_bounds()?",
+      "range": {
+        "startLine": 720,
+        "startChar": 6,
+        "endLine": 720,
+        "endChar": 24
+      },
+      "revId": "9e98eeaa36dc758999a0fad9c781730bda3af376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
