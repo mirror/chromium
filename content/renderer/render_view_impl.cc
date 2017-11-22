@@ -1863,10 +1863,6 @@ blink::WebView* RenderViewImpl::GetWebView() {
   return webview();
 }
 
-blink::WebFrameWidget* RenderViewImpl::GetWebFrameWidget() {
-  return frame_widget_;
-}
-
 bool RenderViewImpl::ShouldDisplayScrollbars(int width, int height) const {
   return (!send_preferred_size_changes_ ||
           (disable_scrollbars_size_limit_.width() <= width ||
