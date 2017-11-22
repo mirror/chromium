@@ -39,6 +39,7 @@
 #include "components/autofill/core/common/form_field_data_predictions.h"
 #include "components/autofill/core/common/signatures_util.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
+#include "url/origin.h"
 
 namespace autofill {
 namespace {
@@ -310,7 +311,7 @@ FormStructure::FormStructure(const FormData& form)
     : form_name_(form.name),
       source_url_(form.origin),
       target_url_(form.action),
-      main_frame_url_(form.main_frame_origin),
+      main_frame_url_(form.main_frame_origin.GetURL()),
       autofill_count_(0),
       active_field_count_(0),
       upload_required_(USE_UPLOAD_RATES),
@@ -565,7 +566,8 @@ std::vector<FormDataPredictions> FormStructure::GetFieldTypePredictions(
     form.data.name = form_structure->form_name_;
     form.data.origin = form_structure->source_url_;
     form.data.action = form_structure->target_url_;
-    form.data.main_frame_origin = form_structure->main_frame_url_;
+    form.data.main_frame_origin =
+        url::Origin::Create(form_structure->main_frame_url_);
     form.data.is_form_tag = form_structure->is_form_tag_;
     form.data.is_formless_checkout = form_structure->is_formless_checkout_;
     form.signature = form_structure->FormSignatureAsStr();
@@ -1017,7 +1019,7 @@ FormData FormStructure::ToFormData() const {
   data.name = form_name_;
   data.origin = source_url_;
   data.action = target_url_;
-  data.main_frame_origin = main_frame_url_;
+  data.main_frame_origin = url::Origin::Create(main_frame_url_);
 
   for (size_t i = 0; i < fields_.size(); ++i) {
     data.fields.push_back(FormFieldData(*fields_[i]));
