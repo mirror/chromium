@@ -39,6 +39,7 @@
 #include "components/autofill/core/common/form_field_data_predictions.h"
 #include "components/autofill/core/common/signatures_util.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
+#include "url/origin.h"
 
 namespace autofill {
 namespace {
@@ -310,7 +311,7 @@ FormStructure::FormStructure(const FormData& form)
     : form_name_(form.name),
       source_url_(form.origin),
       target_url_(form.action),
-      main_frame_url_(form.main_frame_origin),
+      main_frame_origin_(form.main_frame_origin),
       autofill_count_(0),
       active_field_count_(0),
       upload_required_(USE_UPLOAD_RATES),
@@ -393,7 +394,8 @@ void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
   }
 
   if (developer_engagement_metrics)
-    AutofillMetrics::LogDeveloperEngagementUkm(ukm_recorder, main_frame_url(),
+    AutofillMetrics::LogDeveloperEngagementUkm(ukm_recorder,
+                                               main_frame_origin().GetURL(),
                                                developer_engagement_metrics);
 
   if (base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions))
@@ -565,7 +567,7 @@ std::vector<FormDataPredictions> FormStructure::GetFieldTypePredictions(
     form.data.name = form_structure->form_name_;
     form.data.origin = form_structure->source_url_;
     form.data.action = form_structure->target_url_;
-    form.data.main_frame_origin = form_structure->main_frame_url_;
+    form.data.main_frame_origin = form_structure->main_frame_origin_;
     form.data.is_form_tag = form_structure->is_form_tag_;
     form.data.is_formless_checkout = form_structure->is_formless_checkout_;
     form.signature = form_structure->FormSignatureAsStr();
@@ -813,8 +815,9 @@ void FormStructure::LogQualityMetrics(
             GetFormTypes(), did_autofill_some_possible_fields, elapsed);
       }
     }
-    if (form_interactions_ukm_logger->url() != main_frame_url())
-      form_interactions_ukm_logger->UpdateSourceURL(main_frame_url());
+    if (form_interactions_ukm_logger->url() != main_frame_origin().GetURL())
+      form_interactions_ukm_logger->UpdateSourceURL(
+          main_frame_origin().GetURL());
     AutofillMetrics::LogAutofillFormSubmittedState(
         state, form_parsed_timestamp_, form_interactions_ukm_logger);
   }
@@ -1017,7 +1020,7 @@ FormData FormStructure::ToFormData() const {
   data.name = form_name_;
   data.origin = source_url_;
   data.action = target_url_;
-  data.main_frame_origin = main_frame_url_;
+  data.main_frame_origin = main_frame_origin_;
 
   for (size_t i = 0; i < fields_.size(); ++i) {
     data.fields.push_back(FormFieldData(*fields_[i]));

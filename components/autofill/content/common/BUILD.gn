@@ -13,6 +13,8 @@ static_library("ipc_traits") {
   deps = [
     "//components/autofill/core/common",
     "//ipc",
+    "//skia",
+    "//third_party/boringssl",
     "//url",
     "//url/ipc:url_ipc",
   ]
