@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "875089ad_08170d06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4e8a9f_593a6097",
+      "range": {
+        "startLine": 355,
+        "startChar": 16,
+        "endLine": 355,
+        "endChar": 34
+      },
+      "revId": "00b1ada760806d7157a7938b719ba3f0f5d4f172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d1ffec9_aa8ab0bf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b038246f_e340b54d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T00:25:58Z",
+      "side": 1,
+      "message": "I added the function so that we don\u0027t register the component multiple times. Forgot the check though, haha. Fixed now.",
+      "parentUuid": "9d1ffec9_aa8ab0bf",
+      "range": {
+        "startLine": 481,
+        "startChar": 24,
+        "endLine": 481,
+        "endChar": 63
+      },
+      "revId": "00b1ada760806d7157a7938b719ba3f0f5d4f172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4ce4df_fb824913",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "00b1ada760806d7157a7938b719ba3f0f5d4f172",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcced7e_eb2b17f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T00:25:58Z",
+      "side": 1,
+      "message": "Done. Didn\u0027t know whether we always make it past the next line. ymalik@ confirmed we do.",
+      "parentUuid": "ca4ce4df_fb824913",
+      "range": {
+        "startLine": 1166,
+        "startChar": 8,
+        "endLine": 1166,
+        "endChar": 47
+      },
+      "revId": "00b1ada760806d7157a7938b719ba3f0f5d4f172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
