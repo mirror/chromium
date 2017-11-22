@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc83cabc_460e7bd8",
+        "filename": "chrome/browser/sync/test/integration/two_client_uss_sync_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-22T17:58:06Z",
+      "side": 1,
+      "message": "Why is this needed? I don\u0027t see kKey2 referenced before or after.",
+      "range": {
+        "startLine": 350,
+        "startChar": 10,
+        "endLine": 350,
+        "endChar": 19
+      },
+      "revId": "b936aeac0732dbc13fb3e8a4cf2296884fb4ea16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
