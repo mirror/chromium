@@ -53,13 +53,17 @@ namespace {
 constexpr size_t kLCSTableSizeLimit = 16;
 }
 
-inline HTMLSlotElement::HTMLSlotElement(Document& document)
-    : HTMLElement(slotTag, document) {
+HTMLSlotElement* HTMLSlotElement::Create(Document& document,
+                                         HTMLSlotSelectFilter* filter) {
+  return new HTMLSlotElement(document, filter);
+}
+
+inline HTMLSlotElement::HTMLSlotElement(Document& document,
+                                        HTMLSlotSelectFilter* filter)
+    : HTMLElement(slotTag, document), filter_(filter) {
   UseCounter::Count(document, WebFeature::kHTMLSlotElement);
   SetHasCustomStyleCallbacks();
 }
-
-DEFINE_NODE_FACTORY(HTMLSlotElement);
 
 // static
 AtomicString HTMLSlotElement::NormalizeSlotName(const AtomicString& name) {
@@ -262,7 +266,7 @@ Node::InsertionNotificationRequest HTMLSlotElement::InsertedInto(
   if (SupportsAssignment()) {
     ShadowRoot* root = ContainingShadowRoot();
     DCHECK(root);
-    DCHECK(root->IsV1());
+    DCHECK(root->IsV1() || root->IsUserAgentShadow());
     DCHECK(root->Owner());
     if (root == insertion_point->ContainingShadowRoot()) {
       // This slot is inserted into the same tree of |insertion_point|
@@ -489,6 +493,7 @@ void HTMLSlotElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(distributed_nodes_);
   visitor->Trace(old_distributed_nodes_);
   visitor->Trace(distributed_indices_);
+  visitor->Trace(filter_);
   HTMLElement::Trace(visitor);
 }
 

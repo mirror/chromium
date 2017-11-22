@@ -28,8 +28,8 @@
 #include "core/dom/Text.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/HTMLSummaryElement.h"
 #include "core/html/shadow/DetailsMarkerControl.h"
 #include "core/html/shadow/ShadowElementNames.h"
@@ -42,7 +42,7 @@ namespace blink {
 
 using namespace HTMLNames;
 
-class FirstSummarySelectFilter final : public HTMLContentSelectFilter {
+class FirstSummarySelectFilter final : public HTMLSlotSelectFilter {
  public:
   virtual ~FirstSummarySelectFilter() {}
 
@@ -62,7 +62,7 @@ class FirstSummarySelectFilter final : public HTMLContentSelectFilter {
   }
 
   virtual void Trace(blink::Visitor* visitor) {
-    HTMLContentSelectFilter::Trace(visitor);
+    HTMLSlotSelectFilter::Trace(visitor);
   }
 
  private:
@@ -97,7 +97,7 @@ void HTMLDetailsElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
       Text::Create(GetDocument(),
                    GetLocale().QueryString(WebLocalizedString::kDetailsLabel)));
 
-  HTMLContentElement* summary = HTMLContentElement::Create(
+  HTMLSlotElement* summary = HTMLSlotElement::Create(
       GetDocument(), FirstSummarySelectFilter::Create());
   summary->SetIdAttribute(ShadowElementNames::DetailsSummary());
   summary->AppendChild(default_summary);
@@ -105,7 +105,7 @@ void HTMLDetailsElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
 
   HTMLDivElement* content = HTMLDivElement::Create(GetDocument());
   content->SetIdAttribute(ShadowElementNames::DetailsContent());
-  content->AppendChild(HTMLContentElement::Create(GetDocument()));
+  content->AppendChild(HTMLSlotElement::Create(GetDocument()));
   content->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
   root.AppendChild(content);
 }
@@ -115,11 +115,11 @@ Element* HTMLDetailsElement::FindMainSummary() const {
           Traversal<HTMLSummaryElement>::FirstChild(*this))
     return summary;
 
-  HTMLContentElement* content =
-      ToHTMLContentElementOrDie(UserAgentShadowRoot()->firstChild());
-  DCHECK(content->firstChild());
-  CHECK(IsHTMLSummaryElement(*content->firstChild()));
-  return ToElement(content->firstChild());
+  HTMLSlotElement* slot =
+      ToHTMLSlotElementOrDie(UserAgentShadowRoot()->firstChild());
+  DCHECK(slot->firstChild());
+  CHECK(IsHTMLSummaryElement(*slot->firstChild()));
+  return ToElement(slot->firstChild());
 }
 
 void HTMLDetailsElement::ParseAttribute(

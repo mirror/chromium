@@ -103,7 +103,7 @@ HTMLSlotElement* ShadowRoot::AssignedSlotFor(const Node& node) {
 }
 
 void ShadowRoot::DidAddSlot(HTMLSlotElement& slot) {
-  DCHECK(IsV1());
+  DCHECK(IsV1() || IsUserAgentShadow());
   EnsureSlotAssignment().DidAddSlot(slot);
 }
 
@@ -234,7 +234,7 @@ void ShadowRoot::RemovedFrom(ContainerNode* insertion_point) {
 
 void ShadowRoot::SetNeedsAssignmentRecalc() {
   DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
-  DCHECK(IsV1());
+  DCHECK(IsV1() || IsUserAgentShadow());
   if (!slot_assignment_)
     return;
   return slot_assignment_->SetNeedsAssignmentRecalc();
