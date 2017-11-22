@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9ec911b_69d8250b",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-22T17:38:57Z",
+      "side": 1,
+      "message": "If I\u0027m not mistaken this is the type the closure compiler assigns to the `\u003cpassword-list-item\u003e` Polymer element:\n\n- https://github.com/google/closure-compiler/wiki/Polymer-Pass#element-type-names-for-1xhybrid-call-syntax\n- http://closuretools.blogspot.com/2016/06/using-polymer-with-closure-compiler-part-1.html#elementtypenames\n\nThe element is defined in `password_list_item.js` which is listed in this CL.",
+      "parentUuid": "6690984c_673184de",
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d9f0230_ea4d1db2",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "If we can, I\u0027d prefer to avoid having it associated with the Extension API, then (it adds some additional bloat and potential confusion).  A few alternatives:\n\n- Create a new closure type that either adds the password property or that is composed of a PasswordUiEntry and a password\n- Don\u0027t combine the two (does the password need to exist on the same object, or can we have it be a separate variable?)\n- Closure hacks with notes (less preferable)\n\nSince these are all changes that would happen in the JS, I\u0027ll defer to Hector and the other WebUI folks.",
       "parentUuid": "3eb50640_28e15ac9",
+      "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310f9655_ca0bc053",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-22T17:38:57Z",
+      "side": 1,
+      "message": "Fair point. Regarding your alternatives: If I understand you correctly, option 2 was implemented so far. Unfortunately it is too easy for them to get out of sync, leading to the linked bugs in the description. To see this for yourself simply make any password visible and then delete it. The password will still be shown, but it is in the wrong row. You probably want to use Canary for this, as there is a handy Undo Toast, restoring the password afterwards. Also there is a CTRL+Z shortcut.\n\nI\u0027m not quite sure what you mean with the third point. Also the first option looks similar to the second one to me, what exactly is the difference in Polymer\u0027s behavior there? Maybe Hector knows better.\n\nJust out of curiosity: How bad would it be to simply delete this line but set the \u0027password\u0027 attribute anyway? This feels very type unsafe to me, but at least locally the closure compiler does not seem to complain...",
+      "parentUuid": "d558f18f_5d5a14b5",
       "revId": "50c36eaf3dc5fc966d8ce89420cbdfbab36273fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
