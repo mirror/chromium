@@ -175,6 +175,10 @@ class ChromeDownloadManagerDelegate
   void MaybeSendDangerousDownloadOpenedReport(content::DownloadItem* download,
                                               bool show_download_in_folder);
 
+  // Run after in-progress cache is initialized to notify observers that the
+  // in-progress cache is initialized.
+  void OnInProgressCacheInitialized();
+
   Profile* profile_;
 
   std::unique_ptr<download::InProgressCache> download_metadata_cache_;
