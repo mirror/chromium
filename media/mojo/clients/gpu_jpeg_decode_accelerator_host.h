@@ -56,6 +56,7 @@ class GpuJpegDecodeAcceleratorHost : public JpegDecodeAccelerator {
   // Used to safely pass the GpuJpegDecodeAcceleratorPtr from one thread
   // to another. It is set in the constructor and consumed in
   // InitializeAsync().
+  // TODO(mcasas): s/jpeg_decoder_/jda_/ https://crbug.com/699255.
   mojom::GpuJpegDecodeAcceleratorPtrInfo jpeg_decoder_info_;
 
   mojom::GpuJpegDecodeAcceleratorPtr jpeg_decoder_;

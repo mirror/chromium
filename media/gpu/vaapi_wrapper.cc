@@ -231,6 +231,12 @@ VADisplayState::VADisplayState()
     : refcount_(0), va_display_(nullptr), va_initialized_(false) {}
 
 bool VADisplayState::Initialize() {
+  static bool result = VADisplayState::PostSandboxInitialization();
+  if (!result) {
+    LOG(ERROR) << " PostSandboxInitialization failed";
+    return false;
+  }
+
   va_lock_.AssertAcquired();
   if (refcount_++ > 0)
     return true;
@@ -381,10 +387,6 @@ VASupportedProfiles::VASupportedProfiles()
       report_error_to_uma_cb_(base::Bind(&base::DoNothing)) {
   static_assert(arraysize(supported_profiles_) == VaapiWrapper::kCodecModeMax,
                 "The array size of supported profile is incorrect.");
-
-  static bool result = VADisplayState::PostSandboxInitialization();
-  if (!result)
-    return;
   {
     base::AutoLock auto_lock(*va_lock_);
     if (!VADisplayState::Get()->Initialize())
