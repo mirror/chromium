@@ -35,6 +35,8 @@ class EVENTS_BASE_EXPORT Scroller : public GestureCurve {
                            gfx::Vector2dF* offset,
                            gfx::Vector2dF* velocity) override;
 
+  gfx::Vector2dF GetFinalOffset() override;
+
   // Start scrolling by providing a starting point and the distance to travel.
   // The default value of 250 milliseconds will be used for the duration.
   void StartScroll(float start_x,
@@ -63,6 +65,18 @@ class EVENTS_BASE_EXPORT Scroller : public GestureCurve {
              float min_y,
              float max_y,
              base::TimeTicks start_time);
+
+  // Start scrolling based on an end point. The velocity will depend on the
+  // end point of the fling.
+  void FlingTo(float start_x,
+               float start_y,
+               float end_x,
+               float end_y,
+               float min_x,
+               float max_x,
+               float min_y,
+               float max_y,
+               base::TimeTicks start_time);
 
   // Extend the scroll animation by |extend|. This allows a running animation
   // to scroll further and longer when used with |SetFinalX()| or |SetFinalY()|.
@@ -111,6 +125,8 @@ class EVENTS_BASE_EXPORT Scroller : public GestureCurve {
   double GetSplineDeceleration(float velocity) const;
   base::TimeDelta GetSplineFlingDuration(float velocity) const;
   double GetSplineFlingDistance(float velocity) const;
+  double GetSplineVelocityFromDeceleration(float deceleration) const;
+  double GetSplineVelocityFromDistance(float distance) const;
 
   Mode mode_;
 

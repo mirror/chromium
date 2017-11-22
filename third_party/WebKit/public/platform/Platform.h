@@ -558,6 +558,13 @@ class BLINK_PLATFORM_EXPORT Platform {
       const WebFloatPoint& velocity,
       const WebSize& cumulative_scroll);
 
+  // Creates a new fling animation curve instance for device |device_source|
+  // with |distance| and already scrolled |cumulative_scroll| pixels.
+  virtual std::unique_ptr<WebGestureCurve>
+  CreateFlingAnimationCurveFromDistance(WebGestureDevice device_source,
+                                        const WebFloatPoint& distance,
+                                        const WebSize& cumulative_scroll);
+
   // Whether the compositor is using gpu and expects gpu resources as inputs,
   // or software based resources.
   // NOTE: This function should not be called from core/ and modules/, but

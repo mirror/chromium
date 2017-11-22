@@ -244,6 +244,14 @@ std::unique_ptr<WebGestureCurve> Platform::CreateFlingAnimationCurve(
   return nullptr;
 }
 
+std::unique_ptr<WebGestureCurve>
+Platform::CreateFlingAnimationCurveFromDistance(
+    WebGestureDevice device_source,
+    const WebFloatPoint& velocity,
+    const WebSize& cumulative_scroll) {
+  return nullptr;
+}
+
 std::unique_ptr<WebRTCPeerConnectionHandler>
 Platform::CreateRTCPeerConnectionHandler(WebRTCPeerConnectionHandlerClient*) {
   return nullptr;

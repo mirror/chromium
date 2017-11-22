@@ -18,7 +18,19 @@ namespace ui {
 // flings.
 class EVENTS_BASE_EXPORT FlingCurve : public GestureCurve {
  public:
-  FlingCurve(const gfx::Vector2dF& velocity, base::TimeTicks start_timestamp);
+  FlingCurve(base::TimeTicks start_timestamp,
+             const gfx::Vector2dF& displacement_ratio,
+             float time_offset,
+             float position_offset);
+
+  static std::unique_ptr<FlingCurve> CreateFromVelocity(
+      const gfx::Vector2dF& velocity,
+      base::TimeTicks start_timestamp);
+
+  static std::unique_ptr<FlingCurve> CreateFromDistance(
+      const gfx::Vector2dF& distance,
+      base::TimeTicks start_timestamp);
+
   ~FlingCurve() override;
 
   // GestureCurve implementation.
@@ -31,6 +43,8 @@ class EVENTS_BASE_EXPORT FlingCurve : public GestureCurve {
   // Returns true as long as the curve is still active and requires additional
   // animation ticks.
   bool ComputeScrollDeltaAtTime(base::TimeTicks current, gfx::Vector2dF* delta);
+
+  gfx::Vector2dF GetCurveFinalOffset() override;
 
  private:
   const float curve_duration_;
