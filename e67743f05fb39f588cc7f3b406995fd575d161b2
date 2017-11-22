@@ -34,6 +34,24 @@
       "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35370d8_4b42adb0",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T19:37:18Z",
+      "side": 1,
+      "message": "\u003e I feel |pre_auto_manage_window_bounds| is not needed. SetPreAutoManageWindowBounds is called after window_state-\u003eOnWMEvent: [1]. And they got reset both in set_bounds_changed_by_user().\n\u003e \n\nOtherwise it will remember the after automanaged, not pre-automanaged.\n\n\u003e I don\u0027t know whether there is a case that !window_state-\u003epre_added_to_workspace_window_bounds() \u0026\u0026 window_state-\u003epre_auto_manage_window_bounds()?\n\nwon\u0027t it happen when you create another browser window when you already have one?\n\n\u003e \n\u003e [1] https://cs.chromium.org/chromium/src/ash/wm/workspace/workspace_layout_manager.cc?sq\u003dpackage:chromium\u0026l\u003d90",
+      "parentUuid": "5e8b32c4_c0cc7c3b",
+      "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
