@@ -35,6 +35,8 @@ namespace content {
 
 // Mainline routine for running as the utility process.
 int UtilityMain(const MainFunctionParams& parameters) {
+  LOG(ERROR) << "Begin UtilityMain()";
+  LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
   const base::MessageLoop::Type message_loop_type =
       parameters.command_line.HasSwitch(switches::kMessageLoopTypeUi)
           ? base::MessageLoop::TYPE_UI

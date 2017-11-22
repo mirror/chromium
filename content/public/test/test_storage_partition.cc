@@ -119,5 +119,6 @@ void TestStoragePartition::ClearBluetoothAllowedDevicesMapForTesting() {}
 
 void TestStoragePartition::SetNetworkFactoryForTesting(
     mojom::URLLoaderFactoryPtr test_factory) {}
+void TestStoragePartition::FlushNetworkInterfaceForTesting() {}
 
 }  // namespace content

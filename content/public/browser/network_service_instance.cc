@@ -5,6 +5,7 @@
 #include "content/public/browser/network_service_instance.h"
 
 #include "base/feature_list.h"
+#include "base/process/process.h"
 #include "content/browser/network_service_client.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_features.h"
@@ -16,14 +17,20 @@
 namespace content {
 
 mojom::NetworkService* GetNetworkService() {
+  LOG(ERROR) << "Begin content::GetNetworkService()";
+  LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
   DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
 
   static mojom::NetworkServicePtr* g_network_service =
       new mojom::NetworkServicePtr;
   static NetworkServiceClient* g_client;
+  LOG(ERROR) << "g_network_service->is_bound() = " << g_network_service->is_bound();
+  LOG(ERROR) << "g_network_service->encountered_error() = " << g_network_service->encountered_error();
+
   if (!g_network_service->is_bound() ||
       g_network_service->encountered_error()) {
+    LOG(ERROR) << "(Re-)Creating g_network_service";
     ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
         mojom::kNetworkServiceName, g_network_service);
 
