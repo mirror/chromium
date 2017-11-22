@@ -525,6 +525,8 @@ source_set("memory_buffer_sources") {
     "gpu_fence.h",
     "gpu_fence_handle.cc",
     "gpu_fence_handle.h",
+    "gpu_fence_passthrough.cc",
+    "gpu_fence_passthrough.h",
     "native_pixmap.h",
     "native_pixmap_handle.cc",
     "native_pixmap_handle.h",
