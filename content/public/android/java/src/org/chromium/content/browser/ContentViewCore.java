@@ -1455,6 +1455,9 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mSelectionPopupController.updateSelectionState(editable, password);
     }
 
+    @Override
+    public void onSendKeyEvent(KeyEvent event) {}
+
     /**
      * Called (from native) when the <select> popup needs to be shown.
      * @param anchorView View anchored for popup.
