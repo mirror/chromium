@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17f7fe54_0cdc561f",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-22T20:50:50Z",
+      "side": 1,
+      "message": "These comments seem backwards.\n\nHere\u0027s a suggestion, but I may not be understanding what it does\nexactly, so correct me if this isn\u0027t exactly the logic.\n\n// If the user selected an autocompleted result,\n// |accessibility_label_| will contain the url plus extra\n// text like the title of the site. Otherwise we just expose\n// the typed text directly.",
+      "revId": "248c6de9aacede6d5aaf343b96adefe000d17cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f074897a_7246448c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-22T20:50:50Z",
+      "side": 1,
+      "message": "Maybe expand on this comment a bit? I think by \"match\" you mean an\nautocomplete result, right? I think this may also include text like\n\"Search\" if it\u0027s a search suggestion, right?\n\nAlso, \"accessibility label\" is a really generic name that could apply\nto almost any control. Could we call it something like\nautocompleted_url_label_for_accessibility_? Doesn\u0027t have to be that\nverbose, but the more specific and clear you could make it, the better.",
+      "revId": "248c6de9aacede6d5aaf343b96adefe000d17cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
