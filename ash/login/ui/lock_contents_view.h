@@ -64,6 +64,8 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
     views::View* note_action() const;
     LoginBubble* tooltip_bubble() const;
 
+    views::View* dev_channel_info() const;
+
    private:
     LockContentsView* const view_;
   };
@@ -91,6 +93,9 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   void OnShowEasyUnlockIcon(
       const AccountId& user,
       const mojom::EasyUnlockIconOptionsPtr& icon) override;
+  void OnDevChannelInfoChanged(const std::string& os_version_label_text,
+                               const std::string& enterprise_info_text,
+                               const std::string& bluetooth_name) override;
 
   // SystemTrayFocusObserver:
   void OnFocusLeavingSystemTray(bool reverse) override;
@@ -219,6 +224,10 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   // This is placed on the top right of the screen without affecting layout
   // of other views.
   NoteActionLaunchButton* note_action_ = nullptr;
+
+  // View for showing the version, enterprise and bluetooth info in dev and
+  // canary channels, placed in the top right corner of the screen.
+  views::View* dev_channel_info_ = nullptr;
 
   // Contains authentication user and the additional user views.
   NonAccessibleView* main_view_ = nullptr;
