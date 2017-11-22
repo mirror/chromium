@@ -21,6 +21,8 @@ git reset --hard origin/infra/config
 git config depot-tools.upstream origin/infra/config
 ```
 
+
+
 Now you can create a new branch to make changes:
 
 ```
