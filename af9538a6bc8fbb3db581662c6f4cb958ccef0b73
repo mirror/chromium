@@ -22,6 +22,30 @@
       "revId": "af9538a6bc8fbb3db581662c6f4cb958ccef0b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8f28c6_0102d133",
+        "filename": "components/omnibox/browser/test_omnibox_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-22T01:37:40Z",
+      "side": 1,
+      "message": "Ugh, I don\u0027t know. Thanks for catching (again). For my penance, I checked the other new test files one more time and found an IWYU omission. Fixes for both in https://crrev.com/c/783825.",
+      "parentUuid": "91e19045_7e7d4471",
+      "range": {
+        "startLine": 13,
+        "startChar": 50,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "af9538a6bc8fbb3db581662c6f4cb958ccef0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
