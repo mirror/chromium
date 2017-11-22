@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "287296e8_1214873b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/MotionEventSynthesizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-22T20:13:11Z",
+      "side": 1,
+      "message": "I\u0027d prefer pointerIndex, or even just index.",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "a9837f4eaf827fbaeefa8a34dabfa1f0a196829e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
