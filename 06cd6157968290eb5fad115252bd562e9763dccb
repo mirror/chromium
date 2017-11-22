@@ -70,6 +70,24 @@
       "revId": "06cd6157968290eb5fad115252bd562e9763dccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d816767_072fdf09",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-11-22T17:55:01Z",
+      "side": 1,
+      "message": "Nice, thanks",
+      "parentUuid": "547004e5_ebb42bb6",
+      "revId": "06cd6157968290eb5fad115252bd562e9763dccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
