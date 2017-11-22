@@ -1,13 +1,13 @@
 {
   "manifest_package": "org.chromium.webapk",
-  "scope_url": "https://pwa.rocks/",
+  "scope_url": "https://www.google.com",
   "intent_filters": {
     "scope_url_scheme": "https",
-    "scope_url_host": "pwa.rocks",
+    "scope_url_host": "www.google.com",
     "scope_url_path_type": "android:pathPrefix",
     "scope_url_path": "/"
   },
-  "start_url": "https://pwa.rocks/",
+  "start_url": "https://www.google.com/url?sa=t&amp;source=web&amp;rct=j&amp;url=https://www.amazon.ca/&amp;ved=0ahUKEwiPrNOf_IHVAhVI7IMKHT3UBWoQFgguMAA&amp;usg=AFQjCNHtWpf7QVxR4Qdb7r4h-hyHKYW45g",
   "display_mode": "standalone",
   "orientation": "portrait",
   "theme_color": "2147483648L",
