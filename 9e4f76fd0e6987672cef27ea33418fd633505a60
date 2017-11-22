@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8319a3d6_821160d0",
+        "filename": "chrome/browser/ui/webui/translate_internals/translate_internals_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-22T23:46:58Z",
+      "side": 1,
+      "message": "This exact block of code appears in an above function, and I don\u0027t want to change everything in this file just for consistency.\n\nLeaving as-is.",
+      "parentUuid": "dcac4bcf_2fb93239",
+      "revId": "9e4f76fd0e6987672cef27ea33418fd633505a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dab7f70_c7d76c59",
         "filename": "chrome/browser/ui/webui/translate_internals/translate_internals_handler.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "9e4f76fd0e6987672cef27ea33418fd633505a60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8eed45f_9bdf1d7f",
+        "filename": "chrome/browser/ui/webui/translate_internals/translate_internals_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-22T23:46:58Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "1dab7f70_c7d76c59",
+      "revId": "9e4f76fd0e6987672cef27ea33418fd633505a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
