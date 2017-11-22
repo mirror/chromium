@@ -238,15 +238,8 @@ RenderFrameHostImpl* RenderFrameHostManager::Navigate(
       GetNavigatingWebUI()->RenderFrameCreated(dest_render_frame_host);
     }
 
-    // Now that we've created a new renderer, be sure to hide it if it isn't
-    // our primary one.  Otherwise, we might crash if we try to call Show()
-    // on it later.
-    if (dest_render_frame_host != render_frame_host_.get()) {
-      if (dest_render_frame_host->GetView())
-        dest_render_frame_host->GetView()->Hide();
-    } else {
-      EnsureRenderFrameHostVisibilityConsistent();
-
+    EnsureRenderFrameHostVisibilityConsistent();
+    if (dest_render_frame_host == render_frame_host_.get()) {
       // TODO(nasko): This is a very ugly hack. The Chrome extensions process
       // manager still uses NotificationService and expects to see a
       // RenderViewHost changed notification after WebContents and
@@ -1791,14 +1784,6 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
   }
 
   if (success) {
-    if (frame_tree_node_->IsMainFrame()) {
-      // Don't show the main frame's view until we get a DidNavigate from it.
-      // Only the RenderViewHost for the top-level RenderFrameHost has a
-      // RenderWidgetHostView; RenderWidgetHosts for out-of-process iframes
-      // will be created later and hidden.
-      if (render_view_host->GetWidget()->GetView())
-        render_view_host->GetWidget()->GetView()->Hide();
-    }
     // RenderViewHost for |instance| might exist prior to calling
     // CreateRenderFrame. In such a case, InitRenderView will not create the
     // RenderFrame in the renderer process and it needs to be done
