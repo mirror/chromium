@@ -211,10 +211,7 @@ const char* const kSafeManifestEntries[] = {
     // No constant in manifest_constants.cc. Declared as a feature, but unused.
     // "platforms",
 
-    // N/A on Chrome OS, so we don't care.
-    emk::kPlugins,
-
-    // Stated 3D/WebGL/plugin requirements of an app.
+    // Stated 3D/WebGL requirements of an app.
     emk::kRequirements,
 
     // Execute some pages in a separate sandbox.  (Note: Using string literal

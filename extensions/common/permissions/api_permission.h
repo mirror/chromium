@@ -154,7 +154,6 @@ class APIPermission {
     kPageCapture,
     kPointerLock,
     kPlatformKeys,
-    kPlugin,
     kPower,
     kPreferencesPrivate,
     kDeleted_PrincipalsPrivate,
@@ -349,10 +348,8 @@ class APIPermission {
 class APIPermissionInfo {
  public:
   enum Flag {
+    // TODO are these persisted somewhere?
     kFlagNone = 0,
-
-    // Indicates if the permission implies full access (native code).
-    kFlagImpliesFullAccess = 1 << 0,
 
     // Indicates if the permission implies full URL access.
     kFlagImpliesFullURLAccess = 1 << 1,
@@ -384,11 +381,6 @@ class APIPermissionInfo {
 
   // Returns the name of this permission.
   const char* name() const { return name_; }
-
-  // Returns true if this permission implies full access (e.g., native code).
-  bool implies_full_access() const {
-    return (flags_ & kFlagImpliesFullAccess) != 0;
-  }
 
   // Returns true if this permission implies full URL access.
   bool implies_full_url_access() const {
