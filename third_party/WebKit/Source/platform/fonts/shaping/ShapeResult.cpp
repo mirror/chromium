@@ -40,6 +40,8 @@
 #include "platform/fonts/Font.h"
 #include "platform/fonts/shaping/ShapeResultInlineHeaders.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
+#include "platform/text/TextBreakIterator.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -69,63 +71,102 @@ unsigned ShapeResult::RunInfo::PreviousSafeToBreakOffset(
   return 0;
 }
 
-float ShapeResult::RunInfo::XPositionForVisualOffset(
-    unsigned offset,
-    AdjustMidCluster adjust_mid_cluster) const {
+float ShapeResult::RunInfo::XPositionForVisualOffset(const TextRun& text_run,
+                                                     unsigned offset) const {
   DCHECK_LT(offset, num_characters_);
   if (Rtl())
     offset = num_characters_ - offset - 1;
-  return XPositionForOffset(offset, adjust_mid_cluster);
+  return XPositionForOffset(text_run, offset);
 }
 
-float ShapeResult::RunInfo::XPositionForOffset(
-    unsigned offset,
-    AdjustMidCluster adjust_mid_cluster) const {
+// XPositionForOffset returns the X position (in layout space) from the
+// beginning of the run to the beginning of the cluster of glyphs for X
+// character.
+// For RTL, beginning means the right most side of the cluster.
+// Characters may spawn multiple glyphs.
+// In the case that multiple characters spawn a cluster, we distribute the
+// width of the grapheme cluster among the number of cursor positions
+// returned by cursor-based TextBreakIterator.
+float ShapeResult::RunInfo::XPositionForOffset(const TextRun& text_run,
+                                               unsigned offset) const {
   DCHECK_LE(offset, num_characters_);
   const unsigned num_glyphs = glyph_data_.size();
-  unsigned glyph_index = 0;
+
+  // A "track" is a sequence of glyphs on the run that have the same
+  // character_index, and therefore represent the same interval of characters.
+  // [track_start, track_end] are both inclusive for the range of characters of
+  // the current sequence we are visiting.
+  unsigned track_start = 0;
+  unsigned last_character = num_characters_ - 1;
+  unsigned track_end = last_character;
+  // track_pos is the advance of the current track.
+  float track_pos = 0.0;
+  // position is the summed advance before the current track.
   float position = 0;
-  if (Rtl()) {
-    while (glyph_index < num_glyphs &&
-           glyph_data_[glyph_index].character_index > offset) {
-      position += glyph_data_[glyph_index].advance;
-      ++glyph_index;
-    }
-    // Adjust offset if it's not on the cluster boundary. In RTL, this means
-    // that the adjusted position is the left side of the character.
-    if (adjust_mid_cluster == kAdjustToEnd &&
-        (glyph_index < num_glyphs ? glyph_data_[glyph_index].character_index
-                                  : num_characters_) < offset) {
-      return position;
-    }
-    // For RTL, we need to return the right side boundary of the character.
-    // Add advance of glyphs which are part of the character.
-    while (glyph_index < num_glyphs - 1 &&
-           glyph_data_[glyph_index].character_index ==
-               glyph_data_[glyph_index + 1].character_index) {
-      position += glyph_data_[glyph_index].advance;
-      ++glyph_index;
-    }
-    position += glyph_data_[glyph_index].advance;
-  } else {
-    while (glyph_index < num_glyphs &&
-           glyph_data_[glyph_index].character_index < offset) {
-      position += glyph_data_[glyph_index].advance;
-      ++glyph_index;
-    }
-    // Adjust offset if it's not on the cluster boundary.
-    if (adjust_mid_cluster == kAdjustToStart && glyph_index &&
-        (glyph_index < num_glyphs ? glyph_data_[glyph_index].character_index
-                                  : num_characters_) > offset) {
-      offset = glyph_data_[--glyph_index].character_index;
-      for (; glyph_data_[glyph_index].character_index == offset;
-           --glyph_index) {
-        position -= glyph_data_[glyph_index].advance;
-        if (!glyph_index)
-          break;
+
+  // We visit each glyph and keep track of the current character interval.
+  if (!Rtl()) {
+    for (unsigned i = 0; i < num_glyphs; ++i) {
+      unsigned glyph_char = glyph_data_[i].character_index;
+      if (track_start == glyph_char) {
+        track_pos += glyph_data_[i].advance;
+        continue;
       }
+      // LTR has intervals open on the right side.
+      if (track_start <= offset && offset < glyph_char) {
+        track_end = glyph_char - 1;
+        break;
+      }
+
+      track_start = glyph_char;
+      // since we always update track_end when we break, set this to
+      // last_character in case this is the final iteration of the loop.
+      track_end = last_character;
+      position += track_pos;
+      track_pos = glyph_data_[i].advance;
+    }
+
+  } else {
+    track_start = track_end = last_character + 1;
+
+    for (unsigned i = 0; i < num_glyphs; ++i) {
+      unsigned glyph_char = glyph_data_[i].character_index;
+      if (track_end == glyph_char) {
+        track_pos += glyph_data_[i].advance;
+        continue;
+      }
+
+      // RTL has intervals open on the left side.
+      if (track_start < offset && offset <= track_end) {
+        break;
+      }
+
+      track_end = track_start - 1;
+      track_start = glyph_char;
+      position += track_pos;
+      track_pos = glyph_data_[i].advance;
     }
   }
+  // At this point, we have position tracking the left side of the offset,
+  // and track_pos containing the length of the cluster of glyphs where offset
+  // is in.
+  // If we have text_run available, we calculate the number of ICU units on the
+  // subset of characters. We use this to update track_pos and position to
+  // match the "subposition" of the character.
+  float graphemes = static_cast<float>(
+      NumCursorGraphemesClusters(text_run, track_start, track_end + 1));
+  if (graphemes > 0) {
+    int pos = Rtl() ? track_end - offset : offset - track_start;
+    track_pos = track_pos / graphemes;
+    track_start = offset;
+    position += track_pos * pos;
+  }
+
+  if (Rtl()) {
+    // For RTL, we return the right side.
+    position += track_pos;
+  }
+
   return position;
 }
 
@@ -371,7 +412,8 @@ float ShapeResult::PositionForOffset(unsigned absolute_offset) const {
     unsigned num_characters = runs_[i]->num_characters_;
 
     if (!offset_x && offset < num_characters) {
-      offset_x = runs_[i]->XPositionForVisualOffset(offset, kAdjustToEnd) + x;
+      // offset_x = runs_[i]->XPositionForVisualOffset(offset, kAdjustToEnd) +
+      // x;
       break;
     }
 

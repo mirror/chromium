@@ -12,27 +12,20 @@
 
 namespace blink {
 
-// TODO(eae): This is a bit of a hack to allow reuse of the implementation
-// for both ShapeResultBuffer and single ShapeResult use cases. Ideally the
-// logic should move into ShapeResult itself and then the ShapeResultBuffer
-// implementation may wrap that.
-CharacterRange ShapeResultBuffer::GetCharacterRange(
-    scoped_refptr<const ShapeResult> result,
-    TextDirection direction,
-    float total_width,
-    unsigned from,
-    unsigned to) {
-  Vector<scoped_refptr<const ShapeResult>, 64> results;
-  results.push_back(result);
-  return GetCharacterRangeInternal(results, direction, total_width, from, to);
+float GetXPositionForRun(const TextRun& text_run,
+                         unsigned offset,
+                         unsigned total_num_characters,
+                         const ShapeResult::RunInfo* info) {
+  TextRun sub_run = text_run.SubRun(total_num_characters + info->start_index_,
+                                    info->num_characters_);
+  return info->XPositionForVisualOffset(sub_run, offset);
 }
 
-CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
-    const Vector<scoped_refptr<const ShapeResult>, 64>& results,
-    TextDirection direction,
+CharacterRange ShapeResultBuffer::GetCharacterRange(
+    const TextRun& text_run,
     float total_width,
     unsigned absolute_from,
-    unsigned absolute_to) {
+    unsigned absolute_to) const {
   float current_x = 0;
   float from_x = 0;
   float to_x = 0;
@@ -40,6 +33,8 @@ CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
   bool found_to_x = false;
   float min_y = 0;
   float max_y = 0;
+
+  TextDirection direction = text_run.Direction();
 
   if (direction == TextDirection::kRtl)
     current_x = total_width;
@@ -51,8 +46,8 @@ CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
   int to = absolute_to;
 
   unsigned total_num_characters = 0;
-  for (unsigned j = 0; j < results.size(); j++) {
-    const scoped_refptr<const ShapeResult> result = results[j];
+  for (unsigned j = 0; j < results_.size(); j++) {
+    const scoped_refptr<const ShapeResult> result = results_[j];
     if (direction == TextDirection::kRtl) {
       // Convert logical offsets to visual offsets, because results are in
       // logical order while runs are in visual order.
@@ -70,16 +65,17 @@ CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
       DCHECK_EQ(direction == TextDirection::kRtl, result->runs_[i]->Rtl());
       int num_characters = result->runs_[i]->num_characters_;
       if (!found_from_x && from >= 0 && from < num_characters) {
-        from_x =
-            result->runs_[i]->XPositionForVisualOffset(from, kAdjustToStart) +
-            current_x;
+        from_x = GetXPositionForRun(text_run, from, total_num_characters,
+                                    result->runs_[i].get()) +
+                 current_x;
         found_from_x = true;
       } else {
         from -= num_characters;
       }
 
       if (!found_to_x && to >= 0 && to < num_characters) {
-        to_x = result->runs_[i]->XPositionForVisualOffset(to, kAdjustToEnd) +
+        to_x = GetXPositionForRun(text_run, to, total_num_characters,
+                                  result->runs_[i].get()) +
                current_x;
         found_to_x = true;
       } else {
@@ -120,13 +116,6 @@ CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
   if (from_x < to_x)
     return CharacterRange(from_x, to_x, -min_y, max_y);
   return CharacterRange(to_x, from_x, -min_y, max_y);
-}
-
-CharacterRange ShapeResultBuffer::GetCharacterRange(TextDirection direction,
-                                                    float total_width,
-                                                    unsigned from,
-                                                    unsigned to) const {
-  return GetCharacterRangeInternal(results_, direction, total_width, from, to);
 }
 
 void ShapeResultBuffer::AddRunInfoRanges(const ShapeResult::RunInfo& run_info,
