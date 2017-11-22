@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e96a89b_d4a73ad9",
+        "filename": "remoting/webapp/base/js/client_plugin_impl.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-22T21:46:22Z",
+      "side": 1,
+      "message": "platformIsLinux()",
+      "range": {
+        "startLine": 465,
+        "startChar": 25,
+        "endLine": 465,
+        "endChar": 40
+      },
+      "revId": "aeade88fa11a7ff18d0b973c23059852c31b30d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
