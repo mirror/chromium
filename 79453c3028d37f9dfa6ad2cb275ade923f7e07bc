@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef05f4d_0f963df3",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-22T22:13:24Z",
+      "side": 1,
+      "message": "Changes in this method are just renaming viewportPosition to params.",
+      "range": {
+        "startLine": 31,
+        "startChar": 49,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "79453c3028d37f9dfa6ad2cb275ade923f7e07bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76f489e1_4abcf952",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-22T22:13:24Z",
+      "side": 1,
+      "message": "Changes in this method are just renaming viewportPosition to params.",
+      "range": {
+        "startLine": 181,
+        "startChar": 25,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "79453c3028d37f9dfa6ad2cb275ade923f7e07bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
