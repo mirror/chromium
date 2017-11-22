@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5cb148d_ffcaa176",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-22T19:22:38Z",
+      "side": 1,
+      "message": "Wrong thread to use the client right? Also globals x.x\n\nCan we pass this value into EstablishRequest?",
+      "revId": "f984d13f2244baa8e28813c5b70dee7324fd621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
