@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85815874_c2c37c33",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-22T07:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea0ab407_ddcd4f84",
+      "revId": "e707c097833a42f91af9782ff4eb66c63af0b4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4497d9_7cb367c0",
         "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b1fe83c3_4f3a4d77",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-22T07:43:41Z",
+      "side": 1,
+      "message": "Yes, thank you for picking it.\nDone",
+      "parentUuid": "bf4497d9_7cb367c0",
+      "range": {
+        "startLine": 255,
+        "startChar": 5,
+        "endLine": 255,
+        "endChar": 31
+      },
+      "revId": "e707c097833a42f91af9782ff4eb66c63af0b4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2892348b_391ec3b1",
         "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "e707c097833a42f91af9782ff4eb66c63af0b4c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766a621a_6d6e75ab",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-22T07:43:41Z",
+      "side": 1,
+      "message": "Exactly.\nUpdated to \"all remained conditionally enabled features\"",
+      "parentUuid": "2892348b_391ec3b1",
+      "revId": "e707c097833a42f91af9782ff4eb66c63af0b4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
