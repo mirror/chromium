@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbab129e_f2b370f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-22T21:11:14Z",
+      "side": 1,
+      "message": "This only works for English. You\u0027ll have to add a new string\nof the form \"%d bytes\" that can be translated into any language.",
+      "revId": "7d39c83c1d937825daf6e993629e4e3030e621f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
