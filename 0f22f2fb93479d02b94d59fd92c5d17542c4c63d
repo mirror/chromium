@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab932026_325db113",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-22T21:57:24Z",
+      "side": 1,
+      "message": "nit: ATK_ROLE_SLIDER is duplicated",
+      "revId": "0f22f2fb93479d02b94d59fd92c5d17542c4c63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c2883b_9492180e",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-22T21:57:24Z",
+      "side": 1,
+      "message": "We have AXNodeObject::StepValueForRange() implemented, I\u0027d love to see it\nplumbed through for platforms that can use it. I\u0027ve been asking for\naria-valuestep for a while now for ARIA range controls, too.",
+      "revId": "0f22f2fb93479d02b94d59fd92c5d17542c4c63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
