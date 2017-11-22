@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "7b2e20f6_2495f10a",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-22T16:22:01Z",
+      "side": 1,
+      "message": "I mean.. 4 billion doomed files with the same hash is ridiculous. But if we\u0027re seriously worried about it, we could use an int64 instead and not worry about overflow. That would use less memory (and be faster than) a GUID.",
+      "parentUuid": "cdfea787_7a147ea6",
+      "range": {
+        "startLine": 145,
+        "startChar": 28,
+        "endLine": 145,
+        "endChar": 50
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "889e4d9f_4d338e94",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 16
