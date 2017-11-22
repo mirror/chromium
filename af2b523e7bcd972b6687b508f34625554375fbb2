@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "fcd6830a_088422df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-22T00:06:52Z",
+      "side": 1,
+      "message": "I think changing the display mode will be more flaky, and it adds another special case for us to have to keep in mind (e.g. if we reload the display mode from disk for any reason). Explicit enforcement in the BrowserControlsDelegate aligns better with how this is handled for other cases (off-origin navigation, SSL failure, etc.).",
+      "parentUuid": "5780e8de_1a195a77",
+      "revId": "af2b523e7bcd972b6687b508f34625554375fbb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6dd7e4_61409319",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 2
