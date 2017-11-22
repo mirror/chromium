@@ -10,6 +10,7 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
 
 import org.chromium.base.test.params.ParameterAnnotations.UseMethodParameter;
+import org.chromium.base.test.params.ParameterAnnotations.UseParameterGenerator;
 import org.chromium.base.test.params.ParameterizedRunner.ParameterizedTestInstantiationException;
 
 import java.util.ArrayList;
@@ -78,11 +79,7 @@ public class ParameterizedRunnerDelegateFactory {
 
         // Create tagToListOfFrameworkMethod
         for (FrameworkMethod method : testClass.getAnnotatedMethods(Test.class)) {
-            // If test method is not parameterized (does not have
-            // UseMethodParameter annotation)
-            if (!method.getMethod().isAnnotationPresent(UseMethodParameter.class)) {
-                returnList.add(new ParameterizedFrameworkMethod(method.getMethod(), null, postFix));
-            } else {
+            if (method.getMethod().isAnnotationPresent(UseMethodParameter.class)) {
                 String currentGroup = method.getAnnotation(UseMethodParameter.class).value();
                 if (tagToListOfFrameworkMethod.get(currentGroup) == null) {
                     List<FrameworkMethod> list = new ArrayList<>();
@@ -91,6 +88,13 @@ public class ParameterizedRunnerDelegateFactory {
                 } else {
                     tagToListOfFrameworkMethod.get(currentGroup).add(method);
                 }
+            } else if (method.getMethod().isAnnotationPresent(UseParameterGenerator.class)) {
+                List<ParameterSet> parameterSets =
+                        getParameters(method.getAnnotation(UseParameterGenerator.class).value());
+                returnList.addAll(createParameterizedMethods(method, parameterSets, postFix));
+            } else {
+                // If test method is not parameterized (does not have UseMethodParameter annotation)
+                returnList.add(new ParameterizedFrameworkMethod(method.getMethod(), null, postFix));
             }
         }
 
@@ -106,16 +110,10 @@ public class ParameterizedRunnerDelegateFactory {
             String tagString = entry.getKey();
             List<ParameterSet> parameterSetList = entry.getValue();
             for (FrameworkMethod method : tagToListOfFrameworkMethod.get(tagString)) {
-                for (ParameterSet set : parameterSetList) {
-                    if (set.getValues() == null) {
-                        throw new IllegalArgumentException(
-                                "No parameter is added to method ParameterSet");
-                    }
-                    returnList.add(
-                            new ParameterizedFrameworkMethod(method.getMethod(), set, postFix));
-                }
+                returnList.addAll(createParameterizedMethods(method, parameterSetList, postFix));
             }
         }
+
         return Collections.unmodifiableList(returnList);
     }
 
@@ -152,5 +150,29 @@ public class ParameterizedRunnerDelegateFactory {
                           runnerDelegateClass),
                     e);
         }
+    }
+
+    private static List<ParameterSet> getParameters(Class<? extends ParameterGenerator> clazz) {
+        ParameterGenerator parameterGenerator;
+        try {
+            parameterGenerator = clazz.newInstance();
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException("Failed instantiating " + clazz.getCanonicalName(), e);
+        } catch (InstantiationException e) {
+            throw new IllegalStateException("Failed instantiating " + clazz.getCanonicalName(), e);
+        }
+        return parameterGenerator.getParameters();
+    }
+
+    private static List<FrameworkMethod> createParameterizedMethods(
+            FrameworkMethod baseMethod, List<ParameterSet> parameterSetList, String postFix) {
+        List<FrameworkMethod> returnList = new ArrayList<>();
+        for (ParameterSet set : parameterSetList) {
+            if (set.getValues() == null) {
+                throw new IllegalArgumentException("No parameter is added to method ParameterSet");
+            }
+            returnList.add(new ParameterizedFrameworkMethod(baseMethod.getMethod(), set, postFix));
+        }
+        return returnList;
     }
 }
