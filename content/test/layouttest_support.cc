@@ -160,8 +160,8 @@ void RegisterSideloadedTypefaces(SkFontMgr* fontmgr) {
   for (std::vector<std::string>::const_iterator i(files.begin());
        i != files.end();
        ++i) {
-    SkTypeface* typeface = fontmgr->makeFromFile(i->c_str()).release();
-    blink::WebFontRendering::AddSideloadedFontForTesting(typeface);
+    blink::WebFontRendering::AddSideloadedFontForTesting(
+        fontmgr->makeFromFile(i->c_str()));
   }
 }
 #endif  // OS_WIN
