@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c51d8b9_e0e71cb8",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/filter-matches.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-22T22:20:31Z",
+      "side": 1,
+      "message": "drive-by: Initializing a whole HealthThermometer device, connecting to it and retrieving it\u0027s services seems a bit unnecessary. Consider adding a setUpHealthThermometer and using it instead.\n\n// Returns a FakePeripherals with a \u0027health_thermometer\u0027 and \u0027generic_access\u0027 UUIDs.\nfunction setUpHealthThermometer() {\n  return navigator.bluetooth.test.simulateCentral({state: \u0027powered-on\u0027})\n   .then(fake_central \u003d\u003e fake_central.simulatePreconnectedPeripheral({\n       address: \u002709:09:09:09:09:09\u0027,\n       name: \u0027Health Thermometer\u0027,\n       knownServiceUUIDs: [\u0027generic_access\u0027, \u0027health_thermometer\u0027],\n     }));\n}",
+      "revId": "d2aeacee4f306c9eac766d4e5b5afa280d2ed864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
