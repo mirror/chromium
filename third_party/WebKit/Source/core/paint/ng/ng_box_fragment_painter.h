@@ -70,6 +70,9 @@ class NGBoxFragmentPainter : public BoxPainterBase {
   void PaintChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
                      const PaintInfo&,
                      const LayoutPoint&);
+  void PaintLegacyFallbackChild(const NGPhysicalFragment&,
+                                const PaintInfo&,
+                                const LayoutPoint&);
   void PaintText(const NGPaintFragment&,
                  const PaintInfo&,
                  const LayoutPoint& paint_offset);
@@ -80,7 +83,7 @@ class NGBoxFragmentPainter : public BoxPainterBase {
   void PaintMask(const PaintInfo&, const LayoutPoint&);
   void PaintClippingMask(const PaintInfo&, const LayoutPoint&);
   void PaintOverflowControlsIfNeeded(const PaintInfo&, const LayoutPoint&);
-  void PaintInlineBlock(const PaintInfo&, const LayoutPoint& paint_offset);
+  void PaintInlineBox(const PaintInfo&, const LayoutPoint& paint_offset);
   void PaintLineBox(const NGPaintFragment&,
                     const PaintInfo&,
                     const LayoutPoint&);

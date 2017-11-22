@@ -73,6 +73,8 @@ class CORE_EXPORT NGPhysicalFragment
   bool IsText() const { return Type() == NGFragmentType::kFragmentText; }
   bool IsLineBox() const { return Type() == NGFragmentType::kFragmentLineBox; }
 
+  bool IsInline() const { return is_inline_; }
+
   // Returns the box type of this fragment.
   NGBoxType BoxType() const { return static_cast<NGBoxType>(box_type_); }
   // An inline block is represented as a kFragmentBox.
@@ -172,6 +174,7 @@ class CORE_EXPORT NGPhysicalFragment
 
   unsigned type_ : 2;  // NGFragmentType
   unsigned box_type_ : 3;  // NGBoxType
+  unsigned is_inline_ : 1;
   unsigned is_placed_ : 1;
   unsigned border_edge_ : 4;  // NGBorderEdges::Physical
 
