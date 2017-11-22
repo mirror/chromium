@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7bf6e7_cc7ca532",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-22T21:33:50Z",
+      "side": 1,
+      "message": "This effectively evaluates the asserts a bit later, but it appears to work.",
+      "range": {
+        "startLine": 404,
+        "startChar": 12,
+        "endLine": 407,
+        "endChar": 61
+      },
+      "revId": "caf0325f992b02e0054fb592269a555443a3906a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
