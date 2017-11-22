@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c468039f_ea8b0b22",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_function.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T09:39:35Z",
+      "side": 1,
+      "message": "I understand the bug.  The problem of the bug is abuse of template context and inconsistency.  To be consistent, this part must use Jinja2 template context.  Otherwise, it\u0027s not easy to guarantee that context[\u0027foo\u0027] and |foo| in .py are actually the same, i.e. there is no guarantee that |return_cpp_type| in .py is the same as context[\u0027return_cpp_type\u0027].  And again, this part should be ideally written in the template.  This is (a kind of) accidentally written in .py.\n\nIn a diagram (vertical arrows means a flow of control),\n\n    [Python code layer]\n    Don\u0027t abuse the template contexts.\n\n        |\n        V\n\n    [template layer]\n    Only use the template contexts as readonly data.\n\n            |\n            V\n\n         [called-back python code layer (I\u0027m unhappy with this hack)]\n         Generate some code that\u0027s hard to write in the template.\n\nThis part of code is the last layer in the diagram, where only the template contexts should be used ideally (actually we use non-template-contexts, too, and that\u0027s why we need the third layer here).  In this layer, we\u0027d better to avoid abuse of non-template-contexts.",
+      "parentUuid": "8c2299c4_91b4de39",
+      "range": {
+        "startLine": 56,
+        "startChar": 59,
+        "endLine": 56,
+        "endChar": 85
+      },
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0182c80_58423e34",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 6
