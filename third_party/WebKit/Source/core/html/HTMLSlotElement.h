@@ -38,11 +38,20 @@ namespace blink {
 
 class AssignedNodesOptions;
 
+class HTMLSlotAssignmentFilter
+    : public GarbageCollectedFinalized<HTMLSlotAssignmentFilter> {
+ public:
+  virtual ~HTMLSlotAssignmentFilter() {}
+  virtual bool CanAssignNode(const Node&) const = 0;
+  virtual void Trace(blink::Visitor* visitor) {}
+};
+
 class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  DECLARE_NODE_FACTORY(HTMLSlotElement);
+  static HTMLSlotElement* Create(Document&,
+                                 HTMLSlotAssignmentFilter* = nullptr);
 
   const HeapVector<Member<Node>>& AssignedNodes() const;
   const HeapVector<Member<Node>>& GetDistributedNodes();
@@ -120,7 +129,7 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   virtual void Trace(blink::Visitor*);
 
  private:
-  HTMLSlotElement(Document&);
+  HTMLSlotElement(Document&, HTMLSlotAssignmentFilter*);
 
   InsertionNotificationRequest InsertedInto(ContainerNode*) final;
   void RemovedFrom(ContainerNode*) final;
@@ -184,6 +193,7 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   }
 
   friend class HTMLSlotElementTest;
+  Member<HTMLSlotAssignmentFilter> filter_;
 };
 
 }  // namespace blink

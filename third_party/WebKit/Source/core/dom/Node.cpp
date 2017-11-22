@@ -1155,12 +1155,14 @@ AtomicString Node::SlotName() const {
 
 bool Node::IsInV1ShadowTree() const {
   ShadowRoot* shadow_root = ContainingShadowRoot();
-  return shadow_root && shadow_root->IsV1();
+  return shadow_root &&
+         (shadow_root->IsV1() || shadow_root->IsUserAgentShadow());
 }
 
 bool Node::IsInV0ShadowTree() const {
   ShadowRoot* shadow_root = ContainingShadowRoot();
-  return shadow_root && !shadow_root->IsV1();
+  return shadow_root && !shadow_root->IsV1() &&
+         !shadow_root->IsUserAgentShadow();
 }
 
 ElementShadow* Node::ParentElementShadow() const {
@@ -1170,12 +1172,14 @@ ElementShadow* Node::ParentElementShadow() const {
 
 bool Node::IsChildOfV1ShadowHost() const {
   ElementShadow* parent_shadow = ParentElementShadow();
-  return parent_shadow && parent_shadow->IsV1();
+  return parent_shadow &&
+         (parent_shadow->IsV1() || parent_shadow->IsUserAgentShadow());
 }
 
 bool Node::IsChildOfV0ShadowHost() const {
   ElementShadow* parent_shadow = ParentElementShadow();
-  return parent_shadow && !parent_shadow->IsV1();
+  return parent_shadow && !parent_shadow->IsV1() &&
+         !parent_shadow->IsUserAgentShadow();
 }
 
 ShadowRoot* Node::V1ShadowRootOfParent() const {

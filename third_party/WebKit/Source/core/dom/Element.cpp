@@ -1545,7 +1545,7 @@ bool Element::ShouldInvalidateDistributionWhenAttributeChanged(
     const QualifiedName& name,
     const AtomicString& new_value) {
   DCHECK(element_shadow);
-  if (element_shadow->IsV1())
+  if (element_shadow->IsV1() || element_shadow->IsUserAgentShadow())
     return false;
   const SelectRuleFeatureSet& feature_set =
       element_shadow->V0().EnsureSelectFeatureSet();
@@ -2466,7 +2466,7 @@ ShadowRoot& Element::CreateShadowRootInternal() {
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
 }
 
-ShadowRoot& Element::CreateUserAgentShadowRoot() {
+ShadowRoot& Element::CreateUserAgentShadowRootForTesting() {
   DCHECK(!GetShadowRoot());
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
 }
