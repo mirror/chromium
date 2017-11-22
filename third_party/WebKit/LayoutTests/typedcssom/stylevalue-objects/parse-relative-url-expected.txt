@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Loading a CSSURLImageValue from a URL sets its state to loaded assert_equals: expected "../resources/1x1-green.png" but got "file:///workspace/chromium/src/third_party/WebKit/LayoutTests/typedcssom/resources/1x1-green.png"
+Harness: the test ran to completion.
+
