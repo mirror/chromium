@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "292b94be_60bf85e4",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T07:31:44Z",
+      "side": 1,
+      "message": "Note: resolved TODO to make sure I didn\u0027t overlook remaining Init().\nOf course, I know we are still under discussion about the implementation details of the template.\nLet\u0027s continue to discuss it on https://chromium-review.googlesource.com/c/chromium/src/+/783410.\nMeanwhile, I chose just the shorter approach.",
+      "revId": "79c2288f97d3c0eed65e0f4b9a9904429024e595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
