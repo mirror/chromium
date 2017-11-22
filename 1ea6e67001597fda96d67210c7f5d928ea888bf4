@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcc8f442_0b4664e4",
+        "filename": "chrome/browser/devtools/devtools_file_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T02:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80b8d85c_99a1ddf4",
+      "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cc5dc80_557fa2f9",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/PersistenceActions.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23250c5_a0589084",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/PersistenceActions.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T02:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cc5dc80_557fa2f9",
+      "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "945e1f01_34e5ed65",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T02:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a8e6386_92cb0434",
+      "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1640587e_1cb7a8de",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54d0c43_3c1e6c9d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-22T02:28:16Z",
+      "side": 1,
+      "message": "Done in DevToolsFileHelper::ShowItemInFolder with NormalizePathSeparators().",
+      "parentUuid": "1640587e_1cb7a8de",
+      "revId": "1ea6e67001597fda96d67210c7f5d928ea888bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
