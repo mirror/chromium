@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181c873f_fdf0d1bd",
+        "filename": "content/renderer/pepper/ppb_broker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-22T19:57:31Z",
+      "side": 1,
+      "message": "UKM is not allowed to record subframe (e.g. iframe) URLs - only top level navigations.\n\nI don\u0027t see where in the code this is being enforced here. Is this logic currently missing?\n\nIf so please add it. Also, can a test be added that checks that subframe URLs can\u0027t get recorded by this code? (i.e. one with a plugin on an iframe)",
+      "range": {
+        "startLine": 48,
+        "startChar": 72,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "ff974a9a29ce25ffd862831708b5c078363ccefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
