@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28d767de_48f86a08",
+        "filename": "chrome/browser/android/instantapps/instant_apps_settings.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-22T19:38:38Z",
+      "side": 1,
+      "message": "I am slightly concerned that this could get out of sync with how the banners are shown for non-instant apps, but sounds like the new API won\u0027t quite return the right thing for AIA banners.",
+      "range": {
+        "startLine": 97,
+        "startChar": 26,
+        "endLine": 97,
+        "endChar": 27
+      },
+      "revId": "c5830a59f61928881eef7d5a8b28c516ae80d108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
