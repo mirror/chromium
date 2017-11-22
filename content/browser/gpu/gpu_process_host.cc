@@ -772,10 +772,6 @@ void GpuProcessHost::SendDestroyingVideoSurface(int surface_id,
       surface_id, base::Bind(&GpuProcessHost::OnDestroyingVideoSurfaceAck,
                              weak_ptr_factory_.GetWeakPtr()));
 }
-
-void GpuProcessHost::DidSuccessfullyInitializeContext() {
-  gpu_recent_crash_count_ = 0;
-}
 #endif
 
 void GpuProcessHost::OnChannelEstablished(
@@ -804,6 +800,16 @@ void GpuProcessHost::OnChannelEstablished(
   callback.Run(std::move(channel_handle), gpu_data_manager->GetGPUInfo(),
                gpu_data_manager->GetGpuFeatureInfo(),
                EstablishChannelStatus::SUCCESS);
+
+#if defined(OS_ANDROID)
+  // Android may kill the GPU process to free memory, especially when the app
+  // is the background, so Android cannot have a hard limit on GPU starts.
+  // Reset crash count on Android when establish channel succeeds. This puts a
+  // limit on retries for crashes before establish channel. Context creation
+  // already has ContextResult::kFatalFailure to stop retries on any fatal
+  // failures, which should be enough to cover failures after establish channel.
+  gpu_recent_crash_count_ = 0;
+#endif
 }
 
 void GpuProcessHost::OnGpuMemoryBufferCreated(
