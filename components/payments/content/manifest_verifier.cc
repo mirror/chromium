@@ -4,13 +4,12 @@
 
 #include "components/payments/content/manifest_verifier.h"
 
-#include <stdint.h>
 #include <algorithm>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/strings/string_util.h"
+#include "components/payments/content/origin_security_checker.h"
 #include "components/payments/content/payment_manifest_web_data_service.h"
 #include "components/payments/content/utility/payment_manifest_parser.h"
 #include "components/payments/core/payment_manifest_downloader.h"
@@ -101,21 +100,15 @@ void ManifestVerifier::Verify(content::PaymentAppProvider::PaymentApps apps,
         continue;
       }
 
-      // GURL constructor may crash with some invalid unicode strings.
-      if (!base::IsStringUTF8(method)) {
-        dev_tools_.WarnIfPossible("Payment method name \"" + method +
-                                  "\" is not valid unicode.");
+      GURL method_manifest_url;
+      std::string error_message_suffix;
+      if (!OriginSecurityChecker::IsValidWebPaymentsUrl(
+              method, &method_manifest_url, &error_message_suffix)) {
+        dev_tools_.WarnIfPossible("Payment method name \"" + method + "\" " +
+                                  error_message_suffix);
         continue;
       }
-
-      // All URL payment method names must be HTTPS.
-      GURL method_manifest_url = GURL(method);
-      if (!method_manifest_url.is_valid() ||
-          method_manifest_url.scheme() != "https") {
-        dev_tools_.WarnIfPossible("\"" + method +
-                                  "\" is not a valid payment method name.");
-        continue;
-      }
+      DCHECK(method_manifest_url.is_valid());
 
       // Same origin payment methods are always allowed.
       url::Origin app_origin =

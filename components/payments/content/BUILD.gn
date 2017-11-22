@@ -48,12 +48,24 @@ static_library("content_common") {
   ]
 }
 
+static_library("origin_security_checker") {
+  sources = [
+    "origin_security_checker.cc",
+    "origin_security_checker.h",
+  ]
+
+  deps = [
+    "//base",
+    "//content/public/common",
+    "//net",
+    "//url",
+  ]
+}
+
 static_library("utils") {
   sources = [
     "manifest_verifier.cc",
     "manifest_verifier.h",
-    "origin_security_checker.cc",
-    "origin_security_checker.h",
     "payment_manifest_web_data_service.cc",
     "payment_manifest_web_data_service.h",
     "payment_method_manifest_table.cc",
@@ -87,6 +99,7 @@ static_library("utils") {
 source_set("unit_tests") {
   testonly = true
   sources = [
+    "origin_security_checker_unittest.cc",
     "payment_method_manifest_table_unittest.cc",
     "payment_request_spec_unittest.cc",
     "payment_request_state_unittest.cc",
@@ -100,6 +113,7 @@ source_set("unit_tests") {
 
   deps = [
     ":content",
+    ":origin_security_checker",
     ":utils",
     "//base",
     "//base/test:test_support",
