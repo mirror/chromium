@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b77e58a9_592bc982",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-22T01:27:29Z",
+      "side": 1,
+      "message": "This and testAppButtonAfterPageStopsSubmitting fail in all activity types except ChromeTabbedActivity - is this expected?",
+      "range": {
+        "startLine": 237,
+        "startChar": 16,
+        "endLine": 237,
+        "endChar": 46
+      },
+      "revId": "4e99a7aaf7b7533562b4fe3f5a530c84a9e66f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fbd17f_aa930416",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-22T01:27:29Z",
+      "side": 1,
+      "message": "This test fails when run in a WebappActivity - is NFC supposed to work in that activity type?",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 45
+      },
+      "revId": "4e99a7aaf7b7533562b4fe3f5a530c84a9e66f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
