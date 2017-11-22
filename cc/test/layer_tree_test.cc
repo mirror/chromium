@@ -902,8 +902,11 @@ void LayerTreeTest::DispatchNextCommitWaitsForActivation() {
     layer_tree_host_->SetNextCommitWaitsForActivation();
 }
 
-void LayerTreeTest::RunTest(CompositorMode mode) {
+void LayerTreeTest::RunTest(CompositorMode mode,
+                            bool using_synchronous_renderer_compositor) {
   mode_ = mode;
+  settings_.using_synchronous_renderer_compositor =
+      using_synchronous_renderer_compositor;
   if (mode_ == CompositorMode::THREADED) {
     impl_thread_.reset(new base::Thread("Compositor"));
     ASSERT_TRUE(impl_thread_->Start());
