@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "836560eb_c37f1983",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-22T15:51:02Z",
+      "side": 1,
+      "message": "I think it should be ok to return 0 for the width as I assume it\u0027s ignored during layout.",
+      "range": {
+        "startLine": 283,
+        "startChar": 34,
+        "endLine": 283,
+        "endChar": 56
+      },
+      "revId": "87daed750ea8adbcbc5b95d91b53cd9b4a7b506e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbbb53b_f46f48ce",
+        "filename": "ash/message_center/message_center_button_bar.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-22T15:51:02Z",
+      "side": 1,
+      "message": "nit: why is this called back_arrow_visible? The terminology used elsewhere is \"collapse button\"",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 26
+      },
+      "revId": "87daed750ea8adbcbc5b95d91b53cd9b4a7b506e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
