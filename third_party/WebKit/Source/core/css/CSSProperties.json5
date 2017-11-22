@@ -39,7 +39,7 @@
     property_methods: {
       default: [],
       valid_type: "list",
-      valid_values: ["ParseSingleValue", "ParseShorthand", "IsLayoutDependent"],
+      valid_values: ["ParseSingleValue", "ParseShorthand", "IsLayoutDependent", "CSSValueFromComputedStyle"],
     },
     // - custom_apply_functions_all
     // - custom_apply_functions_initial
@@ -770,7 +770,7 @@
     {
       name: "background-color",
       property_class: true,
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       field_group: "background",
       field_template: "external",
@@ -835,8 +835,8 @@
     },
     {
       name: "border-bottom-color",
-      property_class: "BorderColorSide",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -944,8 +944,8 @@
     },
     {
       name: "border-left-color",
-      property_class: "BorderColorSide",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -984,8 +984,8 @@
     },
     {
       name: "border-right-color",
-      property_class: "BorderColorSide",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -1024,8 +1024,8 @@
     },
     {
       name: "border-top-color",
-      property_class: "BorderColorSide",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -1166,7 +1166,7 @@
     {
       name: "caret-color",
       property_class: true,
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       inherited: true,
       field_group: "*",
@@ -1447,8 +1447,8 @@
     },
     {
       name: "flood-color",
-      property_class: "ColorNoQuirks",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       svg: true,
       converter: "ConvertColor",
@@ -1695,8 +1695,8 @@
     },
     {
       name: "lighting-color",
-      property_class: "ColorNoQuirks",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       svg: true,
       converter: "ConvertColor",
@@ -2035,7 +2035,7 @@
     {
       name: "outline-color",
       property_class: true,
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       field_group: "*",
       field_template: "external",
@@ -2588,8 +2588,8 @@
     },
     {
       name: "stop-color",
-      property_class: "ColorNoQuirks",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       svg: true,
       converter: "ConvertColor",
@@ -2739,7 +2739,7 @@
     {
       name: "text-decoration-color",
       property_class: true,
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       field_group: "*",
       field_template: "external",
@@ -3183,8 +3183,8 @@
     },
     {
       name: "column-rule-color",
-      property_class: "ColorNoQuirks",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       field_group: "*",
       field_template: "external",
@@ -3454,8 +3454,8 @@
     },
     {
       name: "-webkit-tap-highlight-color",
-      property_class: "WebkitColorNoQuirks",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       inherited: true,
       field_group: "*",
       field_template: "<color>",
@@ -3470,8 +3470,8 @@
     },
     {
       name: "-webkit-text-emphasis-color",
-      property_class: "WebkitColorNoQuirks",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       inherited: true,
       field_group: "*",
       field_template: "external",
@@ -3502,8 +3502,8 @@
     },
     {
       name: "-webkit-text-fill-color",
-      property_class: "WebkitColorNoQuirks",
-      property_methods: ["ParseSingleValue"],
+      property_class: true,
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       inherited: true,
       field_group: "*",
       field_template: "external",
@@ -3525,7 +3525,7 @@
     {
       name: "-webkit-text-stroke-color",
       property_class: true,
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle"],
       interpolable: true,
       inherited: true,
       field_group: "*",

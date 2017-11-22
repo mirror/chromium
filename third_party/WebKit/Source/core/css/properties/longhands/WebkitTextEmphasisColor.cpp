@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/longhands/WebkitColorNoQuirks.h"
+#include "core/css/properties/longhands/WebkitTextEmphasisColor.h"
 
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
+#include "core/css/properties/ComputedStyleUtils.h"
+#include "core/style/ComputedStyle.h"
 
 namespace blink {
 
@@ -13,11 +15,20 @@ class CSSParserLocalContext;
 
 namespace CSSLonghand {
 
-const CSSValue* WebkitColorNoQuirks::ParseSingleValue(
+const CSSValue* WebkitTextEmphasisColor::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
   return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
+}
+
+const CSSValue* WebkitTextEmphasisColor::CSSValueFromComputedStyle(
+    const ComputedStyle& style,
+    const LayoutObject* layout_object,
+    Node* styled_node,
+    bool allow_visited_style) const {
+  return ComputedStyleUtils::CurrentColorOrValidColor(
+      style, style.TextEmphasisColor());
 }
 
 }  // namespace CSSLonghand

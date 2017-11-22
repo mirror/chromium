@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
  *           (C) 2000 Antti Koivisto (koivisto@kde.org)
@@ -65,6 +66,7 @@ struct BorderEdge;
 class ContentData;
 class CounterDirectives;
 class CSSAnimationData;
+class FloodColor;
 class CSSTransitionData;
 class CSSVariableData;
 class FilterOperations;
@@ -85,6 +87,27 @@ class TransformationMatrix;
 class ContentData;
 
 typedef Vector<scoped_refptr<ComputedStyle>, 4> PseudoStyleCache;
+
+namespace CSSLonghand {
+
+class BackgroundColor;
+class BorderBottomColor;
+class BorderLeftColor;
+class BorderRightColor;
+class BorderTopColor;
+class CaretColor;
+class ColumnRuleColor;
+class FloodColor;
+class LightingColor;
+class OutlineColor;
+class StopColor;
+class TextDecorationColor;
+class WebkitTapHighlightColor;
+class WebkitTextEmphasisColor;
+class WebkitTextFillColor;
+class WebkitTextStrokeColor;
+
+}  // namespace CSSLonghand
 
 // ComputedStyle stores the computed value [1] for every CSS property on an
 // element and provides the interface between the style engine and the rest of
@@ -152,6 +175,24 @@ class ComputedStyle : public ComputedStyleBase,
   // Used by CSS animations. We can't allow them to animate based off visited
   // colors.
   friend class CSSPropertyEquality;
+
+  friend class ComputedStyleUtils;
+  friend class CSSLonghand::BackgroundColor;
+  friend class CSSLonghand::BorderBottomColor;
+  friend class CSSLonghand::BorderLeftColor;
+  friend class CSSLonghand::BorderRightColor;
+  friend class CSSLonghand::BorderTopColor;
+  friend class CSSLonghand::CaretColor;
+  friend class CSSLonghand::ColumnRuleColor;
+  friend class CSSLonghand::FloodColor;
+  friend class CSSLonghand::LightingColor;
+  friend class CSSLonghand::OutlineColor;
+  friend class CSSLonghand::StopColor;
+  friend class CSSLonghand::TextDecorationColor;
+  friend class CSSLonghand::WebkitTapHighlightColor;
+  friend class CSSLonghand::WebkitTextEmphasisColor;
+  friend class CSSLonghand::WebkitTextFillColor;
+  friend class CSSLonghand::WebkitTextStrokeColor;
   // Editing has to only reveal unvisited info.
   friend class ApplyStyleCommand;
   // Editing has to only reveal unvisited info.
