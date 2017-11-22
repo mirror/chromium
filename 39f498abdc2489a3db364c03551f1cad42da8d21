@@ -25,6 +25,69 @@
     },
     {
       "key": {
+        "uuid": "3f1479a1_fbc2471e",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-22T19:12:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure I like referring this to as \"JSONified\" since there\u0027s really no JSON involved -- it\u0027s really base::Value, which we typically represent as JSON.",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a16c36_4659de3c",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-22T19:12:31Z",
+      "side": 1,
+      "message": "Here for example, we could say \"The XML document is transformed into a base::Value dictionary structure, with special keys holding the tag name, attributes, and child nodes.\"",
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb289af_bf62992a",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-22T19:12:31Z",
+      "side": 1,
+      "message": "Can we make guarantees about the encoding and validity of string content?",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43dd5307_18f241e8",
         "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
         "patchSetId": 10
@@ -59,6 +122,30 @@
       "writtenOn": "2017-11-22T18:29:55Z",
       "side": 1,
       "message": "Are we sure we\u0027re happy with this representation?  Are all nodes tags?  I guess I was expecting to have something like a type attribute to distinguish text nodes, CDATA, etc from other XML types.\n\nIn particular, if this were someday the sole mechanism to parse XML in the browser for all uses of XML in the browser, what other mechanisms would we need to provide?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a4bb74_3efd98a6",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-22T19:12:31Z",
+      "side": 1,
+      "message": "I somewhat agree we should try and be forward-looking here: we do want to ultimately replace all unsafe XML handling with this service, and I\u0027m a bit concerned that unless we can encode the fully possibilities of XML within the representation, changing clients later down the line will be a headache.",
+      "parentUuid": "cd289b4c_a2379b45",
       "range": {
         "startLine": 40,
         "startChar": 2,
