@@ -80,7 +80,8 @@ class GamingSeatTest : public test::ExoTestBase {
 
 TEST_F(GamingSeatTest, ConnectionChange) {
   std::unique_ptr<Surface> surface(new Surface);
-  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  std::unique_ptr<ShellSurface> shell_surface(
+      exo_test_helper()->CreateShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
