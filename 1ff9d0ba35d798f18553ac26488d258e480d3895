@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52e76f92_021deeb9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-22T03:17:21Z",
+      "side": 1,
+      "message": "type-\u003eInstallConditionalFeatures() and InstallOriginTrialFeatures() called in V8PerContextData::ConstructorForTypeSlowCase() do.\n\nI know the snapshot feature makes the situation more complex, but I wonder if we have to explain all the cases here. (snapshot vs non-snapshot, conditional vs origin-trials, instance objects vs prototoype/interface objects, etc.)",
+      "parentUuid": "0ba50c54_471579d9",
+      "revId": "1ff9d0ba35d798f18553ac26488d258e480d3895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fc5cde6_4fb9b8e5",
         "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T02:29:07Z",
       "side": 1,
       "message": "Would you write the comment like this? It\u0027s not clear what are installed when...\n\nWhen a context is created from a snapshot:\n- conditional features on the window wrapper are installed by xxx.\n- conditional features on the prototype objects are installed by xxx.\n\nWhen a context is not created from a snapshot:\n- conditional features on the window wrapper are installed by xxx.\n- conditional features on the prototype objects are installed by xxx.",
+      "revId": "1ff9d0ba35d798f18553ac26488d258e480d3895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e738ca8_c0162634",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-22T03:17:21Z",
+      "side": 1,
+      "message": "I think your suggestion explains too much of implementation, as a comment of an API.\n\"installed by xxx\" can change easily, and I think it will be mismatched and confusing.\n\nWhy don\u0027t we explain it simply like \"Installs conditionally enabled features, if necessary.\"?",
+      "parentUuid": "3fc5cde6_4fb9b8e5",
       "revId": "1ff9d0ba35d798f18553ac26488d258e480d3895",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
