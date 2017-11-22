@@ -15,6 +15,10 @@ namespace syncer {
 class UserEventService;
 }
 
+namespace sync_pb {
+class UserEventSpecifics;
+}
+
 class PrefService;
 class PrefRegistrySimple;
 
@@ -56,6 +60,12 @@ class ConsentAuditor : public KeyedService {
                           const std::string& confirmation_text);
 
  private:
+  std::unique_ptr<sync_pb::UserEventSpecifics> ConstructUserConsent(
+      const std::string& feature,
+      const std::vector<int>& consent_grd_ids,
+      const std::vector<std::string>& placeholder_replacements,
+      ConsentAuditor::ConsentStatus status);
+
   PrefService* pref_service_;
   syncer::UserEventService* user_event_service_;
   std::string app_version_;

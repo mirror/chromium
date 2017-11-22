@@ -4,6 +4,8 @@
 
 #include "components/sync/user_events/user_event_service_impl.h"
 
+#include <utility>
+
 #include "base/message_loop/message_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "components/sync/base/model_type.h"
@@ -93,6 +95,16 @@ TEST_F(UserEventServiceImplTest, ShouldNotRecordNoHistory) {
   UserEventServiceImpl service(&no_history_sync_service, MakeBridge());
   service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
   EXPECT_EQ(0u, processor().put_multimap().size());
+}
+
+TEST_F(UserEventServiceImplTest, ShouldRecordEventNoHistoryForUserConsent) {
+  TestSyncService no_history_sync_service(true, false, ModelTypeSet());
+  UserEventServiceImpl service(&no_history_sync_service, MakeBridge());
+  auto specifics = std::make_unique<UserEventSpecifics>();
+  specifics->mutable_user_consent();
+  service.RecordUserEvent(std::move(specifics));
+  // UserConsent recording doesn't need history sync to be enabled.
+  EXPECT_EQ(1u, processor().put_multimap().size());
 }
 
 TEST_F(UserEventServiceImplTest, ShouldNotRecordPassphrase) {

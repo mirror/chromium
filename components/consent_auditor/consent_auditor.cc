@@ -14,6 +14,8 @@
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/sync/user_events/user_event_service.h"
 
+using UserEventSpecifics = sync_pb::UserEventSpecifics;
+
 namespace consent_auditor {
 
 namespace {
@@ -22,6 +24,16 @@ const char kLocalConsentDescriptionKey[] = "description";
 const char kLocalConsentConfirmationKey[] = "confirmation";
 const char kLocalConsentVersionKey[] = "version";
 const char kLocalConsentLocaleKey[] = "locale";
+
+UserEventSpecifics::UserConsent::ConsentStatus ToProtoEnum(
+    ConsentAuditor::ConsentStatus status) {
+  switch (status) {
+    case ConsentAuditor::ConsentStatus::REVOKED:
+      return UserEventSpecifics::UserConsent::REVOKED;
+    case ConsentAuditor::ConsentStatus::GIVEN:
+      return UserEventSpecifics::UserConsent::GIVEN;
+  }
+}
 
 }  // namespace
 
@@ -53,8 +65,31 @@ void ConsentAuditor::RecordGaiaConsent(
     const std::vector<int>& consent_grd_ids,
     const std::vector<std::string>& placeholder_replacements,
     ConsentStatus status) {
-  // TODO(crbug.com/781765): Implement consent recording.
-  NOTIMPLEMENTED();
+  auto specifics = ConstructUserConsent(feature, consent_grd_ids,
+                                        placeholder_replacements, status);
+  user_event_service_->RecordUserEvent(std::move(specifics));
+}
+
+std::unique_ptr<sync_pb::UserEventSpecifics>
+ConsentAuditor::ConstructUserConsent(
+    const std::string& feature,
+    const std::vector<int>& consent_grd_ids,
+    const std::vector<std::string>& placeholder_replacements,
+    ConsentStatus status) {
+  auto specifics = base::MakeUnique<sync_pb::UserEventSpecifics>();
+  specifics->set_event_time_usec(
+      base::Time::Now().since_origin().InMicroseconds());
+  auto* consent = specifics->mutable_user_consent();
+  consent->set_feature(feature);
+  for (int id : consent_grd_ids) {
+    consent->add_consent_grd_ids(id);
+  }
+  for (const auto& string : placeholder_replacements) {
+    consent->add_placeholder_replacements(string);
+  }
+  consent->set_locale(app_locale_);
+  consent->set_status(ToProtoEnum(status));
+  return specifics;
 }
 
 void ConsentAuditor::RecordLocalConsent(const std::string& feature,
