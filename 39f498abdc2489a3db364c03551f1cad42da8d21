@@ -278,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "c297f759_1771f7fd",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-22T22:44:32Z",
+      "side": 1,
+      "message": "Actually I am wrong, text property won\u0027t work. For ex:\n\u003cp\u003eThis is \u003cb\u003esome\u003c/b\u003e text.\u003c/p\u003e\nSo we need text nodes. The question I am still wondering is whether it makes senses to differentiate between text and CData nodes. It seems CData exist to allow \u003c\u003es in a node content without the use of \u0026 codes. So from a client perspective all that matters is that it\u0027s text.\nI am no XML expert though.\n\nSo we could do with a type if we want to differentiate text and CData:\n\u003cp\u003eThis is \u003cb\u003esome\u003c/b\u003e text.\u003c![CDATA[ this \u003ci\u003eformatting\u003c/i\u003e is ignored ]]\u003e\u003c/p\u003e\nbecomes:\n{\"type\": \"element\", \"tag\": \"p\", \"children\": [\n   {\"type\": \"#text\", \"text\": \"This is \"},\n   {\"type\": \"element\", \"tag\": \"b\", \"children\": [    \n     {\"type\": \"#text\", \"text\": \"some\"},\n   ]},\n   {\"type\": \"#text\", \"text\": \" text.\"},\n   {\"type\": \"#cdata\", \"text\": \"this \u003ci\u003eformatting\u003c/i\u003e is ignored\"},\n ]\n}\n\nor if we think text and cdata nodes can be treated the same, then we don\u0027t need types: a node is either an element (with a tag) or a text node. We can also consolidate adjacent text and cdata nodes:\n{\"tag\": \"p\", \"children\": [\n   \"This is \",\n   {\"tag\": \"b\", \"children\": [ \"some\" ]},\n   \" text. this \u003ci\u003eformatting\u003c/i\u003e is ignored\",\n ]\n}\n\nI like the 2nd approach for its simplicity, but it makes supporting comments a bit more awkward. if we wanted to support them in the future.",
+      "parentUuid": "9430d671_3ad900de",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22d504ba_083f07d9",
         "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
         "patchSetId": 10
