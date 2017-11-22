@@ -251,8 +251,6 @@ void LocalWindowProxy::InstallConditionalFeatures() {
   const WrapperTypeInfo* wrapper_type_info =
       GetFrame()->DomWindow()->GetWrapperTypeInfo();
 
-  InstallOriginTrialFeaturesOnGlobal(wrapper_type_info, script_state_.get());
-
   // If the context was created from snapshot, all remained conditionally
   // enabled features are installed in
   // V8ContextSnapshot::InstallConditionalFeatures().
@@ -267,7 +265,7 @@ void LocalWindowProxy::InstallConditionalFeatures() {
       v8::Local<v8::Function>(),
       wrapper_type_info->domTemplate(GetIsolate(), World()));
 
-  if (world_->IsMainWorld()) {
+  if (World().IsMainWorld()) {
     // For the main world, install any remaining conditional bindings (i.e.
     // for origin trials, which do not apply to extensions). Some conditional
     // bindings cannot be enabled until the execution context is available
