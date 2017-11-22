@@ -10,9 +10,6 @@
 
 #include "modern_linker_jni.h"
 
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <dlfcn.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -21,6 +18,10 @@
 #include <link.h>
 #include <stddef.h>
 #include <string.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "android_dlext.h"
 #include "linker_jni.h"
