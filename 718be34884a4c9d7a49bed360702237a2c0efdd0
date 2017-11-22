@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd2b46ce_1158ad9d",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T07:13:53Z",
+      "side": 1,
+      "message": "Can we move base::AdoptRef and base::MakeRefCounted to a platform-specific whitelist? I don\u0027t think we want to allow them in core/ and modules/.\n\nA follow-up CL is fine.",
+      "revId": "718be34884a4c9d7a49bed360702237a2c0efdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
