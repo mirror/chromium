@@ -15,17 +15,22 @@ Initial setup:
 mkdir config
 cd config
 git init
-git remote add origin https://chromium.googlesource.com/chromium/src
-git fetch origin infra/config
-git reset --hard origin/infra/config
 git config depot-tools.upstream origin/infra/config
+git remote add -t infra/config origin https://chromium.googlesource.com/chromium/src
+git fetch
 ```
 
 Now you can create a new branch to make changes:
 
 ```
-git new-branch add-new-builder
+git new-branch --upstream origin/infra/config some_feature   # note extra --upstream flag.
 # edit cr-buildbucket.cfg
 git commit -a
 git cl upload
+```
+
+To rebase your local branches on top of upstream:
+
+```
+git rebase-update
 ```
