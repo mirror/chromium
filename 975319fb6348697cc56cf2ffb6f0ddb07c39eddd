@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03b87710_c27de332",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-22T10:55:45Z",
+      "side": 1,
+      "message": "I don\u0027t think we have to do this, because we are in //chrome here.\nThe immediate goal is to remove these calls from the component, so that the functions can be moved to //chrome.\n\nI was not intending to remove these functions entirely, although we can discuss this too. What would be the benefit?",
+      "parentUuid": "018b8434_76baf49c",
+      "range": {
+        "startLine": 73,
+        "startChar": 18,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ee5ab3_f1aaee8f",
         "filename": "chrome/browser/signin/chrome_signin_client.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T10:18:31Z",
       "side": 1,
       "message": "Do we still need to keep the GetAccountConsistency methods in //components/signin?",
+      "range": {
+        "startLine": 420,
+        "startChar": 17,
+        "endLine": 420,
+        "endChar": 44
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c68cb5b_a25a57df",
+        "filename": "chrome/browser/signin/chrome_signin_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-22T10:55:45Z",
+      "side": 1,
+      "message": "Yes for now, because I did not convert all the callsites yet. I intend to move them to //chrome later.",
+      "parentUuid": "e6ee5ab3_f1aaee8f",
       "range": {
         "startLine": 420,
         "startChar": 17,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "40582a41_7720113b",
+        "filename": "chrome/browser/signin/chrome_signin_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-22T10:55:45Z",
+      "side": 1,
+      "message": "Same as above. I\u0027ll move the profile_management_switches file to //chrome once everything is converted.",
+      "parentUuid": "ea7bce68_7c547744",
+      "range": {
+        "startLine": 428,
+        "startChar": 9,
+        "endLine": 428,
+        "endChar": 41
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4f8a00a_faa37843",
         "filename": "components/signin/core/browser/dice_account_reconcilor_delegate.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-22T10:18:31Z",
       "side": 1,
       "message": "I am wondering whether we want to move this method to the client as well. We could also move to the client the logic to migrate to DICE on start-up.",
+      "range": {
+        "startLine": 68,
+        "startChar": 36,
+        "endLine": 68,
+        "endChar": 61
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10e7361_53a72288",
+        "filename": "components/signin/core/browser/dice_account_reconcilor_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-22T10:55:45Z",
+      "side": 1,
+      "message": "What would be the benefit? To have all the dice code in the same place?\n\nThe SigninClient is already pretty large, and I propose the following:\nmake a DiceClient class, owned by the SigninClient, which has all the Dice related code.\n\nThe code then becomes, for example:\nsignin_client_-\u003eGetDiceClient()-\u003eIsDiceEnabled()\n\nWDYT?\n\nI\u0027m not sure we should spend a lot of resource on this though, because the migration is temporary and that code will be removed in the medium term.",
+      "parentUuid": "f4f8a00a_faa37843",
       "range": {
         "startLine": 68,
         "startChar": 36,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2fadbb70_718bd959",
+        "filename": "components/signin/core/browser/signin_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-22T10:55:45Z",
+      "side": 1,
+      "message": "Why not. It will cause more #ifdefs in the code, but maybe it\u0027s not that bad.\n\nWe could also move them to a separate interface (i.e. DiceClient).",
+      "parentUuid": "a68695e9_dc2e58f7",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 8
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d867aa2d_dade6ee3",
         "filename": "components/signin/core/browser/signin_client.h",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-22T10:18:31Z",
       "side": 1,
       "message": "I think these methods can be implemented in the SigninClient (not in its subclasses) based on the value returned by GetAccountConsistency method.",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "975319fb6348697cc56cf2ffb6f0ddb07c39eddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899df7e9_0f3c45ab",
+        "filename": "components/signin/core/browser/signin_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-22T10:55:45Z",
+      "side": 1,
+      "message": "I don\u0027t think the client is the right place for this. The client is a way for the embedder to configure the component.\n\nWe could keep that code in the component though, and then the client API becomes:\n\nclass SigninClient {\n  AccountConsistencyMethod GetAccountConsistencyMethod();\n  bool IsDiceMigrationComplete();\n}\n\nThe component can keep the existing functions, but now needs a client to implement them. Maybe we could move them to SigninManager?\n\nclass SigninManagerBase {\n  bool IsDiceEnabled();\n  bool IsMirrorEnabled();\n  ....\n}\n\nWDYT?",
+      "parentUuid": "d867aa2d_dade6ee3",
       "range": {
         "startLine": 138,
         "startChar": 15,
