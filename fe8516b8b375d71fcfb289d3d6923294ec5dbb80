@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74f171a5_275710db",
+        "filename": "ash/system/cast/tray_cast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-22T22:39:56Z",
+      "side": 1,
+      "message": "this is currently what the webui cast dialog does for chrome",
+      "parentUuid": "ba8b432d_ecaebafa",
+      "revId": "fe8516b8b375d71fcfb289d3d6923294ec5dbb80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56e25a09_93a97cde",
         "filename": "chrome/browser/ui/ash/cast_config_client_media_router.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T23:45:00Z",
       "side": 1,
       "message": "Can this use the ash mojom enum directly rather than requiring this static cast?\n\n(There\u0027s nothing that enforces the values actually match)",
+      "revId": "fe8516b8b375d71fcfb289d3d6923294ec5dbb80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c082f0e_ad934964",
+        "filename": "chrome/browser/ui/ash/cast_config_client_media_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-22T22:39:56Z",
+      "side": 1,
+      "message": "Theres quite a lot of uses of SinkIconType currently. Can this be done in a seperate cl?",
+      "parentUuid": "56e25a09_93a97cde",
       "revId": "fe8516b8b375d71fcfb289d3d6923294ec5dbb80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
