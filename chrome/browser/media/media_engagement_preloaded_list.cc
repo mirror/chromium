@@ -5,6 +5,7 @@
 #include "chrome/browser/media/media_engagement_preloaded_list.h"
 
 #include "base/files/file_util.h"
+#include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "chrome/browser/media/media_engagement_preload.pb.h"
@@ -17,11 +18,34 @@ const char MediaEngagementPreloadedList::kHistogramCheckResultName[] =
 const char MediaEngagementPreloadedList::kHistogramLoadResultName[] =
     "Media.Engagement.PreloadedList.LoadResult";
 
-MediaEngagementPreloadedList::MediaEngagementPreloadedList() = default;
+// static
+MediaEngagementPreloadedList* MediaEngagementPreloadedList::GetInstance() {
+  CR_DEFINE_STATIC_LOCAL(MediaEngagementPreloadedList, instance, ());
+  return &instance;
+}
 
-MediaEngagementPreloadedList::~MediaEngagementPreloadedList() = default;
+MediaEngagementPreloadedList::MediaEngagementPreloadedList() {
+  // This class is allowed to be instantiated on any thread.
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
+
+MediaEngagementPreloadedList::~MediaEngagementPreloadedList() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
+
+bool MediaEngagementPreloadedList::loaded() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return is_loaded_;
+}
+
+bool MediaEngagementPreloadedList::empty() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return dafsa_.empty();
+}
 
 bool MediaEngagementPreloadedList::LoadFromFile(const base::FilePath& path) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+
   // Check the file exists.
   if (!base::PathExists(path)) {
     RecordLoadResult(LoadResult::kFileNotFound);
@@ -54,6 +78,7 @@ bool MediaEngagementPreloadedList::LoadFromFile(const base::FilePath& path) {
 
 bool MediaEngagementPreloadedList::CheckOriginIsPresent(
     const url::Origin& origin) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return CheckStringIsPresent(origin.Serialize());
 }
 
