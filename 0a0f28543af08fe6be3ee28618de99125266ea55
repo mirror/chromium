@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72fcb191_f917ade6",
+        "filename": "ash/system/session/tray_session_length_limit_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-22T10:49:17Z",
+      "side": 1,
+      "message": "nit: expect that it\u0027s not shown before and after this",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 0
+      },
+      "revId": "0a0f28543af08fe6be3ee28618de99125266ea55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
