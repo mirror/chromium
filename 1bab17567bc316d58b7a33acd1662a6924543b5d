@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "60aefc57_101498ec",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "I\u0027d rather that we relegate guidance to DevRel (and perhaps a sliver of non-normative text) and keep specs bland and simple.",
+      "parentUuid": "dff12fed_da4567c2",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd399a5_22b84a9d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
         "patchSetId": 6

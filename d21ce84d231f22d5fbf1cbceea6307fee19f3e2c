@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f95ed31b_2b2f9aee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "There\u0027s still \"legacy\" here",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9807fdb_46063d7d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/get_all_no_arguments_empty_cookie_jar.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "nit: The preferred style here is \"should return an empty array\".\n\nAlso, if you want the output, I\u0027d do assert_array_equals and rely on testharness.js to get a better impl for that.",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca10da7f_89661953",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "1) does unprefixed need to be first? it\u0027d be nice if all the getAll tests would be adjacent when sorting, so they can be run together.\n\n2) I think we\u0027ve informally converged on snake_casing with exceptions for names in Web APIs. My tests in cookie-store/ are good examples. IndexedDB tests were written before this, and the Web API names lowercased (i.e. idbobjectstore instead of IDBObjectStore).\n\nTo that end, cookieStore_getAll_ordering_with_explicit_domain.html?\n\nTBH I\u0027d put all the ordering tests in cookieStore_getAll_ordering, but separate files have their benefits, so this last suggestion is very optional. However, it has the merit of getting rid of \"unprefixed\", which seems odd. Along these lines, I think you can make this \".https\" and add tests for the __Host- / __Secure- ordering rules (assuming they\u0027re special, as \"unprefixed\" here suggests).",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a5d4a9_88d681d3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "I think it\u0027d make sense to have a 2nd meta name\u003d\"help\" with href\u003d\"https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.5\", as it covers cookie ordering.",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d185463b_07e89a9b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "nit: I think the comment is now redundant with the code.",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9064f8_f0ec478b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this means. Can you please refer to a standard?\n\nI think WPT tests should express the standards (either as currently written or as we plan to write / change them), and should only refer to specific browsers when doing workarounds (which should be rare).",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5355c227_d85e506b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "nit 1: It\u0027d be nice if we standardize on _ in JS identifiers and - in strings, so we can easily tell them apart.\n\nnit 2: You seem to be inconsistent between \"implied\" and \"implicit\" in this CL. How about dropping both? \u0027value1\u0027, \u0027value2-with-explicit-domain\u0027, \u0027value3\u0027.",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91b942d_72c10d56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "I think you can test for the ordering that you want without the duplicate \"name2\" cookie, assuming all cookies with an explicit domain should sort before or after all cookies without an explicit domain.\n\nReasoning: The duplicate makes things confusing. Without it, you can just assert that mapping cookie names yields [\u0027name1\u0027, \u0027name3\u0027, \u0027name2\u0027], at which point you can switch to \u0027name2-with-explicit-domain\u0027.\n\nFollowing this to conclusion, the cookies should be written in the order \u0027name1\u0027, \u0027name2-with-explicit-domain\u0027, \u0027name3\u0027, so the names ordering (what devs see) matches the creation timestamp ordering (what the implementation should see).",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a964c4c1_7f33ce8c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_path_and_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "Can you please avoid using the same name for different cookies? It makes things hard to debug.\n\nPlease have a separate test for shadowing -- that removes one of the duplicate names.",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb4131e_1139bcd1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/unprefixed_get_all_path_and_domain.tentative.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-22T23:45:38Z",
+      "side": 1,
+      "message": "If you go along the try/finally path, you should wrap the cookie.set calls in it as well. Rationale: if later calls fail (e.g., because the options are unsupported) the earlier cookies would get cleared.\n\nFWIW, I opted to not add a try/finally scope in my tests because I plan to use add_cleanup as soon as it supports Promises.",
+      "revId": "d21ce84d231f22d5fbf1cbceea6307fee19f3e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
