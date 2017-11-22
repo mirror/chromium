@@ -834,7 +834,7 @@ util.comparePath = function(entry1, entry2) {
  *
  * @param {Entry} entry The presumptive child.
  * @param {DirectoryEntry|FakeEntry} directory The presumptive parent.
- * @return {!Promise.<boolean>} Resolves with true if {@code directory} is
+ * @return {!Promise<boolean>} Resolves with true if {@code directory} is
  *     parent of {@code entry}.
  */
 util.isChildEntry = function(entry, directory) {
@@ -971,7 +971,7 @@ util.URLsToEntries = function(urls, opt_callback) {
  *
  * @param {string} url
  *
- * @return {!Promise.<!Entry>} Promise Resolves with the corresponding
+ * @return {!Promise<!Entry>} Promise Resolves with the corresponding
  *     {!Entry} if possible, else rejects.
  */
 util.urlToEntry = function(url) {
@@ -982,7 +982,7 @@ util.urlToEntry = function(url) {
 /**
  * Returns whether the window is teleported or not.
  * @param {Window} window Window.
- * @return {Promise.<boolean>} Whether the window is teleported or not.
+ * @return {Promise<boolean>} Whether the window is teleported or not.
  */
 util.isTeleported = function(window) {
   return new Promise(function(onFulfilled) {
@@ -1287,4 +1287,24 @@ util.isTouchModeEnabled = function() {
           resolve(!isDisabled);
         });
   });
+};
+
+
+/**
+ * @const
+ */
+util.NAVIGATION_REQUEST_EVENT_TYPE = 'navigate-directory';
+
+/**
+ * The event type used for changing current directory.
+ * @param {!DirectoryEntry} directory
+ * @extends {Event}
+ * @constructor
+ * @class
+ */
+util.NavigationRequestEvent = function(directory) {
+  var e = new Event(util.NAVIGATION_REQUEST_EVENT_TYPE);
+  e.__proto__ = Event.prototype;
+  e.directoryEntry = directory;
+  return e;
 };
