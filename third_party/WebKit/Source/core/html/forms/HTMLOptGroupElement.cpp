@@ -27,8 +27,8 @@
 
 #include "core/dom/Text.h"
 #include "core/editing/EditingUtilities.h"
-#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/forms/HTMLSelectElement.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/html_names.h"
@@ -130,6 +130,25 @@ void HTMLOptGroupElement::AccessKeyAction(bool) {
     select->AccessKeyAction(false);
 }
 
+class OptGroupElementFilter final : public HTMLSlotAssignmentFilter {
+ public:
+  virtual ~OptGroupElementFilter() {}
+
+  static OptGroupElementFilter* Create() { return new OptGroupElementFilter(); }
+
+  bool CanAssignNode(const Node& node) const override {
+    return node.HasTagName(HTMLNames::optionTag) ||
+           node.HasTagName(HTMLNames::hrTag);
+  }
+
+  virtual void Trace(blink::Visitor* visitor) {
+    HTMLSlotAssignmentFilter::Trace(visitor);
+  }
+
+ private:
+  OptGroupElementFilter() {}
+};
+
 void HTMLOptGroupElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
   DEFINE_STATIC_LOCAL(AtomicString, label_padding, ("0 2px 1px 2px"));
   DEFINE_STATIC_LOCAL(AtomicString, label_min_height, ("1.2em"));
@@ -141,9 +160,9 @@ void HTMLOptGroupElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
   label->SetIdAttribute(ShadowElementNames::OptGroupLabel());
   root.AppendChild(label);
 
-  HTMLContentElement* content = HTMLContentElement::Create(GetDocument());
-  content->setAttribute(selectAttr, "option,hr");
-  root.AppendChild(content);
+  HTMLSlotElement* slot =
+      HTMLSlotElement::Create(GetDocument(), OptGroupElementFilter::Create());
+  root.AppendChild(slot);
 }
 
 void HTMLOptGroupElement::UpdateGroupLabel() {
