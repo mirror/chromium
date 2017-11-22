@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -157,6 +158,17 @@ SavePreviousDocumentResources GetSavePreviousDocumentResources() {
     return SavePreviousDocumentResources::UNTIL_ON_DOM_CONTENT_LOADED;
   if (save_previous_document_resources == "onload")
     return SavePreviousDocumentResources::UNTIL_ON_LOAD;
+  // The command line, which is set by the user, takes priority. Otherwise,
+  // fall back to the field trial.
+  std::map<std::string, std::string> params;
+  if (base::GetFieldTrialParams(switches::kSavePreviousDocumentResources,
+                                &params)) {
+    const auto& found = params.find("until");
+    if (found->second == "onDOMContentLoaded")
+      return SavePreviousDocumentResources::UNTIL_ON_DOM_CONTENT_LOADED;
+    if (found->second == "onload")
+      return SavePreviousDocumentResources::UNTIL_ON_LOAD;
+  }
   return SavePreviousDocumentResources::NEVER;
 }
 
