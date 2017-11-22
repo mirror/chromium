@@ -3,6 +3,7 @@ def main(request, response):
     referrer = request.headers.get("referer", None)
     referrer_policy = request.GET.first("referrer_policy")
     source_origin = request.GET.first("source_origin")
+    expected_referrer = request.GET.first("expected_referrer", "")
     is_cross_origin = request.GET.first("is_cross_origin", False)
 
     response_headers = [("Content-Type", "text/javascript"),
@@ -24,7 +25,7 @@ def main(request, response):
     if referrer_policy == "same-origin":
         if is_cross_origin and not referrer:
             return (200, response_headers, "")
-        if not is_cross_origin and referrer:
+        if not is_cross_origin and referrer == expected_referrer:
             return (200, response_headers, "")
 
-    return (404)
+    return (404, response_headers)
