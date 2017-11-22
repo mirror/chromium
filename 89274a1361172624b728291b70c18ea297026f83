@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "21cbc2ec_39a670c8",
+        "filename": "services/resource_coordinator/observers/metrics_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-22T21:06:22Z",
+      "side": 1,
+      "message": "There\u0027s two lightweight options here:\n\n1. Add a param for an existing feature (you could use ukm::kUkmFeature)\n2. Add a new feature and file a bug for it, and add the param to that feature.\n\nEither way, you should not need any approvals until you actually want to use the parameter to override the default.",
+      "parentUuid": "f1f66cc6_85d45a89",
+      "range": {
+        "startLine": 227,
+        "startChar": 52,
+        "endLine": 227,
+        "endChar": 76
+      },
+      "revId": "89274a1361172624b728291b70c18ea297026f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "272c9b56_1a12f5d4",
         "filename": "services/resource_coordinator/observers/metrics_collector_unittest.cc",
         "patchSetId": 4
