@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16b58061_00c74f3b",
+        "filename": "content/browser/service_worker/service_worker_registration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-22T02:34:13Z",
+      "side": 1,
+      "message": "Is it possible to set |is_uninstalled_| in this case and replace is_deleted() with is_uninstalled()? Looks like is_deleted()/is_deleted_ is used only in CompleteFindNow()[1] other than devtools/DCHECKs to avoid returning a deleted registration. I wonder if we should not return an uninstalled registration there, too.\n\n(I just quickly looked through the code and may be missing something)\n\n[1] https://chromium.googlesource.com/chromium/src/+/b24a111a60e8baca13a1176fff468aec98cc7c44/content/browser/service_worker/service_worker_storage.cc#53",
+      "range": {
+        "startLine": 209,
+        "startChar": 46,
+        "endLine": 210,
+        "endChar": 73
+      },
+      "revId": "fa27e6a3c1be05f9f987feb833b4d02a898d4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
