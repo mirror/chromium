@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e9476c_cee88363",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-22T05:59:46Z",
+      "side": 1,
+      "message": "Nit: perhaps:\n\n\"Redispatch beforeinstallprompt event on installation cancellation or failure\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20dc885_150fbdcd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-22T05:59:46Z",
+      "side": 1,
+      "message": "Please file a bug for this - usually BUG\u003dNone is only for things like adding/removing owners, dependency rolls, moving files from one place to another, and other mechanical things. :)",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfc2d09_a6f00266",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-22T05:59:46Z",
+      "side": 1,
+      "message": "The \"Reprompt\" name is a bit difficult because it implies that we\u0027re showing a prompt, not sending the event. WDYT of ResendBannerPromptRequest?\n\nAnother option could be to add this to the start of SendBannerPromptRequest():\n\nif (kExperimentalAppBannersEnabled)\n  ResetBindings()\n\nAnd then just call SendBannerPromptRequest instead of Reprompt(). I *think* this would work identically for experimental banners on and off.",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a7a79d_4b07d608",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-22T05:59:46Z",
+      "side": 1,
+      "message": "What\u0027s the reason for reprompting here? From the user\u0027s point of view, they\u0027ve already installed the site, and it didn\u0027t work for some reason beyond their control or beyond the site\u0027s control.  I think the proper way of doing this is giving the site some feedback so it can show appropriate UI (\"install didn\u0027t work, please try again\") so that the user isn\u0027t confused. Otherwise repeated failures will just have the install button seeming like it doesn\u0027t work. which isn\u0027t ideal.\n\nThat probably needs some spec-related work to figure out the best way of informing the site what the installation result is.",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9028bc_684b6c1f",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-22T05:59:46Z",
+      "side": 1,
+      "message": "Should this still call Terminate() if ExperimentalAppBanners is off?",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
