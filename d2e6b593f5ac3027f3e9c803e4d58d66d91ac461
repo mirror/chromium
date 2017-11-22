@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "242697a7_ca39d333",
+        "filename": "ui/file_manager/file_manager/background/js/launcher.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-22T04:56:11Z",
+      "side": 1,
+      "message": "I am not sure if this is the best place for this function, but I thought launcher.js would be a right place for handling files app windows.",
+      "revId": "d2e6b593f5ac3027f3e9c803e4d58d66d91ac461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
