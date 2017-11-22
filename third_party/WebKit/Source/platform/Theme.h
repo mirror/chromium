@@ -85,7 +85,9 @@ class PLATFORM_EXPORT Theme {
   virtual Color SystemColor(ThemeColor) const { return Color(); }
 
   // How fast the caret blinks in text fields.
-  virtual double CaretBlinkInterval() const { return 0.5; }
+  virtual TimeDelta CaretBlinkInterval() const {
+    return TimeDelta::FromMilliseconds(500);
+  }
 
   // Methods used to adjust the ComputedStyles of controls.
 
