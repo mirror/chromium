@@ -1,0 +1,318 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a010e4d_5a9efb93",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Is this constructor required? Could we instead have one that takes a BitstreamBuffer?",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a82b2c6_1b64ff61",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Nit: VLOGF(1) is usually an error, but cancelling Decode()s is normal on Reset() (seek), so this should probably be at least VLOGF(2) or lower, or even DVLOGF.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75bc034_1db2aef7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Is this constructor required?",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0585713_5c0f88a8",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Could we instead pass a scoped_ptr\u003cBitstreamBufferRef\u003e around? Would we need set() and release() then?",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28297b36_e7eb3d9d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Nit: since we only use this for outputs, perhaps kMaxOutputBufferCount?",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2df19ae_3bbd98cb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest adding DCHECK(vda) and DCHECK_CALLED_ON_VALID_THREAD(thread_checker_) in these methods.",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662abdd9_a5f06f1a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest removing this line. request_func won\u0027t be used if we early-exit, and we could replace it below with request.first (or move this line to l.355).",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508bb04b_2fb3f7a3",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "We already have a callback, so I think we don\u0027t need to NotifyError.",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0360c56_c19de1bd",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "I think we can remove this line.",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abd4546_123cbdc7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Could we perhaps extract creation of the whole ref to below, and just create a BitstreamBufferHandle in the if/else clauses?",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f6d2a4_af98b545",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Nit: could we use std::make_pair(), here, and in other locations?",
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9620d9_006ad413",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Nit: pending_requests_.",
+      "range": {
+        "startLine": 103,
+        "startChar": 9,
+        "endLine": 103,
+        "endChar": 25
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d161ff_fb066468",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Nit: I\u0027d recommend removing this comment; in most cases documentation of a method should explain what it does, but rather not document how other methods use it.",
+      "range": {
+        "startLine": 109,
+        "startChar": 60,
+        "endLine": 110,
+        "endChar": 72
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a413452_80d4900c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "before",
+      "range": {
+        "startLine": 130,
+        "startChar": 62,
+        "endLine": 130,
+        "endChar": 63
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14250af5_7497f610",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "output_buffer_count_",
+      "range": {
+        "startLine": 158,
+        "startChar": 9,
+        "endLine": 158,
+        "endChar": 28
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a59d45f_31334f8c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Nit: it may be lower than kMaxProtectedInputBuffers actually, if less protected inputs are allocated.",
+      "range": {
+        "startLine": 165,
+        "startChar": 5,
+        "endLine": 165,
+        "endChar": 63
+      },
+      "revId": "a1960643d2a9984417d472edf5fd333757d633ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

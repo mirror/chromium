@@ -201,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "0c64bb8b_429fefec",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c14145c_5f8c713f",
+      "revId": "42d66e3825ecb6823cd2baaa8606d60d916e7308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c0373e1_ee33f334",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
@@ -715,6 +733,24 @@
     },
     {
       "key": {
+        "uuid": "cd899978_20084b8f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "If we got multiple calls from the client:\n\nAssignPictureBuffers(32);\nAssignPictureBuffers(32);\n...\nAssignPictureBuffers(32);\n\nWe would only check for (32 \u003c\u003d kMaxBufferCount) each time and all of them would succeed, but we would AssignPictureBuffers() multiple times.",
+      "parentUuid": "0fdd5d4a_6676c76d",
+      "revId": "42d66e3825ecb6823cd2baaa8606d60d916e7308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b5d2d2d_7e408075",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
@@ -814,6 +850,24 @@
       "side": 1,
       "message": "Although nothing is done after this, returning here is maybe clearer to a reader? If you think so, I will change as returning here.",
       "parentUuid": "a2b5ee02_1e4030d2",
+      "revId": "42d66e3825ecb6823cd2baaa8606d60d916e7308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44882bca_eb2c83de",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-22T08:24:12Z",
+      "side": 1,
+      "message": "Yes. And actually, looking at the whole method, it\u0027s long and quite confusing, especially with the ifdefs. Could we perhaps have the #else combined for both cases? We could also extract the code creating GpuMemoryBuffer and calling Import...() outside of the if/else.",
+      "parentUuid": "ecd65356_622f00e7",
       "revId": "42d66e3825ecb6823cd2baaa8606d60d916e7308",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
