@@ -46,7 +46,7 @@ ServiceWorkerInstalledScriptsManager::GetScriptData(
         WTF::TextEncoding(raw_script_data->Encoding())));
   } else {
     decoder = TextResourceDecoder::Create(TextResourceDecoderOptions(
-        TextResourceDecoderOptions::kPlainTextContent));
+        TextResourceDecoderOptions::kPlainTextContent, UTF8Encoding()));
   }
 
   StringBuilder source_text_builder;
