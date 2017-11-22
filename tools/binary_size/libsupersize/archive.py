@@ -196,8 +196,8 @@ def _ExtractSourcePathsAndNormalizeObjectPaths(raw_symbols, source_mapper):
   if source_mapper:
     logging.info('Looking up source paths from ninja files')
     for symbol in raw_symbols:
-      object_path = symbol.object_path
-      if object_path:
+      if symbol.object_path:
+        object_path = os.path.normpath(symbol.object_path)
         # We don't have source info for prebuilt .a files.
         if not os.path.isabs(object_path) and not object_path.startswith('..'):
           source_path = source_mapper.FindSourceForPath(object_path)
