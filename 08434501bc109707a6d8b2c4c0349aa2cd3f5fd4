@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b37c045_3729c00f",
+        "filename": "cc/paint/image_transfer_cache_entry.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-22T21:18:27Z",
+      "side": 1,
+      "message": "Mostly my previous comment here was that this was inconsistent.  It was treating the pixmap size as a size_t here but checking it fit in a uint32_t later during serialization.\n\nI was wondering what we did elsewhere in Chrome.  I did some digging, and I found: https://cs.chromium.org/chromium/src/content/child/blink_platform_impl.cc?q\u003dMaxDecodedImageBytes\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d681\n\nIt seems like we do support up to size_t on non-Android platforms.",
+      "revId": "08434501bc109707a6d8b2c4c0349aa2cd3f5fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
