@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea0ab407_ddcd4f84",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T06:57:20Z",
+      "side": 1,
+      "message": "nit: Maybe one empty line here?\n\nThe following if-clause has nothing to do with conditional features.",
+      "revId": "e707c097833a42f91af9782ff4eb66c63af0b4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4497d9_7cb367c0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T06:57:20Z",
+      "side": 1,
+      "message": "You meant \"... created from the snapshot, \"?",
+      "range": {
+        "startLine": 255,
+        "startChar": 5,
+        "endLine": 255,
+        "endChar": 31
+      },
+      "revId": "e707c097833a42f91af9782ff4eb66c63af0b4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2892348b_391ec3b1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-22T06:57:20Z",
+      "side": 1,
+      "message": "nit: No need to address.\n\nThis statement is not that exact, because we still need to install origin trial features on line 253 with InstallOriginTrialFeaturesOnGlobal.  So, it\u0027s not \"all conditionally enabled features\".\n\nI\u0027m fine with the comment as is.",
+      "revId": "e707c097833a42f91af9782ff4eb66c63af0b4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
