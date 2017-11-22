@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a3ca5ad_98194356",
+        "filename": "components/sync/mojo/syncer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-22T18:58:06Z",
+      "side": 1,
+      "message": "Added.\n\nThere\u0027ll be a followup CL, but it\u0027ll be pretty complicated and not ready yet.",
+      "parentUuid": "f3704523_5de3abcf",
+      "revId": "6eb6aaf4cab6602975975003dfd352210d559696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b557dda_6a6dd532",
         "filename": "components/sync/mojo/syncer.mojom",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a44ef525_5e4f23bc",
+        "filename": "components/sync/mojo/syncer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-22T18:58:06Z",
+      "side": 1,
+      "message": "Yes since Ordinal is using string for its implementation. Do you think it makes sense to convert it string-\u003earray\u003cuint8\u003e-\u003estring in mojo?",
+      "parentUuid": "4b557dda_6a6dd532",
+      "revId": "6eb6aaf4cab6602975975003dfd352210d559696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3418d4f_f9c4d167",
         "filename": "components/sync/mojo/syncer_struct_traits.h",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2017-11-22T17:52:05Z",
       "side": 1,
       "message": "Per https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#StructTraits-getters-should-be-simple, this should return a const ref if possible.\n\nSince that doesn\u0027t seem easy atm... maybe we can change Ordinal\u0027s storage to use base::Optional\u003c\u003e internally, and then change this field to be nullable in the mojom?",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "6eb6aaf4cab6602975975003dfd352210d559696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8c8cc2_562c26a4",
+        "filename": "components/sync/mojo/syncer_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-22T18:58:06Z",
+      "side": 1,
+      "message": "Sorry if I\u0027m asking something obvious. Will we get into null errors if we simply return a const ref here?",
+      "parentUuid": "c3418d4f_f9c4d167",
       "range": {
         "startLine": 18,
         "startChar": 15,
