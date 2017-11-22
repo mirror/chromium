@@ -22,6 +22,57 @@
       "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97663cca_c8fa9cfa",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-22T01:28:18Z",
+      "side": 1,
+      "message": "Does this type buy us any type coverage? Isnt\u0027t it equivalent to the following?\nvalue: *",
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462573f7_d8872690",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-22T01:28:18Z",
+      "side": 1,
+      "message": "Would it make sense to document this type more strictly?\n\n{\n  pages: !print_preview_new.Setting;\n  copies: !print_preview_new.Setting;\n  ...\n}",
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917964ed_8569bc73",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-22T01:28:18Z",
+      "side": 1,
+      "message": "Is the code here temporary? Otherwise, you could just inline this at line 158 as follows:\n\ndocumentInfo: {\n  type: Object,\n  notify: true,\n  value: function() {\n     const info \u003d new print_preview.DocumentInfo();\n     ...\n     return info;\n  },\n},",
+      "revId": "b4c6de6affd771b983b4dd484902c47d19d7fe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
