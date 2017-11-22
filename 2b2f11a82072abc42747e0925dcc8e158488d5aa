@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57629572_fb9958f8",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T20:00:57Z",
+      "side": 1,
+      "message": "I think the symbol ordering is working correctly now because CalculatePadding() is the thing that asserts that it\u0027s correct (but we\u0027re skipping it), and the file serialization logic sorts.\n\nLet\u0027s either make this a collections.OrderedDict(), or add an explicit sort when appending to raw_symbols. We\u0027ve had several non-determinism-type bugs, so just want to be extra careful here.",
+      "revId": "2b2f11a82072abc42747e0925dcc8e158488d5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
