@@ -32,6 +32,7 @@
 #include "core/layout/LayoutText.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "core/paint/PaintLayer.h"
 
 namespace blink {
@@ -411,6 +412,27 @@ static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInOneNode(
   DCHECK_GE(end_offset.value(), start_offset.value());
   if (start_offset.value() == end_offset.value())
     return {};
+
+  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    const Position& start = {layout_object->GetNode(), start_offset.value()};
+    const NGOffsetMapping* const start_mapping = NGOffsetMapping::GetFor(start);
+    const WTF::Optional<unsigned int>& ng_start_offset =
+      start_mapping->GetTextContentOffset(start);
+    DCHECK(ng_start_offset.has_value());
+    const Position& end = { layout_object->GetNode(), end_offset.value() };
+    const NGOffsetMapping* const end_mapping = NGOffsetMapping::GetFor(end);
+    const WTF::Optional<unsigned int>& ng_end_offset =
+      end_mapping->GetTextContentOffset(end);
+    DCHECK(ng_end_offset.has_value());
+
+    layout_object->LayoutObject::SetSelectionState(
+        SelectionState::kStartAndEnd);
+    selected_objects.insert(layout_object);
+    return {{ layout_object, (int)ng_start_offset.value(), layout_object,
+             (int)ng_end_offset.value()},
+            std::move(selected_objects)};
+  }
+
   LayoutTextFragment* const first_letter_part =
       FirstLetterPartFor(layout_object);
   if (!first_letter_part) {
