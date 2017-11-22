@@ -78,6 +78,10 @@ class APIBindingHooks {
                           v8::Local<v8::ObjectTemplate> object_template,
                           const APITypeReferenceMap& type_refs);
 
+  // Performs any extra initialization on an instantion of the API.
+  void InitializeInstance(v8::Local<v8::Context> context,
+                          v8::Local<v8::Object> instance);
+
   void SetDelegate(std::unique_ptr<APIBindingHooksDelegate> delegate);
 
  private:
