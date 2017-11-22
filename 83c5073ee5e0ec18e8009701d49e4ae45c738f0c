@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a95a8dc_bba6bf31",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T07:40:26Z",
+      "side": 1,
+      "message": "nit: no (c).",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb847a29_49c37bc9",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T07:40:26Z",
+      "side": 1,
+      "message": "stray letter",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 6
+      },
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c03551_7ff31846",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T07:40:26Z",
+      "side": 1,
+      "message": "I think this is base::bits::Align(kEndOfText, kPageSize), but I don\u0027t have a good suggestion for |start_page|, unless you don\u0027t mind going 1 page under sometimes.",
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c8dede_c185f5c0",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T07:40:26Z",
+      "side": 1,
+      "message": "PLOG_IF?",
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad37f5d_09294a0f",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2691,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T07:40:26Z",
+      "side": 1,
+      "message": "Are there GPU / utility processes on Android that you care about passing this switch to? If so, there\u0027s other files with lists of switches to update.",
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
