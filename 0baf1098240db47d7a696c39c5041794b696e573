@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4299de7a_68f30ac4",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-11-22T14:05:32Z",
+      "side": 1,
+      "message": "Do you need to lock here to guard pending_output_cbs_ since now it could be accessed by decoder_thread as well?",
+      "range": {
+        "startLine": 707,
+        "startChar": 7,
+        "endLine": 707,
+        "endChar": 34
+      },
+      "revId": "0baf1098240db47d7a696c39c5041794b696e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a066e31_5da4bea2",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-11-22T14:05:32Z",
+      "side": 1,
+      "message": "Do you need to lock here for guarding output_buffers_?",
+      "range": {
+        "startLine": 914,
+        "startChar": 2,
+        "endLine": 914,
+        "endChar": 17
+      },
+      "revId": "0baf1098240db47d7a696c39c5041794b696e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16997df7_97e8454f",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-11-22T14:05:32Z",
+      "side": 1,
+      "message": "Maybe move into the scope above to guard by lock?",
+      "range": {
+        "startLine": 1139,
+        "startChar": 2,
+        "endLine": 1139,
+        "endChar": 21
+      },
+      "revId": "0baf1098240db47d7a696c39c5041794b696e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bfb1ca_6154c75d",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-11-22T14:05:32Z",
+      "side": 1,
+      "message": "Now it protects more: pending_output_cbs_, output_buffers_ and finish_flush_pending_",
+      "range": {
+        "startLine": 206,
+        "startChar": 5,
+        "endLine": 206,
+        "endChar": 56
+      },
+      "revId": "0baf1098240db47d7a696c39c5041794b696e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
