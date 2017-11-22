@@ -94,6 +94,30 @@
       "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ec7fa2_2b7849a9",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-22T15:16:14Z",
+      "side": 1,
+      "message": "It\u0027s related to https://codereview.chromium.org/2510923003\n\nI\u0027m surprised this isn\u0027t needed on 10.13 though.",
+      "parentUuid": "476019db_de6ac854",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
