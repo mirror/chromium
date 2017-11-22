@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0261512c_4b8d121f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/referrer-origin-when-cross-origin.sub.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-22T07:21:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ef8449a_5dfc51bb",
+      "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8184c64a_9e2716bf",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/referrer-origin.sub.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8585d988_dd04712d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/referrer-origin.sub.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-22T07:21:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8184c64a_9e2716bf",
+      "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2b3dbd96_a9553445",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/referrer-unsafe-url.sub.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-22T07:21:17Z",
+      "side": 1,
+      "message": "You\u0027re right. Removed the part.",
+      "parentUuid": "59215a0b_4132fc56",
+      "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "396e082c_11dc1f19",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/resources/referrer-checker.py",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada974e8_b2ccc929",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/resources/referrer-checker.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-22T07:21:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396e082c_11dc1f19",
+      "revId": "7140473a9e102e0698c1b22453530aefcd48aeb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
