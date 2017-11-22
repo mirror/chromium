@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "456b634e_e5ed9e7c",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-22T14:59:21Z",
+      "side": 1,
+      "message": "Both the message center and Mac OS native notifications drop the message when items have been provided.",
+      "revId": "3fee7780a8a16539229630985ada20c69afd6d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a07633_26554338",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-22T14:59:21Z",
+      "side": 1,
+      "message": "We\u0027ll probably need to switch on the notification.type() here too?",
+      "revId": "3fee7780a8a16539229630985ada20c69afd6d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0f5576_593e9f71",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-22T14:59:21Z",
+      "side": 1,
+      "message": "constexpr size_t kMaxEntries \u003d 4;\nsize_t entries \u003d std::min(kMaxEntries, items.size())\n\nBoth more explicit and fixes your compile error.",
+      "revId": "3fee7780a8a16539229630985ada20c69afd6d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9ea0ea_5998372f",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-22T14:59:21Z",
+      "side": 1,
+      "message": "Can we add more blank lines here to create logical separation of the blocks?",
+      "revId": "3fee7780a8a16539229630985ada20c69afd6d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
