@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be1ba23f_e04e9b79",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-22T14:44:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4199d426_e2166cb4",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60543a14_0a6b76a2",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "43f06853_4900b7ff",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-22T14:44:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60543a14_0a6b76a2",
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b93cf849_7e8b5500",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-31T11:51:59Z",
       "side": 1,
       "message": "This is a good candidate to be renamed, since we didn\u0027t like the \"placeholder\" name.",
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14eebb5f_1fb170ea",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-22T14:44:57Z",
+      "side": 1,
+      "message": "Agreed, but since I can\u0027t come up with a better name straight away, I\u0027m pushing this as is.",
+      "parentUuid": "b93cf849_7e8b5500",
       "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a1c389d8_c82f1172",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-22T14:44:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a253abc_bfc6e112",
+      "range": {
+        "startLine": 97,
+        "startChar": 3,
+        "endLine": 97,
+        "endChar": 14
+      },
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1018d594_34a01f20",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
         "patchSetId": 3
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "1deaae00_333c2124",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-22T14:44:57Z",
+      "side": 1,
+      "message": "We just need the button to keep its size, hence the priorities. Otherwise it has the same priorities as the textfield, and when the string is very short, it can sometimes stretch the textfield.",
+      "parentUuid": "1018d594_34a01f20",
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc709642_9e95b1cc",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
         "patchSetId": 3
@@ -110,6 +212,24 @@
       "writtenOn": "2017-10-31T11:51:59Z",
       "side": 1,
       "message": "Is there any way to fix this now, before submitting?\n\nWe should at least use ObjCCastStrict here, so that the app fails loudly if the superview is of an unexpected class.",
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a82d9c_7658bcda",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-22T14:44:57Z",
+      "side": 1,
+      "message": "Thanks, I actually forgot about this TODO and somehow presubmit didn\u0027t pick this incorrectly formatted TODO as usual. Addressed the todo now!",
+      "parentUuid": "fc709642_9e95b1cc",
       "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
