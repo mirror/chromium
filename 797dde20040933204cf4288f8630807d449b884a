@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6706c425_d389946f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-22T17:17:28Z",
+      "side": 0,
+      "message": "Semi-related, {google:instantExtendedEnabledParameter} also doesn\u0027t exist anymore.",
+      "range": {
+        "startLine": 3175,
+        "startChar": 335,
+        "endLine": 3175,
+        "endChar": 0
+      },
+      "revId": "797dde20040933204cf4288f8630807d449b884a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
