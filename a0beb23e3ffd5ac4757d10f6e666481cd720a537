@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6b6b85_64e4eac4",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T12:02:30Z",
+      "side": 1,
+      "message": "nit: this can be just UpdateActivityData(clock_-\u003eNow(), type);",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090f15e6_f6201b65",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T12:02:30Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57e8fa3_0ad774d6",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T12:02:30Z",
+      "side": 1,
+      "message": "why it needs to pass in now?\n\ncan\u0027t it get now inside the function?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd5989d_3e5d33c7",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T12:02:30Z",
+      "side": 1,
+      "message": "why always set last_mose_time_?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6263762_481a7c07",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T12:02:30Z",
+      "side": 1,
+      "message": "if multiple fields are not required, maybe just don\u0027t put them in the constructor, but set them later",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
