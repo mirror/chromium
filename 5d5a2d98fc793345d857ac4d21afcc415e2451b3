@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "107bdc95_164671a2",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-22T22:49:25Z",
+      "side": 1,
+      "message": "Seems like it would be better to just implement two factories, one for ozone and one for x11.\n(could be done in a separate CL though.)",
+      "range": {
+        "startLine": 32,
+        "startChar": 45,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "5d5a2d98fc793345d857ac4d21afcc415e2451b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d5462c_4a02ea42",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-22T22:49:25Z",
+      "side": 1,
+      "message": "does this need to be virtual too?",
+      "revId": "5d5a2d98fc793345d857ac4d21afcc415e2451b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
