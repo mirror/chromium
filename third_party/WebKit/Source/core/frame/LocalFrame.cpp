@@ -1156,6 +1156,9 @@ void LocalFrame::ForceSynchronousDocumentInstall(
         return true;
       });
   GetDocument()->Parser()->Finish();
+
+  // Upon loading of the page, log PageVisits in UseCounter.
+  GetPage()->GetUseCounter().DidCommitLoad(GetDocument()->Url());
 }
 
 }  // namespace blink
