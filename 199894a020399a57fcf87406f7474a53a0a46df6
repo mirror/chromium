@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54e5f416_932929b0",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T18:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e01e6319_07385d4d",
+      "range": {
+        "startLine": 123,
+        "startChar": 15,
+        "endLine": 123,
+        "endChar": 30
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abdb788a_5fe6380f",
         "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c020744_4095ec5d",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T18:47:37Z",
+      "side": 1,
+      "message": "Added checks in test for the actual value of the Destination.",
+      "parentUuid": "abdb788a_5fe6380f",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "94bbb6c5_25accafb",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T18:47:37Z",
+      "side": 1,
+      "message": "Sorry, uncleaned leftovers. |abort_| isn\u0027t used anymore.",
+      "parentUuid": "8deb90c4_0c744ccf",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "511e29f5_effe0cc4",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "867901a0_599b0f9e",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T18:47:37Z",
+      "side": 1,
+      "message": "The entire block is deprecated.",
+      "parentUuid": "511e29f5_effe0cc4",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d934ecf5_bb09b2b5",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-22T15:46:58Z",
       "side": 1,
       "message": "If I read WeakReferenceOwner::Invalidate() and the meaning of WeakReferenceOwner::flag_ correctly, after the first call to this, weak_factory_ will never produce a valid pointer again. Is that expected? I understood that the exporter is to be reused for subsequent exports.",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 34
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff06824_fc5f7d18",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T18:47:37Z",
+      "side": 1,
+      "message": "The factory does continue to produce valid pointers (see passing tests). I also didn\u0027t find a point in the documentation where they say that it shouldn\u0027t. Do you feel we are abusing the WeakPtrFactory?\n\nUnfortunately, a boolean (i.e. |abort_|) isn\u0027t a well defined way of cancelling. For example, what happens if we \"abort\" and resume before the task has checked if it\u0027s being cancelled? We need to pass tokens to pending tasks. If WeakPtrs aren\u0027t supposed to do that, I will have to create my own token management, or tie the lifetime of PasswordManagerExporter to a single export.",
+      "parentUuid": "d934ecf5_bb09b2b5",
       "range": {
         "startLine": 65,
         "startChar": 16,
@@ -137,6 +257,30 @@
       "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a54289_fda9863d",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-22T18:47:37Z",
+      "side": 1,
+      "message": "WeakPtrs cannot be used with PostTaskWithTraits.",
+      "parentUuid": "4b06137d_23903ec6",
+      "range": {
+        "startLine": 72,
+        "startChar": 43,
+        "endLine": 72,
+        "endChar": 55
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
