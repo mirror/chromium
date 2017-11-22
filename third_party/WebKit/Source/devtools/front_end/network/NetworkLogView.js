@@ -1169,15 +1169,18 @@ Network.NetworkLogView = class extends UI.VBox {
 
       if (Host.isWin()) {
         footerSection.appendItem(
+            Common.UIString('Copy as PowerShell'), this._copyPowerShellCommand.bind(this, request));
+        footerSection.appendItem(
             Common.UIString('Copy as cURL (cmd)'), this._copyCurlCommand.bind(this, request, 'win'));
         footerSection.appendItem(
             Common.UIString('Copy as cURL (bash)'), this._copyCurlCommand.bind(this, request, 'unix'));
-        footerSection.appendItem(Common.UIString('Copy All as cURL (cmd)'), this._copyAllCurlCommand.bind(this, 'win'));
+        footerSection.appendItem(Common.UIString('Copy all as PowerShell'), this._copyAllPowerShellCommand.bind(this));
+        footerSection.appendItem(Common.UIString('Copy all as cURL (cmd)'), this._copyAllCurlCommand.bind(this, 'win'));
         footerSection.appendItem(
-            Common.UIString('Copy All as cURL (bash)'), this._copyAllCurlCommand.bind(this, 'unix'));
+            Common.UIString('Copy all as cURL (bash)'), this._copyAllCurlCommand.bind(this, 'unix'));
       } else {
         footerSection.appendItem(Common.UIString('Copy as cURL'), this._copyCurlCommand.bind(this, request, 'unix'));
-        footerSection.appendItem(Common.UIString('Copy All as cURL'), this._copyAllCurlCommand.bind(this, 'unix'));
+        footerSection.appendItem(Common.UIString('Copy all as cURL'), this._copyAllCurlCommand.bind(this, 'unix'));
       }
     } else {
       copyMenu = contextMenu.clipboardSection().appendSubMenuItem(Common.UIString('Copy'));
@@ -1271,6 +1274,21 @@ Network.NetworkLogView = class extends UI.VBox {
       InspectorFrontendHost.copyText(commands.join(' &\r\n'));
     else
       InspectorFrontendHost.copyText(commands.join(' ;\n'));
+  }
+
+  /**
+   * @param {!SDK.NetworkRequest} request
+   */
+  _copyPowerShellCommand(request) {
+    InspectorFrontendHost.copyText(this._generatePowerShellCommand(request));
+  }
+
+  _copyAllPowerShellCommand() {
+    var requests = NetworkLog.networkLog.requests();
+    var commands = [];
+    for (var request of requests)
+      commands.push(this._generatePowerShellCommand(request));
+    InspectorFrontendHost.copyText(commands.join(';\r\n'));
   }
 
   async _exportAll() {
@@ -1737,6 +1755,59 @@ Network.NetworkLogView = class extends UI.VBox {
 
     if (request.securityState() === Protocol.Security.SecurityState.Insecure)
       command.push('--insecure');
+    return command.join(' ');
+  }
+
+  /**
+   * @param {!SDK.NetworkRequest} request
+   * @return {string}
+   */
+  _generatePowerShellCommand(request) {
+    var command = ['Invoke-WebRequest'];
+    var ignoredHeaders =
+        {'host': 1, 'connection': 1, 'proxy-connection': 1, 'content-length': 1, 'expect': 1, 'range': 1};
+
+    function escapeCharacter(x) {
+      var code = x.charCodeAt(0);
+      return '$([char]' + code + ')';
+    }
+
+    function escapeString(str) {
+      return '"' +
+          str.replace(/`/g, '``').replace(/\$/g, '`$').replace(/"/g, '`"').replace(/[^\x20-\x7E]/g, escapeCharacter) +
+          '"';
+    }
+
+    command.push('-Uri');
+    command.push(escapeString(request.url()));
+
+    if (request.requestMethod !== 'GET') {
+      command.push('-Method');
+      command.push(request.requestMethod);
+    }
+
+    var data = [];
+    if (request.requestFormData) {
+      data.push('-Body');
+      data.push(escapeString(request.requestFormData));
+      ignoredHeaders['content-length'] = true;
+    }
+
+    var requestHeaders = request.requestHeaders();
+    var headerNameValuePairs = [];
+    for (var i = 0; i < requestHeaders.length; i++) {
+      var header = requestHeaders[i];
+      var name = header.name.replace(/^:/, '');  // Translate SPDY v3 headers to HTTP headers.
+      if (name.toLowerCase() in ignoredHeaders)
+        continue;
+      headerNameValuePairs.push(escapeString(name) + '=' + escapeString(header.value));
+    }
+    if (headerNameValuePairs.length > 0) {
+      command.push('-Headers');
+      command.push('@{' + headerNameValuePairs.join('; ') + '}');
+    }
+
+    command = command.concat(data);
     return command.join(' ');
   }
 };
