@@ -32,17 +32,17 @@ class FakeUserEventService : public UserEventService {
       std::unique_ptr<sync_pb::UserEventSpecifics> specifics) override;
   void RecordUserEvent(const sync_pb::UserEventSpecifics& specifics) override;
   void RegisterDependentFieldTrial(
-      const std::string& trial_name,
-      sync_pb::UserEventSpecifics::EventCase event_case) override;
+      sync_pb::UserEventSpecifics::EventCase event_case,
+      const std::string& trial_name) override;
   base::WeakPtr<ModelTypeSyncBridge> GetSyncBridge() override;
 
   const std::vector<sync_pb::UserEventSpecifics>& GetRecordedUserEvents() const;
-  const std::map<std::string, std::set<sync_pb::UserEventSpecifics::EventCase>>&
+  const std::multimap<sync_pb::UserEventSpecifics::EventCase, std::string>&
   GetRegisteredDependentFieldTrials() const;
 
  private:
   std::vector<sync_pb::UserEventSpecifics> recorded_user_events_;
-  std::map<std::string, std::set<sync_pb::UserEventSpecifics::EventCase>>
+  std::multimap<sync_pb::UserEventSpecifics::EventCase, std::string>
       registered_dependent_field_trials_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeUserEventService);

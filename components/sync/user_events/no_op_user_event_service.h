@@ -27,8 +27,8 @@ class NoOpUserEventService : public UserEventService {
       std::unique_ptr<sync_pb::UserEventSpecifics> specifics) override;
   void RecordUserEvent(const sync_pb::UserEventSpecifics& specifics) override;
   void RegisterDependentFieldTrial(
-      const std::string& trial_name,
-      sync_pb::UserEventSpecifics::EventCase event_case) override;
+      sync_pb::UserEventSpecifics::EventCase event_case,
+      const std::string& trial_name) override;
   base::WeakPtr<ModelTypeSyncBridge> GetSyncBridge() override;
 
  private:
