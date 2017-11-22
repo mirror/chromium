@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b4ab8f3_0ccdcd15",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-22T01:06:55Z",
+      "side": 1,
+      "message": "could we also add\nDCHECK_GE(timing.interactive_timing-\u003einteractive_detection, timing.interactive_timing-\u003einteractive);",
+      "revId": "7337017d7c6a5349f59746d92ce24b7dadeb7b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051dd3a0_1602303c",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-22T01:06:55Z",
+      "side": 1,
+      "message": "looks like this enum is no longer used. remove?",
+      "revId": "7337017d7c6a5349f59746d92ce24b7dadeb7b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
