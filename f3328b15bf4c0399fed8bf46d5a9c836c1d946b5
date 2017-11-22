@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58caa325_599e6cc4",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-22T15:44:42Z",
+      "side": 1,
+      "message": "please name it more explicitly, like: text_start_offset. Otherwise too many offsets in one sentence and some loss of context.\n\nVery nit, of course",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 10
+      },
+      "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43501af6_44082b93",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-22T15:44:42Z",
+      "side": 1,
+      "message": "Path to json file with residency data, as ...\n\nor maybe name it as --residency-file",
+      "range": {
+        "startLine": 216,
+        "startChar": 28,
+        "endLine": 216,
+        "endChar": 42
+      },
+      "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b678a676_82db709f",
+        "filename": "tools/android/native_lib_memory/process_residency.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-22T15:44:42Z",
+      "side": 1,
+      "message": "File name of output in JSON format\n\nCan both --output and --json be used at the same time? Not obvious from this interface, so maybe some clarification?",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361422d2_8cc556b8",
+        "filename": "tools/android/native_lib_memory/process_residency.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-22T15:44:42Z",
+      "side": 1,
+      "message": "we are correcting the offsets by adding this start in another script. Can we make this correction local to this script and deal with normal offset elsewhere? Seems it would reduce the hurdles of dealing with potential abstraction leak in other scripts.\n\nI have not verified that this is possible, so pardon in advance if it is a stupid suggestion. // this sentence should apply to every comment I post, I know, plus a note with apologies for being too verbose.",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
