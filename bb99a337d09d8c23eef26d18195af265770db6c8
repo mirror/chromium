@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f59dd80c_973b456c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-22T18:41:00Z",
+      "side": 0,
+      "message": "Reason for removal of this code-:\n1) directional value change son mac for extent, Since ExtendSelectionAsDirectional and ExtendSelectionAsNonDirectional, deals with the directional changes without altering the value of is_directional, therefore the directional value remain always equal to beahviour ShouldConsiderSelectionAsDirectional().\n\n2) The failure observed in the layout test in patch  http://crrev.com/c/779967 , was because \nthe equality check(LineNo:863) for selection failed and SetSelection() was processed , which eventually made typingStyle cleared in FrameSelection::SetSelection().\n\nNow since we have moved the directional to frameSelection, therefore keeping in mind that SelectionController never changes the directional value, the equality check will never fail because of directional and hence we don\u0027t need to set the below directional value anymore.",
+      "revId": "bb99a337d09d8c23eef26d18195af265770db6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

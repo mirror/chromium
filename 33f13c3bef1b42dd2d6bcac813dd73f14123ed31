@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4880fd77_68070b3e",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-22T18:41:00Z",
+      "side": 1,
+      "message": "This is the comparison check,\ninitially is_directional_ was set to false and options.IsDirectional gets set to true because og windows and linux behavior,\nwhich makes the selection change happens, triggering the idle spell checker.\n\nThe selection gets triggered from MediaCOntrolsImpleTest::Setup, I coulndt debug much because of time constraint, but if you want i will debug more into it.\n\nRecently patch https://chromium-review.googlesource.com/763192 changed some behavior, which could also be the reason,as this code passed the try bots before.",
+      "revId": "33f13c3bef1b42dd2d6bcac813dd73f14123ed31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
