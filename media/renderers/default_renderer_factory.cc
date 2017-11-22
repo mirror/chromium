@@ -92,9 +92,18 @@ DefaultRendererFactory::CreateVideoDecoders(
                                             &video_decoders);
     }
 
-    video_decoders.push_back(std::make_unique<GpuVideoDecoder>(
-        gpu_factories, request_overlay_info_cb, target_color_space,
-        media_log_));
+    bool include_gpu_decoder = false;
+#if defined(OS_ANDROID)
+    // If MCVD is not enabled, then include AVDA.  Otherwise, don't.
+    include_gpu_decoder =
+        !base::FeatureList::IsEnabled(media::kMediaCodecVideoDecoder);
+#endif  // OS_ANDROID
+
+    if (include_gpu_decoder) {
+      video_decoders.push_back(std::make_unique<GpuVideoDecoder>(
+          gpu_factories, request_overlay_info_cb, target_color_space,
+          media_log_));
+    }
   }
 
 #if !defined(MEDIA_DISABLE_LIBVPX)
