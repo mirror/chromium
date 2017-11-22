@@ -16,6 +16,24 @@
       "revId": "d2d6ee9c44327d3f4518dbc904f8c7d4aa4128af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9e8b90_cf93f77f",
+        "filename": "content/public/test/content_browser_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-22T21:41:43Z",
+      "side": 0,
+      "message": "Hmm, really?  I thought the best practice was to do as Chao has done here and put the message in a comment above the DCHECK, so as to not add an extra debug string to the Chrome binary.",
+      "parentUuid": "079c3cd4_27718f9e",
+      "revId": "d2d6ee9c44327d3f4518dbc904f8c7d4aa4128af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
