@@ -326,6 +326,13 @@ TEST(WeakPtrTest, DerivedTargetMultipleInheritance) {
   EXPECT_EQ(pd.get(), &d);
 }
 
+TEST(WeakPtrTest, NullPtr) {
+  DerivedTarget* const target = nullptr;
+  const WeakPtr<DerivedTarget> ptr = AsWeakPtr(target);
+  EXPECT_FALSE(ptr);
+  EXPECT_EQ(target, ptr.get());
+}
+
 TEST(WeakPtrFactoryTest, BooleanTesting) {
   int data;
   WeakPtrFactory<int> factory(&data);
