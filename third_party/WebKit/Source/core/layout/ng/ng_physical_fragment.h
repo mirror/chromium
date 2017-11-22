@@ -72,6 +72,7 @@ class CORE_EXPORT NGPhysicalFragment
   bool IsBox() const { return Type() == NGFragmentType::kFragmentBox; }
   bool IsText() const { return Type() == NGFragmentType::kFragmentText; }
   bool IsLineBox() const { return Type() == NGFragmentType::kFragmentLineBox; }
+  bool IsInlineBox() const { return IsBox() && GetLayoutObject()->IsInline(); }
 
   // Returns the box type of this fragment.
   NGBoxType BoxType() const { return static_cast<NGBoxType>(box_type_); }
