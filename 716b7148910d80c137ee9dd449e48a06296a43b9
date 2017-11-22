@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "726ef7d1_a880edea",
+        "filename": "components/sync/engine_impl/process_updates_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-22T23:29:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t use non-const ref, see https://google.github.io/styleguide/cppguide.html#Reference_Arguments",
+      "revId": "716b7148910d80c137ee9dd449e48a06296a43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6aa8ac4_68fcb52b",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-22T23:29:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t use non-const ref, see https://google.github.io/styleguide/cppguide.html#Reference_Arguments",
+      "revId": "716b7148910d80c137ee9dd449e48a06296a43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad06359f_3e33f7fc",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-22T23:29:50Z",
+      "side": 1,
+      "message": "Why are you doing if (entity)? When would entity be null? I don\u0027t know enough to understand how dangerous this is.",
+      "revId": "716b7148910d80c137ee9dd449e48a06296a43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
