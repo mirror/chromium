@@ -7,8 +7,11 @@
 #include <memory>
 #include <utility>
 
+#include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
+#import "components/autofill/ios/browser/autofill_agent.h"
+#import "components/autofill/ios/browser/js_autofill_manager.h"
 #include "google_apis/google_api_keys.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/referrer.h"
@@ -22,6 +25,7 @@
 #import "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_delegate_bridge.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
+#import "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h"
 #import "ios/web_view/internal/cwv_html_element_internal.h"
 #import "ios/web_view/internal/cwv_navigation_action_internal.h"
 #import "ios/web_view/internal/cwv_scroll_view_internal.h"
@@ -102,6 +106,7 @@ static NSString* gUserAgentProduct = nil;
 
 @implementation CWVWebView
 
+@synthesize autofillController = _autofillController;
 @synthesize canGoBack = _canGoBack;
 @synthesize canGoForward = _canGoForward;
 @synthesize configuration = _configuration;
@@ -375,6 +380,28 @@ static NSString* gUserAgentProduct = nil;
   return _translationController;
 }
 
+#pragma mark - Autofill
+
+- (CWVAutofillController*)autofillController {
+  if (!_autofillController) {
+    _autofillController = [self createAutofillController];
+  }
+  return _autofillController;
+}
+
+- (CWVAutofillController*)createAutofillController {
+  AutofillAgent* autofillAgent = [[AutofillAgent alloc]
+      initWithPrefService:_configuration.browserState->GetPrefs()
+                 webState:_webState.get()];
+  JsAutofillManager* JSAutofillManager =
+      base::mac::ObjCCastStrict<JsAutofillManager>(
+          [_webState->GetJSInjectionReceiver()
+              instanceOfClass:[JsAutofillManager class]]);
+  return [[CWVAutofillController alloc] initWithWebState:_webState.get()
+                                           autofillAgent:autofillAgent
+                                       JSAutofillManager:JSAutofillManager];
+}
+
 #pragma mark - Preserving and Restoring State
 
 - (void)encodeRestorableStateWithCoder:(NSCoder*)coder {
@@ -428,6 +455,13 @@ static NSString* gUserAgentProduct = nil;
   _scrollView.proxy = _webState.get()->GetWebViewProxy().scrollViewProxy;
 
   _translationController.webState = _webState.get();
+
+  // Recreate and restore the delegate only if previously lazily loaded.
+  if (_autofillController) {
+    id<CWVAutofillControllerDelegate> delegate = _autofillController.delegate;
+    _autofillController = [self createAutofillController];
+    _autofillController.delegate = delegate;
+  }
 
   [self addInternalWebViewAsSubview];
 
