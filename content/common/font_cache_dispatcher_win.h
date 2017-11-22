@@ -9,34 +9,25 @@
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
-#include "ipc/ipc_sender.h"
-#include "ipc/message_filter.h"
+#include "content/common/font_cache_win.mojom.h"
 
 namespace content {
 
 // Dispatches messages used for font caching on Windows. This is needed because
 // Windows can't load fonts into its kernel cache in sandboxed processes. So the
 // sandboxed process asks the browser process to do this for it.
-class FontCacheDispatcher : public IPC::MessageFilter, public IPC::Sender {
+class FontCacheDispatcher : public mojom::FontCacheWin {
  public:
   FontCacheDispatcher();
 
-  // IPC::Sender implementation:
-  bool Send(IPC::Message* message) override;
+  static void Create(mojom::FontCacheWinRequest request);
 
  private:
   ~FontCacheDispatcher() override;
 
-  // IPC::MessageFilter implementation:
-  void OnFilterAdded(IPC::Channel* channel) override;
-  bool OnMessageReceived(const IPC::Message& message) override;
-  void OnChannelClosing() override;
-
-  // Message handlers.
-  void OnPreCacheFont(const LOGFONT& font);
-  void OnReleaseCachedFonts();
-
-  IPC::Sender* sender_;
+  // mojom::FontCacheWin
+  void PreCacheFont(const LOGFONT& font);
+  void ReleaseCachedFonts();
 
   DISALLOW_COPY_AND_ASSIGN(FontCacheDispatcher);
 };
