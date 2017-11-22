@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d8fc69_558f44b5",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-22T15:28:03Z",
+      "side": 1,
+      "message": "We change frames all the time while views are in the view hierarchy.  I still think I\u0027m not understanding why it\u0027s necessary for the view to be out of the view hierarchy, or what mechanism has removed it.  I think I\u0027m missing some larger picture that perhaps could be in this comment?",
+      "revId": "b04c31fe9d9d774658ce383114e738e81db83b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48747c44_b7556f1a",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-22T15:28:03Z",
+      "side": 1,
+      "message": "Can we add a comment explaining why fake safe area insets are needed?",
+      "revId": "b04c31fe9d9d774658ce383114e738e81db83b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
