@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "012b3e80_b236979a",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-22T09:52:11Z",
+      "side": 1,
+      "message": "Optional: what you could also do to make this code more robust is change the function\u0027s signature to return an outcome. I have mixed feelings about it because you\u0027d need to return a base::Optional or so to be able to distinguish the success case.",
+      "range": {
+        "startLine": 238,
+        "startChar": 70,
+        "endLine": 238,
+        "endChar": 0
+      },
+      "revId": "ff832b14c8a5bea506cc3ab04806dfd4212f558d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1a9d90_3fb87d92",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-22T09:52:11Z",
+      "side": 1,
+      "message": "Optional: Rename to TriggerReason for readability?",
+      "range": {
+        "startLine": 36,
+        "startChar": 20,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "ff832b14c8a5bea506cc3ab04806dfd4212f558d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
