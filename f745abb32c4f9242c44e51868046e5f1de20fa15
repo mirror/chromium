@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7ff7aca2_1913539d",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T01:18:35Z",
+      "side": 1,
+      "message": "\u003e I do not think this is strictly necessary since this commit function will only be called for the first commit stage of any redirect chain. To me that means that server redirects will be taken into account but never client side code. If we want to support these navigations later we could have internal state associated with such cases that would make identification easier than guessing from raw params.\n\u003e Let me know what you think about that though!\n\nIf there\u0027s no support for client redirects or location.replace here, then we can probably get by for now.  Worth adding a comment in case that need arises at some point.",
+      "parentUuid": "8ea3e9a5_18e51024",
+      "revId": "f745abb32c4f9242c44e51868046e5f1de20fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f6d3151_30342bf4",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 14

@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49966d8b_2609c0f0",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T01:18:35Z",
+      "side": 1,
+      "message": "This line looks unnecessary, since we\u0027re passing in offset on the line above.  (Line 113 makes that assumption as well, though there\u0027s a bug below that CreateHistoryNavigation doesn\u0027t use it.)",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c40e14_70610292",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T01:18:35Z",
+      "side": 1,
+      "message": "This should pass |offset| as a parameter to the constructor.",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f2e6c9_40464cdd",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T01:18:35Z",
+      "side": 1,
+      "message": "Can these checks happen in the constructor, or can we make this a private helper method?  I don\u0027t think we should support changing SetSessionHistoryOffset for an existing simulator after it\u0027s created.",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e82d194_de29adce",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T01:18:35Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need SetIsBackNavigation or SetIsForwardNavigation anymore.",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55468bf_fa715dd8",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T01:18:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure we need this either.  See my comment at the call site.",
+      "revId": "8224c1ea3e325c5bb6ae4890bb8a5cd7989ad722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
