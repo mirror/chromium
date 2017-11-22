@@ -34,6 +34,24 @@
       "revId": "b3f0fa84853013495c12dc63d6086fd5408b1d34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f6ab5d_7cfe8933",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-22T22:07:20Z",
+      "side": 1,
+      "message": "LTI \u003d LayerTreeImpl? No, the compositor can move layers around so we need to know the handler region for each composited layer like with touch events.",
+      "parentUuid": "a73e7364_938938d2",
+      "revId": "b3f0fa84853013495c12dc63d6086fd5408b1d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
