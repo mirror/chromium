@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9769d172_0e25a352",
+        "filename": "content/browser/service_worker/service_worker_client_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T00:48:25Z",
+      "side": 1,
+      "message": "Ah good catch. I strongly prefer service_worker here since it\u0027s two words.",
+      "parentUuid": "f6909d68_1ae93a69",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7de73f0_5d148017",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 2
