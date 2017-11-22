@@ -182,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "9310d0a1_539ed3ca",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-22T19:19:48Z",
+      "side": 1,
+      "message": "Yes, that should be sufficient. I\u0027d probably call the type \"element\". A \"type\" key would then, as Tom notes, allow us to specifically call out text nodes, CDATA, and even comments in the future. \"tag\" still SGTM for the element tag\u0027s name.",
+      "parentUuid": "860c63f0_d7650b0c",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22d504ba_083f07d9",
         "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
         "patchSetId": 10
