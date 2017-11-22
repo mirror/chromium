@@ -16,6 +16,41 @@
       "revId": "e26a2673d35efb8d82a0980e8ded2141d871d213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb9d95f_bc27dfe0",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T02:05:38Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "4384359d_b1242cd7",
+      "revId": "e26a2673d35efb8d82a0980e8ded2141d871d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d227a2d0_fd5d05d4",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T02:05:38Z",
+      "side": 1,
+      "message": "Add DCHECK(UserAgentShadowRoot()).",
+      "revId": "e26a2673d35efb8d82a0980e8ded2141d871d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
