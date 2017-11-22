@@ -1,3 +1,4 @@
+
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -195,7 +196,8 @@ class PluginDataRemoverImpl::Context
       return;
 
     DCHECK(!channel_.get());
-    channel_ = IPC::Channel::CreateClient(handle, this);
+    channel_ = IPC::Channel::CreateClient(handle, this,
+                                          base::ThreadTaskRunnerHandle::Get());
     if (!channel_->Connect()) {
       NOTREACHED() << "Couldn't connect to plugin";
       SignalDone();
