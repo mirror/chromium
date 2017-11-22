@@ -111,6 +111,24 @@
     },
     {
       "key": {
+        "uuid": "8476b69b_487152a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-22T14:54:21Z",
+      "side": 1,
+      "message": "Cool, sounds like we\u0027re on the same page :) what\u0027s the bug number, out of interest?",
+      "parentUuid": "f4977268_4e776296",
+      "revId": "ec432c01dd5698396e720d0e794078eed23fb8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea1150b1_278482cc",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
         "patchSetId": 3
