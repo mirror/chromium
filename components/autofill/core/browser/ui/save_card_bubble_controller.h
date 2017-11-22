@@ -21,6 +21,22 @@ class SaveCardBubbleView;
 // Interface that exposes controller functionality to SaveCardBubbleView.
 class SaveCardBubbleController {
  public:
+  class ObserverForTest {
+   public:
+    virtual void OnLocalBubbleShown() = 0;
+    virtual void OnUploadBubbleShown() = 0;
+    virtual void OnBubbleAccepted() = 0;
+    virtual void OnBubbleCancelled() = 0;
+    virtual void OnBubbleClosed() = 0;
+    virtual void OnBubbleHidden() = 0;
+    virtual void OnFooterShown() = 0;
+    virtual void OnFooterHidden() = 0;
+    virtual void OnCvcRequestViewShown() = 0;
+    virtual void OnCvcRequestViewAccepted() = 0;
+    virtual void OnLearnMoreLinkClicked() = 0;
+    virtual void OnLegalMessageLinkClicked() = 0;
+  };
+
   SaveCardBubbleController() {}
   virtual ~SaveCardBubbleController() {}
 
@@ -53,6 +69,10 @@ class SaveCardBubbleController {
   virtual void OnLegalMessageLinkClicked(const GURL& url) = 0;
   virtual void OnBubbleClosed() = 0;
 
+  // For the browser test observer.
+  virtual void OnBubbleFooterShown() = 0;
+  virtual void OnBubbleFooterHidden() = 0;
+
   // State.
 
   // Returns empty vector if no legal message should be shown.
@@ -64,6 +84,14 @@ class SaveCardBubbleController {
 
   // Utilities.
   virtual bool InputCvcIsValid(const base::string16& input_text) const = 0;
+
+  void SetEventObserver(ObserverForTest* observer) {
+    observer_for_testing_ = observer;
+  }
+
+ protected:
+  // May be null.
+  ObserverForTest* observer_for_testing_ = nullptr;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SaveCardBubbleController);

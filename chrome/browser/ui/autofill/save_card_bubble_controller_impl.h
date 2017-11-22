@@ -64,6 +64,8 @@ class SaveCardBubbleControllerImpl
   void OnLearnMoreClicked() override;
   void OnLegalMessageLinkClicked(const GURL& url) override;
   void OnBubbleClosed() override;
+  void OnBubbleFooterShown() override;
+  void OnBubbleFooterHidden() override;
 
   const LegalMessageLines& GetLegalMessageLines() const override;
   void ContinueToRequestCvcStage() override;
