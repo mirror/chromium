@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e8ff4fee_4f403a97",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "I left this logging out because the root cause will have logged it either in DecodeIdToken or in GetServiceFlags. However, I can add it here for safety as well, in case we forget to log the root cause.",
+      "parentUuid": "f1382356_39a536aa",
+      "range": {
+        "startLine": 22,
+        "startChar": 34,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edd2d737_b3a5455d",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d56425_42a3fd23",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd2d737_b3a5455d",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7994e05d_945d3f25",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "I\u0027ve changed to return it instead.",
+      "parentUuid": "6efebd9a_51e88700",
+      "range": {
+        "startLine": 33,
+        "startChar": 34,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2efe005_1f9242da",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf152b2_64e4add0",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2efe005_1f9242da",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7a705656_66ff503e",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fede533_e286f06b",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bc805fd_942a34f1",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830bb637_b6f0b4fc",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bc805fd_942a34f1",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 47
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "d5cd0552_4fae0f75",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bfe2529_c4dd32c4",
+      "range": {
+        "startLine": 62,
+        "startChar": 30,
+        "endLine": 62,
+        "endChar": 43
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "394fcf7e_0fc69216",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab5bf463_14db4898",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb45b86_00c375ff",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
         "patchSetId": 11
@@ -206,6 +398,30 @@
       "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c766a236_28f6862a",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Thank you for explaining these options in detail.\n\nI\u0027ve implemented Option 1. I think it\u0027s cleaner for our current purposes, and we can migrate to Option 2 if it becomes necessary.\n\nDo you think the filename is still appropriate?",
+      "parentUuid": "dfb45b86_00c375ff",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,54 @@
     },
     {
       "key": {
+        "uuid": "edab72b8_7118ca1a",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ecd091_9b07c497",
+      "range": {
+        "startLine": 22,
+        "startChar": 29,
+        "endLine": 22,
+        "endChar": 46
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1481a8f6_c9b99905",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c36fed5_6911963c",
+      "range": {
+        "startLine": 22,
+        "startChar": 14,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "594e8b8d_de705e5c",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
         "patchSetId": 11
@@ -275,6 +539,30 @@
       "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b411f953_cbe798ef",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-22T16:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "594e8b8d_de705e5c",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
