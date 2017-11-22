@@ -20,6 +20,8 @@ class Origin;
 
 class MediaEngagementPreloadedList {
  public:
+  static MediaEngagementPreloadedList* GetInstance();
+
   MediaEngagementPreloadedList();
   ~MediaEngagementPreloadedList();
 
