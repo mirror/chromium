@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25937d16_8f8879d4",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/BackwardsCharacterIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-22T14:40:46Z",
+      "side": 1,
+      "message": "Calls to |EditingPositionOf| function is the main pain of this CL.\nIts like egg and chicken situation - EditingPositionOf needs a non-const Node for constructing a Position object.\nBut if I change Position to hold a |const Node*| and so EditingPositionOf can take it, then I need to change code in iterators/.\nconst_cast\u003c\u003e is ugly, and I will appreciate any advises for this.\nMaybe create some special |EditingPositionOfDeprecated(const Node*)| function to encapsulate the |const_cast\u003c\u003e| until we make a const-Position?",
+      "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb4a0ab_47a0df62",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-22T14:40:46Z",
+      "side": 1,
+      "message": "Oh, that was my test check, made that just out of curiosity.\nIt is unrelated to the goals of this CL, will remove.\nyosin@, how do you think, can there be a situation in future when assert can be triggred?\nShould we have something like this?",
+      "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
