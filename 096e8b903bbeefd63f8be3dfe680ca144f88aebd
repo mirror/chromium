@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "567823c0_01daf828",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T18:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c573646c_4db8ab05",
+      "range": {
+        "startLine": 354,
+        "startChar": 56,
+        "endLine": 354,
+        "endChar": 85
+      },
+      "revId": "096e8b903bbeefd63f8be3dfe680ca144f88aebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8572c8fd_30187d62",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "096e8b903bbeefd63f8be3dfe680ca144f88aebd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1668ef1_6fdb030c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T18:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8572c8fd_30187d62",
+      "range": {
+        "startLine": 478,
+        "startChar": 13,
+        "endLine": 478,
+        "endChar": 41
+      },
+      "revId": "096e8b903bbeefd63f8be3dfe680ca144f88aebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
