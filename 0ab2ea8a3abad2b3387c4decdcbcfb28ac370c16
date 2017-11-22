@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5569bb3_7e43632a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-22T09:20:19Z",
+      "side": 1,
+      "message": "Non-negative integer should not be a reason for using |unsigned|.\nSee https://google.github.io/styleguide/cppguide.html#Integer_Types\n\nIt seems we have fewer static_cast\u003cT\u003e in the source code.",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "0ab2ea8a3abad2b3387c4decdcbcfb28ac370c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
