@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7201ef5c_620f3914",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T03:06:51Z",
+      "side": 1,
+      "message": "I think you want Bug: 565932",
+      "revId": "df8ae03c7f66111a4f7cd212b6e7497b9a131c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562c9601_9523d0f3",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T03:06:51Z",
+      "side": 1,
+      "message": "Should this be in a private: section?",
+      "revId": "df8ae03c7f66111a4f7cd212b6e7497b9a131c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4a33a8_d557885e",
+        "filename": "third_party/WebKit/Source/core/animation/InterpolableValue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T03:06:51Z",
+      "side": 1,
+      "message": "Change to DISALLOW_ASSIGN(InterpolableList) and remove the \"However...\" comment",
+      "revId": "df8ae03c7f66111a4f7cd212b6e7497b9a131c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bbe167_165e5e2d",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T03:06:51Z",
+      "side": 1,
+      "message": "Move to end of class",
+      "revId": "df8ae03c7f66111a4f7cd212b6e7497b9a131c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5cfe4a_163a5b0d",
+        "filename": "third_party/WebKit/Source/core/animation/css/CSSAnimations.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T03:06:51Z",
+      "side": 1,
+      "message": "Nit: add newline before",
+      "revId": "df8ae03c7f66111a4f7cd212b6e7497b9a131c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
