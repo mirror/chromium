@@ -36,7 +36,13 @@ class SharedWorkerInstanceTest : public testing::Test {
   bool Matches(const SharedWorkerInstance& instance,
                const std::string& url,
                const base::StringPiece& name) {
-    return instance.Matches(GURL(url), name.as_string(), partition_id_,
+    url::Origin constructor_origin;
+    if (GURL(url).SchemeIs(url::kDataScheme))
+      constructor_origin = url::Origin::Create(GURL("http://example.com/"));
+    else
+      constructor_origin = url::Origin::Create(GURL(url));
+    return instance.Matches(GURL(url), name.as_string(), constructor_origin,
+                            partition_id_,
                             browser_context_->GetResourceContext());
   }
 
@@ -50,8 +56,12 @@ class SharedWorkerInstanceTest : public testing::Test {
 };
 
 TEST_F(SharedWorkerInstanceTest, MatchesTest) {
+  // Hello!
+  const std::string kDataURL("data:text/javascript;base64,Ly8gSGVsbG8h");
+
   SharedWorkerInstance instance1(
-      GURL("http://example.com/w.js"), std::string(), std::string(),
+      GURL("http://example.com/w.js"), std::string(),
+      url::Origin::Create(GURL("http://example.com/")), std::string(),
       blink::kWebContentSecurityPolicyTypeReport, blink::kWebAddressSpacePublic,
       browser_context_->GetResourceContext(), partition_id_,
       blink::mojom::SharedWorkerCreationContextType::kNonsecure,
@@ -64,9 +74,12 @@ TEST_F(SharedWorkerInstanceTest, MatchesTest) {
   EXPECT_FALSE(Matches(instance1, "http://example.com/w2.js", "name"));
   EXPECT_FALSE(Matches(instance1, "http://example.net/w.js", "name"));
   EXPECT_FALSE(Matches(instance1, "http://example.net/w2.js", "name"));
+  EXPECT_FALSE(Matches(instance1, kDataURL, ""));
+  EXPECT_FALSE(Matches(instance1, kDataURL, "name"));
 
   SharedWorkerInstance instance2(
-      GURL("http://example.com/w.js"), "name", std::string(),
+      GURL("http://example.com/w.js"), "name",
+      url::Origin::Create(GURL("http://example.com/")), std::string(),
       blink::kWebContentSecurityPolicyTypeReport, blink::kWebAddressSpacePublic,
       browser_context_->GetResourceContext(), partition_id_,
       blink::mojom::SharedWorkerCreationContextType::kNonsecure,
@@ -83,12 +96,86 @@ TEST_F(SharedWorkerInstanceTest, MatchesTest) {
   EXPECT_FALSE(Matches(instance2, "http://example.com/w2.js", "name2"));
   EXPECT_FALSE(Matches(instance2, "http://example.net/w.js", "name2"));
   EXPECT_FALSE(Matches(instance2, "http://example.net/w2.js", "name2"));
+  EXPECT_FALSE(Matches(instance2, kDataURL, ""));
+  EXPECT_FALSE(Matches(instance2, kDataURL, "name"));
+
+  SharedWorkerInstance instance3(
+      GURL(kDataURL), std::string(),
+      url::Origin::Create(GURL("http://example.com/")), std::string(),
+      blink::kWebContentSecurityPolicyTypeReport, blink::kWebAddressSpacePublic,
+      browser_context_->GetResourceContext(), partition_id_,
+      blink::mojom::SharedWorkerCreationContextType::kNonsecure,
+      base::UnguessableToken::Create());
+  EXPECT_FALSE(Matches(instance3, "http://example.com/w.js", ""));
+  EXPECT_FALSE(Matches(instance3, "http://example.com/w2.js", ""));
+  EXPECT_FALSE(Matches(instance3, "http://example.net/w.js", ""));
+  EXPECT_FALSE(Matches(instance3, "http://example.net/w2.js", ""));
+  EXPECT_FALSE(Matches(instance3, "http://example.com/w.js", "name"));
+  EXPECT_FALSE(Matches(instance3, "http://example.com/w2.js", "name"));
+  EXPECT_FALSE(Matches(instance3, "http://example.net/w.js", "name"));
+  EXPECT_FALSE(Matches(instance3, "http://example.net/w2.js", "name"));
+  EXPECT_FALSE(Matches(instance3, "http://example.com/w.js", "name2"));
+  EXPECT_FALSE(Matches(instance3, "http://example.com/w2.js", "name2"));
+  EXPECT_FALSE(Matches(instance3, "http://example.net/w.js", "name2"));
+  EXPECT_FALSE(Matches(instance3, "http://example.net/w2.js", "name2"));
+  // The data: URL should match because the instance has the same data: URL,
+  // name, and constructor origin.
+  EXPECT_TRUE(Matches(instance3, kDataURL, ""));
+  EXPECT_FALSE(Matches(instance3, kDataURL, "name"));
+
+  SharedWorkerInstance instance4(
+      GURL(kDataURL), "name", url::Origin::Create(GURL("http://example.com/")),
+      std::string(), blink::kWebContentSecurityPolicyTypeReport,
+      blink::kWebAddressSpacePublic, browser_context_->GetResourceContext(),
+      partition_id_, blink::mojom::SharedWorkerCreationContextType::kNonsecure,
+      base::UnguessableToken::Create());
+  EXPECT_FALSE(Matches(instance4, "http://example.com/w.js", ""));
+  EXPECT_FALSE(Matches(instance4, "http://example.com/w2.js", ""));
+  EXPECT_FALSE(Matches(instance4, "http://example.net/w.js", ""));
+  EXPECT_FALSE(Matches(instance4, "http://example.net/w2.js", ""));
+  EXPECT_FALSE(Matches(instance4, "http://example.com/w.js", "name"));
+  EXPECT_FALSE(Matches(instance4, "http://example.com/w2.js", "name"));
+  EXPECT_FALSE(Matches(instance4, "http://example.net/w.js", "name"));
+  EXPECT_FALSE(Matches(instance4, "http://example.net/w2.js", "name"));
+  EXPECT_FALSE(Matches(instance4, "http://example.com/w.js", "name2"));
+  EXPECT_FALSE(Matches(instance4, "http://example.com/w2.js", "name2"));
+  EXPECT_FALSE(Matches(instance4, "http://example.net/w.js", "name2"));
+  EXPECT_FALSE(Matches(instance4, "http://example.net/w2.js", "name2"));
+  EXPECT_FALSE(Matches(instance4, kDataURL, ""));
+  // The data: URL should match because the instance has the same data: URL,
+  // name, and constructor origin.
+  EXPECT_TRUE(Matches(instance4, kDataURL, "name"));
+
+  SharedWorkerInstance instance5(
+      GURL(kDataURL), std::string(),
+      url::Origin::Create(GURL("http://example.net/")), std::string(),
+      blink::kWebContentSecurityPolicyTypeReport, blink::kWebAddressSpacePublic,
+      browser_context_->GetResourceContext(), partition_id_,
+      blink::mojom::SharedWorkerCreationContextType::kNonsecure,
+      base::UnguessableToken::Create());
+  EXPECT_FALSE(Matches(instance5, "http://example.com/w.js", ""));
+  EXPECT_FALSE(Matches(instance5, "http://example.com/w2.js", ""));
+  EXPECT_FALSE(Matches(instance5, "http://example.net/w.js", ""));
+  EXPECT_FALSE(Matches(instance5, "http://example.net/w2.js", ""));
+  EXPECT_FALSE(Matches(instance5, "http://example.com/w.js", "name"));
+  EXPECT_FALSE(Matches(instance5, "http://example.com/w2.js", "name"));
+  EXPECT_FALSE(Matches(instance5, "http://example.net/w.js", "name"));
+  EXPECT_FALSE(Matches(instance5, "http://example.net/w2.js", "name"));
+  EXPECT_FALSE(Matches(instance5, "http://example.com/w.js", "name2"));
+  EXPECT_FALSE(Matches(instance5, "http://example.com/w2.js", "name2"));
+  EXPECT_FALSE(Matches(instance5, "http://example.net/w.js", "name2"));
+  EXPECT_FALSE(Matches(instance5, "http://example.net/w2.js", "name2"));
+  // The data: URL should not match because the instance has a different
+  // constructor origin.
+  EXPECT_FALSE(Matches(instance5, kDataURL, ""));
+  EXPECT_FALSE(Matches(instance5, kDataURL, "name"));
 }
 
 TEST_F(SharedWorkerInstanceTest, AddressSpace) {
   for (int i = 0; i < static_cast<int>(blink::kWebAddressSpaceLast); i++) {
     SharedWorkerInstance instance(
-        GURL("http://example.com/w.js"), "name", std::string(),
+        GURL("http://example.com/w.js"), "name",
+        url::Origin::Create(GURL("http://example.com/")), std::string(),
         blink::kWebContentSecurityPolicyTypeReport,
         static_cast<blink::WebAddressSpace>(i),
         browser_context_->GetResourceContext(), partition_id_,

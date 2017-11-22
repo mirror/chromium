@@ -138,10 +138,11 @@ void SharedWorkerRepositoryClientImpl::Connect(SharedWorker* worker,
   std::unique_ptr<WebSharedWorkerConnectListener> listener =
       std::make_unique<SharedWorkerConnectListener>(worker);
   client_->Connect(
-      url, name, GetId(document), header, header_type,
+      url, name, GetId(document),
+      WebSecurityOrigin(document->GetSecurityOrigin()), header, header_type,
       worker->GetExecutionContext()->GetSecurityContext().AddressSpace(),
-      ToCreationContextType(is_secure_context),
-      std::move(port), std::move(listener));
+      ToCreationContextType(is_secure_context), std::move(port),
+      std::move(listener));
 }
 
 void SharedWorkerRepositoryClientImpl::DocumentDetached(Document* document) {
