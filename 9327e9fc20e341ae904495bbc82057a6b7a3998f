@@ -1,0 +1,386 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d9ddc47_1f43bff1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Let\u0027s update the description.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd66470_5ea4685d",
+        "filename": "components/sessions/core/serialized_navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "nit: this contains some information about\n\n(See also some of my comments in navigation_entry.h, like maybe using a landing page term.)",
+      "range": {
+        "startLine": 150,
+        "startChar": 69,
+        "endLine": 151,
+        "endChar": 19
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835750d0_ea2738f9",
+        "filename": "components/sessions/core/serialized_navigation_entry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "There should probably be a test which covers a non-null case, right?",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53711763_ebe73c1c",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Worth adding a comment, saying this is meant to ensure the output_entry keeps track of its landing page as it gets replaced, without overwriting it later.  Maybe point readers to the struct\u0027s definition for additional info.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561b324f_153dd9d2",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Not sure I remember the details of this.  Can you file a bug and cite the number here?",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e86a417_564530c5",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "This is called for subframes too, via RendererDidNavigateNewSubframe.  If we are tracking the value on NavigationEntryImpl instead of FrameNavigationEntry, we may need to avoid your update in the subframe case?\n\nFor example, suppose page A1 does a replaceState to A2.  A2 is the landing page.  A2 has a subframe B1, and it navigates to B2 with NEW_SUBFRAME, creating a new NavigationEntry.  Do we want A2 to be the landing page for the new NavigationEntry, or A1?\n\nLet\u0027s decide, and be sure we have a test and comment for it, since it could go either way.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e593bbd_7b06f210",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3760,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "This prefix isn\u0027t helpful here, since this data isn\u0027t stored on FrameNavigationEntry.  Let\u0027s change it to match the struct name?",
+      "range": {
+        "startLine": 3760,
+        "startChar": 23,
+        "endLine": 3760,
+        "endChar": 43
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e27dd8_091f9ac5",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3768,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "It might be useful to make this test (or a subsequent one) a bit more elaborate to show why the redirect chain and original_request_url don\u0027t help.  We could use server-redirect (similar to FrameNavigationEntry_MainFrameRedirectChain) to go to this client-redirect.html URL, for example.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633a244a_1166ff28",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3778,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Can we declare a url2 (simple_page_1.html) and verify that\u0027s where we end up?  It makes the test more robust against errors and offers better documentation for what concept we\u0027re after.",
+      "range": {
+        "startLine": 3778,
+        "startChar": 11,
+        "endLine": 3778,
+        "endChar": 18
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da16cf16_3f182162",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3780,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Let\u0027s pull this into a local variable so that the rest of the test isn\u0027t as verbose.",
+      "range": {
+        "startLine": 3780,
+        "startChar": 8,
+        "endLine": 3780,
+        "endChar": 37
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d026d62a_cca33e27",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3795,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Let\u0027s also add a test about location.replace, possibly within this ClientRedirect test if you want.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22c4099_2d5606bf",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3800,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 3800,
+        "startChar": 23,
+        "endLine": 3800,
+        "endChar": 43
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da7fe9c_60a13fed",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3834,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Worth putting in a local variable here as well.",
+      "range": {
+        "startLine": 3834,
+        "startChar": 20,
+        "endLine": 3834,
+        "endChar": 49
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1477d4f9_bcf70c22",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3849,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "...and make sure the replaced entry data doesn\u0027t change.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6670c58_68b0e3a8",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "nit: this struct holds some information about",
+      "range": {
+        "startLine": 221,
+        "startChar": 69,
+        "endLine": 221,
+        "endChar": 73
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090c0baf_e483ae7c",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "This will raise a lot of questions about what types of navigations it covers, how it relates to the redirect chain, and whether the first iteration of the NavEntry is the right one to track, so let\u0027s expand the comment (especially since it will end up in its own file).\n\nThings worth pointing out:\n - This is not the same as the first entry in the redirect chain or the original_request_url, since many server redirects could have happened in the meantime.\n - This is the first commit that happens for a given NavigationEntry, before any client redirects, location.replace() events, or history.replaceState() events.\n - The value is preserved for cross-document replacement navigations which generate a new NavigationEntry with replacement (e.g., client redirects and location.replace()), as well as same-document cases that update the existing NavigationEntry (e.g., history.replaceState()).\n - Something about only tracking this for main frames, even though the concept is valid for subframes?\n\nQuestions:\nDo we have a way to be confident that there won\u0027t be a later entry we should track?  We may be able to explain something about how we\u0027re tracking the landing page for a typed (etc) navigation which generates a new entry without replacement, and such cases will never replace an entry?\n\nAre we concerned about history navigations that redirect?  I think it\u0027s probably ok, but it might be an interesting case to point out (i.e., it may replace the entry you had before).",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a1a282_08b5e188",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "This will need to end up in its own file:\n\nhttp://www.chromium.org/developers/content-module/content-api\n\"each interface/struct/enum should be in a separate file\"",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5a5683_693a5ff7",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Can we give this a name, like landing_url or landing_page_url?  Similar for the members below.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab38e0d3_8176d47b",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "Worth explaining why we need to track the timestamp, since it\u0027s a bit unclear why it would be useful.",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db96333_ae560456",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-22T05:36:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to be used outside content/, so it should be in the Impl class rather than on the public interface.\n\nhttp://www.chromium.org/developers/content-module/content-api\n\"only expose methods in the public API that embedders need. If a method is only used by other code in content, it belongs in foo_impl.h and not foo.h.\"",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
