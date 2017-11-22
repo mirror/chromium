@@ -34,6 +34,24 @@
       "revId": "54d0c45cc2f56809d7fc721e4e1fdb35bda486ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8758e2ec_6c099031",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-22T00:55:07Z",
+      "side": 1,
+      "message": "cc::PainterScrollbarLayer probably used a different code path than regular cc::PictureLayer, maybe RTree culling is not done there (thus insensitive to visual rect).\n\nI think the visual rect of cc drawing display items are very likely changed by this CL, but I\u0027m not sure whether it is more correct before or after. Thanks for investigating and please let me know what you found!",
+      "parentUuid": "0dee695c_5cf4eaab",
+      "revId": "54d0c45cc2f56809d7fc721e4e1fdb35bda486ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
