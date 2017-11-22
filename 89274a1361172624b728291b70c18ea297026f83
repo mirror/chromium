@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c61aa68_ed7aa980",
+        "filename": "services/resource_coordinator/observers/metrics_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-22T20:22:24Z",
+      "side": 1,
+      "message": "It would be good to make this a Finch parameter so that it could be easily changed.",
+      "range": {
+        "startLine": 227,
+        "startChar": 52,
+        "endLine": 227,
+        "endChar": 76
+      },
+      "revId": "89274a1361172624b728291b70c18ea297026f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272c9b56_1a12f5d4",
+        "filename": "services/resource_coordinator/observers/metrics_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-22T20:22:24Z",
+      "side": 1,
+      "message": "Why not just use TestUkmRecorder from components/ukm/test_ukm_recorder.h?\n\nAlso, prefer to write test over the entries you are recording as in:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/774120",
+      "range": {
+        "startLine": 399,
+        "startChar": 18,
+        "endLine": 399,
+        "endChar": 37
+      },
+      "revId": "89274a1361172624b728291b70c18ea297026f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
