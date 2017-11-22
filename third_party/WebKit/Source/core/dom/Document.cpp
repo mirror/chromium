@@ -5984,8 +5984,10 @@ void Document::SetFeaturePolicy(const String& feature_policy_header) {
         ConsoleMessage::Create(kOtherMessageSource, kErrorMessageLevel,
                                "Error with Feature-Policy header: " + message));
   }
-  if (frame_ && !parsed_header.empty())
-    frame_->Client()->DidSetFeaturePolicyHeader(parsed_header);
+  if (frame_) {
+    frame_->Client()->DidSetFramePolicyHeaders(GetSandboxFlags(),
+                                               parsed_header);
+  }
 }
 
 ukm::UkmRecorder* Document::UkmRecorder() {
