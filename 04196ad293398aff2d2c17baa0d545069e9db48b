@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e008285c_80d6de87",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-22T22:12:51Z",
+      "side": 1,
+      "message": "Move this into the placeholder text block below (it\u0027s not used otherwise)",
+      "revId": "04196ad293398aff2d2c17baa0d545069e9db48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
