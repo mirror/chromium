@@ -147,6 +147,13 @@ class BookmarkModel : public BookmarkUndoProvider,
             const BookmarkNode* new_parent,
             int index);
 
+  // Ensures that the favicon state is either loading or loaded. Returns true
+  // if the state is LOADED_FAVICON, and false if LOADING_FAVICON (either
+  // because the state was LOADING_FAVICON prior to this function, or it was
+  // INVALID_FAVICON and this call triggered the loading state). |node| must
+  // not be nullptr and |*node| must not be a folder.
+  bool EnsureFaviconLoad(const BookmarkNode* node);
+
   // Returns the favicon for |node|. If the favicon has not yet been
   // loaded it is loaded and the observer of the model notified when done.
   const gfx::Image& GetFavicon(const BookmarkNode* node);

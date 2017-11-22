@@ -323,14 +323,34 @@ void BookmarkModel::Copy(const BookmarkNode* node,
     store_->ScheduleSave();
 }
 
+bool BookmarkModel::EnsureFaviconLoad(const BookmarkNode* node) {
+  DCHECK(node);
+  DCHECK(!node->is_folder());
+
+  switch (node->favicon_state()) {
+    case BookmarkNode::LOADED_FAVICON:
+      return true;
+
+    case BookmarkNode::INVALID_FAVICON: {
+      BookmarkNode* mutable_node = AsMutable(node);
+      LoadFavicon(mutable_node, client_->PreferTouchIcon()
+                                    ? favicon_base::IconType::kTouchIcon
+                                    : favicon_base::IconType::kFavicon);
+      break;
+    }
+
+    case BookmarkNode::LOADING_FAVICON:
+      break;
+  }
+
+  DCHECK_EQ(node->favicon_state(), BookmarkNode::LOADING_FAVICON);
+  return false;
+}
+
 const gfx::Image& BookmarkModel::GetFavicon(const BookmarkNode* node) {
   DCHECK(node);
-  if (node->favicon_state() == BookmarkNode::INVALID_FAVICON) {
-    BookmarkNode* mutable_node = AsMutable(node);
-    LoadFavicon(mutable_node, client_->PreferTouchIcon()
-                                  ? favicon_base::IconType::kTouchIcon
-                                  : favicon_base::IconType::kFavicon);
-  }
+  if (!node->is_folder())
+    EnsureFaviconLoad(node);
   return node->favicon();
 }
 

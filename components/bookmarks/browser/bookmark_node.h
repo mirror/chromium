@@ -70,7 +70,7 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
 
   // Returns the favicon's URL. Returns an empty URL if there is no favicon
   // associated with this bookmark.
-  const GURL* icon_url() const { return icon_url_ ? icon_url_.get() : nullptr; }
+  const GURL* icon_url() const { return icon_url_.get(); }
 
   Type type() const { return type_; }
   void set_type(Type type) { type_ = type; }
@@ -92,8 +92,6 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
   // node whose type is not URL.
   bool is_folder() const { return type_ != URL; }
   bool is_url() const { return type_ == URL; }
-
-  bool is_favicon_loaded() const { return favicon_state_ == LOADED_FAVICON; }
 
   // Accessor method for controlling the visibility of a bookmark node/sub-tree.
   // Note that visibility is not propagated down the tree hierarchy so if a
