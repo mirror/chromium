@@ -748,6 +748,168 @@ TEST_F(AutofillMetricsTest, QualityMetrics) {
   }
 }
 
+// Test that we log quality metrics appropriately with fields having
+// only_fill_when_focused set to true.
+TEST_F(AutofillMetricsTest,
+       QualityMetrics_LoggedCorrecltyForOnlyFillWhenFocusedField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  std::vector<ServerFieldType> heuristic_types, server_types;
+  FormFieldData field;
+
+  // TRUE_POSITIVE
+  test::CreateTestFormField("Name", "name", "Elvis Aaron Presley", "text",
+                            &field);
+  form.fields.push_back(field);
+  heuristic_types.push_back(NAME_FULL);
+  server_types.push_back(NAME_FULL);
+
+  // TRUE_POSITIVE
+  test::CreateTestFormField("Address", "address", "3734 Elvis Presley Blvd.",
+                            "text", &field);
+  form.fields.push_back(field);
+  heuristic_types.push_back(ADDRESS_HOME_LINE1);
+  server_types.push_back(ADDRESS_HOME_LINE1);
+
+  // TRUE_POSITIVE
+  test::CreateTestFormField("Phone", "phone", "2345678901", "text", &field);
+  form.fields.push_back(field);
+  heuristic_types.push_back(PHONE_HOME_CITY_AND_NUMBER);
+  server_types.push_back(PHONE_HOME_CITY_AND_NUMBER);
+
+  // Below are fields with only_fill_when_focused set to true.
+  // TRUE_NEGATIVE_EMPTY
+  test::CreateTestFormField("Phone1", "phone1", "", "text", &field);
+  form.fields.push_back(field);
+  heuristic_types.push_back(PHONE_HOME_CITY_AND_NUMBER);
+  server_types.push_back(PHONE_HOME_WHOLE_NUMBER);
+
+  // TRUE_POSITIVE + UNNECCESSARY_RATIONALIZATION
+  test::CreateTestFormField("Phone2", "phone2", "2345678901", "text", &field);
+  form.fields.push_back(field);
+  heuristic_types.push_back(PHONE_HOME_CITY_AND_NUMBER);
+  server_types.push_back(PHONE_HOME_CITY_AND_NUMBER);
+
+  // FALSE_NEGATIVE_MISMATCH
+  test::CreateTestFormField("Phone3", "phone3", "Elvis Aaron Presley", "text",
+                            &field);
+  form.fields.push_back(field);
+  heuristic_types.push_back(PHONE_HOME_CITY_AND_NUMBER);
+  server_types.push_back(PHONE_HOME_WHOLE_NUMBER);
+
+  // Simulate having seen this form on page load.
+  autofill_manager_->AddSeenForm(form, heuristic_types, server_types);
+  std::string guid("00000000-0000-0000-0000-000000000001");
+  // Trigger phone number rationalization at filling time.
+  autofill_manager_->FillOrPreviewForm(
+      AutofillDriver::FORM_DATA_ACTION_FILL, 0, form, form.fields.front(),
+      autofill_manager_->MakeFrontendID(std::string(), guid));
+
+  // Simulate form submission.
+  base::HistogramTester histogram_tester;
+  autofill_manager_->SubmitForm(form, TimeTicks::Now());
+
+  // Heuristic predictions.
+  {
+    std::string aggregate_histogram =
+        "Autofill.FieldPredictionQuality.Aggregate.Heuristic";
+    std::string by_field_type_histogram =
+        "Autofill.FieldPredictionQuality.ByFieldType.Heuristic";
+
+    // TRUE_POSITIVE:
+    histogram_tester.ExpectBucketCount(aggregate_histogram,
+                                       AutofillMetrics::TRUE_POSITIVE, 4);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(NAME_FULL, AutofillMetrics::TRUE_POSITIVE), 1);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(ADDRESS_HOME_LINE1,
+                                AutofillMetrics::TRUE_POSITIVE),
+        1);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(PHONE_HOME_CITY_AND_NUMBER,
+                                AutofillMetrics::TRUE_POSITIVE),
+        2);
+    // TRUE_NEGATIVE_EMPTY
+    histogram_tester.ExpectBucketCount(aggregate_histogram,
+                                       AutofillMetrics::TRUE_NEGATIVE_EMPTY, 1);
+    // UNNECCESSARY_RATIONALIZATION
+    histogram_tester.ExpectBucketCount(
+        aggregate_histogram, AutofillMetrics::UNNECCESSARY_RATIONALIZATION, 1);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(PHONE_HOME_CITY_AND_NUMBER,
+                                AutofillMetrics::UNNECCESSARY_RATIONALIZATION),
+        1);
+    // FALSE_NEGATIVE_MISMATCH
+    histogram_tester.ExpectBucketCount(
+        aggregate_histogram, AutofillMetrics::FALSE_NEGATIVE_MISMATCH, 1);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(PHONE_HOME_WHOLE_NUMBER,
+                                AutofillMetrics::FALSE_NEGATIVE_MISMATCH),
+        1);
+    // Sanity Check:
+    histogram_tester.ExpectTotalCount(aggregate_histogram, 7);
+    histogram_tester.ExpectTotalCount(by_field_type_histogram, 6);
+  }
+
+  // Server overrides heuristic so Overall and Server are the same predictions
+  // (as there were no test fields where server == NO_SERVER_DATA and heuristic
+  // != UNKNOWN_TYPE).
+  for (const std::string source : {"Server", "Overall"}) {
+    std::string aggregate_histogram =
+        "Autofill.FieldPredictionQuality.Aggregate." + source;
+    std::string by_field_type_histogram =
+        "Autofill.FieldPredictionQuality.ByFieldType." + source;
+
+    // TRUE_POSITIVE:
+    histogram_tester.ExpectBucketCount(aggregate_histogram,
+                                       AutofillMetrics::TRUE_POSITIVE, 4);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(NAME_FULL, AutofillMetrics::TRUE_POSITIVE), 1);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(ADDRESS_HOME_LINE1,
+                                AutofillMetrics::TRUE_POSITIVE),
+        1);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(PHONE_HOME_CITY_AND_NUMBER,
+                                AutofillMetrics::TRUE_POSITIVE),
+        2);
+    // TRUE_NEGATIVE_EMPTY
+    histogram_tester.ExpectBucketCount(aggregate_histogram,
+                                       AutofillMetrics::TRUE_NEGATIVE_EMPTY, 1);
+    // UNNECCESSARY_RATIONALIZATION
+    histogram_tester.ExpectBucketCount(
+        aggregate_histogram, AutofillMetrics::UNNECCESSARY_RATIONALIZATION, 1);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(PHONE_HOME_CITY_AND_NUMBER,
+                                AutofillMetrics::UNNECCESSARY_RATIONALIZATION),
+        1);
+    // FALSE_NEGATIVE_MISMATCHFALSE_NEGATIVE_MATCH
+    histogram_tester.ExpectBucketCount(
+        aggregate_histogram, AutofillMetrics::FALSE_NEGATIVE_MISMATCH, 1);
+    histogram_tester.ExpectBucketCount(
+        by_field_type_histogram,
+        GetFieldTypeGroupMetric(PHONE_HOME_CITY_AND_NUMBER,
+                                AutofillMetrics::FALSE_NEGATIVE_MISMATCH),
+        1);
+    // Sanity Check:
+    histogram_tester.ExpectTotalCount(aggregate_histogram, 7);
+    histogram_tester.ExpectTotalCount(by_field_type_histogram, 6);
+  }
+}
+
 // Tests the true negatives (empty + no prediction and unknown + no prediction)
 // and false positives (empty + bad prediction and unknown + bad prediction)
 // are counted correctly.
