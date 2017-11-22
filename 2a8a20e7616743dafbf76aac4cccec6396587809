@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1122d507_ac4ec9eb",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: it is more readable to use positive conditions.\n\nScrollOrientation scroll_orientation \u003d kNoScroll;\nif (did_scroll_y_for_scroll_gesture_)\n  scroll_orientation |\u003d kVerticalScroll;\nif (did_scroll_x_for_scroll_gesture_)\n  scroll_orientation |\u003d kHorizontalScroll;",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 483,
+        "endChar": 41
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a7ee82_3c125043",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "So these tests use a symmetrical positive padding.\nHow about adding a test case that uses asymmetrical\npadding values e.g. \n  padding: 10px 12px 14px 16px;\n\n\nsame with negative padding and margins.",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a585903_cf86a112",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "super-nit: The comment should be above the TEST_P below.",
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad438c9e_67cadbe4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: maybe call these EXPECT_EQ_CONTAINER(expected, actual) to match gtest naming convention",
+      "range": {
+        "startLine": 305,
+        "startChar": 8,
+        "endLine": 305,
+        "endChar": 23
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fe0c57_0d186467",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: These should really be EXPECT_EQ. I don\u0027t see a reason to abort the test on this failure.",
+      "range": {
+        "startLine": 307,
+        "startChar": 4,
+        "endLine": 307,
+        "endChar": 13
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d956adec_aa045ccc",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "This does not this take into account the \"padding\" and \"margin\".\nIt works still because padding and margin values you are using \nare symmetrical thus they don\u0027t affect the \"center\" alignment.\n\nSo how about adding a test that using asymetrical padding and margins?",
+      "range": {
+        "startLine": 376,
+        "startChar": 51,
+        "endLine": 376,
+        "endChar": 58
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6582078a_15c8de1e",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "super-nit: typical ordering of arguments for assertions  is \"expected, actual\". Just a convention.",
+      "range": {
+        "startLine": 430,
+        "startChar": 18,
+        "endLine": 430,
+        "endChar": 54
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da425a58_f3f30f23",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: s/FindSnapPosition()/GetSnapOffset()",
+      "range": {
+        "startLine": 478,
+        "startChar": 29,
+        "endLine": 478,
+        "endChar": 45
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d859cc_a7e1f156",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: ditto. Should be EXPECT_TRUE and also for all other ASSERT",
+      "range": {
+        "startLine": 493,
+        "startChar": 2,
+        "endLine": 493,
+        "endChar": 13
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f50582_d95b1479",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: how about adding another case here with current offset \"40, 150\" that should give us \"50,150\".\n\nThis verifies that \"negative or zero distance\" also works correctly. Also ensures it \ncorrectly handles the snap point with both alignments.",
+      "range": {
+        "startLine": 573,
+        "startChar": 0,
+        "endLine": 573,
+        "endChar": 1
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7394345a_2a13d9f3",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: axis or axes.",
+      "range": {
+        "startLine": 105,
+        "startChar": 9,
+        "endLine": 105,
+        "endChar": 15
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bc1809_06f56424",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: should end with period.",
+      "range": {
+        "startLine": 127,
+        "startChar": 33,
+        "endLine": 127,
+        "endChar": 46
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcd3f70_dbd7da2f",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-22T19:17:27Z",
+      "side": 1,
+      "message": "nit: should end with period.",
+      "range": {
+        "startLine": 130,
+        "startChar": 42,
+        "endLine": 130,
+        "endChar": 55
+      },
+      "revId": "2a8a20e7616743dafbf76aac4cccec6396587809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
