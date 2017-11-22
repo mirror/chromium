@@ -16,6 +16,24 @@
       "revId": "ad4cca8ab896105c0dfe8e195ed3ba5c8c03524b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d7abc1_3f026fdd",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-22T16:51:28Z",
+      "side": 1,
+      "message": "It can\u0027t be checked over the resulting keyframe_effects vector as ToKeyframeEffectReadOnly will already have been called - which will be undefined for Release and a DCHECK for Debug mode. Maybe I misunderstand?",
+      "parentUuid": "8d827247_367b0d61",
+      "revId": "ad4cca8ab896105c0dfe8e195ed3ba5c8c03524b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
