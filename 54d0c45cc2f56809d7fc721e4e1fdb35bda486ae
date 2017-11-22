@@ -52,6 +52,24 @@
       "revId": "54d0c45cc2f56809d7fc721e4e1fdb35bda486ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03de3d34_89d4b91f",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-22T05:01:28Z",
+      "side": 1,
+      "message": "After some investigation, I think the new visual rect is correct.\n\nFor SPv1, the final cc visual rect is unchanged, because it\u0027s added by the offset in GraphicsLayer::VisualRect(), then in DrawingDisplayItem::AppendToWebDisplayItemList() the same offset is subtracted, so the final visual rect of a GraphicsLayer is still (0,0, size).\n\nFor SPv175+, a scrollbar layer\u0027s VisualRect is correct to be in layer state (which is the local border box state of the containing box) coordinates.",
+      "parentUuid": "8758e2ec_6c099031",
+      "revId": "54d0c45cc2f56809d7fc721e4e1fdb35bda486ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
