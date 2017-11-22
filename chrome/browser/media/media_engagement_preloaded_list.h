@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/sequence_checker.h"
 
 namespace base {
 class FilePath;
@@ -20,21 +21,23 @@ class Origin;
 
 class MediaEngagementPreloadedList {
  public:
+  static MediaEngagementPreloadedList* GetInstance();
+
   MediaEngagementPreloadedList();
   ~MediaEngagementPreloadedList();
 
   // Load the contents from |path|.
-  bool LoadFromFile(base::FilePath path);
+  bool LoadFromFile(const base::FilePath path);
 
   // Checks whether |origin| has a high global engagement and is present in the
   // preloaded list.
   bool CheckOriginIsPresent(url::Origin origin);
 
   // Check whether we have loaded a list.
-  bool IsLoaded() const { return is_loaded_; }
+  bool IsLoaded() const;
 
   // Check whether the list we have loaded is empty.
-  bool IsEmpty() const { return trie_bits_ == 0; }
+  bool IsEmpty() const;
 
  private:
   // Sets |result| to true if |input| is present in the list. If there was an
@@ -54,6 +57,8 @@ class MediaEngagementPreloadedList {
 
   // If a list has been successfully loaded.
   bool is_loaded_ = false;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(MediaEngagementPreloadedList);
 };
