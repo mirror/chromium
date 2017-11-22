@@ -70,6 +70,30 @@
       "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476019db_de6ac854",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-11-22T13:58:45Z",
+      "side": 1,
+      "message": "This has implications outside of just font usage, I wouldn\u0027t actually expect this to do anything without the browser explicitly issuing the extension. Were you able to understand why this is necessary for it to work:?",
+      "parentUuid": "ca869c75_716d22a1",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0f05f9245b026dd532198059df57c9f9413e4d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
