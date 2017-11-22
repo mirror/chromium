@@ -16,6 +16,24 @@
       "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c8f949_4777dc64",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-22T21:35:09Z",
+      "side": 1,
+      "message": "I agree it\u0027s unfortunate, and I think that makes sense to me. Can you add a TODO to stop doing this? And how can we go about coordinating an update to the extension to let us eventually resolve the TODO?",
+      "parentUuid": "ca29b373_19c1e633",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
