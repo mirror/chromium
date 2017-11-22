@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "f62fdbba_4f1e781a",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1784,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-22T17:24:38Z",
+      "side": 1,
+      "message": "Is there a reason we have to fire these events synchronously? I\u0027d default to enqueueing them if we have the option.",
+      "revId": "eb1d506e2da48e3f761d3cba7920baa4e58d8d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65b8b75f_ba5eca51",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 6
@@ -65,6 +82,47 @@
         "endLine": 461,
         "endChar": 20
       },
+      "revId": "eb1d506e2da48e3f761d3cba7920baa4e58d8d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d280e0_f364b081",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-22T17:24:38Z",
+      "side": 1,
+      "message": "+1. If it\u0027s not supported for OOPIFs yet, please add a TODO for it.",
+      "parentUuid": "19a760cf_39d0f05a",
+      "range": {
+        "startLine": 461,
+        "startChar": 19,
+        "endLine": 461,
+        "endChar": 20
+      },
+      "revId": "eb1d506e2da48e3f761d3cba7920baa4e58d8d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628ce3b2_76813252",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-22T17:24:38Z",
+      "side": 1,
+      "message": "Rather than DidPause() being recursive, maybe traverse the frames here?\n\nfor (Frame* frame \u003d main_frame_.Get(); frame; frame \u003d frame-\u003eTree().TraverseNext()) {\n}\n\n...will iterate over every Frame* in the this Page. This will be particularly be cleaner if this code needs to support RemoteFrames at some point.",
       "revId": "eb1d506e2da48e3f761d3cba7920baa4e58d8d7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
