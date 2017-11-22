@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "50445a6a_57c5f259",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-22T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ffdc416_936e0c5f",
+      "revId": "a68449cb33a899e2ef72c9c565fcd9d1aa796a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ccc6dfc_dc1570d4",
         "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
         "patchSetId": 11
