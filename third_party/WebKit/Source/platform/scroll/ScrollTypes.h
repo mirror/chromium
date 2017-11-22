@@ -185,7 +185,12 @@ enum ScrollInertialPhase {
 
 enum ScrollbarOrientation { kHorizontalScrollbar, kVerticalScrollbar };
 
-enum ScrollOrientation { kHorizontalScroll, kVerticalScroll };
+enum ScrollOrientation {
+  kNoScroll = 0,
+  kHorizontalScroll = 1 << 0,
+  kVerticalScroll = 1 << 1,
+  kBothScroll = kHorizontalScroll | kVerticalScroll
+};
 
 enum ScrollbarMode { kScrollbarAuto, kScrollbarAlwaysOff, kScrollbarAlwaysOn };
 
