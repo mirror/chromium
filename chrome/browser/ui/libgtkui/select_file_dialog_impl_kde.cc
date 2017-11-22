@@ -2,7 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <X11/Xlib.h>
+#include "ui/gfx/x/x11.h"
+
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <stddef.h>
@@ -242,7 +243,7 @@ void SelectFileDialogImplKDE::SelectFileImpl(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   type_ = type;
 
-  XID window_xid = None;
+  XID window_xid = x11::None;
   if (owning_window && owning_window->GetHost()) {
     // |owning_window| can be null when user right-clicks on a downloadable item
     // and chooses 'Open Link in New Tab' when 'Ask where to save each file
@@ -341,7 +342,7 @@ void SelectFileDialogImplKDE::GetKDialogCommandLine(
   CHECK(command_line);
 
   // Attach to the current Chrome window.
-  if (parent != None) {
+  if (parent != x11::None) {
     command_line->AppendSwitchNative(
         desktop_ == base::nix::DESKTOP_ENVIRONMENT_KDE3 ?
             "--embed" : "--attach",

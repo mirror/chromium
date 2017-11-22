@@ -4,13 +4,14 @@
 
 import("//build/config/crypto.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/sysroot.gni")
 import("//chrome/common/features.gni")
 import("//extensions/features/features.gni")
 import("//printing/features/features.gni")
 import("//services/service_manager/public/service_manifest.gni")
 
-static_library("utility") {
+jumbo_static_library("utility") {
   sources = [
     "chrome_content_utility_client.cc",
     "chrome_content_utility_client.h",

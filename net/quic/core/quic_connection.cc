@@ -2686,6 +2686,7 @@ void QuicConnection::CheckIfApplicationLimited() {
 
   sent_packet_manager_.OnApplicationLimited();
 }
+#undef ENDPOINT
 
 void QuicConnection::UpdatePacketContent(PacketContent type) {
   if (!server_reply_to_connectivity_probes_) {

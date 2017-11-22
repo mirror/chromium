@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-component("prefs") {
+import("//build/config/jumbo.gni")
+
+jumbo_component("prefs") {
   sources = [
     "command_line_pref_store.cc",
     "command_line_pref_store.h",
