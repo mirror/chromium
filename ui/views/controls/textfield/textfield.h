@@ -170,6 +170,8 @@ class VIEWS_EXPORT Textfield : public View,
     placeholder_text_draw_flags_ = flags;
   }
 
+  int placeholder_text_draw_flags() { return placeholder_text_draw_flags_; }
+
   // Sets whether to indicate the textfield has invalid content.
   void SetInvalid(bool invalid);
   bool invalid() const { return invalid_; }

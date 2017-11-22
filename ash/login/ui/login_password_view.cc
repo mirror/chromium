@@ -19,6 +19,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/events/event_constants.h"
 #include "ui/events/keycodes/dom/dom_code.h"
+#include "ui/gfx/canvas.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/background.h"
@@ -389,6 +390,11 @@ LoginPasswordView::LoginPasswordView() : ime_keyboard_observer_(this) {
   textfield_->SetGlyphSpacing(6);
   textfield_->SetBorder(nullptr);
   textfield_->SetBackgroundColor(SK_ColorTRANSPARENT);
+  // Turn off subpixel rendering for the transparent background. See
+  // crbug.com/786343.
+  textfield_->set_placeholder_text_draw_flags(
+      gfx::Canvas::NO_SUBPIXEL_RENDERING |
+      textfield_->placeholder_text_draw_flags());
 
   password_row_->AddChildView(textfield_);
   layout->SetFlexForView(textfield_, 1);
