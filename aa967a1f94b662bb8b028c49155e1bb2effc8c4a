@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09c1e7c4_47a699ff",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T07:31:02Z",
+      "side": 1,
+      "message": "This breaks \"gn check\" so I might have to move the interface into Blink... or I guess just put into storage/?\n\nERROR at //storage/common/data_element.h:23:11: Can\u0027t include this header from here.\n#include \"services/network/public/interfaces/data_pipe_getter.mojom.h\"\n          ^----------------------------------------------------------\nThe target:\n  //storage/common:common\nis including a file from the target:\n  //services/network/public/interfaces:interfaces__generator\n\nIt\u0027s usually best to depend directly on the destination target.\nIn some cases, the destination target is considered a subcomponent\nof an intermediate target. In this case, the intermediate target\nshould depend publicly on the destination to forward the ability\nto include headers.\n\nDependency chain (there may also be others):\n  //storage/common:common --\u003e\n  //third_party/WebKit/public:blink_headers --[private]--\u003e\n  //services/network/public/interfaces:interfaces --\u003e\n  //services/network/public/interfaces:interfaces__generator",
+      "revId": "aa967a1f94b662bb8b028c49155e1bb2effc8c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
