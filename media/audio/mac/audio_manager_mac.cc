@@ -894,8 +894,7 @@ AudioParameters AudioManagerMac::GetPreferredOutputStreamParameters(
 
 void AudioManagerMac::InitializeOnAudioThread() {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
-  if (base::FeatureList::IsEnabled(kSerializeCoreAudioPauseResume))
-    InitializeCoreAudioDispatchOverride();
+  InitializeCoreAudioDispatchOverride();
   power_observer_.reset(new AudioPowerObserver());
 }
 
