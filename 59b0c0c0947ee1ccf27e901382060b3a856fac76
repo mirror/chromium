@@ -139,6 +139,24 @@
       "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef59b983_4ada5d5e",
+        "filename": "content/renderer/media/webrtc/webrtc_video_frame_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-22T03:01:51Z",
+      "side": 1,
+      "message": "Yeah, C++ is not great at allowing delegation of methods in a compact form.\nIf the \"using\" statements are not enough, what should do the trick is to delegate manually, i.e.\n\nint width() const override { return I420Adapter::width(); }\n\nThat is fairly verbose, but as a reader would still save me a couple of minutes compared to deciphering the templates.",
+      "parentUuid": "6ad731bb_b4a0213b",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
