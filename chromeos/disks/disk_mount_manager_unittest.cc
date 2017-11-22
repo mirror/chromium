@@ -341,6 +341,13 @@ class MockDiskMountManagerObserver : public DiskMountManager::Observer {
     events_.push_back(std::make_unique<DiskEvent>(event, *disk));
   }
 
+  void OnAutoMountableDiskEvent(DiskMountManager::DiskEvent event,
+                                const DiskMountManager::Disk* disk) override {
+    // Take a snapshot (copy) of the Disk object at the time of invocation for
+    // later verification.
+    events_.push_back(std::make_unique<DiskEvent>(event, *disk));
+  }
+
   void OnFormatEvent(DiskMountManager::FormatEvent event,
                      chromeos::FormatError error_code,
                      const std::string& device_path) override {

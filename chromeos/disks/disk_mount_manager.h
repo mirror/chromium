@@ -249,7 +249,10 @@ class CHROMEOS_EXPORT DiskMountManager {
    public:
     virtual ~Observer() {}
 
-    // Called when disk mount status is changed.
+    // Called when auto mountable disk mount status is changed.
+    virtual void OnAutoMountableDiskEvent(DiskEvent event,
+                                          const Disk* disk) = 0;
+    // Called when fixed storage disk status is changed.
     virtual void OnDiskEvent(DiskEvent event, const Disk* disk) = 0;
     // Called when device status is changed.
     virtual void OnDeviceEvent(DeviceEvent event,
