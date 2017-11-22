@@ -1672,22 +1672,24 @@ if (enable_java_templates) {
         depfile = "${target_gen_dir}/${target_name}.d"
         script = invoker.post_process_script
         args = [
-          "--depfile",
-          rebase_path(depfile, root_build_dir),
-          "--apk-path",
-          rebase_path(_packaged_resources_path, root_build_dir),
-          "--output",
-          rebase_path(invoker.output, root_build_dir),
-        ]
+                 "--depfile",
+                 rebase_path(depfile, root_build_dir),
+                 "--apk-path",
+                 rebase_path(_packaged_resources_path, root_build_dir),
+                 "--output",
+                 rebase_path(invoker.output, root_build_dir),
+                 "--srcjar-path",
+                 rebase_path(invoker.srcjar_path, root_build_dir),
+               ] + invoker.post_process_args
         inputs = [
           _packaged_resources_path,
         ]
         outputs = [
           invoker.output,
+          invoker.srcjar_path,
         ]
-        public_deps = [
-          ":${_package_resources_target_name}",
-        ]
+        public_deps =
+            [ ":${_package_resources_target_name}" ] + invoker.post_process_deps
       }
     }
   }

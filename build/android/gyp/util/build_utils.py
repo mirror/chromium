@@ -270,7 +270,7 @@ def ExtractAll(zip_path, path=None, no_clobber=True, pattern=None,
 
 
 def AddToZipHermetic(zip_file, zip_path, src_path=None, data=None,
-                     compress=None):
+                     compress=None, cleanup=False):
   """Adds a file to the given ZipFile with a hard-coded modified time.
 
   Args:
@@ -280,6 +280,7 @@ def AddToZipHermetic(zip_file, zip_path, src_path=None, data=None,
     data: File data as a string.
     compress: Whether to enable compression. Default is taken from ZipFile
         constructor.
+    cleanup: Delete |src_path| if True (does nothing if |src_path| isn't used).
   """
   assert (src_path is None) != (data is None), (
       '|src_path| and |data| are mutually exclusive.')
@@ -308,6 +309,8 @@ def AddToZipHermetic(zip_file, zip_path, src_path=None, data=None,
   if compress is not None:
     compress_type = zipfile.ZIP_DEFLATED if compress else zipfile.ZIP_STORED
   zip_file.writestr(zipinfo, data, compress_type)
+  if src_path and cleanup:
+    os.remove(src_path)
 
 
 def DoZip(inputs, output, base_dir=None, compress_fn=None):
