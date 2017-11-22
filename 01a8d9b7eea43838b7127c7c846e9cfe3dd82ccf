@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5720b3e7_b1681da2",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T00:46:15Z",
+      "side": 1,
+      "message": "Not related to this CL, consider using the per-frame scheduler; e.g., ExecutionContext::GetTaskRunner(), LocalFrame::GetTaskRunner().\n\nWe\u0027re decreasing usage of Platform::Current()-\u003eCurrentThread()-\u003eGetWebTaskRunner().",
+      "revId": "01a8d9b7eea43838b7127c7c846e9cfe3dd82ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
