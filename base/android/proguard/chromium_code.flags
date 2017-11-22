@@ -5,6 +5,9 @@
 # Contains flags that can be safely shared with Cronet, and thus would be
 # appropriate for third-party apps to include.
 
+# Not needed for Android and saves a bit of processing time.
+-dontpreverify
+
 # Keep all annotation related attributes that can affect runtime
 -keepattributes RuntimeVisible*Annotations
 -keepattributes AnnotationDefault
