@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae42d4e7_77cae9d8",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-22T20:26:16Z",
+      "side": 1,
+      "message": "What meaning is lost? Why is it worth it? Future readers are unlikely to know what you meant.",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24542c4d_0ba689ec",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-22T20:26:16Z",
+      "side": 1,
+      "message": "I don\u0027t see a clear case that |base_path| is safe or trustworthy. (I might very well be missing something.) For example, it might be good to call FilePath::ReferencesParent to make sure it doesn\u0027t try to traverse the client machine\u0027s filesystem and create a file in a surprising place.",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15aea4e4_66e5edf3",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-22T20:26:16Z",
+      "side": 1,
+      "message": "What kinds of things will be in these logs?\n\nWhat remote servers?",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
