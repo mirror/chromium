@@ -16,6 +16,24 @@
       "revId": "57737c35bed16999c701ca8d035462322424f93c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e832cfc6_046bc95d",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-22T16:53:04Z",
+      "side": 0,
+      "message": "Nope, lasted a few days on trunk",
+      "parentUuid": "b467683f_b9b856c2",
+      "revId": "57737c35bed16999c701ca8d035462322424f93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
