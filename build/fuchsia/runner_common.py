@@ -20,13 +20,13 @@ import tarfile
 import time
 import uuid
 
-import elfinfo
-
 
 DIR_SOURCE_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
 SDK_ROOT = os.path.join(DIR_SOURCE_ROOT, 'third_party', 'fuchsia-sdk')
-SYMBOLIZATION_TIMEOUT_SECS = 10
+
+STRIP_CMD = os.path.join(DIR_SOURCE_ROOT, 'third_party', 'eu-strip', 'bin',
+                         'eu-strip')
 
 # The guest will get 192.168.3.9 from DHCP, while the host will be
 # accessible as 192.168.3.2 .
@@ -140,11 +140,9 @@ def _StripBinary(dry_run, bin_path):
   """Creates a stripped copy of the executable at |bin_path| and returns the
   path to the stripped copy."""
   strip_path = bin_path + '.bootfs_stripped'
-  if dry_run:
-    print "Strip", bin_path, " to ", strip_path
-  else:
-    info = elfinfo.get_elf_info(bin_path)
-    info.strip(strip_path)
+  _RunAndCheck(dry_run, [STRIP_CMD, bin_path, '-o', strip_path])
+  if not dry_run and not os.path.exists(strip_path):
+    raise Exception('strip did not create output file')
   return strip_path
 
 
