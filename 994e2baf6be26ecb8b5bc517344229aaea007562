@@ -106,6 +106,24 @@
       "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80fb6cd_e6de0b5b",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-22T02:39:03Z",
+      "side": 1,
+      "message": "hm, I also missed git fetch. So, this really does work for me:\n\nhttps://paste.googleplex.com/5842626053931008",
+      "parentUuid": "d8b8fa1f_f5ffc9a5",
+      "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
