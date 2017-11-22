@@ -77,7 +77,7 @@ struct hb_closure_context_t :
 		        unsigned int nesting_level_left_ = HB_MAX_NESTING_LEVEL) :
 			  face (face_),
 			  glyphs (glyphs_),
-			  recurse_func (nullptr),
+			  recurse_func (NULL),
 			  nesting_level_left (nesting_level_left_),
 			  debug_depth (0) {}
 
@@ -146,7 +146,7 @@ struct hb_collect_glyphs_context_t :
     if (unlikely (nesting_level_left == 0 || !recurse_func))
       return default_return_value ();
 
-    /* Note that GPOS sets recurse_func to nullptr already, so it doesn't get
+    /* Note that GPOS sets recurse_func to NULL already, so it doesn't get
      * past the previous check.  For GSUB, we only want to collect the output
      * glyphs in the recursion.  If output is not requested, we can go home now.
      *
@@ -160,7 +160,7 @@ struct hb_collect_glyphs_context_t :
       return HB_VOID;
 
     /* Return if new lookup was recursed to before. */
-    if (recursed_lookups->has (lookup_index))
+    if (recursed_lookups.has (lookup_index))
       return HB_VOID;
 
     hb_set_t *old_before = before;
@@ -176,7 +176,7 @@ struct hb_collect_glyphs_context_t :
     input  = old_input;
     after  = old_after;
 
-    recursed_lookups->add (lookup_index);
+    recursed_lookups.add (lookup_index);
 
     return HB_VOID;
   }
@@ -187,31 +187,31 @@ struct hb_collect_glyphs_context_t :
   hb_set_t *after;
   hb_set_t *output;
   recurse_func_t recurse_func;
-  hb_set_t *recursed_lookups;
+  hb_set_t recursed_lookups;
   unsigned int nesting_level_left;
   unsigned int debug_depth;
 
   hb_collect_glyphs_context_t (hb_face_t *face_,
-			       hb_set_t  *glyphs_before, /* OUT. May be nullptr */
-			       hb_set_t  *glyphs_input,  /* OUT. May be nullptr */
-			       hb_set_t  *glyphs_after,  /* OUT. May be nullptr */
-			       hb_set_t  *glyphs_output, /* OUT. May be nullptr */
+			       hb_set_t  *glyphs_before, /* OUT. May be NULL */
+			       hb_set_t  *glyphs_input,  /* OUT. May be NULL */
+			       hb_set_t  *glyphs_after,  /* OUT. May be NULL */
+			       hb_set_t  *glyphs_output, /* OUT. May be NULL */
 			       unsigned int nesting_level_left_ = HB_MAX_NESTING_LEVEL) :
 			      face (face_),
 			      before (glyphs_before ? glyphs_before : hb_set_get_empty ()),
 			      input  (glyphs_input  ? glyphs_input  : hb_set_get_empty ()),
 			      after  (glyphs_after  ? glyphs_after  : hb_set_get_empty ()),
 			      output (glyphs_output ? glyphs_output : hb_set_get_empty ()),
-			      recurse_func (nullptr),
-			      recursed_lookups (nullptr),
+			      recurse_func (NULL),
+			      recursed_lookups (),
 			      nesting_level_left (nesting_level_left_),
 			      debug_depth (0)
   {
-    recursed_lookups = hb_set_create ();
+    recursed_lookups.init ();
   }
   ~hb_collect_glyphs_context_t (void)
   {
-    hb_set_destroy (recursed_lookups);
+    recursed_lookups.fini ();
   }
 
   void set_recurse_func (recurse_func_t func) { recurse_func = func; }
@@ -273,8 +273,8 @@ struct hb_apply_context_t :
 #define arg1(arg) (arg) /* Remove the macro to see why it's needed! */
 	     syllable arg1(0),
 #undef arg1
-	     match_func (nullptr),
-	     match_data (nullptr) {};
+	     match_func (NULL),
+	     match_data (NULL) {};
 
     typedef bool (*match_func_t) (hb_codepoint_t glyph_id, const USHORT &value, const void *data);
 
@@ -342,8 +342,8 @@ struct hb_apply_context_t :
     inline void init (hb_apply_context_t *c_, bool context_match = false)
     {
       c = c_;
-      match_glyph_data = nullptr;
-      matcher.set_match_func (nullptr, nullptr);
+      match_glyph_data = NULL;
+      matcher.set_match_func (NULL, NULL);
       matcher.set_lookup_props (c->lookup_props);
       /* Ignore ZWNJ if we are matching GSUB context, or matching GPOS. */
       matcher.set_ignore_zwnj (c->table_index == 1 || (context_match && c->auto_zwnj));
@@ -373,13 +373,6 @@ struct hb_apply_context_t :
     }
 
     inline void reject (void) { num_items++; match_glyph_data--; }
-
-    inline matcher_t::may_skip_t
-    may_skip (const hb_apply_context_t *c,
-	      const hb_glyph_info_t    &info) const
-    {
-      return matcher.may_skip (c, info);
-    }
 
     inline bool next (void)
     {
@@ -491,7 +484,7 @@ struct hb_apply_context_t :
 		      hb_buffer_t *buffer_) :
 			iter_input (), iter_context (),
 			font (font_), face (font->face), buffer (buffer_),
-			recurse_func (nullptr),
+			recurse_func (NULL),
 			gdef (*hb_ot_layout_from_face (face)->gdef),
 			var_store (gdef.get_var_store ()),
 			direction (buffer_->props.direction),
@@ -719,10 +712,10 @@ static inline bool match_input (hb_apply_context_t *c,
 				const void *match_data,
 				unsigned int *end_offset,
 				unsigned int match_positions[HB_MAX_CONTEXT_LENGTH],
-				bool *p_is_mark_ligature = nullptr,
-				unsigned int *p_total_component_count = nullptr)
+				bool *p_is_mark_ligature = NULL,
+				unsigned int *p_total_component_count = NULL)
 {
-  TRACE_APPLY (nullptr);
+  TRACE_APPLY (NULL);
 
   if (unlikely (count > HB_MAX_CONTEXT_LENGTH)) return_trace (false);
 
@@ -743,17 +736,11 @@ static inline bool match_input (hb_apply_context_t *c,
    * - Ligatures cannot be formed across glyphs attached to different components
    *   of previous ligatures.  Eg. the sequence is LAM,SHADDA,LAM,FATHA,HEH, and
    *   LAM,LAM,HEH form a ligature, leaving SHADDA,FATHA next to eachother.
-   *   However, it would be wrong to ligate that SHADDA,FATHA sequence.
-   *   There are a couple of exceptions to this:
-   *
-   *   o If a ligature tries ligating with marks that belong to it itself, go ahead,
-   *     assuming that the font designer knows what they are doing (otherwise it can
-   *     break Indic stuff when a matra wants to ligate with a conjunct,
-   *
-   *   o If two marks want to ligate and they belong to different components of the
-   *     same ligature glyph, and said ligature glyph is to be ignored according to
-   *     mark-filtering rules, then allow.
-   *     https://github.com/behdad/harfbuzz/issues/545
+   *   However, it would be wrong to ligate that SHADDA,FATHA sequence.o
+   *   There is an exception to this: If a ligature tries ligating with marks that
+   *   belong to it itself, go ahead, assuming that the font designer knows what
+   *   they are doing (otherwise it can break Indic stuff when a matra wants to
+   *   ligate with a conjunct...)
    */
 
   bool is_mark_ligature = _hb_glyph_info_is_mark (&buffer->cur());
@@ -763,12 +750,6 @@ static inline bool match_input (hb_apply_context_t *c,
 
   unsigned int first_lig_id = _hb_glyph_info_get_lig_id (&buffer->cur());
   unsigned int first_lig_comp = _hb_glyph_info_get_lig_comp (&buffer->cur());
-
-  enum {
-    LIGBASE_NOT_CHECKED,
-    LIGBASE_MAY_NOT_SKIP,
-    LIGBASE_MAY_SKIP
-  } ligbase = LIGBASE_NOT_CHECKED;
 
   match_positions[0] = buffer->idx;
   for (unsigned int i = 1; i < count; i++)
@@ -780,43 +761,13 @@ static inline bool match_input (hb_apply_context_t *c,
     unsigned int this_lig_id = _hb_glyph_info_get_lig_id (&buffer->info[skippy_iter.idx]);
     unsigned int this_lig_comp = _hb_glyph_info_get_lig_comp (&buffer->info[skippy_iter.idx]);
 
-    if (first_lig_id && first_lig_comp)
-    {
+    if (first_lig_id && first_lig_comp) {
       /* If first component was attached to a previous ligature component,
        * all subsequent components should be attached to the same ligature
-       * component, otherwise we shouldn't ligate them... */
+       * component, otherwise we shouldn't ligate them. */
       if (first_lig_id != this_lig_id || first_lig_comp != this_lig_comp)
-      {
-        /* ...unless, we are attached to a base ligature and that base
-	 * ligature is ignorable. */
-        if (ligbase == LIGBASE_NOT_CHECKED)
-	{
-	  bool found = false;
-	  const hb_glyph_info_t *out = buffer->out_info;
-	  unsigned int j = buffer->out_len;
-	  while (j && _hb_glyph_info_get_lig_id (&out[j - 1]) == first_lig_id)
-	  {
-	    if (_hb_glyph_info_get_lig_comp (&out[j - 1]) == 0)
-	    {
-	      j--;
-	      found = true;
-	      break;
-	    }
-	    j--;
-	  }
-
-	  if (found && skippy_iter.may_skip (c, out[j]) == hb_apply_context_t::matcher_t::SKIP_YES)
-	    ligbase = LIGBASE_MAY_SKIP;
-	  else
-	    ligbase = LIGBASE_MAY_NOT_SKIP;
-	}
-
-        if (ligbase == LIGBASE_MAY_NOT_SKIP)
-	  return_trace (false);
-      }
-    }
-    else
-    {
+	return_trace (false);
+    } else {
       /* If first component was NOT attached to a previous ligature component,
        * all subsequent components should also NOT be attached to any ligature
        * component, unless they are attached to the first component itself! */
@@ -846,7 +797,7 @@ static inline bool ligate_input (hb_apply_context_t *c,
 				 bool is_mark_ligature,
 				 unsigned int total_component_count)
 {
-  TRACE_APPLY (nullptr);
+  TRACE_APPLY (NULL);
 
   hb_buffer_t *buffer = c->buffer;
 
@@ -943,7 +894,7 @@ static inline bool match_backtrack (hb_apply_context_t *c,
 				    const void *match_data,
 				    unsigned int *match_start)
 {
-  TRACE_APPLY (nullptr);
+  TRACE_APPLY (NULL);
 
   hb_apply_context_t::skipping_iterator_t &skippy_iter = c->iter_context;
   skippy_iter.reset (c->buffer->backtrack_len (), count);
@@ -966,7 +917,7 @@ static inline bool match_lookahead (hb_apply_context_t *c,
 				    unsigned int offset,
 				    unsigned int *end_index)
 {
-  TRACE_APPLY (nullptr);
+  TRACE_APPLY (NULL);
 
   hb_apply_context_t::skipping_iterator_t &skippy_iter = c->iter_context;
   skippy_iter.reset (c->buffer->idx + offset - 1, count);
@@ -1016,7 +967,7 @@ static inline bool apply_lookup (hb_apply_context_t *c,
 				 const LookupRecord lookupRecord[], /* Array of LookupRecords--in design order */
 				 unsigned int match_length)
 {
-  TRACE_APPLY (nullptr);
+  TRACE_APPLY (NULL);
 
   hb_buffer_t *buffer = c->buffer;
   int end;
@@ -1334,7 +1285,7 @@ struct ContextFormat1
 
     struct ContextClosureLookupContext lookup_context = {
       {intersects_glyph},
-      nullptr
+      NULL
     };
 
     unsigned int count = ruleSet.len;
@@ -1352,7 +1303,7 @@ struct ContextFormat1
 
     struct ContextCollectGlyphsLookupContext lookup_context = {
       {collect_glyph},
-      nullptr
+      NULL
     };
 
     unsigned int count = ruleSet.len;
@@ -1367,7 +1318,7 @@ struct ContextFormat1
     const RuleSet &rule_set = this+ruleSet[(this+coverage).get_coverage (c->glyphs[0])];
     struct ContextApplyLookupContext lookup_context = {
       {match_glyph},
-      nullptr
+      NULL
     };
     return_trace (rule_set.would_apply (c, lookup_context));
   }
@@ -1387,7 +1338,7 @@ struct ContextFormat1
     const RuleSet &rule_set = this+ruleSet[index];
     struct ContextApplyLookupContext lookup_context = {
       {match_glyph},
-      nullptr
+      NULL
     };
     return_trace (rule_set.apply (c, lookup_context));
   }
@@ -1892,7 +1843,7 @@ struct ChainContextFormat1
 
     struct ChainContextClosureLookupContext lookup_context = {
       {intersects_glyph},
-      {nullptr, nullptr, nullptr}
+      {NULL, NULL, NULL}
     };
 
     unsigned int count = ruleSet.len;
@@ -1910,7 +1861,7 @@ struct ChainContextFormat1
 
     struct ChainContextCollectGlyphsLookupContext lookup_context = {
       {collect_glyph},
-      {nullptr, nullptr, nullptr}
+      {NULL, NULL, NULL}
     };
 
     unsigned int count = ruleSet.len;
@@ -1925,7 +1876,7 @@ struct ChainContextFormat1
     const ChainRuleSet &rule_set = this+ruleSet[(this+coverage).get_coverage (c->glyphs[0])];
     struct ChainContextApplyLookupContext lookup_context = {
       {match_glyph},
-      {nullptr, nullptr, nullptr}
+      {NULL, NULL, NULL}
     };
     return_trace (rule_set.would_apply (c, lookup_context));
   }
@@ -1944,7 +1895,7 @@ struct ChainContextFormat1
     const ChainRuleSet &rule_set = this+ruleSet[index];
     struct ChainContextApplyLookupContext lookup_context = {
       {match_glyph},
-      {nullptr, nullptr, nullptr}
+      {NULL, NULL, NULL}
     };
     return_trace (rule_set.apply (c, lookup_context));
   }

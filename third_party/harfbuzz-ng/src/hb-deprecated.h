@@ -34,7 +34,6 @@
 #include "hb-common.h"
 #include "hb-unicode.h"
 #include "hb-font.h"
-#include "hb-set.h"
 
 HB_BEGIN_DECLS
 
@@ -54,9 +53,6 @@ HB_EXTERN void
 hb_font_funcs_set_glyph_func (hb_font_funcs_t *ffuncs,
 			      hb_font_get_glyph_func_t func,
 			      void *user_data, hb_destroy_func_t destroy);
-
-HB_EXTERN void
-hb_set_invert (hb_set_t *set);
 
 #endif
 

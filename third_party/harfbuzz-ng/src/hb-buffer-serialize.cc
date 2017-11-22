@@ -30,7 +30,7 @@
 static const char *serialize_formats[] = {
   "text",
   "json",
-  nullptr
+  NULL
 };
 
 /**
@@ -90,7 +90,7 @@ hb_buffer_serialize_format_to_string (hb_buffer_serialize_format_t format)
     case HB_BUFFER_SERIALIZE_FORMAT_TEXT:	return serialize_formats[0];
     case HB_BUFFER_SERIALIZE_FORMAT_JSON:	return serialize_formats[1];
     default:
-    case HB_BUFFER_SERIALIZE_FORMAT_INVALID:	return nullptr;
+    case HB_BUFFER_SERIALIZE_FORMAT_INVALID:	return NULL;
   }
 }
 
@@ -104,9 +104,9 @@ _hb_buffer_serialize_glyphs_json (hb_buffer_t *buffer,
 				  hb_font_t *font,
 				  hb_buffer_serialize_flags_t flags)
 {
-  hb_glyph_info_t *info = hb_buffer_get_glyph_infos (buffer, nullptr);
+  hb_glyph_info_t *info = hb_buffer_get_glyph_infos (buffer, NULL);
   hb_glyph_position_t *pos = (flags & HB_BUFFER_SERIALIZE_FLAG_NO_POSITIONS) ?
-			     nullptr : hb_buffer_get_glyph_positions (buffer, nullptr);
+			     NULL : hb_buffer_get_glyph_positions (buffer, NULL);
 
   *buf_consumed = 0;
   for (unsigned int i = start; i < end; i++)
@@ -194,9 +194,9 @@ _hb_buffer_serialize_glyphs_text (hb_buffer_t *buffer,
 				  hb_font_t *font,
 				  hb_buffer_serialize_flags_t flags)
 {
-  hb_glyph_info_t *info = hb_buffer_get_glyph_infos (buffer, nullptr);
+  hb_glyph_info_t *info = hb_buffer_get_glyph_infos (buffer, NULL);
   hb_glyph_position_t *pos = (flags & HB_BUFFER_SERIALIZE_FLAG_NO_POSITIONS) ?
-			     nullptr : hb_buffer_get_glyph_positions (buffer, nullptr);
+			     NULL : hb_buffer_get_glyph_positions (buffer, NULL);
 
   *buf_consumed = 0;
   for (unsigned int i = start; i < end; i++)
@@ -422,8 +422,8 @@ hb_bool_t
 hb_buffer_deserialize_glyphs (hb_buffer_t *buffer,
 			      const char *buf,
 			      int buf_len, /* -1 means nul-terminated */
-			      const char **end_ptr, /* May be nullptr */
-			      hb_font_t *font, /* May be nullptr */
+			      const char **end_ptr, /* May be NULL */
+			      hb_font_t *font, /* May be NULL */
 			      hb_buffer_serialize_format_t format)
 {
   const char *end;
