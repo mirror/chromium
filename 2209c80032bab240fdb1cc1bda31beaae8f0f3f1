@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a32e6d5_94931566",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "I need this guarantee for my CL, and I\u0027ve researched it enough to know it\u0027s safe in this case. I am not familiar with the rest of the code, and would not like to lose focus. I think incremental improvement of the codebase is OK.",
+      "parentUuid": "61566b39_c5e8846b",
+      "range": {
+        "startLine": 76,
+        "startChar": 21,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03aa3aef_ceee3283",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9b0010_74d9d4fc",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Right you are.\nI wonder why no lint-like automatic tool complained.",
+      "parentUuid": "03aa3aef_ceee3283",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "965e3b58_638ed0b4",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43006884_146d2255",
+      "range": {
+        "startLine": 74,
+        "startChar": 48,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13471b6c_a43e4f66",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 16
@@ -91,6 +163,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17984600_73633d83",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13471b6c_a43e4f66",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 9
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "34367bf2_52b66c59",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "This should really not happen. We can make it a DCHECK if you want, but recovery seems to me unnecessary.\n(Note that this derives the path; it doesn\u0027t attempt to do anything on the filesystem yet. Getting this to return false would be like concatenating two non-empty strings and getting the empty string as the result.)",
+      "parentUuid": "f69d3a2a_fa450092",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 7
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43c59b42_3e06971d",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 16
@@ -137,6 +257,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d285d7_83da17e2",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43c59b42_3e06971d",
+      "range": {
+        "startLine": 183,
+        "startChar": 28,
+        "endLine": 183,
+        "endChar": 33
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b1f5e152_d31ed65e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d975ad_00e1f5e1",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f690cf27_05fae119",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 16
@@ -183,6 +351,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b13290_2e20dca0",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f690cf27_05fae119",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "21a09159_4ce1a6f7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6383dd29_ac47f775",
+      "range": {
+        "startLine": 74,
+        "startChar": 21,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9d59596_f32099de",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 16
@@ -229,6 +445,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af7dd66_da0b81dc",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Three cases, actually (elsewhere in the file).\nDone, though I would prefer \"unit-tests\" really.",
+      "parentUuid": "d9d59596_f32099de",
+      "range": {
+        "startLine": 130,
+        "startChar": 13,
+        "endLine": 130,
+        "endChar": 14
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "631668ae_905cd6cb",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48d08cdd_abd957c5",
+      "range": {
+        "startLine": 138,
+        "startChar": 24,
+        "endLine": 138,
+        "endChar": 32
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8910b646_0c0b2493",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
         "patchSetId": 16
@@ -275,6 +539,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc38c03_7352e5d7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8910b646_0c0b2493",
+      "range": {
+        "startLine": 146,
+        "startChar": 5,
+        "endLine": 146,
+        "endChar": 9
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "77159e5f_d15e6f36",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06db2309_88a988b9",
+      "range": {
+        "startLine": 552,
+        "startChar": 9,
+        "endLine": 552,
+        "endChar": 10
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61710e72_3a11f411",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 16
@@ -321,6 +633,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e870d932_b82d80b3",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Not my typo, but sure, we can piggyback the fix.",
+      "parentUuid": "61710e72_3a11f411",
+      "range": {
+        "startLine": 21,
+        "startChar": 59,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "4b900186_24ec3e18",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "The next CL removes this file; I\u0027ll just remove the TODO.",
+      "parentUuid": "3dd5cc14_3e29a90f",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1307ccaa_bd1ffd0b",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
         "patchSetId": 16
@@ -367,6 +727,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392115ad_810f0dba",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "I\u0027m about to remove this file altogether in the very next CL, so let me just remove this TODO rather than explain it.",
+      "parentUuid": "1307ccaa_bd1ffd0b",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "d8c4ea6a_a4b38e6b",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "876d337d_1f30dbcb",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97bd0eb2_470b66ea",
         "filename": "content/browser/webrtc/webrtc_eventlog_host_unittest.cc",
         "patchSetId": 16
@@ -416,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "ecab8bdc_dfb17bec",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97bd0eb2_470b66ea",
+      "range": {
+        "startLine": 35,
+        "startChar": 19,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e54360a_135a2335",
         "filename": "content/renderer/media/peer_connection_tracker.h",
         "patchSetId": 16
@@ -436,6 +868,30 @@
       "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3cd07c_a6f56275",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-22T13:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e54360a_135a2335",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 31
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
