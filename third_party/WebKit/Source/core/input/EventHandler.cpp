@@ -1808,7 +1808,9 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
         selection.ComputeVisibleSelectionInDOMTree()
             .ToNormalizedEphemeralRange());
 
-    int x = right_aligned ? first_rect.MaxX() : first_rect.X();
+    // Add extra pixel so we could detect this coordinate is indeed inside of
+    // the selection later.
+    int x = right_aligned ? first_rect.MaxX() : first_rect.X() + 1;
     // In a multiline edit, firstRect.maxY() would end up on the next line, so
     // take the midpoint.
     int y = (first_rect.MaxY() + first_rect.Y()) / 2;
