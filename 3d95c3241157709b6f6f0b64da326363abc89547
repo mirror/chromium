@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "058869b7_8643d7b3",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-22T14:34:20Z",
+      "side": 1,
+      "message": "Since you aren\u0027t supporting all the range of types of GestureEventAndroid perhaps this should return a std::unique_ptr\u003cWebGestureEvent\u003e or some type of result that it was successful or not so you don\u0027t blindly send the undefined GestureEvent to the renderer (which will cause the browser to crash because of the IPC validation criteria).",
+      "revId": "3d95c3241157709b6f6f0b64da326363abc89547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d932f332_2a2e527e",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-22T14:34:20Z",
+      "side": 1,
+      "message": "But if you don\u0027t actually populate the global_x/global_y correctly it might cause issues with callers that read them. For example they are read here:\nhttps://cs.chromium.org/chromium/src/content/renderer/render_widget.cc?sq\u003dpackage:chromium\u0026l\u003d1247 for drag heuristics.\n\nLikely doesn\u0027t apply to pinch zoom but this can be a little hidden bug that would be hard to find so I\u0027d prefer that the GestureEventAndroid had the global screen co-ords.",
+      "range": {
+        "startLine": 1169,
+        "startChar": 18,
+        "endLine": 1169,
+        "endChar": 25
+      },
+      "revId": "3d95c3241157709b6f6f0b64da326363abc89547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
