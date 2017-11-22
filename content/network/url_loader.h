@@ -103,6 +103,8 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   mojom::URLLoaderClientPtr url_loader_client_;
   int64_t total_written_bytes_ = 0;
 
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
+
   mojo::ScopedDataPipeProducerHandle response_body_stream_;
   scoped_refptr<network::NetToMojoPendingBuffer> pending_write_;
   uint32_t pending_write_buffer_size_ = 0;
