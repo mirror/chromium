@@ -26,8 +26,12 @@ class Lock;
 namespace gpu {
 class ContextSupport;
 struct GpuFeatureInfo;
+
 namespace gles2 {
 class GLES2Interface;
+}
+namespace raster {
+class RasterInterface;
 }
 }  // namespace gpu
 
@@ -50,6 +54,10 @@ class VIZ_COMMON_EXPORT ContextProvider
       return context_provider_->ContextGL();
     }
 
+    gpu::raster::RasterInterface* RasterContext() {
+      return context_provider_->RasterContext();
+    }
+
    private:
     ContextProvider* const context_provider_;
     base::AutoLock context_lock_;
@@ -65,6 +73,7 @@ class VIZ_COMMON_EXPORT ContextProvider
   virtual gpu::ContextResult BindToCurrentThread() = 0;
 
   virtual gpu::gles2::GLES2Interface* ContextGL() = 0;
+  virtual gpu::raster::RasterInterface* RasterContext() = 0;
   virtual gpu::ContextSupport* ContextSupport() = 0;
   virtual class GrContext* GrContext() = 0;
   virtual ContextCacheController* CacheController() = 0;
