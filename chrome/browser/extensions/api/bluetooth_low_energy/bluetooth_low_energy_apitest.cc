@@ -1231,7 +1231,7 @@ IN_PROC_BROWSER_TEST_F(BluetoothLowEnergyApiTest, ConnectInProgress) {
       << listener.message();
   listener.Reset();
 
-  connect_callback.Run(std::move(conn_ptr));
+  std::move(connect_callback).Run(std::move(conn_ptr));
   EXPECT_TRUE(listener.WaitUntilSatisfied());
   ASSERT_EQ("After 2nd call to disconnect.", listener.message())
       << listener.message();
