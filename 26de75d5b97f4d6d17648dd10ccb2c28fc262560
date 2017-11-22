@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "75706281_8e5a60e5",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-22T13:11:47Z",
+      "side": 1,
+      "message": "Thank you. In that case, I think this does what I want it to do:\n- if GetValue is nullptr: leave the preference alone.\n- if GetValue is []: Set an empty preference string, overwriting whatever the preference currently says.\n- if GetValue is [...]: as above.\n\nMakes sense?",
+      "parentUuid": "320488f5_023ed7b4",
+      "range": {
+        "startLine": 820,
+        "startChar": 4,
+        "endLine": 820,
+        "endChar": 15
+      },
+      "revId": "26de75d5b97f4d6d17648dd10ccb2c28fc262560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1172ced4_b88dba5b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
