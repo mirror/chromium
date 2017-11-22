@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "c96b66ef_d7148c6c",
+        "filename": "content/browser/frame_host/interstitial_page_impl_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003205
+      },
+      "writtenOn": "2017-11-22T22:48:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c01423ea_5341fd59",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4833ebf1_6b620d8a",
         "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
         "patchSetId": 17
@@ -484,6 +502,24 @@
       "side": 1,
       "message": "It\u0027d need to be ui::Clipboard::GetForCurrentThread()-\u003eReadAsciiText(ui::CLIPBOARD_TYPE_COPY_PASTE, \u0026clipboard_text) right, which looks super weird when the rest of the test uses BrowserTestClipboardScope.\n\nI think it would be better to remove BrowserTestClipboardScope altogether - which I can do now if you really want but I think would work better as a follow up CL.\n\nWDYT?",
       "parentUuid": "f62552e4_99e7cba7",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11d6b8a7_f17bcf9e",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1003205
+      },
+      "writtenOn": "2017-11-22T22:48:37Z",
+      "side": 1,
+      "message": "I\u0027d rather keep the scoper since it still makes it easier to manage test clipboard injection (perhaps moving it into ui/base/test), but just get rid of the helpers for reading/writing to the clipboard. It seems like churn to introduce this function only to remove it in a followup, but I don\u0027t feel super strongly if you feel like it\u0027s better for short-term consistency.",
+      "parentUuid": "c997179c_3a9a9024",
       "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
