@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "26cf7626_d6dce8c6",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-22T13:14:43Z",
+      "side": 1,
+      "message": "Maybe it would be better to clarify that the dummy functions are not correctly in the orderfile, as we\u0027re the only three people who know what \"wrong\" is. At least if you mention \"dummy function\" someone can search the code for that.",
+      "range": {
+        "startLine": 98,
+        "startChar": 55,
+        "endLine": 98,
+        "endChar": 63
+      },
+      "revId": "a1132015ca15b24bd773f3ad06cad7dbae175308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35dbab6_752bf529",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -186,6 +209,30 @@
     },
     {
       "key": {
+        "uuid": "4aa69508_26e246a4",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-22T13:14:43Z",
+      "side": 1,
+      "message": "It\u0027s also not clear to me what the base::subtle::MemoryBarrier is doing below. Since this update to g_ordered_offsets happens after we check for being disabled, a memory barrier isn\u0027t going to prevent us from writing to g_ordered_offsets in the middle of dumping?\n\nIf you\u0027re worried about the increment of the index in another thread not propagating to the load here, wouldn\u0027t std::memory_order_seq_cst be appropriate in the load below?\n\n(The same thing could be done with the store in the call to Disable(), although, again there is nothing that prevents the actual bit fiddling from happening at any point after the call to Disable() so I\u0027m not sure what would gain.",
+      "parentUuid": "14497aba_9d9fe182",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 52
+      },
+      "revId": "a1132015ca15b24bd773f3ad06cad7dbae175308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09f009eb_be34444a",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -197,6 +244,30 @@
       "writtenOn": "2017-11-21T18:56:58Z",
       "side": 1,
       "message": "curious: are there many zeroes in practice?",
+      "range": {
+        "startLine": 145,
+        "startChar": 74,
+        "endLine": 146,
+        "endChar": 29
+      },
+      "revId": "a1132015ca15b24bd773f3ad06cad7dbae175308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cdf114_30a35daa",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-22T13:14:43Z",
+      "side": 1,
+      "message": "It might be better to just handle this in post-processing. We\u0027ll catch all uninitialized or otherwise weird address (like non-atomic writes, if that is possible) when we match up the address to a symbol.\n\nThat will make it easier to count error cases.",
+      "parentUuid": "09f009eb_be34444a",
       "range": {
         "startLine": 145,
         "startChar": 74,
@@ -289,6 +360,30 @@
       "writtenOn": "2017-11-21T18:56:58Z",
       "side": 1,
       "message": "nit: why are the hooks in anonymous namespace? Good to know that it works this way, but moving them out would be cleaner.",
+      "range": {
+        "startLine": 203,
+        "startChar": 3,
+        "endLine": 203,
+        "endChar": 15
+      },
+      "revId": "a1132015ca15b24bd773f3ad06cad7dbae175308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6dcd6b_4b7ef885",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-22T13:14:43Z",
+      "side": 1,
+      "message": "+1. The interaction between extern \"C\" and namespaces is confusing enough as it is.",
+      "parentUuid": "c8ba709f_b7c16d2b",
       "range": {
         "startLine": 203,
         "startChar": 3,
