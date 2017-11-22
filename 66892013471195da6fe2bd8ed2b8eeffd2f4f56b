@@ -93,6 +93,30 @@
       "revId": "66892013471195da6fe2bd8ed2b8eeffd2f4f56b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7612e9b_a4018776",
+        "filename": "content/public/browser/download_url_parameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-22T00:56:21Z",
+      "side": 1,
+      "message": "The new patch now uses an enum, now we have 2 enums copy between content/ and components/download/.",
+      "parentUuid": "36aafe1c_79de8ee6",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "66892013471195da6fe2bd8ed2b8eeffd2f4f56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
