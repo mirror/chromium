@@ -1825,6 +1825,18 @@ void GL_APIENTRY GLES2WindowRectanglesEXT(GLenum mode,
                                           const GLint* box) {
   gles2::GetGLContext()->WindowRectanglesEXT(mode, count, box);
 }
+GLuint GL_APIENTRY GLES2InsertGpuFenceCHROMIUM() {
+  return gles2::GetGLContext()->InsertGpuFenceCHROMIUM();
+}
+GLuint GL_APIENTRY GLES2InsertClientGpuFenceCHROMIUM(ClientGpuFence source) {
+  return gles2::GetGLContext()->InsertClientGpuFenceCHROMIUM(source);
+}
+void GL_APIENTRY GLES2WaitGpuFenceCHROMIUM(GLuint gpu_fence_id) {
+  gles2::GetGLContext()->WaitGpuFenceCHROMIUM(gpu_fence_id);
+}
+void GL_APIENTRY GLES2DestroyGpuFenceCHROMIUM(GLuint gpu_fence_id) {
+  gles2::GetGLContext()->DestroyGpuFenceCHROMIUM(gpu_fence_id);
+}
 
 namespace gles2 {
 
@@ -3198,6 +3210,22 @@ extern const NameToFunc g_gles2_function_table[] = {
     {
         "glWindowRectanglesEXT",
         reinterpret_cast<GLES2FunctionPointer>(glWindowRectanglesEXT),
+    },
+    {
+        "glInsertGpuFenceCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glInsertGpuFenceCHROMIUM),
+    },
+    {
+        "glInsertClientGpuFenceCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glInsertClientGpuFenceCHROMIUM),
+    },
+    {
+        "glWaitGpuFenceCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glWaitGpuFenceCHROMIUM),
+    },
+    {
+        "glDestroyGpuFenceCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glDestroyGpuFenceCHROMIUM),
     },
     {
         NULL, NULL,

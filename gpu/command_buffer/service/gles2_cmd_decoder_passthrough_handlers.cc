@@ -2810,5 +2810,34 @@ GLES2DecoderPassthroughImpl::HandleCreateTransferCacheEntryCHROMIUM(
   return error::kNoError;
 }
 
+error::Error GLES2DecoderPassthroughImpl::HandleInsertGpuFenceINTERNAL(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::InsertGpuFenceINTERNAL& c =
+      *static_cast<const volatile gles2::cmds::InsertGpuFenceINTERNAL*>(
+          cmd_data);
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  return DoInsertGpuFenceINTERNAL(gpu_fence_id);
+}
+
+error::Error GLES2DecoderPassthroughImpl::HandleWaitGpuFenceCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::WaitGpuFenceCHROMIUM& c =
+      *static_cast<const volatile gles2::cmds::WaitGpuFenceCHROMIUM*>(cmd_data);
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  return DoWaitGpuFenceCHROMIUM(gpu_fence_id);
+}
+
+error::Error GLES2DecoderPassthroughImpl::HandleDestroyGpuFenceCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::DestroyGpuFenceCHROMIUM& c =
+      *static_cast<const volatile gles2::cmds::DestroyGpuFenceCHROMIUM*>(
+          cmd_data);
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  return DoDestroyGpuFenceCHROMIUM(gpu_fence_id);
+}
+
 }  // namespace gles2
 }  // namespace gpu

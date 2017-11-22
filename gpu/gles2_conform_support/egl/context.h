@@ -66,6 +66,10 @@ class Context : public base::RefCountedThreadSafe<Context>,
                       unsigned internalformat) override;
   void DestroyImage(int32_t id) override;
   void SignalQuery(uint32_t query, const base::Closure& callback) override;
+  void SendGpuFence(uint32_t gpu_fence_id, ClientGpuFence source) override;
+  void GetGpuFenceHandle(
+      uint32_t gpu_fence_id,
+      base::OnceCallback<void(const gfx::GpuFenceHandle&)> callback) override;
   void SetLock(base::Lock*) override;
   void EnsureWorkVisible() override;
   gpu::CommandBufferNamespace GetNamespaceID() const override;
