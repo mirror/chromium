@@ -282,9 +282,6 @@ Resource::Resource(const ResourceRequest& request,
       resource_request_(request) {
   InstanceCounters::IncrementCounter(InstanceCounters::kResourceCounter);
 
-  // Currently we support the metadata caching only for HTTP family.
-  if (GetResourceRequest().Url().ProtocolIsInHTTPFamily())
-    cache_handler_ = CachedMetadataHandlerImpl::Create(this);
   if (IsMainThread())
     MemoryCoordinator::Instance().RegisterClient(this);
 }
@@ -549,6 +546,7 @@ void Resource::SetRevalidatingRequest(const ResourceRequest& request) {
   is_revalidating_ = true;
   resource_request_ = request;
   status_ = ResourceStatus::kNotStarted;
+  serialized_metadata_received = false;
 }
 
 bool Resource::WillFollowRedirect(const ResourceRequest& new_request,
@@ -561,19 +559,25 @@ bool Resource::WillFollowRedirect(const ResourceRequest& new_request,
 
 void Resource::SetResponse(const ResourceResponse& response) {
   response_ = response;
+
   // Currently we support the metadata caching only for HTTP family.
-  if (!GetResponse().Url().ProtocolIsInHTTPFamily()) {
+  if (!GetResourceRequest().Url().ProtocolIsInHTTPFamily() ||
+      !GetResponse().Url().ProtocolIsInHTTPFamily()) {
     cache_handler_.Clear();
     return;
   }
+
   if (GetResponse().WasFetchedViaServiceWorker()) {
     cache_handler_ = ServiceWorkerResponseCachedMetadataHandler::Create(
         this, fetcher_security_origin_.get());
+  } else {
+    cache_handler_ = CachedMetadataHandlerImpl::Create(this);
   }
 }
 
 void Resource::ResponseReceived(const ResourceResponse& response,
                                 std::unique_ptr<WebDataConsumerHandle>) {
+  DCHECK(!serialized_metadata_received);
   response_timestamp_ = CurrentTime();
   if (preload_discovery_time_) {
     int time_since_discovery = static_cast<int>(
@@ -600,6 +604,8 @@ void Resource::ResponseReceived(const ResourceResponse& response,
 void Resource::SetSerializedCachedMetadata(const char* data, size_t size) {
   DCHECK(!is_revalidating_);
   DCHECK(!GetResponse().IsNull());
+  DCHECK(!serialized_metadata_received);
+  serialized_metadata_received = true;
   if (cache_handler_)
     cache_handler_->SetSerializedCachedMetadata(data, size);
 }

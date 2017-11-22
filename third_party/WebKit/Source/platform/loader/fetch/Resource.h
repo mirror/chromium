@@ -496,6 +496,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   scoped_refptr<SharedBuffer> data_;
 
   WebScopedVirtualTimePauser virtual_time_pauser_;
+
+  bool serialized_metadata_received = false;
 };
 
 class ResourceFactory {
