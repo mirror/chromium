@@ -9,24 +9,58 @@
 </head>
 <body>
 <script>
-function createScriptURL(isCrossOrigin, params) {
-  if (isCrossOrigin) {
-    return get_host_info().HTTPS_REMOTE_ORIGIN +
-           '/worklets/resources/referrer.py?' + params;
+function CreateScriptURLForTopLevel(scriptOrigin, params) {
+  if (scriptOrigin == 'same') {
+    params.append('is_cross_origin', 'false');
+    return 'referrer-checker.py?' + params;
   }
-  return 'referrer.py?' + params;
+  if (scriptOrigin == 'remote') {
+    params.append('is_cross_origin', 'true');
+    return get_host_info().HTTPS_REMOTE_ORIGIN +
+           '/worklets/resources/referrer-checker.py?' + params;
+  }
+  assert_unreached('scriptOrigin should be \'same\' or \'remote\'');
+}
+
+function CreateScriptURLForDecendant(scriptOrigins, params) {
+  if (scriptOrigins.topLevel == 'same' && scriptOrigins.descendant == 'same') {
+    params.append('is_cross_origin', 'false');
+    return 'import-referrer-checker-worklet-script.js?' + params;
+  }
+  if (scriptOrigins.topLevel == 'same' &&
+      scriptOrigins.descendant == 'remote') {
+    params.append('is_cross_origin', 'true');
+    return 'import-remote-origin-referrer-checker-worklet-script.js?' + params;
+  }
+  if (scriptOrigins.topLevel == 'remote' &&
+      scriptOrigins.descendant == 'remote') {
+    params.append('is_cross_origin', 'true');
+    return get_host_info().HTTPS_REMOTE_ORIGIN +
+           '/worklets/resources/import-referrer-checker-worklet-script.js?' +
+           params;
+  }
+  assert_unreached('scriptOrigins have an invalid origin combination.');
 }
 
 window.onmessage = e => {
-  const isCrossOrigin = e.data.isCrossOrigin;
+  const workletType = e.data.workletType;
+  const scriptOrigins = e.data.scriptOrigins;
 
   const params = new URLSearchParams;
+  params.append('pipe', 'sub|header(Access-Control-Allow-Origin, *)');
   params.append('referrer_policy', e.data.referrerPolicy)
   params.append('source_origin', get_host_info().HTTPS_ORIGIN);
-  params.append('is_cross_origin', isCrossOrigin ? 'true' : 'false')
+  params.append('expected_referrer', location.href);
 
-  const scriptURL = createScriptURL(isCrossOrigin, params);
-  get_worklet(e.data.workletType).addModule(scriptURL)
+  let scriptURL;
+  if (e.data.fetchType == 'top-level')
+    scriptURL = CreateScriptURLForTopLevel(scriptOrigins.topLevel, params);
+  else if (e.data.fetchType == 'descendant')
+    scriptURL = CreateScriptURLForDecendant(scriptOrigins, params);
+  else
+    assert_unreached('fetchType should be \'top-level\' or \'descendant\'');
+
+  get_worklet(workletType).addModule(scriptURL)
       .then(() => window.opener.postMessage('RESOLVED', '*'))
       .catch(e => window.opener.postMessage(e.message, '*'));
 };
