@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6c792cf_b6b74472",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-22T00:29:11Z",
+      "side": 1,
+      "message": "Should we rename this known_trust_anchors to reflect the histogram name change?",
+      "revId": "dded9e13321cd30c4fe78f87f79cdcdf7cb306b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c4108b_57f152ed",
+        "filename": "net/cert/known_roots.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-22T00:29:11Z",
+      "side": 1,
+      "message": "nit: NetRootCerts (to reflect the enum\u0027s exact name)",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "dded9e13321cd30c4fe78f87f79cdcdf7cb306b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069bb9f9_75301277",
+        "filename": "net/cert/known_roots_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-22T00:29:11Z",
+      "side": 1,
+      "message": "Optional: add simple tests for GetNetTrustAnchorHistogramIdForSPKI():\n * Returns 0 for unknown hash\n * Returns known ID for known hash\n\nSince there are also indirect tests of this at the CertVerifyProc and URLRequestHTTPJob layer, not really necessary for code coverage.",
+      "revId": "dded9e13321cd30c4fe78f87f79cdcdf7cb306b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15c7f27_1848facd",
+        "filename": "net/cert/root_cert_list_generated.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-22T00:29:11Z",
+      "side": 1,
+      "message": "optional: Mention it is sorted by sha256_spki_hash",
+      "revId": "dded9e13321cd30c4fe78f87f79cdcdf7cb306b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
