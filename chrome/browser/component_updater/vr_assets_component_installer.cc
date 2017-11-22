@@ -17,7 +17,7 @@
 #include "base/path_service.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/version.h"
-#include "chrome/browser/vr/assets.h"
+#include "chrome/browser/vr/vr_assets.h"
 #include "chrome/common/safe_browsing/file_type_policies.h"
 #include "components/component_updater/component_updater_paths.h"
 
@@ -82,8 +82,8 @@ void VrAssetsComponentInstallerTraits::ComponentReady(
     const base::Version& version,
     const base::FilePath& install_dir,
     std::unique_ptr<base::DictionaryValue> manifest) {
-  vr::Assets::GetInstance()->OnComponentReady(version, install_dir,
-                                              std::move(manifest));
+  vr::VrAssets::GetInstance()->OnComponentReady(version, install_dir,
+                                                std::move(manifest));
 }
 
 base::FilePath VrAssetsComponentInstallerTraits::GetRelativeInstallDir() const {

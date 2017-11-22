@@ -17,8 +17,6 @@ static_library("vr_common") {
   sources = [
     "animation_player.cc",
     "animation_player.h",
-    "assets.cc",
-    "assets.h",
     "browser_ui_interface.h",
     "color_scheme.cc",
     "color_scheme.h",
@@ -174,6 +172,8 @@ static_library("vr_common") {
     "ui_scene_manager.cc",
     "ui_scene_manager.h",
     "ui_unsupported_mode.h",
+    "vr_assets.cc",
+    "vr_assets.h",
     "vr_gl_util.cc",
     "vr_gl_util.h",
     "web_contents_event_forwarder.cc",

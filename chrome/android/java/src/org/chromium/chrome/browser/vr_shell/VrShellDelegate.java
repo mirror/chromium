@@ -117,6 +117,7 @@ public class VrShellDelegate
     private static VrBroadcastReceiver sVrBroadcastReceiver;
     private static boolean sRegisteredDaydreamHook;
     private static boolean sAddedBlackOverlayView;
+    private static boolean sRegisteredVrAssetsComponent = false;
 
     private ChromeActivity mActivity;
 
@@ -330,7 +331,7 @@ public class VrShellDelegate
         // Daydream is not supported on pre-N devices.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return;
         if (sInstance != null) return; // Will be handled in onResume.
-        if (!activitySupportsVrBrowsing(activity)) return;
+        if (!activitySupportsVrBrowsing(activity) && sRegisteredVrAssetsComponent) return;
 
         // Reading VR support level and version can be slow, so do it asynchronously.
         new AsyncTask<Void, Void, VrDaydreamApi>() {
@@ -350,9 +351,12 @@ public class VrShellDelegate
             protected void onPostExecute(VrDaydreamApi api) {
                 // Registering the daydream intent has to be done on the UI thread. Note that this
                 // call is slow (~10ms at time of writing).
-                if (api != null
-                        && ApplicationStatus.getStateForActivity(activity)
-                                == ActivityState.RESUMED) {
+                if (api == null) return;
+                if (!sRegisteredVrAssetsComponent) {
+                    registerVrAssetsComponentIfDaydreamUser(api.isDaydreamCurrentViewer());
+                }
+                if (ApplicationStatus.getStateForActivity(activity) == ActivityState.RESUMED
+                        && activitySupportsVrBrowsing(activity)) {
                     registerDaydreamIntent(api, activity);
                 }
             }
@@ -471,6 +475,14 @@ public class VrShellDelegate
     private static boolean activitySupportsExitFeedback(Activity activity) {
         return activity instanceof ChromeTabbedActivity
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_FEEDBACK);
+    }
+
+    private static void registerVrAssetsComponentIfDaydreamUser(boolean isDaydreamCurrentViewer) {
+        assert !sRegisteredVrAssetsComponent;
+        if (isDaydreamCurrentViewer) {
+            nativeRegisterVrAssetsComponent();
+            sRegisteredVrAssetsComponent = true;
+        }
     }
 
     /**
@@ -1176,6 +1188,9 @@ public class VrShellDelegate
                 @Override
                 public void run() {
                     if (!mPaused) registerDaydreamIntent(mVrDaydreamApi, mActivity);
+                    if (!sRegisteredVrAssetsComponent) {
+                        registerVrAssetsComponentIfDaydreamUser(isDaydreamCurrentViewer());
+                    }
                 }
             });
         }
@@ -1719,4 +1734,5 @@ public class VrShellDelegate
     private native void nativeOnResume(long nativeVrShellDelegate);
     private native boolean nativeIsClearActivatePending(long nativeVrShellDelegate);
     private native void nativeDestroy(long nativeVrShellDelegate);
+    private static native void nativeRegisterVrAssetsComponent();
 }
