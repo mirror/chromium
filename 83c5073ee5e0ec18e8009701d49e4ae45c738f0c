@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ebcbbc0_150cddad",
+        "filename": "base/android/library_loader/anchor_functions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-22T13:34:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a95a8dc_bba6bf31",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb847a29_49c37bc9",
         "filename": "base/android/library_loader/library_prefetcher.cc",
         "patchSetId": 7
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c7ade1c_d714cd62",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-22T13:34:45Z",
+      "side": 1,
+      "message": "Thanks!\nDone.",
+      "parentUuid": "54c03551_7ff31846",
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85c8dede_c185f5c0",
         "filename": "base/android/library_loader/library_prefetcher.cc",
         "patchSetId": 7
@@ -82,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "32d20778_f20ec8b9",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-22T13:34:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85c8dede_c185f5c0",
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ad37f5d_09294a0f",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 7
@@ -93,6 +153,24 @@
       "writtenOn": "2017-11-22T07:40:26Z",
       "side": 1,
       "message": "Are there GPU / utility processes on Android that you care about passing this switch to? If so, there\u0027s other files with lists of switches to update.",
+      "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5004b7_631855bc",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2691,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-22T13:34:45Z",
+      "side": 1,
+      "message": "Indeed, thanks a lot!\nIt wasn\u0027t showing on the graph because the GPU process touches very few code pages.\nDone.",
+      "parentUuid": "8ad37f5d_09294a0f",
       "revId": "83c5073ee5e0ec18e8009701d49e4ae45c738f0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
