@@ -40,11 +40,6 @@ const char kAllowInsecureLocalhost[] = "allow-insecure-localhost";
 const char kAllowLoopbackInPeerConnection[] =
     "allow-loopback-in-peer-connection";
 
-// Uses the android SkFontManager on linux. The specified directory should
-// include the configuration xml file with the name "fonts.xml".
-// This is used in blimp to emulate android fonts on linux.
-const char kAndroidFontsPath[]          = "android-fonts-path";
-
 // Set blink settings. Format is <name>[=<value],<name>[=<value>],...
 // The names are declared in Settings.json5. For boolean type, use "true",
 // "false", or omit '=<value>' part to set to true. For enum type, use the int

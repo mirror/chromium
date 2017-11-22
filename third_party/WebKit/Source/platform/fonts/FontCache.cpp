@@ -59,13 +59,14 @@
 #include "public/platform/Platform.h"
 #include "ui/gfx/font_list.h"
 
+#include <SkFontMgr.h>
+#include <SkRefCnt.h>
+
 namespace blink {
 
 #if !defined(OS_WIN) && !defined(OS_LINUX)
-FontCache::FontCache() : purge_prevent_count_(0), font_manager_(nullptr) {}
+FontCache::FontCache() : purge_prevent_count_(0) {}
 #endif  // !defined(OS_WIN) && !defined(OS_LINUX)
-
-SkFontMgr* FontCache::static_font_manager_ = nullptr;
 
 #if defined(OS_WIN)
 bool FontCache::antialiased_text_enabled_ = false;
@@ -199,11 +200,6 @@ ShapeCache* FontCache::GetShapeCache(const FallbackListCompositeKey& key) {
 
   DCHECK(result);
   return result;
-}
-
-void FontCache::SetFontManager(sk_sp<SkFontMgr> font_manager) {
-  DCHECK(!static_font_manager_);
-  static_font_manager_ = font_manager.release();
 }
 
 void FontCache::AcceptLanguagesChanged(const String& accept_languages) {
@@ -356,19 +352,16 @@ void FontCache::Invalidate() {
 
 void FontCache::CrashWithFontInfo(const FontDescription* font_description) {
   FontCache* font_cache = FontCache::GetFontCache();
-  SkFontMgr* font_mgr = nullptr;
+  sk_sp<SkFontMgr> font_mgr = SkFontMgr::RefDefault();
   int num_families = std::numeric_limits<int>::min();
-  if (font_cache) {
-    font_mgr = font_cache->font_manager_.get();
-    if (font_mgr)
-      num_families = font_mgr->countFamilies();
-  }
+  if (font_cache && font_mgr)
+    num_families = font_mgr->countFamilies();
 
   FontDescription font_description_copy = *font_description;
+  SkFontMgr* font_mgr_pointer = font_mgr.get();
   WTF::debug::Alias(&font_description_copy);
-
   WTF::debug::Alias(&font_cache);
-  WTF::debug::Alias(&font_mgr);
+  WTF::debug::Alias(&font_mgr_pointer);
   WTF::debug::Alias(&num_families);
 
   CHECK(false);

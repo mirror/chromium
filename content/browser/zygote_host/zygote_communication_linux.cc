@@ -263,8 +263,7 @@ void ZygoteCommunication::Init() {
       service_manager::switches::kAllowSandboxDebugging,
       service_manager::switches::kDisableInProcessStackTraces,
       service_manager::switches::kDisableSeccompFilterSandbox,
-      switches::kAndroidFontsPath, switches::kClearKeyCdmPathForTesting,
-      switches::kEnableHeapProfiling,
+      switches::kClearKeyCdmPathForTesting, switches::kEnableHeapProfiling,
       switches::kEnableLogging,  // Support, e.g., --enable-logging=stderr.
       // Need to tell the zygote that it is headless so that we don't try to use
       // the wrong type of main delegate.

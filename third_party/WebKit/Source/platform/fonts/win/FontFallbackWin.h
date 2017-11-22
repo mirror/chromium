@@ -40,6 +40,8 @@
 #include <wchar.h>
 #include <windows.h>
 
+#include <SkRefCnt.h>
+
 class SkFontMgr;
 
 namespace blink {
@@ -54,7 +56,7 @@ PLATFORM_EXPORT const UChar* GetFallbackFamily(
     const LayoutLocale* content_locale,
     UScriptCode* script_checked,
     FontFallbackPriority,
-    SkFontMgr* font_manager);
+    sk_sp<SkFontMgr> font_manager);
 
 }  // namespace blink
 

@@ -432,39 +432,6 @@ static void ZygotePreSandboxInit() {
 
   SkFontConfigInterface::SetGlobal(
       new FontConfigIPC(GetSandboxFD()))->unref();
-
-  // Set the android SkFontMgr for blink. We need to ensure this is done
-  // before the sandbox is initialized to allow the font manager to access
-  // font configuration files on disk.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kAndroidFontsPath)) {
-    std::string android_fonts_dir =
-        base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-            switches::kAndroidFontsPath);
-
-    if (android_fonts_dir.size() > 0 && android_fonts_dir.back() != '/')
-      android_fonts_dir += '/';
-
-    SkFontMgr_Android_CustomFonts custom;
-    custom.fSystemFontUse =
-        SkFontMgr_Android_CustomFonts::SystemFontUse::kOnlyCustom;
-    custom.fBasePath = android_fonts_dir.c_str();
-
-    std::string font_config;
-    std::string fallback_font_config;
-    if (android_fonts_dir.find("kitkat") != std::string::npos) {
-      font_config = android_fonts_dir + "system_fonts.xml";
-      fallback_font_config = android_fonts_dir + "fallback_fonts.xml";
-      custom.fFallbackFontsXml = fallback_font_config.c_str();
-    } else {
-      font_config = android_fonts_dir + "fonts.xml";
-      custom.fFallbackFontsXml = nullptr;
-    }
-    custom.fFontsXml = font_config.c_str();
-    custom.fIsolated = true;
-
-    blink::WebFontRendering::SetSkiaFontManager(SkFontMgr_New_Android(&custom));
-  }
 }
 
 static bool CreateInitProcessReaper(base::Closure* post_fork_parent_callback) {

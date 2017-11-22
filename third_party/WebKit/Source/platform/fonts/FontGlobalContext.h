@@ -5,6 +5,7 @@
 #ifndef FontGlobalContext_h
 #define FontGlobalContext_h
 
+#include "build/build_config.h"
 #include "platform/PlatformExport.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/fonts/SimpleFontData.h"
@@ -12,6 +13,9 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/AtomicStringHash.h"
+
+#include <SkFontMgr.h>
+#include <SkRefCnt.h>
 
 struct hb_font_funcs_t;
 
@@ -87,6 +91,18 @@ class PLATFORM_EXPORT FontGlobalContext {
     return Get()->current_accept_languages_;
   }
 
+#if defined(OS_WIN)
+  static inline sk_sk<SkFontMgr> GetFontManagerDirectWrite() {
+    FontGlobalContext* ctx = Get();
+    if (ctx->font_manager_direct_write_)
+      return font_manager_direct_write_;
+
+    font_manager_direct_write_ = CreateFontManagerDirectWrite();
+    DCHECK(font_manager_direct_write_);
+    return font_manager_direct_write_;
+  }
+#endif
+
   // Called by MemoryCoordinator to clear memory.
   static void ClearMemory();
 
@@ -94,6 +110,10 @@ class PLATFORM_EXPORT FontGlobalContext {
 
  private:
   friend class WTF::ThreadSpecific<FontGlobalContext>;
+
+#if defined(OS_WIN)
+  sk_sk<SkFontMgr> CreateFontManagerDirectWrite();
+#endif
 
   FontGlobalContext();
   ~FontGlobalContext() {}
@@ -111,6 +131,10 @@ class PLATFORM_EXPORT FontGlobalContext {
   bool has_default_locale_for_han_;
 
   String current_accept_languages_;
+
+#if defined(OS_WIN)
+  sk_sp<SkFontMgr> font_manager_direct_write_;
+#endif
 };
 
 }  // namespace blink

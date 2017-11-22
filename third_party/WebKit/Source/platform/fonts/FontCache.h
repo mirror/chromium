@@ -156,9 +156,6 @@ class PLATFORM_EXPORT FontCache {
   unsigned short Generation();
   void Invalidate();
 
-  SkFontMgr* FontManager() { return font_manager_.get(); }
-  static void SetFontManager(sk_sp<SkFontMgr>);
-
 #if !defined(OS_MACOSX)
   static const AtomicString& SystemFontFamily();
 #else
@@ -289,11 +286,6 @@ class PLATFORM_EXPORT FontCache {
 
   // Don't purge if this count is > 0;
   int purge_prevent_count_;
-
-  sk_sp<SkFontMgr> font_manager_;
-
-  // A leaky owning bare pointer.
-  static SkFontMgr* static_font_manager_;
 
 #if defined(OS_WIN)
   static bool antialiased_text_enabled_;

@@ -24,7 +24,13 @@ FontGlobalContext::FontGlobalContext()
       default_locale_(nullptr),
       system_locale_(nullptr),
       default_locale_for_han_(nullptr),
-      has_default_locale_for_han_(false) {}
+      has_default_locale_for_han_(false)
+#if defined(OS_WIN)
+      ,
+      font_manager_direct_write_(nullptr)
+#endif
+{
+}
 
 void FontGlobalContext::ClearMemory() {
   if (!Get(kDoNotCreate))
@@ -41,6 +47,15 @@ void FontGlobalContext::ClearForTesting() {
   ctx->has_default_locale_for_han_ = false;
   ctx->layout_locale_map_.clear();
   ctx->font_cache_.Invalidate();
+#if defined(OS_WIN)
+  ctx->font_manager_direct_write_.reset();
+#endif
 }
+
+#if defined(OS_WIN)
+sk_sp<SkFontMgr> CreateFontManagerDirectWrite() {
+  return SkFontMgr_New_DirectWrite();
+}
+#endif
 
 }  // namespace blink

@@ -35,8 +35,7 @@
 
 namespace blink {
 
-FontCache::FontCache()
-    : purge_prevent_count_(0), font_manager_(sk_ref_sp(static_font_manager_)) {}
+FontCache::FontCache() : purge_prevent_count_(0) {}
 
 static AtomicString& MutableSystemFontFamily() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(AtomicString, system_font_family, ());
@@ -91,22 +90,6 @@ scoped_refptr<SimpleFontData> FontCache::FallbackFontForCharacter(
     UChar32 c,
     const SimpleFontData*,
     FontFallbackPriority fallback_priority) {
-  // The m_fontManager is set only if it was provided by the embedder with
-  // WebFontRendering::setSkiaFontManager. This is used to emulate android fonts
-  // on linux so we always request the family from the font manager and if none
-  // is found, we return the LastResort fallback font and avoid using
-  // FontCache::getFontForCharacter which would use sandbox support to query the
-  // underlying system for the font family.
-  if (font_manager_) {
-    AtomicString family_name = GetFamilyNameForCharacter(
-        font_manager_.get(), c, font_description, fallback_priority);
-    if (family_name.IsEmpty())
-      return GetLastResortFallbackFont(font_description, kDoNotRetain);
-    return FontDataFromFontPlatformData(
-        GetFontPlatformData(font_description,
-                            FontFaceCreationParams(family_name)),
-        kDoNotRetain);
-  }
 
   if (fallback_priority == FontFallbackPriority::kEmojiEmoji) {
     // FIXME crbug.com/591346: We're overriding the fallback character here

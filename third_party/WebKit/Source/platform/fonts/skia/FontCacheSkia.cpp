@@ -249,21 +249,6 @@ PaintTypeface FontCache::CreateTypeface(
   }
 #endif
 
-#if defined(OS_LINUX) || defined(OS_WIN)
-  // On linux if the fontManager has been overridden then we should be calling
-  // the embedder provided font Manager rather than calling
-  // SkTypeface::CreateFromName which may redirect the call to the default font
-  // Manager.  On Windows the font manager is always present.
-  if (font_manager_) {
-    // TODO(vmpstr): Handle creating paint typefaces here directly. We need to
-    // figure out whether it's safe to give |font_manager_| to PaintTypeface and
-    // what that means on the GPU side.
-    auto tf = sk_sp<SkTypeface>(font_manager_->matchFamilyStyle(
-        name.data(), font_description.SkiaFontStyle()));
-    return PaintTypeface::FromSkTypeface(std::move(tf));
-  }
-#endif
-
   // FIXME: Use m_fontManager, matchFamilyStyle instead of
   // legacyCreateTypeface on all platforms.
   return PaintTypeface::FromFamilyNameAndFontStyle(
