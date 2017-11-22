@@ -140,6 +140,40 @@
       "revId": "11f8305361635d98dff5493e1ed3a69205831448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e27953d4_dc220a16",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T19:42:42Z",
+      "side": 1,
+      "message": "Hmm...\n\nWould it make sense to just create a new RemoteSecurityContext instead? Or does that cause a lot of things to break? I feel slightly nervous about exposing this.",
+      "revId": "11f8305361635d98dff5493e1ed3a69205831448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b281d8_363e5fa2",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T19:42:42Z",
+      "side": 1,
+      "message": "I\u0027m probably missing something, but how is this called when CSP headers are encountered?",
+      "revId": "11f8305361635d98dff5493e1ed3a69205831448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef6d403a_bae8b2ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T19:42:42Z",
+      "side": 1,
+      "message": "Can we include the motivation to make this change in the CL description?",
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee27bad_74900f6b",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T19:42:42Z",
+      "side": 1,
+      "message": "Maybe FTN should have a ResetForNavigation()?",
+      "range": {
+        "startLine": 601,
+        "startChar": 21,
+        "endLine": 601,
+        "endChar": 45
+      },
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98b186a_b8bf0214",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T19:42:42Z",
+      "side": 1,
+      "message": "It feels a little surprising that we have this here and in DidNavigate(). Is that something we can cleanup in the future?",
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29b3064_5671202f",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T19:42:42Z",
+      "side": 1,
+      "message": "This is only for render frame proxies right?",
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd292c0_ad8dc0b7",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-22T19:42:42Z",
+      "side": 1,
+      "message": "Personally I think DCHECK is OK here, since we should trust the data the browser is sending us. Is this to debug a crash?",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 7
+      },
+      "revId": "15f6cb45769e3c219f3faa0cf553be3eb4ce36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
