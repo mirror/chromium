@@ -154,7 +154,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // Stops the worker if the worker is not being debugged (i.e. devtools is
   // not attached). This method is called by a stop-worker timer to kill
   // idle workers.
-  void StopIfNotAttachedToDevTools();
+  void StopIfNotAttachedToDevtool();
 
   // Sends |message| to the embedded worker running in the child process.
   // It is invalid to call this while the worker is not in STARTING or RUNNING

@@ -548,7 +548,7 @@ void EmbeddedWorkerInstance::Stop() {
     observer.OnStopping();
 }
 
-void EmbeddedWorkerInstance::StopIfNotAttachedToDevTools() {
+void EmbeddedWorkerInstance::StopIfNotAttachedToDevtool() {
   if (devtools_attached_) {
     if (devtools_proxy_) {
       // Check ShouldNotifyWorkerStopIgnored not to show the same message
@@ -695,16 +695,15 @@ void EmbeddedWorkerInstance::OnStartWorkerMessageSent(
 void EmbeddedWorkerInstance::RequestTermination() {
   if (!ServiceWorkerUtils::IsServicificationEnabled()) {
     mojo::ReportBadMessage(
-        "Invalid termination request: RequestTermination() was called but "
+        "Invalid termination RequestTermination shouldn't come when "
         "S13nServiceWorker is not enabled");
     return;
   }
 
+  // Temination should be requested during running or stopping.
   if (status() != EmbeddedWorkerStatus::RUNNING &&
       status() != EmbeddedWorkerStatus::STOPPING) {
-    mojo::ReportBadMessage(
-        "Invalid termination request: Termination should be requested during "
-        "running or stopping");
+    mojo::ReportBadMessage("Invalid termination request: invalid status");
     return;
   }
 

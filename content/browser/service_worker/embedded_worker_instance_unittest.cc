@@ -353,7 +353,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StartAndStop) {
   const GURL url("http://example.com/worker.js");
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(pattern, url);
-  const int64_t service_worker_version_id = pair.second->version_id();
+  int64_t service_worker_version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
@@ -406,7 +406,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
   const GURL url("http://example.com/worker.js");
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(pattern, url);
-  const int64_t service_worker_version_id = pair.second->version_id();
+  int64_t service_worker_version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
@@ -477,7 +477,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopWhenDevToolsAttached) {
   const GURL url("http://example.com/worker.js");
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(pattern, url);
-  const int64_t service_worker_version_id = pair.second->version_id();
+  int64_t service_worker_version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
@@ -486,12 +486,12 @@ TEST_F(EmbeddedWorkerInstanceTest, StopWhenDevToolsAttached) {
   helper_->SimulateAddProcessToPattern(pattern,
                                        helper_->mock_render_process_id());
 
-  // Start the worker and then call StopIfNotAttachedToDevTools().
+  // Start the worker and then call StopIfNoDevtoolAttached().
   EXPECT_EQ(SERVICE_WORKER_OK,
             StartWorker(worker.get(), service_worker_version_id, pattern, url));
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, worker->status());
   EXPECT_EQ(helper_->mock_render_process_id(), worker->process_id());
-  worker->StopIfNotAttachedToDevTools();
+  worker->StopIfNotAttachedToDevtool();
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, worker->status());
   base::RunLoop().RunUntilIdle();
 
@@ -505,7 +505,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopWhenDevToolsAttached) {
             StartWorker(worker.get(), service_worker_version_id, pattern, url));
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, worker->status());
   EXPECT_EQ(helper_->mock_render_process_id(), worker->process_id());
-  worker->StopIfNotAttachedToDevTools();
+  worker->StopIfNotAttachedToDevtool();
   base::RunLoop().RunUntilIdle();
 
   // The worker must not be stopped this time.
@@ -533,8 +533,8 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
   std::unique_ptr<EmbeddedWorkerInstance> worker2 =
       embedded_worker_registry()->CreateWorker(pair2.second.get());
 
-  const int64_t version_id1 = pair1.second->version_id();
-  const int64_t version_id2 = pair2.second->version_id();
+  int64_t version_id1 = pair1.second->version_id();
+  int64_t version_id2 = pair2.second->version_id();
   int process_id = helper_->mock_render_process_id();
 
   helper_->SimulateAddProcessToPattern(pattern, process_id);
@@ -591,7 +591,7 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachDuringProcessAllocation) {
   const GURL url("http://example.com/worker.js");
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(scope, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   worker->AddListener(this);
@@ -627,7 +627,7 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachAfterSendingStartWorkerMessage) {
 
   helper_.reset(new StalledInStartWorkerHelper());
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(scope, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   worker->AddListener(this);
@@ -669,7 +669,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   const GURL url("http://example.com/worker.js");
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(scope, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   worker->AddListener(this);
@@ -748,7 +748,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringPausedAfterDownload) {
           helper_->AsWeakPtr(), &was_resume_after_download_called));
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(scope, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   worker->AddListener(this);
@@ -783,7 +783,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
 
   helper_.reset(new StalledInStartWorkerHelper);
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(scope, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   worker->AddListener(this);
@@ -850,7 +850,7 @@ TEST_F(EmbeddedWorkerInstanceTest, Detach) {
   const GURL url("http://example.com/worker.js");
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(pattern, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   helper_->SimulateAddProcessToPattern(pattern,
@@ -890,7 +890,7 @@ TEST_F(EmbeddedWorkerInstanceTest, FailToSendStartIPC) {
   helper_->RegisterMockInstanceClient(nullptr);
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(pattern, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   helper_->SimulateAddProcessToPattern(pattern,
@@ -947,7 +947,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveRemoteInterface) {
   ASSERT_EQ(mock_instance_clients()->size(), 1UL);
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(pattern, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   helper_->SimulateAddProcessToPattern(pattern,
@@ -1003,7 +1003,7 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
   ASSERT_EQ(mock_instance_clients()->size(), 1UL);
 
   RegistrationAndVersionPair pair = PrepareRegistrationAndVersion(pattern, url);
-  const int64_t version_id = pair.second->version_id();
+  int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   helper_->SimulateAddProcessToPattern(pattern,

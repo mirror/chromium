@@ -62,13 +62,12 @@ interface EmbeddedWorkerInstanceClient {
 // interface.
 interface EmbeddedWorkerInstanceHost {
   // S13nServiceWorker:
-  // Called when the worker requests to be terminated. The worker will request
-  // to be terminated when it realizes it has been idle for some time. The
-  // request may be ignored, for example when there are inflight events issued
-  // just before  RequestTermination(). Note that the browser can terminate the
-  // worker at any time even if RequestTermination() is not called. For example,
-  // if the worker thread is continuously busy and the browser's periodic ping
-  // message has been missed, the browser will terminate the service worker.
+  // Called when the worker requests to be terminated. The request may be
+  // ignored, for example when there are inflight events issued just before
+  // RequestTermination(). Note that the browser can terminate the worker at any
+  // time even if RequestTermination() is not called. For example, if the worker
+  // thread is continuously busy and the browser's periodical ping message has
+  // been missed, the browser will terminate the service worker.
   RequestTermination();
 
   // Indicates that the worker is ready for inspection.

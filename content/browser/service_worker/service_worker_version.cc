@@ -1698,8 +1698,8 @@ void ServiceWorkerVersion::OnTimeoutTimer() {
     return;
 
   // The worker has been idle for longer than a certain period.
-  // S13nServiceWorker: The idle timer is implemented on the renderer, so we can
-  // skip this check.
+  // S13nServiceWorker:
+  // The idle timer is implemented on the renderer, so we can skip this check.
   if (!ServiceWorkerUtils::IsServicificationEnabled() &&
       GetTickDuration(idle_time_) > kIdleWorkerTimeout) {
     StopWorkerIfIdle();
@@ -1740,7 +1740,7 @@ void ServiceWorkerVersion::StopWorkerIfIdle() {
   // worker really is idle.
   if (!ping_controller_->IsTimedOut() && HasWork())
     return;
-  embedded_worker_->StopIfNotAttachedToDevTools();
+  embedded_worker_->StopIfNotAttachedToDevtool();
 }
 
 bool ServiceWorkerVersion::HasWork() const {
