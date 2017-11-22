@@ -46,6 +46,30 @@
       "revId": "c006c4349a55c967a5fdbd84d23e85f67396fe8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffce5a9_7113d276",
+        "filename": "chrome/browser/banners/app_banner_settings_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-22T00:39:46Z",
+      "side": 1,
+      "message": "My understanding is that instant app promo banners in Chrome use the \"installed\" banner state here to indicate that the user has previously decided to open an instant app via the banner. Once that\u0027s happened, links will always open in the instant app, and we don\u0027t want to show the promo banner again if we end up on the site in Chrome (e.g. if navigating directly to the site via the omnibox).",
+      "parentUuid": "c7da7d42_e9d1de17",
+      "range": {
+        "startLine": 259,
+        "startChar": 30,
+        "endLine": 259,
+        "endChar": 46
+      },
+      "revId": "c006c4349a55c967a5fdbd84d23e85f67396fe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
