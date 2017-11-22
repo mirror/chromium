@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23f4f4b_71c30908",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_texture_mailbox.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-22T01:56:07Z",
+      "side": 1,
+      "message": "Wonder if any language needs to be added (like from the OpenGL spec) like the texture must already have been bound at least once to a target like GL_TEXTURE_2D.",
+      "revId": "a11321911fa3f367952c7679b3d2f3372904ef9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
