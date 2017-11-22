@@ -198,6 +198,10 @@ For example, adding a test to `chrome_junit_tests` requires to update
 step in order to run the test locally but it is still required for GN users to
 run the test.
 
+You can instruct the test runner to wait for a debugger to attach before running
+the tests using the `--debug-socket` argument to the test runner script. Follow
+your chosen IDE's instructions on how to attach the debugger.
+
 ```shell
 # Build the test suite.
 ninja -C out/my_build chrome_junit_tests
@@ -208,6 +212,10 @@ BUILDTYPE=my_build build/android/test_runner.py junit -s chrome_junit_tests -vvv
 # Run a subset of tests. You might need to pass the package name for some tests.
 BUILDTYPE=my_build build/android/test_runner.py junit -s chrome_junit_tests -vvv
 -f "org.chromium.chrome.browser.media.*"
+
+# Instruct the tests to not start until a java debugger is attached.
+BUILDTYPE=my_build build/android/test_runner.py junit -s chrome_junit_tests -vvv
+-f "org.chromium.chrome.browser.media.*" --debug-socket <socket-address>
 ```
 
 ## Gtests
