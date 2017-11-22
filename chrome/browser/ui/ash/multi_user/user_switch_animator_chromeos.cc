@@ -21,8 +21,6 @@
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_client.h"
 
-namespace chrome {
-
 namespace {
 
 // The minimal possible animation time for animations which should happen
@@ -368,5 +366,3 @@ void UserSwitchAnimatorChromeOS::BuildUserToWindowsListMap() {
     }
   }
 }
-
-}  // namespace chrome
