@@ -391,6 +391,30 @@
     },
     {
       "key": {
+        "uuid": "ad7bcdeb_bdab6fa8",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T06:47:44Z",
+      "side": 1,
+      "message": "Event has 2 fields... why not just add a helper function that calls EXPECT_EQ twice?\n\nIf you add more fields later, it\u0027s just one extra line per field to add to your helper function :-\\",
+      "parentUuid": "a07d3c18_db2c2e6d",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 11
+      },
+      "revId": "9e4228b385288fb376193ba7fad422bad36165ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4beb51_19a2d388",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
         "patchSetId": 4
