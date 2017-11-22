@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91dc0b1b_0d518d3c",
+        "filename": "chrome/browser/notifications/arc_application_notifier_controller_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-22T01:24:53Z",
+      "side": 0,
+      "message": "This prevents the other crash which happens at L1197 in chrome_browser_main_chromeos.cc (see crbug.com/783538).\n\nCould you keep this or move the reset before L1197 in chrome_browser_main_chromeos.cc?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 76
+      },
+      "revId": "db5696b39173bcda1e530fd456e30b1668de5f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
