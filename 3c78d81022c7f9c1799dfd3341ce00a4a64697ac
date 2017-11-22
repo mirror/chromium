@@ -22,6 +22,30 @@
       "revId": "3c78d81022c7f9c1799dfd3341ce00a4a64697ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f81ac3f_df752f5a",
+        "filename": "net/nqe/network_id.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-22T23:24:37Z",
+      "side": 1,
+      "message": "There is a test in network_id_unitteset.cc for backwards compatibility.\n\nBut, I think you are right that there is no need to support old format.\nI have removed the code for backwards compatibility.",
+      "parentUuid": "39f5a4db_1d181fa6",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 78,
+        "endChar": 20
+      },
+      "revId": "3c78d81022c7f9c1799dfd3341ce00a4a64697ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
