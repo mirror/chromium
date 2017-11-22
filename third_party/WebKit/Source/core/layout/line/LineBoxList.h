@@ -54,6 +54,7 @@ class LineBoxList {
   ~LineBoxList();
 #endif
 
+  bool IsEmpty() const { return !first_line_box_; }
   InlineFlowBox* FirstLineBox() const { return first_line_box_; }
   InlineFlowBox* LastLineBox() const { return last_line_box_; }
 

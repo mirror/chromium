@@ -180,6 +180,12 @@ class CORE_EXPORT NGPhysicalFragment
   void Destroy() const;
 };
 
+// Used for return value of traversing fragment tree.
+struct CORE_EXPORT NGPhysicalFragmentWithOffset {
+  const NGPhysicalFragment* fragment = nullptr;
+  NGPhysicalOffset offset;
+};
+
 }  // namespace blink
 
 #endif  // NGPhysicalFragment_h

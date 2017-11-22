@@ -34,6 +34,8 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LineLayoutBoxModel.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/geometry/ng_physical_rect.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/paint/BoxPainter.h"
 #include "core/paint/InlinePainter.h"
@@ -44,6 +46,8 @@
 #include "platform/geometry/TransformState.h"
 
 namespace blink {
+
+namespace {}  // unnamed namespace
 
 struct SameSizeAsLayoutInline : public LayoutBoxModelObject {
   ~SameSizeAsLayoutInline() override {}
@@ -273,6 +277,7 @@ LayoutRect LayoutInline::LocalCaretRect(
     const InlineBox* inline_box,
     int,
     LayoutUnit* extra_width_to_end_of_line) const {
+  DCHECK(CanUseInlineBox(*this));
   if (FirstChild()) {
     // This condition is possible if the LayoutInline is at an editing boundary,
     // i.e. the VisiblePosition is:
@@ -627,6 +632,7 @@ void LayoutInline::Paint(const PaintInfo& paint_info,
 
 template <typename GeneratorContext>
 void LayoutInline::GenerateLineBoxRects(GeneratorContext& yield) const {
+  DCHECK(CanUseInlineBox(*this));
   if (!AlwaysCreateLineBoxes()) {
     GenerateCulledLineBoxRects(yield, this);
   } else if (InlineFlowBox* curr = FirstLineBox()) {
@@ -639,6 +645,7 @@ static inline void ComputeItemTopHeight(const LayoutInline* container,
                                         const RootInlineBox& root_box,
                                         LayoutUnit* top,
                                         LayoutUnit* height) {
+  DCHECK(CanUseInlineBox(*container));
   bool first_line = root_box.IsFirstLineStyle();
   const SimpleFontData* font_data =
       root_box.GetLineLayoutItem().Style(first_line)->GetFont().PrimaryFont();
@@ -662,6 +669,7 @@ template <typename GeneratorContext>
 void LayoutInline::GenerateCulledLineBoxRects(
     GeneratorContext& yield,
     const LayoutInline* container) const {
+  DCHECK(CanUseInlineBox(*this));
   if (!CulledInlineFirstLineBox())
     return;
 
@@ -760,10 +768,22 @@ class AbsoluteRectsGeneratorContext {
 
 void LayoutInline::AbsoluteRects(Vector<IntRect>& rects,
                                  const LayoutPoint& accumulated_offset) const {
-  AbsoluteRectsGeneratorContext context(rects, accumulated_offset);
-  GenerateLineBoxRects(context);
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      IntRect int_rect =
+          EnclosingIntRect(child.FragementRectInContainerBox().ToLayoutRect());
+      int_rect.Move(accumulated_offset.X().ToInt(),
+                    accumulated_offset.Y().ToInt());
+      rects.push_back(int_rect);
+    }
+  } else {
+    AbsoluteRectsGeneratorContext context(rects, accumulated_offset);
+    GenerateLineBoxRects(context);
+  }
   if (rects.IsEmpty())
-    context(LayoutRect());
+    rects.push_back(LayoutRect());
 
   if (const LayoutBoxModelObject* continuation = this->Continuation()) {
     if (continuation->IsBox()) {
@@ -805,6 +825,20 @@ class AbsoluteQuadsGeneratorContext {
 
 void LayoutInline::AbsoluteQuadsForSelf(Vector<FloatQuad>& quads,
                                         MapCoordinatesFlags mode) const {
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    LayoutGeometryMap geometry_map(mode);
+    geometry_map.PushMappingsToAncestor(this, nullptr);
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      quads.push_back(geometry_map.AbsoluteRect(
+          FloatRect(child.FragementRectInContainerBox().ToLayoutRect())));
+    }
+    if (!quads.IsEmpty())
+      return;
+    quads.push_back(geometry_map.AbsoluteRect(FloatRect()));
+    return;
+  }
   AbsoluteQuadsGeneratorContext context(this, quads, mode);
   GenerateLineBoxRects(context);
   if (quads.IsEmpty())
@@ -812,6 +846,14 @@ void LayoutInline::AbsoluteQuadsForSelf(Vector<FloatQuad>& quads,
 }
 
 LayoutPoint LayoutInline::FirstLineBoxTopLeft() const {
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    NGInlineFragmentIterator children(*box_fragment, this);
+    if (children.begin() == children.end())
+      return LayoutPoint();
+    const auto& first_child = *children.begin();
+    return first_child.offset_to_container_box.ToLayoutPoint();
+  }
   if (InlineBox* first_box = FirstLineBoxIncludingCulling())
     return first_box->Location();
   return LayoutPoint();
@@ -895,6 +937,7 @@ bool LayoutInline::HitTestCulledInline(
     HitTestResult& result,
     const HitTestLocation& location_in_container,
     const LayoutPoint& accumulated_offset) {
+  DCHECK(CanUseInlineBox(*this));
   DCHECK(!AlwaysCreateLineBoxes());
   if (!VisibleToHitTestRequest(result.GetHitTestRequest()))
     return false;
@@ -953,6 +996,16 @@ class LinesBoundingBoxGeneratorContext {
 }  // unnamed namespace
 
 LayoutRect LayoutInline::LinesBoundingBox() const {
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    LayoutRect result;
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      result.Unite(child.FragementRectInContainerBox().ToLayoutRect());
+    }
+    return result;
+  }
+
   if (!AlwaysCreateLineBoxes()) {
     DCHECK(!FirstLineBox());
     FloatRect float_result;
@@ -998,6 +1051,7 @@ LayoutRect LayoutInline::LinesBoundingBox() const {
 }
 
 InlineBox* LayoutInline::CulledInlineFirstLineBox() const {
+  DCHECK(CanUseInlineBox(*this));
   for (LayoutObject* curr = FirstChild(); curr; curr = curr->NextSibling()) {
     if (curr->IsFloatingOrOutOfFlowPositioned())
       continue;
@@ -1022,6 +1076,7 @@ InlineBox* LayoutInline::CulledInlineFirstLineBox() const {
 }
 
 InlineBox* LayoutInline::CulledInlineLastLineBox() const {
+  DCHECK(CanUseInlineBox(*this));
   for (LayoutObject* curr = LastChild(); curr; curr = curr->PreviousSibling()) {
     if (curr->IsFloatingOrOutOfFlowPositioned())
       continue;
@@ -1046,6 +1101,7 @@ InlineBox* LayoutInline::CulledInlineLastLineBox() const {
 }
 
 LayoutRect LayoutInline::CulledInlineVisualOverflowBoundingBox() const {
+  DCHECK(CanUseInlineBox(*this));
   FloatRect float_result;
   LinesBoundingBoxGeneratorContext context(float_result);
   GenerateCulledLineBoxRects(context, this);
@@ -1086,12 +1142,23 @@ LayoutRect LayoutInline::CulledInlineVisualOverflowBoundingBox() const {
 }
 
 LayoutRect LayoutInline::LinesVisualOverflowBoundingBox() const {
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    NGPhysicalOffsetRect rect;
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      rect.Unite(child.fragment->SelfVisualRect() +
+                 child.offset_to_container_box);
+    }
+    return rect.ToLayoutRect();
+  }
   if (!AlwaysCreateLineBoxes())
     return CulledInlineVisualOverflowBoundingBox();
 
   if (!FirstLineBox() || !LastLineBox())
     return LayoutRect();
 
+  DCHECK(CanUseInlineBox(*this));
   // Return the width of the minimal left side and the maximal right side.
   LayoutUnit logical_left_side = LayoutUnit::Max();
   LayoutUnit logical_right_side = LayoutUnit::Min();
@@ -1158,10 +1225,15 @@ LayoutRect LayoutInline::AbsoluteVisualRect() const {
 }
 
 LayoutRect LayoutInline::LocalVisualRectIgnoringVisibility() const {
-  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
-    NGPhysicalOffsetRect visual_rect;
-    if (LayoutNGBlockFlow::LocalVisualRectFor(this, &visual_rect))
-      return visual_rect.ToLayoutRect();
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    NGPhysicalOffsetRect rect;
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      rect.Unite(child.fragment->SelfVisualRect() +
+                 child.offset_to_container_box);
+    }
+    return rect.ToLayoutRect();
   }
 
   // If we don't create line boxes, we don't have any invalidations to do.
@@ -1301,6 +1373,10 @@ void LayoutInline::UpdateHitTestResult(HitTestResult& result,
 }
 
 void LayoutInline::DirtyLineBoxes(bool full_layout) {
+  if (EnclosingNGBlockFlow()) {
+    SetAncestorLineBoxDirty();
+    return;
+  }
   if (full_layout) {
     line_boxes_.DeleteLineBoxes();
     return;
@@ -1335,10 +1411,12 @@ void LayoutInline::DirtyLineBoxes(bool full_layout) {
 }
 
 InlineFlowBox* LayoutInline::CreateInlineFlowBox() {
+  DCHECK(CanUseInlineBox(*this));
   return new InlineFlowBox(LineLayoutItem(this));
 }
 
 InlineFlowBox* LayoutInline::CreateAndAppendInlineFlowBox() {
+  DCHECK(CanUseInlineBox(*this));
   SetAlwaysCreateLineBoxes();
   InlineFlowBox* flow_box = CreateInlineFlowBox();
   line_boxes_.AppendLineBox(flow_box);
@@ -1470,8 +1548,18 @@ void LayoutInline::AddOutlineRects(
     Vector<LayoutRect>& rects,
     const LayoutPoint& additional_offset,
     IncludeBlockVisualOverflowOrNot include_block_overflows) const {
-  AbsoluteLayoutRectsGeneratorContext context(rects, additional_offset);
-  GenerateLineBoxRects(context);
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragement()) {
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      LayoutRect rect = child.FragementRectInContainerBox().ToLayoutRect();
+      rect.MoveBy(additional_offset);
+      rects.push_back(rect);
+    }
+  } else {
+    AbsoluteLayoutRectsGeneratorContext context(rects, additional_offset);
+    GenerateLineBoxRects(context);
+  }
   AddOutlineRectsForChildrenAndContinuations(rects, additional_offset,
                                              include_block_overflows);
 }
@@ -1548,6 +1636,7 @@ void LayoutInline::InvalidateDisplayItemClients(
   ObjectPaintInvalidator paint_invalidator(*this);
   paint_invalidator.InvalidateDisplayItemClient(*this, invalidation_reason);
 
+  // TDOO(layout-dev): We should have LayoutNG version of line box.
   for (InlineFlowBox* box = FirstLineBox(); box; box = box->NextLineBox())
     paint_invalidator.InvalidateDisplayItemClient(*box, invalidation_reason);
 }
