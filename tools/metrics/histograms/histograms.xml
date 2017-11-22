@@ -81057,6 +81057,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="SoftwareReporter.Cleaner.HasCompleted" enum="SRTCompleted">
+  <obsolete>
+    Removed on 2017-11-01.
+  </obsolete>
   <owner>mad@chromium.org</owner>
   <summary>
     The state of software reporter cleaner tool runs. A value of &quot;Not
