@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e345fa8a_c7c9f463",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24bcd3d_2dfe214b",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f497f63_4b7f5dd5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
         "patchSetId": 6
@@ -51,6 +69,24 @@
       "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff12fed_da4567c2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "Done. FWIW we should only recommend prefixed cookies in new applications and the spec should be updated to explicitly call unprefixed cookies \"legacy cookies\" IMO, but that can be handled separately.",
+      "parentUuid": "7f497f63_4b7f5dd5",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a08704dc_e946c996",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "1: Removed prefix FWIW at the moment \"CookieStore async cookies API\" is the name at the top of https://github.com/WICG/cookie-store/blob/gh-pages/explainer.md to accord with the repo renaming and make it easier to find. Should I switch that back?\n\n2: Removed.",
+      "parentUuid": "ffd399a5_22b84a9d",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcf187fe_d5bec688",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
         "patchSetId": 6
@@ -85,6 +139,24 @@
       "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2a605e_c07c2c9e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "dcf187fe_d5bec688",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "98a4328b_7d65c714",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07da88f3_34054e83",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88789af9_fa7457dc",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
         "patchSetId": 6
@@ -119,6 +209,24 @@
       "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e55a3e_36b15b41",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_domain.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "Done. This one tests getAll item ordering with domain shadowing and surrounding unshadowed cookies.",
+      "parentUuid": "88789af9_fa7457dc",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "275bc86d_d87a1da2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "Renaming done, though with shorter names (I believe they are equally meaningful in a cookie context, though). I left the comment to make it completely clear what the names and values reflect.",
+      "parentUuid": "4ca65ebf_bfd8fbd2",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af7c439_8a186c04",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
         "patchSetId": 6
@@ -153,6 +279,24 @@
       "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8087dc_379db25a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "Done, though as above with shorter values and comment preserved to aid clear understanding.",
+      "parentUuid": "1af7c439_8a186c04",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "a6147831_49ccde34",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "I did it this way precisely so the test won\u0027t be brittle if the spec and implementation are ever extended to reflect metadata. Why should it be brittle in this way?",
+      "parentUuid": "a0d32d17_44dda9ca",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c53bc536_23bff678",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
         "patchSetId": 6
@@ -187,6 +349,24 @@
       "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7e9b72_3a2f28e8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path.tentative.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-22T02:19:52Z",
+      "side": 1,
+      "message": "Renamed to clarify. This test covers getAll item ordering with implicit path shadowing and unshadowed cookies, which requires extra surrounding cookies to ensure the correct ordering is reflected in the reported cookie list.",
+      "parentUuid": "c53bc536_23bff678",
+      "revId": "1bab17567bc316d58b7a33acd1662a6924543b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
