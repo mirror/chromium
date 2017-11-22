@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91da83a2_a069fa52",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T05:39:35Z",
+      "side": 1,
+      "message": "nit: for unused parameters, comment out their name rather than saying \"unused\":\n\n  const base::TimeTicks\u0026 /*timestamp*/\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 36
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523df7fb_a11da93a",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T05:39:35Z",
+      "side": 1,
+      "message": "optional: These two lines are always together AFAICT; you never call ResetIdleDelayTimer() without setting last_activity_item_ to Now() or vice versa. Maybe group them in one function?",
+      "range": {
+        "startLine": 77,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7117d5b_1f7c2237",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T05:39:35Z",
+      "side": 1,
+      "message": "nit: we generally group simple getters/setters after NormalFunctions(): https://google.github.io/styleguide/cppguide.html#Class_Format",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba308172_1e5f53e5",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T05:39:35Z",
+      "side": 1,
+      "message": "This returns a std::unique_ptr\u003cbase::Clock\u003e -- no need to wrap it in another one.",
+      "range": {
+        "startLine": 66,
+        "startChar": 37,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5209f0_48d57a71",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T05:39:35Z",
+      "side": 1,
+      "message": "nit: as per derat\u0027s comment, still need to move this above data members (ie, should be the first line after the protected: keyword). again, please see https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655290dc_bb939e94",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-22T05:39:35Z",
+      "side": 1,
+      "message": "I might be confused, but is there any reason not to use |now| (the virtual time from the task_runner_) in these calls?\n\nIf we mix and match the real time with the mock time, it\u0027s harder to reason about the order of events and what the expected behavior is.",
+      "range": {
+        "startLine": 112,
+        "startChar": 52,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "fa0615dbc55165e3732c266974a1d861384330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
