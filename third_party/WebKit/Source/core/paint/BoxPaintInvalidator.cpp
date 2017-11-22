@@ -188,8 +188,24 @@ bool BoxPaintInvalidator::ShouldFullyInvalidateBackgroundOnLayoutOverflowChange(
   DCHECK(old_layout_overflow != new_layout_overflow);
   if (new_layout_overflow.IsEmpty() || old_layout_overflow.IsEmpty())
     return true;
-  if (new_layout_overflow.Location() != old_layout_overflow.Location())
-    return true;
+  if (new_layout_overflow.Location() != old_layout_overflow.Location()) {
+    // The background should invalidate on most location changes but we can
+    // avoid invalidation in a common case if the background is a single color
+    // that fully covers the overflow area.
+
+    auto& layers = box_.StyleRef().BackgroundLayers();
+    // If there are multiple background layers, assume complex positioning is
+    // used. This could be relaxed by doing the GetImage and Repeat checks for
+    // all layers.
+    if (layers.Next())
+      return true;
+    // If the background has an image, it is not a solid color.
+    if (layers.GetImage())
+      return true;
+    // Even solid color backgrounds depend on position if they do not repeat.
+    if (layers.RepeatX() != kRepeatFill || layers.RepeatY() != kRepeatFill)
+      return true;
+  }
   if (new_layout_overflow.Width() != old_layout_overflow.Width() &&
       box_.MustInvalidateFillLayersPaintOnWidthChange(
           box_.StyleRef().BackgroundLayers()))
