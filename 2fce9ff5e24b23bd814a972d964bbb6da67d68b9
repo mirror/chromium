@@ -16,6 +16,24 @@
       "revId": "2fce9ff5e24b23bd814a972d964bbb6da67d68b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb1da72_ca0b5a8e",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-22T21:54:32Z",
+      "side": 1,
+      "message": "Done. Now DrawStringRectWithFlags() and UpdateBackgroundColor() do the same thing.",
+      "parentUuid": "0ce276ac_392bacbc",
+      "revId": "2fce9ff5e24b23bd814a972d964bbb6da67d68b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
