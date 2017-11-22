@@ -16,6 +16,24 @@
       "revId": "a41a5fdd9c9462bb487ee899b851c09e7939193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195cbcb1_cdf4ff0a",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-22T20:12:40Z",
+      "side": 1,
+      "message": "I\u0027ll log a warning then.  If we don\u0027t handle the parsing error, users won\u0027t be able to delete the printers we\u0027ve allowed them to enter in the past.",
+      "parentUuid": "abb18dc2_ea6b5dcb",
+      "revId": "a41a5fdd9c9462bb487ee899b851c09e7939193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
