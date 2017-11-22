@@ -101,7 +101,7 @@ namespace {
 
 const int kButtonHeight = 32;
 const int kFixedAccountRemovalViewWidth = 280;
-const int kFixedMenuWidth = 240;
+const int kFixedMenuWidth = 280;
 
 // Spacing between the edge of the material design user menu and the
 // top/bottom or left/right of the menu items.
@@ -686,7 +686,7 @@ views::View* ProfileChooserView::CreateProfileChooserView(
       current_profile_view = CreateCurrentProfileView(item, false);
       if (!IsProfileChooser(view_mode_))
         current_profile_accounts = CreateCurrentProfileAccountsView(item);
-      sync_error_view = CreateSyncErrorViewIfNeeded();
+      sync_error_view = CreateSyncErrorViewIfNeeded(item);
     } else {
       other_profiles.push_back(i);
     }
@@ -705,8 +705,11 @@ views::View* ProfileChooserView::CreateProfileChooserView(
     option_buttons_view = CreateOptionsView(false, avatar_menu);
   }
 
-  layout->StartRow(1, 0);
-  layout->AddView(current_profile_view);
+  if (!(signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs()) &&
+        sync_error_view)) {
+    layout->StartRow(1, 0);
+    layout->AddView(current_profile_view);
+  }
 
   if (!IsProfileChooser(view_mode_)) {
     DCHECK(current_profile_accounts);
@@ -731,7 +734,8 @@ views::View* ProfileChooserView::CreateProfileChooserView(
   return view;
 }
 
-views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
+views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded(
+    const AvatarMenu::Item& avatar_item) {
   int content_string_id, button_string_id;
   views::LabelButton** button_out = nullptr;
   SigninManagerBase* signin_manager =
@@ -770,64 +774,91 @@ views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
 
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
-  // Sets an overall horizontal layout.
   views::View* view = new views::View();
-  views::BoxLayout* layout = new views::BoxLayout(
-      views::BoxLayout::kHorizontal, gfx::Insets(kMenuEdgeMargin),
-      provider->GetDistanceMetric(DISTANCE_UNRELATED_CONTROL_HORIZONTAL));
-  layout->set_cross_axis_alignment(
-      views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
-  view->SetLayoutManager(layout);
+  if (button_out &&
+      signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs())) {
+    // A HoverButton with a red background and spacing around it is created. To
+    // achieve this, an intermediate view |hover_button_background| is used.
+    views::View* hover_button_background = new views::View();
+    hover_button_background->SetBackground(
+        views::CreateSolidBackground(gfx::kGoogleRed700));
+    hover_button_background->SetLayoutManager(new views::BoxLayout(
+        views::BoxLayout::kVertical, gfx::Insets(0, 0), 0));
+    view->SetLayoutManager(
+        new views::BoxLayout(views::BoxLayout::kVertical,
+                             gfx::Insets(kMenuEdgeMargin, kMenuEdgeMargin), 0));
 
-  // Adds the sync problem icon.
-  views::ImageView* sync_problem_icon = new views::ImageView();
-  sync_problem_icon->SetImage(
-      gfx::CreateVectorIcon(kSyncProblemIcon, 20, gfx::kGoogleRed700));
-  view->AddChildView(sync_problem_icon);
+    auto current_profile_photo = std::make_unique<BadgedProfilePhoto>(
+        BadgedProfilePhoto::BADGE_TYPE_SYNC_ERROR, avatar_item.icon);
+    HoverButton* hover_button =
+        new HoverButton(this, std::move(current_profile_photo),
+                        l10n_util::GetStringUTF16(button_string_id),
+                        l10n_util::GetStringUTF16(content_string_id));
+    hover_button->SetTextColor(SK_ColorWHITE);
 
-  // Adds a vertical view to organize the error title, message, and button.
-  views::View* vertical_view = new views::View();
-  const int small_vertical_spacing = provider->GetDistanceMetric(
-      DISTANCE_RELATED_CONTROL_VERTICAL_SMALL);
-  views::BoxLayout* vertical_layout = new views::BoxLayout(
-      views::BoxLayout::kVertical, gfx::Insets(), small_vertical_spacing);
-  vertical_layout->set_cross_axis_alignment(
-      views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
-  vertical_view->SetLayoutManager(vertical_layout);
+    hover_button_background->AddChildView(hover_button);
+    view->AddChildView(hover_button_background);
+    *button_out = hover_button;
+  } else {
+    // Sets an overall horizontal layout.
+    views::BoxLayout* layout = new views::BoxLayout(
+        views::BoxLayout::kHorizontal, gfx::Insets(kMenuEdgeMargin),
+        provider->GetDistanceMetric(DISTANCE_UNRELATED_CONTROL_HORIZONTAL));
+    layout->set_cross_axis_alignment(
+        views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
+    view->SetLayoutManager(layout);
 
-  // Adds the title.
-  views::Label* title_label = new views::Label(
-      l10n_util::GetStringUTF16(IDS_SYNC_ERROR_USER_MENU_TITLE));
-  title_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  title_label->SetEnabledColor(gfx::kGoogleRed700);
-  vertical_view->AddChildView(title_label);
+    // Adds the sync problem icon.
+    views::ImageView* sync_problem_icon = new views::ImageView();
+    sync_problem_icon->SetImage(
+        gfx::CreateVectorIcon(kSyncProblemIcon, 20, gfx::kGoogleRed700));
+    view->AddChildView(sync_problem_icon);
 
-  // Adds body content.
-  views::Label* content_label =
-      new views::Label(l10n_util::GetStringUTF16(content_string_id));
-  content_label->SetMultiLine(true);
-  content_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  vertical_view->AddChildView(content_label);
+    // Adds a vertical view to organize the error title, message, and button.
+    views::View* vertical_view = new views::View();
+    const int small_vertical_spacing =
+        provider->GetDistanceMetric(DISTANCE_RELATED_CONTROL_VERTICAL_SMALL);
+    views::BoxLayout* vertical_layout = new views::BoxLayout(
+        views::BoxLayout::kVertical, gfx::Insets(), small_vertical_spacing);
+    vertical_layout->set_cross_axis_alignment(
+        views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
+    vertical_view->SetLayoutManager(vertical_layout);
 
-  // Adds an action button if an action exists.
-  if (button_string_id) {
-    // If the button string is specified, then the button itself needs to be
-    // already initialized.
-    DCHECK(button_out);
-    // Adds a padding row between error title/content and the button.
-    auto* padding = new views::View;
-    padding->SetPreferredSize(gfx::Size(
-        0,
-        provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL)));
-    vertical_view->AddChildView(padding);
+    // Adds the title.
+    views::Label* title_label = new views::Label(
+        l10n_util::GetStringUTF16(IDS_SYNC_ERROR_USER_MENU_TITLE));
+    title_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    title_label->SetEnabledColor(gfx::kGoogleRed700);
+    vertical_view->AddChildView(title_label);
 
-    *button_out = views::MdTextButton::CreateSecondaryUiBlueButton(
-        this, l10n_util::GetStringUTF16(button_string_id));
-    vertical_view->AddChildView(*button_out);
-    view->SetBorder(views::CreateEmptyBorder(0, 0, small_vertical_spacing, 0));
+    // Adds body content.
+    views::Label* content_label =
+        new views::Label(l10n_util::GetStringUTF16(content_string_id));
+    content_label->SetMultiLine(true);
+    content_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    vertical_view->AddChildView(content_label);
+
+    // Adds an action button if an action exists.
+    if (button_string_id) {
+      // If the button string is specified, then the button itself needs to be
+      // already initialized.
+      DCHECK(button_out);
+      // Adds a padding row between error title/content and the button.
+      auto* padding = new views::View;
+      padding->SetPreferredSize(
+          gfx::Size(0, provider->GetDistanceMetric(
+                           views::DISTANCE_RELATED_CONTROL_VERTICAL)));
+      vertical_view->AddChildView(padding);
+
+      *button_out = views::MdTextButton::CreateSecondaryUiBlueButton(
+          this, l10n_util::GetStringUTF16(button_string_id));
+      vertical_view->AddChildView(*button_out);
+      view->SetBorder(
+          views::CreateEmptyBorder(0, 0, small_vertical_spacing, 0));
+    }
+
+    view->AddChildView(vertical_view);
   }
-
-  view->AddChildView(vertical_view);
   return view;
 }
 
@@ -846,7 +877,6 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   view->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical,
                            gfx::Insets(content_list_vert_spacing, 0), 0));
-
   auto current_profile_photo = std::make_unique<BadgedProfilePhoto>(
       GetProfileBadgeType(browser_->profile()), avatar_item.icon);
   const base::string16 profile_name =
