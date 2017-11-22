@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cc2fe16_28c63c09",
+        "filename": "chrome/browser/media/media_engagement_preload.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:36:08Z",
+      "side": 1,
+      "message": "Would it have been possible to have this as uint8? It sounds that we internally use 8 bits and I wonder if we wouldn\u0027t end up wasting 24 bits here?",
+      "revId": "3499c03a577e50cb2587a713aa7479f373d29e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
