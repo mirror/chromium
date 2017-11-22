@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6108dd7_c77bd703",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/BackwardsCharacterIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-22T17:36:12Z",
+      "side": 1,
+      "message": "I don\u0027t see any blocker of making EditingPositionOf take |const Node*|. It\u0027s calling the ctors of Position, and the ctors already take |const Node*|.",
+      "parentUuid": "25937d16_8f8879d4",
+      "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfb4a0ab_47a0df62",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
         "patchSetId": 1
@@ -30,6 +48,58 @@
       "writtenOn": "2017-11-22T14:40:46Z",
       "side": 1,
       "message": "Oh, that was my test check, made that just out of curiosity.\nIt is unrelated to the goals of this CL, will remove.\nyosin@, how do you think, can there be a situation in future when assert can be triggred?\nShould we have something like this?",
+      "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763d8539_834df7d5",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-22T17:36:12Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "dfb4a0ab_47a0df62",
+      "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59eeb88_d9670a65",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-22T17:36:12Z",
+      "side": 1,
+      "message": "This function should return |const Node*|. Let\u0027s track it with a TODO.",
+      "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db2cbb7_d2bbc5f0",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-22T17:36:12Z",
+      "side": 1,
+      "message": "Seems better to split it into another patch, since you need a different reviewer for this part.",
       "revId": "201b6da374e316a3a6694dc5bc4255220f2bf39f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
