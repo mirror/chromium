@@ -30410,6 +30410,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="IOS.PageLoadCount.Counts"
+    enum="IOSPageLoadCountNavigationType">
+  <owner>danyao@chromium.org</owner>
+  <summary>The number of navigation started events by navigation type.</summary>
+</histogram>
+
+<histogram name="IOS.PageLoadCount.LoadingStarted" units="count">
+  <owner>danyao@chromium.org</owner>
+  <summary>The number of page loading started events.</summary>
+</histogram>
+
 <histogram name="IOS.PageLoadTiming.OmnibarToPageLoaded" units="ms">
   <owner>danyao@chromium.org</owner>
   <summary>
