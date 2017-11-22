@@ -22,6 +22,30 @@
       "revId": "0d2f4e482c050346a4bb4d19ee27159be447c106",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf4b057_855174f7",
+        "filename": "extensions/renderer/worker_thread_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-22T03:26:01Z",
+      "side": 1,
+      "message": "I\u0027m not sure that passing in the delegate would help clarify.  I\u0027ve restructured this to just pass in the full new bindings system, which also removes the need to pass the source map, so that all logic is contained in the Dispatcher.  WDYT?",
+      "parentUuid": "b447a946_00c22f6a",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 56
+      },
+      "revId": "0d2f4e482c050346a4bb4d19ee27159be447c106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
