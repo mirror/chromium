@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "518f1629_fbe13d26",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T19:49:42Z",
+      "side": 1,
+      "message": "You still need to read the surrounding code either way. e.g. header.version() cannot be 13 here. The only way to know that is to rea all the previous ifs.\n\nHow about I split this off into a separate CL? UpgradeOldDB() can probably be broken up into UpgradeOldDBNN() functions.",
+      "parentUuid": "2b1b2f7a_05cb0557",
+      "range": {
+        "startLine": 529,
+        "startChar": 2,
+        "endLine": 529,
+        "endChar": 30
+      },
+      "revId": "d058bd7d8f4f4316732130f61ac5d67541e4d648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05a26366_949daeaa",
         "filename": "components/drive/service/drive_api_service.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T01:18:29Z",
       "side": 1,
       "message": "I\u0027m not that sure if this code style is more readable. If missed the \"return\", the reader may think the code is shared. I think explicit else, even if redundant, by indentation makes the decision logic easier to understand. At least in this case, the former code looked cleaner to me.\n\nI don\u0027t have strong feelings, but I\u0027m not sure whether this change (at least in this file) has any value.",
+      "range": {
+        "startLine": 839,
+        "startChar": 2,
+        "endLine": 840,
+        "endChar": 6
+      },
+      "revId": "d058bd7d8f4f4316732130f61ac5d67541e4d648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de18444_c281cf82",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T19:49:42Z",
+      "side": 1,
+      "message": "Certainly some prefer the if-else symmetry, while others find the return interrupts the code flow. I mostly expect neutral or positive reaction to clean up CLs, but if they is push back, that\u0027s ok too.\n\nI\u0027ll revert the drive portion and land the request. I have some ideas for cleaning this up and I\u0027ll do that in a separate CL.",
+      "parentUuid": "05a26366_949daeaa",
       "range": {
         "startLine": 839,
         "startChar": 2,
