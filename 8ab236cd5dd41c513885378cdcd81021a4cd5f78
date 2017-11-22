@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4b5f070_ae69e9ca",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "unintentional?",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3055a3b4_fcacc3c3",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "Could use some one sentence comment, ideally explaining about what |map| is, what the return value means.",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c64f8c_7f89c3e7",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "may have been",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e971bf5_02ee3d23",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "Same, could use a comment.",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b0f4ba_e97efbd5",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "Blink",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66cc5aa6_914f9705",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "maybe just CHECK_LT?",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e42d2f9_0796e9a7",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "kEventTimeout",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f893c97a_34d79c74",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "// If |abort_callbacks_| is empty, the worker is now idle.",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87a0123_3c11745b",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "consistency with {} or not for one-liners.",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7aa694_960db7de",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "Can you expand this description: What is an event timeout vs idle timeout? What is the lifetime of this class?",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee7ed86_1cdf44c1",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "Lifetime cmoments would be helpful in the class description... in what circumstances does the timer destruct?",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbaea85_c0865d93",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T05:13:54Z",
+      "side": 1,
+      "message": "The abort callback is called when...?",
+      "revId": "8ab236cd5dd41c513885378cdcd81021a4cd5f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
