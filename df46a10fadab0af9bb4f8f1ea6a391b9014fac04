@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea99d0bc_4b96a85b",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:31:48Z",
+      "side": 1,
+      "message": "nit: I think label  is clear enough; also, I\u0027d move this property under |type|.",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 26
+      },
+      "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35ac3c9_5d8e6a60",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:31:48Z",
+      "side": 1,
+      "message": "Packet or PacketInfo (given that the object contains more than just latency)?",
+      "range": {
+        "startLine": 161,
+        "startChar": 13,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3ff9a2_4ecfafed",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:31:48Z",
+      "side": 1,
+      "message": "can you explain what a reference packet is?",
+      "range": {
+        "startLine": 165,
+        "startChar": 49,
+        "endLine": 165,
+        "endChar": 58
+      },
+      "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191c8a79_a6cca53c",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-22T18:31:48Z",
+      "side": 1,
+      "message": "drishti graph is not really defined in the API documentation.\n\nIt\u0027s unclear to me whether this list contains information about individual packets, or about streams of packets? If latter, can you rename |PacketLatency| to something indicating it\u0027s information about multiple packets?",
+      "range": {
+        "startLine": 183,
+        "startChar": 59,
+        "endLine": 183,
+        "endChar": 66
+      },
+      "revId": "df46a10fadab0af9bb4f8f1ea6a391b9014fac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
