@@ -205,26 +205,14 @@ void RenderMessageFilter::CreateFullscreenWidget(
   std::move(callback).Run(route_id);
 }
 
-void RenderMessageFilter::LoadFont(const base::string16& font_name,
-                                   float font_point_size,
-                                   LoadFontCallback callback) {
+void RenderMessageFilter::LoadFont(
+    const base::string16& font_name,
+    float font_point_size,
+    mojom::RenderMessageFilter::LoadFontCallback callback) {
 #if defined(OS_MACOSX)
-  FontLoader::LoadFont(font_name, font_point_size,
-                       base::BindOnce(&RenderMessageFilter::SendLoadFontReply,
-                                      this, std::move(callback)));
+  FontLoader::LoadFont(font_name, font_point_size, std::move(callback));
 #endif  // defined(OS_MACOSX)
 }
-
-#if defined(OS_MACOSX)
-void RenderMessageFilter::SendLoadFontReply(LoadFontCallback reply,
-                                            uint32_t data_size,
-                                            base::SharedMemoryHandle handle,
-                                            uint32_t font_id) {
-  std::move(reply).Run(data_size,
-                       mojo::WrapSharedMemoryHandle(handle, data_size, true),
-                       font_id);
-}
-#endif  // defined(OS_MACOSX)
 
 #if defined(OS_LINUX)
 void RenderMessageFilter::SetThreadPriorityOnFileThread(
