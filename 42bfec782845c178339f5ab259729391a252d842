@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bdef96a_948d706e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-22T05:41:51Z",
+      "side": 1,
+      "message": "Nit: Line-wrap this paragraph to 72 (it\u0027s too short).",
+      "revId": "42bfec782845c178339f5ab259729391a252d842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace0899a_3ddb9b38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-22T05:41:51Z",
+      "side": 1,
+      "message": "In",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "42bfec782845c178339f5ab259729391a252d842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4569fb7a_1630f709",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-22T05:41:51Z",
+      "side": 1,
+      "message": "s/install/test installing/\n\n(Since again, it feels a bit like you\u0027re saying we currently can\u0027t install two apps on different hosts *in production*. This just makes it clear that we\u0027re now able to test that behaviour which we could already do in production.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "42bfec782845c178339f5ab259729391a252d842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
