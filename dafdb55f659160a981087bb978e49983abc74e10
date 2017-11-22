@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f89efa5_b75a8ca7",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-22T17:36:36Z",
+      "side": 1,
+      "message": "Is there a reason you kept this in the same file?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "dafdb55f659160a981087bb978e49983abc74e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17bea2a2_b7a40e8b",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-22T17:36:36Z",
+      "side": 1,
+      "message": "Where is this defined? I can\u0027t find it in codesearch.",
+      "range": {
+        "startLine": 24,
+        "startChar": 45,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "dafdb55f659160a981087bb978e49983abc74e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d649db56_aaa218ad",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-22T17:36:36Z",
+      "side": 1,
+      "message": "nit: make constant?",
+      "range": {
+        "startLine": 62,
+        "startChar": 43,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "dafdb55f659160a981087bb978e49983abc74e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033e8686_83b42de8",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-22T17:36:36Z",
+      "side": 1,
+      "message": "nit: make constant?",
+      "range": {
+        "startLine": 118,
+        "startChar": 54,
+        "endLine": 118,
+        "endChar": 57
+      },
+      "revId": "dafdb55f659160a981087bb978e49983abc74e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca46adfb_1e62ddc8",
+        "filename": "chrome/browser/vr/elements/text_input.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-22T17:36:36Z",
+      "side": 1,
+      "message": "I\u0027d get rid of this from this CL since my patch adds this with slight modifications :)",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "dafdb55f659160a981087bb978e49983abc74e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
