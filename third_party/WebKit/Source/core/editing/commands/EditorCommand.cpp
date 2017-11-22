@@ -204,8 +204,7 @@ StaticRangeVector* RangesFromCurrentSelectionOrExtendCaret(
     SelectionModifyDirection direction,
     TextGranularity granularity) {
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-  SelectionModifier selection_modifier(
-      frame, frame.Selection().GetSelectionInDOMTree());
+  SelectionModifier selection_modifier(frame.Selection());
   if (selection_modifier.Selection().IsCaret())
     selection_modifier.Modify(SelectionModifyAlteration::kExtend, direction,
                               granularity);
@@ -1247,8 +1246,7 @@ bool ModifySelectionyWithPageGranularity(
     SelectionModifyAlteration alter,
     unsigned vertical_distance,
     SelectionModifyVerticalDirection direction) {
-  SelectionModifier selection_modifier(
-      frame, frame.Selection().GetSelectionInDOMTree());
+  SelectionModifier selection_modifier(frame.Selection());
   if (!selection_modifier.ModifyWithPageGranularity(alter, vertical_distance,
                                                     direction)) {
     return false;
@@ -1263,6 +1261,11 @@ bool ModifySelectionyWithPageGranularity(
           .SetCursorAlignOnScroll(alter == SelectionModifyAlteration::kMove
                                       ? CursorAlignOnScroll::kAlways
                                       : CursorAlignOnScroll::kIfNeeded)
+          .SetIsDirectional(alter == SelectionModifyAlteration::kExtend
+                                ? true
+                                : frame.GetEditor()
+                                      .Behavior()
+                                      .ShouldConsiderSelectionAsDirectional())
           .Build());
   return true;
 }
@@ -1941,10 +1944,17 @@ static bool ExecuteSwapWithMark(LocalFrame& frame,
   const VisibleSelection mark(frame.GetEditor().Mark());
   const VisibleSelection& selection =
       frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+  const bool mark_is_directional = frame.GetEditor().MarkIsDirectional();
+
   if (mark.IsNone() || selection.IsNone())
     return false;
+
   frame.GetEditor().SetMark();
-  frame.Selection().SetSelection(mark.AsSelection());
+  frame.Selection().SetSelection(mark.AsSelection(),
+                                 SetSelectionOptions::Builder()
+                                     .SetIsDirectional(mark_is_directional)
+                                     .Build());
+
   return true;
 }
 

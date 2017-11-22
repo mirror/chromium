@@ -28,6 +28,7 @@
 
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/InlineBoxPosition.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
@@ -67,18 +68,20 @@ bool SelectionModifier::ShouldAlwaysUseDirectionalSelection(LocalFrame* frame) {
          frame->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional();
 }
 
-SelectionModifier::SelectionModifier(
-    const LocalFrame& frame,
-    const SelectionInDOMTree& selection,
-    LayoutUnit x_pos_for_vertical_arrow_navigation)
-    : frame_(const_cast<LocalFrame*>(&frame)),
-      current_selection_(selection),
-      x_pos_for_vertical_arrow_navigation_(
-          x_pos_for_vertical_arrow_navigation) {}
+SelectionModifier::SelectionModifier(const Position& position)
+    : frame_(position.GetDocument()->GetFrame()),
+      current_selection_(
+          SelectionInDOMTree::Builder().Collapse(position).Build()),
+      x_pos_for_vertical_arrow_navigation_(NoXPosForVerticalArrowNavigation()) {
+}
 
-SelectionModifier::SelectionModifier(const LocalFrame& frame,
-                                     const SelectionInDOMTree& selection)
-    : SelectionModifier(frame, selection, NoXPosForVerticalArrowNavigation()) {}
+SelectionModifier::SelectionModifier(
+    const FrameSelection& frame_selection,
+    LayoutUnit x_pos_for_vertical_arrow_navigation)
+    : frame_(frame_selection.GetFrame()),
+      current_selection_(frame_selection.GetSelectionInDOMTree()),
+      x_pos_for_vertical_arrow_navigation_(x_pos_for_vertical_arrow_navigation),
+      is_directional_(frame_selection.IsDirectional()) {}
 
 VisibleSelection SelectionModifier::Selection() const {
   return CreateVisibleSelection(current_selection_);
@@ -126,8 +129,9 @@ TextDirection SelectionModifier::DirectionOfSelection() const {
 }
 
 static bool IsBaseStart(const VisibleSelection& visible_selection,
-                        SelectionModifyDirection direction) {
-  if (visible_selection.IsDirectional()) {
+                        SelectionModifyDirection direction,
+                        bool selection_is_directional) {
+  if (selection_is_directional) {
     // Make base and extent match start and end so we extend the user-visible
     // selection. This only matters for cases where base and extend point to
     // different positions than start and end (e.g. after a double-click to
@@ -155,11 +159,13 @@ static bool IsBaseStart(const VisibleSelection& visible_selection,
 // selection.
 static SelectionInDOMTree PrepareToExtendSelection(
     const SelectionInDOMTree& selection,
-    SelectionModifyDirection direction) {
+    SelectionModifyDirection direction,
+    bool selection_is_directional) {
   const VisibleSelection& visible_selection = CreateVisibleSelection(selection);
   if (visible_selection.Start().IsNull())
     return visible_selection.AsSelection();
-  const bool base_is_start = IsBaseStart(visible_selection, direction);
+  const bool base_is_start =
+      IsBaseStart(visible_selection, direction, selection_is_directional);
   return SelectionInDOMTree::Builder(visible_selection.AsSelection())
       .Collapse(base_is_start ? visible_selection.Start()
                               : visible_selection.End())
@@ -171,9 +177,11 @@ static SelectionInDOMTree PrepareToExtendSelection(
 static SelectionInDOMTree PrepareToModifySelection(
     const SelectionInDOMTree& selection,
     SelectionModifyAlteration alter,
-    SelectionModifyDirection direction) {
+    SelectionModifyDirection direction,
+    bool selection_is_directional) {
   return alter == SelectionModifyAlteration::kExtend
-             ? PrepareToExtendSelection(selection, direction)
+             ? PrepareToExtendSelection(selection, direction,
+                                        selection_is_directional)
              : CreateVisibleSelection(selection).AsSelection();
 }
 
@@ -609,8 +617,8 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       GetFrame()->GetDocument()->Lifecycle());
 
-  selection_ = CreateVisibleSelection(
-      PrepareToModifySelection(current_selection_, alter, direction));
+  selection_ = CreateVisibleSelection(PrepareToModifySelection(
+      current_selection_, alter, direction, is_directional_));
 
   bool was_range = selection_.IsRange();
   VisiblePosition original_start_position = selection_.VisibleStart();
@@ -638,7 +646,6 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
       current_selection_ =
           SelectionInDOMTree::Builder()
               .Collapse(position.ToPositionWithAffinity())
-              .SetIsDirectional(ShouldAlwaysUseDirectionalSelection(GetFrame()))
               .Build();
       break;
     case SelectionModifyAlteration::kExtend:
@@ -675,7 +682,6 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
         current_selection_ = SelectionInDOMTree::Builder()
                                  .Collapse(selection_.Base())
                                  .Extend(position.DeepEquivalent())
-                                 .SetIsDirectional(true)
                                  .Build();
       } else {
         TextDirection text_direction = DirectionOfEnclosingBlock();
@@ -691,7 +697,6 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
                                 : position.DeepEquivalent())
                   .Extend(selection_.IsBaseFirst() ? position.DeepEquivalent()
                                                    : selection_.Extent())
-                  .SetIsDirectional(true)
                   .Build();
         } else {
           current_selection_ =
@@ -700,7 +705,6 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
                                                      : selection_.Base())
                   .Extend(selection_.IsBaseFirst() ? selection_.Extent()
                                                    : position.DeepEquivalent())
-                  .SetIsDirectional(true)
                   .Build();
         }
       }
@@ -738,7 +742,8 @@ bool SelectionModifier::ModifyWithPageGranularity(
       current_selection_, alter,
       direction == SelectionModifyVerticalDirection::kUp
           ? SelectionModifyDirection::kBackward
-          : SelectionModifyDirection::kForward));
+          : SelectionModifyDirection::kForward,
+      is_directional_));
 
   VisiblePosition pos;
   LayoutUnit x_pos;
@@ -799,7 +804,6 @@ bool SelectionModifier::ModifyWithPageGranularity(
       current_selection_ =
           SelectionInDOMTree::Builder()
               .Collapse(result.ToPositionWithAffinity())
-              .SetIsDirectional(ShouldAlwaysUseDirectionalSelection(GetFrame()))
               .SetAffinity(direction == SelectionModifyVerticalDirection::kUp
                                ? TextAffinity::kUpstream
                                : TextAffinity::kDownstream)
@@ -809,7 +813,6 @@ bool SelectionModifier::ModifyWithPageGranularity(
       current_selection_ = SelectionInDOMTree::Builder()
                                .Collapse(selection_.Base())
                                .Extend(result.DeepEquivalent())
-                               .SetIsDirectional(true)
                                .Build();
       break;
     }
