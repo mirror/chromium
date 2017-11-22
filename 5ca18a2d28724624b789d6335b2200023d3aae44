@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70ad197a_6a1aa338",
+        "filename": "services/network/public/cpp/mutable_network_traffic_annotation_tag.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-22T21:54:33Z",
+      "side": 1,
+      "message": "do we want a public_headers \u003d [\"//net/traffic_annotation/network_traffic_annotation.h\"]?",
+      "revId": "5ca18a2d28724624b789d6335b2200023d3aae44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
