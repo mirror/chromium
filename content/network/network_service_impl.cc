@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/process/process.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/network/network_context.h"
@@ -171,9 +172,12 @@ void NetworkServiceImpl::SetClient(mojom::NetworkServiceClientPtr client) {
 void NetworkServiceImpl::CreateNetworkContext(
     mojom::NetworkContextRequest request,
     mojom::NetworkContextParamsPtr params) {
+  LOG(ERROR) << "Begin NetworkServiceImpl::CreateNetworkContext()";
+  LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
   // The NetworkContext will destroy itself on connection error, or when the
   // service is destroyed.
   new NetworkContext(this, std::move(request), std::move(params));
+  LOG(ERROR) << "End NetworkServiceImpl::CreateNetworkContext()";
 }
 
 void NetworkServiceImpl::DisableQuic() {
