@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b0223f9_a7d17bc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-22T17:27:45Z",
+      "side": 0,
+      "message": "Keep this, but replace with \nif (!activitySupportsVrBrowsing(activity) \u0026\u0026 sRegisteredVrAssetsComponent) return;\n\nWe need this function to be as fast as possible because it runs any time any chrome activity is resumed.",
+      "range": {
+        "startLine": 333,
+        "startChar": 8,
+        "endLine": 333,
+        "endChar": 58
+      },
+      "revId": "d1566ff566df6c37b511f848b4cb669b88b15a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

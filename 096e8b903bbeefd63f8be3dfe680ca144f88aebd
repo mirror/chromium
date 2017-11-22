@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c573646c_4db8ab05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-22T17:27:45Z",
+      "side": 1,
+      "message": "Check sRegisteredVrAssetsComponent before calling this as it\u0027s slow.",
+      "range": {
+        "startLine": 354,
+        "startChar": 56,
+        "endLine": 354,
+        "endChar": 85
+      },
+      "revId": "096e8b903bbeefd63f8be3dfe680ca144f88aebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8572c8fd_30187d62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-22T17:27:45Z",
+      "side": 1,
+      "message": "Check this at the callsites and assert it\u0027s false here so we can avoid calls to isDaydreamCurrentViewer()",
+      "range": {
+        "startLine": 478,
+        "startChar": 13,
+        "endLine": 478,
+        "endChar": 41
+      },
+      "revId": "096e8b903bbeefd63f8be3dfe680ca144f88aebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
