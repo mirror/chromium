@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35801be8_fd53606b",
+        "filename": "components/history/core/browser/history_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-22T16:59:11Z",
+      "side": 1,
+      "message": "simplify to?\n\n  if (!s.Step() || s.ColumnType(0) \u003d\u003d sql::COLUMN_TYPE_NULL)\n    return 0;\n  return s.ColumnInt64(0);",
+      "revId": "ff8695136eb86ec3882c48865b1857ef5cc69a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
