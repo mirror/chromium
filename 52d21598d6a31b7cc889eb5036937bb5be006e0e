@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b23af29d_8ed2bc44",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-22T03:19:52Z",
+      "side": 0,
+      "message": "We probably shouldn\u0027t even be posting this task to begin with, we were posting in the presenting case to work around the mojo task starvation, but here we should just be calling ProcessScheduledAnimations directly. I probably blindly copied that from the presenting case :P",
+      "range": {
+        "startLine": 986,
+        "startChar": 2,
+        "endLine": 986,
+        "endChar": 68
+      },
+      "revId": "52d21598d6a31b7cc889eb5036937bb5be006e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
