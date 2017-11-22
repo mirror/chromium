@@ -16,6 +16,24 @@
       "revId": "d9367ec9717681fb8d7c8526ff3df4621b657eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2ebd96_826d1850",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-22T19:57:07Z",
+      "side": 1,
+      "message": "- get rid of BrowserPageTrackDecider::IsHtmlOrXhtmlPage() and its call sites:\n-- Done.\n- verify we do not record any metrics for svg by default\n-- Yes we do. And done.\n- add a new browsertest in page_load_metrics_browsertest.cc\n-- Yes, PageVisits should be recorded for SVG pages, and done.\n\nThanks",
+      "parentUuid": "c8293c98_b889a63f",
+      "revId": "d9367ec9717681fb8d7c8526ff3df4621b657eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
