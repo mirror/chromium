@@ -29,6 +29,7 @@ import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.FullscreenActivity;
 import org.chromium.chrome.browser.RepostFormWarningDialog;
+import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.document.DocumentUtils;
 import org.chromium.chrome.browser.document.DocumentWebContentsDelegate;
 import org.chromium.chrome.browser.findinpage.FindMatchRectsDetails;
@@ -506,6 +507,33 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
     @CalledByNative
     private void setOverlayMode(boolean useOverlayMode) {
         mTab.getActivity().setOverlayMode(useOverlayMode);
+    }
+
+    @Override
+    public int getTopControlsHeight() {
+        CompositorViewHolder cvh = getCompositorViewHolder();
+        return cvh != null ? (int) (cvh.getTopControlsHeightPixels() / getDipScale()) : 0;
+    }
+
+    @Override
+    public int getBottomControlsHeight() {
+        CompositorViewHolder cvh = getCompositorViewHolder();
+        return cvh != null ? (int) (cvh.getBottomControlsHeightPixels() / getDipScale()) : 0;
+    }
+
+    @Override
+    public boolean controlsResizeView() {
+        CompositorViewHolder cvh = getCompositorViewHolder();
+        return cvh != null ? cvh.controlsResizeView() : false;
+    }
+
+    private CompositorViewHolder getCompositorViewHolder() {
+        ChromeActivity activity = mTab.getActivity();
+        return (activity != null) ? activity.getCompositorViewHolder() : null;
+    }
+
+    private float getDipScale() {
+        return mTab.getWindowAndroid().getDisplay().getDipScale();
     }
 
     @Override
