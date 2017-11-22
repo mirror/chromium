@@ -82,7 +82,7 @@ def _OnStaleMd5(lint_path, config_path, processed_config_path,
             print >> sys.stderr, error_line.encode('utf-8')
     return len(issues)
 
-  with build_utils.TempDir() as temp_dir:
+  with build_utils.TempDir(delete=False) as temp_dir:
     _ProcessConfigFile()
 
     cmd = [

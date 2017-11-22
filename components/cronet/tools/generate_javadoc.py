@@ -52,7 +52,7 @@ def GenerateJavadoc(options, src_dir):
     '-federate', 'Android', 'https://developer.android.com/',
     '-federationapi', 'Android', os.path.join(DOCLAVA_DIR, 'current.txt'),
     '-bootclasspath',
-    '%s:%s' % (os.path.join(SDK_DIR, 'platforms', 'android-26', 'android.jar'),
+    '%s:%s' % (os.path.join(SDK_DIR, 'platforms', 'android-27', 'android.jar'),
                os.path.join(SDK_DIR, 'extras', 'android', 'support',
                             'annotations', 'android-support-annotations.jar')),
   ]
