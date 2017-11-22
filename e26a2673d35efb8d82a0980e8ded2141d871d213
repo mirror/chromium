@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6414a1e4_753f2271",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-22T21:54:26Z",
+      "side": 1,
+      "message": "This makes sense to me. Turns out all the subclasses of MediaControlInputElement also rely on EnsureUserAgentShadowRoot (which is called in each subclass\u0027 constructor) calling CreateShadowSubtree as well. So I just moved the shadow root and shadow subtree creation to MediaControlInputElement\u0027s constructor and removed all the EnsureUserAgentShadowRoot calls from the subclass constructors. WDYT?",
+      "parentUuid": "bbb9d95f_bc27dfe0",
+      "revId": "e26a2673d35efb8d82a0980e8ded2141d871d213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d227a2d0_fd5d05d4",
         "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
         "patchSetId": 5
