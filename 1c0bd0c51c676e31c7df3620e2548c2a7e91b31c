@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "de362011_20b6bf10",
+        "filename": "ash/public/cpp/window_pin_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-22T17:55:48Z",
+      "side": 1,
+      "message": "Perhaps it would be more broadly useful to return the type: |mojom::WindowPinType GetWindowPinType(ui::BaseWindow* window)|. I\u0027m a fan of consolidation, but the helper should be added in a CL that also replaces existing duplicated blocks of code; that gives context for its usage and simultaneously fixes the defect of duplication. I\u0027d have a slight preference to do that separately from changing command behavior.",
+      "parentUuid": "94faf7b3_839ddd98",
+      "revId": "1c0bd0c51c676e31c7df3620e2548c2a7e91b31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "226bc762_3123d91e",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 1
