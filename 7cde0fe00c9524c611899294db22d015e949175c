@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "121126df_ed2222b5",
+        "filename": "cc/paint/image_transfer_cache_entry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-22T19:41:33Z",
+      "side": 1,
+      "message": "hmm, I was thinking that we didn\u0027t really need to handle \u003e uint32_t (not sure why I was thinking this), but looking at the code quickly I don\u0027t see anything preventing this from happening. Let\u0027s just handle it, seems easy enough - JPEG apparently supports max image size of 65,535×65,535, which would overflow uint32_t at 4 bytes per pixel.",
+      "parentUuid": "5f2bc0c7_e2b9f990",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7190a9b_6dc323d0",
         "filename": "cc/paint/image_transfer_cache_entry.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T19:19:45Z",
       "side": 1,
       "message": "This function has some \"using unassigned variable\" problems.  Reader might not do anything if it\u0027s already run out of memory to read, so width/height/pixel_size etc might all be unassigned.\n\nI think you likely need to check if the reader is valid before handing them to SkImageInfo::Make.  Similarly, ExtractReadableMemory could return null.  Not sure if SkPixmap copes with that or not.\n\nPaintOpSerializationTest.DeserializationFailures in an asan build will find all these for you once you hook up image serialization/deserialization more thoroughly.",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d46630_17e5561b",
+        "filename": "cc/paint/image_transfer_cache_entry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-22T19:41:33Z",
+      "side": 1,
+      "message": "yup - good point - added these checks.",
+      "parentUuid": "c7190a9b_6dc323d0",
       "revId": "7cde0fe00c9524c611899294db22d015e949175c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a40fb80d_241b67ec",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-22T19:41:33Z",
+      "side": 1,
+      "message": "makes sense.",
+      "parentUuid": "d24dee30_45e228d5",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2b6573f_4e5e9bde",
         "filename": "cc/paint/paint_op_reader.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c873bfae_78fe5582",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-22T19:41:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2b6573f_4e5e9bde",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8e75192_bb792c58",
         "filename": "cc/paint/paint_op_writer.h",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-21T19:19:45Z",
       "side": 1,
       "message": "Unused?",
+      "revId": "7cde0fe00c9524c611899294db22d015e949175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed3a7d8_0dc42196",
+        "filename": "cc/paint/paint_op_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-22T19:41:33Z",
+      "side": 1,
+      "message": "yup, will use in a later CL, removing for now.",
+      "parentUuid": "f8e75192_bb792c58",
       "revId": "7cde0fe00c9524c611899294db22d015e949175c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
