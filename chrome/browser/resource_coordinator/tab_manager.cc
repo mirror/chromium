@@ -342,7 +342,7 @@ bool TabManager::IsTabDiscarded(content::WebContents* contents) const {
 }
 
 bool TabManager::CanDiscardTab(const TabStats& tab_stats,
-                               DiscardCondition condition) const {
+                               DiscardReason condition) const {
 #if defined(OS_CHROMEOS)
   if (tab_stats.is_active && tab_stats.is_in_visible_window)
     return false;
@@ -394,7 +394,7 @@ bool TabManager::CanDiscardTab(const TabStats& tab_stats,
 #if defined(OS_CHROMEOS)
   // The following protections are ignored on ChromeOS during urgent discard,
   // because running out of memory would lead to a kernel panic.
-  if (condition == DiscardCondition::kUrgent)
+  if (condition == DiscardReason::kUrgent)
     return true;
 #endif  // defined(OS_CHROMEOS)
 
@@ -409,7 +409,7 @@ bool TabManager::CanDiscardTab(const TabStats& tab_stats,
   return true;
 }
 
-void TabManager::DiscardTab(DiscardCondition condition) {
+void TabManager::DiscardTab(DiscardReason condition) {
 #if defined(OS_CHROMEOS)
   // Call Chrome OS specific low memory handling process.
   if (base::FeatureList::IsEnabled(features::kArcMemoryManagement)) {
@@ -421,7 +421,7 @@ void TabManager::DiscardTab(DiscardCondition condition) {
 }
 
 WebContents* TabManager::DiscardTabById(int32_t tab_id,
-                                        DiscardCondition condition) {
+                                        DiscardReason condition) {
   TabStripModel* model;
   int index = FindTabStripModelById(tab_id, &model);
 
@@ -436,13 +436,13 @@ WebContents* TabManager::DiscardTabById(int32_t tab_id,
 WebContents* TabManager::DiscardTabByExtension(content::WebContents* contents) {
   if (contents) {
     return DiscardTabById(IdFromWebContents(contents),
-                          DiscardCondition::kProactive);
+                          DiscardReason::kExternal);
   }
 
-  return DiscardTabImpl(DiscardCondition::kProactive);
+  return DiscardTabImpl(DiscardReason::kExternal);
 }
 
-void TabManager::LogMemoryAndDiscardTab(DiscardCondition condition) {
+void TabManager::LogMemoryAndDiscardTab(DiscardReason condition) {
   LogMemory("Tab Discards Memory details",
             base::Bind(&TabManager::PurgeMemoryAndDiscardTab, condition));
 }
@@ -620,7 +620,7 @@ void TabManager::OnAutoDiscardableStateChange(content::WebContents* contents,
 }
 
 // static
-void TabManager::PurgeMemoryAndDiscardTab(DiscardCondition condition) {
+void TabManager::PurgeMemoryAndDiscardTab(DiscardReason condition) {
   TabManager* manager = g_browser_process->GetTabManager();
   manager->PurgeBrowserMemory();
   manager->DiscardTab(condition);
@@ -808,7 +808,7 @@ void TabManager::PurgeBackgroundedTabsIfNeeded() {
 
 WebContents* TabManager::DiscardWebContentsAt(int index,
                                               TabStripModel* model,
-                                              DiscardCondition condition) {
+                                              DiscardReason condition) {
   WebContents* old_contents = model->GetWebContentsAt(index);
 
   // Can't discard tabs that are already discarded.
@@ -852,7 +852,7 @@ WebContents* TabManager::DiscardWebContentsAt(int index,
                                                                          false);
 
 #ifdef OS_CHROMEOS
-  if (!fast_shutdown_success && condition == DiscardCondition::kUrgent) {
+  if (!fast_shutdown_success && condition == DiscardReason::kUrgent) {
     content::RenderFrameHost* main_frame = old_contents->GetMainFrame();
     // We avoid fast shutdown on tabs with beforeunload handlers on the main
     // frame, as that is often an indication of unsaved user state.
@@ -926,7 +926,7 @@ void TabManager::OnMemoryPressure(
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
       break;
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
-      LogMemoryAndDiscardTab(DiscardCondition::kUrgent);
+      LogMemoryAndDiscardTab(DiscardReason::kUrgent);
       break;
     default:
       NOTREACHED();
@@ -1039,7 +1039,7 @@ TabManager::WebContentsData* TabManager::GetWebContentsData(
 // TODO(jamescook): This should consider tabs with references to other tabs,
 // such as tabs created with JavaScript window.open(). Potentially consider
 // discarding the entire set together, or use that in the priority computation.
-content::WebContents* TabManager::DiscardTabImpl(DiscardCondition condition) {
+content::WebContents* TabManager::DiscardTabImpl(DiscardReason condition) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   TabStatsList stats = GetTabStats();
 
