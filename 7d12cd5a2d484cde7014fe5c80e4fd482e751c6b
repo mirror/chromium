@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd824ce_464dcc17",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-22T15:15:01Z",
+      "side": 1,
+      "message": "I didn\u0027t realize that you could call this with a list. Neat!",
+      "revId": "7d12cd5a2d484cde7014fe5c80e4fd482e751c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fa41bf7_c096e5cf",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1855,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-22T15:15:01Z",
+      "side": 1,
+      "message": "I know that you\u0027re primiarily moving this block around, but ... yowza, this looks like an abuse of the sources assignment filtration logic.",
+      "revId": "7d12cd5a2d484cde7014fe5c80e4fd482e751c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
