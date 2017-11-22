@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5853c44b_1df0c4f7",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a5a94b1_984d8d87",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71fe1ece_106fcd0a",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 25
@@ -33,6 +51,24 @@
       "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa26c912_bb5b7cc0",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71fe1ece_106fcd0a",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7271e55b_243a8939",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dca07972_bac15686",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b741be1f_24e7e3b8",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 25
@@ -85,6 +139,24 @@
       "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91d49e7_5724e9da",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b741be1f_24e7e3b8",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "1a88e250_d8694e70",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Done (sorry, totally forgot about that one ;))",
+      "parentUuid": "8e0f5f1a_0c8972be",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7857225a_336ade73",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 25
@@ -119,6 +209,24 @@
       "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0c00cd_9a596b3c",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7857225a_336ade73",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "051aa76c_882aef50",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Awesome comment!\n\nRight now this works, as we only use the function for stack addresses which always required MakeConsistentForGC that clears the allocation point region.\n\nYou are right that for the write barrier use case we need this check. I added version of above using \n  (header-\u003ePayloadEnd() \u003c\u003d address) as a condition.\n\nAlso, we cannot \n    DCHECK_LE(header-\u003ePayload(), address);\nafter the free list entry check because address might be a stack address pointing right into the HeapObjectHeader. In this case we will find the HeapObjectHeader but its payload address is \u003e address.",
+      "parentUuid": "2fbe79dd_598b48ad",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2afcbb5_1e5fcb62",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 25
@@ -153,6 +279,24 @@
       "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87be197c_6eded396",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2afcbb5_1e5fcb62",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "4cd263c9_4ac6d891",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "Added DISALLOW_NEW().\n\nIIUC, we cannot drop PLATFORM_EXPORT as the unit tests are in a different GN target. (It doesn\u0027t compile/link without it.)",
+      "parentUuid": "183bf308_0a6772db",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "946ab7b1_bfcf4b59",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 25
@@ -190,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "636f9588_29f98078",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "I kept all comments on ObjectStartBitmap neutral without referring to objects or free list entries. I added this comment to FindHeaderFromAddress though.",
+      "parentUuid": "946ab7b1_bfcf4b59",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71e6b28c_f3279609",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 25
@@ -204,6 +384,24 @@
       "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b72d92_ecbf413a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-22T10:24:43Z",
+      "side": 1,
+      "message": "I think you meant DCHECK(!CheckBit(....))\n\nI don\u0027t think we can as we allow allocating on FreeListEntries which would just set the bit again over an already existing bit.",
+      "parentUuid": "71e6b28c_f3279609",
+      "revId": "6b4e3dad92d98cfcc8db23b4e2c926134a4e3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
