@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8028c8e_c01b5b63",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/website/PermissionInfoTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-22T11:59:28Z",
+      "side": 1,
+      "message": "This could also be a lambda, no?",
+      "range": {
+        "startLine": 53,
+        "startChar": 49,
+        "endLine": 53,
+        "endChar": 79
+      },
+      "revId": "f527ea2f8a6e5ae7210ede90082bd210005686fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
