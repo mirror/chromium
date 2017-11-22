@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d81d161e_3398e68d",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-22T09:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5baaccf7_ff72fe71",
+      "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82ef8a73_6389846e",
         "filename": "chrome/browser/predictors/loading_predictor.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183cf38d_e943b3df",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-22T09:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82ef8a73_6389846e",
+      "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "252ddc52_95a51d3e",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-22T09:21:16Z",
+      "side": 1,
+      "message": "Yes, I also prefer unique_ptr but in this case I wasn\u0027t sure what\u0027s better. \nWe\u0027re passing a vector stored in PreconnectPrediction structure to another thread so to use unique_ptr we need whether to store unique_ptr\u003cvector\u003cPreconnectRequest\u003e\u003e in the struct or wrap the vector in unique_ptr in the halfway. I don\u0027t like both of these options.",
+      "parentUuid": "92148f8b_0b07b6d2",
+      "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eabd2b7_4707f1ee",
         "filename": "chrome/browser/predictors/loading_stats_collector.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1182e6_e431b5f7",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-22T09:21:16Z",
+      "side": 1,
+      "message": "Agree, it\u0027s really usable now\nOn the other hand the range-based for loop is also nice for readability.",
+      "parentUuid": "8eabd2b7_4707f1ee",
+      "revId": "e6ac0bc3d86f1aab0afd9b8a900120659222e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
