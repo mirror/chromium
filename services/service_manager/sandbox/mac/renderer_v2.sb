@@ -73,9 +73,11 @@
 ; Reads from the home directory.
 (allow file-read-data
   (path (user-homedir-path "/.CFUserTextEncoding"))
+  (path (user-homedir-path "/Library/Fonts"))
   (path (user-homedir-path "/Library/Preferences/com.apple.universalaccess.plist"))
   (path (user-homedir-path "/Library/Preferences/.GlobalPreferences.plist"))
   (regex (user-homedir-path #"/Library/Preferences/ByHost/.GlobalPreferences.*")))
+
 
 ; Reads of /dev devices.
 (allow file-read-data
