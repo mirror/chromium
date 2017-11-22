@@ -57,7 +57,7 @@ class Gpu : public gpu::GpuChannelHostFactory,
       arc::mojom::ProtectedBufferManagerRequest pbm_request);
 #endif
   void CreateJpegDecodeAccelerator(
-      media::mojom::GpuJpegDecodeAcceleratorRequest jda_request);
+      media::mojom::JpegDecodeAcceleratorRequest jda_request);
   void CreateVideoEncodeAcceleratorProvider(
       media::mojom::VideoEncodeAcceleratorProviderRequest vea_provider_request);
 
