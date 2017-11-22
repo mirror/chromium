@@ -62,6 +62,22 @@ var FILES_ID_PATTERN = new RegExp('^' + FILES_ID_PREFIX + '(\\d*)$');
 launcher.queue = new AsyncUtil.Queue();
 
 /**
+ * Changes current directory of the focused window.
+ *
+ * @param {!DirectoryEntry} directoryEntry
+ */
+launcher.changeCurrentDirectoryOfFocusedWindow = function(directoryEntry) {
+  for (var key in window.appWindows) {
+    var contentWindow = window.appWindows[key].contentWindow;
+    if (!contentWindow.isFocused() || !key.match(FILES_ID_PATTERN))
+      continue;
+    contentWindow.dispatchEvent(
+        new util.NavigationRequestEvent(directoryEntry));
+    return;
+  }
+};
+
+/**
  * @param {Object=} opt_appState App state.
  * @param {number=} opt_id Window id.
  * @param {LaunchType=} opt_type Launch type. Default: ALWAYS_CREATE.
