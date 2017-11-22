@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa9a778b_139cf025",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "468622cd_f4142ba9",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ecd0f8d_c107f3eb",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 13
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "194e1105_4b86b56c",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ecd0f8d_c107f3eb",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 71
+      },
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d745a52_7d120a6f",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 13
@@ -56,6 +98,24 @@
       "revId": "db5e106d9033a7a346a95015be54db2135716bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39650d3_f77372e3",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d745a52_7d120a6f",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "ceef2b3f_902f8455",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5a64027_bd55140a",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec73f564_b4c2303a",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 13
@@ -90,6 +168,24 @@
       "revId": "db5e106d9033a7a346a95015be54db2135716bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfe1a92_a5821f8c",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec73f564_b4c2303a",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +229,48 @@
     },
     {
       "key": {
+        "uuid": "d7810c0c_51dbeb26",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d92dbafd_8ccbece5",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd488969_ae9ca5ba",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a92f81b_68becd0d",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb88e7bd_63aacfd3",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
         "patchSetId": 13
@@ -153,6 +291,30 @@
       "revId": "db5e106d9033a7a346a95015be54db2135716bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aecbbb5_340e813c",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb88e7bd_63aacfd3",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "4b6d1056_1a9f4231",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee4ca0f_35fca20a",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 37
+      },
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d259fcad_9076b420",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
         "patchSetId": 13
@@ -190,6 +376,24 @@
       "writtenOn": "2017-11-21T20:10:23Z",
       "side": 1,
       "message": "I would avoid checking this private implementation detail. It\u0027s not necessary if you test the desired behavior, see below.",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb9ab09_eaadfc16",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Thanks for the suggestions! In case any of the init state changes in the future, I\u0027d like to keep this test so that we would know if any current assumption doesn\u0027t hold any more.",
+      "parentUuid": "d259fcad_9076b420",
       "revId": "db5e106d9033a7a346a95015be54db2135716bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "3ecce33a_9e4e8f62",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2208613_ba19bd47",
+      "range": {
+        "startLine": 113,
+        "startChar": 36,
+        "endLine": 113,
+        "endChar": 58
+      },
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f03f2d_415eb737",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
         "patchSetId": 13
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "d3fd9124_e119b443",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f03f2d_415eb737",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "561e596d_82b07d20",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
         "patchSetId": 13
@@ -247,6 +493,24 @@
       "writtenOn": "2017-11-21T20:10:23Z",
       "side": 1,
       "message": "Can you add a test that starts with the PowerChanged(disconnected_power_) event, so you can verify that it doesn\u0027t postpone the idle event?",
+      "revId": "db5e106d9033a7a346a95015be54db2135716bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9dd1647_a34c209d",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T03:25:20Z",
+      "side": 1,
+      "message": "As discussed, PowerSourceNotChanged is testing for the same behaviour.",
+      "parentUuid": "561e596d_82b07d20",
       "revId": "db5e106d9033a7a346a95015be54db2135716bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
