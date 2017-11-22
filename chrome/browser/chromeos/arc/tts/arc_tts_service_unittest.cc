@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "base/threading/platform_thread.h"
-#include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/speech/tts_controller_impl.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/arc/arc_bridge_service.h"
@@ -47,16 +46,10 @@ class TestableTtsController : public TtsControllerImpl {
 
 class ArcTtsServiceTest : public testing::Test {
  public:
-  ArcTtsServiceTest() = default;
-  ~ArcTtsServiceTest() override = default;
-
-  void SetUp() override {
-    arc_service_manager_ = std::make_unique<ArcServiceManager>();
-    testing_profile_ = std::make_unique<TestingProfile>();
-    arc_session_manager_ = std::make_unique<ArcSessionManager>(
-        std::make_unique<ArcSessionRunner>(base::Bind(FakeArcSession::Create)));
-    tts_controller_ = std::make_unique<TestableTtsController>();
-
+  ArcTtsServiceTest()
+      : arc_service_manager_(std::make_unique<ArcServiceManager>()),
+        testing_profile_(std::make_unique<TestingProfile>()),
+        tts_controller_(std::make_unique<TestableTtsController>()) {
     ArcTtsService::GetFactory()->SetTestingFactoryAndUse(
         testing_profile_.get(),
         [](content::BrowserContext* context) -> std::unique_ptr<KeyedService> {
@@ -67,11 +60,10 @@ class ArcTtsServiceTest : public testing::Test {
     tts_service_->set_tts_controller_for_testing(tts_controller_.get());
   }
 
-  void TearDown() override {
+  ~ArcTtsServiceTest() override {
     tts_service_->Shutdown();
 
     tts_controller_.reset();
-    arc_session_manager_.reset();
     testing_profile_.reset();
     arc_service_manager_.reset();
   }
@@ -86,7 +78,6 @@ class ArcTtsServiceTest : public testing::Test {
   content::TestBrowserThreadBundle thread_bundle_;
   std::unique_ptr<ArcServiceManager> arc_service_manager_;
   std::unique_ptr<TestingProfile> testing_profile_;
-  std::unique_ptr<ArcSessionManager> arc_session_manager_;
   std::unique_ptr<TestableTtsController> tts_controller_;
   ArcTtsService* tts_service_;
 
