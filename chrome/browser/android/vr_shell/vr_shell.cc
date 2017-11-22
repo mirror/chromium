@@ -701,6 +701,11 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
       break;
   }
 
+  if (reason == vr::UiUnsupportedMode::kAndroidPermissionNeeded) {
+    UMA_HISTOGRAM_BOOLEAN("VR.Shell.AudioPermission.ExitVRChoice",
+                          choice == vr::ExitVrPromptChoice::CHOICE_EXIT);
+  }
+
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_onExitVrRequestResult(env, j_vr_shell_,
                                          static_cast<int>(reason), should_exit);
@@ -755,6 +760,8 @@ void VrShell::SetVoiceSearchActive(bool active) {
   }
   if (active) {
     speech_recognizer_->Start();
+    if (metrics_helper_)
+      metrics_helper_->RecordVoiceSearchStarted();
   } else {
     speech_recognizer_->Stop();
   }
