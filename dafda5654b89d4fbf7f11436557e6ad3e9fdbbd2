@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66c71d9b_ccabcedc",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T21:01:05Z",
+      "side": 0,
+      "message": "the old method was being called for subresources as well, i.e. not just main frame and sub frames, but also jpg, css, js files. Looking at the rest of the notifications from here, which are just for frame requests, it looks like this was not intended.",
+      "revId": "dafda5654b89d4fbf7f11436557e6ad3e9fdbbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
