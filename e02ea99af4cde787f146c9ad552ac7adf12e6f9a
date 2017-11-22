@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d540674d_4bbb2517",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-22T23:45:11Z",
+      "side": 1,
+      "message": "nit: Give",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef94c42e_6ef74ea8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-22T23:45:11Z",
+      "side": 1,
+      "message": "GetDevices does not appear to be modified in this CL. Is this referring to the WebVR API? That might be context, but this doesn\u0027t describe this CL.",
+      "range": {
+        "startLine": 7,
+        "startChar": 46,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2ead9a_548eb833",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-22T23:45:11Z",
+      "side": 1,
+      "message": "nit: Use the class name - VRDeviceManager",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f303265_78e45185",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-22T23:45:11Z",
+      "side": 1,
+      "message": "The first line should ideally be less than 72 characters and concisely describe the changes. For example:\n  Defer the VRServiceImpl::SetClient callback to VRDeviceManager\n\nNote: If VR is obvious or included already, you don\u0027t necessarily need \"[vr]\".",
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1445dc71_4928b815",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-22T23:45:11Z",
+      "side": 1,
+      "message": "This can be more concisely said by describing what is required. For example:\nDetermining whether orientation or events are supported is asynchronous.\nThis makes it possible for the callback to be called asynchronously.",
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebad5ba8_ee2e051d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-22T23:45:11Z",
+      "side": 1,
+      "message": "VRDeviceManager",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac870a9_518a1802",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-22T23:45:11Z",
+      "side": 1,
+      "message": "nit: You don\u0027t need to include everything included in the corresponding .h file for a .cc file.",
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
