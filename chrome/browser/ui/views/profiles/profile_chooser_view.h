@@ -155,7 +155,7 @@ class ProfileChooserView : public content::WebContentsDelegate,
   void RemoveAccount();
 
   // Creates a header for signin and sync error surfacing for the user menu.
-  views::View* CreateSyncErrorViewIfNeeded();
+  views::View* CreateSyncErrorViewIfNeeded(const AvatarMenu::Item& avatar_item);
 
   bool ShouldShowGoIncognito() const;
 
