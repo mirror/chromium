@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a08dd8da_fb12518f",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-22T16:31:37Z",
+      "side": 1,
+      "message": "nit: maybe be consistent about using NOTIMPLEMENTED_LOG_ONCE() here and elsewhere?",
+      "revId": "20a5b93f1dc85bd93b5a0bcf965e8dd0a2b7fb38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3641f1_d180fec1",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-22T16:31:37Z",
+      "side": 1,
+      "message": "q: Should this eventually look beyond the main frame to determine which frame is actually hosting the text input element (I suppose it\u0027s usually the main frame, but not always?)",
+      "revId": "20a5b93f1dc85bd93b5a0bcf965e8dd0a2b7fb38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
