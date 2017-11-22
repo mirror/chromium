@@ -19,6 +19,7 @@ import org.chromium.content_public.browser.WebContents;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -30,6 +31,20 @@ public class DOMUtils {
 
     private static final long MEDIA_TIMEOUT_SECONDS = scaleTimeout(10);
     private static final long MEDIA_TIMEOUT_MILLISECONDS = MEDIA_TIMEOUT_SECONDS * 1000;
+
+    // Returns the y offset at the top which may come from browser controls height in
+    // an embedder like Chrome.  Returns zero by default.
+    private static Callable<Integer> sTopOffset = () -> {
+        return 0;
+    };
+
+    /**
+     * Sets the callable that returns top offset.
+     * @param callable {@link Callable} that returns optional top offset.
+     */
+    public static void setTopOffsetCallable(Callable<Integer> callable) {
+        sTopOffset = callable;
+    }
 
     /**
      * Plays the media with given {@code id}.
@@ -470,15 +485,13 @@ public class DOMUtils {
         RenderCoordinates coord =
                 ((WebContentsImpl) viewCore.getWebContents()).getRenderCoordinates();
         int clickX = (int) coord.fromLocalCssToPix(bounds.exactCenterX());
-        int clickY = (int) coord.fromLocalCssToPix(bounds.exactCenterY())
-                + getMaybeTopControlsHeight(viewCore);
+        int clickY = (int) coord.fromLocalCssToPix(bounds.exactCenterY()) + getTopOffset();
         return new int[] { clickX, clickY };
     }
 
-    private static int getMaybeTopControlsHeight(ContentViewCore viewCore) {
+    private static int getTopOffset() {
         try {
-            return ThreadUtils.runOnUiThreadBlocking(
-                    () -> { return viewCore.getTopControlsShrinkBlinkHeightForTesting(); });
+            return ThreadUtils.runOnUiThreadBlocking(() -> sTopOffset.call());
         } catch (ExecutionException e) {
             return 0;
         }
