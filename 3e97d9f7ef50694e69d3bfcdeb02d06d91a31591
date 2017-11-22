@@ -123,6 +123,24 @@
       "revId": "3e97d9f7ef50694e69d3bfcdeb02d06d91a31591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a60f1a_bde47fc6",
+        "filename": "base/test/android/junit/src/org/chromium/base/test/params/ExampleParameterizedTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-22T17:43:52Z",
+      "side": 1,
+      "message": "Hum maybe not, I think we disabled findbugs so it should be fine. Making it public also allows removing some ugly code, so I just did that.",
+      "parentUuid": "28e8516d_718e9e47",
+      "revId": "3e97d9f7ef50694e69d3bfcdeb02d06d91a31591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
