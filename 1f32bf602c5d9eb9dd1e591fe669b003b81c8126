@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "732a771a_bf061c02",
+        "filename": "chrome/browser/vr/test/mock_browser_ui_interface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T17:04:26Z",
+      "side": 1,
+      "message": "Should there be a corresponding deletion of mock_browser_interface.h?",
+      "revId": "1f32bf602c5d9eb9dd1e591fe669b003b81c8126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
