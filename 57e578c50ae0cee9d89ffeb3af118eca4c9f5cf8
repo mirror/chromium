@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f88d6940_10c5de3c",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T12:06:20Z",
+      "side": 1,
+      "message": "nit: alternatively you can use \nif (request-\u003edevice_stopped_cb)\n\nbut up to you.",
+      "range": {
+        "startLine": 844,
+        "startChar": 13,
+        "endLine": 844,
+        "endChar": 20
+      },
+      "revId": "57e578c50ae0cee9d89ffeb3af118eca4c9f5cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6c9cee_d9dd1e39",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T12:06:20Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1605,
+        "startChar": 7,
+        "endLine": 1605,
+        "endChar": 14
+      },
+      "revId": "57e578c50ae0cee9d89ffeb3af118eca4c9f5cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
