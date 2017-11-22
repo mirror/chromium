@@ -33,10 +33,10 @@ bool CreateAnonymousSharedMemory(const SharedMemoryCreateOptions& options,
                                  ScopedFILE* fp,
                                  ScopedFD* readonly_fd,
                                  FilePath* path) {
-#if !(defined(OS_MACOSX) && !defined(OS_IOS)) && !defined(OS_FUCHSIA)
+#if defined(OS_LINUX) || defined(OS_CHROMEOS)
   // It doesn't make sense to have a open-existing private piece of shmem
   DCHECK(!options.open_existing_deprecated);
-#endif  // !(defined(OS_MACOSX) && !defined(OS_IOS)
+#endif  // defined(OS_LINUX) || defined(OS_CHROMEOS)
   // Q: Why not use the shm_open() etc. APIs?
   // A: Because they're limited to 4mb on OS X.  FFFFFFFUUUUUUUUUUU
   FilePath directory;
@@ -66,13 +66,13 @@ bool CreateAnonymousSharedMemory(const SharedMemoryCreateOptions& options,
   return true;
 }
 
-bool PrepareMapFile(ScopedFILE fp,
+bool PrepareMapFile(ScopedFD fd,
                     ScopedFD readonly_fd,
                     int* mapped_file,
                     int* readonly_mapped_file) {
   DCHECK_EQ(-1, *mapped_file);
   DCHECK_EQ(-1, *readonly_mapped_file);
-  if (fp == nullptr)
+  if (!fd.is_valid())
     return false;
 
   // This function theoretically can block on the disk, but realistically
@@ -82,7 +82,7 @@ bool PrepareMapFile(ScopedFILE fp,
 
   if (readonly_fd.is_valid()) {
     struct stat st = {};
-    if (fstat(fileno(fp.get()), &st))
+    if (fstat(fd.get(), &st))
       NOTREACHED();
 
     struct stat readonly_st = {};
@@ -94,7 +94,7 @@ bool PrepareMapFile(ScopedFILE fp,
     }
   }
 
-  *mapped_file = HANDLE_EINTR(dup(fileno(fp.get())));
+  *mapped_file = HANDLE_EINTR(dup(fd.get()));
   if (*mapped_file == -1) {
     NOTREACHED() << "Call to dup failed, errno=" << errno;
 
