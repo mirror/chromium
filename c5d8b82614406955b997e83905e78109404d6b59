@@ -70,6 +70,24 @@
       "revId": "c5d8b82614406955b997e83905e78109404d6b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a945d3b_3b41900d",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-22T23:17:43Z",
+      "side": 1,
+      "message": "yeah, I had the same experience a while ago :/ I think Windows tries to use Bluetooth Classic for some reason. You could try with some of our other devices e.g. the Mi Band or the BB-8.\n\nfwiw: I don\u0027t think we should delay this patch. Happy to land and change later if we find a device that changes our understanding of the API.",
+      "parentUuid": "7a600784_71179752",
+      "revId": "c5d8b82614406955b997e83905e78109404d6b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
