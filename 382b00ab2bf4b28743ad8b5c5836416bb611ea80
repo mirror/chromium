@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f681a1b_49616229",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7080,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-22T20:59:48Z",
+      "side": 1,
+      "message": "I feel like I should maybe set a GL error here? This can only happen if context is lost (likely scenario), or OOM (unlikely, we only alloc 1 page at a time). I guess I can log OOM. WDYT?",
+      "range": {
+        "startLine": 7080,
+        "startChar": 4,
+        "endLine": 7080,
+        "endChar": 10
+      },
+      "revId": "382b00ab2bf4b28743ad8b5c5836416bb611ea80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
