@@ -51,6 +51,24 @@
       "revId": "b9ba0b6267dbd27da4e3c294a43838f43ea0a9f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e8fc26_203a3aa8",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T17:16:59Z",
+      "side": 0,
+      "message": "I had a quick chat with dnicoara@ about cast and I think we should have separate ShellSurface and ShellSurfaceBase, the former implmenets wl_shell_interface only, and then latter provides common logic for Xdg and ClientControlledCase. Since this CL is already big, so I\u0027d like to do that\nin a follow up CL if you\u0027re ok. I can separate tests into xdg and clientconrolled in that CL too. Please let me know if you prefer to do that in this CL.",
+      "parentUuid": "1c8fbe63_5f73bcd7",
+      "revId": "b9ba0b6267dbd27da4e3c294a43838f43ea0a9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
