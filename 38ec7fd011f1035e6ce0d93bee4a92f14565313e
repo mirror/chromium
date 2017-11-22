@@ -198,6 +198,24 @@
     },
     {
       "key": {
+        "uuid": "d7de2f14_d2242ed4",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T16:09:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "524fac65_69f8b680",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc94b15_4836b385",
         "filename": "chrome/browser/vr/vr_assets.h",
         "patchSetId": 4
@@ -230,6 +248,24 @@
       "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a88a3d95_8a57eac6",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T16:09:25Z",
+      "side": 1,
+      "message": "But the copy would happen via the binding when you bind the call for posting to the other thread, no?  I don\u0027t think you need to rely on pass-by-value for this.",
+      "parentUuid": "635f574c_6fc3f774",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
