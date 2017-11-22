@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77b1e65_3b072b64",
+        "filename": "content/browser/plugin_data_remover_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T17:05:24Z",
+      "side": 1,
+      "message": "nit: undo",
+      "revId": "33993a053fe5037c64dd2fefaf445c30e792454b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
