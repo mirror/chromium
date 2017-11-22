@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "085f059c_9d270f02",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-22T13:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e9d5ae9_8d6d78d6",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506bf4c8_d7181028",
         "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5723448a_eb858ff6",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-22T13:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506bf4c8_d7181028",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "633f0fa9_e234e094",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-22T13:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f498b5_7b817d36",
+      "range": {
+        "startLine": 443,
+        "startChar": 10,
+        "endLine": 443,
+        "endChar": 70
+      },
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5126d2b_6eab9adb",
         "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
         "patchSetId": 4
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-22T08:02:47Z",
       "side": 1,
       "message": "Could this be done with GetDocument().LazyReattachIfAttached() instead?",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230c3760_20b0871a",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-22T13:55:17Z",
+      "side": 1,
+      "message": "I gave it a shot but it is firing an assert in Document::DetachLayoutTree():\n\n\n[5497:5497:1122/085332.854510:511241175821:FATAL:Document.h(569)] Check failed: false.",
+      "parentUuid": "e5126d2b_6eab9adb",
       "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +168,24 @@
       "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb69d6e9_5596965c",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-22T13:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feb348b6_36a1cb08",
+      "revId": "2a605ac80c74337f1b9cbb940939ea857b5599fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
