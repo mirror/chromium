@@ -264,8 +264,7 @@ void LocalWindowProxy::InstallConditionalFeatures() {
         wrapper_type_info->domTemplate(GetIsolate(), World()));
   }
 
-  InstallOriginTrialFeaturesOnGlobal(wrapper_type_info, script_state_.get());
-  if (world_->IsMainWorld()) {
+  if (World().IsMainWorld()) {
     // For the main world, install any remaining conditional bindings (i.e.
     // for origin trials, which do not apply to extensions). Some conditional
     // bindings cannot be enabled until the execution context is available
