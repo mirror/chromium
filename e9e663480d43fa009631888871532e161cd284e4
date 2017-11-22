@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "fa1100af_995db626",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-22T16:56:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69898fa2_9e6313db",
+      "range": {
+        "startLine": 561,
+        "startChar": 55,
+        "endLine": 561,
+        "endChar": 56
+      },
+      "revId": "e9e663480d43fa009631888871532e161cd284e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7a23e1d_91ef0fb4",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 18
