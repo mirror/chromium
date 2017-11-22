@@ -47,6 +47,7 @@
 #include "platform/mediastream/MediaStreamComponent.h"
 #include "platform/wtf/Assertions.h"
 #include "public/platform/WebMediaStreamTrack.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -57,6 +58,7 @@ static const char kContentHintStringAudioSpeech[] = "speech";
 static const char kContentHintStringAudioMusic[] = "music";
 static const char kContentHintStringVideoMotion[] = "motion";
 static const char kContentHintStringVideoDetail[] = "detail";
+static const int64_t kApproximateTrackSizeInBytes = 1024 * 1024;
 
 // The set of constrainable properties for image capture is available at
 // https://w3c.github.io/mediacapture-image/#constrainable-properties
@@ -156,9 +158,20 @@ MediaStreamTrack::MediaStreamTrack(ExecutionContext* context,
     NonThrowableExceptionState exception_state;
     image_capture_ = ImageCapture::Create(context, this, exception_state);
   }
+
+  // Increase the reported memory usage for each track in V8.
+  // This is to ensure a GC is triggered to collect track objects more often.
+  // The exact size for audio and video tracks is unknown since there are many
+  // factors to take into account like buffer sizes, buffer count, bitrate or
+  // size of the decoded data.
+  v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(
+      kApproximateTrackSizeInBytes);
 }
 
-MediaStreamTrack::~MediaStreamTrack() {}
+MediaStreamTrack::~MediaStreamTrack() {
+  v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(
+      -kApproximateTrackSizeInBytes);
+}
 
 String MediaStreamTrack::kind() const {
   DEFINE_STATIC_LOCAL(String, audio_kind, ("audio"));
