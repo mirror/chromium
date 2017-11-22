@@ -802,6 +802,19 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
     io_data->loading_predictor_observer()->OnResponseStarted(
         request, info->GetWebContentsGetterForRequest());
 
+  // Update the PreviewsState for main frame response if needed.
+  // TODO(dougarnett): Add more comprehensive update for crbug.com/782922
+  if (info->IsMainFrame()) {
+    content::PreviewsState previews_state = response->head.previews_state;
+    if (previews_state != 0) {
+      if (!request->url().SchemeIs(url::kHttpsScheme)) {
+        // Clear https-only previews types.
+        previews_state &= ~(content::NOSCRIPT_ON);
+      }
+      response->head.previews_state = previews_state;
+    }
+  }
+
   mod_pagespeed::RecordMetrics(info->GetResourceType(), request->url(),
                                request->response_headers());
 }
