@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "5f97e315_9b084bb9",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T15:54:27Z",
+      "side": 1,
+      "message": "I thought about this, too. I think the proper solution would be to have one callback that gets called once the component is ready. And in this callback you can initiate loading the individual assets. However, I thought this was overkill for the dummy component. We will be better able to tell how to implement this once we know what assets need to be loaded when and where. I think with this approach we also have to make sure that we only use one component version at a time. I.e. it could happen between two asset loads that the component gets updated. I wanted to deal with all those things later. What do you think?",
+      "parentUuid": "6ecd74fa_e1580f10",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e319271d_ce655819",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 4
@@ -64,6 +82,24 @@
       "writtenOn": "2017-11-22T15:08:26Z",
       "side": 1,
       "message": "Rather than a string, could we jump straight to providing a class or struct that contains the string?  Then these methods don\u0027t have to change as stuff is added to the set of assets.",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e426e562_df0092e0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T15:54:27Z",
+      "side": 1,
+      "message": "As you mentioned in your other comment, we may want to have individual asset load functions. Let\u0027s refactor this once we know what assets to load when and where.",
+      "parentUuid": "e319271d_ce655819",
       "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +180,24 @@
     },
     {
       "key": {
+        "uuid": "524fac65_69f8b680",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T15:54:27Z",
+      "side": 1,
+      "message": "OnAssetsLoadedCallback is a OnceCallback. It gets consumed by the function like an std::unique_ptr. So, it needs to be mutable.",
+      "parentUuid": "d2b8f3aa_64460018",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc94b15_4836b385",
         "filename": "chrome/browser/vr/vr_assets.h",
         "patchSetId": 4
@@ -158,6 +212,24 @@
       "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635f574c_6fc3f774",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-22T15:54:27Z",
+      "side": 1,
+      "message": "I want to pass in the path by copy since this function may run on a different thread. I.e. in the mean time the component could be updated and override the path.",
+      "parentUuid": "cbc94b15_4836b385",
+      "revId": "38ec7fd011f1035e6ce0d93bee4a92f14565313e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
