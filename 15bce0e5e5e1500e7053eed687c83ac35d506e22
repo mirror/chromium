@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e805fbcc_953d5a6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-22T02:56:02Z",
+      "side": 1,
+      "message": "Pliss mention that you have moved code around here. Make it easier to review",
+      "revId": "15bce0e5e5e1500e7053eed687c83ac35d506e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
