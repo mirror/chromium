@@ -273,6 +273,9 @@ class OmniboxViewViews : public OmniboxView,
     COMPOSITING_STARTED,  // Compositing was started.
   } latency_histogram_state_;
 
+  // The currently selected match, if any.
+  base::string16 accessibility_label_;
+
   ScopedObserver<ui::Compositor, ui::CompositorObserver> scoped_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(OmniboxViewViews);

@@ -481,6 +481,9 @@ void OmniboxViewViews::OnTemporaryTextMaybeChanged(
   if (save_original_selection)
     saved_temporary_selection_ = GetSelectedRange();
 
+  accessibility_label_ = AutocompleteMatchType::ToAccessibilityLabel(
+      match.type, display_text, match.description);
+
   SetWindowTextAndCaretPos(display_text, display_text.length(), false,
                            notify_text_changed);
 }
@@ -520,6 +523,11 @@ void OmniboxViewViews::OnBeforePossibleChange() {
   // Record our state.
   GetState(&state_before_change_);
   ime_composing_before_change_ = IsIMEComposing();
+
+  // User is editing or traversing the text, as opposed to moving
+  // through suggestions. Clear the accessibility label
+  // so that the screen reader reports the raw text in the field.
+  accessibility_label_.clear();
 }
 
 bool OmniboxViewViews::OnAfterPossibleChange(bool allow_keyword_ui_change) {
@@ -722,7 +730,14 @@ bool OmniboxViewViews::SkipDefaultKeyEventProcessing(
 void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_TEXT_FIELD;
   node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_LOCATION));
-  node_data->SetValue(GetText());
+  if (accessibility_label_.empty()) {
+    // Use accessibility label if available, as it is more descriptive.
+    // It includes the title of pages, and the type of search, for example.
+    node_data->SetValue(GetText());
+  } else {
+    // Fall back: use the exact text displayed in the omnibox.
+    node_data->SetValue(accessibility_label_);
+  }
   node_data->html_attributes.push_back(std::make_pair("type", "url"));
 
   base::string16::size_type entry_start;
@@ -847,6 +862,8 @@ void OmniboxViewViews::OnBlur() {
     // The location bar needs to repaint without a focus ring.
     location_bar_view_->SchedulePaint();
   }
+
+  accessibility_label_.clear();
 }
 
 bool OmniboxViewViews::IsCommandIdEnabled(int command_id) const {
