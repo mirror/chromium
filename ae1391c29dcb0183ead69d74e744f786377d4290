@@ -34,6 +34,24 @@
       "revId": "ae1391c29dcb0183ead69d74e744f786377d4290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3267969_e8fcc25f",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3210,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-22T09:18:39Z",
+      "side": 1,
+      "message": "Hm, did you forget to upload the new one? :)\n\nRegarding testing, you can specify the parameters with command-line flags, e.g.:\n\n./path/to/chrome --force-fieldtrials\u003dSavePreviousDocumentResources/SaveResourcesUntilDCL\n\nor something like that. This internal link has more details: goto/finch-params",
+      "parentUuid": "c9dea51e_44379fe8",
+      "revId": "ae1391c29dcb0183ead69d74e744f786377d4290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
