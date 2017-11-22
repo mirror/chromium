@@ -19,7 +19,7 @@ class CORE_EXPORT StyleValueFactory {
  public:
   static CSSStyleValueVector FromString(CSSPropertyID,
                                         const String&,
-                                        SecureContextMode);
+                                        const ExecutionContext*);
   static CSSStyleValueVector CssValueToStyleValueVector(CSSPropertyID,
                                                         const CSSValue&);
   // If you don't have complex CSS properties, use this one.

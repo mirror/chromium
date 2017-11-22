@@ -37,8 +37,10 @@ class ComputedStyle;
 
 class CORE_EXPORT CSSImageValue : public CSSValue {
  public:
-  static CSSImageValue* Create(const KURL& url, StyleImage* image = 0) {
-    return Create(url.GetString(), url, Referrer(), image);
+  static CSSImageValue* Create(const KURL& absolute_url,
+                               const KURL& relative_url_,
+                               StyleImage* image = 0) {
+    return Create(relative_url_.GetString(), absolute_url, Referrer(), image);
   }
   static CSSImageValue* Create(const String& raw_value,
                                const KURL& url,
@@ -83,7 +85,8 @@ class CORE_EXPORT CSSImageValue : public CSSValue {
   bool KnownToBeOpaque(const Document&, const ComputedStyle&) const;
 
   CSSImageValue* ValueWithURLMadeAbsolute() const {
-    return Create(KURL(absolute_url_), cached_image_.Get());
+    return Create(KURL(absolute_url_), KURL(relative_url_),
+                  cached_image_.Get());
   }
 
   void SetInitiator(const AtomicString& name) { initiator_name_ = name; }
