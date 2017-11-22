@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fcc4b0d0_612617c4",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-22T10:40:55Z",
+      "side": 1,
+      "message": "Not sure.\n\nIf I do as you suggest, then the command-line switch stops working, I guess because a not-set policy overwrites the preference. That\u0027s undesired.\n\nFor my understanding: Is there a difference between a policy that is unset vs empty. That is, can we have nullptr, [], and [...stuff...] as values?",
+      "parentUuid": "e3b76df7_afb6b885",
+      "range": {
+        "startLine": 820,
+        "startChar": 4,
+        "endLine": 820,
+        "endChar": 15
+      },
+      "revId": "26de75d5b97f4d6d17648dd10ccb2c28fc262560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1172ced4_b88dba5b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "26de75d5b97f4d6d17648dd10ccb2c28fc262560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e3d9be_17ad094a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10648,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-22T10:40:55Z",
+      "side": 1,
+      "message": "Na... contexts. :-)\n\nDone.",
+      "parentUuid": "1172ced4_b88dba5b",
+      "range": {
+        "startLine": 10648,
+        "startChar": 39,
+        "endLine": 10648,
+        "endChar": 47
+      },
+      "revId": "26de75d5b97f4d6d17648dd10ccb2c28fc262560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
