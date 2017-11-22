@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "d0182c80_58423e34",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T01:57:13Z",
+      "side": 1,
+      "message": "However, it\u0027s possible that the context is already detached (until we fix the problem). Then CallbackRelevantScriptState()-\u003eGetContext() will return an empty handle, won\u0027t it?\n\nIn the first place, it looks strange that we have to enter a Context::Scope here because the caller site should have already entered a right context (since the caller site wants to use v8::Maybe).",
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494f8814_56ff7f57",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-22T01:57:13Z",
+      "side": 1,
+      "message": "Not related to this CL at all...: I\u0027m really not happy about magical names like Nothing, Just, JustVoid etc. Why can\u0027t we create a Maybe object with v8::Maybe\u003ctype\u003e()?",
+      "revId": "0719dc1867e98d35abbb2f2624c134032f57b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68ef52b3_31fa5f83",
         "filename": "third_party/WebKit/Source/modules/webdatabase/WindowWebDatabase.idl",
         "patchSetId": 6
