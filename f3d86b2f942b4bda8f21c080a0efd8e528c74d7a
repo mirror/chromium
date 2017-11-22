@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "255c6c82_dd11f215",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-22T19:07:54Z",
+      "side": 1,
+      "message": "Apologies I wasn\u0027t more precise - I meant the \u0027using resolver \u003d \u0027 pattern. That said, it was simply a mistake on my part - we absolutely use the \u0027typedef Class Foo;\u0027 approach to hide abstractions, so this works for me.",
+      "parentUuid": "820886cc_2251613c",
+      "range": {
+        "startLine": 186,
+        "startChar": 14,
+        "endLine": 186,
+        "endChar": 15
+      },
+      "revId": "f3d86b2f942b4bda8f21c080a0efd8e528c74d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f92fcf40_5a14a3fb",
         "filename": "chrome/browser/io_thread.cc",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "f3d86b2f942b4bda8f21c080a0efd8e528c74d7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3ff710_f936b44a",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-22T19:07:54Z",
+      "side": 1,
+      "message": "Sadly, another mistake on my part while reviewing. I had misparsed the template mentally.",
+      "parentUuid": "bf1d586a_e491de1b",
+      "range": {
+        "startLine": 430,
+        "startChar": 14,
+        "endLine": 430,
+        "endChar": 28
+      },
+      "revId": "f3d86b2f942b4bda8f21c080a0efd8e528c74d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
