@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "571b2d88_43e5aac0",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T06:55:12Z",
+      "side": 1,
+      "message": "The mojo interface is the public interface for fetching manifests. Since all of the clients in content/renderer are planned to move into blink this is only temporary and it didn\u0027t seem worthwhile defining a new public interface type for web manifest.",
+      "parentUuid": "dbd893b9_7fb4d4f8",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fff9129_4d1a45cb",
         "filename": "content/renderer/devtools/devtools_agent.cc",
         "patchSetId": 14
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "57945056_49ee44c8",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T06:55:12Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "185fd63c_a95cd490",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94ffca98_b9abb7f8",
         "filename": "content/renderer/manifest/manifest_parser.cc",
         "patchSetId": 14
@@ -82,6 +118,24 @@
       "writtenOn": "2017-11-17T11:26:40Z",
       "side": 1,
       "message": "When do we need to add base::in_place?",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fa370d_4b38dbc7",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T06:55:12Z",
+      "side": 1,
+      "message": "When constructing a StructPtr without an explicit blink::mojom::ManifestError::New(...) call.",
+      "parentUuid": "94ffca98_b9abb7f8",
       "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "525f828c_832f0ac1",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T06:55:12Z",
+      "side": 1,
+      "message": "To provide a narrower interface. Once manifest manager is onion-souped, this will be the only ManifestManager interface visible from //content.",
+      "parentUuid": "1ffd92df_04b4961c",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3acc34b5_3a0dffd2",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 14
@@ -116,6 +188,24 @@
       "writtenOn": "2017-11-17T11:26:40Z",
       "side": 1,
       "message": "manifest_manager_ is a raw pointer. How is it guaranteed that it is non null?",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18613d06_1bc30a38",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-22T06:55:12Z",
+      "side": 1,
+      "message": "It\u0027s set in the constructor and never changed.",
+      "parentUuid": "3acc34b5_3a0dffd2",
       "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
