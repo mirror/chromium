@@ -118,11 +118,50 @@ Optional<MinMaxSize> NGBlockLayoutAlgorithm::ComputeMinMaxSize() const {
   if (Style().ContainsSize())
     return sizes;
 
-  // TODO: handle floats & orthogonal children.
+  const bool nowrap = Style().WhiteSpace() == EWhiteSpace::kNowrap;
+  const TextDirection direction = Style().Direction();
+  LayoutUnit float_left_inline_size;
+  LayoutUnit float_right_inline_size;
+
   for (NGLayoutInputNode node = Node().FirstChild(); node;
        node = node.NextSibling()) {
+    // TODO(ikilpatrick): Do we need to skip IsColumnSpanAll as well?
     if (node.IsOutOfFlowPositioned())
       continue;
+
+    // Conceptually floats and a single new-FC would just get positioned on a
+    // single "line". If there is a float/new-FC with clearance, this creates a
+    // new "line", resetting the float size trackers.
+    if (node.IsFloating() || node.CreatesNewFormattingContext()) {
+      LayoutUnit float_inline_size =
+          float_left_inline_size + float_right_inline_size;
+
+      if (node.Style().Clear() == EClear::kBoth ||
+          node.Style().Clear() == EClear::kLeft) {
+        sizes.max_size = std::max(sizes.max_size, float_inline_size);
+        float_left_inline_size = LayoutUnit();
+      }
+
+      if (node.Style().Clear() == EClear::kBoth ||
+          node.Style().Clear() == EClear::kRight) {
+        sizes.max_size = std::max(sizes.max_size, float_inline_size);
+        float_right_inline_size = LayoutUnit();
+      }
+    }
+
+    // Compute the margins of the child.
+    // NOTE(ikilpatrick): We may want to re-visit calculated margins at some
+    // point. Currently "margin-left: calc(10px + 50%)" will resolve to 0px, but
+    // 10px would be more correct, (as percentages resolve to zero).
+    Length inline_start_margin_length = node.Style().MarginStartUsing(Style());
+    Length inline_end_margin_length = node.Style().MarginEndUsing(Style());
+
+    NGBoxStrut margins;
+    if (inline_start_margin_length.IsFixed())
+      margins.inline_start = LayoutUnit(inline_start_margin_length.Value());
+    if (inline_end_margin_length.IsFixed())
+      margins.inline_end = LayoutUnit(inline_end_margin_length.Value());
+
     MinMaxSize child_sizes;
     if (node.IsInline()) {
       // From |NGBlockLayoutAlgorithm| perspective, we can handle |NGInlineNode|
@@ -142,11 +181,68 @@ Optional<MinMaxSize> NGBlockLayoutAlgorithm::ComputeMinMaxSize() const {
           ComputeMinAndMaxContentContribution(node.Style(), child_minmax);
     }
 
-    sizes.min_size = std::max(sizes.min_size, child_sizes.min_size);
-    sizes.max_size = std::max(sizes.max_size, child_sizes.max_size);
+    LayoutUnit max_inline_contribution;
+
+    if (node.IsFloating()) {
+      // A float
+      LayoutUnit float_inline_size = child_sizes.max_size + margins.InlineSum();
+      if (node.Style().Floating() == EFloat::kLeft)
+        float_left_inline_size += float_inline_size;
+      else
+        float_right_inline_size += float_inline_size;
+
+      max_inline_contribution =
+          float_left_inline_size + float_right_inline_size;
+    } else if (node.CreatesNewFormattingContext()) {
+      // As floats are line relative, we perform the margin calculations in the
+      // line relative coordinate system as well.
+      LayoutUnit margin_line_left = margins.LineLeft(direction);
+      LayoutUnit margin_line_right = margins.LineRight(direction);
+
+      // line_left_inset and line_right_inset are the "distance" from their
+      // respective edges of the parent that the new-FC would take. If the
+      // margin is positive the inset is just whichever of the floats inline
+      // size and margin is larger, and if negative it just subtracts from the
+      // float inline size.
+      LayoutUnit line_left_inset =
+          margin_line_left > 0
+              ? std::max(float_left_inline_size, margin_line_left)
+              : float_left_inline_size + margin_line_left;
+
+      LayoutUnit line_right_inset =
+          margin_line_right > 0
+              ? std::max(float_right_inline_size, margin_line_right)
+              : float_right_inline_size + margin_line_right;
+
+      max_inline_contribution =
+          child_sizes.max_size + line_left_inset + line_right_inset;
+    } else {
+      // This is just a standard inflow child.
+      max_inline_contribution = child_sizes.max_size + margins.InlineSum();
+    }
+
+    // Anything that isn't a float will create a new "line" resetting the float
+    // size trackers.
+    if (!node.IsFloating()) {
+      float_left_inline_size = LayoutUnit();
+      float_right_inline_size = LayoutUnit();
+    }
+
+    sizes.max_size = std::max(sizes.max_size, max_inline_contribution);
+
+    LayoutUnit min_inline_contribution =
+        child_sizes.min_size + margins.InlineSum();
+    sizes.min_size = std::max(sizes.min_size, min_inline_contribution);
+
+    if (nowrap && !node.IsTable()) {
+      sizes.max_size = std::max(sizes.max_size, min_inline_contribution);
+    }
   }
 
-  sizes.max_size = std::max(sizes.min_size, sizes.max_size);
+  sizes.max_size.ClampNegativeToZero();
+  sizes.min_size.ClampNegativeToZero();
+
+  sizes.min_size = std::min(sizes.min_size, sizes.max_size);
   return sizes;
 }
 
