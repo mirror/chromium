@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4c1b9cc_4bac8d1a",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-22T04:00:17Z",
+      "side": 1,
+      "message": "ifdef mac?",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "50e8cb1ef7dd2183da55e49fd03c46aa2b76a313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d67209_39e8525f",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-22T04:00:17Z",
+      "side": 1,
+      "message": "ifdef mac?",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "50e8cb1ef7dd2183da55e49fd03c46aa2b76a313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
