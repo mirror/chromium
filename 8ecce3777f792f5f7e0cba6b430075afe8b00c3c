@@ -68,6 +68,24 @@
       "revId": "8ecce3777f792f5f7e0cba6b430075afe8b00c3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e8046c_b604a241",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-11-22T00:37:23Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "18a3c2b8_c2f320f5",
+      "revId": "8ecce3777f792f5f7e0cba6b430075afe8b00c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
