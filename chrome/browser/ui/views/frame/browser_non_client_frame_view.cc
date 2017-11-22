@@ -16,6 +16,7 @@
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/frame/hosted_app_button_container.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/signin/core/browser/profile_management_switches.h"
@@ -36,7 +37,8 @@ BrowserNonClientFrameView::BrowserNonClientFrameView(BrowserFrame* frame,
                                                      BrowserView* browser_view)
     : frame_(frame),
       browser_view_(browser_view),
-      profile_indicator_icon_(nullptr) {
+      profile_indicator_icon_(nullptr),
+      hosted_app_button_container_(nullptr) {
   // The profile manager may by null in tests.
   if (g_browser_process->profile_manager()) {
     g_browser_process->profile_manager()->
@@ -81,6 +83,13 @@ views::View* BrowserNonClientFrameView::GetProfileSwitcherView() const {
 void BrowserNonClientFrameView::UpdateClientArea() {}
 
 void BrowserNonClientFrameView::UpdateMinimumSize() {}
+
+void BrowserNonClientFrameView::UpdateHostedAppButtonContainer() {
+  if (!hosted_app_button_container_)
+    return;
+
+  hosted_app_button_container_->RefreshContentSettingViews();
+}
 
 void BrowserNonClientFrameView::ChildPreferredSizeChanged(views::View* child) {
   if (child == GetProfileSwitcherView()) {
@@ -212,6 +221,14 @@ void BrowserNonClientFrameView::PaintToolbarBackground(
   BrowserView::Paint1pxHorizontalLine(
       canvas, tp->GetColor(ThemeProperties::COLOR_TOOLBAR_BOTTOM_SEPARATOR),
       toolbar_bounds, true);
+}
+
+void BrowserNonClientFrameView::CreateHostedAppButtonContainer(
+    SkColor active_icon_color,
+    SkColor inactive_icon_color,
+    const gfx::FontList& font_list) {
+  hosted_app_button_container_ = new HostedAppButtonContainer(
+      browser_view(), active_icon_color, inactive_icon_color, font_list);
 }
 
 void BrowserNonClientFrameView::ViewHierarchyChanged(

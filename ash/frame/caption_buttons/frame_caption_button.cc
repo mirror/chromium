@@ -33,6 +33,11 @@ const int kPressedAlpha = 0x24;
 // static
 const char FrameCaptionButton::kViewClassName[] = "FrameCaptionButton";
 
+// static
+SkColor FrameCaptionButton::GetButtonColor(bool use_light_images) {
+  return use_light_images ? SK_ColorWHITE : gfx::kChromeIconGrey;
+}
+
 FrameCaptionButton::FrameCaptionButton(views::ButtonListener* listener,
                                        CaptionButtonIcon icon)
     : Button(listener),
@@ -54,9 +59,8 @@ FrameCaptionButton::~FrameCaptionButton() {}
 void FrameCaptionButton::SetImage(CaptionButtonIcon icon,
                                   Animate animate,
                                   const gfx::VectorIcon& icon_definition) {
-  gfx::ImageSkia new_icon_image = gfx::CreateVectorIcon(
-      icon_definition,
-      use_light_images_ ? SK_ColorWHITE : gfx::kChromeIconGrey);
+  gfx::ImageSkia new_icon_image =
+      gfx::CreateVectorIcon(icon_definition, GetButtonColor(use_light_images_));
 
   // The early return is dependent on |animate| because callers use SetImage()
   // with ANIMATE_NO to progress the crossfade animation to the end.

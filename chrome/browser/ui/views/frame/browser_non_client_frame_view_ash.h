@@ -14,7 +14,6 @@
 #include "chrome/browser/ui/views/frame/browser_non_client_frame_view.h"
 #include "chrome/browser/ui/views/tab_icon_view_model.h"
 
-class HostedAppButtonContainer;
 class TabIconView;
 
 namespace ash {
@@ -128,10 +127,6 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
 
   // Helper class for painting the header.
   std::unique_ptr<ash::FrameHeader> frame_header_;
-
-  // Container for extra frame buttons shown for hosted app windows.
-  // Owned by views hierarchy.
-  HostedAppButtonContainer* hosted_app_button_container_;
 
   // Indicates whether overview mode is active. Hide the header for V1 apps in
   // overview mode because a fake header is added for better UX. If also in

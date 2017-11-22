@@ -43,6 +43,7 @@
 #include "ui/base/hit_test.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/widget/widget.h"
@@ -76,8 +77,7 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
     : BrowserNonClientFrameView(frame, browser_view),
       caption_button_container_(nullptr),
       back_button_(nullptr),
-      window_icon_(nullptr),
-      hosted_app_button_container_(nullptr) {
+      window_icon_(nullptr) {
   ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
                                                       nullptr);
   ash::Shell::Get()->AddShellObserver(this);
@@ -211,11 +211,11 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetWindowBoundsForClientBounds(
 }
 
 int BrowserNonClientFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
-  if (hosted_app_button_container_) {
+  if (hosted_app_button_container()) {
     gfx::Point client_point(point);
-    View::ConvertPointToTarget(this, hosted_app_button_container_,
+    View::ConvertPointToTarget(this, hosted_app_button_container(),
                                &client_point);
-    if (hosted_app_button_container_->HitTestPoint(client_point))
+    if (hosted_app_button_container()->HitTestPoint(client_point))
       return HTCLIENT;
   }
 
@@ -274,8 +274,8 @@ void BrowserNonClientFrameViewAsh::OnPaint(gfx::Canvas* canvas) {
                              : ash::FrameHeader::MODE_INACTIVE;
   frame_header_->PaintHeader(canvas, header_mode);
 
-  if (hosted_app_button_container_)
-    hosted_app_button_container_->SetPaintAsActive(should_paint_as_active);
+  if (hosted_app_button_container())
+    hosted_app_button_container()->SetPaintAsActive(should_paint_as_active);
 
   if (browser_view()->IsToolbarVisible() &&
       !browser_view()->toolbar()->GetPreferredSize().IsEmpty() &&
@@ -512,11 +512,14 @@ BrowserNonClientFrameViewAsh::CreateFrameHeader() {
         caption_button_container_, back_button_);
 
     // Add the container for extra hosted app buttons (e.g app menu button).
-    SkColor text_color = default_frame_header->GetTitleColor();
-    hosted_app_button_container_ = new HostedAppButtonContainer(
-        browser_view(), text_color,
-        SkColorSetA(text_color, 255 * ash::kInactiveFrameButtonIconAlphaRatio));
-    caption_button_container_->AddChildViewAt(hosted_app_button_container_, 0);
+    SkColor button_color = ash::FrameCaptionButton::GetButtonColor(
+        default_frame_header->ShouldUseLightImages());
+    CreateHostedAppButtonContainer(
+        button_color,
+        SkColorSetA(button_color,
+                    255 * ash::kInactiveFrameButtonIconAlphaRatio),
+        HostedAppFrameHeaderAsh::GetTitleFontList());
+    caption_button_container_->AddChildViewAt(hosted_app_button_container(), 0);
 
   } else {
     default_frame_header = std::make_unique<ash::DefaultFrameHeader>(

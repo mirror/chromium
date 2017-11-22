@@ -35,6 +35,9 @@ class FrameCaptionButtonContainerView;
 class ASH_EXPORT DefaultFrameHeader : public FrameHeader,
                                       public gfx::AnimationDelegate {
  public:
+  // Returns the FontList to use for the title.
+  static const gfx::FontList& GetTitleFontList();
+
   // DefaultFrameHeader does not take ownership of any of the parameters.
   DefaultFrameHeader(
       views::Widget* frame,
@@ -75,9 +78,6 @@ class ASH_EXPORT DefaultFrameHeader : public FrameHeader,
   bool ShouldUseLightImages() const;
 
  protected:
-  // Returns the FontList to use for the title.
-  static const gfx::FontList& GetTitleFontList();
-
   // Paints the title bar, primarily the title string.
   virtual void PaintTitleBar(gfx::Canvas* canvas);
 

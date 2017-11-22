@@ -147,6 +147,7 @@ class TestBrowserWindow : public BrowserWindow {
           callback) override {}
   std::string GetWorkspace() const override;
   bool IsVisibleOnAllWorkspaces() const override;
+  void UpdateCustomFrameButtons() const override;
 
  protected:
   void DestroyBrowser() override {}

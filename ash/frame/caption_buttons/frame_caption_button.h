@@ -28,6 +28,8 @@ class ASH_EXPORT FrameCaptionButton : public views::Button {
 
   static const char kViewClassName[];
 
+  static SkColor GetButtonColor(bool use_light_images);
+
   FrameCaptionButton(views::ButtonListener* listener, CaptionButtonIcon icon);
   ~FrameCaptionButton() override;
 
