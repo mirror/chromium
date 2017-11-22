@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba8b432d_ecaebafa",
+        "filename": "ash/system/cast/tray_cast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-22T20:32:23Z",
+      "side": 1,
+      "message": "just curious. Why we want/need to use different icons for chrome vs chromium?",
+      "revId": "fe8516b8b375d71fcfb289d3d6923294ec5dbb80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56e25a09_93a97cde",
         "filename": "chrome/browser/ui/ash/cast_config_client_media_router.cc",
         "patchSetId": 2
