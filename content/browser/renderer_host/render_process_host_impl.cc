@@ -2442,6 +2442,9 @@ static void AppendCompositorCommandLineFlags(base::CommandLine* command_line) {
   if (IsGpuAsyncWorkerContextEnabled())
     command_line->AppendSwitch(switches::kEnableGpuAsyncWorkerContext);
 
+  LOG(ERROR) << "Make map\n"
+             << viz::BufferToTextureTargetMapToString(
+                    CreateBufferToTextureTargetMap());
   command_line->AppendSwitchASCII(
       switches::kContentImageTextureTarget,
       viz::BufferToTextureTargetMapToString(CreateBufferToTextureTargetMap()));
