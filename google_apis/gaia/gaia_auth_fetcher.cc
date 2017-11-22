@@ -45,28 +45,36 @@ static bool CookiePartsContains(const std::vector<std::string>& parts,
   return false;
 }
 
-bool ExtractOAuth2TokenPairResponse(const std::string& data,
-                                    std::string* refresh_token,
-                                    std::string* access_token,
-                                    int* expires_in_secs) {
-  DCHECK(refresh_token);
-  DCHECK(access_token);
-  DCHECK(expires_in_secs);
-
+std::unique_ptr<const GaiaAuthConsumer::ClientOAuthResult>
+ExtractOAuth2TokenPairResponse(const std::string& data) {
   std::unique_ptr<base::Value> value = base::JSONReader::Read(data);
   if (!value.get() || value->type() != base::Value::Type::DICTIONARY)
-    return false;
+    return nullptr;
 
   base::DictionaryValue* dict =
         static_cast<base::DictionaryValue*>(value.get());
 
-  if (!dict->GetStringWithoutPathExpansion("refresh_token", refresh_token) ||
-      !dict->GetStringWithoutPathExpansion("access_token", access_token) ||
-      !dict->GetIntegerWithoutPathExpansion("expires_in", expires_in_secs)) {
-    return false;
+  std::string refresh_token;
+  std::string access_token;
+  std::string id_token;
+  int expires_in_secs;
+  if (!dict->GetStringWithoutPathExpansion("refresh_token", &refresh_token) ||
+      !dict->GetStringWithoutPathExpansion("access_token", &access_token) ||
+      !dict->GetIntegerWithoutPathExpansion("expires_in", &expires_in_secs)) {
+    return nullptr;
   }
 
-  return true;
+  // Extract ID token when obtaining refresh token. Do not fail if absent,
+  // but log to keep track.
+  if (!dict->GetStringWithoutPathExpansion("id_token", &id_token)) {
+    LOG(ERROR) << "Missing ID token on refresh token fetch response.";
+  }
+
+  // TODO(maroun): Use OAuth2IdTokenDecoder to decode this id_token wherever
+  // needed. See http://go/unichrome-idtoken-dd.
+
+  return std::make_unique<GaiaAuthConsumer::ClientOAuthResult>(
+      refresh_token, access_token, id_token, expires_in_secs);
 }
 
 void GetCookiesFromResponse(const net::HttpResponseHeaders* headers,
@@ -946,20 +954,13 @@ void GaiaAuthFetcher::OnOAuth2TokenPairFetched(
     const std::string& data,
     const net::URLRequestStatus& status,
     int response_code) {
-  std::string refresh_token;
-  std::string access_token;
-  int expires_in_secs = 0;
-
-  bool success = false;
+  std::unique_ptr<const GaiaAuthConsumer::ClientOAuthResult> result;
   if (status.is_success() && response_code == net::HTTP_OK) {
-      success = ExtractOAuth2TokenPairResponse(data, &refresh_token,
-                                               &access_token, &expires_in_secs);
+    result = ExtractOAuth2TokenPairResponse(data);
   }
 
-  if (success) {
-    consumer_->OnClientOAuthSuccess(
-        GaiaAuthConsumer::ClientOAuthResult(refresh_token, access_token,
-                                            expires_in_secs));
+  if (result) {
+    consumer_->OnClientOAuthSuccess(*result);
   } else {
     consumer_->OnClientOAuthFailure(GenerateAuthError(data, status));
   }
