@@ -232,8 +232,9 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
     }
 
     // If this is the root web area, make sure we clip the node to fit.
-    // This is disabled as a bugfix for Chrome 63, see crbug.com/786164
-    if (false) {
+    if (container->data().role == ui::AX_ROLE_ROOT_WEB_AREA) {
+      gfx::RectF clipped = bounds;
+      clipped.Intersect(container_bounds);
       if (!clipped.IsEmpty()) {
         // We can simply clip it to the container.
         bounds = clipped;
