@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0b781c3_93206969",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-22T20:48:40Z",
+      "side": 1,
+      "message": "I think we must mention that we use the item\u0027s fit-content size as clamped value.",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0e19da_9883ea01",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-22T20:48:40Z",
+      "side": 1,
+      "message": "I don\u0027t think we need a const reference here, just a Length copy, as we do with LayoutUnit instances.",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b489f327_d9660529",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-22T20:48:40Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d079b0b8_00226523",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-22T20:48:40Z",
+      "side": 1,
+      "message": "I think we should have this condition cached in the GridTrackSize class, like the other we have now; eg, HasMaxContentMaxTrackBreadth",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa6c040_322c4618",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-22T20:48:40Z",
+      "side": 1,
+      "message": "I guess it\u0027s a matter of taste but, don\u0027t you think it\u0027s be clearer to write it as \u0027min_size \u003e max_breadth\u0027 ? Considering that we are implementing a clamping logic, I think it\u0027s more appropriated.",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
