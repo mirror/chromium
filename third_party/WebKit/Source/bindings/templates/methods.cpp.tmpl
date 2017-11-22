@@ -68,6 +68,10 @@ static void {{method.name}}{{method.overload_index}}Method{{world_suffix}}(const
   V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
   {% endif %}
 
+  {% if method.is_ce_reactions %}
+  CEReactionsScope ceReactionsScope;
+  {% endif %}
+
   {{function_call | indent(2)}}
 }
 {% endfilter %}
