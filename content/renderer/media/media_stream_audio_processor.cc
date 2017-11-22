@@ -600,6 +600,24 @@ void MediaStreamAudioProcessor::GetStats(AudioProcessorStats* stats) {
   GetAudioProcessingStats(audio_processing_.get(), stats);
 }
 
+webrtc::AudioProcessorInterface::AudioProcessorStatistics
+MediaStreamAudioProcessor::GetStats(bool has_remote_tracks) {
+  AudioProcessorStatistics stats;
+  stats.typing_noise_detected =
+      (base::subtle::Acquire_Load(&typing_detected_) != false);
+  webrtc::AudioProcessing::AudioProcessingStats apm_stats =
+      audio_processing_->GetStatistics(has_remote_tracks);
+  stats.echo_return_loss = apm_stats.echo_return_loss;
+  stats.echo_return_loss_enhancement = apm_stats.echo_return_loss_enhancement;
+  stats.echo_delay_median_ms = apm_stats.delay_median_ms;
+  stats.echo_delay_std_ms = apm_stats.delay_standard_deviation_ms;
+  stats.residual_echo_likelihood = apm_stats.residual_echo_likelihood;
+  stats.residual_echo_likelihood_recent_max =
+      apm_stats.residual_echo_likelihood_recent_max;
+  stats.aec_divergent_filter_fraction = apm_stats.divergent_filter_fraction;
+  return stats;
+}
+
 void MediaStreamAudioProcessor::InitializeAudioProcessingModule(
     const AudioProcessingProperties& properties) {
   DCHECK(main_thread_runner_->BelongsToCurrentThread());
