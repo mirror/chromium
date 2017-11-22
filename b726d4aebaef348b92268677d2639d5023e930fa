@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab9ebab_d03f7518",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T18:59:09Z",
+      "side": 1,
+      "message": "need to normalize here as well.",
+      "range": {
+        "startLine": 215,
+        "startChar": 29,
+        "endLine": 215,
+        "endChar": 49
+      },
+      "revId": "b726d4aebaef348b92268677d2639d5023e930fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
