@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/ime/text_input_client.h"
@@ -52,8 +53,8 @@ class VIEWS_EXPORT Textfield : public View,
   // The textfield's class name.
   static const char kViewClassName[];
 
-  // Returns the text cursor blink time in milliseconds, or 0 for no blinking.
-  static size_t GetCaretBlinkMs();
+  // Returns the text cursor blink time, or 0 for no blinking.
+  static base::TimeDelta GetCaretBlinkInterval();
 
   // Returns the default FontList used by all textfields.
   static const gfx::FontList& GetDefaultFontList();
