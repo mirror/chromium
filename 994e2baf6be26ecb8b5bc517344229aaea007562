@@ -34,6 +34,24 @@
       "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc09ddd4_8dc9d268",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-11-22T01:41:50Z",
+      "side": 1,
+      "message": "This works for me:\n\n  $ mkdir somedir\n  $ cd somedir\n  $ git init\n  $ git remote add -t infra/config origin https://chromium.googlesource.com/chromium/src\n  $ git config --add remote.origin.fetch \u0027+refs/heads/infra/config:refs/remotes/origin/master\u0027\n  $ git new-branch some_feature\n  $ $EDITOR README.md\n  $ git commit -am \u0027Some message\u0027\n  $ git cl upload\n\nCreates https://chromium-review.googlesource.com/c/chromium/src/+/784191\n\nWe generally recommend the use of `git new-branch` because it knows how to set up tracking information correctly. If you want to use `git checkout` or `git branch` to create branches, then you\u0027ll need the extra flags and stuff (but... that\u0027s why we don\u0027t recommend them)",
+      "parentUuid": "704b9919_94afd1f7",
+      "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
