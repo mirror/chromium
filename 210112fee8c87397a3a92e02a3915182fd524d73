@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "496875d4_80532871",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-22T15:53:18Z",
+      "side": 1,
+      "message": "Right. My point was, you shouldn\u0027t need to explicitly add the PED from there.",
+      "parentUuid": "b318b1fc_94811cd3",
+      "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57576068_3c8a4eca",
         "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "But it\u0027s not actually an XEvent. It\u0027s a translated event based on the XEvent.",
       "parentUuid": "57576068_3c8a4eca",
+      "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9eee262_90bcb895",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-22T15:53:18Z",
+      "side": 1,
+      "message": "Oh? Why is the input an XEvent, in that case?",
+      "parentUuid": "e3e0969c_3acba747",
       "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
