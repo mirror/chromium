@@ -40,7 +40,7 @@ Button::Button(base::Callback<void()> click_handler,
   background->set_bubble_events(true);
   background->SetSize(width, height);
   background->SetTransitionedProperties({TRANSFORM});
-  background->set_corner_radius(width / 2);
+  background->set_corner_radius(width / 2);  // Creates a circle.
   background->set_hit_testable(false);
   background_ = background.get();
   AddChild(std::move(background));
