@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06173ea0_13ffc4b5",
+        "filename": "content/public/common/mutable_network_traffic_annotation_tag.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T15:43:15Z",
+      "side": 0,
+      "message": "Also delete content/public/common/mutable_network_traffic_annotation_tag_struct_traits.h and content/public/common/mutable_network_traffic_annotation_tag.mojom?",
+      "range": {
+        "startLine": 1,
+        "startChar": 21,
+        "endLine": 1,
+        "endChar": 30
+      },
+      "revId": "fbcc09282dc8cd984d220f1bf5135d6f3c44701f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
