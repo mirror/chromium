@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3edeccbf_59d40b3f",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/filter-matches.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-22T20:18:00Z",
+      "side": 1,
+      "message": "bluetooth_test(() \u003d\u003e getHealthThermometerDevice()",
+      "revId": "5486d848266436ba5f29e7f16576d5cac2d8ef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
