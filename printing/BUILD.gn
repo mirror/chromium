@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/sysroot.gni")
 import("//build/config/ui.gni")
 import("//pdf/features.gni")
@@ -22,7 +23,7 @@ if ((enable_basic_printing && is_win) || enable_print_preview) {
              "set enable_pdf=true.")
 }
 
-component("printing") {
+jumbo_component("printing") {
   sources = [
     "backend/print_backend.cc",
     "backend/print_backend.h",
@@ -81,6 +82,10 @@ component("printing") {
     "pwg_raster_settings.h",
     "units.cc",
     "units.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # IPC
   ]
 
   cflags = []

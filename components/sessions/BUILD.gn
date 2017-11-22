@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 if (is_android) {
   import("//build/config/android/config.gni")
 }
@@ -11,7 +12,7 @@ config("implementation") {
 }
 
 if (!is_ios) {
-  component("sessions") {
+  jumbo_component("sessions") {
     sources = [
       "content/content_live_tab.cc",
       "content/content_live_tab.h",
@@ -64,7 +65,7 @@ if (!is_ios) {
 }
 
 # Sources shared between the content and iOS implementations.
-source_set("shared") {
+jumbo_source_set("shared") {
   visibility = [ ":*" ]
 
   sources = [
@@ -109,6 +110,10 @@ source_set("shared") {
     sources += [
       "core/persistent_tab_restore_service.cc",
       "core/persistent_tab_restore_service.h",
+    ]
+    jumbo_excluded_sources = [
+      # Typedef clash
+      "core/persistent_tab_restore_service.cc",
     ]
   }
 

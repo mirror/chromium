@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-component("url_matcher") {
+import("//build/config/jumbo.gni")
+
+jumbo_component("url_matcher") {
   sources = [
     "regex_set_matcher.cc",
     "regex_set_matcher.h",

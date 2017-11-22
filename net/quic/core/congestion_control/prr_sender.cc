@@ -10,7 +10,7 @@ namespace net {
 
 namespace {
 // Constant based on TCP defaults.
-const QuicByteCount kMaxSegmentSize = kDefaultTCPMSS;
+const QuicByteCount kMaxQuicSegmentSize = kDefaultTCPMSS;
 }  // namespace
 
 PrrSender::PrrSender()
@@ -39,7 +39,7 @@ bool PrrSender::CanSend(QuicByteCount congestion_window,
                         QuicByteCount bytes_in_flight,
                         QuicByteCount slowstart_threshold) const {
   // Return QuicTime::Zero in order to ensure limited transmit always works.
-  if (bytes_sent_since_loss_ == 0 || bytes_in_flight < kMaxSegmentSize) {
+  if (bytes_sent_since_loss_ == 0 || bytes_in_flight < kMaxQuicSegmentSize) {
     return true;
   }
   if (congestion_window > bytes_in_flight) {
@@ -47,7 +47,7 @@ bool PrrSender::CanSend(QuicByteCount congestion_window,
     // of sending the entire available window. This prevents burst retransmits
     // when more packets are lost than the CWND reduction.
     //   limit = MAX(prr_delivered - prr_out, DeliveredData) + MSS
-    if (bytes_delivered_since_loss_ + ack_count_since_loss_ * kMaxSegmentSize <=
+    if (bytes_delivered_since_loss_ + ack_count_since_loss_ * kMaxQuicSegmentSize <=
         bytes_sent_since_loss_) {
       return false;
     }
