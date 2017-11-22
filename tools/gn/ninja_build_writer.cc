@@ -51,7 +51,11 @@ std::string GetSelfInvocationCommand(const BuildSettings* build_settings) {
   base::FilePath executable;
   PathService::Get(base::FILE_EXE, &executable);
 
-  base::CommandLine cmdline(executable.NormalizePathSeparatorsTo('/'));
+  const base::FilePath build_path =
+      build_settings->build_dir().Resolve(build_settings->root_path());
+
+  base::CommandLine cmdline(MakeRelativeFilePath(build_path, executable)
+                                .NormalizePathSeparatorsTo('/'));
 
   // Use "." for the directory to generate. When Ninja runs the command it
   // will have the build directory as the current one. Coding it explicitly
@@ -59,8 +63,10 @@ std::string GetSelfInvocationCommand(const BuildSettings* build_settings) {
   cmdline.AppendArg("gen");
   cmdline.AppendArg(".");
 
-  cmdline.AppendSwitchPath(std::string("--") + switches::kRoot,
-                           build_settings->root_path());
+  cmdline.AppendSwitchPath(
+      std::string("--") + switches::kRoot,
+      MakeRelativeFilePath(build_path, build_settings->root_path())
+          .NormalizePathSeparatorsTo('/'));
   // Successful automatic invocations shouldn't print output.
   cmdline.AppendSwitch(std::string("-") + switches::kQuiet);
 
@@ -268,8 +274,12 @@ void NinjaBuildWriter::WriteNinjaRules() {
   std::set<base::FilePath> fileset(input_files.begin(), input_files.end());
   fileset.insert(other_files.begin(), other_files.end());
 
-  for (const auto& other_file : fileset)
-    dep_out_ << " " << FilePathToUTF8(other_file);
+  const base::FilePath build_path =
+      build_settings_->build_dir().Resolve(build_settings_->root_path());
+  for (const auto& other_file : fileset) {
+    const base::FilePath file = MakeRelativeFilePath(build_path, other_file);
+    dep_out_ << " " << FilePathToUTF8(file.NormalizePathSeparatorsTo('/'));
+  }
 
   out_ << std::endl;
 }
