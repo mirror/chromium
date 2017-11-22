@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e43c3b22_c22ea6ca",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T07:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1e9cb6_8cea93f2",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "1e43848f2a8b46d4f0caab3648d368ded4ddb052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82a300e_2d0c037e",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
         "patchSetId": 15
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-22T07:23:27Z",
       "side": 1,
       "message": "nit: does EXPECT_EQ work here?",
+      "revId": "1e43848f2a8b46d4f0caab3648d368ded4ddb052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c426b6b6_0f0fa72d",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T07:44:03Z",
+      "side": 1,
+      "message": "Unfortunately it doesn\u0027t. :( According to this guideline (https://cs.chromium.org/chromium/src/third_party/googletest/src/googletest/include/gtest/gtest.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1892), it seems we should use EXPECT_TRUE to compare two objects.",
+      "parentUuid": "f82a300e_2d0c037e",
       "revId": "1e43848f2a8b46d4f0caab3648d368ded4ddb052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "1e43848f2a8b46d4f0caab3648d368ded4ddb052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d3e5ab_1ec21a9a",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-22T07:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e41150a_7c554f0a",
+      "range": {
+        "startLine": 120,
+        "startChar": 32,
+        "endLine": 120,
+        "endChar": 54
+      },
+      "revId": "1e43848f2a8b46d4f0caab3648d368ded4ddb052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
