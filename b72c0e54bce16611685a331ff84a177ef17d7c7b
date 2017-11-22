@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10f4db47_bd01ef46",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-22T12:08:07Z",
+      "side": 0,
+      "message": "Turns out this was already happening, it was just hard to see since half the logic was in ThumbnailingContext.",
+      "range": {
+        "startLine": 194,
+        "startChar": 59,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "b72c0e54bce16611685a331ff84a177ef17d7c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
