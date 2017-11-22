@@ -124,6 +124,10 @@ class AppBannerManager : public content::WebContentsObserver,
   // Sends a message to the renderer that the user dismissed the banner.
   void SendBannerDismissed();
 
+  // Sends a beforeinstallprompt event, if features::kExperimentalAppBanners is
+  // enabled.
+  void Reprompt();
+
   // Returns a WeakPtr to this object. Exposed so subclasses/infobars may
   // may bind callbacks without needing their own WeakPtrFactory.
   base::WeakPtr<AppBannerManager> GetWeakPtr();

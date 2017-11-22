@@ -71,8 +71,10 @@ void AppBannerInfoBarDelegateDesktop::InfoBarDismissed() {
   content::WebContents* web_contents =
       InfoBarService::WebContentsFromInfoBar(infobar());
   if (web_contents) {
-    if (weak_manager_)
+    if (weak_manager_) {
       weak_manager_->SendBannerDismissed();
+      weak_manager_->Reprompt();
+    }
 
     AppBannerSettingsHelper::RecordBannerDismissEvent(
         web_contents, manifest_.start_url.spec(), AppBannerSettingsHelper::WEB);

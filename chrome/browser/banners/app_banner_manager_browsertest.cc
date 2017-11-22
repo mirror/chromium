@@ -683,9 +683,10 @@ IN_PROC_BROWSER_TEST_F(AppBannerManagerBrowserTest,
                     true /* expected_will_show */, State::COMPLETE);
 
   // Dismiss the banner.
+  manager->SendBannerDismissed();
   base::RunLoop run_loop;
   manager->PrepareBannerPromptReply(run_loop.QuitClosure());
-  manager->SendBannerDismissed();
+  manager->Reprompt();
   // Wait for OnBannerPromptReply event.
   run_loop.Run();
 
