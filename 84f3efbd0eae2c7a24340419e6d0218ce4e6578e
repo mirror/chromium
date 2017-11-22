@@ -93,6 +93,30 @@
       "revId": "84f3efbd0eae2c7a24340419e6d0218ce4e6578e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4646d5_b9e5bc9c",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-22T11:07:22Z",
+      "side": 1,
+      "message": "I think that\u0027s our \"pass a pointer for mutation\" convention.",
+      "parentUuid": "67e52e44_72aec549",
+      "range": {
+        "startLine": 389,
+        "startChar": 57,
+        "endLine": 389,
+        "endChar": 63
+      },
+      "revId": "84f3efbd0eae2c7a24340419e6d0218ce4e6578e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
