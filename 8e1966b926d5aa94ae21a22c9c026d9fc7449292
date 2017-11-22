@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "721122aa_dc0f9cde",
+        "filename": "content/common/web_preferences.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-22T07:02:08Z",
+      "side": 0,
+      "message": "Would it be a leftover?",
+      "range": {
+        "startLine": 5,
+        "startChar": 26,
+        "endLine": 5,
+        "endChar": 41
+      },
+      "revId": "8e1966b926d5aa94ae21a22c9c026d9fc7449292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
