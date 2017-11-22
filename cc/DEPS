@@ -11,6 +11,7 @@ include_rules = [
   "+gpu/command_buffer/common/gpu_memory_allocation.h",
   "+gpu/command_buffer/common/mailbox.h",
   "+gpu/command_buffer/common/mailbox_holder.h",
+  "+gpu/command_buffer/client/raster_interface.h",
   "+gpu/command_buffer/common/sync_token.h",
   "+gpu/command_buffer/common/texture_in_use_response.h",
   "+gpu/config/gpu_feature_info.h",
@@ -27,7 +28,7 @@ include_rules = [
   "+ui/gl",
   "-cc/blink",
 ]
-  
+
 specific_include_rules = {
   "in_process_context_provider\.cc": [
     "+gpu/command_buffer/client",

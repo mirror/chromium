@@ -84,6 +84,11 @@ gpu::gles2::GLES2Interface* InProcessContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
+gpu::raster::RasterInterface* InProcessContextProvider::RasterContext() {
+  NOTREACHED();
+  return nullptr;
+}
+
 gpu::ContextSupport* InProcessContextProvider::ContextSupport() {
   return context_->GetImplementation();
 }
