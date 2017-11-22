@@ -13,7 +13,7 @@
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_types.h"
-#include "mojo/public/cpp/bindings/associated_binding_set.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding_set.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -31,14 +31,14 @@ class ServiceWorkerVersion;
 // Has a reference to the corresponding ServiceWorkerRegistration in order to
 // ensure that the registration is alive while this object host is around.
 class CONTENT_EXPORT ServiceWorkerRegistrationObjectHost
-    : public blink::mojom::ServiceWorkerRegistrationObjectHost,
+    : public base::RefCounted<ServiceWorkerRegistrationObjectHost>,
+      public blink::mojom::ServiceWorkerRegistrationObjectHost,
       public ServiceWorkerRegistration::Listener {
  public:
   ServiceWorkerRegistrationObjectHost(
       base::WeakPtr<ServiceWorkerContextCore> context,
-      ServiceWorkerProviderHost* provider_host,
+      base::WeakPtr<ServiceWorkerProviderHost> provider_host,
       scoped_refptr<ServiceWorkerRegistration> registration);
-  ~ServiceWorkerRegistrationObjectHost() override;
 
   // Establishes a new mojo connection into |bindings_|.
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr CreateObjectInfo();
@@ -46,6 +46,15 @@ class CONTENT_EXPORT ServiceWorkerRegistrationObjectHost
   ServiceWorkerRegistration* registration() { return registration_.get(); }
 
  private:
+  class Receiver;
+  friend class Receiver;
+  friend class base::RefCounted<ServiceWorkerRegistrationObjectHost>;
+  FRIEND_TEST_ALL_PREFIXES(BackgroundSyncManagerTest,
+                           RegisterWithoutLiveSWRegistration);
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerJobTest, RegisterDuplicateScript);
+
+  ~ServiceWorkerRegistrationObjectHost() override;
+
   // ServiceWorkerRegistration::Listener overrides.
   void OnVersionAttributesChanged(
       ServiceWorkerRegistration* registration,
@@ -95,8 +104,6 @@ class CONTENT_EXPORT ServiceWorkerRegistrationObjectHost
                             ServiceWorkerVersion* waiting_version,
                             ServiceWorkerVersion* active_version);
 
-  void OnConnectionError();
-
   // Perform common checks that need to run before RegistrationObjectHost
   // methods that come from a child process are handled. Returns true if all
   // checks have passed. If anything looks wrong |callback| will run with an
@@ -106,11 +113,10 @@ class CONTENT_EXPORT ServiceWorkerRegistrationObjectHost
                                              const char* error_prefix,
                                              Args... args);
 
-  // |provider_host_| is valid throughout lifetime of |this| because it owns
-  // |this|.
-  ServiceWorkerProviderHost* provider_host_;
+  base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
   base::WeakPtr<ServiceWorkerContextCore> context_;
-  mojo::AssociatedBindingSet<blink::mojom::ServiceWorkerRegistrationObjectHost>
+  mojo::StrongAssociatedBindingSet<
+      blink::mojom::ServiceWorkerRegistrationObjectHost>
       bindings_;
   // Mojo connection to the content::WebServiceWorkerRegistrationImpl in the
   // renderer, which corresponds to the ServiceWorkerRegistration JavaScript

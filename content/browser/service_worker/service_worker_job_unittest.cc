@@ -410,9 +410,9 @@ TEST_F(ServiceWorkerJobTest, Unregister) {
   // Clear all service worker handles.
   dispatcher_host->Clear();
   EXPECT_EQ(0UL, dispatcher_host->handles().size());
-  // The service worker registration object host has been destroyed together
-  // with |provider_host| by the above unregistration. Then the only reference
-  // to the registration should be |registration|.
+  // The service worker registration object host has been destroyed by the above
+  // unregistration. Then the only reference to the registration should be
+  // |registration|.
   EXPECT_TRUE(registration->HasOneRef());
 
   registration = FindRegistrationForPattern(pattern,
@@ -481,10 +481,12 @@ TEST_F(ServiceWorkerJobTest, RegisterDuplicateScript) {
 
   // Clear all service worker handles.
   dispatcher_host->Clear();
-  // Ensure that the registration's object host doesn't have the reference.
+  // Stop the running worker to release reference to the registration's object
+  // host.
   EXPECT_EQ(1UL, provider_host->registration_object_hosts_.size());
-  provider_host->registration_object_hosts_.clear();
-  EXPECT_EQ(0UL, provider_host->registration_object_hosts_.size());
+  old_registration->active_version()->StopWorker(
+      base::BindOnce(&base::DoNothing));
+  base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(old_registration->HasOneRef());
 
   scoped_refptr<ServiceWorkerRegistration> old_registration_by_pattern =
