@@ -27,6 +27,7 @@
 #include "content/public/common/simple_connection_filter.h"
 #include "content/public/utility/utility_thread.h"
 #include "extensions/features/features.h"
+#include "extensions/utility/utility_handler.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "printing/features/features.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
@@ -84,6 +85,9 @@
 #include "components/printing/service/public/cpp/pdf_compositor_service_factory.h"  // nogncheck
 #include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"  // nogncheck
 #endif
+
+#include "chrome/services/removable_storage_writer/public/interfaces/constants.mojom.h"
+#include "chrome/services/removable_storage_writer/removable_storage_writer_service.h"
 
 namespace {
 
@@ -156,8 +160,6 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
 
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  extensions::ExposeInterfacesToBrowser(registry.get(),
-                                        utility_process_running_elevated_);
   extensions::utility_handler::ExposeInterfacesToBrowser(
       registry.get(), utility_process_running_elevated_);
 #endif
@@ -259,6 +261,14 @@ void ChromeContentUtilityClient::RegisterServices(
     service_manager::EmbeddedServiceInfo service_info;
     service_info.factory = base::Bind(&patch::PatchService::CreateService);
     services->emplace(patch::mojom::kServiceName, service_info);
+  }
+
+  {
+    service_manager::EmbeddedServiceInfo service_info;
+    service_info.factory =
+        base::Bind(&chrome::RemovableStorageWriterService::CreateService);
+    services->emplace(chrome::mojom::kRemovableStorageWriterServiceName,
+                      service_info);
   }
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
