@@ -34,6 +34,24 @@
       "revId": "d2aeacee4f306c9eac766d4e5b5afa280d2ed864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed7a22c_f6725760",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/filter-matches.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-22T22:28:13Z",
+      "side": 1,
+      "message": "You could also just inline that piece of code and make the properties of the device you are testing really clear.\n\nbluetooth_test(navigator.bluetooth.test.simulateCentral({state: \u0027powered-on\u0027})\n  .then(fake_central \u003d\u003e fake_central.simulatePreconnectedPeripheral({\n      address: \u002709:09:09:09:09:09\u0027,\n      name: \u0027Health Thermometer\u0027,\n      knownServiceUUIDs: [\u0027generic_access\u0027, \u0027health_thermometer\u0027],\n  }))\n  // ...",
+      "parentUuid": "0c51d8b9_e0e71cb8",
+      "revId": "d2aeacee4f306c9eac766d4e5b5afa280d2ed864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
