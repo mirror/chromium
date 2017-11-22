@@ -61,6 +61,7 @@ FakeSessionManagerClient::FakeSessionManagerClient()
       notify_lock_screen_shown_call_count_(0),
       notify_lock_screen_dismissed_call_count_(0),
       arc_available_(false),
+      arc_start_time_(base::TimeTicks::Now()),
       weak_ptr_factory_(this) {}
 
 FakeSessionManagerClient::~FakeSessionManagerClient() {
@@ -335,10 +336,10 @@ void FakeSessionManagerClient::EmitArcBooted(
 void FakeSessionManagerClient::GetArcStartTime(
     DBusMethodCallback<base::TimeTicks> callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback),
-                                arc_available_ ? base::make_optional(
-                                                     base::TimeTicks::Now())
-                                               : base::nullopt));
+      FROM_HERE,
+      base::BindOnce(std::move(callback),
+                     arc_available_ ? base::make_optional(arc_start_time_)
+                                    : base::nullopt));
 }
 
 void FakeSessionManagerClient::RemoveArcData(
