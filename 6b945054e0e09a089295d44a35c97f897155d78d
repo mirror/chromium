@@ -187,6 +187,30 @@
       "revId": "6b945054e0e09a089295d44a35c97f897155d78d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f0f0a17_8acd6ecb",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3012,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "Can we remove this string and use R.string.ok (from components/components_strings.grd) instead?",
+      "parentUuid": "ce275165_427d6b0b",
+      "range": {
+        "startLine": 3012,
+        "startChar": 131,
+        "endLine": 3012,
+        "endChar": 137
+      },
+      "revId": "6b945054e0e09a089295d44a35c97f897155d78d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

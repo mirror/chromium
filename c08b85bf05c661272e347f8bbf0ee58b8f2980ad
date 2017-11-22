@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c0d9c65_0b168392",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "This file should be called WebappOfflineDialog not WebAppOflineDialog for the sake of consistency",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e3552e_18950531",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "Nit: Remove the new line",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972f82d8_f95cf071",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebAppOfflineDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "If we change R.string.webapp_offline_dialog_quit_button to R.ok, we should change\nsetNegativeButton() to setPositiveButton()",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b37600_b1573d22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "Can we null out |mOriginVerifier| here so that it can be garbage collected?",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6af81c_21ba75f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "Can this be inlined into the WebappActivity constructor",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad2db33_02ea1ab8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappBrowserControlsDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "Can you add a parameter twaVerificationFailed to shouldShowBrowserControls() as shouldShowBrowserControls() is not private.\n\nThe parameter would contain the result of this logic",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d9f38f_2d1f9fa6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "Should this information be passed to showSplashScreen() ?\n\nAt the time that the WebappSplashScreenController is created, the WebappInfo has dummy data and calling WebappActivity#getActivityType() causes a crashes",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18133b5_113a61d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T19:23:21Z",
+      "side": 1,
+      "message": "Can we show the dialog for webapps too? I am ok if this is done in a separate CL. Showing the offline dialog does not hurt and gives us less code paths",
+      "revId": "c08b85bf05c661272e347f8bbf0ee58b8f2980ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
