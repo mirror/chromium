@@ -21,6 +21,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.test.ScreenShooter;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.ui.test.util.UiRestriction;
 
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class ExampleUiCaptureTest {
     @Before
     public void setUp() throws InterruptedException {
         mActivityTestRule.startMainActivityFromLauncher();
+        mActivityTestRule.waitForActivityVisible();
     }
 
     /**
@@ -56,7 +58,16 @@ public class ExampleUiCaptureTest {
     @ScreenShooter.Directory("TabSwitcher")
     public void testCaptureTabSwitcher() throws IOException, InterruptedException {
         mScreenShooter.shoot("NTP");
-        Espresso.onView(ViewMatchers.withId(R.id.tab_switcher_button)).perform(ViewActions.click());
+        CriteriaHelper.pollInstrumentationThread(() -> {
+            try {
+                Espresso.onView(ViewMatchers.withId(R.id.tab_switcher_button))
+                        .perform(ViewActions.click());
+            } catch (android.support.test.espresso.NoMatchingViewException
+                    | android.support.test.espresso.PerformException e) {
+                return false;
+            }
+            return true;
+        });
         mScreenShooter.shoot("Tab switcher");
     }
 }

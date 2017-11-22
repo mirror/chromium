@@ -51,7 +51,7 @@ std::unique_ptr<KeyedService> TemplateURLServiceFactory::BuildInstanceFor(
 #endif
   Profile* profile = static_cast<Profile*>(context);
   return base::MakeUnique<TemplateURLService>(
-      profile->GetPrefs(),
+      profile->GetPrefs(), profile->GetPolicy(),
       std::unique_ptr<SearchTermsData>(new UIThreadSearchTermsData(profile)),
       WebDataServiceFactory::GetKeywordWebDataForProfile(
           profile, ServiceAccessType::EXPLICIT_ACCESS),

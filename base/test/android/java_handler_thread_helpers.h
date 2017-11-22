@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/android/scoped_java_ref.h"
+#include "base/callback.h"
 
 namespace base {
 
@@ -30,6 +31,11 @@ class JavaHandlerThreadHelpers {
 
   static bool IsExceptionTestException(
       ScopedJavaLocalRef<jthrowable> exception);
+
+  static void SetOnJavaTaskRunCallback(
+      const RepeatingCallback<void(bool)>& callback);
+
+  static void PostJavaTask();
 
  private:
   JavaHandlerThreadHelpers() = default;

@@ -353,6 +353,10 @@ PrefService* OffTheRecordProfileImpl::GetOffTheRecordPrefs() {
   return prefs_.get();
 }
 
+policy::PolicyService* OffTheRecordProfileImpl::GetPolicy() {
+  return nullptr;
+}
+
 DownloadManagerDelegate* OffTheRecordProfileImpl::GetDownloadManagerDelegate() {
   return DownloadCoreServiceFactory::GetForBrowserContext(this)
       ->GetDownloadManagerDelegate();

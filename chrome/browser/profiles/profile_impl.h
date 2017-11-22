@@ -50,6 +50,7 @@ class DomainReliabilityMonitor;
 
 namespace policy {
 class ConfigurationPolicyProvider;
+class PolicyService;
 class ProfilePolicyConnector;
 class SchemaRegistryService;
 }
@@ -126,6 +127,7 @@ class ProfileImpl : public Profile {
   ExtensionSpecialStoragePolicy* GetExtensionSpecialStoragePolicy() override;
   PrefService* GetPrefs() override;
   const PrefService* GetPrefs() const override;
+  policy::PolicyService* GetPolicy() override;
 #if !defined(OS_ANDROID)
   ChromeZoomLevelPrefs* GetZoomLevelPrefs() override;
 #endif
