@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b1b2f7a_05cb0557",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T01:18:29Z",
+      "side": 1,
+      "message": "I preferred else-if. It made it clear that the condition excludes previous conditions without a need to read any surrounding code.",
+      "range": {
+        "startLine": 529,
+        "startChar": 2,
+        "endLine": 529,
+        "endChar": 30
+      },
+      "revId": "d058bd7d8f4f4316732130f61ac5d67541e4d648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a26366_949daeaa",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-22T01:18:29Z",
+      "side": 1,
+      "message": "I\u0027m not that sure if this code style is more readable. If missed the \"return\", the reader may think the code is shared. I think explicit else, even if redundant, by indentation makes the decision logic easier to understand. At least in this case, the former code looked cleaner to me.\n\nI don\u0027t have strong feelings, but I\u0027m not sure whether this change (at least in this file) has any value.",
+      "range": {
+        "startLine": 839,
+        "startChar": 2,
+        "endLine": 840,
+        "endChar": 6
+      },
+      "revId": "d058bd7d8f4f4316732130f61ac5d67541e4d648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
