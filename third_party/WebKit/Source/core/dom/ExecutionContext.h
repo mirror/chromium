@@ -30,6 +30,7 @@
 
 #include <memory>
 
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleNotifier.h"
 #include "core/dom/ContextLifecycleObserver.h"
@@ -73,7 +74,6 @@ enum class SecureContextMode { kInsecureContext, kSecureContext };
 
 class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
                                      public Supplementable<ExecutionContext> {
-  WTF_MAKE_NONCOPYABLE(ExecutionContext);
   MERGE_GARBAGE_COLLECTED_MIXINS();
 
  public:
@@ -227,6 +227,7 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   int window_interaction_tokens_;
 
   ReferrerPolicy referrer_policy_;
+  DISALLOW_COPY_AND_ASSIGN(ExecutionContext);
 };
 
 }  // namespace blink

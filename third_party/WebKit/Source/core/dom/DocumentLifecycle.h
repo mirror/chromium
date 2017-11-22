@@ -31,6 +31,7 @@
 #ifndef DocumentLifecycle_h
 #define DocumentLifecycle_h
 
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
@@ -44,7 +45,6 @@ namespace blink {
 
 class CORE_EXPORT DocumentLifecycle {
   DISALLOW_NEW();
-  WTF_MAKE_NONCOPYABLE(DocumentLifecycle);
 
  public:
   enum LifecycleState {
@@ -90,7 +90,6 @@ class CORE_EXPORT DocumentLifecycle {
 
   class Scope {
     STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(Scope);
 
    public:
     Scope(DocumentLifecycle&, LifecycleState final_state);
@@ -99,11 +98,11 @@ class CORE_EXPORT DocumentLifecycle {
    private:
     DocumentLifecycle& lifecycle_;
     LifecycleState final_state_;
+    DISALLOW_COPY_AND_ASSIGN(Scope);
   };
 
   class DeprecatedTransition {
     DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(DeprecatedTransition);
 
    public:
     DeprecatedTransition(LifecycleState from, LifecycleState to);
@@ -116,13 +115,13 @@ class CORE_EXPORT DocumentLifecycle {
     DeprecatedTransition* previous_;
     LifecycleState from_;
     LifecycleState to_;
+    DISALLOW_COPY_AND_ASSIGN(DeprecatedTransition);
   };
 
   // Within this scope, state transitions are not allowed.
   // Any attempts to advance or rewind will result in a DCHECK.
   class DisallowTransitionScope {
     STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(DisallowTransitionScope);
 
    public:
     explicit DisallowTransitionScope(DocumentLifecycle& document_lifecycle)
@@ -136,11 +135,11 @@ class CORE_EXPORT DocumentLifecycle {
 
    private:
     DocumentLifecycle& document_lifecycle_;
+    DISALLOW_COPY_AND_ASSIGN(DisallowTransitionScope);
   };
 
   class DetachScope {
     STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(DetachScope);
 
    public:
     explicit DetachScope(DocumentLifecycle& document_lifecycle)
@@ -152,6 +151,7 @@ class CORE_EXPORT DocumentLifecycle {
 
    private:
     DocumentLifecycle& document_lifecycle_;
+    DISALLOW_COPY_AND_ASSIGN(DetachScope);
   };
 
   // Throttling is disabled by default. Instantiating this class allows
@@ -160,16 +160,15 @@ class CORE_EXPORT DocumentLifecycle {
   // perform a synchronous layout if necessary.
   class CORE_EXPORT AllowThrottlingScope {
     STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(AllowThrottlingScope);
 
    public:
     AllowThrottlingScope(DocumentLifecycle&);
     ~AllowThrottlingScope();
+    DISALLOW_COPY_AND_ASSIGN(AllowThrottlingScope);
   };
 
   class CORE_EXPORT DisallowThrottlingScope {
     STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(DisallowThrottlingScope);
 
    public:
     DisallowThrottlingScope(DocumentLifecycle&);
@@ -177,6 +176,7 @@ class CORE_EXPORT DocumentLifecycle {
 
    private:
     int saved_count_;
+    DISALLOW_COPY_AND_ASSIGN(DisallowThrottlingScope);
   };
 
   DocumentLifecycle();
@@ -222,6 +222,7 @@ class CORE_EXPORT DocumentLifecycle {
   LifecycleState state_;
   int detach_count_;
   int disallow_transition_count_;
+  DISALLOW_COPY_AND_ASSIGN(DocumentLifecycle);
 };
 
 inline bool DocumentLifecycle::StateAllowsTreeMutations() const {

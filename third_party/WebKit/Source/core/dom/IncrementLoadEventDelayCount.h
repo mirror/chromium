@@ -6,6 +6,8 @@
 #define IncrementLoadEventDelayCount_h
 
 #include <memory>
+
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
@@ -19,7 +21,6 @@ class Document;
 // contruction and decrement it on destruction (semantics similar to RefPtr).
 class CORE_EXPORT IncrementLoadEventDelayCount {
   USING_FAST_MALLOC(IncrementLoadEventDelayCount);
-  WTF_MAKE_NONCOPYABLE(IncrementLoadEventDelayCount);
 
  public:
   static std::unique_ptr<IncrementLoadEventDelayCount> Create(Document&);
@@ -38,6 +39,7 @@ class CORE_EXPORT IncrementLoadEventDelayCount {
  private:
   IncrementLoadEventDelayCount(Document&);
   WeakPersistent<Document> document_;
+  DISALLOW_COPY_AND_ASSIGN(IncrementLoadEventDelayCount);
 };
 }  // namespace blink
 
