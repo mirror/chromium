@@ -45,6 +45,30 @@
       "revId": "1469a2e09ac7d8a7bd8d493a1623f964f862088a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a875c2_107aef74",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-22T22:56:25Z",
+      "side": 1,
+      "message": "Recapping some out-of-band discussion:\n\nThis is how I want to fix the linked bug: https://crrev.com/c/786612\n\nHowever, the tests are screwed up.  In HTTP/2, a header name on the wire is never allowed to have a \\0 byte in it.  (One of the reasons is that presumably we can get better hit rate in the dynamic table if we split up headers, just like we do with cookies.) And I believe that in production Chrome never does it.  However, AppendToHeaderBlock() in spdy_test_util_common.cc does this weird thing.  It joins values of repeated headers with identical names, just like it should.  Except it uses \\0 separator for all headers, including cookies.  Then HpackEncoder splits up headers, but it only looks at semicolon as a separator for cookies, and looks for \\0 for every other header.  https://cs.chromium.org/chromium/src/net/spdy/core/hpack/hpack_encoder.cc?q\u003dhpackencoder\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d94 calls CookieToCrumbs() for cookies, DecomposeRepresentation() for other headers.  CookieToCrumbs() only looks for ; as a separator, DecodeRepresentation() only looks for \\0.  So when AppendToHeaderBlock() prepares a header with multiple cookies, HpackEncoder will preserve the \\0 in the header value and send it down the wire.  That is completely wrong, and in my other CL, which enforces this in HeaderCoalescer, the test fails.  So this is the motivation.\n\nAlmost all change here is just cleanup/tidying up/changing the test to my taste.  And adding an extra test case to highlight the difference.  The only expectation change is \"val1\\0val2\" to \"val1; val2\".",
+      "parentUuid": "c25a34eb_56dee77e",
+      "range": {
+        "startLine": 3143,
+        "startChar": 14,
+        "endLine": 3143,
+        "endChar": 35
+      },
+      "revId": "1469a2e09ac7d8a7bd8d493a1623f964f862088a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
