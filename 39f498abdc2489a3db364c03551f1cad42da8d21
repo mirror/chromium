@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec145402_522528fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-22T18:29:55Z",
+      "side": 1,
+      "message": "nit: this sentence is kinda misleading, as we discussed.  Maybe explain instead how the xml properties of a node get mapped to dictionary values, as well as what other representational trick is used to provide the children array/firstChild/nextSibling etc.",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dd5307_18f241e8",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-22T18:29:55Z",
+      "side": 1,
+      "message": "nit: I didn\u0027t see where id\u003dk123 occurred in your output.  Also maybe show multiple attributes for a node, \u003cbook id\u003d\"123\" price\u003d\"40.95\"\u003e",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd289b4c_a2379b45",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-22T18:29:55Z",
+      "side": 1,
+      "message": "Are we sure we\u0027re happy with this representation?  Are all nodes tags?  I guess I was expecting to have something like a type attribute to distinguish text nodes, CDATA, etc from other XML types.\n\nIn particular, if this were someday the sole mechanism to parse XML in the browser for all uses of XML in the browser, what other mechanisms would we need to provide?",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d504ba_083f07d9",
+        "filename": "services/data_decoder/public/interfaces/xml_parser.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-22T18:29:55Z",
+      "side": 1,
+      "message": "nit: I didn\u0027t see where this came from in the input.",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "39f498abdc2489a3db364c03551f1cad42da8d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
