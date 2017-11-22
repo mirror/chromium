@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af90fedc_b4de9e53",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-22T05:32:37Z",
+      "side": 1,
+      "message": "# A bit more note for fallback logic about its motivation.\nThen, we can land Android side change and Chrome side change without waiting chrome roll,\nbecause both support both versions.\nAfter some period, we can remove InitDeprecated() freely, too.",
+      "parentUuid": "06e99736_e9e6ec6f",
+      "revId": "6f94288cf84a1ccd40f161c882420566a4f3797b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fb268e7_8bb6ee9e",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 1
