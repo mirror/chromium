@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3caaa2c9_6154b8f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-22T11:00:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43c7b986_e4b48c4a",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "fcfc1b924e7ee9c47f43d2b4bad2cbae2eddf3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91c547d4_f863f560",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a5ce9461_3d4346eb",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-22T11:00:57Z",
+      "side": 1,
+      "message": "You can have multiple AdapterRefs referencing the same adapter, so equality check in that sense doesn\u0027t help. It\u0027s about not having two AdapterRefs with the same webrtc_track(), but this getter has a thread DCHECK in it (that it shouldn\u0027t have but there\u0027s that EnsureInitialized logic there), and it\u0027s not worth fixing this for the sake of a DCHECK. A webrtc stream never contains duplicates, that would be madness.",
+      "parentUuid": "91c547d4_f863f560",
+      "range": {
+        "startLine": 246,
+        "startChar": 5,
+        "endLine": 246,
+        "endChar": 6
+      },
+      "revId": "fcfc1b924e7ee9c47f43d2b4bad2cbae2eddf3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c112bf0_3cf30343",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "fcfc1b924e7ee9c47f43d2b4bad2cbae2eddf3f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce304679_2f3fda9f",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-22T11:00:57Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "2c112bf0_3cf30343",
+      "range": {
+        "startLine": 319,
+        "startChar": 22,
+        "endLine": 319,
+        "endChar": 24
+      },
+      "revId": "fcfc1b924e7ee9c47f43d2b4bad2cbae2eddf3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
