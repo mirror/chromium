@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a016eb6_420ee9d7",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:43:04Z",
+      "side": 1,
+      "message": "`\u003d default;`",
+      "revId": "e13890766f500e9bcc094ab75eb65c590f736c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267fca6c_aad82820",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:43:04Z",
+      "side": 1,
+      "message": "Maybe move this to the first line to avoid crashes (or random behvaviour) if the caller didn\u0027t initialise `out_found`.",
+      "revId": "e13890766f500e9bcc094ab75eb65c590f736c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fc1b84_ef931380",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:43:04Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this be 8 all the time? Does that mean we could compute `huffman_tree_size_` as `message.huffman_tree_size() * sizeof(uint8_t)`.",
+      "range": {
+        "startLine": 328,
+        "startChar": 26,
+        "endLine": 328,
+        "endChar": 41
+      },
+      "revId": "e13890766f500e9bcc094ab75eb65c590f736c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2e4777_6629e815",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:43:04Z",
+      "side": 1,
+      "message": "My understanding is that this call is useful in case of the vector ended up with allocated size X but we only need Y (Y\u003cX). That makes me realise that here, we might be requiring multiple allocation which isn\u0027t a very efficient strategy. Would it make sense instead to put the size as part of the proto so we could allocate the vector to the correct size immediately? (I see that the proto has `huffman_tree_size()` so maybe this could be used?)",
+      "revId": "e13890766f500e9bcc094ab75eb65c590f736c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb35339a_1f06cfa3",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:43:04Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "e13890766f500e9bcc094ab75eb65c590f736c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8339280_c12f8f52",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:43:04Z",
+      "side": 1,
+      "message": "Maybe worth explaining why this isn\u0027t equal to `huffman_tree_.size()`?",
+      "revId": "e13890766f500e9bcc094ab75eb65c590f736c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94d6fba_170bc885",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:43:04Z",
+      "side": 1,
+      "message": "Could we use basic unit test instead? It could make the tests quite faster.",
+      "revId": "e13890766f500e9bcc094ab75eb65c590f736c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ed3ed2_cfc049b6",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-22T14:43:04Z",
+      "side": 1,
+      "message": "Probably ASSERT_TRUE() as failing this would lead to failing everything else. Same for the tests below.",
+      "revId": "e13890766f500e9bcc094ab75eb65c590f736c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
