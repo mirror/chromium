@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61566b39_c5e8846b",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Why add these DCHECKs to OnAddPeerConnection/OnRemovePeerConnection but not to other methods such as OnUpdatePeerConnection/OnAddStats/OnGetUserMedia?\nIt seems to me that either all of them or none of them should have it",
+      "range": {
+        "startLine": 76,
+        "startChar": 21,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03aa3aef_ceee3283",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "explicit not required here",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43006884_146d2255",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "remove \"for\"",
+      "range": {
+        "startLine": 74,
+        "startChar": 48,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13471b6c_a43e4f66",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Rephrase this",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 9
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69d3a2a_fa450092",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Should you instead try to handle this error, like you do for other errors below?\nCHECKs on the browser process are strongly discouraged.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 7
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c59b42_3e06971d",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Give a little more detail about what the issue is? Otherwise just remove the TODO.",
+      "range": {
+        "startLine": 183,
+        "startChar": 28,
+        "endLine": 183,
+        "endChar": 33
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d975ad_00e1f5e1",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Remove \"In this CL\". The code once landed is not a CL. If you have comments about the CL, put them in the CL\u0027s description. \nIf you have a TODO, just state what needs to be done and reference a crbug for more details.",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f690cf27_05fae119",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "nit: Start -\u003e Starts",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6383dd29_ac47f775",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Rephrase as a TODO (in imperative).\nTODO(eladalon): Remove WebRtcEventLogHostTest and this friend declaration. http://crbug.com/775415",
+      "range": {
+        "startLine": 74,
+        "startChar": 21,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d59596_f32099de",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "nit: unit-tests -\u003e unit tests \n(in both cases)",
+      "range": {
+        "startLine": 130,
+        "startChar": 13,
+        "endLine": 130,
+        "endChar": 14
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d08cdd_abd957c5",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Again, rephrase as a TODO.",
+      "range": {
+        "startLine": 138,
+        "startChar": 24,
+        "endLine": 138,
+        "endChar": 32
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8910b646_0c0b2493",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Remove the whole \"We could have had...\" sentence.",
+      "range": {
+        "startLine": 146,
+        "startChar": 5,
+        "endLine": 146,
+        "endChar": 9
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06db2309_88a988b9",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "This is not a TODO.\nAlso, the comment is not very clear. It seems to beabout a hypothetical.\nRewrite it or remove it.",
+      "range": {
+        "startLine": 552,
+        "startChar": 9,
+        "endLine": 552,
+        "endChar": 10
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61710e72_3a11f411",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "typo: peerconnection -\u003e  peer connection",
+      "range": {
+        "startLine": 21,
+        "startChar": 59,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd5cc14_3e29a90f",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Rephrase as\nTODO(): Move the definition of XXX to YYY. http://crbug.com/ZZZ",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1307ccaa_bd1ffd0b",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "What comment about the return value? What needs to be done?",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876d337d_1f30dbcb",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Rephrase as a TODO",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bd0eb2_470b66ea",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Move the TODO() to the last sentence and rehprase as\n\nTODO(): Remove XXX tests. crbug ref.",
+      "range": {
+        "startLine": 35,
+        "startChar": 19,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e54360a_135a2335",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-22T10:43:54Z",
+      "side": 1,
+      "message": "Rephrase as\nTODO(): Remove OnStartEventLogFile() and rename OnStartEventLogOutput() to OnStartEventLog(). crbug ref",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 31
+      },
+      "revId": "2209c80032bab240fdb1cc1bda31beaae8f0f3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
