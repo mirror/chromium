@@ -7,6 +7,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "google_apis/gaia/gaia_urls.h"
+#include "net/base/url_util.h"
 
 namespace signin_util {
 namespace {
@@ -40,6 +42,13 @@ void SetForceSigninForTesting(bool enable) {
 
 void ResetForceSigninForTesting() {
   g_is_force_signin_enabled_cache = NOT_CACHED;
+}
+
+GURL GetGaiaAddAccountUrlForDice() {
+  // Pass www.gooogle.com as the continue URL as otherwise Gaia navigates to
+  // myaccount which may be very confusing for the user.
+  return net::AppendQueryParameter(GaiaUrls::GetInstance()->add_account_url(),
+                                   "continue", "https://www.google.com");
 }
 
 }  // namespace signin_util
