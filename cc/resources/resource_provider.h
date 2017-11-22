@@ -36,6 +36,7 @@
 #include "components/viz/common/resources/resource_id.h"
 #include "components/viz/common/resources/resource_settings.h"
 #include "components/viz/common/resources/resource_texture_hint.h"
+#include "components/viz/common/resources/resource_texture_settings.h"
 #include "components/viz/common/resources/resource_type.h"
 #include "components/viz/common/resources/single_release_callback.h"
 #include "components/viz/common/resources/transferable_resource.h"
@@ -57,10 +58,10 @@ class GLES2Interface;
 
 namespace viz {
 class SharedBitmapManager;
+class TextureIdAllocator;
 }  // namespace viz
 
 namespace cc {
-class TextureIdAllocator;
 
 // This class provides abstractions for allocating and transferring resources
 // between modules/threads/processes. It abstracts away GL textures vs
@@ -158,6 +159,8 @@ class CC_EXPORT ResourceProvider
                       const uint8_t* image,
                       const gfx::Size& image_size);
 
+  // Holds const settings for the ResourceProvider. Never changed after init.
+  viz::ResourceTextureSettings const settings_;
 
   // The following lock classes are part of the ResourceProvider API and are
   // needed to read and write the resource contents. The user must ensure
@@ -379,28 +382,6 @@ class CC_EXPORT ResourceProvider
   // Returns null if we do not have a viz::ContextProvider.
   gpu::gles2::GLES2Interface* ContextGL() const;
 
-  // Holds const settings for the ResourceProvider. Never changed after init.
-  struct Settings {
-    Settings(viz::ContextProvider* compositor_context_provider,
-             bool delegated_sync_points_needed,
-             const viz::ResourceSettings& resource_settings);
-
-    int max_texture_size = 0;
-    bool use_texture_storage = false;
-    bool use_texture_format_bgra = false;
-    bool use_texture_usage_hint = false;
-    bool use_texture_npot = false;
-    bool use_sync_query = false;
-    bool use_texture_storage_image = false;
-    viz::ResourceType default_resource_type = viz::ResourceType::kTexture;
-    viz::ResourceFormat yuv_resource_format = viz::LUMINANCE_8;
-    viz::ResourceFormat yuv_highbit_resource_format = viz::LUMINANCE_8;
-    viz::ResourceFormat best_texture_format = viz::RGBA_8888;
-    viz::ResourceFormat best_render_buffer_format = viz::RGBA_8888;
-    bool use_gpu_memory_buffer_resources = false;
-    bool delegated_sync_points_required = false;
-  } const settings_;
-
   ResourceMap resources_;
 
   // Keep track of whether deleted resources should be batched up or returned
@@ -437,7 +418,7 @@ class CC_EXPORT ResourceProvider
 
   bool IsGLContextLost() const;
 
-  std::unique_ptr<TextureIdAllocator> texture_id_allocator_;
+  std::unique_ptr<viz::TextureIdAllocator> texture_id_allocator_;
   viz::BufferToTextureTargetMap buffer_to_texture_target_map_;
 
   // A process-unique ID used for disambiguating memory dumps from different
