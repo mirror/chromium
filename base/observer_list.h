@@ -218,20 +218,17 @@ class ObserverList
   // Precondition: !HasObserver(obs)
   void AddObserver(ObserverType* obs) {
     DCHECK(obs);
-    if (HasObserver(obs)) {
-      NOTREACHED() << "Observers can only be added once!";
-      return;
-    }
+    DCHECK(!HasObserver(obs));
     observers_.push_back(obs);
   }
 
-  // Removes the given observer from this list. Does nothing if this observer is
-  // not in this list.
+  // Removes the given observer from this list.
+  //
+  // Precondition: HasObserver(obs)
   void RemoveObserver(const ObserverType* obs) {
     DCHECK(obs);
     const auto it = std::find(observers_.begin(), observers_.end(), obs);
-    if (it == observers_.end())
-      return;
+    DCHECK(it != observers_.end());
 
     DCHECK_GE(live_iterator_count_, 0);
     if (live_iterator_count_) {

@@ -61,10 +61,14 @@ class Disrupter : public Foo {
   ~Disrupter() override {}
 
   void Observe(int x) override {
-    if (remove_self_)
+    if (remove_self_) {
       list_->RemoveObserver(this);
-    if (doomed_)
+      remove_self_ = false;
+    }
+    if (doomed_) {
       list_->RemoveObserver(doomed_);
+      doomed_ = nullptr;
+    }
   }
 
   void SetDoomed(Foo* doomed) { doomed_ = doomed; }
@@ -232,7 +236,7 @@ TEST(ObserverListTest, BasicTest) {
     EXPECT_EQ(it3, it2);
   }
 
-  Adder a(1), b(-1), c(1), d(-1), e(-1);
+  Adder a(1), b(-1), c(1), d(-1);
   Disrupter evil(&observer_list, &c);
 
   observer_list.AddObserver(&a);
@@ -284,9 +288,6 @@ TEST(ObserverListTest, BasicTest) {
   observer_list.AddObserver(&c);
   observer_list.AddObserver(&d);
 
-  // Removing an observer not in the list should do nothing.
-  observer_list.RemoveObserver(&e);
-
   for (auto& observer : observer_list)
     observer.Observe(10);
 
@@ -294,7 +295,6 @@ TEST(ObserverListTest, BasicTest) {
   EXPECT_EQ(-20, b.total);
   EXPECT_EQ(0, c.total);
   EXPECT_EQ(-10, d.total);
-  EXPECT_EQ(0, e.total);
 }
 
 TEST(ObserverListTest, CompactsWhenNoActiveIterator) {
