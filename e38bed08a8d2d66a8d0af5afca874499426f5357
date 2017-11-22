@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a74e7b5_3d98bdde",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-22T22:06:26Z",
+      "side": 1,
+      "message": "It\u0027d be nice to keep this in the same place in the code as\nthe code that implements them (GetDocumentAttributeValue) so that\nif one is updated, the other is updated too.\n\nHow about if obj-\u003eGetDocumentAttributes() returns this list?",
+      "revId": "e38bed08a8d2d66a8d0af5afca874499426f5357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
