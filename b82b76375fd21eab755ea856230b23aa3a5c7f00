@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df8f8be5_a89df30d",
+        "filename": "content/browser/quota_dispatcher_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T05:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b96b9a12_4886cd1f",
+      "revId": "b82b76375fd21eab755ea856230b23aa3a5c7f00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ffeedad_c84dfe14",
         "filename": "content/renderer/quota_dispatcher.h",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "b82b76375fd21eab755ea856230b23aa3a5c7f00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aab36dd_09021c7e",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-22T05:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ffeedad_c84dfe14",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "b82b76375fd21eab755ea856230b23aa3a5c7f00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
