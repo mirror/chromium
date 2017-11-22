@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "db034b98_1643ecb5",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-22T15:55:40Z",
+      "side": 1,
+      "message": "I honestly don\u0027t know, though it appears to be used in many places.\n\nWasn\u0027t there already some code somewhere in SimpleCache to rename files using a random value as part of the name? Maybe we could use that?",
+      "parentUuid": "954f45d2_805e379d",
+      "range": {
+        "startLine": 145,
+        "startChar": 28,
+        "endLine": 145,
+        "endChar": 50
+      },
+      "revId": "d84c4540536ffb29225869cf36d1ecb16788edc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "889e4d9f_4d338e94",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 16
