@@ -996,7 +996,7 @@ class EVENTS_EXPORT ScrollEvent : public MouseEvent {
         finger_count_(model.finger_count_){
   }
 
-  // Used for tests.
+  // Used for tests and gesture recognizer.
   ScrollEvent(EventType type,
               const gfx::Point& location,
               base::TimeTicks time_stamp,

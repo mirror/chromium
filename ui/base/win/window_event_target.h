@@ -8,6 +8,7 @@
 #include <windows.h>
 
 #include "ui/base/ui_base_export.h"
+#include "ui/events/event_constants.h"
 
 namespace ui {
 
@@ -88,6 +89,15 @@ class UI_BASE_EXPORT WindowEventTarget {
 
   // Notification from the forwarder window that its parent changed.
   virtual void HandleParentChanged() = 0;
+
+  // Handles the Direct Manipulation message.
+  virtual LRESULT HandleDManipScroll(float delta_x,
+                                     float delta_y,
+                                     ui::EventType event_type) = 0;
+
+  virtual LRESULT HandleDManipPinch(float scale, ui::EventType event_type) = 0;
+
+  virtual void HandleDManipEndMessage(ui::EventType event_type) = 0;
 
  protected:
   WindowEventTarget();
