@@ -332,8 +332,6 @@ URLLoader::URLLoader(NetworkContext* context,
     }
   }
 
-  url_request_->set_initiator(request.request_initiator);
-
   int load_flags = BuildLoadFlagsForRequest(request, false);
   url_request_->SetLoadFlags(load_flags);
   if (report_raw_headers_) {
@@ -634,7 +632,7 @@ void URLLoader::NotifyCompleted(int error_code) {
   if (consumer_handle_.is_valid())
     SendResponseToClient();
 
-  network::URLLoaderCompletionStatus status;
+  network::URLLoaderStatus status;
   status.error_code = error_code;
   status.exists_in_cache = url_request_->response_info().was_cached;
   status.completion_time = base::TimeTicks::Now();

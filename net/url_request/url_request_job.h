@@ -261,7 +261,7 @@ class NET_EXPORT URLRequestJob : public base::PowerObserver {
   bool CanGetCookies(const CookieList& cookie_list) const;
 
   // Delegates to URLRequest::Delegate.
-  bool CanSetCookie(const net::CanonicalCookie& cookie,
+  bool CanSetCookie(const std::string& cookie_line,
                     CookieOptions* options) const;
 
   // Delegates to URLRequest::Delegate.

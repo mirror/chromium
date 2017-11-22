@@ -58,7 +58,6 @@
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_utils.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
-#import "ios/chrome/browser/ui/toolbar/toolbar_button_updater.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller+protected.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_resource_macros.h"
@@ -103,6 +102,7 @@ using ios::material::TimingFunction;
 @interface WebToolbarController ()<DropAndNavigateDelegate,
                                    LocationBarDelegate,
                                    OmniboxPopupPositioner,
+                                   ToolbarAssistiveKeyboardDelegate,
                                    ToolbarViewDelegate> {
   // Top-level view for web content.
   UIView* _webToolbar;
@@ -134,6 +134,13 @@ using ios::material::TimingFunction;
   // icon should indicate so.
   BOOL _isTTSPlaying;
 
+  // Keeps track of whether or not the back button's images have been reversed.
+  ToolbarButtonMode _backButtonMode;
+
+  // Keeps track of whether or not the forward button's images have been
+  // reversed.
+  ToolbarButtonMode _forwardButtonMode;
+
   // Keeps track of the last known toolbar frame.
   CGRect _lastKnownToolbarFrame;
 
@@ -152,8 +159,6 @@ using ios::material::TimingFunction;
 
   // The current browser state.
   ios::ChromeBrowserState* _browserState;  // weak
-
-  ToolbarAssistiveKeyboardDelegateImpl* _keyboardDelegate;
 }
 
 // Accessor for cancel button. Handles lazy initialization.
@@ -184,6 +189,8 @@ using ios::material::TimingFunction;
 // Called by long press gesture recognizer, used to display back/forward
 // history.
 - (void)handleLongPress:(UILongPressGestureRecognizer*)gesture;
+- (void)setImagesForNavButton:(UIButton*)button
+        withTabHistoryVisible:(BOOL)tabHistoryVisible;
 // Returns a map where the keys are names of text-to-speech notifications and
 // the values are the selectors to use for these notifications.
 + (const std::map<__strong NSString*, SEL>&)selectorsForTTSNotificationNames;
@@ -220,13 +227,14 @@ using ios::material::TimingFunction;
 // restore the omnibox's background image.
 - (void)animationDidStop:(CAAnimation*)anim finished:(BOOL)flag;
 - (void)updateSnapshotWithWidth:(CGFloat)width forced:(BOOL)force;
+// Insert 'com' without the period if cursor is directly after a period.
+- (NSString*)updateTextForDotCom:(NSString*)text;
 // Updates all buttons visibility, including the parent class buttons.
 - (void)updateToolbarButtons;
 @end
 
 @implementation WebToolbarController
 
-@synthesize buttonUpdater = _buttonUpdater;
 @synthesize delegate = _delegate;
 @synthesize urlLoader = _urlLoader;
 
@@ -268,9 +276,6 @@ using ios::material::TimingFunction;
                                         font:[MDCTypography subheadFont]
                                    textColor:textColor
                                    tintColor:tintColor];
-  _keyboardDelegate = [[ToolbarAssistiveKeyboardDelegateImpl alloc] init];
-  _keyboardDelegate.dispatcher = dispatcher;
-  _keyboardDelegate.omniboxTextField = _locationBarView.textField;
 
   // Disable default drop interactions on the omnibox.
   // TODO(crbug.com/739903): Handle drop events once Chrome iOS is built with
@@ -300,12 +305,9 @@ using ios::material::TimingFunction;
                           alpha:1.0];
     [_locationBarView.textField setPlaceholderTextColor:placeholderTextColor];
   }
-
-  _buttonUpdater = [[ToolbarButtonUpdater alloc] init];
-
   _backButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kBackButtonFrame[idiom])];
-  _buttonUpdater.backButton = _backButton;
+
   [_backButton setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
                                    UIViewAutoresizingFlexibleTopMargin];
 
@@ -313,7 +315,6 @@ using ios::material::TimingFunction;
   // called.
   _forwardButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kForwardButtonFrame[idiom])];
-  _buttonUpdater.forwardButton = _forwardButton;
   [_forwardButton
       setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
                           UIViewAutoresizingFlexibleTopMargin];
@@ -454,6 +455,8 @@ using ios::material::TimingFunction;
                      action:@selector(goForward)
            forControlEvents:UIControlEventTouchUpInside];
 
+  _backButtonMode = ToolbarButtonModeNormal;
+  _forwardButtonMode = ToolbarButtonModeNormal;
   UILongPressGestureRecognizer* backLongPress =
       [[UILongPressGestureRecognizer alloc]
           initWithTarget:self
@@ -520,8 +523,7 @@ using ios::material::TimingFunction;
     [self.view addSubview:_determinateProgressView];
   }
 
-  ConfigureAssistiveKeyboardViews(_locationBarView.textField, kDotComTLD,
-                                  _keyboardDelegate);
+  ConfigureAssistiveKeyboardViews(_locationBarView.textField, kDotComTLD, self);
 
   // Add the handler to preload voice search when the voice search button is
   // tapped, but only if voice search is enabled.
@@ -560,10 +562,6 @@ using ios::material::TimingFunction;
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (UIViewController*)viewController {
-  return self;
 }
 
 #pragma mark -
@@ -679,6 +677,10 @@ using ios::material::TimingFunction;
 
 - (void)currentPageLoadStarted {
   [self startProgressBar];
+}
+
+- (void)selectedTabChanged {
+  [self cancelOmniboxEdit];
 }
 
 - (CGRect)visibleOmniboxFrame {
@@ -886,7 +888,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)locationBarHasBecomeFirstResponder {
-  [self.delegate locationBarDidBecomeFirstResponder];
+  [self.delegate locationBarDidBecomeFirstResponder:self];
   if (@available(iOS 10, *)) {
     if (base::FeatureList::IsEnabled(kPropertyAnimationsToolbar)) {
       [self expandOmnibox];
@@ -899,7 +901,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)locationBarHasResignedFirstResponder {
-  [self.delegate locationBarDidResignFirstResponder];
+  [self.delegate locationBarDidResignFirstResponder:self];
   if (@available(iOS 10, *)) {
     if (base::FeatureList::IsEnabled(kPropertyAnimationsToolbar)) {
       [self contractOmnibox];
@@ -912,7 +914,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)locationBarBeganEdit {
-  [self.delegate locationBarBeganEdit];
+  [self.delegate locationBarBeganEdit:self];
 }
 
 - (web::WebState*)getWebState {
@@ -1058,6 +1060,68 @@ using ios::material::TimingFunction;
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
                                     _locationBarView.textField);
   }
+}
+
+#pragma mark -
+#pragma mark ToolbarAssistiveKeyboardDelegate
+
+- (void)keyboardAccessoryVoiceSearchTouchDown:(UIView*)view {
+  if (ios::GetChromeBrowserProvider()
+          ->GetVoiceSearchProvider()
+          ->IsVoiceSearchEnabled()) {
+    [self preloadVoiceSearch:view];
+  }
+}
+
+- (void)keyboardAccessoryVoiceSearchTouchUpInside:(UIView*)view {
+  if (ios::GetChromeBrowserProvider()
+          ->GetVoiceSearchProvider()
+          ->IsVoiceSearchEnabled()) {
+    base::RecordAction(UserMetricsAction("MobileCustomRowVoiceSearch"));
+    StartVoiceSearchCommand* command =
+        [[StartVoiceSearchCommand alloc] initWithOriginView:view];
+    [self.dispatcher startVoiceSearch:command];
+  }
+}
+
+- (void)keyboardAccessoryCameraSearchTouchUp {
+  base::RecordAction(UserMetricsAction("MobileCustomRowCameraSearch"));
+  [self.dispatcher showQRScanner];
+}
+
+- (void)keyboardAccessoryExternalSearchTouchUp {
+  [self.dispatcher launchExternalSearch];
+}
+
+- (void)keyPressed:(NSString*)title {
+  NSString* text = [self updateTextForDotCom:title];
+  [_locationBarView.textField insertTextWhileEditing:text];
+}
+
+#pragma mark - TabHistory Requirements
+
+- (CGPoint)originPointForToolbarButton:(ToolbarButtonType)toolbarButton {
+  UIButton* historyButton = toolbarButton ? _backButton : _forwardButton;
+
+  // Set the origin for the tools popup to the leading side of the bottom of the
+  // pressed buttons.
+  CGRect buttonBounds = [historyButton.imageView bounds];
+  CGPoint leadingBottomCorner = CGPointMake(CGRectGetLeadingEdge(buttonBounds),
+                                            CGRectGetMaxY(buttonBounds));
+  CGPoint origin = [historyButton.imageView convertPoint:leadingBottomCorner
+                                                  toView:historyButton.window];
+  return origin;
+}
+
+- (void)updateUIForTabHistoryPresentationFrom:(ToolbarButtonType)button {
+  UIButton* historyButton = button ? _backButton : _forwardButton;
+  // Keep the button pressed by swapping the normal and highlighted images.
+  [self setImagesForNavButton:historyButton withTabHistoryVisible:YES];
+}
+
+- (void)updateUIForTabHistoryWasDismissed {
+  [self setImagesForNavButton:_backButton withTabHistoryVisible:NO];
+  [self setImagesForNavButton:_forwardButton withTabHistoryVisible:NO];
 }
 
 #pragma mark -
@@ -1351,6 +1415,26 @@ using ios::material::TimingFunction;
     [_reloadButton setHidden:YES];
     [_stopButton setHidden:NO];
   }
+}
+
+- (void)setImagesForNavButton:(UIButton*)button
+        withTabHistoryVisible:(BOOL)tabHistoryVisible {
+  BOOL isBackButton = button == _backButton;
+  ToolbarButtonMode newMode =
+      tabHistoryVisible ? ToolbarButtonModeReversed : ToolbarButtonModeNormal;
+  if (isBackButton && newMode == _backButtonMode)
+    return;
+  if (!isBackButton && newMode == _forwardButtonMode)
+    return;
+
+  UIImage* normalImage = [button imageForState:UIControlStateNormal];
+  UIImage* highlightedImage = [button imageForState:UIControlStateHighlighted];
+  [button setImage:highlightedImage forState:UIControlStateNormal];
+  [button setImage:normalImage forState:UIControlStateHighlighted];
+  if (isBackButton)
+    _backButtonMode = newMode;
+  else
+    _forwardButtonMode = newMode;
 }
 
 - (void)updateToolbarAlphaForFrame:(CGRect)frame {
@@ -2160,9 +2244,8 @@ using ios::material::TimingFunction;
 
   // Don't update the snapshot while the progress bar is moving, or while the
   // tools menu is open, unless |force| is true.
-  BOOL shouldRedraw =
-      force || (![self.toolsMenuStateProvider isShowingToolsMenu] &&
-                [_determinateProgressView isHidden]);
+  BOOL shouldRedraw = force || ([self toolsPopupController] == nil &&
+                                [_determinateProgressView isHidden]);
   if (!shouldRedraw)
     return;
 
@@ -2261,6 +2344,19 @@ using ios::material::TimingFunction;
   }
 }
 
+- (NSString*)updateTextForDotCom:(NSString*)text {
+  if ([text isEqualToString:kDotComTLD]) {
+    UITextRange* textRange = [_locationBarView.textField selectedTextRange];
+    NSInteger pos = [_locationBarView.textField
+        offsetFromPosition:[_locationBarView.textField beginningOfDocument]
+                toPosition:textRange.start];
+    if (pos > 0 &&
+        [[_locationBarView.textField text] characterAtIndex:pos - 1] == '.')
+      return [kDotComTLD substringFromIndex:1];
+  }
+  return text;
+}
+
 - (void)loadURLForQuery:(NSString*)query {
   GURL searchURL;
   metrics::OmniboxInputType type = AutocompleteInput::Parse(
@@ -2306,14 +2402,6 @@ using ios::material::TimingFunction;
       [self layoutClippingView];
     }
   }
-}
-
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-
-  // The popup positions itself as a static frame below the web toolbar.  This
-  // will no longer be necessary post omnibox popup boxing.
-  _popupView->UpdatePopupAppearance();
 }
 
 @end

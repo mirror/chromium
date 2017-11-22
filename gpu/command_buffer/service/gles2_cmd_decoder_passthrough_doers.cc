@@ -655,11 +655,6 @@ error::Error GLES2DecoderPassthroughImpl::DoCompressedTexImage2D(
   api()->glCompressedTexImage2DRobustANGLEFn(target, level, internalformat,
                                              width, height, border, image_size,
                                              data_size, data);
-
-  // Texture data upload can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -677,11 +672,6 @@ error::Error GLES2DecoderPassthroughImpl::DoCompressedTexSubImage2D(
   api()->glCompressedTexSubImage2DRobustANGLEFn(target, level, xoffset, yoffset,
                                                 width, height, format,
                                                 image_size, data_size, data);
-
-  // Texture data upload can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -699,11 +689,6 @@ error::Error GLES2DecoderPassthroughImpl::DoCompressedTexImage3D(
   api()->glCompressedTexImage3DRobustANGLEFn(target, level, internalformat,
                                              width, height, depth, border,
                                              image_size, data_size, data);
-
-  // Texture data upload can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -723,11 +708,6 @@ error::Error GLES2DecoderPassthroughImpl::DoCompressedTexSubImage3D(
   api()->glCompressedTexSubImage3DRobustANGLEFn(
       target, level, xoffset, yoffset, zoffset, width, height, depth, format,
       image_size, data_size, data);
-
-  // Texture data upload can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -753,11 +733,6 @@ error::Error GLES2DecoderPassthroughImpl::DoCopyTexImage2D(
     GLint border) {
   api()->glCopyTexImage2DFn(target, level, internalformat, x, y, width, height,
                             border);
-
-  // Texture data copying can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -771,11 +746,6 @@ error::Error GLES2DecoderPassthroughImpl::DoCopyTexSubImage2D(GLenum target,
                                                               GLsizei height) {
   api()->glCopyTexSubImage2DFn(target, level, xoffset, yoffset, x, y, width,
                                height);
-
-  // Texture data copying can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -790,11 +760,6 @@ error::Error GLES2DecoderPassthroughImpl::DoCopyTexSubImage3D(GLenum target,
                                                               GLsizei height) {
   api()->glCopyTexSubImage3DFn(target, level, xoffset, yoffset, zoffset, x, y,
                                width, height);
-
-  // Texture data copying can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -2032,11 +1997,6 @@ error::Error GLES2DecoderPassthroughImpl::DoLineWidth(GLfloat width) {
 
 error::Error GLES2DecoderPassthroughImpl::DoLinkProgram(GLuint program) {
   api()->glLinkProgramFn(GetProgramServiceID(program, resources_));
-
-  // Program linking can be very slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -2311,11 +2271,6 @@ error::Error GLES2DecoderPassthroughImpl::DoTexImage2D(GLenum target,
       api(), image_size != 0 && feature_info_->gl_version_info().is_es3, false);
   api()->glTexImage2DRobustANGLEFn(target, level, internalformat, width, height,
                                    border, format, type, image_size, pixels);
-
-  // Texture data upload can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -2335,11 +2290,6 @@ error::Error GLES2DecoderPassthroughImpl::DoTexImage3D(GLenum target,
   api()->glTexImage3DRobustANGLEFn(target, level, internalformat, width, height,
                                    depth, border, format, type, image_size,
                                    pixels);
-
-  // Texture data upload can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -2403,11 +2353,6 @@ error::Error GLES2DecoderPassthroughImpl::DoTexSubImage2D(GLenum target,
       api(), image_size != 0 && feature_info_->gl_version_info().is_es3, false);
   api()->glTexSubImage2DRobustANGLEFn(target, level, xoffset, yoffset, width,
                                       height, format, type, image_size, pixels);
-
-  // Texture data upload can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -2428,11 +2373,6 @@ error::Error GLES2DecoderPassthroughImpl::DoTexSubImage3D(GLenum target,
   api()->glTexSubImage3DRobustANGLEFn(target, level, xoffset, yoffset, zoffset,
                                       width, height, depth, format, type,
                                       image_size, pixels);
-
-  // Texture data upload can be slow.  Exit command processing to allow for
-  // context preemption and GPU watchdog checks.
-  ExitCommandProcessingEarly();
-
   return error::kNoError;
 }
 
@@ -4676,18 +4616,6 @@ error::Error GLES2DecoderPassthroughImpl::DoBeginRasterCHROMIUM(
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoEndRasterCHROMIUM() {
-  NOTIMPLEMENTED();
-  return error::kNoError;
-}
-
-error::Error GLES2DecoderPassthroughImpl::DoUnlockTransferCacheEntryCHROMIUM(
-    GLuint64 handle_id) {
-  NOTIMPLEMENTED();
-  return error::kNoError;
-}
-
-error::Error GLES2DecoderPassthroughImpl::DoDeleteTransferCacheEntryCHROMIUM(
-    GLuint64 handle_id) {
   NOTIMPLEMENTED();
   return error::kNoError;
 }

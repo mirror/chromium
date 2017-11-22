@@ -12,7 +12,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/connection_holder.h"
+#include "components/arc/instance_holder.h"
 #include "components/arc/test/fake_notifications_instance.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/arc/notification/arc_notification_manager.h"
@@ -60,10 +60,10 @@ class MockMessageCenter : public message_center::FakeMessageCenter {
 };
 
 class NotificationsObserver
-    : public ConnectionObserver<mojom::NotificationsInstance> {
+    : public InstanceHolder<mojom::NotificationsInstance>::Observer {
  public:
   NotificationsObserver() = default;
-  void OnConnectionReady() override { ready_ = true; }
+  void OnInstanceReady() override { ready_ = true; }
 
   bool IsReady() { return ready_; }
 
@@ -177,7 +177,7 @@ TEST_F(ArcNotificationManagerTest, NotificationRemovedByConnectionClose) {
   CreateNotificationWithKey("notification3");
   EXPECT_EQ(3u, message_center()->GetVisibleNotifications().size());
 
-  arc_notification_manager()->OnConnectionClosed();
+  arc_notification_manager()->OnInstanceClosed();
 
   EXPECT_EQ(0u, message_center()->GetVisibleNotifications().size());
 }

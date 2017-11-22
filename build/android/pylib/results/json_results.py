@@ -124,8 +124,7 @@ def GenerateResultsDict(test_run_results, global_tags=None):
   }
 
 
-def GenerateJsonResultsFile(test_run_result, file_path, global_tags=None,
-                            **kwargs):
+def GenerateJsonResultsFile(test_run_result, file_path, global_tags=None):
   """Write |test_run_result| to JSON.
 
   This emulates the format of the JSON emitted by
@@ -137,8 +136,7 @@ def GenerateJsonResultsFile(test_run_result, file_path, global_tags=None,
   """
   with open(file_path, 'w') as json_result_file:
     json_result_file.write(json.dumps(
-        GenerateResultsDict(test_run_result, global_tags=global_tags),
-        **kwargs))
+        GenerateResultsDict(test_run_result, global_tags=global_tags)))
 
 
 def ParseResultsFromJson(json_results):

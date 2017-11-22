@@ -1,10 +1,14 @@
 Tests the Timeline API instrumentation of style recalc events with invalidations.
 
+PASS
+PASS
+PASS
+
 
 Running: testLocalFrame
 first recalculate styles[
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:29}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:9}
         changedAttribute : undefined
         changedClass : "red"
         changedId : undefined
@@ -15,7 +19,7 @@ first recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:30}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:10}
         changedAttribute : undefined
         changedClass : "red"
         changedId : undefined
@@ -30,7 +34,7 @@ first recalculate styles[
 Running: multipleStyleRecalcs
 first recalculate styles[
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:40}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:20}
         changedAttribute : undefined
         changedClass : "green"
         changedId : undefined
@@ -41,7 +45,7 @@ first recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:40}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:20}
         changedAttribute : undefined
         changedClass : "red"
         changedId : undefined
@@ -54,7 +58,7 @@ first recalculate styles[
 ]
 second recalculate styles[
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:42}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:22}
         changedAttribute : undefined
         changedClass : "blue"
         changedId : undefined
@@ -65,7 +69,7 @@ second recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:42}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:22}
         changedAttribute : undefined
         changedClass : "green"
         changedId : undefined
@@ -76,7 +80,7 @@ second recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:43}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:23}
         changedAttribute : undefined
         changedClass : "blue"
         changedId : undefined
@@ -87,7 +91,7 @@ second recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:43}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:23}
         changedAttribute : undefined
         changedClass : "red"
         changedId : undefined
@@ -100,7 +104,7 @@ second recalculate styles[
 ]
 third recalculate styles[
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:45}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:25}
         changedAttribute : undefined
         changedClass : "snow"
         changedId : undefined
@@ -111,7 +115,7 @@ third recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:45}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:25}
         changedAttribute : undefined
         changedClass : "blue"
         changedId : undefined
@@ -122,7 +126,7 @@ third recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:46}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:26}
         changedAttribute : undefined
         changedClass : "snow"
         changedId : undefined
@@ -133,7 +137,7 @@ third recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:46}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:26}
         changedAttribute : undefined
         changedClass : "blue"
         changedId : undefined
@@ -144,7 +148,7 @@ third recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:47}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:27}
         changedAttribute : undefined
         changedClass : "snow"
         changedId : undefined
@@ -159,7 +163,7 @@ third recalculate styles[
 Running: testSubframe
 first recalculate styles[
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:58}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:38}
         changedAttribute : undefined
         changedClass : "green"
         changedId : undefined
@@ -172,7 +176,7 @@ first recalculate styles[
 ]
 second recalculate styles[
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:60}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:40}
         changedAttribute : undefined
         changedClass : "blue"
         changedId : undefined
@@ -183,7 +187,7 @@ second recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:60}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:40}
         changedAttribute : undefined
         changedClass : "green"
         changedId : undefined
@@ -194,7 +198,7 @@ second recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:61}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:41}
         changedAttribute : undefined
         changedClass : "blue"
         changedId : undefined
@@ -207,7 +211,7 @@ second recalculate styles[
 ]
 third recalculate styles[
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:63}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:43}
         changedAttribute : undefined
         changedClass : "snow"
         changedId : undefined
@@ -218,7 +222,7 @@ third recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:63}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:43}
         changedAttribute : undefined
         changedClass : "blue"
         changedId : undefined
@@ -229,7 +233,7 @@ third recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:64}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:44}
         changedAttribute : undefined
         changedClass : "snow"
         changedId : undefined
@@ -240,7 +244,7 @@ third recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:64}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:44}
         changedAttribute : undefined
         changedClass : "blue"
         changedId : undefined
@@ -251,7 +255,7 @@ third recalculate styles[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Element has pending invalidation list, stackTrace: test://evaluations/0/timeline-style-recalc-with-invalidator-invalidations.js:65}
+        cause : {reason: Element has pending invalidation list, stackTrace: .../devtools/tracing/timeline-style/timeline-style-recalc-with-invalidator-invalidations.html:45}
         changedAttribute : undefined
         changedClass : "snow"
         changedId : undefined

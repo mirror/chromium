@@ -31,7 +31,6 @@
 #include "core/events/MouseEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/UseCounter.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLFrameElement.h"
 #include "core/html_names.h"
@@ -298,13 +297,7 @@ LocalDOMWindow* HTMLFrameSetElement::AnonymousNamedGetter(
   Document* document = ToHTMLFrameElement(frame_element)->contentDocument();
   if (!document || !document->GetFrame())
     return nullptr;
-
-  LocalDOMWindow* window = document->domWindow();
-  if (window) {
-    UseCounter::Count(
-        *document, WebFeature::kHTMLFrameSetElementNonNullAnonymousNamedGetter);
-  }
-  return window;
+  return document->domWindow();
 }
 
 }  // namespace blink

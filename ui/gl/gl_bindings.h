@@ -5,9 +5,10 @@
 #ifndef UI_GL_GL_BINDINGS_H_
 #define UI_GL_GL_BINDINGS_H_
 
-#include "build/build_config.h"
-
 // Includes the platform independent and platform dependent GL headers.
+// Only include this in cc files. It pulls in system headers, including
+// the X11 headers on linux, which define all kinds of macros that are
+// liable to cause conflicts.
 
 // GL headers may include inttypes.h and so we need to ensure that
 // __STDC_FORMAT_MACROS is defined in order for //base/format_macros.h to
@@ -16,17 +17,6 @@
 #if defined(OS_POSIX) && !defined(__STDC_FORMAT_MACROS)
 #define __STDC_FORMAT_MACROS
 #endif
-#if defined(USE_GLX)
-// Must be included before GL headers or they might pollute the global
-// namespace with X11 macros indirectly.
-#include "ui/gfx/x/x11.h"
-
-// GL headers expect Bool and Status this to be defined but we avoid
-// defining them since they clash with too much code. Instead we have
-// to add them temporarily here and undef them again below.
-#define Bool int
-#define Status int
-#endif  // USE_GLX
 
 #include <GL/gl.h>
 #include <GL/glext.h>
@@ -50,11 +40,14 @@
 #elif defined(USE_GLX)
 #include <GL/glx.h>
 #include <GL/glxext.h>
-
-// Done with these temporary macros now
-#undef Bool
-#undef Status
 #endif
+
+// Undefine some macros defined by X headers. This is why this file should only
+// be included in .cc files.
+#undef Bool
+#undef None
+#undef Status
+
 
 // GLES2 defines not part of Desktop GL
 // Shader Precision-Specified Types

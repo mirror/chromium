@@ -166,7 +166,7 @@ TestParams params[] = {
          kSpeechRecognitionListeningGrowingCircle,
          kSpeechRecognitionListeningInnerCircle,
          kSpeechRecognitionListeningMicrophoneIcon,
-         kSpeechRecognitionListeningCloseButton,
+         kSpeechRecognitionListeningBackplane,
      }},
     {&UiScene::GetVisible2dBrowsingOverlayElements,
      {

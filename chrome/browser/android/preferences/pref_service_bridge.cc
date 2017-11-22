@@ -319,12 +319,12 @@ static jboolean GetPrintingManaged(JNIEnv* env,
 
 static jboolean GetTranslateEnabled(JNIEnv* env,
                                     const JavaParamRef<jobject>& obj) {
-  return GetPrefService()->GetBoolean(prefs::kOfferTranslateEnabled);
+  return GetPrefService()->GetBoolean(prefs::kEnableTranslate);
 }
 
 static jboolean GetTranslateManaged(JNIEnv* env,
                                     const JavaParamRef<jobject>& obj) {
-  return GetPrefService()->IsManagedPreference(prefs::kOfferTranslateEnabled);
+  return GetPrefService()->IsManagedPreference(prefs::kEnableTranslate);
 }
 
 static jboolean GetSearchSuggestEnabled(JNIEnv* env,
@@ -752,7 +752,7 @@ static ScopedJavaLocalRef<jstring> GetSyncLastAccountName(
 static void SetTranslateEnabled(JNIEnv* env,
                                 const JavaParamRef<jobject>& obj,
                                 jboolean enabled) {
-  GetPrefService()->SetBoolean(prefs::kOfferTranslateEnabled, enabled);
+  GetPrefService()->SetBoolean(prefs::kEnableTranslate, enabled);
 }
 
 static void ResetTranslateDefaults(JNIEnv* env,

@@ -150,8 +150,14 @@ public class BindingManagerImplTest {
         manager.setPriority(connection.getPid(), true /* foreground */, false /* boost */);
         Assert.assertTrue(connection.isStrongBindingBound());
 
-        // Remove the strong binding, verify that the strong binding was removed.
+        // Remove the strong binding, verify that the strong binding is not removed
+        // immediately.
         manager.setPriority(connection.getPid(), false /* foreground */, false /* boost */);
+        Assert.assertTrue(connection.isStrongBindingBound());
+
+        // Wait until the posted unbinding tasks get executed and verify that the strong binding was
+        // removed while the initial binding is not affected.
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertFalse(connection.isStrongBindingBound());
     }
 
@@ -177,9 +183,15 @@ public class BindingManagerImplTest {
         Assert.assertTrue(connection.isStrongBindingBound());
         Assert.assertFalse(connection.isModerateBindingBound());
 
-        // Remove the strong binding, verify that the strong binding was removed while the
-        // initial binding is not affected, and the moderate binding is bound.
+        // Remove the strong binding, verify that the strong binding is not removed
+        // immediately.
         manager.setPriority(connection.getPid(), false /* foreground */, false /* boost */);
+        Assert.assertTrue(connection.isStrongBindingBound());
+        Assert.assertFalse(connection.isModerateBindingBound());
+
+        // Wait until the posted unbinding tasks get executed and verify that the strong binding was
+        // removed while the initial binding is not affected, and the moderate binding is bound.
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
         Assert.assertFalse(connection.isStrongBindingBound());
         Assert.assertTrue(connection.isModerateBindingBound());
     }

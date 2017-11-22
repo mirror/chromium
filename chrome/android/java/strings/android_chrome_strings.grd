@@ -2187,9 +2187,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
 
       <!-- First Run strings -->
-      <message name="IDS_FRE_ACTIVITY_LABEL" desc="Label for first run dialog in Android Recents.">
-        Chrome First Run Experience
-      </message>
       <message name="IDS_FRE_SKIP_TEXT" desc="Text for second page skip button">
         No thanks
       </message>
@@ -2798,14 +2795,14 @@ However, you aren’t invisible. Going incognito doesn’t hide your browsing fr
       <message name="IDS_CONTEXTUAL_SEARCH_QUICK_ACTION_CAPTION_GENERIC_WEBSITE" desc="Caption displayed in the Contextual Search bar prompting the user to navigate to a web page.">
         Go to page
       </message>
-      <message name="IDS_CONTEXTUAL_SEARCH_IPH_ENTITY" desc="An in-product-help message for the Touch to Search feature on Chrome Android. The message encourages users to open a panel that contains search results for the word or phrase they tapped on.">
-        See instant search results in this panel
+      <message name="IDS_CONTEXTUAL_SEARCH_IPH_ENTITY" desc="The in-product-help message for encouraging users to open the Contextual Search panel to learn to more about the phrase they have tapped on. This is a placeholder while the string is being finalized. Do not translate for now.">
+        Open this panel to find more information
       </message>
-      <message name="IDS_CONTEXTUAL_SEARCH_IPH_SEARCH_RESULT" desc="An in-product-help message for the Touch to Search feature. It encourages users to open the Touch to Search panel to see search results for a word or phrase they have tapped.">
-        Tap a word to search instantly or see related actions
+      <message name="IDS_CONTEXTUAL_SEARCH_IPH_SEARCH_RESULT" desc="The in-product-help message for encouraging users to open the Contextual Search panel to see related results about a phrase they have selected. This is a placeholder while the string is being finalized. Do not translate for now.">
+        Open this panel to find related search results
       </message>
-      <message name="IDS_CONTEXTUAL_SEARCH_IPH_TAP" desc="An in-product-help message for encouraging users to tap instead of long pressing to trigger the Touch to Search feature.">
-        You can also search with a quick tap on a word
+      <message name="IDS_CONTEXTUAL_SEARCH_IPH_TAP" desc="The in-product-help message for encouraging users to tap instead of long pressing for triggeting Contextual Search. This is a placeholder while the string is being finalized. Do not translate for now.">
+        You can also search with one tap
       </message>
 
       <!-- Web apps -->
@@ -3204,8 +3201,8 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       <message name="IDS_CHROME_HOME_PROMO_DIALOG_MESSAGE_ACCESSIBILITY" desc="Dialog body text when accessibility is enabled. Dialog describes a new feature called “Chrome Home” (which is a placeholder name, official naming is underway; for now, do not translate the feature name). “Swipe up” (imperative) refers to the gesture on a mobile phone. “access” is a noun. “Popular” modifies both “sites and articles.” “Downloads” refers to items the user has downloaded in Chrome.">
         Swipe up from the bottom of the screen or tap the expand button for easy access to popular sites and articles, downloads, and more
       </message>
-      <message name="IDS_CHROME_HOME_PROMO_DIALOG_NOT_YET" desc="Dialog button text that is visible if the new Chrome is disabled and will dismiss the dialog when pressed without changing the state of Chrome.">
-        Not yet
+      <message name="IDS_CHROME_HOME_PROMO_DIALOG_NOT_NOW" desc="Dialog button text that is visible if the new Chrome is disabled and will dismiss the dialog when pressed without changing the state of Chrome.">
+        Not now
       </message>
       <message name="IDS_CHROME_HOME_PROMO_DIALOG_TITLE" desc="Dialog title text. Dialog describes the new Chrome. Object is omitted; intended meaning is that we wish to introduce you, the user, to a new version of Chrome. Infinitive or other verb form may be used if the gerund is not appropriate in your language.">
         Introducing the new Chrome

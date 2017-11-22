@@ -31,29 +31,15 @@ PaintImage& PaintImage::operator=(const PaintImage& other) = default;
 PaintImage& PaintImage::operator=(PaintImage&& other) = default;
 
 bool PaintImage::operator==(const PaintImage& other) const {
-  if (sk_image_ != other.sk_image_)
-    return false;
-  if (paint_record_ != other.paint_record_)
-    return false;
-  if (paint_record_rect_ != other.paint_record_rect_)
-    return false;
-  if (paint_record_content_id_ != other.paint_record_content_id_)
-    return false;
-  if (paint_image_generator_ != other.paint_image_generator_)
-    return false;
-  if (id_ != other.id_)
-    return false;
-  if (animation_type_ != other.animation_type_)
-    return false;
-  if (completion_state_ != other.completion_state_)
-    return false;
-  if (subset_rect_ != other.subset_rect_)
-    return false;
-  if (frame_index_ != other.frame_index_)
-    return false;
-  if (is_multipart_ != other.is_multipart_)
-    return false;
-  return true;
+  return sk_image_ == other.sk_image_ && paint_record_ == other.paint_record_ &&
+         paint_record_rect_ == other.paint_record_rect_ &&
+         paint_record_content_id_ == other.paint_record_content_id_ &&
+         paint_image_generator_ == other.paint_image_generator_ &&
+         id_ == other.id_ && animation_type_ == other.animation_type_ &&
+         completion_state_ == other.completion_state_ &&
+         subset_rect_ == other.subset_rect_ &&
+         frame_index_ == other.frame_index_ &&
+         is_multipart_ == other.is_multipart_;
 }
 
 // static
@@ -140,13 +126,6 @@ SkISize PaintImage::GetSupportedDecodeSize(
   //  if (paint_image_generator_ && subset_rect_.IsEmpty())
   //    return paint_image_generator_->GetSupportedDecodeSize(requested_size);
   return SkISize::Make(width(), height());
-}
-
-SkImageInfo PaintImage::CreateDecodeImageInfo(const SkISize& size,
-                                              SkColorType color_type) const {
-  DCHECK(GetSupportedDecodeSize(size) == size);
-  return SkImageInfo::Make(size.width(), size.height(), color_type,
-                           kPremul_SkAlphaType);
 }
 
 bool PaintImage::Decode(void* memory,

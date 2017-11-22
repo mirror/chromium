@@ -26,7 +26,6 @@ class DisplayInfoProviderChromeOS : public DisplayInfoProvider {
   static const char kTouchCalibrationPointsNegativeError[];
   static const char kTouchCalibrationPointsTooLargeError[];
   static const char kNativeTouchCalibrationActiveError[];
-  static const char kNoExternalTouchDevicePresent[];
 
   DisplayInfoProviderChromeOS();
   ~DisplayInfoProviderChromeOS() override;

@@ -174,8 +174,8 @@ void WebViewSchedulerImpl::ReportIntervention(const std::string& message) {
   intervention_reporter_->ReportIntervention(WebString::FromUTF8(message));
 }
 
-base::TimeTicks WebViewSchedulerImpl::EnableVirtualTime() {
-  return renderer_scheduler_->EnableVirtualTime();
+void WebViewSchedulerImpl::EnableVirtualTime() {
+  renderer_scheduler_->EnableVirtualTime();
 }
 
 void WebViewSchedulerImpl::DisableVirtualTimeForTesting() {

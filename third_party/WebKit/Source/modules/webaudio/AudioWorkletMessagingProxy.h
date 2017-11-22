@@ -14,7 +14,6 @@ class AudioWorkletHandler;
 class CrossThreadAudioParamInfo;
 class CrossThreadAudioWorkletProcessorInfo;
 class ExecutionContext;
-class MessagePortChannel;
 class WebThread;
 class WorkerThread;
 
@@ -27,15 +26,14 @@ class AudioWorkletMessagingProxy final : public ThreadedWorkletMessagingProxy {
 
   // Since the creation of AudioWorkletProcessor needs to be done in the
   // different thread, this method is a wrapper for cross-thread task posting.
-  void CreateProcessor(AudioWorkletHandler*, MessagePortChannel);
+  void CreateProcessor(AudioWorkletHandler*);
 
   // Invokes AudioWorkletGlobalScope to create an instance of
   // AudioWorkletProcessor.
   void CreateProcessorOnRenderingThread(WorkerThread*,
                                         AudioWorkletHandler*,
                                         const String& name,
-                                        float sample_rate,
-                                        MessagePortChannel);
+                                        float sample_rate);
 
   // Invoked by AudioWorkletObjectProxy on AudioWorkletThread to fetch the
   // information from AudioWorkletGlobalScope to AudioWorkletMessagingProxy

@@ -28,8 +28,6 @@
 #define SelectorQuery_h
 
 #include <memory>
-
-#include "base/macros.h"
 #include "core/css/CSSSelectorList.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashMap.h"
@@ -48,6 +46,7 @@ class StaticNodeTypeList;
 using StaticElementList = StaticNodeTypeList<Element>;
 
 class CORE_EXPORT SelectorQuery {
+  WTF_MAKE_NONCOPYABLE(SelectorQuery);
   USING_FAST_MALLOC(SelectorQuery);
 
  public:
@@ -118,7 +117,6 @@ class CORE_EXPORT SelectorQuery {
   bool uses_deep_combinator_or_shadow_pseudo_ : 1;
   bool needs_updated_distribution_ : 1;
   bool use_slow_scan_ : 1;
-  DISALLOW_COPY_AND_ASSIGN(SelectorQuery);
 };
 
 class SelectorQueryCache {

@@ -77,8 +77,7 @@ CSSVariableData* CSSVariableResolver::ValueForCustomProperty(
 
   const CSSValue* parsed_value = nullptr;
   if (new_variable_data) {
-    parsed_value = new_variable_data->ParseForSyntax(
-        registration->Syntax(), state_.GetDocument().SecureContextMode());
+    parsed_value = new_variable_data->ParseForSyntax(registration->Syntax());
     if (!parsed_value)
       new_variable_data = nullptr;
   }

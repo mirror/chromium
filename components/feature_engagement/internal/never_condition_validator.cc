@@ -15,7 +15,6 @@ ConditionValidator::Result NeverConditionValidator::MeetsConditions(
     const FeatureConfig& config,
     const EventModel& event_model,
     const AvailabilityModel& availability_model,
-    const DisplayLockController& display_lock_controller,
     uint32_t current_day) const {
   return ConditionValidator::Result(false);
 }

@@ -26,7 +26,6 @@
 #ifndef FrameLoadRequest_h
 #define FrameLoadRequest_h
 
-#include "base/unguessable_token.h"
 #include "core/dom/Document.h"
 #include "core/dom/events/Event.h"
 #include "core/loader/FrameLoaderTypes.h"
@@ -55,11 +54,6 @@ struct CORE_EXPORT FrameLoadRequest {
                    const ResourceRequest&,
                    const AtomicString& frame_name,
                    ContentSecurityPolicyDisposition);
-  FrameLoadRequest(Document* origin_document,
-                   const ResourceRequest&,
-                   const AtomicString& frame_name,
-                   ContentSecurityPolicyDisposition,
-                   const base::UnguessableToken& devtools_navigation_token);
 
   Document* OriginDocument() const { return origin_document_.Get(); }
 
@@ -110,18 +104,12 @@ struct CORE_EXPORT FrameLoadRequest {
     return should_check_main_world_content_security_policy_;
   }
 
-  // See DocumentLoader::devtools_navigation_token_ for documentation.
-  const base::UnguessableToken& GetDevToolsNavigationToken() const {
-    return devtools_navigation_token_;
-  }
-
  private:
   FrameLoadRequest(Document* origin_document,
                    const ResourceRequest&,
                    const AtomicString& frame_name,
                    const SubstituteData&,
-                   ContentSecurityPolicyDisposition,
-                   const base::UnguessableToken& devtools_navigation_token);
+                   ContentSecurityPolicyDisposition);
 
   Member<Document> origin_document_;
   ResourceRequest resource_request_;
@@ -135,7 +123,6 @@ struct CORE_EXPORT FrameLoadRequest {
   ShouldSetOpener should_set_opener_;
   ContentSecurityPolicyDisposition
       should_check_main_world_content_security_policy_;
-  base::UnguessableToken devtools_navigation_token_;
 };
 
 }  // namespace blink

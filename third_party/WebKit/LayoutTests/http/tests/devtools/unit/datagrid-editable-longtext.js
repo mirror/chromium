@@ -1,6 +1,6 @@
-(async function() {
-  await TestRunner.loadModule('data_grid');
+TestRunner.loadModule('data_grid').then(test);
 
+function test() {
   TestRunner.addResult("This tests long text in datagrid.");
 
   var columns = [
@@ -69,4 +69,4 @@
   function onEdit() {
     TestRunner.addResult("Editor value committed.");
   }
-})();
+}

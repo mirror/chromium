@@ -171,10 +171,9 @@ struct TestURLInfo {
     {"https://www.wytih/file", "What you typed in history www file", 7, 7, 80},
 };
 
-class AnonFakeAutocompleteProviderClient
-    : public MockAutocompleteProviderClient {
+class FakeAutocompleteProviderClient : public MockAutocompleteProviderClient {
  public:
-  explicit AnonFakeAutocompleteProviderClient(bool create_history_db) {
+  explicit FakeAutocompleteProviderClient(bool create_history_db) {
     set_template_url_service(base::MakeUnique<TemplateURLService>(nullptr, 0));
     if (history_dir_.CreateUniqueTempDir()) {
       history_service_ = history::CreateHistoryService(history_dir_.GetPath(),
@@ -200,7 +199,7 @@ class AnonFakeAutocompleteProviderClient
   base::ScopedTempDir history_dir_;
   std::unique_ptr<history::HistoryService> history_service_;
 
-  DISALLOW_COPY_AND_ASSIGN(AnonFakeAutocompleteProviderClient);
+  DISALLOW_COPY_AND_ASSIGN(FakeAutocompleteProviderClient);
 };
 
 }  // namespace
@@ -267,7 +266,7 @@ class HistoryURLProviderTest : public testing::Test,
 
   base::MessageLoop message_loop_;
   ACMatches matches_;
-  std::unique_ptr<AnonFakeAutocompleteProviderClient> client_;
+  std::unique_ptr<FakeAutocompleteProviderClient> client_;
   scoped_refptr<HistoryURLProvider> autocomplete_;
   // Should the matches be sorted and duplicates removed?
   bool sort_matches_;
@@ -300,8 +299,7 @@ void HistoryURLProviderTest::OnProviderUpdate(bool updated_matches) {
 }
 
 bool HistoryURLProviderTest::SetUpImpl(bool create_history_db) {
-  client_ =
-      std::make_unique<AnonFakeAutocompleteProviderClient>(create_history_db);
+  client_.reset(new FakeAutocompleteProviderClient(create_history_db));
   if (!client_->GetHistoryService())
     return false;
   autocomplete_ = new HistoryURLProvider(client_.get(), this);

@@ -3,9 +3,9 @@
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="chrome://resources/html/util.html">
 <link rel="import" href="chrome://resources/html/web_ui_listener_behavior.html">
-<link rel="import" href="chrome://resources/cr_elements/cr_toggle/cr_toggle.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-button/paper-button.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-input/paper-input.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-radio-group/paper-radio-group.html">
@@ -103,23 +103,23 @@
         <div id="syncEverythingCheckboxLabel" class="start">
           $i18n{syncEverythingCheckboxLabel}
         </div>
-        <cr-toggle id="syncAllDataTypesControl"
+        <paper-toggle-button id="syncAllDataTypesControl"
             checked="{{syncPrefs.syncAllDataTypes}}"
             on-change="onSyncAllDataTypesChanged_"
             aria-labelledby="syncEverythingCheckboxLabel">
-        </cr-toggle>
+        </paper-toggle-button>
       </div>
 
       <div class="list-frame" id="sync-data-types">
         <div class="layout horizontal list-item"
             hidden="[[!syncPrefs.appsRegistered]]">
           <div id="appCheckboxLabel" class="flex">$i18n{appCheckboxLabel}</div>
-          <cr-toggle checked="{{syncPrefs.appsSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.appsSynced}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.appsEnforced)]]"
               aria-labelledby="appCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -129,12 +129,12 @@
           </div>
           <!-- Autofill has a special on-change handler to deal with
                Payments integriation. -->
-          <cr-toggle checked="{{syncPrefs.autofillSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.autofillSynced}}"
               on-change="onAutofillDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.autofillEnforced)]]"
               aria-labelledby="autofillCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -142,12 +142,12 @@
           <div id="bookmarksCheckboxLabel" class="flex">
             $i18n{bookmarksCheckboxLabel}
           </div>
-          <cr-toggle checked="{{syncPrefs.bookmarksSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.bookmarksSynced}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.bookmarksEnforced)]]"
               aria-labelledby="bookmarksCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -155,12 +155,12 @@
           <div id="extensionsCheckboxLabel" class="flex">
             $i18n{extensionsCheckboxLabel}
           </div>
-          <cr-toggle checked="{{syncPrefs.extensionsSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.extensionsSynced}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.extensionsEnforced)]]"
               aria-labelledby="extensionsCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -168,12 +168,12 @@
           <div id="historyCheckboxLabel" class="flex">
             $i18n{historyCheckboxLabel}
           </div>
-          <cr-toggle checked="{{syncPrefs.typedUrlsSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.typedUrlsSynced}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.typedUrlsEnforced)]]"
               aria-labelledby="historyCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -181,12 +181,12 @@
           <div id="passwordsCheckboxLabel" class="flex">
             $i18n{passwordsCheckboxLabel}
           </div>
-          <cr-toggle checked="{{syncPrefs.passwordsSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.passwordsSynced}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.passwordsEnforced)]]"
               aria-labelledby="passwordsCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -194,12 +194,12 @@
           <div id="settingsCheckboxLabel" class="flex">
             $i18n{settingsCheckboxLabel}
           </div>
-          <cr-toggle checked="{{syncPrefs.preferencesSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.preferencesSynced}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.preferencesEnforced)]]"
               aria-labelledby="settingsCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -207,12 +207,12 @@
           <div id="themesAndWallpapersCheckboxLabel" class="flex">
             $i18n{themesAndWallpapersCheckboxLabel}
           </div>
-          <cr-toggle checked="{{syncPrefs.themesSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.themesSynced}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.themesEnforced)]]"
               aria-labelledby="themesAndWallpapersCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -220,12 +220,12 @@
           <div id="openTabsCheckboxLabel" class="flex">
             $i18n{openTabsCheckboxLabel}
           </div>
-          <cr-toggle checked="{{syncPrefs.tabsSynced}}"
+          <paper-toggle-button checked="{{syncPrefs.tabsSynced}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldSyncCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.tabsEnforced)]]"
               aria-labelledby="openTabsCheckboxLabel">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
 
         <div class="layout horizontal list-item"
@@ -239,13 +239,13 @@
               $i18n{learnMore}
             </a>
           </div>
-          <cr-toggle
+          <paper-toggle-button
               checked="{{syncPrefs.paymentsIntegrationEnabled}}"
               on-change="onSingleSyncDataTypeChanged_"
               disabled="[[shouldPaymentsCheckboxBeDisabled_(
                   syncPrefs.syncAllDataTypes, syncPrefs.autofillSynced)]]"
               aria-label="$i18n{enablePaymentsIntegrationCheckboxLabel}">
-          </cr-toggle>
+          </paper-toggle-button>
         </div>
       </div>
 

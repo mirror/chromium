@@ -12,7 +12,7 @@
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_row.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
-#include "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
+#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
@@ -405,6 +405,8 @@ void SelectNewTabPagePanel(ntp_home::PanelIdentifier panel_type) {
   id<GREYMatcher> locationbarButton = grey_allOf(
       grey_accessibilityLabel(l10n_util::GetNSString(IDS_OMNIBOX_EMPTY_HINT)),
       grey_minimumVisiblePercent(0.2), nil);
+  [[EarlGrey selectElementWithMatcher:locationbarButton]
+      assertWithMatcher:grey_text(@"Search or type URL")];
 
   [[EarlGrey selectElementWithMatcher:locationbarButton]
       performAction:grey_typeText(@"a")];

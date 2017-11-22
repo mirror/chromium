@@ -69,7 +69,9 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
 
 // Test case for the NTP home UI. More precisely, this tests the positions of
 // the elements after interacting with the device.
-@interface NTPHomeTestCase : ChromeTestCase
+@interface NTPHomeTestCase : ChromeTestCase {
+  std::unique_ptr<base::test::ScopedCommandLine> _scopedCommandLine;
+}
 
 // Current non-incognito browser state.
 @property(nonatomic, assign, readonly) ios::ChromeBrowserState* browserState;
@@ -134,6 +136,11 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
 }
 
 - (void)setUp {
+  // The command line is set up before [super setUp] in order to have the NTP
+  // opened with the command line already setup.
+  _scopedCommandLine = base::MakeUnique<base::test::ScopedCommandLine>();
+  base::CommandLine* commandLine = _scopedCommandLine->GetProcessCommandLine();
+  commandLine->AppendSwitch(switches::kEnableSuggestionsUI);
   self.provider->FireCategoryStatusChanged(self.category,
                                            CategoryStatus::AVAILABLE);
 
@@ -148,6 +155,7 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
       self.category, CategoryStatus::ALL_SUGGESTIONS_EXPLICITLY_DISABLED);
   [EarlGrey rotateDeviceToOrientation:UIDeviceOrientationPortrait
                            errorOrNil:nil];
+  _scopedCommandLine.reset();
   [super tearDown];
 }
 

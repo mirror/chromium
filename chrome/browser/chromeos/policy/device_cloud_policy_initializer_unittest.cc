@@ -49,7 +49,7 @@ class DeviceCloudPolicyInitializerTest
             nullptr,
             base::MakeUnique<chromeos::attestation::MockAttestationFlow>(),
             &statistics_provider_) {
-    RegisterLocalState(local_state_.registry());
+    chrome::RegisterLocalState(local_state_.registry());
     statistics_provider_.SetMachineStatistic(
         chromeos::system::kSerialNumberKey, "fake-serial");
     statistics_provider_.SetMachineStatistic(

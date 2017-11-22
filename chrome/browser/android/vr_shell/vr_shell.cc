@@ -21,7 +21,6 @@
 #include "base/values.h"
 #include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/android/vr_shell/android_ui_gesture_target.h"
-#include "chrome/browser/android/vr_shell/autocomplete_controller.h"
 #include "chrome/browser/android/vr_shell/vr_compositor.h"
 #include "chrome/browser/android/vr_shell/vr_gl_thread.h"
 #include "chrome/browser/android/vr_shell/vr_shell_delegate.h"
@@ -147,16 +146,11 @@ VrShell::VrShell(JNIEnv* env,
   g_instance = this;
   j_vr_shell_.Reset(env, obj);
 
-  // Defer applying commits to the renderer until we know the desired
-  // content resolution and DPR.
-  compositor_->SetDeferCommits(true);
-
   gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
       ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
-  autocomplete_controller_ = base::MakeUnique<vr::AutocompleteController>(ui_);
 
   gl_thread_->Start();
 
@@ -291,13 +285,6 @@ void VrShell::OnContentPaused(bool paused) {
     device->Blur();
   else
     device->Focus();
-}
-
-void VrShell::Navigate(GURL url) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_VrShellImpl_loadUrl(
-      env, j_vr_shell_,
-      base::android::ConvertUTF8ToJavaString(env, url.spec()));
 }
 
 void VrShell::NavigateBack() {
@@ -735,7 +722,6 @@ void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_setContentCssSize(env, j_vr_shell_, window_size.width(),
                                      window_size.height(), dpr);
-  compositor_->SetDeferCommits(false);
 }
 
 void VrShell::SetVoiceSearchActive(bool active) {
@@ -758,14 +744,6 @@ void VrShell::SetVoiceSearchActive(bool active) {
   } else {
     speech_recognizer_->Stop();
   }
-}
-
-void VrShell::StartAutocomplete(const base::string16& string) {
-  autocomplete_controller_->Start(string);
-}
-
-void VrShell::StopAutocomplete() {
-  autocomplete_controller_->Stop();
 }
 
 bool VrShell::HasAudioPermission() {
@@ -825,19 +803,19 @@ void VrShell::PollMediaAccessFlag() {
   bool is_capturing_screen = num_tabs_capturing_screen > 0;
   bool is_bluetooth_connected = num_tabs_bluetooth_connected > 0;
   if (is_capturing_audio != is_capturing_audio_) {
-    ui_->SetAudioCaptureEnabled(is_capturing_audio);
+    ui_->SetAudioCapturingIndicator(is_capturing_audio);
     is_capturing_audio_ = is_capturing_audio;
   }
   if (is_capturing_video != is_capturing_video_) {
-    ui_->SetVideoCaptureEnabled(is_capturing_video);
+    ui_->SetVideoCapturingIndicator(is_capturing_video);
     is_capturing_video_ = is_capturing_video;
   }
   if (is_capturing_screen != is_capturing_screen_) {
-    ui_->SetScreenCaptureEnabled(is_capturing_screen);
+    ui_->SetScreenCapturingIndicator(is_capturing_screen);
     is_capturing_screen_ = is_capturing_screen;
   }
   if (is_bluetooth_connected != is_bluetooth_connected_) {
-    ui_->SetBluetoothConnected(is_bluetooth_connected);
+    ui_->SetBluetoothConnectedIndicator(is_bluetooth_connected);
     is_bluetooth_connected_ = is_bluetooth_connected;
   }
 }
@@ -845,7 +823,7 @@ void VrShell::PollMediaAccessFlag() {
 void VrShell::SetHighAccuracyLocation(bool high_accuracy_location) {
   if (high_accuracy_location == high_accuracy_location_)
     return;
-  ui_->SetLocationAccess(high_accuracy_location);
+  ui_->SetLocationAccessIndicator(high_accuracy_location);
   high_accuracy_location_ = high_accuracy_location;
 }
 

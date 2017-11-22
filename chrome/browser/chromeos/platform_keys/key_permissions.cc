@@ -319,7 +319,7 @@ void KeyPermissions::PermissionsForExtension::KeyEntriesFromState(
                                                  &new_entry.sign_unlimited);
       state_store_entries_.push_back(new_entry);
     } else {
-      LOG(ERROR) << "Found invalid entry of type " << entry.type()
+      LOG(ERROR) << "Found invalid entry of type " << entry.GetType()
                  << " in PlatformKeys state store.";
       continue;
     }

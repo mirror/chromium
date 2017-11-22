@@ -91,7 +91,7 @@ enum PseudoId {
                          (1 << (kPseudoIdBackdrop - kFirstPublicPseudoId))
 };
 
-enum class OutlineIsAuto : bool { kOff = false, kOn = true };
+enum OutlineIsAuto { kOutlineIsAutoOff = 0, kOutlineIsAutoOn };
 
 // Random visual rendering model attributes. Not inherited.
 
@@ -249,17 +249,22 @@ enum CSSBoxType {
   kContentBox
 };
 
-enum class SnapAxis : unsigned {
-  kBoth,
-  kX,
-  kY,
-  kBlock,
-  kInline,
+enum SnapAxis {
+  kSnapAxisBoth,
+  kSnapAxisX,
+  kSnapAxisY,
+  kSnapAxisBlock,
+  kSnapAxisInline,
 };
 
 enum class SnapStrictness { kProximity, kMandatory };
 
-enum class SnapAlignment : unsigned { kNone, kStart, kEnd, kCenter };
+enum SnapAlignment {
+  kSnapAlignmentNone,
+  kSnapAlignmentStart,
+  kSnapAlignmentEnd,
+  kSnapAlignmentCenter
+};
 
 enum TextEmphasisPosition {
   kOverRight,

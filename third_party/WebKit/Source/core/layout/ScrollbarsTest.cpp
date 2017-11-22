@@ -97,9 +97,11 @@ class ScrollbarsTest : public ::testing::WithParamInterface<bool>,
 
 class ScrollbarsTestWithVirtualTimer : public ScrollbarsTest {
  public:
-  void SetUp() override {
-    ScrollbarsTest::SetUp();
-    WebView().Scheduler()->EnableVirtualTime();
+  void TearDown() override {
+    // The SimTest destructor calls runPendingTasks. This is a problem because
+    // if there are any repeating tasks, advancing virtual time will cause the
+    // runloop to busy loop. Disabling virtual time here fixes that.
+    WebView().Scheduler()->DisableVirtualTimeForTesting();
   }
 
   void TimeAdvance() {
@@ -139,9 +141,9 @@ TEST_P(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(R"HTML(
-    <!DOCTYPE html>
-    <style> body { width: 1600px; height: 1200px; } </style>)HTML");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style> body { width: 1600px; height: 1200px; } </style>");
   auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
 
   Compositor().BeginFrame();
@@ -990,26 +992,25 @@ TEST_P(ScrollbarsTest, NativeScrollbarChangeToMobileByEmulator) {
 
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(R"HTML(
-    <!DOCTYPE html>
-    <style type='text/css'>
-    body {
-      height: 10000px;
-      margin: 0;
-    }
-    #d1 {
-      height: 200px;
-      width: 200px;
-      overflow: auto;
-    }
-    #d2 {
-      height: 2000px;
-    }
-    </style>
-    <div id='d1'>
-      <div id='d2'/>
-    </div>
-  )HTML");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style type='text/css'>"
+      "body {"
+      "  height: 10000px;"
+      "  margin: 0;"
+      "}"
+      "#d1 {"
+      "  height: 200px;"
+      "  width: 200px;"
+      "  overflow: auto;"
+      "}"
+      "#d2 {"
+      "  height: 2000px;"
+      "}"
+      "</style>"
+      "<div id='d1'>"
+      "  <div id='d2'/>"
+      "</div>");
 
   Compositor().BeginFrame();
 
@@ -1078,29 +1079,28 @@ TEST_P(ScrollbarsTest, CustomScrollbarChangeToMobileByEmulator) {
 
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(R"HTML(
-    <!DOCTYPE html>
-    <style type='text/css'>
-    body {
-      height: 10000px;
-      margin: 0;
-    }
-    #d1 {
-      height: 200px;
-      width: 200px;
-      overflow: auto;
-    }
-    #d2 {
-      height: 2000px;
-    }
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    </style>
-    <div id='d1'>
-      <div id='d2'/>
-    </div>
-  )HTML");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style type='text/css'>"
+      "body {"
+      "  height: 10000px;"
+      "  margin: 0;"
+      "}"
+      "#d1 {"
+      "  height: 200px;"
+      "  width: 200px;"
+      "  overflow: auto;"
+      "}"
+      "#d2 {"
+      "  height: 2000px;"
+      "}"
+      "::-webkit-scrollbar {"
+      "  width: 10px;"
+      "}"
+      "</style>"
+      "<div id='d1'>"
+      "  <div id='d2'/>"
+      "</div>");
 
   Compositor().BeginFrame();
 
@@ -1164,28 +1164,27 @@ TEST_P(ScrollbarsTest, CustomScrollbarWhenStyleOwnerChange) {
 
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(R"HTML(
-    <!DOCTYPE html>
-    <style type='text/css'>
-    #d1 {
-      height: 200px;
-      width: 200px;
-      overflow: auto;
-    }
-    #d2 {
-      height: 2000px;
-    }
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    .custom::-webkit-scrollbar {
-      width: 5px;
-    }
-    </style>
-    <div id='d1'>
-      <div id='d2'></div>
-    </div>
-  )HTML");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style type='text/css'>"
+      "#d1 {"
+      "  height: 200px;"
+      "  width: 200px;"
+      "  overflow: auto;"
+      "}"
+      "#d2 {"
+      "  height: 2000px;"
+      "}"
+      "::-webkit-scrollbar {"
+      "  width: 10px;"
+      "}"
+      ".custom::-webkit-scrollbar {"
+      "  width: 5px;"
+      "}"
+      "</style>"
+      "<div id='d1'>"
+      "  <div id='d2'></div>"
+      "</div>");
 
   Compositor().BeginFrame();
 
@@ -1221,6 +1220,8 @@ TEST_P(ScrollbarsTestWithVirtualTimer,
 #else
 TEST_P(ScrollbarsTestWithVirtualTimer, TestNonCompositedOverlayScrollbarsFade) {
 #endif
+  // Will crash if move EnableVirtualTime before test body.
+  WebView().Scheduler()->EnableVirtualTime();
   TimeAdvance();
   constexpr double kMockOverlayFadeOutDelayInSeconds = 5.0;
   constexpr double kMockOverlayFadeOutDelayMS =
@@ -1372,9 +1373,9 @@ TEST_P(ScrollbarAppearanceTest, ThemeEngineDefinesMinimumThumbLength) {
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(R"HTML(
-    <!DOCTYPE html>
-    <style> body { width: 1000000px; height: 1000000px; } </style>)HTML");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style> body { width: 1000000px; height: 1000000px; } </style>");
   ScrollableArea* scrollable_area =
       GetDocument().View()->LayoutViewportScrollableArea();
 
@@ -1398,9 +1399,9 @@ TEST_P(ScrollbarAppearanceTest, HugeScrollingThumbPosition) {
   WebView().Resize(WebSize(1000, 1000));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete(R"HTML(
-    <!DOCTYPE html>
-    <style> body { margin: 0px; height: 10000000px; } </style>)HTML");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style> body { margin: 0px; height: 10000000px; } </style>");
   ScrollableArea* scrollable_area =
       GetDocument().View()->LayoutViewportScrollableArea();
 

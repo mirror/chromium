@@ -200,7 +200,7 @@ bool HasNonDeviceLocalAccounts(const user_manager::UserList& users) {
 // purpose, but it has two caveats:
 // 1. username_hash() is defined only after user has logged in.
 // 2. If cryptohome identifier changes, username_hash() will also change,
-//    and we may lose user => wallpaper files mapping at that point.
+//    and we may loose user => wallpaper files mapping at that point.
 // So this function gives WallpaperManager independent hashing method to break
 // this dependency.
 //
@@ -743,16 +743,15 @@ bool WallpaperManager::ResizeAndSaveWallpaper(const gfx::ImageSkia& image,
 base::FilePath WallpaperManager::GetCustomWallpaperPath(
     const char* sub_dir,
     const wallpaper::WallpaperFilesId& wallpaper_files_id,
-    const std::string& file_name) {
+    const std::string& file) {
   base::FilePath custom_wallpaper_path = GetCustomWallpaperDir(sub_dir);
-  return custom_wallpaper_path.Append(wallpaper_files_id.id())
-      .Append(file_name);
+  return custom_wallpaper_path.Append(wallpaper_files_id.id()).Append(file);
 }
 
 void WallpaperManager::SetCustomWallpaper(
     const AccountId& account_id,
     const wallpaper::WallpaperFilesId& wallpaper_files_id,
-    const std::string& file_name,
+    const std::string& file,
     wallpaper::WallpaperLayout layout,
     wallpaper::WallpaperType type,
     const gfx::ImageSkia& image,
@@ -775,7 +774,7 @@ void WallpaperManager::SetCustomWallpaper(
   }
 
   base::FilePath wallpaper_path = GetCustomWallpaperPath(
-      kOriginalWallpaperSubDir, wallpaper_files_id, file_name);
+      kOriginalWallpaperSubDir, wallpaper_files_id, file);
 
   const user_manager::User* user =
       user_manager::UserManager::Get()->FindUser(account_id);
@@ -803,7 +802,7 @@ void WallpaperManager::SetCustomWallpaper(
   }
 
   std::string relative_path =
-      base::FilePath(wallpaper_files_id.id()).Append(file_name).value();
+      base::FilePath(wallpaper_files_id.id()).Append(file).value();
   // User's custom wallpaper path is determined by relative path and the
   // appropriate wallpaper resolution in GetCustomWallpaperInternal.
   WallpaperInfo info = {relative_path, layout, type,
@@ -852,7 +851,7 @@ void WallpaperManager::SetDefaultWallpaper(const AccountId& account_id,
 
 void WallpaperManager::SetCustomizedDefaultWallpaper(
     const GURL& wallpaper_url,
-    const base::FilePath& file_path,
+    const base::FilePath& downloaded_file,
     const base::FilePath& resized_directory) {
   // Should fail if this ever happens in tests.
   DCHECK(wallpaper_url.is_valid());
@@ -863,10 +862,10 @@ void WallpaperManager::SetCustomizedDefaultWallpaper(
     }
     return;
   }
-  std::string downloaded_file_name = file_path.BaseName().value();
+  std::string downloaded_file_name = downloaded_file.BaseName().value();
   std::unique_ptr<CustomizedWallpaperRescaledFiles> rescaled_files(
       new CustomizedWallpaperRescaledFiles(
-          file_path,
+          downloaded_file,
           resized_directory.Append(downloaded_file_name +
                                    kSmallWallpaperSuffix),
           resized_directory.Append(downloaded_file_name +
@@ -875,7 +874,7 @@ void WallpaperManager::SetCustomizedDefaultWallpaper(
   base::Closure check_file_exists = rescaled_files->CreateCheckerClosure();
   base::Closure on_checked_closure =
       base::Bind(&WallpaperManager::SetCustomizedDefaultWallpaperAfterCheck,
-                 weak_factory_.GetWeakPtr(), wallpaper_url, file_path,
+                 weak_factory_.GetWeakPtr(), wallpaper_url, downloaded_file,
                  base::Passed(std::move(rescaled_files)));
   if (!task_runner_->PostTaskAndReply(FROM_HERE, check_file_exists,
                                       on_checked_closure)) {
@@ -1235,7 +1234,7 @@ void WallpaperManager::RemoveObserver(WallpaperManager::Observer* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void WallpaperManager::OpenWallpaperPicker() {
+void WallpaperManager::Open() {
   if (wallpaper_manager_util::ShouldUseAndroidWallpapersApp(
           ProfileHelper::Get()->GetProfileByUser(
               user_manager::UserManager::Get()->GetActiveUser())) &&
@@ -1330,7 +1329,8 @@ void WallpaperManager::ShowDefaultWallpaperForTesting(
 // WallpaperManager, private: --------------------------------------------------
 
 WallpaperManager::WallpaperManager()
-    : activation_client_observer_(this),
+    : binding_(this),
+      activation_client_observer_(this),
       window_observer_(this),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -1349,6 +1349,19 @@ WallpaperManager::WallpaperManager()
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 
   user_manager::UserManager::Get()->AddObserver(this);
+
+  content::ServiceManagerConnection* connection =
+      content::ServiceManagerConnection::GetForProcess();
+  if (connection && connection->GetConnector()) {
+    // Connect to the wallpaper controller interface in the ash service.
+    ash::mojom::WallpaperControllerPtr wallpaper_controller_ptr;
+    connection->GetConnector()->BindInterface(ash::mojom::kServiceName,
+                                              &wallpaper_controller_ptr);
+    // Register this object as the wallpaper picker.
+    ash::mojom::WallpaperPickerPtr picker;
+    binding_.Bind(mojo::MakeRequest(&picker));
+    wallpaper_controller_ptr->SetWallpaperPicker(std::move(picker));
+  }
 }
 
 // static
@@ -2012,7 +2025,7 @@ base::TimeDelta WallpaperManager::GetWallpaperLoadDelay() const {
 
 void WallpaperManager::SetCustomizedDefaultWallpaperAfterCheck(
     const GURL& wallpaper_url,
-    const base::FilePath& file_path,
+    const base::FilePath& downloaded_file,
     std::unique_ptr<CustomizedWallpaperRescaledFiles> rescaled_files) {
   PrefService* pref_service = g_browser_process->local_state();
 
@@ -2024,7 +2037,7 @@ void WallpaperManager::SetCustomizedDefaultWallpaperAfterCheck(
     // Either resized images do not exist or cached version is incorrect.
     // Need to start resize again.
     user_image_loader::StartWithFilePath(
-        task_runner_, file_path, ImageDecoder::ROBUST_JPEG_CODEC,
+        task_runner_, downloaded_file, ImageDecoder::ROBUST_JPEG_CODEC,
         0,  // Do not crop.
         base::Bind(&WallpaperManager::OnCustomizedDefaultWallpaperDecoded,
                    weak_factory_.GetWeakPtr(), wallpaper_url,

@@ -28,7 +28,6 @@
 #include "services/ui/ws/user_id.h"
 #include "services/ui/ws/window_tree_binding.h"
 #include "services/viz/public/interfaces/compositing/surface_id.mojom.h"
-#include "ui/gfx/native_widget_types.h"
 
 namespace display {
 struct ViewportMetrics;
@@ -92,8 +91,6 @@ class WindowTree : public mojom::WindowTree,
   bool automatically_create_display_roots() const {
     return automatically_create_display_roots_;
   }
-
-  void OnAcceleratedWidgetAvailableForDisplay(Display* display);
 
   ClientSpecificId id() const { return id_; }
 

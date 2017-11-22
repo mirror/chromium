@@ -12,14 +12,12 @@ import filecmp
 
 
 def _CheckTestharnessResults(input_api, output_api):
-    """Checks for all-PASS generic baselines for testharness.js tests.
+    """Checks for testharness.js test baseline files that contain only PASS lines.
 
-    These files are unnecessary because for testharness.js tests, if there is no
-    baseline file then the test is considered to pass when the output is all
-    PASS. Note that only generic baselines are checked because platform specific
-    and virtual baselines might be needed to prevent fallback.
+    In general these files are unnecessary because for testharness.js tests, if there is
+    no baseline file then the test is considered to pass when the output is all PASS.
     """
-    baseline_files = _TestharnessGenericBaselinesToCheck(input_api)
+    baseline_files = _TestharnessBaselineFilesToCheck(input_api)
     if not baseline_files:
         return []
 
@@ -36,8 +34,8 @@ def _CheckTestharnessResults(input_api, output_api):
     return []
 
 
-def _TestharnessGenericBaselinesToCheck(input_api):
-    """Returns a list of paths of generic baselines for testharness.js tests."""
+def _TestharnessBaselineFilesToCheck(input_api):
+    """Returns a list of paths of -expected.txt files for testharness.js tests."""
     baseline_files = []
     for f in input_api.AffectedFiles():
         if f.Action() == 'D':
@@ -47,6 +45,11 @@ def _TestharnessGenericBaselinesToCheck(input_api):
             continue
         if (input_api.os_path.join('LayoutTests', 'platform') in path or
             input_api.os_path.join('LayoutTests', 'virtual') in path):
+            # We want to ignore files in LayoutTests/platform, because some all-PASS
+            # platform specific baselines may be necessary to prevent fallback to a
+            # more general baseline; we also ignore files in LayoutTests/virtual
+            # for a similar reason; some all-pass baselines are necessary to
+            # prevent fallback to the corresponding non-virtual test baseline.
             continue
         baseline_files.append(path)
     return baseline_files

@@ -168,7 +168,7 @@ void EffectStack::Trace(blink::Visitor* visitor) {
 }
 
 bool EffectStack::GetAnimatedBoundingBox(FloatBox& box,
-                                         const CSSProperty& property) const {
+                                         CSSPropertyID property) const {
   FloatBox original_box(box);
   for (const auto& sampled_effect : sampled_effects_) {
     if (sampled_effect->Effect() &&

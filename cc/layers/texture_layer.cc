@@ -34,7 +34,7 @@ void TextureLayer::ClearClient() {
 }
 
 void TextureLayer::ClearTexture() {
-  SetTransferableResource(viz::TransferableResource(), nullptr);
+  SetTextureMailbox(viz::TextureMailbox(), nullptr);
 }
 
 std::unique_ptr<LayerImpl> TextureLayer::CreateLayerImpl(
@@ -99,22 +99,24 @@ void TextureLayer::SetBlendBackgroundColor(bool blend) {
   SetNeedsCommit();
 }
 
-void TextureLayer::SetTransferableResourceInternal(
-    const viz::TransferableResource& resource,
+void TextureLayer::SetTextureMailboxInternal(
+    const viz::TextureMailbox& mailbox,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback,
-    bool requires_commit) {
-  DCHECK(resource.mailbox_holder.mailbox.IsZero() || !holder_ref_ ||
-         resource != holder_ref_->holder()->resource());
-  DCHECK_EQ(resource.mailbox_holder.mailbox.IsZero(), !release_callback);
+    bool requires_commit,
+    bool allow_mailbox_reuse) {
+  DCHECK(!mailbox.IsValid() || !holder_ref_ ||
+         !mailbox.Equals(holder_ref_->holder()->mailbox()) ||
+         allow_mailbox_reuse);
+  DCHECK_EQ(mailbox.IsValid(), !!release_callback);
 
   // If we never commited the mailbox, we need to release it here.
-  if (!resource.mailbox_holder.mailbox.IsZero()) {
-    holder_ref_ = TransferableResourceHolder::Create(
-        resource, std::move(release_callback));
+  if (mailbox.IsValid()) {
+    holder_ref_ =
+        TextureMailboxHolder::Create(mailbox, std::move(release_callback));
   } else {
     holder_ref_ = nullptr;
   }
-  needs_set_resource_ = true;
+  needs_set_mailbox_ = true;
   // If we are within a commit, no need to do it again immediately after.
   if (requires_commit)
     SetNeedsCommit();
@@ -127,12 +129,13 @@ void TextureLayer::SetTransferableResourceInternal(
   SetNextCommitWaitsForActivation();
 }
 
-void TextureLayer::SetTransferableResource(
-    const viz::TransferableResource& resource,
+void TextureLayer::SetTextureMailbox(
+    const viz::TextureMailbox& mailbox,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback) {
   bool requires_commit = true;
-  SetTransferableResourceInternal(resource, std::move(release_callback),
-                                  requires_commit);
+  bool allow_mailbox_reuse = false;
+  SetTextureMailboxInternal(mailbox, std::move(release_callback),
+                            requires_commit, allow_mailbox_reuse);
 }
 
 void TextureLayer::SetNeedsDisplayRect(const gfx::Rect& dirty_rect) {
@@ -149,7 +152,7 @@ void TextureLayer::SetLayerTreeHost(LayerTreeHost* host) {
   // we will need to set the mailbox again on a new TextureLayerImpl the next
   // time we push.
   if (!host && holder_ref_) {
-    needs_set_resource_ = true;
+    needs_set_mailbox_ = true;
     // The active frame needs to be replaced and the mailbox returned before the
     // commit is called complete.
     SetNextCommitWaitsForActivation();
@@ -164,20 +167,21 @@ bool TextureLayer::HasDrawableContent() const {
 bool TextureLayer::Update() {
   bool updated = Layer::Update();
   if (client_) {
-    viz::TransferableResource resource;
+    viz::TextureMailbox mailbox;
     std::unique_ptr<viz::SingleReleaseCallback> release_callback;
-    if (client_->PrepareTransferableResource(&resource, &release_callback)) {
+    if (client_->PrepareTextureMailbox(&mailbox, &release_callback)) {
       // Already within a commit, no need to do another one immediately.
       bool requires_commit = false;
-      SetTransferableResourceInternal(resource, std::move(release_callback),
-                                      requires_commit);
+      bool allow_mailbox_reuse = false;
+      SetTextureMailboxInternal(mailbox, std::move(release_callback),
+                                requires_commit, allow_mailbox_reuse);
       updated = true;
     }
   }
 
-  // SetTransferableResource could be called externally and the same mailbox
-  // used for different textures.  Such callers notify this layer that the
-  // texture has changed by calling SetNeedsDisplay, so check for that here.
+  // SetTextureMailbox could be called externally and the same mailbox used for
+  // different textures.  Such callers notify this layer that the texture has
+  // changed by calling SetNeedsDisplay, so check for that here.
   return updated || !update_rect().IsEmpty();
 }
 
@@ -197,54 +201,54 @@ void TextureLayer::PushPropertiesTo(LayerImpl* layer) {
   texture_layer->SetVertexOpacity(vertex_opacity_);
   texture_layer->SetPremultipliedAlpha(premultiplied_alpha_);
   texture_layer->SetBlendBackgroundColor(blend_background_color_);
-  if (needs_set_resource_) {
-    viz::TransferableResource resource;
+  if (needs_set_mailbox_) {
+    viz::TextureMailbox texture_mailbox;
     std::unique_ptr<viz::SingleReleaseCallback> release_callback;
     if (holder_ref_) {
-      TransferableResourceHolder* holder = holder_ref_->holder();
-      resource = holder->resource();
+      TextureMailboxHolder* holder = holder_ref_->holder();
+      texture_mailbox = holder->mailbox();
       release_callback = holder->GetCallbackForImplThread(
           layer_tree_host()->GetTaskRunnerProvider()->MainThreadTaskRunner());
     }
-    texture_layer->SetTransferableResource(resource,
-                                           std::move(release_callback));
-    needs_set_resource_ = false;
+    texture_layer->SetTextureMailbox(texture_mailbox,
+                                     std::move(release_callback));
+    needs_set_mailbox_ = false;
   }
 }
 
-TextureLayer::TransferableResourceHolder::MainThreadReference::
-    MainThreadReference(TransferableResourceHolder* holder)
+TextureLayer::TextureMailboxHolder::MainThreadReference::MainThreadReference(
+    TextureMailboxHolder* holder)
     : holder_(holder) {
   holder_->InternalAddRef();
 }
 
-TextureLayer::TransferableResourceHolder::MainThreadReference::
+TextureLayer::TextureMailboxHolder::MainThreadReference::
     ~MainThreadReference() {
   holder_->InternalRelease();
 }
 
-TextureLayer::TransferableResourceHolder::TransferableResourceHolder(
-    const viz::TransferableResource& resource,
+TextureLayer::TextureMailboxHolder::TextureMailboxHolder(
+    const viz::TextureMailbox& mailbox,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback)
     : internal_references_(0),
-      resource_(resource),
+      mailbox_(mailbox),
       release_callback_(std::move(release_callback)),
-      sync_token_(resource.mailbox_holder.sync_token),
+      sync_token_(mailbox.sync_token()),
       is_lost_(false) {}
 
-TextureLayer::TransferableResourceHolder::~TransferableResourceHolder() {
+TextureLayer::TextureMailboxHolder::~TextureMailboxHolder() {
   DCHECK_EQ(0u, internal_references_);
 }
 
-std::unique_ptr<TextureLayer::TransferableResourceHolder::MainThreadReference>
-TextureLayer::TransferableResourceHolder::Create(
-    const viz::TransferableResource& resource,
+std::unique_ptr<TextureLayer::TextureMailboxHolder::MainThreadReference>
+TextureLayer::TextureMailboxHolder::Create(
+    const viz::TextureMailbox& mailbox,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback) {
   return std::make_unique<MainThreadReference>(
-      new TransferableResourceHolder(resource, std::move(release_callback)));
+      new TextureMailboxHolder(mailbox, std::move(release_callback)));
 }
 
-void TextureLayer::TransferableResourceHolder::Return(
+void TextureLayer::TextureMailboxHolder::Return(
     const gpu::SyncToken& sync_token,
     bool is_lost) {
   base::AutoLock lock(arguments_lock_);
@@ -253,38 +257,37 @@ void TextureLayer::TransferableResourceHolder::Return(
 }
 
 std::unique_ptr<viz::SingleReleaseCallback>
-TextureLayer::TransferableResourceHolder::GetCallbackForImplThread(
+TextureLayer::TextureMailboxHolder::GetCallbackForImplThread(
     scoped_refptr<base::SequencedTaskRunner> main_thread_task_runner) {
   // We can't call GetCallbackForImplThread if we released the main thread
   // reference.
   DCHECK_GT(internal_references_, 0u);
   InternalAddRef();
   return viz::SingleReleaseCallback::Create(
-      base::Bind(&TransferableResourceHolder::ReturnAndReleaseOnImplThread,
-                 this, std::move(main_thread_task_runner)));
+      base::Bind(&TextureMailboxHolder::ReturnAndReleaseOnImplThread, this,
+                 std::move(main_thread_task_runner)));
 }
 
-void TextureLayer::TransferableResourceHolder::InternalAddRef() {
+void TextureLayer::TextureMailboxHolder::InternalAddRef() {
   ++internal_references_;
 }
 
-void TextureLayer::TransferableResourceHolder::InternalRelease() {
+void TextureLayer::TextureMailboxHolder::InternalRelease() {
   DCHECK(main_thread_checker_.CalledOnValidThread());
   if (!--internal_references_) {
     release_callback_->Run(sync_token_, is_lost_);
-    resource_ = viz::TransferableResource();
+    mailbox_ = viz::TextureMailbox();
     release_callback_ = nullptr;
   }
 }
 
-void TextureLayer::TransferableResourceHolder::ReturnAndReleaseOnImplThread(
+void TextureLayer::TextureMailboxHolder::ReturnAndReleaseOnImplThread(
     const scoped_refptr<base::SequencedTaskRunner>& main_thread_task_runner,
     const gpu::SyncToken& sync_token,
     bool is_lost) {
   Return(sync_token, is_lost);
   main_thread_task_runner->PostTask(
-      FROM_HERE,
-      base::Bind(&TransferableResourceHolder::InternalRelease, this));
+      FROM_HERE, base::Bind(&TextureMailboxHolder::InternalRelease, this));
 }
 
 }  // namespace cc

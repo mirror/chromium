@@ -96,8 +96,8 @@ public class AwLayoutSizer {
     public void onContentSizeChanged(int width, int height) {
         CommandLine commandLine = CommandLine.getInstance();
         if (!commandLine.hasSwitch(ContentSwitches.ENABLE_USE_ZOOM_FOR_DSF)) {
-            width = (int) (width * mDIPScale);
-            height = (int) (height * mDIPScale);
+            width *= mDIPScale;
+            height *= mDIPScale;
         }
         doUpdate(width, height, mPageScaleFactor);
     }

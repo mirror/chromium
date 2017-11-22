@@ -43,7 +43,7 @@ class GPU_EXPORT DiscardableHandleBase {
   // Test only functions.
   bool IsLockedForTesting() const;
   bool IsDeletedForTesting() const;
-  scoped_refptr<Buffer> BufferForTesting() const;
+  scoped_refptr<Buffer> BufferForTesting() const { return buffer_; }
 
  protected:
   DiscardableHandleBase(scoped_refptr<Buffer> buffer,

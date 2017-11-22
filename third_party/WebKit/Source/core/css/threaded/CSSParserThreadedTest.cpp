@@ -15,9 +15,7 @@ namespace blink {
 class CSSParserThreadedTest : public MultiThreadedTest {
  public:
   static void TestSingle(CSSPropertyID prop, const String& text) {
-    const CSSValue* value = CSSParser::ParseSingleValue(
-        prop, text,
-        StrictCSSParserContext(SecureContextMode::kInsecureContext));
+    const CSSValue* value = CSSParser::ParseSingleValue(prop, text);
     ASSERT_TRUE(value);
     EXPECT_EQ(text, value->CssText());
   }
@@ -26,8 +24,7 @@ class CSSParserThreadedTest : public MultiThreadedTest {
                                                const String& text) {
     MutableCSSPropertyValueSet* style =
         MutableCSSPropertyValueSet::Create(kHTMLStandardMode);
-    CSSParser::ParseValue(style, prop, text, true,
-                          SecureContextMode::kInsecureContext);
+    CSSParser::ParseValue(style, prop, text, true);
     return style;
   }
 };
@@ -65,8 +62,7 @@ TSAN_TEST_F(CSSParserThreadedTest, ValuePropertyFont) {
 
 TSAN_TEST_F(CSSParserThreadedTest, FontFaceDescriptor) {
   RunOnThreads([]() {
-    CSSParserContext* ctx = CSSParserContext::Create(
-        kCSSFontFaceRuleMode, SecureContextMode::kInsecureContext);
+    CSSParserContext* ctx = CSSParserContext::Create(kCSSFontFaceRuleMode);
     const CSSValue* v = CSSParser::ParseFontFaceDescriptor(
         CSSPropertySrc, "url(myfont.ttf)", ctx);
     ASSERT_TRUE(v);

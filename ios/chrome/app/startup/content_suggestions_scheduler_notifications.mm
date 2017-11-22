@@ -16,6 +16,9 @@
 @implementation ContentSuggestionsSchedulerNotifications
 
 + (void)notifyColdStart:(ios::ChromeBrowserState*)browserState {
+  if (!experimental_flags::IsSuggestionsUIEnabled())
+    return;
+
   ntp_snippets::ContentSuggestionsService* contentSuggestionsService =
       IOSChromeContentSuggestionsServiceFactory::GetForBrowserState(
           browserState);
@@ -24,6 +27,9 @@
 }
 
 + (void)notifyForeground:(ios::ChromeBrowserState*)browserState {
+  if (!experimental_flags::IsSuggestionsUIEnabled())
+    return;
+
   ntp_snippets::ContentSuggestionsService* contentSuggestionsService =
       IOSChromeContentSuggestionsServiceFactory::GetForBrowserState(
           browserState);

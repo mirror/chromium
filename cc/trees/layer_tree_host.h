@@ -500,7 +500,7 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
       ElementId element_id) const override;
 
   void QueueImageDecode(const PaintImage& image,
-                        base::OnceCallback<void(bool)> callback);
+                        const base::Callback<void(bool)>& callback);
   void ImageDecodesFinished(const std::vector<std::pair<int, bool>>& results);
 
   void RequestBeginMainFrameNotExpected(bool new_state);
@@ -671,10 +671,9 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   MutatorHost* mutator_host_;
 
-  std::vector<std::pair<PaintImage, base::OnceCallback<void(bool)>>>
+  std::vector<std::pair<PaintImage, base::Callback<void(bool)>>>
       queued_image_decodes_;
-  std::unordered_map<int, base::OnceCallback<void(bool)>>
-      pending_image_decodes_;
+  std::unordered_map<int, base::Callback<void(bool)>> pending_image_decodes_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHost);
 };

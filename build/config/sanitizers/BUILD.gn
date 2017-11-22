@@ -226,8 +226,9 @@ config("default_sanitizer_ldflags") {
     # and dlls, see link_executable and link_shared_library below.
     # This here handles only the component build.
     if (target_cpu == "x64") {
-      # Windows 64-bit.
+      # Windows 64-bit. TODO(etienneb): Remove the assert when this is ready.
       if (is_component_build) {
+        assert(false, "win/asan does not work in 64-bit yet")
         libs = [
           "clang_rt.asan_dynamic-x86_64.lib",
           "clang_rt.asan_dynamic_runtime_thunk-x86_64.lib",
@@ -266,7 +267,12 @@ config("common_sanitizer_flags") {
       "-gcolumn-info",
     ]
 
-    # Frame pointers are controlled in //build/config/compiler:default_stack_frames
+    # Disable frame pointer elimination for better stack traces.
+    if (is_posix) {
+      cflags += [ "-fno-omit-frame-pointer" ]
+    } else {
+      cflags += [ "/Oy-" ]
+    }
   }
 }
 

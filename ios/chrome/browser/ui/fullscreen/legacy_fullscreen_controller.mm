@@ -15,7 +15,6 @@
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h"
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_constants.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
-#import "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
 #import "ios/chrome/browser/ui/voice/voice_search_notification_names.h"
 #include "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
@@ -228,11 +227,11 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
                  object:nil];
     [center addObserver:self
                selector:@selector(incrementFullScreenLock)
-                   name:kToolsMenuWillShowNotification
+                   name:kMenuWillShowNotification
                  object:nil];
     [center addObserver:self
                selector:@selector(decrementFullScreenLock)
-                   name:kToolsMenuWillHideNotification
+                   name:kMenuWillHideNotification
                  object:nil];
     [center addObserver:self
                selector:@selector(triggerHeader)
@@ -366,10 +365,12 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
   // The desired final position of the header.
   CGFloat headerPosition = visible ? 0.0 : self.headerHeight;
 
-  // Check if there is anything to do.
   CGFloat delta = self.delegate.currentHeaderOffset - headerPosition;
-  if (CGFloatEquals(delta, 0.0))
+  if (CGFloatEquals(delta, 0.0) && !selfTriggered_) {
+    // The header is already in the right place, and just needs to be redrawn.
+    [self.delegate redrawHeader];
     return;
+  }
 
   // Do not further act on scrollview changes.
   ScopedIncrementer stack(&(self->selfTriggered_));

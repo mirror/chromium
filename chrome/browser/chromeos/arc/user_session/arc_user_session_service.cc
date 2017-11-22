@@ -69,11 +69,11 @@ void ArcUserSessionService::OnSessionStateChanged() {
       "{}");
 }
 
-void ArcUserSessionService::OnConnectionReady() {
+void ArcUserSessionService::OnInstanceReady() {
   session_manager::SessionManager::Get()->AddObserver(this);
 }
 
-void ArcUserSessionService::OnConnectionClosed() {
+void ArcUserSessionService::OnInstanceClosed() {
   session_manager::SessionManager::Get()->RemoveObserver(this);
 }
 

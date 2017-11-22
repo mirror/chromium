@@ -415,7 +415,6 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/feedback/FeedbackReporter.java",
   "java/src/org/chromium/chrome/browser/feedback/FeedbackSource.java",
   "java/src/org/chromium/chrome/browser/feedback/HistogramFeedbackSource.java",
-  "java/src/org/chromium/chrome/browser/feedback/LowEndDeviceFeedbackSource.java",
   "java/src/org/chromium/chrome/browser/feedback/ScreenshotSource.java",
   "java/src/org/chromium/chrome/browser/feedback/ScreenshotTask.java",
   "java/src/org/chromium/chrome/browser/feedback/StaticScreenshotSource.java",
@@ -796,7 +795,7 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/page_info/ConnectionInfoPopup.java",
   "java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
   "java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmark.java",
-  "java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottle.java",
+  "java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
   "java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksProviderIterator.java",
   "java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
   "java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
@@ -1402,8 +1401,6 @@ chrome_vr_java_sources = [
   "java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
   "java/src/org/chromium/chrome/browser/vr_shell/VrWindowAndroid.java",
   "java/src/org/chromium/chrome/browser/vr_shell/OnDispatchTouchEventCallback.java",
-  "java/src/org/chromium/chrome/browser/vr_shell/keyboard/BuildConstants.java",
-  "java/src/org/chromium/chrome/browser/vr_shell/keyboard/GvrKeyboardLoaderClient.java",
 ]
 
 chrome_test_java_sources = [
@@ -1935,8 +1932,8 @@ chrome_junit_test_java_sources = [
   "junit/src/org/chromium/chrome/browser/omnibox/geo/VisibleNetworksTest.java",
   "junit/src/org/chromium/chrome/browser/omnibox/geo/VisibleNetworksTrackerTest.java",
   "junit/src/org/chromium/chrome/browser/omnibox/geo/PlatformNetworksManagerTest.java",
+  "junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
   "junit/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizationsUnitTest.java",
-  "junit/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottleTest.java",
   "junit/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderUnitTest.java",
   "junit/src/org/chromium/chrome/browser/payments/AutofillContactTest.java",
   "junit/src/org/chromium/chrome/browser/payments/AutofillContactUnitTest.java",

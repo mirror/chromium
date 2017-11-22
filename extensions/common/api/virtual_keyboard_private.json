@@ -186,19 +186,12 @@
       {
         "name": "setMode",
         "type": "function",
-        "description": "Sets the virtual keyboard container mode.",
+        "description": "Sets the virtual keyboard mode.",
         "parameters": [
           {
             "$ref": "KeyboardMode",
             "name": "mode",
             "description": "The value of the virtual keyboard mode to set to."
-          },
-          {
-            "type": "function",
-            "name": "callback",
-            "optional": true,
-            "description": "Called when container mode is ready to change.",
-            "parameters": []
           }
         ]
       },

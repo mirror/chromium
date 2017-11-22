@@ -118,9 +118,7 @@ class CORE_EXPORT DOMMatrix : public DOMMatrixReadOnly {
   DOMMatrix* perspectiveSelf(double p);
   DOMMatrix* invertSelf();
 
-  DOMMatrix* setMatrixValue(const ExecutionContext*,
-                            const String&,
-                            ExceptionState&);
+  DOMMatrix* setMatrixValue(const String&, ExceptionState&);
 
  private:
   DOMMatrix(const TransformationMatrix&, bool is2d = true);

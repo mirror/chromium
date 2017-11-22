@@ -73,6 +73,7 @@ class Layer::LayerMirror : public LayerDelegate, LayerObserver {
     if (auto* delegate = source_->delegate())
       delegate->OnPaintLayer(context);
   }
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {}
 
@@ -192,9 +193,8 @@ std::unique_ptr<Layer> Layer::Clone() const {
 
   // cc::Layer state.
   if (surface_layer_) {
-    if (surface_layer_->primary_surface_id().is_valid()) {
-      clone->SetShowPrimarySurface(surface_layer_->primary_surface_id(),
-                                   frame_size_in_dip_,
+    if (surface_layer_->primary_surface_info().is_valid()) {
+      clone->SetShowPrimarySurface(surface_layer_->primary_surface_info(),
                                    surface_layer_->surface_reference_factory());
     }
     if (surface_layer_->fallback_surface_id().is_valid())
@@ -773,8 +773,7 @@ bool Layer::TextureFlipped() const {
 }
 
 void Layer::SetShowPrimarySurface(
-    const viz::SurfaceId& surface_id,
-    const gfx::Size& frame_size_in_dip,
+    const viz::SurfaceInfo& surface_info,
     scoped_refptr<viz::SurfaceReferenceFactory> ref_factory) {
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
 
@@ -785,14 +784,14 @@ void Layer::SetShowPrimarySurface(
     surface_layer_ = new_layer;
   }
 
-  surface_layer_->SetPrimarySurfaceId(surface_id);
+  surface_layer_->SetPrimarySurfaceInfo(surface_info);
 
-  frame_size_in_dip_ = frame_size_in_dip;
+  frame_size_in_dip_ = gfx::ConvertSizeToDIP(surface_info.device_scale_factor(),
+                                             surface_info.size_in_pixels());
   RecomputeDrawsContentAndUVRect();
 
   for (const auto& mirror : mirrors_)
-    mirror->dest()->SetShowPrimarySurface(surface_id, frame_size_in_dip,
-                                          ref_factory);
+    mirror->dest()->SetShowPrimarySurface(surface_info, ref_factory);
 }
 
 void Layer::SetFallbackSurfaceId(const viz::SurfaceId& surface_id) {
@@ -805,9 +804,9 @@ void Layer::SetFallbackSurfaceId(const viz::SurfaceId& surface_id) {
     mirror->dest()->SetFallbackSurfaceId(surface_id);
 }
 
-const viz::SurfaceId* Layer::GetPrimarySurfaceId() const {
+const viz::SurfaceInfo* Layer::GetPrimarySurfaceInfo() const {
   if (surface_layer_)
-    return &surface_layer_->primary_surface_id();
+    return &surface_layer_->primary_surface_info();
   return nullptr;
 }
 
@@ -964,6 +963,12 @@ void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
     layer_mask_->OnDeviceScaleFactorChanged(device_scale_factor);
 }
 
+void Layer::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {
+  DCHECK(surface_layer_.get());
+  if (delegate_)
+    delegate_->OnDelegatedFrameDamage(damage_rect_in_dip);
+}
+
 void Layer::SetDidScrollCallback(
     base::Callback<void(const gfx::ScrollOffset&, const cc::ElementId&)>
         callback) {
@@ -1033,12 +1038,12 @@ size_t Layer::GetApproximateUnsharedMemoryUsage() const {
   return 0;
 }
 
-bool Layer::PrepareTransferableResource(
-    viz::TransferableResource* resource,
+bool Layer::PrepareTextureMailbox(
+    viz::TextureMailbox* mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* release_callback) {
   if (!mailbox_release_callback_)
     return false;
-  *resource = mailbox_.ToTransferableResource();
+  *mailbox = mailbox_;
   *release_callback = std::move(mailbox_release_callback_);
   return true;
 }

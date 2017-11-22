@@ -138,9 +138,8 @@ Response InspectorEmulationAgent::setCPUThrottlingRate(double throttling_rate) {
 
 Response InspectorEmulationAgent::setVirtualTimePolicy(
     const String& policy,
-    Maybe<double> budget,
-    protocol::Maybe<int> max_virtual_time_task_starvation_count,
-    double* virtual_time_base_ms) {
+    Maybe<int> budget,
+    protocol::Maybe<int> max_virtual_time_task_starvation_count) {
   if (protocol::Emulation::VirtualTimePolicyEnum::Advance == policy) {
     web_local_frame_->View()->Scheduler()->SetVirtualTimePolicy(
         WebViewScheduler::VirtualTimePolicy::kAdvance);
@@ -152,11 +151,7 @@ Response InspectorEmulationAgent::setVirtualTimePolicy(
     web_local_frame_->View()->Scheduler()->SetVirtualTimePolicy(
         WebViewScheduler::VirtualTimePolicy::kDeterministicLoading);
   }
-  WTF::TimeTicks virtual_time_base_ticks(
-      web_local_frame_->View()->Scheduler()->EnableVirtualTime());
-  WTF::TimeDelta virtual_time_base_delta =
-      virtual_time_base_ticks - WTF::TimeTicks::UnixEpoch();
-  *virtual_time_base_ms = virtual_time_base_delta.InMillisecondsF();
+  web_local_frame_->View()->Scheduler()->EnableVirtualTime();
   if (!virtual_time_observer_registered_) {
     web_local_frame_->View()->Scheduler()->AddVirtualTimeObserver(this);
     virtual_time_observer_registered_ = true;
@@ -164,7 +159,7 @@ Response InspectorEmulationAgent::setVirtualTimePolicy(
 
   if (budget.isJust()) {
     WTF::TimeDelta budget_amount =
-        WTF::TimeDelta::FromMillisecondsD(budget.fromJust());
+        WTF::TimeDelta::FromMilliseconds(budget.fromJust());
     web_local_frame_->View()->Scheduler()->GrantVirtualTimeBudget(
         budget_amount,
         WTF::Bind(&InspectorEmulationAgent::VirtualTimeBudgetExpired,
@@ -193,12 +188,12 @@ void InspectorEmulationAgent::VirtualTimeBudgetExpired() {
 
 void InspectorEmulationAgent::OnVirtualTimeAdvanced(
     WTF::TimeDelta virtual_time_offset) {
-  GetFrontend()->virtualTimeAdvanced(virtual_time_offset.InMillisecondsF());
+  GetFrontend()->virtualTimeAdvanced(virtual_time_offset.InMilliseconds());
 }
 
 void InspectorEmulationAgent::OnVirtualTimePaused(
     WTF::TimeDelta virtual_time_offset) {
-  GetFrontend()->virtualTimePaused(virtual_time_offset.InMillisecondsF());
+  GetFrontend()->virtualTimePaused(virtual_time_offset.InMilliseconds());
 }
 
 Response InspectorEmulationAgent::setDefaultBackgroundColorOverride(

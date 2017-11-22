@@ -98,7 +98,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/common/frame_navigate_params.h"
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/url_constants.h"
@@ -1470,11 +1469,10 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, OpenAppWindowLikeNtp) {
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
   ASSERT_TRUE(app_window);
 
-  // Apps launched in a window from the NTP have an extensions tab helper and
-  // an extension_app set in it.
+  // Apps launched in a window from the NTP have an extensions tab helper but
+  // do not have extension_app set in it.
   ASSERT_TRUE(extensions::TabHelper::FromWebContents(app_window));
-  EXPECT_EQ(
-      extension_app,
+  EXPECT_FALSE(
       extensions::TabHelper::FromWebContents(app_window)->extension_app());
   EXPECT_EQ(extensions::AppLaunchInfo::GetFullLaunchURL(extension_app),
             app_window->GetURL());
@@ -2005,8 +2003,6 @@ IN_PROC_BROWSER_TEST_F(BrowserTest2, NoTabsInPopups) {
 IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kDisablePopupBlocking);
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kDisableBackgroundTimerThrottling);
   GURL url = ui_test_utils::GetTestUrl(
       base::FilePath(), base::FilePath().AppendASCII("window.close.html"));
 

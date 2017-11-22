@@ -74,7 +74,7 @@ function FileTasks(
    * @const
    */
   this.taskHistory_ = taskHistory;
-}
+};
 
 FileTasks.prototype = {
   /**
@@ -430,13 +430,13 @@ FileTasks.annotateTasks_ = function(tasks, entries) {
 
     // Add verb to title.
     if (task.verb) {
-      var verbButtonLabel = '';
+      var verb_button_label = '';
       switch (task.verb) {
         case chrome.fileManagerPrivate.Verb.ADD_TO:
-          verbButtonLabel = 'ADD_TO_VERB_BUTTON_LABEL';
+          verb_button_label = 'ADD_TO_VERB_BUTTON_LABEL';
           break;
         case chrome.fileManagerPrivate.Verb.PACK_WITH:
-          verbButtonLabel = 'PACK_WITH_VERB_BUTTON_LABEL';
+          verb_button_label = 'PACK_WITH_VERB_BUTTON_LABEL';
           break;
         case chrome.fileManagerPrivate.Verb.SHARE_WITH:
           // Even when the task has SHARE_WITH verb, we don't prefix the title
@@ -445,17 +445,17 @@ FileTasks.annotateTasks_ = function(tasks, entries) {
           // appropriate verb.
           if (!(taskParts[1] == 'arc' &&
                 (taskParts[2] == 'send' || taskParts[2] == 'send_multiple'))) {
-            verbButtonLabel = 'SHARE_WITH_VERB_BUTTON_LABEL';
+            verb_button_label = 'SHARE_WITH_VERB_BUTTON_LABEL';
           }
           break;
         case chrome.fileManagerPrivate.Verb.OPEN_WITH:
-          verbButtonLabel = 'OPEN_WITH_VERB_BUTTON_LABEL';
+          verb_button_label = 'OPEN_WITH_VERB_BUTTON_LABEL';
           break;
         default:
           console.error('Invalid task verb: ' + task.verb + '.');
       }
-      if (verbButtonLabel)
-        task.title = loadTimeData.getStringF(verbButtonLabel, task.title);
+      if (verb_button_label)
+        task.title = loadTimeData.getStringF(verb_button_label, task.title);
     }
 
     result.push(task);
@@ -766,21 +766,17 @@ FileTasks.prototype.mountArchivesInternal_ = function() {
             tracker.stop();
             return;
           }
-          volumeInfo.resolveDisplayRoot(
-              function(displayRoot) {
-                if (tracker.hasChanged) {
-                  tracker.stop();
-                  return;
-                }
-                this.directoryModel_.changeDirectoryEntry(displayRoot);
-              }.bind(this),
-              function() {
-                console.warn(
-                    'Failed to resolve the display root after mounting.');
-                tracker.stop();
-              });
-        }.bind(this),
-        function(url, error) {
+          volumeInfo.resolveDisplayRoot(function(displayRoot) {
+            if (tracker.hasChanged) {
+              tracker.stop();
+              return;
+            }
+            this.directoryModel_.changeDirectoryEntry(displayRoot);
+          }, function() {
+            console.warn('Failed to resolve the display root after mounting.');
+            tracker.stop();
+          });
+        }, function(url, error) {
           tracker.stop();
           var path = util.extractFilePath(url);
           var namePos = path.lastIndexOf('/');

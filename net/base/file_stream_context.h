@@ -97,9 +97,6 @@ class FileStream::Context {
   // Seeks |offset| bytes from the start of the file.
   void Seek(int64_t offset, const Int64CompletionCallback& callback);
 
-  void GetFileInfo(base::File::Info* file_info,
-                   const CompletionCallback& callback);
-
   void Flush(const CompletionCallback& callback);
 
   bool IsOpen() const;
@@ -154,8 +151,6 @@ class FileStream::Context {
   ////////////////////////////////////////////////////////////////////////////
 
   OpenResult OpenFileImpl(const base::FilePath& path, int open_flags);
-
-  IOResult GetFileInfoImpl(base::File::Info* file_info);
 
   IOResult CloseFileImpl();
 

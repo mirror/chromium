@@ -6,7 +6,8 @@
 
 [
     RuntimeEnabled=PaymentApp,
-    ConstructorCallWith=ExecutionContext
+    ConstructorCallWith=ExecutionContext,
+    DependentLifetime
 ] interface PaymentManager {
     readonly attribute PaymentInstruments instruments;
     attribute DOMString userHint;

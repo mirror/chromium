@@ -195,7 +195,8 @@ cr.define('settings_people_page_sync_page', function() {
 
       // Assert that all the individual datatype controls are disabled.
       var datatypeControls = syncPage
-          .$$('#configure').querySelectorAll('.list-item cr-toggle');
+          .$$('#configure')
+          .querySelectorAll('.list-item paper-toggle-button');
       for (var control of datatypeControls) {
         assertTrue(control.disabled);
         assertTrue(control.checked);

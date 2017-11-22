@@ -227,18 +227,6 @@ WATERFALL = {
       'swarming': True,
       'os_type': 'linux',
     },
-    'Android Release (Nexus 5X)': {
-      'swarming_dimensions': [
-        {
-          'device_type': 'bullhead',
-          'device_os': 'M',
-          'os': 'Android'
-        },
-      ],
-      'build_config': 'android-chromium',
-      'swarming': True,
-      'os_type': 'android',
-    },
   }
 }
 
@@ -249,17 +237,13 @@ FYI_WATERFALL = {
   'builders': {
     'GPU Win Builder' : {},
     'GPU Win Builder (dbg)' : {},
-    'GPU Win dEQP Builder': {},
     'GPU Win x64 Builder' : {},
     'GPU Win x64 Builder (dbg)' : {},
-    'GPU Win x64 dEQP Builder' : {},
     'GPU Mac Builder' : {},
     'GPU Mac Builder (dbg)' : {},
-    'GPU Mac dEQP Builder' : {},
     'GPU Linux Builder' : {},
     'GPU Linux Builder (dbg)' : {},
     'GPU Linux Ozone Builder' : {},
-    'GPU Linux dEQP Builder' : {},
   },
 
   'testers': {
@@ -1873,7 +1857,6 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
   'maps_pixel_test': {
     'target_name': 'maps',
     'args': [
-      '--dont-restore-color-profile-after-test',
       '--os-type',
       '${os_type}',
       '--build-revision',
@@ -1907,7 +1890,6 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
   'pixel_test': {
     'target_name': 'pixel',
     'args': [
-      '--dont-restore-color-profile-after-test',
       '--refimg-cloud-storage-bucket',
       'chromium-gpu-archive/reference-images',
       '--os-type',
@@ -1938,9 +1920,6 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
     ],
   },
   'screenshot_sync': {
-    'args': [
-      '--dont-restore-color-profile-after-test',
-    ],
     'tester_configs': [
       {
         'predicate': Predicates.DEFAULT_PLUS_V8,

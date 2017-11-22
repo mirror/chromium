@@ -29,12 +29,11 @@ void MockHomedirMethods::SetUp(bool success, MountError return_code) {
           WithArgs<3>(Invoke(this, &MockHomedirMethods::DoCallback)));
   ON_CALL(*this, MountEx(_, _, _, _)).WillByDefault(
       WithArgs<3>(Invoke(this, &MockHomedirMethods::DoMountCallback)));
-  ON_CALL(*this, AddKeyEx(_, _, _, _))
+  ON_CALL(*this, AddKeyEx(_, _, _, _, _))
       .WillByDefault(
-          WithArgs<3>(Invoke(this, &MockHomedirMethods::DoAddKeyCallback)));
-  ON_CALL(*this, UpdateKeyEx(_, _, _, _))
-      .WillByDefault(
-          WithArgs<3>(Invoke(this, &MockHomedirMethods::DoCallback)));
+          WithArgs<4>(Invoke(this, &MockHomedirMethods::DoAddKeyCallback)));
+  ON_CALL(*this, UpdateKeyEx(_, _, _, _, _)).WillByDefault(
+      WithArgs<4>(Invoke(this, &MockHomedirMethods::DoCallback)));
   ON_CALL(*this, RemoveKeyEx(_, _, _, _)).WillByDefault(
       WithArgs<3>(Invoke(this, &MockHomedirMethods::DoCallback)));
 }

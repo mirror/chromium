@@ -64,9 +64,8 @@ bool QuicStreamFactoryPeer::IsLiveSession(QuicStreamFactory* factory,
   return false;
 }
 
-void QuicStreamFactoryPeer::SetTaskRunner(
-    QuicStreamFactory* factory,
-    base::SequencedTaskRunner* task_runner) {
+void QuicStreamFactoryPeer::SetTaskRunner(QuicStreamFactory* factory,
+                                          base::TaskRunner* task_runner) {
   factory->task_runner_ = task_runner;
 }
 

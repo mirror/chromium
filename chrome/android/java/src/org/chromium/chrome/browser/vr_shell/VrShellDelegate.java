@@ -107,6 +107,7 @@ public class VrShellDelegate
 
     private static final long REENTER_VR_TIMEOUT_MS = 1000;
     private static final int EXPECT_DON_TIMEOUT_MS = 2000;
+    private static final long ENTER_VR_FAILED_TIMEOUT_MS = 10000;
 
     private static final String FEEDBACK_REPORT_TYPE = "USER_INITIATED_FEEDBACK_REPORT_VR";
 
@@ -173,6 +174,8 @@ public class VrShellDelegate
     // Set to true if performed VR browsing at least once. That is, this was not simply a WebVr
     // presentation experience.
     private boolean mVrBrowserUsed;
+
+    private boolean mWaitingForVrTimeout;
 
     private boolean mDensityChanged;
 
@@ -427,6 +430,7 @@ public class VrShellDelegate
             return true;
         }
         if (sInstance.mInVr || sInstance.mDonSucceeded) {
+            sInstance.onDensityChangedInternal(oldDpi, newDpi);
             sInstance.mDensityChanged = true;
             return true;
         }
@@ -1083,6 +1087,7 @@ public class VrShellDelegate
     private int enterVrInternal() {
         if (mPaused) return ENTER_VR_CANCELLED;
         if (mInVr) return ENTER_VR_NOT_NECESSARY;
+        if (mWaitingForVrTimeout) return ENTER_VR_CANCELLED;
 
         // Update VR support level as it can change at runtime
         maybeUpdateVrSupportLevel();
@@ -1155,11 +1160,6 @@ public class VrShellDelegate
 
         mPaused = false;
 
-        // We call resume here to be symmetric with onPause in case we get paused/resumed without
-        // being hidden/shown. However, we still don't want to resume if we're not visible to avoid
-        // doing VR rendering that won't be seen.
-        if (mInVr && mVisible) mVrShell.resume();
-
         maybeUpdateVrSupportLevel();
 
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
@@ -1198,6 +1198,13 @@ public class VrShellDelegate
             maybeSetPresentResult(false, mDonSucceeded);
 
             shutdownVr(true, false);
+            mWaitingForVrTimeout = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mWaitingForVrTimeout = false;
+                }
+            }, ENTER_VR_FAILED_TIMEOUT_MS);
         }
 
         mProbablyInDon = false;
@@ -1226,13 +1233,13 @@ public class VrShellDelegate
 
         // Only resume VrShell once we're visible so that we don't start rendering before being
         // visible and delaying startup.
-        if (mInVr && !mPaused) mVrShell.resume();
+        if (mInVr) mVrShell.resume();
     }
 
     private void onActivityHidden() {
         mVisible = false;
-        // In case we're hidden before onPause is called, we pause here. Duplicate calls to pause
-        // are safe.
+        // We defer pausing of VrShell until the app is no longer visible to keep head tracking
+        // working for as long as possible while going to daydream home.
         if (mInVr) mVrShell.pause();
         if (mShowingDaydreamDoff || mProbablyInDon) return;
 
@@ -1262,7 +1269,6 @@ public class VrShellDelegate
         // vrdisplayactivate event should be dispatched in enterVRFromIntent.
         mListeningForWebVrActivateBeforePause = mListeningForWebVrActivate;
 
-        if (mInVr) mVrShell.pause();
         if (mNativeVrShellDelegate != 0) nativeOnPause(mNativeVrShellDelegate);
 
         mIsDaydreamCurrentViewer = null;
@@ -1397,10 +1403,6 @@ public class VrShellDelegate
 
         promptForFeedbackIfNeeded(stayingInChrome);
 
-        // Listener may not have been handled yet at this point due to other reasons (e.g back/close
-        // button was pressed while at exit prompt UI in VR), failure should be reported despite
-        // that we are exiting VR.
-        callOnExitVrRequestListener(false);
         assert mOnExitVrRequestListener == null;
     }
 
@@ -1621,6 +1623,10 @@ public class VrShellDelegate
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());
+    }
+
+    private void onDensityChangedInternal(float oldDpi, float newDpi) {
+        if (mVrShell != null) mVrShell.onDensityChanged(oldDpi, newDpi);
     }
 
     /**

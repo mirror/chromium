@@ -135,7 +135,7 @@ ArcIntentHelperBridge::~ArcIntentHelperBridge() {
   arc_bridge_service_->intent_helper()->RemoveObserver(this);
 }
 
-void ArcIntentHelperBridge::OnConnectionReady() {
+void ArcIntentHelperBridge::OnInstanceReady() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto* instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->intent_helper(), Init);
@@ -145,7 +145,7 @@ void ArcIntentHelperBridge::OnConnectionReady() {
   instance->Init(std::move(host_proxy));
 }
 
-void ArcIntentHelperBridge::OnConnectionClosed() {
+void ArcIntentHelperBridge::OnInstanceClosed() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 }
 

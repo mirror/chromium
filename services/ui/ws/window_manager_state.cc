@@ -927,8 +927,12 @@ viz::HitTestQuery* WindowManagerState::GetHitTestQueryForDisplay(
   if (!display)
     return nullptr;
 
-  return window_server()->GetVizHostProxy()->GetHitTestQuery(
-      display->root_window()->frame_sink_id());
+  const auto& display_hit_test_query_map =
+      window_server()->GetHostFrameSinkManager()->display_hit_test_query();
+  const auto iter =
+      display_hit_test_query_map.find(display->root_window()->frame_sink_id());
+  return (iter != display_hit_test_query_map.end()) ? iter->second.get()
+                                                    : nullptr;
 }
 
 ServerWindow* WindowManagerState::GetWindowFromFrameSinkId(

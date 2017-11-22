@@ -7,6 +7,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "jni/ChromeBackupWatcher_jni.h"
 
+namespace chrome {
 namespace android {
 
 namespace {
@@ -34,3 +35,4 @@ ChromeBackupWatcher::ChromeBackupWatcher(Profile* profile) {
 ChromeBackupWatcher::~ChromeBackupWatcher() {}
 
 }  //  namespace android
+}  //  namespace chrome

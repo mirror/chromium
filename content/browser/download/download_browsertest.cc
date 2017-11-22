@@ -894,7 +894,7 @@ class ParallelDownloadTest : public DownloadContentTest {
 
   ~ParallelDownloadTest() override {}
 
-  void InitParallelDownloadFeature() {
+  void SetUpOnMainThread() override {
     std::map<std::string, std::string> params = {
         {content::kMinSliceSizeFinchKey, "1"},
         {content::kParallelRequestCountFinchKey,
@@ -903,6 +903,7 @@ class ParallelDownloadTest : public DownloadContentTest {
         {content::kParallelRequestRemainingTimeFinchKey, "0"}};
     scoped_feature_list_.InitAndEnableFeatureWithParameters(
         features::kParallelDownloading, params);
+    DownloadContentTest::SetUpOnMainThread();
   }
 
  private:
@@ -913,8 +914,13 @@ class ParallelDownloadTest : public DownloadContentTest {
 
 }  // namespace
 
-// Flaky. See https://crbug.com/754679.
-IN_PROC_BROWSER_TEST_F(DownloadContentTest, DISABLED_DownloadCancelled) {
+#if defined(OS_ANDROID)
+// Failing/Flaky on Android: https://crbug.com/754679
+#define MAYBE_DownloadCancelled DISABLED_DownloadCancelled
+#else
+#define MAYBE_DownloadCancelled DownloadCancelled
+#endif
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, MAYBE_DownloadCancelled) {
   SetupEnsureNoPendingDownloads();
 
   // Create a download, wait until it's started, and confirm
@@ -2894,14 +2900,13 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
 }
 
 // Verify parallel download in normal case.
-// Flaky. See http://crbug.com/786626.
-#if defined(OS_ANDROID) || defined(OS_LINUX)
-#define MAYBE_ParallelDownloadComplete DISABLED_ParallelDownloadComplete
+#if defined(THREAD_SANITIZER)
+// Failing/Flaky under TSAN: https://crbug.com/782037
+#define MAYBE_ParallelDownloadComplete DISABLED_DownloadComplete
 #else
 #define MAYBE_ParallelDownloadComplete ParallelDownloadComplete
 #endif
 IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadComplete) {
-  InitParallelDownloadFeature();
   EXPECT_TRUE(base::FeatureList::IsEnabled(features::kParallelDownloading));
 
   GURL url = TestDownloadHttpResponse::GetNextURLForDownload();
@@ -2939,8 +2944,13 @@ IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadComplete) {
 }
 
 // Verify parallel download resumption.
-IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, ParallelDownloadResumption) {
-  InitParallelDownloadFeature();
+#if defined(THREAD_SANITIZER)
+// Failing/Flaky under TSAN: https://crbug.com/782037
+#define MAYBE_ParallelDownloadResumption DISABLED_DownloadResumption
+#else
+#define MAYBE_ParallelDownloadResumption ParallelDownloadResumption
+#endif
+IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadResumption) {
   EXPECT_TRUE(base::FeatureList::IsEnabled(features::kParallelDownloading));
 
   GURL url = TestDownloadHttpResponse::GetNextURLForDownload();

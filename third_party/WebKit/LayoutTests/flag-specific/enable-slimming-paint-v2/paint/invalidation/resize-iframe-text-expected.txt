@@ -14,7 +14,7 @@
         {
           "object": "LayoutBlockFlow HTML",
           "rect": [8, 300, 60, 22],
-          "reason": "incremental"
+          "reason": "paint property change"
         },
         {
           "object": "LayoutView #document",

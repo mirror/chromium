@@ -1,5 +1,4 @@
 Tests that LayerTreeModel successfully imports layers from a trace.
-
 #document
     #document 0x0
     #document

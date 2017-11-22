@@ -935,6 +935,12 @@ bool PrintRenderFrameHelper::Delegate::IsScriptedPrintEnabled() {
   return true;
 }
 
+#if defined(OS_MACOSX)
+bool PrintRenderFrameHelper::Delegate::UseSingleMetafile() {
+  return false;
+}
+#endif
+
 PrintRenderFrameHelper::PrintRenderFrameHelper(
     content::RenderFrame* render_frame,
     std::unique_ptr<Delegate> delegate)

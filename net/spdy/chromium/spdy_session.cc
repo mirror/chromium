@@ -2440,6 +2440,9 @@ SpdyStream* SpdySession::GetActivePushStream(const GURL& url) {
   net_log_.AddEvent(NetLogEventType::HTTP2_STREAM_ADOPTED_PUSH_STREAM,
                     base::Bind(&NetLogSpdyAdoptedPushStreamCallback,
                                stream->stream_id(), &url));
+  // A stream is in reserved remote state until response headers arrive.
+  UMA_HISTOGRAM_BOOLEAN("Net.PushedStreamAlreadyHasResponseHeaders",
+                        !stream->IsReservedRemote());
   return stream;
 }
 

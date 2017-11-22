@@ -28,7 +28,7 @@ class CHROMEOS_EXPORT DeviceState : public ManagedState {
                        const base::Value& value) override;
 
   void IPConfigPropertiesChanged(const std::string& ip_config_path,
-                                 const base::Value& properties);
+                                 const base::DictionaryValue& properties);
 
   // Accessors
   const std::string& mac_address() const { return mac_address_; }

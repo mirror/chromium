@@ -39,18 +39,19 @@ const char kCryptAuthEnrollmentLastEnrollmentTimeSeconds[] =
 // The reason that the next enrollment is performed. This should be one of the
 // enum values of InvocationReason in
 // components/cryptauth/proto/cryptauth_api.proto.
-const char kCryptAuthEnrollmentReason[] = "cryptauth.enrollment.reason";
+extern const char kCryptAuthEnrollmentReason[] = "cryptauth.enrollment.reason";
 
 // The public key of the user and device enrolled with CryptAuth.
-const char kCryptAuthEnrollmentUserPublicKey[] =
+extern const char kCryptAuthEnrollmentUserPublicKey[] =
     "cryptauth.enrollment.user_public_key";
 
 // The private key of the user and device enrolled with CryptAuth.
-const char kCryptAuthEnrollmentUserPrivateKey[] =
+extern const char kCryptAuthEnrollmentUserPrivateKey[] =
     "cryptauth.enrollment.user_private_key";
 
 // The GCM registration id used for receiving push messages from CryptAuth.
-const char kCryptAuthGCMRegistrationId[] = "cryptauth.gcm_registration_id";
+extern const char kCryptAuthGCMRegistrationId[] =
+    "cryptauth.gcm_registration_id";
 
 }  // namespace prefs
 }  // namespace cryptauth

@@ -259,7 +259,6 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
                             int index) override;
   void OnToolbarActionRemoved(const std::string& action_id) override;
   void OnToolbarActionMoved(const std::string& action_id, int index) override;
-  void OnToolbarActionLoadFailed() override;
   void OnToolbarActionUpdated(const std::string& action_id) override;
   void OnToolbarVisibleCountChanged() override;
   void OnToolbarHighlightModeChanged(bool is_highlighting) override;

@@ -585,8 +585,7 @@ void LocalFrame::SetPageAndTextZoomFactors(float page_zoom_factor,
       return;
   }
 
-  if (page_zoom_factor_ != page_zoom_factor &&
-      !RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+  if (page_zoom_factor_ != page_zoom_factor) {
     if (LocalFrameView* view = this->View()) {
       // Update the scroll position when doing a full page zoom, so the content
       // stays in relatively the same position.

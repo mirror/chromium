@@ -271,17 +271,16 @@ Polymer({
   },
 
   /**
-   * Returns true if external touch devices are connected and the current
-   * display is not an internal display. If the feature is not enabled via the
-   * switch, this will return false.
+   * Returns true if the given display has touch support and is not an internal
+   * display. If the feature is not enabled via the switch, this will return
+   * false.
    * @param {!chrome.system.display.DisplayUnitInfo} display Display being
    *     checked for touch support.
    * @return {boolean}
    * @private
    */
   showTouchCalibrationSetting_: function(display) {
-    return !display.isInternal &&
-        loadTimeData.getBoolean('hasExternalTouchDevice') &&
+    return !display.isInternal && display.hasTouchSupport &&
         loadTimeData.getBoolean('enableTouchCalibrationSetting');
   },
 

@@ -213,10 +213,8 @@ void VizProcessTransportFactory::SetDisplayColorSpace(
 void VizProcessTransportFactory::SetAuthoritativeVSyncInterval(
     ui::Compositor* compositor,
     base::TimeDelta interval) {
-  auto iter = compositor_data_map_.find(compositor);
-  if (iter == compositor_data_map_.end() || !iter->second.display_private)
-    return;
-  iter->second.display_private->SetAuthoritativeVSyncInterval(interval);
+  // TODO(crbug.com/772524): Deal with vsync later.
+  NOTIMPLEMENTED();
 }
 
 void VizProcessTransportFactory::SetDisplayVSyncParameters(

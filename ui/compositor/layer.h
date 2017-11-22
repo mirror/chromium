@@ -42,7 +42,6 @@ class TextureLayer;
 
 namespace viz {
 class CopyOutputRequest;
-struct TransferableResource;
 }
 
 namespace ui {
@@ -310,16 +309,15 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
 
   // Begins showing content from a surface with a particular ID.
   void SetShowPrimarySurface(
-      const viz::SurfaceId& surface_id,
-      const gfx::Size& frame_size_in_dip,
+      const viz::SurfaceInfo& surface_info,
       scoped_refptr<viz::SurfaceReferenceFactory> surface_ref);
 
   // In the event that the primary surface is not yet available in the
   // display compositor, the fallback surface will be used.
   void SetFallbackSurfaceId(const viz::SurfaceId& surface_id);
 
-  // Returns the primary SurfaceId set by SetShowPrimarySurface.
-  const viz::SurfaceId* GetPrimarySurfaceId() const;
+  // Returns the primary SurfaceInfo set by SetShowPrimarySurface.
+  const viz::SurfaceInfo* GetPrimarySurfaceInfo() const;
 
   // Returns the fallback SurfaceId set by SetFallbackSurfaceId.
   const viz::SurfaceId* GetFallbackSurfaceId() const;
@@ -368,6 +366,10 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // Notifies the layer that the device scale factor has changed.
   void OnDeviceScaleFactorChanged(float device_scale_factor);
 
+  // Notifies the layer that one of its children has received a new
+  // delegated frame.
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip);
+
   // Requets a copy of the layer's output as a texture or bitmap.
   void RequestCopyOfOutput(std::unique_ptr<viz::CopyOutputRequest> request);
 
@@ -388,7 +390,7 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   gfx::ScrollOffset CurrentScrollOffset() const;
   void SetScrollOffset(const gfx::ScrollOffset& offset);
 
-  // ContentLayerClient implementation.
+  // ContentLayerClient
   gfx::Rect PaintableRegion() override;
   scoped_refptr<cc::DisplayItemList> PaintContentsToDisplayList(
       ContentLayerClient::PaintingControlSetting painting_control) override;
@@ -397,14 +399,14 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
 
   cc::Layer* cc_layer_for_testing() { return cc_layer_; }
 
-  // TextureLayerClient implementation.
-  bool PrepareTransferableResource(
-      viz::TransferableResource* resource,
+  // TextureLayerClient
+  bool PrepareTextureMailbox(
+      viz::TextureMailbox* mailbox,
       std::unique_ptr<viz::SingleReleaseCallback>* release_callback) override;
 
   float device_scale_factor() const { return device_scale_factor_; }
 
-  // LayerClient implementation.
+  // LayerClient
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> TakeDebugInfo(
       cc::Layer* layer) override;
   void didUpdateMainThreadScrollingReasons() override;

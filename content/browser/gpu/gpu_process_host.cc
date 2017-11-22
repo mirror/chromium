@@ -740,12 +740,7 @@ void GpuProcessHost::ConnectFrameSinkManager(
     viz::mojom::FrameSinkManagerRequest request,
     viz::mojom::FrameSinkManagerClientPtr client) {
   TRACE_EVENT0("gpu", "GpuProcessHost::ConnectFrameSinkManager");
-  viz::mojom::FrameSinkManagerParamsPtr params =
-      viz::mojom::FrameSinkManagerParams::New();
-  params->restart_id = host_id_;
-  params->frame_sink_manager = std::move(request);
-  params->frame_sink_manager_client = client.PassInterface();
-  gpu_main_ptr_->CreateFrameSinkManager(std::move(params));
+  gpu_main_ptr_->CreateFrameSinkManager(std::move(request), std::move(client));
 }
 
 void GpuProcessHost::RequestGPUInfo(RequestGPUInfoCallback request_cb) {

@@ -149,11 +149,11 @@ bool NetworkDelegate::CanGetCookies(const URLRequest& request,
 }
 
 bool NetworkDelegate::CanSetCookie(const URLRequest& request,
-                                   const net::CanonicalCookie& cookie,
+                                   const std::string& cookie_line,
                                    CookieOptions* options) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(!(request.load_flags() & LOAD_DO_NOT_SAVE_COOKIES));
-  return OnCanSetCookie(request, cookie, options);
+  return OnCanSetCookie(request, cookie_line, options);
 }
 
 bool NetworkDelegate::CanAccessFile(const URLRequest& request,

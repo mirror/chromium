@@ -203,9 +203,9 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/PtrUtil.h"
-#include "platform/wtf/Time.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebDoubleSize.h"
 #include "public/platform/WebFloatPoint.h"
@@ -863,7 +863,7 @@ void WebLocalFrameImpl::ReloadWithOverrideURL(const WebURL& override_url,
   if (request.IsNull())
     return;
   Load(request, load_type, WebHistoryItem(), kWebHistoryDifferentDocumentLoad,
-       false, base::UnguessableToken::Create());
+       false);
 }
 
 void WebLocalFrameImpl::ReloadImage(const WebNode& web_node) {
@@ -880,8 +880,7 @@ void WebLocalFrameImpl::LoadRequest(const WebURLRequest& request) {
   // TODO(clamy): Remove this function once RenderFrame calls load for all
   // requests.
   Load(request, WebFrameLoadType::kStandard, WebHistoryItem(),
-       kWebHistoryDifferentDocumentLoad, false,
-       base::UnguessableToken::Create());
+       kWebHistoryDifferentDocumentLoad, false);
 }
 
 void WebLocalFrameImpl::LoadHTMLString(const WebData& data,
@@ -1686,8 +1685,8 @@ void WebLocalFrameImpl::SetCoreFrame(LocalFrame* frame) {
   frame_ = frame;
 
   local_frame_client_->SetVirtualTimePauser(
-      frame_ ? frame_->FrameScheduler()->CreateWebScopedVirtualTimePauser()
-             : WebScopedVirtualTimePauser());
+      frame_ ? frame_->FrameScheduler()->CreateScopedVirtualTimePauser()
+             : ScopedVirtualTimePauser());
 }
 
 void WebLocalFrameImpl::InitializeCoreFrame(Page& page,
@@ -1885,7 +1884,7 @@ void WebLocalFrameImpl::LoadJavaScriptURL(const KURL& url) {
   v8::HandleScope handle_scope(ToIsolate(GetFrame()));
   v8::Local<v8::Value> result =
       GetFrame()->GetScriptController().ExecuteScriptInMainWorldAndReturnValue(
-          ScriptSourceCode(script, ScriptSourceLocationType::kJavascriptUrl));
+          ScriptSourceCode(script));
   if (result.IsEmpty() || !result->IsString())
     return;
   String script_result = ToCoreString(v8::Local<v8::String>::Cast(result));
@@ -1982,13 +1981,11 @@ WebURLRequest WebLocalFrameImpl::RequestForReload(
   return WrappedResourceRequest(request);
 }
 
-void WebLocalFrameImpl::Load(
-    const WebURLRequest& request,
-    WebFrameLoadType web_frame_load_type,
-    const WebHistoryItem& item,
-    WebHistoryLoadType web_history_load_type,
-    bool is_client_redirect,
-    const base::UnguessableToken& devtools_navigation_token) {
+void WebLocalFrameImpl::Load(const WebURLRequest& request,
+                             WebFrameLoadType web_frame_load_type,
+                             const WebHistoryItem& item,
+                             WebHistoryLoadType web_history_load_type,
+                             bool is_client_redirect) {
   DCHECK(GetFrame());
   DCHECK(!request.IsNull());
   const ResourceRequest& resource_request = request.ToResourceRequest();
@@ -2002,9 +1999,7 @@ void WebLocalFrameImpl::Load(
   if (text_finder_)
     text_finder_->ClearActiveFindMatch();
 
-  FrameLoadRequest frame_request =
-      FrameLoadRequest(nullptr, resource_request, /*frame_name=*/AtomicString(),
-                       kCheckContentSecurityPolicy, devtools_navigation_token);
+  FrameLoadRequest frame_request = FrameLoadRequest(nullptr, resource_request);
   if (is_client_redirect)
     frame_request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
   HistoryItem* history_item = item;

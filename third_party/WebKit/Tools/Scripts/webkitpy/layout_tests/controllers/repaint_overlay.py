@@ -54,7 +54,6 @@ def generate_repaint_overlay_html(test_name, actual_text, expected_text):
         width: 800px;
         height: 600px;
         border: 0;
-        display: none;
     }
     canvas {
         position: absolute;
@@ -65,7 +64,7 @@ def generate_repaint_overlay_html(test_name, actual_text, expected_text):
 </style>
 </head>
 <body>
-<label><input id="show-test" type="checkbox" onchange="toggle_test(this.checked)">Show test</label>
+<label><input id="show-test" type="checkbox" checked onchange="toggle_test(this.checked)">Show test</label>
 <label><input id="use-solid-colors" type="checkbox" onchange="toggle_solid_color(this.checked)">Use solid colors</label>
 <br>
 <span id="overlay_type">Expected Invalidations</span>
@@ -79,8 +78,6 @@ var overlay_opacity = 0.25;
 
 function toggle_test(show_test) {
     test_frame.style.display = show_test ? 'block' : 'none';
-    if (!test_frame.src)
-        test_frame.src = decodeURIComponent(location.search).substr(1);
 }
 
 function toggle_solid_color(use_solid_color) {
@@ -157,6 +154,8 @@ function draw_repaint_rects() {
 
 draw_repaint_rects();
 
+test_frame.src = decodeURIComponent(location.search).substr(1);
+
 var expected_showing = true;
 function flip() {
     if (expected_showing) {
@@ -170,7 +169,7 @@ function flip() {
     }
     expected_showing = !expected_showing
 }
-setInterval(flip, 1500);
+setInterval(flip, 3000);
 </script>
 </body>
 </html>

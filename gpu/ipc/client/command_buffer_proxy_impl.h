@@ -34,6 +34,7 @@
 #include "ipc/ipc_listener.h"
 #include "ui/gfx/swap_result.h"
 #include "ui/gl/gpu_preference.h"
+#include "ui/latency/latency_info.h"
 
 struct GPUCommandBufferConsoleMessage;
 struct GpuCommandBufferMsg_SwapBuffersCompleted_Params;
@@ -128,7 +129,9 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
                        const base::Closure& callback) override;
   void WaitSyncTokenHint(const gpu::SyncToken& sync_token) override;
   bool CanWaitUnverifiedSyncToken(const gpu::SyncToken& sync_token) override;
-  void SetSnapshotRequested() override;
+  void AddLatencyInfo(
+      const std::vector<ui::LatencyInfo>& latency_info) override;
+
   void TakeFrontBuffer(const gpu::Mailbox& mailbox);
   void ReturnFrontBuffer(const gpu::Mailbox& mailbox,
                          const gpu::SyncToken& sync_token,
@@ -140,7 +143,8 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
   bool EnsureBackbuffer();
 
   using SwapBuffersCompletionCallback = base::Callback<void(
-      const gfx::SwapResponse& response,
+      const std::vector<ui::LatencyInfo>& latency_info,
+      gfx::SwapResult result,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac)>;
   void SetSwapBuffersCompletionCallback(
       const SwapBuffersCompletionCallback& callback);
@@ -277,7 +281,7 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
 
   gpu::Capabilities capabilities_;
 
-  bool snapshot_requested_ = false;
+  std::vector<ui::LatencyInfo> latency_info_;
 
   SwapBuffersCompletionCallback swap_buffers_completion_callback_;
   UpdateVSyncParametersCallback update_vsync_parameters_completion_callback_;

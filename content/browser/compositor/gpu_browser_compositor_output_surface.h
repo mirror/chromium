@@ -24,6 +24,7 @@ struct GpuProcessHostedCALayerTreeParamsMac;
 
 namespace ui {
 class ContextProviderCommandBuffer;
+class LatencyInfo;
 }
 
 namespace content {
@@ -32,10 +33,8 @@ class ReflectorTexture;
 // Adapts a WebGraphicsContext3DCommandBufferImpl into a
 // viz::OutputSurface that also handles vsync parameter updates
 // arriving from the GPU process.
-class GpuBrowserCompositorOutputSurface
-    : public BrowserCompositorOutputSurface,
-      public GpuVSyncControl,
-      public viz::OutputSurface::LatencyInfoCache::Client {
+class GpuBrowserCompositorOutputSurface : public BrowserCompositorOutputSurface,
+                                          public GpuVSyncControl {
  public:
   GpuBrowserCompositorOutputSurface(
       scoped_refptr<ui::ContextProviderCommandBuffer> context,
@@ -51,7 +50,8 @@ class GpuBrowserCompositorOutputSurface
   // TODO(ccameron): Remove |params_mac| when the CALayer tree is hosted in the
   // browser process.
   virtual void OnGpuSwapBuffersCompleted(
-      const gfx::SwapResponse& response,
+      const std::vector<ui::LatencyInfo>& latency_info,
+      gfx::SwapResult result,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac);
 
   // BrowserCompositorOutputSurface implementation.
@@ -82,10 +82,6 @@ class GpuBrowserCompositorOutputSurface
   // GpuVSyncControl implementation.
   void SetNeedsVSync(bool needs_vsync) override;
 
-  // OutputSurface::LatencyInfoCache::Client implementation.
-  void LatencyInfoCompleted(
-      const std::vector<ui::LatencyInfo>& latency_info) override;
-
  protected:
   void OnVSyncParametersUpdated(base::TimeTicks timebase,
                                 base::TimeDelta interval);
@@ -98,7 +94,6 @@ class GpuBrowserCompositorOutputSurface
   // True if the draw rectangle has been set at all since the last resize.
   bool has_set_draw_rectangle_since_last_resize_ = false;
   gfx::Size size_;
-  LatencyInfoCache latency_info_cache_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(GpuBrowserCompositorOutputSurface);

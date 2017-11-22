@@ -15,3 +15,5 @@ const char ChromeContentClient::kPDFInternalPluginName[] =
     "Chromium PDF Plugin";
 #endif
 const char ChromeContentClient::kPDFPluginPath[] = "internal-pdf-viewer";
+const char ChromeContentClient::kRemotingViewerPluginPath[] =
+    "internal-remoting-viewer";

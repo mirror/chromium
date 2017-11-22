@@ -26,12 +26,6 @@ bool TestTaskRunner::PostDelayedTask(const base::Location& from_here,
   return false;
 }
 
-bool TestTaskRunner::PostNonNestableDelayedTask(const base::Location& from_here,
-                                                base::OnceClosure task,
-                                                base::TimeDelta delay) {
-  return PostDelayedTask(from_here, std::move(task), delay);
-}
-
 bool TestTaskRunner::RunsTasksInCurrentSequence() const {
   return true;
 }

@@ -120,10 +120,12 @@ Polymer({
     proxyExpanded_: Boolean,
   },
 
-  listeners: {
-    'network-list-changed': 'checkNetworkExists_',
-    'networks-changed': 'updateNetworkDetails_',
-  },
+  /**
+   * Listener function for chrome.networkingPrivate.onNetworksChanged event.
+   * @type {?function(!Array<string>)}
+   * @private
+   */
+  networksChangedListener_: null,
 
   /** @private {boolean} */
   didSetFocus_: false,
@@ -131,8 +133,6 @@ Polymer({
   /**
    * Set to true to once the initial properties have been received. This
    * prevents setProperties from being called when setting default properties.
-   * This will also be set to false if the network no longer exists in the
-   * list of networks (e.g. it goes out of range).
    * @private {boolean}
    */
   networkPropertiesReceived_: false,
@@ -152,9 +152,19 @@ Polymer({
    * @protected
    */
   currentRouteChanged: function(route, oldRoute) {
-    if (route != settings.routes.NETWORK_DETAIL)
+    if (route != settings.routes.NETWORK_DETAIL) {
+      if (this.networksChangedListener_) {
+        this.networkingPrivate.onNetworksChanged.removeListener(
+            this.networksChangedListener_);
+        this.networksChangedListener_ = null;
+      }
       return;
-
+    }
+    if (!this.networksChangedListener_) {
+      this.networksChangedListener_ = this.onNetworksChangedEvent_.bind(this);
+      this.networkingPrivate.onNetworksChanged.addListener(
+          this.networksChangedListener_);
+    }
     var queryParams = settings.getQueryParameters();
     this.guid = queryParams.get('guid') || '';
     if (!this.guid) {
@@ -253,20 +263,11 @@ Polymer({
   },
 
   /**
-   * @param {{detail: !Array<string>}} event
+   * networkingPrivate.onNetworksChanged event callback.
+   * @param {!Array<string>} networkIds The list of changed network GUIDs.
    * @private
    */
-  checkNetworkExists_: function(event) {
-    var networkIds = event.detail;
-    this.networkPropertiesReceived_ = networkIds.indexOf(this.guid) != -1;
-  },
-
-  /**
-   * @param {{detail: !Array<string>}} event
-   * @private
-   */
-  updateNetworkDetails_: function(event) {
-    var networkIds = event.detail;
+  onNetworksChangedEvent_: function(networkIds) {
     if (networkIds.indexOf(this.guid) != -1)
       this.getNetworkDetails_();
   },
@@ -539,8 +540,6 @@ Polymer({
    */
   enableConnect_: function(networkProperties, defaultNetwork, globalPolicy) {
     if (!this.showConnect_(networkProperties, globalPolicy))
-      return false;
-    if (!this.networkPropertiesReceived_)
       return false;
     if ((networkProperties.Type == CrOnc.Type.CELLULAR) &&
         (CrOnc.isSimLocked(networkProperties) ||

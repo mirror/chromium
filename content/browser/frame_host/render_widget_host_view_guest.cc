@@ -373,6 +373,19 @@ void RenderWidgetHostViewGuest::SetTooltipText(
     guest_->SetTooltipText(tooltip_text);
 }
 
+void RenderWidgetHostViewGuest::Init() {
+  RenderWidgetHostViewChildFrame::Init();
+
+#if defined(USE_AURA)
+  if (IsUsingMus()) {
+    aura::Env::GetInstance()->ScheduleEmbed(
+        GetWindowTreeClientFromRenderer(),
+        base::BindOnce(&RenderWidgetHostViewGuest::OnGotEmbedToken,
+                       weak_ptr_factory_.GetWeakPtr()));
+  }
+#endif
+}
+
 void RenderWidgetHostViewGuest::SendSurfaceInfoToEmbedderImpl(
     const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
@@ -395,18 +408,6 @@ void RenderWidgetHostViewGuest::SubmitCompositorFrame(
   // no longer need.
   if (!guest_ || !guest_->attached())
     ClearCompositorSurfaceIfNecessary();
-}
-
-void RenderWidgetHostViewGuest::OnAttached() {
-  RegisterFrameSinkId();
-#if defined(USE_AURA)
-  if (IsUsingMus()) {
-    aura::Env::GetInstance()->ScheduleEmbed(
-        GetWindowTreeClientFromRenderer(),
-        base::BindOnce(&RenderWidgetHostViewGuest::OnGotEmbedToken,
-                       weak_ptr_factory_.GetWeakPtr()));
-  }
-#endif
 }
 
 bool RenderWidgetHostViewGuest::OnMessageReceived(const IPC::Message& msg) {

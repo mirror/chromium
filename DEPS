@@ -74,11 +74,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'f8db42eaeec931fc5c8da2bbe03d1f14a2cc4bb9',
+  'skia_revision': '35c556f33e2c9316055537e5683c28ea1645ff49',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'cd23cae9edc134ecfe16a4868266dcf5ec432cbf',
+  'v8_revision': '64d2c3ba034fa66ab4d2f511900b146953dae155',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -86,11 +86,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': 'c7965001b32fbd7c03a5ddd908af603ee29f0601',
+  'angle_revision': '1eda27a6548972c673fa0b45f9414ef94fe02d68',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
-  'buildtools_revision': '461b345a815c1c745ac0534a6a4bd52d123abe68',
+  'buildtools_revision': '9c40f80c99981e0e3b8ab444ead3d8de8751c103',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
@@ -98,7 +98,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '120c19b6a19377c341658c342c4351eccbb59741',
+  'pdfium_revision': 'ec2209da158750beeeaeaab5dd68e58424921c4a',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -106,7 +106,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling BoringSSL
   # and whatever else without interference from each other.
-  'boringssl_revision': '8793942c5c7f4a46dcadea3a686c50f2b1c312ed',
+  'boringssl_revision': '6cc352e216938d78b65fb8ccbeebfc1f7f7486c4',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling google-toolbox-for-mac
   # and whatever else without interference from each other.
@@ -126,11 +126,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling freetype
   # and whatever else without interference from each other.
-  'freetype_revision': '954710ddd756733b851c0d2e472b93cbb9a6a44a',
+  'freetype_revision': '8f5568bfc4fd5fe707f0e41915b57affc1bff0e3',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '37921f135dc61021b8ced4c73375339658ac9953',
+  'catapult_revision': 'ba6a850bbb5b7f0ec0a9a8a9cb60cad12bbd230b',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -283,7 +283,7 @@ deps = {
 
   # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
   'src/third_party/chromite': {
-      'url': Var('chromium_git') + '/chromiumos/chromite.git' + '@' + 'ef632e4a473bfe196707200bc315293b59a121f7',
+      'url': Var('chromium_git') + '/chromiumos/chromite.git' + '@' + 'aed007c176057a9550d4b511809d68e5d8495015',
       'condition': 'checkout_linux',
   },
 
@@ -303,12 +303,12 @@ deps = {
   },
 
   'src/third_party/custom_tabs_client/src': {
-      'url': Var('chromium_git') + '/custom-tabs-client.git' + '@' + 'afe8a13457103292fb1ba49877a0b0e5abdc2f36',
+      'url': Var('chromium_git') + '/external/github.com/GoogleChrome/custom-tabs-client.git' + '@' + 'afe8a13457103292fb1ba49877a0b0e5abdc2f36',
       'condition': 'checkout_android',
   },
 
   'src/third_party/depot_tools':
-    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + 'faf3708960d4acc023236ce9ea2e06c139f6095b',
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '23b8214cec26b17e1023c575a683dff9e3e34051',
 
   # DevTools node modules. Used on Linux buildbots only.
   'src/third_party/devtools-node-modules': {
@@ -330,7 +330,7 @@ deps = {
   },
 
   'src/third_party/ffmpeg':
-    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + '168dfaa19bfdaa60e58a675eea67d2ee700fcdf9',
+    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'c99db0ab53a43f09e65caf0b546c8a4b19a36f60',
 
   'src/third_party/findbugs': {
       'url': Var('chromium_git') + '/chromium/deps/findbugs.git' + '@' + '4275d9ac8610db6b1bc9a5e887f97e41b33fac67',
@@ -419,7 +419,7 @@ deps = {
     Var('chromium_git') + '/external/libaddressinput.git' + '@' + '2a7c3d38915138189f4ac78e1188b58b2fbf5219',
 
   'src/third_party/libaom/source/libaom': {
-    'url': Var('aomedia_git') + '/aom.git' + '@' +  '535ecf6b31fe97f704f6725989cffad88ad960d8',
+    'url': Var('aomedia_git') + '/aom.git' + '@' +  '08b26a8a257e54210d8bbdba799980bc291f368e',
     'condition': 'checkout_libaom',
   },
 
@@ -459,13 +459,13 @@ deps = {
   },
 
   'src/third_party/libvpx/source/libvpx':
-    Var('chromium_git') + '/webm/libvpx.git' + '@' +  'ea14a1a965c51a4220427d9e8b34eec92d58a997',
+    Var('chromium_git') + '/webm/libvpx.git' + '@' +  '8c7213bc00b56143b4374b1b8b8e1300331475b5',
 
   'src/third_party/libwebm/source':
     Var('chromium_git') + '/webm/libwebm.git' + '@' + '4956b2dec65352af32dc71bab553acb631c64177',
 
   'src/third_party/libyuv':
-    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + '12c904a97c81c3ef4cab0fc8fb1f0485b4ec4e8c',  # from r1678
+    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + '8fa02df3c0591754958a50cc2896aafae319f3bc',  # from r1675
 
   'src/third_party/lighttpd': {
       'url': Var('chromium_git') + '/chromium/deps/lighttpd.git' + '@' + Var('lighttpd_revision'),
@@ -621,10 +621,10 @@ deps = {
     Var('chromium_git') + '/external/selenium/py.git' + '@' + '5fd78261a75fe08d27ca4835fb6c5ce4b42275bd',
 
   'src/third_party/webgl/src':
-    Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + 'e4919fa03c74bd561dcabf3e61668fa3c7e54353',
+    Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '12192b948daa2d83269ab46cbf03d65e9f2a48a3',
 
   'src/third_party/webrtc':
-    Var('webrtc_git') + '/src.git' + '@' + '202be3957d9528cbd92a2d212e1fd11ce9da2bb8', # commit position 20628
+    Var('webrtc_git') + '/src.git' + '@' + '0a8798b266754f6f5cde98e6ee653dbf9f650317', # commit position 20628
 
   'src/third_party/xdg-utils': {
       'url': Var('chromium_git') + '/chromium/deps/xdg-utils.git' + '@' + 'd80274d5869b17b8c9067a1022e4416ee7ed5e0d',
@@ -647,7 +647,7 @@ deps = {
     Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
 
   'src-internal': {
-    'url': 'https://chrome-internal.googlesource.com/chrome/src-internal.git@426cf33451c07ad93dbc1ec8450d4817a5afca60',
+    'url': 'https://chrome-internal.googlesource.com/chrome/src-internal.git@03c0eed5481423d0e71714cb4ff7ff6be98c8b60',
     'condition': 'checkout_src_internal',
   },
 }
@@ -927,18 +927,6 @@ hooks = [
                 '--no_auth',
                 '--bucket', 'chromium-browser-clang/rc',
                 '-s', 'src/build/toolchain/win/rc/linux64/rc.sha1',
-    ]
-  },
-  {
-    'name': 'content_shell_fonts',
-    'pattern': '.',
-    'action': [ 'download_from_google_storage',
-                '--no_resume',
-                '--platform=linux*',
-                '--extract',
-                '--no_auth',
-                '--bucket', 'chromium-fonts',
-                '-s', 'src/third_party/content_shell_fonts/content_shell_test_fonts.tar.gz.sha1',
     ],
   },
   # Pull order files for the win/clang build.
@@ -1074,7 +1062,7 @@ hooks = [
                 '--no_resume',
                 '--extract',
                 '--no_auth',
-                '--bucket', 'chromium-nodejs/8.9.1',
+                '--bucket', 'chromium-nodejs/6.9.4',
                 '-s', 'src/third_party/node/linux/node-linux-x64.tar.gz.sha1',
     ],
   },
@@ -1087,7 +1075,7 @@ hooks = [
                 '--no_resume',
                 '--extract',
                 '--no_auth',
-                '--bucket', 'chromium-nodejs/8.9.1',
+                '--bucket', 'chromium-nodejs/6.9.4',
                 '-s', 'src/third_party/node/mac/node-darwin-x64.tar.gz.sha1',
     ],
   },
@@ -1099,7 +1087,7 @@ hooks = [
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
                 '--no_auth',
-                '--bucket', 'chromium-nodejs/8.9.1',
+                '--bucket', 'chromium-nodejs/6.9.4',
                 '-s', 'src/third_party/node/win/node.exe.sha1',
     ],
   },
@@ -1165,22 +1153,6 @@ hooks = [
                 '--num_threads=4',
                 '--bucket', 'chromium-tools-traffic_annotation',
                 '-d', 'src/tools/traffic_annotation/bin/linux64',
-    ],
-  },
-
-# This is used to ensure that all network operations are properly
-# annotated so we can document what they're for.
-  {
-    'name': 'tools_traffic_annotation_windows',
-    'pattern': '.',
-    'condition': 'host_os == "windows" and checkout_traffic_annotation_tools',
-    'action': [ 'vpython',
-                'src/third_party/depot_tools/download_from_google_storage.py',
-                '--no_resume',
-                '--no_auth',
-                '--num_threads=4',
-                '--bucket', 'chromium-tools-traffic_annotation',
-                '-d', 'src/tools/traffic_annotation/bin/win32',
     ],
   },
 

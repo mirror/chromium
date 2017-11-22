@@ -19,9 +19,4 @@ bool IsUsingMus() {
 #endif
 }
 
-bool IsMusHostingViz() {
-  // TODO(sad): Currently mus always is the viz host.
-  return IsUsingMus();
-}
-
 }  // namespace content

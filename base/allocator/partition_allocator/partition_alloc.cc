@@ -174,19 +174,21 @@ void PartitionAllocGlobalInit(void (*oom_handling_function)()) {
   PartitionRootBase::gOomHandlingFunction = oom_handling_function;
 }
 
-void PartitionRoot::Init(size_t num_buckets, size_t max_allocation) {
-  PartitionAllocBaseInit(this);
+void PartitionAllocInit(PartitionRoot* root,
+                        size_t num_buckets,
+                        size_t max_allocation) {
+  PartitionAllocBaseInit(root);
 
-  this->num_buckets = num_buckets;
-  this->max_allocation = max_allocation;
+  root->num_buckets = num_buckets;
+  root->max_allocation = max_allocation;
   size_t i;
-  for (i = 0; i < this->num_buckets; ++i) {
-    PartitionBucket* bucket = &this->buckets()[i];
+  for (i = 0; i < root->num_buckets; ++i) {
+    PartitionBucket* bucket = &root->buckets()[i];
     if (!i)
       bucket->slot_size = kAllocationGranularity;
     else
       bucket->slot_size = i << kBucketShift;
-    PartitionBucketInitBase(bucket, this);
+    PartitionBucketInitBase(bucket, root);
   }
 }
 
@@ -1292,9 +1294,9 @@ static void PartitionPurgeBucket(PartitionBucket* bucket) {
   }
 }
 
-void PartitionRoot::PurgeMemory(int flags) {
+void PartitionPurgeMemory(PartitionRoot* root, int flags) {
   if (flags & PartitionPurgeDecommitEmptyPages)
-    PartitionDecommitEmptyPages(this);
+    PartitionDecommitEmptyPages(root);
   // We don't currently do anything for PartitionPurgeDiscardUnusedSystemPages
   // here because that flag is only useful for allocations >= system page
   // size. We only have allocations that large inside generic partitions
@@ -1478,13 +1480,14 @@ void PartitionDumpStatsGeneric(PartitionRootGeneric* partition,
   dumper->PartitionDumpTotals(partition_name, &stats);
 }
 
-void PartitionRoot::DumpStats(const char* partition_name,
-                              bool is_light_dump,
-                              PartitionStatsDumper* dumper) {
+void PartitionDumpStats(PartitionRoot* partition,
+                        const char* partition_name,
+                        bool is_light_dump,
+                        PartitionStatsDumper* dumper) {
   PartitionMemoryStats stats = {0};
-  stats.total_mmapped_bytes = this->total_size_of_super_pages;
-  stats.total_committed_bytes = this->total_size_of_committed_pages;
-  DCHECK(!this->total_size_of_direct_mapped_pages);
+  stats.total_mmapped_bytes = partition->total_size_of_super_pages;
+  stats.total_committed_bytes = partition->total_size_of_committed_pages;
+  DCHECK(!partition->total_size_of_direct_mapped_pages);
 
   static const size_t kMaxReportableBuckets = 4096 / sizeof(void*);
   std::unique_ptr<PartitionBucketMemoryStats[]> memory_stats;
@@ -1492,12 +1495,12 @@ void PartitionRoot::DumpStats(const char* partition_name,
     memory_stats = std::unique_ptr<PartitionBucketMemoryStats[]>(
         new PartitionBucketMemoryStats[kMaxReportableBuckets]);
 
-  const size_t partitionNumBuckets = this->num_buckets;
+  const size_t partitionNumBuckets = partition->num_buckets;
   DCHECK(partitionNumBuckets <= kMaxReportableBuckets);
 
   for (size_t i = 0; i < partitionNumBuckets; ++i) {
     PartitionBucketMemoryStats bucket_stats = {0};
-    PartitionDumpBucketStats(&bucket_stats, &this->buckets()[i]);
+    PartitionDumpBucketStats(&bucket_stats, &partition->buckets()[i]);
     if (bucket_stats.is_valid) {
       stats.total_resident_bytes += bucket_stats.resident_bytes;
       stats.total_active_bytes += bucket_stats.active_bytes;

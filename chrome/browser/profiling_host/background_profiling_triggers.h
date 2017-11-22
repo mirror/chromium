@@ -57,7 +57,7 @@ class BackgroundProfilingTriggers {
       memory_instrumentation::mojom::GlobalMemoryDumpPtr ptr);
 
   // Virtual for testing. Called when a memory report needs to be send.
-  virtual void TriggerMemoryReport();
+  virtual void TriggerMemoryReportForProcess(base::ProcessId pid);
 
   ProfilingProcessHost* host_;
 

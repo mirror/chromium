@@ -17,14 +17,4 @@ MockMojoMediaStreamDispatcherHost::CreateInterfacePtrAndBind() {
   return dispatcher_host;
 }
 
-void MockMojoMediaStreamDispatcherHost::OpenDevice(
-    int32_t render_frame_id,
-    int32_t request_id,
-    const std::string& device_id,
-    MediaStreamType type,
-    OpenDeviceCallback callback) {
-  std::move(callback).Run(true /* success */, std::string(),
-                          MediaStreamDevice());
-}
-
 }  // namespace content

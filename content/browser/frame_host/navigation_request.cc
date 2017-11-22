@@ -348,7 +348,6 @@ NavigationRequest::NavigationRequest(
       from_begin_navigation_(from_begin_navigation),
       has_stale_copy_in_cache_(false),
       net_error_(net::OK),
-      devtools_navigation_token_(base::UnguessableToken::Create()),
       weak_factory_(this) {
   DCHECK(!browser_initiated || (entry != nullptr && frame_entry != nullptr));
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationRequest", this,
@@ -613,13 +612,8 @@ void NavigationRequest::OnRequestRedirected(
   // destination could change.
   dest_site_instance_ = nullptr;
 
-  // For now, DevTools needs the POST data sent to the renderer process even if
-  // it is no longer a POST after the redirect.
-  // TODO(caseq): Send the requestWillBeSent from browser and remove the
-  // IsNetworkHandlerEnabled check here.
   // If the navigation is no longer a POST, the POST data should be reset.
-  if (redirect_info.new_method != "POST" &&
-      !RenderFrameDevToolsAgentHost::IsNetworkHandlerEnabled(frame_tree_node_))
+  if (redirect_info.new_method != "POST")
     common_params_.post_data = nullptr;
 
   // Mark time for the Navigation Timing API.
@@ -1199,8 +1193,7 @@ void NavigationRequest::CommitNavigation() {
 
   render_frame_host->CommitNavigation(
       response_.get(), std::move(body_), std::move(handle_), common_params_,
-      request_params_, is_view_source_, std::move(subresource_loader_params_),
-      devtools_navigation_token_);
+      request_params_, is_view_source_, std::move(subresource_loader_params_));
 
   frame_tree_node_->ResetNavigationRequest(true, true);
 }

@@ -421,8 +421,7 @@ void ThrottlingURLLoader::OnStartLoadingResponseBody(
   forwarding_client_->OnStartLoadingResponseBody(std::move(body));
 }
 
-void ThrottlingURLLoader::OnComplete(
-    const network::URLLoaderCompletionStatus& status) {
+void ThrottlingURLLoader::OnComplete(const network::URLLoaderStatus& status) {
   DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
   DCHECK(!loader_cancelled_);
 
@@ -445,7 +444,7 @@ void ThrottlingURLLoader::CancelWithError(int error_code) {
   if (loader_cancelled_)
     return;
 
-  network::URLLoaderCompletionStatus status;
+  network::URLLoaderStatus status;
   status.error_code = error_code;
   status.completion_time = base::TimeTicks::Now();
 

@@ -489,9 +489,6 @@ class PDFiumEngine : public PDFEngine,
   pp::VarDictionary TraverseBookmarks(FPDF_BOOKMARK bookmark,
                                       unsigned int depth);
 
-  // Set if the document has any local edits.
-  void SetEditMode(bool edit_mode);
-
   // FPDF_FORMFILLINFO callbacks.
   static void Form_Invalidate(FPDF_FORMFILLINFO* param,
                               FPDF_PAGE page,
@@ -814,8 +811,6 @@ class PDFiumEngine : public PDFEngine,
       RangeSelectionDirection::Right;
 
   pp::Point range_selection_base_;
-
-  bool edit_mode_;
 
   DISALLOW_COPY_AND_ASSIGN(PDFiumEngine);
 };

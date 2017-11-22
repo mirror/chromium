@@ -14,6 +14,8 @@ namespace extensions {
 class ExtensionSet;
 }
 
+namespace chrome {
+
 // Returns true if the extension (or an imported module if any) is whitelisted.
 // Module imports are at most one level deep (ie, a module that exports cannot
 // import another extension).  The extension is identified by the host of |url|
@@ -34,4 +36,6 @@ bool IsExtensionOrSharedModuleWhitelisted(
 bool IsHostAllowedByCommandLine(const GURL& url,
                                 const extensions::ExtensionSet* extension_set,
                                 const char* command_line_switch);
+}  // namespace chrome
+
 #endif  // CHROME_COMMON_PEPPER_PERMISSION_UTIL_H_

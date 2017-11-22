@@ -42,8 +42,7 @@ TEST_F(ApplyStyleCommandTest, RemoveRedundantBlocksWithStarEditableStyle) {
 
   MutableCSSPropertyValueSet* style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
-  style->SetProperty(CSSPropertyTextAlign, "center", /* important */ false,
-                     SecureContextMode::kInsecureContext);
+  style->SetProperty(CSSPropertyTextAlign, "center");
   ApplyStyleCommand::Create(GetDocument(), EditingStyle::Create(style),
                             InputEvent::InputType::kFormatJustifyCenter,
                             ApplyStyleCommand::kForceBlockProperties)
@@ -71,8 +70,7 @@ TEST_F(ApplyStyleCommandTest, JustifyRightDetachesDestination) {
 
   MutableCSSPropertyValueSet* style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
-  style->SetProperty(CSSPropertyTextAlign, "right", /* important */ false,
-                     SecureContextMode::kInsecureContext);
+  style->SetProperty(CSSPropertyTextAlign, "right");
   ApplyStyleCommand::Create(GetDocument(), EditingStyle::Create(style),
                             InputEvent::InputType::kFormatJustifyCenter,
                             ApplyStyleCommand::kForceBlockProperties)

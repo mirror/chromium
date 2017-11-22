@@ -24,7 +24,7 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/passwords/ios_chrome_password_store_factory.h"
 #import "ios/chrome/browser/ui/settings/reauthentication_module.h"
-#include "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
+#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/app/password_test_util.h"
@@ -467,82 +467,6 @@ PasswordForm CreateSampleFormWithIndex(int index) {
   // The tap checks the existence of the snackbar and also closes it.
   [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
       performAction:grey_tap()];
-
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
-      performAction:grey_tap()];
-}
-
-// Checks that an attempt to show a password provides an appropriate feedback
-// when reauthentication succeeds.
-- (void)testShowPasswordToastAuthSucceeded {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(
-      password_manager::features::kViewPasswords);
-
-  // Saving a form is needed for using the "password details" view.
-  SaveExamplePasswordForm();
-
-  OpenPasswordSettings();
-
-  [GetInteractionForPasswordEntry(@"example.com, concrete username")
-      performAction:grey_tap()];
-
-  MockReauthenticationModule* mock_reauthentication_module =
-      SetUpAndReturnMockReauthenticationModule();
-
-  // Check the snackbar in case of successful reauthentication.
-  mock_reauthentication_module.shouldSucceed = YES;
-  [GetInteractionForPasswordDetailItem(ShowPasswordButton())
-      performAction:grey_tap()];
-
-  // Check that the password is displayed.
-  [[EarlGrey
-      selectElementWithMatcher:grey_accessibilityLabel(@"concrete password")]
-      assertWithMatcher:grey_sufficientlyVisible()];
-
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
-      performAction:grey_tap()];
-}
-
-// Checks that an attempt to show a password provides an appropriate feedback
-// when reauthentication fails.
-- (void)testShowPasswordToastAuthFailed {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(
-      password_manager::features::kViewPasswords);
-
-  // Saving a form is needed for using the "password details" view.
-  SaveExamplePasswordForm();
-
-  OpenPasswordSettings();
-
-  [GetInteractionForPasswordEntry(@"example.com, concrete username")
-      performAction:grey_tap()];
-
-  MockReauthenticationModule* mock_reauthentication_module =
-      SetUpAndReturnMockReauthenticationModule();
-
-  // Check the snackbar in case of failed reauthentication.
-  mock_reauthentication_module.shouldSucceed = NO;
-  [GetInteractionForPasswordDetailItem(ShowPasswordButton())
-      performAction:grey_tap()];
-
-  // Check that the password is not displayed.
-  [[EarlGrey
-      selectElementWithMatcher:grey_accessibilityLabel(@"concrete password")]
-      assertWithMatcher:grey_nil()];
-
-  // Note that there is supposed to be no message (cf. the case of the copy
-  // button, which does need one). The reason is that the password not being
-  // shown is enough of a message that the action failed.
 
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];

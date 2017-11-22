@@ -45,23 +45,13 @@ class CONTENT_EXPORT WebContentsViewDelegate {
   virtual void ShowContextMenu(RenderFrameHost* render_frame_host,
                                const ContextMenuParams& params);
 
-  // Store the current focused view and start tracking it.
+  // These methods allow the embedder to intercept a WebContentsView's
+  // implementation of these methods. See the WebContentsView interface
+  // documentation for more information about these methods.
   virtual void StoreFocus();
-
-  // Restore focus to stored view if possible, return true if successful.
-  virtual bool RestoreFocus();
-
-  // Clears any stored focus.
-  virtual void ResetStoredFocus();
-
-  // Allows the delegate to intercept a request to focus the WebContents,
-  // and focus something else instead. Returns true when intercepted.
+  virtual void RestoreFocus();
   virtual bool Focus();
-
-  // Advance focus to the view that follows or precedes the WebContents.
-  virtual bool TakeFocus(bool reverse);
-
-  // Allows the delegate to update bounds for a special views.
+  virtual void TakeFocus(bool reverse);
   virtual void SizeChanged(const gfx::Size& size);
 
   // This method allows the embedder to specify the display color space (instead

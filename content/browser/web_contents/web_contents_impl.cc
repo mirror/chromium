@@ -3233,7 +3233,17 @@ void WebContentsImpl::RestoreFocus() {
 }
 
 void WebContentsImpl::FocusThroughTabTraversal(bool reverse) {
-  view_->FocusThroughTabTraversal(reverse);
+  if (ShowingInterstitialPage()) {
+    interstitial_page_->FocusThroughTabTraversal(reverse);
+    return;
+  }
+  RenderWidgetHostView* const fullscreen_view =
+      GetFullscreenRenderWidgetHostView();
+  if (fullscreen_view) {
+    fullscreen_view->Focus();
+    return;
+  }
+  GetRenderViewHost()->SetInitialFocus(reverse);
 }
 
 bool WebContentsImpl::ShowingInterstitialPage() const {
@@ -3246,7 +3256,7 @@ void WebContentsImpl::AdjustPreviewsStateForNavigation(
     delegate_->AdjustPreviewsStateForNavigation(previews_state);
 }
 
-InterstitialPageImpl* WebContentsImpl::GetInterstitialPage() const {
+InterstitialPage* WebContentsImpl::GetInterstitialPage() const {
   return interstitial_page_;
 }
 

@@ -414,7 +414,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       is_guest_view_hack_(is_guest_view_hack),
       device_scale_factor_(0.0f),
       event_handler_(new RenderWidgetHostViewEventHandler(host_, this, this)),
-      frame_sink_id_(IsMusHostingViz()
+      frame_sink_id_(IsUsingMus()
                          ? viz::FrameSinkId()
                          : host_->AllocateFrameSinkId(is_guest_view_hack_)),
       weak_ptr_factory_(this) {
@@ -954,7 +954,6 @@ void RenderWidgetHostViewAura::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     viz::CompositorFrame frame,
     viz::mojom::HitTestRegionListPtr hit_test_region_list) {
-  DCHECK(delegated_frame_host_);
   TRACE_EVENT0("content", "RenderWidgetHostViewAura::OnSwapCompositorFrame");
 
   // Override the background color to the current compositor background.
@@ -972,10 +971,12 @@ void RenderWidgetHostViewAura::SubmitCompositorFrame(
     last_scroll_offset_.Scale(1.0f / current_device_scale_factor_);
   }
 
-  delegated_frame_host_->SubmitCompositorFrame(
-      local_surface_id, std::move(frame), std::move(hit_test_region_list));
-  if (window_)
-    window_->set_embed_frame_sink_id(frame_sink_id_);
+  if (delegated_frame_host_) {
+    delegated_frame_host_->SubmitCompositorFrame(
+        local_surface_id, std::move(frame), std::move(hit_test_region_list));
+    if (window_)
+      window_->set_embed_frame_sink_id(frame_sink_id_);
+  }
   if (frame.metadata.selection.start != selection_start_ ||
       frame.metadata.selection.end != selection_end_) {
     selection_start_ = frame.metadata.selection.start;
@@ -1971,7 +1972,7 @@ void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
 }
 
 void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
-  if (!frame_sink_id_.is_valid())
+  if (IsUsingMus())
     return;
 
   // Tests may set |delegated_frame_host_client_|.

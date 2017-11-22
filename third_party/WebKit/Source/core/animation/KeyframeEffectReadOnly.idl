@@ -10,5 +10,4 @@
     RaisesException=Constructor,
     RuntimeEnabled=WebAnimationsAPI
 ] interface KeyframeEffectReadOnly : AnimationEffectReadOnly {
-  [CallWith=ScriptState] sequence<object> getKeyframes();
 };

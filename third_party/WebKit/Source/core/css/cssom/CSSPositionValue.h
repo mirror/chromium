@@ -5,7 +5,6 @@
 #ifndef CSSPositionValue_h
 #define CSSPositionValue_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -16,6 +15,7 @@ class CSSNumericValue;
 class ExceptionState;
 
 class CORE_EXPORT CSSPositionValue final : public CSSStyleValue {
+  WTF_MAKE_NONCOPYABLE(CSSPositionValue);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -33,7 +33,7 @@ class CORE_EXPORT CSSPositionValue final : public CSSStyleValue {
   // Internal methods - from CSSStyleValue.
   StyleValueType GetType() const final { return kPositionType; }
 
-  const CSSValue* ToCSSValue(SecureContextMode) const final;
+  const CSSValue* ToCSSValue() const final;
 
   virtual void Trace(blink::Visitor* visitor) {
     visitor->Trace(x_);
@@ -46,7 +46,6 @@ class CORE_EXPORT CSSPositionValue final : public CSSStyleValue {
 
   Member<CSSNumericValue> x_;
   Member<CSSNumericValue> y_;
-  DISALLOW_COPY_AND_ASSIGN(CSSPositionValue);
 };
 
 }  // namespace blink

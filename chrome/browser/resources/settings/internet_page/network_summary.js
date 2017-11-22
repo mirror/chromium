@@ -91,10 +91,11 @@ Polymer({
     },
   },
 
-  listeners: {
-    'network-list-changed': 'getNetworkLists_',
-    'networks-changed': 'updateActiveNetworks_',
-  },
+  /**
+   * Listener function for chrome.networkingPrivate.onNetworkListChanged event.
+   * @private {?function(!Array<string>)}
+   */
+  networkListChangedListener_: null,
 
   /**
    * Listener function for chrome.networkingPrivate.onDeviceStateListChanged
@@ -102,6 +103,12 @@ Polymer({
    * @private {?function(!Array<string>)}
    */
   deviceStateListChangedListener_: null,
+
+  /**
+   * Listener function for chrome.networkingPrivate.onNetworksChanged event.
+   * @private {?function(!Array<string>)}
+   */
+  networksChangedListener_: null,
 
   /**
    * Set of GUIDs identifying active networks, one for each type.
@@ -113,17 +120,41 @@ Polymer({
   attached: function() {
     this.getNetworkLists_();
 
+    this.networkListChangedListener_ = this.networkListChangedListener_ ||
+        this.onNetworkListChangedEvent_.bind(this);
+    this.networkingPrivate.onNetworkListChanged.addListener(
+        this.networkListChangedListener_);
+
     this.deviceStateListChangedListener_ =
         this.deviceStateListChangedListener_ ||
         this.onDeviceStateListChangedEvent_.bind(this);
     this.networkingPrivate.onDeviceStateListChanged.addListener(
         this.deviceStateListChangedListener_);
+
+    this.networksChangedListener_ = this.networksChangedListener_ ||
+        this.onNetworksChangedEvent_.bind(this);
+    this.networkingPrivate.onNetworksChanged.addListener(
+        this.networksChangedListener_);
   },
 
   /** @override */
   detached: function() {
+    this.networkingPrivate.onNetworkListChanged.removeListener(
+        assert(this.networkListChangedListener_));
+
     this.networkingPrivate.onDeviceStateListChanged.removeListener(
         assert(this.deviceStateListChangedListener_));
+
+    this.networkingPrivate.onNetworksChanged.removeListener(
+        assert(this.networksChangedListener_));
+  },
+
+  /**
+   * networkingPrivate.onNetworkListChanged event callback.
+   * @private
+   */
+  onNetworkListChangedEvent_: function() {
+    this.getNetworkLists_();
   },
 
   /**
@@ -135,13 +166,13 @@ Polymer({
   },
 
   /**
-   * @param {{detail: !Array<string>}} event
+   * networkingPrivate.onNetworksChanged event callback.
+   * @param {!Array<string>} networkIds The list of changed network GUIDs.
    * @private
    */
-  updateActiveNetworks_: function(event) {
+  onNetworksChangedEvent_: function(networkIds) {
     if (!this.activeNetworkIds_)
       return;  // Initial list of networks not received yet.
-    var networkIds = event.detail;
     networkIds.forEach(function(id) {
       if (this.activeNetworkIds_.has(id)) {
         this.networkingPrivate.getState(

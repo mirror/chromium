@@ -112,15 +112,13 @@ _CONFIG = [
         ],
         'allowed': ['gpu::gles2::GLES2Interface'],
     },
+    # Suppress checks on platform since code in this directory is meant to be a
+    # bridge between Blink and non-Blink code.
     {
         'paths': [
             'third_party/WebKit/Source/platform/',
         ],
-        # Suppress almost all checks on platform since code in this directory
-        # is meant to be a bridge between Blink and non-Blink code. However,
-        # base::RefCounted should still be explicitly blocked, since
-        # WTF::RefCounted should be used instead.
-        'allowed': ['(?!base::RefCounted).+'],
+        'allowed': ['.+'],
     },
 ]
 

@@ -109,6 +109,7 @@ source_set("browser_state_impl") {
     "//ios/chrome/browser/ui/browser_list",
     "//ios/chrome/browser/ui/browser_list:browser_list_impl",
     "//ios/chrome/browser/undo",
+    "//ios/clean/chrome/browser/ui/overlays",
     "//ios/net",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/signin",
@@ -125,20 +126,6 @@ source_set("browser_state_impl") {
     "//ios/chrome/browser/sync",
     "//ios/chrome/browser/sync/glue",
   ]
-}
-
-source_set("unit_tests") {
-  testonly = true
-  sources = [
-    "test_chrome_browser_state_manager_unittest.cc",
-  ]
-  deps = [
-    ":test_support",
-    "//base",
-    "//ios/web/public/test",
-    "//testing/gtest",
-  ]
-  configs += [ "//build/config/compiler:enable_arc" ]
 }
 
 source_set("test_support") {

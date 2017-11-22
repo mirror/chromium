@@ -34,15 +34,14 @@
 
 using content::DevToolsAgentHost;
 
-const char ChromeDevToolsManagerDelegate::kTypeApp[] = "app";
-const char ChromeDevToolsManagerDelegate::kTypeBackgroundPage[] =
-    "background_page";
+char ChromeDevToolsManagerDelegate::kTypeApp[] = "app";
+char ChromeDevToolsManagerDelegate::kTypeBackgroundPage[] = "background_page";
 
 namespace {
 
-const char kLocationsParam[] = "locations";
-const char kHostParam[] = "host";
-const char kPortParam[] = "port";
+char kLocationsParam[] = "locations";
+char kHostParam[] = "host";
+char kPortParam[] = "port";
 
 bool GetExtensionInfo(content::WebContents* wc,
                       std::string* name,
@@ -61,9 +60,9 @@ bool GetExtensionInfo(content::WebContents* wc,
     *name = extension->name();
     *type = ChromeDevToolsManagerDelegate::kTypeBackgroundPage;
     return true;
-  }
-  if (extension->is_hosted_app() || extension->is_legacy_packaged_app() ||
-      extension->is_platform_app()) {
+  } else if (extension->is_hosted_app() ||
+             extension->is_legacy_packaged_app() ||
+             extension->is_platform_app()) {
     *name = extension->name();
     *type = ChromeDevToolsManagerDelegate::kTypeApp;
     return true;

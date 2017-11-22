@@ -24,7 +24,8 @@
  */
 
 [
-    NoInterfaceObject
+    NoInterfaceObject,
+    DependentLifetime
 ] interface RTCDTMFSender : EventTarget {
     readonly attribute boolean canInsertDTMF;
     readonly attribute MediaStreamTrack track;

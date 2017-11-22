@@ -5,7 +5,6 @@
 #ifndef CSSNumericValue_h
 #define CSSNumericValue_h
 
-#include "base/macros.h"
 #include "bindings/core/v8/double_or_css_numeric_value.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSPrimitiveValue.h"
@@ -24,6 +23,7 @@ using CSSNumberish = DoubleOrCSSNumericValue;
 using CSSNumericValueVector = HeapVector<Member<CSSNumericValue>>;
 
 class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
+  WTF_MAKE_NONCOPYABLE(CSSNumericValue);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -64,7 +64,6 @@ class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
   virtual CSSNumericValue* Invert();
 
   CSSNumericValueType type_;
-  DISALLOW_COPY_AND_ASSIGN(CSSNumericValue);
 };
 
 CSSNumericValueVector CSSNumberishesToNumericValues(

@@ -77,13 +77,8 @@
     {
       "id": 20,
       "description": "Disable EXT_draw_buffers on GeForce GT 650M on Mac OS X due to driver bugs",
-      "cr_bugs": [180397, 779991],
       "os": {
-        "type": "macosx",
-        "version": {
-          "op": "<",
-          "value": "10.12"
-        }
+        "type": "macosx"
       },
       "vendor_id": "0x10de",
       "device_id": ["0x0fd5"],
@@ -2696,46 +2691,6 @@
       "gl_renderer": "Adreno \\(TM\\) *",
       "features": [
         "dont_use_loops_to_initialize_variables"
-      ]
-    },
-    {
-      "id": 247,
-      "description": "EXT_disjoint_timer_query is broken on Samsung Galaxy S6",
-      "cr_bugs": [702980],
-      "os": {
-        "type": "android"
-      },
-      "machine_model_name": ["SM-G930F"],
-      "gl_vendor": "ARM.*",
-      "gl_renderer": "Mali-T880",
-      "disabled_extensions": [
-        "GL_EXT_disjoint_timer_query"
-      ]
-    },
-    {
-      "id": 248,
-      "description": "Direct composition causes slow presents on Intel Sandybridge",
-      "cr_bugs": [775898, 785648],
-      "os": {
-        "type": "windows"
-      },
-      "vendor_id": "0x8086",
-      "device_id": ["0x0116"],
-      "features": [
-        "disable_direct_composition"
-      ]
-    },
-    {
-      "id": 249,
-      "description": "Direct composition causes slow presents on old Nvidia GPUs",
-      "cr_bugs": [775898],
-      "os": {
-        "type": "windows"
-      },
-      "vendor_id": "0x10de",
-      "device_id": ["0x10d8"],
-      "features": [
-        "disable_direct_composition"
       ]
     }
   ]

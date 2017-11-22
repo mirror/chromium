@@ -25,8 +25,8 @@ class ChromeDevToolsManagerDelegate :
     public content::DevToolsManagerDelegate,
     public content::DevToolsAgentHostObserver {
  public:
-  static const char kTypeApp[];
-  static const char kTypeBackgroundPage[];
+  static char kTypeApp[];
+  static char kTypeBackgroundPage[];
 
   ChromeDevToolsManagerDelegate();
   ~ChromeDevToolsManagerDelegate() override;

@@ -132,6 +132,7 @@ void SurfaceManager::DestroySurface(const SurfaceId& surface_id) {
   for (auto& observer : observer_list_)
     observer.OnSurfaceDestroyed(surface_id);
   surfaces_to_destroy_.insert(surface_id);
+  GarbageCollectSurfaces();
 }
 
 void SurfaceManager::SurfaceSubtreeDamaged(const SurfaceId& surface_id) {
@@ -155,6 +156,7 @@ void SurfaceManager::SatisfySequence(const SurfaceSequence& sequence) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_EQ(lifetime_type_, LifetimeType::SEQUENCES);
   satisfied_sequences_.insert(sequence);
+  GarbageCollectSurfaces();
 }
 
 void SurfaceManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id) {
@@ -216,6 +218,8 @@ void SurfaceManager::RemoveSurfaceReferences(
 
   for (const auto& reference : references)
     RemoveSurfaceReferenceImpl(reference.parent_id(), reference.child_id());
+
+  GarbageCollectSurfaces();
 }
 
 void SurfaceManager::AssignTemporaryReference(const SurfaceId& surface_id,
@@ -240,8 +244,23 @@ void SurfaceManager::DropTemporaryReference(const SurfaceId& surface_id) {
   RemoveTemporaryReference(surface_id, false);
 }
 
+const base::flat_set<SurfaceId>& SurfaceManager::GetSurfacesReferencedByParent(
+    const SurfaceId& surface_id) const {
+  auto iter = references_.find(surface_id);
+  if (iter == references_.end())
+    return empty_surface_id_set_;
+  return iter->second.children;
+}
+
+const base::flat_set<SurfaceId>& SurfaceManager::GetSurfacesThatReferenceChild(
+    const SurfaceId& surface_id) const {
+  auto iter = references_.find(surface_id);
+  if (iter == references_.end())
+    return empty_surface_id_set_;
+  return iter->second.parents;
+}
+
 void SurfaceManager::GarbageCollectSurfaces() {
-  TRACE_EVENT0("viz", "SurfaceManager::GarbageCollectSurfaces");
   if (surfaces_to_destroy_.empty())
     return;
 
@@ -265,22 +284,6 @@ void SurfaceManager::GarbageCollectSurfaces() {
   // ~Surface() draw callback could modify |surfaces_to_destroy_|.
   for (const SurfaceId& surface_id : surfaces_to_delete)
     DestroySurfaceInternal(surface_id);
-}
-
-const base::flat_set<SurfaceId>& SurfaceManager::GetSurfacesReferencedByParent(
-    const SurfaceId& surface_id) const {
-  auto iter = references_.find(surface_id);
-  if (iter == references_.end())
-    return empty_surface_id_set_;
-  return iter->second.children;
-}
-
-const base::flat_set<SurfaceId>& SurfaceManager::GetSurfacesThatReferenceChild(
-    const SurfaceId& surface_id) const {
-  auto iter = references_.find(surface_id);
-  if (iter == references_.end())
-    return empty_surface_id_set_;
-  return iter->second.parents;
 }
 
 SurfaceManager::SurfaceIdSet SurfaceManager::GetLiveSurfacesForReferences() {

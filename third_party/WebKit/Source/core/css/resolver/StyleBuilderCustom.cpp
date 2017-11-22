@@ -320,7 +320,7 @@ void StyleBuilderFunctions::applyValueCSSPropertyOutlineStyle(
     const CSSValue& value) {
   const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
   state.Style()->SetOutlineStyleIsAuto(
-      static_cast<bool>(identifier_value.ConvertTo<OutlineIsAuto>()));
+      identifier_value.ConvertTo<OutlineIsAuto>());
   state.Style()->SetOutlineStyle(identifier_value.ConvertTo<EBorderStyle>());
 }
 
@@ -879,8 +879,8 @@ void StyleBuilderFunctions::applyValueCSSPropertyVariable(
       return;
     }
 
-    const CSSValue* parsed_value = declaration.Value()->ParseForSyntax(
-        registration->Syntax(), state.GetDocument().SecureContextMode());
+    const CSSValue* parsed_value =
+        declaration.Value()->ParseForSyntax(registration->Syntax());
     if (parsed_value) {
       DCHECK(parsed_value);
       if (is_inherited_property)

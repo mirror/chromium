@@ -14,7 +14,7 @@
 #include "base/timer/timer.h"
 #include "components/arc/common/metrics.mojom.h"
 #include "components/arc/common/process.mojom.h"
-#include "components/arc/connection_observer.h"
+#include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -27,9 +27,10 @@ namespace arc {
 class ArcBridgeService;
 
 // Collects information from other ArcServices and send UMA metrics.
-class ArcMetricsService : public KeyedService,
-                          public ConnectionObserver<mojom::MetricsInstance>,
-                          public mojom::MetricsHost {
+class ArcMetricsService
+    : public KeyedService,
+      public InstanceHolder<mojom::MetricsInstance>::Observer,
+      public mojom::MetricsHost {
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
@@ -40,13 +41,13 @@ class ArcMetricsService : public KeyedService,
                     ArcBridgeService* bridge_service);
   ~ArcMetricsService() override;
 
-  // ConnectionObserver<mojom::MetricsInstance> overrides.
-  void OnConnectionReady() override;
-  void OnConnectionClosed() override;
+  // InstanceHolder<mojom::MetricsInstance>::Observer overrides.
+  void OnInstanceReady() override;
+  void OnInstanceClosed() override;
 
-  // Implementations for ConnectionObserver<mojom::ProcessInstance>.
-  void OnProcessConnectionReady();
-  void OnProcessConnectionClosed();
+  // Implementations for InstanceHolder<mojom::ProcessInstance>::Observer.
+  void OnProcessInstanceReady();
+  void OnProcessInstanceClosed();
 
   // MetricsHost overrides.
   void ReportBootProgress(std::vector<mojom::BootProgressEventPtr> events,
@@ -54,15 +55,16 @@ class ArcMetricsService : public KeyedService,
 
  private:
   // Adapter to be able to also observe ProcessInstance events.
-  class ProcessObserver : public ConnectionObserver<mojom::ProcessInstance> {
+  class ProcessObserver
+      : public InstanceHolder<mojom::ProcessInstance>::Observer {
    public:
     explicit ProcessObserver(ArcMetricsService* arc_metrics_service);
     ~ProcessObserver() override;
 
    private:
-    // ConnectionObserver<mojom::ProcessInstance> overrides.
-    void OnConnectionReady() override;
-    void OnConnectionClosed() override;
+    // InstanceHolder<mojom::ProcessInstance>::Observer overrides.
+    void OnInstanceReady() override;
+    void OnInstanceClosed() override;
 
     ArcMetricsService* arc_metrics_service_;
 

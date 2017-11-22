@@ -117,7 +117,7 @@ class FakeDelegate : public ImageTransportSurfaceDelegate,
   const GpuPreferences& GetGpuPreferences() const override {
     return gpu_preferences_;
   }
-  void SetSnapshotRequestedCallback(const base::Closure& callback) override {}
+  void SetLatencyInfoCallback(const LatencyInfoCallback& callback) override {}
   void UpdateVSyncParameters(base::TimeTicks timebase,
                              base::TimeDelta interval) override {
     // This shouldn't be called by GpuVSyncProviderWin

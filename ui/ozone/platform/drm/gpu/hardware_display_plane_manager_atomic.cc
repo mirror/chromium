@@ -116,14 +116,6 @@ bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
   return ret;
 }
 
-bool HardwareDisplayPlaneManagerAtomic::ValidatePrimarySize(
-    const OverlayPlane& primary,
-    const drmModeModeInfo& mode) {
-  // Atomic KMS allows for primary planes that don't match the size of
-  // the current mode.
-  return true;
-}
-
 bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
     HardwareDisplayPlaneList* plane_list,
     HardwareDisplayPlane* hw_plane,

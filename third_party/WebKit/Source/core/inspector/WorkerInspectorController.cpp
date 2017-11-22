@@ -82,7 +82,7 @@ void WorkerInspectorController::ConnectFrontend(
     DCHECK(ToWorkerGlobalScope(thread_->GlobalScope())->EnsureFetcher());
     session->Append(new InspectorNetworkAgent(
         new InspectedFrames(nullptr, parent_instrumentation_token),
-        ToWorkerGlobalScope(thread_->GlobalScope()), session->V8Session()));
+        ToWorkerGlobalScope(thread_->GlobalScope())));
   }
   if (sessions_.IsEmpty())
     thread_->GetWorkerBackingThread().BackingThread().AddTaskObserver(this);

@@ -197,7 +197,7 @@ void TranslateInternalsHandler::SendPrefsToJs() {
   base::DictionaryValue dict;
 
   static const char* keys[] = {
-      prefs::kOfferTranslateEnabled,
+      prefs::kEnableTranslate,
       translate::TranslatePrefs::kPrefTranslateBlockedLanguages,
       translate::TranslatePrefs::kPrefTranslateSiteBlacklist,
       translate::TranslatePrefs::kPrefTranslateWhitelists,

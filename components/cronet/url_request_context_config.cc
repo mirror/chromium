@@ -50,14 +50,11 @@ const char kQuicIdleConnectionTimeoutSeconds[] =
     "idle_connection_timeout_seconds";
 const char kQuicMigrateSessionsOnNetworkChange[] =
     "migrate_sessions_on_network_change";
-const char kQuicMigrateSessionsOnNetworkChangeV2[] =
-    "migrate_sessions_on_network_change_v2";
 const char kQuicUserAgentId[] = "user_agent_id";
 const char kQuicMigrateSessionsEarly[] = "migrate_sessions_early";
 const char kQuicDisableBidirectionalStreams[] =
     "quic_disable_bidirectional_streams";
 const char kQuicRaceCertVerification[] = "race_cert_verification";
-const char kQuicHostWhitelist[] = "host_whitelist";
 
 // AsyncDNS experiment dictionary name.
 const char kAsyncDnsFieldTrialName[] = "AsyncDNS";
@@ -252,13 +249,6 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
             quic_migrate_sessions_on_network_change;
       }
 
-      bool quic_migrate_sessions_on_network_change_v2 = false;
-      if (quic_args->GetBoolean(kQuicMigrateSessionsOnNetworkChangeV2,
-                                &quic_migrate_sessions_on_network_change_v2)) {
-        session_params->quic_migrate_sessions_on_network_change_v2 =
-            quic_migrate_sessions_on_network_change_v2;
-      }
-
       std::string quic_user_agent_id;
       if (quic_args->GetString(kQuicUserAgentId, &quic_user_agent_id)) {
         session_params->quic_user_agent_id = quic_user_agent_id;
@@ -283,17 +273,6 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
                                 &quic_race_cert_verification)) {
         session_params->quic_race_cert_verification =
             quic_race_cert_verification;
-      }
-
-      std::string quic_host_whitelist;
-      if (quic_args->GetString(kQuicHostWhitelist, &quic_host_whitelist)) {
-        std::vector<std::string> host_vector =
-            base::SplitString(quic_host_whitelist, ",", base::TRIM_WHITESPACE,
-                              base::SPLIT_WANT_ALL);
-        session_params->quic_host_whitelist.clear();
-        for (const std::string& host : host_vector) {
-          session_params->quic_host_whitelist.insert(host);
-        }
       }
 
     } else if (it.key() == kAsyncDnsFieldTrialName) {

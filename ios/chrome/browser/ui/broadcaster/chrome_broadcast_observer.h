@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
+
 // Protocol collecting all of the methods that broadcast keys will trigger
 // in an observer. Each key maps to a specific observer method as indicated.
 // (this mapping is generated in the implementation of the Broadcaster class).
@@ -36,6 +38,18 @@
 // being dragged.  Note that if a drag ends with residual velocity, it's
 // possible for |dragging| to be NO while |scrolling| is still YES.
 - (void)broadcastScrollViewIsDragging:(BOOL)dragging;
+
+#pragma mark - NTP UI
+
+// Observer method for objects that care about the current panel selected on the
+// NTP.
+- (void)broadcastSelectedNTPPanel:(ntp_home::PanelIdentifier)panelIdentifier;
+
+#pragma mark - Omnibox UI
+
+// Observer method for objects that care about the current omnibox frame.  The
+// given frame is in the window's coordinate system.
+- (void)broadcastOmniboxFrame:(CGRect)frame;
 
 @end
 

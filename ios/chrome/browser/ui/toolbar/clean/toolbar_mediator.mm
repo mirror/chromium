@@ -38,10 +38,6 @@
 
 #pragma mark - Public
 
-- (void)updateConsumerForWebState:(web::WebState*)webState {
-  [self updateNavigationBackAndForwardStateForWebState:webState];
-}
-
 - (void)disconnect {
   self.webStateList = nullptr;
   _webStateObserver.reset();
@@ -50,17 +46,17 @@
 #pragma mark - CRWWebStateObserver
 
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
-  [self updateConsumerForWebState:self.webState];
+  [self updateNavigationBackAndForwardState];
 }
 
 - (void)webState:(web::WebState*)webState
     didStartNavigation:(web::NavigationContext*)navigation {
-  [self updateConsumerForWebState:self.webState];
+  [self updateNavigationBackAndForwardState];
 }
 
 - (void)webState:(web::WebState*)webState
     didPruneNavigationItemsWithCount:(size_t)pruned_item_count {
-  [self updateConsumerForWebState:self.webState];
+  [self updateNavigationBackAndForwardState];
 }
 
 - (void)webStateDidStartLoading:(web::WebState*)webState {
@@ -144,16 +140,16 @@
 - (void)updateConsumer {
   DCHECK(self.webState);
   DCHECK(self.consumer);
-  [self updateConsumerForWebState:self.webState];
+  [self updateNavigationBackAndForwardState];
   [self.consumer setIsLoading:self.webState->IsLoading()];
 }
 
 // Updates the consumer with the new forward and back states.
-- (void)updateNavigationBackAndForwardStateForWebState:
-    (web::WebState*)webState {
+- (void)updateNavigationBackAndForwardState {
   [self.consumer
-      setCanGoForward:webState->GetNavigationManager()->CanGoForward()];
-  [self.consumer setCanGoBack:webState->GetNavigationManager()->CanGoBack()];
+      setCanGoForward:self.webState->GetNavigationManager()->CanGoForward()];
+  [self.consumer
+      setCanGoBack:self.webState->GetNavigationManager()->CanGoBack()];
 }
 
 @end

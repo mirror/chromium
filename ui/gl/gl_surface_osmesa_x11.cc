@@ -73,7 +73,7 @@ void GLSurfaceOSMesaX11::Destroy() {
     window_graphics_context_ = NULL;
   }
 
-  XSync(xdisplay_, x11::False);
+  XSync(xdisplay_, False);
 }
 
 bool GLSurfaceOSMesaX11::Resize(const gfx::Size& new_size,

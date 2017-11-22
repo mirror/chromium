@@ -30,7 +30,6 @@
 #ifndef ShadowTreeStyleSheetCollection_h
 #define ShadowTreeStyleSheetCollection_h
 
-#include "base/macros.h"
 #include "core/css/TreeScopeStyleSheetCollection.h"
 
 namespace blink {
@@ -41,6 +40,8 @@ class StyleSheetCollection;
 
 class ShadowTreeStyleSheetCollection final
     : public TreeScopeStyleSheetCollection {
+  WTF_MAKE_NONCOPYABLE(ShadowTreeStyleSheetCollection);
+
  public:
   explicit ShadowTreeStyleSheetCollection(ShadowRoot&);
   void UpdateActiveStyleSheets(StyleEngine& master_engine);
@@ -52,7 +53,6 @@ class ShadowTreeStyleSheetCollection final
 
  private:
   void CollectStyleSheets(StyleEngine& master_engine, StyleSheetCollection&);
-  DISALLOW_COPY_AND_ASSIGN(ShadowTreeStyleSheetCollection);
 };
 
 DEFINE_TYPE_CASTS(ShadowTreeStyleSheetCollection,

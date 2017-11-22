@@ -133,7 +133,7 @@ class UserCloudPolicyManagerChromeOSTest : public testing::Test {
     signin_profile_ = TestingProfile::Builder().BuildIncognito(profile_);
     ASSERT_EQ(signin_profile_, chromeos::ProfileHelper::GetSigninProfile());
 
-    RegisterLocalState(prefs_.registry());
+    chrome::RegisterLocalState(prefs_.registry());
 
     // Set up a policy map for testing.
     GetExpectedDefaultPolicy(&policy_map_);

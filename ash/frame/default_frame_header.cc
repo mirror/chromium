@@ -64,6 +64,14 @@ void TileRoundRect(gfx::Canvas* canvas,
   canvas->DrawPath(path, flags);
 }
 
+// Returns the FontList to use for the title.
+const gfx::FontList& GetTitleFontList() {
+  static const gfx::FontList* title_font_list =
+      new gfx::FontList(views::NativeWidgetAura::GetWindowTitleFontList());
+  ANNOTATE_LEAKING_OBJECT_PTR(title_font_list);
+  return *title_font_list;
+}
+
 }  // namespace
 
 namespace ash {
@@ -71,38 +79,43 @@ namespace ash {
 ///////////////////////////////////////////////////////////////////////////////
 // DefaultFrameHeader, public:
 
-DefaultFrameHeader::DefaultFrameHeader(
-    views::Widget* frame,
-    views::View* header_view,
-    FrameCaptionButtonContainerView* caption_button_container,
-    FrameCaptionButton* back_button,
-    mojom::WindowStyle window_style)
+DefaultFrameHeader::DefaultFrameHeader(mojom::WindowStyle window_style)
     : window_style_(window_style),
-      frame_(frame),
-      view_(header_view),
-      back_button_(back_button),
+      frame_(nullptr),
+      view_(nullptr),
+      back_button_(nullptr),
       left_header_view_(nullptr),
       active_frame_color_(kDefaultFrameColor),
       inactive_frame_color_(kDefaultFrameColor),
-      caption_button_container_(caption_button_container),
+      caption_button_container_(nullptr),
       painted_height_(0),
       mode_(MODE_INACTIVE),
       initial_paint_(true),
-      activation_animation_(new gfx::SlideAnimation(this)) {
+      activation_animation_(new gfx::SlideAnimation(this)) {}
+
+DefaultFrameHeader::~DefaultFrameHeader() {}
+
+void DefaultFrameHeader::Init(
+    views::Widget* frame,
+    views::View* header_view,
+    FrameCaptionButtonContainerView* caption_button_container,
+    FrameCaptionButton* back_button) {
   DCHECK(frame);
   DCHECK(header_view);
   DCHECK(caption_button_container);
+  frame_ = frame;
+  view_ = header_view;
+  caption_button_container_ = caption_button_container;
   caption_button_container_->SetButtonSize(
       GetAshLayoutSize(AshLayoutSize::NON_BROWSER_CAPTION_BUTTON));
   UpdateAllButtonImages();
+  UpdateBackButton(back_button);
 }
-
-DefaultFrameHeader::~DefaultFrameHeader() = default;
 
 int DefaultFrameHeader::GetMinimumHeaderWidth() const {
   // Ensure we have enough space for the window icon and buttons. We allow
   // the title string to collapse to zero width.
-  return GetAvailableTitleBounds().x() +
+  return GetTitleBounds().x() +
          caption_button_container_->GetMinimumSize().width();
 }
 
@@ -207,7 +220,7 @@ void DefaultFrameHeader::SetHeaderHeightForPainting(int height) {
 }
 
 void DefaultFrameHeader::SchedulePaintForTitle() {
-  view_->SchedulePaintInRect(GetAvailableTitleBounds());
+  view_->SchedulePaintInRect(GetTitleBounds());
 }
 
 void DefaultFrameHeader::SetPaintAsActive(bool paint_as_active) {
@@ -238,14 +251,6 @@ SkColor DefaultFrameHeader::GetTitleColor() const {
 bool DefaultFrameHeader::ShouldUseLightImages() const {
   return color_utils::IsDark(mode_ == MODE_INACTIVE ? inactive_frame_color_
                                                     : active_frame_color_);
-}
-
-// static
-const gfx::FontList& DefaultFrameHeader::GetTitleFontList() {
-  static const gfx::FontList* title_font_list =
-      new gfx::FontList(views::NativeWidgetAura::GetWindowTitleFontList());
-  ANNOTATE_LEAKING_OBJECT_PTR(title_font_list);
-  return *title_font_list;
 }
 
 void DefaultFrameHeader::UpdateLeftHeaderView(views::View* left_header_view) {
@@ -296,10 +301,11 @@ void DefaultFrameHeader::PaintHighlightForInactiveRestoredWindow(
 
 void DefaultFrameHeader::PaintTitleBar(gfx::Canvas* canvas) {
   // The window icon is painted by its own views::View.
-  gfx::Rect title_bounds = GetAvailableTitleBounds();
+  gfx::Rect title_bounds = GetTitleBounds();
   title_bounds.set_x(view_->GetMirroredXForRect(title_bounds));
-  canvas->DrawStringRect(frame_->widget_delegate()->GetWindowTitle(),
-                         GetTitleFontList(), GetTitleColor(), title_bounds);
+  canvas->DrawStringRectWithFlags(
+      frame_->widget_delegate()->GetWindowTitle(), GetTitleFontList(),
+      GetTitleColor(), title_bounds, gfx::Canvas::NO_SUBPIXEL_RENDERING);
 }
 
 void DefaultFrameHeader::PaintHeaderContentSeparator(gfx::Canvas* canvas) {
@@ -341,10 +347,10 @@ gfx::Rect DefaultFrameHeader::GetLocalBounds() const {
   return gfx::Rect(view_->width(), painted_height_);
 }
 
-gfx::Rect DefaultFrameHeader::GetAvailableTitleBounds() const {
+gfx::Rect DefaultFrameHeader::GetTitleBounds() const {
   views::View* left_view = left_header_view_ ? left_header_view_ : back_button_;
-  return FrameHeaderUtil::GetAvailableTitleBounds(
-      left_view, caption_button_container_, GetTitleFontList());
+  return FrameHeaderUtil::GetTitleBounds(left_view, caption_button_container_,
+                                         GetTitleFontList());
 }
 
 bool DefaultFrameHeader::UsesCustomFrameColors() const {

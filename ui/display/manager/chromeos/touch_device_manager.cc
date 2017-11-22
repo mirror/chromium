@@ -13,8 +13,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "ui/display/manager/managed_display_info.h"
-#include "ui/events/devices/input_device.h"
-#include "ui/events/devices/input_device_manager.h"
 #include "ui/events/devices/touchscreen_device.h"
 
 namespace display {
@@ -108,41 +106,6 @@ void ClearCalibrationDataInMap(TouchDeviceManager::AssociationInfoMap& info_map,
   if (info_map.find(display_id) == info_map.end())
     return;
   info_map[display_id].calibration_data = TouchCalibrationData();
-}
-
-// Returns a pointer to the ManagedDisplayInfo of the display that the device
-// identified by |identifier| should be associated with. Returns |nullptr| if
-// no match is found. |displays| should be the list of active displays.
-ManagedDisplayInfo* GetBestMatchForDevice(
-    const TouchDeviceManager::TouchAssociationMap& touch_associations,
-    const TouchDeviceIdentifier& identifier,
-    DisplayInfoList* displays) {
-  ManagedDisplayInfo* display_info = nullptr;
-  base::Time most_recent_timestamp;
-
-  // If we have no historical information for the touch device identified by
-  // |identifier|, do an early return.
-  if (!base::ContainsKey(touch_associations, identifier))
-    return display_info;
-
-  const TouchDeviceManager::AssociationInfoMap& info_map =
-      touch_associations.at(identifier);
-  // Iterate over each active display to see which one was most recently
-  // associated with the touch device identified by |identifier|.
-  for (auto* display : *displays) {
-    // We do not want to match anything to the internal display.
-    if (Display::IsInternalDisplayId(display->id()))
-      continue;
-    if (!base::ContainsKey(info_map, display->id()))
-      continue;
-    const TouchDeviceManager::TouchAssociationInfo& info =
-        info_map.at(display->id());
-    if (info.timestamp > most_recent_timestamp) {
-      display_info = display;
-      most_recent_timestamp = info.timestamp;
-    }
-  }
-  return display_info;
 }
 
 }  // namespace
@@ -286,7 +249,6 @@ void TouchDeviceManager::AssociateTouchscreens(
   }
 
   AssociateInternalDevices(&displays, &devices);
-  AssociateFromHistoricalData(&displays, &devices);
   AssociateUdlDevices(&displays, &devices);
   AssociateSameSizeDevices(&displays, &devices);
   AssociateToSingleDisplay(&displays, &devices);
@@ -337,30 +299,6 @@ void TouchDeviceManager::AssociateInternalDevices(DisplayInfoList* displays,
   if (!matched && internal_display) {
     VLOG(2) << "=> No device found to match with internal display "
             << internal_display->name();
-  }
-}
-
-void TouchDeviceManager::AssociateFromHistoricalData(DisplayInfoList* displays,
-                                                     DeviceList* devices) {
-  if (!devices->size() || !displays->size())
-    return;
-
-  VLOG(2) << "Trying to match " << devices->size() << " devices "
-          << "and " << displays->size() << " displays based on historical "
-          << "preferences.";
-
-  for (auto device_it = devices->begin(); device_it != devices->end();) {
-    auto* matched_display_info = GetBestMatchForDevice(
-        touch_associations_, TouchDeviceIdentifier::FromDevice(*device_it),
-        displays);
-    if (matched_display_info) {
-      VLOG(2) << "=> Matched device " << (*device_it).name << " to display "
-              << matched_display_info->name();
-      Associate(matched_display_info, *device_it);
-      device_it = devices->erase(device_it);
-    } else {
-      device_it++;
-    }
   }
 }
 
@@ -614,26 +552,6 @@ void TouchDeviceManager::RegisterTouchAssociations(
 std::ostream& operator<<(std::ostream& os,
                          const TouchDeviceIdentifier& identifier) {
   return os << identifier.ToString();
-}
-
-bool HasExternalTouchscreenDevice() {
-  for (const auto& device :
-       ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices()) {
-    if (device.type == ui::InputDeviceType::INPUT_DEVICE_EXTERNAL)
-      return true;
-  }
-  return false;
-}
-
-bool IsInternalTouchscreenDevice(const TouchDeviceIdentifier& identifier) {
-  for (const auto& device :
-       ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices()) {
-    if (TouchDeviceIdentifier::FromDevice(device) == identifier)
-      return device.type == ui::InputDeviceType::INPUT_DEVICE_INTERNAL;
-  }
-  VLOG(1) << "Touch device identified by " << identifier << " is currently"
-          << " not connected to the device or is an invalid device.";
-  return false;
 }
 
 }  // namespace display

@@ -1,5 +1,4 @@
 include_rules = [
-    "+base/unguessable_token.h",
     "-bindings",
     "-core",
     "-modules",

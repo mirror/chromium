@@ -327,8 +327,7 @@ UserMediaProcessor::UserMediaProcessor(
       media_stream_dispatcher_(std::move(media_stream_dispatcher)),
       media_devices_dispatcher_cb_(std::move(media_devices_dispatcher_cb)),
       worker_task_runner_(worker_task_runner),
-      render_frame_id_(render_frame ? render_frame->GetRoutingID()
-                                    : MSG_ROUTING_NONE),
+      render_frame_(render_frame),
       weak_factory_(this) {
   DCHECK(dependency_factory_);
   DCHECK(media_stream_dispatcher_.get());
@@ -785,15 +784,15 @@ MediaStreamAudioSource* UserMediaProcessor::CreateAudioSource(
       !MediaStreamAudioProcessor::WouldModifyAudio(
           audio_processing_properties)) {
     *has_sw_echo_cancellation = false;
-    return new LocalMediaStreamAudioSource(render_frame_id_, device,
-                                           source_ready);
+    return new LocalMediaStreamAudioSource(render_frame_->GetRoutingID(),
+                                           device, source_ready);
   }
 
   // The audio device is not associated with screen capture and also requires
   // processing.
   ProcessedLocalAudioSource* source = new ProcessedLocalAudioSource(
-      render_frame_id_, device, audio_processing_properties, source_ready,
-      dependency_factory_);
+      render_frame_->GetRoutingID(), device, audio_processing_properties,
+      source_ready, dependency_factory_);
   *has_sw_echo_cancellation =
       audio_processing_properties.enable_sw_echo_cancellation;
   return source;
@@ -808,7 +807,8 @@ MediaStreamVideoSource* UserMediaProcessor::CreateVideoSource(
 
   return new MediaStreamVideoCapturerSource(
       stop_callback, device,
-      current_request_info_->video_capture_settings().capture_params());
+      current_request_info_->video_capture_settings().capture_params(),
+      render_frame_);
 }
 
 void UserMediaProcessor::CreateVideoTracks(
@@ -891,6 +891,19 @@ void UserMediaProcessor::OnCreateNativeTracksCompleted(
   }
 
   DeleteWebRequest(request_info->web_request());
+}
+
+void UserMediaProcessor::OnDeviceOpened(int request_id,
+                                        const std::string& label,
+                                        const MediaStreamDevice& device) {
+  DVLOG(1) << "UserMediaClientImpl::OnDeviceOpened(" << request_id << ", "
+           << label << ")";
+  NOTIMPLEMENTED();
+}
+
+void UserMediaProcessor::OnDeviceOpenFailed(int request_id) {
+  DVLOG(1) << "UserMediaProcessor::VideoDeviceOpenFailed(" << request_id << ")";
+  NOTIMPLEMENTED();
 }
 
 void UserMediaProcessor::GetUserMediaRequestSucceeded(

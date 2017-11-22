@@ -6,40 +6,43 @@
 
 #include "base/macros.h"
 #include "base/run_loop.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/profiles/profile_window.h"
 #include "chrome/browser/ui/user_manager.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
+#include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/prefs/pref_service.h"
 
 class UserManagerMacTest : public BrowserWithTestWindowTest {
  public:
-  UserManagerMacTest() = default;
-  ~UserManagerMacTest() override = default;
+  UserManagerMacTest()
+      : testing_profile_manager_(TestingBrowserProcess::GetGlobal()) {
+  }
 
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
+    ASSERT_TRUE(testing_profile_manager_.SetUp());
+    // Create a user to make sure the System Profile isn't the only one since it
+    // shouldn't be added to the ProfileAttributesStorage.
+    testing_profile_manager_.CreateTestingProfile("Default");
     // Pre-load the system profile so we don't have to wait for the User Manager
     // to asynchronously create it.
-    profile_manager()->CreateSystemProfile();
+    testing_profile_manager_.CreateSystemProfile();
   }
 
   void TearDown() override {
+    testing_profile_manager_.DeleteSystemProfile();
+    TestingBrowserProcess::GetGlobal()->SetProfileManager(NULL);
     base::RunLoop().RunUntilIdle();
     BrowserWithTestWindowTest::TearDown();
   }
 
-  TestingProfile* CreateProfile() override {
-    // Create a user to make sure the System Profile isn't the only one since it
-    // shouldn't be added to the ProfileAttributesStorage.
-    return profile_manager()->CreateTestingProfile("Default");
-  }
-
  private:
+  TestingProfileManager testing_profile_manager_;
+
   DISALLOW_COPY_AND_ASSIGN(UserManagerMacTest);
 };
 

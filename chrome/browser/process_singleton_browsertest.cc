@@ -214,7 +214,7 @@ class ProcessSingletonTest : public InProcessBrowserTest {
 };
 
 // ChromeOS hits DCHECKS on ProcessSingleton rendezvous: crbug.com/782487
-#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_WIN)
+#if defined(OS_CHROMEOS)
 #define MAYBE_StartupRaceCondition DISABLED_StartupRaceCondition
 #else
 #define MAYBE_StartupRaceCondition StartupRaceCondition

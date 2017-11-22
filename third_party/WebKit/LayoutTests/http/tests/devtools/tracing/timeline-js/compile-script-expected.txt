@@ -1,3 +1,4 @@
+CONSOLE MESSAGE: line 1: SCRIPT TAG
 Tests the Timeline instrumentation for CompileScript event.
 
 v8.compile Properties:

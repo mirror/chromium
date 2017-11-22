@@ -27,7 +27,7 @@ import zipfile
 # Do NOT CHANGE this if you don't know what you're doing -- see
 # https://chromium.googlesource.com/chromium/src/+/master/docs/updating_clang.md
 # Reverting problematic clang rolls is safe, though.
-CLANG_REVISION = '317263'
+CLANG_REVISION = '318369'
 
 use_head_revision = bool(os.environ.get('LLVM_FORCE_HEAD_REVISION', '0')
                          in ('1', 'YES'))
@@ -35,7 +35,7 @@ if use_head_revision:
   CLANG_REVISION = 'HEAD'
 
 # This is incremented when pushing a new build of Clang at the same revision.
-CLANG_SUB_REVISION=4
+CLANG_SUB_REVISION=1
 
 PACKAGE_VERSION = "%s-%s" % (CLANG_REVISION, CLANG_SUB_REVISION)
 
@@ -399,18 +399,16 @@ def VeryifyVersionOfBuiltClangMatchesVERSION():
     sys.exit(1)
 
 
-def GetPlatformUrlPrefix(platform):
-  if platform == 'win32' or platform == 'cygwin':
-    return CDS_URL + '/Win/'
-  if platform == 'darwin':
-    return CDS_URL + '/Mac/'
-  assert platform.startswith('linux')
-  return CDS_URL + '/Linux_x64/'
-
-
 def DownloadAndUnpackClangPackage(platform, runtimes_only=False):
   cds_file = "clang-%s.tgz" %  PACKAGE_VERSION
-  cds_full_url = GetPlatformUrlPrefix(platform) + cds_file
+  if platform == 'win32' or platform == 'cygwin':
+    cds_full_url = CDS_URL + '/Win/' + cds_file
+  elif platform == 'darwin':
+    cds_full_url = CDS_URL + '/Mac/' + cds_file
+  else:
+    assert platform.startswith('linux')
+    cds_full_url = CDS_URL + '/Linux_x64/' + cds_file
+
   try:
     path_prefix = None
     if runtimes_only:

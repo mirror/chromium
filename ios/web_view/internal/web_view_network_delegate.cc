@@ -71,7 +71,7 @@ bool WebViewNetworkDelegate::OnCanGetCookies(
 }
 
 bool WebViewNetworkDelegate::OnCanSetCookie(const net::URLRequest& request,
-                                            const net::CanonicalCookie& cookie,
+                                            const std::string& cookie_line,
                                             net::CookieOptions* options) {
   return true;
 }

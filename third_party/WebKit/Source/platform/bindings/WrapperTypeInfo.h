@@ -97,6 +97,11 @@ struct WrapperTypeInfo {
     kInheritFromActiveScriptWrappable,
   };
 
+  enum Lifetime {
+    kDependent,
+    kIndependent,
+  };
+
   static const WrapperTypeInfo* Unwrap(v8::Local<v8::Value> type_info_wrapper) {
     return reinterpret_cast<const WrapperTypeInfo*>(
         v8::External::Cast(*type_info_wrapper)->Value());
@@ -126,6 +131,8 @@ struct WrapperTypeInfo {
 
   void ConfigureWrapper(v8::PersistentBase<v8::Object>* wrapper) const {
     wrapper->SetWrapperClassId(wrapper_class_id);
+    if (lifetime == kIndependent)
+      wrapper->MarkIndependent();
   }
 
   v8::Local<v8::FunctionTemplate> domTemplate(
@@ -178,6 +185,7 @@ struct WrapperTypeInfo {
   const unsigned wrapper_class_id : 2;        // WrapperClassId
   const unsigned  // ActiveScriptWrappableInheritance
       active_script_wrappable_inheritance : 1;
+  const unsigned lifetime : 1;  // Lifetime
 };
 
 template <typename T, int offset>

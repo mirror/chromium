@@ -121,8 +121,8 @@ ArcCertStoreBridge::~ArcCertStoreBridge() {
   arc_bridge_service_->cert_store()->RemoveObserver(this);
 }
 
-void ArcCertStoreBridge::OnConnectionReady() {
-  DVLOG(1) << "ArcCertStoreBridge::OnConnectionReady";
+void ArcCertStoreBridge::OnInstanceReady() {
+  DVLOG(1) << "ArcCertStoreBridge::OnInstanceReady";
 
   policy_service_->AddObserver(policy::POLICY_DOMAIN_CHROME, this);
   net::CertDatabase::GetInstance()->AddObserver(this);
@@ -138,8 +138,8 @@ void ArcCertStoreBridge::OnConnectionReady() {
   UpdateFromKeyPermissionsPolicy();
 }
 
-void ArcCertStoreBridge::OnConnectionClosed() {
-  DVLOG(1) << "ArcCertStoreBridge::OnConnectionClosed";
+void ArcCertStoreBridge::OnInstanceClosed() {
+  DVLOG(1) << "ArcCertStoreBridge::OnInstanceClosed";
 
   policy_service_->RemoveObserver(policy::POLICY_DOMAIN_CHROME, this);
   net::CertDatabase::GetInstance()->RemoveObserver(this);

@@ -227,10 +227,6 @@ const base::Feature kVrBrowsing {
 #endif  // BUILDFLAG(ENABLE_VR) || defined(OS_ANDROID)
 
 #if BUILDFLAG(ENABLE_VR)
-// Enables the virtual keyboard for Chrome VR.
-const base::Feature kVrBrowserKeyboard{"VrBrowserKeyboard",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Controls features related to VR browsing that are under development.
 const base::Feature kVrBrowsingExperimentalFeatures{
     "VrBrowsingExperimentalFeatures", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -489,7 +485,8 @@ const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
 
 #if defined(OS_CHROMEOS)
 // Enables or disables the ability to add a Samba Share to the Files app
-const base::Feature kNativeSmb{"NativeSmb", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kNativeSamba{"NativeSamba",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
 
 // Enables or disables the ability to use the sound content setting to mute a

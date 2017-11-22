@@ -19,6 +19,8 @@ using extensions::Extension;
 using extensions::Manifest;
 using extensions::SharedModuleInfo;
 
+namespace chrome {
+
 namespace {
 
 std::string HashHost(const std::string& host) {
@@ -101,3 +103,5 @@ bool IsHostAllowedByCommandLine(const GURL& url,
 
   return false;
 }
+
+}  // namespace chrome

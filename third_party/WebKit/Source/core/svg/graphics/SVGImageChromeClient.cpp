@@ -30,7 +30,7 @@
 
 #include "core/svg/graphics/SVGImage.h"
 #include "platform/graphics/ImageObserver.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 
 namespace blink {
 

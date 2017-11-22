@@ -5,12 +5,10 @@
 #include "core/animation/AnimationInputHelpers.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/animation/PropertyHandle.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/resolver/CSSToStyleMap.h"
-#include "core/dom/Document.h"
 #include "core/frame/Deprecation.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/animation/SVGSMILElement.h"
@@ -29,28 +27,6 @@ static bool IsSVGPrefixed(const String& property) {
 static String RemoveSVGPrefix(const String& property) {
   DCHECK(IsSVGPrefixed(property));
   return property.Substring(kSVGPrefixLength);
-}
-
-static String CSSPropertyToKeyframeAttribute(CSSPropertyID property) {
-  DCHECK_NE(property, CSSPropertyInvalid);
-  DCHECK_NE(property, CSSPropertyVariable);
-
-  switch (property) {
-    case CSSPropertyFloat:
-      return "cssFloat";
-    case CSSPropertyOffset:
-      return "cssOffset";
-    default:
-      return getJSPropertyName(property);
-  }
-}
-
-static String PresentationAttributeToKeyframeAttribute(
-    CSSPropertyID presentation_attribute) {
-  StringBuilder builder;
-  builder.Append(kSVGPrefix, kSVGPrefixLength);
-  builder.Append(getPropertyName(presentation_attribute));
-  return builder.ToString();
 }
 
 CSSPropertyID AnimationInputHelpers::KeyframeAttributeToCSSProperty(
@@ -244,14 +220,8 @@ scoped_refptr<TimingFunction> AnimationInputHelpers::ParseTimingFunction(
     return nullptr;
   }
 
-  // Fallback to an insecure parsing mode if we weren't provided with a
-  // document.
-  SecureContextMode secure_context_mode =
-      document ? document->SecureContextMode()
-               : SecureContextMode::kInsecureContext;
   const CSSValue* value =
-      CSSParser::ParseSingleValue(CSSPropertyTransitionTimingFunction, string,
-                                  StrictCSSParserContext(secure_context_mode));
+      CSSParser::ParseSingleValue(CSSPropertyTransitionTimingFunction, string);
   if (!value || !value->IsValueList()) {
     DCHECK(!value || value->IsCSSWideKeyword());
     exception_state.ThrowTypeError("'" + string +
@@ -265,24 +235,6 @@ scoped_refptr<TimingFunction> AnimationInputHelpers::ParseTimingFunction(
   }
   return CSSToStyleMap::MapAnimationTimingFunction(value_list->Item(0), true,
                                                    document);
-}
-
-String AnimationInputHelpers::PropertyHandleToKeyframeAttribute(
-    PropertyHandle property) {
-  if (property.IsCSSProperty()) {
-    return property.IsCSSCustomProperty()
-               ? property.CustomPropertyName()
-               : CSSPropertyToKeyframeAttribute(
-                     property.GetCSSProperty().PropertyID());
-  }
-
-  if (property.IsPresentationAttribute()) {
-    return PresentationAttributeToKeyframeAttribute(
-        property.PresentationAttribute().PropertyID());
-  }
-
-  DCHECK(property.IsSVGAttribute());
-  return property.SvgAttribute().LocalName();
 }
 
 }  // namespace blink

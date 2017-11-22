@@ -28,7 +28,6 @@
 
 #include "modules/webdatabase/DatabaseBasicTypes.h"
 #include "modules/webdatabase/DatabaseError.h"
-#include "modules/webdatabase/SQLTransactionBackend.h"
 #include "modules/webdatabase/sqlite/SQLiteDatabase.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
@@ -43,6 +42,7 @@ class DatabaseAuthorizer;
 class DatabaseContext;
 class ExecutionContext;
 class SQLTransaction;
+class SQLTransactionBackend;
 class SQLTransactionCallback;
 class SQLTransactionClient;
 class SQLTransactionCoordinator;

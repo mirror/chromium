@@ -275,7 +275,7 @@ bool ArcProcessService::RequestAppProcessList(
   // process list, it can produce a lot of logspam when the board is ARC-ready
   // but the user has not opted into ARC. This redundant check avoids that
   // logspam.
-  if (!connection_ready_)
+  if (!instance_ready_)
     return false;
 
   mojom::ProcessInstance* process_instance = ARC_GET_INSTANCE_FOR_METHOD(
@@ -301,15 +301,15 @@ void ArcProcessService::OnReceiveProcessList(
       callback);
 }
 
-void ArcProcessService::OnConnectionReady() {
+void ArcProcessService::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   task_runner_->PostTask(FROM_HERE, base::BindOnce(&Reset, nspid_to_pid_));
-  connection_ready_ = true;
+  instance_ready_ = true;
 }
 
-void ArcProcessService::OnConnectionClosed() {
+void ArcProcessService::OnInstanceClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  connection_ready_ = false;
+  instance_ready_ = false;
 }
 
 inline ArcProcessService::NSPidToPidMap::NSPidToPidMap() {}

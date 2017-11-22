@@ -28,7 +28,7 @@ namespace content {
 
 NavigationURLLoaderImplCore::NavigationURLLoaderImplCore(
     const base::WeakPtr<NavigationURLLoaderImpl>& loader)
-    : loader_(loader), resource_handler_(nullptr), weak_factory_(this) {
+    : loader_(loader), resource_handler_(nullptr) {
   // This object is created on the UI thread but otherwise is accessed and
   // deleted on the IO thread.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -46,8 +46,10 @@ void NavigationURLLoaderImplCore::Start(
     std::unique_ptr<NavigationUIData> navigation_ui_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  base::WeakPtr<NavigationURLLoaderImplCore> weak_this =
-      weak_factory_.GetWeakPtr();
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&NavigationURLLoaderImpl::NotifyRequestStarted, loader_,
+                     base::TimeTicks::Now()));
 
   // The ResourceDispatcherHostImpl can be null in unit tests.
   if (ResourceDispatcherHostImpl::Get()) {
@@ -57,15 +59,6 @@ void NavigationURLLoaderImplCore::Start(
         std::move(navigation_ui_data), this, service_worker_handle_core,
         appcache_handle_core);
   }
-
-  // Careful, |this| could be destroyed at this point. Don't notify start if
-  // that's the case (i.e. the request failed).
-  if (!weak_this)
-    return;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&NavigationURLLoaderImpl::NotifyRequestStarted, loader_,
-                     base::TimeTicks::Now()));
 }
 
 void NavigationURLLoaderImplCore::FollowRedirect() {

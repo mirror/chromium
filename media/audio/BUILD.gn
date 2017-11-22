@@ -333,8 +333,6 @@ static_library("test_support") {
   sources = [
     "audio_device_info_accessor_for_tests.cc",
     "audio_device_info_accessor_for_tests.h",
-    "audio_system_test_util.cc",
-    "audio_system_test_util.h",
     "audio_unittest_util.cc",
     "audio_unittest_util.h",
     "mock_audio_manager.cc",
@@ -376,7 +374,6 @@ source_set("unit_tests") {
     "audio_output_controller_unittest.cc",
     "audio_output_device_unittest.cc",
     "audio_output_proxy_unittest.cc",
-    "audio_output_unittest.cc",
     "audio_power_monitor_unittest.cc",
     "audio_system_impl_unittest.cc",
     "power_observer_helper_unittest.cc",

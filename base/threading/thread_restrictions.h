@@ -75,9 +75,6 @@ namespace edk {
 class ScopedIPCSupport;
 }
 }
-namespace rlz_lib {
-class FinancialPing;
-}
 namespace ui {
 class CommandBufferClientImpl;
 class CommandBufferLocal;
@@ -264,7 +261,6 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   friend class leveldb::LevelDBMojoProxy;
   friend class media::BlockingUrlProtocol;
   friend class net::MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
-  friend class rlz_lib::FinancialPing;
   friend class shell_integration::LaunchXdgUtilityScopedAllowBaseSyncPrimitives;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;

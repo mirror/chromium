@@ -23,7 +23,6 @@
 #ifndef StyleResolver_h
 #define StyleResolver_h
 
-#include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
 #include "core/animation/Interpolation.h"
@@ -61,6 +60,7 @@ enum RuleMatchingBehavior { kMatchAllRules, kMatchAllRulesExcludingSMIL };
 // of stylesheets.
 class CORE_EXPORT StyleResolver final
     : public GarbageCollectedFinalized<StyleResolver> {
+  WTF_MAKE_NONCOPYABLE(StyleResolver);
 
  public:
   static StyleResolver* Create(Document& document) {
@@ -79,7 +79,7 @@ class CORE_EXPORT StyleResolver final
       Element&,
       const ComputedStyle& base_style,
       const ComputedStyle* parent_style,
-      const CSSProperty&,
+      CSSPropertyID,
       const CSSValue*);
 
   scoped_refptr<ComputedStyle> PseudoStyleForElement(
@@ -296,7 +296,6 @@ class CORE_EXPORT StyleResolver final
 
   bool print_media_type_ = false;
   bool was_viewport_resized_ = false;
-  DISALLOW_COPY_AND_ASSIGN(StyleResolver);
 };
 
 }  // namespace blink

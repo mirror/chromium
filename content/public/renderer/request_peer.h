@@ -17,7 +17,7 @@ struct RedirectInfo;
 }
 
 namespace network {
-struct URLLoaderCompletionStatus;
+struct URLLoaderStatus;
 }
 
 namespace content {
@@ -93,8 +93,7 @@ class CONTENT_EXPORT RequestPeer {
 
   // Called when the response is complete.  This method signals completion of
   // the resource load.
-  virtual void OnCompletedRequest(
-      const network::URLLoaderCompletionStatus& status) = 0;
+  virtual void OnCompletedRequest(const network::URLLoaderStatus& status) = 0;
 
   virtual ~RequestPeer() {}
 };

@@ -25,8 +25,8 @@ namespace {
 // the tasks we want to run.
 class RunTaskOnHistoryThread : public HistoryDBTask {
  public:
-  explicit RunTaskOnHistoryThread(ModelTypeController::BridgeTask task)
-      : task_(std::move(task)) {}
+  explicit RunTaskOnHistoryThread(const ModelTypeController::BridgeTask& task)
+      : task_(task) {}
 
   bool RunOnDBThread(HistoryBackend* backend, HistoryDatabase* db) override {
     // Invoke the task, then free it immediately so we don't keep a reference
@@ -34,9 +34,13 @@ class RunTaskOnHistoryThread : public HistoryDBTask {
     // main thread - we want to release references as soon as possible to avoid
     // keeping them around too long during shutdown.
     TypedURLSyncBridge* bridge = backend->GetTypedURLSyncBridge();
-    DCHECK(bridge);
+    if (!bridge) {
+      NOTREACHED();
+      return true;
+    }
 
-    std::move(task_).Run(bridge);
+    task_.Run(bridge);
+    task_.Reset();
     return true;
   }
 
@@ -69,7 +73,7 @@ bool TypedURLModelTypeController::ReadyForStart() const {
 }
 
 void TypedURLModelTypeController::PostBridgeTask(const base::Location& location,
-                                                 BridgeTask task) {
+                                                 const BridgeTask& task) {
   history::HistoryService* history = sync_client()->GetHistoryService();
   if (!history) {
     // History must be disabled - don't start.
@@ -77,9 +81,8 @@ void TypedURLModelTypeController::PostBridgeTask(const base::Location& location,
     return;
   }
 
-  history->ScheduleDBTask(
-      std::make_unique<RunTaskOnHistoryThread>(std::move(task)),
-      &task_tracker_);
+  history->ScheduleDBTask(std::make_unique<RunTaskOnHistoryThread>(task),
+                          &task_tracker_);
 }
 
 void TypedURLModelTypeController::OnSavingBrowserHistoryDisabledChanged() {

@@ -16,7 +16,6 @@
 #include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/quads/tile_draw_quad.h"
 #include "components/viz/common/quads/yuv_video_draw_quad.h"
-#include "components/viz/common/resources/transferable_resource.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "ui/gfx/geometry/rect.h"
@@ -168,10 +167,12 @@ void AddOneOfEveryQuadType(viz::RenderPass* to_pass,
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
-  auto transfer_resource = viz::TransferableResource::MakeGL(
-      gpu_mailbox, GL_LINEAR, target, kSyncTokenForMailboxTextureQuad);
+  viz::TextureMailbox mailbox(gpu_mailbox, kSyncTokenForMailboxTextureQuad,
+                              target);
   viz::ResourceId resource8 =
-      resource_provider->ImportResource(transfer_resource, std::move(callback));
+      resource_provider->CreateResourceFromTextureMailbox(mailbox,
+                                                          std::move(callback));
+  resource_provider->AllocateForTesting(resource8);
 
   viz::SharedQuadState* shared_state =
       to_pass->CreateAndAppendSharedQuadState();
@@ -207,12 +208,12 @@ void AddOneOfEveryQuadType(viz::RenderPass* to_pass,
                        gfx::PointF(1.f, 1.f), SK_ColorTRANSPARENT,
                        vertex_opacity, false, false, false);
 
-  auto* external_resource_texture_quad =
+  auto* mailbox_texture_quad =
       to_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
-  external_resource_texture_quad->SetNew(
-      shared_state, rect, visible_rect, needs_blending, resource8, false,
-      gfx::PointF(0.f, 0.f), gfx::PointF(1.f, 1.f), SK_ColorTRANSPARENT,
-      vertex_opacity, false, false, false);
+  mailbox_texture_quad->SetNew(shared_state, rect, visible_rect, needs_blending,
+                               resource8, false, gfx::PointF(0.f, 0.f),
+                               gfx::PointF(1.f, 1.f), SK_ColorTRANSPARENT,
+                               vertex_opacity, false, false, false);
 
   auto* scaled_tile_quad =
       to_pass->CreateAndAppendDrawQuad<viz::TileDrawQuad>();
@@ -324,10 +325,12 @@ void AddOneOfEveryQuadTypeInDisplayResourceProvider(
   memcpy(gpu_mailbox.name, "Hello world", strlen("Hello world") + 1);
   std::unique_ptr<viz::SingleReleaseCallback> callback =
       viz::SingleReleaseCallback::Create(base::Bind(&EmptyReleaseCallback));
-  auto transfer_resource = viz::TransferableResource::MakeGL(
-      gpu_mailbox, GL_LINEAR, target, kSyncTokenForMailboxTextureQuad);
-  viz::ResourceId resource8 = child_resource_provider->ImportResource(
-      transfer_resource, std::move(callback));
+  viz::TextureMailbox mailbox(gpu_mailbox, kSyncTokenForMailboxTextureQuad,
+                              target);
+  viz::ResourceId resource8 =
+      child_resource_provider->CreateResourceFromTextureMailbox(
+          mailbox, std::move(callback));
+  child_resource_provider->AllocateForTesting(resource8);
 
   // Transfer resource to the parent.
   ResourceProvider::ResourceIdArray resource_ids_to_transfer;
@@ -409,12 +412,12 @@ void AddOneOfEveryQuadTypeInDisplayResourceProvider(
                        gfx::PointF(1.f, 1.f), SK_ColorTRANSPARENT,
                        vertex_opacity, false, false, false);
 
-  viz::TextureDrawQuad* external_resource_texture_quad =
+  viz::TextureDrawQuad* mailbox_texture_quad =
       to_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
-  external_resource_texture_quad->SetNew(
-      shared_state, rect, visible_rect, needs_blending, mapped_resource8, false,
-      gfx::PointF(0.f, 0.f), gfx::PointF(1.f, 1.f), SK_ColorTRANSPARENT,
-      vertex_opacity, false, false, false);
+  mailbox_texture_quad->SetNew(shared_state, rect, visible_rect, needs_blending,
+                               mapped_resource8, false, gfx::PointF(0.f, 0.f),
+                               gfx::PointF(1.f, 1.f), SK_ColorTRANSPARENT,
+                               vertex_opacity, false, false, false);
 
   viz::TileDrawQuad* scaled_tile_quad =
       to_pass->CreateAndAppendDrawQuad<viz::TileDrawQuad>();

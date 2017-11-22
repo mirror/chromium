@@ -153,23 +153,9 @@ bool ChromeVirtualKeyboardDelegate::ShowLanguageSettings() {
 }
 
 bool ChromeVirtualKeyboardDelegate::SetVirtualKeyboardMode(int mode_enum) {
-  keyboard::KeyboardController* controller =
-      keyboard::KeyboardController::GetInstance();
-  if (!controller)
-    return false;
-
-  switch (mode_enum) {
-    case keyboard_api::KEYBOARD_MODE_FULL_WIDTH:
-      controller->SetContainerType(keyboard::ContainerType::FULL_WIDTH);
-      break;
-    case keyboard_api::KEYBOARD_MODE_FLOATING:
-      controller->SetContainerType(keyboard::ContainerType::FLOATING);
-      break;
-    default:
-      NOTREACHED();
-      break;
-  }
-  return true;
+  // TODO(blakeo): remove this. The virtual keyboard's implementation of mode
+  // was removed, and so this should be removed from the JS API side as well.
+  return false;
 }
 
 bool ChromeVirtualKeyboardDelegate::SetRequestedKeyboardState(int state_enum) {

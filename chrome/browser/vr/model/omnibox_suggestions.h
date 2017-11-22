@@ -7,21 +7,17 @@
 
 #include "base/strings/string16.h"
 #include "components/omnibox/browser/autocomplete_match.h"
-#include "url/gurl.h"
 
 namespace vr {
 
 struct OmniboxSuggestion {
   OmniboxSuggestion(const base::string16& new_content,
                     const base::string16& new_description,
-                    AutocompleteMatch::Type new_type,
-                    GURL new_destination);
-  OmniboxSuggestion(const OmniboxSuggestion& other);
+                    AutocompleteMatch::Type new_type);
 
   base::string16 content;
   base::string16 description;
   AutocompleteMatch::Type type;
-  GURL destination;
 };
 
 struct OmniboxSuggestions {

@@ -106,7 +106,6 @@ class CC_PAINT_EXPORT PaintImage {
   PaintImage& operator=(PaintImage&& other);
 
   bool operator==(const PaintImage& other) const;
-  bool operator!=(const PaintImage& other) const { return !(*this == other); }
 
   // Returns the smallest size that is at least as big as the requested_size
   // such that we can decode to exactly that scale. If the requested size is
@@ -115,11 +114,6 @@ class CC_PAINT_EXPORT PaintImage {
   // GetSupportedDecodeSize(GetSupportedDecodeSize(size)) is guaranteed to be
   // GetSupportedDecodeSize(size).
   SkISize GetSupportedDecodeSize(const SkISize& requested_size) const;
-
-  // Returns SkImageInfo that should be used to decode this image to the given
-  // size and color type. The size must be supported.
-  SkImageInfo CreateDecodeImageInfo(const SkISize& size,
-                                    SkColorType color_type) const;
 
   // Decode the image into the given memory for the given SkImageInfo.
   // - Size in |info| must be supported.

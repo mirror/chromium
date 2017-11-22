@@ -10,7 +10,6 @@
 #import "ios/chrome/browser/ui/toolbar/public/abstract_toolbar.h"
 
 @class Tab;
-@class ToolbarButtonUpdater;
 @protocol WebToolbarDelegate;
 
 // WebToolbarController public interface.
@@ -31,6 +30,8 @@
 - (BOOL)isOmniboxFirstResponder;
 // Returns whether the omnibox popup is currently displayed.
 - (BOOL)showingOmniboxPopup;
+// Called when the current tab changes or is closed.
+- (void)selectedTabChanged;
 // Update the visibility of the toolbar before making a side swipe snapshot so
 // the toolbar looks appropriate for |tab|. This includes morphing the toolbar
 // to look like the new tab page header.
@@ -39,10 +40,6 @@
 - (void)resetToolbarAfterSideSwipeSnapshot;
 // WebToolbarDelegate delegate.
 @property(nonatomic, weak) id<WebToolbarDelegate> delegate;
-// Convienence getter for the UIViewController.
-@property(nonatomic, readonly, weak) UIViewController* viewController;
-// Object handling the updates of the buttons.
-@property(nonatomic, strong) ToolbarButtonUpdater* buttonUpdater;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_PUBLIC_ABSTRACT_WEB_TOOLBAR_H_

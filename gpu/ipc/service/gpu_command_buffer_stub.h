@@ -34,6 +34,7 @@
 #include "ui/gfx/swap_result.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/gpu_preference.h"
+#include "ui/latency/latency_info.h"
 #include "url/gurl.h"
 
 struct GPUCreateCommandBufferConfig;
@@ -66,6 +67,9 @@ class GPU_EXPORT GpuCommandBufferStub
    protected:
     virtual ~DestructionObserver() {}
   };
+
+  typedef base::Callback<void(const std::vector<ui::LatencyInfo>&)>
+      LatencyInfoCallback;
 
   GpuCommandBufferStub(GpuChannel* channel,
                        const GPUCreateCommandBufferConfig& init_params,
@@ -111,7 +115,7 @@ class GPU_EXPORT GpuCommandBufferStub
   void DidSwapBuffersComplete(SwapBuffersCompleteParams params) override;
   const gles2::FeatureInfo* GetFeatureInfo() const override;
   const GpuPreferences& GetGpuPreferences() const override;
-  void SetSnapshotRequestedCallback(const base::Closure& callback) override;
+  void SetLatencyInfoCallback(const LatencyInfoCallback& callback) override;
   void UpdateVSyncParameters(base::TimeTicks timebase,
                              base::TimeDelta interval) override;
 
@@ -164,7 +168,7 @@ class GPU_EXPORT GpuCommandBufferStub
                                  IPC::Message* reply_message);
   void OnAsyncFlush(int32_t put_offset,
                     uint32_t flush_id,
-                    bool snapshot_requested);
+                    const std::vector<ui::LatencyInfo>& latency_info);
   void OnRegisterTransferBuffer(int32_t id,
                                 base::SharedMemoryHandle transfer_buffer,
                                 uint32_t size);
@@ -235,7 +239,7 @@ class GPU_EXPORT GpuCommandBufferStub
   uint32_t previous_processed_num_;
   base::TimeTicks last_idle_time_;
 
-  base::Closure snapshot_requested_callback_;
+  LatencyInfoCallback latency_info_callback_;
 
   GURL active_url_;
   size_t active_url_hash_;

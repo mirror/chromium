@@ -10,7 +10,6 @@
 #include "base/compiler_specific.h"
 
 namespace cc {
-class ClientTransferCacheEntry;
 class DisplayItemList;
 }
 

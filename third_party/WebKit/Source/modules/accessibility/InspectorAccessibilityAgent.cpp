@@ -23,14 +23,18 @@
 
 namespace blink {
 
-using protocol::Accessibility::AXPropertyName;
+using protocol::Accessibility::AXGlobalStates;
+using protocol::Accessibility::AXLiveRegionAttributes;
 using protocol::Accessibility::AXNode;
 using protocol::Accessibility::AXNodeId;
 using protocol::Accessibility::AXProperty;
 using protocol::Accessibility::AXValueSource;
 using protocol::Accessibility::AXValueType;
 using protocol::Accessibility::AXRelatedNode;
+using protocol::Accessibility::AXRelationshipAttributes;
 using protocol::Accessibility::AXValue;
+using protocol::Accessibility::AXWidgetAttributes;
+using protocol::Accessibility::AXWidgetStates;
 using protocol::Maybe;
 using protocol::Response;
 
@@ -46,36 +50,35 @@ void FillLiveRegionProperties(AXObject& ax_object,
     return;
 
   properties.addItem(
-      CreateProperty(AXPropertyNameEnum::Live,
+      CreateProperty(AXLiveRegionAttributesEnum::Live,
                      CreateValue(ax_object.ContainerLiveRegionStatus(),
                                  AXValueTypeEnum::Token)));
   properties.addItem(CreateProperty(
-      AXPropertyNameEnum::Atomic,
+      AXLiveRegionAttributesEnum::Atomic,
       CreateBooleanValue(ax_object.ContainerLiveRegionAtomic())));
   properties.addItem(
-      CreateProperty(AXPropertyNameEnum::Relevant,
+      CreateProperty(AXLiveRegionAttributesEnum::Relevant,
                      CreateValue(ax_object.ContainerLiveRegionRelevant(),
                                  AXValueTypeEnum::TokenList)));
 
   if (!ax_object.IsLiveRegion()) {
     properties.addItem(CreateProperty(
-        AXPropertyNameEnum::Root,
+        AXLiveRegionAttributesEnum::Root,
         CreateRelatedNodeListValue(*(ax_object.LiveRegionRoot()))));
   }
 }
 
 void FillGlobalStates(AXObject& ax_object,
                       protocol::Array<AXProperty>& properties) {
-  if (ax_object.Restriction() == kDisabled) {
+  if (ax_object.Restriction() == kDisabled)
     properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Disabled, CreateBooleanValue(true)));
-  }
+        CreateProperty(AXGlobalStatesEnum::Disabled, CreateBooleanValue(true)));
 
   if (const AXObject* hidden_root = ax_object.AriaHiddenRoot()) {
     properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Hidden, CreateBooleanValue(true)));
+        CreateProperty(AXGlobalStatesEnum::Hidden, CreateBooleanValue(true)));
     properties.addItem(
-        CreateProperty(AXPropertyNameEnum::HiddenRoot,
+        CreateProperty(AXGlobalStatesEnum::HiddenRoot,
                        CreateRelatedNodeListValue(*hidden_root)));
   }
 
@@ -85,29 +88,29 @@ void FillGlobalStates(AXObject& ax_object,
       break;
     case kInvalidStateFalse:
       properties.addItem(
-          CreateProperty(AXPropertyNameEnum::Invalid,
+          CreateProperty(AXGlobalStatesEnum::Invalid,
                          CreateValue("false", AXValueTypeEnum::Token)));
       break;
     case kInvalidStateTrue:
       properties.addItem(
-          CreateProperty(AXPropertyNameEnum::Invalid,
+          CreateProperty(AXGlobalStatesEnum::Invalid,
                          CreateValue("true", AXValueTypeEnum::Token)));
       break;
     case kInvalidStateSpelling:
       properties.addItem(
-          CreateProperty(AXPropertyNameEnum::Invalid,
+          CreateProperty(AXGlobalStatesEnum::Invalid,
                          CreateValue("spelling", AXValueTypeEnum::Token)));
       break;
     case kInvalidStateGrammar:
       properties.addItem(
-          CreateProperty(AXPropertyNameEnum::Invalid,
+          CreateProperty(AXGlobalStatesEnum::Invalid,
                          CreateValue("grammar", AXValueTypeEnum::Token)));
       break;
     default:
       // TODO(aboxhall): expose invalid: <nothing> and source: aria-invalid as
       // invalid value
       properties.addItem(CreateProperty(
-          AXPropertyNameEnum::Invalid,
+          AXGlobalStatesEnum::Invalid,
           CreateValue(ax_object.AriaInvalidValue(), AXValueTypeEnum::String)));
       break;
   }
@@ -133,10 +136,9 @@ bool RoleAllowsReadonly(AccessibilityRole role) {
 }
 
 bool RoleAllowsRequired(AccessibilityRole role) {
-  return role == kComboBoxGroupingRole || role == kComboBoxMenuButtonRole ||
-         role == kCellRole || role == kListBoxRole || role == kRadioGroupRole ||
-         role == kSpinButtonRole || role == kTextFieldRole ||
-         role == kTextFieldWithComboBoxRole || role == kTreeRole ||
+  return role == kComboBoxRole || role == kCellRole || role == kListBoxRole ||
+         role == kRadioGroupRole || role == kSpinButtonRole ||
+         role == kTextFieldRole || role == kTreeRole ||
          role == kColumnHeaderRole || role == kRowHeaderRole ||
          role == kTreeGridRole;
 }
@@ -158,30 +160,30 @@ void FillWidgetProperties(AXObject& ax_object,
   String autocomplete = ax_object.AriaAutoComplete();
   if (!autocomplete.IsEmpty())
     properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Autocomplete,
+        CreateProperty(AXWidgetAttributesEnum::Autocomplete,
                        CreateValue(autocomplete, AXValueTypeEnum::Token)));
 
   bool has_popup = ax_object.AriaHasPopup();
   if (has_popup || ax_object.HasAttribute(HTMLNames::aria_haspopupAttr)) {
-    properties.addItem(CreateProperty(AXPropertyNameEnum::Haspopup,
+    properties.addItem(CreateProperty(AXWidgetAttributesEnum::Haspopup,
                                       CreateBooleanValue(has_popup)));
   }
 
   int heading_level = ax_object.HeadingLevel();
   if (heading_level > 0) {
-    properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Level, CreateValue(heading_level)));
+    properties.addItem(CreateProperty(AXWidgetAttributesEnum::Level,
+                                      CreateValue(heading_level)));
   }
   int hierarchical_level = ax_object.HierarchicalLevel();
   if (hierarchical_level > 0 ||
       ax_object.HasAttribute(HTMLNames::aria_levelAttr)) {
-    properties.addItem(CreateProperty(AXPropertyNameEnum::Level,
+    properties.addItem(CreateProperty(AXWidgetAttributesEnum::Level,
                                       CreateValue(hierarchical_level)));
   }
 
   if (RoleAllowsMultiselectable(role)) {
     bool multiselectable = ax_object.IsMultiSelectable();
-    properties.addItem(CreateProperty(AXPropertyNameEnum::Multiselectable,
+    properties.addItem(CreateProperty(AXWidgetAttributesEnum::Multiselectable,
                                       CreateBooleanValue(multiselectable)));
   }
 
@@ -190,12 +192,12 @@ void FillWidgetProperties(AXObject& ax_object,
     switch (orientation) {
       case kAccessibilityOrientationVertical:
         properties.addItem(
-            CreateProperty(AXPropertyNameEnum::Orientation,
+            CreateProperty(AXWidgetAttributesEnum::Orientation,
                            CreateValue("vertical", AXValueTypeEnum::Token)));
         break;
       case kAccessibilityOrientationHorizontal:
         properties.addItem(
-            CreateProperty(AXPropertyNameEnum::Orientation,
+            CreateProperty(AXWidgetAttributesEnum::Orientation,
                            CreateValue("horizontal", AXValueTypeEnum::Token)));
         break;
       case kAccessibilityOrientationUndefined:
@@ -205,19 +207,19 @@ void FillWidgetProperties(AXObject& ax_object,
 
   if (role == kTextFieldRole) {
     properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Multiline,
+        CreateProperty(AXWidgetAttributesEnum::Multiline,
                        CreateBooleanValue(ax_object.IsMultiline())));
   }
 
   if (RoleAllowsReadonly(role)) {
     properties.addItem(CreateProperty(
-        AXPropertyNameEnum::Readonly,
+        AXWidgetAttributesEnum::Readonly,
         CreateBooleanValue(ax_object.Restriction() == kReadOnly)));
   }
 
   if (RoleAllowsRequired(role)) {
     properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Required,
+        CreateProperty(AXWidgetAttributesEnum::Required,
                        CreateBooleanValue(ax_object.IsRequired())));
   }
 
@@ -228,18 +230,18 @@ void FillWidgetProperties(AXObject& ax_object,
   if (ax_object.IsRange()) {
     float min_value;
     if (ax_object.MinValueForRange(&min_value)) {
-      properties.addItem(
-          CreateProperty(AXPropertyNameEnum::Valuemin, CreateValue(min_value)));
+      properties.addItem(CreateProperty(AXWidgetAttributesEnum::Valuemin,
+                                        CreateValue(min_value)));
     }
 
     float max_value;
     if (ax_object.MaxValueForRange(&max_value)) {
-      properties.addItem(
-          CreateProperty(AXPropertyNameEnum::Valuemax, CreateValue(max_value)));
+      properties.addItem(CreateProperty(AXWidgetAttributesEnum::Valuemax,
+                                        CreateValue(max_value)));
     }
 
     properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Valuetext,
+        CreateProperty(AXWidgetAttributesEnum::Valuetext,
                        CreateValue(ax_object.ValueDescription())));
   }
 }
@@ -263,8 +265,8 @@ void FillWidgetStates(AXObject& ax_object,
   }
   if (checked_prop_val) {
     const auto checked_prop_name = role == kToggleButtonRole
-                                       ? AXPropertyNameEnum::Pressed
-                                       : AXPropertyNameEnum::Checked;
+                                       ? AXWidgetStatesEnum::Pressed
+                                       : AXWidgetStatesEnum::Checked;
     properties.addItem(CreateProperty(
         checked_prop_name,
         CreateValue(checked_prop_val, AXValueTypeEnum::Tristate)));
@@ -276,24 +278,24 @@ void FillWidgetStates(AXObject& ax_object,
       break;
     case kExpandedCollapsed:
       properties.addItem(CreateProperty(
-          AXPropertyNameEnum::Expanded,
+          AXWidgetStatesEnum::Expanded,
           CreateBooleanValue(false, AXValueTypeEnum::BooleanOrUndefined)));
       break;
     case kExpandedExpanded:
       properties.addItem(CreateProperty(
-          AXPropertyNameEnum::Expanded,
+          AXWidgetStatesEnum::Expanded,
           CreateBooleanValue(true, AXValueTypeEnum::BooleanOrUndefined)));
       break;
   }
 
   if (RoleAllowsSelected(role)) {
     properties.addItem(
-        CreateProperty(AXPropertyNameEnum::Selected,
+        CreateProperty(AXWidgetStatesEnum::Selected,
                        CreateBooleanValue(ax_object.IsSelected())));
   }
 
   if (RoleAllowsModal(role)) {
-    properties.addItem(CreateProperty(AXPropertyNameEnum::Modal,
+    properties.addItem(CreateProperty(AXWidgetStatesEnum::Modal,
                                       CreateBooleanValue(ax_object.IsModal())));
   }
 }
@@ -335,7 +337,7 @@ class SparseAttributeAXPropertyAdapter
     switch (attribute) {
       case AXBoolAttribute::kAriaBusy:
         properties_.addItem(
-            CreateProperty(AXPropertyNameEnum::Busy,
+            CreateProperty(AXGlobalStatesEnum::Busy,
                            CreateValue(value, AXValueTypeEnum::Boolean)));
         break;
     }
@@ -345,12 +347,12 @@ class SparseAttributeAXPropertyAdapter
     switch (attribute) {
       case AXStringAttribute::kAriaKeyShortcuts:
         properties_.addItem(
-            CreateProperty(AXPropertyNameEnum::Keyshortcuts,
+            CreateProperty(AXGlobalStatesEnum::Keyshortcuts,
                            CreateValue(value, AXValueTypeEnum::String)));
         break;
       case AXStringAttribute::kAriaRoleDescription:
         properties_.addItem(
-            CreateProperty(AXPropertyNameEnum::Roledescription,
+            CreateProperty(AXGlobalStatesEnum::Roledescription,
                            CreateValue(value, AXValueTypeEnum::String)));
         break;
     }
@@ -359,16 +361,19 @@ class SparseAttributeAXPropertyAdapter
   void AddObjectAttribute(AXObjectAttribute attribute, AXObject& object) {
     switch (attribute) {
       case AXObjectAttribute::kAriaActiveDescendant:
-        properties_.addItem(CreateProperty(AXPropertyNameEnum::Activedescendant,
-                                           CreateRelatedNodeListValue(object)));
+        properties_.addItem(
+            CreateProperty(AXRelationshipAttributesEnum::Activedescendant,
+                           CreateRelatedNodeListValue(object)));
         break;
       case AXObjectAttribute::kAriaDetails:
-        properties_.addItem(CreateProperty(AXPropertyNameEnum::Details,
-                                           CreateRelatedNodeListValue(object)));
+        properties_.addItem(
+            CreateProperty(AXRelationshipAttributesEnum::Details,
+                           CreateRelatedNodeListValue(object)));
         break;
       case AXObjectAttribute::kAriaErrorMessage:
-        properties_.addItem(CreateProperty(AXPropertyNameEnum::Errormessage,
-                                           CreateRelatedNodeListValue(object)));
+        properties_.addItem(
+            CreateProperty(AXRelationshipAttributesEnum::Errormessage,
+                           CreateRelatedNodeListValue(object)));
         break;
     }
   }
@@ -377,13 +382,14 @@ class SparseAttributeAXPropertyAdapter
                                 HeapVector<Member<AXObject>>& objects) {
     switch (attribute) {
       case AXObjectVectorAttribute::kAriaControls:
-        properties_.addItem(
-            CreateRelatedNodeListProperty(AXPropertyNameEnum::Controls, objects,
-                                          aria_controlsAttr, *ax_object_));
+        properties_.addItem(CreateRelatedNodeListProperty(
+            AXRelationshipAttributesEnum::Controls, objects, aria_controlsAttr,
+            *ax_object_));
         break;
       case AXObjectVectorAttribute::kAriaFlowTo:
         properties_.addItem(CreateRelatedNodeListProperty(
-            AXPropertyNameEnum::Flowto, objects, aria_flowtoAttr, *ax_object_));
+            AXRelationshipAttributesEnum::Flowto, objects, aria_flowtoAttr,
+            *ax_object_));
         break;
     }
   }
@@ -393,18 +399,16 @@ void FillRelationships(AXObject& ax_object,
                        protocol::Array<AXProperty>& properties) {
   AXObject::AXObjectVector results;
   ax_object.AriaDescribedbyElements(results);
-  if (!results.IsEmpty()) {
-    properties.addItem(
-        CreateRelatedNodeListProperty(AXPropertyNameEnum::Describedby, results,
-                                      aria_describedbyAttr, ax_object));
-  }
+  if (!results.IsEmpty())
+    properties.addItem(CreateRelatedNodeListProperty(
+        AXRelationshipAttributesEnum::Describedby, results,
+        aria_describedbyAttr, ax_object));
   results.clear();
 
   ax_object.AriaOwnsElements(results);
-  if (!results.IsEmpty()) {
+  if (!results.IsEmpty())
     properties.addItem(CreateRelatedNodeListProperty(
-        AXPropertyNameEnum::Owns, results, aria_ownsAttr, ax_object));
-  }
+        AXRelationshipAttributesEnum::Owns, results, aria_ownsAttr, ax_object));
   results.clear();
 }
 
@@ -611,7 +615,8 @@ std::unique_ptr<AXNode> InspectorAccessibilityAgent::BuildProtocolAXObject(
           continue;
         if (!name_source.related_objects.IsEmpty()) {
           properties->addItem(CreateRelatedNodeListProperty(
-              AXPropertyNameEnum::Labelledby, name_source.related_objects));
+              AXRelationshipAttributesEnum::Labelledby,
+              name_source.related_objects));
         }
       }
       name->setSources(std::move(name_source_properties));

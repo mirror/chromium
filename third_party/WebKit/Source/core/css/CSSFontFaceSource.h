@@ -26,7 +26,6 @@
 #ifndef CSSFontFaceSource_h
 #define CSSFontFaceSource_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "platform/fonts/FontCacheKey.h"
 #include "platform/fonts/FontSelectionTypes.h"
@@ -41,6 +40,8 @@ class SimpleFontData;
 
 class CORE_EXPORT CSSFontFaceSource
     : public GarbageCollectedFinalized<CSSFontFaceSource> {
+  WTF_MAKE_NONCOPYABLE(CSSFontFaceSource);
+
  public:
   virtual ~CSSFontFaceSource();
 
@@ -77,7 +78,6 @@ class CORE_EXPORT CSSFontFaceSource
                                 FontCacheKeyTraits>;
 
   FontDataTable font_data_table_;
-  DISALLOW_COPY_AND_ASSIGN(CSSFontFaceSource);
 };
 
 }  // namespace blink

@@ -49,9 +49,8 @@ class CORE_EXPORT InspectorEmulationAgent final
   protocol::Response setCPUThrottlingRate(double) override;
   protocol::Response setVirtualTimePolicy(
       const String& policy,
-      protocol::Maybe<double> virtual_time_budget_ms,
-      protocol::Maybe<int> max_virtual_time_task_starvation_count,
-      double* virtual_time_base_ms) override;
+      protocol::Maybe<int> virtual_time_budget_ms,
+      protocol::Maybe<int> max_virtual_time_task_starvation_count) override;
   protocol::Response setNavigatorOverrides(const String& platform) override;
   protocol::Response setDefaultBackgroundColorOverride(
       protocol::Maybe<protocol::DOM::RGBA>) override;

@@ -457,12 +457,6 @@ void LayoutTableCell::StyleDidChange(StyleDifference diff,
   if (!table)
     return;
 
-  if (old_style->Visibility() != StyleRef().Visibility() &&
-      table->ShouldCollapseBorders()) {
-    table->InvalidateCollapsedBorders();
-    collapsed_borders_need_paint_invalidation_ = true;
-  }
-
   LayoutTableBoxComponent::InvalidateCollapsedBordersOnStyleChange(
       *this, *table, diff, *old_style);
 

@@ -133,7 +133,7 @@ ApplicationTestRunner.addIDBValueAsync = function(databaseName, objectStoreName,
       'addIDBValueAsync(\'' + databaseName + '\', \'' + objectStoreName + '\', \'' + key + '\', \'' + value + '\')');
 };
 
-TestRunner.deprecatedInitAsync(`
+TestRunner.initAsync(`
   function dispatchCallback(callbackId) {
     console.log(callbackId);
   }

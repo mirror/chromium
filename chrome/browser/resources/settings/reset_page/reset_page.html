@@ -36,9 +36,7 @@
               class="subpage-arrow" aria-label="$i18n{resetPageTitle}"
               aria-describedby="resetProfileSecondary"></button>
         </div>
-        <!-- Keep a single instance of reset-profile-dialog on purpose, to
-          preserve state across show/hide operations. -->
-        <template is="cr-lazy-render" id="resetProfileDialog">
+        <template is="dom-if" if="[[showResetProfileDialog_]]" restamp>
           <settings-reset-profile-dialog on-close="onResetProfileDialogClose_">
           </settings-reset-profile-dialog>
         </template>
@@ -66,14 +64,14 @@
           <div class="settings-box two-line" id="chromeCleanupSubpageTrigger"
               on-tap="onChromeCleanupTap_" actionable>
             <div class="start">
-              $i18n{resetCleanupComputerTrigger}
+              $i18n{chromeCleanupPageTitle}
               <div class="secondary" id="chromeCleanupSecondary">
-                $i18n{resetCleanupComputerTriggerDescription}
+                $i18n{chromeCleanupPageTriggerDescription}
               </div>
             </div>
             <button id="chromeCleanupArrow" is="paper-icon-button-light"
                 class="subpage-arrow"
-                aria-label="$i18n{resetCleanupComputerTrigger}"
+                aria-label="$i18n{chromeCleanupPageTitle}"
                 aria-describedby="chromeCleanupSecondary"></button>
           </div>
         </template>
@@ -84,7 +82,7 @@
         <template is="dom-if" route-path="/cleanup">
           <settings-subpage id="chromeCleanupSubpage"
               associated-control="[[$$('#chromeCleanupSubpageTrigger')]]"
-              page-title="$i18n{resetCleanupComputerTrigger}"
+              page-title="$i18n{chromeCleanupPageTitle}"
               learn-more-url="$i18n{chromeCleanupLearnMoreUrl}">
             <settings-chrome-cleanup-page></settings-chrome-cleanup-page>
           </settings-subpage>

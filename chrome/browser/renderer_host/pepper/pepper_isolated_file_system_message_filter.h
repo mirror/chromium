@@ -31,6 +31,8 @@ struct HostMessageContext;
 }  // namespace host
 }  // namespace ppapi
 
+namespace chrome {
+
 class PepperIsolatedFileSystemMessageFilter
     : public ppapi::host::ResourceMessageFilter {
  public:
@@ -78,5 +80,7 @@ class PepperIsolatedFileSystemMessageFilter
 
   DISALLOW_COPY_AND_ASSIGN(PepperIsolatedFileSystemMessageFilter);
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_BROWSER_RENDERER_HOST_PEPPER_PEPPER_ISOLATED_FILE_SYSTEM_MESSAGE_FILTER_H_

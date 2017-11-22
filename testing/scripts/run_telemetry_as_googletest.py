@@ -16,16 +16,15 @@ common.parse_common_test_results.
 
 Optional argument:
 
-  --isolated-script-test-filter=[TEST_NAMES]
+  --isolated-script-test-filter-file=[FILENAME]
 
-is a double-colon-separated ("::") list of test names, to run just that subset
-of tests. This list is parsed by this harness and remapped to multiple arguments
-passed to the target script.
+points to a file containing newline-separated test names, to run just
+that subset of tests. This is remapped to multiple arguments passed to
+the target script.
 
 This script is intended to be the base command invoked by the isolate,
 followed by a subsequent Python script. It could be generalized to
 invoke an arbitrary executable.
-
 """
 
 import argparse
@@ -46,7 +45,7 @@ def main():
       '--isolated-script-test-output', type=str,
       required=True)
   parser.add_argument(
-      '--isolated-script-test-filter', type=str,
+      '--isolated-script-test-filter-file', type=str,
       required=False)
   parser.add_argument('--xvfb', help='Start xvfb.', action='store_true')
   args, rest_args = parser.parse_known_args()
@@ -59,10 +58,10 @@ def main():
       rest_args.pop(index)
       break
     index += 1
-  if args.isolated_script_test_filter:
+  if args.isolated_script_test_filter_file:
     # This test harness doesn't yet support reading the test list from
     # a file.
-    filter_list = common.extract_filter_list(args.isolated_script_test_filter)
+    filter_list = common.load_filter_list(args.isolated_script_test_filter_file)
     # This harness takes the test names to run as the first arguments.
     # The first argument of rest_args is the script to run, so insert
     # the test names after that.

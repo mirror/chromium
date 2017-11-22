@@ -5,6 +5,7 @@
 // https://html.spec.whatwg.org/#audiotracklist
 
 [
+    DependentLifetime,
     RuntimeEnabled=AudioVideoTracks
 ] interface AudioTrackList : EventTarget {
   readonly attribute unsigned long length;

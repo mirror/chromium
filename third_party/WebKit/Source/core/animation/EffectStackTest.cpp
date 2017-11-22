@@ -52,12 +52,10 @@ class AnimationEffectStackTest : public ::testing::Test {
     StringKeyframeVector keyframes(2);
     keyframes[0] = StringKeyframe::Create();
     keyframes[0]->SetOffset(0.0);
-    keyframes[0]->SetCSSPropertyValue(
-        id, value, SecureContextMode::kInsecureContext, nullptr);
+    keyframes[0]->SetCSSPropertyValue(id, value, nullptr);
     keyframes[1] = StringKeyframe::Create();
     keyframes[1]->SetOffset(1.0);
-    keyframes[1]->SetCSSPropertyValue(
-        id, value, SecureContextMode::kInsecureContext, nullptr);
+    keyframes[1]->SetCSSPropertyValue(id, value, nullptr);
     return StringKeyframeEffectModel::Create(keyframes);
   }
 
@@ -78,7 +76,7 @@ class AnimationEffectStackTest : public ::testing::Test {
   double GetFontSizeValue(
       const ActiveInterpolationsMap& active_interpolations) {
     const ActiveInterpolations& interpolations =
-        active_interpolations.at(PropertyHandle(GetCSSPropertyFontSize()));
+        active_interpolations.at(PropertyHandle(CSSPropertyFontSize));
     EnsureInterpolatedValueCached(interpolations, *document, element);
 
     const TypedInterpolationValue* typed_value =
@@ -93,7 +91,7 @@ class AnimationEffectStackTest : public ::testing::Test {
 
   double GetZIndexValue(const ActiveInterpolationsMap& active_interpolations) {
     const ActiveInterpolations& interpolations =
-        active_interpolations.at(PropertyHandle(GetCSSPropertyZIndex()));
+        active_interpolations.at(PropertyHandle(CSSPropertyZIndex));
     EnsureInterpolatedValueCached(interpolations, *document, element);
 
     const TypedInterpolationValue* typed_value =

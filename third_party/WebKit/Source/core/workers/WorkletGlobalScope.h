@@ -44,10 +44,9 @@ class CORE_EXPORT WorkletGlobalScope
       String source_code,
       std::unique_ptr<Vector<char>> cached_meta_data) final;
 
-  // Always returns false here as PaintWorkletGlobalScope and
-  // AnimationWorkletGlobalScope don't have a #close() method on the global.
-  // Note that AudioWorkletGlobal overrides this behavior.
-  bool IsClosing() const { return false; }
+  // Always returns false here as worklets don't have a #close() method on
+  // the global.
+  bool IsClosing() const final { return false; }
 
   ExecutionContext* GetExecutionContext() const;
 

@@ -11,6 +11,16 @@
 
 namespace content {
 
+namespace {
+
+void TerminateSharedWorkerOnIO(
+    WorkerDevToolsAgentHost::WorkerId worker_id) {
+  SharedWorkerServiceImpl::GetInstance()->TerminateWorker(
+      worker_id.first, worker_id.second);
+}
+
+}  // namespace
+
 SharedWorkerDevToolsAgentHost::SharedWorkerDevToolsAgentHost(
     WorkerId worker_id,
     const SharedWorkerInstance& shared_worker)
@@ -39,8 +49,9 @@ void SharedWorkerDevToolsAgentHost::Reload() {
 }
 
 bool SharedWorkerDevToolsAgentHost::Close() {
-  SharedWorkerServiceImpl::GetInstance()->TerminateWorker(worker_id().first,
-                                                          worker_id().second);
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&TerminateSharedWorkerOnIO, worker_id()));
   return true;
 }
 

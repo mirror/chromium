@@ -22,7 +22,7 @@
 #import "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
-#include "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
+#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/bookmarks_test_util.h"
@@ -140,7 +140,15 @@ id<GREYMatcher> ActionSheet(Action action) {
 
 - (void)setUp {
   [super setUp];
-  [ChromeEarlGrey waitForBookmarksToFinishLoading];
+  // Wait for bookmark model to be loaded.
+  GREYAssert(testing::WaitUntilConditionOrTimeout(
+                 testing::kWaitForUIElementTimeout,
+                 ^{
+                   return chrome_test_util::BookmarksLoaded();
+                 }),
+             @"Bookmark model did not load");
+  GREYAssert(chrome_test_util::ClearBookmarks(),
+             @"Not all bookmarks were removed.");
 }
 
 // Tear down called once per test.
@@ -1248,8 +1256,8 @@ id<GREYMatcher> ActionSheet(Action action) {
   // Check the sign-in promo view is visible.
   [SigninEarlGreyUtils
       checkSigninPromoVisibleWithMode:SigninPromoViewModeColdState];
-  // Check the sign-in promo already-seen state didn't change.
-  [BookmarksTestCase verifyPromoAlreadySeen:NO];
+  // Check the sign-in promo will not be shown anymore.
+  [BookmarksTestCase verifyPromoAlreadySeen:YES];
   GREYAssertEqual(
       20, prefs->GetInteger(prefs::kIosBookmarkSigninPromoDisplayedCount),
       @"Should have incremented the display count");

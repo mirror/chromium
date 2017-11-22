@@ -23,7 +23,6 @@ class VoiceInteractionControllerClient {
   void NotifySettingsEnabled(bool enabled);
   void NotifyContextEnabled(bool enabled);
   void NotifySetupCompleted(bool completed);
-  void NotifyFeatureAllowed(ash::mojom::AssistantAllowedState state);
 
   // Testing methods.
   void SetControllerForTesting(

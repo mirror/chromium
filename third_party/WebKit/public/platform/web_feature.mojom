@@ -638,6 +638,7 @@ enum WebFeature {
   kCredentialManagerGetMediationOptional = 961,
   kCredentialManagerGetMediationSilent = 962,
   kCredentialManagerStore = 963,
+  kCredentialManagerRequireUserMediation = 964,
   // The above items are available in M47 branch.
 
   kBlockableMixedContentInSubframeBlocked = 966,
@@ -1510,6 +1511,7 @@ enum WebFeature {
   kWebDatabaseCreateDropFTS3Table = 1980,
   kFieldEditInSecureContext = 1981,
   kFieldEditInNonSecureContext = 1982,
+  kCredentialManagerCredentialRequestOptionsUnmediated = 1983,
   kCredentialManagerGetMediationRequired = 1984,
   kCredentialManagerIdName = 1985,
   kCredentialManagerPasswordName = 1986,
@@ -1520,6 +1522,7 @@ enum WebFeature {
   kShapeDetection_BarcodeDetectorConstructor = 1991,
   kShapeDetection_FaceDetectorConstructor = 1992,
   kShapeDetection_TextDetectorConstructor = 1993,
+  kCredentialManagerCredentialRequestOptionsOnlyUnmediated = 1994,
   kInertAttribute = 1995,
   kPluginInstanceAccessFromIsolatedWorld = 1996,
   kPluginInstanceAccessFromMainWorld = 1997,
@@ -1755,11 +1758,6 @@ enum WebFeature {
   kReplaceCharsetInXHR = 2230,
   kRespondToSameOriginRequestWithCrossOriginResponse = 2231,
   kLinkRelModulePreload = 2232,
-  kPerformanceMeasurePassedInObject = 2233,
-  kPerformanceMeasurePassedInNavigationTiming = 2234,
-  kHTMLFrameSetElementNonNullAnonymousNamedGetter = 2235,
-  kCSPWithUnsafeEval = 2236,
-  kWebAssemblyInstantiation = 2237,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

@@ -5,8 +5,6 @@
 #ifndef CHROME_BROWSER_UI_TABS_TAB_STRIP_MODEL_EXPERIMENTAL_H_
 #define CHROME_BROWSER_UI_TABS_TAB_STRIP_MODEL_EXPERIMENTAL_H_
 
-#include <stdint.h>
-
 #include <memory>
 
 #include "base/containers/span.h"
@@ -15,6 +13,7 @@
 #include "base/observer_list.h"
 #include "chrome/browser/ui/tabs/tab_data_experimental.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "ui/base/models/list_selection_model.h"
 #include "ui/base/page_transition_types.h"
 
@@ -103,6 +102,9 @@ class TabStripModelExperimental : public TabStripModel {
 
   // TabStripModel implementation.
   TabStripModelExperimental* AsTabStripModelExperimental() override;
+  TabStripModelDelegate* delegate() const override;
+  void AddObserver(TabStripModelObserver* observer) override;
+  void RemoveObserver(TabStripModelObserver* observer) override;
   int count() const override;
   bool empty() const override;
   Profile* profile() const override;
@@ -173,8 +175,6 @@ class TabStripModelExperimental : public TabStripModel {
   bool WillContextMenuMute(int index) override;
   bool WillContextMenuMuteSites(int index) override;
   bool WillContextMenuPin(int index) override;
-  void OnWillDeleteWebContents(content::WebContents* contents,
-                               uint32_t close_types) override;
 
   // Returns the tab model data.
   const std::vector<std::unique_ptr<TabDataExperimental>>& top_level_tabs()
@@ -195,9 +195,6 @@ class TabStripModelExperimental : public TabStripModel {
   // index is not valid.
   const TabDataExperimental* GetDataForViewIndex(int view_index) const;
   TabDataExperimental* GetDataForViewIndex(int view_index);
-
-  // Returns kNoTab if there isn't a view index for this data.
-  int GetViewIndexForData(const TabDataExperimental* data) const;
 
   void AddExperimentalObserver(TabStripModelExperimentalObserver* observer);
   void RemoveExperimentalObserver(TabStripModelExperimentalObserver* observer);
@@ -235,9 +232,7 @@ class TabStripModelExperimental : public TabStripModel {
       Notify notify_types,
       const ui::ListSelectionModel& old_model);
 
-  bool InternalCloseTabs(
-      const std::vector<content::WebContents*>& tabs_to_close,
-      uint32_t close_types);
+  void InternalCloseTabs(base::span<content::WebContents*> tabs_to_close);
 
   // Returns the iterator associated with the give view index, or end() if
   // not found.
@@ -246,8 +241,10 @@ class TabStripModelExperimental : public TabStripModel {
   int ComputeViewCount() const;
   void UpdateViewCount();
 
+  TabStripModelDelegate* delegate_;
   Profile* profile_;
 
+  base::ObserverList<TabStripModelObserver> observers_;
   base::ObserverList<TabStripModelExperimentalObserver> exp_observers_;
 
   ui::ListSelectionModel selection_model_;

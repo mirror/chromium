@@ -5,8 +5,6 @@
 #include "tools/gn/parse_tree.h"
 
 #include <stdint.h>
-
-#include <memory>
 #include <utility>
 
 #include "testing/gtest/include/gtest/gtest.h"
@@ -26,8 +24,8 @@ TEST(ParseTree, Accessor) {
   AccessorNode accessor;
   accessor.set_base(base_token);
 
-  std::unique_ptr<IdentifierNode> member_identifier =
-      std::make_unique<IdentifierNode>(member_token);
+  std::unique_ptr<IdentifierNode> member_identifier(
+      new IdentifierNode(member_token));
   accessor.set_member(std::move(member_identifier));
 
   // The access should fail because a is not defined.
@@ -39,7 +37,8 @@ TEST(ParseTree, Accessor) {
   // Define a as a Scope. It should still fail because b isn't defined.
   err = Err();
   setup.scope()->SetValue(
-      "a", Value(nullptr, std::make_unique<Scope>(setup.scope())), nullptr);
+      "a", Value(nullptr, std::unique_ptr<Scope>(new Scope(setup.scope()))),
+      nullptr);
   result = accessor.Execute(setup.scope(), &err);
   EXPECT_TRUE(err.has_error());
   EXPECT_EQ(Value::NONE, result.type());

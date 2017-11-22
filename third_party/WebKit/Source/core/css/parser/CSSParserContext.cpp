@@ -28,8 +28,7 @@ CSSParserContext* CSSParserContext::Create(const ExecutionContext& context) {
 
   return new CSSParserContext(
       context.Url(), WTF::TextEncoding(), kHTMLStandardMode, kHTMLStandardMode,
-      kDynamicProfile, referrer, true, false, context.SecureContextMode(),
-      policy_disposition,
+      kDynamicProfile, referrer, true, false, policy_disposition,
       context.IsDocument() ? &ToDocument(context) : nullptr);
 }
 
@@ -57,8 +56,7 @@ CSSParserContext* CSSParserContext::Create(
       other->base_url_, other->charset_, other->mode_, other->match_mode_,
       other->profile_, other->referrer_, other->is_html_document_,
       other->use_legacy_background_size_shorthand_behavior_,
-      other->secure_context_mode_, other->should_check_content_security_policy_,
-      use_counter_document);
+      other->should_check_content_security_policy_, use_counter_document);
 }
 
 // static
@@ -73,20 +71,17 @@ CSSParserContext* CSSParserContext::Create(
       Referrer(base_url.StrippedForUseAsReferrer(), referrer_policy),
       other->is_html_document_,
       other->use_legacy_background_size_shorthand_behavior_,
-      other->secure_context_mode_, other->should_check_content_security_policy_,
-      use_counter_document);
+      other->should_check_content_security_policy_, use_counter_document);
 }
 
 // static
 CSSParserContext* CSSParserContext::Create(
     CSSParserMode mode,
-    SecureContextMode secure_context_mode,
     SelectorProfile profile,
     const Document* use_counter_document) {
-  return new CSSParserContext(KURL(), WTF::TextEncoding(), mode, mode, profile,
-                              Referrer(), false, false, secure_context_mode,
-                              kDoNotCheckContentSecurityPolicy,
-                              use_counter_document);
+  return new CSSParserContext(
+      KURL(), WTF::TextEncoding(), mode, mode, profile, Referrer(), false,
+      false, kDoNotCheckContentSecurityPolicy, use_counter_document);
 }
 
 // static
@@ -130,10 +125,10 @@ CSSParserContext* CSSParserContext::Create(
   else
     policy_disposition = kCheckContentSecurityPolicy;
 
-  return new CSSParserContext(
-      base_url_override, charset, mode, match_mode, profile, referrer,
-      document.IsHTMLDocument(), use_legacy_background_size_shorthand_behavior,
-      document.SecureContextMode(), policy_disposition, &document);
+  return new CSSParserContext(base_url_override, charset, mode, match_mode,
+                              profile, referrer, document.IsHTMLDocument(),
+                              use_legacy_background_size_shorthand_behavior,
+                              policy_disposition, &document);
 }
 
 CSSParserContext::CSSParserContext(
@@ -145,7 +140,6 @@ CSSParserContext::CSSParserContext(
     const Referrer& referrer,
     bool is_html_document,
     bool use_legacy_background_size_shorthand_behavior,
-    SecureContextMode secure_context_mode,
     ContentSecurityPolicyDisposition policy_disposition,
     const Document* use_counter_document)
     : base_url_(base_url),
@@ -157,7 +151,6 @@ CSSParserContext::CSSParserContext(
       is_html_document_(is_html_document),
       use_legacy_background_size_shorthand_behavior_(
           use_legacy_background_size_shorthand_behavior),
-      secure_context_mode_(secure_context_mode),
       should_check_content_security_policy_(policy_disposition),
       document_(use_counter_document) {}
 
@@ -167,23 +160,15 @@ bool CSSParserContext::operator==(const CSSParserContext& other) const {
          profile_ == other.profile_ &&
          is_html_document_ == other.is_html_document_ &&
          use_legacy_background_size_shorthand_behavior_ ==
-             other.use_legacy_background_size_shorthand_behavior_ &&
-         secure_context_mode_ == other.secure_context_mode_;
+             other.use_legacy_background_size_shorthand_behavior_;
 }
 
-const CSSParserContext* StrictCSSParserContext(
-    SecureContextMode secure_context_mode) {
+const CSSParserContext* StrictCSSParserContext() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<Persistent<CSSParserContext>>,
                                   strict_context_pool, ());
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<Persistent<CSSParserContext>>,
-                                  secure_strict_context_pool, ());
-
-  Persistent<CSSParserContext>& context =
-      secure_context_mode == SecureContextMode::kSecureContext
-          ? *secure_strict_context_pool
-          : *strict_context_pool;
+  Persistent<CSSParserContext>& context = *strict_context_pool;
   if (!context) {
-    context = CSSParserContext::Create(kHTMLStandardMode, secure_context_mode);
+    context = CSSParserContext::Create(kHTMLStandardMode);
     context.RegisterAsStaticReference();
   }
 

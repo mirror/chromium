@@ -564,7 +564,6 @@
     },
     {
       name: "MediaCapabilities",
-      origin_trial_feature_name: "MediaCapabilities",
       status: "experimental",
     },
     {
@@ -596,6 +595,10 @@
     // Set to reflect the kMediaEngagementBypassAutoplayPolicies feature.
     {
       name: "MediaEngagementBypassAutoplayPolicies",
+    },
+    {
+      name: "MediaPlaybackRateOutOfRange",
+      status: "experimental",
     },
     {
       name: "MediaQueryShape",

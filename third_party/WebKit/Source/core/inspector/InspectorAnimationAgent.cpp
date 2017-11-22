@@ -152,7 +152,8 @@ BuildObjectForAnimationKeyframes(const KeyframeEffectReadOnly* effect) {
   const KeyframeEffectModelBase* model =
       ToKeyframeEffectModelBase(effect->Model());
   Vector<double> computed_offsets =
-      KeyframeEffectModelBase::GetComputedOffsets(model->GetFrames());
+      KeyframeEffectModelBase::GetComputedOffsetsForInspector(
+          model->GetFrames());
   std::unique_ptr<protocol::Array<protocol::Animation::KeyframeStyle>>
       keyframes = protocol::Array<protocol::Animation::KeyframeStyle>::create();
 

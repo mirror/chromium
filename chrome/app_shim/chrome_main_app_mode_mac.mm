@@ -227,8 +227,7 @@ void AppShimController::CreateChannelAndSendLaunchApp(
               mojo::edk::TransportProtocol::kLegacy,
               mojo::edk::CreateClientHandle(
                   mojo::edk::NamedPlatformHandle(socket_path.value())))),
-          g_io_thread->task_runner().get(),
-          base::ThreadTaskRunnerHandle::Get()),
+          g_io_thread->task_runner().get()),
       this, g_io_thread->task_runner().get(),
       base::ThreadTaskRunnerHandle::Get());
 

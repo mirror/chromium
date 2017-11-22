@@ -136,8 +136,6 @@ split_static_library("ui") {
     "page_info/page_info_ui.h",
     "passwords/account_avatar_fetcher.cc",
     "passwords/account_avatar_fetcher.h",
-    "passwords/destination_file_system.cc",
-    "passwords/destination_file_system.h",
     "passwords/manage_passwords_state.cc",
     "passwords/manage_passwords_state.h",
     "passwords/manage_passwords_view_utils.cc",
@@ -411,7 +409,6 @@ split_static_library("ui") {
     "//components/invalidation/impl",
     "//components/keyed_service/content",
     "//components/keyed_service/core",
-    "//components/navigation_metrics",
     "//components/net_log",
     "//components/ntp_snippets",
     "//components/ntp_tiles",
@@ -913,8 +910,6 @@ split_static_library("ui") {
       "tabs/tab_strip_model_stats_recorder.h",
       "tabs/tab_utils.cc",
       "tabs/tab_utils.h",
-      "tabs/web_contents_closer.cc",
-      "tabs/web_contents_closer.h",
       "task_manager/task_manager_columns.cc",
       "task_manager/task_manager_columns.h",
       "task_manager/task_manager_table_model.cc",
@@ -1276,8 +1271,6 @@ split_static_library("ui") {
       "ash/volume_controller.h",
       "ash/vpn_list_forwarder.cc",
       "ash/vpn_list_forwarder.h",
-      "ash/wallpaper_controller_client.cc",
-      "ash/wallpaper_controller_client.h",
       "browser_commands_chromeos.cc",
       "browser_commands_chromeos.h",
       "extensions/extension_installed_notification.cc",
@@ -1304,8 +1297,6 @@ split_static_library("ui") {
       "views/frame/browser_frame_header_ash.h",
       "views/frame/browser_non_client_frame_view_ash.cc",
       "views/frame/browser_non_client_frame_view_ash.h",
-      "views/frame/hosted_app_frame_header_ash.cc",
-      "views/frame/hosted_app_frame_header_ash.h",
       "views/frame/immersive_context_mus.cc",
       "views/frame/immersive_context_mus.h",
       "views/frame/immersive_handler_factory_mus.cc",
@@ -1503,7 +1494,8 @@ split_static_library("ui") {
     deps += [
       "//ash",
       "//ash:ash_with_content",
-      "//ash/public/cpp",
+      "//ash/mus:lib",
+      "//ash/public/cpp:ash_public_cpp",
       "//ash/resources/vector_icons",
       "//ash/strings",
       "//chrome/browser/chromeos",
@@ -1710,7 +1702,6 @@ split_static_library("ui") {
       "cocoa/chrome_command_dispatcher_delegate.mm",
       "cocoa/chrome_style.cc",
       "cocoa/chrome_style.h",
-      "cocoa/color_chooser_mac.h",
       "cocoa/color_chooser_mac.mm",
       "cocoa/confirm_quit.h",
       "cocoa/confirm_quit_panel_controller.h",
@@ -3029,8 +3020,6 @@ split_static_library("ui") {
         "views/ssl_client_certificate_selector.h",
         "views/status_bubble_views.cc",
         "views/status_bubble_views.h",
-        "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
-        "views/tab_contents/chrome_web_contents_view_focus_helper.h",
         "views/tab_dialogs_views.cc",
         "views/tab_dialogs_views.h",
         "views/tab_icon_view.cc",
@@ -3733,10 +3722,8 @@ static_library("test_support") {
     sources += [
       "ash/fake_tablet_mode_controller.cc",
       "ash/fake_tablet_mode_controller.h",
-      "ash/test_wallpaper_controller.cc",
-      "ash/test_wallpaper_controller.h",
     ]
-    deps += [ "//ash/public/cpp" ]
+    deps += [ "//ash/public/cpp:ash_public_cpp" ]
   }
 
   if (enable_extensions) {

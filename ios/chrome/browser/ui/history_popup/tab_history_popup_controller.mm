@@ -124,7 +124,7 @@ static const CGFloat kHeightPercentage = 0.85;
                    animations:^{
                      [_tabHistoryTableViewContainer setAlpha:1];
                    }];
-  [super fadeInPopupFromSource:source toDestination:destination completion:nil];
+  [super fadeInPopupFromSource:source toDestination:destination];
 }
 
 - (void)dismissAnimatedWithCompletion:(void (^)(void))completion {

@@ -36,19 +36,15 @@ CSSValueList* CssValueListForPropertyID(CSSPropertyID property_id) {
 }
 
 const CSSValue* StyleValueToCSSValue(CSSPropertyID property_id,
-                                     const CSSStyleValue& style_value,
-                                     SecureContextMode secure_context_mode) {
+                                     const CSSStyleValue& style_value) {
   if (!CSSOMTypes::PropertyCanTake(property_id, style_value))
     return nullptr;
-  return style_value.ToCSSValueWithProperty(property_id, secure_context_mode);
+  return style_value.ToCSSValueWithProperty(property_id);
 }
 
-const CSSValue* SingleStyleValueAsCSSValue(
-    CSSPropertyID property_id,
-    const CSSStyleValue& style_value,
-    SecureContextMode secure_context_mode) {
-  const CSSValue* css_value =
-      StyleValueToCSSValue(property_id, style_value, secure_context_mode);
+const CSSValue* SingleStyleValueAsCSSValue(CSSPropertyID property_id,
+                                           const CSSStyleValue& style_value) {
+  const CSSValue* css_value = StyleValueToCSSValue(property_id, style_value);
   if (!css_value)
     return nullptr;
 
@@ -63,12 +59,10 @@ const CSSValue* SingleStyleValueAsCSSValue(
 
 const CSSValueList* AsCSSValueList(
     CSSPropertyID property_id,
-    const CSSStyleValueVector& style_value_vector,
-    SecureContextMode secure_context_mode) {
+    const CSSStyleValueVector& style_value_vector) {
   CSSValueList* value_list = CssValueListForPropertyID(property_id);
   for (const CSSStyleValue* value : style_value_vector) {
-    const CSSValue* css_value =
-        StyleValueToCSSValue(property_id, *value, secure_context_mode);
+    const CSSValue* css_value = StyleValueToCSSValue(property_id, *value);
     if (!css_value) {
       return nullptr;
     }
@@ -122,23 +116,20 @@ Vector<String> InlineStylePropertyMap::getProperties() {
 }
 
 void InlineStylePropertyMap::set(
-    const ExecutionContext* execution_context,
     CSSPropertyID property_id,
     CSSStyleValueOrCSSStyleValueSequenceOrString& item,
     ExceptionState& exception_state) {
   const CSSValue* css_value = nullptr;
   if (item.IsCSSStyleValue()) {
     css_value =
-        SingleStyleValueAsCSSValue(property_id, *item.GetAsCSSStyleValue(),
-                                   execution_context->SecureContextMode());
+        SingleStyleValueAsCSSValue(property_id, *item.GetAsCSSStyleValue());
   } else if (item.IsCSSStyleValueSequence()) {
     if (!CSSProperty::Get(property_id).IsRepeated()) {
       exception_state.ThrowTypeError(
           "Property does not support multiple values");
       return;
     }
-    css_value = AsCSSValueList(property_id, item.GetAsCSSStyleValueSequence(),
-                               execution_context->SecureContextMode());
+    css_value = AsCSSValueList(property_id, item.GetAsCSSStyleValueSequence());
   } else {
     // Parse it.
     DCHECK(item.IsString());
@@ -154,7 +145,6 @@ void InlineStylePropertyMap::set(
 }
 
 void InlineStylePropertyMap::append(
-    const ExecutionContext* execution_context,
     CSSPropertyID property_id,
     CSSStyleValueOrCSSStyleValueSequenceOrString& item,
     ExceptionState& exception_state) {
@@ -179,8 +169,7 @@ void InlineStylePropertyMap::append(
 
   if (item.IsCSSStyleValue()) {
     const CSSValue* css_value =
-        StyleValueToCSSValue(property_id, *item.GetAsCSSStyleValue(),
-                             execution_context->SecureContextMode());
+        StyleValueToCSSValue(property_id, *item.GetAsCSSStyleValue());
     if (!css_value) {
       exception_state.ThrowTypeError("Invalid type for property");
       return;
@@ -188,8 +177,8 @@ void InlineStylePropertyMap::append(
     css_value_list->Append(*css_value);
   } else if (item.IsCSSStyleValueSequence()) {
     for (CSSStyleValue* style_value : item.GetAsCSSStyleValueSequence()) {
-      const CSSValue* css_value = StyleValueToCSSValue(
-          property_id, *style_value, execution_context->SecureContextMode());
+      const CSSValue* css_value =
+          StyleValueToCSSValue(property_id, *style_value);
       if (!css_value) {
         exception_state.ThrowTypeError("Invalid type for property");
         return;

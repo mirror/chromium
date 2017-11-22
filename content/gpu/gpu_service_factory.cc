@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
 #include "services/shape_detection/shape_detection_service.h"
@@ -38,12 +37,7 @@ void GpuServiceFactory::RegisterServices(ServiceMap* services) {
   info.factory =
       base::Bind(&media::CreateGpuMediaService, gpu_preferences_, task_runner_,
                  media_gpu_channel_manager_, android_overlay_factory_cb_);
-  // This service will host audio/video decoders, and if these decoding
-  // operations are blocked, user may hear audio glitch or see video freezing,
-  // hence "user blocking".
-  // TODO(crbug.com/786169): Check whether this needs to be single threaded.
-  info.task_runner = base::CreateSingleThreadTaskRunnerWithTraits(
-      {base::TaskPriority::USER_BLOCKING});
+  info.use_own_thread = true;
   services->insert(std::make_pair("media", info));
 #endif
 

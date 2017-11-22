@@ -103,6 +103,18 @@ TEST_P(LayerTreeResourceProviderTest, TransferableResourceReleased) {
   provider().RemoveImportedResource(id);
 }
 
+TEST_P(LayerTreeResourceProviderTest, TransferableResourceLostOnShutdown) {
+  MockReleaseCallback release;
+  viz::TransferableResource tran = MakeTransferableResource(use_gpu(), 'a', 15);
+  provider().ImportResource(
+      tran, viz::SingleReleaseCallback::Create(base::Bind(
+                &MockReleaseCallback::Released, base::Unretained(&release))));
+
+  // On shutdown the TransferableResource is lost.
+  EXPECT_CALL(release, Released(_, true));
+  Shutdown();
+}
+
 TEST_P(LayerTreeResourceProviderTest, TransferableResourceSendToParent) {
   MockReleaseCallback release;
   viz::TransferableResource tran = MakeTransferableResource(use_gpu(), 'a', 15);

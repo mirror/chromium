@@ -35,6 +35,10 @@ ResultExpr BPFBasePolicy::InvalidSyscall() const {
   return baseline_policy_->InvalidSyscall();
 }
 
+std::unique_ptr<BPFBasePolicy> BPFBasePolicy::GetBrokerSandboxPolicy() {
+  return nullptr;
+}
+
 int BPFBasePolicy::GetFSDeniedErrno() {
   return kFSDeniedErrno;
 }

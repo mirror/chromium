@@ -47,13 +47,11 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/NetworkHintsInterface.h"
-#include "core/loader/SubresourceIntegrityHelper.h"
 #include "core/loader/modulescript/ModuleScriptFetchRequest.h"
 #include "core/loader/private/PrerenderHandle.h"
 #include "core/loader/resource/LinkFetchResource.h"
 #include "platform/Prerender.h"
 #include "platform/loader/LinkHeader.h"
-#include "platform/loader/SubresourceIntegrity.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -402,7 +400,6 @@ static void ModulePreloadIfNeeded(const LinkRelAttribute& rel_attribute,
                                   const String& as,
                                   const String& media,
                                   const String& nonce,
-                                  const String& integrity,
                                   CrossOriginAttributeValue cross_origin,
                                   ViewportDescription* viewport_description,
                                   ReferrerPolicy referrer_policy,
@@ -476,13 +473,7 @@ static void ModulePreloadIfNeeded(const LinkRelAttribute& rel_attribute,
 
   // Step 8. "Let integrity metadata be the value of the integrity attribute, if
   // it is specified, or the empty string otherwise." [spec text]
-  IntegrityMetadataSet integrity_metadata;
-  if (!integrity.IsEmpty()) {
-    SubresourceIntegrity::ReportInfo report_info;
-    SubresourceIntegrity::ParseIntegrityAttribute(integrity, integrity_metadata,
-                                                  &report_info);
-    SubresourceIntegrityHelper::DoReport(document, report_info);
-  }
+  // TODO(ksakamoto): Support integrity attribute.
 
   // Step 9. "Let options be a script fetch options whose cryptographic nonce is
   // cryptographic nonce, integrity metadata is integrity metadata, parser
@@ -490,7 +481,7 @@ static void ModulePreloadIfNeeded(const LinkRelAttribute& rel_attribute,
   // mode." [spec text]
   ModuleScriptFetchRequest request(
       href, referrer_policy,
-      ScriptFetchOptions(nonce, integrity_metadata, integrity,
+      ScriptFetchOptions(nonce, IntegrityMetadataSet(), String(),
                          kNotParserInserted, credentials_mode));
 
   // Step 10. "Fetch a single module script given url, settings object,
@@ -588,9 +579,9 @@ void LinkLoader::LoadLinksFromHeader(
       PrefetchIfNeeded(*document, url, rel_attribute, cross_origin,
                        kReferrerPolicyDefault);
       ModulePreloadIfNeeded(rel_attribute, url, *document, header.As(),
-                            header.Media(), header.Nonce(), header.Integrity(),
-                            cross_origin, viewport_description,
-                            kReferrerPolicyDefault, nullptr);
+                            header.Media(), header.Nonce(), cross_origin,
+                            viewport_description, kReferrerPolicyDefault,
+                            nullptr);
     }
     if (rel_attribute.IsServiceWorker()) {
       UseCounter::Count(&frame, WebFeature::kLinkHeaderServiceWorker);
@@ -606,7 +597,6 @@ bool LinkLoader::LoadLink(
     const String& as,
     const String& media,
     const String& nonce,
-    const String& integrity,
     ReferrerPolicy referrer_policy,
     const KURL& href,
     Document& document,
@@ -635,8 +625,7 @@ bool LinkLoader::LoadLink(
     finish_observer_ = new FinishObserver(this, resource);
 
   ModulePreloadIfNeeded(rel_attribute, href, document, as, media, nonce,
-                        integrity, cross_origin, nullptr, referrer_policy,
-                        this);
+                        cross_origin, nullptr, referrer_policy, this);
 
   if (const unsigned prerender_rel_types =
           PrerenderRelTypesFromRelAttribute(rel_attribute, document)) {

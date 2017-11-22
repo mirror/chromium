@@ -100,7 +100,6 @@
 #include "content/browser/media/midi_host.h"
 #include "content/browser/memory/memory_coordinator_impl.h"
 #include "content/browser/mime_registry_impl.h"
-#include "content/browser/mus_util.h"
 #include "content/browser/net/reporting_service_proxy.h"
 #include "content/browser/notifications/notification_message_filter.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
@@ -159,6 +158,7 @@
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/browser/worker_service.h"
 #include "content/public/common/bind_interface_helpers.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/connection_filter.h"
@@ -1601,9 +1601,8 @@ void RenderProcessHostImpl::InitializeChannelProxy() {
   mojo::MessagePipe pipe;
   BindInterface(IPC::mojom::ChannelBootstrap::Name_, std::move(pipe.handle1));
   std::unique_ptr<IPC::ChannelFactory> channel_factory =
-      IPC::ChannelMojo::CreateServerFactory(
-          std::move(pipe.handle0), io_task_runner,
-          base::ThreadTaskRunnerHandle::Get());
+      IPC::ChannelMojo::CreateServerFactory(std::move(pipe.handle0),
+                                            io_task_runner);
 
   content::BindInterface(this, &child_control_interface_);
 
@@ -2610,6 +2609,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kIgnoreAutoplayRestrictionsForTests,
     switches::kIPCConnectionTimeout,
     switches::kIsolateOrigins,
+    switches::kIsRunningInMash,
     switches::kJavaScriptFlags,
     switches::kLoggingLevel,
     switches::kMainFrameResizesAreOrientationChanges,
@@ -2707,9 +2707,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kIpcDumpDirectory,
     switches::kIpcFuzzerTestcase,
 #endif
-#if BUILDFLAG(ENABLE_MUS)
-    switches::kMus,
-#endif
   };
   renderer_cmd->CopySwitchesFrom(browser_cmd, kSwitchNames,
                                  arraysize(kSwitchNames));
@@ -2750,7 +2747,8 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
   // optimizes the common case to avoid wasted work.
   // Note: There is no ImageTransportFactory with Mash or Viz.
   // TODO(danakj): Get this info somewhere for viz mode.
-  if (!IsUsingMus() && !browser_cmd.HasSwitch(switches::kEnableViz) &&
+  if (!browser_cmd.HasSwitch(switches::kIsRunningInMash) &&
+      !browser_cmd.HasSwitch(switches::kEnableViz) &&
       ImageTransportFactory::GetInstance()->IsGpuCompositingDisabled())
     renderer_cmd->AppendSwitch(switches::kDisableGpuCompositing);
 #endif

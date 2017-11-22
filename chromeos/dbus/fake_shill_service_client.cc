@@ -402,11 +402,13 @@ bool FakeShillServiceClient::SetServiceProperty(const std::string& service_path,
     std::string key = property;
     if (base::StartsWith(property, "Provider.", case_sensitive))
       key = property.substr(strlen("Provider."));
-    base::Value* provider = new_properties.SetKey(
-        shill::kProviderProperty, base::Value(base::Value::Type::DICTIONARY));
+    base::DictionaryValue* provider =
+        new_properties.SetDictionaryWithoutPathExpansion(
+            shill::kProviderProperty,
+            std::make_unique<base::DictionaryValue>());
     provider->SetKey(key, value.Clone());
     changed_property = shill::kProviderProperty;
-  } else if (value.is_dict()) {
+  } else if (value.GetType() == base::Value::Type::DICTIONARY) {
     const base::DictionaryValue* new_dict = NULL;
     value.GetAsDictionary(&new_dict);
     CHECK(new_dict);

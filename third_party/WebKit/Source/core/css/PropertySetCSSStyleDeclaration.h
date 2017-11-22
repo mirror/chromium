@@ -36,7 +36,6 @@ class CSSRule;
 class CSSValue;
 class Element;
 class ExceptionState;
-class ExecutionContext;
 class MutableCSSPropertyValueSet;
 class PropertyRegistry;
 class StyleSheetContents;
@@ -56,8 +55,7 @@ class AbstractPropertySetCSSStyleDeclaration : public CSSStyleDeclaration {
   String getPropertyPriority(const String& property_name) final;
   String GetPropertyShorthand(const String& property_name) final;
   bool IsPropertyImplicit(const String& property_name) final;
-  void setProperty(const ExecutionContext*,
-                   const String& property_name,
+  void setProperty(const String& property_name,
                    const String& value,
                    const String& priority,
                    ExceptionState&) final;
@@ -65,9 +63,7 @@ class AbstractPropertySetCSSStyleDeclaration : public CSSStyleDeclaration {
   String CssFloat() const;
   void SetCSSFloat(const String&, ExceptionState&);
   String cssText() const final;
-  void setCSSText(const ExecutionContext*,
-                  const String&,
-                  ExceptionState&) final;
+  void setCSSText(const String&, ExceptionState&) final;
   const CSSValue* GetPropertyCSSValueInternal(CSSPropertyID) final;
   const CSSValue* GetPropertyCSSValueInternal(
       AtomicString custom_property_name) final;
@@ -76,7 +72,6 @@ class AbstractPropertySetCSSStyleDeclaration : public CSSStyleDeclaration {
                            const String& custom_property_name,
                            const String& value,
                            bool important,
-                           SecureContextMode,
                            ExceptionState&) final;
 
   bool CssPropertyMatches(CSSPropertyID, const CSSValue*) const final;

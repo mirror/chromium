@@ -9,7 +9,7 @@
 #include "components/viz/common/surfaces/surface_reference_factory.h"
 
 namespace viz {
-class SurfaceId;
+class SurfaceInfo;
 }
 
 // Embed a surface into the OverlayWindow to show content. Responsible for
@@ -20,7 +20,7 @@ class OverlaySurfaceEmbedder {
   explicit OverlaySurfaceEmbedder(OverlayWindow* window);
   ~OverlaySurfaceEmbedder();
 
-  void SetPrimarySurfaceId(const viz::SurfaceId& surface_id);
+  void SetPrimarySurfaceInfo(const viz::SurfaceInfo& surface_info);
 
  private:
   // The window which embeds the client.

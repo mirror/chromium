@@ -375,9 +375,9 @@ TEST_F(AppContextMenuTest, ArcMenu) {
 
   // This makes all apps non-ready.
   controller()->SetAppOpen(app_id, false);
-  arc::ConnectionObserver<arc::mojom::AppInstance>* connection_observer =
+  arc::InstanceHolder<arc::mojom::AppInstance>::Observer* instance_observer =
       arc_test.arc_app_list_prefs();
-  connection_observer->OnConnectionClosed();
+  instance_observer->OnInstanceClosed();
 
   menu = item.GetContextMenuModel();
   ASSERT_EQ(6, menu->GetItemCount());
@@ -428,9 +428,9 @@ TEST_F(AppContextMenuTest, ArcMenuShortcut) {
       menu, 5, MenuState(app_list::AppContextMenu::SHOW_APP_INFO));
 
   // This makes all apps non-ready. Shortcut is still uninstall-able.
-  arc::ConnectionObserver<arc::mojom::AppInstance>* connection_observer =
+  arc::InstanceHolder<arc::mojom::AppInstance>::Observer* instance_observer =
       arc_test.arc_app_list_prefs();
-  connection_observer->OnConnectionClosed();
+  instance_observer->OnInstanceClosed();
 
   menu = item.GetContextMenuModel();
   ASSERT_EQ(6, menu->GetItemCount());

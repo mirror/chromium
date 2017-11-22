@@ -59,9 +59,9 @@
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/StringExtras.h"
-#include "platform/wtf/Time.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/web/WebSettings.h"
@@ -252,9 +252,8 @@ bool ScriptController::ExecuteScriptIfJavaScriptURL(const KURL& url,
   // source, settings, base URL, and the default classic script fetch options."
   // [spec text]
   v8::Local<v8::Value> result = EvaluateScriptInMainWorld(
-      ScriptSourceCode(script_source, ScriptSourceLocationType::kJavascriptUrl),
-      ScriptFetchOptions(), kNotSharableCrossOrigin,
-      kDoNotExecuteScriptWhenScriptsDisabled);
+      ScriptSourceCode(script_source), ScriptFetchOptions(),
+      kNotSharableCrossOrigin, kDoNotExecuteScriptWhenScriptsDisabled);
 
   // If executing script caused this frame to be removed from the page, we
   // don't want to try to replace its document!
@@ -279,14 +278,11 @@ bool ScriptController::ExecuteScriptIfJavaScriptURL(const KURL& url,
   return true;
 }
 
-void ScriptController::ExecuteScriptInMainWorld(
-    const String& script,
-    ScriptSourceLocationType source_location_type,
-    ExecuteScriptPolicy policy) {
+void ScriptController::ExecuteScriptInMainWorld(const String& script,
+                                                ExecuteScriptPolicy policy) {
   v8::HandleScope handle_scope(GetIsolate());
-  EvaluateScriptInMainWorld(ScriptSourceCode(script, source_location_type),
-                            ScriptFetchOptions(), kNotSharableCrossOrigin,
-                            policy);
+  EvaluateScriptInMainWorld(ScriptSourceCode(script), ScriptFetchOptions(),
+                            kNotSharableCrossOrigin, policy);
 }
 
 void ScriptController::ExecuteScriptInMainWorld(

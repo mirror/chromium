@@ -10,6 +10,9 @@
 
 const int64_t kNonInitialImageAdditionDelayNanosec = 500000LL;
 
+NSString* const kMenuWillShowNotification = @"kMenuWillShowNotification";
+NSString* const kMenuWillHideNotification = @"kMenuWillHideNotification";
+
 NSString* const kToolbarIdentifier = @"kToolbarIdentifier";
 NSString* const kIncognitoToolbarIdentifier = @"kIncognitoToolbarIdentifier";
 NSString* const kToolbarToolsMenuButtonIdentifier =

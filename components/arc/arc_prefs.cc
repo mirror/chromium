@@ -47,7 +47,7 @@ const char kArcSetNotificationsEnabledDeferred[] =
 const char kArcSignedIn[] = "arc.signedin";
 // A preference that indicates an ARC comaptible filesystem was chosen for
 // the user directory (i.e., the user finished required migration.)
-const char kArcCompatibleFilesystemChosen[] =
+extern const char kArcCompatibleFilesystemChosen[] =
     "arc.compatible_filesystem.chosen";
 // A preference that indicates that user accepted Voice Interaction Value Prop.
 const char kArcVoiceInteractionValuePropAccepted[] =

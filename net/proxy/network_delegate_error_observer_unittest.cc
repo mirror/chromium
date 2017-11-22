@@ -68,7 +68,7 @@ class TestNetworkDelegate : public NetworkDelegateImpl {
     return true;
   }
   bool OnCanSetCookie(const URLRequest& request,
-                      const net::CanonicalCookie& cookie,
+                      const std::string& cookie_line,
                       CookieOptions* options) override {
     return true;
   }

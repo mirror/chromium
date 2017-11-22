@@ -13,7 +13,11 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
+namespace chrome {
+
 void RegisterBrowserPrefs(PrefRegistrySimple* registry);
 void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry);
+
+}  // namespace chrome
 
 #endif  // CHROME_BROWSER_UI_BROWSER_UI_PREFS_H_

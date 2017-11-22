@@ -69,7 +69,6 @@ WebMixedContentContextType WebMixedContent::ContextTypeFromRequestContext(
     case WebURLRequest::kRequestContextManifest:
     case WebURLRequest::kRequestContextObject:
     case WebURLRequest::kRequestContextPing:
-    case WebURLRequest::kRequestContextPrefetch:
     case WebURLRequest::kRequestContextScript:
     case WebURLRequest::kRequestContextServiceWorker:
     case WebURLRequest::kRequestContextSharedWorker:
@@ -84,6 +83,7 @@ WebMixedContentContextType WebMixedContent::ContextTypeFromRequestContext(
     // FIXME: Contexts that we should block, but don't currently.
     // https://crbug.com/388650
     case WebURLRequest::kRequestContextDownload:
+    case WebURLRequest::kRequestContextPrefetch:
       return WebMixedContentContextType::kShouldBeBlockable;
 
     case WebURLRequest::kRequestContextUnspecified:

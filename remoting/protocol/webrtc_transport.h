@@ -15,7 +15,6 @@
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
 #include "crypto/hmac.h"
-#include "remoting/base/session_options.h"
 #include "remoting/protocol/transport.h"
 #include "remoting/protocol/webrtc_data_stream_adapter.h"
 #include "remoting/protocol/webrtc_dummy_video_encoder.h"
@@ -85,7 +84,7 @@ class WebrtcTransport : public Transport {
   bool ProcessTransportInfo(buzz::XmlElement* transport_info) override;
   void Close(ErrorCode error);
 
-  void ApplySessionOptions(const SessionOptions& options);
+  void SetPreferredVideoCodec(const std::string& codec);
 
  private:
   // PeerConnectionWrapper is responsible for PeerConnection creation,

@@ -10,17 +10,14 @@
 #include "extensions/common/error_utils.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 
-namespace {
-
-const char kGoogleDotCom[] = "google.com";
-constexpr const char* kGoogleGstaticAppIds[] = {
-    "https://www.gstatic.com/securitykey/origins.json",
-    "https://www.gstatic.com/securitykey/a/google.com/origins.json"};
-
-}  // namespace
-
 namespace extensions {
 namespace api {
+
+const char kGoogleDotCom[] = "google.com";
+const char* kGoogleGstaticAppIds[] = {
+  "https://www.gstatic.com/securitykey/origins.json",
+  "https://www.gstatic.com/securitykey/a/google.com/origins.json"
+};
 
 CryptotokenPrivateCanOriginAssertAppIdFunction::
     CryptotokenPrivateCanOriginAssertAppIdFunction()
@@ -72,9 +69,12 @@ CryptotokenPrivateCanOriginAssertAppIdFunction::Run() {
   // gstatic.com appIds.
   // TODO(juanlang): remove when legacy constraints are removed.
   if (origin_etldp1 == kGoogleDotCom) {
-    for (const char* id : kGoogleGstaticAppIds) {
-      if (params->app_id_url == id)
+    for (size_t i = 0;
+         i < sizeof(kGoogleGstaticAppIds) / sizeof(kGoogleGstaticAppIds[0]);
+         i++) {
+      if (params->app_id_url == kGoogleGstaticAppIds[i]) {
         return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
+      }
     }
   }
   return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));

@@ -80,7 +80,8 @@ void GpuOutputSurfaceMac::SwapBuffers(viz::OutputSurfaceFrame frame) {
 }
 
 void GpuOutputSurfaceMac::OnGpuSwapBuffersCompleted(
-    const gfx::SwapResponse& response,
+    const std::vector<ui::LatencyInfo>& latency_info,
+    gfx::SwapResult result,
     const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
   remote_layers_->UpdateLayers(params_mac->ca_context_id,
                                params_mac->fullscreen_low_power_ca_context_id);
@@ -105,7 +106,7 @@ void GpuOutputSurfaceMac::OnGpuSwapBuffersCompleted(
   }
   client_->DidReceiveTextureInUseResponses(params_mac->responses);
   GpuSurfacelessBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted(
-      response, params_mac);
+      latency_info, result, params_mac);
 }
 
 void GpuOutputSurfaceMac::SetSurfaceSuspendedForRecycle(bool suspended) {

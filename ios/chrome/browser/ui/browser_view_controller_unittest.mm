@@ -148,11 +148,6 @@ using web::WebStateImpl;
 - (void)selectedTabChanged;
 - (void)dismissToolsMenuPopup;
 - (void)cancelOmniboxEdit;
-
-- (ToolbarButtonUpdater*)buttonUpdater;
-- (void)setToolsMenuStateProvider:(id)provider;
-@property(nonatomic, readonly, weak) UIViewController* viewController;
-
 @end
 
 @implementation TestWebToolbarController
@@ -181,15 +176,6 @@ using web::WebStateImpl;
   return;
 }
 - (void)cancelOmniboxEdit {
-  return;
-}
-- (UIViewController*)viewController {
-  return self;
-}
-- (ToolbarButtonUpdater*)buttonUpdater {
-  return nil;
-}
-- (void)setToolsMenuStateProvider:(id)provider {
   return;
 }
 @end
@@ -458,7 +444,7 @@ TEST_F(BrowserViewControllerTest,
   // The tab should only stop loading on handsets.
   if (!IsIPadIdiom())
     [[static_cast<OCMockObject*>(webController_) expect] stopLoading];
-  [bvc_ locationBarBeganEdit];
+  [bvc_ locationBarBeganEdit:nil];
 
   EXPECT_OCMOCK_VERIFY(static_cast<OCMockObject*>(webController_));
   EXPECT_OCMOCK_VERIFY(tabMock);
@@ -474,7 +460,7 @@ TEST_F(BrowserViewControllerTest,
   static_cast<TestToolbarModelIOS*>(toolbarModelIOS_)->set_is_loading(false);
 
   // Don't set any expectation for stopLoading to be called on the mock tab.
-  [bvc_ locationBarBeganEdit];
+  [bvc_ locationBarBeganEdit:nil];
 
   EXPECT_OCMOCK_VERIFY(tabMock);
 }

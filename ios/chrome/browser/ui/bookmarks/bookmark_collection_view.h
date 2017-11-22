@@ -25,6 +25,9 @@ class GURL;
 namespace bookmarks {
 class BookmarkNode;
 }  // namespace bookmarks
+namespace user_prefs {
+class PrefRegistrySyncable;
+}  // namespace user_prefs
 
 @protocol BookmarkCollectionViewDelegate<NSObject>
 
@@ -90,6 +93,9 @@ class BookmarkNode;
 //       no other effect. Subclasses must provide the actual functionality.
 @interface BookmarkCollectionView
     : UIView<BookmarkHomePrimaryView, BookmarkModelBridgeObserver>
+
+// Registers the feature preferences.
++ (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry;
 
 // Designated initializer.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState

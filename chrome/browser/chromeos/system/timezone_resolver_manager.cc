@@ -85,12 +85,26 @@ ServiceConfiguration GetServiceConfigurationFromPolicy() {
   return result;
 }
 
+// Convert kResolveTimezoneByGeolocationMethod /
+// kResolveDeviceTimezoneByGeolocationMethod preference value to
+// TimeZoneResolveMethod. Defaults to DISABLED for unknown values.
+TimeZoneResolverManager::TimeZoneResolveMethod TimeZoneResolveMethodFromInt(
+    int value) {
+  if (value < 0 ||
+      value >=
+          static_cast<int>(
+              TimeZoneResolverManager::TimeZoneResolveMethod::METHODS_NUMBER)) {
+    return TimeZoneResolverManager::TimeZoneResolveMethod::DISABLED;
+  }
+
+  return static_cast<TimeZoneResolverManager::TimeZoneResolveMethod>(value);
+}
+
 // Returns service configuration for the user.
 ServiceConfiguration GetServiceConfigurationFromUserPrefs(
     const PrefService* user_prefs) {
-  return TimeZoneResolverManager::TimeZoneResolveMethodFromInt(
-             user_prefs->GetInteger(
-                 prefs::kResolveTimezoneByGeolocationMethod)) ==
+  return TimeZoneResolveMethodFromInt(user_prefs->GetInteger(
+             prefs::kResolveTimezoneByGeolocationMethod)) ==
                  TimeZoneResolverManager::TimeZoneResolveMethod::DISABLED
              ? SHOULD_STOP
              : SHOULD_START;
@@ -114,8 +128,7 @@ ServiceConfiguration GetServiceConfigurationForSigninScreen() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kLoginUser))
     return SHOULD_STOP;
 
-  return TimeZoneResolverManager::TimeZoneResolveMethodFromInt(
-             device_pref->GetValue()->GetInt()) ==
+  return TimeZoneResolveMethodFromInt(device_pref->GetValue()->GetInt()) ==
                  TimeZoneResolverManager::TimeZoneResolveMethod::DISABLED
              ? SHOULD_STOP
              : SHOULD_START;
@@ -228,26 +241,6 @@ void TimeZoneResolverManager::OnLocalStateInitialized(bool initialized) {
   }
   if (initialized_)
     UpdateTimezoneResolver();
-}
-
-// static
-TimeZoneResolverManager::TimeZoneResolveMethod
-TimeZoneResolverManager::TimeZoneResolveMethodFromInt(int value) {
-  if (value < 0 ||
-      value >= static_cast<int>(TimeZoneResolveMethod::METHODS_NUMBER)) {
-    return TimeZoneResolveMethod::DISABLED;
-  }
-
-  const TimeZoneResolveMethod method =
-      static_cast<TimeZoneResolveMethod>(value);
-
-  if (FineGrainedTimeZoneDetectionEnabled())
-    return method;
-
-  if (method == TimeZoneResolveMethod::DISABLED)
-    return TimeZoneResolveMethod::DISABLED;
-
-  return TimeZoneResolveMethod::IP_ONLY;
 }
 
 // static

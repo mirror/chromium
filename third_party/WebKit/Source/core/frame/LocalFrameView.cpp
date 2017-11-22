@@ -128,9 +128,9 @@
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/text/TextStream.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
-#include "platform/wtf/Time.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebDisplayItemList.h"
 #include "public/platform/WebRect.h"
@@ -1322,13 +1322,12 @@ void LocalFrameView::UpdateLayout() {
   }  // Reset m_layoutSchedulingEnabled to its previous value.
   CheckDoesNotNeedLayout();
 
-  DocumentLifecycle::Scope lifecycle_scope(Lifecycle(),
-                                           DocumentLifecycle::kLayoutClean);
+  Lifecycle().AdvanceTo(DocumentLifecycle::kLayoutClean);
 
   frame_timing_requests_dirty_ = true;
 
-  // FIXME: Could find the common ancestor layer of all dirty subtrees and mark
-  // from there. crbug.com/462719
+  // FIXME: Could find the common ancestor layer of all dirty subtrees and
+  // mark from there. crbug.com/462719
   GetLayoutViewItem().EnclosingLayer()->UpdateLayerPositionsAfterLayout();
 
   TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(

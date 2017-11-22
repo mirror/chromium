@@ -142,6 +142,9 @@ void OverscanCalibrator::OnPaintLayer(const ui::PaintContext& context) {
   DrawTriangle(center.x() + horizontal_offset, center.y(), -90, canvas);
 }
 
+void OverscanCalibrator::OnDelegatedFrameDamage(
+    const gfx::Rect& damage_rect_in_dip) {}
+
 void OverscanCalibrator::OnDeviceScaleFactorChanged(
     float old_device_scale_factor,
     float new_device_scale_factor) {

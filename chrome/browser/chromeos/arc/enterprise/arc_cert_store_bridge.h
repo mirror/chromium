@@ -11,7 +11,7 @@
 #include "base/memory/weak_ptr.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/common/cert_store.mojom.h"
-#include "components/arc/connection_observer.h"
+#include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/policy/core/common/policy_service.h"
 #include "components/prefs/pref_service.h"
@@ -30,7 +30,7 @@ class ArcBridgeService;
 
 class ArcCertStoreBridge
     : public KeyedService,
-      public ConnectionObserver<arc::mojom::CertStoreInstance>,
+      public InstanceHolder<arc::mojom::CertStoreInstance>::Observer,
       public mojom::CertStoreHost,
       public net::CertDatabase::Observer,
       public policy::PolicyService::Observer {
@@ -44,9 +44,9 @@ class ArcCertStoreBridge
                      ArcBridgeService* bridge_service);
   ~ArcCertStoreBridge() override;
 
-  // ConnectionObserver<mojom::CertStoreInstance> overrides.
-  void OnConnectionReady() override;
-  void OnConnectionClosed() override;
+  // InstanceHolder<mojom::CertStoreInstance>::Observer overrides.
+  void OnInstanceReady() override;
+  void OnInstanceClosed() override;
 
   // CertStoreHost overrides.
   void ListCertificates(ListCertificatesCallback callback) override;

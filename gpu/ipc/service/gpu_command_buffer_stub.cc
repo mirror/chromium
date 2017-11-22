@@ -342,7 +342,8 @@ void GpuCommandBufferStub::DidSwapBuffersComplete(
   send_params.scale_factor = params.scale_factor;
   send_params.in_use_responses = params.in_use_responses;
 #endif
-  send_params.response = std::move(params.response);
+  send_params.latency_info = std::move(params.latency_info);
+  send_params.result = params.result;
   Send(new GpuCommandBufferMsg_SwapBuffersCompleted(route_id_, send_params));
 }
 
@@ -354,9 +355,9 @@ const GpuPreferences& GpuCommandBufferStub::GetGpuPreferences() const {
   return context_group_->gpu_preferences();
 }
 
-void GpuCommandBufferStub::SetSnapshotRequestedCallback(
-    const base::Closure& callback) {
-  snapshot_requested_callback_ = callback;
+void GpuCommandBufferStub::SetLatencyInfoCallback(
+    const LatencyInfoCallback& callback) {
+  latency_info_callback_ = callback;
 }
 
 void GpuCommandBufferStub::UpdateVSyncParameters(base::TimeTicks timebase,
@@ -974,9 +975,10 @@ void GpuCommandBufferStub::CheckCompleteWaits() {
   }
 }
 
-void GpuCommandBufferStub::OnAsyncFlush(int32_t put_offset,
-                                        uint32_t flush_id,
-                                        bool snapshot_requested) {
+void GpuCommandBufferStub::OnAsyncFlush(
+    int32_t put_offset,
+    uint32_t flush_id,
+    const std::vector<ui::LatencyInfo>& latency_info) {
   TRACE_EVENT1(
       "gpu", "GpuCommandBufferStub::OnAsyncFlush", "put_offset", put_offset);
   DCHECK(command_buffer_);
@@ -986,8 +988,12 @@ void GpuCommandBufferStub::OnAsyncFlush(int32_t put_offset,
   DVLOG_IF(0, flush_id - last_flush_id_ >= 0x8000000U)
       << "Received a Flush message out-of-order";
 
-  if (snapshot_requested && snapshot_requested_callback_)
-    snapshot_requested_callback_.Run();
+  if (flush_id > last_flush_id_ &&
+      ui::LatencyInfo::Verify(latency_info,
+                              "GpuCommandBufferStub::OnAsyncFlush") &&
+      !latency_info_callback_.is_null()) {
+    latency_info_callback_.Run(latency_info);
+  }
 
   last_flush_id_ = flush_id;
   CommandBuffer::State pre_state = command_buffer_->GetState();

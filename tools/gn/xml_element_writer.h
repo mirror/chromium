@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_piece.h"
 
 // Vector of XML attribute key-value pairs.
@@ -115,7 +116,7 @@ std::unique_ptr<XmlElementWriter> XmlElementWriter::SubElement(
     const std::string& attribute_name,
     const Writer& attribute_value_writer) {
   StartContent(true);
-  return std::make_unique<XmlElementWriter>(
+  return base::MakeUnique<XmlElementWriter>(
       out_, tag, attribute_name, attribute_value_writer, indent_ + 2);
 }
 

@@ -291,11 +291,16 @@ void DelegatedFrameHost::WasResized() {
   }
 
   if (enable_surface_synchronization_) {
+    ui::Layer* layer = client_->DelegatedFrameHostGetLayer();
     current_frame_size_in_dip_ = client_->DelegatedFrameHostDesiredSizeInDIP();
+    gfx::Size desired_size_in_pixels = gfx::ConvertSizeToPixel(
+        layer->device_scale_factor(), current_frame_size_in_dip_);
 
     viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
+    viz::SurfaceInfo surface_info(surface_id, layer->device_scale_factor(),
+                                  desired_size_in_pixels);
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_id, current_frame_size_in_dip_, GetSurfaceReferenceFactory());
+        surface_info, GetSurfaceReferenceFactory());
     has_primary_surface_ = true;
     frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
     if (compositor_)
@@ -461,6 +466,11 @@ void DelegatedFrameHost::SubmitCompositorFrame(
   gfx::Size frame_size_in_dip =
       gfx::ConvertSizeToDIP(frame_device_scale_factor, frame_size);
 
+  gfx::Rect damage_rect = root_pass->damage_rect;
+  damage_rect.Intersect(gfx::Rect(frame_size));
+  gfx::Rect damage_rect_in_dip =
+      gfx::ConvertRectToDIP(frame_device_scale_factor, damage_rect);
+
   if (ShouldSkipFrame(frame_size_in_dip)) {
     std::vector<viz::ReturnedResource> resources =
         viz::TransferableResource::ReturnResources(frame.resource_list);
@@ -485,10 +495,12 @@ void DelegatedFrameHost::SubmitCompositorFrame(
 
   if (skipped_frames_) {
     skipped_frames_ = false;
+    damage_rect = gfx::Rect(frame_size);
+    damage_rect_in_dip = gfx::Rect(frame_size_in_dip);
 
     // Give the same damage rect to the compositor.
     viz::RenderPass* root_pass = frame.render_pass_list.back().get();
-    root_pass->damage_rect = gfx::Rect(frame_size);
+    root_pass->damage_rect = damage_rect;
   }
 
   background_color_ = frame.metadata.root_background_color;
@@ -511,7 +523,13 @@ void DelegatedFrameHost::SubmitCompositorFrame(
     DCHECK(enable_surface_synchronization_ || has_primary_surface_);
   }
 
+  // TODO(fsamuel): This is used to detect video. We need to develop an
+  // alternative mechanism to detect video in a frame for Viz.
   if (!enable_surface_synchronization_) {
+    if (!damage_rect_in_dip.IsEmpty()) {
+      client_->DelegatedFrameHostGetLayer()->OnDelegatedFrameDamage(
+          damage_rect_in_dip);
+    }
     if (has_primary_surface_)
       frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
     // Note: the frame may have been evicted immediately.
@@ -556,12 +574,9 @@ void DelegatedFrameHost::OnBeginFramePausedChanged(bool paused) {
 
 void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
-  gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
-      surface_info.device_scale_factor(), surface_info.size_in_pixels());
-
   if (!enable_surface_synchronization_) {
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_info.id(), frame_size_in_dip, GetSurfaceReferenceFactory());
+        surface_info, GetSurfaceReferenceFactory());
     has_primary_surface_ = true;
   }
 
@@ -579,6 +594,8 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     return;
 
   released_front_lock_ = nullptr;
+  gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
+      surface_info.device_scale_factor(), surface_info.size_in_pixels());
   current_frame_size_in_dip_ = frame_size_in_dip;
   CheckResizeLock();
 

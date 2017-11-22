@@ -22,7 +22,6 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
-#include "content/browser/web_contents/web_contents_view.h"
 #include "content/browser/webui/web_ui_data_source_impl.h"
 #include "content/common/view_message_enums.h"
 #include "content/grit/content_resources.h"
@@ -37,7 +36,6 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "net/base/escape.h"
-#include "ui/accessibility/platform/ax_platform_node.h"
 
 static const char kTargetsDataFile[] = "targets-data.json";
 
@@ -178,26 +176,25 @@ bool HandleAccessibilityRequestCallback(
   return true;
 }
 
-std::string RecursiveDumpAXPlatformNodeAsString(ui::AXPlatformNode* node,
-                                                int indent) {
-  std::string str(2 * indent, '+');
-  str += node->GetDelegate()->GetData().ToString() + "\n";
-  for (int i = 0; i < node->GetDelegate()->GetChildCount(); i++) {
-    gfx::NativeViewAccessible child = node->GetDelegate()->ChildAtIndex(i);
-    ui::AXPlatformNode* child_node =
-        ui::AXPlatformNode::FromNativeViewAccessible(child);
-    if (child_node)
-      str += RecursiveDumpAXPlatformNodeAsString(child_node, indent + 1);
-  }
-  return str;
-}
-
 }  // namespace
 
 AccessibilityUI::AccessibilityUI(WebUI* web_ui) : WebUIController(web_ui) {
   // Set up the chrome://accessibility source.
   WebUIDataSourceImpl* html_source = static_cast<WebUIDataSourceImpl*>(
       WebUIDataSource::Create(kChromeUIAccessibilityHost));
+
+  web_ui->RegisterMessageCallback(
+      "toggleAccessibility",
+      base::Bind(&AccessibilityUI::ToggleAccessibility,
+                 base::Unretained(this)));
+  web_ui->RegisterMessageCallback(
+      "setGlobalFlag",
+      base::Bind(&AccessibilityUI::SetGlobalFlag,
+                 base::Unretained(this)));
+  web_ui->RegisterMessageCallback(
+      "requestAccessibilityTree",
+      base::Bind(&AccessibilityUI::RequestAccessibilityTree,
+                 base::Unretained(this)));
 
   // Add required resources.
   html_source->SetJsonPath("strings.js");
@@ -213,38 +210,11 @@ AccessibilityUI::AccessibilityUI(WebUI* web_ui) : WebUIController(web_ui) {
   BrowserContext* browser_context =
       web_ui->GetWebContents()->GetBrowserContext();
   WebUIDataSource::Add(browser_context, html_source);
-
-  web_ui->AddMessageHandler(base::MakeUnique<AccessibilityUIMessageHandler>());
 }
 
 AccessibilityUI::~AccessibilityUI() {}
 
-AccessibilityUIMessageHandler::AccessibilityUIMessageHandler() {}
-
-AccessibilityUIMessageHandler::~AccessibilityUIMessageHandler() {}
-
-void AccessibilityUIMessageHandler::RegisterMessages() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  web_ui()->RegisterMessageCallback(
-      "toggleAccessibility",
-      base::Bind(&AccessibilityUIMessageHandler::ToggleAccessibility,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback(
-      "setGlobalFlag", base::Bind(&AccessibilityUIMessageHandler::SetGlobalFlag,
-                                  base::Unretained(this)));
-  web_ui()->RegisterMessageCallback(
-      "requestWebContentsTree",
-      base::Bind(&AccessibilityUIMessageHandler::RequestWebContentsTree,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback(
-      "requestNativeUITree",
-      base::Bind(&AccessibilityUIMessageHandler::RequestNativeUITree,
-                 base::Unretained(this)));
-}
-
-void AccessibilityUIMessageHandler::ToggleAccessibility(
-    const base::ListValue* args) {
+void AccessibilityUI::ToggleAccessibility(const base::ListValue* args) {
   std::string process_id_str;
   std::string route_id_str;
   int process_id;
@@ -258,7 +228,6 @@ void AccessibilityUIMessageHandler::ToggleAccessibility(
   CHECK(base::StringToInt(process_id_str, &process_id));
   CHECK(base::StringToInt(route_id_str, &route_id));
 
-  AllowJavascript();
   RenderViewHost* rvh = RenderViewHost::FromID(process_id, route_id);
   if (!rvh)
     return;
@@ -284,14 +253,13 @@ void AccessibilityUIMessageHandler::ToggleAccessibility(
   web_contents->SetAccessibilityMode(current_mode);
 }
 
-void AccessibilityUIMessageHandler::SetGlobalFlag(const base::ListValue* args) {
+void AccessibilityUI::SetGlobalFlag(const base::ListValue* args) {
   std::string flag_name_str;
   bool enabled;
   CHECK_EQ(2U, args->GetSize());
   CHECK(args->GetString(0, &flag_name_str));
   CHECK(args->GetBoolean(1, &enabled));
 
-  AllowJavascript();
   if (flag_name_str == kInternal) {
     g_show_internal_accessibility_tree = enabled;
     LOG(ERROR) << "INTERNAL: " << g_show_internal_accessibility_tree;
@@ -338,8 +306,7 @@ void AccessibilityUIMessageHandler::SetGlobalFlag(const base::ListValue* args) {
     state->RemoveAccessibilityModeFlags(new_mode);
 }
 
-void AccessibilityUIMessageHandler::RequestWebContentsTree(
-    const base::ListValue* args) {
+void AccessibilityUI::RequestAccessibilityTree(const base::ListValue* args) {
   std::string process_id_str;
   std::string route_id_str;
   int process_id;
@@ -350,14 +317,14 @@ void AccessibilityUIMessageHandler::RequestWebContentsTree(
   CHECK(base::StringToInt(process_id_str, &process_id));
   CHECK(base::StringToInt(route_id_str, &route_id));
 
-  AllowJavascript();
   RenderViewHost* rvh = RenderViewHost::FromID(process_id, route_id);
   if (!rvh) {
     std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
     result->SetInteger(kProcessIdField, process_id);
     result->SetInteger(kRouteIdField, route_id);
     result->SetString("error", "Renderer no longer exists.");
-    CallJavascriptFunction("accessibility.showTree", *(result.get()));
+    web_ui()->CallJavascriptFunctionUnsafe("accessibility.showTree",
+                                           *(result.get()));
     return;
   }
 
@@ -385,23 +352,8 @@ void AccessibilityUIMessageHandler::RequestWebContentsTree(
   formatter->FormatAccessibilityTree(ax_mgr->GetRoot(),
                                      &accessibility_contents_utf16);
   result->SetString("tree", base::UTF16ToUTF8(accessibility_contents_utf16));
-  CallJavascriptFunction("accessibility.showTree", *(result.get()));
-}
-
-void AccessibilityUIMessageHandler::RequestNativeUITree(
-    const base::ListValue* args) {
-  AllowJavascript();
-  WebContentsImpl* web_contents =
-      static_cast<WebContentsImpl*>(web_ui()->GetWebContents());
-  gfx::NativeWindow native_window =
-      web_contents->GetView()->GetTopLevelNativeWindow();
-  ui::AXPlatformNode* node =
-      ui::AXPlatformNode::FromNativeWindow(native_window);
-  std::string str = RecursiveDumpAXPlatformNodeAsString(node, 0);
-
-  std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
-  result->SetString("tree", str);
-  CallJavascriptFunction("accessibility.showNativeUITree", *(result.get()));
+  web_ui()->CallJavascriptFunctionUnsafe("accessibility.showTree",
+                                         *(result.get()));
 }
 
 }  // namespace content

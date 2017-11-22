@@ -108,7 +108,7 @@ public class ChromeHomePromoDialog extends PromoDialog {
             params.secondaryButtonStringResource = R.string.chrome_home_promo_dialog_turn_off;
         } else {
             params.primaryButtonStringResource = R.string.chrome_home_promo_dialog_try_it;
-            params.secondaryButtonStringResource = R.string.chrome_home_promo_dialog_not_yet;
+            params.secondaryButtonStringResource = R.string.chrome_home_promo_dialog_not_now;
         }
 
         if (SysUtils.isLowEndDevice()) {

@@ -59,7 +59,6 @@ UI_BASE_EXPORT extern const char kMangleLocalizedStrings[];
 
 #if BUILDFLAG(ENABLE_MUS)
 UI_BASE_EXPORT extern const char kMus[];
-UI_BASE_EXPORT extern const char kMusHostVizValue[];
 #endif
 
 }  // namespace switches

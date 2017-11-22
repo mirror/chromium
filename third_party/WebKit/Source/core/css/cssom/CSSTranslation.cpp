@@ -213,14 +213,13 @@ const DOMMatrix* CSSTranslation::AsMatrix(
   return matrix->translate(x->value(), y->value(), z->value());
 }
 
-const CSSFunctionValue* CSSTranslation::ToCSSValue(
-    SecureContextMode secure_context_mode) const {
+const CSSFunctionValue* CSSTranslation::ToCSSValue() const {
   CSSFunctionValue* result = CSSFunctionValue::Create(
       is2D() ? CSSValueTranslate : CSSValueTranslate3d);
-  result->Append(*x_->ToCSSValue(secure_context_mode));
-  result->Append(*y_->ToCSSValue(secure_context_mode));
+  result->Append(*x_->ToCSSValue());
+  result->Append(*y_->ToCSSValue());
   if (!is2D())
-    result->Append(*z_->ToCSSValue(secure_context_mode));
+    result->Append(*z_->ToCSSValue());
   return result;
 }
 

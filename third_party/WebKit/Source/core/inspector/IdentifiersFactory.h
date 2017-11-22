@@ -50,6 +50,7 @@ class CORE_EXPORT IdentifiersFactory {
   static LocalFrame* FrameById(InspectedFrames*, const String&);
 
   static String LoaderId(DocumentLoader*);
+  static DocumentLoader* LoaderById(InspectedFrames*, const String&);
 
  private:
   static String AddProcessIdPrefixTo(int id);

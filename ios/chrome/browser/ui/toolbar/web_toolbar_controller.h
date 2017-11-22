@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/history_popup/requirements/tab_history_positioner.h"
+#import "ios/chrome/browser/ui/history_popup/requirements/tab_history_ui_updater.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
 #include "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_result_loading.h"
 #import "ios/chrome/browser/ui/toolbar/omnibox_focuser.h"
@@ -28,10 +30,12 @@ class ChromeBrowserState;
 // Web-view specific toolbar, adding navigation controls like back/forward,
 // omnibox, etc.
 @interface WebToolbarController
-    : ToolbarController<AbstractWebToolbar,
-                        OmniboxFocuser,
+    : ToolbarController<OmniboxFocuser,
                         QRScannerResultLoading,
-                        VoiceSearchControllerDelegate>
+                        TabHistoryPositioner,
+                        TabHistoryUIUpdater,
+                        VoiceSearchControllerDelegate,
+                        AbstractWebToolbar>
 
 // Mark inherited initializer as unavailable.
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style

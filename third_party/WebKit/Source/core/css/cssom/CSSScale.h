@@ -5,7 +5,6 @@
 #ifndef CSSScale_h
 #define CSSScale_h
 
-#include "base/macros.h"
 #include "core/css/cssom/CSSTransformComponent.h"
 #include "core/geometry/DOMMatrix.h"
 
@@ -17,6 +16,7 @@ class DOMMatrix;
 // "transform".
 // See CSSScale.idl for more information about this class.
 class CORE_EXPORT CSSScale final : public CSSTransformComponent {
+  WTF_MAKE_NONCOPYABLE(CSSScale);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -43,7 +43,7 @@ class CORE_EXPORT CSSScale final : public CSSTransformComponent {
     DOMMatrix* result = DOMMatrix::Create();
     return result->scaleSelf(x_, y_, z_);
   }
-  const CSSFunctionValue* ToCSSValue(SecureContextMode) const final;
+  const CSSFunctionValue* ToCSSValue() const final;
 
  private:
   CSSScale(double x, double y)
@@ -54,7 +54,6 @@ class CORE_EXPORT CSSScale final : public CSSTransformComponent {
   double x_;
   double y_;
   double z_;
-  DISALLOW_COPY_AND_ASSIGN(CSSScale);
 };
 
 }  // namespace blink

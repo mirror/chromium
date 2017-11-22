@@ -9,7 +9,6 @@ namespace ash {
 
 namespace mojom {
 
-enum class AssistantAllowedState;
 enum class VoiceInteractionState;
 
 }  // namespace mojom
@@ -29,10 +28,6 @@ class VoiceInteractionObserver {
 
   // Called when voice interaction setup flow completed.
   virtual void OnVoiceInteractionSetupCompleted(bool completed) {}
-
-  // Called when assistant feature allowed state has changed.
-  virtual void OnAssistantFeatureAllowedChanged(
-      mojom::AssistantAllowedState state) {}
 
  protected:
   virtual ~VoiceInteractionObserver() = default;

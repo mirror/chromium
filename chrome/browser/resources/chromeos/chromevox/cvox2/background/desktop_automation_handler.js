@@ -302,6 +302,8 @@ DesktopAutomationHandler.prototype = {
     if (node.role == RoleType.EMBEDDED_OBJECT || node.role == RoleType.WEB_VIEW)
       return;
 
+    this.createTextEditHandlerIfNeeded_(evt.target);
+
     // Category flush speech triggered by events with no source. This includes
     // views.
     if (evt.eventFrom == '')
@@ -327,9 +329,6 @@ DesktopAutomationHandler.prototype = {
     }
     var event = new CustomAutomationEvent(EventType.FOCUS, node, evt.eventFrom);
     this.onEventDefault(event);
-
-    // Refresh the handler, if needed, now that ChromeVox focus is up to date.
-    this.createTextEditHandlerIfNeeded_(node);
   },
 
   /**

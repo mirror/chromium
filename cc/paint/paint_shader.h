@@ -126,9 +126,6 @@ class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
   // shader is correct is hard.
   bool IsValid() const;
 
-  bool operator==(const PaintShader& other) const;
-  bool operator!=(const PaintShader& other) const { return !(*this == other); }
-
  private:
   friend class PaintFlags;
   friend class PaintOpReader;

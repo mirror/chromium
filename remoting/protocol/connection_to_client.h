@@ -9,7 +9,6 @@
 
 #include <string>
 
-#include "remoting/base/session_options.h"
 #include "remoting/protocol/message_pipe.h"
 #include "remoting/protocol/transport.h"
 
@@ -101,10 +100,9 @@ class ConnectionToClient {
   virtual void set_host_stub(HostStub* host_stub) = 0;
   virtual void set_input_stub(InputStub* input_stub) = 0;
 
-  // Applies the |options| to current session. SessionOptions usually controls
-  // experimental behaviors, implementations can ignore this function if no
-  // control logic can be applied.
-  virtual void ApplySessionOptions(const SessionOptions& options) {}
+  // Set the preferred video codec for the connection. Implementations can
+  // ignore this function if no extra codec can be chosen from.
+  virtual void SetPreferredVideoCodec(const std::string& codec) {}
 };
 
 }  // namespace protocol

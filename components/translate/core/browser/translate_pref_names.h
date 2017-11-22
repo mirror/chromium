@@ -7,7 +7,7 @@
 
 namespace prefs {
 
-extern const char kOfferTranslateEnabled[];
+extern const char kEnableTranslate[];
 
 }  // namespace prefs
 

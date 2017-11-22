@@ -7,10 +7,6 @@
 
 #import <UIKit/UIKIt.h>
 
-@protocol ApplicationCommands;
-@protocol BrowserCommands;
-@class OmniboxTextFieldIOS;
-
 // Delegate protocol for the KeyboardAccessoryView.
 @protocol ToolbarAssistiveKeyboardDelegate
 
@@ -28,16 +24,6 @@
 
 // Notifies the delegate that a key with the title |title| was pressed.
 - (void)keyPressed:(NSString*)title;
-
-@end
-
-// TODO(crbug.com/784819): Move this code to omnibox.
-// Implementation of the ToolbarAssistiveKeyboardDelegate.
-@interface ToolbarAssistiveKeyboardDelegateImpl
-    : NSObject<ToolbarAssistiveKeyboardDelegate>
-
-@property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
-@property(nonatomic, weak) OmniboxTextFieldIOS* omniboxTextField;
 
 @end
 

@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/ntp/google_landing_view_controller.h"
+
 @class NewTabPageBarItem;
 
 @protocol NewTabPageBarDelegate

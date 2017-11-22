@@ -520,7 +520,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTimePauseCount_DETERMINISTIC_LOADING) {
 }
 
 TEST_F(WebViewSchedulerImplTest,
-       WebScopedVirtualTimePauser_DETERMINISTIC_LOADING) {
+       ScopedVirtualTimePauser_DETERMINISTIC_LOADING) {
   web_view_scheduler_->SetVirtualTimePolicy(
       VirtualTimePolicy::kDeterministicLoading);
 
@@ -529,8 +529,8 @@ TEST_F(WebViewSchedulerImplTest,
           nullptr, WebFrameScheduler::FrameType::kSubframe);
 
   {
-    WebScopedVirtualTimePauser virtual_time_pauser =
-        web_frame_scheduler->CreateWebScopedVirtualTimePauser();
+    ScopedVirtualTimePauser virtual_time_pauser =
+        web_frame_scheduler->CreateScopedVirtualTimePauser();
     EXPECT_TRUE(scheduler_->VirtualTimeAllowedToAdvance());
 
     virtual_time_pauser.PauseVirtualTime(true);
@@ -547,7 +547,7 @@ TEST_F(WebViewSchedulerImplTest,
 }
 
 TEST_F(WebViewSchedulerImplTest,
-       MultipleWebScopedVirtualTimePausers_DETERMINISTIC_LOADING) {
+       MultipleScopedVirtualTimePausers_DETERMINISTIC_LOADING) {
   web_view_scheduler_->SetVirtualTimePolicy(
       VirtualTimePolicy::kDeterministicLoading);
 
@@ -555,10 +555,10 @@ TEST_F(WebViewSchedulerImplTest,
       web_view_scheduler_->CreateWebFrameSchedulerImpl(
           nullptr, WebFrameScheduler::FrameType::kSubframe);
 
-  WebScopedVirtualTimePauser virtual_time_pauser1 =
-      web_frame_scheduler->CreateWebScopedVirtualTimePauser();
-  WebScopedVirtualTimePauser virtual_time_pauser2 =
-      web_frame_scheduler->CreateWebScopedVirtualTimePauser();
+  ScopedVirtualTimePauser virtual_time_pauser1 =
+      web_frame_scheduler->CreateScopedVirtualTimePauser();
+  ScopedVirtualTimePauser virtual_time_pauser2 =
+      web_frame_scheduler->CreateScopedVirtualTimePauser();
 
   EXPECT_TRUE(scheduler_->VirtualTimeAllowedToAdvance());
 

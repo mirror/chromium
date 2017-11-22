@@ -295,7 +295,7 @@ public class PictureInPictureController {
     /**
      * A class to dismiss the Activity when the tab:
      * - Closes.
-     * - Reparents: Attaches to a different activity.
+     * - Reparents.
      * - Crashes.
      * - Leaves fullscreen.
      */
@@ -306,10 +306,8 @@ public class PictureInPictureController {
         }
 
         @Override
-        public void onActivityAttachmentChanged(Tab tab, boolean isAttached) {
-            if (isAttached) {
-                dismissActivity(mActivity, METRICS_END_REASON_REPARENT);
-            }
+        public void onReparentingFinished(Tab tab) {
+            dismissActivity(mActivity, METRICS_END_REASON_REPARENT);
         }
 
         @Override

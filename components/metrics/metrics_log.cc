@@ -45,6 +45,12 @@ using base::SampleCountIterator;
 
 namespace metrics {
 
+namespace internal {
+// Maximum number of events before truncation.
+extern const int kOmniboxEventLimit = 5000;
+extern const int kUserActionEventLimit = 5000;
+}
+
 namespace {
 
 // A simple class to write histogram data to a log.

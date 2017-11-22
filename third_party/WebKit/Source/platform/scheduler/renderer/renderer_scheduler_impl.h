@@ -138,7 +138,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   bool MainThreadSeemsUnresponsive(
       base::TimeDelta main_thread_responsiveness_threshold) override;
   void SetRendererProcessType(RendererProcessType type) override;
-  WebScopedVirtualTimePauser CreateWebScopedVirtualTimePauser() override;
 
   // AutoAdvancingVirtualTimeDomain::Observer implementation:
   void OnVirtualTimeAdvanced() override;
@@ -193,9 +192,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   using VirtualTimePolicy = WebViewScheduler::VirtualTimePolicy;
   using VirtualTimeObserver = WebViewScheduler::VirtualTimeObserver;
 
-  // Tells the scheduler that all TaskQueues should use virtual time. Returns
-  // the TimeTicks that virtual time offsets will be relative to.
-  base::TimeTicks EnableVirtualTime();
+  // Tells the scheduler that all TaskQueues should use virtual time.
+  void EnableVirtualTime();
 
   // Migrates all task queues to real time.
   void DisableVirtualTimeForTesting();

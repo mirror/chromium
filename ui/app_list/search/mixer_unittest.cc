@@ -11,8 +11,6 @@
 #include <string>
 #include <vector>
 
-#include "ash/app_list/model/app_list_model.h"
-#include "ash/app_list/model/search_result.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
@@ -21,8 +19,10 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
+#include "ui/app_list/app_list_model.h"
 #include "ui/app_list/search/history_types.h"
 #include "ui/app_list/search_provider.h"
+#include "ui/app_list/search_result.h"
 
 namespace app_list {
 namespace test {

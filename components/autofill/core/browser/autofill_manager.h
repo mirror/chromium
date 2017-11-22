@@ -26,7 +26,6 @@
 #include "components/autofill/core/browser/autofill_handler.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
 #include "components/autofill/core/browser/card_unmask_delegate.h"
-#include "components/autofill/core/browser/field_filler.h"
 #include "components/autofill/core/browser/form_data_importer.h"
 #include "components/autofill/core/browser/form_structure.h"
 #include "components/autofill/core/browser/form_types.h"
@@ -203,10 +202,7 @@ class AutofillManager : public AutofillHandler,
   // Test code should prefer to use this constructor.
   AutofillManager(AutofillDriver* driver,
                   AutofillClient* client,
-                  PersonalDataManager* personal_data,
-                  const std::string app_locale = "en-US",
-                  AutofillDownloadManagerState enable_download_manager =
-                      DISABLE_AUTOFILL_DOWNLOAD_MANAGER);
+                  PersonalDataManager* personal_data);
 
   // Uploads the form data to the Autofill server. |observed_submission|
   // indicates that upload is the result of a submission event.
@@ -475,9 +471,6 @@ class AutofillManager : public AutofillHandler,
   // Must be initialized (and thus listed) after payments_client_.
   std::unique_ptr<FormDataImporter> form_data_importer_;
 
-  // Used to help fill data into fields.
-  FieldFiller field_filler_;
-
   base::circular_deque<std::string> autofilled_form_signatures_;
 
   // Handles queries and uploads to Autofill servers. Will be NULL if
@@ -497,19 +490,18 @@ class AutofillManager : public AutofillHandler,
       credit_card_form_event_logger_;
 
   // Have we logged whether Autofill is enabled for this page load?
-  bool has_logged_autofill_enabled_ = false;
+  bool has_logged_autofill_enabled_;
   // Have we logged an address suggestions count metric for this page?
-  bool has_logged_address_suggestions_count_ = false;
+  bool has_logged_address_suggestions_count_;
   // Have we shown Autofill suggestions at least once?
-  bool did_show_suggestions_ = false;
+  bool did_show_suggestions_;
   // Has the user manually edited at least one form field among the autofillable
   // ones?
-  bool user_did_type_ = false;
+  bool user_did_type_;
   // Has the user autofilled a form on this page?
-  bool user_did_autofill_ = false;
+  bool user_did_autofill_;
   // Has the user edited a field that was previously autofilled?
-  bool user_did_edit_autofilled_field_ = false;
-
+  bool user_did_edit_autofilled_field_;
   // When the form finished loading.
   std::map<FormData, base::TimeTicks> forms_loaded_timestamps_;
   // When the user first interacted with a potentially fillable form on this
@@ -528,14 +520,14 @@ class AutofillManager : public AutofillHandler,
 
   // Collected information about the autofill form where unmasked card will be
   // filled.
-  int unmasking_query_id_ = -1;
+  int unmasking_query_id_;
   FormData unmasking_form_;
   FormFieldData unmasking_field_;
   CreditCard masked_card_;
 
   // Ablation experiment turns off autofill, but logging still has to be kept
   // for metrics analysis.
-  bool enable_ablation_logging_ = false;
+  bool enable_ablation_logging_;
 
   // Suggestion backend ID to ID mapping. We keep two maps to convert back and
   // forth. These should be used only by BackendIDToInt and IntToBackendID.
@@ -545,10 +537,10 @@ class AutofillManager : public AutofillHandler,
 
   // Delegate to perform external processing (display, selection) on
   // our behalf.  Weak.
-  AutofillExternalDelegate* external_delegate_ = nullptr;
+  AutofillExternalDelegate* external_delegate_;
 
   // Delegate used in test to get notifications on certain events.
-  AutofillManagerTestDelegate* test_delegate_ = nullptr;
+  AutofillManagerTestDelegate* test_delegate_;
 
 #if defined(OS_ANDROID) || defined(OS_IOS)
   AutofillAssistant autofill_assistant_;

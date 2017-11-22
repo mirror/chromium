@@ -45,17 +45,9 @@ cr.define('route_details', function() {
             details.$$('#' + elementId).querySelector('span').innerText);
       };
 
-      // Checks whether |expected| and the text in the element in the
-      // |elementId| element are equal.
-      var checkElementText = function(expected, elementId) {
-        assertEquals(
-            expected,
-            details.$$('#' + elementId).innerText);
-      };
-
       // Checks the default route view is shown.
       var checkDefaultViewIsShown = function() {
-        assertFalse(details.$$('#route-description').hasAttribute('hidden'));
+        assertFalse(details.$$('#route-information').hasAttribute('hidden'));
         assertTrue(
             !details.$$('extension-view-wrapper') ||
             details.$$('extension-view-wrapper').hasAttribute('hidden'));
@@ -75,7 +67,7 @@ cr.define('route_details', function() {
 
       // Checks the custom controller is shown.
       var checkCustomControllerIsShown = function() {
-        assertTrue(details.$$('#route-description').hasAttribute('hidden'));
+        assertTrue(details.$$('#route-information').hasAttribute('hidden'));
         assertFalse(
             details.$$('extension-view-wrapper').hasAttribute('hidden'));
       };
@@ -190,7 +182,7 @@ cr.define('route_details', function() {
         checkSpanText(
             loadTimeData.getString('startCastingButtonText').toUpperCase(),
             'start-casting-to-route-button');
-        checkElementText('', 'route-description');
+        checkSpanText('', 'route-information');
       });
 
       // Tests when |route| is undefined or set.
@@ -202,14 +194,16 @@ cr.define('route_details', function() {
         // Set |route|.
         details.route = fakeRouteOne;
         assertEquals(fakeRouteOne, details.route);
-        checkElementText(fakeRouteOne.description, 'route-description');
+        checkSpanText(loadTimeData.getStringF('castingActivityStatus',
+            fakeRouteOne.description), 'route-information');
         checkDefaultViewIsShown();
         checkStartCastButtonIsNotShown();
 
         // Set |route| to a different route.
         details.route = fakeRouteTwo;
         assertEquals(fakeRouteTwo, details.route);
-        checkElementText(fakeRouteTwo.description, 'route-description');
+        checkSpanText(loadTimeData.getStringF('castingActivityStatus',
+            fakeRouteTwo.description), 'route-information');
         checkDefaultViewIsShown();
         checkStartCastButtonIsShown();
       });

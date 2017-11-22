@@ -274,8 +274,7 @@ bool FontPlatformData::HasSpaceInLigaturesOrKerning(
   if (!hb_face)
     return false;
 
-  hb_font_t* font =
-      hb_face->GetScaledFont(nullptr, HarfBuzzFace::NoVerticalLayout);
+  hb_font_t* font = hb_face->GetScaledFont();
   DCHECK(font);
   hb_face_t* face = hb_font_get_face(font);
   DCHECK(face);

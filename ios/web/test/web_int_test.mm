@@ -6,7 +6,6 @@
 
 #import "base/ios/block_types.h"
 #include "base/memory/ptr_util.h"
-#include "base/scoped_observer.h"
 #import "base/test/ios/wait_util.h"
 #import "ios/web/public/test/http_server/http_server.h"
 #import "ios/web/public/test/js_test_util.h"
@@ -22,10 +21,16 @@ namespace web {
 #pragma mark - IntTestWebStateObserver
 
 // WebStateObserver class that is used to track when page loads finish.
-class IntTestWebStateObserver : public WebStateObserver {
+class IntTestWebStateObserver : public web::WebStateObserver {
  public:
+  IntTestWebStateObserver(web::WebState* web_state)
+      : web::WebStateObserver(web_state), page_loaded_(false) {}
+
   // Instructs the observer to listen for page loads for |url|.
-  explicit IntTestWebStateObserver(const GURL& url) : expected_url_(url) {}
+  void ExpectPageLoad(const GURL& url) {
+    expected_url_ = url;
+    page_loaded_ = false;
+  }
 
   // Whether |expected_url_| has been loaded successfully.
   bool IsExpectedPageLoaded() { return page_loaded_; }
@@ -39,13 +44,9 @@ class IntTestWebStateObserver : public WebStateObserver {
     page_loaded_ = true;
   }
 
-  void WebStateDestroyed(web::WebState* web_state) override { NOTREACHED(); }
-
  private:
   GURL expected_url_;
-  bool page_loaded_ = false;
-
-  DISALLOW_COPY_AND_ASSIGN(IntTestWebStateObserver);
+  bool page_loaded_;
 };
 
 #pragma mark - WebIntTest
@@ -94,18 +95,11 @@ id WebIntTest::ExecuteJavaScript(NSString* script) {
 void WebIntTest::ExecuteBlockAndWaitForLoad(const GURL& url,
                                             ProceduralBlock block) {
   DCHECK(block);
-
-  IntTestWebStateObserver observer(url);
-  ScopedObserver<WebState, WebStateObserver> scoped_observer(&observer);
-  scoped_observer.Add(web_state());
-
+  observer_ = base::MakeUnique<IntTestWebStateObserver>(web_state());
+  observer_->ExpectPageLoad(url);
   block();
-
-  // Need to use a pointer to |observer| as the block wants to capture it by
-  // value (even if marked with __block) which would not work.
-  IntTestWebStateObserver* observer_ptr = &observer;
   base::test::ios::WaitUntilCondition(^bool {
-    return observer_ptr->IsExpectedPageLoaded();
+    return observer_->IsExpectedPageLoaded();
   });
 }
 

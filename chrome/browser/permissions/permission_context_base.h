@@ -42,6 +42,8 @@ using BrowserPermissionCallback = base::Callback<void(ContentSetting)>;
 //   - Define your new permission in the ContentSettingsType enum.
 //   - Create a class that inherits from PermissionContextBase and passes the
 //     new permission.
+//   - Inherit from PermissionInfobarDelegate and implement
+//     |GetMessageText|
 //   - Edit the PermissionRequestImpl methods to add the new text.
 //   - Hit several asserts for the missing plumbing and fix them :)
 // After this you can override several other methods to customize behavior,
@@ -68,8 +70,9 @@ class PermissionContextBase : public KeyedService {
   // PermissionContextBase can use it.
   static const char kPermissionsKillSwitchBlockedValue[];
 
-  // |callback| is called upon resolution of the request, but not if a prompt
-  // is shown and ignored.
+  // The renderer is requesting permission to push messages.
+  // When the answer to a permission request has been determined, |callback|
+  // should be called with the result.
   virtual void RequestPermission(content::WebContents* web_contents,
                                  const PermissionRequestID& id,
                                  const GURL& requesting_frame,
@@ -114,8 +117,9 @@ class PermissionContextBase : public KeyedService {
       const GURL& requesting_origin,
       const GURL& embedding_origin) const;
 
-  // Called if generic checks (existing content setting, embargo, etc.) fail to
-  // resolve a permission request. The default implementation prompts the user.
+  // Decide whether the permission should be granted.
+  // Calls PermissionDecided if permission can be decided non-interactively,
+  // or NotifyPermissionSet if permission decided by presenting an infobar.
   virtual void DecidePermission(content::WebContents* web_contents,
                                 const PermissionRequestID& id,
                                 const GURL& requesting_origin,
@@ -123,8 +127,15 @@ class PermissionContextBase : public KeyedService {
                                 bool user_gesture,
                                 const BrowserPermissionCallback& callback);
 
-  // Updates stored content setting if persist is set, updates tab indicators
-  // and runs the callback to finish the request.
+  // Called when permission is granted without interactively asking the user.
+  void PermissionDecided(const PermissionRequestID& id,
+                         const GURL& requesting_origin,
+                         const GURL& embedding_origin,
+                         bool user_gesture,
+                         const BrowserPermissionCallback& callback,
+                         bool persist,
+                         ContentSetting content_setting);
+
   virtual void NotifyPermissionSet(const PermissionRequestID& id,
                                    const GURL& requesting_origin,
                                    const GURL& embedding_origin,
@@ -173,16 +184,6 @@ class PermissionContextBase : public KeyedService {
                                  bool user_gesture,
                                  const BrowserPermissionCallback& callback,
                                  bool permission_blocked);
-
-  // This is the callback for PermissionRequestImpl and is called once the user
-  // allows/blocks/dismisses a permission prompt.
-  void PermissionDecided(const PermissionRequestID& id,
-                         const GURL& requesting_origin,
-                         const GURL& embedding_origin,
-                         bool user_gesture,
-                         const BrowserPermissionCallback& callback,
-                         bool persist,
-                         ContentSetting content_setting);
 
   // Called when the user has made a permission decision. This is a hook for
   // descendent classes to do appropriate things they might need to do when this

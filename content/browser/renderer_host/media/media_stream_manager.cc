@@ -369,9 +369,7 @@ class MediaStreamManager::DeviceRequest {
   // Callback to the requester which audio/video devices have been selected.
   // It can be null if the requester has no interest to know the result.
   // Currently it is only used by |DEVICE_ACCESS| type.
-  MediaRequestResponseCallback callback;
-
-  OpenDeviceCallback open_device_cb;
+  MediaStreamManager::MediaRequestResponseCallback callback;
 
   std::unique_ptr<MediaStreamUIProxy> ui_proxy;
 
@@ -740,15 +738,14 @@ void MediaStreamManager::CloseDevice(MediaStreamType type, int session_id) {
 }
 
 void MediaStreamManager::OpenDevice(
+    base::WeakPtr<MediaStreamRequester> requester,
     int render_process_id,
     int render_frame_id,
     const std::string& salt,
     int page_request_id,
     const std::string& device_id,
     MediaStreamType type,
-    const url::Origin& security_origin,
-    OpenDeviceCallback callback,
-    base::WeakPtr<MediaStreamRequester> requester) {
+    const url::Origin& security_origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(type == MEDIA_DEVICE_AUDIO_CAPTURE ||
          type == MEDIA_DEVICE_VIDEO_CAPTURE);
@@ -769,8 +766,6 @@ void MediaStreamManager::OpenDevice(
       MEDIA_OPEN_DEVICE_PEPPER_ONLY, controls, salt, std::move(requester));
 
   const std::string& label = AddRequest(request);
-
-  request->open_device_cb = std::move(callback);
   // Post a task and handle the request asynchronously. The reason is that the
   // requester won't have a label for the request until this function returns
   // and thus can not handle a response. Using base::Unretained is safe since
@@ -1227,10 +1222,11 @@ void MediaStreamManager::FinalizeGenerateStream(const std::string& label,
       NOTREACHED();
   }
 
-  DCHECK(request->requester);
-  request->requester->StreamGenerated(request->requesting_frame_id,
-                                      request->page_request_id, label,
-                                      audio_devices, video_devices);
+  if (request->requester) {
+    request->requester->StreamGenerated(request->requesting_frame_id,
+                                        request->page_request_id, label,
+                                        audio_devices, video_devices);
+  }
 }
 
 void MediaStreamManager::FinalizeRequestFailed(
@@ -1239,28 +1235,17 @@ void MediaStreamManager::FinalizeRequestFailed(
     content::MediaStreamRequestResult result) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  switch (request->request_type) {
-    case MEDIA_GENERATE_STREAM: {
-      DCHECK(request->requester);
-      request->requester->StreamGenerationFailed(
-          request->requesting_frame_id, request->page_request_id, result);
-      break;
-    }
-    case MEDIA_OPEN_DEVICE_PEPPER_ONLY: {
-      DCHECK(request->open_device_cb);
-      std::move(request->open_device_cb)
-          .Run(false /* success */, std::string(), MediaStreamDevice());
-      break;
-    }
-    case MEDIA_DEVICE_ACCESS: {
-      DCHECK(request->callback);
-      std::move(request->callback)
-          .Run(MediaStreamDevices(), std::move(request->ui_proxy));
-      break;
-    }
-    default:
-      NOTREACHED();
-      break;
+  if (request->requester) {
+    request->requester->StreamGenerationFailed(
+        request->requesting_frame_id,
+        request->page_request_id,
+        result);
+  }
+
+  if (request->request_type == MEDIA_DEVICE_ACCESS &&
+      !request->callback.is_null()) {
+    std::move(request->callback)
+        .Run(MediaStreamDevices(), std::move(request->ui_proxy));
   }
 
   DeleteRequest(label);
@@ -1269,18 +1254,20 @@ void MediaStreamManager::FinalizeRequestFailed(
 void MediaStreamManager::FinalizeOpenDevice(const std::string& label,
                                             DeviceRequest* request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(request->open_device_cb);
 
-  std::move(request->open_device_cb)
-      .Run(true /* success */, label, request->devices.front());
+  if (request->requester) {
+    request->requester->DeviceOpened(request->requesting_frame_id,
+                                     request->page_request_id, label,
+                                     request->devices.front());
+  }
 }
 
 void MediaStreamManager::FinalizeMediaAccessRequest(
     const std::string& label,
     DeviceRequest* request,
     const MediaStreamDevices& devices) {
-  DCHECK(request->callback);
-  std::move(request->callback).Run(devices, std::move(request->ui_proxy));
+  if (!request->callback.is_null())
+    std::move(request->callback).Run(devices, std::move(request->ui_proxy));
 
   // Delete the request since it is done.
   DeleteRequest(label);

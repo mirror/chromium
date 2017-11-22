@@ -89,6 +89,10 @@ namespace media {
 
 namespace {
 
+// TODO(apacible): Remove when crbug/747082 is stable.
+const double kMinRate = 0.0625;
+const double kMaxRate = 16.0;
+
 void SetSinkIdOnMediaThread(scoped_refptr<WebAudioSourceProviderImpl> sink,
                             const std::string& device_id,
                             const url::Origin& security_origin,
@@ -357,20 +361,13 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
   DoLoad(load_type, url, cors_mode);
 }
 
-void WebMediaPlayerImpl::OnWebLayerUpdated() {}
-
-void WebMediaPlayerImpl::RegisterContentsLayer(blink::WebLayer* web_layer) {
+void WebMediaPlayerImpl::OnWebLayerUpdated() {
   DCHECK(bridge_);
   bridge_->GetWebLayer()->CcLayer()->SetContentsOpaque(opaque_);
   bridge_->GetWebLayer()->SetContentsOpaqueIsFixed(true);
   // TODO(lethalantidote): Figure out how to pass along rotation information.
   // https://crbug/750313.
-  client_->SetWebLayer(web_layer);
-}
-
-void WebMediaPlayerImpl::UnregisterContentsLayer(blink::WebLayer* web_layer) {
-  // |client_| will unregister its WebLayer if given a nullptr.
-  client_->SetWebLayer(nullptr);
+  client_->SetWebLayer(bridge_->GetWebLayer());
 }
 
 bool WebMediaPlayerImpl::SupportsOverlayFullscreenVideo() {
@@ -713,6 +710,13 @@ void WebMediaPlayerImpl::SetRate(double rate) {
         << "Effective playback rate changed from " << playback_rate_ << " to "
         << rate;
   }
+
+  // TODO(apacible): Remove clamping when crbug/747082 is stable.
+  // Limit rates to reasonable values by clamping.
+  if (rate < 0.0)
+    return;
+  if (rate != 0.0)
+    rate = std::min(std::max(rate, kMinRate), kMaxRate);
 
   playback_rate_ = rate;
   if (!paused_) {
@@ -2549,12 +2553,6 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
   if (!HasVideo() && !HasAudio())
     return;
 
-  // URL is used for UKM reporting. Privacy requires we only report origin of
-  // the top frame. |is_top_frame| signals how to interpret the origin.
-  // TODO(crbug.com/787209): Stop getting origin from the renderer.
-  bool is_top_frame = frame_ == frame_->Top();
-  url::Origin top_origin(frame_->Top()->GetSecurityOrigin());
-
   // Create the watch time reporter and synchronize its initial state.
   watch_time_reporter_.reset(new WatchTimeReporter(
       mojom::PlaybackProperties::New(
@@ -2562,7 +2560,8 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
           pipeline_metadata_.video_decoder_config.codec(),
           pipeline_metadata_.has_audio, pipeline_metadata_.has_video,
           !!chunk_demuxer_, is_encrypted_, embedded_media_experience_enabled_,
-          pipeline_metadata_.natural_size, top_origin, is_top_frame),
+          pipeline_metadata_.natural_size,
+          url::Origin(frame_->GetSecurityOrigin())),
       base::BindRepeating(&WebMediaPlayerImpl::GetCurrentTimeInternal,
                           base::Unretained(this)),
       watch_time_recorder_provider_));

@@ -693,7 +693,7 @@ void LocationBarView::RefreshLocationIcon() {
                            : GetSecureTextColor(security_level);
   location_icon_view_->SetImage(gfx::CreateVectorIcon(
       omnibox_view_->GetVectorIcon(), kIconWidth, icon_color));
-  location_icon_view_->Update();
+  location_icon_view_->UpdateInkDropMode();
 }
 
 bool LocationBarView::RefreshContentSettingViews() {
@@ -764,13 +764,8 @@ bool LocationBarView::RefreshSaveCreditCardIconView() {
 }
 
 bool LocationBarView::RefreshFindBarIcon() {
-  // |browser_| may be nullptr since some unit tests pass it in for the
-  // Browser*. |browser_->window()| may return nullptr because Update() is
-  // called while BrowserWindow is being constructed.
-  if (!find_bar_icon_ || !browser_ || !browser_->window() ||
-      !browser_->HasFindBarController()) {
+  if (!find_bar_icon_ || !browser_ || !browser_->window())
     return false;
-  }
   const bool was_visible = find_bar_icon_->visible();
   find_bar_icon_->SetVisible(
       browser_->GetFindBarController()->find_bar()->IsFindBarVisible());

@@ -39,7 +39,7 @@ if (enable_extensions) {
     ]
 
     # TODO(crbug.com/699569): Convert to use the new JS bindings.
-    js_bindings_mode = "both"
+    use_new_js_bindings = false
   }
 
   # This must be a static library because extensions common depends on

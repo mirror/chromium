@@ -13,7 +13,7 @@
 #include "core/testing/sim/SimRequest.h"
 #include "core/testing/sim/SimTest.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 
 namespace blink {
 

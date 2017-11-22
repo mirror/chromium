@@ -35,6 +35,8 @@
 
 using content::BrowserPpapiHost;
 
+namespace chrome {
+
 namespace {
 const char kVoucherFilename[] = "plugin.vch";
 }
@@ -196,3 +198,5 @@ void PepperFlashDRMHost::GotDeviceID(
   host()->SendReply(reply_context,
                     PpapiPluginMsg_FlashDRM_GetDeviceIDReply(id));
 }
+
+}  // namespace chrome

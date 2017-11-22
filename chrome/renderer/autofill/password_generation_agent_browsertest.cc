@@ -121,8 +121,13 @@ class PasswordGenerationAgentTest : public ChromeRenderViewTest {
     return fake_pw_client_.called_show_pw_generation_popup();
   }
 
-  void SelectGenerationFallbackInContextMenu(const char* element_id) {
-    SimulateElementRightClick(element_id);
+  void ShowGenerationPopUpManually(const char* element_id) {
+    FocusField(element_id);
+    password_generation_->UserTriggeredGeneratePassword();
+  }
+
+  void SelectGenerationFallback(const char* element_id) {
+    FocusField(element_id);
     password_generation_->UserSelectedManualGenerationOption();
   }
 
@@ -136,7 +141,7 @@ class PasswordGenerationAgentTest : public ChromeRenderViewTest {
         mojom::PasswordManagerClientAssociatedRequest(std::move(handle)));
   }
 
-  void EnableManualGenerationFallback() {
+  void SetManualGenerationFallback() {
     scoped_feature_list_.InitAndEnableFeature(
         password_manager::features::kEnableManualFallbacksGeneration);
   }
@@ -661,14 +666,14 @@ TEST_F(PasswordGenerationAgentTest, ChangePasswordFormDetectionTest) {
 
 TEST_F(PasswordGenerationAgentTest, ManualGenerationInFormTest) {
   LoadHTMLWithUserGesture(kAccountCreationFormHTML);
-  SelectGenerationFallbackInContextMenu("first_password");
+  ShowGenerationPopUpManually("first_password");
   ExpectGenerationAvailable("first_password", true);
   ExpectGenerationAvailable("second_password", false);
 }
 
 TEST_F(PasswordGenerationAgentTest, ManualGenerationNoFormTest) {
   LoadHTMLWithUserGesture(kAccountCreationNoForm);
-  SelectGenerationFallbackInContextMenu("first_password");
+  ShowGenerationPopUpManually("first_password");
   ExpectGenerationAvailable("first_password", true);
   ExpectGenerationAvailable("second_password", false);
 }
@@ -679,7 +684,7 @@ TEST_F(PasswordGenerationAgentTest, ManualGenerationChangeFocusTest) {
   // generate password, even if focused element has changed.
   LoadHTMLWithUserGesture(kAccountCreationFormHTML);
   FocusField("first_password");
-  SelectGenerationFallbackInContextMenu("username" /* current focus */);
+  ShowGenerationPopUpManually("username" /* current focus */);
   ExpectGenerationAvailable("first_password", true);
   ExpectGenerationAvailable("second_password", false);
 }
@@ -696,7 +701,7 @@ TEST_F(PasswordGenerationAgentTest, PresavingGeneratedPassword) {
     LoadHTMLWithUserGesture(test_case.form);
     // To be able to work with input elements outside <form>'s, use manual
     // generation.
-    SelectGenerationFallbackInContextMenu(test_case.generation_element);
+    ShowGenerationPopUpManually(test_case.generation_element);
     ExpectGenerationAvailable(test_case.generation_element, true);
 
     base::string16 password = base::ASCIIToUTF16("random_password");
@@ -722,7 +727,7 @@ TEST_F(PasswordGenerationAgentTest, PresavingGeneratedPassword) {
 
 TEST_F(PasswordGenerationAgentTest, FallbackForSaving) {
   LoadHTMLWithUserGesture(kAccountCreationFormHTML);
-  SelectGenerationFallbackInContextMenu("first_password");
+  ShowGenerationPopUpManually("first_password");
   ExpectGenerationAvailable("first_password", true);
   EXPECT_EQ(0, fake_driver_.called_show_manual_fallback_for_saving_count());
   password_generation_->GeneratedPasswordAccepted(
@@ -854,6 +859,7 @@ TEST_F(PasswordGenerationAgentTest, JavascriptClearedTheField) {
 }
 
 TEST_F(PasswordGenerationAgentTest, GenerationFallbackTest) {
+  SetManualGenerationFallback();
   LoadHTMLWithUserGesture(kAccountCreationFormHTML);
   WebDocument document = GetMainFrame()->GetDocument();
   WebElement element =
@@ -861,15 +867,8 @@ TEST_F(PasswordGenerationAgentTest, GenerationFallbackTest) {
   ASSERT_FALSE(element.IsNull());
   WebInputElement first_password_element = element.To<WebInputElement>();
   EXPECT_TRUE(first_password_element.Value().IsNull());
-  SelectGenerationFallbackInContextMenu("first_password");
+  SelectGenerationFallback("first_password");
   EXPECT_TRUE(first_password_element.Value().IsNull());
-}
-
-TEST_F(PasswordGenerationAgentTest, GenerationFallback_NoFocusedElement) {
-  // Checks the fallback doesn't cause a crash just in case no password element
-  // had focus so far.
-  LoadHTMLWithUserGesture(kAccountCreationFormHTML);
-  password_generation_->UserSelectedManualGenerationOption();
 }
 
 }  // namespace autofill

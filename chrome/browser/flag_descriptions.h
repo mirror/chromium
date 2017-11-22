@@ -222,6 +222,9 @@ extern const char kEnableBreakingNewsPushDescription[];
 extern const char kEnableBrotliName[];
 extern const char kEnableBrotliDescription[];
 
+extern const char kEnableClearBrowsingDataCountersName[];
+extern const char kEnableClearBrowsingDataCountersDescription[];
+
 extern const char kEnableClientLoFiName[];
 extern const char kEnableClientLoFiDescription[];
 
@@ -231,16 +234,7 @@ extern const char kEnableNoScriptPreviewsDescription[];
 extern const char kEnableDataReductionProxyLitePageName[];
 extern const char kEnableDataReductionProxyLitePageDescription[];
 
-extern const char kDataReductionProxyServerAlternative1[];
-extern const char kDataReductionProxyServerAlternative2[];
-extern const char kDataReductionProxyServerAlternative3[];
-extern const char kDataReductionProxyServerAlternative4[];
-extern const char kDataReductionProxyServerAlternative5[];
-extern const char kDataReductionProxyServerAlternative6[];
-extern const char kDataReductionProxyServerAlternative7[];
-extern const char kDataReductionProxyServerAlternative8[];
-extern const char kDataReductionProxyServerAlternative9[];
-extern const char kDataReductionProxyServerAlternative10[];
+extern const char kDataReductionProxyServerAlternative[];
 extern const char kEnableDataReductionProxyServerExperimentName[];
 extern const char kEnableDataReductionProxyServerExperimentDescription[];
 
@@ -1589,8 +1583,8 @@ extern const char kMtpWriteSupportDescription[];
 extern const char kMultideviceName[];
 extern const char kMultideviceDescription[];
 
-extern const char kNativeSmbName[];
-extern const char kNativeSmbDescription[];
+extern const char kNativeSambaName[];
+extern const char kNativeSambaDescription[];
 
 extern const char kNetworkPortalNotificationName[];
 extern const char kNetworkPortalNotificationDescription[];
@@ -1684,9 +1678,6 @@ extern const char kWebVrVsyncAlignDescription[];
 
 extern const char kVrBrowsingName[];
 extern const char kVrBrowsingDescription[];
-
-extern const char kVrBrowserKeyboardName[];
-extern const char kVrBrowserKeyboardDescription[];
 
 extern const char kVrBrowsingExperimentalFeaturesName[];
 extern const char kVrBrowsingExperimentalFeaturesDescription[];

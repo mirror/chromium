@@ -22,7 +22,6 @@
 
 #include "core/css/PropertySetCSSStyleDeclaration.h"
 
-#include "base/macros.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/StylePropertyShorthand.h"
 #include "core/css/CSSCustomPropertyDeclaration.h"
@@ -53,6 +52,7 @@ static CustomElementDefinition* DefinitionIfStyleChangedCallback(
 }
 
 class StyleAttributeMutationScope {
+  WTF_MAKE_NONCOPYABLE(StyleAttributeMutationScope);
   STACK_ALLOCATED();
 
  public:
@@ -139,7 +139,6 @@ class StyleAttributeMutationScope {
   Member<MutationObserverInterestGroup> mutation_recipients_;
   Member<MutationRecord> mutation_;
   AtomicString old_value_;
-  DISALLOW_COPY_AND_ASSIGN(StyleAttributeMutationScope);
 };
 
 unsigned StyleAttributeMutationScope::scope_count_ = 0;
@@ -172,15 +171,12 @@ String AbstractPropertySetCSSStyleDeclaration::cssText() const {
   return PropertySet().AsText();
 }
 
-void AbstractPropertySetCSSStyleDeclaration::setCSSText(
-    const ExecutionContext* execution_context,
-    const String& text,
-    ExceptionState&) {
+void AbstractPropertySetCSSStyleDeclaration::setCSSText(const String& text,
+                                                        ExceptionState&) {
   StyleAttributeMutationScope mutation_scope(this);
   WillMutate();
 
-  PropertySet().ParseDeclarationList(
-      text, execution_context->SecureContextMode(), ContextStyleSheet());
+  PropertySet().ParseDeclarationList(text, ContextStyleSheet());
 
   DidMutate(kPropertyChanged);
 
@@ -235,7 +231,6 @@ bool AbstractPropertySetCSSStyleDeclaration::IsPropertyImplicit(
 }
 
 void AbstractPropertySetCSSStyleDeclaration::setProperty(
-    const ExecutionContext* execution_context,
     const String& property_name,
     const String& value,
     const String& priority,
@@ -249,7 +244,7 @@ void AbstractPropertySetCSSStyleDeclaration::setProperty(
     return;
 
   SetPropertyInternal(property_id, property_name, value, important,
-                      execution_context->SecureContextMode(), exception_state);
+                      exception_state);
 }
 
 String AbstractPropertySetCSSStyleDeclaration::removeProperty(
@@ -300,7 +295,6 @@ void AbstractPropertySetCSSStyleDeclaration::SetPropertyInternal(
     const String& custom_property_name,
     const String& value,
     bool important,
-    SecureContextMode secure_context_mode,
     ExceptionState&) {
   StyleAttributeMutationScope mutation_scope(this);
   WillMutate();
@@ -310,15 +304,15 @@ void AbstractPropertySetCSSStyleDeclaration::SetPropertyInternal(
     AtomicString atomic_name(custom_property_name);
 
     bool is_animation_tainted = IsKeyframeStyle();
-    did_change = PropertySet()
-                     .SetProperty(atomic_name, GetPropertyRegistry(), value,
-                                  important, secure_context_mode,
-                                  ContextStyleSheet(), is_animation_tainted)
-                     .did_change;
+    did_change =
+        PropertySet()
+            .SetProperty(atomic_name, GetPropertyRegistry(), value, important,
+                         ContextStyleSheet(), is_animation_tainted)
+            .did_change;
   } else {
     did_change = PropertySet()
                      .SetProperty(unresolved_property, value, important,
-                                  secure_context_mode, ContextStyleSheet())
+                                  ContextStyleSheet())
                      .did_change;
   }
 

@@ -11,20 +11,16 @@
 #include "build/build_config.h"
 #include "content/common/dom_storage/dom_storage_map.h"
 #include "content/renderer/dom_storage/dom_storage_proxy.h"
-#include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 
 namespace content {
 
-DOMStorageCachedArea::DOMStorageCachedArea(
-    int64_t namespace_id,
-    const GURL& origin,
-    DOMStorageProxy* proxy,
-    blink::scheduler::RendererScheduler* renderer_scheduler)
+DOMStorageCachedArea::DOMStorageCachedArea(int64_t namespace_id,
+                                           const GURL& origin,
+                                           DOMStorageProxy* proxy)
     : ignore_all_mutations_(false),
       namespace_id_(namespace_id),
       origin_(origin),
       proxy_(proxy),
-      renderer_scheduler_(renderer_scheduler),
       weak_factory_(this) {}
 
 DOMStorageCachedArea::~DOMStorageCachedArea() {}
@@ -72,14 +68,10 @@ bool DOMStorageCachedArea::SetItem(int connection_id,
 #endif  // !defined(OS_ANDROID)
 
   // Ignore mutations to 'key' until OnSetItemComplete.
-  blink::WebScopedVirtualTimePauser virtual_time_pauser =
-      renderer_scheduler_->CreateWebScopedVirtualTimePauser();
-  virtual_time_pauser.PauseVirtualTime(true);
   ignore_key_mutations_[key]++;
   proxy_->SetItem(connection_id, key, value, old_value, page_url,
                   base::Bind(&DOMStorageCachedArea::OnSetItemComplete,
-                             weak_factory_.GetWeakPtr(), key,
-                             base::Passed(std::move(virtual_time_pauser))));
+                             weak_factory_.GetWeakPtr(), key));
   return true;
 }
 
@@ -99,15 +91,11 @@ void DOMStorageCachedArea::RemoveItem(int connection_id,
 #endif
 
   // Ignore mutations to 'key' until OnRemoveItemComplete.
-  blink::WebScopedVirtualTimePauser virtual_time_pauser =
-      renderer_scheduler_->CreateWebScopedVirtualTimePauser();
-  virtual_time_pauser.PauseVirtualTime(true);
   ignore_key_mutations_[key]++;
   proxy_->RemoveItem(connection_id, key,
                      base::NullableString16(old_value, false), page_url,
                      base::Bind(&DOMStorageCachedArea::OnRemoveItemComplete,
-                                weak_factory_.GetWeakPtr(), key,
-                                base::Passed(std::move(virtual_time_pauser))));
+                                weak_factory_.GetWeakPtr(), key));
 }
 
 void DOMStorageCachedArea::Clear(int connection_id, const GURL& page_url) {
@@ -116,14 +104,11 @@ void DOMStorageCachedArea::Clear(int connection_id, const GURL& page_url) {
   map_ = new DOMStorageMap(kPerStorageAreaQuota);
 
   // Ignore all mutations until OnClearComplete time.
-  blink::WebScopedVirtualTimePauser virtual_time_pauser =
-      renderer_scheduler_->CreateWebScopedVirtualTimePauser();
-  virtual_time_pauser.PauseVirtualTime(true);
   ignore_all_mutations_ = true;
-  proxy_->ClearArea(connection_id, page_url,
+  proxy_->ClearArea(connection_id,
+                    page_url,
                     base::Bind(&DOMStorageCachedArea::OnClearComplete,
-                               weak_factory_.GetWeakPtr(),
-                               base::Passed(std::move(virtual_time_pauser))));
+                               weak_factory_.GetWeakPtr()));
 }
 
 void DOMStorageCachedArea::ApplyMutation(
@@ -230,7 +215,6 @@ void DOMStorageCachedArea::OnLoadComplete(bool success) {
 }
 
 void DOMStorageCachedArea::OnSetItemComplete(const base::string16& key,
-                                             blink::WebScopedVirtualTimePauser,
                                              bool success) {
   if (!success) {
     Reset();
@@ -243,10 +227,8 @@ void DOMStorageCachedArea::OnSetItemComplete(const base::string16& key,
     ignore_key_mutations_.erase(found);
 }
 
-void DOMStorageCachedArea::OnRemoveItemComplete(
-    const base::string16& key,
-    blink::WebScopedVirtualTimePauser,
-    bool success) {
+void DOMStorageCachedArea::OnRemoveItemComplete(const base::string16& key,
+                                                bool success) {
   DCHECK(success);
   std::map<base::string16, int>::iterator found =
       ignore_key_mutations_.find(key);
@@ -255,8 +237,7 @@ void DOMStorageCachedArea::OnRemoveItemComplete(
     ignore_key_mutations_.erase(found);
 }
 
-void DOMStorageCachedArea::OnClearComplete(blink::WebScopedVirtualTimePauser,
-                                           bool success) {
+void DOMStorageCachedArea::OnClearComplete(bool success) {
   DCHECK(success);
   DCHECK(ignore_all_mutations_);
   ignore_all_mutations_ = false;

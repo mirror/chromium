@@ -5,17 +5,13 @@
 #include "content/renderer/mash_util.h"
 
 #include "base/command_line.h"
-#include "ui/base/ui_base_switches.h"
+#include "content/public/common/content_switches.h"
 
 namespace content {
 
-bool IsRunningWithMus() {
-#if BUILDFLAG(ENABLE_MUS)
+bool IsRunningInMash() {
   const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
-  return cmdline->HasSwitch(switches::kMus);
-#else
-  return false;
-#endif
+  return cmdline->HasSwitch(switches::kIsRunningInMash);
 }
 
 }  // namespace content

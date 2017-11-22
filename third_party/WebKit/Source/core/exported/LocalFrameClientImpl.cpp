@@ -232,8 +232,7 @@ function createShadowRootWithin(node) {
 createShadowRootWithin(document.body);
 )";
     web_frame_->GetFrame()->GetScriptController().ExecuteScriptInMainWorld(
-        script, ScriptSourceLocationType::kInternal,
-        ScriptController::kExecuteScriptWhenScriptsDisabled);
+        script, ScriptController::kExecuteScriptWhenScriptsDisabled);
   }
 
   if (web_frame_->Client()) {
@@ -780,12 +779,6 @@ void LocalFrameClientImpl::DidObserveNewFeatureUsage(
     web_frame_->Client()->DidObserveNewFeatureUsage(feature);
 }
 
-bool LocalFrameClientImpl::ShouldTrackUseCounter(const KURL& url) {
-  if (web_frame_->Client())
-    return web_frame_->Client()->ShouldTrackUseCounter(url);
-  return false;
-}
-
 void LocalFrameClientImpl::SelectorMatchChanged(
     const Vector<String>& added_selectors,
     const Vector<String>& removed_selectors) {
@@ -799,12 +792,11 @@ DocumentLoader* LocalFrameClientImpl::CreateDocumentLoader(
     LocalFrame* frame,
     const ResourceRequest& request,
     const SubstituteData& data,
-    ClientRedirectPolicy client_redirect_policy,
-    const base::UnguessableToken& devtools_navigation_token) {
+    ClientRedirectPolicy client_redirect_policy) {
   DCHECK(frame);
 
   WebDocumentLoaderImpl* document_loader = WebDocumentLoaderImpl::Create(
-      frame, request, data, client_redirect_policy, devtools_navigation_token);
+      frame, request, data, client_redirect_policy);
   if (web_frame_->Client())
     web_frame_->Client()->DidCreateDocumentLoader(document_loader);
   return document_loader;
@@ -1135,7 +1127,7 @@ void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
 }
 
 void LocalFrameClientImpl::SetVirtualTimePauser(
-    WebScopedVirtualTimePauser virtual_time_pauser) {
+    ScopedVirtualTimePauser virtual_time_pauser) {
   virtual_time_pauser_ = std::move(virtual_time_pauser);
 }
 

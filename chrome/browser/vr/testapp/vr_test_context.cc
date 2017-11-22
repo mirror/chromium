@@ -13,8 +13,8 @@
 #include "chrome/browser/vr/controller_mesh.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
-#include "chrome/browser/vr/model/toolbar_state.h"
 #include "chrome/browser/vr/test/constants.h"
+#include "chrome/browser/vr/toolbar_state.h"
 #include "chrome/browser/vr/ui.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
 #include "chrome/browser/vr/ui_input_manager.h"
@@ -65,7 +65,6 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   base::i18n::InitializeICU();
 
   ui_ = base::MakeUnique<Ui>(this, nullptr, UiInitialState());
-  model_ = ui_->model_for_test();
 
   GURL gurl("https://dangerous.com/dir/file.html");
   ToolbarState state(gurl, security_state::SecurityLevel::DANGEROUS,
@@ -75,11 +74,11 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   ui_->SetHistoryButtonsEnabled(true, true);
   ui_->SetLoading(true);
   ui_->SetLoadProgress(0.4);
-  ui_->SetVideoCaptureEnabled(true);
-  ui_->SetScreenCaptureEnabled(true);
-  ui_->SetAudioCaptureEnabled(true);
-  ui_->SetBluetoothConnected(true);
-  ui_->SetLocationAccess(true);
+  ui_->SetVideoCapturingIndicator(true);
+  ui_->SetScreenCapturingIndicator(true);
+  ui_->SetAudioCapturingIndicator(true);
+  ui_->SetBluetoothConnectedIndicator(true);
+  ui_->SetLocationAccessIndicator(true);
 }
 
 VrTestContext::~VrTestContext() = default;
@@ -128,10 +127,6 @@ void VrTestContext::HandleInput(ui::Event* event) {
       case ui::DomCode::US_S: {
         CreateFakeOmniboxSuggestions();
         break;
-        case ui::DomCode::US_V:
-          ui_->SetVideoCaptureEnabled(
-              !model_->permissions.video_capture_enabled);
-          break;
       }
       default:
         break;
@@ -293,7 +288,7 @@ void VrTestContext::CreateFakeOmniboxSuggestions() {
     result->suggestions.emplace_back(OmniboxSuggestion(
         base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
         base::UTF8ToUTF16("Description text"),
-        AutocompleteMatch::Type::VOICE_SUGGEST, GURL("http://www.test.com/")));
+        AutocompleteMatch::Type::VOICE_SUGGEST));
   }
   ui_->SetOmniboxSuggestions(std::move(result));
 }
@@ -326,9 +321,5 @@ void VrTestContext::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
   ui_->SetExitVrPromptEnabled(false, UiUnsupportedMode::kCount);
 }
 void VrTestContext::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {}
-
-void VrTestContext::StartAutocomplete(const base::string16& string) {}
-void VrTestContext::StopAutocomplete() {}
-void VrTestContext::Navigate(GURL gurl) {}
 
 }  // namespace vr

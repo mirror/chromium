@@ -45,15 +45,16 @@ MediaRouterWebUITest::MediaRouterWebUITest(bool require_mock_ui_service)
 
 MediaRouterWebUITest::~MediaRouterWebUITest() {}
 
-TestingProfile::TestingFactories MediaRouterWebUITest::GetTestingFactories() {
+TestingProfile* MediaRouterWebUITest::CreateProfile() {
+  TestingProfile::Builder builder;
   if (require_mock_ui_service_) {
-    return {
-        {media_router::MediaRouterUIServiceFactory::GetInstance(),
-         BuildMockMediaRouterUIService},
-        {ToolbarActionsModelFactory::GetInstance(), BuildToolbarActionsModel}};
+    builder.AddTestingFactory(
+        media_router::MediaRouterUIServiceFactory::GetInstance(),
+        BuildMockMediaRouterUIService);
+    builder.AddTestingFactory(ToolbarActionsModelFactory::GetInstance(),
+                              BuildToolbarActionsModel);
   }
-
-  return BrowserWithTestWindowTest::GetTestingFactories();
+  return builder.Build().release();
 }
 
 BrowserWindow* MediaRouterWebUITest::CreateBrowserWindow() {

@@ -150,9 +150,8 @@ void ReplayProcess::OpenChannel() {
       base::MakeUnique<IPCChannelBootstrapper>(std::move(ipc_pipe.handle0)));
   service_manager_connection_->Start();
   channel_ = IPC::ChannelProxy::Create(
-      IPC::ChannelMojo::CreateClientFactory(
-          std::move(ipc_pipe.handle1), io_thread_.task_runner(),
-          base::ThreadTaskRunnerHandle::Get()),
+      IPC::ChannelMojo::CreateClientFactory(std::move(ipc_pipe.handle1),
+                                            io_thread_.task_runner()),
       this, io_thread_.task_runner(), base::ThreadTaskRunnerHandle::Get());
 }
 

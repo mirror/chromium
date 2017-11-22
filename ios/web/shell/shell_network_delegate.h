@@ -48,7 +48,7 @@ class ShellNetworkDelegate : public net::NetworkDelegateImpl {
   bool OnCanGetCookies(const net::URLRequest& request,
                        const net::CookieList& cookie_list) override;
   bool OnCanSetCookie(const net::URLRequest& request,
-                      const net::CanonicalCookie& cookie,
+                      const std::string& cookie_line,
                       net::CookieOptions* options) override;
   bool OnCanAccessFile(const net::URLRequest& request,
                        const base::FilePath& original_path,

@@ -11,13 +11,12 @@
 
 namespace blink {
 
-void StylePropertyMap::set(const ExecutionContext* execution_context,
-                           const String& property_name,
+void StylePropertyMap::set(const String& property_name,
                            CSSStyleValueOrCSSStyleValueSequenceOrString& item,
                            ExceptionState& exception_state) {
   CSSPropertyID property_id = cssPropertyID(property_name);
   if (property_id != CSSPropertyInvalid && property_id != CSSPropertyVariable) {
-    set(execution_context, property_id, item, exception_state);
+    set(property_id, item, exception_state);
     return;
   }
   // TODO(meade): Handle custom properties here.
@@ -25,13 +24,12 @@ void StylePropertyMap::set(const ExecutionContext* execution_context,
 }
 
 void StylePropertyMap::append(
-    const ExecutionContext* execution_context,
     const String& property_name,
     CSSStyleValueOrCSSStyleValueSequenceOrString& item,
     ExceptionState& exception_state) {
   CSSPropertyID property_id = cssPropertyID(property_name);
   if (property_id != CSSPropertyInvalid && property_id != CSSPropertyVariable) {
-    append(execution_context, property_id, item, exception_state);
+    append(property_id, item, exception_state);
     return;
   }
   // TODO(meade): Handle custom properties here.

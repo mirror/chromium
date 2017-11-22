@@ -353,9 +353,9 @@ void TracedValue::AppendBaseValue(const base::Value& value) {
 }
 
 std::unique_ptr<base::Value> TracedValue::ToBaseValue() const {
-  base::Value root(base::Value::Type::DICTIONARY);
-  Value* cur_dict = &root;
-  Value* cur_list = nullptr;
+  std::unique_ptr<DictionaryValue> root(new DictionaryValue);
+  DictionaryValue* cur_dict = root.get();
+  ListValue* cur_list = nullptr;
   std::vector<Value*> stack;
   PickleIterator it(pickle_);
   const char* type;
@@ -364,15 +364,16 @@ std::unique_ptr<base::Value> TracedValue::ToBaseValue() const {
     DCHECK((cur_dict && !cur_list) || (cur_list && !cur_dict));
     switch (*type) {
       case kTypeStartDict: {
-        base::Value new_dict(base::Value::Type::DICTIONARY);
+        auto new_dict = std::make_unique<DictionaryValue>();
         if (cur_dict) {
           stack.push_back(cur_dict);
-          cur_dict = cur_dict->SetKey(ReadKeyName(it), std::move(new_dict));
+          cur_dict = cur_dict->SetDictionaryWithoutPathExpansion(
+              ReadKeyName(it), std::move(new_dict));
         } else {
-          cur_list->GetList().push_back(std::move(new_dict));
+          cur_list->Append(std::move(new_dict));
           // |new_dict| is invalidated at this point, so |cur_dict| needs to be
           // reset.
-          cur_dict = &cur_list->GetList().back();
+          cur_list->GetDictionary(cur_list->GetSize() - 1, &cur_dict);
           stack.push_back(cur_list);
           cur_list = nullptr;
         }
@@ -380,72 +381,66 @@ std::unique_ptr<base::Value> TracedValue::ToBaseValue() const {
 
       case kTypeEndArray:
       case kTypeEndDict: {
-        if (stack.back()->is_dict()) {
-          cur_dict = stack.back();
+        if (stack.back()->GetAsDictionary(&cur_dict)) {
           cur_list = nullptr;
-        } else if (stack.back()->is_list()) {
-          cur_list = stack.back();
+        } else if (stack.back()->GetAsList(&cur_list)) {
           cur_dict = nullptr;
         }
         stack.pop_back();
       } break;
 
       case kTypeStartArray: {
-        base::Value new_list(base::Value::Type::LIST);
         if (cur_dict) {
           stack.push_back(cur_dict);
-          cur_list = cur_dict->SetKey(ReadKeyName(it), std::move(new_list));
+          cur_list = static_cast<ListValue*>(
+              cur_dict->SetKey(ReadKeyName(it), Value(Value::Type::LIST)));
           cur_dict = nullptr;
         } else {
-          cur_list->GetList().push_back(std::move(new_list));
+          cur_list->GetList().emplace_back(Value::Type::LIST);
           stack.push_back(cur_list);
           // |cur_list| is invalidated at this point by the Append, so it needs
           // to be reset.
-          cur_list = &cur_list->GetList().back();
+          cur_list->GetList(cur_list->GetSize() - 1, &cur_list);
         }
       } break;
 
       case kTypeBool: {
         bool value;
         CHECK(it.ReadBool(&value));
-        base::Value new_bool(value);
         if (cur_dict) {
-          cur_dict->SetKey(ReadKeyName(it), std::move(new_bool));
+          cur_dict->SetKey(ReadKeyName(it), Value(value));
         } else {
-          cur_list->GetList().push_back(std::move(new_bool));
+          cur_list->AppendBoolean(value);
         }
       } break;
 
       case kTypeInt: {
         int value;
         CHECK(it.ReadInt(&value));
-        base::Value new_int(value);
         if (cur_dict) {
-          cur_dict->SetKey(ReadKeyName(it), std::move(new_int));
+          cur_dict->SetKey(ReadKeyName(it), Value(value));
         } else {
-          cur_list->GetList().push_back(std::move(new_int));
+          cur_list->AppendInteger(value);
         }
       } break;
 
       case kTypeDouble: {
         double value;
         CHECK(it.ReadDouble(&value));
-        base::Value new_double(value);
         if (cur_dict) {
-          cur_dict->SetKey(ReadKeyName(it), std::move(new_double));
+          cur_dict->SetKey(ReadKeyName(it), Value(value));
         } else {
-          cur_list->GetList().push_back(std::move(new_double));
+          cur_list->AppendDouble(value);
         }
       } break;
 
       case kTypeString: {
         std::string value;
         CHECK(it.ReadString(&value));
-        base::Value new_str(std::move(value));
         if (cur_dict) {
-          cur_dict->SetKey(ReadKeyName(it), std::move(new_str));
+          cur_dict->SetKey(ReadKeyName(it), Value(value));
         } else {
-          cur_list->GetList().push_back(std::move(new_str));
+          cur_list->AppendString(value);
         }
       } break;
 
@@ -454,7 +449,7 @@ std::unique_ptr<base::Value> TracedValue::ToBaseValue() const {
     }
   }
   DCHECK(stack.empty());
-  return base::Value::ToUniquePtrValue(std::move(root));
+  return std::move(root);
 }
 
 void TracedValue::AppendAsTraceFormat(std::string* out) const {

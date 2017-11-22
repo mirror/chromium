@@ -25,11 +25,6 @@ const char kCaptivePortalDescription[] =
     "When enabled, the Captive Portal landing page will be displayed if it is "
     "detected that the user is connected to a Captive Portal network.";
 
-const char kCleanToolbarName[] = "Clean Toolbar";
-const char kCleanToolbarDescription[] =
-    "When enabled, the Clean Toolbar will be used instead of "
-    "WebToolbarController.";
-
 const char kContextualSearch[] = "Contextual Search";
 const char kContextualSearchDescription[] =
     "Whether or not Contextual Search is enabled.";
@@ -91,8 +86,9 @@ const char kPropertyAnimationsToolbarDescription[] =
     "When enabled, Toolbar animations will be done using "
     "UIViewPropertyAnimator";
 
-const char kSafeAreaCompatibleToolbarName[] = "Safe Area Compatible Toolbar";
-const char kSafeAreaCompatibleToolbarDescription[] =
+extern const char kSafeAreaCompatibleToolbarName[] =
+    "Safe Area Compatible Toolbar";
+extern const char kSafeAreaCompatibleToolbarDescription[] =
     "When enabled, the toolbar resizes itself when the safe area changes.";
 
 const char kShareCanonicalURLName[] = "Share Canonical URL";

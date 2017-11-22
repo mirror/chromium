@@ -22,7 +22,6 @@ namespace vr_shell {
 
 class VrShell;
 class VrShellGl;
-struct OmniboxSuggestions;
 
 class VrGLThread : public base::android::JavaHandlerThread,
                    public vr::ContentInputForwarder,
@@ -56,7 +55,6 @@ class VrGLThread : public base::android::JavaHandlerThread,
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;
   void ExitFullscreen() override;
-  void Navigate(GURL gurl) override;
   void NavigateBack() override;
   void ExitCct() override;
   void OnUnsupportedMode(vr::UiUnsupportedMode mode) override;
@@ -64,8 +62,6 @@ class VrGLThread : public base::android::JavaHandlerThread,
                             vr::ExitVrPromptChoice choice) override;
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) override;
   void SetVoiceSearchActive(bool active) override;
-  void StartAutocomplete(const base::string16& string) override;
-  void StopAutocomplete() override;
 
   // vr::BrowserUiInterface implementation (Browser calling to UI).
   void SetWebVrMode(bool enabled, bool show_toast) override;
@@ -76,18 +72,16 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetLoadProgress(float progress) override;
   void SetIsExiting() override;
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) override;
-  void SetVideoCaptureEnabled(bool enabled) override;
-  void SetScreenCaptureEnabled(bool enabled) override;
-  void SetAudioCaptureEnabled(bool enabled) override;
-  void SetBluetoothConnected(bool enabled) override;
-  void SetLocationAccess(bool enabled) override;
+  void SetVideoCapturingIndicator(bool enabled) override;
+  void SetScreenCapturingIndicator(bool enabled) override;
+  void SetAudioCapturingIndicator(bool enabled) override;
+  void SetBluetoothConnectedIndicator(bool enabled) override;
+  void SetLocationAccessIndicator(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
-  void SetOmniboxSuggestions(
-      std::unique_ptr<vr::OmniboxSuggestions> result) override;
 
  protected:
   void Init() override;

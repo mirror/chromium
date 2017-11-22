@@ -512,7 +512,8 @@ static void DropAllCapabilities(int proc_fd) {
 
 static void EnterNamespaceSandbox(service_manager::SandboxLinux* linux_sandbox,
                                   base::Closure* post_fork_parent_callback) {
-  linux_sandbox->EngageNamespaceSandbox(true /* from_zygote */);
+  linux_sandbox->EngageNamespaceSandbox();
+
   if (getpid() == 1) {
     base::Closure drop_all_caps_callback =
         base::Bind(&DropAllCapabilities, linux_sandbox->proc_fd());
@@ -614,11 +615,11 @@ bool ZygoteMain(
   const int sandbox_flags = linux_sandbox->GetStatus();
 
   const bool setuid_sandbox_engaged =
-      sandbox_flags & service_manager::SandboxLinux::kSUID;
+      sandbox_flags & service_manager::Sandbox::kSUID;
   CHECK_EQ(using_setuid_sandbox, setuid_sandbox_engaged);
 
   const bool namespace_sandbox_engaged =
-      sandbox_flags & service_manager::SandboxLinux::kUserNS;
+      sandbox_flags & service_manager::Sandbox::kUserNS;
   CHECK_EQ(using_namespace_sandbox, namespace_sandbox_engaged);
 
   Zygote zygote(sandbox_flags, std::move(fork_delegates), extra_children,

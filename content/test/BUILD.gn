@@ -254,10 +254,6 @@ static_library("test_support") {
     "test_render_view_host.h",
     "test_render_view_host_factory.cc",
     "test_render_view_host_factory.h",
-    "test_render_widget_host.cc",
-    "test_render_widget_host.h",
-    "test_render_widget_host_factory.cc",
-    "test_render_widget_host_factory.h",
     "test_web_contents.cc",
     "test_web_contents.h",
     "test_web_contents_factory.cc",
@@ -876,7 +872,6 @@ test("content_browsertests") {
     "//testing/gtest",
     "//third_party/WebKit/public:blink",
     "//third_party/leveldatabase",
-    "//third_party/libaom:av1_features",
     "//third_party/mesa:osmesa",
     "//third_party/zlib",
     "//ui/accessibility",
@@ -1718,7 +1713,6 @@ test("content_unittests") {
     "//ui/gfx/ipc/skia",
     "//ui/gl",
     "//ui/gl:test_support",
-    "//ui/latency:test_support",
   ]
 
   data_deps = [
@@ -1834,7 +1828,6 @@ test("content_unittests") {
       "//third_party/webrtc/api:libjingle_peerconnection",
       "//third_party/webrtc/api:rtc_stats_api",
       "//third_party/webrtc/api:video_frame_api",
-      "//third_party/webrtc/api:video_frame_api_i420",
       "//third_party/webrtc/api/video_codecs:video_codecs_api",
       "//third_party/webrtc/media:rtc_media",
       "//third_party/webrtc/modules/desktop_capture:primitives",

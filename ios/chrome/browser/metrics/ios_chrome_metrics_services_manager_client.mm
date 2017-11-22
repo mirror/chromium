@@ -63,7 +63,7 @@ std::unique_ptr<rappor::RapporServiceImpl>
 IOSChromeMetricsServicesManagerClient::CreateRapporServiceImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
   return base::MakeUnique<rappor::RapporServiceImpl>(
-      local_state_, base::Bind(&TabModelList::IsOffTheRecordSessionActive));
+      local_state_, base::Bind(&::IsOffTheRecordSessionActive));
 }
 
 std::unique_ptr<variations::VariationsService>
@@ -116,5 +116,9 @@ IOSChromeMetricsServicesManagerClient::GetMetricsStateManager() {
 }
 
 bool IOSChromeMetricsServicesManagerClient::IsIncognitoSessionActive() {
-  return TabModelList::IsOffTheRecordSessionActive();
+  // return ::IsOffTheRecordSessionActive();
+  // TODO(crbug.com/734091): Conservatively set to true until there is a test
+  // to ensure it gets re-queried when an incognito tab is opened.  This
+  // effectively disables UKM.
+  return true;
 }

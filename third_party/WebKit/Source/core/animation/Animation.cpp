@@ -440,8 +440,7 @@ void Animation::NotifyStartTime(double timeline_time) {
   }
 }
 
-bool Animation::Affects(const Element& element,
-                        const CSSProperty& property) const {
+bool Animation::Affects(const Element& element, CSSPropertyID property) const {
   if (!content_ || !content_->IsKeyframeEffectReadOnly())
     return false;
 

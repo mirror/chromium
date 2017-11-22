@@ -6,7 +6,6 @@
 #ifndef FontFaceSet_h
 #define FontFaceSet_h
 
-#include "base/macros.h"
 #include "bindings/core/v8/Iterable.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
@@ -35,6 +34,7 @@ class CORE_EXPORT FontFaceSet : public EventTargetWithInlineData,
                                 public FontFaceSetIterable,
                                 public FontFace::LoadFontCallback {
   DEFINE_WRAPPERTYPEINFO();
+  WTF_MAKE_NONCOPYABLE(FontFaceSet);
 
  public:
   FontFaceSet(ExecutionContext& context)
@@ -89,7 +89,7 @@ class CORE_EXPORT FontFaceSet : public EventTargetWithInlineData,
   virtual bool ResolveFontStyle(const String&, Font&) = 0;
   virtual bool InActiveContext() const = 0;
   virtual FontSelector* GetFontSelector() const = 0;
-  virtual const HeapLinkedHashSet<Member<FontFace>>& CSSConnectedFontFaceList()
+  virtual const HeapListHashSet<Member<FontFace>>& CSSConnectedFontFaceList()
       const = 0;
   bool IsCSSConnectedFontFace(FontFace* font_face) const {
     return CSSConnectedFontFaceList().Contains(font_face);
@@ -109,7 +109,7 @@ class CORE_EXPORT FontFaceSet : public EventTargetWithInlineData,
 
   bool is_loading_;
   bool should_fire_loading_event_;
-  HeapLinkedHashSet<Member<FontFace>> non_css_connected_faces_;
+  HeapListHashSet<Member<FontFace>> non_css_connected_faces_;
   HeapHashSet<Member<FontFace>> loading_fonts_;
   FontFaceArray loaded_fonts_;
   FontFaceArray failed_fonts_;
@@ -176,7 +176,6 @@ class CORE_EXPORT FontFaceSet : public EventTargetWithInlineData,
 
   void HandlePendingEventsAndPromises();
   void FireLoadingEvent();
-  DISALLOW_COPY_AND_ASSIGN(FontFaceSet);
 };
 
 }  // namespace blink

@@ -82,22 +82,6 @@ bool KeyframeEffectModelBase::Sample(
   return changed;
 }
 
-namespace {
-
-static const size_t num_compositable_properties = 7;
-
-const CSSProperty** CompositableProperties() {
-  static const CSSProperty*
-      kCompositableProperties[num_compositable_properties] = {
-          &GetCSSPropertyOpacity(),       &GetCSSPropertyRotate(),
-          &GetCSSPropertyScale(),         &GetCSSPropertyTransform(),
-          &GetCSSPropertyTranslate(),     &GetCSSPropertyFilter(),
-          &GetCSSPropertyBackdropFilter()};
-  return kCompositableProperties;
-}
-
-}  // namespace
-
 bool KeyframeEffectModelBase::SnapshotNeutralCompositorKeyframes(
     Element& element,
     const ComputedStyle& old_style,
@@ -105,9 +89,7 @@ bool KeyframeEffectModelBase::SnapshotNeutralCompositorKeyframes(
     const ComputedStyle* parent_style) const {
   bool updated = false;
   EnsureKeyframeGroups();
-  static const CSSProperty** compositable_properties = CompositableProperties();
-  for (size_t i = 0; i < num_compositable_properties; i++) {
-    const CSSProperty& property = *compositable_properties[i];
+  for (CSSPropertyID property : CompositorAnimations::kCompositableProperties) {
     if (CSSPropertyEquality::PropertiesEqual(PropertyHandle(property),
                                              old_style, new_style))
       continue;
@@ -132,9 +114,7 @@ bool KeyframeEffectModelBase::SnapshotAllCompositorKeyframes(
   bool updated = false;
   bool has_neutral_compositable_keyframe = false;
   EnsureKeyframeGroups();
-  static const CSSProperty** compositable_properties = CompositableProperties();
-  for (size_t i = 0; i < num_compositable_properties; i++) {
-    const CSSProperty& property = *compositable_properties[i];
+  for (CSSPropertyID property : CompositorAnimations::kCompositableProperties) {
     PropertySpecificKeyframeGroup* keyframe_group =
         keyframe_groups_->at(PropertyHandle(property));
     if (!keyframe_group)
@@ -196,10 +176,10 @@ Vector<double> KeyframeEffectModelBase::GetComputedOffsets(
 }
 
 bool KeyframeEffectModelBase::IsTransformRelatedEffect() const {
-  return Affects(PropertyHandle(GetCSSPropertyTransform())) ||
-         Affects(PropertyHandle(GetCSSPropertyRotate())) ||
-         Affects(PropertyHandle(GetCSSPropertyScale())) ||
-         Affects(PropertyHandle(GetCSSPropertyTranslate()));
+  return Affects(PropertyHandle(CSSPropertyTransform)) ||
+         Affects(PropertyHandle(CSSPropertyRotate)) ||
+         Affects(PropertyHandle(CSSPropertyScale)) ||
+         Affects(PropertyHandle(CSSPropertyTranslate));
 }
 
 void KeyframeEffectModelBase::EnsureKeyframeGroups() const {

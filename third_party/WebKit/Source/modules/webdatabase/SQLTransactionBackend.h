@@ -31,7 +31,6 @@
 #include <memory>
 #include "modules/webdatabase/DatabaseBasicTypes.h"
 #include "modules/webdatabase/SQLStatement.h"
-#include "modules/webdatabase/SQLStatementBackend.h"
 #include "modules/webdatabase/SQLTransactionStateMachine.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Deque.h"
@@ -43,6 +42,7 @@ namespace blink {
 class Database;
 class SQLErrorData;
 class SQLiteTransaction;
+class SQLStatementBackend;
 class SQLTransaction;
 class SQLTransactionBackend;
 class SQLValue;

@@ -40,16 +40,6 @@
 
 @property(nonatomic, strong) UIViewController* locationBarViewController;
 
-// Animates the toolbar so the omnibox is shrinking to its standard state.
-- (void)contractOmnibox;
-// Expands the omnibox to its expanded state, |animated| or not.
-- (void)expandOmniboxAnimated:(BOOL)animated;
-// Updates the view so a snapshot can be taken. It needs to be adapted,
-// depending on if it is a snapshot displayed |onNTP| or not.
-- (void)updateForSideSwipeSnapshotOnNTP:(BOOL)onNTP;
-// Resets the view after taking a snapshot for a side swipe.
-- (void)resetAfterSideSwipeSnapshot;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_CLEAN_TOOLBAR_VIEW_CONTROLLER_H_

@@ -19,11 +19,6 @@ class scoped_refptr;
 
 namespace base {
 
-template <class, typename>
-class RefCounted;
-template <class, typename>
-class RefCountedThreadSafe;
-
 template <typename T>
 scoped_refptr<T> AdoptRef(T* t);
 
@@ -33,25 +28,6 @@ enum AdoptRefTag { kAdoptRefTag };
 enum StartRefCountFromZeroTag { kStartRefCountFromZeroTag };
 enum StartRefCountFromOneTag { kStartRefCountFromOneTag };
 
-template <typename T, typename U, typename V>
-constexpr bool IsRefCountPreferenceOverridden(const T*,
-                                              const RefCounted<U, V>*) {
-  return !std::is_same<std::decay_t<decltype(T::kRefCountPreference)>,
-                       std::decay_t<decltype(U::kRefCountPreference)>>::value;
-}
-
-template <typename T, typename U, typename V>
-constexpr bool IsRefCountPreferenceOverridden(
-    const T*,
-    const RefCountedThreadSafe<U, V>*) {
-  return !std::is_same<std::decay_t<decltype(T::kRefCountPreference)>,
-                       std::decay_t<decltype(U::kRefCountPreference)>>::value;
-}
-
-constexpr bool IsRefCountPreferenceOverridden(...) {
-  return false;
-}
-
 }  // namespace subtle
 
 // Creates a scoped_refptr from a raw pointer without incrementing the reference
@@ -59,7 +35,7 @@ constexpr bool IsRefCountPreferenceOverridden(...) {
 // from 1 instead of 0.
 template <typename T>
 scoped_refptr<T> AdoptRef(T* obj) {
-  using Tag = std::decay_t<decltype(T::kRefCountPreference)>;
+  using Tag = typename std::decay<decltype(T::kRefCountPreference)>::type;
   static_assert(std::is_same<subtle::StartRefCountFromOneTag, Tag>::value,
                 "Use AdoptRef only for the reference count starts from one.");
 
@@ -191,11 +167,6 @@ class scoped_refptr {
   }
 
   ~scoped_refptr() {
-    static_assert(!base::subtle::IsRefCountPreferenceOverridden(
-                      static_cast<T*>(nullptr), static_cast<T*>(nullptr)),
-                  "It's unsafe to override the ref count preference."
-                  " Please remove REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE"
-                  " from subclasses.");
     if (ptr_)
       Release(ptr_);
   }

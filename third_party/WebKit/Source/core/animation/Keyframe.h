@@ -21,7 +21,6 @@ using PropertyHandleSet = HashSet<PropertyHandle>;
 
 class Element;
 class ComputedStyle;
-class V8ObjectBuilder;
 
 // A base class representing an animation keyframe.
 //
@@ -102,12 +101,6 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
     return the_clone;
   }
 
-  // Add the properties represented by this keyframe to the given V8 object.
-  //
-  // Subclasses should override this to add the (property, value) pairs they
-  // store, and call into the base version to add the basic Keyframe properties.
-  virtual void AddKeyframePropertiesToV8Object(V8ObjectBuilder&) const;
-
   virtual bool IsStringKeyframe() const { return false; }
   virtual bool IsTransitionKeyframe() const { return false; }
 
@@ -132,7 +125,7 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
     // FIXME: Remove this once CompositorAnimations no longer depends on
     // AnimatableValues
     virtual bool PopulateAnimatableValue(
-        const CSSProperty&,
+        CSSPropertyID,
         Element&,
         const ComputedStyle& base_style,
         const ComputedStyle* parent_style) const {

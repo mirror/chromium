@@ -478,10 +478,10 @@ ProfileImpl::ProfileImpl(
 
 #if defined(OS_CHROMEOS)
   if (chromeos::ProfileHelper::IsSigninProfile(this))
-    RegisterLoginProfilePrefs(pref_registry_.get());
+    chrome::RegisterLoginProfilePrefs(pref_registry_.get());
   else
 #endif
-    RegisterUserProfilePrefs(pref_registry_.get());
+  chrome::RegisterUserProfilePrefs(pref_registry_.get());
 
   BrowserContextDependencyManager::GetInstance()->
       RegisterProfilePrefsForServices(this, pref_registry_.get());
@@ -864,8 +864,8 @@ void ProfileImpl::OnLocaleReady() {
   SCOPED_UMA_HISTOGRAM_TIMER("Profile.OnLocaleReadyTime");
   // Migrate obsolete prefs.
   if (g_browser_process->local_state())
-    MigrateObsoleteBrowserPrefs(this, g_browser_process->local_state());
-  MigrateObsoleteProfilePrefs(this);
+    chrome::MigrateObsoleteBrowserPrefs(this, g_browser_process->local_state());
+  chrome::MigrateObsoleteProfilePrefs(this);
 
   // |kSessionExitType| was added after |kSessionExitedCleanly|. If the pref
   // value is empty fallback to checking for |kSessionExitedCleanly|.

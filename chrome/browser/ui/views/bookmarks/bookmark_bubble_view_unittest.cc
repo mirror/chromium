@@ -50,8 +50,11 @@ class BookmarkBubbleViewTest : public BrowserWithTestWindowTest {
   }
 
   // BrowserWithTestWindowTest:
-  TestingProfile::TestingFactories GetTestingFactories() override {
-    return {{SigninManagerFactory::GetInstance(), BuildFakeSigninManagerBase}};
+  TestingProfile* CreateProfile() override {
+    TestingProfile::Builder builder;
+    builder.AddTestingFactory(SigninManagerFactory::GetInstance(),
+                              BuildFakeSigninManagerBase);
+    return builder.Build().release();
   }
 
  protected:

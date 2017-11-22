@@ -5,7 +5,6 @@
 #include "components/sync/engine_impl/loopback_server/persistent_unique_client_entity.h"
 
 #include "base/guid.h"
-#include "base/memory/ptr_util.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "components/sync/base/hash_util.h"
@@ -39,13 +38,10 @@ std::unique_ptr<LoopbackServerEntity>
 PersistentUniqueClientEntity::CreateFromEntity(
     const sync_pb::SyncEntity& client_entity) {
   ModelType model_type = GetModelTypeFromSpecifics(client_entity.specifics());
-  if (client_entity.has_client_defined_unique_tag() ==
-      syncer::CommitOnlyTypes().Has(model_type)) {
-    DLOG(WARNING) << "A UniqueClientEntity should have a client-defined unique "
-                     "tag iff it is not a CommitOnly type.";
-    return nullptr;
-  }
-
+  DCHECK_NE(client_entity.has_client_defined_unique_tag(),
+            syncer::CommitOnlyTypes().Has(model_type))
+      << "A UniqueClientEntity should have a client-defined unique tag iff it "
+         "is not a CommitOnly type.";
   // Without model type specific logic for each CommitOnly type, we cannot infer
   // a reasonable tag from the specifics. We need uniqueness for how the server
   // holds onto all objects, so simply make a new tag from a random  number.
@@ -53,7 +49,7 @@ PersistentUniqueClientEntity::CreateFromEntity(
                              ? client_entity.client_defined_unique_tag()
                              : base::Uint64ToString(base::RandUint64());
   string id = LoopbackServerEntity::CreateId(model_type, effective_tag);
-  return base::WrapUnique(new PersistentUniqueClientEntity(
+  return std::unique_ptr<LoopbackServerEntity>(new PersistentUniqueClientEntity(
       id, model_type, client_entity.version(), client_entity.name(),
       client_entity.client_defined_unique_tag(), client_entity.specifics(),
       client_entity.ctime(), client_entity.mtime()));
@@ -63,16 +59,14 @@ PersistentUniqueClientEntity::CreateFromEntity(
 std::unique_ptr<LoopbackServerEntity>
 PersistentUniqueClientEntity::CreateFromEntitySpecifics(
     const string& name,
-    const sync_pb::EntitySpecifics& entity_specifics,
-    int64_t creation_time,
-    int64_t last_modified_time) {
+    const sync_pb::EntitySpecifics& entity_specifics) {
   ModelType model_type = GetModelTypeFromSpecifics(entity_specifics);
   string client_defined_unique_tag = GenerateSyncableHash(model_type, name);
   string id =
       LoopbackServerEntity::CreateId(model_type, client_defined_unique_tag);
-  return base::WrapUnique(new PersistentUniqueClientEntity(
+  return std::unique_ptr<LoopbackServerEntity>(new PersistentUniqueClientEntity(
       id, model_type, 0, name, client_defined_unique_tag, entity_specifics,
-      creation_time, last_modified_time));
+      1337, 1337));
 }
 
 bool PersistentUniqueClientEntity::RequiresParentId() const {

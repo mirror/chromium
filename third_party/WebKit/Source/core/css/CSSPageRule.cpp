@@ -27,7 +27,6 @@
 #include "core/css/PropertySetCSSStyleDeclaration.h"
 #include "core/css/StyleRule.h"
 #include "core/css/parser/CSSParser.h"
-#include "core/dom/ExecutionContext.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -55,10 +54,9 @@ String CSSPageRule::selectorText() const {
   return text.ToString();
 }
 
-void CSSPageRule::setSelectorText(const ExecutionContext* execution_context,
-                                  const String& selector_text) {
-  CSSParserContext* context = CSSParserContext::Create(
-      ParserContext(execution_context->SecureContextMode()), nullptr);
+void CSSPageRule::setSelectorText(const String& selector_text) {
+  CSSParserContext* context =
+      CSSParserContext::Create(ParserContext(), nullptr);
   DCHECK(context);
   CSSSelectorList selector_list = CSSParser::ParsePageSelector(
       *context, parentStyleSheet() ? parentStyleSheet()->Contents() : nullptr,

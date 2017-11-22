@@ -11,7 +11,6 @@
 #include <stdint.h>
 #import <UIKit/UIKit.h>
 
-#include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
@@ -189,10 +188,7 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(kPropertyAnimationsToolbar)},
     {"new-fullscreen-controller", flag_descriptions::kNewFullscreenName,
      flag_descriptions::kNewFullscreenDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(fullscreen::features::kNewFullscreen)},
-    {"clean-toolbar", flag_descriptions::kCleanToolbarName,
-     flag_descriptions::kCleanToolbarDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kCleanToolbar)}};
+     FEATURE_VALUE_TYPE(fullscreen::features::kNewFullscreen)}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
@@ -224,6 +220,14 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
 
     command_line->AppendSwitchASCII(switches::kUserAgent,
                                     web::BuildUserAgentFromProduct(product));
+  }
+
+  // Populate command line flag for Suggestions UI display.
+  NSString* enableSuggestions = [defaults stringForKey:@"EnableSuggestions"];
+  if ([enableSuggestions isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableSuggestionsUI);
+  } else if ([enableSuggestions isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableSuggestionsUI);
   }
 
   // Populate command line flag for fetching missing favicons for NTP tiles.
@@ -302,7 +306,7 @@ void ConvertFlagsToSwitches(flags_ui::FlagsStorage* flags_storage,
                             base::CommandLine* command_line) {
   FlagsStateSingleton::GetFlagsState()->ConvertFlagsToSwitches(
       flags_storage, command_line, flags_ui::kAddSentinels,
-      switches::kEnableFeatures, switches::kDisableFeatures);
+      switches::kEnableIOSFeatures, switches::kDisableIOSFeatures);
   AppendSwitchesFromExperimentalSettings(command_line);
 }
 

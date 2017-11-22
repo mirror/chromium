@@ -129,11 +129,8 @@ const char kSlowDownCompositingScaleFactor[] =
 
 #if BUILDFLAG(ENABLE_MUS)
 // Used to enable the mus service (aka the UI service). This makes mus run in
-// process. It is also used to notify the clients that the UI service is being
-// used. If the value of this flag is set to kMusHostVizValue, then that means
-// the UI service is hosting the viz service.
+// process.
 const char kMus[] = "mus";
-const char kMusHostVizValue[] = "viz";
 #endif
 
 }  // namespace switches

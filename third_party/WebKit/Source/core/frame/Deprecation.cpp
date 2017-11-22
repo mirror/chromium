@@ -538,6 +538,12 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
              "https://www.chromestatus.com/feature/5735596811091968 for more "
              "details.";
 
+    case WebFeature::kCredentialManagerCredentialRequestOptionsUnmediated:
+      return replacedWillBeRemoved(
+          "The boolean flag CredentialRequestOptions.unmediated",
+          "the CredentialRequestOptions.mediation enum", M62,
+          "6076479909658624");
+
     case WebFeature::kCredentialManagerIdName:
     case WebFeature::kCredentialManagerPasswordName:
     case WebFeature::kCredentialManagerAdditionalData:
@@ -556,6 +562,11 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
           "payment method name \"basic-card\" with issuer network in the "
           "\"supportedNetworks\" field",
           M64, "5725727580225536");
+    case WebFeature::kCredentialManagerRequireUserMediation:
+      return replacedWillBeRemoved(
+          "The CredentialsContainer.requireUserMediation method",
+          "the CredentialsContainer.preventSilentAccess method", M62,
+          "4781762488041472");
     case WebFeature::kDeprecatedTimingFunctionStepMiddle:
       return replacedWillBeRemoved(
           "The step timing function with step position 'middle'",

@@ -5,7 +5,6 @@
 #ifndef CSSMathSum_h
 #define CSSMathSum_h
 
-#include "base/macros.h"
 #include "core/css/cssom/CSSMathVariadic.h"
 
 namespace blink {
@@ -13,6 +12,7 @@ namespace blink {
 // Represents the sum of one or more CSSNumericValues.
 // See CSSMathSum.idl for more information about this class.
 class CORE_EXPORT CSSMathSum final : public CSSMathVariadic {
+  WTF_MAKE_NONCOPYABLE(CSSMathSum);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -30,7 +30,6 @@ class CORE_EXPORT CSSMathSum final : public CSSMathVariadic {
  private:
   CSSMathSum(CSSNumericArray* values, const CSSNumericValueType& type)
       : CSSMathVariadic(values, type) {}
-  DISALLOW_COPY_AND_ASSIGN(CSSMathSum);
 };
 
 }  // namespace blink

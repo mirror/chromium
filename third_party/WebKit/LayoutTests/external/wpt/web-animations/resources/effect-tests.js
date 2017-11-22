@@ -1,5 +1,3 @@
-'use strict';
-
 // Common utility methods for testing animation effects
 
 // Tests the |property| member of |animation's| target effect's computed timing

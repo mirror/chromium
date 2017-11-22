@@ -116,24 +116,27 @@ bool VideoLayerImpl::WillDraw(DrawMode draw_mode,
     DCHECK_GT(external_resources.software_resource, viz::kInvalidResourceId);
     software_resource_ = external_resources.software_resource;
     software_release_callback_ =
-        std::move(external_resources.software_release_callback);
+        external_resources.software_release_callback;
     return true;
   }
   frame_resource_offset_ = external_resources.offset;
   frame_resource_multiplier_ = external_resources.multiplier;
   frame_bits_per_channel_ = external_resources.bits_per_channel;
 
-  DCHECK_EQ(external_resources.resources.size(),
+  DCHECK_EQ(external_resources.mailboxes.size(),
             external_resources.release_callbacks.size());
   ResourceProvider::ResourceIdArray resource_ids;
-  resource_ids.reserve(external_resources.resources.size());
-  for (size_t i = 0; i < external_resources.resources.size(); ++i) {
-    unsigned resource_id = resource_provider->ImportResource(
-        external_resources.resources[i],
+  resource_ids.reserve(external_resources.mailboxes.size());
+  for (size_t i = 0; i < external_resources.mailboxes.size(); ++i) {
+    unsigned resource_id = resource_provider->CreateResourceFromTextureMailbox(
+        external_resources.mailboxes[i],
         viz::SingleReleaseCallback::Create(
-            std::move(external_resources.release_callbacks[i])));
-    frame_resources_.push_back(
-        FrameResource(resource_id, external_resources.resources[i].size));
+            std::move(external_resources.release_callbacks[i])),
+        external_resources.read_lock_fences_enabled,
+        external_resources.buffer_format);
+    frame_resources_.push_back(FrameResource(
+        resource_id, external_resources.mailboxes[i].size_in_pixels(),
+        external_resources.mailboxes[i].is_overlay_candidate()));
     resource_ids.push_back(resource_id);
   }
 
@@ -333,11 +336,13 @@ void VideoLayerImpl::DidDraw(LayerTreeResourceProvider* resource_provider) {
   if (frame_resource_type_ ==
       VideoFrameExternalResources::SOFTWARE_RESOURCE) {
     DCHECK_GT(software_resource_, viz::kInvalidResourceId);
-    std::move(software_release_callback_).Run(gpu::SyncToken(), false);
+    software_release_callback_.Run(gpu::SyncToken(), false);
+
     software_resource_ = viz::kInvalidResourceId;
+    software_release_callback_.Reset();
   } else {
-    for (const FrameResource& resource : frame_resources_)
-      resource_provider->RemoveImportedResource(resource.id);
+    for (size_t i = 0; i < frame_resources_.size(); ++i)
+      resource_provider->DeleteResource(frame_resources_[i].id);
     frame_resources_.clear();
   }
 

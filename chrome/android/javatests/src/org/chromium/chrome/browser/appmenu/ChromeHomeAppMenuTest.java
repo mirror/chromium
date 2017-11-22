@@ -8,7 +8,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.text.TextUtils;
@@ -92,12 +91,6 @@ public class ChromeHomeAppMenuTest {
         public void dismissed(String feature) {
             Assert.assertEquals("Wrong feature dismissed.", mEnabledFeature, feature);
             mDimissedCallbackHelper.notifyCalled();
-        }
-
-        @Nullable
-        @Override
-        public DisplayLockHandle acquireDisplayLock() {
-            return null;
         }
 
         @Override

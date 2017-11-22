@@ -33,23 +33,23 @@ namespace {
 
 const viz::ResourceFormat kRGBResourceFormat = viz::RGBA_8888;
 
-VideoFrameExternalResources::ResourceType ExternalResourceTypeForHardwarePlanes(
-    GLuint format,
-    GLuint target,
-    int num_textures,
+VideoFrameExternalResources::ResourceType ResourceTypeForVideoFrame(
+    media::VideoFrame* video_frame,
     gfx::BufferFormat* buffer_format,
     bool use_stream_video_draw_quad) {
-  *buffer_format = gfx::BufferFormat::RGBA_8888;
-  switch (format) {
+  DCHECK(buffer_format);
+  switch (video_frame->format()) {
     case media::PIXEL_FORMAT_ARGB:
     case media::PIXEL_FORMAT_XRGB:
     case media::PIXEL_FORMAT_UYVY:
-      switch (target) {
+      switch (video_frame->mailbox_holder(0).texture_target) {
         case GL_TEXTURE_EXTERNAL_OES:
-          if (use_stream_video_draw_quad)
+          if (use_stream_video_draw_quad &&
+              !video_frame->metadata()->IsTrue(
+                  media::VideoFrameMetadata::COPY_REQUIRED))
             return VideoFrameExternalResources::STREAM_TEXTURE_RESOURCE;
         case GL_TEXTURE_2D:
-          return (format == media::PIXEL_FORMAT_XRGB)
+          return (video_frame->format() == media::PIXEL_FORMAT_XRGB)
                      ? VideoFrameExternalResources::RGB_RESOURCE
                      : VideoFrameExternalResources::RGBA_PREMULTIPLIED_RESOURCE;
         case GL_TEXTURE_RECTANGLE_ARB:
@@ -63,11 +63,11 @@ VideoFrameExternalResources::ResourceType ExternalResourceTypeForHardwarePlanes(
       return VideoFrameExternalResources::YUV_RESOURCE;
       break;
     case media::PIXEL_FORMAT_NV12:
-      switch (target) {
+      switch (video_frame->mailbox_holder(0).texture_target) {
         case GL_TEXTURE_EXTERNAL_OES:
         case GL_TEXTURE_2D:
           // Single plane textures can be sampled as RGB.
-          if (num_textures > 1) {
+          if (video_frame->NumTextures() > 1) {
             return VideoFrameExternalResources::YUV_RESOURCE;
           } else {
             *buffer_format = gfx::BufferFormat::YUV_420_BIPLANAR;
@@ -177,13 +177,20 @@ void VideoResourceUpdater::PlaneResource::SetUniqueId(int unique_frame_id,
   has_unique_frame_id_and_plane_index_ = true;
 }
 
-VideoFrameExternalResources::VideoFrameExternalResources() = default;
-VideoFrameExternalResources::~VideoFrameExternalResources() = default;
+VideoFrameExternalResources::VideoFrameExternalResources()
+    : type(NONE),
+      read_lock_fences_enabled(false),
+      buffer_format(gfx::BufferFormat::RGBA_8888),
+      offset(0.0f),
+      multiplier(1.0f),
+      bits_per_channel(8) {}
 
 VideoFrameExternalResources::VideoFrameExternalResources(
     VideoFrameExternalResources&& other) = default;
 VideoFrameExternalResources& VideoFrameExternalResources::operator=(
     VideoFrameExternalResources&& other) = default;
+
+VideoFrameExternalResources::~VideoFrameExternalResources() {}
 
 VideoResourceUpdater::VideoResourceUpdater(
     viz::ContextProvider* context_provider,
@@ -434,16 +441,16 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
                      plane_resource.resource_id());
       external_resources.type = VideoFrameExternalResources::SOFTWARE_RESOURCE;
     } else {
+      // Set the sync token otherwise resource is assumed to be synchronized.
       gpu::SyncToken sync_token;
       GenerateCompositorSyncToken(context_provider_->ContextGL(), &sync_token);
 
-      GLuint target = resource_provider_->GetResourceTextureTarget(
-          plane_resource.resource_id());
-      auto transfer_resource = viz::TransferableResource::MakeGL(
-          plane_resource.mailbox(), GL_LINEAR, target, sync_token);
-      transfer_resource.color_space = output_color_space;
+      viz::TextureMailbox mailbox(plane_resource.mailbox(), sync_token,
+                                  resource_provider_->GetResourceTextureTarget(
+                                      plane_resource.resource_id()));
+      mailbox.set_color_space(output_color_space);
 
-      external_resources.resources.push_back(std::move(transfer_resource));
+      external_resources.mailboxes.push_back(mailbox);
       external_resources.release_callbacks.push_back(
           base::Bind(&RecycleResource, weak_ptr_factory_.GetWeakPtr(),
                      plane_resource.resource_id()));
@@ -568,12 +575,13 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
 
   for (size_t i = 0; i < plane_resources.size(); ++i) {
     PlaneResource& plane_resource = *plane_resources[i];
-    GLuint target = resource_provider_->GetResourceTextureTarget(
-        plane_resource.resource_id());
-    auto transfer_resource = viz::TransferableResource::MakeGL(
-        plane_resource.mailbox(), GL_LINEAR, target, sync_token);
-    transfer_resource.color_space = output_color_space;
-    external_resources.resources.push_back(std::move(transfer_resource));
+    // VideoResourceUpdater shares a context with the compositor so a
+    // sync token is not required.
+    viz::TextureMailbox mailbox(plane_resource.mailbox(), sync_token,
+                                resource_provider_->GetResourceTextureTarget(
+                                    plane_resource.resource_id()));
+    mailbox.set_color_space(output_color_space);
+    external_resources.mailboxes.push_back(mailbox);
     external_resources.release_callbacks.push_back(
         base::Bind(&RecycleResource, weak_ptr_factory_.GetWeakPtr(),
                    plane_resource.resource_id()));
@@ -601,7 +609,7 @@ void VideoResourceUpdater::ReturnTexture(
 
 // Create a copy of a texture-backed source video frame in a new GL_TEXTURE_2D
 // texture.
-void VideoResourceUpdater::CopyHardwarePlane(
+void VideoResourceUpdater::CopyPlaneTexture(
     media::VideoFrame* video_frame,
     const gfx::ColorSpace& resource_color_space,
     const gpu::MailboxHolder& mailbox_holder,
@@ -640,10 +648,11 @@ void VideoResourceUpdater::CopyHardwarePlane(
   SyncTokenClientImpl client(gl, gpu::SyncToken());
   gpu::SyncToken sync_token = video_frame->UpdateReleaseSyncToken(&client);
 
-  auto transfer_resource = viz::TransferableResource::MakeGL(
-      resource->mailbox(), GL_LINEAR, GL_TEXTURE_2D, sync_token);
-  transfer_resource.color_space = resource_color_space;
-  external_resources->resources.push_back(std::move(transfer_resource));
+  // Set sync token otherwise resource is assumed to be synchronized.
+  viz::TextureMailbox mailbox(resource->mailbox(), sync_token, GL_TEXTURE_2D,
+                              video_frame->coded_size(), false);
+  mailbox.set_color_space(resource_color_space);
+  external_resources->mailboxes.push_back(mailbox);
 
   external_resources->release_callbacks.push_back(
       base::Bind(&RecycleResource, weak_ptr_factory_.GetWeakPtr(),
@@ -658,19 +667,14 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForHardwarePlanes(
     return VideoFrameExternalResources();
 
   VideoFrameExternalResources external_resources;
+  if (video_frame->metadata()->IsTrue(
+          media::VideoFrameMetadata::READ_LOCK_FENCES_ENABLED)) {
+    external_resources.read_lock_fences_enabled = true;
+  }
   gfx::ColorSpace resource_color_space = video_frame->ColorSpace();
 
-  bool copy_required =
-      video_frame->metadata()->IsTrue(media::VideoFrameMetadata::COPY_REQUIRED);
-
-  GLuint target = video_frame->mailbox_holder(0).texture_target;
-  // If |copy_required| then we will copy into a GL_TEXTURE_2D target.
-  if (copy_required)
-    target = GL_TEXTURE_2D;
-
-  gfx::BufferFormat buffer_format;
-  external_resources.type = ExternalResourceTypeForHardwarePlanes(
-      video_frame->format(), target, video_frame->NumTextures(), &buffer_format,
+  external_resources.type = ResourceTypeForVideoFrame(
+      video_frame.get(), &external_resources.buffer_format,
       use_stream_video_draw_quad_);
   if (external_resources.type == VideoFrameExternalResources::NONE) {
     DLOG(ERROR) << "Unsupported Texture format"
@@ -686,28 +690,24 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForHardwarePlanes(
     if (mailbox_holder.mailbox.IsZero())
       break;
 
-    if (copy_required) {
-      CopyHardwarePlane(video_frame.get(), resource_color_space, mailbox_holder,
-                        &external_resources);
+    if (video_frame->metadata()->IsTrue(
+            media::VideoFrameMetadata::COPY_REQUIRED)) {
+      CopyPlaneTexture(video_frame.get(), resource_color_space, mailbox_holder,
+                       &external_resources);
     } else {
-      auto transfer_resource = viz::TransferableResource::MakeGLOverlay(
-          mailbox_holder.mailbox, GL_LINEAR, mailbox_holder.texture_target,
-          mailbox_holder.sync_token, video_frame->coded_size(),
+      viz::TextureMailbox mailbox(
+          mailbox_holder.mailbox, mailbox_holder.sync_token,
+          mailbox_holder.texture_target, video_frame->coded_size(),
           video_frame->metadata()->IsTrue(
               media::VideoFrameMetadata::ALLOW_OVERLAY));
-      transfer_resource.color_space = resource_color_space;
-      transfer_resource.read_lock_fences_enabled =
-          video_frame->metadata()->IsTrue(
-              media::VideoFrameMetadata::READ_LOCK_FENCES_ENABLED);
-      transfer_resource.buffer_format = buffer_format;
+      mailbox.set_color_space(resource_color_space);
 #if defined(OS_ANDROID)
-      transfer_resource.is_backed_by_surface_texture =
-          video_frame->metadata()->IsTrue(
-              media::VideoFrameMetadata::SURFACE_TEXTURE);
-      transfer_resource.wants_promotion_hint = video_frame->metadata()->IsTrue(
-          media::VideoFrameMetadata::WANTS_PROMOTION_HINT);
+      mailbox.set_is_backed_by_surface_texture(video_frame->metadata()->IsTrue(
+          media::VideoFrameMetadata::SURFACE_TEXTURE));
+      mailbox.set_wants_promotion_hint(video_frame->metadata()->IsTrue(
+          media::VideoFrameMetadata::WANTS_PROMOTION_HINT));
 #endif
-      external_resources.resources.push_back(std::move(transfer_resource));
+      external_resources.mailboxes.push_back(mailbox);
       external_resources.release_callbacks.push_back(base::Bind(
           &ReturnTexture, weak_ptr_factory_.GetWeakPtr(), video_frame));
     }

@@ -10,7 +10,6 @@
 #include "base/macros.h"
 
 class FullscreenControllerObserver;
-class FullscreenModel;
 
 // An object that observes scrolling events in the main content area and
 // calculates how much of the toolbar should be visible as a result.  When the
@@ -38,9 +37,6 @@ class FullscreenController {
   void DecrementDisabledCounter();
 
  private:
-  // The model used to calculate fullscreen state.
-  std::unique_ptr<FullscreenModel> model_;
-
   DISALLOW_COPY_AND_ASSIGN(FullscreenController);
 };
 

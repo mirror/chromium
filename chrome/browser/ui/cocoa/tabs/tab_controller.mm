@@ -83,9 +83,6 @@ class MenuDelegate : public ui::SimpleMenuModel::Delegate {
 
 @property(nonatomic) int currentAttentionTypes;  // Bitmask of AttentionType.
 
-// Recomputes the iconView's frame and updates it with or without animation.
-- (void)updateIconViewFrameWithAnimation:(BOOL)shouldAnimate;
-
 @end
 
 @implementation TabController
@@ -133,23 +130,7 @@ static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
 
 - (id)init {
   if ((self = [super init])) {
-    BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
-
-    // Create the close button.
-    const CGFloat closeButtonXOrigin =
-        isRTL ? kTabTrailingPadding
-              : kInitialTabWidth - kCloseButtonSize - kTabTrailingPadding;
-    NSRect closeButtonFrame = NSMakeRect(closeButtonXOrigin, kTabElementYOrigin,
-                                         kCloseButtonSize, kCloseButtonSize);
-    closeButton_.reset(
-        [[HoverCloseButton alloc] initWithFrame:closeButtonFrame]);
-    [closeButton_
-        setAutoresizingMask:isRTL ? NSViewMaxXMargin : NSViewMinXMargin];
-    [closeButton_ setTarget:self];
-    [closeButton_ setAction:@selector(closeTab:)];
-
-    // Create the TabView. The TabView works directly with the closeButton so
-    // here (the TabView handles adding it as a subview).
+    // Create the TabView.
     base::scoped_nsobject<TabView> tabView([[TabView alloc]
         initWithFrame:NSMakeRect(0, 0, kInitialTabWidth,
                                  [TabController defaultTabHeight])
@@ -160,15 +141,16 @@ static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
     [tabView setPostsBoundsChangedNotifications:NO];
     [super setView:tabView];
 
+    BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
+
     // Add the favicon view.
     NSRect iconViewFrame =
         NSMakeRect(0, kTabElementYOrigin, gfx::kFaviconSize, gfx::kFaviconSize);
     iconView_.reset([[SpriteView alloc] initWithFrame:iconViewFrame]);
     [iconView_ setAutoresizingMask:isRTL ? NSViewMinXMargin | NSViewMinYMargin
                                          : NSViewMaxXMargin | NSViewMinYMargin];
-    [self updateIconViewFrameWithAnimation:NO];
+    [self updateIconViewFrame];
     [tabView addSubview:iconView_];
-    isIconShowing_ = YES;
 
     // Set up the title.
     const CGFloat titleXOrigin =
@@ -179,6 +161,22 @@ static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
                                    kInitialTitleWidth, kTitleHeight);
     [tabView setTitleFrame:titleFrame];
 
+    // Add the close button.
+    const CGFloat closeButtonXOrigin =
+        isRTL ? kTabTrailingPadding
+              : kInitialTabWidth - kCloseButtonSize - kTabTrailingPadding;
+    NSRect closeButtonFrame = NSMakeRect(closeButtonXOrigin, kTabElementYOrigin,
+                                         kCloseButtonSize, kCloseButtonSize);
+    closeButton_.reset([[HoverCloseButton alloc] initWithFrame:
+        closeButtonFrame]);
+    [closeButton_
+        setAutoresizingMask:isRTL ? NSViewMaxXMargin : NSViewMinXMargin];
+    [closeButton_ setTarget:self];
+    [closeButton_ setAction:@selector(closeTab:)];
+
+    [tabView addSubview:closeButton_];
+
+    isIconShowing_ = YES;
     NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self
                       selector:@selector(themeChangedNotification:)
@@ -312,11 +310,11 @@ static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
 - (void)setPinned:(BOOL)pinned {
   if (pinned_ != pinned) {
     pinned_ = pinned;
-    [self updateIconViewFrameWithAnimation:YES];
+    [self updateIconViewFrame];
   }
 }
 
-- (void)updateIconViewFrameWithAnimation:(BOOL)shouldAnimate {
+- (void)updateIconViewFrame {
   NSRect iconViewFrame = [iconView_ frame];
 
   if ([self pinned]) {
@@ -330,11 +328,9 @@ static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
               : kTabLeadingPadding;
   }
 
-  if (shouldAnimate) {
-    [[iconView_ animator] setFrame:iconViewFrame];
-  } else {
-    [iconView_ setFrame:iconViewFrame];
-  }
+  // If the pinned status has changed, animating the view to its new
+  // location looks much better than jumping there.
+  [[iconView_ animator] setFrame:iconViewFrame];
 }
 
 - (SpriteView*)iconView {

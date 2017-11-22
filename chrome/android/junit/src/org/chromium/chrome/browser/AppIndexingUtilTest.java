@@ -20,6 +20,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.robolectric.annotation.Config;
 
 import org.chromium.blink.mojom.document_metadata.CopylessPaste;
@@ -38,7 +40,7 @@ public class AppIndexingUtilTest {
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();
     @Spy
-    private AppIndexingUtil mUtil = new AppIndexingUtil();
+    AppIndexingUtil mUtil = new AppIndexingUtil();
     @Mock
     private AppIndexingReporter mReporter;
     @Mock
@@ -57,15 +59,20 @@ public class AppIndexingUtilTest {
         doReturn("http://www.test.com").when(mTab).getUrl();
         doReturn("My neat website").when(mTab).getTitle();
         doReturn(0L).when(mUtil).getElapsedTime();
-        doAnswer(invocation -> {
-            CopylessPaste.GetEntitiesResponse callback =
-                    (CopylessPaste.GetEntitiesResponse) invocation.getArguments()[0];
-            WebPage webpage = new WebPage();
-            webpage.url = createUrl("http://www.test.com");
-            webpage.title = "My neat website";
-            callback.call(webpage);
-            return null;
-        }).when(mCopylessPaste).getEntities(any(CopylessPaste.GetEntitiesResponse.class));
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) {
+                CopylessPaste.GetEntitiesResponse callback =
+                        (CopylessPaste.GetEntitiesResponse) invocation.getArguments()[0];
+                WebPage webpage = new WebPage();
+                webpage.url = createUrl("http://www.test.com");
+                webpage.title = "My neat website";
+                callback.call(webpage);
+                return null;
+            }
+        })
+                .when(mCopylessPaste)
+                .getEntities(any(CopylessPaste.GetEntitiesResponse.class));
     }
 
     @Test
@@ -101,12 +108,17 @@ public class AppIndexingUtilTest {
 
     @Test
     public void testCacheHit_noEntity() {
-        doAnswer(invocation -> {
-            CopylessPaste.GetEntitiesResponse callback =
-                    (CopylessPaste.GetEntitiesResponse) invocation.getArguments()[0];
-            callback.call(null);
-            return null;
-        }).when(mCopylessPaste).getEntities(any(CopylessPaste.GetEntitiesResponse.class));
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) {
+                CopylessPaste.GetEntitiesResponse callback =
+                        (CopylessPaste.GetEntitiesResponse) invocation.getArguments()[0];
+                callback.call(null);
+                return null;
+            }
+        })
+                .when(mCopylessPaste)
+                .getEntities(any(CopylessPaste.GetEntitiesResponse.class));
         mUtil.extractCopylessPasteMetadata(mTab);
 
         doReturn(1L).when(mUtil).getElapsedTime();

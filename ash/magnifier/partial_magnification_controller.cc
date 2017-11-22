@@ -126,6 +126,8 @@ class PartialMagnificationController::ContentMask : public ui::LayerDelegate {
     recorder.canvas()->DrawCircle(rect.CenterPoint(), clipping_radius, flags);
   }
 
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {
     // Redrawing will take care of scale factor change.
@@ -193,6 +195,8 @@ class PartialMagnificationController::BorderRenderer
         magnifier_radius - kBorderSize + kBorderOutlineThickness / 2,
         border_flags);
   }
+
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
 
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {}

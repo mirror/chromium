@@ -27,18 +27,14 @@ void WebContentsViewDelegate::ShowContextMenu(
 void WebContentsViewDelegate::StoreFocus() {
 }
 
-bool WebContentsViewDelegate::RestoreFocus() {
-  return false;
+void WebContentsViewDelegate::RestoreFocus() {
 }
-
-void WebContentsViewDelegate::ResetStoredFocus() {}
 
 bool WebContentsViewDelegate::Focus() {
   return false;
 }
 
-bool WebContentsViewDelegate::TakeFocus(bool reverse) {
-  return false;
+void WebContentsViewDelegate::TakeFocus(bool reverse) {
 }
 
 void WebContentsViewDelegate::SizeChanged(const gfx::Size& size) {

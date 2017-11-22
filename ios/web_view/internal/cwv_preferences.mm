@@ -29,11 +29,11 @@
 #pragma mark - Public Methods
 
 - (void)setTranslationEnabled:(BOOL)enabled {
-  _prefService->SetBoolean(prefs::kOfferTranslateEnabled, enabled);
+  _prefService->SetBoolean(prefs::kEnableTranslate, enabled);
 }
 
 - (BOOL)isTranslationEnabled {
-  return _prefService->GetBoolean(prefs::kOfferTranslateEnabled);
+  return _prefService->GetBoolean(prefs::kEnableTranslate);
 }
 
 - (void)resetTranslationSettings {

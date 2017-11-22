@@ -1078,6 +1078,7 @@ interface CredentialsContainer
     method create
     method get
     method preventSilentAccess
+    method requireUserMediation
     method store
 interface Crypto
     attribute @@toStringTag
@@ -3943,7 +3944,6 @@ interface KeyframeEffect : KeyframeEffectReadOnly
 interface KeyframeEffectReadOnly : AnimationEffectReadOnly
     attribute @@toStringTag
     method constructor
-    method getKeyframes
 interface LinearAccelerationSensor : Accelerometer
     attribute @@toStringTag
     method constructor
@@ -6779,7 +6779,6 @@ interface StylePropertyMap : StylePropertyMapReadonly
     method constructor
     method delete
     method set
-    method update
 interface StylePropertyMapReadonly
     attribute @@toStringTag
     method @@iterator
@@ -9148,6 +9147,7 @@ interface webkitURL
     attribute frames
     attribute gamepadController
     attribute internals
+    attribute layoutTestController
     attribute length
     attribute location
     attribute opener

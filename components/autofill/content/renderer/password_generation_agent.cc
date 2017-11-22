@@ -465,9 +465,9 @@ void PasswordGenerationAgent::DetermineGenerationElement() {
   }
 }
 
-bool PasswordGenerationAgent::SetUpUserTriggeredGeneration() {
+void PasswordGenerationAgent::SetUpUserTriggeredGeneration() {
   if (last_focused_password_element_.IsNull() || !render_frame())
-    return false;
+    return;
 
   blink::WebFormElement form = last_focused_password_element_.Form();
   std::unique_ptr<PasswordForm> password_form;
@@ -479,14 +479,14 @@ bool PasswordGenerationAgent::SetUpUserTriggeredGeneration() {
     const blink::WebLocalFrame& frame = *render_frame()->GetWebFrame();
     blink::WebDocument doc = frame.GetDocument();
     if (doc.IsNull())
-      return false;
+      return;
     password_form = password_agent_->GetPasswordFormFromUnownedInputElements();
     control_elements =
         form_util::GetUnownedFormFieldElements(doc.All(), nullptr);
   }
 
   if (!password_form)
-    return false;
+    return;
 
   generation_element_ = last_focused_password_element_;
   std::vector<blink::WebInputElement> password_elements;
@@ -501,7 +501,6 @@ bool PasswordGenerationAgent::SetUpUserTriggeredGeneration() {
   generation_form_data_.reset(new AccountCreationFormData(
       make_linked_ptr(password_form.release()), password_elements));
   is_manually_triggered_ = true;
-  return true;
 }
 
 bool PasswordGenerationAgent::FocusedNodeHasChanged(
@@ -580,7 +579,7 @@ bool PasswordGenerationAgent::TextDidChangeInTextField(
 }
 
 void PasswordGenerationAgent::ShowGenerationPopup() {
-  if (!render_frame() || generation_element_.IsNull())
+  if (!render_frame())
     return;
   LogMessage(Logger::STRING_GENERATION_RENDERER_SHOW_GENERATION_POPUP);
   GetPasswordManagerClient()->ShowPasswordGenerationPopup(
@@ -624,16 +623,15 @@ void PasswordGenerationAgent::PasswordNoLongerGenerated() {
 }
 
 void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
-  if (SetUpUserTriggeredGeneration())
-    ShowGenerationPopup();
+  SetUpUserTriggeredGeneration();
+  ShowGenerationPopup();
 }
 
 void PasswordGenerationAgent::UserSelectedManualGenerationOption() {
-  if (SetUpUserTriggeredGeneration()) {
-    last_focused_password_element_.SetAutofillValue(blink::WebString());
-    last_focused_password_element_.SetAutofilled(false);
-    ShowGenerationPopup();
-  }
+  SetUpUserTriggeredGeneration();
+  last_focused_password_element_.SetAutofillValue(blink::WebString());
+  last_focused_password_element_.SetAutofilled(false);
+  ShowGenerationPopup();
 }
 
 const mojom::PasswordManagerDriverPtr&

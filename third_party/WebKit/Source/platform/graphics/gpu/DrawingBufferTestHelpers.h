@@ -431,7 +431,7 @@ class DrawingBufferForTests : public DrawingBuffer {
             client,
             false /* discardFramebufferSupported */,
             true /* wantAlphaChannel */,
-            true /* premultipliedAlpha */,
+            false /* premultipliedAlpha */,
             preserve,
             kWebGL1,
             false /* wantDepth */,

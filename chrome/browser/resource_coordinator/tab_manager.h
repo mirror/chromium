@@ -21,7 +21,6 @@
 #include "base/strings/string16.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
-#include "chrome/browser/resource_coordinator/discard_condition.h"
 #include "chrome/browser/resource_coordinator/tab_lifetime_observer.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/sessions/session_restore_observer.h"
@@ -105,25 +104,27 @@ class TabManager : public TabStripModelObserver,
   bool IsTabDiscarded(content::WebContents* contents) const;
 
   // Goes through a list of checks to see if a tab is allowed to be discarded by
-  // the automatic tab discarding mechanism under |condition|. Note that this is
-  // not used when discarding a particular tab from about:discards or from an
-  // extension.
-  bool CanDiscardTab(const TabStats& tab_stats,
-                     DiscardCondition condition) const;
+  // the automatic tab discarding mechanism. Note that this is not used when
+  // discarding a particular tab from about:discards.
+  bool CanDiscardTab(const TabStats& tab_stats) const;
+
+  // Indicates the criticality of the situation when attempting to discard a
+  // tab.
+  enum DiscardTabCondition { kProactiveShutdown, kUrgentShutdown };
 
   // Discards a tab to free the memory occupied by its renderer. The tab still
   // exists in the tab-strip; clicking on it will reload it. If the |condition|
   // is urgent, an aggressive fast-kill will be attempted if the sudden
   // termination disablers are allowed to be ignored (e.g. On ChromeOS, we can
   // ignore an unload handler and fast-kill the tab regardless).
-  void DiscardTab(DiscardCondition condition);
+  void DiscardTab(DiscardTabCondition condition);
 
   // Discards a tab with the given unique ID. The tab still exists in the
   // tab-strip; clicking on it will reload it. Returns null if the tab cannot
   // be found or cannot be discarded. Otherwise returns the new web_contents
   // of the discarded tab.
   content::WebContents* DiscardTabById(int64_t target_web_contents_id,
-                                       DiscardCondition condition);
+                                       DiscardTabCondition condition);
 
   // Method used by the extensions API to discard tabs. If |contents| is null,
   // discards the least important tab using DiscardTab(). Otherwise discards
@@ -134,7 +135,7 @@ class TabManager : public TabStripModelObserver,
   // Log memory statistics for the running processes, then discards a tab.
   // Tab discard happens sometime later, as collecting the statistics touches
   // multiple threads and takes time.
-  void LogMemoryAndDiscardTab(DiscardCondition condition);
+  void LogMemoryAndDiscardTab(DiscardTabCondition condition);
 
   // Log memory statistics for the running processes, then call the callback.
   void LogMemory(const std::string& title, const base::Closure& callback);
@@ -152,6 +153,10 @@ class TabManager : public TabStripModelObserver,
   void AddObserver(TabLifetimeObserver* observer);
   void RemoveObserver(TabLifetimeObserver* observer);
 
+  // Used in tests to change the protection time of the tabs.
+  void set_minimum_protection_time_for_tests(
+      base::TimeDelta minimum_protection_time);
+
   // Returns the auto-discardable state of the tab. When true, the tab is
   // eligible to be automatically discarded when critical memory pressure hits,
   // otherwise the tab is ignored and will never be automatically discarded.
@@ -164,7 +169,8 @@ class TabManager : public TabStripModelObserver,
 
   // Returns true when a given renderer can be purged if the specified
   // renderer is eligible for purging.
-  bool CanPurgeBackgroundedRenderer(int render_process_id) const;
+  // TODO(tasak): rename this to CanPurgeBackgroundedRenderer.
+  bool CanSuspendBackgroundedRenderer(int render_process_id) const;
 
   // Indicates how TabManager should load pending background tabs. The mode is
   // recorded in tracing for easier debugging. The existing explicit numbering
@@ -222,11 +228,6 @@ class TabManager : public TabStripModelObserver,
 
   // Returns the number of tabs open in all browser instances.
   int GetTabCount() const;
-
-  // Duration during which a tab cannot be automatically discarded after having
-  // been active.
-  static constexpr base::TimeDelta kDiscardProtectionTime =
-      base::TimeDelta::FromMinutes(10);
 
  private:
   friend class TabManagerStatsCollectorTest;
@@ -310,7 +311,7 @@ class TabManager : public TabStripModelObserver,
   void OnAutoDiscardableStateChange(content::WebContents* contents,
                                     bool is_auto_discardable);
 
-  static void PurgeMemoryAndDiscardTab(DiscardCondition condition);
+  static void PurgeMemoryAndDiscardTab(DiscardTabCondition condition);
 
   // Returns true if the |url| represents an internal Chrome web UI page that
   // can be easily reloaded and hence makes a good choice to discard.
@@ -365,7 +366,7 @@ class TabManager : public TabStripModelObserver,
   // the operation fails (return value used only in testing).
   content::WebContents* DiscardWebContentsAt(int index,
                                              TabStripModel* model,
-                                             DiscardCondition condition);
+                                             DiscardTabCondition condition);
 
   // Pause or resume background tab opening according to memory pressure change
   // if there are pending background tabs.
@@ -403,7 +404,10 @@ class TabManager : public TabStripModelObserver,
 
   // Implementation of DiscardTab. Returns null if no tab was discarded.
   // Otherwise returns the new web_contents of the discarded tab.
-  content::WebContents* DiscardTabImpl(DiscardCondition condition);
+  content::WebContents* DiscardTabImpl(DiscardTabCondition condition);
+
+  // Returns true if tabs can be discarded only once.
+  bool CanOnlyDiscardOnce() const;
 
   // Returns true if |web_contents| is the active WebContents in the last active
   // Browser.
@@ -492,6 +496,13 @@ class TabManager : public TabStripModelObserver,
 
   // Number of times a tab has been discarded, for statistics.
   int discard_count_;
+
+  // Whether a tab can only ever discarded once.
+  bool discard_once_;
+
+  // This allows protecting tabs for a certain amount of time after being
+  // backgrounded.
+  base::TimeDelta minimum_protection_time_;
 
   // A backgrounded renderer will be purged between min_time_to_purge_ and
   // max_time_to_purge_.

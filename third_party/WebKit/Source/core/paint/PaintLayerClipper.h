@@ -81,8 +81,7 @@ class ClipRectsContext {
                                   ? kIgnoreOverflowClip
                                   : kRespectOverflowClip),
         respect_overflow_clip_for_viewport(
-            (slot == kRootRelativeClipRectsIgnoringViewportClip ||
-             slot == kAbsoluteClipRectsIgnoringViewportClip)
+            slot == kRootRelativeClipRectsIgnoringViewportClip
                 ? kIgnoreOverflowClip
                 : kRespectOverflowClip) {}
 

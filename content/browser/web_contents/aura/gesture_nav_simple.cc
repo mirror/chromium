@@ -138,6 +138,7 @@ class Arrow : public ui::LayerDelegate {
  private:
   // ui::LayerDelegate:
   void OnPaintLayer(const ui::PaintContext& context) override;
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override;
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override;
 
@@ -183,6 +184,8 @@ void Arrow::OnPaintLayer(const ui::PaintContext& context) {
   gfx::Canvas* canvas = recorder.canvas();
   canvas->DrawImageInt(image, 0, 0);
 }
+
+void Arrow::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {}
 
 void Arrow::OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                        float new_device_scale_factor) {}
@@ -239,6 +242,7 @@ class Affordance : public ui::LayerDelegate, public gfx::AnimationDelegate {
 
   // ui::LayerDelegate:
   void OnPaintLayer(const ui::PaintContext& context) override;
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override;
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override;
 
@@ -499,6 +503,8 @@ void Affordance::OnPaintLayer(const ui::PaintContext& context) {
   bg_flags.setLooper(gfx::CreateShadowDrawLooper(shadow));
   canvas->DrawCircle(center_point, kBackgroundRadius, bg_flags);
 }
+
+void Affordance::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {}
 
 void Affordance::OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                             float new_device_scale_factor) {}

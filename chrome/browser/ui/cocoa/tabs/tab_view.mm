@@ -88,6 +88,11 @@ const CGFloat kRapidCloseDist = 2.5;
 + (void)setTabEdgeStrokeColor;
 @end
 
+@interface TabController(Private)
+// The TabView's close button.
+- (HoverCloseButton*)closeButton;
+@end
+
 extern NSString* const _Nonnull NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification;
 
 namespace {
@@ -218,7 +223,6 @@ CGFloat LineWidthFromContext(CGContextRef context) {
   if (self) {
     controller_ = controller;
     closeButton_ = closeButton;
-    [self addSubview:closeButton_];
 
     // Make a text field for the title, but don't add it as a subview.
     // We will use the cell to draw the text directly into our layer,
@@ -715,9 +719,9 @@ CGFloat LineWidthFromContext(CGContextRef context) {
   AlertIndicatorButton* const indicator = [controller_ alertIndicatorButton];
   const int indicatorLeft = (!indicator || [indicator isHidden]) ?
       NSWidth([self frame]) : NSMinX([indicator frame]);
-  const int closeButtonLeft = (!closeButton_ || [closeButton_ isHidden])
-                                  ? NSWidth([self frame])
-                                  : NSMinX([closeButton_ frame]);
+  HoverCloseButton* const closeButton = [controller_ closeButton];
+  const int closeButtonLeft = (!closeButton || [closeButton isHidden]) ?
+      NSWidth([self frame]) : NSMinX([closeButton frame]);
   return std::min(indicatorLeft, closeButtonLeft);
 }
 

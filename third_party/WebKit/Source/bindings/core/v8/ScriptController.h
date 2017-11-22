@@ -31,7 +31,6 @@
 #ifndef ScriptController_h
 #define ScriptController_h
 
-#include "bindings/core/v8/ScriptSourceLocationType.h"
 #include "bindings/core/v8/WindowProxyManager.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
@@ -85,8 +84,7 @@ class CORE_EXPORT ScriptController final
 
   // Evaluate JavaScript in the main world.
   void ExecuteScriptInMainWorld(
-      const String& script,
-      ScriptSourceLocationType = ScriptSourceLocationType::kUnknown,
+      const String&,
       ExecuteScriptPolicy = kDoNotExecuteScriptWhenScriptsDisabled);
   void ExecuteScriptInMainWorld(
       const ScriptSourceCode&,

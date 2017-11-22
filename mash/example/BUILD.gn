@@ -16,7 +16,7 @@ group("example") {
   ]
 
   if (is_chromeos) {
-    deps += [ "//ash:ash_service" ]
+    deps += [ "//ash/mus" ]
   }
 }
 

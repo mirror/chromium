@@ -32,7 +32,6 @@
 
 #include <memory>
 #include "base/memory/scoped_refptr.h"
-#include "base/unguessable_token.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/CoreExport.h"
 #include "core/dom/ViewportDescription.h"
@@ -79,16 +78,13 @@ class CORE_EXPORT DocumentLoader
   USING_GARBAGE_COLLECTED_MIXIN(DocumentLoader);
 
  public:
-  static DocumentLoader* Create(
-      LocalFrame* frame,
-      const ResourceRequest& request,
-      const SubstituteData& data,
-      ClientRedirectPolicy client_redirect_policy,
-      const base::UnguessableToken& devtools_navigation_token) {
+  static DocumentLoader* Create(LocalFrame* frame,
+                                const ResourceRequest& request,
+                                const SubstituteData& data,
+                                ClientRedirectPolicy client_redirect_policy) {
     DCHECK(frame);
 
-    return new DocumentLoader(frame, request, data, client_redirect_policy,
-                              devtools_navigation_token);
+    return new DocumentLoader(frame, request, data, client_redirect_policy);
   }
   ~DocumentLoader() override;
 
@@ -221,26 +217,11 @@ class CORE_EXPORT DocumentLoader
 
   void Trace(blink::Visitor*) override;
 
-  // For automation driver-initiated navigations over the devtools protocol,
-  // |devtools_navigation_token_| is used to tag the navigation. This navigation
-  // token is then sent into the renderer and lands on the DocumentLoader. That
-  // way subsequent Blink-level frame lifecycle events can be associated with
-  // the concrete navigation.
-  // - The value should not be sent back to the browser.
-  // - The value on DocumentLoader may be generated in the renderer in some
-  // cases, and thus shouldn't be trusted.
-  // TODO(crbug.com/783506): Replace devtools navigation token with the generic
-  // navigation token that can be passed from renderer to the browser.
-  const base::UnguessableToken& GetDevToolsNavigationToken() {
-    return devtools_navigation_token_;
-  }
-
  protected:
   DocumentLoader(LocalFrame*,
                  const ResourceRequest&,
                  const SubstituteData&,
-                 ClientRedirectPolicy,
-                 const base::UnguessableToken& devtools_navigation_token);
+                 ClientRedirectPolicy);
 
   static bool ShouldClearWindowName(const LocalFrame&,
                                     SecurityOrigin* previous_security_origin,
@@ -378,7 +359,6 @@ class CORE_EXPORT DocumentLoader
   // Used to protect against reentrancy into dataReceived().
   bool in_data_received_;
   scoped_refptr<SharedBuffer> data_buffer_;
-  base::UnguessableToken devtools_navigation_token_;
 };
 
 DECLARE_WEAK_IDENTIFIER_MAP(DocumentLoader);

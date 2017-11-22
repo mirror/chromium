@@ -688,52 +688,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The reason the bottom sheet was opened.</summary>
 </histogram>
 
-<histogram name="Android.ChromeHome.OpenSheetVelocity.Fail"
-    units="microseconds/dp">
-  <owner>mdjones@chromium.org</owner>
-  <owner>twellington@chromium.org</owner>
-  <summary>
-    Records the reciprocal of the velocity of a swipe that did not result in the
-    bottom sheet opening. This value is recorded in microseconds per dp traveled
-    and is only recorded if the &quot;chrome-home-swipe-logic&quot; experiment
-    is set to &quot;velocity&quot;.
-  </summary>
-</histogram>
-
-<histogram name="Android.ChromeHome.OpenSheetVelocity.Navigation"
-    units="microseconds/dp">
-  <owner>mdjones@chromium.org</owner>
-  <owner>twellington@chromium.org</owner>
-  <summary>
-    Records the reciprocal of the velocity of a swipe that resulted in the
-    bottom sheet opening and the user navigating to a URL or a different sheet
-    content. This value is recorded in microseconds per dp traveled.
-  </summary>
-</histogram>
-
-<histogram name="Android.ChromeHome.OpenSheetVelocity.NoNavigation"
-    units="microseconds/dp">
-  <owner>mdjones@chromium.org</owner>
-  <owner>twellington@chromium.org</owner>
-  <summary>
-    Records the reciprocal of the velocity of a swipe that resulted in the
-    bottom sheet opening but the user taking no action (i.e. the next action is
-    the sheet closing). This value is recorded in microseconds per dp traveled.
-  </summary>
-</histogram>
-
-<histogram name="Android.ChromeHome.OpenSheetVelocity.Success"
-    units="microseconds/dp">
-  <owner>mdjones@chromium.org</owner>
-  <owner>twellington@chromium.org</owner>
-  <summary>
-    Records the reciprocal velocity of a swipe that resulted in the bottom sheet
-    opening. This value is recorded in microseconds per dp traveled and is only
-    recorded if the &quot;chrome-home-swipe-logic&quot; experiment is set to
-    &quot;velocity&quot;.
-  </summary>
-</histogram>
-
 <histogram name="Android.ChromeHome.Promo.Result.Menu"
     enum="ChromeHomePromoResult">
   <owner>mdjones@chromium.org</owner>
@@ -12099,18 +12053,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The errors resulting from interacting with the Trusted Platform Module (TPM)
     device.
-  </summary>
-</histogram>
-
-<histogram base="true" name="CustomTab.SessionDuration" units="ms">
-  <owner>ranj@chromium.org</owner>
-  <owner>yfriedman@chromium.org</owner>
-<!-- Name completed by histogram_suffixes name="CustomTabOpenSource" -->
-
-  <summary>
-    Records the time duration in CustomTab Activity from onStart/onResume to
-    onStop/onPause, if that activity is opened by Webapp/WebApk/Trusted Web
-    Activity.
   </summary>
 </histogram>
 
@@ -28290,17 +28232,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="HttpCache.CantConditionalizeZeroFreshnessFromMemHint"
-    enum="Boolean">
-  <owner>morlovich@chromium.org</owner>
-  <summary>
-    For each request with HttpCache.CantConditionalizeCause == Zero Freshness,
-    this is true iff the zero freshness status was determined by looking at
-    in-memory hints in disk cache index, rather than by opening the entry and
-    looking at headers.
-  </summary>
-</histogram>
-
 <histogram name="HttpCache.EntryLockWait" units="ms">
   <owner>jkarlin@chromium.org</owner>
   <owner>gavinp@chromium.org</owner>
@@ -30536,7 +30467,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="JSDialogs.DismissalCause"
+<histogram name="JSDialogs.DismissalCause"
     enum="JavaScriptDialogDismissalCause">
   <owner>avi@chromium.org</owner>
   <summary>The cause of dismissal of JavaScript dialogs.</summary>
@@ -30572,7 +30503,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="JSDialogs.IsForemost" enum="BooleanForemost">
+<histogram name="JSDialogs.IsForemost" enum="BooleanForemost">
   <owner>avi@chromium.org</owner>
   <summary>
     For dialogs, whether or not they were spawned by a tab that was foremost.
@@ -30587,11 +30518,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="JSDialogs.Scheme" enum="NavigationScheme">
-  <owner>avi@chromium.org</owner>
-  <summary>The scheme of the URL showing a JavaScript dialog.</summary>
-</histogram>
-
 <histogram name="JSDialogs.SiteEngagementOfBeforeUnload" units="%">
   <obsolete>
     Deprecated 2017-10.
@@ -30603,7 +30529,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="JSDialogs.SiteEngagementOfDialogs" units="%">
+<histogram name="JSDialogs.SiteEngagementOfDialogs" units="%">
   <obsolete>
     Deprecated 2016-10. Site engagement needed to be measured in small buckets
     anyway so it was never high-resolution enough for use.
@@ -35730,15 +35656,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>apacible@chromium.org</owner>
   <summary>
     The number of times the user selects a specific cast source type.
-  </summary>
-</histogram>
-
-<histogram name="MediaRouter.WiredDisplay.AvailableDevicesCount">
-  <owner>takumif@chromium.org</owner>
-  <summary>
-    The number of Media Sinks available for Casting a Presentation API URL to
-    local screens. Recorded at most once an hour, when the Wired Display Media
-    Route Provider reports an update on the sink count.
   </summary>
 </histogram>
 
@@ -43890,9 +43807,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.PushedStreamAlreadyHasResponseHeaders" enum="Boolean">
-  <obsolete>
-    Deprecated 11/2017.
-  </obsolete>
   <owner>bnc@chromium.org</owner>
   <summary>
     Records whether HTTP/2 response headers have already arrived on a pushed
@@ -57674,15 +57588,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PartnerBookmark.FaviconThrottleFetchResult"
-    enum="PartnerBookmark.FaviconFetchResult">
-  <owner>thildebr@chromium.org</owner>
-  <summary>
-    The response we got back from our favicon fetching throttler, once for each
-    bookmark at each cold start. Only recorded on Android.
-  </summary>
-</histogram>
-
 <histogram name="PartnerBookmark.Null" enum="BooleanNull">
   <owner>wychen@chromium.org</owner>
   <summary>
@@ -57698,15 +57603,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether reading of partner bookmark is skipped. Logged when using the
     bookmark, and at most once per cold start.
-  </summary>
-</histogram>
-
-<histogram name="PartnerBookmarksFaviconThrottle.NumEntries" units="entries">
-  <owner>thildebr@chromium.org</owner>
-  <summary>
-    Number of elements read from the partner bookmarks favicon cache, recorded
-    once per cold start when reading partner bookmarks. Only recorded on
-    Android.
   </summary>
 </histogram>
 
@@ -58980,20 +58876,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PasswordManager.UsernameDetectionMethod"
-    enum="UsernameDetectionMethod">
-  <owner>kolos@chromium.org</owner>
-  <summary>
-    Measures what method was used for username field detection in the renderer
-    code. The metric may be recorded several times for page visit because it is
-    recorded at every PasswordForm creation. If a site changes HTML attributes
-    of fields or server-side predictions is received, different values can be
-    recorded for the same form. If an outcome of HTML classifier or a
-    server-side prediction coincides with the outcome of base heuristic, the
-    metric points to base heuristic method.
-  </summary>
-</histogram>
-
 <histogram name="PasswordManager.UserStoredPasswordWithInvalidSSLCert"
     enum="Boolean">
   <obsolete>
@@ -59488,13 +59370,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Pepper.BrokerAction" enum="PepperBrokerAction">
-  <owner>raymes@chromium.org</owner>
-  <summary>
-    Counts various actions related to the Pepper Broker interface.
-  </summary>
-</histogram>
-
 <histogram name="Pepper.Graphics3DHasShareGroup" units="BooleanShareGroup">
   <owner>jbauman@chromium.org</owner>
   <summary>
@@ -59541,24 +59416,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether a Pepper media stream request (mic/cam access) comes from a plugin
     in a secure or an insecure origin.
-  </summary>
-</histogram>
-
-<histogram name="Performance.PerformanceMeasurePassedInParameter.EndMark"
-    enum="PerformanceMeasurePassedInParameterType">
-  <owner>maxlg@chromium.org</owner>
-  <summary>
-    The count of possible string of the endMark parameter in
-    performance.measure().
-  </summary>
-</histogram>
-
-<histogram name="Performance.PerformanceMeasurePassedInParameter.StartMark"
-    enum="PerformanceMeasurePassedInParameterType">
-  <owner>maxlg@chromium.org</owner>
-  <summary>
-    The count of possible string of the startMark parameter in
-    performance.measure().
   </summary>
 </histogram>
 
@@ -68346,8 +68203,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Renderer4.ImageDecodeTaskDurationUs.OutOfRaster"
     units="microseconds">
-  <owner>vmpstr@chromium.org</owner>
-  <owner>khushalsagar@chromium.org</owner>
+  <owner>vmpstr@chromium.org, khushalsagar@chromium.org</owner>
   <summary>
     This metric records the duration of an image decode for out of raster path
     in the compositor. It is recorded every time we decode an image. It is
@@ -68859,8 +68715,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Replaced with RendererScheduler.NumberOfTasksPerQueueType2 as of May 2017.
   </obsolete>
-  <owner>altimin@chromium.org</owner>
-  <owner>alexclarke@chromium.org</owner>
+  <owner>altimin@chromium.org,alexclarke@chromium.org</owner>
   <summary>
     The number of completed renderer tasks split per task queue type. Used to
     monitor usage of each type of task queue. Reported each time when task is
@@ -68873,8 +68728,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Replaced with RendererScheduler.TaskCountPerQueueType as of July 2017.
   </obsolete>
-  <owner>altimin@chromium.org</owner>
-  <owner>alexclarke@chromium.org</owner>
+  <owner>altimin@chromium.org,alexclarke@chromium.org</owner>
   <summary>
     The number of completed renderer tasks split per task queue type. Used to
     monitor usage of each type of task queue. Reported each time when task is
@@ -68998,8 +68852,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Replaced with RendererScheduler.TaskDurationPerQueueType2 as of May 2017.
   </obsolete>
-  <owner>altimin@chromium.org</owner>
-  <owner>alexclarke@chromium.org</owner>
+  <owner>altimin@chromium.org,alexclarke@chromium.org</owner>
   <summary>
     Total duration of renderer tasks split per task queue type. Used to monitor
     usage of each type of task queues. Reported each time when task is completed
@@ -69012,8 +68865,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="RendererScheduler.TaskDurationPerQueueType2"
     enum="RendererSchedulerTaskQueueType" units="ms">
-  <owner>altimin@chromium.org</owner>
-  <owner>alexclarke@chromium.org</owner>
+  <owner>altimin@chromium.org,alexclarke@chromium.org</owner>
   <summary>
     Total duration of renderer tasks split per task queue type. Used to monitor
     usage of each type of task queues. Reported each time when task is completed
@@ -69024,20 +68876,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
     Note that this metric discards tasks longer than 30 seconds because they are
     considered to be a result of measurement glitch.
-  </summary>
-</histogram>
-
-<histogram name="RendererScheduler.TaskDurationPerTaskType"
-    enum="RendererSchedulerTaskType" units="ms">
-  <owner>altimin@chromium.org</owner>
-  <owner>hajimehoshi@chromium.org</owner>
-  <summary>
-    Total duration of renderer per-frame tasks split per task type. Used to
-    monitor usage of each task type. Reported each time when task is completed
-    and current accumulated duration is longer than 1ms.
-
-    This metric is susceptible to problematic outliers and should be analyzed
-    with custom scripts accounting for that rather than from a dashboard.
   </summary>
 </histogram>
 
@@ -70709,14 +70547,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SafeBrowsing.Interstitial.Type" enum="InterstitialTypeEnum">
-  <owner>ntfschr@chromium.org</owner>
-  <summary>
-    Which interstitial type is being displayed to the user? This currently
-    applies only to WebView (where we show Loud vs. Quiet interstitials).
-  </summary>
-</histogram>
-
 <histogram name="SafeBrowsing.ModuleBaseRelocation" units="BaseRelocationType">
   <owner>csharp@chromium.org</owner>
   <owner>krstnmnlsn@chromium.org</owner>
@@ -71514,16 +71344,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     counted. Note: the &quot;ABANDONED&quot; bucket contains both connections
     that were abandoned before the check completed and those that were cancelled
     when the user navigated away from the SafeBrowsing interstitial.
-  </summary>
-</histogram>
-
-<histogram name="SafeBrowsing.WebView.Viewable" enum="BooleanVisible">
-  <owner>ntfschr@chromium.org</owner>
-  <summary>
-    When encountering an unsafe resource, this indicates whether the WebView is
-    considered to be viewable or not. Currently, we define &quot;viewable&quot;
-    as getVisibility() == View.VISIBLE and attached to the Android View
-    hierarchy.
   </summary>
 </histogram>
 
@@ -76444,25 +76264,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The time taken between dispatching a SyncEvent to a Service Worker and
     receiving a message that it finished handling the event. Includes the time
     for the waitUntil() promise to settle.
-  </summary>
-</histogram>
-
-<histogram name="ServiceWorker.CacheStorageInstalledScript.CachedMetadataSize"
-    units="bytes">
-  <owner>horo@chromium.org</owner>
-  <summary>
-    The length of cached metadata of scripts which are stored to the
-    CacheStorage by the installing service worker.
-  </summary>
-</histogram>
-
-<histogram
-    name="ServiceWorker.CacheStorageInstalledScript.CachedMetadataTotalSize"
-    units="bytes">
-  <owner>horo@chromium.org</owner>
-  <summary>
-    The total length of cached metadata of scripts which are stored to the
-    CacheStorage by the installing service worker.
   </summary>
 </histogram>
 
@@ -84970,13 +84771,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Sync.Local.FileSize" units="KB">
   <owner>pastarmovj@chromium.org</owner>
   <summary>Tracks the size of the local sync backend database file.</summary>
-</histogram>
-
-<histogram name="Sync.Local.RequestTypeOnError" enum="SyncRequestType">
-  <owner>skym@chromium.org</owner>
-  <summary>
-    Tracks the types of requests that caused errors inside of the local server.
-  </summary>
 </histogram>
 
 <histogram name="Sync.Local.RoamingProfileUnavailable" enum="BooleanError">
@@ -99187,14 +98981,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Tabs.StateTransfer.Time"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="CustomTabOpenSource" separator=".">
-  <affected-histogram name="CustomTab.SessionDuration"/>
-  <suffix name="TWA" label="CustomTab opened by Trusted Web Activity."/>
-  <suffix name="Webapp" label="CustomTab opened by Webapp."/>
-  <suffix name="WebApk" label="CustomTab opened by WebApk."/>
-  <suffix name="Other" label="CustomTab opened by other apps."/>
-</histogram_suffixes>
-
 <histogram_suffixes name="DataReductionProxy" separator="_">
   <obsolete>
     Deprecated 9/2016.
@@ -101316,7 +101102,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Prompt"/>
   <affected-histogram name="JSDialogs.DismissalCause"/>
   <affected-histogram name="JSDialogs.IsForemost"/>
-  <affected-histogram name="JSDialogs.Scheme"/>
   <affected-histogram name="JSDialogs.SiteEngagementOfDialogs"/>
 </histogram_suffixes>
 

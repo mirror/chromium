@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/interfaces/wallpaper.mojom.h"
 #include "base/containers/circular_deque.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
@@ -32,6 +33,7 @@
 #include "components/wallpaper/wallpaper_info.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "ui/aura/window_observer.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/wm/public/activation_change_observer.h"
@@ -94,7 +96,8 @@ extern const int kWallpaperThumbnailHeight;
 // A dictionary pref that maps usernames to wallpaper info.
 extern const char kUsersWallpaperInfo[];
 
-class WallpaperManager : public content::NotificationObserver,
+class WallpaperManager : public ash::mojom::WallpaperPicker,
+                         public content::NotificationObserver,
                          public user_manager::UserManager::Observer,
                          public wm::ActivationChangeObserver,
                          public aura::WindowObserver {
@@ -237,39 +240,26 @@ class WallpaperManager : public content::NotificationObserver,
                                      gfx::ImageSkia* output_skia);
 
   // Returns custom wallpaper path. Append |sub_dir|, |wallpaper_files_id| and
-  // |file_name| to custom wallpaper directory.
+  // |file| to custom wallpaper directory.
   static base::FilePath GetCustomWallpaperPath(
       const char* sub_dir,
       const wallpaper::WallpaperFilesId& wallpaper_files_id,
-      const std::string& file_name);
+      const std::string& file);
 
   // Sets wallpaper from policy or from a local file. Saves the custom wallpaper
-  // to file, posts task to generate thumbnail and updates local state.
-  // |account_id|: The user's account id.
-  // |wallpaper_files_id|: The unique id of each wallpaper file.
-  // |file_name|: The name of the wallpaper file.
-  // |layout|: The layout of the wallpaper, used for wallpaper resizing.
-  // |type|: The type of the wallpaper, e.g., default, policy etc.
-  // |image|: The wallpaper image.
-  // |show_wallpaper|: If false, don't show the new wallpaper now but only
-  //                   update cache.
+  // to file, posts task to generate thumbnail and updates local state. If
+  // |show_wallpaper| is false, don't show the new wallpaper now but only update
+  // cache.
   void SetCustomWallpaper(const AccountId& account_id,
                           const wallpaper::WallpaperFilesId& wallpaper_files_id,
-                          const std::string& file_name,
+                          const std::string& file,
                           wallpaper::WallpaperLayout layout,
                           wallpaper::WallpaperType type,
                           const gfx::ImageSkia& image,
                           bool show_wallpaper);
 
-  // Sets wallpaper from the wallpaper picker selection, i.e., the wallpaper
-  // type is ONLINE.
-  // |account_id|: The user's account id.
-  // |image|: The wallpaper image.
-  // |url|: The url corresponding to this wallpaper. Used as a placeholder for
-  //        the location in WallpaperInfo.
-  // |layout|: The layout of the wallpaper, used for wallpaper resizing.
-  // |show_wallpaper|: If false, don't show the new wallpaper now but only
-  //                   update cache.
+  // Sets wallpaper from the wallpaper picker selection. If |show_wallpaper|
+  // is false, don't show the new wallpaper now but only update cache.
   void SetOnlineWallpaper(const AccountId& account_id,
                           const gfx::ImageSkia& image,
                           const std::string& url,
@@ -281,15 +271,10 @@ class WallpaperManager : public content::NotificationObserver,
   // false, don't show the default wallpaper now.
   void SetDefaultWallpaper(const AccountId& account_id, bool show_wallpaper);
 
-  // Sets a customized default wallpaper to be used wherever a default wallpaper
-  // is needed. Note: it doesn't change the default wallpaper for guest and
-  // child accounts.
-  // |wallpaper_url|: The url corresponding to this wallpaper.
-  // |file_path|: The path of the wallpaper file.
-  // |resized_directory|: The directory where resized versions are stored. Must
-  //                      be writable.
+  // Called from CustomizationDocument. |resized_directory| is the directory
+  // where resized versions are stored and it must be writable.
   void SetCustomizedDefaultWallpaper(const GURL& wallpaper_url,
-                                     const base::FilePath& file_path,
+                                     const base::FilePath& downloaded_file,
                                      const base::FilePath& resized_directory);
 
   // Shows |account_id|'s wallpaper, which is determined in the following order:
@@ -372,8 +357,8 @@ class WallpaperManager : public content::NotificationObserver,
   // Removes given observer from the list.
   void RemoveObserver(Observer* observer);
 
-  // Opens the wallpaper picker window.
-  void OpenWallpaperPicker();
+  // ash::mojom::WallpaperPicker:
+  void Open() override;
 
   // content::NotificationObserver:
   void Observe(int type,
@@ -564,7 +549,7 @@ class WallpaperManager : public content::NotificationObserver,
   // This is called after we check that supplied default wallpaper files exist.
   void SetCustomizedDefaultWallpaperAfterCheck(
       const GURL& wallpaper_url,
-      const base::FilePath& file_path,
+      const base::FilePath& downloaded_file,
       std::unique_ptr<CustomizedWallpaperRescaledFiles> rescaled_files);
 
   // Starts rescaling of customized wallpaper.
@@ -670,6 +655,8 @@ class WallpaperManager : public content::NotificationObserver,
       std::unique_ptr<gfx::ImageSkia> small_wallpaper_image,
       const base::FilePath& customized_default_wallpaper_file_large,
       std::unique_ptr<gfx::ImageSkia> large_wallpaper_image);
+
+  mojo::Binding<ash::mojom::WallpaperPicker> binding_;
 
   std::unique_ptr<CrosSettings::ObserverSubscription>
       show_user_name_on_signin_subscription_;

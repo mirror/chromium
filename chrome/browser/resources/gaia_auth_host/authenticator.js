@@ -432,10 +432,8 @@ cr.define('cr.login', function() {
    * @private
    */
   Authenticator.prototype.onFocus_ = function(e) {
-    if (this.authMode == AuthMode.DESKTOP &&
-        document.activeElement == document.body) {
+    if (this.authMode == AuthMode.DESKTOP)
       this.webview_.focus();
-    }
   };
 
   /**

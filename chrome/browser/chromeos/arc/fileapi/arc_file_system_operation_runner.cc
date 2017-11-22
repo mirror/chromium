@@ -334,12 +334,12 @@ void ArcFileSystemOperationRunner::OnArcPlayStoreEnabledChanged(bool enabled) {
   OnStateChanged();
 }
 
-void ArcFileSystemOperationRunner::OnConnectionReady() {
+void ArcFileSystemOperationRunner::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   OnStateChanged();
 }
 
-void ArcFileSystemOperationRunner::OnConnectionClosed() {
+void ArcFileSystemOperationRunner::OnInstanceClosed() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // ArcFileSystemService and watchers are gone.
   watcher_callbacks_.clear();
@@ -371,7 +371,7 @@ void ArcFileSystemOperationRunner::OnStateChanged() {
   if (set_should_defer_by_events_) {
     SetShouldDefer(IsArcPlayStoreEnabledForProfile(
                        Profile::FromBrowserContext(context_)) &&
-                   !arc_bridge_service_->file_system()->IsConnected());
+                   !arc_bridge_service_->file_system()->has_instance());
   }
 }
 

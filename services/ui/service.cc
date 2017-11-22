@@ -146,8 +146,7 @@ Service::Service(const InProcessConfig* config)
       test_config_(false),
       ime_registrar_(&ime_driver_),
       discardable_shared_memory_manager_(config ? config->memory_manager
-                                                : nullptr),
-      should_host_viz_(!config || config->should_host_viz) {}
+                                                : nullptr) {}
 
 Service::~Service() {
   in_destructor_ = true;
@@ -277,22 +276,10 @@ void Service::OnStart() {
   // so keep this line below both of those.
   input_device_server_.RegisterAsObserver();
 
-  window_server_ = base::MakeUnique<ws::WindowServer>(this, should_host_viz_);
-  if (should_host_viz_) {
-    std::unique_ptr<ws::GpuHost> gpu_host =
-        base::MakeUnique<ws::DefaultGpuHost>(window_server_.get(),
-                                             context()->connector());
-    window_server_->SetGpuHost(std::move(gpu_host));
-
-    registry_.AddInterface<mojom::Gpu>(
-        base::Bind(&Service::BindGpuRequest, base::Unretained(this)));
-    registry_.AddInterface<mojom::VideoDetector>(
-        base::Bind(&Service::BindVideoDetectorRequest, base::Unretained(this)));
-#if defined(OS_CHROMEOS)
-    registry_.AddInterface<mojom::Arc>(
-        base::Bind(&Service::BindArcRequest, base::Unretained(this)));
-#endif  // defined(OS_CHROMEOS)
-  }
+  window_server_ = std::make_unique<ws::WindowServer>(this);
+  std::unique_ptr<ws::GpuHost> gpu_host = std::make_unique<ws::DefaultGpuHost>(
+      window_server_.get(), context()->connector());
+  window_server_->SetGpuHost(std::move(gpu_host));
 
   ime_driver_.Init(context()->connector(), test_config_);
 
@@ -309,6 +296,8 @@ void Service::OnStart() {
       base::Bind(&Service::BindClipboardRequest, base::Unretained(this)));
   registry_with_source_info_.AddInterface<mojom::DisplayManager>(
       base::Bind(&Service::BindDisplayManagerRequest, base::Unretained(this)));
+  registry_.AddInterface<mojom::Gpu>(
+      base::Bind(&Service::BindGpuRequest, base::Unretained(this)));
   registry_.AddInterface<mojom::IMERegistrar>(
       base::Bind(&Service::BindIMERegistrarRequest, base::Unretained(this)));
   registry_.AddInterface<mojom::IMEDriver>(
@@ -336,6 +325,8 @@ void Service::OnStart() {
   }
   registry_.AddInterface<mojom::RemoteEventDispatcher>(base::Bind(
       &Service::BindRemoteEventDispatcherRequest, base::Unretained(this)));
+  registry_.AddInterface<mojom::VideoDetector>(
+      base::Bind(&Service::BindVideoDetectorRequest, base::Unretained(this)));
 
   // On non-Linux platforms there will be no DeviceDataManager instance and no
   // purpose in adding the Mojo interface to connect to.
@@ -556,11 +547,5 @@ void Service::BindRemoteEventDispatcherRequest(
 void Service::BindVideoDetectorRequest(mojom::VideoDetectorRequest request) {
   window_server_->video_detector()->AddBinding(std::move(request));
 }
-
-#if defined(OS_CHROMEOS)
-void Service::BindArcRequest(mojom::ArcRequest request) {
-  window_server_->gpu_host()->AddArc(std::move(request));
-}
-#endif  // defined(OS_CHROMEOS)
 
 }  // namespace ui

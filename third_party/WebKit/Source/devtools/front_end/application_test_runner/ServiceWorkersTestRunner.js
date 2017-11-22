@@ -62,7 +62,7 @@ ApplicationTestRunner.makeFetchInServiceWorker = function(scope, url, requestIni
   TestRunner.callFunctionInPageAsync('makeFetchInServiceWorker', [scope, url, requestInitializer]).then(callback);
 };
 
-TestRunner.deprecatedInitAsync(`
+TestRunner.initAsync(`
   var registrations = {};
 
   function registerServiceWorker(script, scope) {

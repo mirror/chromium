@@ -25,7 +25,7 @@
 #include "cc/layers/content_layer_client.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/texture_layer_client.h"
-#include "components/viz/common/resources/transferable_resource.h"
+#include "components/viz/common/quads/texture_mailbox.h"
 #include "content/common/content_export.h"
 #include "content/public/renderer/pepper_plugin_instance.h"
 #include "content/public/renderer/plugin_instance_throttler.h"
@@ -200,15 +200,15 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // slow path can also be triggered if there is an overlapping frame.
   void ScrollRect(int dx, int dy, const gfx::Rect& rect);
 
-  // Commit the output to the screen.
-  void CommitTransferableResource(const viz::TransferableResource& resource);
+  // Commit the texture mailbox to the screen.
+  void CommitTextureMailbox(const viz::TextureMailbox& texture_mailbox);
 
   // Passes the committed texture to |texture_layer_| and marks it as in use.
   void PassCommittedTextureToTextureLayer();
 
   // Callback when the compositor is finished consuming the committed texture.
   void FinishedConsumingCommittedTexture(
-      const viz::TransferableResource& resource,
+      const viz::TextureMailbox& texture_mailbox,
       scoped_refptr<PPB_Graphics3D_Impl> graphics_3d,
       const gpu::SyncToken& sync_token,
       bool is_lost);
@@ -558,8 +558,8 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   bool IsValidInstanceOf(PluginModule* module);
 
   // cc::TextureLayerClient implementation.
-  bool PrepareTransferableResource(
-      viz::TransferableResource* transferable_resource,
+  bool PrepareTextureMailbox(
+      viz::TextureMailbox* mailbox,
       std::unique_ptr<viz::SingleReleaseCallback>* release_callback) override;
 
   // RenderFrameObserver
@@ -675,6 +675,11 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   //   to the container. Set to true if the bound device has been changed.
   void UpdateLayer(bool force_creation);
 
+  // Internal helper function for PrintPage().
+  void PrintPageHelper(PP_PrintPageNumberRange_Dev* page_ranges,
+                       int num_ranges,
+                       printing::PdfMetafileSkia* metafile);
+
   void DoSetCursor(std::unique_ptr<blink::WebCursorInfo> cursor);
 
   // Internal helper functions for HandleCompositionXXX().
@@ -731,19 +736,17 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // to ensure that a viz::TextureMailbox isn't returned until all copies of it
   // have been released by texture_layer_.
   //
-  // This method should be called each time a viz::TransferableResource is
-  // passed to |texture_layer_|. It increments an internal reference count.
-  void IncrementTextureReferenceCount(
-      const viz::TransferableResource& resource);
+  // This method should be called each time a viz::TextureMailbox is passed to
+  // |texture_layer_|. It increments an internal reference count.
+  void IncrementTextureReferenceCount(const viz::TextureMailbox& mailbox);
 
   // This method should be called each time |texture_layer_| finishes consuming
-  // a viz::TransferableResource. It decrements an internal reference count.
-  // Returns whether the last reference was removed.
-  bool DecrementTextureReferenceCount(
-      const viz::TransferableResource& resource);
+  // a viz::TextureMailbox. It decrements an internal reference count. Returns
+  // whether the last reference was removed.
+  bool DecrementTextureReferenceCount(const viz::TextureMailbox& mailbox);
 
-  // Whether a given viz::TransferableResource is in use by |texture_layer_|.
-  bool IsTextureInUse(const viz::TransferableResource& resource) const;
+  // Whether a given viz::TextureMailbox is in use by |texture_layer_|.
+  bool IsTextureInUse(const viz::TextureMailbox& mailbox) const;
 
   RenderFrameImpl* render_frame_;
   scoped_refptr<PluginModule> module_;
@@ -838,11 +841,13 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // call.
   PP_PrintSettings_Dev current_print_settings_;
 
-  // The entire document goes into one metafile. However, it is impossible to
-  // know if a call to PrintPage() is the last call. Thus in PrintPage(), just
-  // store the page number in |ranges_|. The hack is in PrintEnd(), where a
-  // valid |metafile_| is preserved in PrintWebFrameHelper::PrintPages(). This
-  // makes it possible to generate the entire PDF given the variables below:
+  // Always when printing to PDF on Linux and when printing for preview on Mac
+  // and Win, the entire document goes into one metafile.  However, when users
+  // print only a subset of all the pages, it is impossible to know if a call
+  // to PrintPage() is the last call. Thus in PrintPage(), just store the page
+  // number in |ranges_|. The hack is in PrintEnd(), where a valid |metafile_|
+  // is preserved in PrintWebFrameHelper::PrintPages. This makes it possible
+  // to generate the entire PDF given the variables below:
   //
   // The metafile to save into, which is guaranteed to be valid between a
   // successful PrintBegin call and a PrintEnd call.
@@ -964,7 +969,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
 
   // The most recently committed texture. This is kept around in case the layer
   // needs to be regenerated.
-  viz::TransferableResource committed_texture_;
+  viz::TextureMailbox committed_texture_;
 
   // The Graphics3D that produced the most recently committed texture.
   scoped_refptr<PPB_Graphics3D_Impl> committed_texture_graphics_3d_;
@@ -975,7 +980,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // viz::TextureMailbox.
   // We expect there to be no more than 10 textures in use at a time. A
   // std::vector will have better performance than a std::map.
-  using TextureMailboxRefCount = std::pair<gpu::Mailbox, int>;
+  using TextureMailboxRefCount = std::pair<viz::TextureMailbox, int>;
   std::vector<TextureMailboxRefCount> texture_ref_counts_;
 
   bool initialized_;

@@ -93,7 +93,7 @@ class CC_EXPORT ResourceProvider
 
   bool IsSoftware() const { return !compositor_context_provider_; }
 
-  void DidLoseContextProvider() { lost_context_provider_ = true; }
+  void DidLoseVulkanContextProvider() { lost_context_provider_ = true; }
 
   int max_texture_size() const { return settings_.max_texture_size; }
   viz::ResourceFormat best_texture_format() const {
@@ -312,13 +312,12 @@ class CC_EXPORT ResourceProvider
   bool IsBackedBySurfaceTexture(viz::ResourceId id);
 
   // Indicates if this resource wants to receive promotion hints.
-  bool WantsPromotionHintForTesting(viz::ResourceId id);
+  bool WantsPromotionHint(viz::ResourceId id);
 
   // Return the number of resources that request promotion hints.
   size_t CountPromotionHintRequestsForTesting();
 #endif
 
-  // TODO(danakj): Move to DisplayResourceProvider.
   void WaitSyncToken(viz::ResourceId id);
 
   static GLint GetActiveTextureUnit(gpu::gles2::GLES2Interface* gl);

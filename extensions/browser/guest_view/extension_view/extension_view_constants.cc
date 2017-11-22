@@ -7,7 +7,7 @@
 namespace extensionview {
 
 // API namespace.
-const char kAPINamespace[] = "extensionViewInternal";
+extern const char kAPINamespace[] = "extensionViewInternal";
 
 // Attributes.
 const char kAttributeExtension[] = "extension";

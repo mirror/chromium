@@ -9,6 +9,7 @@ import org.chromium.chrome.browser.AppHooks;
 
 /** Base class for reporting entities to App Indexing. */
 public class AppIndexingReporter {
+    private static final String TAG = "AppIndexingReporter";
     private static AppIndexingReporter sInstance;
 
     public static AppIndexingReporter getInstance() {
@@ -24,7 +25,7 @@ public class AppIndexingReporter {
      * implement this functionality.
      */
     public void reportWebPage(WebPage webpage) {
-        // Overridden by private class. Base class does nothing.
+        // Overriden by private class. Base class does nothing.
     }
 
     /**
@@ -33,7 +34,7 @@ public class AppIndexingReporter {
      * implement this functionality.
      */
     public void reportWebPageView(String url, String title) {
-        // Overridden by private class. Base class does nothing.
+        // Overriden by private class. Base class does nothing.
     }
 
     /**
@@ -42,6 +43,6 @@ public class AppIndexingReporter {
      * any reporting, and call is a no-op. Child classes should implement this functionality.
      */
     public void clearHistory() {
-        // Overridden by private class. Base class does nothing.
+        // Overriden by private class. Base class does nothing.
     }
 }

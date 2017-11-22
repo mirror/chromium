@@ -127,13 +127,12 @@ public class InfoBarContainer extends SwipableOverlayView {
         }
 
         @Override
-        public void onActivityAttachmentChanged(Tab tab, boolean isAttached) {
-            if (!isAttached) return;
-
+        public void onReparentingFinished(Tab tab) {
             setParentView((ViewGroup) tab.getActivity().findViewById(R.id.bottom_container));
             mTab = tab;
         }
     };
+
 
     /**
      * Adds/removes the {@link InfoBarContainer} when the tab's view is attached/detached. This is

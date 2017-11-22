@@ -20,14 +20,13 @@
 #import "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.h"
 #import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/browser/ui/settings/accounts_collection_view_controller.h"
-#import "ios/chrome/browser/ui/settings/cells/sync_switch_item.h"
 #import "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/import_data_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/settings_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/sync_settings_collection_view_controller.h"
 #import "ios/chrome/browser/ui/static_content/static_html_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
-#import "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
+#import "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -169,14 +168,6 @@ id<GREYMatcher> CollectionViewSwitchCell(NSString* accessibilityIdentifier,
   return grey_allOf(grey_accessibilityID(accessibilityIdentifier),
                     CollectionViewSwitchIsOn(is_on), grey_sufficientlyVisible(),
                     nil);
-}
-
-id<GREYMatcher> SyncSwitchCell(NSString* accessibilityLabel, BOOL is_on) {
-  return grey_allOf(grey_accessibilityLabel(accessibilityLabel),
-                    grey_accessibilityValue(
-                        is_on ? l10n_util::GetNSString(IDS_IOS_SETTING_ON)
-                              : l10n_util::GetNSString(IDS_IOS_SETTING_OFF)),
-                    grey_sufficientlyVisible(), nil);
 }
 
 id<GREYMatcher> OpenLinkInNewTabButton() {

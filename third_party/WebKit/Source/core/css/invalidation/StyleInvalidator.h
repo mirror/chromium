@@ -6,8 +6,6 @@
 #define StyleInvalidator_h
 
 #include <memory>
-
-#include "base/macros.h"
 #include "core/css/invalidation/PendingInvalidations.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
@@ -63,6 +61,7 @@ class InvalidationSet;
 
 class CORE_EXPORT StyleInvalidator {
   DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(StyleInvalidator);
 
  public:
   StyleInvalidator();
@@ -190,7 +189,6 @@ class CORE_EXPORT StyleInvalidator {
   PendingInvalidations& EnsurePendingInvalidations(ContainerNode&);
 
   PendingInvalidationMap pending_invalidation_map_;
-  DISALLOW_COPY_AND_ASSIGN(StyleInvalidator);
 };
 
 }  // namespace blink

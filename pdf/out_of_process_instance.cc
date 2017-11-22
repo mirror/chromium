@@ -145,10 +145,6 @@ const char kJSNamedDestinationPageNumber[] = "pageNumber";
 const char kJSSetIsSelectingType[] = "setIsSelecting";
 const char kJSIsSelecting[] = "isSelecting";
 
-// Notify when the document was changed and edit mode is toggled.
-const char kJSSetIsEditModeType[] = "setIsEditMode";
-const char kJSIsEditMode[] = "isEditMode";
-
 // Notify when a form field is focused (Plugin -> Page)
 const char kJSFieldFocusType[] = "formFocusChange";
 const char kJSFieldFocus[] = "focused";
@@ -584,7 +580,6 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
   } else if (type == kJSPrintType) {
     Print();
   } else if (type == kJSSaveType) {
-    engine_->KillFormFocus();
     pp::PDF::SaveAs(this);
   } else if (type == kJSRotateClockwiseType) {
     RotateClockwise();
@@ -1748,13 +1743,6 @@ void OutOfProcessInstance::IsSelectingChanged(bool is_selecting) {
   PostMessage(message);
   if (is_selecting)
     PrintPreviewHistogramEnumeration(SELECT_TEXT);
-}
-
-void OutOfProcessInstance::IsEditModeChanged(bool is_edit_mode) {
-  pp::VarDictionary message;
-  message.Set(kType, kJSSetIsEditModeType);
-  message.Set(kJSIsEditMode, pp::Var(is_edit_mode));
-  PostMessage(message);
 }
 
 void OutOfProcessInstance::ProcessPreviewPageInfo(const std::string& url,

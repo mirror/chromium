@@ -13,6 +13,7 @@
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/common/surfaces/surface_sequence.h"
 #include "media/base/media_switches.h"
+#include "platform/graphics/GraphicsLayer.h"
 #include "platform/mojo/MojoHelper.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/InterfaceProvider.h"
@@ -99,8 +100,7 @@ void SurfaceLayerBridge::CreateSolidColorLayer() {
   web_layer_ = Platform::Current()->CompositorSupport()->CreateLayerFromCCLayer(
       cc_layer_.get());
 
-  if (observer_)
-    observer_->RegisterContentsLayer(web_layer_.get());
+  GraphicsLayer::RegisterContentsLayer(web_layer_.get());
 }
 
 void SurfaceLayerBridge::OnFirstSurfaceActivation(
@@ -109,14 +109,13 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     // First time a SurfaceId is received
     current_surface_id_ = surface_info.id();
     if (web_layer_) {
-      if (observer_)
-        observer_->UnregisterContentsLayer(web_layer_.get());
+      GraphicsLayer::UnregisterContentsLayer(web_layer_.get());
       web_layer_->RemoveFromParent();
     }
 
     scoped_refptr<cc::SurfaceLayer> surface_layer =
         cc::SurfaceLayer::Create(ref_factory_);
-    surface_layer->SetPrimarySurfaceId(surface_info.id());
+    surface_layer->SetPrimarySurfaceInfo(surface_info);
     surface_layer->SetFallbackSurfaceId(surface_info.id());
     surface_layer->SetStretchContentToFillBounds(true);
     surface_layer->SetIsDrawable(true);
@@ -125,15 +124,14 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     web_layer_ =
         Platform::Current()->CompositorSupport()->CreateLayerFromCCLayer(
             cc_layer_.get());
-    if (observer_)
-      observer_->RegisterContentsLayer(web_layer_.get());
+    GraphicsLayer::RegisterContentsLayer(web_layer_.get());
   } else if (current_surface_id_ != surface_info.id()) {
     // A different SurfaceId is received, prompting change to existing
     // SurfaceLayer
     current_surface_id_ = surface_info.id();
     cc::SurfaceLayer* surface_layer =
         static_cast<cc::SurfaceLayer*>(cc_layer_.get());
-    surface_layer->SetPrimarySurfaceId(surface_info.id());
+    surface_layer->SetPrimarySurfaceInfo(surface_info);
     surface_layer->SetFallbackSurfaceId(surface_info.id());
   }
 

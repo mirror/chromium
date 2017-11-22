@@ -32,6 +32,7 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source_type.h"
 #include "net/ssl/ssl_cert_request_info.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/redirect_util.h"
 #include "net/url_request/url_request_context.h"
@@ -42,10 +43,6 @@
 #include "net/url_request/url_request_redirect_job.h"
 #include "url/gurl.h"
 #include "url/origin.h"
-
-#if BUILDFLAG(ENABLE_REPORTING)
-#include "net/url_request/network_error_logging_delegate.h"
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 using base::Time;
 using std::string;
@@ -1058,11 +1055,11 @@ bool URLRequest::CanGetCookies(const CookieList& cookie_list) const {
   return g_default_can_use_cookies;
 }
 
-bool URLRequest::CanSetCookie(const net::CanonicalCookie& cookie,
+bool URLRequest::CanSetCookie(const std::string& cookie_line,
                               CookieOptions* options) const {
   DCHECK(!(load_flags_ & LOAD_DO_NOT_SAVE_COOKIES));
   if (network_delegate_) {
-    return network_delegate_->CanSetCookie(*this, cookie, options);
+    return network_delegate_->CanSetCookie(*this, cookie_line, options);
   }
   return g_default_can_use_cookies;
 }
@@ -1138,9 +1135,7 @@ void URLRequest::NotifyRequestCompleted() {
     network_delegate_->NotifyCompleted(this, job_.get() != NULL,
                                        status_.error());
 
-#if BUILDFLAG(ENABLE_REPORTING)
   MaybeGenerateNetworkErrorLoggingReport();
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 }
 
 void URLRequest::OnCallToDelegate() {
@@ -1159,7 +1154,6 @@ void URLRequest::OnCallToDelegateComplete() {
   net_log_.EndEvent(NetLogEventType::URL_REQUEST_DELEGATE);
 }
 
-#if BUILDFLAG(ENABLE_REPORTING)
 void URLRequest::MaybeGenerateNetworkErrorLoggingReport() {
   NetworkErrorLoggingDelegate* delegate =
       context()->network_error_logging_delegate();
@@ -1192,7 +1186,6 @@ void URLRequest::MaybeGenerateNetworkErrorLoggingReport() {
 
   delegate->OnNetworkError(details);
 }
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 void URLRequest::GetConnectionAttempts(ConnectionAttempts* out) const {
   if (job_)

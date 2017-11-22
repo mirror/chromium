@@ -134,9 +134,6 @@
   self.contentSuggestionsMediator.commandHandler = self.NTPMediator;
   self.contentSuggestionsMediator.headerProvider = self.headerController;
 
-  self.headerController.promoCanShow =
-      [self.contentSuggestionsMediator notificationPromo]->CanShow();
-
   self.metricsRecorder = [[ContentSuggestionsMetricsRecorder alloc] init];
   self.metricsRecorder.delegate = self.contentSuggestionsMediator;
 

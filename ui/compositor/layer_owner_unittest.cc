@@ -4,8 +4,6 @@
 
 #include "ui/compositor/layer_owner.h"
 
-#include <utility>
-
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/test/null_task_runner.h"
@@ -43,9 +41,6 @@ class TestLayerAnimationObserver : public ImplicitAnimationObserver {
 
 class LayerOwnerForTesting : public LayerOwner {
  public:
-  LayerOwnerForTesting(std::unique_ptr<Layer> layer) {
-    SetLayer(std::move(layer));
-  }
   void DestroyLayerForTesting() { DestroyLayer(); }
 };
 
@@ -99,7 +94,8 @@ void LayerOwnerTestWithCompositor::TearDown() {
 }  // namespace
 
 TEST_F(LayerOwnerTestWithCompositor, RecreateRootLayerWithCompositor) {
-  LayerOwnerForTesting owner(std::make_unique<Layer>());
+  LayerOwner owner;
+  owner.SetLayer(std::make_unique<Layer>());
   Layer* layer = owner.layer();
   compositor()->SetRootLayer(layer);
 
@@ -114,7 +110,8 @@ TEST_F(LayerOwnerTestWithCompositor, RecreateRootLayerWithCompositor) {
 // properly updates the compositor. So that compositor is not null for observers
 // of animations being cancelled.
 TEST_F(LayerOwnerTestWithCompositor, RecreateRootLayerDuringAnimation) {
-  LayerOwnerForTesting owner(std::make_unique<Layer>());
+  LayerOwner owner;
+  owner.SetLayer(std::make_unique<Layer>());
   Layer* layer = owner.layer();
   compositor()->SetRootLayer(layer);
 
@@ -148,7 +145,8 @@ TEST_F(LayerOwnerTestWithCompositor, RecreateNonRootLayerDuringAnimation) {
   std::unique_ptr<Layer> root_layer(new Layer);
   compositor()->SetRootLayer(root_layer.get());
 
-  LayerOwnerForTesting owner(std::make_unique<Layer>());
+  LayerOwner owner;
+  owner.SetLayer(std::make_unique<Layer>());
   Layer* layer = owner.layer();
   root_layer->Add(layer);
 
@@ -181,7 +179,8 @@ TEST_F(LayerOwnerTestWithCompositor, DetachTimelineOnAnimatorDeletion) {
   std::unique_ptr<Layer> root_layer(new Layer);
   compositor()->SetRootLayer(root_layer.get());
 
-  LayerOwnerForTesting owner(std::make_unique<Layer>());
+  LayerOwnerForTesting owner;
+  owner.SetLayer(std::make_unique<Layer>());
   Layer* layer = owner.layer();
   layer->SetOpacity(0.5f);
   root_layer->Add(layer);
@@ -203,7 +202,8 @@ TEST_F(LayerOwnerTestWithCompositor,
   std::unique_ptr<Layer> root_layer(new Layer);
   compositor()->SetRootLayer(root_layer.get());
 
-  LayerOwnerForTesting owner(std::make_unique<Layer>());
+  LayerOwner owner;
+  owner.SetLayer(std::make_unique<Layer>());
   Layer* layer = owner.layer();
   root_layer->Add(layer);
 

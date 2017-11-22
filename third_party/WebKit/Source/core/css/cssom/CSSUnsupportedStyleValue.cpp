@@ -9,16 +9,15 @@
 
 namespace blink {
 
-const CSSValue* CSSUnsupportedStyleValue::ToCSSValue(SecureContextMode) const {
+const CSSValue* CSSUnsupportedStyleValue::ToCSSValue() const {
   NOTREACHED();
   return nullptr;
 }
 
 const CSSValue* CSSUnsupportedStyleValue::ToCSSValueWithProperty(
-    CSSPropertyID property_id,
-    SecureContextMode secure_context_mode) const {
-  return CSSParser::ParseSingleValue(
-      property_id, css_text_, StrictCSSParserContext(secure_context_mode));
+    CSSPropertyID property_id) const {
+  return CSSParser::ParseSingleValue(property_id, css_text_,
+                                     StrictCSSParserContext());
 }
 
 }  // namespace blink

@@ -22,7 +22,6 @@ import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
-import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.net.test.EmbeddedTestServerRule;
 
 /**
@@ -75,8 +74,8 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
         super(WebappActivity0.class);
     }
 
-    public EmbeddedTestServer getTestServer() {
-        return mTestServerRule.getServer();
+    public String getUrlFromTestServer(String relativeUrl) {
+        return mTestServerRule.getServer().getURL(relativeUrl);
     }
 
     /**
@@ -170,7 +169,7 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
             throws Exception {
         // Reset the url to one that takes more time to load.
         // This is to make sure splash screen won't disappear during test.
-        intent.putExtra(ShortcutHelper.EXTRA_URL, getTestServer().getURL("/slow?2"));
+        intent.putExtra(ShortcutHelper.EXTRA_URL, getUrlFromTestServer("/slow?2"));
         launchActivity(intent);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         CriteriaHelper.pollInstrumentationThread(new Criteria() {

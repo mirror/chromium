@@ -40,9 +40,9 @@ namespace {
 // The number or entries to keep in the cache, depending on the memory state of
 // the system. This limit can be breached by in-use cache items, which cannot
 // be deleted.
-static const int kNormalMaxItemsInCacheForGpu = 2000;
-static const int kThrottledMaxItemsInCacheForGpu = 100;
-static const int kSuspendedMaxItemsInCacheForGpu = 0;
+static const int kNormalMaxItemsInCache = 2000;
+static const int kThrottledMaxItemsInCache = 100;
+static const int kSuspendedMaxItemsInCache = 0;
 
 // lock_count │ used  │ result state
 // ═══════════╪═══════╪══════════════════
@@ -1182,14 +1182,14 @@ bool GpuImageDecodeCache::ExceedsPreferredCount() const {
 
   size_t items_limit;
   if (aggressively_freeing_resources_) {
-    items_limit = kSuspendedMaxItemsInCacheForGpu;
+    items_limit = kSuspendedMaxItemsInCache;
   } else if (memory_state_ == base::MemoryState::NORMAL) {
-    items_limit = kNormalMaxItemsInCacheForGpu;
+    items_limit = kNormalMaxItemsInCache;
   } else if (memory_state_ == base::MemoryState::THROTTLED) {
-    items_limit = kThrottledMaxItemsInCacheForGpu;
+    items_limit = kThrottledMaxItemsInCache;
   } else {
     DCHECK_EQ(base::MemoryState::SUSPENDED, memory_state_);
-    items_limit = kSuspendedMaxItemsInCacheForGpu;
+    items_limit = kSuspendedMaxItemsInCache;
   }
 
   return persistent_cache_.size() > items_limit;

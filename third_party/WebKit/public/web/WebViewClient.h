@@ -45,6 +45,7 @@ class WebDateTimeChooserCompletion;
 class WebFileChooserCompletion;
 class WebNode;
 class WebSpeechRecognizer;
+class WebStorageNamespace;
 class WebURL;
 class WebURLRequest;
 class WebView;
@@ -77,14 +78,14 @@ class WebViewClient : protected WebWidgetClient {
                               WebNavigationPolicy policy,
                               bool suppress_opener,
                               WebSandboxFlags) {
-    return nullptr;
+    return 0;
   }
 
   // Create a new popup WebWidget.
-  virtual WebWidget* CreatePopup(WebPopupType) { return nullptr; }
+  virtual WebWidget* CreatePopupMenu(WebPopupType) { return 0; }
 
-  // Returns the session storage namespace id associated with this WebView.
-  virtual int64_t GetSessionStorageNamespaceId() { return 0; }
+  // Create a session storage namespace object associated with this WebView.
+  virtual WebStorageNamespace* CreateSessionStorageNamespace() { return 0; }
 
   // Misc ----------------------------------------------------------------
 
@@ -201,7 +202,7 @@ class WebViewClient : protected WebWidgetClient {
   // Speech --------------------------------------------------------------
 
   // Access the embedder API for speech recognition services.
-  virtual WebSpeechRecognizer* SpeechRecognizer() { return nullptr; }
+  virtual WebSpeechRecognizer* SpeechRecognizer() { return 0; }
 
   // Zoom ----------------------------------------------------------------
 

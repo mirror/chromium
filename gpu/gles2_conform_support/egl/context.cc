@@ -239,7 +239,8 @@ bool Context::CanWaitUnverifiedSyncToken(const gpu::SyncToken& sync_token) {
   return false;
 }
 
-void Context::SetSnapshotRequested() {}
+void Context::AddLatencyInfo(const std::vector<ui::LatencyInfo>& latency_info) {
+}
 
 void Context::ApplyCurrentContext(gl::GLSurface* current_surface) {
   DCHECK(HasService());

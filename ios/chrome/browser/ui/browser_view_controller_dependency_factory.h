@@ -18,7 +18,6 @@
 @protocol Toolbar;
 class ToolbarModelDelegateIOS;
 class ToolbarModelIOS;
-class WebStateList;
 @protocol UrlLoader;
 @protocol WebToolbarDelegate;
 
@@ -36,8 +35,7 @@ class ChromeBrowserState;
 // Creates a new factory backed by |browserState|. This must be the same browser
 // state provided to BrowserViewController (and like BVC, this is a weak
 // reference).
-- (id)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-              webStateList:(WebStateList*)webStateList;
+- (id)initWithBrowserState:(ios::ChromeBrowserState*)browserState;
 
 // Creates a new PassKit view controller to display |pass|.
 - (PKAddPassesViewController*)newPassKitViewControllerForPass:(PKPass*)pass;

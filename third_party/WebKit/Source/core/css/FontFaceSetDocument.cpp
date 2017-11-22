@@ -109,7 +109,7 @@ ScriptPromise FontFaceSetDocument::ready(ScriptState* script_state) {
   return ready_->Promise(script_state->World());
 }
 
-const HeapLinkedHashSet<Member<FontFace>>&
+const HeapListHashSet<Member<FontFace>>&
 FontFaceSetDocument::CSSConnectedFontFaceList() const {
   Document* document = this->GetDocument();
   document->UpdateActiveStyle();
@@ -144,8 +144,7 @@ bool FontFaceSetDocument::ResolveFontStyle(const String& font_string,
   // CanvasRenderingContext2D.
   MutableCSSPropertyValueSet* parsed_style =
       MutableCSSPropertyValueSet::Create(kHTMLStandardMode);
-  CSSParser::ParseValue(parsed_style, CSSPropertyFont, font_string, true,
-                        GetDocument()->SecureContextMode());
+  CSSParser::ParseValue(parsed_style, CSSPropertyFont, font_string, true);
   if (parsed_style->IsEmpty())
     return false;
 

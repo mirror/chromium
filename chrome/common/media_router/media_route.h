@@ -32,7 +32,7 @@ class MediaRoute {
   // |media_route_id|: ID of the route.
   // |media_source|: Description of source of the route.
   // |media_sink|: The sink that is receiving the media.
-  // |description|: Human readable description of the casting activity.
+  // |description|: Description of the route to be displayed.
   // |is_local|: true if the route was created from this browser.
   // |custom_controller_path|: custom controller path if it is given by route
   //     provider. empty otherwise.
@@ -126,8 +126,8 @@ class MediaRoute {
   // The ID of sink being routed to.
   MediaSink::Id media_sink_id_;
 
-  // Human readable description of the casting activity.  Examples:
-  // "Mirroring tab (www.example.com)", "Casting media", "Casting YouTube"
+  // The description of the media route activity, for example
+  // "Playing Foo Bar Music All Access."
   std::string description_;
 
   // |true| if the route is created locally (versus discovered by a media route

@@ -11,7 +11,6 @@
 #include "base/compiler_specific.h"
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
-#include "base/containers/span.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -424,12 +423,6 @@ class TabStripExperimental : public TabStrip,
   // Ensures that view_order_ corresponds to the latest tabs_ structure.
   void EnsureViewOrderUpToDate() const;
 
-  // Recursive backend for EnsureViewOrderUpToDate.
-  void ComputeViewOrder(
-      base::span<const std::unique_ptr<TabDataExperimental>> tabs,
-      const TabDataExperimental* selected,
-      std::vector<TabExperimental*>* output) const;
-
   // -- Member Variables ------------------------------------------------------
 
   TabStripModelExperimental* model_;
@@ -444,9 +437,8 @@ class TabStripExperimental : public TabStrip,
   // this will cause them to be painted in order of their memory address!
   base::flat_set<TabExperimental*> closing_tabs_;
 
-  // Cached ordered vector for painting the tabs. The topmost view is at the
-  // front(). This will include everything in the tabs_ map and also the items
-  // in closing_tabs_.
+  // Cached ordered vector for painting the tabs. This will include everything
+  // in the tabs_ map and also the items in closing_tabs_.
   //
   // This is computed by EnsureViewOrderUpToDate().
   mutable std::vector<TabExperimental*> view_order_;

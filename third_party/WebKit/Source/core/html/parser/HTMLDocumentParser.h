@@ -106,8 +106,8 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   bool IsParsingAtLineNumber() const final;
   OrdinalNumber LineNumber() const final;
 
-  void PauseScheduledTasks() final;
-  void UnpauseScheduledTasks() final;
+  void SuspendScheduledTasks() final;
+  void ResumeScheduledTasks() final;
 
   HTMLParserReentryPermit* ReentryPermit() { return reentry_permit_.get(); }
 
@@ -279,7 +279,7 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   bool should_use_threading_;
   bool end_was_delayed_;
   bool have_background_parser_;
-  bool tasks_were_paused_;
+  bool tasks_were_suspended_;
   unsigned pump_session_nesting_level_;
   unsigned pump_speculations_session_nesting_level_;
   bool is_parsing_at_line_number_;
@@ -287,7 +287,7 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   bool added_pending_stylesheet_in_body_;
   bool is_waiting_for_stylesheets_;
 
-  WebScopedVirtualTimePauser virtual_time_pauser_;
+  ScopedVirtualTimePauser virtual_time_pauser_;
 };
 
 }  // namespace blink

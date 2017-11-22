@@ -241,6 +241,7 @@ function registerInputviewApi() {
     callback(0);
   }
 
+
   /**
    * Retrieve the current input method configuration.
    * @param {function} callback The callback function for processing the
@@ -357,9 +358,6 @@ function registerInputviewApi() {
       defaultSendMessage(message);
   });
 
-  registerFunction('chrome.runtime.setContainerMode', function(mode, callback) {
-    chrome.virtualKeyboardPrivate.setMode(mode, callback);
-  });
 }
 
 

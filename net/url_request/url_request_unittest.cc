@@ -110,6 +110,7 @@
 #include "net/test/url_request/url_request_failed_job.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/data_protocol_handler.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/static_http_user_agent_settings.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_filter.h"
@@ -145,7 +146,6 @@
 
 #if BUILDFLAG(ENABLE_REPORTING)
 #include "net/reporting/reporting_service.h"
-#include "net/url_request/network_error_logging_delegate.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
 #if defined(USE_BUILTIN_CERT_VERIFIER)
@@ -2523,19 +2523,19 @@ TEST_F(URLRequestTest, PriorityIgnoreLimits) {
 namespace {
 
 // Less verbose way of running a simple testserver for the tests below.
-class HttpTestServer : public EmbeddedTestServer {
+class LocalHttpTestServer : public EmbeddedTestServer {
  public:
-  explicit HttpTestServer(const base::FilePath& document_root) {
+  explicit LocalHttpTestServer(const base::FilePath& document_root) {
     AddDefaultHandlers(document_root);
   }
 
-  HttpTestServer() { AddDefaultHandlers(base::FilePath()); }
+  LocalHttpTestServer() { AddDefaultHandlers(base::FilePath()); }
 };
 
 }  // namespace
 
 TEST_F(URLRequestTest, DelayedCookieCallback) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   TestURLRequestContext context;
@@ -2576,7 +2576,7 @@ TEST_F(URLRequestTest, DelayedCookieCallback) {
 }
 
 TEST_F(URLRequestTest, DoNotSendCookies) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // Set up a cookie.
@@ -2632,7 +2632,7 @@ TEST_F(URLRequestTest, DoNotSendCookies) {
 }
 
 TEST_F(URLRequestTest, DoNotSaveCookies) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // Set up a cookie.
@@ -2693,7 +2693,7 @@ TEST_F(URLRequestTest, DoNotSaveCookies) {
 }
 
 TEST_F(URLRequestTest, DoNotSendCookies_ViaPolicy) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // Set up a cookie.
@@ -2756,7 +2756,7 @@ TEST_F(URLRequestTest, DoNotSendCookies_ViaPolicy) {
 #define MAYBE_DoNotSaveCookies_ViaPolicy DoNotSaveCookies_ViaPolicy
 #endif
 TEST_F(URLRequestTest, DoNotSaveCookies_ViaPolicy) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // Set up a cookie.
@@ -2813,7 +2813,7 @@ TEST_F(URLRequestTest, DoNotSaveCookies_ViaPolicy) {
 }
 
 TEST_F(URLRequestTest, DoNotSaveEmptyCookies) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // Set up an empty cookie.
@@ -2834,7 +2834,7 @@ TEST_F(URLRequestTest, DoNotSaveEmptyCookies) {
 }
 
 TEST_F(URLRequestTest, DoNotSendCookies_ViaPolicy_Async) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // Set up a cookie.
@@ -2891,7 +2891,7 @@ TEST_F(URLRequestTest, DoNotSendCookies_ViaPolicy_Async) {
 }
 
 TEST_F(URLRequestTest, DoNotSaveCookies_ViaPolicy_Async) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // Set up a cookie.
@@ -2948,7 +2948,7 @@ TEST_F(URLRequestTest, DoNotSaveCookies_ViaPolicy_Async) {
 }
 
 TEST_F(URLRequestTest, SameSiteCookies) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   TestNetworkDelegate network_delegate;
@@ -3438,7 +3438,7 @@ int FixedDateNetworkDelegate::OnHeadersReceived(
 // skew and that we handle incorrect timezone specifier "UTC" in HTTP Date
 // headers by defaulting to GMT. (crbug.com/135131)
 TEST_F(URLRequestTest, AcceptClockSkewCookieWithWrongDateTimezone) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // Set up an expired cookie.
@@ -3497,7 +3497,7 @@ TEST_F(URLRequestTest, AcceptClockSkewCookieWithWrongDateTimezone) {
 // Check that it is impossible to change the referrer in the extra headers of
 // an URLRequest.
 TEST_F(URLRequestTest, DoNotOverrideReferrer) {
-  HttpTestServer test_server;
+  LocalHttpTestServer test_server;
   ASSERT_TRUE(test_server.Start());
 
   // If extra headers contain referer and the request contains a referer,
@@ -3691,10 +3691,10 @@ class URLRequestTestHTTP : public URLRequestTest {
     return true;
   }
 
-  HttpTestServer* http_test_server() { return &test_server_; }
+  LocalHttpTestServer* http_test_server() { return &test_server_; }
 
  private:
-  HttpTestServer test_server_;
+  LocalHttpTestServer test_server_;
 };
 
 namespace {

@@ -1770,6 +1770,8 @@ void RenderWidgetHostImpl::RendererExited(base::TerminationStatus status,
   // event. (In particular, the above call to view_->RenderProcessGone will
   // destroy the aura window, which may dispatch a synthetic mouse move.)
   SetupInputRouter();
+  associated_widget_input_handler_ = nullptr;
+  widget_input_handler_ = nullptr;
   synthetic_gesture_controller_.reset();
 
   last_received_frame_token_ = 0;
@@ -2827,11 +2829,6 @@ void RenderWidgetHostImpl::DidAllocateSharedBitmap(uint32_t sequence_number) {
 }
 
 void RenderWidgetHostImpl::SetupInputRouter() {
-  in_flight_event_count_ = 0;
-  StopHangMonitorTimeout();
-  associated_widget_input_handler_ = nullptr;
-  widget_input_handler_ = nullptr;
-
   if (base::FeatureList::IsEnabled(features::kMojoInputMessages)) {
     input_router_.reset(
         new InputRouterImpl(this, this, GetInputRouterConfigForPlatform()));
@@ -2866,9 +2863,7 @@ void RenderWidgetHostImpl::SetWidgetInputHandler(
 
 void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
   if (widget && base::FeatureList::IsEnabled(features::kMojoInputMessages)) {
-    // If we have a bound handler ensure that we destroy the old input router.
-    if (widget_input_handler_.get())
-      SetupInputRouter();
+    widget_input_handler_.reset();
 
     mojom::WidgetInputHandlerHostPtr host;
     mojom::WidgetInputHandlerHostRequest host_request =

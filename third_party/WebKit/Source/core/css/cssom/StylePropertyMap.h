@@ -5,36 +5,29 @@
 #ifndef StylePropertyMap_h
 #define StylePropertyMap_h
 
-#include "base/macros.h"
-#include "bindings/core/v8/v8_update_function.h"
 #include "core/css/cssom/StylePropertyMapReadonly.h"
 
 namespace blink {
 
 class ExceptionState;
-class ExecutionContext;
 
 class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadonly {
   DEFINE_WRAPPERTYPEINFO();
+  WTF_MAKE_NONCOPYABLE(StylePropertyMap);
 
  public:
-  void set(const ExecutionContext*,
-           const String& property_name,
+  void set(const String& property_name,
            CSSStyleValueOrCSSStyleValueSequenceOrString& item,
            ExceptionState&);
-  void append(const ExecutionContext*,
-              const String& property_name,
+  void append(const String& property_name,
               CSSStyleValueOrCSSStyleValueSequenceOrString& item,
               ExceptionState&);
   void remove(const String& property_name, ExceptionState&);
-  void update(const String&, const V8UpdateFunction*) {}
 
-  virtual void set(const ExecutionContext*,
-                   CSSPropertyID,
+  virtual void set(CSSPropertyID,
                    CSSStyleValueOrCSSStyleValueSequenceOrString& item,
                    ExceptionState&) = 0;
-  virtual void append(const ExecutionContext*,
-                      CSSPropertyID,
+  virtual void append(CSSPropertyID,
                       CSSStyleValueOrCSSStyleValueSequenceOrString& item,
                       ExceptionState&) = 0;
   virtual void remove(CSSPropertyID, ExceptionState&) = 0;
@@ -42,8 +35,6 @@ class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadonly {
  protected:
   StylePropertyMap() {}
 
- private:
-  DISALLOW_COPY_AND_ASSIGN(StylePropertyMap);
 };
 
 }  // namespace blink

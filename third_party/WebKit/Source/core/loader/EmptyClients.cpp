@@ -86,8 +86,8 @@ class EmptyFrameScheduler : public WebFrameScheduler {
     return WebFrameScheduler::FrameType::kSubframe;
   }
   WebViewScheduler* GetWebViewScheduler() const override { return nullptr; }
-  WebScopedVirtualTimePauser CreateWebScopedVirtualTimePauser() {
-    return WebScopedVirtualTimePauser();
+  ScopedVirtualTimePauser CreateScopedVirtualTimePauser() {
+    return ScopedVirtualTimePauser();
   }
   void DidStartProvisionalLoad(bool is_main_frame) override {}
   void DidCommitProvisionalLoad(bool is_web_history_inert_commit,
@@ -161,13 +161,11 @@ DocumentLoader* EmptyLocalFrameClient::CreateDocumentLoader(
     LocalFrame* frame,
     const ResourceRequest& request,
     const SubstituteData& substitute_data,
-    ClientRedirectPolicy client_redirect_policy,
-    const base::UnguessableToken& devtools_navigation_token) {
+    ClientRedirectPolicy client_redirect_policy) {
   DCHECK(frame);
 
   return DocumentLoader::Create(frame, request, substitute_data,
-                                client_redirect_policy,
-                                devtools_navigation_token);
+                                client_redirect_policy);
 }
 
 LocalFrame* EmptyLocalFrameClient::CreateFrame(const AtomicString&,

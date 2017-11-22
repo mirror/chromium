@@ -128,6 +128,7 @@ class EPKChallengeKeyTestBase : public BrowserWithTestWindowTest {
   EPKChallengeKeyTestBase()
       : settings_helper_(false),
         extension_(ExtensionBuilder("Test").Build()),
+        profile_manager_(TestingBrowserProcess::GetGlobal()),
         fake_user_manager_(new chromeos::FakeChromeUserManager),
         user_manager_enabler_(base::WrapUnique(fake_user_manager_)) {
     // Set up the default behavior of mocks.
@@ -146,6 +147,8 @@ class EPKChallengeKeyTestBase : public BrowserWithTestWindowTest {
   }
 
   void SetUp() override {
+    ASSERT_TRUE(profile_manager_.SetUp());
+
     BrowserWithTestWindowTest::SetUp();
 
     // Set the user preferences.
@@ -161,7 +164,13 @@ class EPKChallengeKeyTestBase : public BrowserWithTestWindowTest {
   TestingProfile* CreateProfile() override {
     fake_user_manager_->AddUserWithAffiliation(
         AccountId::FromUserEmail(kUserEmail), true);
-    return profile_manager()->CreateTestingProfile(kUserEmail);
+    return profile_manager_.CreateTestingProfile(kUserEmail);
+  }
+
+  void DestroyProfile(TestingProfile* profile) override {
+    profile_manager_.DeleteTestingProfile(profile->GetProfileUserName());
+    // Profile itself will be destroyed later in
+    // ProfileManager::ProfileInfo::~ProfileInfo() .
   }
 
   // Derived classes can override this method to set the required authenticated
@@ -207,6 +216,7 @@ class EPKChallengeKeyTestBase : public BrowserWithTestWindowTest {
   chromeos::ScopedCrosSettingsTestHelper settings_helper_;
   scoped_refptr<extensions::Extension> extension_;
   chromeos::StubInstallAttributes stub_install_attributes_;
+  TestingProfileManager profile_manager_;
   // fake_user_manager_ is owned by user_manager_enabler_.
   chromeos::FakeChromeUserManager* fake_user_manager_;
   user_manager::ScopedUserManager user_manager_enabler_;
@@ -584,7 +594,9 @@ class EPKChallengeMachineKeyUnmanagedUserTest
 
   TestingProfile* CreateProfile() override {
     fake_user_manager_->AddUser(account_id_);
-    return profile_manager()->CreateTestingProfile(account_id_.GetUserEmail());
+    TestingProfile* profile =
+        profile_manager_.CreateTestingProfile(account_id_.GetUserEmail());
+    return profile;
   }
 
   const AccountId account_id_ =
@@ -606,7 +618,9 @@ class EPKChallengeUserKeyUnmanagedUserTest : public EPKChallengeUserKeyTest {
 
   TestingProfile* CreateProfile() override {
     fake_user_manager_->AddUser(account_id_);
-    return profile_manager()->CreateTestingProfile(account_id_.GetUserEmail());
+    TestingProfile* profile =
+        profile_manager_.CreateTestingProfile(account_id_.GetUserEmail());
+    return profile;
   }
 
   const AccountId account_id_ =

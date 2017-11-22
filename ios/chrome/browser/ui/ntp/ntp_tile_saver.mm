@@ -13,7 +13,7 @@
 #include "components/favicon/core/fallback_url_util.h"
 #include "components/ntp_tiles/ntp_tile.h"
 #import "ios/chrome/browser/ui/favicon/favicon_attributes.h"
-#import "ios/chrome/browser/ui/favicon/favicon_attributes_provider.h"
+#import "ios/chrome/browser/ui/ntp/google_landing_data_source.h"
 #import "ios/chrome/browser/ui/ntp/ntp_tile.h"
 #include "ios/chrome/common/app_group/app_group_constants.h"
 #import "net/base/mac/url_conversions.h"
@@ -49,9 +49,9 @@ void WriteSingleUpdatedTileToDisk(NTPTile* tile);
 // Empty the temporary favicon folder.
 void ClearTemporaryFaviconFolder();
 
-// Get the favicons using |favicon_provider| and writes them to disk.
+// Get the favicons using |favicon_fetcher| and writes them to disk.
 void GetFaviconsAndSave(const ntp_tiles::NTPTilesVector& most_visited_data,
-                        FaviconAttributesProvider* favicon_provider,
+                        id<GoogleLandingDataSource> favicon_fetcher,
                         NSURL* favicons_folder);
 
 }  // namespace ntp_tile_saver
@@ -125,7 +125,7 @@ NSString* GetFaviconFileName(const GURL& url) {
 }
 
 void GetFaviconsAndSave(const ntp_tiles::NTPTilesVector& most_visited_data,
-                        FaviconAttributesProvider* favicon_provider,
+                        id<GoogleLandingDataSource> favicon_fetcher,
                         NSURL* favicons_folder) {
   NSMutableDictionary<NSURL*, NTPTile*>* tiles =
       [[NSMutableDictionary alloc] init];
@@ -196,13 +196,15 @@ void GetFaviconsAndSave(const ntp_tiles::NTPTilesVector& most_visited_data,
     // The cache is not used here as it is simply a way to have a synchronous
     // immediate return. In this case it is unnecessary.
 
-    [favicon_provider fetchFaviconAttributesForURL:gurl
-                                        completion:faviconAttributesBlock];
+    [favicon_fetcher getFaviconForPageURL:gurl
+                                     size:48
+                                 useCache:NO
+                                 callback:faviconAttributesBlock];
   }
 }
 
 void SaveMostVisitedToDisk(const ntp_tiles::NTPTilesVector& most_visited_data,
-                           FaviconAttributesProvider* favicon_provider,
+                           id<GoogleLandingDataSource> favicon_fetcher,
                            NSURL* favicons_folder) {
   if (favicons_folder == nil) {
     return;
@@ -213,7 +215,7 @@ void SaveMostVisitedToDisk(const ntp_tiles::NTPTilesVector& most_visited_data,
       base::BindOnce(&ClearTemporaryFaviconFolder),
       base::Bind(base::BindBlockArc(
                      ^(const ntp_tiles::NTPTilesVector& most_visited_data) {
-                       GetFaviconsAndSave(most_visited_data, favicon_provider,
+                       GetFaviconsAndSave(most_visited_data, favicon_fetcher,
                                           favicons_folder);
                      }),
                  most_visited_data));
@@ -243,7 +245,7 @@ NSDictionary* ReadSavedMostVisited() {
 }
 
 void UpdateSingleFavicon(const GURL& site_url,
-                         FaviconAttributesProvider* favicon_provider,
+                         id<GoogleLandingDataSource> favicon_fetcher,
                          NSURL* favicons_folder) {
   NSDictionary* tiles = ReadSavedMostVisited();
 
@@ -317,7 +319,9 @@ void UpdateSingleFavicon(const GURL& site_url,
 
   // The cache is not used here as it is simply a way to have a synchronous
   // immediate return. In this case it is unnecessary.
-  [favicon_provider fetchFaviconAttributesForURL:site_url
-                                      completion:faviconAttributesBlock];
+  [favicon_fetcher getFaviconForPageURL:site_url
+                                   size:48
+                               useCache:NO
+                               callback:faviconAttributesBlock];
 }
 }  // namespace ntp_tile_saver

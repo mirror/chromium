@@ -5,7 +5,7 @@
 #include "net/http/http_network_session.h"
 
 #include <inttypes.h>
-#include <memory>
+
 #include <utility>
 
 #include "base/atomic_sequence_num.h"
@@ -45,13 +45,13 @@ namespace {
 
 base::AtomicSequenceNumber g_next_shard_id;
 
-std::unique_ptr<ClientSocketPoolManager> CreateSocketPoolManager(
+ClientSocketPoolManager* CreateSocketPoolManager(
     HttpNetworkSession::SocketPoolType pool_type,
     const HttpNetworkSession::Context& context,
     const std::string& ssl_session_cache_shard) {
   // TODO(yutak): Differentiate WebSocket pool manager and allow more
   // simultaneous connections for WebSockets.
-  return std::make_unique<ClientSocketPoolManagerImpl>(
+  return new ClientSocketPoolManagerImpl(
       context.net_log,
       context.client_socket_factory ? context.client_socket_factory
                                     : ClientSocketFactory::GetDefaultFactory(),
@@ -121,7 +121,6 @@ HttpNetworkSession::Params::Params()
           kInitialIdleTimeoutSecs),
       quic_connect_using_default_network(false),
       quic_migrate_sessions_on_network_change(false),
-      quic_migrate_sessions_on_network_change_v2(false),
       quic_migrate_sessions_early(false),
       quic_allow_server_migration(false),
       quic_disable_bidirectional_streams(false),
@@ -199,7 +198,6 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
           params.quic_max_idle_time_before_crypto_handshake_seconds,
           params.quic_connect_using_default_network,
           params.quic_migrate_sessions_on_network_change,
-          params.quic_migrate_sessions_on_network_change_v2,
           params.quic_migrate_sessions_early,
           params.quic_allow_server_migration,
           params.quic_race_cert_verification,
@@ -229,10 +227,10 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
 
   const std::string ssl_session_cache_shard =
       "http_network_session/" + base::IntToString(g_next_shard_id.GetNext());
-  normal_socket_pool_manager_ = CreateSocketPoolManager(
-      NORMAL_SOCKET_POOL, context, ssl_session_cache_shard);
-  websocket_socket_pool_manager_ = CreateSocketPoolManager(
-      WEBSOCKET_SOCKET_POOL, context, ssl_session_cache_shard);
+  normal_socket_pool_manager_.reset(CreateSocketPoolManager(
+      NORMAL_SOCKET_POOL, context, ssl_session_cache_shard));
+  websocket_socket_pool_manager_.reset(CreateSocketPoolManager(
+      WEBSOCKET_SOCKET_POOL, context, ssl_session_cache_shard));
 
   if (params_.enable_http2) {
     next_protos_.push_back(kProtoHTTP2);
@@ -346,8 +344,6 @@ std::unique_ptr<base::Value> HttpNetworkSession::QuicInfoToValue() const {
                    params_.quic_disable_bidirectional_streams);
   dict->SetBoolean("migrate_sessions_on_network_change",
                    params_.quic_migrate_sessions_on_network_change);
-  dict->SetBoolean("migrate_sessions_on_network_change_v2",
-                   params_.quic_migrate_sessions_on_network_change_v2);
   dict->SetBoolean("migrate_sessions_early",
                    params_.quic_migrate_sessions_early);
   dict->SetBoolean("allow_server_migration",

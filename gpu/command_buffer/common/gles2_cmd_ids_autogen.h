@@ -340,12 +340,9 @@
   OP(BeginRasterCHROMIUM)                                  /* 581 */ \
   OP(RasterCHROMIUM)                                       /* 582 */ \
   OP(EndRasterCHROMIUM)                                    /* 583 */ \
-  OP(CreateTransferCacheEntryCHROMIUM)                     /* 584 */ \
-  OP(DeleteTransferCacheEntryCHROMIUM)                     /* 585 */ \
-  OP(UnlockTransferCacheEntryCHROMIUM)                     /* 586 */ \
-  OP(TexStorage2DImageCHROMIUM)                            /* 587 */ \
-  OP(SetColorSpaceMetadataCHROMIUM)                        /* 588 */ \
-  OP(WindowRectanglesEXTImmediate)                         /* 589 */
+  OP(TexStorage2DImageCHROMIUM)                            /* 584 */ \
+  OP(SetColorSpaceMetadataCHROMIUM)                        /* 585 */ \
+  OP(WindowRectanglesEXTImmediate)                         /* 586 */
 
 enum CommandId {
   kOneBeforeStartPoint =

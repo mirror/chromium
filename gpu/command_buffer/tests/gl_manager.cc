@@ -572,6 +572,7 @@ bool GLManager::CanWaitUnverifiedSyncToken(const gpu::SyncToken& sync_token) {
   return false;
 }
 
-void GLManager::SetSnapshotRequested() {}
+void GLManager::AddLatencyInfo(
+    const std::vector<ui::LatencyInfo>& latency_info) {}
 
 }  // namespace gpu

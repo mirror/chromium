@@ -27,9 +27,8 @@ struct ActivationContext;
 // DataTypeController implementation for Unified Sync and Storage model types.
 class ModelTypeController : public DataTypeController {
  public:
-  using BridgeProvider =
-      base::OnceCallback<base::WeakPtr<ModelTypeSyncBridge>()>;
-  using BridgeTask = base::OnceCallback<void(ModelTypeSyncBridge*)>;
+  using BridgeProvider = base::Callback<base::WeakPtr<ModelTypeSyncBridge>()>;
+  using BridgeTask = base::Callback<void(ModelTypeSyncBridge*)>;
 
   ModelTypeController(
       ModelType type,
@@ -77,7 +76,8 @@ class ModelTypeController : public DataTypeController {
 
   // Post the given task that requires the bridge object to run to the model
   // thread, where the bridge lives.
-  virtual void PostBridgeTask(const base::Location& location, BridgeTask task);
+  virtual void PostBridgeTask(const base::Location& location,
+                              const BridgeTask& task);
 
   // The sync client, which provides access to this type's ModelTypeSyncBridge.
   SyncClient* const sync_client_;

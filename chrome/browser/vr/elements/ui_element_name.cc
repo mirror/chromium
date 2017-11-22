@@ -83,7 +83,7 @@ static const char* g_ui_element_name_strings[] = {
     "kSpeechRecognitionListeningGrowingCircle",
     "kSpeechRecognitionListeningInnerCircle",
     "kSpeechRecognitionListeningMicrophoneIcon",
-    "kSpeechRecognitionListeningCloseButton",
+    "kSpeechRecognitionListeningBackplane",
     "kSuggestionLayout",
     "kNumUiElementNames",
 };

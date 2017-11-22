@@ -1858,9 +1858,7 @@ void RenderFrameImpl::OnNavigate(
     devtools_agent_->ContinueProgram();
   NavigateInternal(common_params, start_params, request_params,
                    std::unique_ptr<StreamOverrideParameters>(),
-                   /*subresource_loader_factories=*/base::nullopt,
-                   /* non-plznavigate navigations are not traced */
-                   base::UnguessableToken::Create());
+                   /*subresource_loader_factories=*/base::nullopt);
 }
 
 void RenderFrameImpl::BindEngagement(
@@ -2629,7 +2627,7 @@ bool RenderFrameImpl::ScheduleFileChooser(
 }
 
 void RenderFrameImpl::DidFailProvisionalLoadInternal(
-    const WebURLError& error,
+    const blink::WebURLError& error,
     blink::WebHistoryCommitType commit_type,
     const base::Optional<std::string>& error_page_content) {
   TRACE_EVENT1("navigation,benchmark,rail",
@@ -2873,7 +2871,7 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
 }
 
 void RenderFrameImpl::LoadErrorPage(int reason) {
-  WebURLError error(reason, frame_->GetDocument().Url());
+  blink::WebURLError error(reason, frame_->GetDocument().Url());
 
   std::string error_html;
   GetContentClient()->renderer()->GetNavigationErrorStrings(
@@ -3121,8 +3119,7 @@ void RenderFrameImpl::CommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
     mojo::ScopedDataPipeConsumerHandle body_data,
-    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
-    const base::UnguessableToken& devtools_navigation_token) {
+    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
   CHECK(IsBrowserSideNavigationEnabled());
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
@@ -3168,8 +3165,7 @@ void RenderFrameImpl::CommitNavigation(
 
   NavigateInternal(common_params, StartNavigationParams(), request_params,
                    std::move(stream_override),
-                   std::move(subresource_loader_factories),
-                   devtools_navigation_token);
+                   std::move(subresource_loader_factories));
 
   // Don't add code after this since NavigateInternal may have destroyed this
   // RenderFrameImpl.
@@ -3892,7 +3888,7 @@ void RenderFrameImpl::DidReceiveServerRedirectForProvisionalLoad() {
 }
 
 void RenderFrameImpl::DidFailProvisionalLoad(
-    const WebURLError& error,
+    const blink::WebURLError& error,
     blink::WebHistoryCommitType commit_type) {
   DidFailProvisionalLoadInternal(error, commit_type, base::nullopt);
 }
@@ -4241,7 +4237,7 @@ void RenderFrameImpl::DidHandleOnloadEvents() {
   }
 }
 
-void RenderFrameImpl::DidFailLoad(const WebURLError& error,
+void RenderFrameImpl::DidFailLoad(const blink::WebURLError& error,
                                   blink::WebHistoryCommitType commit_type) {
   TRACE_EVENT1("navigation,rail", "RenderFrameImpl::didFailLoad",
                "id", routing_id_);
@@ -4823,10 +4819,6 @@ void RenderFrameImpl::DidObserveNewFeatureUsage(
     blink::mojom::WebFeature feature) {
   for (auto& observer : observers_)
     observer.DidObserveNewFeatureUsage(feature);
-}
-
-bool RenderFrameImpl::ShouldTrackUseCounter(const blink::WebURL& url) {
-  return GetContentClient()->renderer()->ShouldTrackUseCounter(url);
 }
 
 void RenderFrameImpl::DidCreateScriptContext(v8::Local<v8::Context> context,
@@ -6257,8 +6249,7 @@ void RenderFrameImpl::NavigateInternal(
     const StartNavigationParams& start_params,
     const RequestNavigationParams& request_params,
     std::unique_ptr<StreamOverrideParameters> stream_params,
-    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
-    const base::UnguessableToken& devtools_navigation_token) {
+    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
 
   // First, check if this is a Debug URL. If so, handle it and stop the
@@ -6521,8 +6512,7 @@ void RenderFrameImpl::NavigateInternal(
     } else {
       // Load the request.
       frame_->Load(request, load_type, item_for_history_navigation,
-                   history_load_type, is_client_redirect,
-                   devtools_navigation_token);
+                   history_load_type, is_client_redirect);
 
       // The load of the URL can result in this frame being removed. Use a
       // WeakPtr as an easy way to detect whether this has occured. If so, this
@@ -6833,7 +6823,7 @@ void RenderFrameImpl::SendUpdateState() {
 
 void RenderFrameImpl::SendFailedProvisionalLoad(
     const blink::WebURLRequest& request,
-    const WebURLError& error,
+    const blink::WebURLError& error,
     blink::WebLocalFrame* frame) {
   bool show_repost_interstitial =
       (error.reason() == net::ERR_CACHE_MISS &&

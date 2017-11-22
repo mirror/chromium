@@ -137,8 +137,8 @@
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/wtf/AutoReset.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
-#include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositeAndReadbackAsyncCallback.h"
 #include "public/platform/WebCompositorSupport.h"
@@ -1534,8 +1534,8 @@ PagePopup* WebViewImpl::OpenPagePopup(PagePopupClient* client) {
     HidePopups();
   DCHECK(!page_popup_);
 
-  WebWidget* popup_widget = client_->CreatePopup(kWebPopupTypePage);
-  // CreatePopup returns nullptr if this renderer process is about to die.
+  WebWidget* popup_widget = client_->CreatePopupMenu(kWebPopupTypePage);
+  // createPopupMenu returns nullptr if this renderer process is about to die.
   if (!popup_widget)
     return nullptr;
   page_popup_ = ToWebPagePopupImpl(popup_widget);

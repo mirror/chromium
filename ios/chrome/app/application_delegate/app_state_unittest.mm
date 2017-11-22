@@ -131,9 +131,11 @@ class AppStateTest : public BlockCleanupTest {
   void SetUp() override {
     BlockCleanupTest::SetUp();
     TestChromeBrowserState::Builder test_cbs_builder;
-    test_cbs_builder.AddTestingFactory(
-        IOSChromeContentSuggestionsServiceFactory::GetInstance(),
-        IOSChromeContentSuggestionsServiceFactory::GetDefaultFactory());
+    if (experimental_flags::IsSuggestionsUIEnabled()) {
+      test_cbs_builder.AddTestingFactory(
+          IOSChromeContentSuggestionsServiceFactory::GetInstance(),
+          IOSChromeContentSuggestionsServiceFactory::GetDefaultFactory());
+    }
     browser_state_ = test_cbs_builder.Build();
   }
 

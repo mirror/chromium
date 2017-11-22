@@ -48,6 +48,7 @@
 #include "components/autofill/core/browser/country_names.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/field_types.h"
+#include "components/autofill/core/browser/fill_util.h"
 #include "components/autofill/core/browser/form_structure.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/phone_number.h"
@@ -192,11 +193,59 @@ AutofillManager::AutofillManager(
     AutofillClient* client,
     const std::string& app_locale,
     AutofillDownloadManagerState enable_download_manager)
-    : AutofillManager(driver,
-                      client,
-                      client->GetPersonalDataManager(),
-                      app_locale,
-                      enable_download_manager) {}
+    : AutofillHandler(driver),
+      client_(client),
+      payments_client_(std::make_unique<payments::PaymentsClient>(
+          driver->GetURLRequestContext(),
+          client->GetPrefs(),
+          client->GetIdentityProvider(),
+          /*unmask_delegate=*/this,
+          // save_delegate starts out as nullptr and is set up by the
+          // CreditCardSaveManager owned by form_data_importer_.
+          /*save_delegate=*/nullptr)),
+      app_locale_(app_locale),
+      personal_data_(client->GetPersonalDataManager()),
+      form_data_importer_(
+          std::make_unique<FormDataImporter>(client,
+                                             payments_client_.get(),
+                                             client->GetPersonalDataManager(),
+                                             app_locale)),
+      autocomplete_history_manager_(
+          std::make_unique<AutocompleteHistoryManager>(driver, client)),
+      form_interactions_ukm_logger_(
+          std::make_unique<AutofillMetrics::FormInteractionsUkmLogger>(
+              client->GetUkmRecorder())),
+      address_form_event_logger_(
+          std::make_unique<AutofillMetrics::FormEventLogger>(
+              false /* is_for_credit_card */,
+              form_interactions_ukm_logger_.get())),
+      credit_card_form_event_logger_(
+          std::make_unique<AutofillMetrics::FormEventLogger>(
+              true /* is_for_credit_card */,
+              form_interactions_ukm_logger_.get())),
+      has_logged_autofill_enabled_(false),
+      has_logged_address_suggestions_count_(false),
+      did_show_suggestions_(false),
+      user_did_type_(false),
+      user_did_autofill_(false),
+      user_did_edit_autofilled_field_(false),
+      enable_ablation_logging_(false),
+      external_delegate_(nullptr),
+      test_delegate_(nullptr),
+#if defined(OS_ANDROID) || defined(OS_IOS)
+      autofill_assistant_(this),
+#endif
+      weak_ptr_factory_(this) {
+  if (enable_download_manager == ENABLE_AUTOFILL_DOWNLOAD_MANAGER) {
+    download_manager_.reset(new AutofillDownloadManager(driver, this));
+  }
+  CountryNames::SetLocaleString(app_locale_);
+  if (personal_data_ && client_)
+    personal_data_->OnSyncServiceInitialized(client_->GetSyncService());
+
+  if (personal_data_ && driver)
+    personal_data_->SetURLRequestContextGetter(driver->GetURLRequestContext());
+}
 
 AutofillManager::~AutofillManager() {}
 
@@ -1159,12 +1208,9 @@ void AutofillManager::Reset() {
   external_delegate_->Reset();
 }
 
-AutofillManager::AutofillManager(
-    AutofillDriver* driver,
-    AutofillClient* client,
-    PersonalDataManager* personal_data,
-    const std::string app_locale,
-    AutofillDownloadManagerState enable_download_manager)
+AutofillManager::AutofillManager(AutofillDriver* driver,
+                                 AutofillClient* client,
+                                 PersonalDataManager* personal_data)
     : AutofillHandler(driver),
       client_(client),
       payments_client_(std::make_unique<payments::PaymentsClient>(
@@ -1175,14 +1221,13 @@ AutofillManager::AutofillManager(
           // save_delegate starts out as nullptr and is set up by the
           // CreditCardSaveManager owned by form_data_importer_.
           /*save_delegate=*/nullptr)),
-      app_locale_(app_locale),
+      app_locale_("en-US"),
       personal_data_(personal_data),
       form_data_importer_(
           std::make_unique<FormDataImporter>(client,
                                              payments_client_.get(),
                                              personal_data,
                                              app_locale_)),
-      field_filler_("en-US"),
       autocomplete_history_manager_(
           std::make_unique<AutocompleteHistoryManager>(driver, client)),
       form_interactions_ukm_logger_(
@@ -1196,21 +1241,23 @@ AutofillManager::AutofillManager(
           std::make_unique<AutofillMetrics::FormEventLogger>(
               true /* is_for_credit_card */,
               form_interactions_ukm_logger_.get())),
+      has_logged_autofill_enabled_(false),
+      has_logged_address_suggestions_count_(false),
+      did_show_suggestions_(false),
+      user_did_type_(false),
+      user_did_autofill_(false),
+      user_did_edit_autofilled_field_(false),
+      unmasking_query_id_(-1),
+      enable_ablation_logging_(false),
+      external_delegate_(nullptr),
+      test_delegate_(nullptr),
 #if defined(OS_ANDROID) || defined(OS_IOS)
       autofill_assistant_(this),
 #endif
       weak_ptr_factory_(this) {
   DCHECK(driver);
   DCHECK(client_);
-  if (enable_download_manager == ENABLE_AUTOFILL_DOWNLOAD_MANAGER) {
-    download_manager_.reset(new AutofillDownloadManager(driver, this));
-  }
   CountryNames::SetLocaleString(app_locale_);
-  if (personal_data_ && client_)
-    personal_data_->OnSyncServiceInitialized(client_->GetSyncService());
-
-  if (personal_data_ && driver)
-    personal_data_->SetURLRequestContextGetter(driver->GetURLRequestContext());
 }
 
 bool AutofillManager::RefreshDataModels() {
@@ -1559,7 +1606,7 @@ std::vector<Suggestion> AutofillManager::GetProfileSuggestions(
   // Adjust phone number to display in prefix/suffix case.
   if (autofill_field.Type().GetStorableType() == PHONE_HOME_NUMBER) {
     for (size_t i = 0; i < suggestions.size(); ++i) {
-      suggestions[i].value = FieldFiller::GetPhoneNumberValue(
+      suggestions[i].value = fill_util::GetPhoneNumberValue(
           autofill_field, suggestions[i].value, field);
     }
   }
@@ -1602,7 +1649,7 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
     return;
 
   // Setup the url for metrics that we will collect for this form.
-  form_interactions_ukm_logger_->OnFormsParsed(forms[0].main_frame_origin);
+  form_interactions_ukm_logger_->OnFormsParsed(forms[0].origin);
 
   std::vector<FormStructure*> non_queryable_forms;
   std::vector<FormStructure*> queryable_forms;
@@ -1932,8 +1979,8 @@ void AutofillManager::FillFieldWithValue(
     const base::string16& profile_full_name,
     FormFieldData* field_data,
     bool should_notify) {
-  if (field_filler_.FillFormField(*autofill_field, value, profile_language_code,
-                                  field_data)) {
+  if (fill_util::FillFormField(*autofill_field, value, profile_language_code,
+                               app_locale_, field_data)) {
     // Mark the cached field as autofilled, so that we can detect when a
     // user edits an autofilled field (for metrics).
     autofill_field->is_autofilled = true;

@@ -355,7 +355,7 @@ void CleanCertificatePolicyCache(
              object:nil];
 
     // Associate with ios::ChromeBrowserState.
-    TabModelList::RegisterTabModelWithChromeBrowserState(_browserState, self);
+    RegisterTabModelWithChromeBrowserState(_browserState, self);
   }
   return self;
 }
@@ -581,7 +581,7 @@ void CleanCertificatePolicyCache(
     return;
 
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  TabModelList::UnregisterTabModelFromChromeBrowserState(_browserState, self);
+  UnregisterTabModelFromChromeBrowserState(_browserState, self);
   _browserState = nullptr;
 
   // Clear weak pointer to observers before destroying them.

@@ -988,7 +988,6 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
     return false;
 
   // FIXME: What is this code really trying to do?
-  // TODO(xiaochengh): Rename |o| to |runner|.
   LayoutObject* o = GetLayoutObject();
   if (!o->IsInline() || o->IsAtomicInlineLevel()) {
     point = o->LocalToAbsolute(FloatPoint(), kUseTransforms);
@@ -997,7 +996,7 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
 
   // Find the next text/image child, to get a position.
   while (o) {
-    const LayoutObject* const previous = o;
+    LayoutObject* p = o;
     if (LayoutObject* o_first_child = o->SlowFirstChild()) {
       o = o_first_child;
     } else if (o->NextSibling()) {
@@ -1020,29 +1019,27 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
       return true;
     }
 
-    if (o->IsText() && !o->IsBR()) {
-      const Optional<FloatPoint> maybe_point =
-          ToLayoutText(o)->GetUpperLeftCorner();
-      if (maybe_point.has_value()) {
-        point = o->LocalToAbsolute(maybe_point.value(), kUseTransforms);
-        return true;
+    DCHECK(CanUseInlineBox(*o));
+    if (p->GetNode() && p->GetNode() == this && o->IsText() && !o->IsBR() &&
+        !ToLayoutText(o)->HasTextBoxes()) {
+      // Do nothing - skip unrendered whitespace that is a child or next sibling
+      // of the anchor.
+      // FIXME: This fails to skip a whitespace sibling when there was also a
+      // whitespace child (because p has moved).
+    } else if ((o->IsText() && !o->IsBR()) || o->IsAtomicInlineLevel()) {
+      point = FloatPoint();
+      if (o->IsText()) {
+        if (ToLayoutText(o)->FirstTextBox())
+          point.Move(
+              ToLayoutText(o)->LinesBoundingBox().X(),
+              ToLayoutText(o)->FirstTextBox()->Root().LineTop().ToFloat());
+        point = o->LocalToAbsolute(point, kUseTransforms);
+      } else {
+        DCHECK(o->IsBox());
+        LayoutBox* box = ToLayoutBox(o);
+        point.MoveBy(box->Location());
+        point = o->Container()->LocalToAbsolute(point, kUseTransforms);
       }
-      if (previous->GetNode() == this) {
-        // Do nothing - skip unrendered whitespace that is a child or next
-        // sibling of the anchor.
-        // FIXME: This fails to skip a whitespace sibling when there was also a
-        // whitespace child (because |previous| has moved).
-        continue;
-      }
-      point = o->LocalToAbsolute(FloatPoint(), kUseTransforms);
-      return true;
-    }
-
-    if (o->IsAtomicInlineLevel()) {
-      DCHECK(o->IsBox());
-      LayoutBox* box = ToLayoutBox(o);
-      point = FloatPoint(box->Location());
-      point = o->Container()->LocalToAbsolute(point, kUseTransforms);
       return true;
     }
   }

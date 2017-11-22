@@ -433,19 +433,6 @@ ServiceWorkerProviderHost::MatchRegistration() const {
   return nullptr;
 }
 
-void ServiceWorkerProviderHost::RemoveServiceWorkerRegistrationObjectHost(
-    int64_t registration_id) {
-  DCHECK(base::ContainsKey(registration_object_hosts_, registration_id));
-  registration_object_hosts_.erase(registration_id);
-}
-
-bool ServiceWorkerProviderHost::AllowServiceWorker(const GURL& scope) {
-  return GetContentClient()->browser()->AllowServiceWorker(
-      scope, topmost_frame_url(), dispatcher_host_->resource_context(),
-      base::Bind(&WebContentsImpl::FromRenderFrameHostID, render_process_id_,
-                 frame_id()));
-}
-
 void ServiceWorkerProviderHost::NotifyControllerLost() {
   SetControllerVersionAttribute(nullptr, true /* notify_controllerchange */);
 }
@@ -496,6 +483,23 @@ ServiceWorkerProviderHost::CreateRequestHandler(
   return std::unique_ptr<ServiceWorkerRequestHandler>();
 }
 
+blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
+ServiceWorkerProviderHost::CreateServiceWorkerRegistrationObjectInfo(
+    ServiceWorkerRegistration* registration) {
+  DCHECK(dispatcher_host_);
+  ServiceWorkerRegistrationObjectHost* existing_host =
+      dispatcher_host_->FindServiceWorkerRegistrationObjectHost(
+          provider_id(), registration->id());
+  if (existing_host) {
+    return existing_host->CreateObjectInfo();
+  }
+  // ServiceWorkerRegistrationObjectHost ctor will register itself into
+  // |dispatcher_host_->registration_object_hosts_|.
+  auto* new_host = new ServiceWorkerRegistrationObjectHost(
+      context_, dispatcher_host_.get(), AsWeakPtr(), registration);
+  return new_host->CreateObjectInfo();
+}
+
 blink::mojom::ServiceWorkerObjectInfoPtr
 ServiceWorkerProviderHost::GetOrCreateServiceWorkerHandle(
     ServiceWorkerVersion* version) {
@@ -544,14 +548,11 @@ void ServiceWorkerProviderHost::PostMessageToClient(
 void ServiceWorkerProviderHost::CountFeature(uint32_t feature) {
   if (!dispatcher_host_)
     return;
+
   // CountFeature message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  DCHECK_LT(feature,
-            static_cast<uint32_t>(blink::mojom::WebFeature::kNumberOfFeatures));
-
-  blink::mojom::WebFeature web_feature =
-      static_cast<blink::mojom::WebFeature>(feature);
-  container_->CountFeature(web_feature);
+  Send(new ServiceWorkerMsg_CountFeature(render_thread_id_, provider_id(),
+                                         feature));
 }
 
 void ServiceWorkerProviderHost::AddScopedProcessReferenceToPattern(
@@ -712,8 +713,8 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info =
       mojom::ServiceWorkerProviderInfoForStartWorker::New();
   provider_info->provider_id = provider_id();
-  provider_info->registration = CreateServiceWorkerRegistrationObjectInfo(
-      scoped_refptr<ServiceWorkerRegistration>(registration));
+  provider_info->registration =
+      CreateServiceWorkerRegistrationObjectInfo(registration);
   provider_info->client_request = mojo::MakeRequest(&container_);
 
   mojom::URLLoaderFactoryAssociatedPtrInfo script_loader_factory_ptr_info;
@@ -822,8 +823,7 @@ void ServiceWorkerProviderHost::ReturnRegistrationForReadyIfNeeded() {
   }
 
   std::move(*get_ready_callback_)
-      .Run(CreateServiceWorkerRegistrationObjectInfo(
-          scoped_refptr<ServiceWorkerRegistration>(registration)));
+      .Run(CreateServiceWorkerRegistrationObjectInfo(registration));
 }
 
 bool ServiceWorkerProviderHost::IsReadyToSendMessages() const {
@@ -855,9 +855,13 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
   std::vector<blink::mojom::WebFeature> used_features;
   if (version) {
     for (const uint32_t feature : version->used_features()) {
-      DCHECK_LT(feature, static_cast<uint32_t>(
-                             blink::mojom::WebFeature::kNumberOfFeatures));
-      used_features.push_back(static_cast<blink::mojom::WebFeature>(feature));
+      // TODO: version->used_features() should never have a feature outside the
+      // known feature range. But there is special case, see the details in
+      // crbug.com/758419.
+      if (feature <
+          static_cast<uint32_t>(blink::mojom::WebFeature::kNumberOfFeatures)) {
+        used_features.push_back(static_cast<blink::mojom::WebFeature>(feature));
+      }
     }
   }
   container_->SetController(GetOrCreateServiceWorkerHandle(version),
@@ -931,8 +935,7 @@ void ServiceWorkerProviderHost::RegistrationComplete(
 
   std::move(callback).Run(
       blink::mojom::ServiceWorkerErrorType::kNone, base::nullopt,
-      CreateServiceWorkerRegistrationObjectInfo(
-          scoped_refptr<ServiceWorkerRegistration>(registration)));
+      CreateServiceWorkerRegistrationObjectInfo(registration));
 }
 
 void ServiceWorkerProviderHost::GetRegistration(
@@ -1025,7 +1028,7 @@ void ServiceWorkerProviderHost::GetRegistrationComplete(
   DCHECK(status != SERVICE_WORKER_OK || registration);
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info;
   if (status == SERVICE_WORKER_OK && !registration->is_uninstalling())
-    info = CreateServiceWorkerRegistrationObjectInfo(std::move(registration));
+    info = CreateServiceWorkerRegistrationObjectInfo(registration.get());
 
   std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kNone,
                           base::nullopt, std::move(info));
@@ -1067,7 +1070,7 @@ void ServiceWorkerProviderHost::GetRegistrationsComplete(
     DCHECK(registration.get());
     if (!registration->is_uninstalling()) {
       object_infos.push_back(
-          CreateServiceWorkerRegistrationObjectInfo(std::move(registration)));
+          CreateServiceWorkerRegistrationObjectInfo(registration.get()));
     }
   }
 
@@ -1204,20 +1207,6 @@ void ServiceWorkerProviderHost::GetInterface(
           running_hosted_version_->script_origin(), render_process_id_));
 }
 
-blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
-ServiceWorkerProviderHost::CreateServiceWorkerRegistrationObjectInfo(
-    scoped_refptr<ServiceWorkerRegistration> registration) {
-  int64_t registration_id = registration->id();
-  auto existing_host = registration_object_hosts_.find(registration_id);
-  if (existing_host != registration_object_hosts_.end()) {
-    return existing_host->second->CreateObjectInfo();
-  }
-  registration_object_hosts_[registration_id] =
-      std::make_unique<ServiceWorkerRegistrationObjectHost>(
-          context_, this, std::move(registration));
-  return registration_object_hosts_[registration_id]->CreateObjectInfo();
-}
-
 template <typename CallbackType, typename... Args>
 bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
     CallbackType* callback,
@@ -1244,7 +1233,10 @@ bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
     return false;
   }
 
-  if (!AllowServiceWorker(scope)) {
+  if (!GetContentClient()->browser()->AllowServiceWorker(
+          scope, topmost_frame_url(), dispatcher_host_->resource_context(),
+          base::Bind(&WebContentsImpl::FromRenderFrameHostID,
+                     render_process_id_, frame_id()))) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kDisabled,
         std::string(error_prefix) +

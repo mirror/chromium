@@ -20,6 +20,7 @@ cc_component("paint") {
     "image_id.h",
     "image_provider.cc",
     "image_provider.h",
+    "paint_canvas.cc",
     "paint_canvas.h",
     "paint_export.h",
     "paint_flags.cc",
@@ -52,8 +53,6 @@ cc_component("paint") {
     "paint_text_blob_builder.h",
     "paint_typeface.cc",
     "paint_typeface.h",
-    "raw_memory_transfer_cache_entry.cc",
-    "raw_memory_transfer_cache_entry.h",
     "record_paint_canvas.cc",
     "record_paint_canvas.h",
     "scoped_image_flags.cc",
@@ -64,8 +63,6 @@ cc_component("paint") {
     "skia_paint_image_generator.h",
     "solid_color_analyzer.cc",
     "solid_color_analyzer.h",
-    "transfer_cache_entry.cc",
-    "transfer_cache_entry.h",
   ]
 
   defines = [ "CC_PAINT_IMPLEMENTATION=1" ]

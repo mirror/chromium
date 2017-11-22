@@ -26,6 +26,7 @@
 // https://html.spec.whatwg.org/#the-domstringmap-interface
 
 [
+    DependentLifetime,
     OverrideBuiltins
 ] interface DOMStringMap {
     [ImplementedAs=item] getter DOMString (DOMString name);

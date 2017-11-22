@@ -17,23 +17,29 @@ class SigninUtilTest : public BrowserWithTestWindowTest {
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
     signin_util::ResetForceSigninForTesting();
+
+    prefs_.reset(new TestingPrefServiceSimple());
   }
 
   void TearDown() override {
     signin_util::ResetForceSigninForTesting();
     BrowserWithTestWindowTest::TearDown();
   }
+
+  std::unique_ptr<TestingPrefServiceSimple> prefs_;
 };
 
 TEST_F(SigninUtilTest, GetForceSigninPolicy) {
-  EXPECT_FALSE(signin_util::IsForceSigninEnabled());
+  ASSERT_FALSE(signin_util::IsForceSigninEnabled());
+  chrome::RegisterLocalState(prefs_->registry());
+  TestingBrowserProcess::GetGlobal()->SetLocalState(prefs_.get());
 
   g_browser_process->local_state()->SetBoolean(prefs::kForceBrowserSignin,
                                                true);
-  signin_util::ResetForceSigninForTesting();
-  EXPECT_TRUE(signin_util::IsForceSigninEnabled());
+  ASSERT_TRUE(signin_util::IsForceSigninEnabled());
   g_browser_process->local_state()->SetBoolean(prefs::kForceBrowserSignin,
                                                false);
-  signin_util::ResetForceSigninForTesting();
-  EXPECT_FALSE(signin_util::IsForceSigninEnabled());
+  ASSERT_TRUE(signin_util::IsForceSigninEnabled());
+
+  TestingBrowserProcess::GetGlobal()->SetLocalState(nullptr);
 }

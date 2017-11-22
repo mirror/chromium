@@ -17,15 +17,7 @@
 #include "content/public/browser/web_ui_data_source.h"
 #include "net/base/url_util.h"
 #include "ui/base/l10n/l10n_util.h"
-
-namespace {
-  const bool kIsBranded =
-#if defined(GOOGLE_CHROME_BUILD)
-      true;
-#else
-      false;
-#endif
-}
+#include "ui/resources/grit/webui_resources.h"
 
 WelcomeUI::WelcomeUI(content::WebUI* web_ui, const GURL& url)
     : content::WebUIController(web_ui) {
@@ -52,45 +44,32 @@ WelcomeUI::WelcomeUI(content::WebUI* web_ui, const GURL& url)
       (net::GetValueForKeyInQuery(url, "variant", &value) &&
        value == "everywhere");
 
-  bool is_dice = signin::IsDiceEnabledForProfile(profile->GetPrefs());
+  int header_id = is_everywhere_variant ? IDS_WELCOME_HEADER_AFTER_FIRST_RUN
+                                        : IDS_WELCOME_HEADER;
+  html_source->AddString("headerText", l10n_util::GetStringUTF16(header_id));
 
-  // There are multiple possible configurations that affects the layout, but
-  // first add resources that are shared across all layouts.
+// The subheader describes the browser as being "by Google", so we only show
+// it in the "Welcome to Chrome" variant, and only on branded builds.
+#if defined(GOOGLE_CHROME_BUILD)
+  base::string16 subheader =
+      is_everywhere_variant ? base::string16()
+                            : l10n_util::GetStringUTF16(IDS_WELCOME_SUBHEADER);
+  html_source->AddString("subheaderText", subheader);
+#endif
+
+  html_source->AddLocalizedString("descriptionText", IDS_WELCOME_DESCRIPTION);
   html_source->AddLocalizedString("acceptText", IDS_WELCOME_ACCEPT_BUTTON);
+  html_source->AddLocalizedString("declineText", IDS_WELCOME_DECLINE_BUTTON);
+
   html_source->AddResourcePath("logo.png", IDR_PRODUCT_LOGO_128);
   html_source->AddResourcePath("logo2x.png", IDR_PRODUCT_LOGO_256);
+  html_source->AddResourcePath("watermark.svg", IDR_WEBUI_IMAGES_GOOGLE_LOGO);
 
-  // Use special layout if it's branded, DICE is enabled, and it's the first
-  // run. otherwise use the default layout.
-  if (kIsBranded && is_dice && !is_everywhere_variant) {
-    html_source->AddLocalizedString("headerText", IDS_WELCOME_HEADER);
-    html_source->AddLocalizedString("secondHeaderText",
-                                    IDS_DICE_WELCOME_SECOND_HEADER);
-    html_source->AddLocalizedString("descriptionText",
-                                    IDS_DICE_WELCOME_DESCRIPTION);
-    html_source->AddLocalizedString("declineText",
-                                    IDS_DICE_WELCOME_DECLINE_BUTTON);
-    html_source->AddResourcePath("welcome_browser_proxy.html", IDR_DICE_WELCOME_BROWSER_PROXY_HTML);
-    html_source->AddResourcePath("welcome_browser_proxy.js", IDR_DICE_WELCOME_BROWSER_PROXY_JS);
-    html_source->AddResourcePath("welcome_app.html", IDR_DICE_WELCOME_APP_HTML);
-    html_source->AddResourcePath("welcome_app.js", IDR_DICE_WELCOME_APP_JS);
+  if (signin::IsDiceEnabledForProfile(profile->GetPrefs())) {
+    html_source->AddResourcePath("welcome.js", IDR_DICE_WELCOME_JS);
     html_source->AddResourcePath("welcome.css", IDR_DICE_WELCOME_CSS);
     html_source->SetDefaultResource(IDR_DICE_WELCOME_HTML);
   } else {
-    // Use default layout for non-DICE, non-first run, or unbranded build.
-    if (kIsBranded) {
-      base::string16 subheader =
-          is_everywhere_variant
-              ? base::string16()
-              : l10n_util::GetStringUTF16(IDS_WELCOME_SUBHEADER);
-      html_source->AddString("subheaderText", subheader);
-    }
-
-    int header_id = is_everywhere_variant ? IDS_WELCOME_HEADER_AFTER_FIRST_RUN
-                                          : IDS_WELCOME_HEADER;
-    html_source->AddString("headerText", l10n_util::GetStringUTF16(header_id));
-    html_source->AddLocalizedString("descriptionText", IDS_WELCOME_DESCRIPTION);
-    html_source->AddLocalizedString("declineText", IDS_WELCOME_DECLINE_BUTTON);
     html_source->AddResourcePath("welcome.js", IDR_WELCOME_JS);
     html_source->AddResourcePath("welcome.css", IDR_WELCOME_CSS);
     html_source->SetDefaultResource(IDR_WELCOME_HTML);

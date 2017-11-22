@@ -231,7 +231,6 @@ class TestSession : public QuicSpdySession {
   }
 
   using QuicSession::closed_streams;
-  using QuicSession::next_outgoing_stream_id;
   using QuicSession::PostProcessAfterData;
   using QuicSession::zombie_streams;
 
@@ -818,12 +817,6 @@ TEST_P(QuicSessionTestServer, SendGoAway) {
   EXPECT_TRUE(session_.GetOrCreateDynamicStream(kTestStreamId));
 }
 
-TEST_P(QuicSessionTestServer, InvalidGoAway) {
-  QuicGoAwayFrame go_away(QUIC_PEER_GOING_AWAY,
-                          session_.next_outgoing_stream_id(), "");
-  session_.OnGoAway(go_away);
-}
-
 // Test that server session will send a connectivity probe in response to a
 // connectivity probe on the same path.
 TEST_P(QuicSessionTestServer, ServerReplyToConnecitivityProbe) {
@@ -898,26 +891,6 @@ TEST_P(QuicSessionTestServer, OnRstStreamStaticStreamId) {
   EXPECT_CALL(*connection_,
               CloseConnection(
                   QUIC_INVALID_STREAM_ID, "Attempt to reset a static stream",
-                  ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET));
-  session_.OnRstStream(rst1);
-}
-
-TEST_P(QuicSessionTestServer, OnStreamFrameInvalidStreamId) {
-  // Send two bytes of payload.
-  QuicStreamFrame data1(kInvalidStreamId, true, 0, QuicStringPiece("HT"));
-  EXPECT_CALL(*connection_,
-              CloseConnection(
-                  QUIC_INVALID_STREAM_ID, "Recevied data for an invalid stream",
-                  ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET));
-  session_.OnStreamFrame(data1);
-}
-
-TEST_P(QuicSessionTestServer, OnRstStreamInvalidStreamId) {
-  // Send two bytes of payload.
-  QuicRstStreamFrame rst1(kInvalidStreamId, QUIC_ERROR_PROCESSING_STREAM, 0);
-  EXPECT_CALL(*connection_,
-              CloseConnection(
-                  QUIC_INVALID_STREAM_ID, "Recevied data for an invalid stream",
                   ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET));
   session_.OnRstStream(rst1);
 }

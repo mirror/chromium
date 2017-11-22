@@ -51,8 +51,6 @@ static constexpr float kUrlBarHeight = kUrlBarHeightDMM * kUrlBarDistance;
 static constexpr float kUrlBarVerticalOffset = -0.516f * kUrlBarDistance;
 static constexpr float kUrlBarRotationRad = -0.175f;
 
-static constexpr float kOverlayPlaneDistance = 2.3f;
-
 static constexpr float kAudioPermissionPromptWidth = 0.63f * kUrlBarDistance;
 static constexpr float kAudioPermissionPromptHeight = 0.218f * kUrlBarDistance;
 static constexpr float kAudionPermisionPromptDepth = 0.11f;
@@ -92,8 +90,6 @@ static constexpr float kSplashScreenTextHeightM =
 static constexpr float kSplashScreenTextVerticalOffset = -0.18f;
 static constexpr float kSplashScreenMinDurationSeconds = 3;
 
-static constexpr float kButtonZOffsetHoverDMM = 0.048;
-
 static constexpr float kCloseButtonDistance = 2.4f;
 static constexpr float kCloseButtonHeight =
     kUrlBarHeightDMM * kCloseButtonDistance;
@@ -121,18 +117,10 @@ static constexpr int kFloorGridlineCount = 40;
 // Tiny distance to offset textures that should appear in the same plane.
 static constexpr float kTextureOffset = 0.01f;
 
-static constexpr float kVoiceSearchUIGroupButtonDMM = 0.096f;
-static constexpr float kVoiceSearchButtonWidth =
-    kVoiceSearchUIGroupButtonDMM * kUrlBarDistance;
+static constexpr float kVoiceSearchButtonWidth = 0.096f * kUrlBarDistance;
 static constexpr float kVoiceSearchButtonHeight = kVoiceSearchButtonWidth;
 static constexpr float kVoiceSearchButtonYOffset =
-    (0.5f * kUrlBarHeightDMM + 0.032f) * kUrlBarDistance;
-static constexpr float kVoiceSearchCloseButtonWidth =
-    kVoiceSearchUIGroupButtonDMM * kContentDistance;
-static constexpr float kVoiceSearchCloseButtonHeight =
-    kVoiceSearchCloseButtonWidth;
-static constexpr float kVoiceSearchCloseButtonYOffset =
-    0.316f * kContentDistance + 0.5f * kVoiceSearchCloseButtonWidth;
+    (0.5 * kUrlBarHeightDMM + 0.032) * kUrlBarDistance;
 
 static constexpr float kUnderDevelopmentNoticeFontHeightM =
     0.02f * kUrlBarDistance;

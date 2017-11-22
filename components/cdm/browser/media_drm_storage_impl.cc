@@ -202,18 +202,25 @@ DictValue* GetSessionsDictFromStorageDict(DictValue* storage_dict,
 
 // Create origin dict with empty sessions dict. It returns the sessions dict for
 // caller to write session information.
-base::Value* CreateOriginDictAndReturnSessionsDict(
-    base::Value* storage_dict,
+base::DictionaryValue* CreateOriginDictAndReturnSessionsDict(
+    base::DictionaryValue* storage_dict,
     const std::string& origin,
     const base::UnguessableToken& origin_id) {
   DCHECK(storage_dict);
 
   // TODO(yucliu): Change to base::Value::SetKey.
   return storage_dict
-      ->SetKey(origin, base::Value::FromUniquePtrValue(
-                           OriginData(origin_id).ToDictValue()))
-      ->SetKey(kSessions, base::Value(base::Value::Type::DICTIONARY));
+      ->SetDictionaryWithoutPathExpansion(origin,
+                                          OriginData(origin_id).ToDictValue())
+      ->SetDictionary(kSessions, base::MakeUnique<base::DictionaryValue>());
 }
+
+#if DCHECK_IS_ON()
+// Returns whether |dict| has a value associated with the |key|.
+bool HasEntry(const base::DictionaryValue& dict, const std::string& key) {
+  return dict.GetDictionaryWithoutPathExpansion(key, nullptr);
+}
+#endif
 
 // Clear sessions whose creation time falls in [start, end] from
 // |sessions_dict|. This function also cleans corruption data and should never
@@ -424,7 +431,7 @@ void MediaDrmStorageImpl::OnProvisioned(OnProvisionedCallback callback) {
   DCHECK(storage_dict);
 
   // The origin string may contain dots. Do not use path expansion.
-  DVLOG_IF(1, storage_dict->FindKey(origin().Serialize()))
+  DVLOG_IF(1, HasEntry(*storage_dict, origin().Serialize()))
       << __func__ << ": Entry for origin " << origin()
       << " already exists and will be cleared";
 
@@ -450,7 +457,7 @@ void MediaDrmStorageImpl::SavePersistentSession(
   base::DictionaryValue* storage_dict = update.Get();
   DCHECK(storage_dict);
 
-  base::Value* sessions_dict =
+  base::DictionaryValue* sessions_dict =
       GetSessionsDictFromStorageDict<base::DictionaryValue>(
           storage_dict, origin().Serialize());
 
@@ -465,13 +472,12 @@ void MediaDrmStorageImpl::SavePersistentSession(
     DCHECK(sessions_dict);
   }
 
-  DVLOG_IF(1, sessions_dict->FindKey(session_id))
+  DVLOG_IF(1, HasEntry(*sessions_dict, session_id))
       << __func__ << ": Session ID already exists and will be replaced.";
 
-  sessions_dict->SetKey(session_id, base::Value::FromUniquePtrValue(
-                                        SessionData(session_data->key_set_id,
-                                                    session_data->mime_type)
-                                            .ToDictValue()));
+  sessions_dict->SetWithoutPathExpansion(
+      session_id, SessionData(session_data->key_set_id, session_data->mime_type)
+                      .ToDictValue());
 
   std::move(callback).Run(true);
 }

@@ -12,7 +12,7 @@
 #include "base/macros.h"
 #include "components/arc/common/oemcrypto.mojom.h"
 #include "components/arc/common/oemcrypto_daemon.mojom.h"
-#include "components/arc/connection_observer.h"
+#include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -24,9 +24,10 @@ namespace arc {
 
 class ArcBridgeService;
 
-class ArcOemCryptoBridge : public KeyedService,
-                           public ConnectionObserver<mojom::OemCryptoInstance>,
-                           public mojom::OemCryptoHost {
+class ArcOemCryptoBridge
+    : public KeyedService,
+      public InstanceHolder<mojom::OemCryptoInstance>::Observer,
+      public mojom::OemCryptoHost {
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
@@ -37,8 +38,8 @@ class ArcOemCryptoBridge : public KeyedService,
                      ArcBridgeService* bridge_service);
   ~ArcOemCryptoBridge() override;
 
-  // Overridden from ConnectionObserver<mojom::OemCryptoInstance>:
-  void OnConnectionReady() override;
+  // Overridden from InstanceHolder<mojom::OemCryptoInstance>::Observer:
+  void OnInstanceReady() override;
 
   // OemCrypto Mojo host interface
   void Connect(mojom::OemCryptoServiceRequest request) override;

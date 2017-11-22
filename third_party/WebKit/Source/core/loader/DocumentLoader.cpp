@@ -101,12 +101,10 @@ static bool IsArchiveMIMEType(const String& mime_type) {
   return DeprecatedEqualIgnoringCase("multipart/related", mime_type);
 }
 
-DocumentLoader::DocumentLoader(
-    LocalFrame* frame,
-    const ResourceRequest& req,
-    const SubstituteData& substitute_data,
-    ClientRedirectPolicy client_redirect_policy,
-    const base::UnguessableToken& devtools_navigation_token)
+DocumentLoader::DocumentLoader(LocalFrame* frame,
+                               const ResourceRequest& req,
+                               const SubstituteData& substitute_data,
+                               ClientRedirectPolicy client_redirect_policy)
     : frame_(frame),
       fetcher_(FrameFetchContext::CreateFetcherFromDocumentLoader(this)),
       original_request_(req),
@@ -124,8 +122,7 @@ DocumentLoader::DocumentLoader(
       was_blocked_after_csp_(false),
       state_(kNotStarted),
       in_data_received_(false),
-      data_buffer_(SharedBuffer::Create()),
-      devtools_navigation_token_(devtools_navigation_token) {
+      data_buffer_(SharedBuffer::Create()) {
   DCHECK(frame_);
 
   // The document URL needs to be added to the head of the list as that is
@@ -1126,7 +1123,7 @@ void DocumentLoader::InstallNewDocument(
 
   if (document->GetSettings()
           ->GetForceTouchEventFeatureDetectionForInspector()) {
-    OriginTrialContext::FromOrCreate(document)->AddFeature(
+    OriginTrialContext::From(document)->AddFeature(
         "ForceTouchEventFeatureDetectionForInspector");
   }
   OriginTrialContext::AddTokensFromHeader(

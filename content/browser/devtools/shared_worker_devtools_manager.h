@@ -14,6 +14,7 @@
 
 namespace content {
 
+class DevToolsAgentHostImpl;
 class SharedWorkerDevToolsAgentHost;
 class SharedWorkerInstance;
 
@@ -26,6 +27,8 @@ class CONTENT_EXPORT SharedWorkerDevToolsManager {
   // Returns the SharedWorkerDevToolsManager singleton.
   static SharedWorkerDevToolsManager* GetInstance();
 
+  DevToolsAgentHostImpl* GetDevToolsAgentHostForWorker(int worker_process_id,
+                                                       int worker_route_id);
   void AddAllAgentHosts(
       std::vector<scoped_refptr<SharedWorkerDevToolsAgentHost>>* result);
 

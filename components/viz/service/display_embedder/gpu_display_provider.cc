@@ -42,18 +42,14 @@ gpu::ImageFactory* GetImageFactory(gpu::GpuChannelManager* channel_manager) {
 namespace viz {
 
 GpuDisplayProvider::GpuDisplayProvider(
-    uint32_t restart_id,
     scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service,
     gpu::GpuChannelManager* gpu_channel_manager)
-    : restart_id_(restart_id),
-      gpu_service_(std::move(gpu_service)),
+    : gpu_service_(std::move(gpu_service)),
       gpu_memory_buffer_manager_(
           base::MakeUnique<InProcessGpuMemoryBufferManager>(
               gpu_channel_manager)),
       image_factory_(GetImageFactory(gpu_channel_manager)),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()) {
-  DCHECK_NE(restart_id_, BeginFrameSource::kNotRestartableId);
-}
+      task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
 
 GpuDisplayProvider::~GpuDisplayProvider() = default;
 
@@ -61,11 +57,12 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
     const RendererSettings& renderer_settings,
-    std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source) {
+    std::unique_ptr<BeginFrameSource>* begin_frame_source) {
+  // TODO(kylechar): Get process restart id from host process.
   auto synthetic_begin_frame_source =
       base::MakeUnique<DelayBasedBeginFrameSource>(
           base::MakeUnique<DelayBasedTimeSource>(task_runner_.get()),
-          restart_id_);
+          BeginFrameSource::kNotRestartableId);
 
   scoped_refptr<InProcessContextProvider> context_provider =
       new InProcessContextProvider(gpu_service_, surface_handle,
@@ -102,7 +99,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
       max_frames_pending);
 
   // The ownership of the BeginFrameSource is transfered to the caller.
-  *out_begin_frame_source = std::move(synthetic_begin_frame_source);
+  *begin_frame_source = std::move(synthetic_begin_frame_source);
 
   return base::MakeUnique<Display>(
       ServerSharedBitmapManager::current(), gpu_memory_buffer_manager_.get(),

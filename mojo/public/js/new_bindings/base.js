@@ -4,21 +4,14 @@
 
 'use strict';
 
-if ((typeof mojo !== 'undefined') && mojo.bindingsLibraryInitialized) {
+if (mojo && mojo.internal) {
   throw new Error('The Mojo bindings library has been initialized.');
 }
 
 var mojo = mojo || {};
-mojo.bindingsLibraryInitialized = true;
-
-mojo.internal = mojo.internal || {};
-
-mojo.config = mojo.config || {};
-if (typeof mojo.config.global === 'undefined') {
-  mojo.config.global = this;
-}
-
-if (typeof mojo.config.autoLoadMojomDeps === 'undefined') {
+mojo.internal = {};
+mojo.internal.global = this;
+mojo.config = {
   // Whether to automatically load mojom dependencies.
   // For example, if foo.mojom imports bar.mojom, |autoLoadMojomDeps| set to
   // true means that loading foo.mojom.js will insert a <script> tag to load
@@ -59,12 +52,11 @@ if (typeof mojo.config.autoLoadMojomDeps === 'undefined') {
   // <script src="http://example.org/scripts/b/d/bar.mojom.js"></script>
   //
   // -->
-  mojo.config.autoLoadMojomDeps = true;
-}
+  autoLoadMojomDeps: true
+};
 
 (function() {
   var internal = mojo.internal;
-  var config = mojo.config;
 
   var LoadState = {
     PENDING_LOAD: 1,
@@ -74,7 +66,7 @@ if (typeof mojo.config.autoLoadMojomDeps === 'undefined') {
   var mojomRegistry = new Map();
 
   function exposeNamespace(namespace) {
-    var current = config.global;
+    var current = internal.global;
     var parts = namespace.split('.');
 
     for (var part; parts.length && (part = parts.shift());) {
@@ -112,7 +104,7 @@ if (typeof mojo.config.autoLoadMojomDeps === 'undefined') {
       return;
     }
 
-    if (config.global.document === undefined) {
+    if (internal.global.document === undefined) {
       throw new Error(
           'Mojom dependency autoloading is not implemented in workers. ' +
           'Please see config variable mojo.config.autoLoadMojomDeps for more ' +
@@ -121,8 +113,8 @@ if (typeof mojo.config.autoLoadMojomDeps === 'undefined') {
 
     markMojomPendingLoad(id);
     var url = new URL(relativePath, document.currentScript.src).href;
-    config.global.document.write('<script type="text/javascript" src="' +
-                                 url + '"><' + '/script>');
+    internal.global.document.write('<script type="text/javascript" src="' +
+                                   url + '"><' + '/script>');
   }
 
   internal.exposeNamespace = exposeNamespace;

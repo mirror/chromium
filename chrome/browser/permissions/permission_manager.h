@@ -10,6 +10,7 @@
 #include "base/callback_forward.h"
 #include "base/containers/id_map.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "chrome/browser/permissions/permission_util.h"
 #include "components/content_settings/core/browser/content_settings_observer.h"
 #include "components/content_settings/core/common/content_settings.h"
@@ -158,6 +159,8 @@ class PermissionManager : public KeyedService,
                      std::unique_ptr<PermissionContextBase>,
                      ContentSettingsTypeHash>
       permission_contexts_;
+
+  base::WeakPtrFactory<PermissionManager> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionManager);
 };

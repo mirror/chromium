@@ -1,5 +1,6 @@
 Tests the Timeline API instrumentation of ParseHTML
 
+Test data
 ParseHTML Properties:
 {
     data : {
@@ -7,7 +8,7 @@ ParseHTML Properties:
             frame : <string>
             stackTrace : <object>
             startLine : 0
-            url : .../devtools/resources/inspected-page.html
+            url : .../devtools/tracing/timeline-misc/timeline-parse-html.html
         }
         endData : {
             endLine : -1
@@ -19,7 +20,7 @@ ParseHTML Properties:
     startTime : <number>
     type : "ParseHTML"
 }
-Text details for ParseHTML: inspected-page.html [1…]
+Text details for ParseHTML: timeline-parse-html.html [1…]
 ParseHTML Properties:
 {
     data : {
@@ -27,7 +28,7 @@ ParseHTML Properties:
             frame : <string>
             stackTrace : <object>
             startLine : 0
-            url : .../devtools/resources/inspected-page.html
+            url : .../devtools/tracing/timeline-misc/timeline-parse-html.html
         }
         endData : {
             endLine : -1
@@ -39,5 +40,5 @@ ParseHTML Properties:
     startTime : <number>
     type : "ParseHTML"
 }
-Text details for ParseHTML: inspected-page.html [1…]
+Text details for ParseHTML: timeline-parse-html.html [1…]
 

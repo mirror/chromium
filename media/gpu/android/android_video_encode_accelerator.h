@@ -9,7 +9,6 @@
 #include <stdint.h>
 
 #include <list>
-#include <map>
 #include <memory>
 #include <tuple>
 #include <vector>
@@ -97,11 +96,7 @@ class MEDIA_GPU_EXPORT AndroidVideoEncodeAccelerator
   int32_t num_buffers_at_codec_;
 
   // A monotonically-growing value.
-  base::TimeDelta presentation_timestamp_;
-
-  std::map<base::TimeDelta /* presentation_timestamp */,
-           base::TimeDelta /* frame_timestamp */>
-      frame_timestamp_map_;
+  base::TimeDelta input_timestamp_;
 
   // Resolution of input stream. Set once in initialization and not allowed to
   // change after.

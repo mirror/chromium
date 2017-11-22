@@ -23,7 +23,6 @@
 #include "content/public/test/browser_side_navigation_test_utils.h"
 #include "content/test/test_navigation_url_loader.h"
 #include "content/test/test_render_view_host.h"
-#include "content/test/test_render_widget_host.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_response_headers.h"
@@ -55,18 +54,17 @@ class TestRenderFrameHost::NavigationInterceptor
   ~NavigationInterceptor() override = default;
 
   // mojom::FrameNavigationControl:
-  void CommitNavigation(
-      const ResourceResponseHead& head,
-      const GURL& body_url,
-      const CommonNavigationParams& common_params,
-      const RequestNavigationParams& request_params,
-      mojo::ScopedDataPipeConsumerHandle body_data,
-      base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
-      const base::UnguessableToken& devtools_navigation_token) override {
+  void CommitNavigation(const ResourceResponseHead& head,
+                        const GURL& body_url,
+                        const CommonNavigationParams& common_params,
+                        const RequestNavigationParams& request_params,
+                        mojo::ScopedDataPipeConsumerHandle body_data,
+                        base::Optional<URLLoaderFactoryBundle>
+                            subresource_loader_factories) override {
     frame_host_->GetProcess()->set_did_frame_commit_navigation(true);
     frame_host_->GetInternalNavigationControl()->CommitNavigation(
         head, body_url, common_params, request_params, std::move(body_data),
-        std::move(subresource_loader_factories), devtools_navigation_token);
+        std::move(subresource_loader_factories));
   }
 
  private:
@@ -110,11 +108,6 @@ TestRenderViewHost* TestRenderFrameHost::GetRenderViewHost() {
 
 MockRenderProcessHost* TestRenderFrameHost::GetProcess() {
   return static_cast<MockRenderProcessHost*>(RenderFrameHostImpl::GetProcess());
-}
-
-TestRenderWidgetHost* TestRenderFrameHost::GetRenderWidgetHost() {
-  return static_cast<TestRenderWidgetHost*>(
-      RenderFrameHostImpl::GetRenderWidgetHost());
 }
 
 void TestRenderFrameHost::AddMessageToConsole(ConsoleMessageLevel level,

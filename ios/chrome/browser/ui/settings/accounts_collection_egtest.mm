@@ -17,7 +17,7 @@
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
 #import "ios/chrome/browser/ui/authentication/account_control_item.h"
 #import "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.h"
-#include "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
+#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
@@ -76,6 +76,38 @@ id<GREYMatcher> ButtonWithIdentity(ChromeIdentity* identity) {
 @end
 
 @implementation AccountCollectionsTestCase
+
++ (void)setUp {
+  [super setUp];
+
+  [self closeAllTabs];
+  ios::ChromeBrowserState* browserState =
+      chrome_test_util::GetOriginalBrowserState();
+
+  if (experimental_flags::IsSuggestionsUIEnabled()) {
+    // Sets the ContentSuggestionsService associated with this browserState to a
+    // service with no provider registered, allowing to register fake providers
+    // which do not require internet connection. The previous service is
+    // deleted.
+    IOSChromeContentSuggestionsServiceFactory::GetInstance()->SetTestingFactory(
+        browserState, ntp_snippets::CreateChromeContentSuggestionsService);
+  }
+}
+
++ (void)tearDown {
+  [self closeAllTabs];
+  ios::ChromeBrowserState* browserState =
+      chrome_test_util::GetOriginalBrowserState();
+
+  if (experimental_flags::IsSuggestionsUIEnabled()) {
+    // Resets the Service associated with this browserState to a service with
+    // default providers. The previous service is deleted.
+    IOSChromeContentSuggestionsServiceFactory::GetInstance()->SetTestingFactory(
+        browserState,
+        ntp_snippets::CreateChromeContentSuggestionsServiceWithProviders);
+  }
+  [super tearDown];
+}
 
 // Tests that the Sync and Account Settings screen are correctly popped if the
 // signed in account is removed.

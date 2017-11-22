@@ -117,23 +117,22 @@ class ScopedEventDispatchProtect final {
 // TODO(tyoshino): Switch XHR to use HttpUtil. See crbug.com/743311.
 void FindCharsetInMediaType(const String& media_type,
                             unsigned& charset_pos,
-                            unsigned& charset_len) {
+                            unsigned& charset_len,
+                            unsigned start) {
+  charset_pos = start;
   charset_len = 0;
 
-  size_t pos = charset_pos;
+  size_t pos = start;
   unsigned length = media_type.length();
 
   while (pos < length) {
     pos = media_type.FindIgnoringASCIICase("charset", pos);
-
-    if (pos == kNotFound)
+    if (pos == kNotFound || !pos) {
+      charset_len = 0;
       return;
+    }
 
-    // Give up if we find "charset" at the head.
-    if (!pos)
-      return;
-
-    // Now check that "charset" is not a substring of some longer word.
+    // is what we found a beginning of a word?
     if (media_type[pos - 1] > ' ' && media_type[pos - 1] != ';') {
       pos += 7;
       continue;
@@ -141,49 +140,55 @@ void FindCharsetInMediaType(const String& media_type,
 
     pos += 7;
 
-    while (pos < length && media_type[pos] <= ' ')
+    // skip whitespace
+    while (pos != length && media_type[pos] <= ' ')
       ++pos;
 
-    // Treat this as a charset parameter.
-    if (media_type[pos++] == '=')
-      break;
+    // this "charset" substring wasn't a parameter
+    // name, but there may be others
+    if (media_type[pos++] != '=')
+      continue;
+
+    while (pos != length && (media_type[pos] <= ' ' || media_type[pos] == '"' ||
+                             media_type[pos] == '\''))
+      ++pos;
+
+    // we don't handle spaces within quoted parameter values, because charset
+    // names cannot have any
+    unsigned endpos = pos;
+    while (pos != length && media_type[endpos] > ' ' &&
+           media_type[endpos] != '"' && media_type[endpos] != '\'' &&
+           media_type[endpos] != ';')
+      ++endpos;
+
+    charset_pos = pos;
+    charset_len = endpos - pos;
+    return;
   }
-
-  while (pos < length && (media_type[pos] <= ' ' || media_type[pos] == '"' ||
-                          media_type[pos] == '\''))
-    ++pos;
-
-  charset_pos = pos;
-
-  // we don't handle spaces within quoted parameter values, because charset
-  // names cannot have any
-  while (pos < length && media_type[pos] > ' ' && media_type[pos] != '"' &&
-         media_type[pos] != '\'' && media_type[pos] != ';')
-    ++pos;
-
-  charset_len = pos - charset_pos;
 }
 String ExtractCharsetFromMediaType(const String& media_type) {
-  unsigned pos = 0;
-  unsigned len = 0;
-  FindCharsetInMediaType(media_type, pos, len);
+  unsigned pos, len;
+  FindCharsetInMediaType(media_type, pos, len, 0);
   return media_type.Substring(pos, len);
 }
 
 void ReplaceCharsetInMediaType(String& media_type,
                                const String& charset_value) {
-  unsigned pos = 0;
+  unsigned pos = 0, len = 0;
 
-  while (true) {
-    unsigned len = 0;
-    FindCharsetInMediaType(media_type, pos, len);
-    if (!len)
-      return;
-    if (!EqualIgnoringASCIICase(StringView(media_type, pos, len),
-                                charset_value)) {
-      media_type.replace(pos, len, charset_value);
-    }
-    pos += charset_value.length();
+  FindCharsetInMediaType(media_type, pos, len, 0);
+
+  if (!len) {
+    // When no charset found, do nothing.
+    return;
+  }
+
+  // Found at least one existing charset, replace all occurrences with new
+  // charset.
+  while (len) {
+    media_type.replace(pos, len, charset_value);
+    unsigned start = pos + charset_value.length();
+    FindCharsetInMediaType(media_type, pos, len, start);
   }
 }
 

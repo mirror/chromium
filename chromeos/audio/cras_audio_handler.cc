@@ -1655,14 +1655,14 @@ void CrasAudioHandler::GetDefaultOutputBufferSizeInternal() {
                  weak_ptr_factory_.GetWeakPtr()));
 }
 
-void CrasAudioHandler::HandleGetDefaultOutputBufferSize(
-    base::Optional<int> buffer_size) {
-  if (!buffer_size.has_value()) {
+void CrasAudioHandler::HandleGetDefaultOutputBufferSize(int32_t buffer_size,
+                                                        bool success) {
+  if (!success) {
     LOG(ERROR) << "Failed to retrieve output buffer size";
     return;
   }
 
-  default_output_buffer_size_ = buffer_size.value();
+  default_output_buffer_size_ = buffer_size;
 }
 
 }  // namespace chromeos

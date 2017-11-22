@@ -38,7 +38,6 @@ class MediaRouterContextualMenuUnitTest : public BrowserWithTestWindowTest {
 
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
-    ExtensionErrorReporter::Init(true);
 
     toolbar_actions_model_ =
         extensions::extension_action_test_util::CreateToolbarModelForProfile(
@@ -126,17 +125,12 @@ TEST_F(MediaRouterContextualMenuUnitTest, Basic) {
 
 // Note that "Manage devices" is always disabled on Linux.
 TEST_F(MediaRouterContextualMenuUnitTest, ManageDevicesDisabledInIncognito) {
-  std::unique_ptr<BrowserWindow> window(CreateBrowserWindow());
-  std::unique_ptr<Browser> incognito_browser(
-      CreateBrowser(profile()->GetOffTheRecordProfile(), Browser::TYPE_TABBED,
-                    false, window.get()));
-
+  // Create the MediaRouterAction under an incognito profile.
+  profile()->ForceIncognito(true);
   action_ = base::MakeUnique<MediaRouterAction>(
-      incognito_browser.get(),
-      browser_action_test_util_->GetToolbarActionsBar());
+      browser(), browser_action_test_util_->GetToolbarActionsBar());
   model_ = static_cast<ui::SimpleMenuModel*>(action_->GetContextMenu());
   EXPECT_EQ(-1, model_->GetIndexOfCommandId(IDC_MEDIA_ROUTER_MANAGE_DEVICES));
-  action_.reset();
 }
 
 // "Report an issue" should be present for normal profiles but not for
@@ -144,17 +138,12 @@ TEST_F(MediaRouterContextualMenuUnitTest, ManageDevicesDisabledInIncognito) {
 TEST_F(MediaRouterContextualMenuUnitTest, EnableAndDisableReportIssue) {
   EXPECT_NE(-1, model_->GetIndexOfCommandId(IDC_MEDIA_ROUTER_REPORT_ISSUE));
 
-  std::unique_ptr<BrowserWindow> window(CreateBrowserWindow());
-  std::unique_ptr<Browser> incognito_browser(
-      CreateBrowser(profile()->GetOffTheRecordProfile(), Browser::TYPE_TABBED,
-                    false, window.get()));
-
+  // Create the MediaRouterAction under an incognito profile.
+  profile()->ForceIncognito(true);
   action_ = base::MakeUnique<MediaRouterAction>(
-      incognito_browser.get(),
-      browser_action_test_util_->GetToolbarActionsBar());
+      browser(), browser_action_test_util_->GetToolbarActionsBar());
   model_ = static_cast<ui::SimpleMenuModel*>(action_->GetContextMenu());
   EXPECT_EQ(-1, model_->GetIndexOfCommandId(IDC_MEDIA_ROUTER_REPORT_ISSUE));
-  action_.reset();
 }
 
 // Tests whether the cloud services item is correctly toggled. This menu item

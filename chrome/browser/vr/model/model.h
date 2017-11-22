@@ -8,10 +8,8 @@
 #include "chrome/browser/vr/model/controller_model.h"
 #include "chrome/browser/vr/model/modal_prompt_type.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
-#include "chrome/browser/vr/model/permissions_model.h"
 #include "chrome/browser/vr/model/reticle_model.h"
 #include "chrome/browser/vr/model/speech_recognition_model.h"
-#include "chrome/browser/vr/model/toolbar_state.h"
 #include "chrome/browser/vr/model/web_vr_timeout_state.h"
 
 namespace vr {
@@ -35,9 +33,6 @@ struct Model {
 
   ModalPromptType active_modal_prompt_type = kModalPromptTypeNone;
 
-  PermissionsModel permissions;
-
-  ToolbarState toolbar_state;
   std::vector<OmniboxSuggestion> omnibox_suggestions;
 };
 

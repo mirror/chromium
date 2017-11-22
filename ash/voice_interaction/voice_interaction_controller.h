@@ -30,7 +30,6 @@ class ASH_EXPORT VoiceInteractionController
   void NotifySettingsEnabled(bool enabled) override;
   void NotifyContextEnabled(bool enabled) override;
   void NotifySetupCompleted(bool completed) override;
-  void NotifyFeatureAllowed(mojom::AssistantAllowedState state) override;
 
   mojom::VoiceInteractionState voice_interaction_state() const {
     return voice_interaction_state_;
@@ -39,8 +38,6 @@ class ASH_EXPORT VoiceInteractionController
   bool settings_enabled() const { return settings_enabled_; }
 
   bool setup_completed() const { return setup_completed_; }
-
-  mojom::AssistantAllowedState allowed_state() const { return allowed_state_; }
 
  private:
   // Voice interaction state. The initial value should be set to STOPPED to make
@@ -53,10 +50,6 @@ class ASH_EXPORT VoiceInteractionController
 
   // Whether voice intearction setup flow has completed.
   bool setup_completed_ = false;
-
-  // Whether voice intearction feature is allowed or disallowed for what reason.
-  mojom::AssistantAllowedState allowed_state_ =
-      mojom::AssistantAllowedState::ALLOWED;
 
   base::ObserverList<VoiceInteractionObserver> observers_;
 

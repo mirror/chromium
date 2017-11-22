@@ -16,7 +16,7 @@ class MediaRouterWebUITest : public BrowserWithTestWindowTest {
 
  protected:
   // BrowserWithTestWindowTest:
-  TestingProfile::TestingFactories GetTestingFactories() override;
+  TestingProfile* CreateProfile() override;
   BrowserWindow* CreateBrowserWindow() override;
 
  private:

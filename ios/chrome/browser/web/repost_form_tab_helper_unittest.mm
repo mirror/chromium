@@ -50,9 +50,8 @@
 }
 
 - (void)repostFormTabHelper:(RepostFormTabHelper*)helper
-    presentRepostFormDialogForWebState:(web::WebState*)webState
-                         dialogAtPoint:(CGPoint)location
-                     completionHandler:(void (^)(BOOL))completionHandler {
+    presentRepostFromDialogAtPoint:(CGPoint)location
+                 completionHandler:(void (^)(BOOL))completionHandler {
   EXPECT_EQ(_tabHelper, helper);
   EXPECT_FALSE(_presentingDialog);
   _presentingDialog = YES;

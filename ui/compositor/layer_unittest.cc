@@ -23,7 +23,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
-#include "build/build_config.h"
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_player.h"
@@ -94,6 +93,8 @@ class ColoredLayer : public Layer, public LayerDelegate {
     recorder.canvas()->DrawColor(color_);
   }
 
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {}
 
@@ -118,6 +119,8 @@ class DrawFadedStringLayerDelegate : public LayerDelegate {
     recorder.canvas()->DrawFadedString(text, font_list_, SK_ColorRED, bounds,
                                        0);
   }
+
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
 
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {}
@@ -309,6 +312,8 @@ class TestLayerDelegate : public LayerDelegate {
     color_index_ = (color_index_ + 1) % static_cast<int>(colors_.size());
   }
 
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {
     device_scale_factor_ = new_device_scale_factor;
@@ -353,6 +358,7 @@ class DrawTreeLayerDelegate : public LayerDelegate {
     ui::PaintRecorder recorder(context, layer_bounds_.size());
     recorder.canvas()->DrawColor(SK_ColorWHITE);
   }
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {}
 
@@ -377,6 +383,7 @@ class NullLayerDelegate : public LayerDelegate {
   void OnPaintLayer(const ui::PaintContext& context) override {
     invalidation_ = context.InvalidationForTesting();
   }
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {}
 
@@ -1398,13 +1405,7 @@ TEST_F(LayerWithRealCompositorTest, SetRootLayer) {
 // - After ScheduleDraw is called, or
 // - Whenever SetBounds, SetOpacity or SetTransform are called.
 // TODO(vollick): could be reorganized into compositor_unittest.cc
-// Flaky on Windows. See https://crbug.com/784563.
-#if defined(OS_WIN)
-#define MAYBE_CompositorObservers DISABLED_CompositorObservers
-#else
-#define MAYBE_CompositorObservers CompositorObservers
-#endif
-TEST_F(LayerWithRealCompositorTest, MAYBE_CompositorObservers) {
+TEST_F(LayerWithRealCompositorTest, CompositorObservers) {
   std::unique_ptr<Layer> l1(
       CreateColorLayer(SK_ColorRED, gfx::Rect(20, 20, 400, 400)));
   std::unique_ptr<Layer> l2(
@@ -1634,6 +1635,8 @@ class SchedulePaintLayerDelegate : public LayerDelegate {
     last_clip_rect_ = context.InvalidationForTesting();
   }
 
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {}
 
@@ -1861,8 +1864,9 @@ TEST_F(LayerWithDelegateTest, ExternalContent) {
 
   // Showing surface content changes the underlying cc layer.
   before = child->cc_layer_for_testing();
-  child->SetShowPrimarySurface(viz::SurfaceId(), gfx::Size(10, 10),
-                               new TestSurfaceReferenceFactory());
+  child->SetShowPrimarySurface(
+      viz::SurfaceInfo(viz::SurfaceId(), 1.0, gfx::Size(10, 10)),
+      new TestSurfaceReferenceFactory());
   EXPECT_TRUE(child->cc_layer_for_testing());
   EXPECT_NE(before.get(), child->cc_layer_for_testing());
 
@@ -1881,29 +1885,43 @@ TEST_F(LayerWithDelegateTest, ExternalContentMirroring) {
   viz::SurfaceId surface_id(
       viz::FrameSinkId(0, 1),
       viz::LocalSurfaceId(2, base::UnguessableToken::Create()));
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(10, 10),
-                               reference_factory);
+  viz::SurfaceInfo surface_info(surface_id, 1.0f, gfx::Size(10, 10));
+  layer->SetShowPrimarySurface(surface_info, reference_factory);
 
   const auto mirror = layer->Mirror();
   auto* const cc_layer = mirror->cc_layer_for_testing();
   const auto* surface = static_cast<cc::SurfaceLayer*>(cc_layer);
 
   // Mirroring preserves surface state.
-  EXPECT_EQ(surface_id, surface->primary_surface_id());
+  EXPECT_EQ(surface_info, surface->primary_surface_info());
 
   surface_id =
       viz::SurfaceId(viz::FrameSinkId(1, 2),
                      viz::LocalSurfaceId(3, base::UnguessableToken::Create()));
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20),
-                               reference_factory);
+  viz::SurfaceInfo surface_info_2(surface_id, 2.0f, gfx::Size(20, 20));
+  layer->SetShowPrimarySurface(surface_info_2, reference_factory);
 
   // The mirror should continue to use the same cc_layer.
   EXPECT_EQ(cc_layer, mirror->cc_layer_for_testing());
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20),
-                               reference_factory);
+  layer->SetShowPrimarySurface(surface_info_2, reference_factory);
 
   // Surface updates propagate to the mirror.
-  EXPECT_EQ(surface_id, surface->primary_surface_id());
+  EXPECT_EQ(surface_info_2, surface->primary_surface_info());
+}
+
+// Test if frame size in dip is properly calculated in SetShowPrimarySurface.
+TEST_F(LayerWithDelegateTest, FrameSizeInDip) {
+  std::unique_ptr<Layer> layer(CreateLayer(LAYER_SOLID_COLOR));
+
+  viz::SurfaceId surface_id(
+      viz::FrameSinkId(0, 1),
+      viz::LocalSurfaceId(2, base::UnguessableToken::Create()));
+
+  layer->SetShowPrimarySurface(
+      viz::SurfaceInfo(surface_id, 2.0f, gfx::Size(30, 40)),
+      new TestSurfaceReferenceFactory());
+
+  EXPECT_EQ(layer->frame_size_in_dip_for_testing(), gfx::Size(15, 20));
 }
 
 // Verifies that layer filters still attached after changing implementation
@@ -1920,8 +1938,9 @@ TEST_F(LayerWithDelegateTest, LayerFiltersSurvival) {
 
   // Showing surface content changes the underlying cc layer.
   scoped_refptr<cc::Layer> before = layer->cc_layer_for_testing();
-  layer->SetShowPrimarySurface(viz::SurfaceId(), gfx::Size(10, 10),
-                               new TestSurfaceReferenceFactory());
+  layer->SetShowPrimarySurface(
+      viz::SurfaceInfo(viz::SurfaceId(), 1.0, gfx::Size(10, 10)),
+      new TestSurfaceReferenceFactory());
   EXPECT_EQ(layer->layer_grayscale(), 0.5f);
   EXPECT_TRUE(layer->cc_layer_for_testing());
   EXPECT_NE(before.get(), layer->cc_layer_for_testing());
@@ -2246,6 +2265,45 @@ TEST_F(LayerWithRealCompositorTest, SnapLayerToPixels) {
   // 0.5 / 1.5 = 0.333...
   EXPECT_EQ("0.33 0.33",
             Vector2dFTo100thPercisionString(c11->subpixel_position_offset()));
+}
+
+class FrameDamageCheckingDelegate : public TestLayerDelegate {
+ public:
+  FrameDamageCheckingDelegate() : delegated_frame_damage_called_(false) {}
+
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {
+    delegated_frame_damage_called_ = true;
+    delegated_frame_damage_rect_ = damage_rect_in_dip;
+  }
+
+  const gfx::Rect& delegated_frame_damage_rect() const {
+    return delegated_frame_damage_rect_;
+  }
+  bool delegated_frame_damage_called() const {
+    return delegated_frame_damage_called_;
+  }
+
+ private:
+  gfx::Rect delegated_frame_damage_rect_;
+  bool delegated_frame_damage_called_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameDamageCheckingDelegate);
+};
+
+TEST(LayerDelegateTest, DelegatedFrameDamage) {
+  std::unique_ptr<Layer> layer(new Layer(LAYER_TEXTURED));
+  gfx::Rect damage_rect(2, 1, 5, 3);
+
+  FrameDamageCheckingDelegate delegate;
+  layer->set_delegate(&delegate);
+  layer->SetShowPrimarySurface(
+      viz::SurfaceInfo(viz::SurfaceId(), 1.0, gfx::Size(10, 10)),
+      new TestSurfaceReferenceFactory());
+
+  EXPECT_FALSE(delegate.delegated_frame_damage_called());
+  layer->OnDelegatedFrameDamage(damage_rect);
+  EXPECT_TRUE(delegate.delegated_frame_damage_called());
+  EXPECT_EQ(damage_rect, delegate.delegated_frame_damage_rect());
 }
 
 // Verify that LayerDelegate::OnLayerBoundsChanged() is called when the bounds

@@ -78,7 +78,7 @@
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/graphics/paint/TransformDisplayItem.h"
 #include "platform/runtime_enabled_features.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/WebLayerStickyPositionConstraint.h"
 #include "public/platform/WebScrollBoundaryBehavior.h"
@@ -2198,31 +2198,13 @@ enum ApplyToGraphicsLayersModeFlags {
 };
 typedef unsigned ApplyToGraphicsLayersMode;
 
-// Flags to layers mapping matrix:
-//                  bit 0 1 2 3 4 5 6 7 8 9
-// ChildTransform       *           *
-// Main                 *         *   *
-// Clipping             *           *
-// Scrolling            *           *
-// ScrollingContents    *         * *   *
-// Foreground           *         *     *
-// Squashing              *
-// Mask                         * *   *
-// ChildClippingMask            * *   *
-// AncestorClippingMask         * *   *
-// Background                 * *     *
-// HorizontalScrollbar      *
-// VerticalScrollbar        *
-// ScrollCorner             *
-// DecorationOutline                  *   *
 template <typename Func>
 static void ApplyToGraphicsLayers(const CompositedLayerMapping* mapping,
                                   const Func& f,
                                   ApplyToGraphicsLayersMode mode) {
   DCHECK(mode);
 
-  if (((mode & kApplyToLayersAffectedByPreserve3D) ||
-       (mode & kApplyToChildContainingLayers)) &&
+  if ((mode & kApplyToLayersAffectedByPreserve3D) &&
       mapping->ChildTransformLayer())
     f(mapping->ChildTransformLayer());
   if (((mode & kApplyToLayersAffectedByPreserve3D) ||
@@ -2249,6 +2231,9 @@ static void ApplyToGraphicsLayers(const CompositedLayerMapping* mapping,
        (mode & kApplyToScrollingContentLayers)) &&
       mapping->ForegroundLayer())
     f(mapping->ForegroundLayer());
+
+  if ((mode & kApplyToChildContainingLayers) && mapping->ChildTransformLayer())
+    f(mapping->ChildTransformLayer());
 
   if ((mode & kApplyToSquashingLayer) && mapping->SquashingLayer())
     f(mapping->SquashingLayer());

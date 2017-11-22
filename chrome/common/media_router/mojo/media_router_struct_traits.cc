@@ -167,7 +167,6 @@ bool StructTraits<media_router::mojom::CastMediaSinkDataView,
   return true;
 }
 
-// static
 bool StructTraits<media_router::mojom::MediaRouteDataView,
                   media_router::MediaRoute>::
     Read(media_router::mojom::MediaRouteDataView data,

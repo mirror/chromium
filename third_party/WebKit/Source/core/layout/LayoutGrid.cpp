@@ -1638,8 +1638,6 @@ bool LayoutGrid::IsDescentBaselineForChild(const LayoutBox& child,
 
 bool LayoutGrid::IsBaselineAlignmentForChild(const LayoutBox& child,
                                              GridAxis baseline_axis) const {
-  if (child.IsOutOfFlowPositioned())
-    return false;
   ItemPosition align =
       SelfAlignmentForChild(baseline_axis, child).GetPosition();
   bool has_auto_margins = baseline_axis == kGridColumnAxis

@@ -26,12 +26,11 @@ void ContentSettingsUsagesState::OnPermissionSet(
       allowed ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK;
 }
 
-void ContentSettingsUsagesState::DidNavigate(const GURL& url,
-                                             const GURL& previous_url) {
-  embedder_url_ = url;
+void ContentSettingsUsagesState::DidNavigate(const CommittedDetails& details) {
+  embedder_url_ = details.current_url;
   if (state_map_.empty())
     return;
-  if (previous_url.GetOrigin() != url.GetOrigin()) {
+  if (details.previous_url.GetOrigin() != details.current_url.GetOrigin()) {
     state_map_.clear();
     return;
   }

@@ -523,8 +523,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       mojo::ScopedDataPipeConsumerHandle body_data,
-      base::Optional<URLLoaderFactoryBundle> subresource_loaders,
-      const base::UnguessableToken& devtools_navigation_token) override;
+      base::Optional<URLLoaderFactoryBundle> subresource_loaders) override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -674,7 +673,6 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidObserveLoadingBehavior(
       blink::WebLoadingBehaviorFlag behavior) override;
   void DidObserveNewFeatureUsage(blink::mojom::WebFeature feature) override;
-  bool ShouldTrackUseCounter(const blink::WebURL& url) override;
   void DidCreateScriptContext(v8::Local<v8::Context> context,
                               int world_id) override;
   void WillReleaseScriptContext(v8::Local<v8::Context> context,
@@ -1096,8 +1094,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const StartNavigationParams& start_params,
       const RequestNavigationParams& request_params,
       std::unique_ptr<StreamOverrideParameters> stream_params,
-      base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
-      const base::UnguessableToken& devtools_navigation_token);
+      base::Optional<URLLoaderFactoryBundle> subresource_loader_factories);
 
   // Returns a URLLoaderFactoryBundle which can be used to request subresources
   // for this frame. Only valid to call when the Network Service is enabled.

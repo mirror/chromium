@@ -144,15 +144,12 @@ void BrowserPlugin::OnSetChildFrameSurface(
     int browser_plugin_instance_id,
     const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
-  if (!attached() || IsRunningWithMus())
+  if (!attached() || IsRunningInMash())
     return;
 
-  if (!enable_surface_synchronization_) {
-    compositing_helper_->SetPrimarySurfaceId(surface_info.id(),
-                                             frame_rect().size());
-  }
-  compositing_helper_->SetFallbackSurfaceId(surface_info.id(),
-                                            frame_rect().size(), sequence);
+  if (!enable_surface_synchronization_)
+    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+  compositing_helper_->SetFallbackSurfaceInfo(surface_info, sequence);
 }
 
 void BrowserPlugin::SendSatisfySequence(const viz::SurfaceSequence& sequence) {
@@ -250,10 +247,6 @@ void BrowserPlugin::CreateMusWindowAndEmbed(
   DCHECK(renderer_window_tree_client);
   mus_embedded_frame_ =
       renderer_window_tree_client->CreateMusEmbeddedFrame(this, embed_token);
-  if (attached() && local_surface_id_.is_valid()) {
-    mus_embedded_frame_->SetWindowBounds(local_surface_id_,
-                                         FrameRectInPixels());
-  }
 }
 #endif
 
@@ -272,8 +265,10 @@ void BrowserPlugin::WasResized() {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
 
   if (enable_surface_synchronization_ && frame_sink_id_.is_valid()) {
-    compositing_helper_->SetPrimarySurfaceId(
-        viz::SurfaceId(frame_sink_id_, local_surface_id_), frame_rect().size());
+    viz::SurfaceInfo surface_info(
+        viz::SurfaceId(frame_sink_id_, local_surface_id_),
+        GetDeviceScaleFactor(), FrameRectInPixels().size());
+    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
   }
 
   bool position_changed =
@@ -296,7 +291,7 @@ void BrowserPlugin::WasResized() {
     sent_resize_params_ = pending_resize_params_;
 
 #if defined(USE_AURA)
-  if (IsRunningWithMus() && mus_embedded_frame_) {
+  if (IsRunningInMash() && mus_embedded_frame_) {
     mus_embedded_frame_->SetWindowBounds(local_surface_id_,
                                          FrameRectInPixels());
   }
@@ -362,7 +357,7 @@ void BrowserPlugin::OnSetMouseLock(int browser_plugin_instance_id,
 void BrowserPlugin::OnSetMusEmbedToken(
     int instance_id,
     const base::UnguessableToken& embed_token) {
-  DCHECK(IsRunningWithMus());
+  DCHECK(IsRunningInMash());
   if (!attached_) {
     pending_embed_token_ = embed_token;
   } else {
@@ -770,8 +765,8 @@ void BrowserPlugin::OnMusEmbeddedFrameSurfaceChanged(
   if (!attached_)
     return;
 
-  compositing_helper_->SetFallbackSurfaceId(
-      surface_info.id(), frame_rect().size(), viz::SurfaceSequence());
+  compositing_helper_->SetFallbackSurfaceInfo(surface_info,
+                                              viz::SurfaceSequence());
 }
 
 void BrowserPlugin::OnMusEmbeddedFrameSinkIdAllocated(

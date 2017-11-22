@@ -35,8 +35,7 @@ FILE_TEMPLATE = \
 %(v_1_0)s
   <structure name="IDR_POLYMER_1_0_WEB_ANIMATIONS_JS_WEB_ANIMATIONS_NEXT_LITE_MIN_JS"
              file="../../../third_party/web-animations-js/sources/web-animations-next-lite.min.js"
-             type="chrome_html"
-             compress="gzip" />
+             type="chrome_html" />
 </grit-part>
 """
 
@@ -44,8 +43,7 @@ FILE_TEMPLATE = \
 DEFINITION_TEMPLATE_1_0 = \
 """  <structure name="%s"
              file="../../../third_party/polymer/v1_0/components-chromium/%s"
-             type="chrome_html"
-             compress="gzip" />"""
+             type="chrome_html" />"""
 
 
 def PathToGritId(path):

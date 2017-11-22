@@ -2,5 +2,5 @@
   section="Applications/Network/Web Browsing" \
   hints="Web browsers" \
   title="@@MENUNAME@@" \
-  icon="@@INSTALLDIR@@/@@LOGO_RESOURCE_XPM@@" \
+  icon="@@INSTALLDIR@@/product_logo_32.xpm" \
   command="@@INSTALLDIR@@/@@PACKAGE@@"

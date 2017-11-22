@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <vector>
 
-#include "ash/app_list/model/app_list_model.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
@@ -21,6 +20,7 @@
 #include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
+#include "ui/app_list/app_list_model.h"
 #include "ui/app_list/app_list_util.h"
 #include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/speech_ui_model.h"
@@ -1249,7 +1249,6 @@ void AppListView::StartAnimationForState(AppListViewState target_state) {
   }
 
   gfx::Rect target_bounds = fullscreen_widget_->GetNativeView()->bounds();
-  const int original_state_y = target_bounds.origin().y();
   target_bounds.set_y(target_state_y);
 
   int animation_duration;
@@ -1265,26 +1264,21 @@ void AppListView::StartAnimationForState(AppListViewState target_state) {
     animation_duration = kAppListAnimationDurationMs;
   }
 
-  ui::Layer* layer = fullscreen_widget_->GetLayer();
-  layer->SetBounds(target_bounds);
-  gfx::Transform transform;
-  transform.Translate(0, original_state_y - target_state_y);
-  layer->SetTransform(transform);
+  std::unique_ptr<ui::LayerAnimationElement> bounds_animation_element =
+      ui::LayerAnimationElement::CreateBoundsElement(
+          target_bounds, base::TimeDelta::FromMilliseconds(animation_duration));
 
-  {
-    ui::LayerAnimator* animator = layer->GetAnimator();
-    animator->StopAnimating();
-    ui::ScopedLayerAnimationSettings settings(animator);
-    settings.SetTransitionDuration(
-        base::TimeDelta::FromMilliseconds(animation_duration));
-    settings.SetTweenType(gfx::Tween::EASE_OUT);
-    settings.SetPreemptionStrategy(
-        ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
-    settings.SetAnimationMetricsReporter(
-        state_animation_metrics_reporter_.get());
+  bounds_animation_element->set_tween_type(gfx::Tween::EASE_OUT);
 
-    layer->SetTransform(gfx::Transform());
-  }
+  ui::LayerAnimator* animator = fullscreen_widget_->GetLayer()->GetAnimator();
+  animator->set_preemption_strategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  animator->StopAnimating();
+  ui::LayerAnimationSequence* animation_sequence =
+      new ui::LayerAnimationSequence(std::move(bounds_animation_element));
+  animation_sequence->SetAnimationMetricsReporter(
+      state_animation_metrics_reporter_.get());
+  animator->ScheduleAnimation(animation_sequence);
 }
 
 void AppListView::StartCloseAnimation(base::TimeDelta animation_duration) {

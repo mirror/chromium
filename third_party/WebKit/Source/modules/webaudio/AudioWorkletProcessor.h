@@ -18,8 +18,6 @@ namespace blink {
 class AudioBus;
 class AudioWorkletGlobalScope;
 class AudioWorkletProcessorDefinition;
-class MessagePort;
-class ExecutionContext;
 
 // AudioWorkletProcessor class represents the active instance created from
 // AudioWorkletProcessorDefinition. |AudioWorkletNodeHandler| invokes
@@ -31,13 +29,13 @@ class MODULES_EXPORT AudioWorkletProcessor : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  // This static factory should be called after an instance of
-  // |AudioWorkletNode| gets created by user-supplied JS code in the main
-  // thread. This factory must not be called by user in
-  // |AudioWorkletGlobalScope|.
-  static AudioWorkletProcessor* Create(ExecutionContext*);
+  static AudioWorkletProcessor* Create(AudioWorkletGlobalScope*,
+                                       const String& name);
+  virtual ~AudioWorkletProcessor();
 
-  ~AudioWorkletProcessor() {}
+  void SetInstance(v8::Isolate*, v8::Local<v8::Object> instance);
+
+  v8::Local<v8::Object> InstanceLocal(v8::Isolate*);
 
   // |AudioWorkletHandler| invokes this method to process audio.
   bool Process(
@@ -54,19 +52,14 @@ class MODULES_EXPORT AudioWorkletProcessor : public ScriptWrappable {
   void MarkNonRunnable() { is_runnable_ = false; }
   bool IsRunnable() { return is_runnable_; }
 
-  // IDL
-  MessagePort* port() const;
-
   void Trace(blink::Visitor*);
+  void TraceWrappers(const ScriptWrappableVisitor*) const;
 
  private:
-  AudioWorkletProcessor(AudioWorkletGlobalScope*,
-                        const String& name,
-                        MessagePort*);
+  AudioWorkletProcessor(AudioWorkletGlobalScope*, const String& name);
 
   Member<AudioWorkletGlobalScope> global_scope_;
-  Member<MessagePort> processor_port_;
-
+  TraceWrapperV8Reference<v8::Object> instance_;
   const String name_;
 
   // Becomes |false| when Process() method throws an exception from the the

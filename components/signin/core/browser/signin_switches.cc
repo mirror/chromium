@@ -27,7 +27,7 @@ const char kAccountConsistencyDice[] = "dice";
 #endif
 
 // Enables sending EnableRefreshTokenAnnotationRequest.
-const char kEnableRefreshTokenAnnotationRequest[] =
+extern const char kEnableRefreshTokenAnnotationRequest[] =
     "enable-refresh-token-annotation-request";
 
 // Enables multiple account versions of chrome.identity APIs.

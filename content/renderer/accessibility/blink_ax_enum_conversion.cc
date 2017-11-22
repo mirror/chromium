@@ -110,10 +110,8 @@ ui::AXRole AXRoleFromBlink(blink::WebAXRole role) {
       return ui::AX_ROLE_COLUMN;
     case blink::kWebAXRoleColumnHeader:
       return ui::AX_ROLE_COLUMN_HEADER;
-    case blink::kWebAXRoleComboBoxGrouping:
-      return ui::AX_ROLE_COMBO_BOX_GROUPING;
-    case blink::kWebAXRoleComboBoxMenuButton:
-      return ui::AX_ROLE_COMBO_BOX_MENU_BUTTON;
+    case blink::kWebAXRoleComboBox:
+      return ui::AX_ROLE_COMBO_BOX;
     case blink::kWebAXRoleComplementary:
       return ui::AX_ROLE_COMPLEMENTARY;
     case blink::kWebAXRoleContentInfo:
@@ -284,8 +282,6 @@ ui::AXRole AXRoleFromBlink(blink::WebAXRole role) {
       return ui::AX_ROLE_TERM;
     case blink::kWebAXRoleTextField:
       return ui::AX_ROLE_TEXT_FIELD;
-    case blink::kWebAXRoleTextFieldWithComboBox:
-      return ui::AX_ROLE_TEXT_FIELD_WITH_COMBO_BOX;
     case blink::kWebAXRoleTime:
       return ui::AX_ROLE_TIME;
     case blink::kWebAXRoleTimer:

@@ -9,10 +9,10 @@ Polymer({
 
   properties: {
     /**
-     * Description of the current casting activity, e.g. "Casting YouTube".
+     * The text for the current casting activity status.
      * @private {string|undefined}
      */
-    routeDescription_: {
+    activityStatus_: {
       type: String,
     },
 
@@ -191,12 +191,15 @@ Polymer({
   },
 
   /**
-   * Updates |routeDescription_| for the default view.
+   * Updates |activityStatus_| for the default view.
    *
    * @private
    */
-  updateRouteDescription_: function() {
-    this.routeDescription_ = this.route ? this.route.description : '';
+  updateActivityStatus_: function() {
+    this.activityStatus_ = this.route ?
+        loadTimeData.getStringF(
+            'castingActivityStatus', this.route.description) :
+        '';
   },
 
   /**
@@ -228,7 +231,7 @@ Polymer({
    */
   onRouteChange_: function(newRoute) {
     if (this.controllerType_ !== media_router.ControllerType.WEBUI) {
-      this.updateRouteDescription_();
+      this.updateActivityStatus_();
     }
   },
 
@@ -257,7 +260,7 @@ Polymer({
    *     the extensionview or the WebUI route controller.
    * @private
    */
-  shouldShowRouteDescription_: function(controllerType) {
+  shouldShowRouteInfoOnly_: function(controllerType) {
     return controllerType === media_router.ControllerType.NONE;
   },
 

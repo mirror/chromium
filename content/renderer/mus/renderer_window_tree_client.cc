@@ -30,7 +30,7 @@ base::LazyInstance<ConnectionMap>::Leaky g_connections =
 
 // static
 void RendererWindowTreeClient::CreateIfNecessary(int routing_id) {
-  if (!IsRunningWithMus() || Get(routing_id))
+  if (!IsRunningInMash() || Get(routing_id))
     return;
   RendererWindowTreeClient* connection =
       new RendererWindowTreeClient(routing_id);
@@ -54,10 +54,6 @@ void RendererWindowTreeClient::Bind(
     ui::mojom::WindowTreeClientRequest request,
     mojom::RenderWidgetWindowTreeClientRequest
         render_widget_window_tree_client_request) {
-  // Bind() may be called multiple times.
-  binding_.Close();
-  render_widget_window_tree_client_binding_.Close();
-
   binding_.Bind(std::move(request));
   render_widget_window_tree_client_binding_.Bind(
       std::move(render_widget_window_tree_client_request));
@@ -175,20 +171,12 @@ void RendererWindowTreeClient::OnEmbed(
     ui::Id focused_window_id,
     bool drawn,
     const base::Optional<viz::LocalSurfaceId>& local_surface_id) {
-  const bool is_reembed = tree_.is_bound();
-  if (is_reembed) {
-    for (MusEmbeddedFrame* frame : embedded_frames_)
-      frame->OnTreeWillChange();
-  }
   root_window_id_ = root->window_id;
-
   tree_ = std::move(tree);
   tree_->SetWindowVisibility(GetAndAdvanceNextChangeId(), root_window_id_,
                              visible_);
-  if (!is_reembed) {
-    for (MusEmbeddedFrame* frame : embedded_frames_)
-      frame->OnTreeAvailable();
-  }
+  for (MusEmbeddedFrame* frame : embedded_frames_)
+    frame->OnTreeAvailable();
 
   if (!pending_layer_tree_frame_sink_callback_.is_null()) {
     RequestLayerTreeFrameSinkInternal(std::move(pending_context_provider_),

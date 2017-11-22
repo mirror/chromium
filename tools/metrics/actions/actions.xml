@@ -847,7 +847,7 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
-<action name="Accel_Search_LWin" not_user_triggered="true">
+<action name="Accel_Search_LWin">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
@@ -1583,14 +1583,6 @@ should be able to be added at any place in this file.
   <description>Promo banner for an instant app has been dismissed.</description>
 </action>
 
-<action name="Android.InstantApps.BannerDismissedAppIsDefault">
-  <owner>thildebr@chromium.org</owner>
-  <description>
-    A promo banner shown when opening the instant app is default has been
-    dismissed.
-  </description>
-</action>
-
 <action name="Android.InstantApps.BannerOpen">
   <owner>mariakhomenko@chromium.org</owner>
   <description>
@@ -1598,27 +1590,9 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="Android.InstantApps.BannerOpenAppIsDefault">
-  <owner>thildebr@chromium.org</owner>
-  <description>
-    User clicked &quot;Open App&quot; button on an instant apps banner that was
-    shown when opening the app was default, signaling that they were using the
-    mobile web first, and decided to switch over to the instant app.
-  </description>
-</action>
-
 <action name="Android.InstantApps.BannerShown" not_user_triggered="true">
   <owner>mariakhomenko@chromium.org</owner>
   <description>Promo banner for an instant app has been displayed.</description>
-</action>
-
-<action name="Android.InstantApps.BannerShownAppIsDefault"
-    not_user_triggered="true">
-  <owner>thildebr@chromium.org</owner>
-  <description>
-    Promo banner for an instant app has been displayed when opening the app is
-    default.
-  </description>
 </action>
 
 <action name="Android.InstantApps.InstantAppsEligiblePageLoaded">
@@ -12388,7 +12362,7 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
-<action name="Mouse_Down" not_user_triggered="true">
+<action name="Mouse_Down">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
@@ -12981,12 +12955,12 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
-<action name="OpenFileSystemPersistent" not_user_triggered="true">
+<action name="OpenFileSystemPersistent">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
 
-<action name="OpenFileSystemTemporary" not_user_triggered="true">
+<action name="OpenFileSystemTemporary">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
@@ -17535,7 +17509,7 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
-<action name="StatusArea_BrightnessChanged" not_user_triggered="true">
+<action name="StatusArea_BrightnessChanged">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
@@ -18503,7 +18477,7 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="TextToSpeech.Stop" not_user_triggered="true">
+<action name="TextToSpeech.Stop">
   <owner>dmazzoni@chromium.org</owner>
   <description>Synthesized speech is stopped.</description>
 </action>
@@ -18688,7 +18662,7 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="TrackpadScrollFling" not_user_triggered="true">
+<action name="TrackpadScrollFling">
   <owner>tdresser@chromium.org</owner>
   <description>Logged on an ET_SCROLL_FLING_START scroll event.</description>
 </action>
@@ -19074,7 +19048,7 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="WebView.PermissionAllow.FileSystem" not_user_triggered="true">
+<action name="WebView.PermissionAllow.FileSystem">
   <owner>fsamuel@chromium.org</owner>
   <owner>hanxi@chromium.org</owner>
   <description>

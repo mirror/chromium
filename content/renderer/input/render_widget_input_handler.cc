@@ -394,7 +394,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
   // Virtual keyboard is not supported, so react to focus change immediately.
   if (processed != WebInputEventResult::kNotHandled &&
       (input_event.GetType() == WebInputEvent::kTouchEnd ||
-       input_event.GetType() == WebInputEvent::kMouseDown)) {
+       input_event.GetType() == WebInputEvent::kMouseUp)) {
     delegate_->FocusChangeComplete();
   }
 #endif

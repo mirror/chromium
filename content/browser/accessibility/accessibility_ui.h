@@ -8,7 +8,6 @@
 #include "base/macros.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_data_source.h"
-#include "content/public/browser/web_ui_message_handler.h"
 
 namespace base {
   class ListValue;
@@ -20,22 +19,13 @@ class AccessibilityUI : public WebUIController {
  public:
   explicit AccessibilityUI(WebUI* web_ui);
   ~AccessibilityUI() override;
-};
-
-class AccessibilityUIMessageHandler : public content::WebUIMessageHandler {
- public:
-  AccessibilityUIMessageHandler();
-  ~AccessibilityUIMessageHandler() override;
-
-  void RegisterMessages() override;
 
  private:
   void ToggleAccessibility(const base::ListValue* args);
   void SetGlobalFlag(const base::ListValue* args);
-  void RequestWebContentsTree(const base::ListValue* args);
-  void RequestNativeUITree(const base::ListValue* args);
+  void RequestAccessibilityTree(const base::ListValue* args);
 
-  DISALLOW_COPY_AND_ASSIGN(AccessibilityUIMessageHandler);
+  DISALLOW_COPY_AND_ASSIGN(AccessibilityUI);
 };
 
 }  // namespace content

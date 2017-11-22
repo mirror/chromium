@@ -35,10 +35,10 @@
 #include "base/memory/scoped_refptr.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "platform/ScopedVirtualTimePauser.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
-#include "public/platform/WebScopedVirtualTimePauser.h"
 
 #include <memory>
 
@@ -142,7 +142,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DidChangePerformanceTiming() override;
   void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) override;
   void DidObserveNewFeatureUsage(mojom::WebFeature) override;
-  bool ShouldTrackUseCounter(const KURL&) override;
   void SelectorMatchChanged(const Vector<String>& added_selectors,
                             const Vector<String>& removed_selectors) override;
 
@@ -150,12 +149,10 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   // - storage to store an extra data that can be used by the content layer
   // - wrapper methods to expose DocumentLoader's variables to the content
   //   layer
-  DocumentLoader* CreateDocumentLoader(
-      LocalFrame*,
-      const ResourceRequest&,
-      const SubstituteData&,
-      ClientRedirectPolicy,
-      const base::UnguessableToken& devtools_navigation_token) override;
+  DocumentLoader* CreateDocumentLoader(LocalFrame*,
+                                       const ResourceRequest&,
+                                       const SubstituteData&,
+                                       ClientRedirectPolicy) override;
   WTF::String UserAgent() override;
   WTF::String DoNotTrackValue() override;
   void TransitionToCommittedForNewPage() override;
@@ -253,7 +250,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
       const WebRect&,
       const WebRemoteScrollProperties&) override;
 
-  void SetVirtualTimePauser(WebScopedVirtualTimePauser) override;
+  void SetVirtualTimePauser(ScopedVirtualTimePauser) override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
@@ -273,7 +270,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   // The hosts for which a legacy certificate warning has been printed.
   HashSet<String> certificate_warning_hosts_;
 
-  mutable WebScopedVirtualTimePauser virtual_time_pauser_;
+  mutable ScopedVirtualTimePauser virtual_time_pauser_;
 };
 
 DEFINE_TYPE_CASTS(LocalFrameClientImpl,

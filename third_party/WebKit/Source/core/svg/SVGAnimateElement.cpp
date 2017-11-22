@@ -501,9 +501,8 @@ void SVGAnimateElement::ApplyResultsToTarget() {
     MutableCSSPropertyValueSet* property_set =
         targetElement()->EnsureAnimatedSMILStyleProperties();
     if (property_set
-            ->SetProperty(
-                css_property_id_, animated_value_->ValueAsString(), false,
-                targetElement()->GetDocument().SecureContextMode(), nullptr)
+            ->SetProperty(css_property_id_, animated_value_->ValueAsString(),
+                          false, nullptr)
             .did_change) {
       targetElement()->SetNeedsStyleRecalc(
           kLocalStyleChange,

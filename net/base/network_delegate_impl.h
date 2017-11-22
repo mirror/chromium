@@ -85,7 +85,7 @@ class NET_EXPORT NetworkDelegateImpl : public NetworkDelegate {
                        const CookieList& cookie_list) override;
 
   bool OnCanSetCookie(const URLRequest& request,
-                      const net::CanonicalCookie& cookie,
+                      const std::string& cookie_line,
                       CookieOptions* options) override;
 
   bool OnCanAccessFile(const URLRequest& request,

@@ -68,7 +68,6 @@
 #include "content/browser/renderer_host/render_view_host_delegate_view.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
-#include "content/browser/renderer_host/render_widget_host_factory.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
@@ -542,9 +541,10 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
     }
     if (!render_widget_host_) {
       DCHECK(frame_tree_node->parent());
-      render_widget_host_ = RenderWidgetHostFactory::Create(
-          rwh_delegate, GetProcess(), widget_routing_id, std::move(widget),
-          hidden);
+
+      render_widget_host_ = new RenderWidgetHostImpl(rwh_delegate, GetProcess(),
+                                                     widget_routing_id,
+                                                     std::move(widget), hidden);
       render_widget_host_->set_owned_by_render_frame_host(true);
     } else {
       DCHECK(!render_widget_host_->owned_by_render_frame_host());
@@ -1264,10 +1264,11 @@ void RenderFrameHostImpl::Init() {
     return;
 
   waiting_for_init_ = false;
-  if (pending_navigate_) {
+  if (pendinging_navigate_) {
     frame_tree_node()->navigator()->OnBeginNavigation(
-        frame_tree_node(), pending_navigate_->first, pending_navigate_->second);
-    pending_navigate_.reset();
+        frame_tree_node(), pendinging_navigate_->first,
+        pendinging_navigate_->second);
+    pendinging_navigate_.reset();
   }
 }
 
@@ -2372,7 +2373,7 @@ void RenderFrameHostImpl::OnBeginNavigation(
     return;
 
   if (waiting_for_init_) {
-    pending_navigate_ = std::make_unique<PendingNavigation>(
+    pendinging_navigate_ = std::make_unique<PendingNavigation>(
         validated_params, validated_begin_params);
     return;
   }
@@ -2551,33 +2552,12 @@ void RenderFrameHostImpl::OnAccessibilityFindInPageResult(
 
 void RenderFrameHostImpl::OnAccessibilityChildFrameHitTestResult(
     const gfx::Point& point,
-    int child_frame_routing_id,
-    int child_frame_browser_plugin_instance_id,
+    int hit_obj_id,
     ui::AXEvent event_to_fire) {
-  RenderFrameHostImpl* child_frame = nullptr;
-  if (child_frame_routing_id) {
-    RenderFrameProxyHost* rfph = nullptr;
-    LookupRenderFrameHostOrProxy(GetProcess()->GetID(), child_frame_routing_id,
-                                 &child_frame, &rfph);
-    if (rfph)
-      child_frame = rfph->frame_tree_node()->current_frame_host();
-  } else if (child_frame_browser_plugin_instance_id) {
-    child_frame =
-        static_cast<RenderFrameHostImpl*>(delegate()->GetGuestByInstanceID(
-            this, child_frame_browser_plugin_instance_id));
-  } else {
-    NOTREACHED();
+  if (browser_accessibility_manager_) {
+    browser_accessibility_manager_->OnChildFrameHitTestResult(point, hit_obj_id,
+                                                              event_to_fire);
   }
-
-  if (!child_frame)
-    return;
-
-  ui::AXActionData action_data;
-  action_data.target_point = point;
-  action_data.action = ui::AX_ACTION_HIT_TEST;
-  action_data.hit_test_event_to_fire = event_to_fire;
-
-  child_frame->AccessibilityPerformAction(action_data);
 }
 
 void RenderFrameHostImpl::OnAccessibilitySnapshotResponse(
@@ -3247,8 +3227,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
   if (IsBrowserSideNavigationEnabled()) {
     CommitNavigation(nullptr, nullptr, mojo::ScopedDataPipeConsumerHandle(),
                      common_params, RequestNavigationParams(), false,
-                     base::nullopt,
-                     base::UnguessableToken::Create() /* not traced */);
+                     base::nullopt);
   } else {
     Navigate(common_params, StartNavigationParams(), RequestNavigationParams());
   }
@@ -3399,8 +3378,7 @@ void RenderFrameHostImpl::CommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
     bool is_view_source,
-    base::Optional<SubresourceLoaderParams> subresource_loader_params,
-    const base::UnguessableToken& devtools_navigation_token) {
+    base::Optional<SubresourceLoaderParams> subresource_loader_params) {
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
@@ -3422,8 +3400,7 @@ void RenderFrameHostImpl::CommitNavigation(
     GetNavigationControl()->CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojo::ScopedDataPipeConsumerHandle(),
-        /*subresource_loader_factories=*/base::nullopt,
-        devtools_navigation_token);
+        /*subresource_loader_factories=*/base::nullopt);
     return;
   }
 
@@ -3535,7 +3512,7 @@ void RenderFrameHostImpl::CommitNavigation(
 
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params, std::move(handle),
-      std::move(subresource_loader_factories), devtools_navigation_token);
+      std::move(subresource_loader_factories));
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&

@@ -74,7 +74,7 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/ReferrerPolicy.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/Base64.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebMixedContentContextType.h"
@@ -1538,30 +1538,6 @@ Response InspectorNetworkAgent::GetResponseBody(const String& request_id,
   return Response::Error("No data found for resource with given identifier");
 }
 
-Response InspectorNetworkAgent::searchInResponseBody(
-    const String& request_id,
-    const String& query,
-    Maybe<bool> case_sensitive,
-    Maybe<bool> is_regex,
-    std::unique_ptr<
-        protocol::Array<v8_inspector::protocol::Debugger::API::SearchMatch>>*
-        matches) {
-  String content;
-  bool base64_encoded;
-  Response response = GetResponseBody(request_id, &content, &base64_encoded);
-  if (!response.isSuccess())
-    return response;
-
-  auto results = v8_session_->searchInTextByLines(
-      ToV8InspectorStringView(content), ToV8InspectorStringView(query),
-      case_sensitive.fromMaybe(false), is_regex.fromMaybe(false));
-  *matches = protocol::Array<
-      v8_inspector::protocol::Debugger::API::SearchMatch>::create();
-  for (size_t i = 0; i < results.size(); ++i)
-    matches->get()->addItem(std::move(results[i]));
-  return Response::OK();
-}
-
 bool InspectorNetworkAgent::FetchResourceContent(Document* document,
                                                  const KURL& url,
                                                  String* content,
@@ -1601,11 +1577,9 @@ void InspectorNetworkAgent::RemoveFinishedReplayXHRFired(TimerBase*) {
 
 InspectorNetworkAgent::InspectorNetworkAgent(
     InspectedFrames* inspected_frames,
-    WorkerGlobalScope* worker_global_scope,
-    v8_inspector::V8InspectorSession* v8_session)
+    WorkerGlobalScope* worker_global_scope)
     : inspected_frames_(inspected_frames),
       worker_global_scope_(worker_global_scope),
-      v8_session_(v8_session),
       resources_data_(
           NetworkResourcesData::Create(g_maximum_total_buffer_size,
                                        g_maximum_resource_buffer_size)),

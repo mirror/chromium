@@ -326,6 +326,11 @@ const char kEnableBrotliName[] = "Brotli Content-Encoding.";
 const char kEnableBrotliDescription[] =
     "Enable Brotli Content-Encoding support.";
 
+const char kEnableClearBrowsingDataCountersName[] =
+    "Enable Clear browsing data counters.";
+const char kEnableClearBrowsingDataCountersDescription[] =
+    "Shows data volume counters in the Clear browsing data dialog.";
+
 const char kEnableClientLoFiName[] = "Client-side Lo-Fi previews";
 
 const char kEnableClientLoFiDescription[] =
@@ -343,17 +348,8 @@ const char kEnableDataReductionProxyLitePageDescription[] =
     "shown instead of image placeholders when Lo-Fi is on. Data Saver and "
     "Lo-Fi must be enabled for lite pages to be shown.";
 
-const char kDataReductionProxyServerAlternative1[] = "Use alt. server config 1";
-const char kDataReductionProxyServerAlternative2[] = "Use alt. server config 2";
-const char kDataReductionProxyServerAlternative3[] = "Use alt. server config 3";
-const char kDataReductionProxyServerAlternative4[] = "Use alt. server config 4";
-const char kDataReductionProxyServerAlternative5[] = "Use alt. server config 5";
-const char kDataReductionProxyServerAlternative6[] = "Use alt. server config 6";
-const char kDataReductionProxyServerAlternative7[] = "Use alt. server config 7";
-const char kDataReductionProxyServerAlternative8[] = "Use alt. server config 8";
-const char kDataReductionProxyServerAlternative9[] = "Use alt. server config 9";
-const char kDataReductionProxyServerAlternative10[] =
-    "Use alt. server config 10";
+const char kDataReductionProxyServerAlternative[] =
+    "Use alternative server configuration";
 const char kEnableDataReductionProxyServerExperimentName[] =
     "Use an alternative Data Saver back end configuration.";
 const char kEnableDataReductionProxyServerExperimentDescription[] =
@@ -1038,7 +1034,8 @@ const char kOverscrollStartThreshold200Percent[] = "200%";
 
 const char kParallelDownloadingName[] = "Parallel downloading";
 const char kParallelDownloadingDescription[] =
-    "Enable parallel downloading to accelerate download speed.";
+    "Enable parallel downloading to"
+    "accelerate download speed.";
 
 const char kPassiveEventListenerDefaultName[] =
     "Passive Event Listener Override";
@@ -2557,9 +2554,9 @@ const char kMultideviceName[] = "Enable multidevice features";
 const char kMultideviceDescription[] =
     "Enables UI for controlling multidevice features.";
 
-const char kNativeSmbName[] = "Native Smb Client";
-const char kNativeSmbDescription[] =
-    "If enabled, allows connections to an smb filesystem via Files app";
+const char kNativeSambaName[] = "Native Samba Client";
+const char kNativeSambaDescription[] =
+    "If enabled, allows connections to a Samba share via Files app";
 
 const char kNetworkPortalNotificationName[] =
     "Notifications about captive portals";
@@ -2720,10 +2717,6 @@ const char kWebVrVsyncAlignDescription[] =
 const char kVrBrowsingName[] = "VR browsing";
 const char kVrBrowsingDescription[] =
     "Browsing within a VR headset if available for this device.";
-
-const char kVrBrowserKeyboardName[] = "Chrome VR virtual keyboard.";
-const char kVrBrowserKeyboardDescription[] =
-    "Enable a virtual keyboard for Chrome VR.";
 
 const char kVrBrowsingExperimentalFeaturesName[] =
     "VR browsing experimental features";

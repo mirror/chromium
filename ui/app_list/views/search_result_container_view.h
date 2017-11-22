@@ -7,10 +7,9 @@
 
 #include <stddef.h>
 
-#include "ash/app_list/model/app_list_model.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "ui/app_list/app_list_export.h"
+#include "ui/app_list/app_list_model.h"
 #include "ui/views/view.h"
 
 namespace app_list {

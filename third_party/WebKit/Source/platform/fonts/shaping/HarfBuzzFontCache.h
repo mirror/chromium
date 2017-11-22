@@ -9,8 +9,6 @@
 #include "platform/fonts/FontMetrics.h"
 #include "platform/fonts/UnicodeRangeSet.h"
 #include "platform/fonts/opentype/OpenTypeVerticalData.h"
-#include "platform/fonts/shaping/HarfBuzzFace.h"
-#include "platform/wtf/Assertions.h"
 
 struct hb_font_t;
 struct hb_face_t;
@@ -29,8 +27,6 @@ struct HbFaceDeleter {
 
 using HbFaceUniquePtr = std::unique_ptr<hb_face_t, HbFaceDeleter>;
 
-const unsigned kInvalidFallbackMetricsValue = static_cast<unsigned>(-1);
-
 // struct to carry user-pointer data for hb_font_t callback
 // functions/operations, that require information related to a font scaled to a
 // particular size.
@@ -44,10 +40,8 @@ struct HarfBuzzFontData {
   // The vertical origin and vertical advance functions in HarfBuzzFace require
   // the ascent and height metrics as fallback in case no specific vertical
   // layout information is found from the font.
-  void UpdateFallbackMetricsAndScale(
-      const FontPlatformData& platform_data,
-      const SkPaint& paint,
-      HarfBuzzFace::VerticalLayoutCallbacks vertical_layout) {
+  void UpdateFallbackMetricsAndScale(const FontPlatformData& platform_data,
+                                     const SkPaint& paint) {
     float ascent = 0;
     float descent = 0;
     unsigned dummy_ascent_inflation = 0;
@@ -55,30 +49,20 @@ struct HarfBuzzFontData {
 
     paint_ = paint;
 
-    if (UNLIKELY(vertical_layout == HarfBuzzFace::PrepareForVerticalLayout)) {
-      FontMetrics::AscentDescentWithHacks(
-          ascent, descent, dummy_ascent_inflation, dummy_descent_inflation,
-          platform_data, paint);
-      ascent_fallback_ = ascent;
-      // Simulate the rounding that FontMetrics does so far for returning the
-      // integer Height()
-      height_fallback_ = lroundf(ascent) + lroundf(descent);
+    FontMetrics::AscentDescentWithHacks(ascent, descent, dummy_ascent_inflation,
+                                        dummy_descent_inflation, platform_data,
+                                        paint_);
+    ascent_fallback_ = ascent;
+    // Simulate the rounding that FontMetrics does so far for returning the
+    // integer Height()
+    height_fallback_ = lroundf(ascent) + lroundf(descent);
 
-      int units_per_em = paint.refTypeface()->getUnitsPerEm();
-      size_per_unit_ = platform_data.size() / (units_per_em ? units_per_em : 1);
-    } else {
-      ascent_fallback_ = kInvalidFallbackMetricsValue;
-      height_fallback_ = kInvalidFallbackMetricsValue;
-      size_per_unit_ = kInvalidFallbackMetricsValue;
-    }
+    int units_per_em = paint_.refTypeface()->getUnitsPerEm();
+    size_per_unit_ = platform_data.size() / (units_per_em ? units_per_em : 1);
   }
 
   scoped_refptr<OpenTypeVerticalData> VerticalData() {
     if (!vertical_data_) {
-      DCHECK_NE(ascent_fallback_, kInvalidFallbackMetricsValue);
-      DCHECK_NE(height_fallback_, kInvalidFallbackMetricsValue);
-      DCHECK_NE(size_per_unit_, kInvalidFallbackMetricsValue);
-
       vertical_data_ =
           OpenTypeVerticalData::CreateUnscaled(paint_.refTypeface());
     }

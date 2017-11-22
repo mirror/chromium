@@ -84,6 +84,7 @@ class AccessibilityLayer : public ui::LayerDelegate,
 
  private:
   // ui::LayerDelegate overrides:
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override;
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override;
 

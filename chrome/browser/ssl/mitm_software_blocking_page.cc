@@ -52,9 +52,8 @@ std::unique_ptr<ChromeMetricsHelper> CreateMetricsHelper(
 }  // namespace
 
 // static
-const InterstitialPageDelegate::TypeID
-    MITMSoftwareBlockingPage::kTypeForTesting =
-        &MITMSoftwareBlockingPage::kTypeForTesting;
+InterstitialPageDelegate::TypeID MITMSoftwareBlockingPage::kTypeForTesting =
+    &MITMSoftwareBlockingPage::kTypeForTesting;
 
 // Note that we always create a navigation entry with SSL errors.
 // No error happening loading a sub-resource triggers an interstitial so far.

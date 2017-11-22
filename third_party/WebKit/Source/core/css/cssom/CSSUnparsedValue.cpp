@@ -70,8 +70,7 @@ CSSUnparsedValue* CSSUnparsedValue::FromCSSValue(
       css_variable_reference_value.VariableDataValue()->TokenRange()));
 }
 
-const CSSValue* CSSUnparsedValue::ToCSSValue(
-    SecureContextMode secure_context_mode) const {
+const CSSValue* CSSUnparsedValue::ToCSSValue() const {
   StringBuilder input;
 
   for (unsigned i = 0; i < tokens_.size(); i++) {
@@ -95,7 +94,7 @@ const CSSValue* CSSUnparsedValue::ToCSSValue(
       CSSVariableData::Create(CSSParserTokenRange(tokens),
                               false /* isAnimationTainted */,
                               true /* needsVariableResolution */),
-      *StrictCSSParserContext(secure_context_mode));
+      *StrictCSSParserContext());
 }
 
 }  // namespace blink

@@ -89,7 +89,6 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
   // Returns the mode set on the current process' command line.
   static Mode GetCurrentMode();
-  static Mode ConvertStringToMode(const std::string& input);
   bool ShouldProfileProcessType(int process_type);
 
   // Launches the profiling process and returns a pointer to it.
@@ -105,15 +104,15 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
   void ConfigureBackgroundProfilingTriggers();
 
-  // Sends a message to the profiling process to dump the given process'
+  // Sends a message to the profiling process that it dump the given process'
   // memory data to the given file.
   void RequestProcessDump(base::ProcessId pid,
                           base::FilePath dest,
                           base::OnceClosure done);
 
-  // Sends a message to the profiling process to report all profiled processes
+  // Sends a message to the profiling process that it report the given process'
   // memory data to the crash server (slow-report).
-  void RequestProcessReport(std::string trigger_name);
+  void RequestProcessReport(base::ProcessId pid, std::string trigger_name);
 
   // For testing. Only one can be set at a time. Will be called after the
   // profiling process dumps heaps into the trace log. No guarantees are made
@@ -124,7 +123,6 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   friend struct base::DefaultSingletonTraits<ProfilingProcessHost>;
   friend class BackgroundProfilingTriggersTest;
   friend class MemlogBrowserTest;
-  friend class ProfilingTestDriver;
   FRIEND_TEST_ALL_PREFIXES(ProfilingProcessHost, ShouldProfileNewRenderer);
 
   ProfilingProcessHost();

@@ -293,12 +293,10 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
                    const String& suggested_name) override {}
   void LoadErrorPage(int reason) override {}
 
-  DocumentLoader* CreateDocumentLoader(
-      LocalFrame*,
-      const ResourceRequest&,
-      const SubstituteData&,
-      ClientRedirectPolicy,
-      const base::UnguessableToken& devtools_navigation_token) override;
+  DocumentLoader* CreateDocumentLoader(LocalFrame*,
+                                       const ResourceRequest&,
+                                       const SubstituteData&,
+                                       ClientRedirectPolicy) override;
 
   String UserAgent() override { return ""; }
 

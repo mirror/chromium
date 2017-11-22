@@ -755,7 +755,7 @@ SourcesTestRunner.setEventListenerBreakpoint = function(id, enabled, targetName)
   }
 };
 
-TestRunner.deprecatedInitAsync(`
+TestRunner.initAsync(`
   function scheduleTestFunction() {
     setTimeout(testFunction, 0);
   }

@@ -185,7 +185,7 @@ ApplicationTestRunner.ensureFrameStatusEventsReceived = function(frameId, count,
   ApplicationTestRunner.awaitedFrameStatusEventsCount[frameId] = {count: eventsLeft, callback: callback};
 };
 
-TestRunner.deprecatedInitAsync(`
+TestRunner.initAsync(`
   var framesCount = 0;
 
   function createAndNavigateIFrame(url) {

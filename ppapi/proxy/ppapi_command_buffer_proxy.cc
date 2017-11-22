@@ -231,7 +231,8 @@ bool PpapiCommandBufferProxy::CanWaitUnverifiedSyncToken(
   return false;
 }
 
-void PpapiCommandBufferProxy::SetSnapshotRequested() {}
+void PpapiCommandBufferProxy::AddLatencyInfo(
+    const std::vector<ui::LatencyInfo>& latency_info) {}
 
 void PpapiCommandBufferProxy::SignalQuery(uint32_t query,
                                           const base::Closure& callback) {

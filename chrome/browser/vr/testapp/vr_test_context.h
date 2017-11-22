@@ -21,7 +21,6 @@ class Event;
 namespace vr {
 
 class Ui;
-struct Model;
 
 // This class provides a home for the VR UI in a testapp context, and
 // manipulates the UI according to user input.
@@ -44,9 +43,6 @@ class VrTestContext : public vr::UiBrowserInterface {
                             vr::ExitVrPromptChoice choice) override;
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) override;
   void SetVoiceSearchActive(bool active) override;
-  void StartAutocomplete(const base::string16& string) override;
-  void StopAutocomplete() override;
-  void Navigate(GURL gurl) override;
 
  private:
   unsigned int CreateFakeContentTexture();
@@ -67,9 +63,6 @@ class VrTestContext : public vr::UiBrowserInterface {
   bool touchpad_pressed_ = false;
 
   float view_scale_factor_ = 1.f;
-
-  // This avoids storing a duplicate of the model state here.
-  Model* model_;
 
   bool fullscreen_ = false;
   bool incognito_ = false;

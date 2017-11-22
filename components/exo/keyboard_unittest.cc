@@ -12,7 +12,6 @@
 #include "components/exo/keyboard_delegate.h"
 #include "components/exo/keyboard_device_configuration_delegate.h"
 #include "components/exo/keyboard_observer.h"
-#include "components/exo/seat.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
@@ -84,8 +83,7 @@ TEST_F(KeyboardTest, OnKeyboardEnter) {
   MockKeyboardDelegate delegate;
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
       .WillOnce(testing::Return(false));
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow());
   generator.PressKey(ui::VKEY_A, 0);
@@ -122,8 +120,7 @@ TEST_F(KeyboardTest, OnKeyboardLeave) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
       .WillOnce(testing::Return(true));
@@ -152,8 +149,7 @@ TEST_F(KeyboardTest, OnKeyboardKey) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
       .WillOnce(testing::Return(true));
@@ -191,8 +187,7 @@ TEST_F(KeyboardTest, OnKeyboardModifiers) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
       .WillOnce(testing::Return(true));
@@ -247,8 +242,7 @@ TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
   tablet_mode_controller->EnableTabletModeWindowManager(true);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
   MockKeyboardDeviceConfigurationDelegate configuration_delegate;
 
   EXPECT_CALL(configuration_delegate, OnKeyboardTypeChanged(true));
@@ -284,8 +278,7 @@ TEST_F(KeyboardTest, KeyboardObserver) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  auto keyboard = std::make_unique<Keyboard>(&delegate);
   MockKeyboardObserver observer;
   keyboard->AddObserver(&observer);
 
@@ -307,8 +300,7 @@ TEST_F(KeyboardTest, NeedKeyboardKeyAcks) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  auto keyboard = std::make_unique<Keyboard>(&delegate);
 
   EXPECT_FALSE(keyboard->AreKeyboardKeyAcksNeeded());
   keyboard->SetNeedKeyboardKeyAcks(true);
@@ -333,8 +325,7 @@ TEST_F(KeyboardTest, AckKeyboardKey) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
       .WillOnce(testing::Return(true));
@@ -412,8 +403,7 @@ TEST_F(KeyboardTest, AckKeyboardKeyMoveFocus) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
       .WillOnce(testing::Return(true));
@@ -455,8 +445,7 @@ TEST_F(KeyboardTest, AckKeyboardKeyExpired) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
       .WillOnce(testing::Return(true));
@@ -528,8 +517,7 @@ TEST_F(KeyboardTest, AckKeyboardKeyExpiredWithMovingFocusAccelerator) {
   focus_client->FocusWindow(nullptr);
 
   MockKeyboardDelegate delegate;
-  Seat seat;
-  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+  std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
 
   EXPECT_CALL(delegate, CanAcceptKeyboardEventsForSurface(surface.get()))
       .WillOnce(testing::Return(true));

@@ -20,9 +20,7 @@ OpenVRRenderLoop::OpenVRRenderLoop()
   DCHECK(main_thread_task_runner_);
 }
 
-OpenVRRenderLoop::~OpenVRRenderLoop() {
-  Stop();
-}
+OpenVRRenderLoop::~OpenVRRenderLoop() {}
 
 void OpenVRRenderLoop::SubmitFrame(int16_t frame_index,
                                    const gpu::MailboxHolder& mailbox) {
@@ -78,11 +76,6 @@ void OpenVRRenderLoop::SubmitFrameWithTextureHandle(
     submit_client_->OnSubmitFrameRendered();
   }
 #endif
-}
-
-void OpenVRRenderLoop::CleanUp() {
-  submit_client_ = nullptr;
-  binding_.Close();
 }
 
 void OpenVRRenderLoop::UpdateLayerBounds(int16_t frame_id,

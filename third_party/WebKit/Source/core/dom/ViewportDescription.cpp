@@ -239,13 +239,20 @@ PageScaleConstraints ViewportDescription::Resolve(
 
 void ViewportDescription::ReportMobilePageStats(
     const LocalFrame* main_frame) const {
+#if defined(OS_ANDROID)
+  enum ViewportUMAType {
+    kNoViewportTag,
+    kDeviceWidth,
+    kConstantWidth,
+    kMetaWidthOther,
+    kMetaHandheldFriendly,
+    kMetaMobileOptimized,
+    kXhtmlMobileProfile,
+    kTypeCount
+  };
 
   if (!main_frame || !main_frame->GetPage() || !main_frame->View() ||
       !main_frame->GetDocument())
-    return;
-
-  if (!main_frame->GetSettings() ||
-      !main_frame->GetSettings()->GetViewportEnabled())
     return;
 
   // Avoid chrome:// pages like the new-tab page (on Android new tab is
@@ -253,21 +260,18 @@ void ViewportDescription::ReportMobilePageStats(
   if (!main_frame->GetDocument()->Url().ProtocolIsInHTTPFamily())
     return;
 
-  DEFINE_STATIC_LOCAL(
-      EnumerationHistogram, meta_tag_type_histogram,
-      ("Viewport.MetaTagType", static_cast<int>(ViewportUMAType::kTypeCount)));
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, meta_tag_type_histogram,
+                      ("Viewport.MetaTagType", kTypeCount));
   if (!IsSpecifiedByAuthor()) {
-    meta_tag_type_histogram.Count(
-        main_frame->GetDocument()->IsMobileDocument()
-            ? static_cast<int>(ViewportUMAType::kXhtmlMobileProfile)
-            : static_cast<int>(ViewportUMAType::kNoViewportTag));
+    meta_tag_type_histogram.Count(main_frame->GetDocument()->IsMobileDocument()
+                                      ? kXhtmlMobileProfile
+                                      : kNoViewportTag);
     return;
   }
 
   if (IsMetaViewportType()) {
     if (max_width.GetType() == blink::kFixed) {
-      meta_tag_type_histogram.Count(
-          static_cast<int>(ViewportUMAType::kConstantWidth));
+      meta_tag_type_histogram.Count(kConstantWidth);
 
       if (main_frame->View()) {
         // To get an idea of how "far" the viewport is from the device's ideal
@@ -285,20 +289,17 @@ void ViewportDescription::ReportMobilePageStats(
 
     } else if (max_width.GetType() == blink::kDeviceWidth ||
                max_width.GetType() == blink::kExtendToZoom) {
-      meta_tag_type_histogram.Count(
-          static_cast<int>(ViewportUMAType::kDeviceWidth));
+      meta_tag_type_histogram.Count(kDeviceWidth);
     } else {
       // Overflow bucket for cases we may be unaware of.
-      meta_tag_type_histogram.Count(
-          static_cast<int>(ViewportUMAType::kMetaWidthOther));
+      meta_tag_type_histogram.Count(kMetaWidthOther);
     }
   } else if (type == ViewportDescription::kHandheldFriendlyMeta) {
-    meta_tag_type_histogram.Count(
-        static_cast<int>(ViewportUMAType::kMetaHandheldFriendly));
+    meta_tag_type_histogram.Count(kMetaHandheldFriendly);
   } else if (type == ViewportDescription::kMobileOptimizedMeta) {
-    meta_tag_type_histogram.Count(
-        static_cast<int>(ViewportUMAType::kMetaMobileOptimized));
+    meta_tag_type_histogram.Count(kMetaMobileOptimized);
   }
+#endif
 }
 
 bool ViewportDescription::MatchesHeuristicsForGpuRasterization() const {

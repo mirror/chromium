@@ -21,7 +21,9 @@
 
 // https://html.spec.whatwg.org/#the-htmloptionscollection-interface
 
-interface HTMLOptionsCollection : HTMLCollection {
+[
+    DependentLifetime
+] interface HTMLOptionsCollection : HTMLCollection {
     // inherits item()
     [CEReactions, RaisesException=Setter] attribute unsigned long length; // shadows inherited length
     // FIXME: The spec has a legacycaller HTMLOptionElement? (DOMString name);

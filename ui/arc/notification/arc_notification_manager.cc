@@ -100,7 +100,7 @@ ArcNotificationManager::~ArcNotificationManager() {
   arc_bridge_service_->notifications()->RemoveObserver(this);
 }
 
-void ArcNotificationManager::OnConnectionReady() {
+void ArcNotificationManager::OnInstanceReady() {
   DCHECK(!ready_);
 
   auto* notifications_instance =
@@ -113,7 +113,7 @@ void ArcNotificationManager::OnConnectionReady() {
   ready_ = true;
 }
 
-void ArcNotificationManager::OnConnectionClosed() {
+void ArcNotificationManager::OnInstanceClosed() {
   DCHECK(ready_);
   while (!items_.empty()) {
     auto it = items_.begin();
@@ -138,16 +138,6 @@ void ArcNotificationManager::OnNotificationPosted(
     DCHECK(result.second);
     it = result.first;
   }
-  it->second->OnUpdatedFromAndroid(std::move(data));
-}
-
-void ArcNotificationManager::OnNotificationUpdated(
-    mojom::ArcNotificationDataPtr data) {
-  const std::string& key = data->key;
-  auto it = items_.find(key);
-  if (it == items_.end())
-    return;
-
   it->second->OnUpdatedFromAndroid(std::move(data));
 }
 

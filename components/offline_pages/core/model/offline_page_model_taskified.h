@@ -109,6 +109,8 @@ class OfflinePageModelTaskified : public OfflinePageModel,
 
   ClientPolicyController* GetPolicyController() override;
 
+  bool is_loaded() const override;
+
   OfflineEventLogger* GetLogger() override;
 
   // Methods for testing only:

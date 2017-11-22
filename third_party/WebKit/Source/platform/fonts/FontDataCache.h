@@ -34,7 +34,7 @@
 #include "platform/fonts/FontPlatformData.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/wtf/HashMap.h"
-#include "platform/wtf/LinkedHashSet.h"
+#include "platform/wtf/ListHashSet.h"
 
 namespace blink {
 
@@ -92,7 +92,7 @@ class FontDataCache {
                   FontDataCacheKeyHash>
       Cache;
   Cache cache_;
-  LinkedHashSet<scoped_refptr<SimpleFontData>> inactive_font_data_;
+  ListHashSet<scoped_refptr<SimpleFontData>> inactive_font_data_;
 };
 
 }  // namespace blink

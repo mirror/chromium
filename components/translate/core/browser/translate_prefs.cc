@@ -175,17 +175,8 @@ TranslatePrefs::TranslatePrefs(PrefService* user_prefs,
 #endif
 }
 
-bool TranslatePrefs::IsOfferTranslateEnabled() const {
-  return prefs_->GetBoolean(prefs::kOfferTranslateEnabled);
-}
-
-bool TranslatePrefs::IsTranslateAllowedByPolicy() const {
-  const PrefService::Preference* const pref =
-      prefs_->FindPreference(prefs::kOfferTranslateEnabled);
-  DCHECK(pref);
-  DCHECK(pref->GetValue()->is_bool());
-
-  return pref->GetValue()->GetBool() || !pref->IsManaged();
+bool TranslatePrefs::IsEnabled() const {
+  return prefs_->GetBoolean(prefs::kEnableTranslate);
 }
 
 void TranslatePrefs::SetCountry(const std::string& country) {

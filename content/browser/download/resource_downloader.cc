@@ -86,7 +86,7 @@ ResourceDownloader::InterceptNavigationResponse(
     int frame_tree_node_id,
     std::unique_ptr<ThrottlingURLLoader> url_loader,
     std::vector<GURL> url_chain,
-    base::Optional<network::URLLoaderCompletionStatus> status) {
+    base::Optional<network::URLLoaderStatus> status) {
   auto downloader = std::make_unique<ResourceDownloader>(
       delegate, std::move(resource_request),
       std::make_unique<DownloadSaveInfo>(), content::DownloadItem::kInvalidId,
@@ -154,7 +154,7 @@ void ResourceDownloader::InterceptResponse(
     const SSLStatus& ssl_status,
     int frame_tree_node_id,
     std::vector<GURL> url_chain,
-    base::Optional<network::URLLoaderCompletionStatus> status) {
+    base::Optional<network::URLLoaderStatus> status) {
   url_loader_ = std::move(url_loader);
   url_loader_->set_forwarding_client(&response_handler_);
   net::SSLInfo info;

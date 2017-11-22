@@ -1,8 +1,6 @@
 Tests V8 cache information of Service Worker Cache Storage in timeline
 
---- Trace events while installing -------------
------------------------------------------------
---- Trace events while executing scripts ------
+
 v8.compile Properties:
 {
     data : {
@@ -34,5 +32,4 @@ v8.compile Properties:
     type : "v8.compile"
 }
 Text details for v8.compile: v8-cache-script.js:1
------------------------------------------------
 

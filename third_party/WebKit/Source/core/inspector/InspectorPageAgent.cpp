@@ -72,8 +72,8 @@
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/ListHashSet.h"
-#include "platform/wtf/Time.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/Base64.h"
 #include "platform/wtf/text/TextEncoding.h"
@@ -598,12 +598,9 @@ Response InspectorPageAgent::navigate(const String& url,
                                       Maybe<String> referrer,
                                       Maybe<String> transitionType,
                                       String* out_frame_id,
-                                      Maybe<String>* out_loader_id,
                                       Maybe<String>* errorText) {
   LocalFrame* frame = inspected_frames_->Root();
   *out_frame_id = IdentifiersFactory::FrameId(frame);
-  DocumentLoader* loader = frame->Loader().GetDocumentLoader();
-  *out_loader_id = IdentifiersFactory::LoaderId(loader);
   return Response::OK();
 }
 
@@ -940,8 +937,7 @@ void InspectorPageAgent::WindowOpen(Document* document,
                                     const AtomicString& window_name,
                                     const WebWindowFeatures& window_features,
                                     bool user_gesture) {
-  KURL completed_url = url.IsEmpty() ? BlankURL() : document->CompleteURL(url);
-  GetFrontend()->windowOpen(completed_url.GetString(), window_name,
+  GetFrontend()->windowOpen(document->CompleteURL(url).GetString(), window_name,
                             GetEnabledWindowFeatures(window_features),
                             user_gesture);
 }

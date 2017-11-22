@@ -312,9 +312,6 @@ class HttpStreamFactoryImpl::JobController
   // given error code is simply returned.
   int ReconsiderProxyAfterError(Job* job, int error);
 
-  // Returns true if QUIC is whitelisted for |host|.
-  bool IsQuicWhitelistedForHost(const std::string& host);
-
   HttpStreamFactoryImpl* factory_;
   HttpNetworkSession* session_;
   JobFactory* job_factory_;

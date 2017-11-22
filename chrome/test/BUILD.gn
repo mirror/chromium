@@ -381,7 +381,7 @@ test("browser_tests") {
     data_deps += [
       # Needed for --run-in-mash, which triggers launching chrome.
       # TODO(sky): this seems wrong, figure a better way to get resources.
-      "//ash:ash_service_resources",
+      "//ash/mus:resources",
       "//chrome",
       "//ui/keyboard:resources",
     ]
@@ -428,7 +428,6 @@ test("browser_tests") {
       "../browser/apps/service_worker_browsertest.cc",
       "../browser/autocomplete/autocomplete_browsertest.cc",
       "../browser/autofill/autofill_browsertest.cc",
-      "../browser/autofill/autofill_metrics_browsertest.cc",
       "../browser/autofill/autofill_server_browsertest.cc",
       "../browser/autofill/content_autofill_driver_browsertest.cc",
       "../browser/autofill/form_structure_browsertest.cc",
@@ -732,7 +731,6 @@ test("browser_tests") {
       "../browser/ui/extensions/extension_message_bubble_browsertest.cc",
       "../browser/ui/extensions/extension_message_bubble_browsertest.h",
       "../browser/ui/extensions/hosted_app_browsertest.cc",
-      "../browser/ui/find_bar/find_bar_controller_browsertest.cc",
       "../browser/ui/find_bar/find_bar_host_browsertest.cc",
       "../browser/ui/hung_renderer_browsertest.cc",
       "../browser/ui/javascript_dialogs/javascript_dialog_browsertest.cc",
@@ -822,7 +820,7 @@ test("browser_tests") {
       "../renderer/autofill/form_autocomplete_browsertest.cc",
       "../renderer/autofill/form_autofill_browsertest.cc",
       "../renderer/autofill/form_classifier_browsertest.cc",
-      "../renderer/autofill/form_control_click_detection_browsertest.cc",
+      "../renderer/autofill/page_click_tracker_browsertest.cc",
       "../renderer/autofill/page_passwords_analyser_browsertest.cc",
       "../renderer/autofill/password_autofill_agent_browsertest.cc",
       "../renderer/autofill/password_generation_agent_browsertest.cc",
@@ -873,7 +871,6 @@ test("browser_tests") {
       "//components/dom_distiller/content/renderer",
       "//components/dom_distiller/core:test_support",
       "//components/feature_engagement/test:test_support",
-      "//components/optimization_guide:test_support",
       "//components/policy:chrome_settings_proto_generated_compile",
       "//components/resources",
       "//components/safe_browsing/db:test_database_manager",
@@ -1655,7 +1652,6 @@ test("browser_tests") {
       sources += [
         "../browser/safe_browsing/certificate_reporting_service_browsertest.cc",
         "../browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
-        "../browser/safe_browsing/client_side_detection_host_browsertest.cc",
         "../browser/safe_browsing/permission_reporter_browsertest.cc",
         "../browser/safe_browsing/safe_browsing_blocking_page_test.cc",
         "../browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
@@ -2426,7 +2422,6 @@ test("unit_tests") {
     "../browser/ui/find_bar/find_backend_unittest.cc",
     "../browser/ui/login/login_handler_unittest.cc",
     "../browser/ui/page_info/page_info_unittest.cc",
-    "../browser/ui/passwords/destination_file_system_unittest.cc",
     "../browser/ui/passwords/manage_passwords_state_unittest.cc",
     "../browser/ui/passwords/manage_passwords_view_utils_unittest.cc",
     "../browser/ui/passwords/password_access_authenticator_unittest.cc",
@@ -2473,6 +2468,7 @@ test("unit_tests") {
     "../common/pref_names_util_unittest.cc",
     "../common/search/search_urls_unittest.cc",
     "../common/secure_origin_whitelist_unittest.cc",
+    "../common/switch_utils_unittest.cc",
     "../renderer/app_categorizer_unittest.cc",
     "../renderer/chrome_content_renderer_client_unittest.cc",
     "../renderer/content_settings_observer_unittest.cc",
@@ -2747,7 +2743,6 @@ test("unit_tests") {
       "../browser/search/search_unittest.cc",
       "../browser/sessions/persistent_tab_restore_service_unittest.cc",
       "../browser/signin/mutable_profile_oauth2_token_service_delegate_unittest.cc",
-      "../browser/signin/signin_promo_unittest.cc",
       "../browser/speech/extension_api/extension_manifests_tts_unittest.cc",
       "../browser/speech/tts_controller_unittest.cc",
       "../browser/sync/sessions/browser_list_router_helper_unittest.cc",
@@ -2991,7 +2986,6 @@ test("unit_tests") {
       "../browser/ui/ash/multi_user/multi_user_window_manager_chromeos_unittest.cc",
       "../browser/ui/ash/session_controller_client_unittest.cc",
       "../browser/ui/ash/tablet_mode_client_unittest.cc",
-      "../browser/ui/ash/wallpaper_controller_client_unittest.cc",
       "../browser/ui/ash/window_positioner_unittest.cc",
       "../browser/ui/window_sizer/window_sizer_ash_unittest.cc",
     ]
@@ -3396,12 +3390,11 @@ test("unit_tests") {
     sources += [ "../browser/media/protected_media_identifier_permission_context_unittest.cc" ]
   } else {
     sources += [
-      "../browser/lifetime/switch_utils_unittest.cc",
       "../browser/net/disk_cache_dir_policy_handler_unittest.cc",
-      "../browser/profiles/profile_list_desktop_unittest.cc",
-      "../browser/profiles/profile_statistics_unittest.cc",
-      "../browser/ui/startup/startup_browser_creator_impl_unittest.cc",
-      "../browser/ui/startup/startup_tab_provider_unittest.cc",
+      "//chrome/browser/profiles/profile_list_desktop_unittest.cc",
+      "//chrome/browser/profiles/profile_statistics_unittest.cc",
+      "//chrome/browser/ui/startup/startup_browser_creator_impl_unittest.cc",
+      "//chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
     ]
   }
   if (use_gio) {
@@ -3723,7 +3716,6 @@ test("unit_tests") {
         "../browser/ui/cocoa/bubble_view_unittest.mm",
         "../browser/ui/cocoa/chrome_browser_window_unittest.mm",
         "../browser/ui/cocoa/clickhold_button_cell_unittest.mm",
-        "../browser/ui/cocoa/color_panel_cocoa_unittest.mm",
         "../browser/ui/cocoa/confirm_bubble_controller_unittest.mm",
         "../browser/ui/cocoa/confirm_quit_panel_controller_unittest.mm",
         "../browser/ui/cocoa/constrained_window/constrained_window_alert_unittest.mm",

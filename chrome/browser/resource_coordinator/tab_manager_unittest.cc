@@ -431,7 +431,7 @@ TEST_F(TabManagerTest, DiscardWebContentsAt) {
 
   // Discard one of the tabs.
   WebContents* null_contents1 = tab_manager.DiscardWebContentsAt(
-      0, &tabstrip, DiscardCondition::kProactive);
+      0, &tabstrip, TabManager::kProactiveShutdown);
   ASSERT_EQ(2, tabstrip.count());
   EXPECT_TRUE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
@@ -446,7 +446,7 @@ TEST_F(TabManagerTest, DiscardWebContentsAt) {
   tab_manager.GetWebContentsData(tabstrip.GetWebContentsAt(0))
       ->SetDiscardState(false);
   WebContents* null_contents2 = tab_manager.DiscardWebContentsAt(
-      0, &tabstrip, DiscardCondition::kProactive);
+      0, &tabstrip, TabManager::kProactiveShutdown);
   ASSERT_EQ(2, tabstrip.count());
   EXPECT_TRUE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
@@ -489,7 +489,8 @@ TEST_F(TabManagerTest, ReloadDiscardedTabContextMenu) {
       ->NavigateAndCommit(GURL("chrome://newtab"));
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
 
-  tab_manager.DiscardWebContentsAt(1, &tabstrip, DiscardCondition::kProactive);
+  tab_manager.DiscardWebContentsAt(1, &tabstrip,
+                                   TabManager::kProactiveShutdown);
   EXPECT_TRUE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
 
   tabstrip.GetWebContentsAt(1)->GetController().Reload(
@@ -518,12 +519,67 @@ TEST_F(TabManagerTest, DiscardedTabKeepsLastActiveTime) {
   EXPECT_EQ(new_last_active_time, test_contents->GetLastActiveTime());
 
   WebContents* null_contents = tab_manager.DiscardWebContentsAt(
-      1, &tabstrip, DiscardCondition::kProactive);
+      1, &tabstrip, TabManager::kProactiveShutdown);
   EXPECT_EQ(new_last_active_time, null_contents->GetLastActiveTime());
 
   tabstrip.CloseAllTabs();
   EXPECT_TRUE(tabstrip.empty());
 }
+
+// Test to see if a tab can only be discarded once. On Windows and Mac, this
+// defaults to true unless overridden through a variation parameter. On other
+// platforms, it's always false.
+#if defined(OS_WIN) || defined(OS_MACOSX)
+TEST_F(TabManagerTest, CanOnlyDiscardOnce) {
+  TabManager tab_manager;
+  const std::string kTrialName = features::kAutomaticTabDiscarding.name;
+
+  // Not setting the variation parameter.
+  {
+    bool discard_once_value = tab_manager.CanOnlyDiscardOnce();
+    EXPECT_TRUE(discard_once_value);
+  }
+
+  // Setting the variation parameter to true.
+  {
+    std::unique_ptr<base::FieldTrialList> field_trial_list_;
+    field_trial_list_.reset(new base::FieldTrialList(
+        base::MakeUnique<base::MockEntropyProvider>()));
+    variations::testing::ClearAllVariationParams();
+
+    std::map<std::string, std::string> params;
+    params["AllowMultipleDiscards"] = "true";
+    ASSERT_TRUE(variations::AssociateVariationParams(kTrialName, "A", params));
+    base::FieldTrialList::CreateFieldTrial(kTrialName, "A");
+
+    bool discard_once_value = tab_manager.CanOnlyDiscardOnce();
+    EXPECT_FALSE(discard_once_value);
+  }
+
+  // Setting the variation parameter to something else.
+  {
+    std::unique_ptr<base::FieldTrialList> field_trial_list_;
+    field_trial_list_.reset(new base::FieldTrialList(
+        base::MakeUnique<base::MockEntropyProvider>()));
+    variations::testing::ClearAllVariationParams();
+
+    std::map<std::string, std::string> params;
+    params["AllowMultipleDiscards"] = "somethingElse";
+    ASSERT_TRUE(variations::AssociateVariationParams(kTrialName, "B", params));
+    base::FieldTrialList::CreateFieldTrial(kTrialName, "B");
+
+    bool discard_once_value = tab_manager.CanOnlyDiscardOnce();
+    EXPECT_TRUE(discard_once_value);
+  }
+}
+#else
+TEST_F(TabManagerTest, CanOnlyDiscardOnce) {
+  TabManager tab_manager;
+
+  bool discard_once_value = tab_manager.CanOnlyDiscardOnce();
+  EXPECT_FALSE(discard_once_value);
+}
+#endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
 TEST_F(TabManagerTest, DefaultTimeToPurgeInCorrectRange) {
   TabManager tab_manager;
@@ -703,7 +759,7 @@ TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
   tab_manager.test_browser_info_list_.push_back(browser_info2);
 
   for (int i = 0; i < 4; ++i)
-    tab_manager.DiscardTab(DiscardCondition::kProactive);
+    tab_manager.DiscardTab(TabManager::kProactiveShutdown);
 
   // Active tab in a visible window should not be discarded.
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip1.GetWebContentsAt(0)));

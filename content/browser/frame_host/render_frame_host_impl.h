@@ -42,6 +42,7 @@
 #include "content/common/frame_replication_state.h"
 #include "content/common/image_downloader/image_downloader.mojom.h"
 #include "content/common/input/input_handler.mojom.h"
+#include "content/common/navigation_params.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/javascript_dialog_type.h"
@@ -121,17 +122,12 @@ class SensorProviderProxyImpl;
 class StreamHandle;
 class TimeoutMonitor;
 class WebBluetoothServiceImpl;
-struct BeginNavigationParams;
-struct CommonNavigationParams;
 struct ContextMenuParams;
 struct FileChooserParams;
 struct FrameOwnerProperties;
 struct FileChooserParams;
-struct NavigationParams;
-struct RequestNavigationParams;
 struct ResourceResponse;
 struct SubresourceLoaderParams;
-struct StartNavigationParams;
 
 class CONTENT_EXPORT RenderFrameHostImpl
     : public RenderFrameHost,
@@ -354,7 +350,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // This method crashes if this RenderFrameHostImpl does not own a
   // a RenderWidgetHost and nor does any of its ancestors. That would
   // typically mean that the frame has been detached from the frame tree.
-  virtual RenderWidgetHostImpl* GetRenderWidgetHost();
+  RenderWidgetHostImpl* GetRenderWidgetHost();
 
   GlobalFrameRoutingId GetGlobalFrameRoutingId();
 
@@ -567,8 +563,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       bool is_view_source,
-      base::Optional<SubresourceLoaderParams> subresource_loader_params,
-      const base::UnguessableToken& devtools_navigation_token);
+      base::Optional<SubresourceLoaderParams> subresource_loader_params);
 
   // PlzNavigate
   // Indicates that a navigation failed and that this RenderFrame should display
@@ -813,11 +808,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const std::vector<AccessibilityHostMsg_LocationChangeParams>& params);
   void OnAccessibilityFindInPageResult(
       const AccessibilityHostMsg_FindInPageResultParams& params);
-  void OnAccessibilityChildFrameHitTestResult(
-      const gfx::Point& point,
-      int child_frame_routing_id,
-      int child_frame_browser_plugin_instance_id,
-      ui::AXEvent event_to_fire);
+  void OnAccessibilityChildFrameHitTestResult(const gfx::Point& point,
+                                              int hit_obj_id,
+                                              ui::AXEvent event_to_fire);
   void OnAccessibilitySnapshotResponse(
       int callback_id,
       const AXContentTreeUpdate& snapshot);
@@ -1295,7 +1288,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   typedef std::pair<CommonNavigationParams, BeginNavigationParams>
       PendingNavigation;
-  std::unique_ptr<PendingNavigation> pending_navigate_;
+  std::unique_ptr<PendingNavigation> pendinging_navigate_;
 
   // A collection of non-network URLLoaderFactory implementations which are used
   // to service any supported non-network subresource requests for the currently

@@ -246,12 +246,12 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/AutoReset.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/DateMath.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
-#include "platform/wtf/Time.h"
 #include "platform/wtf/text/CharacterNames.h"
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
@@ -1959,6 +1959,12 @@ void Document::PropagateStyleToViewport() {
       !background_style->HasBackground())
     background_style = body_style;
 
+  // If the page set a rootScroller, we should use its background for painting
+  // the document background.
+  Node& root_scroller = GetRootScrollerController().EffectiveRootScroller();
+  if (this != &root_scroller)
+    background_style = ToElement(root_scroller).EnsureComputedStyle();
+
   Color background_color =
       background_style->VisitedDependentColor(CSSPropertyBackgroundColor);
   FillLayer background_layers = background_style->BackgroundLayers();
@@ -3299,7 +3305,7 @@ void Document::CheckCompleted() {
   // No need to repeat if we've already notified this load as finished.
   if (!Loader()->SentDidFinishLoad()) {
     if (frame_->IsMainFrame())
-      GetViewportDescription().ReportMobilePageStats(frame_);
+      ViewportDescription().ReportMobilePageStats(frame_);
     Loader()->SetSentDidFinishLoad();
     frame_->Client()->DispatchDidFinishLoad();
     if (!frame_)
@@ -6401,7 +6407,7 @@ void Document::TasksWerePaused() {
   GetScriptRunner()->Suspend();
 
   if (parser_)
-    parser_->PauseScheduledTasks();
+    parser_->SuspendScheduledTasks();
   if (scripted_animation_controller_)
     scripted_animation_controller_->Pause();
 }
@@ -6410,7 +6416,7 @@ void Document::TasksWereUnpaused() {
   GetScriptRunner()->Resume();
 
   if (parser_)
-    parser_->UnpauseScheduledTasks();
+    parser_->ResumeScheduledTasks();
   if (scripted_animation_controller_)
     scripted_animation_controller_->Unpause();
 

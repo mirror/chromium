@@ -5,7 +5,6 @@
 #ifndef CSSPerspective_h
 #define CSSPerspective_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/css/cssom/CSSNumericValue.h"
 #include "core/css/cssom/CSSTransformComponent.h"
@@ -19,6 +18,7 @@ class ExceptionState;
 // like "transform".
 // See CSSPerspective.idl for more information about this class.
 class CORE_EXPORT CSSPerspective final : public CSSTransformComponent {
+  WTF_MAKE_NONCOPYABLE(CSSPerspective);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -40,7 +40,7 @@ class CORE_EXPORT CSSPerspective final : public CSSTransformComponent {
   // Internal methods - from CSSTransformComponent.
   TransformComponentType GetType() const final { return kPerspectiveType; }
   const DOMMatrix* AsMatrix(ExceptionState&) const final;
-  const CSSFunctionValue* ToCSSValue(SecureContextMode) const final;
+  const CSSFunctionValue* ToCSSValue() const final;
 
   virtual void Trace(blink::Visitor* visitor) {
     visitor->Trace(length_);
@@ -52,7 +52,6 @@ class CORE_EXPORT CSSPerspective final : public CSSTransformComponent {
       : CSSTransformComponent(false /* is2D */), length_(length) {}
 
   Member<CSSNumericValue> length_;
-  DISALLOW_COPY_AND_ASSIGN(CSSPerspective);
 };
 
 }  // namespace blink

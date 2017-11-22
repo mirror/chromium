@@ -4,7 +4,6 @@
 
 #include "tools/gn/input_conversion.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/macros.h"
@@ -75,7 +74,7 @@ Value ParseValueOrScope(const Settings* settings,
   if (!parse_root)
     return Value();
 
-  std::unique_ptr<Scope> scope = std::make_unique<Scope>(settings);
+  std::unique_ptr<Scope> scope(new Scope(settings));
   Value result = parse_root->Execute(scope.get(), err);
   if (err->has_error())
     return Value();

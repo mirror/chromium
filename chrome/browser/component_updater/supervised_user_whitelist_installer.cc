@@ -24,7 +24,6 @@
 #include "base/path_service.h"
 #include "base/scoped_observer.h"
 #include "base/sequenced_task_runner.h"
-#include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
@@ -549,34 +548,35 @@ void SupervisedUserWhitelistInstallerImpl::RegisterWhitelist(
     const std::string& name) {
   DictionaryPrefUpdate update(local_state_,
                               prefs::kRegisteredSupervisedUserWhitelists);
-  base::Value* pref_dict = update.Get();
-  base::Value* whitelist_dict =
-      pref_dict->FindKeyOfType(crx_id, base::Value::Type::DICTIONARY);
-  const bool newly_added = !whitelist_dict;
+  base::DictionaryValue* pref_dict = update.Get();
+  base::DictionaryValue* whitelist_dict_weak = nullptr;
+  const bool newly_added = !pref_dict->GetDictionaryWithoutPathExpansion(
+      crx_id, &whitelist_dict_weak);
   if (newly_added) {
-    whitelist_dict =
-        pref_dict->SetKey(crx_id, base::Value(base::Value::Type::DICTIONARY));
-    whitelist_dict->SetKey(kName, base::Value(name));
+    whitelist_dict_weak = pref_dict->SetDictionaryWithoutPathExpansion(
+        crx_id, std::make_unique<base::DictionaryValue>());
+    whitelist_dict_weak->SetString(kName, name);
   }
 
   if (!client_id.empty()) {
-    base::Value* clients =
-        whitelist_dict->FindKeyOfType(kClients, base::Value::Type::LIST);
-    if (!clients) {
+    base::ListValue* clients_weak = nullptr;
+    if (!whitelist_dict_weak->GetList(kClients, &clients_weak)) {
       DCHECK(newly_added);
-      clients = whitelist_dict->SetKey(kClients,
-                                       base::Value(base::Value::Type::LIST));
+      auto clients = std::make_unique<base::ListValue>();
+      clients_weak = clients.get();
+      whitelist_dict_weak->Set(kClients, std::move(clients));
     }
-
-    base::Value client(client_id);
-    DCHECK(!base::ContainsValue(clients->GetList(), client));
-    clients->GetList().push_back(std::move(client));
+    bool success = clients_weak->AppendIfNotPresent(
+        std::make_unique<base::Value>(client_id));
+    DCHECK(success);
   }
 
   if (!newly_added) {
     // Sanity-check that the stored name is equal to the name passed in.
     // In release builds this is a no-op.
-    DCHECK_EQ(name, whitelist_dict->FindKey(kName)->GetString());
+    std::string stored_name;
+    DCHECK(whitelist_dict_weak->GetString(kName, &stored_name));
+    DCHECK_EQ(stored_name, name);
     return;
   }
 

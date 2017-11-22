@@ -18,6 +18,7 @@
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view_test_helper.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
+#include "chrome/test/base/scoped_testing_local_state.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
@@ -41,11 +42,14 @@ class BookmarkBarViewTest : public BrowserWithTestWindowTest {
 
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
+    local_state_.reset(
+        new ScopedTestingLocalState(TestingBrowserProcess::GetGlobal()));
   }
 
   void TearDown() override {
     test_helper_.reset();
     bookmark_bar_view_.reset();
+    local_state_.reset();
     BrowserWithTestWindowTest::TearDown();
   }
 
@@ -133,6 +137,8 @@ class BookmarkBarViewTest : public BrowserWithTestWindowTest {
                                std::unique_ptr<TemplateURLServiceClient>(),
                                NULL, NULL, base::Closure()));
   }
+
+  std::unique_ptr<ScopedTestingLocalState> local_state_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkBarViewTest);
 };

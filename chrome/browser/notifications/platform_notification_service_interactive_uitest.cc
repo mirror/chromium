@@ -433,15 +433,8 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   ASSERT_EQ(0u, notifications.size());
 }
 
-// Flaky on Linux. http://crbug.com/784951
-#if defined(OS_LINUX)
-#define MAYBE_UserClosesPersistentNotification \
-  DISABLED_UserClosesPersistentNotification
-#else
-#define MAYBE_UserClosesPersistentNotification UserClosesPersistentNotification
-#endif
 IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
-                       MAYBE_UserClosesPersistentNotification) {
+                       UserClosesPersistentNotification) {
   base::UserActionTester user_action_tester;
   ASSERT_NO_FATAL_FAILURE(GrantNotificationPermissionForTest());
 

@@ -1,5 +1,3 @@
-Tests JS blackboxing for timeline
-
 
 Blackboxed url: lib_script.js
   level1: 10 @ 208

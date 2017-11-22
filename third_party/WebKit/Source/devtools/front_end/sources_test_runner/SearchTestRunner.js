@@ -140,7 +140,7 @@ SourcesTestRunner.replaceAndDumpChange = function(sourceFrame, searchConfig, rep
   }
 };
 
-TestRunner.deprecatedInitAsync(`
+TestRunner.initAsync(`
   if (window.GCController)
     GCController.collect();
 `);

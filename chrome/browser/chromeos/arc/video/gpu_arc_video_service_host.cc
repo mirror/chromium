@@ -13,7 +13,6 @@
 #include "base/memory/singleton.h"
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "chrome/browser/chromeos/ash_config.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/common/video_decode_accelerator.mojom.h"
@@ -24,12 +23,20 @@
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "services/ui/public/cpp/gpu/gpu.h"
-#include "ui/aura/env.h"
 
 namespace arc {
 
 namespace {
+
+void ConnectToVideoDecodeAcceleratorOnIOThread(
+    mojom::VideoDecodeAcceleratorRequest request) {
+  content::BindInterfaceInGpuProcess(std::move(request));
+}
+
+void ConnectToVideoEncodeAcceleratorOnIOThread(
+    mojom::VideoEncodeAcceleratorRequest request) {
+  content::BindInterfaceInGpuProcess(std::move(request));
+}
 
 // Singleton factory for GpuArcVideoServiceHost.
 class GpuArcVideoServiceHostFactory
@@ -58,32 +65,18 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
 
   void CreateDecodeAccelerator(
       mojom::VideoDecodeAcceleratorRequest request) override {
-    if (chromeos::GetAshConfig() != ash::Config::CLASSIC) {
-      aura::Env::GetInstance()
-          ->GetGpuConnection()
-          ->CreateArcVideoDecodeAccelerator(std::move(request));
-    } else {
-      content::BrowserThread::PostTask(
-          content::BrowserThread::IO, FROM_HERE,
-          base::BindOnce(&content::BindInterfaceInGpuProcess<
-                             mojom::VideoDecodeAccelerator>,
-                         base::Passed(&request)));
-    }
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ConnectToVideoDecodeAcceleratorOnIOThread,
+                       base::Passed(&request)));
   }
 
   void CreateEncodeAccelerator(
       mojom::VideoEncodeAcceleratorRequest request) override {
-    if (chromeos::GetAshConfig() != ash::Config::CLASSIC) {
-      aura::Env::GetInstance()
-          ->GetGpuConnection()
-          ->CreateArcVideoEncodeAccelerator(std::move(request));
-    } else {
-      content::BrowserThread::PostTask(
-          content::BrowserThread::IO, FROM_HERE,
-          base::BindOnce(&content::BindInterfaceInGpuProcess<
-                             mojom::VideoEncodeAccelerator>,
-                         base::Passed(&request)));
-    }
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ConnectToVideoEncodeAcceleratorOnIOThread,
+                       base::Passed(&request)));
   }
 
  private:
@@ -108,7 +101,7 @@ GpuArcVideoServiceHost::~GpuArcVideoServiceHost() {
   arc_bridge_service_->video()->RemoveObserver(this);
 }
 
-void GpuArcVideoServiceHost::OnConnectionReady() {
+void GpuArcVideoServiceHost::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   auto* video_instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->video(), Init);

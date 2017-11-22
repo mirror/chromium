@@ -8,7 +8,6 @@ namespace feature_engagement {
 namespace test {
 
 MockTracker::MockTracker() = default;
-
 MockTracker::~MockTracker() = default;
 
 }  // namespace test

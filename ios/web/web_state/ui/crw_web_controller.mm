@@ -1178,6 +1178,13 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   return self.webScrollView.contentOffset;
 }
 
+- (BOOL)atTop {
+  if (!_webView)
+    return YES;
+  UIScrollView* scrollView = self.webScrollView;
+  return scrollView.contentOffset.y == -scrollView.contentInset.top;
+}
+
 - (GURL)currentURLWithTrustLevel:(web::URLVerificationTrustLevel*)trustLevel {
   DCHECK(trustLevel) << "Verification of the trustLevel state is mandatory";
 
@@ -1679,18 +1686,12 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)loadNativeViewWithSuccess:(BOOL)loadSuccess
                 navigationContext:(web::NavigationContextImpl*)context {
-  if (loadSuccess) {
-    // No DidStartNavigation callback for displaying error page.
-    _webStateImpl->OnNavigationStarted(context);
-  }
+  _webStateImpl->OnNavigationStarted(context);
   const GURL currentURL([self currentURL]);
   [self didStartLoading];
   self.navigationManagerImpl->CommitPendingItem();
   _loadPhase = web::PAGE_LOADED;
-  if (loadSuccess) {
-    // No DidFinishNavigation callback for displaying error page.
-    _webStateImpl->OnNavigationFinished(context);
-  }
+  _webStateImpl->OnNavigationFinished(context);
 
   // Perform post-load-finished updates.
   [self didFinishWithURL:currentURL loadSuccess:loadSuccess];
@@ -2955,10 +2956,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   [self loadCompleteWithSuccess:NO forNavigation:navigation];
   [self loadErrorInNativeView:error navigationContext:navigationContext];
-  if ([_navigationStates stateForNavigation:navigation] ==
-      web::WKNavigationState::PROVISIONALY_FAILED) {
-    _webStateImpl->OnNavigationFinished(navigationContext);
-  }
 }
 
 - (void)handleCancelledError:(NSError*)error {
@@ -4213,19 +4210,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
     }
   }
 
-  // Although the Apple documentation says that |handler| can be called
-  // immediately or saved and called asynchronously, there is a bug in
-  // iOS 10 (and possibly before) that JavaScript code is not executed
-  // when the |handler| is called asynchronously.
-  if (@available(iOS 11, *)) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
-                                : WKNavigationActionPolicyCancel);
-    });
-  } else {
-    decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
-                              : WKNavigationActionPolicyCancel);
-  }
+  decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
+                            : WKNavigationActionPolicyCancel);
 }
 
 - (void)webView:(WKWebView*)webView

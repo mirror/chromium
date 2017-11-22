@@ -5,7 +5,7 @@
 #include "platform/graphics/gpu/ImageLayerBridge.h"
 
 #include "components/viz/common/quads/shared_bitmap.h"
-#include "components/viz/common/resources/transferable_resource.h"
+#include "components/viz/common/quads/texture_mailbox.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "platform/graphics/AcceleratedStaticBitmapImage.h"
 #include "platform/graphics/ColorBehavior.h"
@@ -47,9 +47,9 @@ void ImageLayerBridge::SetImage(scoped_refptr<StaticBitmapImage> image) {
       image_->IsTextureBacked()) {
     // If the layer bridge is not presenting, the GrContext may not be getting
     // flushed regularly.  The flush is normally triggered inside the
-    // m_image->EnsureMailbox() call of
-    // ImageLayerBridge::PrepareTransferableResource. To prevent a potential
-    // memory leak we must flush the GrContext here.
+    // m_image->ensureMailbox() call of
+    // ImageLayerBridge::PrepareTextureMailbox. To prevent a potential memory
+    // leak we must flush the GrContext here.
     image_->PaintImageForCurrentFrame().GetSkImage()->getTextureHandle(
         true);  // GrContext flush.
   }
@@ -66,8 +66,8 @@ void ImageLayerBridge::Dispose() {
   disposed_ = true;
 }
 
-bool ImageLayerBridge::PrepareTransferableResource(
-    viz::TransferableResource* out_resource,
+bool ImageLayerBridge::PrepareTextureMailbox(
+    viz::TextureMailbox* out_mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* out_release_callback) {
   if (disposed_)
     return false;
@@ -106,13 +106,11 @@ bool ImageLayerBridge::PrepareTransferableResource(
 
   if (gpu_compositing) {
     image_for_compositor->EnsureMailbox(kUnverifiedSyncToken);
-    uint32_t filter =
-        filter_quality_ == kNone_SkFilterQuality ? GL_NEAREST : GL_LINEAR;
-    *out_resource = viz::TransferableResource::MakeGL(
-        image_for_compositor->GetMailbox(), filter, GL_TEXTURE_2D,
-        image_for_compositor->GetSyncToken());
+    *out_mailbox = viz::TextureMailbox(image_for_compositor->GetMailbox(),
+                                       image_for_compositor->GetSyncToken(),
+                                       GL_TEXTURE_2D);
     auto func =
-        WTF::Bind(&ImageLayerBridge::ResourceReleasedGpu,
+        WTF::Bind(&ImageLayerBridge::MailboxReleasedGpu,
                   WrapWeakPersistent(this), std::move(image_for_compositor));
     *out_release_callback = viz::SingleReleaseCallback::Create(
         ConvertToBaseCallback(std::move(func)));
@@ -137,19 +135,19 @@ bool ImageLayerBridge::PrepareTransferableResource(
         return false;
     }
 
-    *out_resource = viz::TransferableResource::MakeSoftware(
-        bitmap->id(), bitmap->sequence_number(),
-        gfx::Size(image_for_compositor->width(),
-                  image_for_compositor->height()));
-    auto func = WTF::Bind(&ImageLayerBridge::ResourceReleasedSoftware,
+    *out_mailbox = viz::TextureMailbox(
+        bitmap.get(), gfx::Size(image_for_compositor->width(),
+                                image_for_compositor->height()));
+    auto func = WTF::Bind(&ImageLayerBridge::MailboxReleasedSoftware,
                           WrapWeakPersistent(this), base::Passed(&bitmap),
                           image_for_compositor->Size());
     *out_release_callback = viz::SingleReleaseCallback::Create(
         ConvertToBaseCallback(std::move(func)));
   }
 
+  out_mailbox->set_nearest_neighbor(filter_quality_ == kNone_SkFilterQuality);
   // TODO(junov): Figure out how to get the color space info.
-  // out_resource->color_space = ...;
+  // outMailbox->set_color_space();
 
   return true;
 }
@@ -170,7 +168,7 @@ std::unique_ptr<viz::SharedBitmap> ImageLayerBridge::CreateOrRecycleBitmap(
   return Platform::Current()->AllocateSharedBitmap(size);
 }
 
-void ImageLayerBridge::ResourceReleasedGpu(
+void ImageLayerBridge::MailboxReleasedGpu(
     scoped_refptr<StaticBitmapImage> image,
     const gpu::SyncToken& token,
     bool lost_resource) {
@@ -185,7 +183,7 @@ void ImageLayerBridge::ResourceReleasedGpu(
   // let 'image' go out of scope to release gpu resources.
 }
 
-void ImageLayerBridge::ResourceReleasedSoftware(
+void ImageLayerBridge::MailboxReleasedSoftware(
     std::unique_ptr<viz::SharedBitmap> bitmap,
     const IntSize& size,
     const gpu::SyncToken& sync_token,

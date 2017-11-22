@@ -155,6 +155,22 @@ class ScopedBlockPopupsPref {
 
 @implementation CacheTestCase
 
+// Reloads the web view and waits for the loading to complete.
+// TODO(crbug.com/638674): Evaluate if this can move to shared code
+- (void)reloadPage {
+  [chrome_test_util::BrowserCommandDispatcherForMainBVC() reload];
+
+  [ChromeEarlGrey waitForPageToFinishLoading];
+}
+
+// Navigates back to the previous webpage.
+// TODO(crbug.com/638674): Evaluate if this can move to shared code.
+- (void)goBack {
+  [chrome_test_util::BrowserCommandDispatcherForMainBVC() goBack];
+
+  [ChromeEarlGrey waitForPageToFinishLoading];
+}
+
 // Tests caching behavior on navigate back and page reload. Navigate back should
 // use the cached page. Page reload should use cache-control in the request
 // header and show updated page.
@@ -180,12 +196,12 @@ class ScopedBlockPopupsPref {
 
   // Navigate back. This should not hit the server. Verify the page has been
   // loaded from cache. The serverHitCounter will remain the same.
-  [ChromeEarlGrey goBack];
+  [self goBack];
   [ChromeEarlGrey waitForWebViewContainingText:"serverHitCounter: 1"];
 
   // Reload page. 3rd hit to server. Verify that page reload causes the
   // hitCounter to show updated value.
-  [ChromeEarlGrey reload];
+  [self reloadPage];
   [ChromeEarlGrey waitForWebViewContainingText:"serverHitCounter: 3"];
 
   // Verify that page reload causes Cache-Control value to be sent with request.

@@ -44,8 +44,8 @@ cr.define('accessibility', function() {
     document.location.reload();
   }
 
-  function requestWebContentsTree(data, element) {
-    chrome.send('requestWebContentsTree',
+  function requestAccessibilityTree(data, element) {
+    chrome.send('requestAccessibilityTree',
                 [String(data.processId), String(data.routeId)]);
   }
 
@@ -66,11 +66,6 @@ cr.define('accessibility', function() {
     for (var i = 0; i < list.length; i++) {
       addToPagesList(list[i]);
     }
-
-    var showNativeUI = $('showNativeUI');
-    showNativeUI.addEventListener('click', function() {
-      chrome.send('requestNativeUITree', []);
-    });
   }
 
   function bindCheckbox(name, value) {
@@ -195,7 +190,7 @@ cr.define('accessibility', function() {
       link.textContent = 'show accessibility tree';
     link.id = row.id + ':showTree';
     link.addEventListener('click',
-                          requestWebContentsTree.bind(this, data, link));
+                          requestAccessibilityTree.bind(this, data, link));
     return link;
   }
 
@@ -233,7 +228,6 @@ cr.define('accessibility', function() {
     return errorMessageElement;
   }
 
-  // Called from C++
   function showTree(data) {
     var id = data.processId + '.' + data.routeId;
     var row = $(id);
@@ -244,16 +238,6 @@ cr.define('accessibility', function() {
     formatRow(row, data);
   }
 
-  // Called from C++
-  function showNativeUITree(data) {
-    var treeElement = document.querySelector('#native_ui pre');
-    if (!treeElement) {
-      var treeElement = document.createElement('pre');
-      $('native_ui').appendChild(treeElement);
-    }
-    treeElement.textContent = data.tree;
-  }
-
   function createAccessibilityTreeElement(data) {
     var treeElement = document.createElement('pre');
     var tree = data.tree;
@@ -261,11 +245,9 @@ cr.define('accessibility', function() {
     return treeElement;
   }
 
-  // These are the functions we export so they can be called from C++.
   return {
     initialize: initialize,
-    showTree: showTree,
-    showNativeUITree: showNativeUITree
+    showTree: showTree
   };
 });
 

@@ -1,6 +1,5 @@
-(async function() {
-  await TestRunner.loadModule('data_grid');
-
+TestRunner.loadModule('data_grid').then(test);
+function test() {
   TestRunner.addResult("This tests viewport datagrid.");
 
   var div = document.createElement("div");
@@ -53,4 +52,4 @@
     }
     TestRunner.addResult("");
   }
-})();
+}

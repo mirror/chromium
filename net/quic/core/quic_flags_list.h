@@ -127,7 +127,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_41, true)
 
 // If true, QUIC can take ownership of data provided in a reference counted
 // memory to avoid data copy.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_mem_slices, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_mem_slices, true)
 
 // Allow QUIC to accept initial packet numbers that are random, not 1.
 QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_enable_accept_random_ipn, false)
@@ -200,7 +200,3 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_less_probe_rtt, false)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing,
           true)
-
-// If true, truncates QUIC error strings to 256 characters before writing them
-// to the wire.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_truncate_long_details, true)

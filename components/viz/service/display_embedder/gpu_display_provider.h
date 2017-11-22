@@ -29,7 +29,6 @@ class Display;
 class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
  public:
   GpuDisplayProvider(
-      uint32_t restart_id,
       scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service,
       gpu::GpuChannelManager* gpu_channel_manager);
   ~GpuDisplayProvider() override;
@@ -39,11 +38,9 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
       const RendererSettings& renderer_settings,
-      std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source)
-      override;
+      std::unique_ptr<BeginFrameSource>* begin_frame_source) override;
 
  private:
-  const uint32_t restart_id_;
   scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service_;
   std::unique_ptr<gpu::GpuMemoryBufferManager> gpu_memory_buffer_manager_;
   gpu::ImageFactory* image_factory_;

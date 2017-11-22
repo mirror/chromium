@@ -11,7 +11,7 @@
 #include "base/optional.h"
 #include "base/threading/thread_checker.h"
 #include "components/arc/common/print.mojom.h"
-#include "components/arc/connection_observer.h"
+#include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -24,7 +24,7 @@ namespace arc {
 class ArcBridgeService;
 
 class ArcPrintService : public KeyedService,
-                        public ConnectionObserver<mojom::PrintInstance>,
+                        public InstanceHolder<mojom::PrintInstance>::Observer,
                         public mojom::PrintHost {
  public:
   // Returns singleton instance for the given BrowserContext,
@@ -36,8 +36,8 @@ class ArcPrintService : public KeyedService,
                   ArcBridgeService* bridge_service);
   ~ArcPrintService() override;
 
-  // ConnectionObserver<mojom::PrintInstance> override:
-  void OnConnectionReady() override;
+  // InstanceHolder<mojom::PrintInstance>::Observer override:
+  void OnInstanceReady() override;
 
   // mojom::PrintHost override:
   void Print(mojo::ScopedHandle pdf_data) override;

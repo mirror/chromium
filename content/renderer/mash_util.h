@@ -7,7 +7,7 @@
 
 namespace content {
 
-bool IsRunningWithMus();
+bool IsRunningInMash();
 
 }  // namespace content
 

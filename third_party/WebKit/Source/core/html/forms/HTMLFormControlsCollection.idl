@@ -21,7 +21,9 @@
 
 // https://html.spec.whatwg.org/#the-htmlformcontrolscollection-interface
 
-interface HTMLFormControlsCollection : HTMLCollection {
+[
+    DependentLifetime
+] interface HTMLFormControlsCollection : HTMLCollection {
     // inherits length and item()
     [ImplementedAs=namedGetter] getter (RadioNodeList or Element)? namedItem(DOMString name); // shadows inherited namedItem()
     // FIXME: This getter is not in the spec.

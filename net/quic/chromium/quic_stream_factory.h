@@ -207,7 +207,6 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
       int max_idle_time_before_crypto_handshake_seconds,
       bool connect_using_default_network,
       bool migrate_sessions_on_network_change,
-      bool migrate_sessions_on_network_change_v2,
       bool migrate_sessions_early,
       bool allow_server_migration,
       bool race_cert_verification,
@@ -497,9 +496,6 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   // interface changes.
   const bool migrate_sessions_on_network_change_;
 
-  // Set if migration should be attempted after probing.
-  const bool migrate_sessions_on_network_change_v2_;
-
   // Set if early migration should be attempted when the connection
   // experiences poor connectivity.
   const bool migrate_sessions_early_;
@@ -526,7 +522,7 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
 
   QuicClientPushPromiseIndex push_promise_index_;
 
-  base::SequencedTaskRunner* task_runner_;
+  base::TaskRunner* task_runner_;
 
   const scoped_refptr<SSLConfigService> ssl_config_service_;
 

@@ -22,7 +22,10 @@ class CC_EXPORT SurfaceLayer : public Layer {
   static scoped_refptr<SurfaceLayer> Create(
       scoped_refptr<viz::SurfaceReferenceFactory> ref_factory);
 
-  void SetPrimarySurfaceId(const viz::SurfaceId& surface_id);
+  // TODO(fsamuel): SurfaceLayer only cares about the surface ID of the
+  // |surface_info|. SetPrimarySurfaceInfo only needs to be a
+  // SetPrimarySurfaceId.
+  void SetPrimarySurfaceInfo(const viz::SurfaceInfo& surface_info);
   void SetFallbackSurfaceId(const viz::SurfaceId& surface_id);
 
   // When stretch_content_to_fill_bounds is true, the scale of the embedded
@@ -43,8 +46,8 @@ class CC_EXPORT SurfaceLayer : public Layer {
     return ref_factory_;
   }
 
-  const viz::SurfaceId& primary_surface_id() const {
-    return primary_surface_id_;
+  const viz::SurfaceInfo& primary_surface_info() const {
+    return primary_surface_info_;
   }
 
   const viz::SurfaceId& fallback_surface_id() const {
@@ -60,7 +63,7 @@ class CC_EXPORT SurfaceLayer : public Layer {
   ~SurfaceLayer() override;
   void RemoveReference(base::Closure reference_returner);
 
-  viz::SurfaceId primary_surface_id_;
+  viz::SurfaceInfo primary_surface_info_;
   viz::SurfaceId fallback_surface_id_;
   base::Closure fallback_reference_returner_;
 

@@ -103,9 +103,6 @@ const uint8_t kLargestAckedOffset = 2;
 const uint8_t kQuicHasMultipleAckBlocksOffset_Pre40 = 5;
 const uint8_t kQuicHasMultipleAckBlocksOffset = 4;
 
-// Maximum length of encoded error strings.
-const int kMaxErrorStringLength = 256;
-
 // Returns the absolute value of the difference between |a| and |b|.
 QuicPacketNumber Delta(QuicPacketNumber a, QuicPacketNumber b) {
   // Since these are unsigned numbers, we can't just return abs(a - b)
@@ -1888,11 +1885,9 @@ size_t QuicFramer::ComputeFrameLength(
       return GetRstStreamFrameSize();
     case CONNECTION_CLOSE_FRAME:
       return GetMinConnectionCloseFrameSize() +
-             TruncateErrorString(frame.connection_close_frame->error_details)
-                 .size();
+             frame.connection_close_frame->error_details.size();
     case GOAWAY_FRAME:
-      return GetMinGoAwayFrameSize() +
-             TruncateErrorString(frame.goaway_frame->reason_phrase).size();
+      return GetMinGoAwayFrameSize() + frame.goaway_frame->reason_phrase.size();
     case WINDOW_UPDATE_FRAME:
       return GetWindowUpdateFrameSize();
     case BLOCKED_FRAME:
@@ -2378,7 +2373,7 @@ bool QuicFramer::AppendConnectionCloseFrame(
   if (!writer->WriteUInt32(error_code)) {
     return false;
   }
-  if (!writer->WriteStringPiece16(TruncateErrorString(frame.error_details))) {
+  if (!writer->WriteStringPiece16(frame.error_details)) {
     return false;
   }
   return true;
@@ -2394,7 +2389,7 @@ bool QuicFramer::AppendGoAwayFrame(const QuicGoAwayFrame& frame,
   if (!writer->WriteUInt32(stream_id)) {
     return false;
   }
-  if (!writer->WriteStringPiece16(TruncateErrorString(frame.reason_phrase))) {
+  if (!writer->WriteStringPiece16(frame.reason_phrase)) {
     return false;
   }
   return true;
@@ -2469,15 +2464,6 @@ bool QuicFramer::StartsWithChlo(QuicStreamId id,
 
   return strncmp(buf, reinterpret_cast<const char*>(&kCHLO), sizeof(kCHLO)) ==
          0;
-}
-
-QuicStringPiece QuicFramer::TruncateErrorString(QuicStringPiece error) {
-  if (error.length() <= kMaxErrorStringLength ||
-      !FLAGS_quic_reloadable_flag_quic_truncate_long_details) {
-    return error;
-  }
-  QUIC_FLAG_COUNT(quic_reloadable_flag_quic_truncate_long_details);
-  return QuicStringPiece(error.data(), kMaxErrorStringLength);
 }
 
 }  // namespace net

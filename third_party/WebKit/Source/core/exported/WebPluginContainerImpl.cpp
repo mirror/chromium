@@ -510,7 +510,7 @@ WebString WebPluginContainerImpl::ExecuteScriptURL(const WebURL& url,
   v8::HandleScope handle_scope(ToIsolate(frame));
   v8::Local<v8::Value> result =
       frame->GetScriptController().ExecuteScriptInMainWorldAndReturnValue(
-          ScriptSourceCode(script, ScriptSourceLocationType::kJavascriptUrl));
+          ScriptSourceCode(script));
 
   // Failure is reported as a null string.
   if (result.IsEmpty() || !result->IsString())

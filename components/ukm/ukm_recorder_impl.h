@@ -15,7 +15,6 @@
 
 namespace metrics {
 class UkmBrowserTest;
-class UkmEGTestHelper;
 }
 
 namespace ukm {
@@ -54,7 +53,6 @@ class UkmRecorderImpl : public UkmRecorder {
 
  private:
   friend ::metrics::UkmBrowserTest;
-  friend ::metrics::UkmEGTestHelper;
   friend ::ukm::debug::DebugPage;
 
   // UkmRecorder:

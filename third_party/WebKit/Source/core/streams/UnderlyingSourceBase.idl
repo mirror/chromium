@@ -9,6 +9,7 @@
 
 [
     ActiveScriptWrappable,
+    DependentLifetime,
     NoInterfaceObject
 ]
 interface UnderlyingSourceBase {

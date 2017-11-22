@@ -11,7 +11,7 @@
 #include "modules/notifications/Notification.h"
 #include "modules/notifications/NotificationOptions.h"
 #include "modules/vibration/VibrationController.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 #include "public/platform/WebURL.h"
 
 namespace blink {

@@ -16,9 +16,9 @@ using gpu::gles2::GLES2Interface;
 namespace cc {
 
 namespace {
-// The resource id in LayerTreeResourceProvider starts from 1 to avoid
-// conflicts with id from DisplayResourceProvider.
-const unsigned int kLayerTreeInitialResourceId = 1;
+// The Resouce id in LayerTreeResourceProvider starts from 1 to avoid conflicts
+// with id from DisplayResourceProvider.
+const unsigned int kInitialResourceId = 1;
 }  // namespace
 
 struct LayerTreeResourceProvider::ImportedResource {
@@ -55,16 +55,77 @@ LayerTreeResourceProvider::LayerTreeResourceProvider(
                        gpu_memory_buffer_manager,
                        delegated_sync_points_required,
                        resource_settings,
-                       kLayerTreeInitialResourceId) {}
+                       kInitialResourceId) {}
 
 LayerTreeResourceProvider::~LayerTreeResourceProvider() {
   for (auto& pair : imported_resources_) {
     ImportedResource& imported = pair.second;
-    // If the resource is exported we can't report when it can be used again
-    // once this class is destroyed, so consider the resource lost.
-    bool is_lost = imported.exported_count || imported.returned_lost;
-    imported.release_callback->Run(imported.returned_sync_token, is_lost);
+    imported.release_callback->Run(gpu::SyncToken(), true /* is_lost */);
   }
+}
+
+viz::ResourceId LayerTreeResourceProvider::CreateResourceFromTextureMailbox(
+    const viz::TextureMailbox& mailbox,
+    std::unique_ptr<viz::SingleReleaseCallback> release_callback,
+    bool read_lock_fences_enabled,
+    gfx::BufferFormat buffer_format) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  // Just store the information. Mailbox will be consumed in
+  // DisplayResourceProvider::LockForRead().
+  viz::ResourceId id = next_id_++;
+  DCHECK(mailbox.IsValid());
+  viz::internal::Resource* resource = InsertResource(
+      id, viz::internal::Resource(
+              mailbox.size_in_pixels(), viz::internal::Resource::EXTERNAL,
+              viz::ResourceTextureHint::kDefault,
+              mailbox.IsTexture() ? viz::ResourceType::kTexture
+                                  : viz::ResourceType::kBitmap,
+              viz::RGBA_8888, mailbox.color_space()));
+  if (mailbox.IsTexture()) {
+    GLenum filter = mailbox.nearest_neighbor() ? GL_NEAREST : GL_LINEAR;
+    resource->filter = filter;
+    resource->original_filter = filter;
+    resource->min_filter = filter;
+    resource->target = mailbox.target();
+    resource->UpdateSyncToken(mailbox.sync_token());
+  } else {
+    DCHECK(mailbox.IsSharedMemory());
+    resource->SetSharedBitmap(mailbox.shared_bitmap());
+  }
+  resource->allocated = true;
+  resource->mailbox = mailbox.mailbox();
+  resource->release_callback =
+      base::Bind(&viz::SingleReleaseCallback::Run,
+                 base::Owned(release_callback.release()));
+  resource->read_lock_fences_enabled = read_lock_fences_enabled;
+  resource->buffer_format = buffer_format;
+  resource->is_overlay_candidate = mailbox.is_overlay_candidate();
+#if defined(OS_ANDROID)
+  resource->is_backed_by_surface_texture =
+      mailbox.is_backed_by_surface_texture();
+  resource->wants_promotion_hint = mailbox.wants_promotion_hint();
+  if (resource->wants_promotion_hint)
+    wants_promotion_hints_set_.insert(id);
+#endif
+  resource->color_space = mailbox.color_space();
+
+  return id;
+}
+
+viz::ResourceId LayerTreeResourceProvider::CreateResourceFromTextureMailbox(
+    const viz::TextureMailbox& mailbox,
+    std::unique_ptr<viz::SingleReleaseCallback> release_callback,
+    bool read_lock_fences_enabled) {
+  return CreateResourceFromTextureMailbox(mailbox, std::move(release_callback),
+                                          read_lock_fences_enabled,
+                                          gfx::BufferFormat::RGBA_8888);
+}
+
+viz::ResourceId LayerTreeResourceProvider::CreateResourceFromTextureMailbox(
+    const viz::TextureMailbox& mailbox,
+    std::unique_ptr<viz::SingleReleaseCallback> release_callback) {
+  return CreateResourceFromTextureMailbox(mailbox, std::move(release_callback),
+                                          false);
 }
 
 gpu::SyncToken LayerTreeResourceProvider::GetSyncTokenForResources(
@@ -255,6 +316,9 @@ viz::ResourceId LayerTreeResourceProvider::ImportResource(
     const viz::TransferableResource& resource,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  // This field is only for LayerTreeResourceProvider-created resources.
+  DCHECK(!resource.read_lock_fences_enabled);
+
   viz::ResourceId id = next_id_++;
   auto result = imported_resources_.emplace(
       id, ImportedResource(id, resource, std::move(release_callback)));
@@ -289,6 +353,10 @@ void LayerTreeResourceProvider::TransferResource(
   resource->size = source->size;
   resource->read_lock_fences_enabled = source->read_lock_fences_enabled;
   resource->is_overlay_candidate = source->is_overlay_candidate;
+#if defined(OS_ANDROID)
+  resource->is_backed_by_surface_texture = source->is_backed_by_surface_texture;
+  resource->wants_promotion_hint = source->wants_promotion_hint;
+#endif
   resource->color_space = source->color_space;
 
   if (source->type == viz::ResourceType::kBitmap) {

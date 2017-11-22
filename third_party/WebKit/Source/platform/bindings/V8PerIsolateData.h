@@ -100,6 +100,7 @@ class PLATFORM_EXPORT V8PerIsolateData {
   };
 
   static v8::Isolate* Initialize(WebTaskRunner*,
+                                 const intptr_t* reference_table,
                                  V8ContextSnapshotMode);
 
   static V8PerIsolateData* From(v8::Isolate* isolate) {
@@ -235,8 +236,9 @@ class PLATFORM_EXPORT V8PerIsolateData {
 
  private:
   V8PerIsolateData(WebTaskRunner*,
+                   const intptr_t* reference_table,
                    V8ContextSnapshotMode);
-  V8PerIsolateData();
+  explicit V8PerIsolateData(const intptr_t* reference_table);
   ~V8PerIsolateData();
 
   // A really simple hash function, which makes lookups faster. The set of

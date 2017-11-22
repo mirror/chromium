@@ -102,7 +102,7 @@ class NET_EXPORT NetworkDelegate {
   bool CanGetCookies(const URLRequest& request,
                      const CookieList& cookie_list);
   bool CanSetCookie(const URLRequest& request,
-                    const net::CanonicalCookie& cookie,
+                    const std::string& cookie_line,
                     CookieOptions* options);
   bool CanAccessFile(const URLRequest& request,
                      const base::FilePath& original_path,
@@ -276,7 +276,7 @@ class NET_EXPORT NetworkDelegate {
   // to the cookie. This method will never be invoked when
   // LOAD_DO_NOT_SAVE_COOKIES is specified.
   virtual bool OnCanSetCookie(const URLRequest& request,
-                              const net::CanonicalCookie& cookie,
+                              const std::string& cookie_line,
                               CookieOptions* options) = 0;
 
   // Called when a file access is attempted to allow the network delegate to

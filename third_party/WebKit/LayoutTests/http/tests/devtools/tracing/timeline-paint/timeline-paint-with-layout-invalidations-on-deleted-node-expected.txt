@@ -1,10 +1,11 @@
 Tests the Timeline API instrumentation of layout invalidations on a deleted node.
 
 
+
 Running: testLocalFrame
 paint invalidations[
     {
-        cause : {reason: Inline CSS style declaration was mutated, stackTrace: test://evaluations/0/timeline-paint-with-layout-invalidations-on-deleted-node.js:17}
+        cause : {reason: Inline CSS style declaration was mutated, stackTrace: .../devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html:9}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -15,7 +16,7 @@ paint invalidations[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Inline CSS style declaration was mutated, stackTrace: test://evaluations/0/timeline-paint-with-layout-invalidations-on-deleted-node.js:19}
+        cause : {reason: Inline CSS style declaration was mutated, stackTrace: .../devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html:11}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -26,7 +27,7 @@ paint invalidations[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Style changed, stackTrace: test://evaluations/0/timeline-paint-with-layout-invalidations-on-deleted-node.js:20}
+        cause : {reason: Style changed, stackTrace: .../devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html:12}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -37,7 +38,7 @@ paint invalidations[
         type : "LayoutInvalidationTracking"
     }
     {
-        cause : {reason: Removed from layout, stackTrace: test://evaluations/0/timeline-paint-with-layout-invalidations-on-deleted-node.js:21}
+        cause : {reason: Removed from layout, stackTrace: .../devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html:13}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -48,7 +49,7 @@ paint invalidations[
         type : "LayoutInvalidationTracking"
     }
     {
-        cause : {reason: Removed from layout, stackTrace: test://evaluations/0/timeline-paint-with-layout-invalidations-on-deleted-node.js:21}
+        cause : {reason: Removed from layout, stackTrace: .../devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html:13}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -63,7 +64,7 @@ paint invalidations[
 Running: testSubframe
 second paint invalidations[
     {
-        cause : {reason: Inline CSS style declaration was mutated, stackTrace: test://evaluations/0/timeline-paint-with-layout-invalidations-on-deleted-node.js:28}
+        cause : {reason: Inline CSS style declaration was mutated, stackTrace: .../devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html:20}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -74,7 +75,7 @@ second paint invalidations[
         type : "StyleRecalcInvalidationTracking"
     }
     {
-        cause : {reason: Style changed, stackTrace: test://evaluations/0/timeline-paint-with-layout-invalidations-on-deleted-node.js:29}
+        cause : {reason: Style changed, stackTrace: .../devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html:21}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined
@@ -85,7 +86,7 @@ second paint invalidations[
         type : "LayoutInvalidationTracking"
     }
     {
-        cause : {reason: Removed from layout, stackTrace: test://evaluations/0/timeline-paint-with-layout-invalidations-on-deleted-node.js:30}
+        cause : {reason: Removed from layout, stackTrace: .../devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.html:22}
         changedAttribute : undefined
         changedClass : undefined
         changedId : undefined

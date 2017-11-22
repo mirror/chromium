@@ -64,17 +64,15 @@ class Ui : public BrowserUiInterface {
   void SetLoadProgress(float progress) override;
   void SetIsExiting() override;
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) override;
-  void SetVideoCaptureEnabled(bool enabled) override;
-  void SetScreenCaptureEnabled(bool enabled) override;
-  void SetAudioCaptureEnabled(bool enabled) override;
-  void SetBluetoothConnected(bool enabled) override;
-  void SetLocationAccess(bool enabled) override;
+  void SetVideoCapturingIndicator(bool enabled) override;
+  void SetScreenCapturingIndicator(bool enabled) override;
+  void SetAudioCapturingIndicator(bool enabled) override;
+  void SetBluetoothConnectedIndicator(bool enabled) override;
+  void SetLocationAccessIndicator(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
-  void SetOmniboxSuggestions(
-      std::unique_ptr<OmniboxSuggestions> suggestions) override;
 
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
@@ -94,7 +92,7 @@ class Ui : public BrowserUiInterface {
   void OnContentBoundsChanged(int width, int height);
   void OnPlatformControllerInitialized(PlatformController* controller);
 
-  Model* model_for_test() { return model_.get(); }
+  void SetOmniboxSuggestions(std::unique_ptr<OmniboxSuggestions> suggestions);
 
  private:
   UiBrowserInterface* browser_;

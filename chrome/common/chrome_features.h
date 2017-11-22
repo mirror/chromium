@@ -118,7 +118,6 @@ extern const base::Feature kExperimentalKeyboardLockUI;
 extern const base::Feature kVrBrowsing;
 #endif
 #if BUILDFLAG(ENABLE_VR)
-extern const base::Feature kVrBrowserKeyboard;
 extern const base::Feature kVrBrowsingExperimentalFeatures;
 extern const base::Feature kVrBrowsingExperimentalRendering;
 #endif
@@ -254,7 +253,7 @@ extern const base::Feature kSiteNotificationChannels;
 #endif
 
 #if defined(OS_CHROMEOS)
-extern const base::Feature kNativeSmb;
+extern const base::Feature kNativeSamba;
 #endif
 
 extern const base::Feature kSoundContentSetting;

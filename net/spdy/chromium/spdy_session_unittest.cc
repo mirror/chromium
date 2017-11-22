@@ -347,7 +347,9 @@ TEST_F(SpdySessionTest, GoAwayImmediatelyWithNoActiveStreams) {
   AddSSLSocketData();
 
   CreateNetworkSession();
-  CreateSpdySession();
+
+  session_ = TryCreateSpdySessionExpectingFailure(
+      http_session_.get(), key_, ERR_CONNECTION_CLOSED, NetLogWithSource());
   base::RunLoop().RunUntilIdle();
 
   EXPECT_FALSE(session_);

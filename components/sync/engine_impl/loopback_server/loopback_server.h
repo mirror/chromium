@@ -113,8 +113,8 @@ class LoopbackServer {
   bool IsChild(const std::string& id, const std::string& potential_parent_id);
 
   // Creates and saves tombstones for all children of the entity with the given
-  // |parent_id|. A tombstone is not created for the entity itself.
-  void DeleteChildren(const std::string& parent_id);
+  // |id|. A tombstone is not created for the entity itself.
+  void DeleteChildren(const std::string& id);
 
   // Updates the |entity| to a new version and increments the version counter
   // that the server uses to assign versions.

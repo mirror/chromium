@@ -209,6 +209,21 @@ void ChildFrameCompositingHelper::UpdateWebLayer(
   web_layer_ = std::move(layer);
 }
 
+void ChildFrameCompositingHelper::CheckSizeAndAdjustLayerProperties(
+    const viz::SurfaceInfo& surface_info,
+    cc::Layer* layer) {
+  if (last_surface_size_in_pixels_ == surface_info.size_in_pixels())
+    return;
+
+  last_surface_size_in_pixels_ = surface_info.size_in_pixels();
+  // The container size is in DIP, so is the layer size.
+  // Buffer size is in physical pixels, so we need to adjust
+  // it by the device scale factor.
+  gfx::Size device_scale_adjusted_size = gfx::ScaleToFlooredSize(
+      surface_info.size_in_pixels(), 1.0f / surface_info.device_scale_factor());
+  layer->SetBounds(device_scale_adjusted_size);
+}
+
 void ChildFrameCompositingHelper::OnContainerDestroy() {
   UpdateWebLayer(nullptr);
 }
@@ -246,19 +261,18 @@ void ChildFrameCompositingHelper::ChildFrameGone() {
   UpdateWebLayer(std::move(layer));
 }
 
-void ChildFrameCompositingHelper::SetPrimarySurfaceId(
-    const viz::SurfaceId& surface_id,
-    const gfx::Size& frame_size_in_dip) {
-  if (last_primary_surface_id_ == surface_id)
+void ChildFrameCompositingHelper::SetPrimarySurfaceInfo(
+    const viz::SurfaceInfo& surface_info) {
+  if (last_primary_surface_id_ == surface_info.id())
     return;
 
-  last_primary_surface_id_ = surface_id;
+  last_primary_surface_id_ = surface_info.id();
 
   surface_layer_ = cc::SurfaceLayer::Create(surface_reference_factory_);
   surface_layer_->SetMasksToBounds(true);
   surface_layer_->SetDefaultBackgroundColor(SK_ColorTRANSPARENT);
 
-  surface_layer_->SetPrimarySurfaceId(surface_id);
+  surface_layer_->SetPrimarySurfaceInfo(surface_info);
   surface_layer_->SetFallbackSurfaceId(fallback_surface_id_);
 
   std::unique_ptr<cc_blink::WebLayerImpl> layer(
@@ -271,19 +285,18 @@ void ChildFrameCompositingHelper::SetPrimarySurfaceId(
 
   UpdateVisibility(true);
 
-  static_cast<cc_blink::WebLayerImpl*>(web_layer_.get())
-      ->layer()
-      ->SetBounds(frame_size_in_dip);
+  CheckSizeAndAdjustLayerProperties(
+      surface_info,
+      static_cast<cc_blink::WebLayerImpl*>(web_layer_.get())->layer());
 }
 
-void ChildFrameCompositingHelper::SetFallbackSurfaceId(
-    const viz::SurfaceId& surface_id,
-    const gfx::Size& frame_size_in_dip,
+void ChildFrameCompositingHelper::SetFallbackSurfaceInfo(
+    const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
-  if (fallback_surface_id_ == surface_id)
+  if (fallback_surface_id_ == surface_info.id())
     return;
 
-  fallback_surface_id_ = surface_id;
+  fallback_surface_id_ = surface_info.id();
   // The RWHV creates a destruction dependency on the surface that needs to be
   // satisfied. The reference factory will satisfy it when a new reference has
   // been created.
@@ -300,11 +313,11 @@ void ChildFrameCompositingHelper::SetFallbackSurfaceId(
   }
 
   if (!surface_layer_) {
-    SetPrimarySurfaceId(surface_id, frame_size_in_dip);
+    SetPrimarySurfaceInfo(surface_info);
     return;
   }
 
-  surface_layer_->SetFallbackSurfaceId(surface_id);
+  surface_layer_->SetFallbackSurfaceId(surface_info.id());
 }
 
 void ChildFrameCompositingHelper::UpdateVisibility(bool visible) {

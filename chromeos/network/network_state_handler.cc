@@ -6,14 +6,14 @@
 
 #include <stddef.h>
 
-#include <limits>
 #include <memory>
-#include <utility>
 
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/format_macros.h"
 #include "base/guid.h"
+#include "base/json/json_string_value_serializer.h"
+#include "base/json/json_writer.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -61,6 +61,13 @@ std::string GetLogName(const ManagedState* state) {
     return "None";
   return base::StringPrintf("%s (%s)", state->name().c_str(),
                             state->path().c_str());
+}
+
+std::string ValueAsString(const base::Value& value) {
+  std::string vstr;
+  base::JSONWriter::WriteWithOptions(
+      value, base::JSONWriter::OPTIONS_OMIT_BINARY_VALUES, &vstr);
+  return vstr.empty() ? "''" : vstr;
 }
 
 bool ShouldIncludeNetworkInList(const NetworkState* network_state,
@@ -310,11 +317,10 @@ const NetworkState* NetworkStateHandler::DefaultNetwork() const {
 }
 
 const NetworkState* NetworkStateHandler::ConnectedNetworkByType(
-    const NetworkTypePattern& type) {
-  if (!network_list_sorted_)
-    SortNetworkList();  // Sort to ensure visible networks are listed first.
-
+    const NetworkTypePattern& type) const {
   const NetworkState* connected_network = nullptr;
+
+  // Active networks are always listed first by Shill so no need to sort.
   for (auto iter = network_list_.begin(); iter != network_list_.end(); ++iter) {
     const NetworkState* network = (*iter)->AsNetworkState();
     DCHECK(network);
@@ -431,7 +437,7 @@ const NetworkState* NetworkStateHandler::FirstNetworkByType(
 }
 
 std::string NetworkStateHandler::FormattedHardwareAddressForType(
-    const NetworkTypePattern& type) {
+    const NetworkTypePattern& type) const {
   const NetworkState* network = ConnectedNetworkByType(type);
   if (network && network->type() == kTypeTether) {
     // If this is a Tether network, get the MAC address corresponding to that
@@ -518,7 +524,7 @@ void NetworkStateHandler::AppendTetherNetworksToList(bool get_active,
                                                      size_t limit,
                                                      NetworkStateList* list) {
   DCHECK(list);
-  DCHECK_NE(0U, limit);
+  DCHECK(limit != 0);
   if (!IsTechnologyEnabled(NetworkTypePattern::Tether()))
     return;
 
@@ -1143,47 +1149,51 @@ void NetworkStateHandler::UpdateNetworkServiceProperty(
   if (!changed)
     return;
 
-  // If added to a Profile, request a full update so that a NetworkState
-  // gets created.
-  bool request_update =
-      prev_profile_path.empty() && !network->profile_path().empty();
-
-  bool notify_default = network->path() == default_network_path_;
-
   if (key == shill::kStateProperty || key == shill::kVisibleProperty) {
     network_list_sorted_ = false;
     if (ConnectionStateChanged(network, prev_connection_state,
                                prev_is_captive_portal)) {
-      if (OnNetworkConnectionStateChanged(network))
-        notify_default = false;  // already notified
+      OnNetworkConnectionStateChanged(network);
       // If the connection state changes, other properties such as IPConfig
       // may have changed, so request a full update.
-      request_update = true;
+      RequestUpdateForNetwork(service_path);
+    }
+  } else {
+    std::string value_str;
+    value.GetAsString(&value_str);
+    // Some property changes are noisy and not interesting:
+    // * Wifi SignalStrength
+    // * WifiFrequencyList updates
+    // * Device property changes to "/" (occurs before a service is removed)
+    if (key != shill::kSignalStrengthProperty &&
+        key != shill::kWifiFrequencyListProperty &&
+        (key != shill::kDeviceProperty || value_str != "/")) {
+      std::string log_event = "NetworkPropertyUpdated";
+      // Trigger a default network update for interesting changes only.
+      if (network->path() == default_network_path_) {
+        NotifyDefaultNetworkChanged(network);
+        log_event = "Default" + log_event;
+      }
+      // Log event.
+      std::string detail = network->name() + "." + key;
+      detail += " = " + ValueAsString(value);
+      device_event_log::LogLevel log_level;
+      if (key == shill::kErrorProperty || key == shill::kErrorDetailsProperty) {
+        log_level = device_event_log::LOG_LEVEL_ERROR;
+      } else {
+        log_level = device_event_log::LOG_LEVEL_EVENT;
+      }
+      NET_LOG_LEVEL(log_level, log_event, detail);
     }
   }
 
-  if (request_update)
-    RequestUpdateForNetwork(service_path);
-
-  std::string value_str;
-  value.GetAsString(&value_str);
-  if (key == shill::kSignalStrengthProperty || key == shill::kWifiBSsid ||
-      key == shill::kWifiFrequency ||
-      key == shill::kWifiFrequencyListProperty ||
-      (key == shill::kDeviceProperty && value_str == "/")) {
-    // Uninteresting update. This includes 'Device' property changes to "/"
-    // (occurs before just a service is removed).
-    // For non active networks do not log or send any notifications.
-    if (!network->IsConnectingOrConnected())
-      return;
-    // Otherwise do not trigger 'default network changed'.
-    notify_default = false;
-  }
-
-  LogPropertyUpdated(network, key, value);
-  if (notify_default)
-    NotifyDefaultNetworkChanged(network);
+  // All property updates signal 'NetworkPropertiesUpdated'.
   NotifyNetworkPropertiesUpdated(network);
+
+  // If added to a Profile, request a full update so that a NetworkState
+  // gets created.
+  if (prev_profile_path.empty() && !network->profile_path().empty())
+    RequestUpdateForNetwork(service_path);
 }
 
 void NetworkStateHandler::UpdateDeviceProperty(const std::string& device_path,
@@ -1196,7 +1206,10 @@ void NetworkStateHandler::UpdateDeviceProperty(const std::string& device_path,
   if (!device->PropertyChanged(key, value))
     return;
 
-  LogPropertyUpdated(device, key, value);
+  std::string detail = device->name() + "." + key;
+  detail += " = " + ValueAsString(value);
+  NET_LOG_EVENT("DevicePropertyUpdated", detail);
+
   NotifyDeviceListChanged();
   NotifyDevicePropertiesUpdated(device);
 
@@ -1304,7 +1317,9 @@ void NetworkStateHandler::SortNetworkList() {
       cellular.push_back(std::move(*iter));
       continue;
     }
-    if (network->IsConnectingOrConnected()) {
+    // Ethernet networks are always considered active.
+    if (network->IsConnectingOrConnected() ||
+        NetworkTypePattern::Ethernet().MatchesType(network->type())) {
       active.push_back(std::move(*iter));
       continue;
     }
@@ -1558,7 +1573,7 @@ NetworkStateHandler::ManagedStateList* NetworkStateHandler::GetManagedList(
   return nullptr;
 }
 
-bool NetworkStateHandler::OnNetworkConnectionStateChanged(
+void NetworkStateHandler::OnNetworkConnectionStateChanged(
     NetworkState* network) {
   SCOPED_NET_LOG_IF_SLOW();
   DCHECK(network);
@@ -1590,7 +1605,6 @@ bool NetworkStateHandler::OnNetworkConnectionStateChanged(
     observer.NetworkConnectionStateChanged(network);
   if (notify_default)
     NotifyDefaultNetworkChanged(network);
-  return notify_default;
 }
 
 void NetworkStateHandler::NotifyDefaultNetworkChanged(
@@ -1629,23 +1643,6 @@ void NetworkStateHandler::NotifyScanCompleted(const DeviceState* device) {
   NET_LOG_DEBUG("NOTIFY:ScanCompleted", GetLogName(device));
   for (auto& observer : observers_)
     observer.ScanCompleted(device);
-}
-
-void NetworkStateHandler::LogPropertyUpdated(const ManagedState* state,
-                                             const std::string& key,
-                                             const base::Value& value) {
-  std::string type_str =
-      state->managed_type() == ManagedState::MANAGED_TYPE_DEVICE
-          ? "Device"
-          : state->path() == default_network_path_ ? "DefaultNetwork"
-                                                   : "Network";
-  device_event_log::LogLevel log_level =
-      (key == shill::kErrorProperty || key == shill::kErrorDetailsProperty)
-          ? device_event_log::LOG_LEVEL_ERROR
-          : device_event_log::LOG_LEVEL_EVENT;
-  DEVICE_LOG(::device_event_log::LOG_TYPE_NETWORK, log_level)
-      << type_str << "PropertyUpdated: " << state->name() << "." << key << " = "
-      << value;
 }
 
 std::string NetworkStateHandler::GetTechnologyForType(

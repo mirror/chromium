@@ -154,8 +154,8 @@ inline EBorderStyle CSSIdentifierValue::ConvertTo() const {
 template <>
 inline OutlineIsAuto CSSIdentifierValue::ConvertTo() const {
   if (value_id_ == CSSValueAuto)
-    return OutlineIsAuto::kOn;
-  return OutlineIsAuto::kOff;
+    return kOutlineIsAutoOn;
+  return kOutlineIsAutoOff;
 }
 
 template <>
@@ -1815,19 +1815,19 @@ template <>
 inline CSSIdentifierValue::CSSIdentifierValue(SnapAxis axis)
     : CSSValue(kIdentifierClass) {
   switch (axis) {
-    case SnapAxis::kX:
+    case kSnapAxisX:
       value_id_ = CSSValueX;
       break;
-    case SnapAxis::kY:
+    case kSnapAxisY:
       value_id_ = CSSValueY;
       break;
-    case SnapAxis::kBlock:
+    case kSnapAxisBlock:
       value_id_ = CSSValueBlock;
       break;
-    case SnapAxis::kInline:
+    case kSnapAxisInline:
       value_id_ = CSSValueInline;
       break;
-    case SnapAxis::kBoth:
+    case kSnapAxisBoth:
       value_id_ = CSSValueBoth;
       break;
   }
@@ -1837,20 +1837,20 @@ template <>
 inline SnapAxis CSSIdentifierValue::ConvertTo() const {
   switch (GetValueID()) {
     case CSSValueX:
-      return SnapAxis::kX;
+      return kSnapAxisX;
     case CSSValueY:
-      return SnapAxis::kY;
+      return kSnapAxisY;
     case CSSValueBlock:
-      return SnapAxis::kBlock;
+      return kSnapAxisBlock;
     case CSSValueInline:
-      return SnapAxis::kInline;
+      return kSnapAxisInline;
     case CSSValueBoth:
-      return SnapAxis::kBoth;
+      return kSnapAxisBoth;
     default:
       break;
   }
   NOTREACHED();
-  return SnapAxis::kBoth;
+  return kSnapAxisBoth;
 }
 
 template <>
@@ -1884,16 +1884,16 @@ template <>
 inline CSSIdentifierValue::CSSIdentifierValue(SnapAlignment alignment)
     : CSSValue(kIdentifierClass) {
   switch (alignment) {
-    case SnapAlignment::kNone:
+    case kSnapAlignmentNone:
       value_id_ = CSSValueNone;
       break;
-    case SnapAlignment::kStart:
+    case kSnapAlignmentStart:
       value_id_ = CSSValueStart;
       break;
-    case SnapAlignment::kEnd:
+    case kSnapAlignmentEnd:
       value_id_ = CSSValueEnd;
       break;
-    case SnapAlignment::kCenter:
+    case kSnapAlignmentCenter:
       value_id_ = CSSValueCenter;
       break;
   }
@@ -1903,18 +1903,18 @@ template <>
 inline SnapAlignment CSSIdentifierValue::ConvertTo() const {
   switch (GetValueID()) {
     case CSSValueNone:
-      return SnapAlignment::kNone;
+      return kSnapAlignmentNone;
     case CSSValueStart:
-      return SnapAlignment::kStart;
+      return kSnapAlignmentStart;
     case CSSValueEnd:
-      return SnapAlignment::kEnd;
+      return kSnapAlignmentEnd;
     case CSSValueCenter:
-      return SnapAlignment::kCenter;
+      return kSnapAlignmentCenter;
     default:
       break;
   }
   NOTREACHED();
-  return SnapAlignment::kNone;
+  return kSnapAlignmentNone;
 }
 
 template <>

@@ -23,6 +23,7 @@ namespace IPC {
 class Message;
 }
 
+namespace chrome {
 class MonitorFinder;
 
 class PepperFlashDRMHost : public ppapi::host::ResourceHost {
@@ -56,5 +57,7 @@ class PepperFlashDRMHost : public ppapi::host::ResourceHost {
 
   DISALLOW_COPY_AND_ASSIGN(PepperFlashDRMHost);
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_BROWSER_RENDERER_HOST_PEPPER_PEPPER_FLASH_DRM_HOST_H_

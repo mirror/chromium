@@ -245,6 +245,7 @@ class CONTENT_EXPORT BrowserMainLoop {
 
   void CreateAudioManager();
 
+  static bool IsUsingMus();
   bool UsingInProcessGpu() const;
 
   void InitializeMemoryManagementComponent();

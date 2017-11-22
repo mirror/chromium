@@ -54,7 +54,6 @@
 #include "chrome/browser/intranet_redirect_detector.h"
 #include "chrome/browser/io_thread.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
-#include "chrome/browser/lifetime/switch_utils.h"
 #include "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/chrome_metrics_services_manager_client.h"
@@ -87,6 +86,7 @@
 #include "chrome/common/extensions/extension_process_policy.h"
 #include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/common/switch_utils.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/installer/util/google_update_settings.h"
 #include "components/component_updater/component_updater_service.h"
@@ -1047,7 +1047,7 @@ void BrowserProcessImpl::CreateLocalState() {
   auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
 
   // Register local state preferences.
-  RegisterLocalState(pref_registry.get());
+  chrome::RegisterLocalState(pref_registry.get());
 
   auto delegate = pref_service_factory_->CreateDelegate();
   delegate->InitPrefRegistry(pref_registry.get());

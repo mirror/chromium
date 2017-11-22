@@ -116,9 +116,6 @@ class TestVoiceInteractionController
   void NotifySetupCompleted(bool completed) override {
     voice_interaction_setup_completed_ = completed;
   }
-  void NotifyFeatureAllowed(ash::mojom::AssistantAllowedState state) override {
-    assistant_allowed_state_ = state;
-  }
 
   ash::mojom::VoiceInteractionState voice_interaction_state() const {
     return voice_interaction_state_;
@@ -132,9 +129,6 @@ class TestVoiceInteractionController
   bool voice_interaction_setup_completed() const {
     return voice_interaction_setup_completed_;
   }
-  ash::mojom::AssistantAllowedState assistant_allowed_state() const {
-    return assistant_allowed_state_;
-  }
 
  private:
   ash::mojom::VoiceInteractionState voice_interaction_state_ =
@@ -142,8 +136,6 @@ class TestVoiceInteractionController
   bool voice_interaction_settings_enabled_ = false;
   bool voice_interaction_context_enabled_ = false;
   bool voice_interaction_setup_completed_ = false;
-  ash::mojom::AssistantAllowedState assistant_allowed_state_ =
-      ash::mojom::AssistantAllowedState::ALLOWED;
 
   mojo::Binding<ash::mojom::VoiceInteractionController> binding_;
 
@@ -441,13 +433,6 @@ TEST_F(ArcVoiceInteractionFrameworkServiceTest,
   FlushVoiceInteractionControllerMojo();
   EXPECT_EQ(controller->voice_interaction_state(),
             ash::mojom::VoiceInteractionState::RUNNING);
-
-  // Send the signal to set the assistant allowed state.
-  controller_client->NotifyFeatureAllowed(
-      ash::mojom::AssistantAllowedState::DISALLOWED_BY_ARC_POLICY);
-  FlushVoiceInteractionControllerMojo();
-  EXPECT_EQ(controller->assistant_allowed_state(),
-            ash::mojom::AssistantAllowedState::DISALLOWED_BY_ARC_POLICY);
 }
 
 }  // namespace arc

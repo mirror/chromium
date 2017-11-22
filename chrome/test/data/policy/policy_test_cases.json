@@ -3305,9 +3305,6 @@
     ]
   },
 
-  "DeviceLoginScreenAutoSelectCertificateForUrls": {
-  },
-
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {

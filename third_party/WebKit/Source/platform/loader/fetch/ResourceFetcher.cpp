@@ -1444,8 +1444,8 @@ bool ResourceFetcher::StartLoad(Resource* resource) {
                                             resource->Options().initiator_info);
 
     if (Context().GetFrameScheduler()) {
-      WebScopedVirtualTimePauser virtual_time_pauser =
-          Context().GetFrameScheduler()->CreateWebScopedVirtualTimePauser();
+      ScopedVirtualTimePauser virtual_time_pauser =
+          Context().GetFrameScheduler()->CreateScopedVirtualTimePauser();
       virtual_time_pauser.PauseVirtualTime(true);
       resource->VirtualTimePauser() = std::move(virtual_time_pauser);
     }

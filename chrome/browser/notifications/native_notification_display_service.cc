@@ -81,8 +81,7 @@ void NativeNotificationDisplayService::Display(
                                   profile_->IsOffTheRecord(), notification,
                                   std::move(metadata));
     NotificationHandler* handler = GetNotificationHandler(notification_type);
-    if (handler)
-      handler->OnShow(profile_, notification.id());
+    handler->OnShow(profile_, notification.id());
   } else if (message_center_display_service_) {
     message_center_display_service_->Display(notification_type, notification,
                                              std::move(metadata));

@@ -150,57 +150,6 @@ def DefaultPages(base_name):
       revision=7),
 
     PixelTestPage(
-      'pixel_webgl_premultiplied_alpha_false.html',
-      base_name + '_WebGL_PremultipliedAlpha_False',
-      test_rect=[0, 0, 150, 150],
-      revision=0, # This is not used.
-      expected_colors=[
-        # TODO(kbr): if this works, then factor it out so it applies
-        # to all pixel tests that use programmatic expectations.
-        {
-          "comment": "scale factor overrides",
-          "scale_factor_overrides": [
-            {
-              "device_type": "Nexus 5",
-              "scale_factor": 1.105
-            },
-            {
-              "device_type": "Nexus 5X",
-              "scale_factor": 1.105
-            },
-            {
-              "device_type": "Nexus 6",
-              "scale_factor": 1.47436
-            },
-            {
-              "device_type": "Nexus 6P",
-              "scale_factor": 1.472
-            },
-            {
-              "device_type": "Nexus 9",
-              "scale_factor": 1.566
-            },
-            {
-              "comment": "NVIDIA Shield",
-              "device_type": "sb_na_wf",
-              "scale_factor": 1.226
-            }
-          ]
-        },
-        {
-          'comment': 'brown',
-          'location': [1, 1],
-          'size': [148, 148],
-          # This is the color on an NVIDIA based MacBook Pro if the
-          # sRGB profile's applied correctly.
-          'color': [102, 77, 0],
-          # This is the color if it isn't.
-          # 'color': [101, 76, 12],
-          'tolerance': 3
-        },
-      ]),
-
-    PixelTestPage(
       'pixel_webgl2_blitframebuffer_result_displayed.html',
       base_name + '_WebGL2_BlitFramebuffer_Result_Displayed',
       test_rect=[0, 0, 200, 200],
@@ -443,14 +392,14 @@ def ExperimentalCanvasFeaturesPages(base_name):
       'pixel_offscreenCanvas_transfer_after_style_resize.html',
       base_name + '_OffscreenCanvasTransferAfterStyleResize',
       test_rect=[0, 0, 350, 350],
-      revision=3,
+      revision=2,
       browser_args=browser_args),
 
     PixelTestPage(
       'pixel_offscreenCanvas_transfer_before_style_resize.html',
       base_name + '_OffscreenCanvasTransferBeforeStyleResize',
       test_rect=[0, 0, 350, 350],
-      revision=3,
+      revision=2,
       browser_args=browser_args),
 
     PixelTestPage(
@@ -471,14 +420,14 @@ def ExperimentalCanvasFeaturesPages(base_name):
       'pixel_offscreenCanvas_webgl_commit_main.html',
       base_name + '_OffscreenCanvasWebGLDefault',
       test_rect=[0, 0, 360, 200],
-      revision=6,
+      revision=5,
       browser_args=browser_args),
 
     PixelTestPage(
       'pixel_offscreenCanvas_webgl_commit_worker.html',
       base_name + '_OffscreenCanvasWebGLDefaultWorker',
       test_rect=[0, 0, 360, 200],
-      revision=6,
+      revision=5,
       browser_args=browser_args),
 
     PixelTestPage(
@@ -499,14 +448,14 @@ def ExperimentalCanvasFeaturesPages(base_name):
       'pixel_offscreenCanvas_2d_commit_main.html',
       base_name + '_OffscreenCanvasAccelerated2D',
       test_rect=[0, 0, 360, 200],
-      revision=8,
+      revision=7,
       browser_args=browser_args),
 
     PixelTestPage(
       'pixel_offscreenCanvas_2d_commit_worker.html',
       base_name + '_OffscreenCanvasAccelerated2DWorker',
       test_rect=[0, 0, 360, 200],
-      revision=8,
+      revision=7,
       browser_args=browser_args),
 
     PixelTestPage(
@@ -527,28 +476,28 @@ def ExperimentalCanvasFeaturesPages(base_name):
       'pixel_offscreenCanvas_2d_commit_main.html',
       base_name + '_OffscreenCanvasUnaccelerated2DGPUCompositing',
       test_rect=[0, 0, 360, 200],
-      revision=9,
+      revision=8,
       browser_args=browser_args + ['--disable-accelerated-2d-canvas']),
 
     PixelTestPage(
       'pixel_offscreenCanvas_2d_commit_worker.html',
       base_name + '_OffscreenCanvasUnaccelerated2DGPUCompositingWorker',
       test_rect=[0, 0, 360, 200],
-      revision=9,
+      revision=8,
       browser_args=browser_args + ['--disable-accelerated-2d-canvas']),
 
     PixelTestPage(
       'pixel_offscreenCanvas_2d_resize_on_worker.html',
       base_name + '_OffscreenCanvas2DResizeOnWorker',
       test_rect=[0, 0, 200, 200],
-      revision=4,
+      revision=3,
       browser_args=browser_args),
 
     PixelTestPage(
       'pixel_offscreenCanvas_webgl_resize_on_worker.html',
       base_name + '_OffscreenCanvasWebglResizeOnWorker',
       test_rect=[0, 0, 200, 200],
-      revision=4,
+      revision=3,
       browser_args=browser_args),
 
     PixelTestPage(

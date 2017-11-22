@@ -436,12 +436,14 @@ class BlinkPerfCanvas(_BlinkPerfBenchmark):
         self.DisableStory(
             'draw-static-canvas-2d-to-hw-accelerated-canvas-2d.html',
             [story.expectations.ANDROID_NEXUS5,
-             story.expectations.ANDROID_NEXUS5X],
+             story.expectations.ANDROID_NEXUS5X,
+             story.expectations.ANDROID_WEBVIEW],
             'crbug.com/784540')
         self.DisableStory(
             'draw-dynamic-canvas-2d-to-hw-accelerated-canvas-2d.html',
             [story.expectations.ANDROID_NEXUS5,
-             story.expectations.ANDROID_NEXUS5X],
+             story.expectations.ANDROID_NEXUS5X,
+             story.expectations.ANDROID_WEBVIEW],
             'crbug.com/784540')
     return StoryExpectations()
 
@@ -455,7 +457,8 @@ class BlinkPerfDOM(_BlinkPerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing disabled.
+        self.DisableStory('select-long-word.html',
+            [story.expectations.ALL], 'crbug.com/783345')
     return StoryExpectations()
 
 

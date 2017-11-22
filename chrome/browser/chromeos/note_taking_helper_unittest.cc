@@ -211,6 +211,9 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
     DBusThreadManager::GetSetterForTesting()->SetSessionManagerClient(
         std::unique_ptr<SessionManagerClient>(session_manager_client_));
 
+    profile_manager_.reset(
+        new TestingProfileManager(TestingBrowserProcess::GetGlobal()));
+    ASSERT_TRUE(profile_manager_->SetUp());
     BrowserWithTestWindowTest::SetUp();
     InitExtensionService(profile());
   }
@@ -408,14 +411,21 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
 
   // BrowserWithTestWindowTest:
   TestingProfile* CreateProfile() override {
+    // Ensure that the profile created by BrowserWithTestWindowTest is
+    // registered with |profile_manager_|.
     auto prefs =
         base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-    RegisterUserProfilePrefs(prefs->registry());
+    chrome::RegisterUserProfilePrefs(prefs->registry());
     profile_prefs_ = prefs.get();
-    return profile_manager()->CreateTestingProfile(
+    return profile_manager_->CreateTestingProfile(
         kTestProfileName, std::move(prefs), base::ASCIIToUTF16("Test profile"),
         1 /*avatar_id*/, std::string() /*supervised_user_id*/,
         TestingProfile::TestingFactories());
+  }
+
+  void DestroyProfile(TestingProfile* profile) override {
+    profile_prefs_ = nullptr;
+    return profile_manager_->DeleteTestingProfile(kTestProfileName);
   }
 
   testing::AssertionResult PreferredAppMatches(Profile* profile,
@@ -478,6 +488,7 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
   std::vector<ChromeAppLaunchInfo> launched_chrome_apps_;
 
   arc::FakeIntentHelperInstance intent_helper_;
+  std::unique_ptr<TestingProfileManager> profile_manager_;
 
   // Pointer to the primary profile (returned by |profile()|) prefs - owned by
   // the profile.
@@ -936,9 +947,9 @@ TEST_P(NoteTakingHelperTest, AddProfileWithPlayStoreEnabled) {
   // this case: http://crbug.com/700554
   const char kSecondProfileName[] = "second-profile";
   auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-  RegisterUserProfilePrefs(prefs->registry());
+  chrome::RegisterUserProfilePrefs(prefs->registry());
   prefs->SetBoolean(arc::prefs::kArcEnabled, true);
-  profile_manager()->CreateTestingProfile(
+  profile_manager_->CreateTestingProfile(
       kSecondProfileName, std::move(prefs), base::ASCIIToUTF16("Second User"),
       1 /* avatar_id */, std::string() /* supervised_user_id */,
       TestingProfile::TestingFactories());
@@ -958,7 +969,7 @@ TEST_P(NoteTakingHelperTest, AddProfileWithPlayStoreEnabled) {
   EXPECT_TRUE(helper()->android_apps_received());
   EXPECT_EQ(2, observer.num_updates());
 
-  profile_manager()->DeleteTestingProfile(kSecondProfileName);
+  profile_manager_->DeleteTestingProfile(kSecondProfileName);
 }
 
 TEST_P(NoteTakingHelperTest, ListAndroidApps) {
@@ -1179,14 +1190,14 @@ TEST_P(NoteTakingHelperTest, NotifyObserverAboutChromeApps) {
   observer.reset_num_updates();
   const std::string kSecondProfileName = "second-profile";
   TestingProfile* second_profile =
-      profile_manager()->CreateTestingProfile(kSecondProfileName);
+      profile_manager_->CreateTestingProfile(kSecondProfileName);
   InitExtensionService(second_profile);
   EXPECT_EQ(0, observer.num_updates());
   InstallExtension(keep_extension.get(), second_profile);
   EXPECT_EQ(1, observer.num_updates());
   UninstallExtension(keep_extension.get(), second_profile);
   EXPECT_EQ(2, observer.num_updates());
-  profile_manager()->DeleteTestingProfile(kSecondProfileName);
+  profile_manager_->DeleteTestingProfile(kSecondProfileName);
 }
 
 TEST_P(NoteTakingHelperTest, NotifyObserverAboutPreferredAppChanges) {
@@ -1229,7 +1240,7 @@ TEST_P(NoteTakingHelperTest, NotifyObserverAboutPreferredAppChanges) {
   // Initialize secondary profile with a test app.
   const std::string kSecondProfileName = "second-profile";
   TestingProfile* second_profile =
-      profile_manager()->CreateTestingProfile(kSecondProfileName);
+      profile_manager_->CreateTestingProfile(kSecondProfileName);
   InitExtensionService(second_profile);
   scoped_refptr<const extensions::Extension>
       second_profile_prod_keep_extension =
@@ -1251,7 +1262,7 @@ TEST_P(NoteTakingHelperTest, NotifyObserverAboutPreferredAppChanges) {
             observer.preferred_app_updates());
   observer.clear_preferred_app_updates();
 
-  profile_manager()->DeleteTestingProfile(kSecondProfileName);
+  profile_manager_->DeleteTestingProfile(kSecondProfileName);
 }
 
 TEST_P(NoteTakingHelperTest,
@@ -1498,10 +1509,10 @@ TEST_P(NoteTakingHelperTest, LockScreenSupportInSecondaryProfile) {
 
   // Initialize secondary profile.
   auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-  RegisterUserProfilePrefs(prefs->registry());
+  chrome::RegisterUserProfilePrefs(prefs->registry());
   sync_preferences::TestingPrefServiceSyncable* profile_prefs = prefs.get();
   const std::string kSecondProfileName = "second-profile";
-  TestingProfile* second_profile = profile_manager()->CreateTestingProfile(
+  TestingProfile* second_profile = profile_manager_->CreateTestingProfile(
       kSecondProfileName, std::move(prefs), base::ASCIIToUTF16("Test profile"),
       1 /*avatar_id*/, std::string() /*supervised_user_id*/,
       TestingProfile::TestingFactories());
@@ -1589,7 +1600,7 @@ TEST_P(NoteTakingHelperTest, NoteTakingControllerClient) {
 
   const std::string kSecondProfileName = "second-profile";
   TestingProfile* second_profile =
-      profile_manager()->CreateTestingProfile(kSecondProfileName);
+      profile_manager_->CreateTestingProfile(kSecondProfileName);
   InitExtensionService(second_profile);
 
   SetNoteTakingClientProfile(second_profile);
@@ -1609,7 +1620,7 @@ TEST_P(NoteTakingHelperTest, NoteTakingControllerClient) {
   UninstallExtension(extension2.get(), second_profile);
   EXPECT_TRUE(has_note_taking_apps());
 
-  profile_manager()->DeleteTestingProfile(kSecondProfileName);
+  profile_manager_->DeleteTestingProfile(kSecondProfileName);
 }
 
 }  // namespace chromeos

@@ -1475,9 +1475,9 @@ WakeUpBudgetPool* RendererSchedulerImpl::GetWakeUpBudgetPoolForTesting() {
   return main_thread_only().wake_up_budget_pool;
 }
 
-base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
+void RendererSchedulerImpl::EnableVirtualTime() {
   if (main_thread_only().use_virtual_time)
-    return main_thread_only().initial_virtual_time;
+    return;
   main_thread_only().use_virtual_time = true;
   DCHECK(!virtual_time_domain_);
   main_thread_only().initial_virtual_time = tick_clock()->NowTicks();
@@ -1502,7 +1502,6 @@ base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
 
   if (main_thread_only().virtual_time_stopped)
     VirtualTimePaused();
-  return main_thread_only().initial_virtual_time;
 }
 
 void RendererSchedulerImpl::DisableVirtualTimeForTesting() {
@@ -2077,11 +2076,6 @@ void RendererSchedulerImpl::SetRendererProcessType(RendererProcessType type) {
   main_thread_only().process_type = type;
 }
 
-WebScopedVirtualTimePauser
-RendererSchedulerImpl::CreateWebScopedVirtualTimePauser() {
-  return WebScopedVirtualTimePauser(this);
-}
-
 void RendererSchedulerImpl::RegisterTimeDomain(TimeDomain* time_domain) {
   helper_.RegisterTimeDomain(time_domain);
 }
@@ -2173,7 +2167,7 @@ void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
   task_queue_throttler()->OnTaskRunTimeReported(queue, start, end);
 
   // TODO(altimin): Per-page metrics should also be considered.
-  main_thread_only().metrics_helper.RecordTaskMetrics(queue, task, start, end);
+  main_thread_only().metrics_helper.RecordTaskMetrics(queue, start, end);
 }
 
 void RendererSchedulerImpl::OnBeginNestedRunLoop() {

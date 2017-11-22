@@ -41,7 +41,7 @@ Polymer({
     },
   },
 
-  /** @private {?settings.ResetBrowserProxy} */
+  /** @private {!settings.ResetBrowserProxy} */
   browserProxy_: null,
 
   /**
@@ -87,12 +87,12 @@ Polymer({
 
   /** @private */
   showDialog_: function() {
-    if (!this.$.dialog.open)
-      this.$.dialog.showModal();
+    this.$.dialog.showModal();
     this.browserProxy_.onShowResetProfileDialog();
   },
 
-  show: function() {
+  /** @override */
+  attached: function() {
     this.isTriggered_ =
         settings.getCurrentRoute() == settings.routes.TRIGGERED_RESET_DIALOG;
     if (this.isTriggered_) {

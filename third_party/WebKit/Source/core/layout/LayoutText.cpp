@@ -302,14 +302,6 @@ void LayoutText::DeleteTextBoxes() {
   }
 }
 
-Optional<FloatPoint> LayoutText::GetUpperLeftCorner() const {
-  DCHECK(!IsBR());
-  if (!HasTextBoxes())
-    return WTF::nullopt;
-  return FloatPoint(LinesBoundingBox().X(),
-                    FirstTextBox()->Root().LineTop().ToFloat());
-}
-
 scoped_refptr<StringImpl> LayoutText::OriginalText() const {
   Node* e = GetNode();
   return (e && e->IsTextNode()) ? ToText(e)->DataImpl() : nullptr;
@@ -1970,8 +1962,6 @@ Optional<unsigned> LayoutText::CaretOffsetForPosition(
 }
 
 int LayoutText::CaretMinOffset() const {
-  DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
-
   if (auto* mapping = GetNGOffsetMapping()) {
     const Position first_position = PositionForCaretOffset(0);
     if (first_position.IsNull())
@@ -1994,8 +1984,6 @@ int LayoutText::CaretMinOffset() const {
 }
 
 int LayoutText::CaretMaxOffset() const {
-  DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
-
   if (auto* mapping = GetNGOffsetMapping()) {
     const Position last_position = PositionForCaretOffset(TextLength());
     if (last_position.IsNull())

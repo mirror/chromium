@@ -15,7 +15,8 @@ namespace ws {
 
 class TestServerWindowDelegate : public ServerWindowDelegate {
  public:
-  explicit TestServerWindowDelegate(VizHostProxy* viz_host_proxy);
+  explicit TestServerWindowDelegate(
+      viz::HostFrameSinkManager* host_frame_sink_manager);
   ~TestServerWindowDelegate() override;
 
   // GetRootWindowForDrawn() returns the first ServerWindow added by way of
@@ -27,13 +28,13 @@ class TestServerWindowDelegate : public ServerWindowDelegate {
 
  private:
   // ServerWindowDelegate:
-  VizHostProxy* GetVizHostProxy() override;
+  viz::HostFrameSinkManager* GetHostFrameSinkManager() override;
   ServerWindow* GetRootWindowForDrawn(const ServerWindow* window) override;
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info,
                                 ServerWindow* window) override;
 
   ServerWindow* root_window_ = nullptr;
-  VizHostProxy* viz_host_proxy_ = nullptr;
+  viz::HostFrameSinkManager* host_frame_sink_manager_ = nullptr;
   std::set<ServerWindow*> roots_;
 
   DISALLOW_COPY_AND_ASSIGN(TestServerWindowDelegate);

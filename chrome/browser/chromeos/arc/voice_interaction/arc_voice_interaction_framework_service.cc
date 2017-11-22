@@ -21,7 +21,6 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/task_scheduler/post_task.h"
-#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/highlighter_controller_client.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h"
@@ -40,7 +39,7 @@
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/arc_util.h"
-#include "components/arc/connection_holder.h"
+#include "components/arc/instance_holder.h"
 #include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -249,7 +248,7 @@ ArcVoiceInteractionFrameworkService::~ArcVoiceInteractionFrameworkService() {
   arc_bridge_service_->voice_interaction_framework()->RemoveObserver(this);
 }
 
-void ArcVoiceInteractionFrameworkService::OnConnectionReady() {
+void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
@@ -271,7 +270,7 @@ void ArcVoiceInteractionFrameworkService::OnConnectionReady() {
   highlighter_client_->Attach();
 }
 
-void ArcVoiceInteractionFrameworkService::OnConnectionClosed() {
+void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   binding_.Close();
   highlighter_client_->Detach();
@@ -351,6 +350,18 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
   voice_interaction_controller_client_->NotifyStatusChanged(state);
 }
 
+void ArcVoiceInteractionFrameworkService::OnMetalayerClosed() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  LOG(ERROR) << "Deprecated method called: "
+                "VoiceInteractionFrameworkHost.OnInstanceClosed";
+}
+
+void ArcVoiceInteractionFrameworkService::SetMetalayerEnabled(bool enabled) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  LOG(ERROR) << "Deprecated method called: "
+                "VoiceInteractionFrameworkHost.SetMetalayerEnabled";
+}
+
 void ArcVoiceInteractionFrameworkService::ShowMetalayer() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   NotifyMetalayerStatusChanged(true);
@@ -363,10 +374,6 @@ void ArcVoiceInteractionFrameworkService::HideMetalayer() {
 
 void ArcVoiceInteractionFrameworkService::OnArcPlayStoreEnabledChanged(
     bool enabled) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  voice_interaction_controller_client_->NotifyFeatureAllowed(
-      IsAssistantAllowedForProfile(Profile::FromBrowserContext(context_)));
-
   if (enabled)
     return;
 
@@ -383,8 +390,7 @@ void ArcVoiceInteractionFrameworkService::OnSessionStateChanged() {
   if (session_state != session_manager::SessionState::ACTIVE)
     return;
 
-  Profile* profile = Profile::FromBrowserContext(context_);
-  PrefService* prefs = profile->GetPrefs();
+  PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
   bool enabled = prefs->GetBoolean(prefs::kVoiceInteractionEnabled);
   voice_interaction_controller_client_->NotifySettingsEnabled(enabled);
 
@@ -394,9 +400,6 @@ void ArcVoiceInteractionFrameworkService::OnSessionStateChanged() {
   bool setup_completed =
       prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted);
   voice_interaction_controller_client_->NotifySetupCompleted(setup_completed);
-
-  voice_interaction_controller_client_->NotifyFeatureAllowed(
-      IsAssistantAllowedForProfile(profile));
 
   // We only want notify the status change on first user signed in.
   session_manager::SessionManager::Get()->RemoveObserver(this);
@@ -609,7 +612,7 @@ bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction(
   }
 
   ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(context_);
-  if (!arc_bridge_service_->voice_interaction_framework()->IsConnected()) {
+  if (!arc_bridge_service_->voice_interaction_framework()->has_instance()) {
     VLOG(1) << "Instance not ready.";
     SetArcCpuRestriction(false);
     is_request_pending_ = true;

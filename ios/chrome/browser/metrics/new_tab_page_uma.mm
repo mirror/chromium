@@ -22,7 +22,7 @@ namespace new_tab_page_uma {
 
 bool IsCurrentlyOnNTP(ios::ChromeBrowserState* browser_state) {
   TabModel* tab_model =
-      TabModelList::GetLastActiveTabModelForChromeBrowserState(browser_state);
+      GetLastActiveTabModelForChromeBrowserState(browser_state);
   return tab_model.currentTab.webState &&
          tab_model.currentTab.webState->GetVisibleURL() == kChromeUINewTabURL;
 }

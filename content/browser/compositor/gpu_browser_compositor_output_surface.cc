@@ -28,8 +28,7 @@ GpuBrowserCompositorOutputSurface::GpuBrowserCompositorOutputSurface(
         overlay_candidate_validator)
     : BrowserCompositorOutputSurface(std::move(context),
                                      update_vsync_parameters_callback,
-                                     std::move(overlay_candidate_validator)),
-      latency_info_cache_(this) {
+                                     std::move(overlay_candidate_validator)) {
   if (capabilities_.uses_default_gl_framebuffer) {
     capabilities_.flipped_output_surface =
         context_provider()->ContextCapabilities().flips_vertically;
@@ -56,15 +55,11 @@ void GpuBrowserCompositorOutputSurface::SetNeedsVSync(bool needs_vsync) {
 }
 
 void GpuBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted(
-    const gfx::SwapResponse& response,
+    const std::vector<ui::LatencyInfo>& latency_info,
+    gfx::SwapResult result,
     const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
-  client_->DidReceiveSwapBuffersAck();
-  latency_info_cache_.OnSwapBuffersCompleted(response);
-}
-
-void GpuBrowserCompositorOutputSurface::LatencyInfoCompleted(
-    const std::vector<ui::LatencyInfo>& latency_info) {
   RenderWidgetHostImpl::OnGpuSwapBuffersCompleted(latency_info);
+  client_->DidReceiveSwapBuffersAck();
 }
 
 void GpuBrowserCompositorOutputSurface::OnReflectorChanged() {
@@ -118,8 +113,7 @@ void GpuBrowserCompositorOutputSurface::Reshape(
 
 void GpuBrowserCompositorOutputSurface::SwapBuffers(
     viz::OutputSurfaceFrame frame) {
-  if (latency_info_cache_.WillSwap(std::move(frame.latency_info)))
-    GetCommandBufferProxy()->SetSnapshotRequested();
+  GetCommandBufferProxy()->AddLatencyInfo(frame.latency_info);
 
   gfx::Size surface_size = frame.size;
   if (reflector_) {

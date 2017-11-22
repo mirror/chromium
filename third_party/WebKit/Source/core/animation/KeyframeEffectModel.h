@@ -123,7 +123,10 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
                                       const ComputedStyle& base_style,
                                       const ComputedStyle* parent_style) const;
 
-  static Vector<double> GetComputedOffsets(const KeyframeVector& keyframes);
+  static Vector<double> GetComputedOffsetsForInspector(
+      const KeyframeVector& keyframes) {
+    return GetComputedOffsets(keyframes);
+  }
 
   bool Affects(const PropertyHandle& property) const override {
     EnsureKeyframeGroups();
@@ -140,6 +143,8 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
         default_keyframe_easing_(std::move(default_keyframe_easing)),
         has_synthetic_keyframes_(false),
         needs_compositor_keyframes_snapshot_(true) {}
+
+  static Vector<double> GetComputedOffsets(const KeyframeVector& keyframes);
 
   // Lazily computes the groups of property-specific keyframes.
   void EnsureKeyframeGroups() const;

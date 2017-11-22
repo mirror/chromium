@@ -19,16 +19,16 @@
 
 const target = document.getElementById('target');
 
-test(t => {
-  for (const frames of gEmptyKeyframeListTests) {
+test(function(t) {
+  gEmptyKeyframeListTests.forEach(function(frames) {
     assert_equals(new KeyframeEffectReadOnly(target, frames)
                         .getKeyframes().length,
-                  0, `number of frames for ${JSON.stringify(frames)}`);
-  }
+                  0, 'number of frames for ' + JSON.stringify(frames));
+  });
 }, 'A KeyframeEffectReadOnly can be constructed with no frames');
 
-test(t => {
-  for (const subtest of gEasingParsingTests) {
+test(function(t) {
+  gEasingParsingTests.forEach(function(subtest) {
     const easing = subtest[0];
     const expected = subtest[1];
     const effect = new KeyframeEffectReadOnly(target, {
@@ -36,96 +36,98 @@ test(t => {
     }, { easing: easing });
     assert_equals(effect.timing.easing, expected,
                   `resulting easing for '${easing}'`);
-  }
+  });
 }, 'easing values are parsed correctly when passed to the ' +
    'KeyframeEffectReadOnly constructor in KeyframeEffectOptions');
 
-test(t => {
-  for (const invalidEasing of gInvalidEasings) {
+test(function(t) {
+  gInvalidEasings.forEach(invalidEasing => {
     assert_throws(new TypeError, () => {
       new KeyframeEffectReadOnly(target, null, { easing: invalidEasing });
     }, `TypeError is thrown for easing '${invalidEasing}'`);
-  }
+  });
 }, 'Invalid easing values are correctly rejected when passed to the ' +
    'KeyframeEffectReadOnly constructor in KeyframeEffectOptions');
 
-test(t => {
-  const getKeyframe =
-    composite => ({ left: [ '10px', '20px' ], composite: composite });
-  for (const composite of gGoodKeyframeCompositeValueTests) {
+test(function(t) {
+  const getKeyframe = function(composite) {
+    return { left: [ '10px', '20px' ], composite: composite };
+  };
+  gGoodKeyframeCompositeValueTests.forEach(function(composite) {
     const effect = new KeyframeEffectReadOnly(target, getKeyframe(composite));
     assert_equals(effect.getKeyframes()[0].composite, composite,
                   `resulting composite for '${composite}'`);
-  }
-  for (const composite of gBadCompositeValueTests) {
-    assert_throws(new TypeError, () => {
+  });
+  gBadCompositeValueTests.forEach(function(composite) {
+    assert_throws(new TypeError, function() {
       new KeyframeEffectReadOnly(target, getKeyframe(composite));
     });
-  }
+  });
 }, 'composite values are parsed correctly when passed to the ' +
    'KeyframeEffectReadOnly constructor in property-indexed keyframes');
 
-test(t => {
-  const getKeyframes = composite =>
-    [
+test(function(t) {
+  const getKeyframes = function(composite) {
+    return [
       { offset: 0, left: '10px', composite: composite },
       { offset: 1, left: '20px' }
     ];
-  for (const composite of gGoodKeyframeCompositeValueTests) {
+  };
+  gGoodKeyframeCompositeValueTests.forEach(function(composite) {
     const effect = new KeyframeEffectReadOnly(target, getKeyframes(composite));
     assert_equals(effect.getKeyframes()[0].composite, composite,
                   `resulting composite for '${composite}'`);
-  }
-  for (const composite of gBadCompositeValueTests) {
-    assert_throws(new TypeError, () => {
+  });
+  gBadCompositeValueTests.forEach(function(composite) {
+    assert_throws(new TypeError, function() {
       new KeyframeEffectReadOnly(target, getKeyframes(composite));
     });
-  }
+  });
 }, 'composite values are parsed correctly when passed to the ' +
    'KeyframeEffectReadOnly constructor in regular keyframes');
 
-test(t => {
-  for (const composite of gGoodOptionsCompositeValueTests) {
+test(function(t) {
+  gGoodOptionsCompositeValueTests.forEach(function(composite) {
     const effect = new KeyframeEffectReadOnly(target, {
       left: ['10px', '20px']
     }, { composite: composite });
     assert_equals(effect.getKeyframes()[0].composite, undefined,
                   `resulting composite for '${composite}'`);
-  }
-  for (const composite of gBadCompositeValueTests) {
-    assert_throws(new TypeError, () => {
+  });
+  gBadCompositeValueTests.forEach(function(composite) {
+    assert_throws(new TypeError, function() {
       new KeyframeEffectReadOnly(target, {
         left: ['10px', '20px']
       }, { composite: composite });
     });
-  }
+  });
 }, 'composite value is absent if the composite operation specified on the ' +
    'keyframe effect is being used');
 
-for (const subtest of gKeyframesTests) {
-  test(t => {
+gKeyframesTests.forEach(function(subtest) {
+  test(function(t) {
     const effect = new KeyframeEffectReadOnly(target, subtest.input);
     assert_frame_lists_equal(effect.getKeyframes(), subtest.output);
   }, `A KeyframeEffectReadOnly can be constructed with ${subtest.desc}`);
 
-  test(t => {
+  test(function(t) {
     const effect = new KeyframeEffectReadOnly(target, subtest.input);
     const secondEffect =
       new KeyframeEffectReadOnly(target, effect.getKeyframes());
     assert_frame_lists_equal(secondEffect.getKeyframes(),
                              effect.getKeyframes());
   }, `A KeyframeEffectReadOnly constructed with ${subtest.desc} roundtrips`);
-}
+});
 
-for (const subtest of gInvalidKeyframesTests) {
-  test(t => {
-    assert_throws(new TypeError, () => {
+gInvalidKeyframesTests.forEach(function(subtest) {
+  test(function(t) {
+    assert_throws(new TypeError, function() {
       new KeyframeEffectReadOnly(target, subtest.input);
     });
   }, `KeyframeEffectReadOnly constructor throws with ${subtest.desc}`);
-}
+});
 
-test(t => {
+test(function(t) {
   const effect = new KeyframeEffectReadOnly(target,
                                             { left: ['10px', '20px'] });
 
@@ -145,8 +147,8 @@ test(t => {
 }, 'A KeyframeEffectReadOnly constructed without any ' +
    'KeyframeEffectOptions object');
 
-for (const subtest of gKeyframeEffectOptionTests) {
-  test(t => {
+gKeyframeEffectOptionTests.forEach(function(subtest) {
+  test(function(t) {
     const effect = new KeyframeEffectReadOnly(target,
                                               { left: ['10px', '20px'] },
                                               subtest.input);
@@ -170,19 +172,19 @@ for (const subtest of gKeyframeEffectOptionTests) {
                   'timing direction');
 
   }, `A KeyframeEffectReadOnly constructed by ${subtest.desc}`);
-}
+});
 
-for (const subtest of gInvalidKeyframeEffectOptionTests) {
-  test(t => {
-    assert_throws(new TypeError, () => {
+gInvalidKeyframeEffectOptionTests.forEach(function(subtest) {
+  test(function(t) {
+    assert_throws(new TypeError, function() {
       new KeyframeEffectReadOnly(target,
                                  { left: ['10px', '20px'] },
                                  subtest.input);
     });
   }, `Invalid KeyframeEffectReadOnly option by ${subtest.desc}`);
-}
+});
 
-test(t => {
+test(function(t) {
   const effect = new KeyframeEffectReadOnly(null,
                                             { left: ['10px', '20px'] },
                                             { duration: 100 * MS_PER_SEC,
@@ -191,10 +193,10 @@ test(t => {
                 'Effect created with null target has correct target');
 }, 'A KeyframeEffectReadOnly constructed with null target');
 
-test(t => {
+test(function(t) {
   const test_error = { name: 'test' };
 
-  assert_throws(test_error, () => {
+  assert_throws(test_error, function() {
     new KeyframeEffect(target, { get left() { throw test_error }})
   });
 }, 'KeyframeEffect constructor propagates exceptions generated by accessing'

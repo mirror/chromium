@@ -12,7 +12,7 @@
 /** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
 self.testRunner;
 
-TestRunner._executeTestScript = function() {
+TestRunner.executeTestScript = function() {
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   fetch(testScriptURL)
       .then(data => data.text())
@@ -28,22 +28,7 @@ TestRunner._executeTestScript = function() {
             self.eval(`function test(){${testScript}}\n//# sourceURL=${testScriptURL}`);
           return;
         }
-
-        // Convert the test script into an expression (if needed)
-        testScript = testScript.trimRight();
-        if (testScript.endsWith(';'))
-          testScript = testScript.slice(0, testScript.length - 1);
-
-        (async function() {
-          try {
-            await eval(testScript + `\n//# sourceURL=${testScriptURL}`);
-          } catch (err) {
-            TestRunner.addResult('TEST ENDED EARLY DUE TO UNCAUGHT ERROR:');
-            TestRunner.addResult(err && err.stack || err);
-            TestRunner.addResult('=== DO NOT COMMIT THIS INTO -expected.txt ===');
-            TestRunner.completeTest();
-          }
-        })();
+        eval(`(function test(){${testScript}})()\n//# sourceURL=${testScriptURL}`);
       })
       .catch(error => {
         TestRunner.addResult(`Unable to execute test script because of error: ${error}`);
@@ -562,20 +547,9 @@ TestRunner.addIframe = function(path, options = {}) {
 TestRunner._pendingInits = 0;
 
 /**
- * The old test framework executed certain snippets in the inspected page
- * context as part of loading a test helper file.
- *
- * This is deprecated because:
- * 1) it makes the testing API less intuitive (need to read the various *TestRunner.js
- * files to know which helper functions are available in the inspected page).
- * 2) it complicates the test framework's module loading process.
- *
- * In most cases, this is used to set up inspected page functions (e.g. makeSimpleXHR)
- * which should become a *TestRunner method (e.g. NetworkTestRunner.makeSimpleXHR)
- * that calls evaluateInPageAnonymously(...).
  * @param {string} code
  */
-TestRunner.deprecatedInitAsync = async function(code) {
+TestRunner.initAsync = async function(code) {
   TestRunner._pendingInits++;
   await TestRunner.RuntimeAgent.invoke_evaluate({expression: code, objectGroup: 'console'});
   TestRunner._pendingInits--;
@@ -1287,7 +1261,7 @@ TestRunner._startedTest = false;
 /**
  * @implements {SDK.TargetManager.Observer}
  */
-TestRunner._TestObserver = class {
+TestRunner.TestObserver = class {
   /**
    * @param {!SDK.Target} target
    * @override
@@ -1297,7 +1271,7 @@ TestRunner._TestObserver = class {
       return;
     TestRunner._startedTest = true;
     TestRunner._setupTestHelpers(target);
-    TestRunner._runTest();
+    TestRunner.runTest();
   }
 
   /**
@@ -1308,7 +1282,7 @@ TestRunner._TestObserver = class {
   }
 };
 
-TestRunner._runTest = async function() {
+TestRunner.runTest = async function() {
   var testPath = TestRunner.url();
   await TestRunner.loadHTML(`
     <head>
@@ -1317,12 +1291,12 @@ TestRunner._runTest = async function() {
     <body>
     </body>
   `);
-  TestRunner._executeTestScript();
+  TestRunner.executeTestScript();
 };
 
 // Old-style tests start test using inspector-test.js
 if (Runtime.queryParam('test'))
-  SDK.targetManager.observeTargets(new TestRunner._TestObserver());
+  SDK.targetManager.observeTargets(new TestRunner.TestObserver());
 
 (function() {
 /**

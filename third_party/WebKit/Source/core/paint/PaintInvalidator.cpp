@@ -567,7 +567,8 @@ void PaintInvalidator::InvalidatePaint(
     }
   }
 
-  if (RuntimeEnabledFeatures::LayoutNGEnabled() && object.IsLayoutNGMixin()) {
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
+      object.IsLayoutNGBlockFlow()) {
     // If the LayoutObject has a paint fragment, it means this LayoutObject and
     // its descendants are painted by NG painter.
     // In the inline NG paint phase, this is a block flow with inline children.

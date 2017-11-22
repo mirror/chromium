@@ -15,6 +15,13 @@
 
 namespace {
 
+ContentSettingsUsagesState::CommittedDetails CreateDetailsWithURL(
+    const GURL& url) {
+  ContentSettingsUsagesState::CommittedDetails details;
+  details.current_url = url;
+  return details;
+}
+
 class ContentSettingsUsagesStateTests : public testing::Test {
  public:
   ContentSettingsUsagesStateTests() = default;
@@ -26,7 +33,9 @@ class ContentSettingsUsagesStateTests : public testing::Test {
         HostContentSettingsMapFactory::GetForProfile(&profile), type);
     GURL url_0("http://www.example.com");
 
-    state.DidNavigate(url_0, GURL());
+    ContentSettingsUsagesState::CommittedDetails details =
+        CreateDetailsWithURL(url_0);
+    state.DidNavigate(details);
 
     HostContentSettingsMapFactory::GetForProfile(&profile)
         ->SetContentSettingDefaultScope(url_0, url_0, type, std::string(),
@@ -96,13 +105,15 @@ class ContentSettingsUsagesStateTests : public testing::Test {
 
     state.OnPermissionSet(url_0, true);
 
-    state.DidNavigate(url_0, url_0);
+    details.previous_url = url_0;
+    state.DidNavigate(details);
 
     ContentSettingsUsagesState::StateMap new_state_map =
         state.state_map();
     EXPECT_EQ(state_map.size(), new_state_map.size());
 
-    state.DidNavigate(GURL("http://foo.com/"), url_0);
+    details.current_url = GURL("http://foo.com");
+    state.DidNavigate(details);
 
     EXPECT_TRUE(state.state_map().empty());
 
@@ -119,7 +130,9 @@ class ContentSettingsUsagesStateTests : public testing::Test {
         HostContentSettingsMapFactory::GetForProfile(&profile), type);
     GURL url_0("http://www.example.com");
 
-    state.DidNavigate(url_0, GURL());
+    ContentSettingsUsagesState::CommittedDetails details =
+        CreateDetailsWithURL(url_0);
+    state.DidNavigate(details);
 
     HostContentSettingsMapFactory::GetForProfile(&profile)
         ->SetContentSettingDefaultScope(url_0, url_0, type, std::string(),

@@ -113,6 +113,10 @@ class CONTENT_EXPORT UserMediaProcessor
                                 MediaStreamRequestResult result) override;
   void OnDeviceStopped(const std::string& label,
                        const MediaStreamDevice& device) override;
+  void OnDeviceOpened(int request_id,
+                      const std::string& label,
+                      const MediaStreamDevice& device) override;
+  void OnDeviceOpenFailed(int request_id) override;
 
  protected:
   // These methods are virtual for test purposes. A test can override them to
@@ -278,7 +282,7 @@ class CONTENT_EXPORT UserMediaProcessor
 
   const scoped_refptr<base::TaskRunner> worker_task_runner_;
 
-  const int render_frame_id_;
+  RenderFrame* const render_frame_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

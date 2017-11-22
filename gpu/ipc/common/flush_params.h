@@ -10,6 +10,7 @@
 
 #include "gpu/command_buffer/common/sync_token.h"
 #include "gpu/gpu_export.h"
+#include "ui/latency/latency_info.h"
 
 namespace gpu {
 
@@ -27,9 +28,9 @@ struct FlushParams {
   int32_t put_offset;
   // Increasing counter for the flush.
   uint32_t flush_id;
-  // Indicates whether a snapshot was requested so the service can wait for
-  // presentation of the swap when there is a snapshot request.
-  bool snapshot_requested;
+  // Latency timestamps used for correlating swap buffers in the GPU process
+  // with input events.
+  std::vector<ui::LatencyInfo> latency_info;
   // Sync token dependencies of the flush. These are sync tokens for which waits
   // are in the commands that are part of this flush.
   std::vector<SyncToken> sync_token_fences;
