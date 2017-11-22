@@ -40,4 +40,15 @@ ScrollStateCallback* ScrollCustomizationCallbacks::GetApplyScroll(
   return it->value.Get();
 }
 
+bool ScrollCustomizationCallbacks::HasCustomizedScroll(Element* element) const {
+  if (has_customized_scroll_.Contains(element))
+    return has_customized_scroll_.at(element);
+  return false;
+}
+
+void ScrollCustomizationCallbacks::SetHasCustomizedScroll(Element* element,
+                                                          bool enabled) {
+  has_customized_scroll_.Set(element, enabled);
+}
+
 }  // namespace blink
