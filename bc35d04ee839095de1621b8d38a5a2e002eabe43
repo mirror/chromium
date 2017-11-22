@@ -34,6 +34,24 @@
       "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8bf8ab_d2f013f2",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-11-22T08:30:21Z",
+      "side": 0,
+      "message": "I\u0027m not so sure if this is the right thing to do.\n\nPassing a pointer is basically a way to bypass the restriction that OnceCallbacks are move-only.\nWhile this may not be a big issue here, someone could use this as an example and pass a pointer to a callback to multiple functions because \"they all handle distinct cases\". If we want to change any of these functions which receive a pointer to a callback, we need to look at all callers to make sure we don\u0027t break anything which IMHO makes it harder to argue correctness and can lead to bugs that are hard to find.\n\nHaving that said, I\u0027m not sure what I prefer because all versions have pros and cons:\n- The switch-preamble from patchset 7 which is easy to read and understand but also means some duplicated code.\n- The macro from patchset 9 which seemed like a good thing to do because it removes the duplication, but I\u0027m not so sure about that anymore.\n- The template kinuko proposed.\n- Something like we talked about earlier, but that would mean adding about 15 *Internal methods (we may be able to it with less).\n\nvoid ServiceWorkerStorage::LazyInitialize(OnceClosure callback) {\n  switch (state_) {\n    case INITIALIZED: // Fall-through.\n    case DISABLED:\n      std::move(callback).Run();\n      return;\n    pending_tasks_.push_back(base::BindOnce(std::move(task), std::move(*callback)));\n      return false;\n    case UNINITIALIZED:\n      pending_tasks_.push_back(base::BindOnce(std::move(task), std::move(*callback)));\n      // Fall-through.\n  } \n    \n  state_ \u003d INITIALIZING;\n  ...\n}\n\nvoid ServiceWorkerStorage::FindRegistrationForPattern(\n    const GURL\u0026 scope,\n    FindRegistrationCallback callback) {\n  LazyInitialize(base::BindOnce(\n      \u0026FindRegistrationForPatternInternal, weak_factory_.GetWeakPtr(),\n      scope, std::move(callback));\n}\n\nvoid ServiceWorkerStorage::FindRegistrationForPattern(\n    const GURL\u0026 scope,\n    FindRegistrationCallback callback) {\n  if (state !\u003d INITIALIZED) { // DISABLED\n    ...\n    return;\n  }\n  ...\n}",
+      "parentUuid": "9a670d00_a73afca2",
+      "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
