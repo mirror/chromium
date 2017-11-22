@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f30fb4_3cc51a23",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T16:31:30Z",
+      "side": 1,
+      "message": "Suggestion: if we typedef set\u003cFilePath\u003e and set\u003cstring16\u003e to something like FileCollection and RegistryKeyCollection then if we need to change the types later we won\u0027t have to update every file that pipes these through. Better yet wrap them in a struct that can be repeated in both OnInfected and OnCleaning.",
+      "revId": "10223426f1975f7213746fc721be39d65a79bc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5955fd_7e0613ba",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T16:31:30Z",
+      "side": 1,
+      "message": "Suggest using EXPECT_THAT(received_var, UnorderedElementsAreArray(expected_container))\n\nhttps://github.com/google/googletest/blob/master/googlemock/docs/CheatSheet.md#container-matchers",
+      "revId": "10223426f1975f7213746fc721be39d65a79bc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc13527_fef5f1f5",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/mock_chrome_cleaner_process_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T16:31:30Z",
+      "side": 1,
+      "message": "If the reporter supports sending regkeys but didn\u0027t find any to remove, wouldn\u0027t it send an empty vector, rather than having the optional parameter missing?\n\n(I haven\u0027t checked how the reporter-side code works. Maybe it\u0027s coded to leave the parameter out if it doesn\u0027t find anything. But we should test an empty list either way.)",
+      "revId": "10223426f1975f7213746fc721be39d65a79bc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583f91cd_24b96e0b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/mock_chrome_cleaner_process_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-22T16:31:30Z",
+      "side": 1,
+      "message": "Nit: please add blank lines between these functions, since they take more than one line they look very crowded",
+      "revId": "10223426f1975f7213746fc721be39d65a79bc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
