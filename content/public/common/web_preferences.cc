@@ -31,7 +31,9 @@ STATIC_ASSERT_ENUM(V8_CACHE_OPTIONS_DEFAULT,
 STATIC_ASSERT_ENUM(V8_CACHE_OPTIONS_NONE, WebSettings::kV8CacheOptionsNone);
 STATIC_ASSERT_ENUM(V8_CACHE_OPTIONS_PARSE, WebSettings::kV8CacheOptionsParse);
 STATIC_ASSERT_ENUM(V8_CACHE_OPTIONS_CODE, WebSettings::kV8CacheOptionsCode);
-STATIC_ASSERT_ENUM(V8_CACHE_OPTIONS_LAST, WebSettings::kV8CacheOptionsCode);
+STATIC_ASSERT_ENUM(V8_CACHE_OPTIONS_FULL_CODE,
+                   WebSettings::kV8CacheOptionsFullCode);
+STATIC_ASSERT_ENUM(V8_CACHE_OPTIONS_LAST, WebSettings::kV8CacheOptionsFullCode);
 
 STATIC_ASSERT_ENUM(ProgressBarCompletion::LOAD_EVENT,
                    WebSettings::ProgressBarCompletion::kLoadEvent);

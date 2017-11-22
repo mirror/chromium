@@ -266,6 +266,7 @@ v8::MaybeLocal<v8::Script> PostStreamCompile(
 
     case kV8CacheOptionsDefault:
     case kV8CacheOptionsCode:
+    case kV8CacheOptionsFullCode:
       V8ScriptRunner::SetCacheTimeStamp(cache_handler);
       break;
 
@@ -331,6 +332,7 @@ static CompileFn SelectCompileFunction(
 
     case kV8CacheOptionsDefault:
     case kV8CacheOptionsCode:
+    case kV8CacheOptionsFullCode:
     case kV8CacheOptionsAlways: {
       uint32_t code_cache_tag = V8ScriptRunner::TagForCodeCache(cache_handler);
       // Use code caching for recently seen resources.
@@ -349,7 +351,10 @@ static CompileFn SelectCompileFunction(
                          v8::ScriptCompiler::kNoCacheBecauseCacheTooCold);
       }
       return WTF::Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
-                       code_cache_tag, v8::ScriptCompiler::kProduceCodeCache,
+                       code_cache_tag,
+                       cache_options == kV8CacheOptionsFullCode
+                           ? v8::ScriptCompiler::kProduceCodeCache
+                           : v8::ScriptCompiler::kProduceFullCodeCache,
                        CachedMetadataHandler::kSendToPlatform);
       break;
     }
@@ -831,5 +836,7 @@ STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsDefault, kV8CacheOptionsDefault);
 STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsNone, kV8CacheOptionsNone);
 STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsParse, kV8CacheOptionsParse);
 STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsCode, kV8CacheOptionsCode);
+STATIC_ASSERT_ENUM(WebSettings::kV8CacheOptionsFullCode,
+                   kV8CacheOptionsFullCode);
 
 }  // namespace blink

@@ -101,6 +101,8 @@ V8CacheOptions GetV8CacheOptions() {
     return V8_CACHE_OPTIONS_PARSE;
   } else if (v8_cache_options == "code") {
     return V8_CACHE_OPTIONS_CODE;
+  } else if (v8_cache_options == "full-code") {
+    return V8_CACHE_OPTIONS_FULL_CODE;
   } else {
     return V8_CACHE_OPTIONS_DEFAULT;
   }
