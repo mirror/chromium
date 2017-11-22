@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54d5882b_c0501edb",
+        "filename": "ui/aura/window_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-22T15:37:42Z",
+      "side": 1,
+      "message": "Let\u0027s rename this to OnWindowOpacitySet() to reflect this better. It looks like there\u0027s very little use of it. So it should be easy to do the rename.",
+      "revId": "881d9ae6fdbea4013905038d43b853c4c36c0f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
