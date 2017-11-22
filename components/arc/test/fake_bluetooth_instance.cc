@@ -26,7 +26,12 @@ FakeBluetoothInstance::LEDeviceFoundData::LEDeviceFoundData(
 
 FakeBluetoothInstance::LEDeviceFoundData::~LEDeviceFoundData() {}
 
-void FakeBluetoothInstance::Init(mojom::BluetoothHostPtr host_ptr) {}
+void FakeBluetoothInstance::InitDeprecated(mojom::BluetoothHostPtr host_ptr) {}
+
+void FakeBluetoothInstance::Init(mojom::BluetoothHostPtr host_ptr,
+                                 InitCallback callback) {
+  std::move(callback).Run();
+}
 
 void FakeBluetoothInstance::OnAdapterProperties(
     mojom::BluetoothStatus status,

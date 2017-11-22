@@ -112,7 +112,7 @@ class ConnectionHolderImpl {
       binding_->Bind(mojo::MakeRequest(&host_proxy));
       binding_->set_connection_error_handler(base::BindOnce(
           &mojo::Binding<HostType>::Close, base::Unretained(binding_.get())));
-      instance_->Init(std::move(host_proxy));
+      instance_->InitDeprecated(std::move(host_proxy));
 
       connection_notifier_->NotifyConnectionReady();
     } else if (binding_.get()) {
