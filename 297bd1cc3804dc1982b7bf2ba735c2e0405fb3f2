@@ -46,6 +46,30 @@
       "revId": "297bd1cc3804dc1982b7bf2ba735c2e0405fb3f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd9860f6_f54a3d23",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-22T15:51:07Z",
+      "side": 1,
+      "message": "But I don\u0027t see this reflected in Patchset 7.",
+      "parentUuid": "45549078_54405a0b",
+      "range": {
+        "startLine": 531,
+        "startChar": 11,
+        "endLine": 531,
+        "endChar": 19
+      },
+      "revId": "297bd1cc3804dc1982b7bf2ba735c2e0405fb3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
