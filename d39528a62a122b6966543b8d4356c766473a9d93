@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5af0daf5_4cc858cb",
+        "filename": "net/cookies/canonical_cookie.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "This should fail if secure is true but the scheme is not.  (The old code to set the cookies that way failed, just in shared code, which this CL is not removing).\n\nAnd should test that.",
+      "range": {
+        "startLine": 263,
+        "startChar": 9,
+        "endLine": 263,
+        "endChar": 15
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb81184c_2559b79a",
+        "filename": "net/cookies/canonical_cookie.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "optional nit:  Think it\u0027s more common in net not to use braces on one-line ifs (x2).",
+      "range": {
+        "startLine": 278,
+        "startChar": 3,
+        "endLine": 278,
+        "endChar": 0
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc0e3e3_e487eb41",
+        "filename": "net/cookies/canonical_cookie.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "This DCHECK fails is last_access_date_ is not null by creation date is. (And should have test for that case)",
+      "range": {
+        "startLine": 297,
+        "startChar": 25,
+        "endLine": 297,
+        "endChar": 26
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83026c23_f762f971",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "Remove trailing underscores.  Should probably also use kConstNamingScheme.  Also, a lot of these aren\u0027t used.\n\nHrm...Should we just inline these URLs?  There\u0027s no reason they need to match in the new tests, and it makes the tests with funky domains easier to read.",
+      "range": {
+        "startLine": 989,
+        "startChar": 13,
+        "endLine": 989,
+        "endChar": 26
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04050154_340e38b9",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "label these bool fields?  I\u0027m not too concerned about labeling them in the false/false tests.",
+      "range": {
+        "startLine": 998,
+        "startChar": 39,
+        "endLine": 998,
+        "endChar": 44
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177139f8_186cf77a",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the case?",
+      "range": {
+        "startLine": 1001,
+        "startChar": 31,
+        "endLine": 1001,
+        "endChar": 35
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222977c8_759d1ddd",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "Switch to a path of \"/\", just to we cover our bases.",
+      "range": {
+        "startLine": 1003,
+        "startChar": 53,
+        "endLine": 1003,
+        "endChar": 56
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6ff309_4f3cf6d1",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "Add another domain test or two (one with a leading dot, one where a subdomain is setting a cookie domain on a parent domain, and vice versa.",
+      "range": {
+        "startLine": 1005,
+        "startChar": 32,
+        "endLine": 1005,
+        "endChar": 0
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdef9f1_e3964c33",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "Use a valid path on this one, so just the domain is invalid?",
+      "range": {
+        "startLine": 1025,
+        "startChar": 51,
+        "endLine": 1025,
+        "endChar": 52
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa21234c_55ab1765",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "I think this should be combined with the previous test.  Having a \"legacy test of things we used to test\" and a \"new test of things we now think is a good idea to test\" isn\u0027t really a great long-term way to distinguish test cases.\n\nI\u0027m fine with multiple tests if they have some other distinguishing features.",
+      "range": {
+        "startLine": 1035,
+        "startChar": 5,
+        "endLine": 1035,
+        "endChar": 24
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb2a57d_0ec39dda",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-22T16:36:13Z",
+      "side": 1,
+      "message": "I think we need to do this for a greater variety of cookies. (At a minimum, one in which every one of these fields is different, other than name/value/domain/path).",
+      "range": {
+        "startLine": 1055,
+        "startChar": 19,
+        "endLine": 1055,
+        "endChar": 33
+      },
+      "revId": "d39528a62a122b6966543b8d4356c766473a9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
