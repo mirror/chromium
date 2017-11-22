@@ -48,6 +48,47 @@
     },
     {
       "key": {
+        "uuid": "720910cb_3a078a59",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T01:33:30Z",
+      "side": 1,
+      "message": "perhaps just a comment like \"// null in tests\" for now?\n\nI prefer to avoid having classes need a lot of extra setup to be unittested.",
+      "parentUuid": "ed026055_16beed15",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 37
+      },
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be7e160_2590d738",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T01:33:30Z",
+      "side": 1,
+      "message": "one of the design principles of the network service is that it knows as little as possible (eventually I hope we remove resource type from this altogether). so can we move this logic to the caller? i.e. similar to kURLLoadOptionSendSSLInfo, have an kURLLoadOptionSendSSLInfoOnCertError that\u0027s documented to only send it on major cert errors. then only navigation_url_loader_network_service.cc sets this option.\n\nAlso, can we move the histograming to navigation_url_loader_network_service.cc, to further simplify this file?",
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7082f8c_c254f930",
         "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
         "patchSetId": 4
@@ -82,6 +123,30 @@
       "writtenOn": "2017-11-21T23:48:28Z",
       "side": 1,
       "message": "Not sure what\u0027s going on with these ones -- they are failing in both the transient and committed version so I don\u0027t think it\u0027s related to committed interstitials. Will investigate separately.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 49
+      },
+      "revId": "e701d14fe88704418c365e53552249ef73701eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bfd58e7_2e974d20",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T01:33:30Z",
+      "side": 1,
+      "message": "Thanks; I\u0027m also happy to investigate if you\u0027re busy, as they\u0027re busted independent of your interstitial work",
+      "parentUuid": "2ccaa2b4_8c4dbd6e",
       "range": {
         "startLine": 236,
         "startChar": 0,
