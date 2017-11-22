@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c972152_f9305b63",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-22T22:31:16Z",
+      "side": 1,
+      "message": "Reassign this while you\u0027re at it? georgesak@ is unlikely to do this :)",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "b863982b808094bbba63f88a14213845ecf7d86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd749eb6_450b9fde",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-22T22:31:16Z",
+      "side": 1,
+      "message": "We\u0027re mixing some statistics related state with the TabManager. Maybe we should be building out a new LifecycleManagerStatsReporter class, and adding these methods there, as well as the corresponding state?",
+      "range": {
+        "startLine": 418,
+        "startChar": 4,
+        "endLine": 418,
+        "endChar": 30
+      },
+      "revId": "b863982b808094bbba63f88a14213845ecf7d86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
