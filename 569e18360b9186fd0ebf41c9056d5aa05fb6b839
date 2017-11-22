@@ -232,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "d908f3ea_1cab67fc",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-22T01:35:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2dd9f2_97b7907d",
+      "revId": "569e18360b9186fd0ebf41c9056d5aa05fb6b839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "469d2079_c9b89b3a",
         "filename": "third_party/WebKit/common/serviceworker/OWNERS",
         "patchSetId": 2
