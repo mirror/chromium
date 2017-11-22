@@ -84,7 +84,9 @@ class COLOR_SPACE_EXPORT ColorSpace {
     LINEAR_HDR,
     // A parametric transfer function defined by |custom_transfer_params_|.
     CUSTOM,
-    LAST = CUSTOM,
+    // 8-bit dithered sRGB where the top range is reserved for HDR.
+    PSEUDO_HDR,
+    LAST = PSEUDO_HDR,
   };
 
   enum class MatrixID : uint8_t {

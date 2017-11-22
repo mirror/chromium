@@ -116,6 +116,13 @@ float FromLinear(ColorSpace::TransferID id, float v) {
       return a * log(v - b) + c;
     }
 
+    case ColorSpace::TransferID::PSEUDO_HDR: {
+      v /= 5.0f;
+      v = max(v, 0.0f);
+      v = pow(v, 1.0f / 2.2f);
+      return v;
+    }
+
     default:
       // Handled by SkColorSpaceTransferFn.
       break;
@@ -191,6 +198,12 @@ float ToLinear(ColorSpace::TransferID id, float v) {
       if (v <= 0.5f)
         return (v * 2.0f) * (v * 2.0f);
       return exp((v - c) / a) + b;
+    }
+
+    case ColorSpace::TransferID::PSEUDO_HDR: {
+      v = max(v, 0.0f);
+      v = pow(v, 2.2f);
+      return v * 5.0f;
     }
 
     default:
@@ -550,6 +563,17 @@ class ColorTransformFromLinear : public ColorTransformPerChannelTransferFn {
                 "    return 0.5 * sqrt(v);\n"
                 "  return a * log(v - b) + c;\n";
         return;
+
+      case ColorSpace::TransferID::PSEUDO_HDR:
+        *src << "  v /= 5.0;\n"
+                "  v = max(v, 0.0);\n"
+                "  v = pow(v, 1.0 / 2.2);\n"
+                // TODO: Dithering
+                // "  v += (fract(sin(dot(v_texCoord ,vec2(12.9898,78.233))) *
+                // 43758.5453) - 0.5) / 255.0;\n"
+                "  return v;\n";
+        return;
+
       default:
         break;
     }
@@ -621,9 +645,14 @@ class ColorTransformToLinear : public ColorTransformPerChannelTransferFn {
                 "  float c1 = 3424.0 / 4096.0;\n"
                 "  float c2 = (2413.0 / 4096.0) * 32.0;\n"
                 "  float c3 = (2392.0 / 4096.0) * 32.0;\n"
-                "  v = pow(max(pow(v, 1.0 / m2) - c1, 0.0) /\n"
+                "  #ifdef GL_FRAGMENT_PRECISION_HIGH\n"
+                "  highp float v2;\n"
+                "  #else\n"
+                "  float v2;\n"
+                "  #endif\n"
+                "  v2 = pow(max(pow(v, 1.0 / m2) - c1, 0.0) /\n"
                 "              (c2 - c3 * pow(v, 1.0 / m2)), 1.0 / m1);\n"
-                "  v *= 10000.0 / 80.0;\n"
+                "  v = v2 * 10000.0 / 80.0;\n"
                 "  return v;\n";
         return;
       case ColorSpace::TransferID::SMPTEST2084_NON_HDR:
@@ -638,6 +667,11 @@ class ColorTransformToLinear : public ColorTransformPerChannelTransferFn {
                 "  if (v <= 0.5)\n"
                 "    return (v * 2.0) * (v * 2.0);\n"
                 "  return exp((v - c) / a) + b;\n";
+        return;
+      case ColorSpace::TransferID::PSEUDO_HDR:
+        *src << "  v = max(v, 0.0);\n"
+                "  v = pow(v, 2.2);\n"
+                " return v * 5.0;\n";
         return;
       default:
         break;
