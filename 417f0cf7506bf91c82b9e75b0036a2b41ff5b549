@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc4f6173_cdd49671",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3053,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-11-22T19:50:50Z",
+      "side": 0,
+      "message": "I am not sure why are you removing testing config if two of the features still stay in the code as disabled by default and your study configs are going to enable them? can this stay until the studies expire ?",
+      "range": {
+        "startLine": 3053,
+        "startChar": 25,
+        "endLine": 3053,
+        "endChar": 53
+      },
+      "revId": "417f0cf7506bf91c82b9e75b0036a2b41ff5b549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
