@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da747f15_6543b3be",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-22T05:15:11Z",
+      "side": 1,
+      "message": "I\u0027m being super nitty but I think this would be more aesthetically pleasing after the EXPECT calls.",
+      "revId": "57a6b1ab63d1eb3f23bcfeea7d7b579fcca57a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
