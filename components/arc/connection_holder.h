@@ -56,6 +56,19 @@ template <typename InstanceType>
 using HasInit =
     decltype(HasInitImpl::Check(static_cast<InstanceType*>(nullptr)));
 
+// Similar to HasInitImpl(), check if InitDeprecated() exists.
+struct HasInitDeprecatedImpl {
+  template <typename InstanceType>
+  static auto Check(InstanceType* v)
+      -> decltype(&InstanceType::InitDeprecated, std::true_type());
+  static std::false_type Check(...);
+};
+
+// Type tratis to return whether InstanceType has InitDeprecated() or not.
+template <typename InstanceType>
+using HasInitDeprecated =
+    decltype(HasInitDeprecatedImpl::Check(static_cast<InstanceType*>(nullptr)));
+
 // Full duplex Mojo connection holder implementation.
 // InstanceType and HostType are Mojo interface types (arc::mojom::XxxInstance,
 // and arc::mojom::XxxHost respectively).
@@ -112,9 +125,16 @@ class ConnectionHolderImpl {
       binding_->Bind(mojo::MakeRequest(&host_proxy));
       binding_->set_connection_error_handler(base::BindOnce(
           &mojo::Binding<HostType>::Close, base::Unretained(binding_.get())));
-      instance_->InitDeprecated(std::move(host_proxy));
+      if (instance_version_ >= InstanceType::kInitMinVersion) {
+        instance_->Init(std::move(host_proxy),
+                        base::BindOnce(&ConnectionHolderImpl::OnConnectionReady,
+                                       weak_factory_.GetWeakPtr()));
+        return;
+      }
 
-      connection_notifier_->NotifyConnectionReady();
+      // Fallback to InitDeprecated() if exists.
+      CallInitDeprecated(std::move(host_proxy),
+                         HasInitDeprecated<InstanceType>());
     } else if (binding_.get()) {
       // Otherwise, the connection is closed. If it was connected,
       // reset the host binding and notify.
@@ -122,6 +142,23 @@ class ConnectionHolderImpl {
       connection_notifier_->NotifyConnectionClosed();
     }
   }
+
+  // Called if InstanceType has InitDeprecated().
+  void CallInitDeprecated(mojo::InterfacePtr<HostType> host_proxy,
+                          std::true_type) {
+    instance_->InitDeprecated(std::move(host_proxy));
+    OnConnectionReady();
+  }
+
+  // Called if InstanceType does not have InitDeprecated().
+  void CallInitDeprecated(mojo::InterfacePtr<HostType> host_proxy,
+                          std::false_type) {
+    // If InitDeprecated does not exists, ARC container must support
+    // Init() with callback, already. Thus, this should not be called.
+    NOTREACHED();
+  }
+
+  void OnConnectionReady() { connection_notifier_->NotifyConnectionReady(); }
 
   ConnectionNotifier* const connection_notifier_;
 
@@ -134,6 +171,7 @@ class ConnectionHolderImpl {
   // Created when both |instance_| and |host_| ptr are set.
   std::unique_ptr<mojo::Binding<HostType>> binding_;
 
+  base::WeakPtrFactory<ConnectionHolderImpl> weak_factory_{this};
   DISALLOW_COPY_AND_ASSIGN(ConnectionHolderImpl);
 };
 
