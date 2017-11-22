@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e0cc72e4_fefa1b00",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-22T19:36:50Z",
+      "side": 1,
+      "message": "Changed to get_bytes_per_span().",
+      "parentUuid": "1c7a666e_9bfce947",
+      "revId": "efced21a44e5c55abb46d4f566b31427382673a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14dd8fd2_7b81c886",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-21T23:28:21Z",
       "side": 1,
       "message": "While we\u0027re here, maybe CheckMul? Or, second best, CheckedMul in debug builds, * for production builds?",
+      "revId": "efced21a44e5c55abb46d4f566b31427382673a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6a84fd_dcd4301b",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-22T19:36:50Z",
+      "side": 1,
+      "message": "I\u0027ll add a TODO()... given the amount of churn I\u0027m adding, I\u0027m pretty leery of any actual behavioral changes....",
+      "parentUuid": "14dd8fd2_7b81c886",
       "revId": "efced21a44e5c55abb46d4f566b31427382673a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "e86143b2_a2e4d4b4",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-22T19:36:50Z",
+      "side": 1,
+      "message": "Changed to get_slots_per_span()",
+      "parentUuid": "bff1165f_1a3f1152",
+      "revId": "efced21a44e5c55abb46d4f566b31427382673a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "956a6763_f148aaa6",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 2
@@ -81,6 +135,24 @@
       "writtenOn": "2017-11-21T23:28:21Z",
       "side": 1,
       "message": "While we\u0027re here, maybe checked_cast ? Or, second best, checked_cast in debug builds, static for production builds?",
+      "revId": "efced21a44e5c55abb46d4f566b31427382673a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbc472a_6d74d84c",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-22T19:36:50Z",
+      "side": 1,
+      "message": "Added TODO.",
+      "parentUuid": "956a6763_f148aaa6",
       "revId": "efced21a44e5c55abb46d4f566b31427382673a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
