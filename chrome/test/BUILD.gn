@@ -974,6 +974,10 @@ test("browser_tests") {
       "$root_out_dir/test_url_loader_data/",
     ]
 
+    if (host_toolchain == current_toolchain) {
+      data_deps += [ "//tools/media_engagement_preload:generator" ]
+    }
+
     if (!is_mac) {
       data += [
         "$root_out_dir/locales/",
