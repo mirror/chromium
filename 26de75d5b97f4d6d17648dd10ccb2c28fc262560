@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "320488f5_023ed7b4",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-22T10:53:49Z",
+      "side": 1,
+      "message": "This is what I believe is the case. \nThe documentation for GetValue says\n\n  // Returns a weak reference to the value currently stored for key |policy|,\n  // or NULL if not found. Ownership is retained by the PolicyMap.\n  // This is equivalent to Get(policy)-\u003evalue, when it doesn\u0027t return NULL.\n\nOtherwise an empty policy I would consider means no origins should be allowed to be treated as secure (as a way to prevent the user from overriding this list from the command line). If the admin doesn\u0027t care they can simply omit the policy.",
+      "parentUuid": "fcc4b0d0_612617c4",
+      "range": {
+        "startLine": 820,
+        "startChar": 4,
+        "endLine": 820,
+        "endChar": 15
+      },
+      "revId": "26de75d5b97f4d6d17648dd10ccb2c28fc262560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1172ced4_b88dba5b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
