@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eaeeefd7_340b8b31",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2593,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "I looked into it. The issue is that I can\u0027t interact with BrowserView inside Browser without using the BrowserWindow API. Another option is to add my own NotificationObserver::Observe to HostedAppButtonContainer and listen for NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED there, but I think adding more Observes is deprecated?",
+      "parentUuid": "9cb5efd7_e3d1e235",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfe43572_75be15ca",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T02:53:59Z",
       "side": 1,
       "message": "see comment on ResourceBundle::FontSize. Use GetFontListWithDelta or views::style::GetFont\n\nOr perhaps see about just removing the |font_list| argument to ContentSettingImageView and have IconLabelBubbleView accept a value from style::TextContext that it passes to the views::Label constructor",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8938acf_297c3520",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "As discussed, this is annoyingly tricky. Using the title font here. This will never show a label due to an implicit quirk in the animation logic (only 1 animation per message per WebContents) which I\u0027ve made more explicit.\n\nThe root of the weirdness is that the animation is ticked off by the web contents, and since the location bar is still created (though hidden), the hidden location bar receives the animation instead of the title bar. If we ever want to change the title bar content settings buttons to animate, this is just something to keep in mind.",
+      "parentUuid": "cfe43572_75be15ca",
       "revId": "ca454efe103f65a29c71fd8c193db781904da538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3427e2be_aeafcbdd",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "Ah, good point. Cribbed from the location bar, which should probably be doing that too. It seems to have this pattern ingrained pretty solidly though.",
+      "parentUuid": "0aaea79e_37f85c25",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8fd83a6_cd559f18",
         "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-09T02:53:59Z",
       "side": 1,
       "message": "Maybe you want a views::ViewModelT\u003cContentSettingImageView\u003e ?",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7336e290_9a2bcabd",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "It looks like ViewModels are for managing bounds/layout. It doesn\u0027t have an iterator and is backed by a vector anyway. I think it\u0027ll be easier to just stick with the vector here.",
+      "parentUuid": "c8fd83a6_cd559f18",
       "revId": "ca454efe103f65a29c71fd8c193db781904da538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8fdbc926_2d232f69",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "Had to move line 48 elsewhere, and make the method public. Done.",
+      "parentUuid": "0d71f255_fa87d17c",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14fcb57e_1fe49f8c",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-09T02:53:59Z",
       "side": 1,
       "message": "huh? why is there a |web_contents| method argument as well - this looks really weird.",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64343782_b4f8b812",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "Oops, forgot to remove this! Done.",
+      "parentUuid": "14fcb57e_1fe49f8c",
       "revId": "ca454efe103f65a29c71fd8c193db781904da538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0e45add0_1d57e216",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9cef12c_be7214ec",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30883447_27fd7400",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "ca454efe103f65a29c71fd8c193db781904da538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55243f17_420a5b94",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30883447_27fd7400",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0bdaabfc_cf447714",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "51614552_703f29c1",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60924419_08745c8e",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
         "patchSetId": 5
@@ -169,6 +331,24 @@
       "revId": "ca454efe103f65a29c71fd8c193db781904da538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd4b44f_00d7747d",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-22T03:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60924419_08745c8e",
+      "revId": "ca454efe103f65a29c71fd8c193db781904da538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
