@@ -642,13 +642,10 @@ CSSSelector::RelationType CSSSelectorParser::ConsumeCombinator(
       const CSSParserToken& slash = range.ConsumeIncludingWhitespace();
       if (slash.GetType() != kDelimiterToken || slash.Delimiter() != '/')
         failed_parsing_ = true;
-      if (RuntimeEnabledFeatures::DeepCombinatorInCSSDynamicProfileEnabled()) {
+      if (!context_->IsDynamicProfile())
+        // For dynamic profile, /deep/ is a no-op as of M65.
         return CSSSelector::kShadowDeep;
-      }
-      return context_->IsDynamicProfile() ? CSSSelector::kShadowDeepAsDescendant
-                                          : CSSSelector::kShadowDeep;
     }
-
     default:
       break;
   }

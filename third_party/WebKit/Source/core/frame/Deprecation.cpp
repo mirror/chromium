@@ -487,14 +487,6 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
           "https://www.chromestatus.com/feature/6451284559265792 for more "
           "details.");
 
-    case WebFeature::kCSSDeepCombinator:
-      return "/deep/ combinator is no longer supported in CSS dynamic profile."
-             "It is now effectively no-op, acting as if it were a descendant "
-             "combinator. /deep/ combinator will be removed, and will be "
-             "invalid at M65. You should remove it. See "
-             "https://www.chromestatus.com/features/4964279606312960 for more "
-             "details.";
-
     case WebFeature::kVREyeParametersOffset:
       return replacedBy("VREyeParameters.offset",
                         "view matrices provided by VRFrameData");

@@ -331,12 +331,6 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
   next_context.pseudo_id = kPseudoIdNone;
 
   switch (relation) {
-    case CSSSelector::kShadowDeepAsDescendant:
-      DCHECK(
-          !RuntimeEnabledFeatures::DeepCombinatorInCSSDynamicProfileEnabled());
-      Deprecation::CountDeprecation(context.element->GetDocument(),
-                                    WebFeature::kCSSDeepCombinator);
-    // fall through
     case CSSSelector::kDescendant:
       if (context.selector->RelationIsAffectedByPseudoContent()) {
         for (Element* element = context.element; element;
@@ -416,14 +410,9 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     case CSSSelector::kShadowPseudo: {
       if (!is_ua_rule_ &&
           context.selector->GetPseudoType() == CSSSelector::kPseudoShadow) {
-        if (mode_ == kQueryingRules) {
-          UseCounter::Count(context.element->GetDocument(),
-                            WebFeature::kPseudoShadowInStaticProfile);
-        } else if (RuntimeEnabledFeatures::
-                       ShadowPseudoElementInCSSDynamicProfileEnabled()) {
-          Deprecation::CountDeprecation(context.element->GetDocument(),
-                                        WebFeature::kCSSSelectorPseudoShadow);
-        }
+        DCHECK(mode_ == kQueryingRules);
+        UseCounter::Count(context.element->GetDocument(),
+                          WebFeature::kPseudoShadowInStaticProfile);
       }
       // If we're in the same tree-scope as the scoping element, then following
       // a shadow descendant combinator would escape that and thus the scope.
@@ -441,13 +430,9 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
 
     case CSSSelector::kShadowDeep: {
       if (!is_ua_rule_) {
-        if (mode_ == kQueryingRules) {
-          UseCounter::Count(context.element->GetDocument(),
-                            WebFeature::kDeepCombinatorInStaticProfile);
-        } else {
-          Deprecation::CountDeprecation(context.element->GetDocument(),
-                                        WebFeature::kCSSDeepCombinator);
-        }
+        DCHECK(mode_ == kQueryingRules);
+        UseCounter::Count(context.element->GetDocument(),
+                          WebFeature::kDeepCombinatorInStaticProfile);
       }
       if (ShadowRoot* root = context.element->ContainingShadowRoot()) {
         if (root->GetType() == ShadowRootType::kUserAgent)
