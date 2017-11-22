@@ -258,7 +258,7 @@ PaintTypeface FontCache::CreateTypeface(
     // TODO(vmpstr): Handle creating paint typefaces here directly. We need to
     // figure out whether it's safe to give |font_manager_| to PaintTypeface and
     // what that means on the GPU side.
-    auto tf = sk_sp<SkTypeface>(font_manager_->matchFamilyStyle(
+    auto tf = sk_ref_sp(font_manager_->matchFamilyStyle(
         name.data(), font_description.SkiaFontStyle()));
     return PaintTypeface::FromSkTypeface(std::move(tf));
   }
