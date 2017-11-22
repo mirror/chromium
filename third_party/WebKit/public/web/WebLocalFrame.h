@@ -547,9 +547,10 @@ class WebLocalFrame : public WebFrame {
   // pairs in the requested range.
   virtual void DeleteSurroundingTextInCodePoints(int before, int after) = 0;
 
-  virtual void ExtractSmartClipData(WebRect rect_in_viewport,
+  virtual void ExtractSmartClipData(const WebRect& rect_in_viewport,
                                     WebString& clip_text,
-                                    WebString& clip_html) = 0;
+                                    WebString& clip_html,
+                                    WebRect& clip_rect) = 0;
 
   // Spell-checking support -------------------------------------------------
   virtual void SetTextCheckClient(WebTextCheckClient*) = 0;

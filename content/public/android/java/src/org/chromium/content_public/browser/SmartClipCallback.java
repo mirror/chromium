@@ -4,10 +4,12 @@
 
 package org.chromium.content_public.browser;
 
+import android.graphics.Rect;
+
 /**
   * An interface that allows the embedder to be notified when the results of
   * extractSmartClipData are available.
   */
 public interface SmartClipCallback {
-    void onSmartClipDataExtracted(String text, String html);
+    void onSmartClipDataExtracted(String text, String html, Rect clipRect);
 }

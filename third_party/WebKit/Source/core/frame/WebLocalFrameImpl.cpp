@@ -2485,11 +2485,13 @@ WebInputMethodController* WebLocalFrameImpl::GetInputMethodController() {
   return &input_method_controller_;
 }
 
-void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,
+void WebLocalFrameImpl::ExtractSmartClipData(const WebRect& rect_in_viewport,
                                              WebString& clip_text,
-                                             WebString& clip_html) {
+                                             WebString& clip_html,
+                                             WebRect& clip_rect) {
   SmartClipData clip_data = SmartClip(GetFrame()).DataForRect(rect_in_viewport);
   clip_text = clip_data.ClipData();
+  clip_rect = clip_data.RectInViewport();
 
   WebPoint start_point(rect_in_viewport.x, rect_in_viewport.y);
   WebPoint end_point(rect_in_viewport.x + rect_in_viewport.width,

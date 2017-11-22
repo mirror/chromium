@@ -318,9 +318,10 @@ class CORE_EXPORT WebLocalFrameImpl final
   scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(TaskType) override;
   WebInputMethodController* GetInputMethodController() override;
 
-  void ExtractSmartClipData(WebRect rect_in_viewport,
+  void ExtractSmartClipData(const WebRect& rect_in_viewport,
                             WebString& clip_text,
-                            WebString& clip_html) override;
+                            WebString& clip_html,
+                            WebRect& clip_rect) override;
 
   void AdvanceFocusInForm(WebFocusType) override;
 

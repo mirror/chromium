@@ -2417,9 +2417,10 @@ void RenderFrameImpl::OnExtractSmartClipData(uint32_t id,
                                              const gfx::Rect& rect) {
   blink::WebString clip_text;
   blink::WebString clip_html;
-  GetWebFrame()->ExtractSmartClipData(rect, clip_text, clip_html);
+  blink::WebRect clip_rect;
+  GetWebFrame()->ExtractSmartClipData(rect, clip_text, clip_html, clip_rect);
   Send(new FrameHostMsg_SmartClipDataExtracted(
-      routing_id_, id, clip_text.Utf16(), clip_html.Utf16()));
+      routing_id_, id, clip_text.Utf16(), clip_html.Utf16(), clip_rect));
 }
 
 void RenderFrameImpl::OnUpdateOpener(int opener_routing_id) {
