@@ -899,13 +899,9 @@ TEST_F(AccountReconcilorTest, DiceMigrationAfterNoop) {
   cookie_manager_service()->SetListAccountsResponseOneAccount("user@gmail.com",
                                                               "12345");
   AccountReconcilor* reconcilor = GetMockReconcilor();
-  signin::DiceAccountReconcilorDelegate* dice_delegate =
-      static_cast<signin::DiceAccountReconcilorDelegate*>(
-          reconcilor->delegate_.get());
-
   // Dice is not enabled by default.
   ASSERT_FALSE(signin::IsDiceEnabledForProfile(profile()->GetPrefs()));
-  EXPECT_FALSE(dice_delegate->IsAccountConsistencyEnforced());
+  EXPECT_FALSE(reconcilor->delegate_->IsAccountConsistencyEnforced());
 
   // No-op reconcile.
   EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(testing::_)).Times(0);
@@ -917,8 +913,10 @@ TEST_F(AccountReconcilorTest, DiceMigrationAfterNoop) {
   ASSERT_EQ(signin_metrics::ACCOUNT_RECONCILOR_OK, reconcilor->GetState());
 
   // Migration will happen on next startup.
-  EXPECT_TRUE(
-      dice_delegate->IsReadyForDiceMigration(false /* is_new_profile */));
+  // TODO(droger): re-enable this check once the test is moved to the signin
+  // component.
+  // EXPECT_TRUE(
+  //    dice_delegate->IsReadyForDiceMigration(false /* is_new_profile */));
   EXPECT_FALSE(signin::IsDiceEnabledForProfile(profile()->GetPrefs()));
   EXPECT_FALSE(reconcilor->delegate_->IsAccountConsistencyEnforced());
 }
@@ -934,13 +932,10 @@ TEST_F(AccountReconcilorTest, DiceNoMigrationAfterReconcile) {
   token_service()->UpdateCredentials(account_id, "refresh_token");
   cookie_manager_service()->SetListAccountsResponseNoAccounts();
   AccountReconcilor* reconcilor = GetMockReconcilor();
-  signin::DiceAccountReconcilorDelegate* dice_delegate =
-      static_cast<signin::DiceAccountReconcilorDelegate*>(
-          reconcilor->delegate_.get());
 
   // Dice is not enabled by default.
   ASSERT_FALSE(signin::IsDiceEnabledForProfile(profile()->GetPrefs()));
-  EXPECT_FALSE(dice_delegate->IsAccountConsistencyEnforced());
+  EXPECT_FALSE(reconcilor->delegate_->IsAccountConsistencyEnforced());
 
   // Busy reconcile.
   EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(account_id));
@@ -953,10 +948,12 @@ TEST_F(AccountReconcilorTest, DiceNoMigrationAfterReconcile) {
   ASSERT_EQ(signin_metrics::ACCOUNT_RECONCILOR_OK, reconcilor->GetState());
 
   // Migration did not happen.
-  EXPECT_FALSE(
-      dice_delegate->IsReadyForDiceMigration(false /* is_new_profile */));
+  // TODO(droger): re-enable this check once the test is moved to the signin
+  // component.
+  // EXPECT_FALSE(
+  //    dice_delegate->IsReadyForDiceMigration(false /* is_new_profile */));
   EXPECT_FALSE(signin::IsDiceEnabledForProfile(profile()->GetPrefs()));
-  EXPECT_FALSE(dice_delegate->IsAccountConsistencyEnforced());
+  EXPECT_FALSE(reconcilor->delegate_->IsAccountConsistencyEnforced());
 }
 
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
