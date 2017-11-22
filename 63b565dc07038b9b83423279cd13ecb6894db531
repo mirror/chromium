@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a0bfd8f_0ceb3539",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T03:54:47Z",
+      "side": 1,
+      "message": "Every private method in this file has a predeclaration",
+      "range": {
+        "startLine": 392,
+        "startChar": 3,
+        "endLine": 392,
+        "endChar": 24
+      },
+      "revId": "63b565dc07038b9b83423279cd13ecb6894db531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b0fe29_ba4e9ce0",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-22T03:54:47Z",
+      "side": 1,
+      "message": "From Style Guide: \"A method that returns an object should have a name beginning with a noun identifying the object returned\"\nhttp://go/objc-style#Objective-C_Method_Names\n\n|new| prefix is acceptable however.",
+      "range": {
+        "startLine": 392,
+        "startChar": 26,
+        "endLine": 392,
+        "endChar": 50
+      },
+      "revId": "63b565dc07038b9b83423279cd13ecb6894db531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
