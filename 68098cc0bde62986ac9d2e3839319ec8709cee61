@@ -16,6 +16,24 @@
       "revId": "68098cc0bde62986ac9d2e3839319ec8709cee61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94e4d22_d7b1f338",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-22T06:45:32Z",
+      "side": 1,
+      "message": "Hm, so let me remove this comment as it seems confusing...",
+      "parentUuid": "7302a574_1240be08",
+      "revId": "68098cc0bde62986ac9d2e3839319ec8709cee61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
