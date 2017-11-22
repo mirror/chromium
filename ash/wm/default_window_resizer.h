@@ -34,9 +34,10 @@ class ASH_EXPORT DefaultWindowResizer : public WindowResizer {
   void CompleteDrag() override;
   void RevertDrag() override;
 
- private:
+ protected:
   explicit DefaultWindowResizer(wm::WindowState* window_state);
 
+ private:
   // Set to true once Drag() is invoked and the bounds of the window change.
   bool did_move_or_resize_;
 

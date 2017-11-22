@@ -73,16 +73,18 @@ const struct {
     {ui::VKEY_W, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN},
     {ui::VKEY_F4, ui::EF_ALT_DOWN}};
 
-class CustomFrameView : public ash::CustomFrameViewAshBase {
+class CustomFrameView : public ash::CustomFrameViewAsh {
  public:
   using ShapeRects = std::vector<gfx::Rect>;
 
-  explicit CustomFrameView(views::Widget* widget) : widget_(widget) {}
+  explicit CustomFrameView(views::Widget* widget) : CustomFrameViewAsh(widget) {
+    ash::CustomFrameViewAsh::SetShouldPaintHeader(false);
+  }
   ~CustomFrameView() override {}
 
   // Overridden from ash::CustomFrameViewAshBase:
   void SetShouldPaintHeader(bool paint) override {
-    aura::Window* window = widget_->GetNativeWindow();
+    aura::Window* window = GetWidget()->GetNativeWindow();
     ui::Layer* layer = window->layer();
     if (paint) {
       if (layer->alpha_shape()) {
@@ -110,6 +112,7 @@ class CustomFrameView : public ash::CustomFrameViewAshBase {
       const gfx::Rect& client_bounds) const override {
     return client_bounds;
   }
+  /*
   int NonClientHitTest(const gfx::Point& point) override {
     return widget_->client_view()->NonClientHitTest(point);
   }
@@ -118,9 +121,10 @@ class CustomFrameView : public ash::CustomFrameViewAshBase {
   void UpdateWindowIcon() override {}
   void UpdateWindowTitle() override {}
   void SizeConstraintsChanged() override {}
+  */
 
  private:
-  views::Widget* const widget_;
+  // views::Widget* const widget_;
 
   DISALLOW_COPY_AND_ASSIGN(CustomFrameView);
 };
