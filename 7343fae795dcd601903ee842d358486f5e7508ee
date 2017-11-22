@@ -22,6 +22,30 @@
       "revId": "7343fae795dcd601903ee842d358486f5e7508ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365583cc_287abee8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-22T02:56:26Z",
+      "side": 1,
+      "message": "Yes, it is possible to end up in this situation in the case of a TrustedWebActivity (that Yusuf is working on). I have tested this and it seems to do the right thing - The WebappActivity is closed and the CCT is launched",
+      "parentUuid": "e600a97f_372bf3db",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 66
+      },
+      "revId": "7343fae795dcd601903ee842d358486f5e7508ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
