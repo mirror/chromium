@@ -3468,6 +3468,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <message name="IDS_EXTENSION_RATING_COUNT" desc="Number of ratings an app or extensions has (displayed after star icons)">
         (<ph name="RATING_COUNT">$1<ex>46</ex></ph>)
       </message>
+      <message name="IDS_EXTENSION_PROMPT_RATING_ACCESSIBLE_TEXT" desc="The text read by a screen reader for the ratings section of an extension prompt, indicating to the user what the average rating for an extension is and how many times it has been rated.">
+        Rated <ph name="AVERAGE_RATING">$1<ex>3.2</ex></ph> by <ph name="NUMBER_OF_RATINGS">$2<ex>400</ex></ph> users.
+      </message>
       <message name="IDS_EXTENSION_USER_COUNT" desc="Number of users an app or extension has">
         <ph name="USER_COUNT">$1<ex>10,479</ex></ph> users
       </message>
