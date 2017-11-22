@@ -50,7 +50,6 @@ class MediaControls;
 class Page;
 class Settings;
 class ShadowRoot;
-class WebCredentialManagerClient;
 class WebFrameClient;
 class WebLayerTreeView;
 class WebMediaPlayer;
@@ -113,10 +112,6 @@ class CORE_EXPORT CoreInitializer {
 
   virtual WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
       HTMLMediaElement&) const = 0;
-
-  virtual void ProvideCredentialManagerClient(
-      Page&,
-      WebCredentialManagerClient*) const = 0;
 
   virtual void ProvideModulesToPage(Page&, WebViewClient*) const = 0;
   virtual void ForceNextWebGLContextCreationToFail() const = 0;

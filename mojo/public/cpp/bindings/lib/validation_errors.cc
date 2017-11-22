@@ -4,6 +4,7 @@
 
 #include "mojo/public/cpp/bindings/lib/validation_errors.h"
 
+#include "base/debug/stack_trace.h"
 #include "base/strings/stringprintf.h"
 #include "mojo/public/cpp/bindings/message.h"
 
@@ -66,6 +67,7 @@ const char* ValidationErrorToString(ValidationError error) {
 void ReportValidationError(ValidationContext* context,
                            ValidationError error,
                            const char* description) {
+  base::debug::StackTrace().Print();
   if (g_validation_error_observer) {
     g_validation_error_observer->set_last_error(error);
     return;

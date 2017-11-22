@@ -158,7 +158,7 @@ class CORE_EXPORT WebViewImpl final
 
   // WebView methods:
   virtual bool IsWebView() const { return true; }
-  void SetCredentialManagerClient(WebCredentialManagerClient*) override;
+  void SetCredentialManagerProxy(WebCredentialManagerProxy*) override;
   void SetPrerendererClient(WebPrerendererClient*) override;
   WebSettings* GetSettings() override;
   WebString PageEncoding() const override;

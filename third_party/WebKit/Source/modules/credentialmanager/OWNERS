@@ -1,3 +1,6 @@
+engedy@chromium.org
 mkwst@chromium.org
+vasilii@chromium.org
 
-# COMPONENT: UI>Browser>Passwords
+# COMPONENT: Blink>SecurityFeature>CredentialManagement
+# TEAM: identity-dev@chromium.org
