@@ -16,6 +16,24 @@
       "revId": "dafda5654b89d4fbf7f11436557e6ad3e9fdbbd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b49ad7_1adccdba",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-22T21:02:49Z",
+      "side": 0,
+      "message": "Yea, that certainly not intended. I hope no apps rely on that behavior!",
+      "parentUuid": "66c71d9b_ccabcedc",
+      "revId": "dafda5654b89d4fbf7f11436557e6ad3e9fdbbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
