@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e0efe660_a5e69a14",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-22T16:23:41Z",
+      "side": 1,
+      "message": "Gotcha, you can get rid of the call to add \"event_source-\u003eAddPlatformEventDispatcher(this);\" which makes things more clear.",
+      "parentUuid": "496875d4_80532871",
+      "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57576068_3c8a4eca",
         "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
         "patchSetId": 5
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Oh? Why is the input an XEvent, in that case?",
       "parentUuid": "e3e0969c_3acba747",
+      "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80b1110_2ba062cd",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-22T16:23:41Z",
+      "side": 1,
+      "message": "It\u0027s more like CheckCanDispatchNextPlatformEventThatWasTranslatedFromXEvent(XEvent*) but that\u0027s a bit of a mouthful. :)",
+      "parentUuid": "d9eee262_90bcb895",
       "revId": "210112fee8c87397a3a92e02a3915182fd524d73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
