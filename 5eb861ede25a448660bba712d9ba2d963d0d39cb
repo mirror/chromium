@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95e344f6_cfcee79a",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Move into GLRenderer\u0027s directory.",
+      "parentUuid": "2479d63b_3f93b040",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b26e820c_bf63dc3b",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-20T22:39:47Z",
       "side": 1,
       "message": "I think ScopedTexture is a more literal description of what this class is.",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c76fcc_4b5c579b",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Name it as ScopedRenderPassTexture. ScopedTexture has been used in gl_helper.h",
+      "parentUuid": "b26e820c_bf63dc3b",
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "875b5350_653326d0",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "In case GLRenderer::UpdateRenderPassTextures frees it. Then this turns into a Resource without being allocated.",
+      "parentUuid": "fd02f867_66b20fe9",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "541bceb0_39a3a57a",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5e2d9f17_dd96bbcc",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "541bceb0_39a3a57a",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a20b8927_c19a6435",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-20T22:39:47Z",
       "side": 1,
       "message": "This bool can go away if we do this in constructor.",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef445d2_78747b09",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "In case GLRenderer::UpdateRenderPassTextures may free it.",
+      "parentUuid": "a20b8927_c19a6435",
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6bf5f6ae_4e8b462c",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "GLRenderer::UpdateRenderPassTextures may free it.",
+      "parentUuid": "0d8f5257_f7c5c27b",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36ec6ff7_6f2a661c",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
@@ -118,6 +226,24 @@
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c71f40_0c7e823c",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ec6ff7_6f2a661c",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1243eeac_eab1f39b",
+        "filename": "components/viz/common/resources/scoped_local_resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7efb8db0_572be5cc",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6caeb677_b8b3ea33",
         "filename": "components/viz/common/resources/scoped_local_resource.h",
         "patchSetId": 18
@@ -152,6 +296,24 @@
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699c58f3_48fdf78b",
+        "filename": "components/viz/common/resources/scoped_local_resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6caeb677_b8b3ea33",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "043c1fe2_558f2d66",
+        "filename": "components/viz/common/resources/scoped_local_resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d72833c_48131301",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec26793b_0187c6d9",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -186,6 +366,24 @@
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7dac33a_18171b89",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec26793b_0187c6d9",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "f03da16b_a0d654a8",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0997396c_e83b99fb",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ccac4c_bf3157b1",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -217,6 +433,24 @@
       "writtenOn": "2017-11-20T22:39:47Z",
       "side": 1,
       "message": "Should this name be changing to match the variable its tracking?\n\nOr if we remove the color space from the Scoped object then it could track it for that case too?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2ce90c_8dabffe0",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Yes, this is used for two cases, contents_texture and bypass case. How about simply name it color_space?",
+      "parentUuid": "31ccac4c_bf3157b1",
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "89d0cd13_794380a8",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Move this from the Scoped object to GLRenderer::current_framebuffer_colorspace_",
+      "parentUuid": "3dc8aa8e_b225233a",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e607c39_aaf27936",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -254,6 +506,24 @@
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5627394_888927bc",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e607c39_aaf27936",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "e89605af_ae9b19f6",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98071407_c61cb904",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8ba42b2_6a40ffe0",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -288,6 +576,24 @@
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c333c3_01735e32",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ba42b2_6a40ffe0",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "c0e2354b_42f4ed2d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae88188_29be4cba",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e531933d_961a08aa",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -319,6 +643,24 @@
       "writtenOn": "2017-11-20T22:39:47Z",
       "side": 1,
       "message": "It seems like the hint() is being hardcoded, so why do we need to check it here? What would we do if this was wrong, we\u0027d still be using that hint? The hint here can include mipmap, right?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956715f7_269f585f",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3609,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "The texture-\u003ehint is framebuffer only. I think it is OK to remove the whole line.",
+      "parentUuid": "e531933d_961a08aa",
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "e2c06490_a73a1035",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3632,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb82a3c_06b6b7ab",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9b8af84_26dd2783",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -353,6 +713,24 @@
       "writtenOn": "2017-11-20T22:39:47Z",
       "side": 1,
       "message": "It seems like this would always be true, the DCHECK agrees. So just return if the find() \u003d\u003d end or not?",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9200646_aa55bd80",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3646,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "It has the possibility to be freed at GLRenderer::UpdateRenderPassTextures, but not removed from  render_pass_textures_.",
+      "parentUuid": "e9b8af84_26dd2783",
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -373,6 +751,24 @@
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a25d94_a83b301a",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-22T01:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acdfb350_a885d2ff",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
