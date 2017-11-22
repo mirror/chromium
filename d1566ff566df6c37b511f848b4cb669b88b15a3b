@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a6a61d_fe625bf6",
+        "filename": "chrome/browser/vr/vr_assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-22T15:05:04Z",
+      "side": 1,
+      "message": "Drive-by comment as I\u0027m reviewing the follow-on change.  Because we\u0027re in VR directories and VR namespace, we should be dropping the VR prefix going forward.  Eg. vr::AutocompleteController.",
+      "revId": "d1566ff566df6c37b511f848b4cb669b88b15a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
