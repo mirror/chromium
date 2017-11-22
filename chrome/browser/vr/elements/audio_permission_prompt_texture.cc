@@ -91,6 +91,7 @@ void AudioPermissionPromptTexture::Draw(SkCanvas* sk_canvas,
   GetFontList(ToPixels(kFontSizePromptButtonText), text, &fonts);
 
   // Secondary button area.
+  // TODO(https://crbug.com/787654): Only uppercase on Android.
   text = base::i18n::ToUpper(l10n_util::GetStringUTF16(
       IDS_VR_SHELL_AUDIO_PERMISSION_PROMPT_ABORT_BUTTON));
   lines = PrepareDrawStringRect(
@@ -115,6 +116,7 @@ void AudioPermissionPromptTexture::Draw(SkCanvas* sk_canvas,
   canvas->Restore();
 
   // Primary button area.
+  // TODO(https://crbug.com/787654): Only uppercase on Android.
   text = base::i18n::ToUpper(l10n_util::GetStringUTF16(
       IDS_VR_SHELL_AUDIO_PERMISSION_PROMPT_CONTINUE_BUTTON));
   button_text_size.set_size(gfx::Size(ToPixels(kButtonWidth), 0));
