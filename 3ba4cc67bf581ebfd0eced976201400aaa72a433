@@ -472,6 +472,24 @@
     },
     {
       "key": {
+        "uuid": "c997179c_3a9a9024",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-11-22T22:42:08Z",
+      "side": 1,
+      "message": "It\u0027d need to be ui::Clipboard::GetForCurrentThread()-\u003eReadAsciiText(ui::CLIPBOARD_TYPE_COPY_PASTE, \u0026clipboard_text) right, which looks super weird when the rest of the test uses BrowserTestClipboardScope.\n\nI think it would be better to remove BrowserTestClipboardScope altogether - which I can do now if you really want but I think would work better as a follow up CL.\n\nWDYT?",
+      "parentUuid": "f62552e4_99e7cba7",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21402732_a289cf8b",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 17
