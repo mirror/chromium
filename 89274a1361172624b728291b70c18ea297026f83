@@ -93,6 +93,30 @@
       "revId": "89274a1361172624b728291b70c18ea297026f83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8f631d_3c06eed5",
+        "filename": "services/resource_coordinator/observers/metrics_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-22T21:09:15Z",
+      "side": 1,
+      "message": "I think in general we would want to avoid depending on components/. But I just took a look at test_ukm_recorder.h and its dependency, I think in this case, we should be fine using it directly.\n\nSo I am supportive to use test_ukm_recorder.h here.",
+      "parentUuid": "272c9b56_1a12f5d4",
+      "range": {
+        "startLine": 399,
+        "startChar": 18,
+        "endLine": 399,
+        "endChar": 37
+      },
+      "revId": "89274a1361172624b728291b70c18ea297026f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
