@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dcccc55_7757279d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-22T22:42:50Z",
+      "side": 1,
+      "message": "We\u0027re doing other UMA for unsupported modes here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/android/vr_shell/vr_shell.cc?rcl\u003d680a1eabe12d1e623eddc66ee0263e31ad4bad13\u0026l\u003d652\n\nCould your metrics be integrated with that?",
+      "revId": "38516468fe97e047447b497c0cc9bb2917de21ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
