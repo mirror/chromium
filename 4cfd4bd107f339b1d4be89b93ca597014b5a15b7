@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "565dbf32_cd38b34d",
+        "filename": "ui/web_dialogs/web_dialog_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-22T02:59:10Z",
+      "side": 1,
+      "message": "Well, they should. I don\u0027t know if they do. If impls were suppose to always return a value, |size| should have been just returned, instead of an out param.",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "4cfd4bd107f339b1d4be89b93ca597014b5a15b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
