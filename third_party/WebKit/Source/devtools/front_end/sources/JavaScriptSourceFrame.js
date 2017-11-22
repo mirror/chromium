@@ -741,23 +741,30 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
 
         var highlightRange = new TextUtils.TextRange(lineNumber, token.startColumn, lineNumber, token.endColumn - 1);
         var decoration = this.textEditor.highlightRange(highlightRange, 'source-frame-continue-to-location');
-        this._continueToLocationDecorations.set(decoration, location.continueToLocation.bind(location));
         if (location.type === Protocol.Debugger.BreakLocationType.Call)
           previousCallLine = lineNumber;
 
         var isAsyncCall = (line[token.startColumn - 1] === '.' && tokenContent === 'then') ||
-            tokenContent === 'setTimeout' || tokenContent === 'setInterval';
+            tokenContent === 'setTimeout' || tokenContent === 'setInterval' || tokenContent === 'postMessage' ||
+            tokenContent === 'new';
         var isCurrentPosition = this._executionLocation && lineNumber === this._executionLocation.lineNumber &&
             location.columnNumber === this._executionLocation.columnNumber;
         if (location.type === Protocol.Debugger.BreakLocationType.Call && isAsyncCall) {
           var asyncStepInRange = this._findAsyncStepInRange(this.textEditor, lineNumber, line, token.endColumn);
+          if (!asyncStepInRange && isCurrentPosition) {
+            asyncStepInRange = {from: token.startColumn, to: token.endColumn};
+          }
           if (asyncStepInRange) {
             highlightRange =
                 new TextUtils.TextRange(lineNumber, asyncStepInRange.from, lineNumber, asyncStepInRange.to - 1);
             decoration = this.textEditor.highlightRange(highlightRange, 'source-frame-async-step-in');
             this._continueToLocationDecorations.set(
                 decoration, this._asyncStepIn.bind(this, location, isCurrentPosition));
+          } else {
+            this._continueToLocationDecorations.set(decoration, location.continueToLocation.bind(location));
           }
+        } else {
+          this._continueToLocationDecorations.set(decoration, location.continueToLocation.bind(location));
         }
       }
 
@@ -854,7 +861,6 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
 
     function asyncStepIn() {
       location.debuggerModel.scheduleStepIntoAsync();
-      location.debuggerModel.stepInto();
     }
   }
 

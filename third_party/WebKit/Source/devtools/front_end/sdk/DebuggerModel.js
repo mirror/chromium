@@ -118,6 +118,9 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     enablePromise.then(this._registerDebugger.bind(this));
     this._pauseOnExceptionStateChanged();
     this._asyncStackTracesStateChanged();
+    if (SDK.DebuggerModel._scheduledPauseOnAsyncCall) {
+      this.pauseOnAsyncCall(SDK.DebuggerModel._scheduledPauseOnAsyncCall);
+    }
     this.dispatchEventToListeners(SDK.DebuggerModel.Events.DebuggerWasEnabled, this);
     return enablePromise;
   }
@@ -210,7 +213,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
   }
 
   scheduleStepIntoAsync() {
-    this._agent.scheduleStepIntoAsync();
+    this._agent.invoke_stepInto({breakOnAsyncCall: true});
   }
 
   resume() {
@@ -222,6 +225,14 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     this._isPausing = true;
     this._skipAllPauses(false);
     this._agent.pause();
+  }
+
+  /**
+   * @param {!Protocol.Runtime.StackTraceId} parentStackTraceId
+   * @return {!Promise<void>}
+   */
+  pauseOnAsyncCall(parentStackTraceId) {
+    return this._agent.invoke_pauseOnAsyncCall({parentStackTraceId: parentStackTraceId}).then(() => undefined);
   }
 
   /**
@@ -487,8 +498,18 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @param {!Array.<string>} breakpointIds
    * @param {!Protocol.Runtime.StackTrace=} asyncStackTrace
    * @param {!Protocol.Runtime.StackTraceId=} asyncStackTraceId
+   * @param {!Protocol.Runtime.StackTraceId=} asyncCallStackTraceId
    */
-  _pausedScript(callFrames, reason, auxData, breakpointIds, asyncStackTrace, asyncStackTraceId) {
+  async _pausedScript(
+      callFrames, reason, auxData, breakpointIds, asyncStackTrace, asyncStackTraceId, asyncCallStackTraceId) {
+    if (asyncCallStackTraceId) {
+      SDK.DebuggerModel._scheduledPauseOnAsyncCall = asyncCallStackTraceId;
+      await Promise.all(Array.from(SDK.DebuggerModel._debuggerIdToModel.values())
+                            .map(model => model.pauseOnAsyncCall(asyncCallStackTraceId)));
+      this.resume();
+      return;
+    }
+
     var pausedDetails = new SDK.DebuggerPausedDetails(
         this, callFrames, reason, auxData, breakpointIds, asyncStackTrace, asyncStackTraceId);
 
@@ -498,6 +519,8 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
       if (callback(pausedDetails))
         return;
     }
+
+    SDK.DebuggerModel._scheduledPauseOnAsyncCall = null;
 
     if (!this._setDebuggerPausedDetails(pausedDetails))
       this._agent.stepInto();
@@ -868,6 +891,9 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
 /** @type {!Map<string, !SDK.DebuggerModel>} */
 SDK.DebuggerModel._debuggerIdToModel = new Map();
 
+/** @type {?Protocol.Runtime.StackTraceId} */
+SDK.DebuggerModel._scheduledPauseOnAsyncCall = null;
+
 /** @type {!Map<string, string>} */
 SDK.DebuggerModel._fileURLToNodeJSPath = new Map();
 
@@ -959,10 +985,11 @@ SDK.DebuggerDispatcher = class {
    * @param {!Array.<string>=} breakpointIds
    * @param {!Protocol.Runtime.StackTrace=} asyncStackTrace
    * @param {!Protocol.Runtime.StackTraceId=} asyncStackTraceId
+   * @param {!Protocol.Runtime.StackTraceId=} asyncCallStackTraceId
    */
-  paused(callFrames, reason, auxData, breakpointIds, asyncStackTrace, asyncStackTraceId) {
+  paused(callFrames, reason, auxData, breakpointIds, asyncStackTrace, asyncStackTraceId, asyncCallStackTraceId) {
     this._debuggerModel._pausedScript(
-        callFrames, reason, auxData, breakpointIds || [], asyncStackTrace, asyncStackTraceId);
+        callFrames, reason, auxData, breakpointIds || [], asyncStackTrace, asyncStackTraceId, asyncCallStackTraceId);
   }
 
   /**
