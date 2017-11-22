@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f701a0f_cce7cc83",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-22T16:05:44Z",
+      "side": 1,
+      "message": "Yeah app button only exits presentation when browsing is enabled, which is only true for CTA.\n\nThe test below verifies this behavior (testAppButtonNoopsWhenBrowsingDisabled).",
+      "parentUuid": "b77e58a9_592bc982",
+      "range": {
+        "startLine": 237,
+        "startChar": 16,
+        "endLine": 237,
+        "endChar": 46
+      },
+      "revId": "4e99a7aaf7b7533562b4fe3f5a530c84a9e66f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8fbd17f_aa930416",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-22T01:27:29Z",
       "side": 1,
       "message": "This test fails when run in a WebappActivity - is NFC supposed to work in that activity type?",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 45
+      },
+      "revId": "4e99a7aaf7b7533562b4fe3f5a530c84a9e66f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babab82a_c6cfe259",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-22T16:05:44Z",
+      "side": 1,
+      "message": "This is surprising. Sounds like a bug, mind filing one?",
+      "parentUuid": "b8fbd17f_aa930416",
       "range": {
         "startLine": 124,
         "startChar": 16,
