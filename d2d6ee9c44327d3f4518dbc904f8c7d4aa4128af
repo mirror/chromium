@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "079c3cd4_27718f9e",
+        "filename": "content/public/test/content_browser_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-22T21:38:45Z",
+      "side": 0,
+      "message": "nit: it\u0027s helpful to put the error message in the dcheck, so that if it fires on bots people know what to do. e.g.\nDCHECK_EQ(base::FieldTrialList::GetFieldTrialCount(), 0u) \u003c\u003c \"Please setup FieldTrial at SetUpOnMainThread\";",
+      "revId": "d2d6ee9c44327d3f4518dbc904f8c7d4aa4128af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
