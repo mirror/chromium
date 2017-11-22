@@ -8,6 +8,7 @@
 
 #include <limits>
 
+#include "base/auto_reset.h"
 #include "base/logging.h"
 #include "base/mac/call_with_eh_frame.h"
 #include "base/mac/scoped_cftyperef.h"
@@ -662,19 +663,22 @@ MessagePumpCFRunLoop::~MessagePumpCFRunLoop() {}
 // the same number of CFRunLoopRun loops must be running for the outermost call
 // to Run.  Run/DoRun are reentrant after that point.
 void MessagePumpCFRunLoop::DoRun(Delegate* delegate) {
+  int result;
   // This is completely identical to calling CFRunLoopRun(), except autorelease
   // pool management is introduced.
-  int result;
+  LOG(INFO) << "Entering MessagePumpCFRunLoop::DoRun() for " << this;
   do {
     MessagePumpScopedAutoreleasePool autorelease_pool(this);
     result = CFRunLoopRunInMode(kCFRunLoopDefaultMode,
                                 kCFTimeIntervalMax,
                                 false);
   } while (result != kCFRunLoopRunStopped && result != kCFRunLoopRunFinished);
+  LOG(INFO) << "Finished MessagePumpCFRunLoop::DoRun() for " << this << " result " << result;
 }
 
 // Must be called on the run loop thread.
 void MessagePumpCFRunLoop::Quit() {
+  LOG(INFO) << "MessagePumpCFRunLoop::Quit() for " << this;
   // Stop the innermost run loop managed by this MessagePumpCFRunLoop object.
   if (nesting_level() == run_nesting_level()) {
     // This object is running the innermost loop, just stop it.
@@ -719,16 +723,19 @@ MessagePumpNSRunLoop::~MessagePumpNSRunLoop() {
 }
 
 void MessagePumpNSRunLoop::DoRun(Delegate* delegate) {
+  LOG(INFO) << "Entering MessagePumpNSRunLoop::DoRun() for " << this;
+  AutoReset<bool> auto_reset_keep_running(&keep_running_, true);
+
   while (keep_running_) {
     // NSRunLoop manages autorelease pools itself.
     [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
                              beforeDate:[NSDate distantFuture]];
   }
-
-  keep_running_ = true;
+  LOG(INFO) << "Quitting MessagePumpNSRunLoop::DoRun() for " << this;
 }
 
 void MessagePumpNSRunLoop::Quit() {
+  LOG(INFO) << "MessagePumpNSRunLoop::Quit() for " << this;
   keep_running_ = false;
   CFRunLoopSourceSignal(quit_source_);
   CFRunLoopWakeUp(run_loop());
@@ -789,6 +796,7 @@ MessagePumpNSApplication::~MessagePumpNSApplication() {
 }
 
 void MessagePumpNSApplication::DoRun(Delegate* delegate) {
+  AutoReset<bool> auto_reset_keep_running(&keep_running_, true);
   bool last_running_own_loop_ = running_own_loop_;
 
   // NSApp must be initialized by calling:
@@ -800,28 +808,43 @@ void MessagePumpNSApplication::DoRun(Delegate* delegate) {
 
   if (![NSApp isRunning]) {
     running_own_loop_ = false;
+    LOG(INFO) << "MessagePumpNSApplication::DoRun() running_own_loop_==" << running_own_loop_ << " for " << this
+    << " with keep_running_ " << keep_running_;
     // NSApplication manages autorelease pools itself when run this way.
     [NSApp run];
+    LOG(INFO) << "MessagePumpNSApplication::DoRun() done, keep_running_=="
+    << keep_running_;
   } else {
     running_own_loop_ = true;
+    LOG(INFO) << "MessagePumpNSApplication::DoRun() running_own_loop_==" << running_own_loop_ << " for " << this
+    << " with keep_running_ " << keep_running_;
     NSDate* distant_future = [NSDate distantFuture];
     while (keep_running_) {
       MessagePumpScopedAutoreleasePool autorelease_pool(this);
+      LOG(INFO) << "MessagePumpNSApplication::DoRun() popping event";
       NSEvent* event = [NSApp nextEventMatchingMask:NSAnyEventMask
                                           untilDate:distant_future
                                              inMode:NSDefaultRunLoopMode
                                             dequeue:YES];
+      LOG(INFO) << "MessagePumpNSApplication::DoRun() popped event";
       if (event) {
+        LOG(INFO) << "MessagePumpNSApplication::DoRun() sending event";
         [NSApp sendEvent:event];
+        LOG(INFO) << "MessagePumpNSApplication::DoRun() sent event";
       }
+      LOG(INFO) << "MessagePumpNSApplication::DoRun() continue";
     }
-    keep_running_ = true;
   }
 
+  LOG(INFO) << "MessagePumpNSApplication::DoRun() finished for " << this
+  << " running_own_loop_==" << running_own_loop_ << " (now set to "
+  << last_running_own_loop_ << ")";
   running_own_loop_ = last_running_own_loop_;
 }
 
 void MessagePumpNSApplication::Quit() {
+  LOG(INFO) << "MessagePumpNSApplication::Quit() running_own_loop_==" << running_own_loop_ << " for " << this;
+  // Does this work well for the case where the runloop hasn't started yet?
   if (!running_own_loop_) {
     [[NSApplication sharedApplication] stop:nil];
   } else {

@@ -28,6 +28,8 @@ MessagePumpDefault::~MessagePumpDefault() {}
 
 void MessagePumpDefault::Run(Delegate* delegate) {
   AutoReset<bool> auto_reset_keep_running(&keep_running_, true);
+  LOG(INFO) << "MessagePumpDefault::Run() " << this << " keep_running_=="
+            << keep_running_;
 
   for (;;) {
 #if defined(OS_MACOSX)
@@ -68,6 +70,7 @@ void MessagePumpDefault::Run(Delegate* delegate) {
 }
 
 void MessagePumpDefault::Quit() {
+  LOG(INFO) << "MessagePumpDefault::Quit() for " << this;
   keep_running_ = false;
 }
 

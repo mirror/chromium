@@ -205,6 +205,8 @@ static void timer_callback(int fd, short events, void* context) {
 
 // Reentrant!
 void MessagePumpLibevent::Run(Delegate* delegate) {
+  LOG(INFO) << "MessagePumpLibevent::Run() keep_running_==" << keep_running_;
+
   AutoReset<bool> auto_reset_keep_running(&keep_running_, true);
   AutoReset<bool> auto_reset_in_run(&in_run_, true);
 
@@ -266,6 +268,8 @@ void MessagePumpLibevent::Run(Delegate* delegate) {
     if (!keep_running_)
       break;
   }
+
+  LOG(INFO) << "MessagePumpLibevent::Run() finished";
 }
 
 void MessagePumpLibevent::Quit() {

@@ -124,7 +124,7 @@ BookmarkModel::BookmarkModel(std::unique_ptr<BookmarkClient> client)
       extensive_changes_(0),
       undo_delegate_(nullptr),
       empty_undo_delegate_(new EmptyUndoDelegate) {
-  DCHECK(client_);
+  CHECK(client_);
   client_->Init(this);
 }
 
@@ -185,7 +185,7 @@ void BookmarkModel::BeginExtensiveChanges() {
 
 void BookmarkModel::EndExtensiveChanges() {
   --extensive_changes_;
-  DCHECK_GE(extensive_changes_, 0);
+  CHECK_GE(extensive_changes_, 0);
   if (extensive_changes_ == 0) {
     for (BookmarkModelObserver& observer : observers_)
       observer.ExtensiveBookmarkChangesEnded(this);
@@ -203,9 +203,9 @@ void BookmarkModel::EndGroupedChanges() {
 }
 
 void BookmarkModel::Remove(const BookmarkNode* node) {
-  DCHECK(loaded_);
-  DCHECK(node);
-  DCHECK(!is_root_node(node));
+  CHECK(loaded_);
+  CHECK(node);
+  CHECK(!is_root_node(node));
   RemoveAndDeleteNode(AsMutable(node));
 }
 
@@ -324,8 +324,9 @@ void BookmarkModel::Copy(const BookmarkNode* node,
 }
 
 const gfx::Image& BookmarkModel::GetFavicon(const BookmarkNode* node) {
-  DCHECK(node);
+  CHECK(node);
   if (node->favicon_state() == BookmarkNode::INVALID_FAVICON) {
+    LOG(INFO) << "Loading icon for node " << node << " url " << node->url();
     BookmarkNode* mutable_node = AsMutable(node);
     LoadFavicon(mutable_node, client_->PreferTouchIcon()
                                   ? favicon_base::IconType::kTouchIcon
@@ -335,13 +336,13 @@ const gfx::Image& BookmarkModel::GetFavicon(const BookmarkNode* node) {
 }
 
 favicon_base::IconType BookmarkModel::GetFaviconType(const BookmarkNode* node) {
-  DCHECK(node);
+  CHECK(node);
   return node->favicon_type();
 }
 
 void BookmarkModel::SetTitle(const BookmarkNode* node,
                              const base::string16& title) {
-  DCHECK(node);
+  CHECK(node);
 
   if (node->GetTitle() == title)
     return;
@@ -371,10 +372,12 @@ void BookmarkModel::SetTitle(const BookmarkNode* node,
 }
 
 void BookmarkModel::SetURL(const BookmarkNode* node, const GURL& url) {
-  DCHECK(node && !node->is_folder());
+  CHECK(node && !node->is_folder());
 
   if (node->url() == url)
     return;
+
+  LOG(INFO) << "SetURL() " << node << " from " << node->url() << " to " << url;
 
   BookmarkNode* mutable_node = AsMutable(node);
   mutable_node->InvalidateFavicon();
@@ -456,7 +459,7 @@ void BookmarkModel::AddNonClonedKey(const std::string& key) {
 void BookmarkModel::SetNodeSyncTransactionVersion(
     const BookmarkNode* node,
     int64_t sync_transaction_version) {
-  DCHECK(client_->CanSyncNode(node));
+  CHECK(client_->CanSyncNode(node));
 
   if (sync_transaction_version == node->sync_transaction_version())
     return;
@@ -490,6 +493,7 @@ void BookmarkModel::OnFaviconsChanged(const std::set<GURL>& page_urls,
   }
 
   for (const BookmarkNode* node : to_update) {
+    LOG(INFO) << "******* OnFaviconChanged() requires updating " << node;
     // Rerequest the favicon.
     BookmarkNode* mutable_node = AsMutable(node);
     mutable_node->InvalidateFavicon();
@@ -500,7 +504,7 @@ void BookmarkModel::OnFaviconsChanged(const std::set<GURL>& page_urls,
 }
 
 void BookmarkModel::SetDateAdded(const BookmarkNode* node, Time date_added) {
-  DCHECK(node && !is_permanent_node(node));
+  CHECK(node && !is_permanent_node(node));
 
   if (node->date_added() == date_added)
     return;
@@ -644,7 +648,7 @@ const BookmarkNode* BookmarkModel::AddURLWithCreationTimeAndMetaInfo(
 }
 
 void BookmarkModel::SortChildren(const BookmarkNode* parent) {
-  DCHECK(client_->CanBeEditedByUser(parent));
+  CHECK(client_->CanBeEditedByUser(parent));
 
   if (!parent || !parent->is_folder() || is_root_node(parent) ||
       parent->child_count() <= 1) {
@@ -673,12 +677,12 @@ void BookmarkModel::SortChildren(const BookmarkNode* parent) {
 void BookmarkModel::ReorderChildren(
     const BookmarkNode* parent,
     const std::vector<const BookmarkNode*>& ordered_nodes) {
-  DCHECK(client_->CanBeEditedByUser(parent));
+  CHECK(client_->CanBeEditedByUser(parent));
 
   // Ensure that all children in |parent| are in |ordered_nodes|.
-  DCHECK_EQ(static_cast<size_t>(parent->child_count()), ordered_nodes.size());
+  CHECK_EQ(static_cast<size_t>(parent->child_count()), ordered_nodes.size());
   for (const BookmarkNode* node : ordered_nodes)
-    DCHECK_EQ(parent, node->parent());
+    CHECK_EQ(parent, node->parent());
 
   for (BookmarkModelObserver& observer : observers_)
     observer.OnWillReorderBookmarkNode(this, parent);
@@ -707,7 +711,7 @@ void BookmarkModel::ReorderChildren(
 
 void BookmarkModel::SetDateFolderModified(const BookmarkNode* parent,
                                           const Time time) {
-  DCHECK(parent);
+  CHECK(parent);
   AsMutable(parent)->set_date_folder_modified(time);
 
   if (store_.get())
@@ -748,7 +752,7 @@ void BookmarkModel::SetPermanentNodeVisible(BookmarkNode::Type type,
 
 const BookmarkPermanentNode* BookmarkModel::PermanentNode(
     BookmarkNode::Type type) {
-  DCHECK(loaded_);
+  CHECK(loaded_);
   switch (type) {
     case BookmarkNode::BOOKMARK_BAR:
       return bookmark_bar_node_;
@@ -808,7 +812,7 @@ void BookmarkModel::RemoveNode(BookmarkNode* node,
 }
 
 void BookmarkModel::DoneLoading(std::unique_ptr<BookmarkLoadDetails> details) {
-  DCHECK(details);
+  CHECK(details);
   if (loaded_) {
     // We should only ever be loaded once.
     NOTREACHED();
@@ -879,9 +883,9 @@ void BookmarkModel::RemoveAndDeleteNode(BookmarkNode* node_ptr) {
   std::unique_ptr<BookmarkNode> node;
 
   const BookmarkNode* parent = node_ptr->parent();
-  DCHECK(parent);
+  CHECK(parent);
   int index = parent->GetIndexOf(node_ptr);
-  DCHECK_NE(-1, index);
+  CHECK_NE(-1, index);
 
   for (BookmarkModelObserver& observer : observers_)
     observer.OnWillRemoveBookmarks(this, parent, index, node_ptr);
@@ -907,7 +911,7 @@ void BookmarkModel::RemoveNodeFromInternalMaps(BookmarkNode* node) {
   // such, this doesn't explicitly grab the lock.
   url_lock_.AssertAcquired();
   NodesOrderedByURLSet::iterator i = nodes_ordered_by_url_set_.find(node);
-  DCHECK(i != nodes_ordered_by_url_set_.end());
+  CHECK(i != nodes_ordered_by_url_set_.end());
   // i points to the first node with the URL, advance until we find the
   // node we're removing.
   while (*i != node)
@@ -921,9 +925,9 @@ std::unique_ptr<BookmarkNode> BookmarkModel::RemoveNodeAndGetRemovedUrls(
   // NOTE: this method should be always called with |url_lock_| held.
   // This method does not explicitly acquires a lock.
   url_lock_.AssertAcquired();
-  DCHECK(removed_urls);
+  CHECK(removed_urls);
   BookmarkNode* parent = node_ptr->parent();
-  DCHECK(parent);
+  CHECK(parent);
   std::unique_ptr<BookmarkNode> node = parent->Remove(node_ptr);
   RemoveNode(node_ptr, removed_urls);
   // RemoveNode adds an entry to removed_urls for each node of type URL. As we
@@ -984,7 +988,7 @@ bool BookmarkModel::IsValidIndex(const BookmarkNode* parent,
 
 BookmarkPermanentNode* BookmarkModel::CreatePermanentNode(
     BookmarkNode::Type type) {
-  DCHECK(type == BookmarkNode::BOOKMARK_BAR ||
+  CHECK(type == BookmarkNode::BOOKMARK_BAR ||
          type == BookmarkNode::OTHER_NODE ||
          type == BookmarkNode::MOBILE);
   BookmarkPermanentNode* node =
@@ -1016,20 +1020,24 @@ void BookmarkModel::OnFaviconDataAvailable(
     BookmarkNode* node,
     favicon_base::IconType icon_type,
     const favicon_base::FaviconImageResult& image_result) {
-  DCHECK(node);
+  CHECK(node);
+  LOG(INFO) << "OnFaviconDataAvailable() for node " << node;
   node->set_favicon_load_task_id(base::CancelableTaskTracker::kBadTaskId);
   node->set_favicon_state(BookmarkNode::LOADED_FAVICON);
   if (!image_result.image.IsEmpty()) {
+    LOG(INFO) << "Non-empty image";
     node->set_favicon_type(icon_type);
     node->set_favicon(image_result.image);
     node->set_icon_url(image_result.icon_url);
     FaviconLoaded(node);
   } else if (icon_type == favicon_base::IconType::kTouchIcon) {
+    LOG(INFO) << "Empty touch icon; falling back to favicon";
     // Couldn't load the touch icon, fallback to the regular favicon.
-    DCHECK(client_->PreferTouchIcon());
+    CHECK(client_->PreferTouchIcon());
     LoadFavicon(node, favicon_base::IconType::kFavicon);
   } else {
     // No favicon available, but we still notify observers.
+    LOG(INFO) << "EMPTY image";
     FaviconLoaded(node);
   }
 }
@@ -1039,7 +1047,10 @@ void BookmarkModel::LoadFavicon(BookmarkNode* node,
   if (node->is_folder())
     return;
 
-  DCHECK(node->url().is_valid());
+  LOG(INFO) << "GetFaviconImageForPageURL() for " << node->url() << " node "
+            << node;
+
+  CHECK(node->url().is_valid());
   node->set_favicon_state(BookmarkNode::LOADING_FAVICON);
   base::CancelableTaskTracker::TaskId taskId =
       client_->GetFaviconImageForPageURL(
@@ -1056,6 +1067,7 @@ void BookmarkModel::LoadFavicon(BookmarkNode* node,
 }
 
 void BookmarkModel::FaviconLoaded(const BookmarkNode* node) {
+  LOG(INFO) << "Favicon loaded for " << node << " id " << node->id() << " url " << node->url();
   for (BookmarkModelObserver& observer : observers_)
     observer.BookmarkNodeFaviconChanged(this, node);
 }

@@ -129,9 +129,11 @@ void RunThisRunLoop(base::RunLoop* run_loop) {
 void RunAllPendingInMessageLoop() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   base::RunLoop run_loop;
+  LOG(INFO) << "RunAllPendingInMessageLoop() with loop " << &run_loop;
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, GetDeferredQuitTaskForRunLoop(&run_loop));
   RunThisRunLoop(&run_loop);
+  LOG(INFO) << "RunAllPendingInMessageLoop() done for loop " << &run_loop;
 }
 
 void RunAllPendingInMessageLoop(BrowserThread::ID thread_id) {

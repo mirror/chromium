@@ -129,17 +129,21 @@ void RunLoop::RunUntilIdle() {
 
 void RunLoop::Quit() {
   // Thread-safe.
+  LOG(INFO) << "RunLoop::Quit() for " << this << " delegate " << delegate_;
 
   // This can only be hit if run_loop->Quit() is called directly (QuitClosure()
   // proxies through ProxyToTaskRunner() as it can only deref its WeakPtr on
   // |origin_task_runner_|).
   if (!origin_task_runner_->RunsTasksInCurrentSequence()) {
+    LOG(INFO) << "RunLoop::Quit() posting task for " << this << " delegate " << delegate_;
     origin_task_runner_->PostTask(
         FROM_HERE, base::BindOnce(&RunLoop::Quit, Unretained(this)));
     return;
   }
 
   quit_called_ = true;
+  LOG(INFO) << "RunLoop::Quit() for " << this << " running " << running_
+            << " delegate " << delegate_;
   if (running_ && delegate_->active_run_loops_.top() == this) {
     // This is the inner-most RunLoop, so quit now.
     delegate_->Quit();
@@ -148,6 +152,7 @@ void RunLoop::Quit() {
 
 void RunLoop::QuitWhenIdle() {
   // Thread-safe.
+  LOG(INFO) << "RunLoop::QuitWhenIdle() for " << this << " delegate " << delegate_;
 
   // This can only be hit if run_loop->QuitWhenIdle() is called directly
   // (QuitWhenIdleClosure() proxies through ProxyToTaskRunner() as it can only
@@ -262,6 +267,8 @@ RunLoop::ScopedDisallowRunningForTesting::~ScopedDisallowRunningForTesting() =
 bool RunLoop::BeforeRun() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
+  LOG(INFO) << "RunLoop::BeforeRun() for loop " << this << " delegate " << delegate_;
+
 #if DCHECK_IS_ON()
   DCHECK(delegate_->allow_running_for_testing_)
       << "RunLoop::Run() isn't allowed in the scope of a "
@@ -280,6 +287,9 @@ bool RunLoop::BeforeRun() {
   active_run_loops_.push(this);
 
   const bool is_nested = active_run_loops_.size() > 1;
+  LOG(INFO) << "RunLoop::BeforeRun() pushed loop " << this << " is_nested=="
+            << is_nested << " (allowed nesting? " << delegate_->allow_nesting_
+            << ")";
 
   if (is_nested) {
     CHECK(delegate_->allow_nesting_);
@@ -295,6 +305,7 @@ bool RunLoop::BeforeRun() {
 
 void RunLoop::AfterRun() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  LOG(INFO) << "RunLoop::AfterRun() for loop " << this << " delegate " << delegate_;
 
   running_ = false;
 
@@ -304,10 +315,13 @@ void RunLoop::AfterRun() {
 
   RunLoop* previous_run_loop =
       active_run_loops_.empty() ? nullptr : active_run_loops_.top();
+  LOG(INFO) << "RunLoop::AfterRun() for loop " << this << " popped previous_run_loop == " << previous_run_loop;
 
   // Execute deferred Quit, if any:
-  if (previous_run_loop && previous_run_loop->quit_called_)
+  if (previous_run_loop && previous_run_loop->quit_called_) {
+    LOG(INFO) << "Executing deferred quit for loop " << this << " delegate " << delegate_;
     delegate_->Quit();
+  }
 }
 
 }  // namespace base
