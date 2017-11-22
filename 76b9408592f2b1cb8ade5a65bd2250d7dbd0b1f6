@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8c7c372_da68969d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/autofill_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-22T19:13:55Z",
+      "side": 1,
+      "message": "Why is this necessary? Isn\u0027t the result of pref.value \u003d\u003d\u003d false already a boolean?",
+      "range": {
+        "startLine": 444,
+        "startChar": 21,
+        "endLine": 444,
+        "endChar": 23
+      },
+      "revId": "76b9408592f2b1cb8ade5a65bd2250d7dbd0b1f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
