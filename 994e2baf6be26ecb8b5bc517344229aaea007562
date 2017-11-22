@@ -88,6 +88,24 @@
       "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b8fa1f_f5ffc9a5",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-22T02:31:04Z",
+      "side": 1,
+      "message": "oops, sorry forgot another important command which should have been done right after git init:\n\ngit config depot-tools.upstream origin/infra/config\n\n\nSo, total thing becomes:\n\n  $ mkdir somedir\n  $ cd somedir\n  $ git init\n  $ git config depot-tools.upstream origin/infra/config\n  $ git remote add -t infra/config origin https://chromium.googlesource.com/chromium/src\n  $ git new-branch --upstream origin/infra/config some_feature   # note extra --upstream flag.\n  $ $EDITOR README.md\n  $ git commit -am \u0027Some message\u0027\n  $ git cl upload",
+      "parentUuid": "6304742e_d9967ddf",
+      "revId": "994e2baf6be26ecb8b5bc517344229aaea007562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
