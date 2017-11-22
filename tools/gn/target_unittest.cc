@@ -4,7 +4,6 @@
 
 #include "tools/gn/target.h"
 
-#include <memory>
 #include <utility>
 
 #include "testing/gtest/include/gtest/gtest.h"
@@ -590,7 +589,7 @@ TEST(Target, LinkAndDepOutputs) {
 
   Toolchain toolchain(setup.settings(), Label(SourceDir("//tc/"), "tc"));
 
-  std::unique_ptr<Tool> solink_tool = std::make_unique<Tool>();
+  std::unique_ptr<Tool> solink_tool(new Tool());
   solink_tool->set_output_prefix("lib");
   solink_tool->set_default_output_extension(".so");
 
@@ -631,7 +630,7 @@ TEST(Target, RuntimeOuputs) {
 
   Toolchain toolchain(setup.settings(), Label(SourceDir("//tc/"), "tc"));
 
-  std::unique_ptr<Tool> solink_tool = std::make_unique<Tool>();
+  std::unique_ptr<Tool> solink_tool(new Tool());
   solink_tool->set_output_prefix("");
   solink_tool->set_default_output_extension(".dll");
 

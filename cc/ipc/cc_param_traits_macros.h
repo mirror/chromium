@@ -5,7 +5,7 @@
 #ifndef CC_IPC_CC_PARAM_TRAITS_MACROS_H_
 #define CC_IPC_CC_PARAM_TRAITS_MACROS_H_
 
-#include "cc/paint/filter_operation.h"
+#include "cc/base/filter_operation.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/debug_border_draw_quad.h"
@@ -42,6 +42,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(viz::ResourceFormat, viz::RESOURCE_FORMAT_MAX)
 
 // TODO(fsamuel): This trait belongs with skia code.
 IPC_ENUM_TRAITS_MAX_VALUE(SkBlendMode, SkBlendMode::kLastMode)
+IPC_ENUM_TRAITS_MAX_VALUE(viz::YUVVideoDrawQuad::ColorSpace,
+                          viz::YUVVideoDrawQuad::COLOR_SPACE_LAST)
 
 IPC_STRUCT_TRAITS_BEGIN(viz::SurfaceSequence)
   IPC_STRUCT_TRAITS_MEMBER(frame_sink_id)

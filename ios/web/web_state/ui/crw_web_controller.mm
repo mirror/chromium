@@ -47,7 +47,6 @@
 #import "ios/web/net/crw_cert_verification_controller.h"
 #import "ios/web/net/crw_ssl_status_updater.h"
 #include "ios/web/public/browser_state.h"
-#import "ios/web/public/download/download_controller.h"
 #include "ios/web/public/favicon_url.h"
 #import "ios/web/public/java_script_dialog_presenter.h"
 #import "ios/web/public/navigation_item.h"
@@ -1177,6 +1176,13 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   if (!self.webScrollView)
     return position;
   return self.webScrollView.contentOffset;
+}
+
+- (BOOL)atTop {
+  if (!_webView)
+    return YES;
+  UIScrollView* scrollView = self.webScrollView;
+  return scrollView.contentOffset.y == -scrollView.contentInset.top;
 }
 
 - (GURL)currentURLWithTrustLevel:(web::URLVerificationTrustLevel*)trustLevel {
@@ -4214,8 +4220,19 @@ registerLoadRequestForURL:(const GURL&)requestURL
     }
   }
 
-  decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
-                            : WKNavigationActionPolicyCancel);
+  // Although the Apple documentation says that |handler| can be called
+  // immediately or saved and called asynchronously, there is a bug in
+  // iOS 10 (and possibly before) that JavaScript code is not executed
+  // when the |handler| is called asynchronously.
+  if (@available(iOS 11, *)) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
+                                : WKNavigationActionPolicyCancel);
+    });
+  } else {
+    decisionHandler(allowLoad ? WKNavigationActionPolicyAllow
+                              : WKNavigationActionPolicyCancel);
+  }
 }
 
 - (void)webView:(WKWebView*)webView
@@ -4231,7 +4248,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
-  scoped_refptr<net::HttpResponseHeaders> HTTPHeaders;
   if ([navigationResponse.response isKindOfClass:[NSHTTPURLResponse class]]) {
     // Create HTTP headers from the response.
     // TODO(crbug.com/546157): Due to the limited interface of
@@ -4239,8 +4255,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // inexact.  Once UIWebView is no longer supported, update WebState's
     // implementation so that the Content-Language and the MIME type can be set
     // without using this imperfect conversion.
-    HTTPHeaders = net::CreateHeadersFromNSHTTPURLResponse(
-        static_cast<NSHTTPURLResponse*>(navigationResponse.response));
+    scoped_refptr<net::HttpResponseHeaders> HTTPHeaders =
+        net::CreateHeadersFromNSHTTPURLResponse(
+            static_cast<NSHTTPURLResponse*>(navigationResponse.response));
     self.webStateImpl->OnHttpResponseHeadersReceived(
         HTTPHeaders.get(), net::GURLWithNSURL(navigationResponse.response.URL));
   }
@@ -4249,7 +4266,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // retrieved state will be pending until |didCommitNavigation| callback.
   [self updatePendingNavigationInfoFromNavigationResponse:navigationResponse];
 
-  NSString* MIMEType = navigationResponse.response.MIMEType;
   BOOL allowNavigation = navigationResponse.canShowMIMEType;
   if (allowNavigation) {
     allowNavigation = self.webStateImpl->ShouldAllowResponse(
@@ -4257,20 +4273,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     if (!allowNavigation && navigationResponse.isForMainFrame) {
       [_pendingNavigationInfo setCancelled:YES];
     }
-  } else {
-    std::string contentDisposition;
-    if (HTTPHeaders) {
-      HTTPHeaders->GetNormalizedHeader("content-disposition",
-                                       &contentDisposition);
-    }
-    int64_t contentLength = navigationResponse.response.expectedContentLength;
-    web::BrowserState* browserState = self.webState->GetBrowserState();
-    web::DownloadController::FromBrowserState(browserState)
-        ->CreateDownloadTask(_webStateImpl, [NSUUID UUID].UUIDString,
-                             responseURL, contentDisposition, contentLength,
-                             base::SysNSStringToUTF8(MIMEType));
   }
-  if ([self.passKitDownloader isMIMETypePassKitType:MIMEType]) {
+  if ([self.passKitDownloader
+          isMIMETypePassKitType:[_pendingNavigationInfo MIMEType]]) {
     [self.passKitDownloader downloadPassKitFileWithURL:responseURL];
     allowNavigation = NO;
 
@@ -4289,8 +4294,19 @@ registerLoadRequestForURL:(const GURL&)requestURL
       self.navigationManagerImpl->DiscardNonCommittedItems();
   }
 
-  handler(allowNavigation ? WKNavigationResponsePolicyAllow
-                          : WKNavigationResponsePolicyCancel);
+  // Although the Apple documentation says that |handler| can be called
+  // immediately or saved and called asynchronously, there is a bug in
+  // iOS 10 (and possibly before) that JavaScript code is not executed
+  // when the |handler| is called asynchronously.
+  if (@available(iOS 11, *)) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      handler(allowNavigation ? WKNavigationResponsePolicyAllow
+                              : WKNavigationResponsePolicyCancel);
+    });
+  } else {
+    handler(allowNavigation ? WKNavigationResponsePolicyAllow
+                            : WKNavigationResponsePolicyCancel);
+  }
 }
 
 - (void)webView:(WKWebView*)webView
@@ -4469,16 +4485,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)webView:(WKWebView*)webView
     didCommitNavigation:(WKNavigation*)navigation {
-  // TODO(crbug.com/787497): Always use webView.backForwardList.currentItem.URL
-  // to obtain lastCommittedURL once loadHTML: is no longer user for WebUI.
   GURL webViewURL = net::GURLWithNSURL(webView.URL);
-
-  if (webViewURL.is_empty()) {
-    // It is possible for |webView.URL| to be nil, in which case
-    // webView.backForwardList.currentItem.URL will return the right committed
-    // URL (crbug.com/784480).
-    webViewURL = net::GURLWithNSURL(webView.backForwardList.currentItem.URL);
-  }
 
   // If this is a placeholder navigation or if |navigation| has been previous
   // aborted, return without modifying the navigation states. The latter case

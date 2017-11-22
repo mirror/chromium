@@ -25,13 +25,13 @@ constexpr size_t kMinProgramSize = 16;
 std::unique_ptr<Disassembler> MakeDisassemblerWithoutFallback(
     ConstBufferView image) {
   if (DisassemblerWin32X86::QuickDetect(image)) {
-    auto disasm = Disassembler::Make<DisassemblerWin32X86>(image);
+    auto disasm = DisassemblerWin32X86::Make(image);
     if (disasm && disasm->size() >= kMinProgramSize)
       return disasm;
   }
 
   if (DisassemblerWin32X64::QuickDetect(image)) {
-    auto disasm = Disassembler::Make<DisassemblerWin32X64>(image);
+    auto disasm = DisassemblerWin32X64::Make(image);
     if (disasm && disasm->size() >= kMinProgramSize)
       return disasm;
   }
@@ -43,20 +43,24 @@ std::unique_ptr<Disassembler> MakeDisassemblerOfType(ConstBufferView image,
                                                      ExecutableType exe_type) {
   switch (exe_type) {
     case kExeTypeWin32X86:
-      return Disassembler::Make<DisassemblerWin32X86>(image);
+      return DisassemblerWin32X86::Make(image);
     case kExeTypeWin32X64:
-      return Disassembler::Make<DisassemblerWin32X64>(image);
+      return DisassemblerWin32X64::Make(image);
     case kExeTypeNoOp:
-      return Disassembler::Make<DisassemblerNoOp>(image);
+      return DisassemblerNoOp::Make(image);
     default:
       return nullptr;
   }
 }
 
+std::unique_ptr<Disassembler> MakeNoOpDisassembler(ConstBufferView image) {
+  return DisassemblerNoOp::Make(image);
+}
+
 base::Optional<Element> DetectElementFromDisassembler(ConstBufferView image) {
   std::unique_ptr<Disassembler> disasm = MakeDisassemblerWithoutFallback(image);
   if (disasm)
-    return Element({0, disasm->size()}, disasm->GetExeType());
+    return Element(disasm->GetExeType(), {0, disasm->size()});
   return base::nullopt;
 }
 

@@ -53,16 +53,16 @@ class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
     network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory),
                                             0);
 
-    std::unique_ptr<ResourceRequest> request =
-        std::make_unique<ResourceRequest>();
-    request->url = embedded_test_server()->GetURL("/echo");
-
     content::SimpleURLLoaderTestHelper simple_loader_helper;
     std::unique_ptr<content::SimpleURLLoader> simple_loader =
-        content::SimpleURLLoader::Create(std::move(request),
-                                         TRAFFIC_ANNOTATION_FOR_TESTS);
+        content::SimpleURLLoader::Create();
+
+    ResourceRequest request;
+    request.url = embedded_test_server()->GetURL("/echo");
+
     simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-        url_loader_factory.get(), simple_loader_helper.GetCallback());
+        request, url_loader_factory.get(), TRAFFIC_ANNOTATION_FOR_TESTS,
+        simple_loader_helper.GetCallback());
     simple_loader_helper.WaitForCallback();
 
     return simple_loader->NetError();

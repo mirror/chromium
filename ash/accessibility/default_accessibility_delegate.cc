@@ -43,6 +43,14 @@ bool DefaultAccessibilityDelegate::IsVirtualKeyboardEnabled() const {
   return virtual_keyboard_enabled_;
 }
 
+void DefaultAccessibilityDelegate::SetMonoAudioEnabled(bool enabled) {
+  mono_audio_enabled_ = enabled;
+}
+
+bool DefaultAccessibilityDelegate::IsMonoAudioEnabled() const {
+  return mono_audio_enabled_;
+}
+
 void DefaultAccessibilityDelegate::SetCaretHighlightEnabled(bool enabled) {
   caret_highlight_enabled_ = enabled;
 }
@@ -104,8 +112,7 @@ bool DefaultAccessibilityDelegate::ShouldShowAccessibilityMenu() const {
       Shell::Get()->accessibility_controller();
   return spoken_feedback_enabled_ || screen_magnifier_enabled_ ||
          autoclick_enabled_ || virtual_keyboard_enabled_ ||
-         controller->IsMonoAudioEnabled() ||
-         controller->IsLargeCursorEnabled() ||
+         mono_audio_enabled_ || controller->IsLargeCursorEnabled() ||
          controller->IsHighContrastEnabled();
 }
 

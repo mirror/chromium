@@ -5,7 +5,6 @@
 #ifndef CSSStyleValue_h
 #define CSSStyleValue_h
 
-#include "base/macros.h"
 #include "bindings/core/v8/Nullable.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
@@ -16,8 +15,6 @@
 namespace blink {
 
 class ExceptionState;
-class ExecutionContext;
-enum class SecureContextMode;
 
 class CSSStyleValue;
 using CSSStyleValueVector = HeapVector<Member<CSSStyleValue>>;
@@ -25,6 +22,7 @@ using CSSStyleValueVector = HeapVector<Member<CSSStyleValue>>;
 // The base class for all CSS values returned by the Typed OM.
 // See CSSStyleValue.idl for additional documentation about this class.
 class CORE_EXPORT CSSStyleValue : public ScriptWrappable {
+  WTF_MAKE_NONCOPYABLE(CSSStyleValue);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -52,12 +50,10 @@ class CORE_EXPORT CSSStyleValue : public ScriptWrappable {
     kInvalidType,
   };
 
-  static CSSStyleValue* parse(const ExecutionContext*,
-                              const String& property_name,
+  static CSSStyleValue* parse(const String& property_name,
                               const String& value,
                               ExceptionState&);
-  static Nullable<CSSStyleValueVector> parseAll(const ExecutionContext*,
-                                                const String& property_name,
+  static Nullable<CSSStyleValueVector> parseAll(const String& property_name,
                                                 const String& value,
                                                 ExceptionState&);
 
@@ -66,21 +62,21 @@ class CORE_EXPORT CSSStyleValue : public ScriptWrappable {
   virtual StyleValueType GetType() const = 0;
   virtual bool ContainsPercent() const { return false; }
 
-  virtual const CSSValue* ToCSSValue(SecureContextMode) const = 0;
-  virtual const CSSValue* ToCSSValueWithProperty(
-      CSSPropertyID,
-      SecureContextMode secure_context_mode) const {
-    return ToCSSValue(secure_context_mode);
+  virtual const CSSValue* ToCSSValue() const = 0;
+  virtual const CSSValue* ToCSSValueWithProperty(CSSPropertyID) const {
+    return ToCSSValue();
   }
-  virtual String toString(const ExecutionContext*) const;
+  virtual String toString() const {
+    const CSSValue* result = ToCSSValue();
+    // TODO(meade): Remove this once all the number and length types are
+    // rewritten.
+    return result ? result->CssText() : "";
+  }
 
  protected:
   static String StyleValueTypeToString(StyleValueType);
 
   CSSStyleValue() {}
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(CSSStyleValue);
 };
 
 }  // namespace blink

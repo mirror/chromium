@@ -42,6 +42,7 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "core/loader/NavigationPolicy.h"
+#include "platform/ScopedVirtualTimePauser.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
@@ -53,7 +54,6 @@
 #include "public/platform/WebEffectiveConnectionType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
-#include "public/platform/WebScopedVirtualTimePauser.h"
 #include "public/platform/WebSuddenTerminationDisablerType.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/web/WebTriggeringEventInfo.h"
@@ -194,12 +194,9 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   // propogates renderer loading behavior to the browser process for histograms.
   virtual void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) {}
 
-  // Will be called when a new UseCounter feature has been observed in a frame.
+  // Will be called when a new useCounter feature has been observed in a frame.
   // This propogates feature usage to the browser process for histograms.
   virtual void DidObserveNewFeatureUsage(mojom::WebFeature) {}
-  // Will be called by a Page upon DidCommitLoad, deciding whether to track
-  // UseCounter usage or not based on its url.
-  virtual bool ShouldTrackUseCounter(const KURL&) { return true; }
 
   // Transmits the change in the set of watched CSS selectors property that
   // match any element on the frame.
@@ -374,7 +371,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
       const WebRemoteScrollProperties&) {}
 
   virtual void SetVirtualTimePauser(
-      WebScopedVirtualTimePauser virtual_time_pauser) {}
+      ScopedVirtualTimePauser virtual_time_pauser) {}
 };
 
 }  // namespace blink

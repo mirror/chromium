@@ -13,11 +13,9 @@ namespace {
 
 bool CompareGradients(const char* gradient1, const char* gradient2) {
   const CSSValue* value1 = CSSParser::ParseSingleValue(
-      CSSPropertyBackgroundImage, gradient1,
-      StrictCSSParserContext(SecureContextMode::kInsecureContext));
+      CSSPropertyBackgroundImage, gradient1, StrictCSSParserContext());
   const CSSValue* value2 = CSSParser::ParseSingleValue(
-      CSSPropertyBackgroundImage, gradient2,
-      StrictCSSParserContext(SecureContextMode::kInsecureContext));
+      CSSPropertyBackgroundImage, gradient2, StrictCSSParserContext());
   return *value1 == *value2;
 }
 

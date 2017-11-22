@@ -2812,7 +2812,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="184" label="RFH_NEGATIVE_SELECTION_START_OFFSET"/>
   <int value="185" label="WEBUI_BAD_SCHEME_ACCESS"/>
   <int value="186" label="CSDH_UNEXPECTED_OPERATION"/>
-  <int value="187" label="RMF_BAD_URL_CACHEABLE_METADATA"/>
 </enum>
 
 <enum name="BadMessageReasonExtensions">
@@ -3293,11 +3292,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="BooleanConnected">
   <int value="0" label="Not Connected"/>
   <int value="1" label="Connected"/>
-</enum>
-
-<enum name="BooleanConnectionError">
-  <int value="0" label="Connected"/>
-  <int value="1" label="Connection error happened"/>
 </enum>
 
 <enum name="BooleanContainedMeCard">
@@ -9012,7 +9006,6 @@ Called by update_net_error_codes.py.-->
 <enum name="Download.Service.BatteryRequirements">
   <int value="0" label="BATTERY_INSENSITIVE"/>
   <int value="1" label="BATTERY_SENSITIVE"/>
-  <int value="2" label="BATTERY_CHARGING"/>
 </enum>
 
 <enum name="Download.Service.CompletionType">
@@ -9103,12 +9096,6 @@ Called by update_net_error_codes.py.-->
   <int value="2" label="FAILURE_REASON_DRIVER"/>
   <int value="3" label="FAILURE_REASON_MODEL"/>
   <int value="4" label="FAILURE_REASON_FILE_MONITOR"/>
-</enum>
-
-<enum name="Download.Shelf.DragEvent">
-  <int value="0" label="Started"/>
-  <int value="1" label="Canceled"/>
-  <int value="2" label="Dropped"/>
 </enum>
 
 <enum name="DownloadableStrings.InstallStatus">
@@ -11930,8 +11917,6 @@ Called by update_net_error_codes.py.-->
   <int value="393" label="NtlmV2Enabled"/>
   <int value="394" label="MinimumRequiredChromeVersion"/>
   <int value="395" label="PromptForDownloadLocation"/>
-  <int value="396" label="DeviceLoginScreenAutoSelectCertificateForUrls"/>
-  <int value="397" label="UnaffiliatedArcAllowed"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
@@ -14468,7 +14453,6 @@ Called by update_net_error_codes.py.-->
   <int value="206" label="kNewTabPageOverride"/>
   <int value="207" label="kDeclarativeNetRequest"/>
   <int value="208" label="kLockWindowFullscreenPrivate"/>
-  <int value="209" label="kWebrtcLoggingPrivateAudioDebug"/>
 </enum>
 
 <enum name="ExtensionServiceVerifyAllSuccess">
@@ -15680,8 +15664,7 @@ Called by update_net_error_codes.py.-->
   <int value="961" label="CredentialManagerGetMediationOptional"/>
   <int value="962" label="CredentialManagerGetMediationSilent"/>
   <int value="963" label="CredentialManagerStore"/>
-  <int value="964"
-      label="CredentialManagerRequireUserMediation (obsolete as of M64)"/>
+  <int value="964" label="CredentialManagerRequireUserMediation"/>
   <int value="965" label="RequestAutocomplete"/>
   <int value="966" label="BlockableMixedContentInSubframeBlocked"/>
   <int value="967" label="AddEventListenerThirdArgumentIsObject"/>
@@ -16732,8 +16715,7 @@ Called by update_net_error_codes.py.-->
   <int value="1981" label="FieldEditInSecureContext"/>
   <int value="1982" label="FieldEditInNonSecureContext"/>
   <int value="1983"
-      label="CredentialManagerCredentialRequestOptionsUnmediated (obsolete as
-             of M64)"/>
+      label="CredentialManagerCredentialRequestOptionsUnmediated"/>
   <int value="1984" label="CredentialManagerGetMediationRequired"/>
   <int value="1985" label="CredentialManagerIdName"/>
   <int value="1986" label="CredentialManagerPasswordName"/>
@@ -16745,8 +16727,7 @@ Called by update_net_error_codes.py.-->
   <int value="1992" label="ShapeDetection_FaceDetectorConstructor"/>
   <int value="1993" label="ShapeDetection_TextDetectorConstructor"/>
   <int value="1994"
-      label="CredentialManagerCredentialRequestOptionsOnlyUnmediated
-             (obsolete as of M64)"/>
+      label="CredentialManagerCredentialRequestOptionsOnlyUnmediated"/>
   <int value="1995" label="InertAttribute"/>
   <int value="1996" label="PluginInstanceAccessFromIsolatedWorld"/>
   <int value="1997" label="PluginInstanceAccessFromMainWorld"/>
@@ -16994,16 +16975,6 @@ Called by update_net_error_codes.py.-->
   <int value="2232" label="LinkRelModulePreload"/>
   <int value="2233" label="PerformanceMeasurePassedInObject"/>
   <int value="2234" label="PerformanceMeasurePassedInNavigationTiming"/>
-  <int value="2235" label="HTMLFrameSetElementNonNullAnonymousNamedGetter"/>
-  <int value="2236" label="CSPWithUnsafeEval"/>
-  <int value="2237" label="WebAssemblyInstantiation"/>
-  <int value="2238" label="V8IndexAccessor"/>
-  <int value="2239" label="V8MediaCapabilities_DecodingInfo_Method"/>
-  <int value="2240" label="V8MediaCapabilities_EncodingInfo_Method"/>
-  <int value="2241" label="V8MediaCapabilitiesInfo_Supported_AttributeGetter"/>
-  <int value="2242" label="V8MediaCapabilitiesInfo_Smooth_AttributeGetter"/>
-  <int value="2243"
-      label="V8MediaCapabilitiesInfo_PowerEfficient_AttributeGetter"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -22416,12 +22387,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="50" label="CRASH"/>
 </enum>
 
-<enum name="InterstitialTypeEnum">
-  <int value="0" label="Loud"/>
-  <int value="1" label="Quiet small"/>
-  <int value="2" label="Quiet giant"/>
-</enum>
-
 <enum name="InvalidationNetworkChannel">
   <int value="0" label="PushClientChannel"/>
   <int value="1" label="GCMNetworkChannel"/>
@@ -22607,10 +22572,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   </int>
   <int value="7" label="Tab navigated">
     The user navigated the tab (e.g. back/forward, reload)
-  </int>
-  <int value="8" label="Tab switched out">
-    The page displaying the dialog was switched out of its tab (e.g. tab
-    discarding)
   </int>
 </enum>
 
@@ -27788,7 +27749,6 @@ Called by update_use_counter_css.py.-->
   <int value="11" label="AC3"/>
   <int value="12" label="DOLBYVISION"/>
   <int value="13" label="FLAC"/>
-  <int value="14" label="AV1"/>
 </enum>
 
 <enum name="MultiAccountUpdateBubbleUserAction">
@@ -30850,25 +30810,6 @@ Called by update_net_error_codes.py.-->
   <int value="1" label="Cookie contains control chars"/>
   <int value="2" label="Cookie is invalid"/>
   <int value="3" label="Cookie contains both control chars and is invalid"/>
-</enum>
-
-<enum name="PartnerBookmark.FaviconFetchResult">
-  <int value="0" label="SUCCESS">
-    Success - favicon found in local cache or fetched from server.
-  </int>
-  <int value="1" label="FAILURE_SERVER_ERROR">
-    Received a server error fetching the favicon.
-  </int>
-  <int value="2" label="FAILURE_ICON_SERVICE_UNAVAILABLE">
-    The icon service was unavailable.
-  </int>
-  <int value="3" label="FAILURE_NOT_IN_CACHE">
-    There was nothing in the cache, but we opted out of retrieving from server.
-  </int>
-  <int value="4" label="FAILURE_CONNECTION_ERROR">
-    Request sent out and a connection error occurred (no valid HTTP response
-    received).
-  </int>
 </enum>
 
 <enum name="PassiveForcedListenerResultType">
@@ -34954,8 +34895,6 @@ Called by update_net_error_codes.py.-->
   <int value="1" label="RESOLVE_FAIL"/>
   <int value="2" label="RESOLVE_SPECULATIVE_SUCCESS"/>
   <int value="3" label="RESOLVE_SPECULATIVE_FAIL"/>
-  <int value="4" label="RESOLVE_ABORT"/>
-  <int value="5" label="RESOLVE_SPECULATIVE_ABORT"/>
 </enum>
 
 <enum name="ResolutionUnspecWasteCategory">
@@ -36881,7 +36820,7 @@ Called by update_net_error_codes.py.-->
 </enum>
 
 <enum name="ShouldAllowOpenURLFailureScheme">
-<!-- Generated from chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc.-->
+<!-- Generated from chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc -->
 
   <int value="0" label="SCHEME_UNKNOWN"/>
   <int value="1" label="SCHEME_EMPTY"/>
@@ -37078,8 +37017,6 @@ Called by update_net_error_codes.py.-->
   <int value="2" label="Reauthentication"/>
   <int value="3" label="Unlock profile"/>
   <int value="4" label="Typed URL with unknown reason"/>
-  <int value="5"
-      label="Signin primary account with force-sign-in policy enabled"/>
 </enum>
 
 <enum name="SigninReauthStates">
@@ -41166,14 +41103,6 @@ Called by update_traffic_annotation_histograms.py.-->
 
 <enum name="UserInitiatedEvent">
   <int value="0" label="WiFi Scan"/>
-</enum>
-
-<enum name="UsernameDetectionMethod">
-  <int value="0" label="No username detected"/>
-  <int value="1" label="Base heuristic"/>
-  <int value="2" label="HTML based classifier"/>
-  <int value="3" label="'autocomplete' attribute"/>
-  <int value="4" label="Server-side prediction"/>
 </enum>
 
 <enum name="UserPodsDisplay">

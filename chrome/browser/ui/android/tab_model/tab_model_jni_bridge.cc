@@ -154,11 +154,10 @@ inline static base::TimeDelta GetTimeDelta(jlong ms) {
   return base::TimeDelta::FromMilliseconds(static_cast<int64_t>(ms));
 }
 
-void JNI_TabModelJniBridge_LogFromCloseMetric(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    jlong ms,
-    jboolean perceived) {
+void LogFromCloseMetric(JNIEnv* env,
+                        const JavaParamRef<jclass>& jcaller,
+                        jlong ms,
+                        jboolean perceived) {
   if (perceived) {
     UMA_HISTOGRAM_TIMES("Tabs.SwitchFromCloseLatency_Perceived",
                         GetTimeDelta(ms));
@@ -168,11 +167,10 @@ void JNI_TabModelJniBridge_LogFromCloseMetric(
   }
 }
 
-void JNI_TabModelJniBridge_LogFromExitMetric(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    jlong ms,
-    jboolean perceived) {
+void LogFromExitMetric(JNIEnv* env,
+                       const JavaParamRef<jclass>& jcaller,
+                       jlong ms,
+                       jboolean perceived) {
   if (perceived) {
     UMA_HISTOGRAM_TIMES("Tabs.SwitchFromExitLatency_Perceived",
                         GetTimeDelta(ms));
@@ -182,10 +180,10 @@ void JNI_TabModelJniBridge_LogFromExitMetric(
   }
 }
 
-void JNI_TabModelJniBridge_LogFromNewMetric(JNIEnv* env,
-                                            const JavaParamRef<jclass>& jcaller,
-                                            jlong ms,
-                                            jboolean perceived) {
+void LogFromNewMetric(JNIEnv* env,
+                      const JavaParamRef<jclass>& jcaller,
+                      jlong ms,
+                      jboolean perceived) {
   if (perceived) {
     UMA_HISTOGRAM_TIMES("Tabs.SwitchFromNewLatency_Perceived",
                         GetTimeDelta(ms));
@@ -195,11 +193,10 @@ void JNI_TabModelJniBridge_LogFromNewMetric(JNIEnv* env,
   }
 }
 
-void JNI_TabModelJniBridge_LogFromUserMetric(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    jlong ms,
-    jboolean perceived) {
+void LogFromUserMetric(JNIEnv* env,
+                       const JavaParamRef<jclass>& jcaller,
+                       jlong ms,
+                       jboolean perceived) {
   if (perceived) {
     UMA_HISTOGRAM_TIMES("Tabs.SwitchFromUserLatency_Perceived",
                         GetTimeDelta(ms));
@@ -213,10 +210,10 @@ TabModelJniBridge::~TabModelJniBridge() {
   TabModelList::RemoveTabModel(this);
 }
 
-static jlong JNI_TabModelJniBridge_Init(JNIEnv* env,
-                                        const JavaParamRef<jobject>& obj,
-                                        jboolean is_incognito,
-                                        jboolean is_tabbed_activity) {
+static jlong Init(JNIEnv* env,
+                  const JavaParamRef<jobject>& obj,
+                  jboolean is_incognito,
+                  jboolean is_tabbed_activity) {
   TabModel* tab_model =
       new TabModelJniBridge(env, obj, is_incognito, is_tabbed_activity);
   return reinterpret_cast<intptr_t>(tab_model);

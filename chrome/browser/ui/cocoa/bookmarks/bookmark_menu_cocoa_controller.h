@@ -7,6 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "base/mac/scoped_nsobject.h"
 #include "ui/base/window_open_disposition.h"
 
 class BookmarkMenuBridge;
@@ -18,7 +19,14 @@ class BookmarkNode;
 // Controller (MVC) for the bookmark menu.
 // All bookmark menu item commands get directed here.
 // Unfortunately there is already a C++ class named BookmarkMenuController.
-@interface BookmarkMenuCocoaController : NSObject<NSMenuDelegate>
+@interface BookmarkMenuCocoaController : NSObject<NSMenuDelegate> {
+ @private
+  BookmarkMenuBridge* bridge_;  // weak; owns me
+  base::scoped_nsobject<NSMenu> menu_;
+}
+
+// The Bookmarks menu
+@property(nonatomic, readonly) NSMenu* menu;
 
 // Return an autoreleased string to be used as a menu title for the
 // given bookmark node.
@@ -27,7 +35,8 @@ class BookmarkNode;
 // Make a relevant tooltip string for node.
 + (NSString*)tooltipForNode:(const bookmarks::BookmarkNode*)node;
 
-- (id)initWithBridge:(BookmarkMenuBridge*)bridge;
+- (id)initWithBridge:(BookmarkMenuBridge *)bridge
+             andMenu:(NSMenu*)menu;
 
 // Called by any Bookmark menu item.
 // The menu item's tag is the bookmark ID.

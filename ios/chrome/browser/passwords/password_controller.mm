@@ -34,7 +34,6 @@
 #include "components/sync/driver/sync_service.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/infobars/infobar_manager_impl.h"
-#include "ios/chrome/browser/passwords/account_select_fill_data.h"
 #include "ios/chrome/browser/passwords/credential_manager.h"
 #include "ios/chrome/browser/passwords/credential_manager_features.h"
 #import "ios/chrome/browser/passwords/ios_chrome_save_password_infobar_delegate.h"
@@ -56,8 +55,6 @@
 #error "This file requires ARC support."
 #endif
 
-using password_manager::AccountSelectFillData;
-using password_manager::FillData;
 using password_manager::PasswordFormManager;
 using password_manager::PasswordManager;
 using password_manager::PasswordManagerClient;
@@ -115,12 +112,6 @@ constexpr char kCommandPrefix[] = "passwordForm";
                 password:(const base::string16&)password
        completionHandler:(void (^)(BOOL))completionHandler;
 
-// Autofills credentials into the page. Credentials and input fields are
-// specified by |fillData|. Invoking |completionHandler| when finished with YES
-// if successful and NO otherwise. |completionHandler| may be nil.
-- (void)fillPasswordFormWithFillData:(const password_manager::FillData&)fillData
-                   completionHandler:(void (^)(BOOL))completionHandler;
-
 // Uses JavaScript to find password forms. Calls |completionHandler| with the
 // extracted information used for matching and saving passwords. Calls
 // |completionHandler| with an empty vector if no password forms are found.
@@ -162,35 +153,66 @@ constexpr char kCommandPrefix[] = "passwordForm";
 namespace {
 
 // Constructs an array of FormSuggestions, each corresponding to a username/
-// password pair in |AccountSelectFillData|, such that |typedValue| is a prefix
-// of the username of each suggestion.
-NSArray* BuildSuggestions(const AccountSelectFillData& fillData,
-                          NSString* formName,
-                          NSString* fieldName,
-                          NSString* typedValue) {
-  base::string16 form_name = base::SysNSStringToUTF16(formName);
-  base::string16 field_name = base::SysNSStringToUTF16(fieldName);
-  base::string16 typed_value = base::SysNSStringToUTF16(typedValue);
-
+// password pair in |formFillData|, such that |prefix| is a prefix of the
+// username of each suggestion.
+NSArray* BuildSuggestions(const autofill::PasswordFormFillData& formFillData,
+                          NSString* prefix) {
   NSMutableArray* suggestions = [NSMutableArray array];
-  std::vector<password_manager::UsernameAndRealm> username_and_realms_ =
-      fillData.RetrieveSuggestions(form_name, field_name, typed_value);
-  if (username_and_realms_.empty())
-    return suggestions;
 
-  for (const auto& username_and_realm : username_and_realms_) {
-    NSString* username = base::SysUTF16ToNSString(username_and_realm.username);
-    NSString* origin = username_and_realm.realm.empty()
-                           ? nil
-                           : base::SysUTF8ToNSString(username_and_realm.realm);
-
-    [suggestions addObject:[FormSuggestion suggestionWithValue:username
+  // Add the default credentials.
+  NSString* defaultUsername =
+      base::SysUTF16ToNSString(formFillData.username_field.value);
+  if ([prefix length] == 0 ||
+      [defaultUsername rangeOfString:prefix].location == 0) {
+    NSString* origin =
+        formFillData.preferred_realm.empty()
+            ? nil
+            : base::SysUTF8ToNSString(formFillData.preferred_realm);
+    [suggestions addObject:[FormSuggestion suggestionWithValue:defaultUsername
                                             displayDescription:origin
                                                           icon:nil
                                                     identifier:0]];
   }
 
+  // Add the additional credentials.
+  for (const auto& it : formFillData.additional_logins) {
+    NSString* additionalUsername = base::SysUTF16ToNSString(it.first);
+    NSString* additionalOrigin = it.second.realm.empty()
+                                     ? nil
+                                     : base::SysUTF8ToNSString(it.second.realm);
+    if ([prefix length] == 0 ||
+        [additionalUsername rangeOfString:prefix].location == 0) {
+      [suggestions
+          addObject:[FormSuggestion suggestionWithValue:additionalUsername
+                                     displayDescription:additionalOrigin
+                                                   icon:nil
+                                             identifier:0]];
+    }
+  }
+
   return suggestions;
+}
+
+// Looks for a credential pair in |formData| for with |username|. If such a pair
+// exists, returns true and |matchingPassword|; returns false otherwise.
+bool FindMatchingUsername(const autofill::PasswordFormFillData& formData,
+                          const base::string16& username,
+                          base::string16* matchingPassword) {
+  base::string16 defaultUsername = formData.username_field.value;
+  if (defaultUsername == username) {
+    *matchingPassword = formData.password_field.value;
+    return true;
+  }
+
+  // Check whether the user has finished typing an alternate username.
+  for (const auto& it : formData.additional_logins) {
+    if (it.first == username) {
+      *matchingPassword = it.second.password;
+      return true;
+    }
+  }
+
+  return false;
 }
 
 // Removes URL components not essential for matching the URL to
@@ -205,28 +227,32 @@ GURL stripURL(GURL& url) {
   return url.ReplaceComponents(replacements);
 }
 
-// Serializes arguments into a JSON string that can be used by the JS side
+// Serializes |formData| into a JSON string that can be used by the JS side
 // of PasswordController.
-NSString* SerializeFillData(const GURL& origin,
-                            const GURL& action,
-                            const base::string16& username_element,
-                            const base::string16& username_value,
-                            const base::string16& password_element,
-                            const base::string16& password_value) {
+NSString* SerializePasswordFormFillData(
+    const autofill::PasswordFormFillData& formData) {
+  // Repackage PasswordFormFillData as a JSON object.
   base::DictionaryValue rootDict;
-  rootDict.SetString("origin", origin.spec());
-  rootDict.SetString("action", action.spec());
 
+  // The normalized URL of the web page.
+  rootDict.SetString("origin", formData.origin.spec());
+
+  // The normalized URL from the "action" attribute of the <form> tag.
+  rootDict.SetString("action", formData.action.spec());
+
+  // Input elements in the form. The list does not necessarily contain
+  // all elements from the form, but all elements listed here are required
+  // to identify the right form to fill.
   auto fieldList = base::MakeUnique<base::ListValue>();
 
   auto usernameField = base::MakeUnique<base::DictionaryValue>();
-  usernameField->SetString("name", username_element);
-  usernameField->SetString("value", username_value);
+  usernameField->SetString("name", formData.username_field.name);
+  usernameField->SetString("value", formData.username_field.value);
   fieldList->Append(std::move(usernameField));
 
   auto passwordField = base::MakeUnique<base::DictionaryValue>();
-  passwordField->SetString("name", password_element);
-  passwordField->SetString("value", password_value);
+  passwordField->SetString("name", formData.password_field.name);
+  passwordField->SetString("value", formData.password_field.value);
   fieldList->Append(std::move(passwordField));
 
   rootDict.Set("fields", std::move(fieldList));
@@ -234,22 +260,6 @@ NSString* SerializeFillData(const GURL& origin,
   std::string jsonString;
   base::JSONWriter::Write(rootDict, &jsonString);
   return base::SysUTF8ToNSString(jsonString);
-}
-
-// Serializes |formData| into a JSON string that can be used by the JS side
-// of PasswordController.
-NSString* SerializePasswordFormFillData(
-    const autofill::PasswordFormFillData& formData) {
-  return SerializeFillData(
-      formData.origin, formData.action, formData.username_field.name,
-      formData.username_field.value, formData.password_field.name,
-      formData.password_field.value);
-}
-
-NSString* SerializeFillData(const FillData& fillData) {
-  return SerializeFillData(fillData.origin, fillData.action,
-                           fillData.username_element, fillData.username_value,
-                           fillData.password_element, fillData.password_value);
 }
 
 // Returns true if the trust level for the current page URL of |web_state| is
@@ -272,12 +282,10 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
   std::unique_ptr<CredentialManager> credentialManager_;
 
   __weak JsPasswordManager* passwordJsManager_;
+  web::WebState* webState_;               // weak
 
-  AccountSelectFillData fillData_;
-
-  // The WebState this instance is observing. Will be null after
-  // -webStateDestroyed: has been called.
-  web::WebState* webState_;
+  // The pending form data.
+  std::unique_ptr<autofill::PasswordFormFillData> formData_;
 
   // Bridge to observe WebState from Objective-C.
   std::unique_ptr<web::WebStateObserverBridge> webStateObserverBridge_;
@@ -287,7 +295,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
   // True indicates that a request for credentials has been sent to the password
   // store.
-  BOOL sentRequestToStore_;
+  BOOL sent_request_to_store_;
 
   // User credential waiting to be displayed in autosign-in snackbar, once tab
   // becomes active.
@@ -311,9 +319,9 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 - (instancetype)initWithWebState:(web::WebState*)webState
                           client:(std::unique_ptr<PasswordManagerClient>)
                                      passwordManagerClient {
+  DCHECK(webState);
   self = [super init];
   if (self) {
-    DCHECK(webState);
     webState_ = webState;
     if (passwordManagerClient)
       passwordManagerClient_ = std::move(passwordManagerClient);
@@ -323,12 +331,11 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     passwordManagerDriver_.reset(new IOSChromePasswordManagerDriver(self));
 
     passwordJsManager_ = base::mac::ObjCCastStrict<JsPasswordManager>(
-        [webState_->GetJSInjectionReceiver()
+        [webState->GetJSInjectionReceiver()
             instanceOfClass:[JsPasswordManager class]]);
-    webStateObserverBridge_ =
-        std::make_unique<web::WebStateObserverBridge>(self);
-    webState_->AddObserver(webStateObserverBridge_.get());
-    sentRequestToStore_ = NO;
+    webStateObserverBridge_.reset(
+        new web::WebStateObserverBridge(webState, self));
+    sent_request_to_store_ = NO;
 
     if (base::FeatureList::IsEnabled(features::kCredentialManager)) {
       credentialManager_ = base::MakeUnique<CredentialManager>(
@@ -342,7 +349,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
       // |originURL| and |isInteracting| aren't used.
       return [weakSelf handleScriptCommand:JSON];
     });
-    webState_->AddScriptCommandCallback(callback, kCommandPrefix);
+    webState->AddScriptCommandCallback(callback, kCommandPrefix);
   }
   return self;
 }
@@ -354,12 +361,6 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
 - (void)dealloc {
   [self detach];
-
-  if (webState_) {
-    webState_->RemoveObserver(webStateObserverBridge_.get());
-    webStateObserverBridge_.reset();
-    webState_ = nullptr;
-  }
 }
 
 - (ios::ChromeBrowserState*)browserState {
@@ -369,17 +370,16 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 }
 
 - (const GURL&)lastCommittedURL {
-  return webState_ ? webState_->GetLastCommittedURL() : GURL::EmptyGURL();
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
+    return GURL::EmptyGURL();
+  return webStateObserverBridge_->web_state()->GetLastCommittedURL();
 }
 
 - (void)detach {
-  if (webState_) {
+  if (webState_)
     webState_->RemoveScriptCommandCallback(kCommandPrefix);
-    webState_->RemoveObserver(webStateObserverBridge_.get());
-    webStateObserverBridge_.reset();
-    webState_ = nullptr;
-  }
-
+  webState_ = nullptr;
+  webStateObserverBridge_.reset();
   passwordManagerDriver_.reset();
   passwordManager_.reset();
   passwordManagerClient_.reset();
@@ -424,7 +424,6 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 // If Tab was shown, and there is a pending PasswordForm, display autosign-in
 // notification.
 - (void)webStateWasShown:(web::WebState*)webState {
-  DCHECK_EQ(webState_, webState);
   if (pendingAutoSigninPasswordForm_) {
     [self showAutosigninNotification:std::move(pendingAutoSigninPasswordForm_)];
     pendingAutoSigninPasswordForm_.reset();
@@ -433,15 +432,13 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
 // If Tab was hidden, hide auto sign-in notification.
 - (void)webStateWasHidden:(web::WebState*)webState {
-  DCHECK_EQ(webState_, webState);
   [self hideAutosigninNotification];
 }
 
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
-  DCHECK_EQ(webState_, webState);
   // Clear per-page state.
-  fillData_.Reset();
-  sentRequestToStore_ = NO;
+  formData_.reset();
+  sent_request_to_store_ = NO;
 
   // Retrieve the identity of the page. In case the page might be malicous,
   // returns early.
@@ -468,7 +465,6 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 - (void)webState:(web::WebState*)webState
     didSubmitDocumentWithFormNamed:(const std::string&)formName
                      userInitiated:(BOOL)userInitiated {
-  DCHECK_EQ(webState_, webState);
   __weak PasswordController* weakSelf = self;
   // This code is racing against the new page loading and will not get the
   // password form data if the page has changed. In most cases this code wins
@@ -486,22 +482,20 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 }
 
 - (void)webStateDestroyed:(web::WebState*)webState {
-  DCHECK_EQ(webState_, webState);
   _isWebStateDestroyed = YES;
   [self detach];
 }
-
-#pragma mark - Private methods.
 
 - (void)findPasswordFormsWithCompletionHandler:
     (void (^)(const std::vector<autofill::PasswordForm>&))completionHandler {
   DCHECK(completionHandler);
 
-  if (!webState_)
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
     return;
 
   GURL pageURL;
-  if (!GetPageURLAndCheckTrustLevel(webState_, &pageURL)) {
+  if (!GetPageURLAndCheckTrustLevel(webStateObserverBridge_->web_state(),
+                                    &pageURL)) {
     return;
   }
 
@@ -567,11 +561,12 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
                            completionHandler {
   DCHECK(completionHandler);
 
-  if (!webState_)
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
     return;
 
   GURL pageURL;
-  if (!GetPageURLAndCheckTrustLevel(webState_, &pageURL)) {
+  if (!GetPageURLAndCheckTrustLevel(webStateObserverBridge_->web_state(),
+                                    &pageURL)) {
     completionHandler(NO, autofill::PasswordForm());
     return;
   }
@@ -632,12 +627,15 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
   if (!forms.empty()) {
     // Notify web_state about password forms, so that this can be taken into
     // account for the security state.
-    if (webState_ && !web::IsOriginSecure(webState_->GetLastCommittedURL())) {
-      InsecureInputTabHelper::GetOrCreateForWebState(webState_)
-          ->DidShowPasswordFieldInInsecureContext();
+    if (webStateObserverBridge_) {
+      web::WebState* web_state = webStateObserverBridge_->web_state();
+      if (web_state && !web::IsOriginSecure(web_state->GetLastCommittedURL())) {
+        InsecureInputTabHelper::GetOrCreateForWebState(web_state)
+            ->DidShowPasswordFieldInInsecureContext();
+      }
     }
 
-    sentRequestToStore_ = YES;
+    sent_request_to_store_ = YES;
     // Invoke the password manager callback to autofill password forms
     // on the loaded page.
     passwordManager_->OnPasswordFormsParsed(passwordManagerDriver_.get(),
@@ -668,19 +666,21 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
                                   webState:(web::WebState*)webState
                          completionHandler:
                              (SuggestionsAvailableCompletion)completion {
-  if (!sentRequestToStore_ && [type isEqual:@"focus"]) {
+  if (!sent_request_to_store_ && [type isEqual:@"focus"]) {
     [self findPasswordFormsAndSendThemToPasswordStore];
     completion(NO);
     return;
   }
-  if (fillData_.Empty() || !GetPageURLAndCheckTrustLevel(webState, nullptr)) {
+  if (!formData_ || !GetPageURLAndCheckTrustLevel(webState, nullptr)) {
     completion(NO);
     return;
   }
 
   // Suggestions are available for the username field of the password form.
-  completion(fillData_.IsSuggestionsAvailable(
-      base::SysNSStringToUTF16(formName), base::SysNSStringToUTF16(fieldName)));
+  const base::string16& pendingFormName = formData_->name;
+  const base::string16& pendingFieldName = formData_->username_field.name;
+  completion(base::SysNSStringToUTF16(formName) == pendingFormName &&
+             base::SysNSStringToUTF16(fieldName) == pendingFieldName);
 }
 
 - (void)retrieveSuggestionsForForm:(NSString*)formName
@@ -691,12 +691,11 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
                           webState:(web::WebState*)webState
                  completionHandler:(SuggestionsReadyCompletion)completion {
   DCHECK(GetPageURLAndCheckTrustLevel(webState, nullptr));
-  if (fillData_.Empty()) {
+  if (!formData_) {
     completion(@[], nil);
     return;
   }
-  completion(BuildSuggestions(fillData_, formName, fieldName, typedValue),
-             self);
+  completion(BuildSuggestions(*formData_, typedValue), self);
 }
 
 - (void)didSelectSuggestion:(FormSuggestion*)suggestion
@@ -704,15 +703,17 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
                        form:(NSString*)formName
           completionHandler:(SuggestionHandledCompletion)completion {
   const base::string16 username = base::SysNSStringToUTF16(suggestion.value);
-  std::unique_ptr<FillData> fillData = fillData_.GetFillData(username);
-
-  if (!fillData)
+  base::string16 password;
+  if (FindMatchingUsername(*formData_, username, &password)) {
+    [self fillPasswordForm:*formData_
+              withUsername:username
+                  password:password
+         completionHandler:^(BOOL success) {
+           completion();
+         }];
+  } else {
     completion();
-
-  [self fillPasswordFormWithFillData:*fillData
-                   completionHandler:^(BOOL success) {
-                     completion();
-                   }];
+  }
 }
 
 #pragma mark - PasswordManagerClientDelegate
@@ -743,7 +744,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 // TODO(crbug.com/435048): Animate appearance.
 - (void)showAutosigninNotification:
     (std::unique_ptr<autofill::PasswordForm>)formSignedIn {
-  if (!webState_)
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
     return;
 
   // If a notification is already being displayed, hides the old one, then shows
@@ -916,32 +917,19 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
 - (void)fillPasswordForm:(const autofill::PasswordFormFillData&)formData
        completionHandler:(void (^)(BOOL))completionHandler {
-  fillData_.Add(formData);
+  formData_.reset(new autofill::PasswordFormFillData(formData));
 
   // Don't fill immediately if waiting for the user to type a username.
-  if (formData.wait_for_username) {
+  if (formData_->wait_for_username) {
     if (completionHandler)
       completionHandler(NO);
     return;
   }
 
-  [self fillPasswordForm:formData
-            withUsername:formData.username_field.value
-                password:formData.password_field.value
+  [self fillPasswordForm:*formData_
+            withUsername:formData_->username_field.value
+                password:formData_->password_field.value
        completionHandler:completionHandler];
-}
-
-- (void)fillPasswordFormWithFillData:(const password_manager::FillData&)fillData
-                   completionHandler:(void (^)(BOOL))completionHandler {
-  // Send JSON over to the web view.
-  [passwordJsManager_
-       fillPasswordForm:SerializeFillData(fillData)
-           withUsername:base::SysUTF16ToNSString(fillData.username_value)
-               password:base::SysUTF16ToNSString(fillData.password_value)
-      completionHandler:^(BOOL result) {
-        if (completionHandler)
-          completionHandler(result);
-      }];
 }
 
 - (BOOL)handleScriptCommand:(const base::DictionaryValue&)JSONCommand {
@@ -987,7 +975,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
 - (void)showInfoBarForForm:(std::unique_ptr<PasswordFormManager>)form
                infoBarType:(PasswordInfoBarType)type {
-  if (!webState_)
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
     return;
 
   bool isSmartLockBrandingEnabled = false;
@@ -999,7 +987,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
         password_bubble_experiment::IsSmartLockUser(sync_service);
   }
   infobars::InfoBarManager* infoBarManager =
-      InfoBarManagerImpl::FromWebState(webState_);
+      InfoBarManagerImpl::FromWebState(webStateObserverBridge_->web_state());
 
   switch (type) {
     case PasswordInfoBarType::SAVE:

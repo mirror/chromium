@@ -35,6 +35,7 @@ mojom("interfaces") {
   public_deps = [
     ":constants",
     "//gpu/ipc/common:interfaces",
+    "//media/gpu/mojo:jpeg_decoder",
     "//media/mojo/interfaces",
     "//mojo/common:common_custom_types",
     "//services/ui/public/interfaces/cursor",
@@ -49,11 +50,6 @@ mojom("interfaces") {
     "//ui/gfx/mojo",
     "//ui/platform_window/mojo:interfaces",
   ]
-
-  if (is_chromeos) {
-    sources += [ "arc.mojom" ]
-    public_deps += [ "//components/arc/common:media" ]
-  }
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
   use_once_callback = false

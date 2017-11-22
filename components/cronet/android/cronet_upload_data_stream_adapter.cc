@@ -105,7 +105,7 @@ void CronetUploadDataStreamAdapter::Destroy(JNIEnv* env,
   delete this;
 }
 
-static jlong JNI_CronetUploadDataStream_AttachUploadDataToRequest(
+static jlong AttachUploadDataToRequest(
     JNIEnv* env,
     const JavaParamRef<jobject>& jupload_data_stream,
     jlong jcronet_url_request_adapter,
@@ -125,7 +125,7 @@ static jlong JNI_CronetUploadDataStream_AttachUploadDataToRequest(
   return reinterpret_cast<jlong>(adapter);
 }
 
-static jlong JNI_CronetUploadDataStream_CreateAdapterForTesting(
+static jlong CreateAdapterForTesting(
     JNIEnv* env,
     const JavaParamRef<jobject>& jupload_data_stream) {
   CronetUploadDataStreamAdapter* adapter =
@@ -133,7 +133,7 @@ static jlong JNI_CronetUploadDataStream_CreateAdapterForTesting(
   return reinterpret_cast<jlong>(adapter);
 }
 
-static jlong JNI_CronetUploadDataStream_CreateUploadDataStreamForTesting(
+static jlong CreateUploadDataStreamForTesting(
     JNIEnv* env,
     const JavaParamRef<jobject>& jupload_data_stream,
     jlong jlength,

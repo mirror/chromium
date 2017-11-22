@@ -66,8 +66,7 @@ class CORE_EXPORT IntersectionObserver final : public ScriptWrappable {
 
   // This is the document which is responsible for running
   // computeIntersectionObservations at frame generation time.
-  // This can return nullptr when no tracking document is available.
-  Document* TrackingDocument() const;
+  Document& TrackingDocument() const;
 
   const Length& TopMargin() const { return top_margin_; }
   const Length& RightMargin() const { return right_margin_; }

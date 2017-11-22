@@ -35,8 +35,10 @@
 #include "ui/gl/sync_control_vsync_provider.h"
 
 #if defined(USE_X11)
-#include "ui/gfx/x/x11.h"
-
+extern "C" {
+#include <X11/Xlib.h>
+#define Status int
+}
 #include "ui/base/x/x11_util_internal.h"  // nogncheck
 #endif
 

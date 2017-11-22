@@ -45,7 +45,7 @@ class AwCookieAccessPolicy {
   bool OnCanGetCookies(const net::URLRequest& request,
                        const net::CookieList& cookie_list);
   bool OnCanSetCookie(const net::URLRequest& request,
-                      const net::CanonicalCookie& cookie,
+                      const std::string& cookie_line,
                       net::CookieOptions* options);
 
   // These are the functions called when operating over cookies from the

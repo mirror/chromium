@@ -242,32 +242,6 @@ static void SetShouldInvalidateIfNeeds(LayoutObject* layout_object) {
   }
 }
 
-static void SetSelectionStateIfNeeded(LayoutObject* layout_object,
-                                      SelectionState state) {
-  DCHECK_NE(state, SelectionState::kContain) << layout_object;
-  if (layout_object->GetSelectionState() == state)
-    return;
-  // TODO(yoichio): Once we make LayoutObject::SetSelectionState() tribial, use
-  // it directly.
-  layout_object->LayoutObject::SetSelectionState(state);
-
-  // Set parent SelectionState kContain for CSS ::selection style.
-  // See LayoutObject::InvalidatePaintForSelection().
-  // TODO(yoichio): We should not propagation kNone state.
-  // if (state == SelectionState::kNone)
-  //   return;
-  const SelectionState propagate_state = state == SelectionState::kNone
-                                             ? SelectionState::kNone
-                                             : SelectionState::kContain;
-  for (LayoutObject* containing_block = layout_object->ContainingBlock();
-       containing_block;
-       containing_block = containing_block->ContainingBlock()) {
-    if (containing_block->GetSelectionState() == propagate_state)
-      return;
-    containing_block->LayoutObject::SetSelectionState(propagate_state);
-  }
-}
-
 // Set ShouldInvalidateSelection flag of LayoutObjects
 // comparing them in |new_range| and |old_range|.
 static void SetShouldInvalidateSelection(
@@ -293,7 +267,7 @@ static void SetShouldInvalidateSelection(
   // above.
   for (LayoutObject* layout_object : old_selected_objects) {
     const SelectionState old_state = layout_object->GetSelectionState();
-    SetSelectionStateIfNeeded(layout_object, SelectionState::kNone);
+    layout_object->SetSelectionStateIfNeeded(SelectionState::kNone);
     if (layout_object->GetSelectionState() == old_state)
       continue;
     SetShouldInvalidateIfNeeds(layout_object);
@@ -377,7 +351,7 @@ static void MarkSelected(SelectedLayoutObjects* selected_objects,
                          LayoutObject* layout_object,
                          SelectionState state) {
   DCHECK(layout_object->CanBeSelectionLeaf());
-  SetSelectionStateIfNeeded(layout_object, state);
+  layout_object->SetSelectionStateIfNeeded(state);
   selected_objects->insert(layout_object);
 }
 

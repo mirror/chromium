@@ -12,12 +12,6 @@
 #include "content/common/content_export.h"
 #include "url/origin.h"
 
-namespace blink {
-namespace scheduler {
-class RendererScheduler;
-}
-}  // namespace blink
-
 namespace content {
 class LocalStorageCachedArea;
 
@@ -29,21 +23,15 @@ class StoragePartitionService;
 // needed because we can have n LocalStorageArea objects for the same origin but
 // we want just one LocalStorageCachedArea to service them (no point in having
 // multiple caches of the same data in the same process).
-// TODO(dmurph): Rename to remove LocalStorage.
 class CONTENT_EXPORT LocalStorageCachedAreas {
  public:
-  LocalStorageCachedAreas(
-      mojom::StoragePartitionService* storage_partition_service,
-      blink::scheduler::RendererScheduler* renderer_schedule);
+  explicit LocalStorageCachedAreas(
+      mojom::StoragePartitionService* storage_partition_service);
   ~LocalStorageCachedAreas();
 
   // Returns, creating if necessary, a cached storage area for the given origin.
   scoped_refptr<LocalStorageCachedArea>
       GetCachedArea(const url::Origin& origin);
-
-  scoped_refptr<LocalStorageCachedArea> GetSessionStorageArea(
-      int64_t namespace_id,
-      const url::Origin& origin);
 
   size_t TotalCacheSize() const;
 
@@ -52,21 +40,12 @@ class CONTENT_EXPORT LocalStorageCachedAreas {
  private:
   void ClearAreasIfNeeded();
 
-  scoped_refptr<LocalStorageCachedArea> GetCachedArea(
-      int64_t namespace_id,
-      const url::Origin& origin,
-      blink::scheduler::RendererScheduler* scheduler);
-
   mojom::StoragePartitionService* const storage_partition_service_;
 
-  // Maps from a namespace + origin to its LocalStorageCachedArea object. When
-  // this map is the only reference to the object, it can be deleted by the
-  // cache.
-  using AreaKey = std::pair<int64_t, url::Origin>;
-  std::map<AreaKey, scoped_refptr<LocalStorageCachedArea>> cached_areas_;
+  // Maps from an origin to its LocalStorageCachedArea object. When this map is
+  // the only reference to the object, it can be deleted by the cache.
+  std::map<url::Origin, scoped_refptr<LocalStorageCachedArea>> cached_areas_;
   size_t total_cache_limit_;
-
-  blink::scheduler::RendererScheduler* renderer_scheduler_;  // NOT OWNED
 
   DISALLOW_COPY_AND_ASSIGN(LocalStorageCachedAreas);
 };

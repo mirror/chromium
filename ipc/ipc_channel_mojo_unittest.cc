@@ -666,12 +666,10 @@ class ChannelProxyRunner {
     std::unique_ptr<IPC::ChannelFactory> factory;
     if (for_server_) {
       factory = IPC::ChannelMojo::CreateServerFactory(
-          std::move(handle_), io_thread_.task_runner(),
-          base::ThreadTaskRunnerHandle::Get());
+          std::move(handle_), io_thread_.task_runner());
     } else {
       factory = IPC::ChannelMojo::CreateClientFactory(
-          std::move(handle_), io_thread_.task_runner(),
-          base::ThreadTaskRunnerHandle::Get());
+          std::move(handle_), io_thread_.task_runner());
     }
     proxy_->Init(std::move(factory), true);
   }

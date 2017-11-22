@@ -21,7 +21,7 @@ namespace mac {
 NSAppleEventDescriptor* ValueToAppleEventDescriptor(const base::Value* value) {
   NSAppleEventDescriptor* descriptor = nil;
 
-  switch (value->type()) {
+  switch (value->GetType()) {
     case base::Value::Type::NONE:
       descriptor = [NSAppleEventDescriptor
           descriptorWithTypeCode:cMissingValue];

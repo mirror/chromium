@@ -229,8 +229,7 @@ String CSSComputedStyleDeclaration::cssText() const {
   return result.ToString();
 }
 
-void CSSComputedStyleDeclaration::setCSSText(const ExecutionContext*,
-                                             const String&,
+void CSSComputedStyleDeclaration::setCSSText(const String&,
                                              ExceptionState& exception_state) {
   exception_state.ThrowDOMException(
       kNoModificationAllowedError,
@@ -420,10 +419,10 @@ MutableCSSPropertyValueSet* CSSComputedStyleDeclaration::CopyPropertiesInSet(
   HeapVector<CSSPropertyValue, 256> list;
   list.ReserveInitialCapacity(properties.size());
   for (unsigned i = 0; i < properties.size(); ++i) {
-    const CSSProperty& property = CSSProperty::Get(properties[i]);
-    const CSSValue* value = GetPropertyCSSValue(property);
+    const CSSValue* value =
+        GetPropertyCSSValue(CSSProperty::Get(properties[i]));
     if (value)
-      list.push_back(CSSPropertyValue(property, *value, false));
+      list.push_back(CSSPropertyValue(properties[i], *value, false));
   }
   return MutableCSSPropertyValueSet::Create(list.data(), list.size());
 }
@@ -462,8 +461,7 @@ bool CSSComputedStyleDeclaration::IsPropertyImplicit(const String&) {
   return false;
 }
 
-void CSSComputedStyleDeclaration::setProperty(const ExecutionContext*,
-                                              const String& name,
+void CSSComputedStyleDeclaration::setProperty(const String& name,
                                               const String&,
                                               const String&,
                                               ExceptionState& exception_state) {
@@ -503,7 +501,6 @@ void CSSComputedStyleDeclaration::SetPropertyInternal(
     const String&,
     const String&,
     bool,
-    SecureContextMode,
     ExceptionState& exception_state) {
   // TODO(leviw): This code is currently unreachable, but shouldn't be.
   exception_state.ThrowDOMException(

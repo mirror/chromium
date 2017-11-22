@@ -115,11 +115,11 @@ TextStream& FilterEffect::ExternalRepresentation(TextStream& ts, int) const {
   return ts;
 }
 
-sk_sp<PaintFilter> FilterEffect::CreateImageFilter() {
+sk_sp<SkImageFilter> FilterEffect::CreateImageFilter() {
   return nullptr;
 }
 
-sk_sp<PaintFilter> FilterEffect::CreateImageFilterWithoutValidation() {
+sk_sp<SkImageFilter> FilterEffect::CreateImageFilterWithoutValidation() {
   return CreateImageFilter();
 }
 
@@ -131,21 +131,21 @@ bool FilterEffect::InputsTaintOrigin() const {
   return false;
 }
 
-sk_sp<PaintFilter> FilterEffect::CreateTransparentBlack() const {
-  PaintFilter::CropRect rect = GetCropRect();
+sk_sp<SkImageFilter> FilterEffect::CreateTransparentBlack() const {
+  SkImageFilter::CropRect rect = GetCropRect();
   sk_sp<SkColorFilter> color_filter =
       SkColorFilter::MakeModeFilter(0, SkBlendMode::kClear);
-  return sk_make_sp<ColorFilterPaintFilter>(std::move(color_filter), nullptr,
-                                            &rect);
+  return SkColorFilterImageFilter::Make(std::move(color_filter), nullptr,
+                                        &rect);
 }
 
-PaintFilter::CropRect FilterEffect::GetCropRect() const {
+SkImageFilter::CropRect FilterEffect::GetCropRect() const {
   if (!FilterPrimitiveSubregion().IsEmpty()) {
     FloatRect rect =
         GetFilter()->MapLocalRectToAbsoluteRect(FilterPrimitiveSubregion());
-    return PaintFilter::CropRect(rect);
+    return SkImageFilter::CropRect(rect);
   } else {
-    return PaintFilter::CropRect(SkRect::MakeEmpty(), 0);
+    return SkImageFilter::CropRect(SkRect::MakeEmpty(), 0);
   }
 }
 
@@ -160,7 +160,7 @@ static int GetImageFilterIndex(InterpolationSpace interpolation_space,
          (requires_pm_color_validation ? 0x2 : 0x0);
 }
 
-PaintFilter* FilterEffect::GetImageFilter(
+SkImageFilter* FilterEffect::GetImageFilter(
     InterpolationSpace interpolation_space,
     bool requires_pm_color_validation) const {
   int index =
@@ -170,7 +170,7 @@ PaintFilter* FilterEffect::GetImageFilter(
 
 void FilterEffect::SetImageFilter(InterpolationSpace interpolation_space,
                                   bool requires_pm_color_validation,
-                                  sk_sp<PaintFilter> image_filter) {
+                                  sk_sp<SkImageFilter> image_filter) {
   int index =
       GetImageFilterIndex(interpolation_space, requires_pm_color_validation);
   image_filters_[index] = std::move(image_filter);

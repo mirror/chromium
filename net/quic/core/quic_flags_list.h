@@ -101,7 +101,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_rate_recovery, false)
 
 // Adds a QuicPacketNumberQueue that is based on a deque and does not support
 // costly AddRange arguments.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque3, true)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque3, false)
 
 // If true, enable QUIC v42.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_42, false)
@@ -127,7 +127,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_41, true)
 
 // If true, QUIC can take ownership of data provided in a reference counted
 // memory to avoid data copy.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_mem_slices, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_mem_slices, true)
 
 // Allow QUIC to accept initial packet numbers that are random, not 1.
 QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_enable_accept_random_ipn, false)
@@ -158,7 +158,7 @@ QUIC_FLAG(bool,
 
 // If true, allow a new BBR connection option to use a slower STARTUP once loss
 // occurs
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_slower_startup, true)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_slower_startup, false)
 
 // Deprecate QuicAckFrame.largest_observed since it is redundant.
 QUIC_FLAG(bool,
@@ -167,7 +167,7 @@ QUIC_FLAG(bool,
 
 // Fully drain the queue in QUIC BBR at least once per cycle(8 rounds) when
 // activated by the BBR3 connection option.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_fully_drain_queue, true)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_fully_drain_queue, false)
 
 // When true, allows connection options to be sent to completely disable packet
 // conservation in QUIC BBR STARTUP or make it more aggressive.

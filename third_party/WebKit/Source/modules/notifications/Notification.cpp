@@ -65,8 +65,8 @@
 namespace blink {
 namespace {
 
-WebNotificationManager* GetWebNotificationManager() {
-  return Platform::Current()->GetWebNotificationManager();
+WebNotificationManager* GetNotificationManager() {
+  return Platform::Current()->GetNotificationManager();
 }
 
 }  // namespace
@@ -151,7 +151,7 @@ Notification::Notification(ExecutionContext* context,
       type_(type),
       state_(State::kLoading),
       data_(data) {
-  DCHECK(GetWebNotificationManager());
+  DCHECK(GetNotificationManager());
 }
 
 Notification::~Notification() {}
@@ -190,8 +190,8 @@ void Notification::DidLoadResources(NotificationResourcesLoader* loader) {
   SecurityOrigin* origin = GetExecutionContext()->GetSecurityOrigin();
   DCHECK(origin);
 
-  GetWebNotificationManager()->Show(WebSecurityOrigin(origin), data_,
-                                    loader->GetResources(), this);
+  GetNotificationManager()->Show(WebSecurityOrigin(origin), data_,
+                                 loader->GetResources(), this);
   loader_.Clear();
 
   state_ = State::kShowing;
@@ -210,7 +210,7 @@ void Notification::close() {
                                               WrapPersistent(this)));
     state_ = State::kClosing;
 
-    GetWebNotificationManager()->Close(this);
+    GetNotificationManager()->Close(this);
     return;
   }
 
@@ -219,8 +219,8 @@ void Notification::close() {
   SecurityOrigin* origin = GetExecutionContext()->GetSecurityOrigin();
   DCHECK(origin);
 
-  GetWebNotificationManager()->ClosePersistent(WebSecurityOrigin(origin),
-                                               data_.tag, notification_id_);
+  GetNotificationManager()->ClosePersistent(WebSecurityOrigin(origin),
+                                            data_.tag, notification_id_);
 }
 
 void Notification::DispatchShowEvent() {
@@ -444,7 +444,7 @@ const AtomicString& Notification::InterfaceName() const {
 }
 
 void Notification::ContextDestroyed(ExecutionContext*) {
-  GetWebNotificationManager()->NotifyDelegateDestroyed(this);
+  GetNotificationManager()->NotifyDelegateDestroyed(this);
 
   state_ = State::kClosed;
 

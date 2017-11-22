@@ -34,8 +34,7 @@ using ::i18n::addressinput::IsFieldRequired;
 using ::i18n::addressinput::Localization;
 using ::i18n::addressinput::RECIPIENT;
 
-static ScopedJavaLocalRef<jstring>
-JNI_AutofillProfileBridge_GetDefaultCountryCode(
+static ScopedJavaLocalRef<jstring> GetDefaultCountryCode(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz) {
   std::string default_country_code =
@@ -44,7 +43,7 @@ JNI_AutofillProfileBridge_GetDefaultCountryCode(
   return ConvertUTF8ToJavaString(env, default_country_code);
 }
 
-static void JNI_AutofillProfileBridge_GetSupportedCountries(
+static void GetSupportedCountries(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& j_country_code_list,
@@ -69,7 +68,7 @@ static void JNI_AutofillProfileBridge_GetSupportedCountries(
       env, ToJavaArrayOfStrings(env, known_country_names), j_country_name_list);
 }
 
-static void JNI_AutofillProfileBridge_GetRequiredFields(
+static void GetRequiredFields(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& j_country_code,
@@ -90,8 +89,7 @@ static void JNI_AutofillProfileBridge_GetRequiredFields(
                                             j_required_fields_list);
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_AutofillProfileBridge_GetAddressUiComponents(
+static ScopedJavaLocalRef<jstring> GetAddressUiComponents(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& j_country_code,

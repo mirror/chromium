@@ -48,8 +48,7 @@ SDK.CSSModel = class extends SDK.SDKModel {
           SDK.ResourceTreeModel.Events.MainFrameNavigated, this._resetStyleSheets, this);
     }
     target.registerCSSDispatcher(new SDK.CSSDispatcher(this));
-    if (!target.suspended())
-      this._enable();
+    this._enable();
     /** @type {!Map.<string, !SDK.CSSStyleSheetHeader>} */
     this._styleSheetIdToHeader = new Map();
     /** @type {!Map.<string, !Object.<!Protocol.Page.FrameId, !Array.<!Protocol.CSS.StyleSheetId>>>} */

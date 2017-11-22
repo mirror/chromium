@@ -11,8 +11,14 @@ namespace autofill {
 TestAddressNormalizer::TestAddressNormalizer() {}
 TestAddressNormalizer::~TestAddressNormalizer() {}
 
+bool TestAddressNormalizer::AreRulesLoadedForRegion(
+    const std::string& region_code) {
+  return true;
+}
+
 void TestAddressNormalizer::NormalizeAddressAsync(
     const AutofillProfile& profile,
+    const std::string& region_code,
     int timeout_seconds,
     AddressNormalizer::NormalizationCallback callback) {
   if (instantaneous_normalization_) {
@@ -25,7 +31,9 @@ void TestAddressNormalizer::NormalizeAddressAsync(
   callback_ = std::move(callback);
 }
 
-bool TestAddressNormalizer::NormalizeAddressSync(AutofillProfile* profile) {
+bool TestAddressNormalizer::NormalizeAddressSync(
+    AutofillProfile* profile,
+    const std::string& region_code) {
   return true;
 }
 

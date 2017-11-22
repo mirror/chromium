@@ -73,13 +73,14 @@ arc::mojom::SecurityType TranslateONCWifiSecurityType(
                                                 true /* required */);
   if (type == onc::wifi::kWEP_PSK)
     return arc::mojom::SecurityType::WEP_PSK;
-  if (type == onc::wifi::kWEP_8021X)
+  else if (type == onc::wifi::kWEP_8021X)
     return arc::mojom::SecurityType::WEP_8021X;
-  if (type == onc::wifi::kWPA_PSK)
+  else if (type == onc::wifi::kWPA_PSK)
     return arc::mojom::SecurityType::WPA_PSK;
-  if (type == onc::wifi::kWPA_EAP)
+  else if (type == onc::wifi::kWPA_EAP)
     return arc::mojom::SecurityType::WPA_EAP;
-  return arc::mojom::SecurityType::NONE;
+  else
+    return arc::mojom::SecurityType::NONE;
 }
 
 arc::mojom::WiFiPtr TranslateONCWifi(const base::DictionaryValue* dict) {
@@ -170,7 +171,7 @@ arc::mojom::ConnectionStateType TranslateONCConnectionState(
 
   if (connection_state == onc::connection_state::kConnected)
     return arc::mojom::ConnectionStateType::CONNECTED;
-  if (connection_state == onc::connection_state::kConnecting)
+  else if (connection_state == onc::connection_state::kConnecting)
     return arc::mojom::ConnectionStateType::CONNECTING;
   return arc::mojom::ConnectionStateType::NOT_CONNECTED;
 }
@@ -374,7 +375,7 @@ ArcNetHostImpl::~ArcNetHostImpl() {
   arc_bridge_service_->net()->RemoveObserver(this);
 }
 
-void ArcNetHostImpl::OnConnectionReady() {
+void ArcNetHostImpl::OnInstanceReady() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   mojom::NetHostPtr host;
@@ -403,7 +404,7 @@ void ArcNetHostImpl::OnConnectionReady() {
   }
 }
 
-void ArcNetHostImpl::OnConnectionClosed() {
+void ArcNetHostImpl::OnInstanceClosed() {
   if (!observing_network_state_)
     return;
 
@@ -598,8 +599,9 @@ bool ArcNetHostImpl::GetNetworkPathFromGuid(const std::string& guid,
   if (cached_guid_ == guid) {
     *path = cached_service_path_;
     return true;
+  } else {
+    return false;
   }
-  return false;
 }
 
 void ArcNetHostImpl::ForgetNetwork(const std::string& guid,

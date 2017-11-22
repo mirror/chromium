@@ -9,6 +9,7 @@
     ConstructorCallWith=ExecutionContext,
     Constructor(USVString url),
     Constructor(sequence<USVString> urls),
+    DependentLifetime,
     MeasureAs=PresentationRequestConstructor,
     RaisesException=Constructor,
     RuntimeEnabled=Presentation

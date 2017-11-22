@@ -9,7 +9,6 @@
 #include <unistd.h>
 
 #include <utility>
-#include <vector>
 
 #include "base/location.h"
 #include "base/posix/eintr_wrapper.h"
@@ -28,6 +27,7 @@
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/platform_channel_utils_posix.h"
+#include "mojo/edk/embedder/platform_handle_vector.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -43,9 +43,8 @@ chromeos::SessionManagerClient* GetSessionManagerClient() {
   // there isn't much we can do. This should only happen when running tests.
   if (!chromeos::DBusThreadManager::IsInitialized() ||
       !chromeos::DBusThreadManager::Get() ||
-      !chromeos::DBusThreadManager::Get()->GetSessionManagerClient()) {
+      !chromeos::DBusThreadManager::Get()->GetSessionManagerClient())
     return nullptr;
-  }
   return chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
 }
 
@@ -183,7 +182,7 @@ mojo::ScopedMessagePipeHandle ArcSessionDelegateImpl::ConnectMojoInternal(
   }
 
   mojo::edk::ScopedPlatformHandle scoped_fd;
-  if (!mojo::edk::ServerAcceptConnection(socket_fd, &scoped_fd,
+  if (!mojo::edk::ServerAcceptConnection(socket_fd.get(), &scoped_fd,
                                          /* check_peer_user = */ false) ||
       !scoped_fd.is_valid()) {
     return mojo::ScopedMessagePipeHandle();
@@ -202,8 +201,9 @@ mojo::ScopedMessagePipeHandle ArcSessionDelegateImpl::ConnectMojoInternal(
       mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
                                   channel_pair.PassServerHandle()));
 
-  std::vector<mojo::edk::ScopedPlatformHandle> handles;
-  handles.emplace_back(channel_pair.PassClientHandle());
+  mojo::edk::ScopedPlatformHandleVectorPtr handles(
+      new mojo::edk::PlatformHandleVector{
+          channel_pair.PassClientHandle().release()});
 
   // We need to send the length of the message as a single byte, so make sure it
   // fits.
@@ -212,7 +212,8 @@ mojo::ScopedMessagePipeHandle ArcSessionDelegateImpl::ConnectMojoInternal(
   struct iovec iov[] = {{&message_length, sizeof(message_length)},
                         {const_cast<char*>(token.c_str()), token.size()}};
   ssize_t result = mojo::edk::PlatformChannelSendmsgWithHandles(
-      scoped_fd, iov, sizeof(iov) / sizeof(iov[0]), handles);
+      scoped_fd.get(), iov, sizeof(iov) / sizeof(iov[0]), handles->data(),
+      handles->size());
   if (result == -1) {
     PLOG(ERROR) << "sendmsg";
     return mojo::ScopedMessagePipeHandle();
@@ -610,28 +611,6 @@ void ArcSessionImpl::OnShutdown() {
   // StopArcInstance() may not work well. At least, because the UI thread is
   // already stopped here, ArcInstanceStopped() callback cannot be invoked.
   OnStopped(ArcStopReason::SHUTDOWN);
-}
-
-std::ostream& operator<<(std::ostream& os, ArcSessionImpl::State state) {
-#define MAP_STATE(name)             \
-  case ArcSessionImpl::State::name: \
-    return os << #name
-
-  switch (state) {
-    MAP_STATE(NOT_STARTED);
-    MAP_STATE(STARTING_MINI_INSTANCE);
-    MAP_STATE(RUNNING_MINI_INSTANCE);
-    MAP_STATE(STARTING_FULL_INSTANCE);
-    MAP_STATE(CONNECTING_MOJO);
-    MAP_STATE(RUNNING_FULL_INSTANCE);
-    MAP_STATE(STOPPED);
-  }
-#undef MAP_STATE
-
-  // Some compilers report an error even if all values of an enum-class are
-  // covered exhaustively in a switch statement.
-  NOTREACHED() << "Invalid value " << static_cast<int>(state);
-  return os;
 }
 
 }  // namespace arc

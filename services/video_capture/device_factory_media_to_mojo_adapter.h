@@ -35,9 +35,6 @@ class DeviceFactoryMediaToMojoAdapter : public mojom::DeviceFactory {
   void CreateDevice(const std::string& device_id,
                     mojom::DeviceRequest device_request,
                     CreateDeviceCallback callback) override;
-  void AddVirtualDevice(const media::VideoCaptureDeviceInfo& device_info,
-                        mojom::ProducerPtr producer,
-                        mojom::VirtualDeviceRequest virtual_device) override;
 
  private:
   struct ActiveDeviceEntry {

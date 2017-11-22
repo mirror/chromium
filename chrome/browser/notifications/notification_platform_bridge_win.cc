@@ -145,12 +145,6 @@ NotificationPlatformBridge* NotificationPlatformBridge::Create() {
   return new NotificationPlatformBridgeWin();
 }
 
-// static
-bool NotificationPlatformBridge::CanHandleType(
-    NotificationCommon::Type notification_type) {
-  return notification_type != NotificationCommon::TRANSIENT;
-}
-
 class NotificationPlatformBridgeWinImpl
     : public base::RefCountedThreadSafe<NotificationPlatformBridgeWinImpl>,
       public content::BrowserThread::DeleteOnThread<

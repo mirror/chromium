@@ -15,11 +15,10 @@ using base::android::JavaParamRef;
 namespace signin {
 namespace android {
 
-void JNI_AccountTrackerService_SeedAccountsInfo(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jobjectArray>& gaiaIds,
-    const JavaParamRef<jobjectArray>& accountNames) {
+void SeedAccountsInfo(JNIEnv* env,
+                      const JavaParamRef<jclass>& jcaller,
+                      const JavaParamRef<jobjectArray>& gaiaIds,
+                      const JavaParamRef<jobjectArray>& accountNames) {
   std::vector<std::string> gaia_ids;
   std::vector<std::string> account_names;
   base::android::AppendJavaStringArrayToStringVector(env, gaiaIds, &gaia_ids);
@@ -38,10 +37,9 @@ void JNI_AccountTrackerService_SeedAccountsInfo(
   }
 }
 
-jboolean JNI_AccountTrackerService_AreAccountsSeeded(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jobjectArray>& accountNames) {
+jboolean AreAccountsSeeded(JNIEnv* env,
+                           const JavaParamRef<jclass>& jcaller,
+                           const JavaParamRef<jobjectArray>& accountNames) {
   std::vector<std::string> account_names;
   base::android::AppendJavaStringArrayToStringVector(env, accountNames,
                                                      &account_names);

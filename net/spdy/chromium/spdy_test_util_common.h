@@ -30,7 +30,6 @@
 #include "net/proxy/proxy_server.h"
 #include "net/proxy/proxy_service.h"
 #include "net/socket/socket_test_util.h"
-#include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/core/spdy_protocol.h"
 #include "net/spdy/platform/api/spdy_string.h"
 #include "net/spdy/platform/api/spdy_string_piece.h"
@@ -47,6 +46,7 @@ class CTVerifier;
 class CTPolicyEnforcer;
 class HostPortPair;
 class NetLogWithSource;
+class SpdySession;
 class SpdySessionKey;
 class SpdySessionPool;
 class SpdyStream;
@@ -238,6 +238,16 @@ class SpdyURLRequestContext : public URLRequestContext {
 // NULL.
 bool HasSpdySession(SpdySessionPool* pool, const SpdySessionKey& key);
 
+// Tries to create a SPDY session for the given key but expects the
+// attempt to fail with the given error. A SPDY session for |key| must
+// not already exist. The session will be created but close in the
+// next event loop iteration.
+base::WeakPtr<SpdySession> TryCreateSpdySessionExpectingFailure(
+    HttpNetworkSession* http_session,
+    const SpdySessionKey& key,
+    Error expected_error,
+    const NetLogWithSource& net_log);
+
 // Creates a SPDY session for the given key and puts it in the SPDY
 // session pool in |http_session|. A SPDY session for |key| must not
 // already exist.
@@ -266,7 +276,7 @@ base::WeakPtr<SpdySession> CreateFakeSpdySession(SpdySessionPool* pool,
 base::WeakPtr<SpdySession> TryCreateFakeSpdySessionExpectingFailure(
     SpdySessionPool* pool,
     const SpdySessionKey& key,
-    Error expected_status);
+    Error expected_error);
 
 class SpdySessionPoolPeer {
  public:

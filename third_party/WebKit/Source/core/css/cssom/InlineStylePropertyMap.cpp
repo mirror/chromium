@@ -16,7 +16,6 @@
 #include "core/css/cssom/StyleValueFactory.h"
 #include "core/css/properties/CSSProperty.h"
 
-#include "core/css/cssom/CSSKeywordValue.h"
 namespace blink {
 
 namespace {
@@ -37,32 +36,39 @@ CSSValueList* CssValueListForPropertyID(CSSPropertyID property_id) {
 }
 
 const CSSValue* StyleValueToCSSValue(CSSPropertyID property_id,
-                                     const CSSStyleValue& style_value,
-                                     SecureContextMode secure_context_mode) {
+                                     const CSSStyleValue& style_value) {
   if (!CSSOMTypes::PropertyCanTake(property_id, style_value))
     return nullptr;
-  return style_value.ToCSSValueWithProperty(property_id, secure_context_mode);
+  return style_value.ToCSSValueWithProperty(property_id);
 }
 
-const CSSValue* CoerceStyleValueOrStringToCSSValue(
-    CSSPropertyID property_id,
-    const CSSStyleValueOrString& value,
-    SecureContextMode secure_context_mode) {
-  if (value.IsCSSStyleValue()) {
-    if (!value.GetAsCSSStyleValue())
-      return nullptr;
-
-    return StyleValueToCSSValue(property_id, *value.GetAsCSSStyleValue(),
-                                secure_context_mode);
-  }
-
-  DCHECK(value.IsString());
-  const auto values = StyleValueFactory::FromString(
-      property_id, value.GetAsString(), secure_context_mode);
-  // TODO(785132): What should we do here?
-  if (values.size() != 1)
+const CSSValue* SingleStyleValueAsCSSValue(CSSPropertyID property_id,
+                                           const CSSStyleValue& style_value) {
+  const CSSValue* css_value = StyleValueToCSSValue(property_id, style_value);
+  if (!css_value)
     return nullptr;
-  return StyleValueToCSSValue(property_id, *values[0], secure_context_mode);
+
+  if (!CSSProperty::Get(property_id).IsRepeated() ||
+      css_value->IsCSSWideKeyword())
+    return css_value;
+
+  CSSValueList* value_list = CssValueListForPropertyID(property_id);
+  value_list->Append(*css_value);
+  return value_list;
+}
+
+const CSSValueList* AsCSSValueList(
+    CSSPropertyID property_id,
+    const CSSStyleValueVector& style_value_vector) {
+  CSSValueList* value_list = CssValueListForPropertyID(property_id);
+  for (const CSSStyleValue* value : style_value_vector) {
+    const CSSValue* css_value = StyleValueToCSSValue(property_id, *value);
+    if (!css_value) {
+      return nullptr;
+    }
+    value_list->Append(*css_value);
+  }
+  return value_list;
 }
 
 }  // namespace
@@ -109,51 +115,39 @@ Vector<String> InlineStylePropertyMap::getProperties() {
   return result;
 }
 
-void InlineStylePropertyMap::set(const ExecutionContext* execution_context,
-                                 CSSPropertyID property_id,
-                                 HeapVector<CSSStyleValueOrString>& values,
-                                 ExceptionState& exception_state) {
-  if (values.IsEmpty())
-    return;
-
-  if (CSSProperty::Get(property_id).IsRepeated()) {
-    CSSValueList* result = CssValueListForPropertyID(property_id);
-    for (const auto& value : values) {
-      const CSSValue* css_value = CoerceStyleValueOrStringToCSSValue(
-          property_id, value, execution_context->SecureContextMode());
-      if (!css_value || (css_value->IsCSSWideKeyword() && values.size() > 1)) {
-        exception_state.ThrowTypeError("Invalid type for property");
-        return;
-      }
-      result->Append(*css_value);
+void InlineStylePropertyMap::set(
+    CSSPropertyID property_id,
+    CSSStyleValueOrCSSStyleValueSequenceOrString& item,
+    ExceptionState& exception_state) {
+  const CSSValue* css_value = nullptr;
+  if (item.IsCSSStyleValue()) {
+    css_value =
+        SingleStyleValueAsCSSValue(property_id, *item.GetAsCSSStyleValue());
+  } else if (item.IsCSSStyleValueSequence()) {
+    if (!CSSProperty::Get(property_id).IsRepeated()) {
+      exception_state.ThrowTypeError(
+          "Property does not support multiple values");
+      return;
     }
-
-    if (result->length() == 1 && result->Item(0).IsCSSWideKeyword())
-      owner_element_->SetInlineStyleProperty(property_id, &result->Item(0));
-    else
-      owner_element_->SetInlineStyleProperty(property_id, result);
+    css_value = AsCSSValueList(property_id, item.GetAsCSSStyleValueSequence());
   } else {
-    if (values.size() != 1) {
-      // FIXME: Is this actually the correct behaviour?
-      exception_state.ThrowTypeError("Not supported");
-      return;
-    }
-
-    const CSSValue* result = CoerceStyleValueOrStringToCSSValue(
-        property_id, values[0], execution_context->SecureContextMode());
-    if (!result) {
-      exception_state.ThrowTypeError("Invalid type for property");
-      return;
-    }
-
-    owner_element_->SetInlineStyleProperty(property_id, result);
+    // Parse it.
+    DCHECK(item.IsString());
+    // TODO(meade): Implement this.
+    exception_state.ThrowTypeError("Not implemented yet");
+    return;
   }
+  if (!css_value) {
+    exception_state.ThrowTypeError("Invalid type for property");
+    return;
+  }
+  owner_element_->SetInlineStyleProperty(property_id, css_value);
 }
 
-void InlineStylePropertyMap::append(const ExecutionContext* execution_context,
-                                    CSSPropertyID property_id,
-                                    HeapVector<CSSStyleValueOrString>& values,
-                                    ExceptionState& exception_state) {
+void InlineStylePropertyMap::append(
+    CSSPropertyID property_id,
+    CSSStyleValueOrCSSStyleValueSequenceOrString& item,
+    ExceptionState& exception_state) {
   if (!CSSProperty::Get(property_id).IsRepeated()) {
     exception_state.ThrowTypeError("Property does not support multiple values");
     return;
@@ -169,19 +163,34 @@ void InlineStylePropertyMap::append(const ExecutionContext* execution_context,
     css_value_list = ToCSSValueList(css_value)->Copy();
   } else {
     // TODO(meade): Figure out what the correct behaviour here is.
-    NOTREACHED();
     exception_state.ThrowTypeError("Property is not already list valued");
     return;
   }
 
-  for (auto& value : values) {
-    const CSSValue* css_value = CoerceStyleValueOrStringToCSSValue(
-        property_id, value, execution_context->SecureContextMode());
+  if (item.IsCSSStyleValue()) {
+    const CSSValue* css_value =
+        StyleValueToCSSValue(property_id, *item.GetAsCSSStyleValue());
     if (!css_value) {
       exception_state.ThrowTypeError("Invalid type for property");
       return;
     }
     css_value_list->Append(*css_value);
+  } else if (item.IsCSSStyleValueSequence()) {
+    for (CSSStyleValue* style_value : item.GetAsCSSStyleValueSequence()) {
+      const CSSValue* css_value =
+          StyleValueToCSSValue(property_id, *style_value);
+      if (!css_value) {
+        exception_state.ThrowTypeError("Invalid type for property");
+        return;
+      }
+      css_value_list->Append(*css_value);
+    }
+  } else {
+    // Parse it.
+    DCHECK(item.IsString());
+    // TODO(meade): Implement this.
+    exception_state.ThrowTypeError("Not implemented yet");
+    return;
   }
 
   owner_element_->SetInlineStyleProperty(property_id, css_value_list);

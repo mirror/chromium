@@ -609,9 +609,7 @@ GLuint TestWebGraphicsContext3D::createImageCHROMIUM(ClientBuffer buffer,
                                                      GLsizei width,
                                                      GLsizei height,
                                                      GLenum internalformat) {
-  DCHECK(internalformat == GL_RGB || internalformat == GL_RGBA ||
-         (test_capabilities_.texture_format_bgra8888 &&
-          internalformat == GL_BGRA_EXT));
+  DCHECK(internalformat == GL_RGB || internalformat == GL_RGBA);
   GLuint image_id = NextImageId();
   base::AutoLock lock(namespace_->lock);
   std::unordered_set<unsigned>& images = namespace_->images;
@@ -634,9 +632,7 @@ GLuint TestWebGraphicsContext3D::createGpuMemoryBufferImageCHROMIUM(
     GLsizei height,
     GLenum internalformat,
     GLenum usage) {
-  DCHECK(internalformat == GL_RGB || internalformat == GL_RGBA ||
-         (test_capabilities_.texture_format_bgra8888 &&
-          internalformat == GL_BGRA_EXT));
+  DCHECK(internalformat == GL_RGB || internalformat == GL_RGBA);
   GLuint image_id = NextImageId();
   base::AutoLock lock(namespace_->lock);
   std::unordered_set<unsigned>& images = namespace_->images;

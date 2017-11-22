@@ -6,9 +6,8 @@
 #define BASE_ALLOCATOR_PARTITION_ALLOCATOR_PARTITION_ALLOC_H_
 
 // DESCRIPTION
-// PartitionRoot::Alloc() / PartitionRootGeneric::Alloc() and PartitionFree() /
-// PartitionRootGeneric::Free() are approximately analagous to malloc() and
-// free().
+// partitionAlloc() / PartitionAllocGeneric() and PartitionFree() /
+// PartitionFreeGeneric() are approximately analagous to malloc() and free().
 //
 // The main difference is that a PartitionRoot / PartitionRootGeneric object
 // must be supplied to these functions, representing a specific "heap partition"
@@ -24,14 +23,14 @@
 // PartitionRoot is really just a header adjacent to other data areas provided
 // by the allocator class.
 //
-// The PartitionRoot::Alloc() variant of the API has the following caveats:
+// The partitionAlloc() variant of the API has the following caveats:
 // - Allocations and frees against a single partition must be single threaded.
 // - Allocations must not exceed a max size, chosen at compile-time via a
 // templated parameter to PartitionAllocator.
 // - Allocation sizes must be aligned to the system pointer size.
 // - Allocations are bucketed exactly according to size.
 //
-// And for PartitionRootGeneric::Alloc():
+// And for PartitionAllocGeneric():
 // - Multi-threaded use against a single partition is ok; locking is handled.
 // - Allocations of any arbitrary size can be handled (subject to a limit of
 // INT_MAX bytes for security reasons).
@@ -95,8 +94,8 @@ static const size_t kBucketShift = (kAllocationGranularity == 8) ? 3 : 2;
 // Slot span sizes are adjusted depending on the allocation size, to make sure
 // the packing does not lead to unused (wasted) space at the end of the last
 // system page of the span. For our current max slot span size of 64k and other
-// constant values, we pack _all_ PartitionRootGeneric::Alloc() sizes perfectly
-// up against the end of a system page.
+// constant values, we pack _all_ PartitionAllocGeneric() sizes perfectly up
+// against the end of a system page.
 static const size_t kPartitionPageShift = 14;  // 16KB
 static const size_t kPartitionPageSize = 1 << kPartitionPageShift;
 static const size_t kPartitionPageOffsetMask = kPartitionPageSize - 1;
@@ -226,7 +225,6 @@ static const unsigned char kCookieValue[kCookieSize] = {
     0x13, 0x37, 0xF0, 0x05, 0xBA, 0x11, 0xAB, 0x1E};
 #endif
 
-class PartitionStatsDumper;
 struct PartitionBucket;
 struct PartitionRootBase;
 
@@ -329,16 +327,6 @@ struct BASE_EXPORT PartitionRootBase {
   static void (*gOomHandlingFunction)();
 };
 
-enum PartitionPurgeFlags {
-  // Decommitting the ring list of empty pages is reasonably fast.
-  PartitionPurgeDecommitEmptyPages = 1 << 0,
-  // Discarding unused system pages is slower, because it involves walking all
-  // freelists in all active partition pages of all buckets >= system page
-  // size. It often frees a similar amount of memory to decommitting the empty
-  // pages, though.
-  PartitionPurgeDiscardUnusedSystemPages = 1 << 1,
-};
-
 // Never instantiate a PartitionRoot directly, instead use PartitionAlloc.
 struct BASE_EXPORT PartitionRoot : public PartitionRootBase {
   PartitionRoot();
@@ -353,16 +341,6 @@ struct BASE_EXPORT PartitionRoot : public PartitionRootBase {
   ALWAYS_INLINE const PartitionBucket* buckets() const {
     return reinterpret_cast<const PartitionBucket*>(this + 1);
   }
-
-  void Init(size_t num_buckets, size_t max_allocation);
-
-  ALWAYS_INLINE void* Alloc(size_t size, const char* type_name);
-
-  void PurgeMemory(int flags);
-
-  void DumpStats(const char* partition_name,
-                 bool is_light_dump,
-                 PartitionStatsDumper* dumper);
 };
 
 // Never instantiate a PartitionRootGeneric directly, instead use
@@ -383,22 +361,6 @@ struct BASE_EXPORT PartitionRootGeneric : public PartitionRootBase {
       bucket_lookups[((kBitsPerSizeT + 1) * kGenericNumBucketsPerOrder) + 1] =
           {};
   PartitionBucket buckets[kGenericNumBuckets] = {};
-
-  // Public API.
-  void Init();
-
-  ALWAYS_INLINE void* Alloc(size_t size, const char* type_name);
-  ALWAYS_INLINE void Free(void* ptr);
-
-  NOINLINE void* Realloc(void* ptr, size_t new_size, const char* type_name);
-
-  ALWAYS_INLINE size_t ActualSize(size_t size);
-
-  void PurgeMemory(int flags);
-
-  void DumpStats(const char* partition_name,
-                 bool is_light_dump,
-                 PartitionStatsDumper* partition_stats_dumper);
 };
 
 // Flags for PartitionAllocGenericFlags.
@@ -453,12 +415,42 @@ class BASE_EXPORT PartitionStatsDumper {
 };
 
 BASE_EXPORT void PartitionAllocGlobalInit(void (*oom_handling_function)());
+BASE_EXPORT void PartitionAllocInit(PartitionRoot*,
+                                    size_t num_buckets,
+                                    size_t max_allocation);
+BASE_EXPORT void PartitionAllocGenericInit(PartitionRootGeneric*);
+
+enum PartitionPurgeFlags {
+  // Decommitting the ring list of empty pages is reasonably fast.
+  PartitionPurgeDecommitEmptyPages = 1 << 0,
+  // Discarding unused system pages is slower, because it involves walking all
+  // freelists in all active partition pages of all buckets >= system page
+  // size. It often frees a similar amount of memory to decommitting the empty
+  // pages, though.
+  PartitionPurgeDiscardUnusedSystemPages = 1 << 1,
+};
+
+BASE_EXPORT void PartitionPurgeMemory(PartitionRoot*, int);
+BASE_EXPORT void PartitionPurgeMemoryGeneric(PartitionRootGeneric*, int);
 
 BASE_EXPORT NOINLINE void* PartitionAllocSlowPath(PartitionRootBase*,
                                                   int,
                                                   size_t,
                                                   PartitionBucket*);
 BASE_EXPORT NOINLINE void PartitionFreeSlowPath(PartitionPage*);
+BASE_EXPORT NOINLINE void* PartitionReallocGeneric(PartitionRootGeneric*,
+                                                   void*,
+                                                   size_t,
+                                                   const char* type_name);
+
+BASE_EXPORT void PartitionDumpStats(PartitionRoot*,
+                                    const char* partition_name,
+                                    bool is_light_dump,
+                                    PartitionStatsDumper*);
+BASE_EXPORT void PartitionDumpStatsGeneric(PartitionRootGeneric*,
+                                           const char* partition_name,
+                                           bool is_light_dump,
+                                           PartitionStatsDumper*);
 
 class BASE_EXPORT PartitionAllocHooks {
  public:
@@ -733,7 +725,9 @@ ALWAYS_INLINE void* PartitionBucketAlloc(PartitionRootBase* root,
   return ret;
 }
 
-ALWAYS_INLINE void* PartitionRoot::Alloc(size_t size, const char* type_name) {
+ALWAYS_INLINE void* PartitionAlloc(PartitionRoot* root,
+                                   size_t size,
+                                   const char* type_name) {
 #if defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
   void* result = malloc(size);
   CHECK(result);
@@ -741,12 +735,12 @@ ALWAYS_INLINE void* PartitionRoot::Alloc(size_t size, const char* type_name) {
 #else
   size_t requested_size = size;
   size = PartitionCookieSizeAdjustAdd(size);
-  DCHECK(this->initialized);
+  DCHECK(root->initialized);
   size_t index = size >> kBucketShift;
-  DCHECK(index < this->num_buckets);
+  DCHECK(index < root->num_buckets);
   DCHECK(size == index << kBucketShift);
-  PartitionBucket* bucket = &this->buckets()[index];
-  void* result = PartitionBucketAlloc(this, 0, size, bucket);
+  PartitionBucket* bucket = &root->buckets()[index];
+  void* result = PartitionBucketAlloc(root, 0, size, bucket);
   PartitionAllocHooks::AllocationHookIfEnabled(result, requested_size,
                                                type_name);
   return result;
@@ -841,16 +835,17 @@ ALWAYS_INLINE void* PartitionAllocGenericFlags(PartitionRootGeneric* root,
 #endif
 }
 
-ALWAYS_INLINE void* PartitionRootGeneric::Alloc(size_t size,
-                                                const char* type_name) {
-  return PartitionAllocGenericFlags(this, 0, size, type_name);
+ALWAYS_INLINE void* PartitionAllocGeneric(PartitionRootGeneric* root,
+                                          size_t size,
+                                          const char* type_name) {
+  return PartitionAllocGenericFlags(root, 0, size, type_name);
 }
 
-ALWAYS_INLINE void PartitionRootGeneric::Free(void* ptr) {
+ALWAYS_INLINE void PartitionFreeGeneric(PartitionRootGeneric* root, void* ptr) {
 #if defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
   free(ptr);
 #else
-  DCHECK(this->initialized);
+  DCHECK(root->initialized);
 
   if (UNLIKELY(!ptr))
     return;
@@ -861,7 +856,7 @@ ALWAYS_INLINE void PartitionRootGeneric::Free(void* ptr) {
   // TODO(palmer): See if we can afford to make this a CHECK.
   DCHECK(PartitionPagePointerIsValid(page));
   {
-    subtle::SpinLock::Guard guard(this->lock);
+    subtle::SpinLock::Guard guard(root->lock);
     PartitionFreeWithPage(ptr, page);
   }
 #endif
@@ -875,13 +870,14 @@ ALWAYS_INLINE size_t PartitionDirectMapSize(size_t size) {
   return (size + kSystemPageOffsetMask) & kSystemPageBaseMask;
 }
 
-ALWAYS_INLINE size_t PartitionRootGeneric::ActualSize(size_t size) {
+ALWAYS_INLINE size_t PartitionAllocActualSize(PartitionRootGeneric* root,
+                                              size_t size) {
 #if defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
   return size;
 #else
-  DCHECK(this->initialized);
+  DCHECK(root->initialized);
   size = PartitionCookieSizeAdjustAdd(size);
-  PartitionBucket* bucket = PartitionGenericSizeToBucket(this, size);
+  PartitionBucket* bucket = PartitionGenericSizeToBucket(root, size);
   if (LIKELY(!PartitionBucketIsDirectMapped(bucket))) {
     size = bucket->slot_size;
   } else if (size > kGenericMaxDirectMapped) {
@@ -923,7 +919,9 @@ class SizeSpecificPartitionAllocator {
   ~SizeSpecificPartitionAllocator() = default;
   static const size_t kMaxAllocation = N - kAllocationGranularity;
   static const size_t kNumBuckets = N / kAllocationGranularity;
-  void init() { partition_root_.Init(kNumBuckets, kMaxAllocation); }
+  void init() {
+    PartitionAllocInit(&partition_root_, kNumBuckets, kMaxAllocation);
+  }
   ALWAYS_INLINE PartitionRoot* root() { return &partition_root_; }
 
  private:
@@ -936,7 +934,7 @@ class BASE_EXPORT PartitionAllocatorGeneric {
   PartitionAllocatorGeneric();
   ~PartitionAllocatorGeneric();
 
-  void init() { partition_root_.Init(); }
+  void init() { PartitionAllocGenericInit(&partition_root_); }
   ALWAYS_INLINE PartitionRootGeneric* root() { return &partition_root_; }
 
  private:

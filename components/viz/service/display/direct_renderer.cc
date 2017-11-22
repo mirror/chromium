@@ -14,9 +14,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/base/filter_operations.h"
 #include "cc/base/math_util.h"
-#include "cc/paint/filter_operations.h"
-#include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/quads/draw_quad.h"
@@ -202,7 +201,7 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
                                float device_scale_factor,
                                const gfx::Size& device_viewport_size) {
   DCHECK(visible_);
-  TRACE_EVENT0("viz", "DirectRenderer::DrawFrame");
+  TRACE_EVENT0("cc", "DirectRenderer::DrawFrame");
   UMA_HISTOGRAM_COUNTS(
       "Renderer4.renderPassCount",
       base::saturated_cast<int>(render_passes_in_draw_order->size()));
@@ -466,7 +465,7 @@ void DirectRenderer::DrawRenderPassAndExecuteCopyRequests(
 }
 
 void DirectRenderer::DrawRenderPass(const RenderPass* render_pass) {
-  TRACE_EVENT0("viz", "DirectRenderer::DrawRenderPass");
+  TRACE_EVENT0("cc", "DirectRenderer::DrawRenderPass");
   if (CanSkipRenderPass(render_pass))
     return;
   UseRenderPass(render_pass);

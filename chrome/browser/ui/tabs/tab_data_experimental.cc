@@ -58,11 +58,10 @@ TabDataExperimental::~TabDataExperimental() = default;
 TabDataExperimental& TabDataExperimental::operator=(TabDataExperimental&&) =
     default;
 
-base::string16 TabDataExperimental::GetTitle() const {
+const base::string16& TabDataExperimental::GetTitle() const {
+  DCHECK(type() == Type::kSingle);
   // TODO(brettw) this will need to use TabUIHelper.
-  if (contents_)
-    return contents_->GetTitle();
-  return base::string16();
+  return contents_->GetTitle();
 }
 
 bool TabDataExperimental::CountsAsViewIndex() const {

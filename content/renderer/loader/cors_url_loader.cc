@@ -59,8 +59,8 @@ CORSURLLoader::CORSURLLoader(
 
   if (fetch_cors_flag_ &&
       fetch_request_mode_ == FetchRequestMode::kSameOrigin) {
-    forwarding_client_->OnComplete(network::URLLoaderCompletionStatus(
-        network::CORSErrorStatus(CORSError::kDisallowedByMode)));
+    forwarding_client_->OnComplete(
+        network::URLLoaderStatus(CORSError::kDisallowedByMode));
     return;
   }
 
@@ -122,9 +122,7 @@ void CORSURLLoader::OnReceiveResponse(
         blink::WebHTTPHeaderMap(response_head.headers.get()),
         fetch_credentials_mode_, security_origin_);
     if (cors_error) {
-      // TODO(toyoshim): Generate related_response_headers here.
-      network::CORSErrorStatus cors_error_status(*cors_error);
-      HandleComplete(network::URLLoaderCompletionStatus(cors_error_status));
+      HandleComplete(network::URLLoaderStatus(*cors_error));
       return;
     }
   }
@@ -189,8 +187,7 @@ void CORSURLLoader::OnStartLoadingResponseBody(
   forwarding_client_->OnStartLoadingResponseBody(std::move(body));
 }
 
-void CORSURLLoader::OnComplete(
-    const network::URLLoaderCompletionStatus& status) {
+void CORSURLLoader::OnComplete(const network::URLLoaderStatus& status) {
   DCHECK(network_loader_);
   DCHECK(forwarding_client_);
   DCHECK(!is_waiting_follow_redirect_call_);
@@ -206,8 +203,7 @@ void CORSURLLoader::OnUpstreamConnectionError() {
   forwarding_client_.reset();
 }
 
-void CORSURLLoader::HandleComplete(
-    const network::URLLoaderCompletionStatus& status) {
+void CORSURLLoader::HandleComplete(const network::URLLoaderStatus& status) {
   forwarding_client_->OnComplete(status);
   forwarding_client_.reset();
 

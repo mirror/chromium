@@ -120,9 +120,6 @@ split_static_library("ui") {
     "history_ui.h",
     "interventions/framebust_block_message_delegate.cc",
     "interventions/framebust_block_message_delegate.h",
-    "interventions/intervention_delegate.h",
-    "interventions/intervention_infobar_delegate.cc",
-    "interventions/intervention_infobar_delegate.h",
     "javascript_dialogs/chrome_javascript_native_dialog_factory.h",
     "javascript_dialogs/javascript_dialog.h",
     "javascript_dialogs/javascript_dialog_tab_helper.cc",
@@ -620,6 +617,8 @@ split_static_library("ui") {
       "android/infobars/translate_infobar.h",
       "android/infobars/update_password_infobar.cc",
       "android/infobars/update_password_infobar.h",
+      "android/interventions/framebust_block_message_delegate_bridge.cc",
+      "android/interventions/framebust_block_message_delegate_bridge.h",
       "android/javascript_app_modal_dialog_android.cc",
       "android/javascript_app_modal_dialog_android.h",
       "android/javascript_dialog_android.cc",
@@ -914,8 +913,6 @@ split_static_library("ui") {
       "tabs/tab_strip_model_stats_recorder.h",
       "tabs/tab_utils.cc",
       "tabs/tab_utils.h",
-      "tabs/web_contents_closer.cc",
-      "tabs/web_contents_closer.h",
       "task_manager/task_manager_columns.cc",
       "task_manager/task_manager_columns.h",
       "task_manager/task_manager_table_model.cc",
@@ -1305,8 +1302,6 @@ split_static_library("ui") {
       "views/frame/browser_frame_header_ash.h",
       "views/frame/browser_non_client_frame_view_ash.cc",
       "views/frame/browser_non_client_frame_view_ash.h",
-      "views/frame/hosted_app_frame_header_ash.cc",
-      "views/frame/hosted_app_frame_header_ash.h",
       "views/frame/immersive_context_mus.cc",
       "views/frame/immersive_context_mus.h",
       "views/frame/immersive_handler_factory_mus.cc",
@@ -1504,7 +1499,7 @@ split_static_library("ui") {
     deps += [
       "//ash",
       "//ash:ash_with_content",
-      "//ash/public/cpp",
+      "//ash/public/cpp:ash_public_cpp",
       "//ash/resources/vector_icons",
       "//ash/strings",
       "//chrome/browser/chromeos",
@@ -1543,12 +1538,6 @@ split_static_library("ui") {
     if (use_cras) {
       defines += [ "USE_CRAS" ]
     }
-  } else if (!is_android) {
-    # !is_chromeos && !is_android
-    sources += [
-      "webui/settings/printing_handler.cc",
-      "webui/settings/printing_handler.h",
-    ]
   }
 
   if (is_win || is_mac || is_desktop_linux) {
@@ -3036,8 +3025,6 @@ split_static_library("ui") {
         "views/ssl_client_certificate_selector.h",
         "views/status_bubble_views.cc",
         "views/status_bubble_views.h",
-        "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
-        "views/tab_contents/chrome_web_contents_view_focus_helper.h",
         "views/tab_dialogs_views.cc",
         "views/tab_dialogs_views.h",
         "views/tab_icon_view.cc",
@@ -3091,6 +3078,8 @@ split_static_library("ui") {
         "views/toolbar/toolbar_view.cc",
         "views/toolbar/toolbar_view.h",
         "views/touch_uma/touch_uma.h",
+        "views/tab_contents/chrome_web_contents_view_focus_helper.cc",
+        "views/tab_contents/chrome_web_contents_view_focus_helper.h",
         "views/translate/translate_icon_view.cc",
         "views/translate/translate_icon_view.h",
         "views/webshare/webshare_target_picker_view.cc",
@@ -3743,7 +3732,7 @@ static_library("test_support") {
       "ash/test_wallpaper_controller.cc",
       "ash/test_wallpaper_controller.h",
     ]
-    deps += [ "//ash/public/cpp" ]
+    deps += [ "//ash/public/cpp:ash_public_cpp" ]
   }
 
   if (enable_extensions) {

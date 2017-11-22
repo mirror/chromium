@@ -370,11 +370,8 @@ void ExtensionFrameHelper::OnSetFrameName(const std::string& name) {
   render_frame()->GetWebFrame()->SetName(blink::WebString::FromUTF8(name));
 }
 
-void ExtensionFrameHelper::OnAppWindowClosed(bool send_onclosed) {
+void ExtensionFrameHelper::OnAppWindowClosed() {
   DCHECK(render_frame()->IsMainFrame());
-
-  if (!send_onclosed)
-    return;
 
   v8::HandleScope scope(v8::Isolate::GetCurrent());
   v8::Local<v8::Context> v8_context =

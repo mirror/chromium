@@ -87,7 +87,6 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/NodeWithIndex.h"
 #include "core/dom/NthIndexCache.h"
-#include "core/dom/Policy.h"
 #include "core/dom/ProcessingInstruction.h"
 #include "core/dom/ScriptRunner.h"
 #include "core/dom/ScriptedAnimationController.h"
@@ -247,12 +246,12 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/AutoReset.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/DateMath.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
-#include "platform/wtf/Time.h"
 #include "platform/wtf/text/CharacterNames.h"
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
@@ -6141,8 +6140,6 @@ void Document::InitContentSecurityPolicy(
     const ContentSecurityPolicy* policy_to_inherit) {
   SetContentSecurityPolicy(csp ? csp : ContentSecurityPolicy::Create());
 
-  GetContentSecurityPolicy()->BindToExecutionContext(this);
-
   // We inherit the parent/opener's CSP for documents with "local" schemes:
   // 'about', 'blob', 'data', and 'filesystem'. We also inherit CSP for
   // documents with empty/invalid URLs because we treat those URLs as
@@ -6172,6 +6169,8 @@ void Document::InitContentSecurityPolicy(
   // regardless of URL.
   if (policy_to_inherit && IsPluginDocument())
     GetContentSecurityPolicy()->CopyPluginTypesFrom(policy_to_inherit);
+
+  GetContentSecurityPolicy()->BindToExecutionContext(this);
 }
 
 bool Document::IsSecureTransitionTo(const KURL& url) const {
@@ -7188,10 +7187,6 @@ scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
   // passed-in document or ContextDocument() used to be attached to a Frame but
   // has since been detached).
   return Platform::Current()->CurrentThread()->GetWebTaskRunner();
-}
-
-Policy* Document::policy() {
-  return Policy::Create(this);
 }
 
 void Document::Trace(blink::Visitor* visitor) {

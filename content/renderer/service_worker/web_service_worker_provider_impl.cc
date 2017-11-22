@@ -38,7 +38,6 @@ WebServiceWorkerProviderImpl::WebServiceWorkerProviderImpl(
     ServiceWorkerProviderContext* context)
     : thread_safe_sender_(thread_safe_sender),
       context_(context),
-      provider_client_(nullptr),
       weak_factory_(this) {
   DCHECK(context_);
   switch (context_->provider_type()) {
@@ -57,13 +56,24 @@ WebServiceWorkerProviderImpl::WebServiceWorkerProviderImpl(
   }
 }
 
-WebServiceWorkerProviderImpl::~WebServiceWorkerProviderImpl() = default;
+WebServiceWorkerProviderImpl::~WebServiceWorkerProviderImpl() {
+  // Make sure the provider client is removed.
+  RemoveProviderClient();
+}
 
 void WebServiceWorkerProviderImpl::SetClient(
     blink::WebServiceWorkerProviderClient* client) {
-  provider_client_ = client;
-  if (!provider_client_)
+  if (!client) {
+    RemoveProviderClient();
     return;
+  }
+
+  // TODO(kinuko): Here we could also register the current thread ID
+  // on the provider context so that multiple WebServiceWorkerProviderImpl
+  // (e.g. on document and on dedicated workers) can properly share
+  // the single provider context across threads. (http://crbug.com/366538
+  // for more context)
+  GetDispatcher()->AddProviderClient(context_->provider_id(), client);
 
   std::unique_ptr<ServiceWorkerHandleReference> controller =
       context_->TakeController();
@@ -190,24 +200,36 @@ bool WebServiceWorkerProviderImpl::ValidateScopeAndScriptURL(
 
 void WebServiceWorkerProviderImpl::SetController(
     std::unique_ptr<ServiceWorkerHandleReference> controller,
-    const std::set<blink::mojom::WebFeature>& features,
+    const std::set<uint32_t>& features,
     bool should_notify_controller_change) {
-  if (!provider_client_)
+  blink::WebServiceWorkerProviderClient* provider_client =
+      GetDispatcher()->GetProviderClient(context_->provider_id());
+  // The document may have been destroyed so that |provider_client| is null. In
+  // such case we just drop |controller| silently as we're just waiting to be
+  // destructed soon.
+  if (!provider_client)
     return;
 
-  for (blink::mojom::WebFeature feature : features)
-    provider_client_->CountFeature(feature);
-  provider_client_->SetController(
+  for (uint32_t feature : features)
+    provider_client->CountFeature(feature);
+  provider_client->SetController(
       WebServiceWorkerImpl::CreateHandle(
           GetDispatcher()->GetOrCreateServiceWorker(std::move(controller))),
       should_notify_controller_change);
+}
+
+int WebServiceWorkerProviderImpl::provider_id() const {
+  return context_->provider_id();
 }
 
 void WebServiceWorkerProviderImpl::PostMessageToClient(
     blink::mojom::ServiceWorkerObjectInfoPtr source,
     const base::string16& message,
     std::vector<mojo::ScopedMessagePipeHandle> message_pipes) {
-  if (!provider_client_)
+  blink::WebServiceWorkerProviderClient* provider_client =
+      GetDispatcher()->GetProviderClient(context_->provider_id());
+  // The document may have been destroyed so that |provider_client| is null.
+  if (!provider_client)
     return;
 
   scoped_refptr<WebServiceWorkerImpl> worker =
@@ -216,20 +238,18 @@ void WebServiceWorkerProviderImpl::PostMessageToClient(
                                                thread_safe_sender_.get()));
   auto message_ports =
       blink::MessagePortChannel::CreateFromHandles(std::move(message_pipes));
-  provider_client_->DispatchMessageEvent(
+  provider_client->DispatchMessageEvent(
       WebServiceWorkerImpl::CreateHandle(std::move(worker)),
       blink::WebString::FromUTF16(message), std::move(message_ports));
 }
 
-void WebServiceWorkerProviderImpl::CountFeature(
-    blink::mojom::WebFeature feature) {
-  if (!provider_client_)
-    return;
-  provider_client_->CountFeature(feature);
-}
-
-int WebServiceWorkerProviderImpl::provider_id() const {
-  return context_->provider_id();
+void WebServiceWorkerProviderImpl::RemoveProviderClient() {
+  // Remove the provider client, but only if the dispatcher is still there.
+  // (For cleanup path we don't need to bother creating a new dispatcher)
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+  if (dispatcher)
+    dispatcher->RemoveProviderClient(context_->provider_id());
 }
 
 ServiceWorkerDispatcher* WebServiceWorkerProviderImpl::GetDispatcher() {

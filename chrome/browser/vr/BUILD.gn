@@ -72,8 +72,6 @@ static_library("vr_common") {
     "elements/simple_textured_element.h",
     "elements/spinner.cc",
     "elements/spinner.h",
-    "elements/suggestion.cc",
-    "elements/suggestion.h",
     "elements/system_indicator.cc",
     "elements/system_indicator.h",
     "elements/system_indicator_texture.cc",
@@ -124,7 +122,6 @@ static_library("vr_common") {
     "model/model.h",
     "model/omnibox_suggestions.cc",
     "model/omnibox_suggestions.h",
-    "model/permissions_model.h",
     "model/reticle_model.h",
     "model/speech_recognition_model.h",
     "model/toolbar_state.cc",
@@ -234,14 +231,24 @@ test("vr_common_unittests") {
     "pose_util_unittest.cc",
     "service/vr_device_manager_unittest.cc",
     "speech_recognizer_unittest.cc",
+    "test/animation_utils.cc",
+    "test/animation_utils.h",
     "test/fake_ui_element_renderer.cc",
     "test/fake_ui_element_renderer.h",
+    "test/gl_test_environment_unittest.cc",
+    "test/mock_browser_interface.cc",
+    "test/mock_browser_interface.h",
+    "test/mock_content_input_delegate.cc",
+    "test/mock_content_input_delegate.h",
     "test/paths.cc",
     "test/paths.h",
     "test/run_all_unittests.cc",
+    "test/ui_pixel_test.cc",
+    "test/ui_pixel_test.h",
     "test/ui_scene_manager_test.cc",
     "test/ui_scene_manager_test.h",
     "ui_input_manager_unittest.cc",
+    "ui_pixeltest.cc",
     "ui_renderer_unittest.cc",
     "ui_scene_manager_unittest.cc",
     "ui_scene_unittest.cc",
@@ -256,30 +263,15 @@ test("vr_common_unittests") {
 
   deps = [
     ":vr_test_support",
+    "//cc:test_support",
     "//mojo/common",
     "//mojo/public/cpp/bindings",
     "//testing/gmock",
+    "//ui/gfx:test_support",
     "//ui/gfx/geometry",
-  ]
-  if (is_android) {
-    deps += [ "//ui/android:ui_java" ]
-  }
-}
-
-test("vr_pixeltests") {
-  testonly = true
-
-  sources = [
-    "test/run_all_pixeltests.cc",
-    "test/ui_pixel_test.cc",
-    "test/ui_pixel_test.h",
-    "ui_pixeltest.cc",
+    "//ui/gl",
   ]
 
-  deps = [
-    ":vr_gl_test_support",
-    ":vr_test_support",
-  ]
   if (is_android) {
     deps += [ "//ui/android:ui_java" ]
   }
@@ -291,10 +283,13 @@ test("vr_common_perftests") {
     "text_perftest.cc",
   ]
   deps = [
-    ":vr_gl_test_support",
     ":vr_test_support",
     "//testing/perf",
   ]
+
+  if (is_android) {
+    deps += [ "//ui/android:ui_java" ]
+  }
 
   # Needed for isolate script to execute
   data = [
@@ -309,15 +304,11 @@ source_set("vr_test_support") {
   testonly = true
 
   sources = [
-    "test/animation_utils.cc",
-    "test/animation_utils.h",
     "test/constants.h",
-    "test/mock_browser_interface.cc",
-    "test/mock_browser_interface.h",
-    "test/mock_content_input_delegate.cc",
-    "test/mock_content_input_delegate.h",
-    "test/vr_test_suite.cc",
-    "test/vr_test_suite.h",
+    "test/gl_test_environment.cc",
+    "test/gl_test_environment.h",
+    "test/vr_common_test_suite.cc",
+    "test/vr_common_test_suite.h",
   ]
 
   if (!enable_gvr_services) {
@@ -330,7 +321,6 @@ source_set("vr_test_support") {
     ":vr_common",
     ":vr_test_pak",
     "//base/test:test_support",
-    "//cc:test_support",
     "//components/security_state/core",
     "//components/toolbar:vector_icons",
     "//content/test:test_support",
@@ -338,34 +328,15 @@ source_set("vr_test_support") {
     "//skia",
     "//testing/gtest",
     "//ui/accessibility:ax_gen",
-    "//ui/gfx:test_support",
+    "//ui/gl:test_support",
 
     # TODO(mthiesse, crbug.com/769373): Remove dependency on device/vr:fakes.
     "//device/vr:fakes",
-
-    # TODO(cjgrant): Figure out why including //ui/android:ui_java here
-    # doesn't propagate to individual test executable targets.
   ]
 
   data = [
     "test/data/",
     "$root_out_dir/vr_test.pak",
-  ]
-}
-
-source_set("vr_gl_test_support") {
-  testonly = true
-
-  sources = [
-    "test/gl_test_environment.cc",
-    "test/gl_test_environment.h",
-    "test/gl_test_environment_unittest.cc",
-  ]
-
-  public_deps = [
-    "//base/test:test_support",
-    "//skia",
-    "//ui/gl",
   ]
 }
 

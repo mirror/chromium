@@ -33,12 +33,13 @@
 
 #include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
-#include "core/dom/events/Event.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
+
+class EventDispatchMediator;
 
 class CORE_EXPORT ScopedEventQueue {
   WTF_MAKE_NONCOPYABLE(ScopedEventQueue);
@@ -47,7 +48,8 @@ class CORE_EXPORT ScopedEventQueue {
  public:
   ~ScopedEventQueue();
 
-  void EnqueueEvent(Event*);
+  void EnqueueEventDispatchMediator(EventDispatchMediator*);
+  void DispatchAllEvents();
   static ScopedEventQueue* Instance();
 
   void IncrementScopingLevel();
@@ -57,10 +59,10 @@ class CORE_EXPORT ScopedEventQueue {
  private:
   ScopedEventQueue();
   static void Initialize();
-  void DispatchAllEvents();
-  void DispatchEvent(Event*) const;
+  void DispatchEvent(EventDispatchMediator*) const;
 
-  PersistentHeapVector<Member<Event>> queued_events_;
+  PersistentHeapVector<Member<EventDispatchMediator>>
+      queued_event_dispatch_mediators_;
   unsigned scoping_level_;
 
   static ScopedEventQueue* instance_;

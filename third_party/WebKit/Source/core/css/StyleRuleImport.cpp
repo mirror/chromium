@@ -75,12 +75,7 @@ void StyleRuleImport::SetCSSStyleSheet(
     style_sheet_->ClearOwnerRule();
 
   Document* document = nullptr;
-
-  // Fallback to an insecure context parser if we don't have a parent style
-  // sheet.
-  const CSSParserContext* context =
-      StrictCSSParserContext(SecureContextMode::kInsecureContext);
-
+  const CSSParserContext* context = StrictCSSParserContext();
   if (parent_style_sheet_) {
     document = parent_style_sheet_->SingleOwnerDocument();
     context = parent_style_sheet_->ParserContext();

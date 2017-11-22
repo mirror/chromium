@@ -205,7 +205,8 @@ bool ExtensionUninstallDialog::Uninstall(base::string16* error) {
     observer_.RemoveAll();
     return ExtensionSystem::Get(profile_)
         ->extension_service()
-        ->UninstallExtension(extension_->id(), uninstall_reason_, error);
+        ->UninstallExtension(extension_->id(), uninstall_reason_,
+                             base::Bind(&base::DoNothing), error);
   }
   *error = base::ASCIIToUTF16(kExtensionRemovedError);
   return false;

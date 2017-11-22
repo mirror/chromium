@@ -215,9 +215,7 @@ void OmniboxViewMac::SaveStateToTab(WebContents* tab) {
 
 void OmniboxViewMac::OnTabChanged(const WebContents* web_contents) {
   const OmniboxViewMacState* state = GetStateFromTab(web_contents);
-  model()->RestoreState(
-      controller()->GetToolbarModel()->GetFormattedURL(nullptr),
-      state ? &state->model_state : NULL);
+  model()->RestoreState(state ? &state->model_state : NULL);
   // Restore focus and selection if they were present when the tab
   // was switched away.
   if (state && state->has_focus) {
@@ -238,8 +236,7 @@ void OmniboxViewMac::ResetTabState(WebContents* web_contents) {
 }
 
 void OmniboxViewMac::Update() {
-  if (model()->SetPermanentText(
-          controller()->GetToolbarModel()->GetFormattedURL(nullptr))) {
+  if (model()->UpdatePermanentText()) {
     // Restore everything to the baseline look.
     RevertAll();
 
@@ -601,7 +598,7 @@ void OmniboxViewMac::ApplyTextAttributes(
 
 void OmniboxViewMac::OnTemporaryTextMaybeChanged(
     const base::string16& display_text,
-    const AutocompleteMatch& match,
+    AutocompleteMatch::Type match_type,
     bool save_original_selection,
     bool notify_text_changed) {
   if (save_original_selection)
@@ -613,8 +610,7 @@ void OmniboxViewMac::OnTemporaryTextMaybeChanged(
   [field_ clearUndoChain];
 
   AnnounceAutocompleteForScreenReader(
-      AutocompleteMatchType::ToAccessibilityLabel(match.type, display_text,
-                                                  match.description));
+      AutocompleteMatchType::ToAccessibilityLabel(match_type, display_text));
 }
 
 bool OmniboxViewMac::OnInlineAutocompleteTextMaybeChanged(
@@ -1086,11 +1082,13 @@ bool OmniboxViewMac::IsCaretAtEnd() const {
 
 void OmniboxViewMac::AnnounceAutocompleteForScreenReader(
     const base::string16& display_text) {
+  NSString* announcement =
+      l10n_util::GetNSStringF(IDS_ANNOUNCEMENT_COMPLETION_AVAILABLE_MAC,
+                              display_text);
   NSDictionary* notification_info = @{
-    NSAccessibilityAnnouncementKey : base::SysUTF16ToNSString(display_text),
-    NSAccessibilityPriorityKey : @(NSAccessibilityPriorityHigh)
+      NSAccessibilityAnnouncementKey : announcement,
+      NSAccessibilityPriorityKey :     @(NSAccessibilityPriorityHigh)
   };
-  // We direct the screen reader to announce the friendly text.
   NSAccessibilityPostNotificationWithUserInfo(
       [field_ window],
       NSAccessibilityAnnouncementRequestedNotification,

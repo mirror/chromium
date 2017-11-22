@@ -64,14 +64,11 @@ void SiteEngagementServiceAndroid::ResetBaseScoreForURL(
   }
 }
 
-void JNI_SiteEngagementService_SetParamValuesForTesting(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
+void SetParamValuesForTesting(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   SiteEngagementScore::SetParamValuesForTesting();
 }
 
-base::android::ScopedJavaLocalRef<jobject>
-JNI_SiteEngagementService_SiteEngagementServiceForProfile(
+base::android::ScopedJavaLocalRef<jobject> SiteEngagementServiceForProfile(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jprofile) {

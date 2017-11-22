@@ -27,7 +27,6 @@ namespace blink {
 
 struct SameSizeAsCSSPropertyValue {
   uint32_t bitfields;
-  void* property;
   Member<void*> value;
 };
 
@@ -39,7 +38,8 @@ CSSPropertyID CSSPropertyValueMetadata::ShorthandID() const {
     return CSSPropertyInvalid;
 
   Vector<StylePropertyShorthand, 4> shorthands;
-  getMatchingShorthandsForLonghand(Property().PropertyID(), &shorthands);
+  getMatchingShorthandsForLonghand(static_cast<CSSPropertyID>(property_id_),
+                                   &shorthands);
   DCHECK(shorthands.size());
   DCHECK_GE(index_in_shorthands_vector_, 0u);
   DCHECK_LT(index_in_shorthands_vector_, shorthands.size());

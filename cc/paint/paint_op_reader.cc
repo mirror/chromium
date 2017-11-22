@@ -223,6 +223,7 @@ void PaintOpReader::Read(PaintFlags* flags) {
   ReadFlattenable(&flags->mask_filter_);
   ReadFlattenable(&flags->color_filter_);
   ReadFlattenable(&flags->draw_looper_);
+  ReadFlattenable(&flags->image_filter_);
 
   Read(&flags->shader_);
 }

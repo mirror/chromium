@@ -2,10 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var OpenPDFParamsParser;
-
-(function() {
-
 'use strict';
 
 /**
@@ -15,10 +11,10 @@ var OpenPDFParamsParser;
  *     the page number for a named destination.
  * @constructor
  */
-OpenPDFParamsParser = function(getNamedDestinationsFunction) {
+function OpenPDFParamsParser(getNamedDestinationsFunction) {
   this.outstandingRequests_ = [];
   this.getNamedDestinationsFunction_ = getNamedDestinationsFunction;
-};
+}
 
 OpenPDFParamsParser.prototype = {
   /**
@@ -124,16 +120,6 @@ OpenPDFParamsParser.prototype = {
         viewportPosition['page'] = pageNumber - 1;
     }
 
-    if ('view' in paramsDictionary) {
-      var viewMode = paramsDictionary['view'].toLowerCase();
-      if (viewMode === 'fit')
-        viewportPosition['view'] = FittingType.FIT_TO_PAGE;
-      else if (viewMode === 'fith')
-        viewportPosition['view'] = FittingType.FIT_TO_WIDTH;
-      else if (viewMode === 'fitv')
-        viewportPosition['view'] = FittingType.FIT_TO_HEIGHT;
-    }
-
     if ('zoom' in paramsDictionary)
       this.parseZoomParam_(paramsDictionary['zoom'], viewportPosition);
 
@@ -160,5 +146,3 @@ OpenPDFParamsParser.prototype = {
     outstandingRequest.callback(outstandingRequest.viewportPosition);
   },
 };
-
-}());

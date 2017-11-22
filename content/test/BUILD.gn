@@ -876,7 +876,6 @@ test("content_browsertests") {
     "//testing/gtest",
     "//third_party/WebKit/public:blink",
     "//third_party/leveldatabase",
-    "//third_party/libaom:av1_features",
     "//third_party/mesa:osmesa",
     "//third_party/zlib",
     "//ui/accessibility",
@@ -1443,6 +1442,7 @@ test("content_unittests") {
     "../browser/web_contents/web_contents_view_mac_unittest.mm",
     "../browser/web_contents/web_drag_dest_mac_unittest.mm",
     "../browser/web_contents/web_drag_source_mac_unittest.mm",
+    "../browser/webauth/authenticator_impl_unittest.cc",
     "../browser/webauth/cbor/cbor_values_unittest.cc",
     "../browser/webauth/cbor/cbor_writer_unittest.cc",
     "../browser/websockets/websocket_manager_unittest.cc",
@@ -1833,7 +1833,6 @@ test("content_unittests") {
       "//third_party/webrtc/api:libjingle_peerconnection",
       "//third_party/webrtc/api:rtc_stats_api",
       "//third_party/webrtc/api:video_frame_api",
-      "//third_party/webrtc/api:video_frame_api_i420",
       "//third_party/webrtc/api/video_codecs:video_codecs_api",
       "//third_party/webrtc/media:rtc_media",
       "//third_party/webrtc/modules/desktop_capture:primitives",
@@ -1943,7 +1942,6 @@ test("content_unittests") {
       "../browser/speech/endpointer/endpointer_unittest.cc",
       "../browser/speech/speech_recognition_engine_unittest.cc",
       "../browser/speech/speech_recognizer_impl_unittest.cc",
-      "../browser/webauth/authenticator_impl_unittest.cc",
     ]
     deps += [ "//third_party/libvpx" ]
   }

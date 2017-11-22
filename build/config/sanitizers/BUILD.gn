@@ -266,7 +266,12 @@ config("common_sanitizer_flags") {
       "-gcolumn-info",
     ]
 
-    # Frame pointers are controlled in //build/config/compiler:default_stack_frames
+    # Disable frame pointer elimination for better stack traces.
+    if (is_posix) {
+      cflags += [ "-fno-omit-frame-pointer" ]
+    } else {
+      cflags += [ "/Oy-" ]
+    }
   }
 }
 
@@ -343,11 +348,6 @@ config("cfi_flags") {
     if (!defined(cfi_blacklist_path)) {
       cfi_blacklist_path =
           rebase_path("//tools/cfi/blacklist.txt", root_build_dir)
-      if (is_android) {
-        cflags +=
-            [ "-fsanitize-blacklist=" +
-              rebase_path("//tools/cfi/blacklist_android.txt", root_build_dir) ]
-      }
     }
     cflags += [
       "-fsanitize=cfi-vcall",
@@ -384,14 +384,6 @@ config("cfi_flags") {
         cflags += [ "-fsanitize-recover=cfi" ]
       }
     }
-  }
-}
-
-# crbug.com/785442: Fix cfi-icall failures for code that casts pointer argument
-# types in function pointer type signatures.
-config("cfi_icall_generalize_pointers") {
-  if (is_clang && is_cfi && use_cfi_icall) {
-    cflags = [ "-fsanitize-cfi-icall-generalize-pointers" ]
   }
 }
 

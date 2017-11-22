@@ -4,7 +4,6 @@
 
 #include "chrome/browser/extensions/api/notifications/extension_notification_handler.h"
 
-#include "base/callback.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/nullable_string16.h"
@@ -54,12 +53,13 @@ std::string ExtensionNotificationHandler::GetExtensionId(const GURL& url) {
   return url.GetOrigin().host_piece().as_string();
 }
 
-void ExtensionNotificationHandler::OnClose(
-    Profile* profile,
-    const GURL& origin,
-    const std::string& notification_id,
-    bool by_user,
-    base::OnceClosure completed_closure) {
+void ExtensionNotificationHandler::OnShow(Profile* profile,
+                                          const std::string& notification_id) {}
+
+void ExtensionNotificationHandler::OnClose(Profile* profile,
+                                           const GURL& origin,
+                                           const std::string& notification_id,
+                                           bool by_user) {
   EventRouter::UserGestureState gesture =
       by_user ? EventRouter::USER_GESTURE_ENABLED
               : EventRouter::USER_GESTURE_NOT_ENABLED;
@@ -76,8 +76,6 @@ void ExtensionNotificationHandler::OnClose(
       ExtensionNotificationDisplayHelperFactory::GetForProfile(profile);
   if (display_helper)
     display_helper->EraseDataForNotificationId(notification_id);
-
-  std::move(completed_closure).Run();
 }
 
 void ExtensionNotificationHandler::OnClick(
@@ -85,8 +83,7 @@ void ExtensionNotificationHandler::OnClick(
     const GURL& origin,
     const std::string& notification_id,
     const base::Optional<int>& action_index,
-    const base::Optional<base::string16>& reply,
-    base::OnceClosure completed_closure) {
+    const base::Optional<base::string16>& reply) {
   DCHECK(!reply.has_value());
 
   std::string extension_id(GetExtensionId(GURL(origin)));
@@ -103,8 +100,11 @@ void ExtensionNotificationHandler::OnClick(
 
   SendEvent(profile, extension_id, histogram_value, event_name,
             EventRouter::USER_GESTURE_ENABLED, std::move(args));
+}
 
-  std::move(completed_closure).Run();
+void ExtensionNotificationHandler::OpenSettings(Profile* profile) {
+  // Extension notifications don't display a settings button.
+  NOTREACHED();
 }
 
 void ExtensionNotificationHandler::SendEvent(

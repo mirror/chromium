@@ -112,16 +112,16 @@ crbug.com/623268 http/tests/inspector-protocol/request-mixed-content-status-opti
 crbug.com/623268 virtual/mojo-loading/http/tests/inspector-protocol/request-mixed-content-status-blockable.js [ Timeout ]
 crbug.com/623268 virtual/mojo-loading/http/tests/inspector-protocol/request-mixed-content-status-none.js [ Timeout ]
 crbug.com/623268 virtual/mojo-loading/http/tests/inspector-protocol/request-mixed-content-status-optionally-blockable.js [ Timeout ]
-crbug.com/623268 http/tests/devtools/console-cross-origin-iframe-logging.js [ Failure ]
-crbug.com/623268 virtual/mojo-loading/http/tests/devtools/console-cross-origin-iframe-logging.js [ Failure ]
+crbug.com/623268 http/tests/devtools/console-cross-origin-iframe-logging.html [ Failure ]
+crbug.com/623268 virtual/mojo-loading/http/tests/devtools/console-cross-origin-iframe-logging.html [ Failure ]
 
 # https://crbug.com/645641 - test_runner.cc(1863) Check failed:
 # layout_test_runtime_flags_.have_top_loading_frame()
 crbug.com/645641 external/wpt/html/syntax/parsing/html5lib_tests19.html [ Crash Failure ]
 
 # http/ flaky tests w/ --site-per-process
-crbug.com/678481 http/tests/devtools/appcache/appcache-iframe-manifests.js [ Timeout Pass ]
-crbug.com/678481 virtual/mojo-loading/http/tests/devtools/appcache/appcache-iframe-manifests.js [ Timeout Pass ]
+crbug.com/678481 http/tests/devtools/appcache/appcache-iframe-manifests.html [ Timeout Pass ]
+crbug.com/678481 virtual/mojo-loading/http/tests/devtools/appcache/appcache-iframe-manifests.html [ Timeout Pass ]
 crbug.com/678482 http/tests/devtools/debugger/fetch-breakpoints.js [ Timeout Pass ]
 crbug.com/678482 virtual/mojo-loading/http/tests/devtools/debugger/fetch-breakpoints.js [ Timeout Pass ]
 crbug.com/678484 http/tests/devtools/startup/reattach-after-editing-styles.html [ Timeout Pass ]
@@ -146,6 +146,9 @@ crbug.com/650348 virtual/mojo-loading/http/tests/webaudio/autoplay-crossorigin.h
 
 # https://crbug.com/745881: Image diff in test due to font rendering issues.
 crbug.com/745881 [ Win ] fast/text/ellipsis-in-relative-inline.html [ Failure ]
+
+# https://crbug.com/778696: Not much info...
+crbug.com/778696 virtual/threaded/fast/scroll-behavior/first-scroll-runs-on-compositor.html [ Failure ]
 
 # https://crbug.com/778372: Unique name conflict with old entries?
 crbug.com/778372 external/wpt/html/browsers/origin/cross-origin-objects/cross-origin-objects.html [ Crash ]

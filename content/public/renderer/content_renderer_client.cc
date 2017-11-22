@@ -47,10 +47,6 @@ bool ContentRendererClient::ShouldSuppressErrorPage(RenderFrame* render_frame,
   return false;
 }
 
-bool ContentRendererClient::ShouldTrackUseCounter(const GURL& url) {
-  return true;
-}
-
 void ContentRendererClient::DeferMediaLoad(
     RenderFrame* render_frame,
     bool has_played_media_before,

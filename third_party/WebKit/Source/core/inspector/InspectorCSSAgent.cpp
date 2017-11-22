@@ -85,7 +85,7 @@
 #include "platform/fonts/FontCache.h"
 #include "platform/fonts/shaping/CachingWordShaper.h"
 #include "platform/text/TextRun.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringConcatenate.h"
 
@@ -108,8 +108,8 @@ String CreateShorthandValue(Document* document,
                             const String& old_text,
                             const String& longhand,
                             const String& new_value) {
-  StyleSheetContents* style_sheet_contents = StyleSheetContents::Create(
-      StrictCSSParserContext(document->SecureContextMode()));
+  StyleSheetContents* style_sheet_contents =
+      StyleSheetContents::Create(StrictCSSParserContext());
   String text = " div { " + shorthand + ": " + old_text + "; }";
   CSSParser::ParseSheet(CSSParserContext::Create(*document),
                         style_sheet_contents, text);
@@ -118,8 +118,8 @@ String CreateShorthandValue(Document* document,
   CSSStyleRule* rule = ToCSSStyleRule(style_sheet->item(0));
   CSSStyleDeclaration* style = rule->style();
   DummyExceptionStateForTesting exception_state;
-  style->setProperty(document, longhand, new_value,
-                     style->getPropertyPriority(longhand), exception_state);
+  style->setProperty(longhand, new_value, style->getPropertyPriority(longhand),
+                     exception_state);
   return style->getPropertyValue(shorthand);
 }
 

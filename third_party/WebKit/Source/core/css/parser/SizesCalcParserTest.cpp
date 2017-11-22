@@ -27,9 +27,8 @@ static void VerifyCSSCalc(String text,
                           unsigned viewport_width,
                           unsigned viewport_height) {
   CSSLengthArray length_array;
-  const CSSValue* css_value = CSSParser::ParseSingleValue(
-      CSSPropertyLeft, text,
-      StrictCSSParserContext(SecureContextMode::kInsecureContext));
+  const CSSValue* css_value =
+      CSSParser::ParseSingleValue(CSSPropertyLeft, text);
   const CSSPrimitiveValue* primitive_value = ToCSSPrimitiveValue(css_value);
   if (primitive_value)
     primitive_value->AccumulateLengthArray(length_array);

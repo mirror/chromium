@@ -1024,8 +1024,6 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
     StartAAAA();
   }
 
-  base::TimeDelta ttl() { return ttl_; }
-
  private:
   void StartA() {
     DCHECK(!transaction_a_);
@@ -1058,9 +1056,7 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
                              const DnsResponse* response) {
     DCHECK(transaction);
     base::TimeDelta duration = base::TimeTicks::Now() - start_time;
-
-    if (net_error != OK && !(net_error == ERR_NAME_NOT_RESOLVED && response &&
-                             response->IsValid())) {
+    if (net_error != OK) {
       UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.TransactionFailure", duration);
       OnFailure(net_error, DnsResponse::DNS_PARSE_OK);
       return;
@@ -1163,9 +1159,8 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
     net_log_.EndEvent(
         NetLogEventType::HOST_RESOLVER_IMPL_DNS_TASK,
         base::Bind(&NetLogDnsTaskFailedCallback, net_error, result));
-    delegate_->OnDnsTaskComplete(
-        task_start_time_, net_error, AddressList(),
-        num_completed_transactions_ > 0 ? ttl_ : base::TimeDelta());
+    delegate_->OnDnsTaskComplete(task_start_time_, net_error, AddressList(),
+                                 base::TimeDelta());
   }
 
   void OnSuccess(const AddressList& addr_list) {
@@ -1593,16 +1588,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
       StartProcTask();
     } else {
       UmaAsyncDnsResolveStatus(RESOLVE_STATUS_FAIL);
-      // If the ttl is max, we didn't get one from the record, so set it to 0
-      base::TimeDelta ttl =
-          dns_task->ttl() < base::TimeDelta::FromSeconds(
-                                std::numeric_limits<uint32_t>::max())
-              ? dns_task->ttl()
-              : base::TimeDelta::FromSeconds(0);
-      CompleteRequests(
-          HostCache::Entry(net_error, AddressList(),
-                           HostCache::Entry::Source::SOURCE_UNKNOWN, ttl),
-          ttl);
+      CompleteRequestsWithError(net_error);
     }
   }
 
@@ -1654,15 +1640,11 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
   }
 
   void RecordJobHistograms(int error) {
-    // Used in UMA_HISTOGRAM_ENUMERATION. Do not renumber entries or reuse
-    // deprecated values.
-    enum Category {
-      RESOLVE_SUCCESS = 0,
-      RESOLVE_FAIL = 1,
-      RESOLVE_SPECULATIVE_SUCCESS = 2,
-      RESOLVE_SPECULATIVE_FAIL = 3,
-      RESOLVE_ABORT = 4,
-      RESOLVE_SPECULATIVE_ABORT = 5,
+    enum Category {  // Used in UMA_HISTOGRAM_ENUMERATION.
+      RESOLVE_SUCCESS,
+      RESOLVE_FAIL,
+      RESOLVE_SPECULATIVE_SUCCESS,
+      RESOLVE_SPECULATIVE_FAIL,
       RESOLVE_MAX,  // Bounding value.
     };
     Category category = RESOLVE_MAX;  // Illegal value for later DCHECK only.
@@ -1691,25 +1673,21 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
         UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ResolveSuccessTime.Speculative",
                                      duration);
       }
-    } else if (error == ERR_NETWORK_CHANGED ||
-               error == ERR_HOST_RESOLVER_QUEUE_TOO_LARGE) {
-      category = had_non_speculative_request_ ? RESOLVE_ABORT
-                                              : RESOLVE_SPECULATIVE_ABORT;
     } else {
       if (had_non_speculative_request_) {
         category = RESOLVE_FAIL;
         UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ResolveFailureTime", duration);
         switch (key_.address_family) {
           case ADDRESS_FAMILY_IPV4:
-            UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ResolveFailureTime.IPV4",
+            UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ResolveSuccessTime.IPV4",
                                          duration);
             break;
           case ADDRESS_FAMILY_IPV6:
-            UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ResolveFailureTime.IPV6",
+            UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ResolveSuccessTime.IPV6",
                                          duration);
             break;
           case ADDRESS_FAMILY_UNSPECIFIED:
-            UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ResolveFailureTime.UNSPEC",
+            UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ResolveSuccessTime.UNSPEC",
                                          duration);
             break;
         }
@@ -1775,10 +1753,10 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
 
     bool did_complete = (entry.error() != ERR_NETWORK_CHANGED) &&
                         (entry.error() != ERR_HOST_RESOLVER_QUEUE_TOO_LARGE);
-    if (did_complete)
+    if (did_complete) {
       resolver_->CacheResult(key_, entry, ttl);
-
-    RecordJobHistograms(entry.error());
+      RecordJobHistograms(entry.error());
+    }
 
     // Complete all of the requests that were attached to the job and
     // detach them.

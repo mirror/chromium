@@ -20,7 +20,7 @@ namespace url_utils {
 
 namespace android {
 
-ScopedJavaLocalRef<jstring> JNI_DomDistillerUrlUtils_GetDistillerViewUrlFromUrl(
+ScopedJavaLocalRef<jstring> GetDistillerViewUrlFromUrl(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& j_scheme,
@@ -38,8 +38,7 @@ ScopedJavaLocalRef<jstring> JNI_DomDistillerUrlUtils_GetDistillerViewUrlFromUrl(
   return base::android::ConvertUTF8ToJavaString(env, view_url.spec());
 }
 
-ScopedJavaLocalRef<jstring>
-JNI_DomDistillerUrlUtils_GetOriginalUrlFromDistillerUrl(
+ScopedJavaLocalRef<jstring> GetOriginalUrlFromDistillerUrl(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& j_url) {
@@ -55,30 +54,28 @@ JNI_DomDistillerUrlUtils_GetOriginalUrlFromDistillerUrl(
   return base::android::ConvertUTF8ToJavaString(env, original_url.spec());
 }
 
-jboolean JNI_DomDistillerUrlUtils_IsDistilledPage(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& j_url) {
+jboolean IsDistilledPage(JNIEnv* env,
+                         const JavaParamRef<jclass>& clazz,
+                         const JavaParamRef<jstring>& j_url) {
   GURL url(base::android::ConvertJavaStringToUTF8(env, j_url));
   return dom_distiller::url_utils::IsDistilledPage(url);
 }
 
-jboolean JNI_DomDistillerUrlUtils_IsUrlDistillable(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& j_url) {
+jboolean IsUrlDistillable(JNIEnv* env,
+                          const JavaParamRef<jclass>& clazz,
+                          const JavaParamRef<jstring>& j_url) {
   GURL url(base::android::ConvertJavaStringToUTF8(env, j_url));
   return dom_distiller::url_utils::IsUrlDistillable(url);
 }
 
-ScopedJavaLocalRef<jstring> JNI_DomDistillerUrlUtils_GetIsDistillableJs(
+ScopedJavaLocalRef<jstring> GetIsDistillableJs(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz) {
   return base::android::ConvertUTF8ToJavaString(
       env, dom_distiller::url_utils::GetIsDistillableJs());
 }
 
-ScopedJavaLocalRef<jstring> JNI_DomDistillerUrlUtils_GetValueForKeyInUrl(
+ScopedJavaLocalRef<jstring> GetValueForKeyInUrl(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& j_url,

@@ -113,7 +113,7 @@ void PasswordUIViewAndroid::HandleRemoveSavedPasswordException(
   password_manager_presenter_.RemovePasswordException(index);
 }
 
-ScopedJavaLocalRef<jstring> JNI_PasswordUIView_GetAccountDashboardURL(
+ScopedJavaLocalRef<jstring> GetAccountDashboardURL(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
   return ConvertUTF8ToJavaString(
@@ -121,8 +121,7 @@ ScopedJavaLocalRef<jstring> JNI_PasswordUIView_GetAccountDashboardURL(
 }
 
 // static
-static jlong JNI_PasswordUIView_Init(JNIEnv* env,
-                                     const JavaParamRef<jobject>& obj) {
+static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   PasswordUIViewAndroid* controller = new PasswordUIViewAndroid(env, obj);
   return reinterpret_cast<intptr_t>(controller);
 }

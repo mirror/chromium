@@ -14,7 +14,15 @@ namespace content {
 class WebContents;
 }
 
-class InterventionDelegate;
+// An interface to handle user actions on NearOomInfoBar.
+class NearOomMessageDelegate {
+ public:
+  virtual void AcceptIntervention() = 0;
+  virtual void DeclineIntervention() = 0;
+
+ protected:
+  virtual ~NearOomMessageDelegate() = default;
+};
 
 // Communicates to the user about the intervention performed by the browser to
 // limit the page's memory usage. See NearOomInfoBar.java for UI specifics, and
@@ -25,10 +33,12 @@ class NearOomInfoBar : public InfoBarAndroid {
 
   // |delegate| must remain alive while showing this info bar.
   static void Show(content::WebContents* web_contents,
-                   InterventionDelegate* delegate);
+                   NearOomMessageDelegate* delegate);
 
  private:
-  explicit NearOomInfoBar(InterventionDelegate* delegate);
+  explicit NearOomInfoBar(NearOomMessageDelegate* delegate);
+  void AcceptIntervention();
+  void DeclineIntervention();
 
   // InfoBarAndroid:
   base::android::ScopedJavaLocalRef<jobject> CreateRenderInfoBar(
@@ -37,7 +47,7 @@ class NearOomInfoBar : public InfoBarAndroid {
                      const base::android::JavaParamRef<jobject>& obj) override;
   void ProcessButton(int action) override;
 
-  InterventionDelegate* delegate_;
+  NearOomMessageDelegate* delegate_;
   DISALLOW_COPY_AND_ASSIGN(NearOomInfoBar);
 };
 

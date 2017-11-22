@@ -12,8 +12,6 @@ import("//testing/test.gni")
 component("services") {
   output_name = "media_mojo_services"
   sources = [
-    "gpu_jpeg_decode_accelerator.cc",
-    "gpu_jpeg_decode_accelerator.h",
     "gpu_mojo_media_client.cc",
     "gpu_mojo_media_client.h",
     "interface_factory_impl.cc",
@@ -217,38 +215,4 @@ catalog("media_service_unittests_catalog") {
 catalog("media_pipeline_integration_unittests_catalog") {
   embedded_services = [ ":pipeline_test_manifest" ]
   standalone_services = [ ":media_manifest" ]
-}
-
-source_set("unit_tests") {
-  testonly = true
-
-  sources = [
-    "gpu_jpeg_decode_accelerator_unittest.cc",
-    "mojo_audio_input_stream_unittest.cc",
-    "mojo_audio_output_stream_unittest.cc",
-    "mojo_video_encode_accelerator_service_unittest.cc",
-    "video_decode_perf_history_unittest.cc",
-    "watch_time_recorder_unittest.cc",
-  ]
-
-  deps = [
-    "//base",
-    "//base/test:test_support",
-    "//components/ukm:test_support",
-    "//media:test_support",
-    "//media/mojo:test_support",
-    "//services/metrics/public/cpp:ukm_builders",
-    "//testing/gmock",
-    "//testing/gtest",
-  ]
-
-  if (enable_library_cdms) {
-    sources += [
-      "mojo_cdm_allocator_unittest.cc",
-      "mojo_cdm_file_io_unittest.cc",
-      "mojo_cdm_helper_unittest.cc",
-    ]
-
-    deps += [ "//media/cdm:cdm_api" ]
-  }
 }

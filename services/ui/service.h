@@ -43,10 +43,6 @@
 #include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
 #endif
 
-#if defined(OS_CHROMEOS)
-#include "services/ui/public/interfaces/arc.mojom.h"
-#endif  // defined(OS_CHROMEOS)
-
 namespace discardable_memory {
 class DiscardableSharedMemoryManager;
 }
@@ -89,10 +85,6 @@ class Service : public service_manager::Service,
     // If null Service creates a DiscardableSharedMemoryManager.
     discardable_memory::DiscardableSharedMemoryManager* memory_manager =
         nullptr;
-
-    // Whether mus should host viz, or whether an external client (e.g. the
-    // window manager) would be responsible for hosting viz.
-    bool should_host_viz = true;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(InProcessConfig);
@@ -189,10 +181,6 @@ class Service : public service_manager::Service,
 
   void BindVideoDetectorRequest(mojom::VideoDetectorRequest request);
 
-#if defined(OS_CHROMEOS)
-  void BindArcRequest(mojom::ArcRequest request);
-#endif  // defined(OS_CHROMEOS)
-
   std::unique_ptr<ws::WindowServer> window_server_;
   std::unique_ptr<PlatformEventSource> event_source_;
   using PendingRequests = std::vector<std::unique_ptr<PendingRequest>>;
@@ -235,8 +223,6 @@ class Service : public service_manager::Service,
   // running in-process.
   std::unique_ptr<discardable_memory::DiscardableSharedMemoryManager>
       owned_discardable_shared_memory_manager_;
-
-  const bool should_host_viz_;
 
   service_manager::BinderRegistryWithArgs<
       const service_manager::BindSourceInfo&>

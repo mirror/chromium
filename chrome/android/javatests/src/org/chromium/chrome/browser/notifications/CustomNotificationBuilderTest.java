@@ -32,7 +32,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.test.BaseJUnit4ClassRunner;
-import org.chromium.base.test.util.DisableIf;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.chrome.R;
@@ -59,7 +58,6 @@ public class CustomNotificationBuilderTest {
     @SmallTest
     @Feature({"Browser", "Notifications"})
     @SuppressLint("NewApi")
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testSetAll() {
         Context context = InstrumentationRegistry.getTargetContext();
 
@@ -146,7 +144,6 @@ public class CustomNotificationBuilderTest {
     @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testZeroActionButtons() {
         Context context = InstrumentationRegistry.getTargetContext();
         Notification notification =
@@ -164,7 +161,6 @@ public class CustomNotificationBuilderTest {
     @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testMaxActionButtons() {
         Context context = InstrumentationRegistry.getTargetContext();
         NotificationBuilderBase builder =
@@ -192,7 +188,6 @@ public class CustomNotificationBuilderTest {
     @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testPaintIcons() {
         Context context = InstrumentationRegistry.getTargetContext();
 
@@ -235,7 +230,6 @@ public class CustomNotificationBuilderTest {
     @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testCharSequenceLimits() {
         Context context = InstrumentationRegistry.getTargetContext();
         int maxLength = CustomNotificationBuilder.MAX_CHARSEQUENCE_LENGTH;
@@ -266,7 +260,6 @@ public class CustomNotificationBuilderTest {
     @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testCalculateMaxBodyLines() {
         Assert.assertEquals(7, CustomNotificationBuilder.calculateMaxBodyLines(-1000.0f));
         Assert.assertEquals(7, CustomNotificationBuilder.calculateMaxBodyLines(0.5f));
@@ -278,7 +271,6 @@ public class CustomNotificationBuilderTest {
     @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testCalculateScaledPadding() {
         DisplayMetrics metrics = new DisplayMetrics();
         metrics.density = 10.0f;
@@ -295,7 +287,6 @@ public class CustomNotificationBuilderTest {
     @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testGeneratesLargeIconFromOriginWhenNoLargeIconProvided() {
         Context context = InstrumentationRegistry.getTargetContext();
         NotificationBuilderBase notificationBuilder =
@@ -313,7 +304,6 @@ public class CustomNotificationBuilderTest {
     @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testGeneratesLargeIconFromOriginWhenLargeIconProvidedIsNull() {
         Context context = InstrumentationRegistry.getTargetContext();
         NotificationBuilderBase notificationBuilder =
@@ -340,7 +330,6 @@ public class CustomNotificationBuilderTest {
     @TargetApi(Build.VERSION_CODES.KITKAT_WATCH) // RemoteInputs were only added in KITKAT_WATCH.
     @SmallTest
     @Feature({"Browser", "Notifications"})
-    @DisableIf.Build(sdk_is_greater_than = 23, message = "crbug.com/779228")
     public void testAddTextActionSetsRemoteInput() {
         Context context = InstrumentationRegistry.getTargetContext();
         NotificationBuilderBase notificationBuilder =

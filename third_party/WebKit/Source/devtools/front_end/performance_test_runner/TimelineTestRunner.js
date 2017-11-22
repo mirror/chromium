@@ -183,14 +183,14 @@ PerformanceTestRunner.performActionsAndPrint = function(actions, typeName, inclu
 };
 
 PerformanceTestRunner.printTimelineRecords = function(name) {
-  for (let event of PerformanceTestRunner.timelineModel().inspectedTargetEvents()) {
+  for (let event of PerformanceTestRunner.timelineModel().mainThreadEvents()) {
     if (event.name === name)
       PerformanceTestRunner.printTraceEventProperties(event);
   }
 };
 
 PerformanceTestRunner.printTimelineRecordsWithDetails = function(name) {
-  for (let event of PerformanceTestRunner.timelineModel().inspectedTargetEvents()) {
+  for (let event of PerformanceTestRunner.timelineModel().mainThreadEvents()) {
     if (name === event.name)
       PerformanceTestRunner.printTraceEventPropertiesWithDetails(event);
   }
@@ -369,7 +369,7 @@ PerformanceTestRunner.loadTimeline = function(timelineData) {
   return promise;
 };
 
-TestRunner.deprecatedInitAsync(`
+TestRunner.initAsync(`
   function wrapCallFunctionForTimeline(f) {
     var script = document.createElement('script');
     script.textContent = '(' + f.toString() + ')()\\n//# sourceURL=wrapCallFunctionForTimeline.js';

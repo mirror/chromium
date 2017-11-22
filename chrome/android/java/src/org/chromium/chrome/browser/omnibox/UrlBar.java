@@ -12,7 +12,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.os.Build;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -409,18 +408,7 @@ public class UrlBar extends AutocompleteEditText {
             if (viewCore != null) viewCore.destroySelectActionMode();
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return super.onTouchEvent(event);
-        }
-        try {
-            return super.onTouchEvent(event);
-        } catch (NullPointerException e) {
-            // Working around a platform bug (b/25562038) that was fixed in N that can throw an
-            // exception during text selection. We just swallow the exception. The outcome is that
-            // the text selection handle doesn't show.
-            Log.w(TAG, "Ignoring NPE in UrlBar#onTouchEvent.", e);
-            return true;
-        }
+        return super.onTouchEvent(event);
     }
 
     @Override

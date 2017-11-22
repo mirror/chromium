@@ -40,14 +40,11 @@ class ASH_EXPORT AccessibilityController
   // Binds the mojom::AccessibilityController interface to this object.
   void BindRequest(mojom::AccessibilityControllerRequest request);
 
-  void SetHighContrastEnabled(bool enabled);
-  bool IsHighContrastEnabled() const;
-
   void SetLargeCursorEnabled(bool enabled);
   bool IsLargeCursorEnabled() const;
 
-  void SetMonoAudioEnabled(bool enabled);
-  bool IsMonoAudioEnabled() const;
+  void SetHighContrastEnabled(bool enabled);
+  bool IsHighContrastEnabled() const;
 
   // Triggers an accessibility alert to give the user feedback.
   void TriggerAccessibilityAlert(mojom::AccessibilityAlert alert);
@@ -67,9 +64,8 @@ class ASH_EXPORT AccessibilityController
   // initial settings.
   void ObservePrefs(PrefService* prefs);
 
-  void UpdateHighContrastFromPref();
   void UpdateLargeCursorFromPref();
-  void UpdateMonoAudioFromPref();
+  void UpdateHighContrastFromPref();
 
   service_manager::Connector* connector_ = nullptr;
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
@@ -80,10 +76,9 @@ class ASH_EXPORT AccessibilityController
   // Client interface in chrome browser.
   mojom::AccessibilityControllerClientPtr client_;
 
-  bool high_contrast_enabled_ = false;
   bool large_cursor_enabled_ = false;
   int large_cursor_size_in_dip_ = kDefaultLargeCursorSize;
-  bool mono_audio_enabled_ = false;
+  bool high_contrast_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AccessibilityController);
 };

@@ -386,8 +386,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          const ResourceResponseHead& head) override {
     if (--redirect_limit_ == 0) {
-      OnComplete(
-          network::URLLoaderCompletionStatus(net::ERR_TOO_MANY_REDIRECTS));
+      OnComplete(network::URLLoaderStatus(net::ERR_TOO_MANY_REDIRECTS));
       return;
     }
 
@@ -426,7 +425,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
             owner_, base::Passed(&body)));
   }
 
-  void OnComplete(const network::URLLoaderCompletionStatus& status) override {
+  void OnComplete(const network::URLLoaderStatus& status) override {
     if (status.error_code != net::OK && !received_response_) {
       // If the default loader (network) was used to handle the URL load
       // request we need to see if the handlers want to potentially create a
@@ -509,7 +508,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   // the case that the response is intercepted by download, and OnComplete() is
   // already called while we are transferring the |url_loader_| and response
   // body to download code.
-  base::Optional<network::URLLoaderCompletionStatus> status_;
+  base::Optional<network::URLLoaderStatus> status_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderRequestController);
 };
@@ -690,7 +689,7 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
 }
 
 void NavigationURLLoaderNetworkService::OnComplete(
-    const network::URLLoaderCompletionStatus& status) {
+    const network::URLLoaderStatus& status) {
   if (status.error_code == net::OK)
     return;
 

@@ -767,16 +767,9 @@ void ChromeContentBrowserClientExtensionsPart::SiteInstanceGotProcess(
   if (!registry)
     return;
 
-  // Only add the process to the map if the SiteInstance's site URL is already
-  // a chrome-extension:// URL. This includes hosted apps, except in rare cases
-  // that a URL in the hosted app's extent is not treated as a hosted app (e.g.,
-  // for isolated origins or cross-site iframes). For that case, don't look up
-  // the hosted app's Extension from the site URL using GetExtensionOrAppByURL,
-  // since it isn't treated as a hosted app.
-  if (!site_instance->GetSiteURL().SchemeIs(kExtensionScheme))
-    return;
-  const Extension* extension = registry->enabled_extensions().GetByID(
-      site_instance->GetSiteURL().host());
+  const Extension* extension =
+      registry->enabled_extensions().GetExtensionOrAppByURL(
+          site_instance->GetSiteURL());
   if (!extension)
     return;
 

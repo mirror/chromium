@@ -27,18 +27,17 @@
 #pragma mark - SadTabTabHelperDelegate
 
 - (void)sadTabTabHelper:(SadTabTabHelper*)tabHelper
-    presentSadTabForWebState:(web::WebState*)webState
-             repeatedFailure:(BOOL)repeatedFailure {
+    presentSadTabForRepeatedFailure:(BOOL)repeatedFailure {
   // Create a SadTabView so |webstate| presents it.
   SadTabView* sadTabview = [[SadTabView alloc]
            initWithMode:repeatedFailure ? SadTabViewMode::FEEDBACK
                                         : SadTabViewMode::RELOAD
-      navigationManager:webState->GetNavigationManager()];
+      navigationManager:tabHelper->web_state()->GetNavigationManager()];
   sadTabview.dispatcher = static_cast<id<ApplicationCommands>>(self.dispatcher);
   sadTabview.actionDelegate = self;
   CRWContentView* contentView =
       [[CRWGenericContentView alloc] initWithView:sadTabview];
-  webState->ShowTransientContentView(contentView);
+  tabHelper->web_state()->ShowTransientContentView(contentView);
 }
 
 @end

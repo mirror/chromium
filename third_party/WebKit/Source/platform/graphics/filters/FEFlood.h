@@ -48,7 +48,7 @@ class PLATFORM_EXPORT FEFlood final : public FilterEffect {
  private:
   FEFlood(Filter*, const Color&, float);
 
-  sk_sp<PaintFilter> CreateImageFilter() override;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
 
   Color flood_color_;
   float flood_opacity_;

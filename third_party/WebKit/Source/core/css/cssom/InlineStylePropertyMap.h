@@ -5,26 +5,25 @@
 #ifndef InlineStylePropertyMap_h
 #define InlineStylePropertyMap_h
 
-#include "base/macros.h"
 #include "core/css/cssom/StylePropertyMap.h"
 #include "core/dom/Element.h"
 
 namespace blink {
 
 class CORE_EXPORT InlineStylePropertyMap final : public StylePropertyMap {
+  WTF_MAKE_NONCOPYABLE(InlineStylePropertyMap);
+
  public:
   explicit InlineStylePropertyMap(Element* owner_element)
       : owner_element_(owner_element) {}
 
   Vector<String> getProperties() override;
 
-  void set(const ExecutionContext*,
-           CSSPropertyID,
-           HeapVector<CSSStyleValueOrString>&,
+  void set(CSSPropertyID,
+           CSSStyleValueOrCSSStyleValueSequenceOrString&,
            ExceptionState&) override;
-  void append(const ExecutionContext*,
-              CSSPropertyID,
-              HeapVector<CSSStyleValueOrString>&,
+  void append(CSSPropertyID,
+              CSSStyleValueOrCSSStyleValueSequenceOrString&,
               ExceptionState&) override;
   void remove(CSSPropertyID, ExceptionState&) override;
 
@@ -42,7 +41,6 @@ class CORE_EXPORT InlineStylePropertyMap final : public StylePropertyMap {
 
  private:
   Member<Element> owner_element_;
-  DISALLOW_COPY_AND_ASSIGN(InlineStylePropertyMap);
 };
 
 }  // namespace blink

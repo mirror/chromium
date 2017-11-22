@@ -37,6 +37,7 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_prepopulate_data.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/toolbar/toolbar_model.h"
 #include "components/url_formatter/url_fixer.h"
 #include "third_party/metrics_proto/omnibox_event.pb.h"
 #include "ui/gfx/image/image.h"
@@ -166,11 +167,10 @@ const OmniboxEditModel::State OmniboxEditModel::GetStateForTabSwitch() {
                keyword_mode_entry_method_, focus_state_, focus_source_, input_);
 }
 
-void OmniboxEditModel::RestoreState(const base::string16& url,
-                                    const State* state) {
+void OmniboxEditModel::RestoreState(const State* state) {
   // We need to update the permanent text correctly and revert the view
   // regardless of whether there is saved state.
-  permanent_text_ = url;
+  permanent_text_ = controller_->GetToolbarModel()->GetFormattedURL(nullptr);
   view_->RevertAll();
   // Restore the autocomplete controller's input, or clear it if this is a new
   // tab.
@@ -205,7 +205,7 @@ AutocompleteMatch OmniboxEditModel::CurrentMatch(
   return match;
 }
 
-bool OmniboxEditModel::SetPermanentText(const base::string16& text) {
+bool OmniboxEditModel::UpdatePermanentText() {
   // When there's new permanent text, and the user isn't interacting with the
   // omnibox, we want to revert the edit to show the new text.  We could simply
   // define "interacting" as "the omnibox has focus", but we still allow updates
@@ -218,11 +218,13 @@ bool OmniboxEditModel::SetPermanentText(const base::string16& text) {
   // always safe to change the text; this also prevents someone toggling "Show
   // URL" (which sounds as if it might be persistent) from seeing just that URL
   // forever afterwards.
+  base::string16 new_permanent_text =
+      controller_->GetToolbarModel()->GetFormattedURL(nullptr);
   const bool visibly_changed_permanent_text =
-      (permanent_text_ != text) &&
+      (permanent_text_ != new_permanent_text) &&
       (!has_focus() || (!user_input_in_progress_ && !PopupIsOpen()));
 
-  permanent_text_ = text;
+  permanent_text_ = new_permanent_text;
   return visibly_changed_permanent_text;
 }
 
@@ -763,10 +765,11 @@ bool OmniboxEditModel::AcceptKeyword(
     const AutocompleteMatch& match = CurrentMatch(nullptr);
     original_url_ = match.destination_url;
     view_->OnTemporaryTextMaybeChanged(MaybeStripKeyword(match.fill_into_edit),
-                                       match, save_original_selection, true);
+                                       match.type, save_original_selection,
+                                       true);
   } else {
     const AutocompleteMatch& match = CurrentMatch(nullptr);
-    view_->OnTemporaryTextMaybeChanged(user_text_, match, false, true);
+    view_->OnTemporaryTextMaybeChanged(user_text_, match.type, false, true);
   }
 
   base::RecordAction(base::UserMetricsAction("AcceptedKeywordHint"));
@@ -1063,7 +1066,7 @@ void OmniboxEditModel::OnPopupDataChanged(
       // right answer here :(
     }
     const AutocompleteMatch& match = CurrentMatch(nullptr);
-    view_->OnTemporaryTextMaybeChanged(MaybeStripKeyword(text), match,
+    view_->OnTemporaryTextMaybeChanged(MaybeStripKeyword(text), match.type,
                                        save_original_selection, true);
     return;
   }

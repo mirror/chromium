@@ -13,29 +13,20 @@ CoverageTestRunner.startCoverage = function() {
   coverageView._startRecording();
 };
 
-/**
- * @return {!Promise}
- */
 CoverageTestRunner.stopCoverage = function() {
   var coverageView = self.runtime.sharedInstance(Coverage.CoverageView);
   return coverageView._stopRecording();
 };
 
-/**
- * @return {!Promise}
- */
 CoverageTestRunner.pollCoverage = function() {
   var coverageView = self.runtime.sharedInstance(Coverage.CoverageView);
   return coverageView._poll();
 };
 
-/**
- * @return {!Promise<!SourceFrame.SourceFrame>}
- */
 CoverageTestRunner.sourceDecorated = async function(source) {
   await UI.inspectorView.showPanel('sources');
   var decoratePromise = TestRunner.addSnifferPromise(Coverage.CoverageView.LineDecorator.prototype, '_innerDecorate');
-  var sourceFrame = await SourcesTestRunner.showScriptSourcePromise(source);
+  var sourceFrame = await new Promise(fulfill => SourcesTestRunner.showScriptSource(source, fulfill));
   await decoratePromise;
   return sourceFrame;
 };
@@ -45,9 +36,6 @@ CoverageTestRunner.dumpDecorations = async function(source) {
   CoverageTestRunner.dumpDecorationsInSourceFrame(sourceFrame);
 };
 
-/**
- * @return {?DataGrid.DataGridNode}
- */
 CoverageTestRunner.findCoverageNodeForURL = function(url) {
   var coverageListView = self.runtime.sharedInstance(Coverage.CoverageView)._listView;
   var rootNode = coverageListView._dataGrid.rootNode();
@@ -92,7 +80,7 @@ CoverageTestRunner.dumpCoverageListView = function() {
     var data = child._coverageInfo;
     var url = TestRunner.formatters.formatAsURL(data.url());
 
-    if (url.startsWith('test://'))
+    if (url.endsWith('-test.js') || url.endsWith('.html'))
       continue;
 
     var type = Coverage.CoverageListView._typeToString(data.type());

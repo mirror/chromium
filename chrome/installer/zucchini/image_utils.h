@@ -162,26 +162,42 @@ enum ExecutableType : uint32_t {
   kNumExeType
 };
 
-// A region in an image with associated executable type |exe_type|. If
-// |exe_type == kExeTypeNoOp|, then the Element represents a region of raw data.
-struct Element : public BufferRegion {
+// Descibes a region in an image with associated executable type. Note that
+// |exe_type| can be kExeTypeNoOp, in which case the Element descibes a region
+// of raw data.
+struct Element {
   Element() = default;
-  constexpr Element(const BufferRegion& region_in, ExecutableType exe_type_in)
-      : BufferRegion(region_in), exe_type(exe_type_in) {}
-  constexpr explicit Element(const BufferRegion& region_in)
-      : BufferRegion(region_in), exe_type(kExeTypeNoOp) {}
+  constexpr Element(ExecutableType exe_type_in,
+                    offset_t offset_in,
+                    offset_t length_in)
+      : exe_type(exe_type_in), offset(offset_in), length(length_in) {}
+  constexpr Element(ExecutableType exe_type, const BufferRegion& region)
+      : exe_type(exe_type),
+        offset(base::checked_cast<offset_t>(region.offset)),
+        length(base::checked_cast<offset_t>(region.size)) {}
+  constexpr explicit Element(const BufferRegion& region)
+      : Element(kExeTypeNoOp, region) {}
 
-  // Similar to lo() and hi(), but returns values in offset_t.
-  offset_t BeginOffset() const { return base::checked_cast<offset_t>(lo()); }
-  offset_t EndOffset() const { return base::checked_cast<offset_t>(hi()); }
+  // Returns the end offset of this element.
+  offset_t EndOffset() const { return offset + length; }
 
-  BufferRegion region() const { return {offset, size}; }
+  // Returns true if the element fits in an image of size |total_size|, false
+  // otherwise.
+  bool FitsIn(offset_t total_size) const {
+    return offset <= total_size && total_size - offset >= length;
+  }
+
+  BufferRegion region() const { return {offset, length}; }
 
   friend bool operator==(const Element& a, const Element& b) {
-    return a.exe_type == b.exe_type && a.offset == b.offset && a.size == b.size;
+    return a.exe_type == b.exe_type && a.offset == b.offset &&
+           a.length == b.length;
   }
 
   ExecutableType exe_type;
+  offset_t offset;
+  offset_t length;
+  // TODO(huangs): Use BufferRegion.
 };
 
 // A matched pair of Elements.

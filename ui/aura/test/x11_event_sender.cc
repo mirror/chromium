@@ -4,9 +4,10 @@
 
 #include "ui/aura/test/x11_event_sender.h"
 
+#include <X11/Xlib.h>
+
 #include "ui/aura/window_tree_host.h"
 #include "ui/gfx/geometry/point.h"
-#include "ui/gfx/x/x11.h"
 
 namespace aura {
 namespace test {
@@ -30,7 +31,7 @@ void PostEventToWindowTreeHost(const XEvent& xevent, WindowTreeHost* host) {
       // above. Using xmotion from XEvent's unions to avoid repeating
       // the code.
       event.xmotion.root = DefaultRootWindow(event.xany.display);
-      event.xmotion.time = x11::CurrentTime;
+      event.xmotion.time = CurrentTime;
 
       gfx::Point point(event.xmotion.x, event.xmotion.y);
       host->ConvertDIPToScreenInPixels(&point);
@@ -40,7 +41,7 @@ void PostEventToWindowTreeHost(const XEvent& xevent, WindowTreeHost* host) {
     default:
       break;
   }
-  XSendEvent(xdisplay, xwindow, x11::False, 0, &event);
+  XSendEvent(xdisplay, xwindow, False, 0, &event);
   XFlush(xdisplay);
 }
 

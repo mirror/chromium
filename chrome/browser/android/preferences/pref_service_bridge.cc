@@ -132,34 +132,31 @@ browsing_data::ClearBrowsingDataTab ToTabEnum(jint clear_browsing_data_tab) {
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
-static jboolean JNI_PrefServiceBridge_GetBoolean(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const jint j_pref_index) {
+static jboolean GetBoolean(JNIEnv* env,
+                           const JavaParamRef<jobject>& obj,
+                           const jint j_pref_index) {
   return GetPrefService()->GetBoolean(
       PrefServiceBridge::GetPrefNameExposedToJava(j_pref_index));
 }
 
-static void JNI_PrefServiceBridge_SetBoolean(JNIEnv* env,
-                                             const JavaParamRef<jobject>& obj,
-                                             const jint j_pref_index,
-                                             const jboolean j_value) {
+static void SetBoolean(JNIEnv* env,
+                       const JavaParamRef<jobject>& obj,
+                       const jint j_pref_index,
+                       const jboolean j_value) {
   GetPrefService()->SetBoolean(
       PrefServiceBridge::GetPrefNameExposedToJava(j_pref_index), j_value);
 }
 
-static jboolean JNI_PrefServiceBridge_IsContentSettingManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    int content_settings_type) {
+static jboolean IsContentSettingManaged(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj,
+                                        int content_settings_type) {
   return IsContentSettingManaged(
       static_cast<ContentSettingsType>(content_settings_type));
 }
 
-static jboolean JNI_PrefServiceBridge_IsContentSettingEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    int content_settings_type) {
+static jboolean IsContentSettingEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj,
+                                        int content_settings_type) {
   // Before we migrate functions over to this central function, we must verify
   // that the functionality provided below is correct.
   DCHECK(content_settings_type == CONTENT_SETTINGS_TYPE_JAVASCRIPT ||
@@ -170,11 +167,10 @@ static jboolean JNI_PrefServiceBridge_IsContentSettingEnabled(
   return GetBooleanForContentSetting(type);
 }
 
-static void JNI_PrefServiceBridge_SetContentSettingEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    int content_settings_type,
-    jboolean allow) {
+static void SetContentSettingEnabled(JNIEnv* env,
+                                     const JavaParamRef<jobject>& obj,
+                                     int content_settings_type,
+                                     jboolean allow) {
   // Before we migrate functions over to this central function, we must verify
   // that the new category supports ALLOW/BLOCK pairs and, if not, handle them.
   DCHECK(content_settings_type == CONTENT_SETTINGS_TYPE_JAVASCRIPT ||
@@ -188,12 +184,11 @@ static void JNI_PrefServiceBridge_SetContentSettingEnabled(
       allow ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetContentSettingForPattern(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    int content_settings_type,
-    const JavaParamRef<jstring>& pattern,
-    int setting) {
+static void SetContentSettingForPattern(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj,
+                                        int content_settings_type,
+                                        const JavaParamRef<jstring>& pattern,
+                                        int setting) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetContentSettingCustomScope(
@@ -203,11 +198,10 @@ static void JNI_PrefServiceBridge_SetContentSettingForPattern(
       static_cast<ContentSetting>(setting));
 }
 
-static void JNI_PrefServiceBridge_GetContentSettingsExceptions(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    int content_settings_type,
-    const JavaParamRef<jobject>& list) {
+static void GetContentSettingsExceptions(JNIEnv* env,
+                                         const JavaParamRef<jobject>& obj,
+                                         int content_settings_type,
+                                         const JavaParamRef<jobject>& list) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   ContentSettingsForOneType entries;
@@ -222,157 +216,139 @@ static void JNI_PrefServiceBridge_GetContentSettingsExceptions(
   }
 }
 
-static jboolean JNI_PrefServiceBridge_GetAcceptCookiesEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetAcceptCookiesEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_COOKIES);
 }
 
-static jboolean JNI_PrefServiceBridge_GetAcceptCookiesUserModifiable(
+static jboolean GetAcceptCookiesUserModifiable(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return IsContentSettingUserModifiable(CONTENT_SETTINGS_TYPE_COOKIES);
 }
 
-static jboolean JNI_PrefServiceBridge_GetAcceptCookiesManagedByCustodian(
+static jboolean GetAcceptCookiesManagedByCustodian(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return IsContentSettingManagedByCustodian(CONTENT_SETTINGS_TYPE_COOKIES);
 }
 
-static jboolean JNI_PrefServiceBridge_GetAutoplayEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetAutoplayEnabled(JNIEnv* env,
+                                   const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_AUTOPLAY);
 }
 
-static jboolean JNI_PrefServiceBridge_GetSoundEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetSoundEnabled(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_SOUND);
 }
 
-static jboolean JNI_PrefServiceBridge_GetBackgroundSyncEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetBackgroundSyncEnabled(JNIEnv* env,
+                                         const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC);
 }
 
-static jboolean JNI_PrefServiceBridge_GetBlockThirdPartyCookiesEnabled(
+static jboolean GetBlockThirdPartyCookiesEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kBlockThirdPartyCookies);
 }
 
-static jboolean JNI_PrefServiceBridge_GetBlockThirdPartyCookiesManaged(
+static jboolean GetBlockThirdPartyCookiesManaged(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(prefs::kBlockThirdPartyCookies);
 }
 
-static jboolean JNI_PrefServiceBridge_GetRememberPasswordsEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetRememberPasswordsEnabled(JNIEnv* env,
+                                            const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(
       password_manager::prefs::kCredentialsEnableService);
 }
 
-static jboolean JNI_PrefServiceBridge_GetPasswordManagerAutoSigninEnabled(
+static jboolean GetPasswordManagerAutoSigninEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(
       password_manager::prefs::kCredentialsEnableAutosignin);
 }
 
-static jboolean JNI_PrefServiceBridge_GetRememberPasswordsManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetRememberPasswordsManaged(JNIEnv* env,
+                                            const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(
       password_manager::prefs::kCredentialsEnableService);
 }
 
-static jboolean JNI_PrefServiceBridge_GetPasswordManagerAutoSigninManaged(
+static jboolean GetPasswordManagerAutoSigninManaged(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(
       password_manager::prefs::kCredentialsEnableAutosignin);
 }
 
-static jboolean JNI_PrefServiceBridge_GetDoNotTrackEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetDoNotTrackEnabled(JNIEnv* env,
+                                     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kEnableDoNotTrack);
 }
 
-static jboolean JNI_PrefServiceBridge_GetNetworkPredictionEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetNetworkPredictionEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetInteger(prefs::kNetworkPredictionOptions)
       != chrome_browser_net::NETWORK_PREDICTION_NEVER;
 }
 
-static jboolean JNI_PrefServiceBridge_GetNetworkPredictionManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetNetworkPredictionManaged(JNIEnv* env,
+                                            const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(
       prefs::kNetworkPredictionOptions);
 }
 
-static jboolean JNI_PrefServiceBridge_GetPasswordEchoEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetPasswordEchoEnabled(JNIEnv* env,
+                                       const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kWebKitPasswordEchoEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetPrintingEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetPrintingEnabled(JNIEnv* env,
+                                   const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kPrintingEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetPrintingManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetPrintingManaged(JNIEnv* env,
+                                   const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(prefs::kPrintingEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetTranslateEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
-  return GetPrefService()->GetBoolean(prefs::kOfferTranslateEnabled);
+static jboolean GetTranslateEnabled(JNIEnv* env,
+                                    const JavaParamRef<jobject>& obj) {
+  return GetPrefService()->GetBoolean(prefs::kEnableTranslate);
 }
 
-static jboolean JNI_PrefServiceBridge_GetTranslateManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
-  return GetPrefService()->IsManagedPreference(prefs::kOfferTranslateEnabled);
+static jboolean GetTranslateManaged(JNIEnv* env,
+                                    const JavaParamRef<jobject>& obj) {
+  return GetPrefService()->IsManagedPreference(prefs::kEnableTranslate);
 }
 
-static jboolean JNI_PrefServiceBridge_GetSearchSuggestEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetSearchSuggestEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kSearchSuggestEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetSearchSuggestManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetSearchSuggestManaged(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(prefs::kSearchSuggestEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_IsScoutExtendedReportingActive(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean IsScoutExtendedReportingActive(
+    JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return safe_browsing::IsScout(*GetPrefService());
 }
 
-static jboolean JNI_PrefServiceBridge_GetSafeBrowsingExtendedReportingEnabled(
+static jboolean GetSafeBrowsingExtendedReportingEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return safe_browsing::IsExtendedReportingEnabled(*GetPrefService());
 }
 
-static void JNI_PrefServiceBridge_SetSafeBrowsingExtendedReportingEnabled(
+static void SetSafeBrowsingExtendedReportingEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     jboolean enabled) {
@@ -381,7 +357,7 @@ static void JNI_PrefServiceBridge_SetSafeBrowsingExtendedReportingEnabled(
       safe_browsing::SBER_OPTIN_SITE_ANDROID_SETTINGS);
 }
 
-static jboolean JNI_PrefServiceBridge_GetSafeBrowsingExtendedReportingManaged(
+static jboolean GetSafeBrowsingExtendedReportingManaged(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   PrefService* pref_service = GetPrefService();
@@ -389,53 +365,47 @@ static jboolean JNI_PrefServiceBridge_GetSafeBrowsingExtendedReportingManaged(
       safe_browsing::GetExtendedReportingPrefName(*pref_service));
 }
 
-static jboolean JNI_PrefServiceBridge_GetSafeBrowsingEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetSafeBrowsingEnabled(JNIEnv* env,
+                                       const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kSafeBrowsingEnabled);
 }
 
-static void JNI_PrefServiceBridge_SetSafeBrowsingEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean enabled) {
+static void SetSafeBrowsingEnabled(JNIEnv* env,
+                                   const JavaParamRef<jobject>& obj,
+                                   jboolean enabled) {
   GetPrefService()->SetBoolean(prefs::kSafeBrowsingEnabled, enabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetSafeBrowsingManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetSafeBrowsingManaged(JNIEnv* env,
+                                       const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(prefs::kSafeBrowsingEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetProtectedMediaIdentifierEnabled(
+static jboolean GetProtectedMediaIdentifierEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(
       CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER);
 }
 
-static jboolean JNI_PrefServiceBridge_GetNotificationsEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetNotificationsEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
 }
 
-static jboolean JNI_PrefServiceBridge_GetNotificationsVibrateEnabled(
+static jboolean GetNotificationsVibrateEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kNotificationsVibrateEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetAllowLocationEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetAllowLocationEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_GEOLOCATION);
 }
 
-static jboolean JNI_PrefServiceBridge_GetLocationAllowedByPolicy(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetLocationAllowedByPolicy(JNIEnv* env,
+                                           const JavaParamRef<jobject>& obj) {
   if (!IsContentSettingManaged(CONTENT_SETTINGS_TYPE_GEOLOCATION))
     return false;
   HostContentSettingsMap* content_settings =
@@ -445,47 +415,45 @@ static jboolean JNI_PrefServiceBridge_GetLocationAllowedByPolicy(
          CONTENT_SETTING_ALLOW;
 }
 
-static jboolean JNI_PrefServiceBridge_GetAllowLocationUserModifiable(
+static jboolean GetAllowLocationUserModifiable(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return IsContentSettingUserModifiable(CONTENT_SETTINGS_TYPE_GEOLOCATION);
 }
 
-static jboolean JNI_PrefServiceBridge_GetAllowLocationManagedByCustodian(
+static jboolean GetAllowLocationManagedByCustodian(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return IsContentSettingManagedByCustodian(CONTENT_SETTINGS_TYPE_GEOLOCATION);
 }
 
-static jboolean JNI_PrefServiceBridge_GetResolveNavigationErrorEnabled(
+static jboolean GetResolveNavigationErrorEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kAlternateErrorPagesEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetResolveNavigationErrorManaged(
+static jboolean GetResolveNavigationErrorManaged(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(
       prefs::kAlternateErrorPagesEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetSupervisedUserSafeSitesEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetSupervisedUserSafeSitesEnabled(JNIEnv* env,
+                                         const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kSupervisedUserSafeSites);
 }
 
-static jint JNI_PrefServiceBridge_GetDefaultSupervisedUserFilteringBehavior(
+static jint GetDefaultSupervisedUserFilteringBehavior(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetInteger(
       prefs::kDefaultSupervisedUserFilteringBehavior);
 }
 
-static jboolean JNI_PrefServiceBridge_GetIncognitoModeEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetIncognitoModeEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   PrefService* prefs = GetPrefService();
   IncognitoModePrefs::Availability incognito_pref =
       IncognitoModePrefs::GetAvailability(prefs);
@@ -495,49 +463,43 @@ static jboolean JNI_PrefServiceBridge_GetIncognitoModeEnabled(
   return incognito_pref != IncognitoModePrefs::DISABLED;
 }
 
-static jboolean JNI_PrefServiceBridge_GetIncognitoModeManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetIncognitoModeManaged(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(
       prefs::kIncognitoModeAvailability);
 }
 
-static jboolean JNI_PrefServiceBridge_IsMetricsReportingEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean IsMetricsReportingEnabled(JNIEnv* env,
+                                           const JavaParamRef<jobject>& obj) {
   PrefService* local_state = g_browser_process->local_state();
   return local_state->GetBoolean(metrics::prefs::kMetricsReportingEnabled);
 }
 
-static void JNI_PrefServiceBridge_SetMetricsReportingEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean enabled) {
+static void SetMetricsReportingEnabled(JNIEnv* env,
+                                       const JavaParamRef<jobject>& obj,
+                                       jboolean enabled) {
   PrefService* local_state = g_browser_process->local_state();
   local_state->SetBoolean(metrics::prefs::kMetricsReportingEnabled, enabled);
 }
 
-static jboolean JNI_PrefServiceBridge_IsMetricsReportingManaged(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean IsMetricsReportingManaged(JNIEnv* env,
+                                           const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(
       metrics::prefs::kMetricsReportingEnabled);
 }
 
-static void JNI_PrefServiceBridge_SetClickedUpdateMenuItem(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean clicked) {
+static void SetClickedUpdateMenuItem(JNIEnv* env,
+                                     const JavaParamRef<jobject>& obj,
+                                     jboolean clicked) {
   GetPrefService()->SetBoolean(prefs::kClickedUpdateMenuItem, clicked);
 }
 
-static jboolean JNI_PrefServiceBridge_GetClickedUpdateMenuItem(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetClickedUpdateMenuItem(JNIEnv* env,
+                                         const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetBoolean(prefs::kClickedUpdateMenuItem);
 }
 
-static void JNI_PrefServiceBridge_SetLatestVersionWhenClickedUpdateMenuItem(
+static void SetLatestVersionWhenClickedUpdateMenuItem(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jstring>& version) {
@@ -546,8 +508,7 @@ static void JNI_PrefServiceBridge_SetLatestVersionWhenClickedUpdateMenuItem(
       ConvertJavaStringToUTF8(env, version));
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_PrefServiceBridge_GetLatestVersionWhenClickedUpdateMenuItem(
+static ScopedJavaLocalRef<jstring> GetLatestVersionWhenClickedUpdateMenuItem(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
@@ -555,7 +516,7 @@ JNI_PrefServiceBridge_GetLatestVersionWhenClickedUpdateMenuItem(
           prefs::kLatestVersionWhenClickedUpdateMenuItem));
 }
 
-static jboolean JNI_PrefServiceBridge_GetBrowsingDataDeletionPreference(
+static jboolean GetBrowsingDataDeletionPreference(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     jint data_type,
@@ -578,12 +539,11 @@ static jboolean JNI_PrefServiceBridge_GetBrowsingDataDeletionPreference(
   return GetOriginalProfile()->GetPrefs()->GetBoolean(pref);
 }
 
-static void JNI_PrefServiceBridge_SetBrowsingDataDeletionPreference(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jint data_type,
-    jint clear_browsing_data_tab,
-    jboolean value) {
+static void SetBrowsingDataDeletionPreference(JNIEnv* env,
+                                              const JavaParamRef<jobject>& obj,
+                                              jint data_type,
+                                              jint clear_browsing_data_tab,
+                                              jboolean value) {
   DCHECK_GE(data_type, 0);
   DCHECK_LT(data_type,
             static_cast<int>(browsing_data::BrowsingDataType::NUM_TYPES));
@@ -598,20 +558,18 @@ static void JNI_PrefServiceBridge_SetBrowsingDataDeletionPreference(
   GetOriginalProfile()->GetPrefs()->SetBoolean(pref, value);
 }
 
-static jint JNI_PrefServiceBridge_GetBrowsingDataDeletionTimePeriod(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jint clear_browsing_data_tab) {
+static jint GetBrowsingDataDeletionTimePeriod(JNIEnv* env,
+                                              const JavaParamRef<jobject>& obj,
+                                              jint clear_browsing_data_tab) {
   return GetPrefService()->GetInteger(
       browsing_data::GetTimePeriodPreferenceName(
           ToTabEnum(clear_browsing_data_tab)));
 }
 
-static void JNI_PrefServiceBridge_SetBrowsingDataDeletionTimePeriod(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jint clear_browsing_data_tab,
-    jint time_period) {
+static void SetBrowsingDataDeletionTimePeriod(JNIEnv* env,
+                                              const JavaParamRef<jobject>& obj,
+                                              jint clear_browsing_data_tab,
+                                              jint time_period) {
   DCHECK_GE(time_period, 0);
   DCHECK_LE(time_period,
             static_cast<int>(browsing_data::TimePeriod::TIME_PERIOD_LAST));
@@ -625,27 +583,24 @@ static void JNI_PrefServiceBridge_SetBrowsingDataDeletionTimePeriod(
   }
 }
 
-static jint JNI_PrefServiceBridge_GetLastClearBrowsingDataTab(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jint GetLastClearBrowsingDataTab(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetInteger(
       browsing_data::prefs::kLastClearBrowsingDataTab);
 }
 
-static void JNI_PrefServiceBridge_SetLastClearBrowsingDataTab(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jint tab_index) {
+static void SetLastClearBrowsingDataTab(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj,
+                                        jint tab_index) {
   DCHECK_GE(tab_index, 0);
   DCHECK_LT(tab_index, 2);
   GetPrefService()->SetInteger(browsing_data::prefs::kLastClearBrowsingDataTab,
                                tab_index);
 }
 
-static void JNI_PrefServiceBridge_SetAutoplayEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetAutoplayEnabled(JNIEnv* env,
+                               const JavaParamRef<jobject>& obj,
+                               jboolean allow) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -653,10 +608,9 @@ static void JNI_PrefServiceBridge_SetAutoplayEnabled(
       allow ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetSoundEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetSoundEnabled(JNIEnv* env,
+                            const JavaParamRef<jobject>& obj,
+                            jboolean allow) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -672,10 +626,9 @@ static void JNI_PrefServiceBridge_SetSoundEnabled(
   }
 }
 
-static void JNI_PrefServiceBridge_SetAllowCookiesEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetAllowCookiesEnabled(JNIEnv* env,
+                                   const JavaParamRef<jobject>& obj,
+                                   jboolean allow) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -683,10 +636,9 @@ static void JNI_PrefServiceBridge_SetAllowCookiesEnabled(
       allow ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetBackgroundSyncEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetBackgroundSyncEnabled(JNIEnv* env,
+                                     const JavaParamRef<jobject>& obj,
+                                     jboolean allow) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -694,22 +646,20 @@ static void JNI_PrefServiceBridge_SetBackgroundSyncEnabled(
       allow ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetBlockThirdPartyCookiesEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean enabled) {
+static void SetBlockThirdPartyCookiesEnabled(JNIEnv* env,
+                                             const JavaParamRef<jobject>& obj,
+                                             jboolean enabled) {
   GetPrefService()->SetBoolean(prefs::kBlockThirdPartyCookies, enabled);
 }
 
-static void JNI_PrefServiceBridge_SetRememberPasswordsEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetRememberPasswordsEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj,
+                                        jboolean allow) {
   GetPrefService()->SetBoolean(
       password_manager::prefs::kCredentialsEnableService, allow);
 }
 
-static void JNI_PrefServiceBridge_SetPasswordManagerAutoSigninEnabled(
+static void SetPasswordManagerAutoSigninEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     jboolean enabled) {
@@ -717,10 +667,9 @@ static void JNI_PrefServiceBridge_SetPasswordManagerAutoSigninEnabled(
       password_manager::prefs::kCredentialsEnableAutosignin, enabled);
 }
 
-static void JNI_PrefServiceBridge_SetProtectedMediaIdentifierEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean is_enabled) {
+static void SetProtectedMediaIdentifierEnabled(JNIEnv* env,
+                                               const JavaParamRef<jobject>& obj,
+                                               jboolean is_enabled) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -728,10 +677,9 @@ static void JNI_PrefServiceBridge_SetProtectedMediaIdentifierEnabled(
       is_enabled ? CONTENT_SETTING_ASK : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetAllowLocationEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean is_enabled) {
+static void SetAllowLocationEnabled(JNIEnv* env,
+                                    const JavaParamRef<jobject>& obj,
+                                    jboolean is_enabled) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -739,10 +687,9 @@ static void JNI_PrefServiceBridge_SetAllowLocationEnabled(
       is_enabled ? CONTENT_SETTING_ASK : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetCameraEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetCameraEnabled(JNIEnv* env,
+                             const JavaParamRef<jobject>& obj,
+                             jboolean allow) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -750,10 +697,9 @@ static void JNI_PrefServiceBridge_SetCameraEnabled(
       allow ? CONTENT_SETTING_ASK : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetMicEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetMicEnabled(JNIEnv* env,
+                          const JavaParamRef<jobject>& obj,
+                          jboolean allow) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -761,10 +707,9 @@ static void JNI_PrefServiceBridge_SetMicEnabled(
       allow ? CONTENT_SETTING_ASK : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetNotificationsEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetNotificationsEnabled(JNIEnv* env,
+                                    const JavaParamRef<jobject>& obj,
+                                    jboolean allow) {
   HostContentSettingsMap* host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(GetOriginalProfile());
   host_content_settings_map->SetDefaultContentSetting(
@@ -772,59 +717,53 @@ static void JNI_PrefServiceBridge_SetNotificationsEnabled(
       allow ? CONTENT_SETTING_ASK : CONTENT_SETTING_BLOCK);
 }
 
-static void JNI_PrefServiceBridge_SetNotificationsVibrateEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean enabled) {
+static void SetNotificationsVibrateEnabled(JNIEnv* env,
+                                           const JavaParamRef<jobject>& obj,
+                                           jboolean enabled) {
   GetPrefService()->SetBoolean(prefs::kNotificationsVibrateEnabled, enabled);
 }
 
-static jboolean JNI_PrefServiceBridge_CanPrefetchAndPrerender(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean CanPrefetchAndPrerender(JNIEnv* env,
+                                         const JavaParamRef<jobject>& obj) {
   return chrome_browser_net::CanPrefetchAndPrerenderUI(GetPrefService()) ==
       chrome_browser_net::NetworkPredictionStatus::ENABLED;
 }
 
-static void JNI_PrefServiceBridge_SetDoNotTrackEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean allow) {
+static void SetDoNotTrackEnabled(JNIEnv* env,
+                                 const JavaParamRef<jobject>& obj,
+                                 jboolean allow) {
   GetPrefService()->SetBoolean(prefs::kEnableDoNotTrack, allow);
 }
 
-static ScopedJavaLocalRef<jstring> JNI_PrefServiceBridge_GetSyncLastAccountId(
+static ScopedJavaLocalRef<jstring> GetSyncLastAccountId(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
       env, GetPrefService()->GetString(prefs::kGoogleServicesLastAccountId));
 }
 
-static ScopedJavaLocalRef<jstring> JNI_PrefServiceBridge_GetSyncLastAccountName(
+static ScopedJavaLocalRef<jstring> GetSyncLastAccountName(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
       env, GetPrefService()->GetString(prefs::kGoogleServicesLastUsername));
 }
 
-static void JNI_PrefServiceBridge_SetTranslateEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean enabled) {
-  GetPrefService()->SetBoolean(prefs::kOfferTranslateEnabled, enabled);
+static void SetTranslateEnabled(JNIEnv* env,
+                                const JavaParamRef<jobject>& obj,
+                                jboolean enabled) {
+  GetPrefService()->SetBoolean(prefs::kEnableTranslate, enabled);
 }
 
-static void JNI_PrefServiceBridge_ResetTranslateDefaults(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static void ResetTranslateDefaults(JNIEnv* env,
+                                   const JavaParamRef<jobject>& obj) {
   std::unique_ptr<translate::TranslatePrefs> translate_prefs =
       ChromeTranslateClient::CreateTranslatePrefs(GetPrefService());
   translate_prefs->ResetToDefaults();
 }
 
-static void JNI_PrefServiceBridge_MigrateJavascriptPreference(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static void MigrateJavascriptPreference(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   const PrefService::Preference* javascript_pref =
       GetPrefService()->FindPreference(prefs::kWebKitJavascriptEnabled);
   DCHECK(javascript_pref);
@@ -835,129 +774,111 @@ static void JNI_PrefServiceBridge_MigrateJavascriptPreference(
   bool javascript_enabled = false;
   bool retval = javascript_pref->GetValue()->GetAsBoolean(&javascript_enabled);
   DCHECK(retval);
-  JNI_PrefServiceBridge_SetContentSettingEnabled(
-      env, obj, CONTENT_SETTINGS_TYPE_JAVASCRIPT, javascript_enabled);
+  SetContentSettingEnabled(env, obj,
+      CONTENT_SETTINGS_TYPE_JAVASCRIPT, javascript_enabled);
   GetPrefService()->ClearPref(prefs::kWebKitJavascriptEnabled);
 }
 
-static void JNI_PrefServiceBridge_SetPasswordEchoEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean passwordEchoEnabled) {
+static void SetPasswordEchoEnabled(JNIEnv* env,
+                                   const JavaParamRef<jobject>& obj,
+                                   jboolean passwordEchoEnabled) {
   GetPrefService()->SetBoolean(prefs::kWebKitPasswordEchoEnabled,
                                passwordEchoEnabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetCameraEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetCameraEnabled(JNIEnv* env,
+                                 const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
 }
 
-static jboolean JNI_PrefServiceBridge_GetCameraUserModifiable(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetCameraUserModifiable(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return IsContentSettingUserModifiable(
              CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
 }
 
-static jboolean JNI_PrefServiceBridge_GetCameraManagedByCustodian(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetCameraManagedByCustodian(JNIEnv* env,
+                                            const JavaParamRef<jobject>& obj) {
   return IsContentSettingManagedByCustodian(
              CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
 }
 
-static jboolean JNI_PrefServiceBridge_GetMicEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetMicEnabled(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
 }
 
-static jboolean JNI_PrefServiceBridge_GetMicUserModifiable(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetMicUserModifiable(JNIEnv* env,
+                                     const JavaParamRef<jobject>& obj) {
   return IsContentSettingUserModifiable(
              CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
 }
 
-static jboolean JNI_PrefServiceBridge_GetMicManagedByCustodian(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetMicManagedByCustodian(JNIEnv* env,
+                                         const JavaParamRef<jobject>& obj) {
   return IsContentSettingManagedByCustodian(
              CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
 }
 
-static void JNI_PrefServiceBridge_SetSearchSuggestEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean enabled) {
+static void SetSearchSuggestEnabled(JNIEnv* env,
+                                    const JavaParamRef<jobject>& obj,
+                                    jboolean enabled) {
   GetPrefService()->SetBoolean(prefs::kSearchSuggestEnabled, enabled);
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_PrefServiceBridge_GetContextualSearchPreference(
+static ScopedJavaLocalRef<jstring> GetContextualSearchPreference(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
       env, GetPrefService()->GetString(prefs::kContextualSearchEnabled));
 }
 
-static jboolean JNI_PrefServiceBridge_GetContextualSearchPreferenceIsManaged(
+static jboolean GetContextualSearchPreferenceIsManaged(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->IsManagedPreference(prefs::kContextualSearchEnabled);
 }
 
-static void JNI_PrefServiceBridge_SetContextualSearchPreference(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& pref) {
+static void SetContextualSearchPreference(JNIEnv* env,
+                                          const JavaParamRef<jobject>& obj,
+                                          const JavaParamRef<jstring>& pref) {
   GetPrefService()->SetString(prefs::kContextualSearchEnabled,
       ConvertJavaStringToUTF8(env, pref));
 }
 
-static void JNI_PrefServiceBridge_SetNetworkPredictionEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean enabled) {
+static void SetNetworkPredictionEnabled(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj,
+                                        jboolean enabled) {
   GetPrefService()->SetInteger(
       prefs::kNetworkPredictionOptions,
       enabled ? chrome_browser_net::NETWORK_PREDICTION_WIFI_ONLY
               : chrome_browser_net::NETWORK_PREDICTION_NEVER);
 }
 
-static jboolean
-JNI_PrefServiceBridge_ObsoleteNetworkPredictionOptionsHasUserSetting(
+static jboolean ObsoleteNetworkPredictionOptionsHasUserSetting(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return GetPrefService()->GetUserPrefValue(
       prefs::kNetworkPredictionOptions) != NULL;
 }
 
-static void JNI_PrefServiceBridge_SetResolveNavigationErrorEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean enabled) {
+static void SetResolveNavigationErrorEnabled(JNIEnv* env,
+                                             const JavaParamRef<jobject>& obj,
+                                             jboolean enabled) {
   GetPrefService()->SetBoolean(prefs::kAlternateErrorPagesEnabled, enabled);
 }
 
-static jboolean JNI_PrefServiceBridge_GetFirstRunEulaAccepted(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jboolean GetFirstRunEulaAccepted(JNIEnv* env,
+                                        const JavaParamRef<jobject>& obj) {
   return g_browser_process->local_state()->GetBoolean(prefs::kEulaAccepted);
 }
 
-static void JNI_PrefServiceBridge_SetEulaAccepted(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static void SetEulaAccepted(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   g_browser_process->local_state()->SetBoolean(prefs::kEulaAccepted, true);
 }
 
-static void JNI_PrefServiceBridge_ResetAcceptLanguages(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& default_locale) {
+static void ResetAcceptLanguages(JNIEnv* env,
+                                 const JavaParamRef<jobject>& obj,
+                                 const JavaParamRef<jstring>& default_locale) {
   std::string accept_languages(l10n_util::GetStringUTF8(IDS_ACCEPT_LANGUAGES));
   std::string locale_string(ConvertJavaStringToUTF8(env, default_locale));
 
@@ -968,7 +889,7 @@ static void JNI_PrefServiceBridge_ResetAcceptLanguages(
 
 // Sends all information about the different versions to Java.
 // From browser_about_handler.cc
-static ScopedJavaLocalRef<jobject> JNI_PrefServiceBridge_GetAboutVersionStrings(
+static ScopedJavaLocalRef<jobject> GetAboutVersionStrings(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   std::string os_version = version_info::GetOSType();
@@ -985,24 +906,21 @@ static ScopedJavaLocalRef<jobject> JNI_PrefServiceBridge_GetAboutVersionStrings(
       ConvertUTF8ToJavaString(env, os_version));
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_PrefServiceBridge_GetSupervisedUserCustodianName(
+static ScopedJavaLocalRef<jstring> GetSupervisedUserCustodianName(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
       env, GetPrefService()->GetString(prefs::kSupervisedUserCustodianName));
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_PrefServiceBridge_GetSupervisedUserCustodianEmail(
+static ScopedJavaLocalRef<jstring> GetSupervisedUserCustodianEmail(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
       env, GetPrefService()->GetString(prefs::kSupervisedUserCustodianEmail));
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_PrefServiceBridge_GetSupervisedUserCustodianProfileImageURL(
+static ScopedJavaLocalRef<jstring> GetSupervisedUserCustodianProfileImageURL(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
@@ -1010,8 +928,7 @@ JNI_PrefServiceBridge_GetSupervisedUserCustodianProfileImageURL(
                prefs::kSupervisedUserCustodianProfileImageURL));
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_PrefServiceBridge_GetSupervisedUserSecondCustodianName(
+static ScopedJavaLocalRef<jstring> GetSupervisedUserSecondCustodianName(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
@@ -1019,8 +936,7 @@ JNI_PrefServiceBridge_GetSupervisedUserSecondCustodianName(
       GetPrefService()->GetString(prefs::kSupervisedUserSecondCustodianName));
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_PrefServiceBridge_GetSupervisedUserSecondCustodianEmail(
+static ScopedJavaLocalRef<jstring> GetSupervisedUserSecondCustodianEmail(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
@@ -1029,7 +945,7 @@ JNI_PrefServiceBridge_GetSupervisedUserSecondCustodianEmail(
 }
 
 static ScopedJavaLocalRef<jstring>
-JNI_PrefServiceBridge_GetSupervisedUserSecondCustodianProfileImageURL(
+GetSupervisedUserSecondCustodianProfileImageURL(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   return ConvertUTF8ToJavaString(
@@ -1127,16 +1043,14 @@ void PrefServiceBridge::GetAndroidPermissionsForContentSetting(
       out);
 }
 
-static void JNI_PrefServiceBridge_SetSupervisedUserId(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& pref) {
+static void SetSupervisedUserId(JNIEnv* env,
+                                const JavaParamRef<jobject>& obj,
+                                const JavaParamRef<jstring>& pref) {
   GetPrefService()->SetString(prefs::kSupervisedUserId,
                               ConvertJavaStringToUTF8(env, pref));
 }
 
-static void
-JNI_PrefServiceBridge_SetChromeHomePersonalizedOmniboxSuggestionsEnabled(
+static void SetChromeHomePersonalizedOmniboxSuggestionsEnabled(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     jboolean is_enabled) {

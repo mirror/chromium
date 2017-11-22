@@ -561,14 +561,13 @@ ConsoleModel.ConsoleMessage = class {
    * @return {boolean}
    */
   isGroupable() {
-    var isUngroupableError = this.level === ConsoleModel.ConsoleMessage.MessageLevel.Error &&
-        (this.source === ConsoleModel.ConsoleMessage.MessageSource.JS ||
-         this.source === ConsoleModel.ConsoleMessage.MessageSource.Network);
+    var isJSError = this.source === ConsoleModel.ConsoleMessage.MessageSource.JS &&
+        this.level === ConsoleModel.ConsoleMessage.MessageLevel.Error;
     return (
         this.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI &&
         this.type !== ConsoleModel.ConsoleMessage.MessageType.Command &&
         this.type !== ConsoleModel.ConsoleMessage.MessageType.Result &&
-        this.type !== ConsoleModel.ConsoleMessage.MessageType.System && !isUngroupableError);
+        this.type !== ConsoleModel.ConsoleMessage.MessageType.System && !isJSError);
   }
 
   /**

@@ -31,27 +31,24 @@ struct TestEnvironment {
 namespace mojo {
 namespace android {
 
-static void JNI_MojoTestRule_Init(JNIEnv* env,
-                                  const JavaParamRef<jobject>& jcaller) {
+static void Init(JNIEnv* env, const JavaParamRef<jobject>& jcaller) {
   base::InitAndroidTestMessageLoop();
 }
 
-static jlong JNI_MojoTestRule_SetupTestEnvironment(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& jcaller) {
+static jlong SetupTestEnvironment(JNIEnv* env,
+                                  const JavaParamRef<jobject>& jcaller) {
   return reinterpret_cast<intptr_t>(new TestEnvironment());
 }
 
-static void JNI_MojoTestRule_TearDownTestEnvironment(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& jcaller,
-    jlong test_environment) {
+static void TearDownTestEnvironment(JNIEnv* env,
+                                    const JavaParamRef<jobject>& jcaller,
+                                    jlong test_environment) {
   delete reinterpret_cast<TestEnvironment*>(test_environment);
 }
 
-static void JNI_MojoTestRule_RunLoop(JNIEnv* env,
-                                     const JavaParamRef<jobject>& jcaller,
-                                     jlong timeout_ms) {
+static void RunLoop(JNIEnv* env,
+                    const JavaParamRef<jobject>& jcaller,
+                    jlong timeout_ms) {
   base::RunLoop run_loop;
   if (timeout_ms) {
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(

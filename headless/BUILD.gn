@@ -425,7 +425,6 @@ component("headless") {
     ]
 
     deps += [
-      "//components/crash/core/common:crash_key",
       "//components/security_state/content",
       "//gin",
       "//third_party/WebKit/public:blink",
@@ -496,7 +495,6 @@ if (!is_component_build) {
 
     deps = [
       ":headless",
-      "//components/crash/core/common:crash_key",
       "//third_party/WebKit/public:blink_headers",
       "//ui/base",
       "//v8",
@@ -806,10 +804,7 @@ if (is_win) {
         "lib/headless_content_main_delegate.h",
         "lib/headless_content_main_delegate_win.cc",
       ]
-      deps += [
-        "//components/crash/core/common:crash_key",
-        "//third_party/WebKit/public:blink_headers",
-      ]
+      deps += [ "//third_party/WebKit/public:blink_headers" ]
     }
 
     configs += [ ":headless_implementation" ]
@@ -846,10 +841,7 @@ if (is_win) {
         "lib/utility/headless_content_utility_client.cc",
         "lib/utility/headless_content_utility_client.h",
       ]
-      deps += [
-        "//components/crash/core/common:crash_key",
-        "//third_party/WebKit/public:blink_headers",
-      ]
+      deps += [ "//third_party/WebKit/public:blink_headers" ]
     }
 
     configs += [ ":headless_implementation" ]

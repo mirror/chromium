@@ -15,9 +15,9 @@ using gpu::gles2::GLES2Interface;
 namespace cc {
 
 namespace {
-// The resource id in DisplayResourceProvider starts from 2 to avoid
-// conflicts with id from LayerTreeResourceProvider.
-const unsigned int kDisplayInitialResourceId = 2;
+// The Resouce id in DisplayResourceProvider starts from 2 to avoid conflicts
+// with id from LayerTreeResourceProvider.
+const unsigned int kInitialResourceId = 2;
 }  // namespace
 
 DisplayResourceProvider::DisplayResourceProvider(
@@ -30,7 +30,7 @@ DisplayResourceProvider::DisplayResourceProvider(
                        gpu_memory_buffer_manager,
                        false,
                        resource_settings,
-                       kDisplayInitialResourceId) {}
+                       kInitialResourceId) {}
 
 DisplayResourceProvider::~DisplayResourceProvider() {
   while (!children_.empty())
@@ -162,7 +162,6 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
   to_return.reserve(unused.size());
   std::vector<viz::ReturnedResource*> need_synchronization_resources;
   std::vector<GLbyte*> unverified_sync_tokens;
-  std::vector<size_t> to_return_indices_unverified;
 
   GLES2Interface* gl = ContextGL();
 
@@ -223,10 +222,8 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
         need_synchronization_resources.push_back(&to_return.back());
       } else if (returned.sync_token.HasData() &&
                  !returned.sync_token.verified_flush()) {
-        // Before returning any sync tokens, they must be verified. Store an
-        // index into |to_return| instead of a pointer as vectors may realloc
-        // and move their data.
-        to_return_indices_unverified.push_back(to_return.size() - 1);
+        // Before returning any sync tokens, they must be verified.
+        unverified_sync_tokens.push_back(returned.sync_token.GetData());
       }
     }
 
@@ -234,9 +231,6 @@ void DisplayResourceProvider::DeleteAndReturnUnusedResourcesToChild(
     resource.imported_count = 0;
     DeleteResourceInternal(it, style);
   }
-
-  for (size_t i : to_return_indices_unverified)
-    unverified_sync_tokens.push_back(to_return[i].sync_token.GetData());
 
   gpu::SyncToken new_sync_token;
   if (!need_synchronization_resources.empty()) {

@@ -180,8 +180,12 @@ void GvrDevice::ExitPresent() {
   OnExitPresent();
 }
 
-void GvrDevice::OnMagicWindowPoseRequest(
+void GvrDevice::GetPose(
     mojom::VRMagicWindowProvider::GetPoseCallback callback) {
+  if (in_browsing_mode_) {
+    std::move(callback).Run(nullptr);
+    return;
+  }
   std::move(callback).Run(
       GvrDelegate::GetVRPosePtrWithNeckModel(gvr_api_.get(), nullptr));
 }

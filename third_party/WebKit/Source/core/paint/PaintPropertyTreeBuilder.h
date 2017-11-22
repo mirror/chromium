@@ -224,6 +224,11 @@ class PaintPropertyTreeBuilder {
       PaintPropertyTreeBuilderFragmentContext&,
       FragmentData&,
       bool& force_subtree_update);
+  ALWAYS_INLINE static void UpdateScrollbarPaintOffset(
+      const LayoutObject&,
+      ObjectPaintProperties&,
+      PaintPropertyTreeBuilderFragmentContext&,
+      bool& force_subtree_update);
   ALWAYS_INLINE static void UpdateOverflowClip(
       const LayoutObject&,
       ObjectPaintProperties&,

@@ -394,8 +394,7 @@ class BidirectionalStreamTest : public testing::Test {
         key_(host_port_pair_, ProxyServer::Direct(), PRIVACY_MODE_DISABLED),
         ssl_data_(SSLSocketDataProvider(ASYNC, OK)) {
     ssl_data_.next_proto = kProtoHTTP2;
-    ssl_data_.ssl_info.cert =
-        ImportCertFromFile(GetTestCertsDirectory(), "ok_cert.pem");
+    ssl_data_.cert = ImportCertFromFile(GetTestCertsDirectory(), "ok_cert.pem");
     net_log_.SetCaptureMode(NetLogCaptureMode::IncludeSocketBytes());
   }
 
@@ -412,7 +411,7 @@ class BidirectionalStreamTest : public testing::Test {
                    size_t reads_count,
                    MockWrite* writes,
                    size_t writes_count) {
-    ASSERT_TRUE(ssl_data_.ssl_info.cert.get());
+    ASSERT_TRUE(ssl_data_.cert.get());
     session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl_data_);
     sequenced_data_.reset(
         new SequencedSocketData(reads, reads_count, writes, writes_count));

@@ -35,7 +35,6 @@
 
 #include "build/build_config.h"
 #include "components/viz/common/quads/shared_bitmap.h"
-#include "components/viz/common/resources/transferable_resource.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
@@ -177,8 +176,6 @@ DrawingBuffer::DrawingBuffer(
       want_stencil_(want_stencil),
       storage_color_space_(color_params.GetStorageGfxColorSpace()),
       sampler_color_space_(color_params.GetSamplerGfxColorSpace()),
-      use_half_float_storage_(color_params.PixelFormat() ==
-                              kF16CanvasPixelFormat),
       chromium_image_usage_(chromium_image_usage) {
   // Used by browser tests to detect the use of a DrawingBuffer.
   TRACE_EVENT_INSTANT0("test_gpu", "DrawingBufferCreation",
@@ -261,17 +258,17 @@ std::unique_ptr<viz::SharedBitmap> DrawingBuffer::CreateOrRecycleBitmap() {
   return Platform::Current()->AllocateSharedBitmap(size_);
 }
 
-bool DrawingBuffer::PrepareTransferableResource(
-    viz::TransferableResource* out_resource,
+bool DrawingBuffer::PrepareTextureMailbox(
+    viz::TextureMailbox* out_mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* out_release_callback) {
   ScopedStateRestorer scoped_state_restorer(this);
   bool force_gpu_result = false;
-  return PrepareTransferableResourceInternal(out_resource, out_release_callback,
-                                             force_gpu_result);
+  return PrepareTextureMailboxInternal(out_mailbox, out_release_callback,
+                                       force_gpu_result);
 }
 
-bool DrawingBuffer::PrepareTransferableResourceInternal(
-    viz::TransferableResource* out_resource,
+bool DrawingBuffer::PrepareTextureMailboxInternal(
+    viz::TextureMailbox* out_mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* out_release_callback,
     bool force_gpu_result) {
   DCHECK(state_restorer_);
@@ -299,16 +296,15 @@ bool DrawingBuffer::PrepareTransferableResourceInternal(
   ResolveIfNeeded();
 
   if (!using_gpu_compositing_ && !force_gpu_result) {
-    return FinishPrepareTransferableResourceSoftware(out_resource,
-                                                     out_release_callback);
+    return FinishPrepareTextureMailboxSoftware(out_mailbox,
+                                               out_release_callback);
   } else {
-    return FinishPrepareTransferableResourceGpu(out_resource,
-                                                out_release_callback);
+    return FinishPrepareTextureMailboxGpu(out_mailbox, out_release_callback);
   }
 }
 
-bool DrawingBuffer::FinishPrepareTransferableResourceSoftware(
-    viz::TransferableResource* out_resource,
+bool DrawingBuffer::FinishPrepareTextureMailboxSoftware(
+    viz::TextureMailbox* out_mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* out_release_callback) {
   DCHECK(state_restorer_);
   std::unique_ptr<viz::SharedBitmap> bitmap = CreateOrRecycleBitmap();
@@ -329,9 +325,8 @@ bool DrawingBuffer::FinishPrepareTransferableResourceSoftware(
                         op);
   }
 
-  *out_resource = viz::TransferableResource::MakeSoftware(
-      bitmap->id(), bitmap->sequence_number(), size_);
-  out_resource->color_space = storage_color_space_;
+  *out_mailbox = viz::TextureMailbox(bitmap.get(), size_);
+  out_mailbox->set_color_space(storage_color_space_);
 
   // This holds a ref on the DrawingBuffer that will keep it alive until the
   // mailbox is released (and while the release callback is running). It also
@@ -349,8 +344,8 @@ bool DrawingBuffer::FinishPrepareTransferableResourceSoftware(
   return true;
 }
 
-bool DrawingBuffer::FinishPrepareTransferableResourceGpu(
-    viz::TransferableResource* out_resource,
+bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
+    viz::TextureMailbox* out_mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* out_release_callback) {
   DCHECK(state_restorer_);
   if (webgl_version_ > kWebGL1) {
@@ -415,11 +410,11 @@ bool DrawingBuffer::FinishPrepareTransferableResourceGpu(
   // Populate the output mailbox and callback.
   {
     bool is_overlay_candidate = color_buffer_for_mailbox->image_id != 0;
-    *out_resource = viz::TransferableResource::MakeGLOverlay(
-        color_buffer_for_mailbox->mailbox, GL_LINEAR, texture_target_,
-        color_buffer_for_mailbox->produce_sync_token, gfx::Size(size_),
-        is_overlay_candidate);
-    out_resource->color_space = sampler_color_space_;
+    *out_mailbox = viz::TextureMailbox(
+        color_buffer_for_mailbox->mailbox,
+        color_buffer_for_mailbox->produce_sync_token, texture_target_,
+        gfx::Size(size_), is_overlay_candidate);
+    out_mailbox->set_color_space(sampler_color_space_);
 
     // This holds a ref on the DrawingBuffer that will keep it alive until the
     // mailbox is released (and while the release callback is running).
@@ -487,13 +482,13 @@ scoped_refptr<StaticBitmapImage> DrawingBuffer::TransferToStaticBitmapImage() {
   // grContext().
   GrContext* gr_context = ContextProvider()->GetGrContext();
 
-  viz::TransferableResource transferable_resource;
+  viz::TextureMailbox texture_mailbox;
   std::unique_ptr<viz::SingleReleaseCallback> release_callback;
   bool success = false;
   if (gr_context) {
     bool force_gpu_result = true;
-    success = PrepareTransferableResourceInternal(
-        &transferable_resource, &release_callback, force_gpu_result);
+    success = PrepareTextureMailboxInternal(&texture_mailbox, &release_callback,
+                                            force_gpu_result);
   }
   if (!success) {
     // If we can't get a mailbox, return an transparent black ImageBitmap.
@@ -505,36 +500,34 @@ scoped_refptr<StaticBitmapImage> DrawingBuffer::TransferToStaticBitmapImage() {
     return StaticBitmapImage::Create(surface->makeImageSnapshot());
   }
 
-  DCHECK_EQ(size_.Width(), transferable_resource.size.width());
-  DCHECK_EQ(size_.Height(), transferable_resource.size.height());
+  DCHECK_EQ(size_.Width(), texture_mailbox.size_in_pixels().width());
+  DCHECK_EQ(size_.Height(), texture_mailbox.size_in_pixels().height());
 
   // Make our own textureId that is a reference on the same texture backing
   // being used as the front buffer (which was returned from
-  // PrepareTransferableResourceInternal()). We do not need to wait on the sync
-  // token in |transferable_resource| since the mailbox was produced on the same
-  // |m_gl| context that we are using here. Similarly, the |release_callback|
-  // will run on the same context so we don't need to send a sync token for this
-  // consume action back to it.
-  // TODO(danakj): Instead of using PrepareTransferableResourceInternal(), we
-  // could just use the actual texture id and avoid needing to produce/consume a
-  // mailbox.
+  // PrepareTextureMailbox()). We do not need to wait on the sync token in
+  // |textureMailbox| since the mailbox was produced on the same |m_gl| context
+  // that we are using here. Similarly, the |releaseCallback| will run on the
+  // same context so we don't need to send a sync token for this consume action
+  // back to it.
+  // TODO(danakj): Instead of using PrepareTextureMailbox(), we could just use
+  // the actual texture id and avoid needing to produce/consume a mailbox.
   GLuint texture_id = gl_->CreateAndConsumeTextureCHROMIUM(
-      GL_TEXTURE_2D, transferable_resource.mailbox_holder.mailbox.name);
+      GL_TEXTURE_2D, texture_mailbox.name());
   // Return the mailbox but report that the resource is lost to prevent trying
   // to use the backing for future frames. We keep it alive with our own
   // reference to the backing via our |textureId|.
-  release_callback->Run(gpu::SyncToken(), true /* lost_resource */);
+  release_callback->Run(gpu::SyncToken(), true /* lostResource */);
 
   // We reuse the same mailbox name from above since our texture id was consumed
   // from it.
-  const auto& sk_image_mailbox = transferable_resource.mailbox_holder.mailbox;
+  const auto& sk_image_mailbox = texture_mailbox.mailbox();
   // Use the sync token generated after producing the mailbox. Waiting for this
   // before trying to use the mailbox with some other context will ensure it is
   // valid. We wouldn't need to wait for the consume done in this function
   // because the texture id it generated would only be valid for the
   // DrawingBuffer's context anyways.
-  const auto& sk_image_sync_token =
-      transferable_resource.mailbox_holder.sync_token;
+  const auto& sk_image_sync_token = texture_mailbox.sync_token();
 
   // TODO(xidachen): Create a small pool of recycled textures from
   // ImageBitmapRenderingContext's transferFromImageBitmap, and try to use them
@@ -628,26 +621,7 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
 
   if (gl_->GetGraphicsResetStatusKHR() != GL_NO_ERROR) {
     // Need to try to restore the context again later.
-    DLOG(ERROR) << "Cannot initialize with lost context.";
     return false;
-  }
-
-  // Specifying a half-float backbuffer requires and implicitly enables
-  // half-float backbuffer extensions.
-  if (use_half_float_storage_) {
-    const char* color_buffer_extension = webgl_version_ > kWebGL1
-                                             ? "GL_EXT_color_buffer_float"
-                                             : "GL_EXT_color_buffer_half_float";
-    if (!extensions_util_->EnsureExtensionEnabled(color_buffer_extension)) {
-      DLOG(ERROR) << "Half-float color buffer support is absent.";
-      return false;
-    }
-    // Support for RGB half-float renderbuffers is absent from ES3. Do not
-    // attempt to expose them.
-    if (!want_alpha_channel_) {
-      DLOG(ERROR) << "RGB half-float renderbuffers are not supported.";
-      return false;
-    }
   }
 
   gl_->GetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size_);
@@ -729,10 +703,8 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
     gl_->BindFramebuffer(GL_FRAMEBUFFER, multisample_fbo_);
     gl_->GenRenderbuffers(1, &multisample_renderbuffer_);
   }
-  if (!ResizeFramebufferInternal(size)) {
-    DLOG(ERROR) << "Initialization failed to allocate backbuffer.";
+  if (!ResizeFramebufferInternal(size))
     return false;
-  }
 
   if (depth_stencil_buffer_) {
     DCHECK(WantDepthOrStencil());
@@ -742,7 +714,6 @@ bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
   if (gl_->GetGraphicsResetStatusKHR() != GL_NO_ERROR) {
     // It's possible that the drawing buffer allocation provokes a context loss,
     // so check again just in case. http://crbug.com/512302
-    DLOG(ERROR) << "Context lost during initialization.";
     return false;
   }
 
@@ -894,14 +865,10 @@ bool DrawingBuffer::ResizeDefaultFramebuffer(const IntSize& size) {
     // Note that the multisample rendertarget will allocate an alpha channel
     // based on |have_alpha_channel_|, not |allocate_alpha_channel_|, since it
     // will resolve into the ColorBuffer.
-    GLenum internal_format = have_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES;
-    if (use_half_float_storage_) {
-      DCHECK(want_alpha_channel_);
-      internal_format = GL_RGBA16F_EXT;
-    }
-    gl_->RenderbufferStorageMultisampleCHROMIUM(GL_RENDERBUFFER, sample_count_,
-                                                internal_format, size.Width(),
-                                                size.Height());
+    gl_->RenderbufferStorageMultisampleCHROMIUM(
+        GL_RENDERBUFFER, sample_count_,
+        have_alpha_channel_ ? GL_RGBA8_OES : GL_RGB8_OES, size.Width(),
+        size.Height());
 
     if (gl_->GetError() == GL_OUT_OF_MEMORY)
       return false;
@@ -1229,11 +1196,9 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
     gfx::BufferFormat buffer_format;
     GLenum gl_format = GL_NONE;
     if (allocate_alpha_channel_) {
-      buffer_format = use_half_float_storage_ ? gfx::BufferFormat::RGBA_F16
-                                              : gfx::BufferFormat::RGBA_8888;
+      buffer_format = gfx::BufferFormat::RGBA_8888;
       gl_format = GL_RGBA;
     } else {
-      DCHECK(!use_half_float_storage_);
       buffer_format = gfx::BufferFormat::RGBX_8888;
       if (gpu::IsImageFromGpuMemoryBufferFormatSupported(
               gfx::BufferFormat::BGRX_8888,
@@ -1273,28 +1238,12 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
     if (storage_texture_supported_) {
       GLenum internal_storage_format =
           allocate_alpha_channel_ ? GL_RGBA8 : GL_RGB8;
-      if (use_half_float_storage_) {
-        DCHECK(want_alpha_channel_);
-        internal_storage_format = GL_RGBA16F_EXT;
-      }
       gl_->TexStorage2DEXT(GL_TEXTURE_2D, 1, internal_storage_format,
                            size.Width(), size.Height());
     } else {
-      GLenum internal_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
-      GLenum format = internal_format;
-      GLenum data_type = GL_UNSIGNED_BYTE;
-      if (use_half_float_storage_) {
-        DCHECK(want_alpha_channel_);
-        if (webgl_version_ > kWebGL1) {
-          internal_format = GL_RGBA16F;
-          data_type = GL_HALF_FLOAT;
-        } else {
-          internal_format = GL_RGBA;
-          data_type = GL_HALF_FLOAT_OES;
-        }
-      }
-      gl_->TexImage2D(texture_target_, 0, internal_format, size.Width(),
-                      size.Height(), 0, format, data_type, nullptr);
+      GLenum gl_format = allocate_alpha_channel_ ? GL_RGBA : GL_RGB;
+      gl_->TexImage2D(texture_target_, 0, gl_format, size.Width(),
+                      size.Height(), 0, gl_format, GL_UNSIGNED_BYTE, nullptr);
     }
   }
 

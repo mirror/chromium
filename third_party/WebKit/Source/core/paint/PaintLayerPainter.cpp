@@ -416,7 +416,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   PaintLayerPaintingInfo local_painting_info(painting_info);
   local_painting_info.sub_pixel_accumulation = subpixel_accumulation;
 
-  sk_sp<PaintFilter> image_filter = FilterPainter::GetImageFilter(paint_layer_);
+  sk_sp<SkImageFilter> image_filter =
+      FilterPainter::GetImageFilter(paint_layer_);
 
   bool should_paint_content = paint_layer_.HasVisibleContent() &&
                               is_self_painting_layer &&
@@ -535,7 +536,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     const auto* local_border_box_properties = paint_layer_.GetLayoutObject()
                                                   .FirstFragment()
-                                                  .LocalBorderBoxProperties();
+                                                  .GetRarePaintData()
+                                                  ->LocalBorderBoxProperties();
     DCHECK(local_border_box_properties);
     PaintChunkProperties properties(*local_border_box_properties);
     properties.backface_hidden =

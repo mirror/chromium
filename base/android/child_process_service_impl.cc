@@ -18,14 +18,13 @@ using base::android::JavaParamRef;
 namespace base {
 namespace android {
 
-void JNI_ChildProcessServiceImpl_RegisterFileDescriptors(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobjectArray>& j_keys,
-    const JavaParamRef<jintArray>& j_ids,
-    const JavaParamRef<jintArray>& j_fds,
-    const JavaParamRef<jlongArray>& j_offsets,
-    const JavaParamRef<jlongArray>& j_sizes) {
+void RegisterFileDescriptors(JNIEnv* env,
+                             const JavaParamRef<jclass>& clazz,
+                             const JavaParamRef<jobjectArray>& j_keys,
+                             const JavaParamRef<jintArray>& j_ids,
+                             const JavaParamRef<jintArray>& j_fds,
+                             const JavaParamRef<jlongArray>& j_offsets,
+                             const JavaParamRef<jlongArray>& j_sizes) {
   std::vector<base::Optional<std::string>> keys;
   jsize keys_size = env->GetArrayLength(j_keys);
   keys.reserve(keys_size);
@@ -67,9 +66,7 @@ void JNI_ChildProcessServiceImpl_RegisterFileDescriptors(
   }
 }
 
-void JNI_ChildProcessServiceImpl_ExitChildProcess(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
+void ExitChildProcess(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   VLOG(0) << "ChildProcessServiceImpl: Exiting child process.";
   base::android::LibraryLoaderExitHook();
   _exit(0);

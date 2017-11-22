@@ -29,7 +29,7 @@ void StartNetworkErrorsURLLoader(const ResourceRequest& request,
     }
   }
 
-  network::URLLoaderCompletionStatus status;
+  network::URLLoaderStatus status;
   status.error_code = net_error;
   client->OnComplete(status);
 }

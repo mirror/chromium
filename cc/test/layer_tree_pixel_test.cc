@@ -139,7 +139,7 @@ void LayerTreePixelTest::EndTest() {
   // Drop TextureMailboxes on the main thread so that they can be cleaned up and
   // the pending callbacks will fire.
   for (size_t i = 0; i < texture_layers_.size(); ++i) {
-    texture_layers_[i]->ClearTexture();
+    texture_layers_[i]->SetTextureMailbox(viz::TextureMailbox(), nullptr);
   }
 
   TryEndTest();
@@ -194,7 +194,7 @@ void LayerTreePixelTest::RunPixelTest(
   content_root_ = content_root;
   readback_target_ = nullptr;
   ref_file_ = file_name;
-  RunTest(CompositorMode::THREADED, false);
+  RunTest(CompositorMode::THREADED);
 }
 
 void LayerTreePixelTest::RunSingleThreadedPixelTest(
@@ -205,7 +205,7 @@ void LayerTreePixelTest::RunSingleThreadedPixelTest(
   content_root_ = content_root;
   readback_target_ = nullptr;
   ref_file_ = file_name;
-  RunTest(CompositorMode::SINGLE_THREADED, false);
+  RunTest(CompositorMode::SINGLE_THREADED);
 }
 
 void LayerTreePixelTest::RunPixelTestWithReadbackTarget(
@@ -217,7 +217,7 @@ void LayerTreePixelTest::RunPixelTestWithReadbackTarget(
   content_root_ = content_root;
   readback_target_ = target;
   ref_file_ = file_name;
-  RunTest(CompositorMode::THREADED, false);
+  RunTest(CompositorMode::THREADED);
 }
 
 void LayerTreePixelTest::SetupTree() {
@@ -244,6 +244,10 @@ SkBitmap LayerTreePixelTest::CopyTextureMailboxToBitmap(
   if (texture_mailbox.sync_token().HasData())
     gl->WaitSyncTokenCHROMIUM(texture_mailbox.sync_token().GetConstData());
 
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   GLuint texture_id = gl->CreateAndConsumeTextureCHROMIUM(
       texture_mailbox.target(), texture_mailbox.name());
 

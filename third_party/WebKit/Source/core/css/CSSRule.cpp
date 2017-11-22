@@ -38,11 +38,10 @@ struct SameSizeAsCSSRule : public GarbageCollectedFinalized<SameSizeAsCSSRule>,
 static_assert(sizeof(CSSRule) == sizeof(SameSizeAsCSSRule),
               "CSSRule should stay small");
 
-const CSSParserContext* CSSRule::ParserContext(
-    SecureContextMode secure_context_mode) const {
+const CSSParserContext* CSSRule::ParserContext() const {
   CSSStyleSheet* style_sheet = parentStyleSheet();
   return style_sheet ? style_sheet->Contents()->ParserContext()
-                     : StrictCSSParserContext(secure_context_mode);
+                     : StrictCSSParserContext();
 }
 
 void CSSRule::SetParentStyleSheet(CSSStyleSheet* style_sheet) {

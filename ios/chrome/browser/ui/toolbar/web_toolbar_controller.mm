@@ -681,6 +681,10 @@ using ios::material::TimingFunction;
   [self startProgressBar];
 }
 
+- (void)selectedTabChanged {
+  [self cancelOmniboxEdit];
+}
+
 - (CGRect)visibleOmniboxFrame {
   CGRect frame = _omniboxBackground.frame;
   frame = [self.view.superview convertRect:frame
@@ -2160,9 +2164,8 @@ using ios::material::TimingFunction;
 
   // Don't update the snapshot while the progress bar is moving, or while the
   // tools menu is open, unless |force| is true.
-  BOOL shouldRedraw =
-      force || (![self.toolsMenuStateProvider isShowingToolsMenu] &&
-                [_determinateProgressView isHidden]);
+  BOOL shouldRedraw = force || ([self toolsPopupController] == nil &&
+                                [_determinateProgressView isHidden]);
   if (!shouldRedraw)
     return;
 
@@ -2306,14 +2309,6 @@ using ios::material::TimingFunction;
       [self layoutClippingView];
     }
   }
-}
-
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-
-  // The popup positions itself as a static frame below the web toolbar.  This
-  // will no longer be necessary post omnibox popup boxing.
-  _popupView->UpdatePopupAppearance();
 }
 
 @end

@@ -25,7 +25,6 @@
 #ifndef CSSPropertyParser_h
 #define CSSPropertyParser_h
 
-#include "base/macros.h"
 #include "core/css/StyleRule.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSParserTokenRange.h"
@@ -40,6 +39,7 @@ class CSSValue;
 // Outputs: Vector of CSSProperties
 
 class CSSPropertyParser {
+  WTF_MAKE_NONCOPYABLE(CSSPropertyParser);
   STACK_ALLOCATED();
 
  public:
@@ -73,7 +73,6 @@ class CSSPropertyParser {
   Member<const CSSParserContext> context_;
   // Outputs:
   HeapVector<CSSPropertyValue, 256>* parsed_properties_;
-  DISALLOW_COPY_AND_ASSIGN(CSSPropertyParser);
 };
 
 CSSPropertyID UnresolvedCSSPropertyID(StringView);

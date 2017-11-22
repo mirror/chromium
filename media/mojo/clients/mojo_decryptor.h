@@ -77,9 +77,6 @@ class MojoDecryptor : public Decryptor {
                       const scoped_refptr<VideoFrame>& video_frame,
                       mojom::FrameResourceReleaserPtr releaser);
 
-  void OnConnectionError(uint32_t custom_reason,
-                         const std::string& description);
-
   base::ThreadChecker thread_checker_;
 
   mojom::DecryptorPtr remote_decryptor_;

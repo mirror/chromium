@@ -160,6 +160,7 @@ TEST_F(SharedModuleServiceUnitTest, PruneSharedModulesOnUninstall) {
   base::string16 error;
   service()->UninstallExtension(importing_extension->id(),
                                 extensions::UNINSTALL_REASON_FOR_TESTING,
+                                base::Bind(&base::DoNothing),
                                 &error);
   EXPECT_TRUE(error.empty());
 
@@ -297,7 +298,7 @@ TEST_F(SharedModuleServiceUnitTest, PruneMultipleSharedModules) {
   base::string16 error;
   service()->UninstallExtension(importing_extension->id(),
                                 extensions::UNINSTALL_REASON_FOR_TESTING,
-                                &error);
+                                base::Bind(&base::DoNothing), &error);
   EXPECT_TRUE(error.empty());
 
   // Since the modules were only referenced by that single extension, they

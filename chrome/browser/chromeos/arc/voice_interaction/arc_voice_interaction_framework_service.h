@@ -15,7 +15,7 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "components/arc/common/voice_interaction_framework.mojom.h"
-#include "components/arc/connection_observer.h"
+#include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/session_manager/core/session_manager_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -43,7 +43,7 @@ class ArcVoiceInteractionFrameworkService
     : public chromeos::CrasAudioHandler::AudioObserver,
       public KeyedService,
       public mojom::VoiceInteractionFrameworkHost,
-      public ConnectionObserver<mojom::VoiceInteractionFrameworkInstance>,
+      public InstanceHolder<mojom::VoiceInteractionFrameworkInstance>::Observer,
       public ArcSessionManager::Observer,
       public session_manager::SessionManagerObserver {
  public:
@@ -59,12 +59,15 @@ class ArcVoiceInteractionFrameworkService
                                       ArcBridgeService* bridge_service);
   ~ArcVoiceInteractionFrameworkService() override;
 
-  // ConnectionObserver<mojom::VoiceInteractionFrameworkInstance> overrides.
-  void OnConnectionReady() override;
-  void OnConnectionClosed() override;
+  // InstanceHolder<mojom::VoiceInteractionFrameworkInstance> overrides.
+  void OnInstanceReady() override;
+  void OnInstanceClosed() override;
 
   // mojom::VoiceInteractionFrameworkHost overrides.
   void CaptureFullscreen(CaptureFullscreenCallback callback) override;
+  // TODO(kaznacheev) remove usages of this obsolete method from the container.
+  void OnMetalayerClosed() override;
+  void SetMetalayerEnabled(bool enabled) override;
   void SetVoiceInteractionState(
       arc::mojom::VoiceInteractionState state) override;
 

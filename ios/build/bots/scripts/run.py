@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # Copyright 2016 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -10,12 +10,11 @@ Sample usage:
   -a src/xcodebuild/Release-iphoneos/base_unittests.app \
   -o /tmp/out \
   -p iPhone 5s \
-  -v 9.3 \
-  -b 9b46
+  -v 9.3
 
-  Installs base_unittests.app in an iPhone 5s simulator running iOS 9.3 under
-  Xcode build version 9b46, runs it, and captures all test data in /tmp/out.
-  """
+  Installs base_unittests.app in an iPhone 5s simulator running iOS 9.3,
+  runs it, and captures all test data in /tmp/out.
+"""
 
 import argparse
 import json
@@ -26,9 +25,7 @@ import traceback
 import test_runner
 
 
-def main():
-  args, test_args = parse_args()
-
+def main(args, test_args):
   summary = {}
   tr = None
 
@@ -43,27 +40,21 @@ def main():
         args.platform,
         args.version,
         args.xcode_version,
-        args.xcode_build_version,
         args.out_dir,
         env_vars=args.env_var,
-        mac_toolchain=args.mac_toolchain_cmd,
         retries=args.retries,
         test_args=test_args,
-        xcode_path=args.xcode_path,
         xctest=args.xctest,
       )
     else:
       tr = test_runner.DeviceTestRunner(
         args.app,
         args.xcode_version,
-        args.xcode_build_version,
         args.out_dir,
         env_vars=args.env_var,
-        mac_toolchain=args.mac_toolchain_cmd,
         restart=args.restart,
         retries=args.retries,
         test_args=test_args,
-        xcode_path=args.xcode_path,
         xctest=args.xctest,
       )
 
@@ -88,7 +79,7 @@ def main():
         json.dump(tr.test_results, f)
 
 
-def parse_args():
+if __name__ == '__main__':
   parser = argparse.ArgumentParser()
 
   parser.add_argument(
@@ -150,31 +141,11 @@ def parse_args():
     metavar='ver',
   )
   parser.add_argument(
-    '-b',
-    '--xcode-build-version',
-    help='Xcode build version to install.',
-    metavar='build_id',
-  )
-  parser.add_argument(
     '-x',
     '--xcode-version',
-    help='Version of Xcode to use. DEPRECATED by --xcode-build-version.',
+    help='Version of Xcode to use.',
     metavar='ver',
-  )
-  parser.add_argument(
-    '--xcode-path',
-    metavar='PATH',
-    help=('Path to <Xcode>.app folder where contents of the app will be '
-          'installed. Default: %(default)s. WARNING: this folder will be '
-          'overwritten! This folder is intended to be a cached CIPD '
-          'installation.'),
-    default='Xcode.app',
-  )
-  parser.add_argument(
-    '--mac-toolchain-cmd',
-    help='Command to run mac_toolchain tool. Default: %(default)s.',
-    default='mac_toolchain',
-    metavar='mac_toolchain',
+    required=True,
   )
   parser.add_argument(
     '--xctest',
@@ -190,10 +161,6 @@ def parse_args():
       parser.error(
         'must specify all or none of -i/--iossim, -p/--platform, -v/--version')
 
-  if not (bool(args.xcode_version) ^ bool(args.xcode_build_version)):
-    parser.error(
-      'must specify exactly one of --xcode-build-version or --xcode-version')
-
   args_json = json.loads(args.args_json)
   args.env_var = args.env_var or []
   args.env_var.extend(args_json.get('env_var', []))
@@ -201,8 +168,4 @@ def parse_args():
   args.xctest = args_json.get('xctest', args.xctest)
   test_args.extend(args_json.get('test_args', []))
 
-  return args, test_args
-
-
-if __name__ == '__main__':
-  sys.exit(main())
+  sys.exit(main(args, test_args))

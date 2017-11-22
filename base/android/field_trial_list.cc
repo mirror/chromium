@@ -17,7 +17,7 @@ using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
 
-static ScopedJavaLocalRef<jstring> JNI_FieldTrialList_FindFullName(
+static ScopedJavaLocalRef<jstring> FindFullName(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jtrial_name) {
@@ -26,15 +26,14 @@ static ScopedJavaLocalRef<jstring> JNI_FieldTrialList_FindFullName(
       env, base::FieldTrialList::FindFullName(trial_name));
 }
 
-static jboolean JNI_FieldTrialList_TrialExists(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& jtrial_name) {
+static jboolean TrialExists(JNIEnv* env,
+                            const JavaParamRef<jclass>& clazz,
+                            const JavaParamRef<jstring>& jtrial_name) {
   std::string trial_name(ConvertJavaStringToUTF8(env, jtrial_name));
   return base::FieldTrialList::TrialExists(trial_name);
 }
 
-static ScopedJavaLocalRef<jstring> JNI_FieldTrialList_GetVariationParameter(
+static ScopedJavaLocalRef<jstring> GetVariationParameter(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jtrial_name,

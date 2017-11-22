@@ -9,6 +9,7 @@
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/android/infobars/infobar_android.h"
+#include "chrome/browser/ui/android/interventions/framebust_block_message_delegate_bridge.h"
 
 namespace content {
 class WebContents;
@@ -17,10 +18,8 @@ class WebContents;
 class FramebustBlockMessageDelegate;
 
 // Communicates to the user about the intervention performed by the browser by
-// blocking a framebust.
-// That InfoBar shows a link to the URL that was blocked if the user wants to
-// bypass the intervention, and a "OK" button to acknowledge and accept it.
-// See FramebustBlockInfoBar.java for UI specifics.
+// blocking a framebust. See FramebustBlockInfoBar.java for UI specifics, and
+// FramebustBlockMessageDelegate for behavior specifics.
 class FramebustBlockInfoBar : public InfoBarAndroid {
  public:
   ~FramebustBlockInfoBar() override;
@@ -36,10 +35,8 @@ class FramebustBlockInfoBar : public InfoBarAndroid {
   base::android::ScopedJavaLocalRef<jobject> CreateRenderInfoBar(
       JNIEnv* env) override;
   void ProcessButton(int action) override;
-  void OnLinkClicked(JNIEnv* env,
-                     const base::android::JavaParamRef<jobject>& obj) override;
 
-  std::unique_ptr<FramebustBlockMessageDelegate> delegate_;
+  std::unique_ptr<FramebustBlockMessageDelegateBridge> delegate_bridge_;
 
   DISALLOW_COPY_AND_ASSIGN(FramebustBlockInfoBar);
 };

@@ -416,8 +416,12 @@ cr.define('print_preview', function() {
 
       this.tracker.add(
           this.destinationSearch_,
-          print_preview.DestinationSearch.EventType.MANAGE_PRINT_DESTINATIONS,
-          this.onManagePrintDestinationsActivated_.bind(this));
+          print_preview.DestinationSearch.EventType.MANAGE_CLOUD_DESTINATIONS,
+          this.onManageCloudDestinationsActivated_.bind(this));
+      this.tracker.add(
+          this.destinationSearch_,
+          print_preview.DestinationSearch.EventType.MANAGE_LOCAL_DESTINATIONS,
+          this.onManageLocalDestinationsActivated_.bind(this));
       this.tracker.add(
           this.destinationSearch_,
           print_preview.DestinationSearch.EventType.ADD_ACCOUNT,
@@ -977,12 +981,21 @@ cr.define('print_preview', function() {
     },
 
     /**
-     * Called when the destination search dispatches manage all print
-     * destinations event. Calls corresponding native layer method.
+     * Called when the destination search dispatches manage cloud destinations
+     * event. Calls corresponding native layer method.
      * @private
      */
-    onManagePrintDestinationsActivated_: function() {
-      this.nativeLayer_.managePrinters();
+    onManageCloudDestinationsActivated_: function() {
+      this.nativeLayer_.manageCloudPrinters(this.userInfo_.activeUser);
+    },
+
+    /**
+     * Called when the destination search dispatches manage local destinations
+     * event. Calls corresponding native layer method.
+     * @private
+     */
+    onManageLocalDestinationsActivated_: function() {
+      this.nativeLayer_.manageLocalPrinters();
     },
 
     /**
@@ -1313,6 +1326,7 @@ cr.define('print_preview', function() {
 // <include src="preview_generator.js">
 
 // <include src="search/destination_list.js">
+// <include src="search/cloud_destination_list.js">
 // <include src="search/recent_destination_list.js">
 // <include src="search/destination_list_item.js">
 // <include src="search/destination_search.js">

@@ -151,6 +151,10 @@ public class CustomTabActivity extends ChromeActivity {
         private final CustomTabsSessionToken mSession;
         private final WebContents mWebContents;
 
+        private int mEffectiveConnectionType; // See net::EffectiveConnectionType.
+        private long mHttpRttMs;
+        private long mTransportRttMs;
+
         public PageLoadMetricsObserver(CustomTabsConnection connection,
                 CustomTabsSessionToken session, Tab tab) {
             mConnection = connection;
@@ -163,11 +167,9 @@ public class CustomTabActivity extends ChromeActivity {
                 long httpRttMs, long transportRttMs) {
             if (webContents != mWebContents) return;
 
-            Bundle args = new Bundle();
-            args.putLong(PageLoadMetrics.EFFECTIVE_CONNECTION_TYPE, effectiveConnectionType);
-            args.putLong(PageLoadMetrics.HTTP_RTT, httpRttMs);
-            args.putLong(PageLoadMetrics.TRANSPORT_RTT, transportRttMs);
-            mConnection.notifyPageLoadMetrics(mSession, args);
+            mEffectiveConnectionType = effectiveConnectionType;
+            mHttpRttMs = httpRttMs;
+            mTransportRttMs = transportRttMs;
         }
 
         @Override
@@ -201,6 +203,9 @@ public class CustomTabActivity extends ChromeActivity {
             args.putLong(PageLoadMetrics.REQUEST_START, requestStartMs);
             args.putLong(PageLoadMetrics.RESPONSE_START, sendStartMs);
             args.putLong(PageLoadMetrics.RESPONSE_END, sendEndMs);
+            args.putLong(PageLoadMetrics.EFFECTIVE_CONNECTION_TYPE, mEffectiveConnectionType);
+            args.putLong(PageLoadMetrics.HTTP_RTT, mHttpRttMs);
+            args.putLong(PageLoadMetrics.TRANSPORT_RTT, mTransportRttMs);
             mConnection.notifyPageLoadMetrics(mSession, args);
         }
     }

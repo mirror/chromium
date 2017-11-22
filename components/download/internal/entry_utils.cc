@@ -4,8 +4,6 @@
 
 #include "components/download/internal/entry_utils.h"
 
-#include <algorithm>
-
 #include "components/download/internal/entry.h"
 #include "components/download/public/download_metadata.h"
 
@@ -38,34 +36,15 @@ MapEntriesToMetadataForClients(const std::set<DownloadClient>& clients,
   return categorized;
 }
 
-Criteria GetSchedulingCriteria(const Model::EntryList& entries,
-                               int optimal_battery_percentage) {
-  Criteria criteria(optimal_battery_percentage);
-
-  // The scheduling criteria can only become less strict, from requiring battery
-  // charging to not requiring charging, from requiring unmetered network to
-  // any network. Optimal battery level can only decrease.
+Criteria GetSchedulingCriteria(const Model::EntryList& entries) {
+  Criteria criteria;
   for (auto* const entry : entries) {
     DCHECK(entry);
     const SchedulingParams& scheduling_params = entry->scheduling_params;
-    switch (scheduling_params.battery_requirements) {
-      case SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE:
-        criteria.requires_battery_charging = false;
-        criteria.optimal_battery_percentage =
-            std::min(criteria.optimal_battery_percentage,
-                     DeviceStatus::kBatteryPercentageAlwaysStart);
-        break;
-      case SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE:
-        criteria.requires_battery_charging = false;
-        criteria.optimal_battery_percentage = std::min(
-            criteria.optimal_battery_percentage, optimal_battery_percentage);
-        break;
-      case SchedulingParams::BatteryRequirements::BATTERY_CHARGING:
-        break;
-      default:
-        NOTREACHED();
+    if (scheduling_params.battery_requirements ==
+        SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE) {
+      criteria.requires_battery_charging = false;
     }
-
     if (scheduling_params.network_requirements ==
         SchedulingParams::NetworkRequirements::NONE) {
       criteria.requires_unmetered_network = false;

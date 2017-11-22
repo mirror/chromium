@@ -135,11 +135,12 @@ class SupervisedUserSyncService : public KeyedService,
   void GoogleSignedOut(const std::string& account_id,
                        const std::string& username) override;
 
-  base::Value CreateDictionary(const std::string& name,
-                               const std::string& master_key,
-                               const std::string& signature_key,
-                               const std::string& encryption_key,
-                               int avatar_index);
+  std::unique_ptr<base::DictionaryValue> CreateDictionary(
+      const std::string& name,
+      const std::string& master_key,
+      const std::string& signature_key,
+      const std::string& encryption_key,
+      int avatar_index);
 
   void UpdateSupervisedUserImpl(const std::string& id,
                                 const std::string& name,

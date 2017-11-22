@@ -23,6 +23,8 @@ using content::BrowserPpapiHost;
 using content::BrowserThread;
 using content::RenderProcessHost;
 
+namespace chrome {
+
 PepperBrokerMessageFilter::PepperBrokerMessageFilter(PP_Instance instance,
                                                      BrowserPpapiHost* host)
     : document_url_(host->GetDocumentURLForInstance(instance)) {
@@ -70,3 +72,5 @@ int32_t PepperBrokerMessageFilter::OnIsAllowed(
     return PP_OK;
   return PP_ERROR_FAILED;
 }
+
+}  // namespace chrome

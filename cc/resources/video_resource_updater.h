@@ -55,10 +55,13 @@ class CC_EXPORT VideoFrameExternalResources {
   std::vector<viz::TransferableResource> resources;
   std::vector<viz::ReleaseCallback> release_callbacks;
 
+  using SoftwareReleaseCallback =
+      base::RepeatingCallback<void(const gpu::SyncToken& sync_token,
+                                   bool is_lost)>;
   // TODO(danakj): Remove these and use TransferableResources to send
   // software things too.
   unsigned software_resource = viz::kInvalidResourceId;
-  viz::ReleaseCallback software_release_callback;
+  SoftwareReleaseCallback software_release_callback;
 
   // Used by hardware textures which do not return values in the 0-1 range.
   // After a lookup, subtract offset and multiply by multiplier.

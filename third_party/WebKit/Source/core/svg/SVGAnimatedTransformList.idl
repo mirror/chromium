@@ -25,7 +25,9 @@
 
 // https://svgwg.org/svg2-draft/coords.html#InterfaceSVGAnimatedTransformList
 
-interface SVGAnimatedTransformList {
+[
+    DependentLifetime
+] interface SVGAnimatedTransformList {
     [MeasureAs=SVGAnimatedTransformListBaseVal] readonly attribute SVGTransformList baseVal;
     readonly attribute SVGTransformList animVal;
 };

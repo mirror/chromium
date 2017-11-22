@@ -218,9 +218,8 @@ std::unique_ptr<HttpResponse> HandleImageOnloadHtml(
 }  // namespace
 
 // static
-ScopedJavaLocalRef<jlongArray> JNI_AwEmbeddedTestServerImpl_GetHandlers(
-    JNIEnv* env,
-    const JavaParamRef<jclass>&) {
+ScopedJavaLocalRef<jlongArray> GetHandlers(JNIEnv* env,
+                                           const JavaParamRef<jclass>&) {
   std::vector<int64_t> handlers = {
       reinterpret_cast<int64_t>(&HandleClickRedirect),
       reinterpret_cast<int64_t>(&HandleEchoHeaderAndSetData),

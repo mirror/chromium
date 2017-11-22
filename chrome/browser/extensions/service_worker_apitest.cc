@@ -627,7 +627,8 @@ IN_PROC_BROWSER_TEST_P(ServiceWorkerTest,
   // Uninstall the extension. Opening pages should fail again.
   base::string16 error;
   extension_service()->UninstallExtension(
-      extension_id, UninstallReason::UNINSTALL_REASON_FOR_TESTING, &error);
+      extension_id, UninstallReason::UNINSTALL_REASON_FOR_TESTING,
+      base::Bind(&base::DoNothing), &error);
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(content::PAGE_TYPE_ERROR,

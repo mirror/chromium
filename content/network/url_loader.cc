@@ -6,7 +6,6 @@
 
 #include <string>
 
-#include "base/files/file.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
@@ -16,8 +15,6 @@
 #include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
 #include "content/public/common/referrer.h"
-#include "content/public/common/resource_request.h"
-#include "content/public/common/resource_request_body.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
@@ -143,31 +140,6 @@ class FileElementReader : public net::UploadFileElementReader {
   DISALLOW_COPY_AND_ASSIGN(FileElementReader);
 };
 
-class RawFileElementReader : public net::UploadFileElementReader {
- public:
-  RawFileElementReader(ResourceRequestBody* resource_request_body,
-                       base::TaskRunner* task_runner,
-                       const ResourceRequestBody::Element& element)
-      : net::UploadFileElementReader(
-            task_runner,
-            // TODO(mmenke): Is duplicating this necessary?
-            element.file().Duplicate(),
-            element.path(),
-            element.offset(),
-            element.length(),
-            element.expected_modification_time()),
-        resource_request_body_(resource_request_body) {
-    DCHECK_EQ(ResourceRequestBody::Element::TYPE_RAW_FILE, element.type());
-  }
-
-  ~RawFileElementReader() override {}
-
- private:
-  scoped_refptr<ResourceRequestBody> resource_request_body_;
-
-  DISALLOW_COPY_AND_ASSIGN(RawFileElementReader);
-};
-
 // A subclass of net::UploadElementReader to read data pipes.
 class DataPipeElementReader : public net::UploadElementReader {
  public:
@@ -275,10 +247,6 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
         element_readers.push_back(std::make_unique<FileElementReader>(
             body, file_task_runner, element));
         break;
-      case ResourceRequestBody::Element::TYPE_RAW_FILE:
-        element_readers.push_back(std::make_unique<RawFileElementReader>(
-            body, file_task_runner, element));
-        break;
       case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
         CHECK(false) << "Should never be reached";
         break;
@@ -362,15 +330,6 @@ URLLoader::URLLoader(NetworkContext* context,
                               base::Unretained(this)),
           url_request_.get());
     }
-  }
-
-  url_request_->set_initiator(request.request_initiator);
-
-  // TODO(qinmin): network service shouldn't know about resource type, need
-  // to introduce another field to set this.
-  if (request.resource_type == RESOURCE_TYPE_MAIN_FRAME) {
-    url_request_->set_first_party_url_policy(
-        net::URLRequest::UPDATE_FIRST_PARTY_URL_ON_REDIRECT);
   }
 
   int load_flags = BuildLoadFlagsForRequest(request, false);
@@ -673,7 +632,7 @@ void URLLoader::NotifyCompleted(int error_code) {
   if (consumer_handle_.is_valid())
     SendResponseToClient();
 
-  network::URLLoaderCompletionStatus status;
+  network::URLLoaderStatus status;
   status.error_code = error_code;
   status.exists_in_cache = url_request_->response_info().was_cached;
   status.completion_time = base::TimeTicks::Now();

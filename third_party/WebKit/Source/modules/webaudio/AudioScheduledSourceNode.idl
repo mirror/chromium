@@ -4,7 +4,8 @@
 
 // See https://webaudio.github.io/web-audio-api/
 [
-    ActiveScriptWrappable
+    ActiveScriptWrappable,
+    DependentLifetime
 ]
 interface AudioScheduledSourceNode : AudioNode {
     [RaisesException] void start(optional double when);

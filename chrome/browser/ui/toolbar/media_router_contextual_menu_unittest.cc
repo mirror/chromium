@@ -38,7 +38,6 @@ class MediaRouterContextualMenuUnitTest : public BrowserWithTestWindowTest {
 
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
-    ExtensionErrorReporter::Init(true);
 
     toolbar_actions_model_ =
         extensions::extension_action_test_util::CreateToolbarModelForProfile(

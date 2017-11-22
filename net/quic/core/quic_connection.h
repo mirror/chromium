@@ -673,9 +673,8 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Sends a connectivity probing packet to |peer_address| with
   // |probing_writer|. If |probing_writer| is nullptr, will use default
-  // packet writer to write the packet. Returns true if subsequent packets can
-  // be written to the probing writer.
-  virtual bool SendConnectivityProbingPacket(
+  // packet writer to write the packet.
+  virtual void SendConnectivityProbingPacket(
       QuicPacketWriter* probing_writer,
       const QuicSocketAddress& peer_address);
 
@@ -726,13 +725,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
     fill_up_link_during_probing_ = new_value;
   }
 
-  // If |defer| is true, configures the connection to defer sending packets in
-  // response to an ACK to the SendAlarm. If |defer| is false, packets may be
-  // sent immediately after receiving an ACK.
-  void set_defer_send_in_response_to_packets(bool defer) {
-    defer_send_in_response_to_packets_ = defer;
-  }
-
  protected:
   // Calls cancel() on all the alarms owned by this connection.
   void CancelAllAlarms();
@@ -761,6 +753,13 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // the QuicConnection is in use.
   void set_per_packet_options(PerPacketOptions* options) {
     per_packet_options_ = options;
+  }
+
+  // If |defer| is true, configures the connection to defer sending packets in
+  // response to an ACK to the SendAlarm. If |defer| is false, packets may be
+  // sent immediately after receiving an ACK.
+  void set_defer_send_in_response_to_packets(bool defer) {
+    defer_send_in_response_to_packets_ = defer;
   }
 
   PeerAddressChangeType active_peer_migration_type() {

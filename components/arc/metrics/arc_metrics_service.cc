@@ -89,7 +89,7 @@ ArcMetricsService::~ArcMetricsService() {
   arc_bridge_service_->metrics()->RemoveObserver(this);
 }
 
-void ArcMetricsService::OnConnectionReady() {
+void ArcMetricsService::OnInstanceReady() {
   VLOG(2) << "Start metrics service.";
   // Retrieve ARC start time from session manager.
   chromeos::SessionManagerClient* session_manager_client =
@@ -99,20 +99,20 @@ void ArcMetricsService::OnConnectionReady() {
                      weak_ptr_factory_.GetWeakPtr()));
 }
 
-void ArcMetricsService::OnConnectionClosed() {
+void ArcMetricsService::OnInstanceClosed() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   VLOG(2) << "Close metrics service.";
   if (binding_.is_bound())
     binding_.Unbind();
 }
 
-void ArcMetricsService::OnProcessConnectionReady() {
+void ArcMetricsService::OnProcessInstanceReady() {
   VLOG(2) << "Start updating process list.";
   timer_.Start(FROM_HERE, kRequestProcessListPeriod, this,
                &ArcMetricsService::RequestProcessList);
 }
 
-void ArcMetricsService::OnProcessConnectionClosed() {
+void ArcMetricsService::OnProcessInstanceClosed() {
   VLOG(2) << "Stop updating process list.";
   timer_.Stop();
 }
@@ -210,12 +210,12 @@ ArcMetricsService::ProcessObserver::ProcessObserver(
 
 ArcMetricsService::ProcessObserver::~ProcessObserver() = default;
 
-void ArcMetricsService::ProcessObserver::OnConnectionReady() {
-  arc_metrics_service_->OnProcessConnectionReady();
+void ArcMetricsService::ProcessObserver::OnInstanceReady() {
+  arc_metrics_service_->OnProcessInstanceReady();
 }
 
-void ArcMetricsService::ProcessObserver::OnConnectionClosed() {
-  arc_metrics_service_->OnProcessConnectionClosed();
+void ArcMetricsService::ProcessObserver::OnInstanceClosed() {
+  arc_metrics_service_->OnProcessInstanceClosed();
 }
 
 }  // namespace arc

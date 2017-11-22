@@ -14,6 +14,8 @@
 
 namespace video_capture {
 
+class DeviceFactoryMediaToMojoAdapter;
+
 class DeviceFactoryProviderImpl : public mojom::DeviceFactoryProvider {
  public:
   DeviceFactoryProviderImpl(
@@ -29,7 +31,7 @@ class DeviceFactoryProviderImpl : public mojom::DeviceFactoryProvider {
   void LazyInitializeDeviceFactory();
 
   mojo::BindingSet<mojom::DeviceFactory> factory_bindings_;
-  std::unique_ptr<mojom::DeviceFactory> device_factory_;
+  std::unique_ptr<DeviceFactoryMediaToMojoAdapter> device_factory_;
 
   const std::unique_ptr<service_manager::ServiceContextRef> service_ref_;
   base::Callback<void(float)> set_shutdown_delay_cb_;

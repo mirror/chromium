@@ -31,7 +31,6 @@
 #include "bindings/core/v8/V8CSSStyleDeclaration.h"
 
 #include <algorithm>
-#include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CSSPropertyNames.h"
@@ -44,6 +43,7 @@
 #include "core/dom/events/EventTarget.h"
 #include "core/html/custom/CEReactionsScope.h"
 #include "platform/wtf/ASCIICType.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -222,8 +222,6 @@ void V8CSSStyleDeclaration::namedPropertySetterCustom(
     return;
 
   CEReactionsScope ce_reactions_scope;
-  ExecutionContext* execution_context =
-      ToExecutionContext(info.Holder()->CreationContext());
 
   TOSTRING_VOID(V8StringResource<kTreatNullAsNullString>, property_value,
                 value);
@@ -231,8 +229,7 @@ void V8CSSStyleDeclaration::namedPropertySetterCustom(
       info.GetIsolate(), ExceptionState::kSetterContext, "CSSStyleDeclaration",
       getPropertyName(resolveCSSPropertyID(unresolved_property)));
   impl->SetPropertyInternal(unresolved_property, String(), property_value,
-                            false, execution_context->SecureContextMode(),
-                            exception_state);
+                            false, exception_state);
 
   V8SetReturnValue(info, value);
 }

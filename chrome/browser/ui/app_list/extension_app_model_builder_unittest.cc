@@ -9,7 +9,6 @@
 #include <memory>
 #include <string>
 
-#include "ash/app_list/model/app_list_item.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -34,6 +33,7 @@
 #include "extensions/common/extension_set.h"
 #include "extensions/common/manifest.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/app_list/app_list_item.h"
 
 using extensions::AppSorting;
 using extensions::ExtensionSystem;
@@ -181,6 +181,7 @@ TEST_F(ExtensionAppModelBuilderTest, DisableAndEnable) {
 TEST_F(ExtensionAppModelBuilderTest, Uninstall) {
   service_->UninstallExtension(kPackagedApp2Id,
                                extensions::UNINSTALL_REASON_FOR_TESTING,
+                               base::Bind(&base::DoNothing),
                                NULL);
   EXPECT_EQ(std::string("Packaged App 1,Hosted App"),
             GetModelContent(model_.get()));
@@ -196,6 +197,7 @@ TEST_F(ExtensionAppModelBuilderTest, UninstallTerminatedApp) {
 
   service_->UninstallExtension(kPackagedApp2Id,
                                extensions::UNINSTALL_REASON_FOR_TESTING,
+                               base::Bind(&base::DoNothing),
                                NULL);
   EXPECT_EQ(std::string("Packaged App 1,Hosted App"),
             GetModelContent(model_.get()));

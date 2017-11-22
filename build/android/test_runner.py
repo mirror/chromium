@@ -821,8 +821,7 @@ def RunTestsInPlatformMode(args):
     finally:
       json_results.GenerateJsonResultsFile(
           all_raw_results, json_file.name,
-          global_tags=list(global_results_tags),
-          indent=2)
+          global_tags=list(global_results_tags))
 
   @contextlib.contextmanager
   def upload_logcats_file():

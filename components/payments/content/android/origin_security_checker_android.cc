@@ -17,28 +17,25 @@ using ::base::android::ConvertJavaStringToUTF8;
 }  // namespace
 
 // static
-jboolean JNI_OriginSecurityChecker_IsOriginSecure(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jstring>& jurl) {
+jboolean IsOriginSecure(JNIEnv* env,
+                        const JavaParamRef<jclass>& jcaller,
+                        const JavaParamRef<jstring>& jurl) {
   return OriginSecurityChecker::IsOriginSecure(
       GURL(ConvertJavaStringToUTF8(env, jurl)));
 }
 
 // static
-jboolean JNI_OriginSecurityChecker_IsSchemeCryptographic(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jstring>& jurl) {
+jboolean IsSchemeCryptographic(JNIEnv* env,
+                               const JavaParamRef<jclass>& jcaller,
+                               const JavaParamRef<jstring>& jurl) {
   return OriginSecurityChecker::IsSchemeCryptographic(
       GURL(ConvertJavaStringToUTF8(env, jurl)));
 }
 
 // static
-jboolean JNI_OriginSecurityChecker_IsOriginLocalhostOrFile(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jstring>& jurl) {
+jboolean IsOriginLocalhostOrFile(JNIEnv* env,
+                                 const JavaParamRef<jclass>& jcaller,
+                                 const JavaParamRef<jstring>& jurl) {
   return OriginSecurityChecker::IsOriginLocalhostOrFile(
       GURL(ConvertJavaStringToUTF8(env, jurl)));
 }

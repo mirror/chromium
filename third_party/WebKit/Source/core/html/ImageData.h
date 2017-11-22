@@ -140,7 +140,7 @@ class CORE_EXPORT ImageData final : public ScriptWrappable,
   // used to create an ImageBitmap, kN32ColorType should be used.
   bool ImageDataInCanvasColorSettings(CanvasColorSpace,
                                       CanvasPixelFormat,
-                                      unsigned char* converted_pixels,
+                                      std::unique_ptr<uint8_t[]>&,
                                       DataU8ColorType,
                                       const IntRect* = nullptr);
 

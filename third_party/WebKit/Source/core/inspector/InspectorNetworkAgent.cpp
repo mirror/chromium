@@ -74,7 +74,7 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/ReferrerPolicy.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/Base64.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebMixedContentContextType.h"
@@ -699,16 +699,10 @@ void InspectorNetworkAgent::WillSendRequest(
   if (headers) {
     for (size_t i = 0; i < headers->size(); ++i) {
       auto header = headers->at(i);
-      AtomicString header_name = AtomicString(header.first);
       String value;
-      if (!header.second->asString(&value))
-        continue;
-      // When overriding referer, also override referrer policy
-      // for this request to assure the request will be allowed.
-      if (header_name.LowerASCII() == HTTPNames::Referer.LowerASCII())
-        request.SetHTTPReferrer(Referrer(value, kReferrerPolicyAlways));
-      else
-        request.SetHTTPHeaderField(header_name, AtomicString(value));
+      if (header.second->asString(&value))
+        request.SetHTTPHeaderField(AtomicString(header.first),
+                                   AtomicString(value));
     }
   }
 

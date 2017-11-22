@@ -7,7 +7,7 @@
 
 #include "base/macros.h"
 #include "components/arc/common/intent_helper.mojom.h"
-#include "components/arc/connection_observer.h"
+#include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/session_manager/core/session_manager_observer.h"
 
@@ -21,7 +21,7 @@ class ArcBridgeService;
 
 class ArcUserSessionService
     : public KeyedService,
-      public ConnectionObserver<mojom::IntentHelperInstance>,
+      public InstanceHolder<mojom::IntentHelperInstance>::Observer,
       public session_manager::SessionManagerObserver {
  public:
   // Returns singleton instance for the given BrowserContext,
@@ -33,9 +33,9 @@ class ArcUserSessionService
                         ArcBridgeService* bridge_service);
   ~ArcUserSessionService() override;
 
-  // ConnectionObserver<mojom::IntentHelperInstance> override.
-  void OnConnectionReady() override;
-  void OnConnectionClosed() override;
+  // InstanceHolder<mojom::IntentHelperInstance>::Observer
+  void OnInstanceReady() override;
+  void OnInstanceClosed() override;
 
   // session_manager::SessionManagerObserver
   void OnSessionStateChanged() override;

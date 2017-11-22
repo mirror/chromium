@@ -42,7 +42,7 @@ class PLATFORM_EXPORT FETile final : public FilterEffect {
 
   FloatRect MapInputs(const FloatRect&) const final;
 
-  sk_sp<PaintFilter> CreateImageFilter() override;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
 };
 
 }  // namespace blink

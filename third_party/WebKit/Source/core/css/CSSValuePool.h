@@ -26,7 +26,6 @@
 #ifndef CSSValuePool_h
 #define CSSValuePool_h
 
-#include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
@@ -47,6 +46,7 @@ namespace blink {
 
 class CORE_EXPORT CSSValuePool
     : public GarbageCollectedFinalized<CSSValuePool> {
+  WTF_MAKE_NONCOPYABLE(CSSValuePool);
 
  public:
   // TODO(sashab): Make all the value pools store const CSSValues.
@@ -145,7 +145,6 @@ class CORE_EXPORT CSSValuePool
   FontFamilyValueCache font_family_value_cache_;
 
   friend CORE_EXPORT CSSValuePool& CssValuePool();
-  DISALLOW_COPY_AND_ASSIGN(CSSValuePool);
 };
 
 CORE_EXPORT CSSValuePool& CssValuePool();

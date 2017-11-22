@@ -4,7 +4,6 @@
 
 #include "services/device/geolocation/public_ip_address_geolocator.h"
 
-#include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
@@ -71,6 +70,7 @@ class PublicIpAddressGeolocatorTest : public testing::Test {
   // Deal with PublicIpAddressGeolocator bad message.
   void OnGeolocatorBadMessage(const std::string& message) {
     binding_set_.ReportBadMessage(message);
+    binding_set_.CloseAllBindings();
   }
 
   // Invokes QueryNextPosition on |public_ip_address_geolocator_|, and runs
@@ -198,7 +198,7 @@ TEST_F(PublicIpAddressGeolocatorTest, ProhibitedOverlappingCalls) {
   // This terminates only in case of connection error, which we expect.
   loop.Run();
 
-  // Verify that the geolocator reported a bad message.
+  // A Mojo bad-message should be reported.
   EXPECT_THAT(bad_messages_, testing::SizeIs(1));
 }
 

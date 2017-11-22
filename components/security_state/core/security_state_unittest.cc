@@ -57,9 +57,7 @@ class TestSecurityStateHelper {
         ran_mixed_content_(false),
         malicious_content_status_(MALICIOUS_CONTENT_STATUS_NONE),
         is_incognito_(false),
-        is_error_page_(false),
-        is_view_source_(false),
-        has_policy_certificate_(false) {}
+        is_error_page_(false) {}
   virtual ~TestSecurityStateHelper() {}
 
   void SetCertificate(scoped_refptr<net::X509Certificate> cert) {
@@ -73,9 +71,6 @@ class TestSecurityStateHelper {
   }
   void AddCertStatus(net::CertStatus cert_status) {
     cert_status_ |= cert_status;
-  }
-  void set_cert_status(net::CertStatus cert_status) {
-    cert_status_ = cert_status;
   }
   void set_displayed_mixed_content(bool displayed_mixed_content) {
     displayed_mixed_content_ = displayed_mixed_content;
@@ -100,16 +95,10 @@ class TestSecurityStateHelper {
 
   void set_is_error_page(bool is_error_page) { is_error_page_ = is_error_page; }
 
-  void set_is_view_source(bool is_view_source) {
-    is_view_source_ = is_view_source;
-  }
-
   void set_insecure_field_edit(bool insecure_field_edit) {
     insecure_input_events_.insecure_field_edited = insecure_field_edit;
   }
-  void set_has_policy_certificate(bool has_policy_cert) {
-    has_policy_certificate_ = has_policy_cert;
-  }
+
   void SetUrl(const GURL& url) { url_ = url; }
 
   std::unique_ptr<VisibleSecurityState> GetVisibleSecurityState() const {
@@ -126,15 +115,15 @@ class TestSecurityStateHelper {
     state->malicious_content_status = malicious_content_status_;
     state->is_incognito = is_incognito_;
     state->is_error_page = is_error_page_;
-    state->is_view_source = is_view_source_;
     state->insecure_input_events = insecure_input_events_;
     return state;
   }
 
   void GetSecurityInfo(SecurityInfo* security_info) const {
-    security_state::GetSecurityInfo(GetVisibleSecurityState(),
-                                    has_policy_certificate_,
-                                    base::Bind(&IsOriginSecure), security_info);
+    security_state::GetSecurityInfo(
+        GetVisibleSecurityState(),
+        false /* used policy installed certificate */,
+        base::Bind(&IsOriginSecure), security_info);
   }
 
  private:
@@ -148,8 +137,6 @@ class TestSecurityStateHelper {
   MaliciousContentStatus malicious_content_status_;
   bool is_incognito_;
   bool is_error_page_;
-  bool is_view_source_;
-  bool has_policy_certificate_;
   InsecureInputEventData insecure_input_events_;
 };
 
@@ -165,13 +152,6 @@ TEST(SecurityStateTest, SHA1Blocked) {
   helper.GetSecurityInfo(&security_info);
   EXPECT_TRUE(security_info.sha1_in_chain);
   EXPECT_EQ(DANGEROUS, security_info.security_level);
-
-  // Ensure that policy-installed certificates do not interfere.
-  helper.set_has_policy_certificate(true);
-  SecurityInfo policy_cert_security_info;
-  helper.GetSecurityInfo(&policy_cert_security_info);
-  EXPECT_TRUE(policy_cert_security_info.sha1_in_chain);
-  EXPECT_EQ(DANGEROUS, policy_cert_security_info.security_level);
 }
 
 // Tests that SHA1-signed certificates, when allowed by policy, downgrade the
@@ -182,13 +162,6 @@ TEST(SecurityStateTest, SHA1Warning) {
   helper.GetSecurityInfo(&security_info);
   EXPECT_TRUE(security_info.sha1_in_chain);
   EXPECT_EQ(NONE, security_info.security_level);
-
-  // Ensure that policy-installed certificates do not interfere.
-  helper.set_has_policy_certificate(true);
-  SecurityInfo policy_cert_security_info;
-  helper.GetSecurityInfo(&policy_cert_security_info);
-  EXPECT_TRUE(policy_cert_security_info.sha1_in_chain);
-  EXPECT_EQ(NONE, policy_cert_security_info.security_level);
 }
 
 // Tests that SHA1-signed certificates, when allowed by policy, don't interfere
@@ -408,32 +381,6 @@ TEST(SecurityStateTest, PrivateUserDataNotSetOnPseudoUrls) {
   }
 }
 
-// Tests that if |is_view_source| NONE is returned for a secure site.
-TEST(SecurityStateTest, ViewSourceRemovesSecure) {
-  TestSecurityStateHelper helper;
-  SecurityInfo security_info;
-  helper.set_cert_status(0);
-  helper.GetSecurityInfo(&security_info);
-  EXPECT_EQ(SECURE, security_info.security_level);
-  helper.set_is_view_source(true);
-  helper.GetSecurityInfo(&security_info);
-  EXPECT_EQ(NONE, security_info.security_level);
-}
-
-// Tests that if |is_view_source|, DANGEROUS is still returned for a site
-// flagged by SafeBrowsing.
-TEST(SecurityStateTest, ViewSourceKeepsWarning) {
-  TestSecurityStateHelper helper;
-  helper.set_malicious_content_status(
-      MALICIOUS_CONTENT_STATUS_SOCIAL_ENGINEERING);
-  helper.set_is_view_source(true);
-  SecurityInfo security_info;
-  helper.GetSecurityInfo(&security_info);
-  EXPECT_EQ(MALICIOUS_CONTENT_STATUS_SOCIAL_ENGINEERING,
-            security_info.malicious_content_status);
-  EXPECT_EQ(DANGEROUS, security_info.security_level);
-}
-
 // Tests that |incognito_downgraded_security_level| is set only when the
 // corresponding VisibleSecurityState flag is set and the HTTPBad Phase 2
 // experiment is enabled.
@@ -563,14 +510,12 @@ TEST(SecurityStateTest, MixedForm) {
 
   helper.set_contained_mixed_form(true);
 
-  // Verify that a mixed form downgrades the security level.
   SecurityInfo mixed_form_security_info;
   helper.GetSecurityInfo(&mixed_form_security_info);
   EXPECT_TRUE(mixed_form_security_info.contained_mixed_form);
   EXPECT_EQ(CONTENT_STATUS_NONE, mixed_form_security_info.mixed_content_status);
   EXPECT_EQ(NONE, mixed_form_security_info.security_level);
 
-  // Ensure that active mixed content trumps the mixed form warning.
   helper.set_ran_mixed_content(true);
   SecurityInfo mixed_form_and_active_security_info;
   helper.GetSecurityInfo(&mixed_form_and_active_security_info);
@@ -578,61 +523,6 @@ TEST(SecurityStateTest, MixedForm) {
   EXPECT_EQ(CONTENT_STATUS_RAN,
             mixed_form_and_active_security_info.mixed_content_status);
   EXPECT_EQ(DANGEROUS, mixed_form_and_active_security_info.security_level);
-}
-
-// Tests that policy-installed-certificates do not interfere with mixed content
-// notifications.
-TEST(SecurityStateTest, MixedContentWithPolicyCertificate) {
-  TestSecurityStateHelper helper;
-
-  helper.set_has_policy_certificate(true);
-  helper.set_cert_status(0);
-
-  {
-    // Verify that if no mixed content is present, the policy-installed
-    // certificate is recorded.
-    SecurityInfo no_mixed_content_security_info;
-    helper.GetSecurityInfo(&no_mixed_content_security_info);
-    EXPECT_FALSE(no_mixed_content_security_info.contained_mixed_form);
-    EXPECT_EQ(CONTENT_STATUS_NONE,
-              no_mixed_content_security_info.mixed_content_status);
-    EXPECT_EQ(SECURE_WITH_POLICY_INSTALLED_CERT,
-              no_mixed_content_security_info.security_level);
-  }
-
-  {
-    // Verify that a mixed form downgrades the security level.
-    SecurityInfo mixed_form_security_info;
-    helper.set_contained_mixed_form(true);
-    helper.GetSecurityInfo(&mixed_form_security_info);
-    EXPECT_TRUE(mixed_form_security_info.contained_mixed_form);
-    EXPECT_EQ(CONTENT_STATUS_NONE,
-              mixed_form_security_info.mixed_content_status);
-    EXPECT_EQ(NONE, mixed_form_security_info.security_level);
-  }
-
-  {
-    // Verify that passive mixed content downgrades the security level.
-    helper.set_contained_mixed_form(false);
-    helper.set_displayed_mixed_content(true);
-    SecurityInfo passive_mixed_security_info;
-    helper.GetSecurityInfo(&passive_mixed_security_info);
-    EXPECT_EQ(CONTENT_STATUS_DISPLAYED,
-              passive_mixed_security_info.mixed_content_status);
-    EXPECT_EQ(NONE, passive_mixed_security_info.security_level);
-  }
-
-  {
-    // Ensure that active mixed content downgrades the security level.
-    helper.set_contained_mixed_form(false);
-    helper.set_displayed_mixed_content(false);
-    helper.set_ran_mixed_content(true);
-    SecurityInfo active_mixed_security_info;
-    helper.GetSecurityInfo(&active_mixed_security_info);
-    EXPECT_EQ(CONTENT_STATUS_RAN,
-              active_mixed_security_info.mixed_content_status);
-    EXPECT_EQ(DANGEROUS, active_mixed_security_info.security_level);
-  }
 }
 
 // Tests that a field edit is reflected in the SecurityInfo.

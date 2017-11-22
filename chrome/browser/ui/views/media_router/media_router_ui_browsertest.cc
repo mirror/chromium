@@ -130,7 +130,7 @@ class MediaRouterUIBrowserTest : public InProcessBrowserTest {
       update->SetBoolean(ComponentToolbarActionsFactory::kMediaRouterActionId,
                          always_show);
     }
-    MigrateObsoleteProfilePrefs(browser()->profile());
+    chrome::MigrateObsoleteProfilePrefs(browser()->profile());
   }
 
  protected:

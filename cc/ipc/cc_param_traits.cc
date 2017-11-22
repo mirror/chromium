@@ -11,7 +11,7 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "base/unguessable_token.h"
-#include "cc/paint/filter_operations.h"
+#include "cc/base/filter_operations.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/debug_border_draw_quad.h"
 #include "components/viz/common/quads/draw_quad.h"
@@ -68,7 +68,7 @@ void ParamTraits<cc::FilterOperation>::Write(base::Pickle* m,
       WriteParam(m, p.zoom_inset());
       break;
     case cc::FilterOperation::REFERENCE:
-      WriteParam(m, p.image_filter()->cached_sk_filter());
+      WriteParam(m, p.image_filter());
       break;
     case cc::FilterOperation::ALPHA_THRESHOLD:
       WriteParam(m, p.amount());
@@ -151,13 +151,12 @@ bool ParamTraits<cc::FilterOperation>::Read(const base::Pickle* m,
       }
       break;
     case cc::FilterOperation::REFERENCE: {
-      sk_sp<SkImageFilter> sk_filter;
-      if (!ReadParam(m, iter, &sk_filter)) {
+      sk_sp<SkImageFilter> filter;
+      if (!ReadParam(m, iter, &filter)) {
         success = false;
         break;
       }
-      auto* paint_filter = new cc::ImageFilterPaintFilter(std::move(sk_filter));
-      r->set_image_filter(sk_sp<cc::ImageFilterPaintFilter>(paint_filter));
+      r->set_image_filter(std::move(filter));
       success = true;
       break;
     }
@@ -218,7 +217,7 @@ void ParamTraits<cc::FilterOperation>::Log(const param_type& p,
       LogParam(p.zoom_inset(), l);
       break;
     case cc::FilterOperation::REFERENCE:
-      LogParam(p.image_filter()->cached_sk_filter(), l);
+      LogParam(p.image_filter(), l);
       break;
     case cc::FilterOperation::ALPHA_THRESHOLD:
       LogParam(p.amount(), l);
@@ -850,6 +849,7 @@ void ParamTraits<viz::YUVVideoDrawQuad>::Write(base::Pickle* m,
   WriteParam(m, p.uv_tex_coord_rect);
   WriteParam(m, p.ya_tex_size);
   WriteParam(m, p.uv_tex_size);
+  WriteParam(m, p.color_space);
   WriteParam(m, p.video_color_space);
   WriteParam(m, p.resource_offset);
   WriteParam(m, p.resource_multiplier);
@@ -864,6 +864,7 @@ bool ParamTraits<viz::YUVVideoDrawQuad>::Read(const base::Pickle* m,
          ReadParam(m, iter, &p->uv_tex_coord_rect) &&
          ReadParam(m, iter, &p->ya_tex_size) &&
          ReadParam(m, iter, &p->uv_tex_size) &&
+         ReadParam(m, iter, &p->color_space) &&
          ReadParam(m, iter, &p->video_color_space) &&
          ReadParam(m, iter, &p->resource_offset) &&
          ReadParam(m, iter, &p->resource_multiplier) &&
@@ -884,6 +885,8 @@ void ParamTraits<viz::YUVVideoDrawQuad>::Log(const param_type& p,
   LogParam(p.ya_tex_size, l);
   l->append(", ");
   LogParam(p.uv_tex_size, l);
+  l->append(", ");
+  LogParam(p.color_space, l);
   l->append(", ");
   LogParam(p.video_color_space, l);
   l->append(", ");

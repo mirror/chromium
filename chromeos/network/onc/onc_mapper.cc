@@ -25,7 +25,7 @@ std::unique_ptr<base::Value> Mapper::MapValue(
     const base::Value& onc_value,
     bool* error) {
   std::unique_ptr<base::Value> result_value;
-  switch (onc_value.type()) {
+  switch (onc_value.GetType()) {
     case base::Value::Type::DICTIONARY: {
       const base::DictionaryValue* dict = NULL;
       onc_value.GetAsDictionary(&dict);

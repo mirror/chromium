@@ -11,7 +11,6 @@
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/supports_user_data.h"
-#include "build/build_config.h"
 #include "chrome/browser/extensions/api/tabs/tabs_constants.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -24,29 +23,6 @@
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/common/error_utils.h"
-
-#if defined(OS_LINUX) || defined(OS_CHROMEOS)
-#include "extensions/common/permissions/permissions_data.h"
-#endif
-
-namespace {
-
-bool CanEnableAudioDebugRecordingsFromExtension(
-    const extensions::Extension* extension) {
-  bool enabled_by_permissions = false;
-#if defined(OS_LINUX) || defined(OS_CHROMEOS)
-  if (extension) {
-    enabled_by_permissions =
-        extension->permissions_data()->active_permissions().HasAPIPermission(
-            extensions::APIPermission::kWebrtcLoggingPrivateAudioDebug);
-  }
-#endif
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-             switches::kEnableAudioDebugRecordingsFromExtension) ||
-         enabled_by_permissions;
-}
-
-}  // namespace
 
 namespace extensions {
 
@@ -86,55 +62,15 @@ std::string HashIdWithOrigin(const std::string& security_origin,
 // http://crbug.com/710371
 content::RenderProcessHost* WebrtcLoggingPrivateFunction::RphFromRequest(
     const RequestInfo& request, const std::string& security_origin) {
-  // There are 2 ways these API functions can get called.
-  //
-  //  1. From a whitelisted component extension on behalf of a page with the
-  //  appropriate origin via a message from that page. In this case, either the
-  //  guest process id or the tab id is on the message received by the component
-  //  extension, and the extension can pass that along in RequestInfo as
-  //  |guest_process_id| or |tab_id|.
-  //
-  //  2. From a whitelisted app that hosts a page in a webview. In this case,
-  //  the app should call these API functions with the |target_webview| flag
-  //  set, from a web contents that has exactly 1 webview .
-
-  // If |target_webview| is set, lookup the guest content's render process in
-  // the sender's web contents. There should be exactly 1 guest.
-  if (request.target_webview.get()) {
-    content::RenderProcessHost* target_host = nullptr;
-    int guests_found = 0;
-    auto get_guest = [](int* guests_found,
-                        content::RenderProcessHost** target_host,
-                        content::WebContents* guest_contents) {
-      *guests_found = *guests_found + 1;
-      *target_host = guest_contents->GetMainFrame()->GetProcess();
-      // Don't short-circuit, so we can count how many other guest contents
-      // there are.
-      return false;
-    };
-    guest_view::GuestViewManager::FromBrowserContext(browser_context())
-        ->ForEachGuest(GetSenderWebContents(),
-                       base::Bind(get_guest, &guests_found, &target_host));
-    if (!target_host) {
-      error_ = "No webview render process found";
-      return nullptr;
-    }
-    if (guests_found > 1) {
-      error_ = "Multiple webviews found";
-      return nullptr;
-    }
-    return target_host;
-  }
-
   // If |guest_process_id| is defined, directly use this id to find the
   // corresponding RenderProcessHost.
   if (request.guest_process_id.get())
     return content::RenderProcessHost::FromID(*request.guest_process_id);
 
-  // Otherwise, use the |tab_id|. If there's no |target_viewview|, no |tab_id|,
-  // and no |guest_process_id|, we can't look up the RenderProcessHost.
+  // Otherwise, use the |tab_id|. If there's no |tab_id| and no
+  // |guest_process_id|, we can't look up the RenderProcessHost.
   if (!request.tab_id.get()) {
-    error_ = "No webview, tab ID, or guest process ID specified.";
+    error_ = "No tab ID or guest process ID specified.";
     return nullptr;
   }
 
@@ -466,7 +402,8 @@ bool WebrtcLoggingPrivateStopRtpDumpFunction::RunAsync() {
 }
 
 bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
-  if (!CanEnableAudioDebugRecordingsFromExtension(extension())) {
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableAudioDebugRecordingsFromExtension)) {
     return false;
   }
 
@@ -500,7 +437,8 @@ bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
 }
 
 bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
-  if (!CanEnableAudioDebugRecordingsFromExtension(extension())) {
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableAudioDebugRecordingsFromExtension)) {
     return false;
   }
 
@@ -586,7 +524,6 @@ bool WebrtcLoggingPrivateStopWebRtcEventLoggingFunction::RunAsync() {
 }
 
 bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
-#if defined(OS_LINUX) || defined(OS_CHROMEOS)
   // Unlike other WebrtcLoggingPrivate functions that take a RequestInfo object,
   // this function shouldn't be called by a component extension on behalf of
   // some web code. It returns a DirectoryEntry for use directly in the calling
@@ -610,11 +547,6 @@ bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
           &WebrtcLoggingPrivateGetLogsDirectoryFunction::FireErrorCallback,
           this));
   return true;
-#else   // defined(OS_LINUX) || defined(OS_CHROMEOS)
-  SetError("Not supported on the current OS");
-  SendResponse(false);
-  return false;
-#endif  // defined(OS_LINUX) || defined(OS_CHROMEOS)
 }
 
 void WebrtcLoggingPrivateGetLogsDirectoryFunction::FireCallback(

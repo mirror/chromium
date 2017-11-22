@@ -369,7 +369,8 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
         ->extension_service()
         ->UninstallExtension(
             extension->id(),
-            extensions::UninstallReason::UNINSTALL_REASON_FOR_TESTING, &error);
+            extensions::UninstallReason::UNINSTALL_REASON_FOR_TESTING,
+            base::Closure(), &error);
     FlushNoteTakingClientMojo();
   }
 
@@ -409,7 +410,7 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
   TestingProfile* CreateProfile() override {
     auto prefs =
         base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-    RegisterUserProfilePrefs(prefs->registry());
+    chrome::RegisterUserProfilePrefs(prefs->registry());
     profile_prefs_ = prefs.get();
     return profile_manager()->CreateTestingProfile(
         kTestProfileName, std::move(prefs), base::ASCIIToUTF16("Test profile"),
@@ -935,7 +936,7 @@ TEST_P(NoteTakingHelperTest, AddProfileWithPlayStoreEnabled) {
   // this case: http://crbug.com/700554
   const char kSecondProfileName[] = "second-profile";
   auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-  RegisterUserProfilePrefs(prefs->registry());
+  chrome::RegisterUserProfilePrefs(prefs->registry());
   prefs->SetBoolean(arc::prefs::kArcEnabled, true);
   profile_manager()->CreateTestingProfile(
       kSecondProfileName, std::move(prefs), base::ASCIIToUTF16("Second User"),
@@ -1497,7 +1498,7 @@ TEST_P(NoteTakingHelperTest, LockScreenSupportInSecondaryProfile) {
 
   // Initialize secondary profile.
   auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
-  RegisterUserProfilePrefs(prefs->registry());
+  chrome::RegisterUserProfilePrefs(prefs->registry());
   sync_preferences::TestingPrefServiceSyncable* profile_prefs = prefs.get();
   const std::string kSecondProfileName = "second-profile";
   TestingProfile* second_profile = profile_manager()->CreateTestingProfile(

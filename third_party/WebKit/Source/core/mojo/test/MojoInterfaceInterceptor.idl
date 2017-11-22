@@ -6,6 +6,7 @@
     ActiveScriptWrappable,
     Constructor(DOMString interfaceName, optional MojoScope scope = "context"),
     ConstructorCallWith=ExecutionContext,
+    DependentLifetime,
     Exposed=(Window,Worker),
     RaisesException=Constructor,
     RuntimeEnabled=MojoJSTest

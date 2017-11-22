@@ -968,10 +968,7 @@ class TestExcServerVariants : public MachMultiprocess,
         behavior_(behavior),
         flavor_(flavor),
         state_count_(state_count),
-        handled_(false) {
-    // This is how the __builtin_trap() in MachMultiprocessChild() appears.
-    SetExpectedChildTermination(kTerminationSignal, SIGILL);
-  }
+        handled_(false) {}
 
   // UniversalMachExcServer::Interface:
 
@@ -1016,6 +1013,7 @@ class TestExcServerVariants : public MachMultiprocess,
     if (exception == EXC_CRASH && code_count >= 1) {
       int signal;
       ExcCrashRecoverOriginalException(code[0], nullptr, &signal);
+      SetExpectedChildTermination(kTerminationSignal, signal);
     }
 
     const bool has_state = ExceptionBehaviorHasState(behavior);

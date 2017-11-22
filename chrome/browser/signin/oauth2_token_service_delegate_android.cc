@@ -191,7 +191,7 @@ ScopedJavaLocalRef<jobject> OAuth2TokenServiceDelegateAndroid::GetForProfile(
       static_cast<OAuth2TokenServiceDelegateAndroid*>(delegate)->java_ref_);
 }
 
-static ScopedJavaLocalRef<jobject> JNI_OAuth2TokenService_GetForProfile(
+static ScopedJavaLocalRef<jobject> GetForProfile(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& j_profile_android) {
@@ -540,12 +540,11 @@ std::string OAuth2TokenServiceDelegateAndroid::MapAccountNameToAccountId(
 
 // Called from Java when fetching of an OAuth2 token is finished. The
 // |authToken| param is only valid when |result| is true.
-void JNI_OAuth2TokenService_OAuth2TokenFetched(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& authToken,
-    jboolean isTransientError,
-    jlong nativeCallback) {
+void OAuth2TokenFetched(JNIEnv* env,
+                        const JavaParamRef<jclass>& clazz,
+                        const JavaParamRef<jstring>& authToken,
+                        jboolean isTransientError,
+                        jlong nativeCallback) {
   std::string token;
   if (authToken)
     token = ConvertJavaStringToUTF8(env, authToken);

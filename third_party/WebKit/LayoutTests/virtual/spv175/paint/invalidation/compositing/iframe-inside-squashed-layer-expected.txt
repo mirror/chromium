@@ -23,14 +23,9 @@
       "bounds": [300, 654],
       "paintInvalidations": [
         {
-          "object": "InlineTextBox 'test1'",
+          "object": "LayoutBlockFlow HTML",
           "rect": [8, 508, 29, 19],
-          "reason": "appeared"
-        },
-        {
-          "object": "InlineTextBox 'test1'",
-          "rect": [8, 508, 29, 19],
-          "reason": "disappeared"
+          "reason": "paint property change"
         },
         {
           "object": "LayoutView #document",

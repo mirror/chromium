@@ -9,7 +9,6 @@
 
 #include "cc/base/region.h"
 #include "cc/layers/recording_source.h"
-#include "cc/paint/paint_filter.h"
 #include "cc/test/fake_content_layer_client.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "third_party/skia/include/core/SkImage.h"

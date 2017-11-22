@@ -52,21 +52,7 @@
 
 DEFINE_WEB_STATE_USER_DATA_KEY(ChromeIOSTranslateClient);
 
-// static
-void ChromeIOSTranslateClient::CreateForWebState(
-    web::WebState* web_state,
-    id<LanguageSelectionHandler> language_selection_handler) {
-  DCHECK(web_state);
-  if (!FromWebState(web_state)) {
-    web_state->SetUserData(UserDataKey(),
-                           base::WrapUnique(new ChromeIOSTranslateClient(
-                               web_state, language_selection_handler)));
-  }
-}
-
-ChromeIOSTranslateClient::ChromeIOSTranslateClient(
-    web::WebState* web_state,
-    id<LanguageSelectionHandler> language_selection_handler)
+ChromeIOSTranslateClient::ChromeIOSTranslateClient(web::WebState* web_state)
     : web_state_(web_state),
       translate_manager_(base::MakeUnique<translate::TranslateManager>(
           this,
@@ -78,9 +64,7 @@ ChromeIOSTranslateClient::ChromeIOSTranslateClient(
                   web_state->GetBrowserState())))),
       translate_driver_(web_state,
                         web_state->GetNavigationManager(),
-                        translate_manager_.get()),
-      language_selection_handler_(language_selection_handler) {
-  DCHECK(language_selection_handler);
+                        translate_manager_.get()) {
   web_state_->AddObserver(this);
 }
 
@@ -112,14 +96,10 @@ std::unique_ptr<infobars::InfoBar> ChromeIOSTranslateClient::CreateInfoBar(
       controller = [[AfterTranslateInfoBarController alloc]
           initWithDelegate:infobar.get()];
       break;
-    case translate::TRANSLATE_STEP_BEFORE_TRANSLATE: {
-      BeforeTranslateInfoBarController* beforeController =
-          [[BeforeTranslateInfoBarController alloc]
-              initWithDelegate:infobar.get()];
-      beforeController.languageSelectionHandler = language_selection_handler_;
-      controller = beforeController;
+    case translate::TRANSLATE_STEP_BEFORE_TRANSLATE:
+      controller = [[BeforeTranslateInfoBarController alloc]
+          initWithDelegate:infobar.get()];
       break;
-    }
     case translate::TRANSLATE_STEP_NEVER_TRANSLATE:
       controller = [[NeverTranslateInfoBarController alloc]
           initWithDelegate:infobar.get()];

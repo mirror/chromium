@@ -147,10 +147,6 @@ VrShell::VrShell(JNIEnv* env,
   g_instance = this;
   j_vr_shell_.Reset(env, obj);
 
-  // Defer applying commits to the renderer until we know the desired
-  // content resolution and DPR.
-  compositor_->SetDeferCommits(true);
-
   gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
       ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
@@ -735,7 +731,6 @@ void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_setContentCssSize(env, j_vr_shell_, window_size.width(),
                                      window_size.height(), dpr);
-  compositor_->SetDeferCommits(false);
 }
 
 void VrShell::SetVoiceSearchActive(bool active) {
@@ -825,19 +820,19 @@ void VrShell::PollMediaAccessFlag() {
   bool is_capturing_screen = num_tabs_capturing_screen > 0;
   bool is_bluetooth_connected = num_tabs_bluetooth_connected > 0;
   if (is_capturing_audio != is_capturing_audio_) {
-    ui_->SetAudioCaptureEnabled(is_capturing_audio);
+    ui_->SetAudioCapturingIndicator(is_capturing_audio);
     is_capturing_audio_ = is_capturing_audio;
   }
   if (is_capturing_video != is_capturing_video_) {
-    ui_->SetVideoCaptureEnabled(is_capturing_video);
+    ui_->SetVideoCapturingIndicator(is_capturing_video);
     is_capturing_video_ = is_capturing_video;
   }
   if (is_capturing_screen != is_capturing_screen_) {
-    ui_->SetScreenCaptureEnabled(is_capturing_screen);
+    ui_->SetScreenCapturingIndicator(is_capturing_screen);
     is_capturing_screen_ = is_capturing_screen;
   }
   if (is_bluetooth_connected != is_bluetooth_connected_) {
-    ui_->SetBluetoothConnected(is_bluetooth_connected);
+    ui_->SetBluetoothConnectedIndicator(is_bluetooth_connected);
     is_bluetooth_connected_ = is_bluetooth_connected;
   }
 }
@@ -845,7 +840,7 @@ void VrShell::PollMediaAccessFlag() {
 void VrShell::SetHighAccuracyLocation(bool high_accuracy_location) {
   if (high_accuracy_location == high_accuracy_location_)
     return;
-  ui_->SetLocationAccess(high_accuracy_location);
+  ui_->SetLocationAccessIndicator(high_accuracy_location);
   high_accuracy_location_ = high_accuracy_location;
 }
 
@@ -929,21 +924,21 @@ void VrShell::OnVoiceResults(const base::string16& result) {
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
-jlong JNI_VrShellImpl_Init(JNIEnv* env,
-                           const JavaParamRef<jobject>& obj,
-                           const JavaParamRef<jobject>& delegate,
-                           jlong window_android,
-                           jboolean for_web_vr,
-                           jboolean web_vr_autopresentation_expected,
-                           jboolean in_cct,
-                           jboolean browsing_disabled,
-                           jboolean has_or_can_request_audio_permission,
-                           jlong gvr_api,
-                           jboolean reprojected_rendering,
-                           jfloat display_width_meters,
-                           jfloat display_height_meters,
-                           jint display_width_pixels,
-                           jint display_pixel_height) {
+jlong Init(JNIEnv* env,
+           const JavaParamRef<jobject>& obj,
+           const JavaParamRef<jobject>& delegate,
+           jlong window_android,
+           jboolean for_web_vr,
+           jboolean web_vr_autopresentation_expected,
+           jboolean in_cct,
+           jboolean browsing_disabled,
+           jboolean has_or_can_request_audio_permission,
+           jlong gvr_api,
+           jboolean reprojected_rendering,
+           jfloat display_width_meters,
+           jfloat display_height_meters,
+           jint display_width_pixels,
+           jint display_pixel_height) {
   vr::UiInitialState ui_initial_state;
   ui_initial_state.browsing_disabled = browsing_disabled;
   ui_initial_state.in_cct = in_cct;

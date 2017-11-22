@@ -75,12 +75,8 @@ class UserManagerProfileDialog {
 
   // Shows a dialog where the user logs into their profile for the first time
   // via the user manager.
-  // |reason| can be REASON_SIGNIN_PRIMARY_ACCOUNT or
-  // REASON_FORCED_SIGNIN_PRIMARY_ACCOUNT to indicate whether this sign in is
-  // forced or not.
   static void ShowSigninDialog(content::BrowserContext* browser_context,
-                               const base::FilePath& profile_path,
-                               signin_metrics::Reason reason);
+                               const base::FilePath& profile_path);
 
   // Show the dialog and display local sign in error message without browser.
   static void ShowDialogAndDisplayErrorMessage(

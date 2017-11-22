@@ -58,7 +58,7 @@ class WindowServer : public ServerWindowDelegate,
                      public UserDisplayManagerDelegate,
                      public UserIdTrackerObserver {
  public:
-  WindowServer(WindowServerDelegate* delegate, bool should_host_viz);
+  explicit WindowServer(WindowServerDelegate* delegate);
   ~WindowServer() override;
 
   WindowServerDelegate* delegate() { return delegate_; }
@@ -71,15 +71,14 @@ class WindowServer : public ServerWindowDelegate,
     return display_manager_.get();
   }
 
+  GpuHost* gpu_host() { return gpu_host_.get(); }
+
   void SetDisplayCreationConfig(DisplayCreationConfig config);
   DisplayCreationConfig display_creation_config() const {
     return display_creation_config_;
   }
 
   void SetGpuHost(std::unique_ptr<GpuHost> gpu_host);
-  GpuHost* gpu_host() { return gpu_host_.get(); }
-
-  bool is_hosting_viz() const { return !!host_frame_sink_manager_; }
 
   ThreadedImageCursorsFactory* GetThreadedImageCursorsFactory();
 
@@ -253,7 +252,7 @@ class WindowServer : public ServerWindowDelegate,
   VideoDetectorImpl* video_detector() { return &video_detector_; }
 
   // ServerWindowDelegate:
-  VizHostProxy* GetVizHostProxy() override;
+  viz::HostFrameSinkManager* GetHostFrameSinkManager() override;
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info,
                                 ServerWindow* window) override;
 
@@ -420,7 +419,6 @@ class WindowServer : public ServerWindowDelegate,
 
   // Provides interfaces to create and manage FrameSinks.
   std::unique_ptr<viz::HostFrameSinkManager> host_frame_sink_manager_;
-  std::unique_ptr<VizHostProxy> viz_host_proxy_;
 
   VideoDetectorImpl video_detector_;
 

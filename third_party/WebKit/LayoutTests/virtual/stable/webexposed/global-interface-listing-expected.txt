@@ -570,6 +570,7 @@ interface CredentialsContainer
     method create
     method get
     method preventSilentAccess
+    method requireUserMediation
     method store
 interface Crypto
     attribute @@toStringTag
@@ -7907,6 +7908,7 @@ interface webkitURL
     attribute frames
     attribute gamepadController
     attribute internals
+    attribute layoutTestController
     attribute length
     attribute location
     attribute opener

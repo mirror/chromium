@@ -56,12 +56,9 @@ class HttpUserAgentSettings;
 class HttpServerProperties;
 class NetworkQualityEstimator;
 class ProxyConfigService;
+struct ReportingPolicy;
 class URLRequestContext;
 class URLRequestInterceptor;
-
-#if BUILDFLAG(ENABLE_REPORTING)
-struct ReportingPolicy;
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 // A URLRequestContextBuilder creates a single URLRequestContext. It provides
 // methods to manage various URLRequestContext components which should be called
@@ -297,10 +294,6 @@ class NET_EXPORT URLRequestContextBuilder {
 #if BUILDFLAG(ENABLE_REPORTING)
   void set_reporting_policy(
       std::unique_ptr<net::ReportingPolicy> reporting_policy);
-
-  void set_network_error_logging_enabled(bool network_error_logging_enabled) {
-    network_error_logging_enabled_ = network_error_logging_enabled;
-  }
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
   void SetInterceptors(std::vector<std::unique_ptr<URLRequestInterceptor>>
@@ -402,7 +395,6 @@ class NET_EXPORT URLRequestContextBuilder {
   std::unique_ptr<CTPolicyEnforcer> ct_policy_enforcer_;
 #if BUILDFLAG(ENABLE_REPORTING)
   std::unique_ptr<net::ReportingPolicy> reporting_policy_;
-  bool network_error_logging_enabled_;
 #endif  // BUILDFLAG(ENABLE_REPORTING)
   std::vector<std::unique_ptr<URLRequestInterceptor>> url_request_interceptors_;
   CreateInterceptingJobFactory create_intercepting_job_factory_;

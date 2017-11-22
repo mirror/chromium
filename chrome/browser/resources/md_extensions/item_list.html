@@ -14,10 +14,8 @@
       }
 
       #container {
-        box-sizing: border-box;
         height: 100%;
         overflow: overlay;
-        padding-top: 24px;
       }
 
       .empty-list-message {
@@ -31,7 +29,6 @@
       .items-container {
         --grid-gutter: 12px;
         --max-columns: 3;
-        --padding: calc(var(--grid-gutter) / 2);
         display: grid;
         grid-column-gap: var(--grid-gutter);
         grid-row-gap: var(--grid-gutter);
@@ -40,7 +37,7 @@
         margin: auto;
         max-width: calc(var(--extensions-card-width) * var(--max-columns) +
             var(--grid-gutter) * var(--max-columns));
-        padding: 0 var(--padding) var(--padding);
+        padding: calc(var(--grid-gutter) / 2);
       }
 
       extensions-item {
@@ -76,8 +73,8 @@
             filter="[[computeFilter_(filter)]]"
             rendered-item-count="{{shownExtensionsCount_::dom-change}}"
             notify-dom-change>
-          <extensions-item id="[[item.id]]" data="[[item]]"
-              delegate="[[delegate]]" in-dev-mode="[[inDevMode]]">
+          <extensions-item data="[[item]]" delegate="[[delegate]]"
+              in-dev-mode="[[inDevMode]]">
           </extensions-item>
         </template>
       </div>
@@ -90,8 +87,8 @@
               filter="[[computeFilter_(filter)]]"
               rendered-item-count="{{shownAppsCount_::dom-change}}"
               notify-dom-change>
-            <extensions-item id="[[item.id]]" data="[[item]]"
-                delegate="[[delegate]]" in-dev-mode="[[inDevMode]]">
+            <extensions-item data="[[item]]" delegate="[[delegate]]"
+                in-dev-mode="[[inDevMode]]">
             </extensions-item>
           </template>
         </div>

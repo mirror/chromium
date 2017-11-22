@@ -20,7 +20,7 @@ class AnimationInterpolableValueTest : public ::testing::Test {
     // We require a property that maps to CSSNumberInterpolationType. 'z-index'
     // suffices for this, and also means we can ignore the AnimatableValues for
     // the compositor (as z-index isn't compositor-compatible).
-    PropertyHandle property_handle(GetCSSPropertyZIndex());
+    PropertyHandle property_handle(CSSPropertyZIndex);
     CSSNumberInterpolationType interpolation_type(property_handle);
     InterpolationValue start(InterpolableNumber::Create(a));
     InterpolationValue end(InterpolableNumber::Create(b));
@@ -49,7 +49,7 @@ class AnimationInterpolableValueTest : public ::testing::Test {
     // We require a property that maps to CSSLengthInterpolationType. 'left'
     // suffices for this, and also means we can ignore the AnimatableValues for
     // the compositor (as left isn't compositor-compatible).
-    PropertyHandle property_handle(GetCSSPropertyLeft());
+    PropertyHandle property_handle(CSSPropertyLeft);
     CSSLengthInterpolationType interpolation_type(property_handle);
     InterpolationValue start(std::move(list_a));
     InterpolationValue end(std::move(list_b));

@@ -120,7 +120,7 @@ TestPlugin::TestPlugin(const blink::WebPluginParams& params,
       web_local_frame_(frame),
       gl_(nullptr),
       color_texture_(0),
-      content_changed_(false),
+      mailbox_changed_(false),
       framebuffer_(0),
       touch_event_request_(
           blink::WebPluginContainer::kTouchEventRequestTypeNone),
@@ -243,9 +243,7 @@ void TestPlugin::UpdateGeometry(
   rect_ = clip_rect;
 
   if (rect_.IsEmpty()) {
-    mailbox_ = gpu::Mailbox();
-    sync_token_ = gpu::SyncToken();
-    shared_bitmap_ = nullptr;
+    texture_mailbox_ = viz::TextureMailbox();
   } else if (gl_) {
     gl_->Viewport(0, 0, rect_.width, rect_.height);
 
@@ -262,23 +260,30 @@ void TestPlugin::UpdateGeometry(
 
     DrawSceneGL();
 
-    gl_->GenMailboxCHROMIUM(mailbox_.name);
-    gl_->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox_.name);
+    gpu::Mailbox mailbox;
+    gl_->GenMailboxCHROMIUM(mailbox.name);
+    gl_->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox.name);
     const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
     gl_->Flush();
 
-    gl_->GenSyncTokenCHROMIUM(fence_sync, sync_token_.GetData());
-
-    shared_bitmap_ = nullptr;
+    gpu::SyncToken sync_token;
+    gl_->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+    texture_mailbox_ = viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D);
   } else {
-    mailbox_ = gpu::Mailbox();
-    sync_token_ = gpu::SyncToken();
-    shared_bitmap_ = delegate_->GetSharedBitmapManager()->AllocateSharedBitmap(
-        gfx::Rect(rect_).size());
-    DrawSceneSoftware(shared_bitmap_->pixels());
+    std::unique_ptr<viz::SharedBitmap> bitmap =
+        delegate_->GetSharedBitmapManager()->AllocateSharedBitmap(
+            gfx::Rect(rect_).size());
+    if (!bitmap) {
+      texture_mailbox_ = viz::TextureMailbox();
+    } else {
+      DrawSceneSoftware(bitmap->pixels());
+      texture_mailbox_ = viz::TextureMailbox(
+          bitmap.get(), gfx::Size(rect_.width, rect_.height));
+      shared_bitmap_ = std::move(bitmap);
+    }
   }
 
-  content_changed_ = true;
+  mailbox_changed_ = true;
   layer_->SetNeedsDisplay();
 }
 
@@ -293,24 +298,20 @@ static void ReleaseSharedMemory(std::unique_ptr<viz::SharedBitmap> bitmap,
                                 const gpu::SyncToken& sync_token,
                                 bool lost) {}
 
-bool TestPlugin::PrepareTransferableResource(
-    viz::TransferableResource* resource,
+bool TestPlugin::PrepareTextureMailbox(
+    viz::TextureMailbox* mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* release_callback) {
-  if (!content_changed_)
+  if (!mailbox_changed_)
     return false;
-  if (!mailbox_.IsZero()) {
-    *resource = viz::TransferableResource::MakeGL(mailbox_, GL_LINEAR,
-                                                  GL_TEXTURE_2D, sync_token_);
+  *mailbox = texture_mailbox_;
+  if (texture_mailbox_.IsTexture()) {
     *release_callback =
         viz::SingleReleaseCallback::Create(base::Bind(&IgnoreReleaseCallback));
-  } else if (shared_bitmap_) {
-    *resource = viz::TransferableResource::MakeSoftware(
-        shared_bitmap_->id(), shared_bitmap_->sequence_number(),
-        gfx::Size(rect_.width, rect_.height));
+  } else if (texture_mailbox_.IsSharedMemory()) {
     *release_callback = viz::SingleReleaseCallback::Create(
         base::Bind(&ReleaseSharedMemory, base::Passed(&shared_bitmap_)));
   }
-  content_changed_ = false;
+  mailbox_changed_ = false;
   return true;
 }
 

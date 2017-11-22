@@ -6,7 +6,6 @@
 
 #include <stdint.h>
 
-#include <memory>
 #include <string>
 #include <tuple>
 
@@ -111,7 +110,7 @@ const UnaryOpNode* ParseNode::AsUnaryOp() const { return nullptr; }
 
 Comments* ParseNode::comments_mutable() {
   if (!comments_)
-    comments_ = std::make_unique<Comments>();
+    comments_.reset(new Comments);
   return comments_.get();
 }
 
@@ -316,7 +315,7 @@ Value BlockNode::Execute(Scope* enclosing_scope, Err* err) const {
   Scope* execution_scope;  // Either the enclosing_scope or nested_scope.
   if (result_mode_ == RETURNS_SCOPE) {
     // Create a nested scope to save the values for returning.
-    nested_scope = std::make_unique<Scope>(enclosing_scope);
+    nested_scope.reset(new Scope(enclosing_scope));
     execution_scope = nested_scope.get();
   } else {
     // Use the enclosing scope. Modifications will go into this also (for

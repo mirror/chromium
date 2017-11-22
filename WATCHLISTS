@@ -84,8 +84,7 @@
       'filepath': 'android_webview/',
     },
     'app_list': {
-      'filepath': 'ash/app_list'\
-                  '|chrome/browser/ui/app_list'\
+      'filepath': 'chrome/browser/ui/app_list'\
                   '|chrome/browser/ui/ash/app_list'\
                   '|chrome/browser/ui/views/app_list'\
                   '|ui/app_list/'
@@ -1947,7 +1946,8 @@
     'components_deps': ['blundell+watchlist@chromium.org',
                         'droger+watchlist@chromium.org',
                         'sdefresne+watchlist@chromium.org'],
-    'content': ['jam@chromium.org'],
+    'content': ['darin-cc@chromium.org',
+                'jam@chromium.org'],
     'content_bluetooth': ['cco3+watch@chromium.org',
                           'mattreynolds+watch@chromium.org',
                           'ortuno+watch@chromium.org',
@@ -2080,7 +2080,8 @@
                  'liaoyuke+watch@chromium.org'],
     'ios_web': ['ios-reviews+web@chromium.org',
                 'eugenebut@chromium.org'],
-    'ipc': ['jam@chromium.org'],
+    'ipc': ['darin-cc@chromium.org',
+            'jam@chromium.org'],
     'libvpx': ['fgalligan@chromium.org',
                'johannkoenig@chromium.org',
                'jzern@chromium.org',

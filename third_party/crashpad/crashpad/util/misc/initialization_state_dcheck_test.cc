@@ -21,7 +21,7 @@
 #include "base/logging.h"
 #include "base/memory/free_deleter.h"
 #include "gtest/gtest.h"
-#include "test/gtest_death.h"
+#include "test/gtest_death_check.h"
 
 namespace crashpad {
 namespace test {

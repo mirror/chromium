@@ -254,8 +254,11 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
   // If the feature is not supported on the device, nothing happens.
   void SwapInternalSpeakerLeftRightChannel(bool swap);
 
-  // Accessibility mono audio setting: sets the output mono or not.
-  void SetOutputMonoEnabled(bool enabled);
+  // Accessibility audio setting: sets the output mono or not.
+  void SetOutputMono(bool mono_on);
+
+  // Returns true if output mono is enabled.
+  bool IsOutputMonoEnabled() const;
 
   // If necessary, sets the starting point for re-discovering the active HDMI
   // output device caused by device entering/exiting docking mode, HDMI display
@@ -469,7 +472,7 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
   void GetDefaultOutputBufferSizeInternal();
 
   // Handle dbus callback for GetDefaultOutputBufferSize.
-  void HandleGetDefaultOutputBufferSize(base::Optional<int> buffer_size);
+  void HandleGetDefaultOutputBufferSize(int buffer_size, bool success);
 
   void OnVideoCaptureStartedOnMainThread(media::VideoFacingMode facing);
   void OnVideoCaptureStoppedOnMainThread(media::VideoFacingMode facing);
@@ -496,7 +499,7 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
 
   // Audio output channel counts.
   int32_t output_channels_;
-  bool output_mono_enabled_;
+  bool output_mono_on_;
 
   // Timer for HDMI re-discovering grace period.
   base::OneShotTimer hdmi_rediscover_timer_;

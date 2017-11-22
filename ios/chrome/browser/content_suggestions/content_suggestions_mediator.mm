@@ -175,10 +175,6 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
   self.faviconMediator.dataSink = dataSink;
 }
 
-+ (NSUInteger)maxSitesShown {
-  return kMaxNumMostVisitedTiles;
-}
-
 #pragma mark - ContentSuggestionsDataSource
 
 - (NSArray<ContentSuggestionsSectionInformation*>*)sectionsInfo {

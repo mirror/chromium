@@ -37,20 +37,22 @@ class CHROMEOS_EXPORT MockHomedirMethods : public HomedirMethods {
                     const AuthorizationRequest& auth,
                     const MountRequest& request,
                     const MountCallback& callback));
-  MOCK_METHOD4(AddKeyEx,
+  MOCK_METHOD5(AddKeyEx,
                void(const Identification& id,
-                    const AuthorizationRequest& auth,
-                    const AddKeyRequest& request,
+                    const Authorization& auth,
+                    const KeyDefinition& key,
+                    bool clobber_if_exist,
                     const Callback& callback));
   MOCK_METHOD4(RemoveKeyEx,
                void(const Identification& id,
-                    const AuthorizationRequest& auth,
-                    const RemoveKeyRequest& request,
+                    const Authorization& auth,
+                    const std::string& label,
                     const Callback& callback));
-  MOCK_METHOD4(UpdateKeyEx,
+  MOCK_METHOD5(UpdateKeyEx,
                void(const Identification& id,
-                    const AuthorizationRequest& auth,
-                    const UpdateKeyRequest& request,
+                    const Authorization& auth,
+                    const KeyDefinition& key,
+                    const std::string& signature,
                     const Callback& callback));
   MOCK_METHOD3(RenameCryptohome,
                void(const Identification& id_from,
@@ -61,7 +63,7 @@ class CHROMEOS_EXPORT MockHomedirMethods : public HomedirMethods {
                     const GetAccountDiskUsageCallback& callback));
   MOCK_METHOD3(MigrateToDircrypto,
                void(const Identification& id,
-                    const MigrateToDircryptoRequest& request,
+                    bool minimal_migration,
                     const DBusResultCallback& callback));
 
   void set_mount_callback(const base::Closure& callback) {

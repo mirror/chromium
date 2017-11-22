@@ -150,7 +150,7 @@ class DeviceCloudPolicyManagerChromeOSTest
         base::WrapUnique(store_), base::ThreadTaskRunnerHandle::Get(),
         &state_keys_broker_));
 
-    RegisterLocalState(local_state_.registry());
+    chrome::RegisterLocalState(local_state_.registry());
     manager_->Init(&schema_registry_);
 
     // DeviceOAuth2TokenService uses the system request context to fetch

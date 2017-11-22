@@ -30,7 +30,7 @@
 
 #include "platform/graphics/ProfilingCanvas.h"
 
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 
 namespace blink {
 

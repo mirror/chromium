@@ -15,11 +15,10 @@
 
 using base::android::JavaParamRef;
 
-static void JNI_WarmupManager_PreconnectUrlAndSubresources(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobject>& jprofile,
-    const JavaParamRef<jstring>& url_str) {
+static void PreconnectUrlAndSubresources(JNIEnv* env,
+                                         const JavaParamRef<jclass>& clazz,
+                                         const JavaParamRef<jobject>& jprofile,
+                                         const JavaParamRef<jstring>& url_str) {
   if (url_str) {
     GURL url = GURL(base::android::ConvertJavaStringToUTF8(env, url_str));
     Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);
@@ -37,10 +36,9 @@ static void JNI_WarmupManager_PreconnectUrlAndSubresources(
   }
 }
 
-static void JNI_WarmupManager_WarmupSpareRenderer(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobject>& jprofile) {
+static void WarmupSpareRenderer(JNIEnv* env,
+                                const JavaParamRef<jclass>& clazz,
+                                const JavaParamRef<jobject>& jprofile) {
   Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);
   if (profile) {
     content::RenderProcessHost::WarmupSpareRenderProcessHost(profile);

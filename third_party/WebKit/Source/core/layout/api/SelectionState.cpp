@@ -20,8 +20,6 @@ std::ostream& operator<<(std::ostream& out, const SelectionState state) {
       return out << "End";
     case SelectionState::kStartAndEnd:
       return out << "StartAndEnd";
-    case SelectionState::kContain:
-      return out << "Contain";
   }
   NOTREACHED();
   return out;

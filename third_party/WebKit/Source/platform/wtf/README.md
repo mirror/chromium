@@ -71,7 +71,7 @@ The below is a list of major libraries. For a complete list, look at
 
   [Noncopyable.h] (`WTF_MAKE_NONCOPYABLE`),
   [StdLibExtras.h] (`DEFINE_STATIC_LOCAL` etc.),
-  [Time.h],
+  [CurrentTime.h],
   [CryptographicallyRandomNumber.h],
   [AutoReset.h],
   [Optional.h]
@@ -105,6 +105,7 @@ current location][4] Source/platform/wtf.
 [StringBuilder]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/text/StringBuilder.h
 [CString]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/text/CString.h
 [RefCounted]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/RefCounted.h
+[RefPtr]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/RefPtr.h
 [PtrUtil.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/PtrUtil.h
 [Allocator.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/Allocator.h
 [Functional.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/Functional.h
@@ -115,7 +116,7 @@ current location][4] Source/platform/wtf.
 [build_config.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/build_config.h
 [Noncopyable.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/Noncopyable.h
 [StdLibExtras.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/StdLibExtras.h
-[Time.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/Time.h
+[CurrentTime.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/CurrentTime.h
 [CryptographicallyRandomNumber.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/CryptographicallyRandomNumber.h
 [AutoReset.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/AutoReset.h
 [Optional.h]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/Optional.h

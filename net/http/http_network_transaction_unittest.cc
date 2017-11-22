@@ -569,9 +569,8 @@ class HttpNetworkTransactionTest : public PlatformTest {
 
   void AddSSLSocketData() {
     ssl_.next_proto = kProtoHTTP2;
-    ssl_.ssl_info.cert =
-        ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
-    ASSERT_TRUE(ssl_.ssl_info.cert);
+    ssl_.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
+    ASSERT_TRUE(ssl_.cert);
     session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl_);
   }
 
@@ -10407,10 +10406,9 @@ TEST_F(HttpNetworkTransactionTest, IgnoreAltSvcWithInvalidCert) {
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
-  ssl.ssl_info.cert =
-      ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
-  ASSERT_TRUE(ssl.ssl_info.cert);
-  ssl.ssl_info.cert_status = CERT_STATUS_COMMON_NAME_INVALID;
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
+  ssl.cert_status = CERT_STATUS_COMMON_NAME_INVALID;
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   TestCompletionCallback callback;
@@ -10461,9 +10459,8 @@ TEST_F(HttpNetworkTransactionTest, HonorAlternativeServiceHeader) {
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
-  ssl.ssl_info.cert =
-      ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
-  ASSERT_TRUE(ssl.ssl_info.cert);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   TestCompletionCallback callback;
@@ -10661,9 +10658,8 @@ TEST_F(HttpNetworkTransactionTest, ClearAlternativeServices) {
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
-  ssl.ssl_info.cert =
-      ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
-  ASSERT_TRUE(ssl.ssl_info.cert);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   HttpRequestInfo request;
@@ -10709,9 +10705,8 @@ TEST_F(HttpNetworkTransactionTest, HonorMultipleAlternativeServiceHeaders) {
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
-  ssl.ssl_info.cert =
-      ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
-  ASSERT_TRUE(ssl.ssl_info.cert);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   TestCompletionCallback callback;
@@ -11341,9 +11336,8 @@ TEST_F(HttpNetworkTransactionTest, AlternateProtocolWithSpdyLateBinding) {
   session_deps_.socket_factory->AddSocketDataProvider(&http11_data);
 
   SSLSocketDataProvider ssl_http11(ASYNC, OK);
-  ssl_http11.ssl_info.cert =
-      ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
-  ASSERT_TRUE(ssl_http11.ssl_info.cert);
+  ssl_http11.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl_http11.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl_http11);
 
   // Second transaction starts an alternative and a non-alternative Job.
@@ -11455,9 +11449,8 @@ TEST_F(HttpNetworkTransactionTest, StallAlternativeServiceForNpnSpdy) {
   session_deps_.socket_factory->AddSocketDataProvider(&first_transaction);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
-  ssl.ssl_info.cert =
-      ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
-  ASSERT_TRUE(ssl.ssl_info.cert);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   MockConnect never_finishing_connect(SYNCHRONOUS, ERR_IO_PENDING);
@@ -14890,9 +14883,8 @@ TEST_F(HttpNetworkTransactionTest, DoNotUseSpdySessionIfCertDoesNotMatch) {
   // be valid for proxy because the MockSSLClientSocket does
   // not actually verify it.  But SpdySession will use this
   // to see if it is valid for the new origin
-  ssl1.ssl_info.cert =
-      ImportCertFromFile(GetTestCertsDirectory(), "ok_cert.pem");
-  ASSERT_TRUE(ssl1.ssl_info.cert);
+  ssl1.cert = ImportCertFromFile(GetTestCertsDirectory(), "ok_cert.pem");
+  ASSERT_TRUE(ssl1.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl1);
   session_deps_.socket_factory->AddSocketDataProvider(&data1);
 
@@ -17153,8 +17145,8 @@ TEST_F(HttpNetworkTransactionTest, TokenBindingSpdy) {
   request.method = "GET";
 
   SSLSocketDataProvider ssl(ASYNC, OK);
-  ssl.ssl_info.token_binding_negotiated = true;
-  ssl.ssl_info.token_binding_key_param = TB_PARAM_ECDSAP256;
+  ssl.token_binding_negotiated = true;
+  ssl.token_binding_key_param = TB_PARAM_ECDSAP256;
   ssl.next_proto = kProtoHTTP2;
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 

@@ -29,41 +29,6 @@ function getTimeFormat(time) {
 }
 
 /**
- * Insert a log message row to the top of the log message table.
- *
- * @param {number!} time Millisecond since Unix Epoch representation of time.
- * @param {string!} type The message event type.
- * @param {string!} description The event message description.
- * @param {string} url The URL associated with the event.
- */
-function insertMessageRowToMessageLogTable(time, type, description, url) {
-  let tableRow =
-      $('message-logs-table').insertRow(1);  // Index 0 belongs to header row.
-  tableRow.setAttribute('class', 'log-message');
-
-  let timeTd = document.createElement('td');
-  timeTd.textContent = getTimeFormat(time);
-  timeTd.setAttribute('class', 'log-time');
-  tableRow.appendChild(timeTd);
-
-  let typeTd = document.createElement('td');
-  typeTd.setAttribute('class', 'log-type');
-  typeTd.textContent = type;
-  tableRow.appendChild(typeTd);
-
-  let descriptionTd = document.createElement('td');
-  descriptionTd.setAttribute('class', 'log-description');
-  descriptionTd.textContent = description;
-  tableRow.appendChild(descriptionTd);
-
-  if (url.length > 0) {
-    let urlTd = createUrlElement(url);
-    urlTd.setAttribute('class', 'log-url');
-    tableRow.appendChild(urlTd);
-  }
-}
-
-/**
  * Switch the selected tab to 'selected-tab' class.
  */
 function setSelectedTab() {
@@ -224,8 +189,29 @@ InterventionsInternalPageImpl.prototype = {
    * PreviewsLogger.
    */
   logNewMessage: function(log) {
-    insertMessageRowToMessageLogTable(
-        log.time, log.type, log.description, log.url.url);
+    let logsTable = $('message-logs-table');
+
+    let tableRow = logsTable.insertRow(1);  // Index 0 belongs to header row.
+    tableRow.setAttribute('class', 'log-message');
+
+    let timeTd = document.createElement('td');
+    timeTd.textContent = getTimeFormat(log.time);
+    timeTd.setAttribute('class', 'log-time');
+    tableRow.appendChild(timeTd);
+
+    let typeTd = document.createElement('td');
+    typeTd.setAttribute('class', 'log-type');
+    typeTd.textContent = log.type;
+    tableRow.appendChild(typeTd);
+
+    let descriptionTd = document.createElement('td');
+    descriptionTd.setAttribute('class', 'log-description');
+    descriptionTd.textContent = log.description;
+    tableRow.appendChild(descriptionTd);
+
+    let urlTd = createUrlElement(log.url.url);
+    urlTd.setAttribute('class', 'log-url');
+    tableRow.appendChild(urlTd);
   },
 
   /**
@@ -314,14 +300,11 @@ InterventionsInternalPageImpl.prototype = {
     let ectType = $('nqe-type');
     ectType.textContent = type;
 
-    let now = getTimeFormat(Date.now());
-
-    // Log ECT changed event to ECT change log.
-    let nqeRow =
-        $('nqe-logs-table').insertRow(1);  // Index 0 belongs to header row.
+    // Log ECT changed event.
+    let nqeRow = document.createElement('tr');
 
     let timeCol = document.createElement('td');
-    timeCol.textContent = now;
+    timeCol.textContent = getTimeFormat(Date.now());
     timeCol.setAttribute('class', 'nqe-time-column');
     nqeRow.appendChild((timeCol));
 
@@ -329,10 +312,7 @@ InterventionsInternalPageImpl.prototype = {
     nqeCol.setAttribute('class', 'nqe-value-column');
     nqeCol.textContent = type;
     nqeRow.appendChild(nqeCol);
-
-    // Insert ECT changed message to message-logs-table.
-    insertMessageRowToMessageLogTable(
-        now, 'ECT Changed', 'Effective Connection Type changed to ' + type, '');
+    $('nqe-logs-table').appendChild(nqeRow);
   },
 };
 
@@ -342,7 +322,6 @@ cr.define('interventions_internals', () => {
   function init(handler) {
     pageHandler = handler;
     getPreviewsEnabled();
-    getPreviewsFlagsDetails();
 
     let ignoreButton = $('ignore-blacklist-button');
     ignoreButton.addEventListener('click', () => {
@@ -354,77 +333,33 @@ cr.define('interventions_internals', () => {
   }
 
   /**
-   * Sort keys by the value of each value by its description attribute of a
-   * |mapObject|.
-   *
-   * @param mapObject {!Map<string, Object} A map where all values have a
-   * description attribute.
-   * @return A list of keys sorted by their descriptions.
-   */
-  function getSortedKeysByDescription(mapObject) {
-    let sortedKeys = Array.from(mapObject.keys());
-    sortedKeys.sort((a, b) => {
-      return mapObject.get(a).description > mapObject.get(b).description;
-    });
-    return sortedKeys;
-  }
-
-  /**
    * Retrieves the statuses of previews (i.e. Offline, LoFi, AMP Redirection),
    * and posts them on chrome://intervention-internals.
    */
   function getPreviewsEnabled() {
     pageHandler.getPreviewsEnabled()
         .then((response) => {
-          let statuses = $('previews-enabled-status');
+          let statuses = $('previews-statuses');
 
-          getSortedKeysByDescription(response.statuses).forEach((key) => {
+          // Sorting the keys by the status's description.
+          let sortedKeys = Array.from(response.statuses.keys());
+          sortedKeys.sort((a, b) => {
+            return response.statuses.get(a).description >
+                response.statuses.get(b).description;
+          });
+
+          sortedKeys.forEach((key) => {
             let value = response.statuses.get(key);
             let message = value.description + ': ';
             message += value.enabled ? 'Enabled' : 'Disabled';
 
             assert(!$(key), 'Component ' + key + ' already existed!');
 
-            let node = document.createElement('div');
+            let node = document.createElement('p');
             node.setAttribute('class', 'previews-status-value');
             node.setAttribute('id', key);
             node.textContent = message;
             statuses.appendChild(node);
-          });
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
-  }
-
-  function getPreviewsFlagsDetails() {
-    pageHandler.getPreviewsFlagsDetails()
-        .then((response) => {
-          let flags = $('previews-flags-table');
-
-          getSortedKeysByDescription(response.flags).forEach((key) => {
-            let value = response.flags.get(key);
-            assert(!$(key), 'Component ' + key + ' already existed!');
-
-            let flagDescription = document.createElement('a');
-            flagDescription.setAttribute('class', 'previews-flag-description');
-            flagDescription.setAttribute('id', key + 'Description');
-            flagDescription.setAttribute('href', value.link);
-            flagDescription.textContent = value.description;
-
-            let flagNameTd = document.createElement('td');
-            flagNameTd.appendChild(flagDescription);
-
-            let flagValueTd = document.createElement('td');
-            flagValueTd.setAttribute('class', 'previews-flag-value');
-            flagValueTd.setAttribute('id', key + 'Value');
-            flagValueTd.textContent = value.value;
-
-            let node = document.createElement('tr');
-            node.setAttribute('class', 'previews-flag-container');
-            node.appendChild(flagNameTd);
-            node.appendChild(flagValueTd);
-            flags.appendChild(node);
           });
         })
         .catch((error) => {

@@ -6,6 +6,7 @@
 
 [
     ActiveScriptWrappable,
+    DependentLifetime,
     Exposed=ServiceWorker,
     NoInterfaceObject
 ] interface Body {

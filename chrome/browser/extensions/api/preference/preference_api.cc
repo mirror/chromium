@@ -126,7 +126,7 @@ const PrefMappingEntry kPrefMapping[] = {
      APIPermission::kPrivacy, APIPermission::kPrivacy},
     {"thirdPartyCookiesAllowed", prefs::kBlockThirdPartyCookies,
      APIPermission::kPrivacy, APIPermission::kPrivacy},
-    {"translationServiceEnabled", prefs::kOfferTranslateEnabled,
+    {"translationServiceEnabled", prefs::kEnableTranslate,
      APIPermission::kPrivacy, APIPermission::kPrivacy},
 #if BUILDFLAG(ENABLE_WEBRTC)
     // webRTCMultipleRoutesEnabled and webRTCNonProxiedUdpEnabled have been
@@ -467,7 +467,7 @@ void PreferenceAPIBase::SetExtensionControlledPref(
       extension_prefs()->pref_service()->FindPreference(pref_key);
   DCHECK(pref) << "Extension controlled preference key " << pref_key
                << " not registered.";
-  DCHECK_EQ(pref->GetType(), value->type())
+  DCHECK_EQ(pref->GetType(), value->GetType())
       << "Extension controlled preference " << pref_key << " has wrong type.";
 #endif
 

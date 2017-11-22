@@ -32,6 +32,7 @@
 
 #include <memory>
 #include "core/dom/events/Event.h"
+#include "core/dom/events/EventDispatchMediator.h"
 #include "core/dom/events/EventDispatcher.h"
 #include "core/dom/events/EventTarget.h"
 #include "platform/wtf/PtrUtil.h"
@@ -44,7 +45,7 @@ ScopedEventQueue::ScopedEventQueue() : scoping_level_(0) {}
 
 ScopedEventQueue::~ScopedEventQueue() {
   DCHECK(!scoping_level_);
-  DCHECK(!queued_events_.size());
+  DCHECK(!queued_event_dispatch_mediators_.size());
 }
 
 void ScopedEventQueue::Initialize() {
@@ -54,25 +55,26 @@ void ScopedEventQueue::Initialize() {
   instance_ = instance.release();
 }
 
-void ScopedEventQueue::EnqueueEvent(Event* event) {
+void ScopedEventQueue::EnqueueEventDispatchMediator(
+    EventDispatchMediator* mediator) {
   if (ShouldQueueEvents())
-    queued_events_.push_back(event);
+    queued_event_dispatch_mediators_.push_back(mediator);
   else
-    DispatchEvent(event);
+    DispatchEvent(mediator);
 }
 
 void ScopedEventQueue::DispatchAllEvents() {
-  HeapVector<Member<Event>> queued_events;
-  queued_events.swap(queued_events_);
+  HeapVector<Member<EventDispatchMediator>> queued_event_dispatch_mediators;
+  queued_event_dispatch_mediators.swap(queued_event_dispatch_mediators_);
 
-  for (auto& event : queued_events)
-    DispatchEvent(event);
+  for (auto& mediator : queued_event_dispatch_mediators)
+    DispatchEvent(mediator.Release());
 }
 
-void ScopedEventQueue::DispatchEvent(Event* event) const {
-  DCHECK(event->target());
-  Node* node = event->target()->ToNode();
-  EventDispatcher::DispatchEvent(*node, event);
+void ScopedEventQueue::DispatchEvent(EventDispatchMediator* mediator) const {
+  DCHECK(mediator->GetEvent().target());
+  Node* node = mediator->GetEvent().target()->ToNode();
+  EventDispatcher::DispatchEvent(*node, mediator);
 }
 
 ScopedEventQueue* ScopedEventQueue::Instance() {

@@ -1151,10 +1151,8 @@ void ChildProcessSecurityPolicyImpl::AddIsolatedOrigin(
   CHECK(IsolatedOriginUtil::IsValidIsolatedOrigin(origin));
 
   base::AutoLock lock(lock_);
-  if (isolated_origins_.count(origin)) {
-    LOG(ERROR) << "Ignoring duplicate isolated origin: " << origin.Serialize();
-    return;
-  }
+  CHECK(!isolated_origins_.count(origin))
+      << "Duplicate isolated origin: " << origin.Serialize();
 
   isolated_origins_.insert(origin);
 }

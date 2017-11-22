@@ -25,7 +25,8 @@ void TestAppWindowContents::NativeWindowChanged(
     NativeAppWindow* native_app_window) {
 }
 
-void TestAppWindowContents::NativeWindowClosed(bool send_onclosed) {}
+void TestAppWindowContents::NativeWindowClosed() {
+}
 
 void TestAppWindowContents::OnWindowReady() {}
 

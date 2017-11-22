@@ -25,8 +25,6 @@ class Surface;
 
 enum class DndAction { kNone, kCopy, kMove, kAsk };
 
-class ScopedDataOffer;
-
 // DataDevice to start drag and drop and copy and paste oprations.
 class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
  public:
@@ -61,10 +59,11 @@ class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
 
  private:
   Surface* GetEffectiveTargetForEvent(const ui::DropTargetEvent& event) const;
+  void ClearDataOffer();
 
   DataDeviceDelegate* const delegate_;
   FileHelper* const file_helper_;
-  std::unique_ptr<ScopedDataOffer> data_offer_;
+  DataOffer* data_offer_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
 };

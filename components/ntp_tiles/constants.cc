@@ -23,11 +23,12 @@ const base::Feature kSiteExplorationUiFeature{
 
 bool AreNtpMostLikelyFaviconsFromServerEnabled() {
   // Check if the experimental flag is forced on or off.
-  base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
-  if (cmdline->HasSwitch(switches::kEnableNtpMostLikelyFaviconsFromServer)) {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(
+          switches::kEnableNtpMostLikelyFaviconsFromServer)) {
     return true;
-  }
-  if (cmdline->HasSwitch(switches::kDisableNtpMostLikelyFaviconsFromServer)) {
+  } else if (command_line->HasSwitch(
+                 switches::kDisableNtpMostLikelyFaviconsFromServer)) {
     return false;
   }
 

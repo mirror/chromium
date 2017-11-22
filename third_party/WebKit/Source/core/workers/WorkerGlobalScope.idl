@@ -28,6 +28,7 @@
 
 [
     ActiveScriptWrappable,
+    DependentLifetime,
     Exposed=Worker,
     ImmutablePrototype
 ] interface WorkerGlobalScope : EventTarget {

@@ -128,7 +128,6 @@ class ChromeContentRendererClient
   bool HasErrorPage(int http_status_code) override;
   bool ShouldSuppressErrorPage(content::RenderFrame* render_frame,
                                const GURL& url) override;
-  bool ShouldTrackUseCounter(const GURL& url) override;
   void GetNavigationErrorStrings(content::RenderFrame* render_frame,
                                  const blink::WebURLRequest& failed_request,
                                  const blink::WebURLError& error,
@@ -239,8 +238,7 @@ class ChromeContentRendererClient
 
 #if BUILDFLAG(ENABLE_PLUGINS) && BUILDFLAG(ENABLE_EXTENSIONS)
   static bool IsExtensionOrSharedModuleWhitelisted(
-      const GURL& url,
-      const std::set<std::string>& whitelist);
+      const GURL& url, const std::set<std::string>& whitelist);
 #endif
 
  private:

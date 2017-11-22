@@ -35,11 +35,10 @@ bool IsInScope(const GURL& url, const GURL& scope) {
 
 }  // anonymous namespace
 
-jlong JNI_WebApkUpdateDataFetcher_Initialize(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& java_scope_url,
-    const JavaParamRef<jstring>& java_web_manifest_url) {
+jlong Initialize(JNIEnv* env,
+                 const JavaParamRef<jobject>& obj,
+                 const JavaParamRef<jstring>& java_scope_url,
+                 const JavaParamRef<jstring>& java_web_manifest_url) {
   GURL scope(base::android::ConvertJavaStringToUTF8(env, java_scope_url));
   GURL web_manifest_url(
       base::android::ConvertJavaStringToUTF8(env, java_web_manifest_url));

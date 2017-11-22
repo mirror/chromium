@@ -278,8 +278,6 @@ NetworkQualityEstimator::NetworkQualityEstimator(
       params_->min_socket_watcher_notification_interval(),
       base::Bind(&NetworkQualityEstimator::OnUpdatedTransportRTTAvailable,
                  base::Unretained(this)),
-      base::Bind(&NetworkQualityEstimator::ShouldSocketWatcherNotifyRTT,
-                 base::Unretained(this)),
       tick_clock_.get()));
 
   // Record accuracy after a 15 second interval. The values used here must
@@ -797,7 +795,6 @@ void NetworkQualityEstimator::OnConnectionTypeChanged(
   new_rtt_observations_since_last_ect_computation_ = 0;
   new_throughput_observations_since_last_ect_computation_ = 0;
   transport_rtt_observation_count_last_ect_computation_ = 0;
-  last_socket_watcher_rtt_notification_ = base::TimeTicks();
   estimated_quality_at_last_main_frame_ = nqe::internal::NetworkQuality();
   cached_estimate_applied_ = false;
 
@@ -1660,7 +1657,6 @@ void NetworkQualityEstimator::SetTickClockForTesting(
   http_downstream_throughput_kbps_observations_.SetTickClockForTesting(
       tick_clock_.get());
   throughput_analyzer_->SetTickClockForTesting(tick_clock_.get());
-  watcher_factory_->SetTickClockForTesting(tick_clock_.get());
 }
 
 double NetworkQualityEstimator::RandDouble() const {
@@ -1707,11 +1703,6 @@ void NetworkQualityEstimator::AddAndNotifyObserversOfRTT(
     case nqe::internal::ObservationCategory::kTransport:
       transport_rtt_ms_observations_.AddObservation(observation);
       break;
-  }
-
-  if (observation.source() == NETWORK_QUALITY_OBSERVATION_SOURCE_TCP ||
-      observation.source() == NETWORK_QUALITY_OBSERVATION_SOURCE_QUIC) {
-    last_socket_watcher_rtt_notification_ = tick_clock_->NowTicks();
   }
 
   UMA_HISTOGRAM_ENUMERATION("NQE.RTT.ObservationSource", observation.source(),
@@ -1904,8 +1895,8 @@ void NetworkQualityEstimator::OnPrefsRead(
         effective_connection_type);
 
     network_quality_store_->Add(it.first, cached_network_quality);
+    MaybeUpdateNetworkQualityFromCache(it.first, cached_network_quality);
   }
-  ReadCachedNetworkQualityEstimate();
 }
 
 base::Optional<base::TimeDelta> NetworkQualityEstimator::GetHttpRTT() const {
@@ -1940,6 +1931,50 @@ base::Optional<int32_t> NetworkQualityEstimator::GetBandwidthDelayProductKbits()
     const {
   DCHECK(thread_checker_.CalledOnValidThread());
   return bandwidth_delay_product_kbits_;
+}
+
+void NetworkQualityEstimator::MaybeUpdateNetworkQualityFromCache(
+    const nqe::internal::NetworkID& network_id,
+    const nqe::internal::CachedNetworkQuality& cached_network_quality) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (!params_->persistent_cache_reading_enabled())
+    return;
+  if (network_id != current_network_id_)
+    return;
+  if (network_id.type !=
+          NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI &&
+      network_id.type !=
+          NetworkChangeNotifier::ConnectionType::CONNECTION_ETHERNET &&
+      !disable_offline_check_) {
+    return;
+  }
+
+  // Since the cached network quality is for the current network, add it to
+  // the current observations.
+  Observation http_rtt_observation(
+      cached_network_quality.network_quality().http_rtt().InMilliseconds(),
+      tick_clock_->NowTicks(), INT32_MIN,
+      NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_CACHED_ESTIMATE);
+  AddAndNotifyObserversOfRTT(http_rtt_observation);
+
+  Observation transport_rtt_observation(
+      cached_network_quality.network_quality().transport_rtt().InMilliseconds(),
+      tick_clock_->NowTicks(), INT32_MIN,
+      NETWORK_QUALITY_OBSERVATION_SOURCE_TRANSPORT_CACHED_ESTIMATE);
+  AddAndNotifyObserversOfRTT(transport_rtt_observation);
+
+  // TODO(tbansal): crbug.com/673977: Remove this check.
+  if (cached_network_quality.network_quality().downstream_throughput_kbps() !=
+      nqe::internal::INVALID_RTT_THROUGHPUT) {
+    Observation throughput_observation(
+        cached_network_quality.network_quality().downstream_throughput_kbps(),
+        tick_clock_->NowTicks(), INT32_MIN,
+        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_CACHED_ESTIMATE);
+    AddAndNotifyObserversOfThroughput(throughput_observation);
+  }
+
+  ComputeEffectiveConnectionType();
 }
 
 const char* NetworkQualityEstimator::GetNameForStatistic(int i) const {
@@ -1992,13 +2027,6 @@ bool NetworkQualityEstimator::ShouldAddObservation(
     return false;
   }
   return true;
-}
-
-bool NetworkQualityEstimator::ShouldSocketWatcherNotifyRTT(
-    base::TimeTicks now) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  return (now - last_socket_watcher_rtt_notification_ >=
-          params_->socket_watchers_min_notification_interval());
 }
 
 }  // namespace net

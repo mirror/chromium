@@ -25,11 +25,10 @@ void AccountManagementScreenHelper::OpenAccountManagementScreen(
       static_cast<int>(service_type));
 }
 
-static void JNI_AccountManagementScreenHelper_LogEvent(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    jint metric,
-    jint gaiaServiceType) {
+static void LogEvent(JNIEnv* env,
+                     const JavaParamRef<jclass>& clazz,
+                     jint metric,
+                     jint gaiaServiceType) {
   ProfileMetrics::LogProfileAndroidAccountManagementMenu(
       static_cast<ProfileMetrics::ProfileAndroidAccountManagementMenu>(metric),
       static_cast<signin::GAIAServiceType>(gaiaServiceType));

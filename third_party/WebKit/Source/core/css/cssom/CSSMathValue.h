@@ -5,7 +5,6 @@
 #ifndef CSSMathValue_h
 #define CSSMathValue_h
 
-#include "base/macros.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/cssom/CSSNumericValue.h"
 
@@ -14,6 +13,7 @@ namespace blink {
 // Represents mathematical operations, acting as nodes in a tree of
 // CSSNumericValues. See CSSMathValue.idl for more information about this class.
 class CORE_EXPORT CSSMathValue : public CSSNumericValue {
+  WTF_MAKE_NONCOPYABLE(CSSMathValue);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -31,16 +31,13 @@ class CORE_EXPORT CSSMathValue : public CSSNumericValue {
     // TODO(776173): Implement
     return false;
   }
-  const CSSValue* ToCSSValue(SecureContextMode) const final {
+  const CSSValue* ToCSSValue() const final {
     // TODO(776173): Implement
     return nullptr;
   }
 
  protected:
   CSSMathValue(const CSSNumericValueType& type) : CSSNumericValue(type) {}
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(CSSMathValue);
 };
 
 }  // namespace blink

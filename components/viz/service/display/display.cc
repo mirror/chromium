@@ -26,6 +26,7 @@
 #include "components/viz/service/display/skia_renderer.h"
 #include "components/viz/service/display/software_renderer.h"
 #include "components/viz/service/display/surface_aggregator.h"
+#include "components/viz/service/display/texture_mailbox_deleter.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -40,21 +41,20 @@
 
 namespace viz {
 
-Display::Display(
-    SharedBitmapManager* bitmap_manager,
-    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-    const RendererSettings& settings,
-    const FrameSinkId& frame_sink_id,
-    std::unique_ptr<OutputSurface> output_surface,
-    std::unique_ptr<DisplayScheduler> scheduler,
-    scoped_refptr<base::SingleThreadTaskRunner> current_task_runner)
+Display::Display(SharedBitmapManager* bitmap_manager,
+                 gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+                 const RendererSettings& settings,
+                 const FrameSinkId& frame_sink_id,
+                 std::unique_ptr<OutputSurface> output_surface,
+                 std::unique_ptr<DisplayScheduler> scheduler,
+                 std::unique_ptr<TextureMailboxDeleter> texture_mailbox_deleter)
     : bitmap_manager_(bitmap_manager),
       gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
       settings_(settings),
       frame_sink_id_(frame_sink_id),
       output_surface_(std::move(output_surface)),
       scheduler_(std::move(scheduler)),
-      current_task_runner_(std::move(current_task_runner)) {
+      texture_mailbox_deleter_(std::move(texture_mailbox_deleter)) {
   DCHECK(output_surface_);
   DCHECK(frame_sink_id_.is_valid());
   if (scheduler_)
@@ -197,16 +197,18 @@ void Display::InitializeRenderer() {
       gpu_memory_buffer_manager_, settings_.resource_settings);
 
   if (output_surface_->context_provider()) {
+    DCHECK(texture_mailbox_deleter_);
     if (!settings_.use_skia_renderer) {
       renderer_ = base::MakeUnique<GLRenderer>(
           &settings_, output_surface_.get(), resource_provider_.get(),
-          current_task_runner_);
+          texture_mailbox_deleter_.get());
     } else {
       renderer_ = base::MakeUnique<SkiaRenderer>(
           &settings_, output_surface_.get(), resource_provider_.get());
     }
   } else if (output_surface_->vulkan_context_provider()) {
 #if defined(ENABLE_VULKAN)
+    DCHECK(texture_mailbox_deleter_);
     renderer_ = base::MakeUnique<VulkanRenderer>(
         &settings_, output_surface_.get(), resource_provider_.get());
 #else
@@ -395,12 +397,6 @@ bool Display::DrawAndSwap() {
   }
 
   client_->DisplayDidDrawAndSwap();
-
-  // Garbage collection can lead to sync IPCs to the GPU service to verify sync
-  // tokens. We defer garbage collection until the end of DrawAndSwap to avoid
-  // stalling the critical path for compositing.
-  surface_manager_->GarbageCollectSurfaces();
-
   return true;
 }
 
@@ -483,7 +479,6 @@ bool Display::SurfaceDamaged(const SurfaceId& surface_id,
 }
 
 void Display::SurfaceDiscarded(const SurfaceId& surface_id) {
-  TRACE_EVENT0("viz", "Display::SurfaceDiscarded");
   if (aggregator_)
     aggregator_->ReleaseResources(surface_id);
 }
@@ -574,7 +569,7 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
       }
 
       if (!current_sqs_intersects_occlusion) {
-        ++quad;
+        quad++;
         continue;
       }
 
@@ -584,7 +579,7 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
               transform, quad->visible_rect)))
         quad = pass->quad_list.EraseAndInvalidateAllPointers(quad);
       else
-        ++quad;
+        quad++;
     }
   }
 }

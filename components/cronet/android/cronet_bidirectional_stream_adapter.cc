@@ -72,7 +72,7 @@ PendingWriteData::~PendingWriteData() {
   jwrite_buffer_limit_list.Reset();
 }
 
-static jlong JNI_CronetBidirectionalStream_CreateBidirectionalStream(
+static jlong CreateBidirectionalStream(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jbidi_stream,
     jlong jurl_request_context_adapter,

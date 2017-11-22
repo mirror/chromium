@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+/**
+ * @unrestricted
+ */
 Persistence.WorkspaceSettingsTab = class extends UI.VBox {
   constructor() {
     super();
@@ -14,16 +17,9 @@ Persistence.WorkspaceSettingsTab = class extends UI.VBox {
                                 .createChild('div', 'settings-tab help-content help-container');
 
     Persistence.isolatedFileSystemManager.addEventListener(
-        Persistence.IsolatedFileSystemManager.Events.FileSystemAdded,
-        event => this._fileSystemAdded(/** @type {!Persistence.IsolatedFileSystem} */ (event.data)), this);
+        Persistence.IsolatedFileSystemManager.Events.FileSystemAdded, this._fileSystemAdded, this);
     Persistence.isolatedFileSystemManager.addEventListener(
-        Persistence.IsolatedFileSystemManager.Events.FileSystemRemoved,
-        event => this._fileSystemRemoved(/** @type {!Persistence.IsolatedFileSystem} */ (event.data)), this);
-    Persistence.networkPersistenceManager.addEventListener(
-        Persistence.NetworkPersistenceManager.Events.ProjectDomainChanged,
-        event => this._overridesProjectChanged(
-            /** @type {!Persistence.FileSystemWorkspaceBinding.FileSystem} */ (event.data)),
-        this);
+        Persistence.IsolatedFileSystemManager.Events.FileSystemRemoved, this._fileSystemRemoved, this);
 
     var folderExcludePatternInput = this._createFolderExcludePatternInput();
     folderExcludePatternInput.classList.add('folder-exclude-pattern');
@@ -89,8 +85,6 @@ Persistence.WorkspaceSettingsTab = class extends UI.VBox {
    * @param {!Persistence.IsolatedFileSystem} fileSystem
    */
   _addItem(fileSystem) {
-    if (Persistence.networkPersistenceManager.projectForFileSystem(fileSystem))
-      return;
     var element = this._renderFileSystem(fileSystem);
     this._elementByPath.set(fileSystem.path(), element);
 
@@ -139,17 +133,14 @@ Persistence.WorkspaceSettingsTab = class extends UI.VBox {
     Persistence.isolatedFileSystemManager.addFileSystem();
   }
 
-  /**
-   * @param {!Persistence.IsolatedFileSystem} fileSystem
-   */
-  _fileSystemAdded(fileSystem) {
+  _fileSystemAdded(event) {
+    var fileSystem = /** @type {!Persistence.IsolatedFileSystem} */ (event.data);
     this._addItem(fileSystem);
   }
 
-  /**
-   * @param {!Persistence.IsolatedFileSystem} fileSystem
-   */
-  _fileSystemRemoved(fileSystem) {
+  _fileSystemRemoved(event) {
+    var fileSystem = /** @type {!Persistence.IsolatedFileSystem} */ (event.data);
+
     var mappingView = this._mappingViewByPath.get(fileSystem.path());
     if (mappingView) {
       mappingView.dispose();
@@ -161,16 +152,5 @@ Persistence.WorkspaceSettingsTab = class extends UI.VBox {
       this._elementByPath.delete(fileSystem.path());
       element.remove();
     }
-  }
-
-  /**
-   * @param {!Persistence.FileSystemWorkspaceBinding.FileSystem} project
-   */
-  _overridesProjectChanged(project) {
-    var fileSystem = Persistence.isolatedFileSystemManager.fileSystem(project.fileSystemPath());
-    if (!fileSystem)
-      return;
-    this._fileSystemRemoved(fileSystem);
-    this._fileSystemAdded(fileSystem);
   }
 };

@@ -93,20 +93,22 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
   const SurfaceId& previous_frame_surface_id() const {
     return previous_frame_surface_id_;
   }
-  const gfx::Size& size_in_pixels() const {
-    return surface_info_.size_in_pixels();
-  }
 
   base::WeakPtr<SurfaceClient> client() { return surface_client_; }
 
   bool has_deadline() const { return deadline_.has_deadline(); }
   const SurfaceDependencyDeadline& deadline() const { return deadline_; }
 
-  bool InheritActivationDeadlineFrom(const SurfaceDependencyDeadline& deadline);
+  bool InheritActivationDeadlineFrom(
+      const SurfaceDependencyDeadline& deadline) {
+    return deadline_.InheritFrom(deadline);
+  }
 
   // Sets a deadline a number of frames ahead to active the currently pending
   // CompositorFrame held by this surface.
-  void SetActivationDeadline(uint32_t number_of_frames_to_deadline);
+  void SetActivationDeadline(uint32_t number_of_frames_to_deadline) {
+    deadline_.Set(number_of_frames_to_deadline);
+  }
 
   void SetPreviousFrameSurface(Surface* surface);
 

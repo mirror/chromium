@@ -17,7 +17,7 @@
 #include "ui/app_list/search/history_data.h"
 
 namespace base {
-class Value;
+class DictionaryValue;
 }
 
 namespace app_list {
@@ -64,10 +64,10 @@ class APP_LIST_EXPORT HistoryDataStore
   void Init(base::DictionaryValue* cached_dict);
 
   // Gets the dictionary for "associations" key.
-  base::Value* GetAssociationDict();
+  base::DictionaryValue* GetAssociationDict();
 
   // Gets entry dictionary for given |query|. Creates one if necessary.
-  base::Value* GetEntryDict(const std::string& query);
+  base::DictionaryValue* GetEntryDict(const std::string& query);
 
   void OnDictionaryLoadedCallback(OnLoadedCallback callback,
                                   std::unique_ptr<base::DictionaryValue> dict);

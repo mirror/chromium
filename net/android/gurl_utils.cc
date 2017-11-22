@@ -11,19 +11,17 @@ using base::android::ScopedJavaLocalRef;
 
 namespace net {
 
-ScopedJavaLocalRef<jstring> JNI_GURLUtils_GetOrigin(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& url) {
+ScopedJavaLocalRef<jstring> GetOrigin(JNIEnv* env,
+                                      const JavaParamRef<jclass>& clazz,
+                                      const JavaParamRef<jstring>& url) {
   GURL host(base::android::ConvertJavaStringToUTF16(env, url));
 
   return base::android::ConvertUTF8ToJavaString(env, host.GetOrigin().spec());
 }
 
-ScopedJavaLocalRef<jstring> JNI_GURLUtils_GetScheme(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& url) {
+ScopedJavaLocalRef<jstring> GetScheme(JNIEnv* env,
+                                      const JavaParamRef<jclass>& clazz,
+                                      const JavaParamRef<jstring>& url) {
   GURL host(base::android::ConvertJavaStringToUTF16(env, url));
 
   return base::android::ConvertUTF8ToJavaString(env, host.scheme());

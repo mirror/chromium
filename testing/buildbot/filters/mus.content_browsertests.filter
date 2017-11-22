@@ -107,8 +107,6 @@
 -SnapshotBrowserTest.AsyncMultiWindowTest
 -SnapshotBrowserTest.SingleWindowTest
 -SnapshotBrowserTest.SyncMultiWindowTest
--WebRtcCaptureFromElementBrowserTest.CaptureFromCanvas2DHandlesContextLoss
--WebRtcCaptureFromElementBrowserTest.CaptureFromOpaqueCanvas2DHandlesContextLoss
 
 # TODO: these all rely on RenderWidgetHostImpl::SubmitCompositorFrame(), which
 # isn't hit for mus.

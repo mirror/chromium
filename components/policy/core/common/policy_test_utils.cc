@@ -57,7 +57,7 @@ bool PolicyServiceIsEmpty(const PolicyService* service) {
 
 #if defined(OS_IOS) || defined(OS_MACOSX)
 CFPropertyListRef ValueToProperty(const base::Value& value) {
-  switch (value.type()) {
+  switch (value.GetType()) {
     case base::Value::Type::NONE:
       return kCFNull;
 

@@ -20,6 +20,7 @@ namespace viz {
 class CopyOutputResult;
 class DirectRenderer;
 class TestGpuMemoryBufferManager;
+class TextureMailboxDeleter;
 }
 
 namespace cc {
@@ -69,11 +70,11 @@ class PixelTest : public testing::Test {
   std::unique_ptr<DisplayResourceProvider> resource_provider_;
   scoped_refptr<TestInProcessContextProvider> child_context_provider_;
   std::unique_ptr<LayerTreeResourceProvider> child_resource_provider_;
+  std::unique_ptr<viz::TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<viz::DirectRenderer> renderer_;
   viz::SoftwareRenderer* software_renderer_ = nullptr;
   std::unique_ptr<SkBitmap> result_bitmap_;
 
-  void SetUpGLWithoutRenderer(bool flipped_output_surface);
   void SetUpGLRenderer(bool flipped_output_surface);
   void SetUpSoftwareRenderer();
 
@@ -108,11 +109,11 @@ class GLRendererWithExpandedViewport : public viz::GLRenderer {
       const viz::RendererSettings* settings,
       viz::OutputSurface* output_surface,
       DisplayResourceProvider* resource_provider,
-      scoped_refptr<base::SingleThreadTaskRunner> current_task_runner)
+      viz::TextureMailboxDeleter* texture_mailbox_deleter)
       : viz::GLRenderer(settings,
                         output_surface,
                         resource_provider,
-                        std::move(current_task_runner)) {}
+                        texture_mailbox_deleter) {}
 };
 
 class SoftwareRendererWithExpandedViewport : public viz::SoftwareRenderer {
@@ -130,11 +131,11 @@ class GLRendererWithFlippedSurface : public viz::GLRenderer {
       const viz::RendererSettings* settings,
       viz::OutputSurface* output_surface,
       DisplayResourceProvider* resource_provider,
-      scoped_refptr<base::SingleThreadTaskRunner> current_task_runner)
+      viz::TextureMailboxDeleter* texture_mailbox_deleter)
       : viz::GLRenderer(settings,
                         output_surface,
                         resource_provider,
-                        std::move(current_task_runner)) {}
+                        texture_mailbox_deleter) {}
 };
 
 template <>

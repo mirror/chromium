@@ -36,7 +36,7 @@ class UtilCCHelper(object):
     return '#include "tools/json_schema_compiler/util.h"'
 
   def GetValueTypeString(self, value, is_ptr=False):
-    call = '.type()'
+    call = '.GetType()'
     if is_ptr:
-      call = '->type()'
+      call = '->GetType()'
     return 'std::string(base::Value::GetTypeName(%s%s))' % (value, call)

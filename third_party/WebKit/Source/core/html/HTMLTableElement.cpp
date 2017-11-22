@@ -334,7 +334,7 @@ void HTMLTableElement::CollectStyleForPresentationAttribute(
                                 Referrer(GetDocument().OutgoingReferrer(),
                                          GetDocument().GetReferrerPolicy()));
       style->SetProperty(
-          CSSPropertyValue(GetCSSPropertyBackgroundImage(), *image_value));
+          CSSPropertyValue(CSSPropertyBackgroundImage, *image_value));
     }
   } else if (name == valignAttr) {
     if (!value.IsEmpty())

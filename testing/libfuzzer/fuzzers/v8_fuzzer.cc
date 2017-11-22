@@ -14,8 +14,6 @@
 
 using v8::MaybeLocal;
 using std::ref;
-using std::lock_guard;
-using std::mutex;
 using std::chrono::time_point;
 using std::chrono::steady_clock;
 using std::chrono::seconds;
@@ -27,7 +25,7 @@ static const seconds kSleepSeconds(1);
 // kSleepSeconds + kMaxExecutionSeconds.
 // TODO(metzman): Determine if having such a short timeout causes too much
 // indeterminism.
-static const seconds kMaxExecutionSeconds(12);
+static const seconds kMaxExecutionSeconds(15);
 
 // Inspired by/copied from d8 code, this allocator will return nullptr when
 // an allocation request is made that puts currently_allocated_ over
@@ -41,7 +39,7 @@ class MockArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // between runs is a good idea. Maybe we should simply prevent allocations
   // over a certain size regardless of previous allocations.
   size_t currently_allocated_;
-  mutex mtx_;
+  std::mutex mtx_;
 
  public:
   MockArrayBufferAllocator()
@@ -58,33 +56,39 @@ class MockArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   }
 
   void* AllocateUninitialized(size_t length) override {
-    lock_guard<mutex> mtx_locker(mtx_);
+    mtx_.lock();
     if (length + currently_allocated_ > kAllocationLimit) {
+      mtx_.unlock();
       return nullptr;
     }
     currently_allocated_ += length;
+    mtx_.unlock();
     return malloc(length);
   }
 
   void Free(void* ptr, size_t length) override {
-    lock_guard<mutex> mtx_locker(mtx_);
+    mtx_.lock();
     currently_allocated_ -= length;
     // We need to free before we unlock, otherwise currently_allocated_ will
     // be innacurate.
     free(ptr);
+    mtx_.unlock();
   }
 
   void Free(void* data, size_t length, AllocationMode mode) override {
     switch (mode) {
       case AllocationMode::kNormal: {
-        // Free locks and unlocks for us.
+        mtx_.lock();
+        currently_allocated_ -= length;
         Free(data, length);
+        mtx_.unlock();
         return;
       }
       case AllocationMode::kReservation: {
-        lock_guard<mutex> mtx_locker(mtx_);
+        mtx_.lock();
         currently_allocated_ -= length;
         allocator_->Free(data, length, mode);
+        mtx_.unlock();
         return;
       }
       default:
@@ -93,17 +97,19 @@ class MockArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   }
 
   void* Reserve(size_t length) override {
-    lock_guard<mutex> mtx_locker(mtx_);
+    mtx_.lock();
     if (length + currently_allocated_ > kAllocationLimit) {
+      mtx_.unlock();
       return nullptr;
     }
     currently_allocated_ += length;
+    mtx_.unlock();
     return allocator_->Reserve(length);
   }
 };
 
 void terminate_execution(v8::Isolate* isolate,
-                         mutex& mtx,
+                         std::mutex& mtx,
                          bool& is_running,
                          time_point<steady_clock>& start_time) {
   while (true) {
@@ -138,7 +144,7 @@ struct Environment {
                                     ref(is_running), ref(start_time));
   }
   MockArrayBufferAllocator mock_arraybuffer_allocator;
-  mutex mtx;
+  std::mutex mtx;
   std::thread terminator_thread;
   v8::Isolate* isolate;
   time_point<steady_clock> start_time;
@@ -187,7 +193,8 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
   ALLOW_UNUSED_LOCAL(local_script->Run(context));
 
-  lock_guard<mutex> mtx_locker(env->mtx);
+  env->mtx.lock();
   env->is_running = false;
+  env->mtx.unlock();
   return 0;
 }

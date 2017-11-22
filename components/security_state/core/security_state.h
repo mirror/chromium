@@ -57,11 +57,10 @@ enum SecurityLevel {
   // HTTPS (non-EV) with valid cert.
   SECURE,
 
-  // HTTPS, but a certificate chain anchored to a root certificate installed
-  // by the system administrator has been observed in this profile, suggesting
-  // a MITM was present.
+  // HTTPS, but the certificate verification chain is anchored on a
+  // certificate that was installed by the system administrator.
   //
-  // Used only on ChromeOS, this status is unreached on other platforms.
+  // Currently used only on ChromeOS.
   SECURE_WITH_POLICY_INSTALLED_CERT,
 
   // Attempted HTTPS and failed, page not authenticated, HTTPS with
@@ -190,8 +189,6 @@ struct VisibleSecurityState {
   // True if the page was an error page.
   // TODO(estark): this field is not populated on iOS. https://crbug.com/760647
   bool is_error_page;
-  // True if the page is a view-source page.
-  bool is_view_source;
   // Contains information about input events that may impact the security
   // level of the page.
   InsecureInputEventData insecure_input_events;

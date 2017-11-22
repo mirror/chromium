@@ -19,7 +19,7 @@
 #include "chromeos/network/network_connection_observer.h"
 #include "chromeos/network/network_state_handler_observer.h"
 #include "components/arc/common/net.mojom.h"
-#include "components/arc/connection_observer.h"
+#include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -33,7 +33,7 @@ class ArcBridgeService;
 
 // Private implementation of ArcNetHost.
 class ArcNetHostImpl : public KeyedService,
-                       public ConnectionObserver<mojom::NetInstance>,
+                       public InstanceHolder<mojom::NetInstance>::Observer,
                        public chromeos::NetworkConnectionObserver,
                        public chromeos::NetworkStateHandlerObserver,
                        public mojom::NetHost {
@@ -93,9 +93,9 @@ class ArcNetHostImpl : public KeyedService,
   // Overriden from chromeos::NetworkConnectionObserver.
   void DisconnectRequested(const std::string& service_path) override;
 
-  // Overridden from ConnectionObserver<mojom::NetInstance>:
-  void OnConnectionReady() override;
-  void OnConnectionClosed() override;
+  // Overridden from ArcBridgeService::InterfaceObserver<mojom::NetInstance>:
+  void OnInstanceReady() override;
+  void OnInstanceClosed() override;
 
  private:
   void DefaultNetworkSuccessCallback(const std::string& service_path,

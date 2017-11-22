@@ -8,6 +8,8 @@
 #include "build/build_config.h"
 #include "content/public/common/isolated_world_ids.h"
 
+namespace chrome {
+
 enum ChromeIsolatedWorldIDs {
   // Isolated world ID for Chrome Translate.
   ISOLATED_WORLD_ID_TRANSLATE = content::ISOLATED_WORLD_ID_CONTENT_END + 1,
@@ -25,5 +27,7 @@ enum ChromeIsolatedWorldIDs {
   // to this number.
   ISOLATED_WORLD_ID_EXTENSIONS
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_COMMON_CHROME_ISOLATED_WORLD_IDS_H_

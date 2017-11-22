@@ -19,9 +19,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace content {
 
-static jlong JNI_TracingControllerAndroid_Init(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
+static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   TracingControllerAndroid* profiler = new TracingControllerAndroid(env, obj);
   return reinterpret_cast<intptr_t>(profiler);
 }
@@ -112,8 +110,7 @@ void TracingControllerAndroid::OnKnownCategoriesReceived(
   LOG(WARNING) << "{\"traceCategoriesList\": " << received_category_list << "}";
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_TracingControllerAndroid_GetDefaultCategories(
+static ScopedJavaLocalRef<jstring> GetDefaultCategories(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   base::trace_event::TraceConfig trace_config;

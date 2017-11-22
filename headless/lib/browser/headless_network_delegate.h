@@ -66,7 +66,7 @@ class HeadlessNetworkDelegate : public net::NetworkDelegateImpl,
                        const net::CookieList& cookie_list) override;
 
   bool OnCanSetCookie(const net::URLRequest& request,
-                      const net::CanonicalCookie& cookie,
+                      const std::string& cookie_line,
                       net::CookieOptions* options) override;
 
   bool OnCanAccessFile(const net::URLRequest& request,

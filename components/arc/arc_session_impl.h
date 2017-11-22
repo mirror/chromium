@@ -6,7 +6,6 @@
 #define COMPONENTS_ARC_ARC_SESSION_IMPL_H_
 
 #include <memory>
-#include <ostream>
 #include <string>
 
 #include "base/callback.h"
@@ -144,8 +143,6 @@ class ArcSessionImpl : public ArcSession,
   static std::unique_ptr<Delegate> CreateDelegate(
       ArcBridgeService* arc_bridge_service);
 
-  State GetStateForTesting() { return state_; }
-
   // ArcSession overrides:
   void Start(ArcInstanceMode request_mode) override;
   void Stop() override;
@@ -231,11 +228,9 @@ class ArcSessionImpl : public ArcSession,
   // WeakPtrFactory to use callbacks.
   base::WeakPtrFactory<ArcSessionImpl> weak_factory_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(ArcSessionImpl);
 };
-
-// Stringified output for logging purpose.
-std::ostream& operator<<(std::ostream& os, ArcSessionImpl::State state);
 
 }  // namespace arc
 

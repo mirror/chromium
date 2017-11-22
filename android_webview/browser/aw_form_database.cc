@@ -25,12 +25,12 @@ AwFormDatabaseService* GetFormDatabaseService() {
 }  // anonymous namespace
 
 // static
-jboolean JNI_AwFormDatabase_HasFormData(JNIEnv*, const JavaParamRef<jclass>&) {
+jboolean HasFormData(JNIEnv*, const JavaParamRef<jclass>&) {
   return GetFormDatabaseService()->HasFormData();
 }
 
 // static
-void JNI_AwFormDatabase_ClearFormData(JNIEnv*, const JavaParamRef<jclass>&) {
+void ClearFormData(JNIEnv*, const JavaParamRef<jclass>&) {
   GetFormDatabaseService()->ClearFormData();
 }
 

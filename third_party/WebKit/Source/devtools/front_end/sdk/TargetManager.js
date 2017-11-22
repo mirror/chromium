@@ -42,7 +42,8 @@ SDK.TargetManager = class extends Common.Object {
       var childTargetManager = this._childTargetManagers.get(target);
       if (childTargetManager)
         promises.push(childTargetManager.suspend());
-      promises.push(target.suspend());
+      for (var model of target.models().values())
+        promises.push(model.suspendModel());
     }
     return Promise.all(promises);
   }
@@ -61,7 +62,8 @@ SDK.TargetManager = class extends Common.Object {
       var childTargetManager = this._childTargetManagers.get(target);
       if (childTargetManager)
         promises.push(childTargetManager.resume());
-      promises.push(target.resume());
+      for (var model of target.models().values())
+        promises.push(model.resumeModel());
     }
     return Promise.all(promises);
   }
@@ -218,7 +220,7 @@ SDK.TargetManager = class extends Common.Object {
    * @return {!SDK.Target}
    */
   createTarget(id, name, capabilitiesMask, connectionFactory, parentTarget) {
-    var target = new SDK.Target(this, id, name, capabilitiesMask, connectionFactory, parentTarget, this._isSuspended);
+    var target = new SDK.Target(this, id, name, capabilitiesMask, connectionFactory, parentTarget);
     target.createModels(new Set(this._modelObservers.keys()));
     if (target.hasTargetCapability())
       this._childTargetManagers.set(target, new SDK.ChildTargetManager(this, target));
@@ -327,7 +329,7 @@ SDK.TargetManager = class extends Common.Object {
     if (Runtime.queryParam('nodeFrontend')) {
       var target = new SDK.Target(
           this, 'main', Common.UIString('Node.js'), SDK.Target.Capability.Target, this._createMainConnection.bind(this),
-          null, this._isSuspended);
+          null);
       target.setInspectedURL('Node.js');
       this._childTargetManagers.set(target, new SDK.ChildTargetManager(this, target));
       Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConnectToNodeJSFromFrontend);

@@ -105,8 +105,11 @@ AddressNormalizationManager::NormalizerDelegate::NormalizerDelegate(
   DCHECK(owner_);
   DCHECK(profile_);
 
+  const std::string country_code =
+      autofill::data_util::GetCountryCodeWithFallback(*profile_,
+                                                      owner->app_locale_);
   address_normalizer->NormalizeAddressAsync(
-      *profile_, kAddressNormalizationTimeoutSeconds,
+      *profile_, country_code, kAddressNormalizationTimeoutSeconds,
       base::BindOnce(&NormalizerDelegate::OnAddressNormalized,
                      base::Unretained(this)));
 }

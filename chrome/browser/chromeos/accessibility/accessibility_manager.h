@@ -317,7 +317,7 @@ class AccessibilityManager
   void UpdateAutoclickFromPref();
   void UpdateAutoclickDelayFromPref();
   void UpdateVirtualKeyboardFromPref();
-  void OnMonoAudioChanged();
+  void UpdateMonoAudioFromPref();
   void UpdateCaretHighlightFromPref();
   void UpdateCursorHighlightFromPref();
   void UpdateFocusHighlightFromPref();
@@ -392,6 +392,7 @@ class AccessibilityManager
   bool autoclick_enabled_;
   base::TimeDelta autoclick_delay_ms_;
   bool virtual_keyboard_enabled_;
+  bool mono_audio_enabled_;
   bool caret_highlight_enabled_;
   bool cursor_highlight_enabled_;
   bool focus_highlight_enabled_;

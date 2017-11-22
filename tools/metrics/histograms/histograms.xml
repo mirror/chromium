@@ -17553,14 +17553,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Download.Shelf.DragEvent" enum="Download.Shelf.DragEvent">
-  <owner>sdy@chromium.org</owner>
-  <summary>
-    Events related to dragging a completed download from the shelf, which
-    represents dragging a reference to the downloaded file.
-  </summary>
-</histogram>
-
 <histogram name="Download.ShelfInProgressSizeOnAutoClose">
   <owner>asanka@chromium.org</owner>
   <summary>
@@ -24851,17 +24843,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="ExtensionService.ZipUnpackerDisabledReason"
-    enum="ExtensionDisableReason">
-  <owner>yamaguchi@google.com</owner>
-  <summary>
-    Records the reason why the ZIP unpacker extension was disabled when the
-    service attempted to re-enable the extension upon startup. Each entry
-    indicates that the extension was disabled unintentionally and a fix was
-    attempted.
-  </summary>
-</histogram>
-
 <histogram name="ExtensionSettings.ShouldDoVerificationCheck" enum="Boolean">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>
@@ -28270,7 +28251,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="HttpCache.AccessToDone" units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For every http cache transaction with a pattern (see HttpCache.Pattern), the
     time from the first access to the disk cache until the transaction was done.
@@ -28292,7 +28273,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="HttpCache.BeforeSend" units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For http cache transactions in which a network request was sent, the time
     elapsed between beginning the request and sending it over the network; this
@@ -28322,7 +28303,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="HttpCache.EntryLockWait" units="ms">
   <owner>jkarlin@chromium.org</owner>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The time spent waiting for write lock on a disk cache entry.
   </summary>
@@ -28353,13 +28334,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="HttpCache.Pattern" enum="HttpCachePattern">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <owner>jkarlin@chromium.org</owner>
   <summary>For each http cache transaction, the recorded pattern.</summary>
 </histogram>
 
 <histogram name="HttpCache.PercentBeforeSend" units="%">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For http cache transactions in which a network request was sent, the
     percentage of total request time that elapsed before sending the request
@@ -33240,17 +33221,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Media.EME.MojoCdm.ConnectionError"
-    enum="BooleanConnectionError">
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    Whether connection error has happened for MojoCdm. Every time a MojoCdm
-    object is created a &quot;false&quot; value is reported to provide a
-    baseline. Every time a mojo connection error happened, a &quot;true&quot;
-    value will be reported, which typically means a remote CDM process crash.
-  </summary>
-</histogram>
-
 <histogram name="Media.EME.NeedKey">
   <obsolete>
     Renamed to Media.EME.EncryptedEvent in 10/2017.
@@ -35109,14 +35079,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether Chrome had to fall back to a secondary video decoder after the
     primary decoder failed reinitialization.
-  </summary>
-</histogram>
-
-<histogram name="Media.VideoDecodeStatsDB.OpSuccess" enum="BooleanSuccess">
-  <owner>chcunningham@chromium.org</owner>
-  <summary>
-    Indicates whether we were successful performing some database operation. See
-    suffix VideoDecodeStatsDBOperations.
   </summary>
 </histogram>
 
@@ -57712,15 +57674,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PartnerBookmark.FaviconThrottleFetchResult"
-    enum="PartnerBookmark.FaviconFetchResult">
-  <owner>thildebr@chromium.org</owner>
-  <summary>
-    The response we got back from our favicon fetching throttler, once for each
-    bookmark at each cold start. Only recorded on Android.
-  </summary>
-</histogram>
-
 <histogram name="PartnerBookmark.Null" enum="BooleanNull">
   <owner>wychen@chromium.org</owner>
   <summary>
@@ -57736,15 +57689,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether reading of partner bookmark is skipped. Logged when using the
     bookmark, and at most once per cold start.
-  </summary>
-</histogram>
-
-<histogram name="PartnerBookmarksFaviconThrottle.NumEntries" units="entries">
-  <owner>thildebr@chromium.org</owner>
-  <summary>
-    Number of elements read from the partner bookmarks favicon cache, recorded
-    once per cold start when reading partner bookmarks. Only recorded on
-    Android.
   </summary>
 </histogram>
 
@@ -59015,20 +58959,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     form to a value of another field from the sign-up form, then Chrome uploads
     a username correction vote which points to the correct username field. This
     histogram measures how many correction votes are uploaded.
-  </summary>
-</histogram>
-
-<histogram name="PasswordManager.UsernameDetectionMethod"
-    enum="UsernameDetectionMethod">
-  <owner>kolos@chromium.org</owner>
-  <summary>
-    Measures what method was used for username field detection in the renderer
-    code. The metric may be recorded several times for page visit because it is
-    recorded at every PasswordForm creation. If a site changes HTML attributes
-    of fields or server-side predictions is received, different values can be
-    recorded for the same form. If an outcome of HTML classifier or a
-    server-side prediction coincides with the outcome of base heuristic, the
-    metric points to base heuristic method.
   </summary>
 </histogram>
 
@@ -63954,19 +63884,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The length of time, in seconds, that a user spent in a single session.
     Values for this metric are clamped to 12 hours, so the last bucket should be
     considered to be including all metrics above 12 hours.
-  </summary>
-</histogram>
-
-<histogram name="Power.LidClosedSuspendCountDaily" units="count">
-  <owner>derat@chromium.org</owner>
-  <summary>
-    Number of times that that the system has suspended in response to its lid
-    being closed, reported daily. The count is accumulated through the day,
-    spanning reboots, and sent once the system clock indicates that a full day
-    or more has passed since the last report. If the system is suspended or off
-    for more than a day, the current count will be reported immediately the next
-    time the system boots, but the skipped days will not be reported. Chrome OS
-    only.
   </summary>
 </histogram>
 
@@ -70760,14 +70677,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SafeBrowsing.Interstitial.Type" enum="InterstitialTypeEnum">
-  <owner>ntfschr@chromium.org</owner>
-  <summary>
-    Which interstitial type is being displayed to the user? This currently
-    applies only to WebView (where we show Loud vs. Quiet interstitials).
-  </summary>
-</histogram>
-
 <histogram name="SafeBrowsing.ModuleBaseRelocation" units="BaseRelocationType">
   <owner>csharp@chromium.org</owner>
   <owner>krstnmnlsn@chromium.org</owner>
@@ -71565,16 +71474,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     counted. Note: the &quot;ABANDONED&quot; bucket contains both connections
     that were abandoned before the check completed and those that were cancelled
     when the user navigated away from the SafeBrowsing interstitial.
-  </summary>
-</histogram>
-
-<histogram name="SafeBrowsing.WebView.Viewable" enum="BooleanVisible">
-  <owner>ntfschr@chromium.org</owner>
-  <summary>
-    When encountering an unsafe resource, this indicates whether the WebView is
-    considered to be viewable or not. Currently, we define &quot;viewable&quot;
-    as getVisibility() == View.VISIBLE and attached to the Android View
-    hierarchy.
   </summary>
 </histogram>
 
@@ -76498,25 +76397,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="ServiceWorker.CacheStorageInstalledScript.CachedMetadataSize"
-    units="bytes">
-  <owner>horo@chromium.org</owner>
-  <summary>
-    The length of cached metadata of scripts which are stored to the
-    CacheStorage by the installing service worker.
-  </summary>
-</histogram>
-
-<histogram
-    name="ServiceWorker.CacheStorageInstalledScript.CachedMetadataTotalSize"
-    units="bytes">
-  <owner>horo@chromium.org</owner>
-  <summary>
-    The total length of cached metadata of scripts which are stored to the
-    CacheStorage by the installing service worker.
-  </summary>
-</histogram>
-
 <histogram name="ServiceWorker.CacheStorageInstalledScript.Count" units="count">
   <owner>horo@chromium.org</owner>
   <summary>
@@ -77949,16 +77829,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>chrisha@chromium.org</owner>
   <summary>
     The number of tabs involved in a single session restore event.
-  </summary>
-</histogram>
-
-<histogram name="SessionRestore.TabLoadTimeout" enum="BooleanTimedOut">
-  <owner>zhenw@chromium.org</owner>
-  <summary>
-    The boolean indicates whether the tab load was initiated because a previous
-    tab load completed (including the tab was closed) or whether the tab load
-    was initiated because a timer fired to start the next load (true) during
-    session restore.
   </summary>
 </histogram>
 
@@ -79480,7 +79350,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.CheckCRCResult" enum="CheckCRCResult">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Whether or not the CRC was checked at the moment when the last reference to
     a read-only entry stream is closed.
@@ -79488,7 +79358,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.CreationToIndex" units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The time from the creation of the simple cache backend until the index has
     been loaded from disk.
@@ -79496,7 +79366,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.CreationToIndexFail" units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The time from the creation of the simple cache backend until the index fails
     to load.
@@ -79537,7 +79407,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.EntryCreatedAndStream2Omitted"
     enum="SimpleCache.EntryCreatedAndStream2Omitted">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Whether, upon creation of a new cache entry, the file for stream 2 was
     omitted since that stream was empty.
@@ -79546,7 +79416,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.EntryCreationResult"
     enum="BooleanSuccess">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For entry creation operations that were sent to the disk, the result of
     creation.
@@ -79554,13 +79424,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.EntryCreationTime" units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The time, in ms, spent creating a new entry on disk.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.EntryOpenedAndStream2Removed"
     enum="SimpleCache.EntryOpenedAndStream2Removed">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Whether, upon opening of an existing cache entry, stream 2 was empty and the
     file for that stream was therefore removed.
@@ -79568,7 +79438,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.EntryOperationsPending">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     At the time that operations are run, the number of pending operations on a
     particular entry.
@@ -79579,17 +79449,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Deprecated 2013 in favour of SimpleCache.Eviction.CacheSizeOnStart2
   </obsolete>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The size of the cache at the beginning of an eviction.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.Eviction.CacheSizeOnStart2" units="KB">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The size of the cache at the beginning of an eviction.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.Eviction.EntryCount">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The number of entries to be erased in an eviction.</summary>
 </histogram>
 
@@ -79597,7 +79467,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Deprecated 2013 in favour of SimpleCache.Eviction.MaxCacheSizeOnStart2
   </obsolete>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The maximum allowed size of the cache at the beginning of an eviction.
   </summary>
@@ -79605,14 +79475,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.Eviction.MaxCacheSizeOnStart2"
     units="KB">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The maximum allowed size of the cache at the beginning of an eviction.
   </summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.Eviction.Result" enum="BooleanSuccess">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The result of an eviction.</summary>
 </histogram>
 
@@ -79620,12 +79490,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Deprecated 2013 in favour of SimpleCache.Eviction.SizeOfEvicted2
   </obsolete>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The number of bytes to be erased in an eviction.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.Eviction.SizeOfEvicted2" units="KB">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The amount of memory freed in an eviction.</summary>
 </histogram>
 
@@ -79633,28 +79503,28 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Deprecated 2013 in favour of SimpleCache.Eviction.SizeWhenDone2
   </obsolete>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The size of the cache after running an eviction.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.Eviction.SizeWhenDone2" units="KB">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The size of the cache after running an eviction.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.Eviction.TimeToDone" units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>Time spent completing an eviction.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.Eviction.TimeToSelectEntries"
     units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>Time spent selecting entries for eviction.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.FileDescriptorLimitHard">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The maximum limit of how many file descriptors a process can open.  Emitted
     each time the browser is launched, if the limit could be retrieved.  (This
@@ -79663,7 +79533,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.FileDescriptorLimitSoft">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The current limit of how many file descriptors a process can open.  Emitted
     each time the browser is launched, if the limit could be retrieved.  (We can
@@ -79673,7 +79543,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.FileDescriptorLimitStatus"
     enum="SimpleCache.FileDescriptorLimitStatus">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The result of trying to get the file descriptor limit.  Emitted each time
     the browser is launched.
@@ -79681,7 +79551,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.GlobalOpenEntryCount">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The number of open entries across all caches backed by the Simple Cache. An
     entry is opened whenever a caller asks to open it to read or write cache
@@ -79691,7 +79561,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.HeaderSize" units="bytes">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The size of the header stream of a Simple Cache entry, emitted every time
     the headers are written or rewritten.
@@ -79700,7 +79570,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.HeaderSizeChange"
     enum="SimpleCacheHeaderSizeChange">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     How the header size has changed in a Simple Cache entry, emitted every time
     a write operation occurs on the header stream.  (This includes the initial
@@ -79710,7 +79580,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.HeaderSizeDecreaseAbsolute"
     units="bytes">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The absolute size decrease of the header stream of a Simple Cache entry,
     emitted every time the headers are rewritten with a smaller size.
@@ -79719,7 +79589,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.HeaderSizeDecreasePercentage"
     units="%">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The relative size decrease of the header stream of a Simple Cache entry,
     emitted every time the headers are rewritten with a smaller size.
@@ -79728,7 +79598,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.HeaderSizeIncreaseAbsolute"
     units="bytes">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The absolute size increase of the header stream of a Simple Cache entry,
     emitted every time the headers are rewritten with a larger size.
@@ -79737,7 +79607,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.HeaderSizeIncreasePercentage"
     units="%">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The relative size increase of the header stream of a Simple Cache entry,
     emitted every time the headers are rewritten with a larger size.
@@ -79745,22 +79615,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexCorrupt" enum="BooleanCorrupt">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>For each index load, whether the index file was corrupt.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexCreatedEntryCount">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The number of entries in a newly created index file.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexEntriesLoaded">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>Number of entries loaded from the index file on start.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexEntriesRestored">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Number of entries restored from disk when there was no index or the index
     was corrupted.
@@ -79769,14 +79639,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.IndexFileStateOnLoad"
     enum="SimpleIndexState">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The state the index file is at when an attempt is made to load from it.
   </summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexInitializationWaiters">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     At the time of index initialization, the number of enqueued jobs awaiting
     index initialization.
@@ -79785,12 +79655,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.IndexInitializeMethod"
     enum="SimpleCacheIndexInitializeMethod">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The method used to initialize the simple cache index.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexLoadTime" units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Time (as measured on the worker pool) spent loading the index file.
   </summary>
@@ -79805,12 +79675,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexNumEntriesOnWrite">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The number of entries written to the index on a flush.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexRestoreTime" units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Time (as measured on the worker pool) spent restoring the index file by
     iterating directory entries.
@@ -79821,13 +79691,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Deprecated 07/2013, and replaced by IndexFileStateOnLoad.
   </obsolete>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>For each index load, whether the index file was stale.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.IndexWriteInterval.Background"
     units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The interval between index saves, for apps in the background.
   </summary>
@@ -79835,7 +79705,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.IndexWriteInterval.Foreground"
     units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The interval between index saves, for apps in the foreground.
   </summary>
@@ -79843,7 +79713,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.IndexWriteReason"
     enum="SimpleCacheIndexWriteReason">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The reason an index was written to disk. Recorded every time an index is
     saved.
@@ -79852,7 +79722,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.IndexWriteReasonAtLoad"
     enum="SimpleCacheIndexWriteReason">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Recorded immediately after loading a fresh index (INDEX_STATE_FRESH or
     INDEX_STATE_FRESH_CONCURRENT_UPDATES), the reason the loaded index was
@@ -79866,7 +79736,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     SimpleCache.SimpleIndexWriteToDiskTime.Background and
     SimpleCache.SimpleIndexWriteToDiskTime.Foreground.
   </obsolete>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The amount of time spend writing the index file to disk, measured starting
     at the beginning of the write on the callback thread, and calculated using
@@ -79876,7 +79746,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.IndexWriteToDiskTime.Background"
     units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The amount of time spend writing the index file to disk, for apps in the
     background, measured starting at the beginning of the write on the callback
@@ -79886,7 +79756,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.IndexWriteToDiskTime.Foreground"
     units="ms">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The amount of time spend writing the index file to disk, for apps in the
     foreground, measured starting at the beginning of the write on the callback
@@ -79900,14 +79770,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     itself, so this result is now reported in the SimpleCache.x.SyncOpenResult
     histograms.
   </obsolete>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For each call to OpenEntry, whether the key on disk matched the request key.
   </summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.LastClusterLossPercent" units="%">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For each file in the Simple Cache, the percentage of disk space used by the
     cluster loss, the unused disk space in the last 4096 byte cluster of the
@@ -79916,7 +79786,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.LastClusterSize" units="bytes">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For each file in the Simple Cache, the number of bytes in the last 4096 byte
     cluster when the entry is saved to disk.
@@ -79933,7 +79803,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.OpenEntryIndexState"
     enum="SimpleCacheOpenEntryIndexState">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     At the time that an entry is opened, the state of that entry in the index.
   </summary>
@@ -79966,7 +79836,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.ReadIsParallelizable"
     enum="SimpleCacheReadParallelizable">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For each Read operation, whether it could have been issued in parallel of a
     previous Read operation.
@@ -79975,7 +79845,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.ReadResult"
     enum="SimpleCacheReadResult">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The outcome of Entry::ReadData in the simple cache.</summary>
 </histogram>
 
@@ -79991,7 +79861,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.StaleIndexExtraEntryCount"
     units="entries">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Count of the number of entries recorded in the index, but not actually
     present in the cache. Recorded each time a stale index is found and a
@@ -80001,7 +79871,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.StaleIndexMissedEntryCount"
     units="entries">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Count of the number of entries present in a cache, but not recorded in the
     index. Recorded each time a stale index is found and a directory rescan is
@@ -80011,7 +79881,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.StaleIndexQuality"
     enum="SimpleCacheStaleIndexQuality">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The quality of a &quot;stale&quot; index compared to a full directory
     rescan. Recorded immediately after every directory scan for stale indexes.
@@ -80020,7 +79890,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncCheckEOFHasCrc"
     enum="BooleanHasCrc">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     For each EOFRecord found with a valid magic number, indicates if the record
     also contains a CRC.
@@ -80029,7 +79899,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncCheckEOFResult"
     enum="SimpleCacheSyncCheckEOFResult">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The result, at the synchronous layer, of checking the EOF record of a cache
     entry.
@@ -80038,7 +79908,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncCloseResult"
     enum="SimpleCacheSyncCloseResult">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The result, at the synchronous layer, of closing a cache entry.
   </summary>
@@ -80046,7 +79916,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncCreatePlatformFileError"
     enum="PlatformFileError">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The platform error reported when attempting to create a new cache entry at
     the synchronous layer.
@@ -80055,7 +79925,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncCreateResult"
     enum="SimpleCacheSyncCreateResult">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The result, at the synchronous layer, reported when attempting to create a
     new cache entry.
@@ -80064,7 +79934,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncKeySHA256Result"
     enum="SimpleCacheSyncSHA256Result">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The result of the the key SHA256 check done when opening stream 0 for each
     entry.
@@ -80080,7 +79950,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram base="true" name="SimpleCache.SyncOpenEntryAge" units="hours">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The age of the entry (time since last modified), when opened at the
     synchronous layer.
@@ -80089,7 +79959,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncOpenPlatformFileError"
     enum="PlatformFileError">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The platform error reported when attempting to create a new cache entry at
     the synchronous layer.
@@ -80098,7 +79968,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncOpenResult"
     enum="SimpleCacheSyncOpenResult">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The result, at the synchronous layer, reported when attempting to open a new
     cache entry.
@@ -80107,7 +79977,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.SyncWriteResult"
     enum="SimpleCacheSyncWriteResult">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     The result, at the synchronous layer, of writing to a cache entry.
   </summary>
@@ -80115,7 +79985,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="SimpleCache.WriteDependencyType"
     enum="SimpleCacheWriteDependencyType">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>
     Shows whether a write operation depends on the previous operation in queue
     particularly in the aspect of its possibility to run in parallel.
@@ -80127,13 +79997,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Replaced 2013/09/03 by WriteResult2, which adds &quot;fast empty
     return&quot;, which previously showed up as &quot;success&quot;.
   </obsolete>
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The outcome of Entry::WriteData in the simple cache.</summary>
 </histogram>
 
 <histogram base="true" name="SimpleCache.WriteResult2"
     enum="SimpleCacheWriteResult">
-  <owner>morlovich@chromium.org</owner>
+  <owner>gavinp@chromium.org</owner>
   <summary>The outcome of Entry::WriteData in the simple cache.</summary>
 </histogram>
 
@@ -86626,18 +86496,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TabManager.BackgroundTabOpening.TabLoadTimeout"
-    enum="BooleanTimedOut">
-  <owner>zhenw@chromium.org</owner>
-  <summary>
-    Whether the tab load is timed out during background tab opening session (the
-    duration of time from when the browser starts to open background tabs until
-    the time the browser has finished loading those tabs or otherwise decided to
-    stop loading them). The metric is not recorded when the session overlaps
-    with session restore.
-  </summary>
-</histogram>
-
 <histogram name="TabManager.BackgroundTabOpening.TabLoadUserInitiatedCount"
     units="tabs">
   <owner>zhenw@chromium.org</owner>
@@ -86677,11 +86535,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="TabManager.Discarding.DiscardedEngagementScore">
-  <obsolete>
-    Deprecated 11/2017. Analysis showed that MRU was as good as engagement score
-    to choose which tabs to discard. The new plan is to build a machine learning
-    model to choose which tabs to discard.
-  </obsolete>
   <owner>georgesak@chromium.org</owner>
   <summary>
     Site engagement score of a discarded tab. Recorded for each discard if the
@@ -86743,11 +86596,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="TabManager.Discarding.ReloadedEngagementScore">
-  <obsolete>
-    Deprecated 11/2017. Analysis showed that MRU was as good as engagement score
-    to choose which tabs to discard. The new plan is to build a machine learning
-    model to choose which tabs to discard.
-  </obsolete>
   <owner>georgesak@chromium.org</owner>
   <summary>
     Site engagement score of a reloaded tab. Recorded for each reload if the
@@ -108361,14 +108209,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Cpu" label="Adapt reason: CPU."/>
   <suffix name="Quality" label="Adapt reason: quality."/>
   <affected-histogram name="WebRTC.Video.AdaptChangesPerMinute"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="VideoDecodeStatsDBOperations" separator=".">
-  <suffix name="Initialize" label="Success status for initializing the DB."/>
-  <suffix name="Read" label="Success status for reading from the DB"/>
-  <suffix name="Write" label="Success status for writing to the DB"/>
-  <suffix name="Destroy" label="Success status for destroying the DB"/>
-  <affected-histogram name="Media.VideoDecodeStatsDB.OpSuccess"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="VideoEncodedQpStats" separator=".">

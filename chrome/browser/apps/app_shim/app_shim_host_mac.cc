@@ -34,8 +34,7 @@ void AppShimHost::ServeChannel(mojo::edk::ScopedPlatformHandle handle) {
               mojo::edk::TransportProtocol::kLegacy, std::move(handle))),
           content::BrowserThread::GetTaskRunnerForThread(
               content::BrowserThread::IO)
-              .get(),
-          base::ThreadTaskRunnerHandle::Get()),
+              .get()),
       this,
       content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
           .get(),

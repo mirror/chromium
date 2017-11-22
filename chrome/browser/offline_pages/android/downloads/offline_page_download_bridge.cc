@@ -267,11 +267,10 @@ void OfflinePageDownloadBridge::Destroy(JNIEnv* env,
   delete this;
 }
 
-void JNI_OfflinePageDownloadBridge_StartDownload(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobject>& j_tab,
-    const JavaParamRef<jstring>& j_origin) {
+void StartDownload(JNIEnv* env,
+                   const JavaParamRef<jclass>& clazz,
+                   const JavaParamRef<jobject>& j_tab,
+                   const JavaParamRef<jstring>& j_origin) {
   TabAndroid* tab = TabAndroid::GetNativeTab(env, j_tab);
   if (!tab)
     return;
@@ -307,10 +306,9 @@ void JNI_OfflinePageDownloadBridge_StartDownload(
       base::Bind(&DuplicateCheckDone, url, original_url, j_tab_ref, origin));
 }
 
-static jlong JNI_OfflinePageDownloadBridge_Init(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& j_profile) {
+static jlong Init(JNIEnv* env,
+                  const JavaParamRef<jobject>& obj,
+                  const JavaParamRef<jobject>& j_profile) {
   content::BrowserContext* browser_context =
       ProfileAndroid::FromProfileAndroid(j_profile);
 

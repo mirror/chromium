@@ -161,9 +161,7 @@ void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
         ClipRect clip_rect;
         layer->Clipper(PaintLayer::kDoNotUseGeometryMapper)
             .CalculateBackgroundClipRect(
-                ClipRectsContext(root_layer_,
-                                 kAbsoluteClipRectsIgnoringViewportClip),
-                clip_rect);
+                ClipRectsContext(root_layer_, kAbsoluteClipRects), clip_rect);
         IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
         properties.clipped_absolute_bounding_box =
             properties.unclipped_absolute_bounding_box;

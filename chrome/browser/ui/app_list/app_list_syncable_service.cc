@@ -4,13 +4,8 @@
 
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 
-#include <set>
 #include <utility>
 
-#include "ash/app_list/model/app_list_folder_item.h"
-#include "ash/app_list/model/app_list_item.h"
-#include "ash/app_list/model/app_list_model.h"
-#include "ash/app_list/model/app_list_model_observer.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -45,6 +40,10 @@
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/one_shot_event.h"
+#include "ui/app_list/app_list_folder_item.h"
+#include "ui/app_list/app_list_item.h"
+#include "ui/app_list/app_list_model.h"
+#include "ui/app_list/app_list_model_observer.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -185,26 +184,20 @@ void UpdateSyncItemInLocalStorage(
     const AppListSyncableService::SyncItem* sync_item) {
   DictionaryPrefUpdate pref_update(profile->GetPrefs(),
                                    prefs::kAppListLocalState);
-  base::Value* dict_item = pref_update->FindKeyOfType(
-      sync_item->item_id, base::Value::Type::DICTIONARY);
-  if (!dict_item) {
-    dict_item = pref_update->SetKey(sync_item->item_id,
-                                    base::Value(base::Value::Type::DICTIONARY));
+  base::DictionaryValue* dict_item = nullptr;
+  if (!pref_update->GetDictionaryWithoutPathExpansion(sync_item->item_id,
+      &dict_item)) {
+    dict_item = pref_update->SetDictionaryWithoutPathExpansion(
+        sync_item->item_id, base::MakeUnique<base::DictionaryValue>());
   }
 
-  dict_item->SetKey(kNameKey, base::Value(sync_item->item_name));
-  dict_item->SetKey(kParentIdKey, base::Value(sync_item->parent_id));
-  dict_item->SetKey(kPositionKey,
-                    base::Value(sync_item->item_ordinal.IsValid()
-                                    ? sync_item->item_ordinal.ToInternalValue()
-                                    : std::string()));
-  dict_item->SetKey(
-      kPinPositionKey,
-      base::Value(sync_item->item_pin_ordinal.IsValid()
-                      ? sync_item->item_pin_ordinal.ToInternalValue()
-                      : std::string()));
-  dict_item->SetKey(kTypeKey,
-                    base::Value(static_cast<int>(sync_item->item_type)));
+  dict_item->SetString(kNameKey, sync_item->item_name);
+  dict_item->SetString(kParentIdKey, sync_item->parent_id);
+  dict_item->SetString(kPositionKey,sync_item->item_ordinal.IsValid() ?
+      sync_item->item_ordinal.ToInternalValue() : std::string());
+  dict_item->SetString(kPinPositionKey, sync_item->item_pin_ordinal.IsValid() ?
+      sync_item->item_pin_ordinal.ToInternalValue() : std::string());
+  dict_item->SetInteger(kTypeKey, static_cast<int>(sync_item->item_type));
 }
 
 bool IsDefaultSyncItem(const AppListSyncableService::SyncItem* sync_item) {

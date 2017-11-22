@@ -42,6 +42,8 @@ TestWebState::TestWebState()
 TestWebState::~TestWebState() {
   for (auto& observer : observers_)
     observer.WebStateDestroyed(this);
+  for (auto& observer : observers_)
+    observer.ResetWebState();
 };
 
 WebStateDelegate* TestWebState::GetDelegate() {

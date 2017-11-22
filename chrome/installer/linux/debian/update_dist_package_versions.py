@@ -43,7 +43,6 @@ PACKAGE_FILTER = set([
     "libcairo2",
     "libcups2",
     "libdbus-1-3",
-    "libdconf1",
     "libexpat1",
     "libfontconfig1",
     "libgcc1",

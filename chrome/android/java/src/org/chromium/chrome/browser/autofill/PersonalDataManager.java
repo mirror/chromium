@@ -872,19 +872,20 @@ public class PersonalDataManager {
 
     /**
      * Normalizes the address of the profile associated with the {@code guid} if the rules
-     * associated with the profile's region are done loading. Otherwise sets up the callback to
+     * associated with the {@code regionCode} are done loading. Otherwise sets up the callback to
      * start normalizing the address when the rules are loaded. The normalized profile will be sent
      * to the {@code delegate}. If the profile is not normalized in the specified
      * {@code sRequestTimeoutSeconds}, the {@code delegate} will be notified.
      *
      * @param profile The profile to normalize.
+     * @param regionCode The region code indicating which rules to use for normalization.
      * @param delegate The object requesting the normalization.
      */
     public void normalizeAddress(
-            AutofillProfile profile, NormalizedAddressRequestDelegate delegate) {
+            AutofillProfile profile, String regionCode, NormalizedAddressRequestDelegate delegate) {
         ThreadUtils.assertOnUiThread();
         nativeStartAddressNormalization(
-                mPersonalDataManagerAndroid, profile, sRequestTimeoutSeconds, delegate);
+                mPersonalDataManagerAndroid, profile, regionCode, sRequestTimeoutSeconds, delegate);
     }
 
     /**
@@ -1018,7 +1019,8 @@ public class PersonalDataManager {
     private native void nativeLoadRulesForSubKeys(
             long nativePersonalDataManagerAndroid, String regionCode);
     private native void nativeStartAddressNormalization(long nativePersonalDataManagerAndroid,
-            AutofillProfile profile, int timeoutSeconds, NormalizedAddressRequestDelegate delegate);
+            AutofillProfile profile, String regionCode, int timeoutSeconds,
+            NormalizedAddressRequestDelegate delegate);
     private native void nativeStartRegionSubKeysRequest(long nativePersonalDataManagerAndroid,
             String regionCode, int timeoutSeconds, GetSubKeysRequestDelegate delegate);
     private static native boolean nativeHasProfiles(long nativePersonalDataManagerAndroid);

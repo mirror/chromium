@@ -5,7 +5,6 @@
 #ifndef CSSKeywordValue_h
 #define CSSKeywordValue_h
 
-#include "base/macros.h"
 #include "core/CSSValueKeywords.h"
 #include "core/CoreExport.h"
 #include "core/css/cssom/CSSStyleValue.h"
@@ -15,6 +14,7 @@ namespace blink {
 class ExceptionState;
 
 class CORE_EXPORT CSSKeywordValue final : public CSSStyleValue {
+  WTF_MAKE_NONCOPYABLE(CSSKeywordValue);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -28,13 +28,12 @@ class CORE_EXPORT CSSKeywordValue final : public CSSStyleValue {
   void setValue(const String& keyword, ExceptionState&);
   CSSValueID KeywordValueID() const;
 
-  const CSSValue* ToCSSValue(SecureContextMode) const override;
+  const CSSValue* ToCSSValue() const override;
 
  private:
   explicit CSSKeywordValue(const String& keyword) : keyword_value_(keyword) {}
 
   String keyword_value_;
-  DISALLOW_COPY_AND_ASSIGN(CSSKeywordValue);
 };
 
 DEFINE_TYPE_CASTS(CSSKeywordValue,

@@ -68,7 +68,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     /**
      * The precomputed maximum width of the Ripple resource in pixels.
      */
-    private float mRippleMaximumWidthPx;
+    private final float mRippleMaximumWidthPx;
 
     /**
      * @param panel             The panel.
@@ -121,19 +121,6 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
      */
     float getHeightPeekingPx() {
         return mIsVisible ? mDefaultHeightPx : 0.f;
-    }
-
-    // ============================================================================================
-    // Custom Behaviors
-    // ============================================================================================
-
-    void onResized(ContextualSearchPanel panel) {
-        mRippleMaximumWidthPx = panel.getMaximumWidthPx();
-
-        // In the rare condition that size is changed mid-animation, e.g. the device orientation is
-        // changed, mRippleWidthPx will be updated by the CompositorAnimator and will grow to the
-        // new mRippleMaximumWidthPx by the end of animation.
-        mRippleWidthPx = mRippleMaximumWidthPx;
     }
 
     // ============================================================================================

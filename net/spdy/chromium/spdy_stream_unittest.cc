@@ -130,9 +130,8 @@ class SpdyStreamTest : public ::testing::Test {
   void AddSSLSocketData() {
     // Load a cert that is valid for
     // www.example.org, mail.example.org, and mail.example.com.
-    ssl_.ssl_info.cert =
-        ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
-    ASSERT_TRUE(ssl_.ssl_info.cert);
+    ssl_.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
+    ASSERT_TRUE(ssl_.cert);
     session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl_);
   }
 

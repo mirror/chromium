@@ -59,7 +59,7 @@ int FrameHeaderUtil::GetThemeBackgroundXInset() {
 }
 
 // static
-gfx::Rect FrameHeaderUtil::GetAvailableTitleBounds(
+gfx::Rect FrameHeaderUtil::GetTitleBounds(
     const views::View* left_view,
     const views::View* right_view,
     const gfx::FontList& title_font_list) {

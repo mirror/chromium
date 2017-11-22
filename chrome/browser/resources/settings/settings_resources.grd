@@ -681,12 +681,6 @@
       <structure name="IDR_SETTINGS_PASSWORD_EDIT_DIALOG_JS"
                  file="passwords_and_forms_page/password_edit_dialog.js"
                  type="chrome_html" />
-      <structure name="IDR_SETTINGS_PASSWORDS_EXPORT_DIALOG_HTML"
-                 file="passwords_and_forms_page/passwords_export_dialog.html"
-                 type="chrome_html" />
-      <structure name="IDR_SETTINGS_PASSWORDS_EXPORT_DIALOG_JS"
-                 file="passwords_and_forms_page/passwords_export_dialog.js"
-                 type="chrome_html" />
       <structure name="IDR_SETTINGS_PEOPLE_PAGE_HTML"
                  file="people_page/people_page.html"
                  type="chrome_html"
@@ -817,14 +811,6 @@
                    type="chrome_html" />
         <structure name="IDR_SETTINGS_CUPS_ADD_PRINTER_DIALOG_UTIL_JS"
                    file="printing_page/cups_add_printer_dialog_util.js"
-                   type="chrome_html" />
-      </if>
-      <if expr="not chromeos">
-        <structure name="IDR_SETTINGS_PRINTING_BROWSER_PROXY_HTML"
-                   file="printing_page/printing_browser_proxy.html"
-                   type="chrome_html" />
-        <structure name="IDR_SETTINGS_PRINTING_BROWSER_PROXY_JS"
-                   file="printing_page/printing_browser_proxy.js"
                    type="chrome_html" />
       </if>
       <structure name="IDR_SETTINGS_CLOUD_PRINTING_PAGE_HTML"

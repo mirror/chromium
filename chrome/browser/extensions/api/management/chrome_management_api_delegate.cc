@@ -314,10 +314,12 @@ bool ChromeManagementAPIDelegate::UninstallExtension(
     content::BrowserContext* context,
     const std::string& transient_extension_id,
     extensions::UninstallReason reason,
+    const base::Closure& deletion_done_callback,
     base::string16* error) const {
   return extensions::ExtensionSystem::Get(context)
       ->extension_service()
-      ->UninstallExtension(transient_extension_id, reason, error);
+      ->UninstallExtension(transient_extension_id, reason,
+                           deletion_done_callback, error);
 }
 
 void ChromeManagementAPIDelegate::SetLaunchType(

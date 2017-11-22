@@ -248,11 +248,6 @@ void PaintController::RemoveLastDisplayItem() {
     } else {
       DCHECK(under_invalidation_checking_begin_);
       --under_invalidation_checking_begin_;
-      // The old display item is a tombstone because it was matched by the begin
-      // display item being removed. Restore the tombstone so that we can match
-      // the next new display item against it.
-      current_paint_artifact_.GetDisplayItemList().RestoreTombstone(
-          under_invalidation_checking_begin_, new_display_item_list_.Last());
     }
   }
   new_display_item_list_.RemoveLast();
@@ -518,7 +513,10 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
   for (size_t current_index = begin_index; current_index < end_index;
        ++current_index) {
     cached_item = &current_paint_artifact_.GetDisplayItemList()[current_index];
-    SECURITY_CHECK(!cached_item->IsTombstone());
+    DCHECK(!cached_item->IsTombstone());
+    // TODO(chrishtr); remove this hack once crbug.com/712660 is resolved.
+    if (cached_item->IsTombstone())
+      continue;
 #if DCHECK_IS_ON()
     DCHECK(cached_item->Client().IsAlive());
 #endif
@@ -1117,7 +1115,7 @@ void PaintController::CheckUnderInvalidation() {
   }
 
   // Discard the forced repainted display item and move the cached item into
-  // new_display_item_list_. This is to align with the
+  // m_newDisplayItemList. This is to align with the
   // non-under-invalidation-checking path to empty the original cached slot,
   // leaving only disappeared or invalidated display items in the old list after
   // painting.

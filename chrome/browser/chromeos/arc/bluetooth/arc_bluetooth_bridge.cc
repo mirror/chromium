@@ -304,59 +304,82 @@ ArcBluetoothBridge* ArcBluetoothBridge::GetForBrowserContext(
   return ArcBluetoothBridgeFactory::GetForBrowserContext(context);
 }
 
-template <typename InstanceType, typename HostType>
-class ArcBluetoothBridge::ConnectionObserverImpl
-    : public ConnectionObserver<InstanceType> {
+template <typename T>
+class ArcBluetoothBridge::InstanceObserver
+    : public InstanceHolder<T>::Observer {
  public:
-  ConnectionObserverImpl(ArcBluetoothBridge* owner,
-                         ArcBridgeService* arc_bridge_service)
+  InstanceObserver(ArcBluetoothBridge* owner,
+                   ArcBridgeService* arc_bridge_service)
       : owner_(owner), arc_bridge_service_(arc_bridge_service) {
     GetHolder()->AddObserver(this);
   }
 
-  ~ConnectionObserverImpl() override { GetHolder()->RemoveObserver(this); }
+  ~InstanceObserver() override { GetHolder()->RemoveObserver(this); }
 
  protected:
-  ConnectionHolder<InstanceType, HostType>* GetHolder();
+  InstanceHolder<T>* GetHolder();
 
   ArcBridgeService* arc_bridge_service() { return arc_bridge_service_; }
 
  private:
-  // ConnectionObserver<T>:
-  void OnConnectionReady() override { owner_->MaybeSendInitialPowerChange(); }
+  // InstanceHolder<T>::Observer:
+  void OnInstanceReady() override { owner_->MaybeSendInitialPowerChange(); }
 
   // Unowned pointer
   ArcBluetoothBridge* const owner_;
   ArcBridgeService* const arc_bridge_service_;
 
-  DISALLOW_COPY_AND_ASSIGN(ConnectionObserverImpl);
+  DISALLOW_COPY_AND_ASSIGN(InstanceObserver);
 };
 
 template <>
-ConnectionHolder<mojom::AppInstance, mojom::AppHost>*
-ArcBluetoothBridge::ConnectionObserverImpl<mojom::AppInstance,
-                                           mojom::AppHost>::GetHolder() {
+InstanceHolder<mojom::AppInstance>*
+ArcBluetoothBridge::InstanceObserver<mojom::AppInstance>::GetHolder() {
   return arc_bridge_service()->app();
 }
 
 template <>
-ConnectionHolder<mojom::IntentHelperInstance>*
-ArcBluetoothBridge::ConnectionObserverImpl<mojom::IntentHelperInstance,
-                                           void>::GetHolder() {
+InstanceHolder<mojom::IntentHelperInstance>*
+ArcBluetoothBridge::InstanceObserver<mojom::IntentHelperInstance>::GetHolder() {
   return arc_bridge_service()->intent_helper();
 }
+
+class ArcBluetoothBridge::AppInstanceObserver
+    : public InstanceObserver<mojom::AppInstance> {
+ public:
+  AppInstanceObserver(ArcBluetoothBridge* owner,
+                      ArcBridgeService* arc_bridge_service)
+      : InstanceObserver<mojom::AppInstance>(owner, arc_bridge_service) {}
+
+  ~AppInstanceObserver() override = default;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(AppInstanceObserver);
+};
+
+class ArcBluetoothBridge::IntentHelperInstanceObserver
+    : public InstanceObserver<mojom::IntentHelperInstance> {
+ public:
+  IntentHelperInstanceObserver(ArcBluetoothBridge* owner,
+                               ArcBridgeService* arc_bridge_service)
+      : InstanceObserver<mojom::IntentHelperInstance>(owner,
+                                                      arc_bridge_service) {}
+
+  ~IntentHelperInstanceObserver() override = default;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(IntentHelperInstanceObserver);
+};
 
 ArcBluetoothBridge::ArcBluetoothBridge(content::BrowserContext* context,
                                        ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service), binding_(this), weak_factory_(this) {
   arc_bridge_service_->bluetooth()->AddObserver(this);
 
-  app_observer_ = std::make_unique<
-      ConnectionObserverImpl<mojom::AppInstance, mojom::AppHost>>(
-      this, arc_bridge_service_);
-  intent_helper_observer_ = std::make_unique<
-      ConnectionObserverImpl<mojom::IntentHelperInstance, void>>(
-      this, arc_bridge_service_);
+  app_observer_ =
+      std::make_unique<AppInstanceObserver>(this, arc_bridge_service_);
+  intent_helper_observer_ =
+      std::make_unique<IntentHelperInstanceObserver>(this, arc_bridge_service_);
 
   if (BluetoothAdapterFactory::IsBluetoothSupported()) {
     VLOG(1) << "Registering bluetooth adapter.";
@@ -390,7 +413,7 @@ void ArcBluetoothBridge::OnAdapterInitialized(
     bluetooth_adapter_->AddObserver(this);
 }
 
-void ArcBluetoothBridge::OnConnectionReady() {
+void ArcBluetoothBridge::OnInstanceReady() {
   mojom::BluetoothInstance* bluetooth_instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->bluetooth(), Init);
   DCHECK(bluetooth_instance);
@@ -402,7 +425,7 @@ void ArcBluetoothBridge::OnConnectionReady() {
   is_bluetooth_instance_up_ = true;
 }
 
-void ArcBluetoothBridge::OnConnectionClosed() {
+void ArcBluetoothBridge::OnInstanceClosed() {
   is_bluetooth_instance_up_ = false;
 }
 
@@ -2117,8 +2140,8 @@ void ArcBluetoothBridge::MaybeSendInitialPowerChange() {
   // after the Intent Helper instance. In case of next boot Intent Helper and
   // App instances are started at almost the same time and order of start is not
   // determined.
-  if (!arc_bridge_service_->app()->IsConnected() ||
-      !arc_bridge_service_->intent_helper()->IsConnected()) {
+  if (!arc_bridge_service_->app()->has_instance() ||
+      !arc_bridge_service_->intent_helper()->has_instance()) {
     return;
   }
 

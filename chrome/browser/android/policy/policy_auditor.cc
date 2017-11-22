@@ -11,10 +11,9 @@
 
 using base::android::JavaParamRef;
 
-int JNI_PolicyAuditor_GetCertificateFailure(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& obj,
-    const JavaParamRef<jobject>& java_web_contents) {
+int GetCertificateFailure(JNIEnv* env,
+                          const JavaParamRef<jclass>& obj,
+                          const JavaParamRef<jobject>& java_web_contents) {
   // This function is similar to
   // ToolbarModelImpl::GetSecurityLevelForWebContents, but has a custom mapping
   // for policy auditing

@@ -589,7 +589,7 @@ void ChromeContentRendererClient::RenderFrameCreated(
 
   // Set up a mojo service to test if this page is a distiller page.
   new dom_distiller::DistillerJsRenderFrameObserver(
-      render_frame, ISOLATED_WORLD_ID_CHROME_INTERNAL, registry);
+      render_frame, chrome::ISOLATED_WORLD_ID_CHROME_INTERNAL, registry);
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kEnableDistillabilityService)) {
@@ -1175,10 +1175,6 @@ bool ChromeContentRendererClient::ShouldSuppressErrorPage(
   return SearchBouncer::GetInstance()->IsNewTabPage(url);
 }
 
-bool ChromeContentRendererClient::ShouldTrackUseCounter(const GURL& url) {
-  return !SearchBouncer::GetInstance()->IsNewTabPage(url);
-}
-
 void ChromeContentRendererClient::GetNavigationErrorStrings(
     content::RenderFrame* render_frame,
     const WebURLRequest& failed_request,
@@ -1399,11 +1395,11 @@ bool ChromeContentRendererClient::IsExternalPepperPlugin(
 
 #if BUILDFLAG(ENABLE_PLUGINS) && BUILDFLAG(ENABLE_EXTENSIONS)
 bool ChromeContentRendererClient::IsExtensionOrSharedModuleWhitelisted(
-    const GURL& url,
-    const std::set<std::string>& whitelist) {
+    const GURL& url, const std::set<std::string>& whitelist) {
   const extensions::ExtensionSet* extension_set =
       extensions::RendererExtensionRegistry::Get()->GetMainThreadExtensionSet();
-  return ::IsExtensionOrSharedModuleWhitelisted(url, extension_set, whitelist);
+  return chrome::IsExtensionOrSharedModuleWhitelisted(url, extension_set,
+      whitelist);
 }
 #endif
 

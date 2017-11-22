@@ -44,16 +44,17 @@ class ManifestVerifierBrowserTest : public InProcessBrowserTest {
   // Runs the verifier on the |apps| and blocks until the verifier has finished
   // using all resources.
   void Verify(content::PaymentAppProvider::PaymentApps apps) {
-    content::WebContents* web_contents =
-        browser()->tab_strip_model()->GetActiveWebContents();
-    content::BrowserContext* context = web_contents->GetBrowserContext();
+    content::BrowserContext* context = browser()
+                                           ->tab_strip_model()
+                                           ->GetActiveWebContents()
+                                           ->GetBrowserContext();
     auto downloader = std::make_unique<TestDownloader>(
         content::BrowserContext::GetDefaultStoragePartition(context)
             ->GetURLRequestContext());
     downloader->AddTestServerURL("https://", https_server_->GetURL("/"));
 
     ManifestVerifier verifier(
-        web_contents, std::move(downloader),
+        std::move(downloader),
         std::make_unique<payments::PaymentManifestParser>(),
         WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
             Profile::FromBrowserContext(context),

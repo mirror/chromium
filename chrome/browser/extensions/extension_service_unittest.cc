@@ -3968,6 +3968,7 @@ TEST_F(ExtensionServiceTest, ManagementPolicyProhibitsLoadFromPrefs) {
   EXPECT_TRUE(
       service()->UninstallExtension(extension->id(),
                                     extensions::UNINSTALL_REASON_FOR_TESTING,
+                                    base::Bind(&base::DoNothing),
                                     NULL));
   EXPECT_EQ(0u, registry()->enabled_extensions().size());
 
@@ -4033,6 +4034,7 @@ TEST_F(ExtensionServiceTest, ManagementPolicyProhibitsUninstall) {
   EXPECT_FALSE(
       service()->UninstallExtension(good_crx,
                                     extensions::UNINSTALL_REASON_FOR_TESTING,
+                                    base::Bind(&base::DoNothing),
                                     NULL));
 
   EXPECT_EQ(1u, registry()->enabled_extensions().size());
@@ -4917,14 +4919,14 @@ TEST_F(ExtensionServiceTest, ClearExtensionData) {
   idb_context->ResetCachesForTesting();
 
   // Uninstall the extension.
+  base::RunLoop run_loop;
   ASSERT_TRUE(
       service()->UninstallExtension(good_crx,
                                     extensions::UNINSTALL_REASON_FOR_TESTING,
+                                    run_loop.QuitClosure(),
                                     NULL));
-  // The data deletion happens on the IO thread; since we use a
-  // TestBrowserThreadBundle (without REAL_IO_THREAD), the IO and UI threads are
-  // the same, and RunAllTasksUntilIdle() should run IO thread tasks.
-  content::RunAllTasksUntilIdle();
+  // The data deletion happens on the IO thread.
+  run_loop.Run();
 
   // Check that the cookie is gone.
   cookie_store->GetAllCookiesForURLAsync(
@@ -5122,6 +5124,7 @@ TEST_F(ExtensionServiceTest, DISABLED_LoadExtension) {
   EXPECT_FALSE(unloaded_id_.length());
   service()->UninstallExtension(id,
                                 extensions::UNINSTALL_REASON_FOR_TESTING,
+                                base::Bind(&base::DoNothing),
                                 NULL);
   content::RunAllTasksUntilIdle();
   EXPECT_EQ(id, unloaded_id_);
@@ -5228,6 +5231,7 @@ void ExtensionServiceTest::TestExternalProvider(MockExternalProvider* provider,
       GetManagementPolicy()->MustRemainEnabled(loaded_[0].get(), NULL);
   service()->UninstallExtension(id,
                                 extensions::UNINSTALL_REASON_FOR_TESTING,
+                                base::Bind(&base::DoNothing),
                                 NULL);
   content::RunAllTasksUntilIdle();
 
@@ -5286,6 +5290,7 @@ void ExtensionServiceTest::TestExternalProvider(MockExternalProvider* provider,
     loaded_.clear();
     service()->UninstallExtension(id,
                                   extensions::UNINSTALL_REASON_FOR_TESTING,
+                                  base::Bind(&base::DoNothing),
                                   NULL);
     content::RunAllTasksUntilIdle();
     ASSERT_EQ(0u, loaded_.size());
@@ -7138,7 +7143,8 @@ TEST_F(ExtensionServiceTest, UninstallBlacklistedExtension) {
   EXPECT_NE(nullptr, registry()->GetInstalledExtension(id));
   base::string16 error;
   EXPECT_TRUE(service()->UninstallExtension(
-      id, extensions::UNINSTALL_REASON_USER_INITIATED, nullptr));
+      id, extensions::UNINSTALL_REASON_USER_INITIATED,
+      base::Bind(&base::DoNothing), nullptr));
   EXPECT_EQ(nullptr, registry()->GetInstalledExtension(id));
 }
 

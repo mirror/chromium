@@ -108,9 +108,9 @@ class PLATFORM_EXPORT SegmentedSubstring {
     return true;
   }
 
-  ALWAYS_INLINE UChar GetCurrentChar() const { return current_char_; }
+  UChar GetCurrentChar() const { return current_char_; }
 
-  ALWAYS_INLINE void IncrementAndDecrementLength() {
+  void IncrementAndDecrementLength() {
     current_char_ = is8_bit_ ? *++data_.string8_ptr : *++data_.string16_ptr;
     --length_;
   }
@@ -189,7 +189,7 @@ class PLATFORM_EXPORT SegmentedString {
     return LookAheadInline(string, kTextCaseASCIIInsensitive);
   }
 
-  ALWAYS_INLINE void Advance() {
+  void Advance() {
     if (LIKELY(current_string_.length() > 1)) {
       current_string_.IncrementAndDecrementLength();
     } else {
@@ -197,7 +197,7 @@ class PLATFORM_EXPORT SegmentedString {
     }
   }
 
-  ALWAYS_INLINE void UpdateLineNumber() {
+  void UpdateLineNumber() {
     if (LIKELY(current_string_.DoNotExcludeLineNumbers())) {
       ++current_line_;
       // Plus 1 because numberOfCharactersConsumed value hasn't incremented yet;
@@ -207,7 +207,7 @@ class PLATFORM_EXPORT SegmentedString {
     }
   }
 
-  ALWAYS_INLINE void AdvanceAndUpdateLineNumber() {
+  void AdvanceAndUpdateLineNumber() {
     DCHECK_GE(current_string_.length(), 1);
 
     if (current_string_.GetCurrentChar() == '\n')
@@ -220,23 +220,23 @@ class PLATFORM_EXPORT SegmentedString {
     }
   }
 
-  ALWAYS_INLINE void AdvanceAndASSERT(UChar expected_character) {
+  void AdvanceAndASSERT(UChar expected_character) {
     DCHECK_EQ(expected_character, CurrentChar());
     Advance();
   }
 
-  ALWAYS_INLINE void AdvanceAndASSERTIgnoringCase(UChar expected_character) {
+  void AdvanceAndASSERTIgnoringCase(UChar expected_character) {
     DCHECK_EQ(WTF::Unicode::FoldCase(CurrentChar()),
               WTF::Unicode::FoldCase(expected_character));
     Advance();
   }
 
-  ALWAYS_INLINE void AdvancePastNonNewline() {
+  void AdvancePastNonNewline() {
     DCHECK_NE(CurrentChar(), '\n');
     Advance();
   }
 
-  ALWAYS_INLINE void AdvancePastNewlineAndUpdateLineNumber() {
+  void AdvancePastNewlineAndUpdateLineNumber() {
     DCHECK_EQ(CurrentChar(), '\n');
     DCHECK_GE(current_string_.length(), 1);
 
@@ -262,9 +262,7 @@ class PLATFORM_EXPORT SegmentedString {
 
   String ToString() const;
 
-  ALWAYS_INLINE UChar CurrentChar() const {
-    return current_string_.GetCurrentChar();
-  }
+  UChar CurrentChar() const { return current_string_.GetCurrentChar(); }
 
   // The method is moderately slow, comparing to currentLine method.
   OrdinalNumber CurrentColumn() const;

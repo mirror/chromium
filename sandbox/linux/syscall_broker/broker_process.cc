@@ -114,44 +114,40 @@ int BrokerProcess::Open(const char* pathname, int flags) const {
   return broker_client_->Open(pathname, flags);
 }
 
-#if defined(MEMORY_SANITIZER)
-#define BROKER_UNPOISON_STRING(x) __msan_unpoison_string(x)
-#else
-#define BROKER_UNPOISON_STRING(x)
-#endif
-
 // static
 intptr_t BrokerProcess::SIGSYS_Handler(const sandbox::arch_seccomp_data& args,
                                        void* aux_broker_process) {
   RAW_CHECK(aux_broker_process);
   auto* broker_process = static_cast<BrokerProcess*>(aux_broker_process);
   switch (args.nr) {
-#if defined(__NR_access)
+#if !defined(__aarch64__)
     case __NR_access:
       return broker_process->Access(reinterpret_cast<const char*>(args.args[0]),
                                     static_cast<int>(args.args[1]));
-#endif
-#if defined(__NR_open)
     case __NR_open:
+#if defined(MEMORY_SANITIZER)
       // http://crbug.com/372840
-      BROKER_UNPOISON_STRING(reinterpret_cast<const char*>(args.args[0]));
+      __msan_unpoison_string(reinterpret_cast<const char*>(args.args[0]));
+#endif
       return broker_process->Open(reinterpret_cast<const char*>(args.args[0]),
                                   static_cast<int>(args.args[1]));
-#endif
-#if defined(__NR_faccessat)
+#endif  // !defined(__aarch64__)
     case __NR_faccessat:
-      if (static_cast<int>(args.args[0]) != AT_FDCWD)
+      if (static_cast<int>(args.args[0]) == AT_FDCWD) {
+        return broker_process->Access(
+            reinterpret_cast<const char*>(args.args[1]),
+            static_cast<int>(args.args[2]));
+      } else {
         return -EPERM;
-      return broker_process->Access(reinterpret_cast<const char*>(args.args[1]),
-                                    static_cast<int>(args.args[2]));
-#endif
-#if defined(__NR_openat)
+      }
     case __NR_openat:
-      if (static_cast<int>(args.args[0]) != AT_FDCWD)
+      // Allow using openat() as open().
+      if (static_cast<int>(args.args[0]) == AT_FDCWD) {
+        return broker_process->Open(reinterpret_cast<const char*>(args.args[1]),
+                                    static_cast<int>(args.args[2]));
+      } else {
         return -EPERM;
-      return broker_process->Open(reinterpret_cast<const char*>(args.args[1]),
-                                  static_cast<int>(args.args[2]));
-#endif
+      }
     default:
       RAW_CHECK(false);
       return -ENOSYS;

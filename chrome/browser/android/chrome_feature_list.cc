@@ -21,7 +21,6 @@
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/payments/core/features.h"
-#include "components/safe_browsing/features.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "content/public/common/content_features.h"
 #include "jni/ChromeFeatureList_jni.h"
@@ -130,7 +129,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &omnibox::kAndroidChromeHomePersonalizedSuggestions,
     &password_manager::features::kViewPasswords,
     &subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI,
-    &safe_browsing::kDispatchSafetyNetCheckOffThread,
 };
 
 const base::Feature* FindFeatureExposedToJava(const std::string& feature_name) {
@@ -343,23 +341,19 @@ const base::Feature kWebVrAutopresentFromIntent{
 const base::Feature kWebVrCardboardSupport{"WebVrCardboardSupport",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
-static jboolean JNI_ChromeFeatureList_IsInitialized(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
+static jboolean IsInitialized(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   return !!base::FeatureList::GetInstance();
 }
 
-static jboolean JNI_ChromeFeatureList_IsEnabled(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& jfeature_name) {
+static jboolean IsEnabled(JNIEnv* env,
+                          const JavaParamRef<jclass>& clazz,
+                          const JavaParamRef<jstring>& jfeature_name) {
   const base::Feature* feature =
       FindFeatureExposedToJava(ConvertJavaStringToUTF8(env, jfeature_name));
   return base::FeatureList::IsEnabled(*feature);
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_ChromeFeatureList_GetFieldTrialParamByFeature(
+static ScopedJavaLocalRef<jstring> GetFieldTrialParamByFeature(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jfeature_name,
@@ -372,7 +366,7 @@ JNI_ChromeFeatureList_GetFieldTrialParamByFeature(
   return ConvertUTF8ToJavaString(env, param_value);
 }
 
-static jint JNI_ChromeFeatureList_GetFieldTrialParamByFeatureAsInt(
+static jint GetFieldTrialParamByFeatureAsInt(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jfeature_name,
@@ -385,7 +379,7 @@ static jint JNI_ChromeFeatureList_GetFieldTrialParamByFeatureAsInt(
                                                 jdefault_value);
 }
 
-static jdouble JNI_ChromeFeatureList_GetFieldTrialParamByFeatureAsDouble(
+static jdouble GetFieldTrialParamByFeatureAsDouble(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jfeature_name,
@@ -398,7 +392,7 @@ static jdouble JNI_ChromeFeatureList_GetFieldTrialParamByFeatureAsDouble(
                                                    jdefault_value);
 }
 
-static jboolean JNI_ChromeFeatureList_GetFieldTrialParamByFeatureAsBoolean(
+static jboolean GetFieldTrialParamByFeatureAsBoolean(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jfeature_name,

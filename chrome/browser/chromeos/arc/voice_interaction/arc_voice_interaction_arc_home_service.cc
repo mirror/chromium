@@ -29,7 +29,7 @@
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/arc_service_manager.h"
-#include "components/arc/connection_holder.h"
+#include "components/arc/instance_holder.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/accessibility/platform/ax_snapshot_node_android_platform.h"
@@ -275,7 +275,7 @@ void ArcVoiceInteractionArcHomeService::OnWizardCompleteTimeout() {
   UnlockPai();
 }
 
-void ArcVoiceInteractionArcHomeService::OnConnectionReady() {
+void ArcVoiceInteractionArcHomeService::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   mojom::VoiceInteractionArcHomeInstance* home_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
@@ -286,7 +286,7 @@ void ArcVoiceInteractionArcHomeService::OnConnectionReady() {
   home_instance->Init(std::move(host_proxy));
 }
 
-void ArcVoiceInteractionArcHomeService::OnConnectionClosed() {
+void ArcVoiceInteractionArcHomeService::OnInstanceClosed() {
   VLOG(1) << "Voice interaction instance is closed.";
   UnlockPai();
 }

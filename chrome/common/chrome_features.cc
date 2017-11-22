@@ -135,12 +135,12 @@ const base::Feature kTabsInCbd{"TabsInCBD", base::FEATURE_ENABLED_BY_DEFAULT};
 // one that qualifies for inclusion in TopSites.
 const base::Feature kCaptureThumbnailDependingOnTransitionType{
     "CaptureThumbnailDependingOnTransitionType",
-    base::FEATURE_DISABLED_BY_DEFAULT};
+    base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Whether to capture page thumbnails when navigating away from the current page
 // (in addition to any other times this might happen).
 const base::Feature kCaptureThumbnailOnNavigatingAway{
-    "CaptureThumbnailOnNavigatingAway", base::FEATURE_DISABLED_BY_DEFAULT};
+    "CaptureThumbnailOnNavigatingAway", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Whether to trigger app banner installability checks on page load.
 const base::Feature kCheckInstallabilityForBannerOnLoad{
@@ -496,6 +496,20 @@ const base::Feature kNativeSmb{"NativeSmb", base::FEATURE_DISABLED_BY_DEFAULT};
 // website.
 const base::Feature kSoundContentSetting{"SoundContentSetting",
                                          base::FEATURE_ENABLED_BY_DEFAULT};
+
+#if !defined(OS_ANDROID)
+// Enables delaying the navigation of background tabs in order to improve
+// foreground tab's user experience.
+const base::Feature kStaggeredBackgroundTabOpening{
+    "StaggeredBackgroundTabOpening", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// This controls whether we are running experiment with staggered background
+// tab opening feature. For control group, this should be disabled. This depends
+// on |kStaggeredBackgroundTabOpening| above.
+const base::Feature kStaggeredBackgroundTabOpeningExperiment{
+    "StaggeredBackgroundTabOpeningExperiment",
+    base::FEATURE_ENABLED_BY_DEFAULT};
+#endif
 
 // Enables or disables the creation of (legacy) supervised users. Does not
 // affect existing supervised users.

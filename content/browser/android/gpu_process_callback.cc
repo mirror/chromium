@@ -12,7 +12,7 @@
 
 namespace content {
 
-void JNI_GpuProcessCallback_CompleteScopedSurfaceRequest(
+void CompleteScopedSurfaceRequest(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& clazz,
     const base::android::JavaParamRef<jobject>& token,
@@ -33,8 +33,7 @@ void JNI_GpuProcessCallback_CompleteScopedSurfaceRequest(
       requestToken, gl::ScopedJavaSurface(jsurface));
 }
 
-base::android::ScopedJavaLocalRef<jobject>
-JNI_GpuProcessCallback_GetViewSurface(
+base::android::ScopedJavaLocalRef<jobject> GetViewSurface(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     jint surface_id) {

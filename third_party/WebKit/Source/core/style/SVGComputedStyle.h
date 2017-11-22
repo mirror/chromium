@@ -436,6 +436,8 @@ class SVGComputedStyle : public RefCounted<SVGComputedStyle> {
   bool HasVisibleStroke() const {
     return HasStroke() && !StrokeWidth().IsZero();
   }
+  bool HasSquareCapStyle() const { return CapStyle() == kSquareCap; }
+  bool HasMiterJoinStyle() const { return JoinStyle() == kMiterJoin; }
   bool HasFill() const { return FillPaintType() != SVG_PAINTTYPE_NONE; }
 
  protected:

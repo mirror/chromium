@@ -56,8 +56,6 @@ class ClientSideDetectionHost : public content::WebContentsObserver,
 
   virtual scoped_refptr<SafeBrowsingDatabaseManager> database_manager();
 
-  BrowseInfo* GetBrowseInfo() const { return browse_info_.get(); }
-
  protected:
   explicit ClientSideDetectionHost(content::WebContents* tab);
 
@@ -69,18 +67,15 @@ class ClientSideDetectionHost : public content::WebContentsObserver,
       SafeBrowsingUIManager* ui_manager,
       SafeBrowsingDatabaseManager* database_manager);
 
-  // Called when pre-classification checks are done for the malware classifiers.
-  // Overridden in test.
-  virtual void OnMalwarePreClassificationDone(bool should_classify);
-
  private:
   friend class ClientSideDetectionHostTest;
   class ShouldClassifyUrlRequest;
   friend class ShouldClassifyUrlRequest;
 
-  // Called when pre-classification checks are done for the phishing
-  // classifiers.
+  // These methods are called when pre-classification checks are done for
+  // the phishing and malware clasifiers.
   void OnPhishingPreClassificationDone(bool should_classify);
+  void OnMalwarePreClassificationDone(bool should_classify);
 
   // Verdict is an encoded ClientPhishingRequest protocol message.
   void OnPhishingDetectionDone(const std::string& verdict);

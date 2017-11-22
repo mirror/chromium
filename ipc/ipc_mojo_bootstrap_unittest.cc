@@ -69,8 +69,7 @@ TEST_F(IPCMojoBootstrapTest, Connect) {
   base::MessageLoop message_loop;
   std::unique_ptr<IPC::MojoBootstrap> bootstrap = IPC::MojoBootstrap::Create(
       helper_.StartChild("IPCMojoBootstrapTestClient"),
-      IPC::Channel::MODE_SERVER, base::ThreadTaskRunnerHandle::Get(),
-      base::ThreadTaskRunnerHandle::Get());
+      IPC::Channel::MODE_SERVER, base::ThreadTaskRunnerHandle::Get());
 
   IPC::mojom::ChannelAssociatedPtr sender;
   IPC::mojom::ChannelAssociatedRequest receiver;
@@ -93,8 +92,7 @@ MULTIPROCESS_TEST_MAIN_WITH_SETUP(
   base::MessageLoop message_loop;
   std::unique_ptr<IPC::MojoBootstrap> bootstrap = IPC::MojoBootstrap::Create(
       std::move(mojo::edk::test::MultiprocessTestHelper::primordial_pipe),
-      IPC::Channel::MODE_CLIENT, base::ThreadTaskRunnerHandle::Get(),
-      base::ThreadTaskRunnerHandle::Get());
+      IPC::Channel::MODE_CLIENT, base::ThreadTaskRunnerHandle::Get());
 
   IPC::mojom::ChannelAssociatedPtr sender;
   IPC::mojom::ChannelAssociatedRequest receiver;

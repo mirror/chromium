@@ -431,10 +431,7 @@ void SigninCreateProfileHandler::OpenNewWindowForProfile(
 
 void SigninCreateProfileHandler::OpenSigninDialogForProfile(Profile* profile) {
   UserManagerProfileDialog::ShowSigninDialog(
-      web_ui()->GetWebContents()->GetBrowserContext(), profile->GetPath(),
-      signin_util::IsForceSigninEnabled()
-          ? signin_metrics::Reason::REASON_FORCED_SIGNIN_PRIMARY_ACCOUNT
-          : signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT);
+      web_ui()->GetWebContents()->GetBrowserContext(), profile->GetPath());
 }
 
 void SigninCreateProfileHandler::ShowProfileCreationError(

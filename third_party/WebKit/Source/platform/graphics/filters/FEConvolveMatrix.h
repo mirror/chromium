@@ -70,7 +70,7 @@ class PLATFORM_EXPORT FEConvolveMatrix final : public FilterEffect {
 
   FloatRect MapEffect(const FloatRect&) const final;
 
-  sk_sp<PaintFilter> CreateImageFilter() override;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
 
   bool ParametersValid() const;
 

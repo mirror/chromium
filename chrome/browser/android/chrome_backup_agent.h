@@ -10,6 +10,7 @@
 
 #include "base/android/jni_android.h"
 
+namespace chrome {
 namespace android {
 
 std::vector<std::string> GetBackupPrefNames();
@@ -28,5 +29,6 @@ void SetBoolBackupPrefsForTesting(
     const base::android::JavaParamRef<jbooleanArray>& values);
 
 }  //  namespace android
+}  //  namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_CHROME_BACKUP_AGENT_H_

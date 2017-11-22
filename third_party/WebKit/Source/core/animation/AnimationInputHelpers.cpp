@@ -10,7 +10,6 @@
 #include "core/css/parser/CSSParser.h"
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/resolver/CSSToStyleMap.h"
-#include "core/dom/Document.h"
 #include "core/frame/Deprecation.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/animation/SVGSMILElement.h"
@@ -244,14 +243,8 @@ scoped_refptr<TimingFunction> AnimationInputHelpers::ParseTimingFunction(
     return nullptr;
   }
 
-  // Fallback to an insecure parsing mode if we weren't provided with a
-  // document.
-  SecureContextMode secure_context_mode =
-      document ? document->SecureContextMode()
-               : SecureContextMode::kInsecureContext;
   const CSSValue* value =
-      CSSParser::ParseSingleValue(CSSPropertyTransitionTimingFunction, string,
-                                  StrictCSSParserContext(secure_context_mode));
+      CSSParser::ParseSingleValue(CSSPropertyTransitionTimingFunction, string);
   if (!value || !value->IsValueList()) {
     DCHECK(!value || value->IsCSSWideKeyword());
     exception_state.ThrowTypeError("'" + string +
@@ -272,13 +265,12 @@ String AnimationInputHelpers::PropertyHandleToKeyframeAttribute(
   if (property.IsCSSProperty()) {
     return property.IsCSSCustomProperty()
                ? property.CustomPropertyName()
-               : CSSPropertyToKeyframeAttribute(
-                     property.GetCSSProperty().PropertyID());
+               : CSSPropertyToKeyframeAttribute(property.CssProperty());
   }
 
   if (property.IsPresentationAttribute()) {
     return PresentationAttributeToKeyframeAttribute(
-        property.PresentationAttribute().PropertyID());
+        property.PresentationAttribute());
   }
 
   DCHECK(property.IsSVGAttribute());

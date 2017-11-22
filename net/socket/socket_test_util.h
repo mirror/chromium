@@ -358,20 +358,18 @@ struct SSLSocketDataProvider {
   SSLSocketDataProvider(const SSLSocketDataProvider& other);
   ~SSLSocketDataProvider();
 
-  // Result for Connect().
   MockConnect connect;
-
-  // Result for GetNegotiatedProtocol().
   NextProto next_proto;
-
-  // Result for GetSSLInfo().
-  SSLInfo ssl_info;
-
-  // Result for GetSSLCertRequestInfo().
-  SSLCertRequestInfo* cert_request_info;
-
-  ChannelIDService* channel_id_service;
   NextProtoVector next_protos_expected_in_ssl_config;
+  bool client_cert_sent;
+  SSLCertRequestInfo* cert_request_info;
+  scoped_refptr<X509Certificate> cert;
+  CertStatus cert_status;
+  bool channel_id_sent;
+  ChannelIDService* channel_id_service;
+  int connection_status;
+  bool token_binding_negotiated;
+  TokenBindingParam token_binding_key_param;
 };
 
 // Uses the sequence_number field in the mock reads and writes to

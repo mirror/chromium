@@ -181,7 +181,7 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
       settings_private::PrefType::PREF_TYPE_LIST;
   (*s_whitelist)[spellcheck::prefs::kSpellCheckUseSpellingService] =
       settings_private::PrefType::PREF_TYPE_BOOLEAN;
-  (*s_whitelist)[::prefs::kOfferTranslateEnabled] =
+  (*s_whitelist)[::prefs::kEnableTranslate] =
       settings_private::PrefType::PREF_TYPE_BOOLEAN;
   (*s_whitelist)[translate::TranslatePrefs::kPrefTranslateBlockedLanguages] =
       settings_private::PrefType::PREF_TYPE_LIST;
@@ -484,7 +484,7 @@ std::unique_ptr<settings_private::PrefObject> PrefsUtil::GetCrosSettingsPref(
     return nullptr;
   }
   pref_object->key = name;
-  pref_object->type = GetType(name, value->type());
+  pref_object->type = GetType(name, value->GetType());
   pref_object->value.reset(value->DeepCopy());
 #endif
 

@@ -410,16 +410,13 @@ String BaseRenderingContext2D::filter() const {
   return GetState().UnparsedFilter();
 }
 
-void BaseRenderingContext2D::setFilter(
-    const ExecutionContext* execution_context,
-    const String& filter_string) {
+void BaseRenderingContext2D::setFilter(const String& filter_string) {
   if (filter_string == GetState().UnparsedFilter())
     return;
 
-  const CSSValue* filter_value = CSSParser::ParseSingleValue(
-      CSSPropertyFilter, filter_string,
-      CSSParserContext::Create(kHTMLStandardMode,
-                               execution_context->SecureContextMode()));
+  const CSSValue* filter_value =
+      CSSParser::ParseSingleValue(CSSPropertyFilter, filter_string,
+                                  CSSParserContext::Create(kHTMLStandardMode));
 
   if (!filter_value || filter_value->IsCSSWideKeyword())
     return;
@@ -1760,9 +1757,8 @@ void BaseRenderingContext2D::putImageData(ImageData* data,
     unsigned data_length =
         data->Size().Area() * context_color_params.BytesPerPixel();
     std::unique_ptr<uint8_t[]> converted_pixels(new uint8_t[data_length]);
-    if (data->ImageDataInCanvasColorSettings(ColorSpace(), PixelFormat(),
-                                             converted_pixels.get(),
-                                             kRGBAColorType)) {
+    if (data->ImageDataInCanvasColorSettings(
+            ColorSpace(), PixelFormat(), converted_pixels, kRGBAColorType)) {
       buffer->PutByteArray(converted_pixels.get(),
                            IntSize(data->width(), data->height()), source_rect,
                            IntPoint(dest_offset));

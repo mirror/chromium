@@ -994,7 +994,6 @@ component("net") {
       "nqe/event_creator.cc",
       "nqe/event_creator.h",
       "nqe/external_estimate_provider.h",
-      "nqe/network_id.cc",
       "nqe/network_id.h",
       "nqe/network_qualities_prefs_manager.cc",
       "nqe/network_qualities_prefs_manager.h",
@@ -1458,7 +1457,6 @@ component("net") {
       "quic/quartc/quartc_clock_interface.h",
       "quic/quartc/quartc_factory.cc",
       "quic/quartc/quartc_factory.h",
-      "quic/quartc/quartc_factory_interface.cc",
       "quic/quartc/quartc_factory_interface.h",
       "quic/quartc/quartc_packet_writer.cc",
       "quic/quartc/quartc_packet_writer.h",
@@ -1664,6 +1662,8 @@ component("net") {
       "url_request/data_protocol_handler.cc",
       "url_request/data_protocol_handler.h",
       "url_request/http_user_agent_settings.h",
+      "url_request/network_error_logging_delegate.cc",
+      "url_request/network_error_logging_delegate.h",
       "url_request/redirect_info.cc",
       "url_request/redirect_info.h",
       "url_request/redirect_util.cc",
@@ -1783,8 +1783,6 @@ component("net") {
         "reporting/reporting_service.h",
         "reporting/reporting_uploader.cc",
         "reporting/reporting_uploader.h",
-        "url_request/network_error_logging_delegate.cc",
-        "url_request/network_error_logging_delegate.h",
       ]
     }
 

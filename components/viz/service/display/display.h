@@ -44,6 +44,7 @@ class DisplayClient;
 class OutputSurface;
 class SharedBitmapManager;
 class SoftwareRenderer;
+class TextureMailboxDeleter;
 
 class VIZ_SERVICE_EXPORT DisplayObserver {
  public:
@@ -61,15 +62,13 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
  public:
   // The |begin_frame_source| and |scheduler| may be null (together). In that
   // case, DrawAndSwap must be called externally when needed.
-  // The |current_task_runner| may be null if the Display is on a thread without
-  // a MessageLoop.
   Display(SharedBitmapManager* bitmap_manager,
           gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
           const RendererSettings& settings,
           const FrameSinkId& frame_sink_id,
           std::unique_ptr<OutputSurface> output_surface,
           std::unique_ptr<DisplayScheduler> scheduler,
-          scoped_refptr<base::SingleThreadTaskRunner> current_task_runner);
+          std::unique_ptr<TextureMailboxDeleter> texture_mailbox_deleter);
 
   ~Display() override;
 
@@ -143,8 +142,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   std::unique_ptr<DisplayScheduler> scheduler_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
   std::unique_ptr<SurfaceAggregator> aggregator_;
-  // This may be null if the Display is on a thread without a MessageLoop.
-  scoped_refptr<base::SingleThreadTaskRunner> current_task_runner_;
+  std::unique_ptr<TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<DirectRenderer> renderer_;
   SoftwareRenderer* software_renderer_ = nullptr;
   std::vector<ui::LatencyInfo> stored_latency_info_;

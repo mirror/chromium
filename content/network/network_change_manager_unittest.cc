@@ -11,8 +11,8 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
+#include "content/public/common/network_change_manager.mojom.h"
 #include "net/base/network_change_notifier.h"
-#include "services/network/public/interfaces/network_change_manager.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -30,22 +30,21 @@ enum NotificationType {
 };
 
 class TestNetworkChangeManagerClient
-    : public network::mojom::NetworkChangeManagerClient {
+    : public mojom::NetworkChangeManagerClient {
  public:
   explicit TestNetworkChangeManagerClient(
       content::NetworkChangeManager* network_change_manager)
       : num_network_changed_(0),
         run_loop_(std::make_unique<base::RunLoop>()),
         notification_type_to_wait_(NONE),
-        connection_type_(network::mojom::ConnectionType::CONNECTION_UNKNOWN),
+        connection_type_(mojom::ConnectionType::CONNECTION_UNKNOWN),
         binding_(this) {
-    network::mojom::NetworkChangeManagerPtr manager_ptr;
-    network::mojom::NetworkChangeManagerRequest request(
-        mojo::MakeRequest(&manager_ptr));
+    mojom::NetworkChangeManagerPtr manager_ptr;
+    mojom::NetworkChangeManagerRequest request(mojo::MakeRequest(&manager_ptr));
     network_change_manager->AddRequest(std::move(request));
 
-    network::mojom::NetworkChangeManagerClientPtr client_ptr;
-    network::mojom::NetworkChangeManagerClientRequest client_request(
+    mojom::NetworkChangeManagerClientPtr client_ptr;
+    mojom::NetworkChangeManagerClientRequest client_request(
         mojo::MakeRequest(&client_ptr));
     binding_.Bind(std::move(client_request));
     manager_ptr->RequestNotifications(std::move(client_ptr));
@@ -54,13 +53,13 @@ class TestNetworkChangeManagerClient
   ~TestNetworkChangeManagerClient() override {}
 
   // NetworkChangeManagerClient implementation:
-  void OnInitialConnectionType(network::mojom::ConnectionType type) override {
+  void OnInitialConnectionType(mojom::ConnectionType type) override {
     connection_type_ = type;
     if (notification_type_to_wait_ == INITIAL)
       run_loop_->Quit();
   }
 
-  void OnNetworkChanged(network::mojom::ConnectionType type) override {
+  void OnNetworkChanged(mojom::ConnectionType type) override {
     num_network_changed_++;
     connection_type_ = type;
     if (notification_type_to_wait_ == NETWORK_CHANGED)
@@ -76,16 +75,14 @@ class TestNetworkChangeManagerClient
     run_loop_.reset(new base::RunLoop());
   }
 
-  network::mojom::ConnectionType connection_type() const {
-    return connection_type_;
-  }
+  mojom::ConnectionType connection_type() const { return connection_type_; }
 
  private:
   size_t num_network_changed_;
   std::unique_ptr<base::RunLoop> run_loop_;
   NotificationType notification_type_to_wait_;
-  network::mojom::ConnectionType connection_type_;
-  mojo::Binding<network::mojom::NetworkChangeManagerClient> binding_;
+  mojom::ConnectionType connection_type_;
+  mojo::Binding<mojom::NetworkChangeManagerClient> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(TestNetworkChangeManagerClient);
 };
@@ -129,7 +126,7 @@ TEST_F(NetworkChangeManagerTest, ClientNotified) {
   // Simulate a new network change.
   SimulateNetworkChange(net::NetworkChangeNotifier::CONNECTION_3G);
   network_change_manager_client()->WaitForNotification(NETWORK_CHANGED);
-  EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_3G,
+  EXPECT_EQ(mojom::ConnectionType::CONNECTION_3G,
             network_change_manager_client()->connection_type());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(1u, network_change_manager_client()->num_network_changed());
@@ -145,7 +142,7 @@ TEST_F(NetworkChangeManagerTest, OneClientPipeBroken) {
 
   network_change_manager_client()->WaitForNotification(NETWORK_CHANGED);
   network_change_manager_client2->WaitForNotification(NETWORK_CHANGED);
-  EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_WIFI,
+  EXPECT_EQ(mojom::ConnectionType::CONNECTION_WIFI,
             network_change_manager_client2->connection_type());
   base::RunLoop().RunUntilIdle();
 
@@ -163,7 +160,7 @@ TEST_F(NetworkChangeManagerTest, OneClientPipeBroken) {
   SimulateNetworkChange(net::NetworkChangeNotifier::CONNECTION_2G);
 
   network_change_manager_client()->WaitForNotification(NETWORK_CHANGED);
-  EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_2G,
+  EXPECT_EQ(mojom::ConnectionType::CONNECTION_2G,
             network_change_manager_client()->connection_type());
   EXPECT_EQ(2u, network_change_manager_client()->num_network_changed());
 }
@@ -173,7 +170,7 @@ TEST_F(NetworkChangeManagerTest, NewClientReceivesCurrentType) {
   SimulateNetworkChange(net::NetworkChangeNotifier::CONNECTION_BLUETOOTH);
 
   network_change_manager_client()->WaitForNotification(NETWORK_CHANGED);
-  EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_BLUETOOTH,
+  EXPECT_EQ(mojom::ConnectionType::CONNECTION_BLUETOOTH,
             network_change_manager_client()->connection_type());
   base::RunLoop().RunUntilIdle();
 
@@ -182,42 +179,39 @@ TEST_F(NetworkChangeManagerTest, NewClientReceivesCurrentType) {
   TestNetworkChangeManagerClient network_change_manager_client2(
       network_change_manager());
   network_change_manager_client2.WaitForNotification(INITIAL);
-  EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_BLUETOOTH,
+  EXPECT_EQ(mojom::ConnectionType::CONNECTION_BLUETOOTH,
             network_change_manager_client2.connection_type());
 }
 
 TEST(NetworkChangeConnectionTypeTest, ConnectionTypeEnumMatch) {
   for (int typeInt = net::NetworkChangeNotifier::CONNECTION_UNKNOWN;
        typeInt != net::NetworkChangeNotifier::CONNECTION_LAST; typeInt++) {
-    network::mojom::ConnectionType mojoType =
-        network::mojom::ConnectionType(typeInt);
+    mojom::ConnectionType mojoType = mojom::ConnectionType(typeInt);
     switch (typeInt) {
       case net::NetworkChangeNotifier::CONNECTION_UNKNOWN:
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_UNKNOWN, mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_UNKNOWN, mojoType);
         break;
       case net::NetworkChangeNotifier::CONNECTION_ETHERNET:
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_ETHERNET,
-                  mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_ETHERNET, mojoType);
         break;
       case net::NetworkChangeNotifier::CONNECTION_WIFI:
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_WIFI, mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_WIFI, mojoType);
         break;
       case net::NetworkChangeNotifier::CONNECTION_2G:
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_2G, mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_2G, mojoType);
         break;
       case net::NetworkChangeNotifier::CONNECTION_3G:
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_3G, mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_3G, mojoType);
         break;
       case net::NetworkChangeNotifier::CONNECTION_4G:
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_4G, mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_4G, mojoType);
         break;
       case net::NetworkChangeNotifier::CONNECTION_NONE:
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_NONE, mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_NONE, mojoType);
         break;
       case net::NetworkChangeNotifier::CONNECTION_BLUETOOTH:
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_BLUETOOTH,
-                  mojoType);
-        EXPECT_EQ(network::mojom::ConnectionType::CONNECTION_LAST, mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_BLUETOOTH, mojoType);
+        EXPECT_EQ(mojom::ConnectionType::CONNECTION_LAST, mojoType);
         break;
     }
   }

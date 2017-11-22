@@ -15,8 +15,9 @@
 namespace vr {
 
 GlRenderer::GlRenderer(const scoped_refptr<gl::GLSurface>& surface,
+                       const gfx::Size& size,
                        vr::VrTestContext* vr)
-    : surface_(surface), vr_(vr), weak_ptr_factory_(this) {}
+    : surface_(surface), size_(size), vr_(vr), weak_ptr_factory_(this) {}
 
 GlRenderer::~GlRenderer() {}
 
@@ -28,12 +29,14 @@ bool GlRenderer::Initialize() {
     return false;
   }
 
+  surface_->Resize(size_, 1.f, gl::GLSurface::ColorSpace::UNSPECIFIED, true);
+
   if (!context_->MakeCurrent(surface_.get())) {
     LOG(ERROR) << "Failed to make GL context current";
     return false;
   }
 
-  vr_->OnGlInitialized();
+  vr_->OnGlInitialized(size_);
 
   PostRenderFrameTask(gfx::SwapResult::SWAP_ACK);
   return true;

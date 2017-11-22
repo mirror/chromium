@@ -481,15 +481,14 @@ ScopedJavaLocalRef<jobject>
 
 // Static JNI methods.
 
-static void JNI_TabState_FreeWebContentsStateBuffer(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobject>& obj) {
+static void FreeWebContentsStateBuffer(JNIEnv* env,
+                                       const JavaParamRef<jclass>& clazz,
+                                       const JavaParamRef<jobject>& obj) {
   void* data = env->GetDirectBufferAddress(obj);
   free(data);
 }
 
-static ScopedJavaLocalRef<jobject> JNI_TabState_RestoreContentsFromByteBuffer(
+static ScopedJavaLocalRef<jobject> RestoreContentsFromByteBuffer(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& state,
@@ -502,7 +501,7 @@ static ScopedJavaLocalRef<jobject> JNI_TabState_RestoreContentsFromByteBuffer(
                                                          initially_hidden);
 }
 
-static ScopedJavaLocalRef<jobject> JNI_TabState_GetContentsStateAsByteBuffer(
+static ScopedJavaLocalRef<jobject> GetContentsStateAsByteBuffer(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jtab) {
@@ -510,8 +509,7 @@ static ScopedJavaLocalRef<jobject> JNI_TabState_GetContentsStateAsByteBuffer(
   return WebContentsState::GetContentsStateAsByteBuffer(env, tab_android);
 }
 
-static ScopedJavaLocalRef<jobject>
-JNI_TabState_CreateSingleNavigationStateAsByteBuffer(
+static ScopedJavaLocalRef<jobject> CreateSingleNavigationStateAsByteBuffer(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& url,
@@ -522,7 +520,7 @@ JNI_TabState_CreateSingleNavigationStateAsByteBuffer(
       env, url, referrer_url, referrer_policy, is_off_the_record);
 }
 
-static ScopedJavaLocalRef<jstring> JNI_TabState_GetDisplayTitleFromByteBuffer(
+static ScopedJavaLocalRef<jstring> GetDisplayTitleFromByteBuffer(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& state,
@@ -536,7 +534,7 @@ static ScopedJavaLocalRef<jstring> JNI_TabState_GetDisplayTitleFromByteBuffer(
   return result;
 }
 
-static ScopedJavaLocalRef<jstring> JNI_TabState_GetVirtualUrlFromByteBuffer(
+static ScopedJavaLocalRef<jstring> GetVirtualUrlFromByteBuffer(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& state,
@@ -551,10 +549,10 @@ static ScopedJavaLocalRef<jstring> JNI_TabState_GetVirtualUrlFromByteBuffer(
 
 // Creates a historical tab entry from the serialized tab contents contained
 // within |state|.
-static void JNI_TabState_CreateHistoricalTab(JNIEnv* env,
-                                             const JavaParamRef<jclass>& clazz,
-                                             const JavaParamRef<jobject>& state,
-                                             jint saved_state_version) {
+static void CreateHistoricalTab(JNIEnv* env,
+                                const JavaParamRef<jclass>& clazz,
+                                const JavaParamRef<jobject>& state,
+                                jint saved_state_version) {
   std::unique_ptr<WebContents> web_contents(WebContents::FromJavaWebContents(
       WebContentsState::RestoreContentsFromByteBuffer(
           env, clazz, state, saved_state_version, true)));

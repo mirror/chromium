@@ -77,6 +77,10 @@
   return NO;
 }
 
+- (void)selectedTabChanged {
+  return;
+}
+
 - (void)updateToolbarForSideSwipeSnapshot:(Tab*)tab {
   [self.toolbarCoordinator updateToolbarForSideSwipeSnapshot:tab.webState];
 }
@@ -115,12 +119,12 @@
   return;
 }
 
-- (void)setToolsMenuStateProvider:
-    (id<ToolsMenuPresentationStateProvider>)provider {
+- (void)showToolsMenuPopupWithConfiguration:
+    (ToolsMenuConfiguration*)configuration {
   return;
 }
 
-- (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible {
+- (void)dismissToolsMenuPopup {
   return;
 }
 

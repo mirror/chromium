@@ -434,26 +434,26 @@ cr.define('print_preview_test', function() {
       return setupSettingsAndDestinationsWithCapabilities().then(function() {
         const recentList =
             $('destination-search').querySelector('.recent-list ul');
-        const printList =
-            $('destination-search').querySelector('.print-list ul');
+        const localList =
+            $('destination-search').querySelector('.local-list ul');
         assertNotEquals(null, recentList);
         assertEquals(1, recentList.childNodes.length);
         assertEquals('FooName',
                      recentList.childNodes.item(0).querySelector(
                          '.destination-list-item-name').textContent);
-        assertNotEquals(null, printList);
-        assertEquals(3, printList.childNodes.length);
+        assertNotEquals(null, localList);
+        assertEquals(3, localList.childNodes.length);
         assertEquals(
             'Save as PDF',
-            printList.childNodes.item(PDF_INDEX).
+            localList.childNodes.item(PDF_INDEX).
             querySelector('.destination-list-item-name').textContent);
         assertEquals(
             'FooName',
-            printList.childNodes.item(FOO_INDEX).
+            localList.childNodes.item(FOO_INDEX).
             querySelector('.destination-list-item-name').textContent);
         assertEquals(
             'BarName',
-            printList.childNodes.item(BAR_INDEX).
+            localList.childNodes.item(BAR_INDEX).
             querySelector('.destination-list-item-name').textContent);
       });
     });
@@ -472,8 +472,10 @@ cr.define('print_preview_test', function() {
 
         const recentList =
             $('destination-search').querySelector('.recent-list ul');
-        const printList =
-            $('destination-search').querySelector('.print-list ul');
+        const localList =
+            $('destination-search').querySelector('.local-list ul');
+        const cloudList =
+            $('destination-search').querySelector('.cloud-list ul');
 
         assertNotEquals(null, recentList);
         assertEquals(1, recentList.childNodes.length);
@@ -482,22 +484,25 @@ cr.define('print_preview_test', function() {
                          querySelector('.destination-list-item-name').
                          textContent);
 
-        assertNotEquals(null, printList);
-        assertEquals(3, printList.childNodes.length);
+        assertNotEquals(null, localList);
+        assertEquals(3, localList.childNodes.length);
         assertEquals('Save as PDF',
-            printList.childNodes.item(PDF_INDEX).
+                     localList.childNodes.item(PDF_INDEX).
                          querySelector('.destination-list-item-name').
                          textContent);
         assertEquals('FooName',
-            printList.childNodes.
+                     localList.childNodes.
                          item(FOO_INDEX).
                          querySelector('.destination-list-item-name').
                          textContent);
         assertEquals('BarName',
-            printList.childNodes.
+                     localList.childNodes.
                          item(BAR_INDEX).
                          querySelector('.destination-list-item-name').
                          textContent);
+
+        assertNotEquals(null, cloudList);
+        assertEquals(0, cloudList.childNodes.length);
       });
     });
 

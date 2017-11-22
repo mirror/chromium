@@ -4,6 +4,7 @@
 
 [
     ActiveScriptWrappable,
+    DependentLifetime,
     Constructor(DOMString type, optional BeforeInstallPromptEventInit eventInitDict),
     ConstructorCallWith=ExecutionContext
 ] interface BeforeInstallPromptEvent : Event {

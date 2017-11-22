@@ -28,8 +28,7 @@ LazyInstance<std::unique_ptr<ContentMainDelegate>>::DestructorAtExit
 
 }  // namespace
 
-static jint JNI_ContentMain_Start(JNIEnv* env,
-                                  const JavaParamRef<jclass>& clazz) {
+static jint Start(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   TRACE_EVENT0("startup", "content::Start");
 
   DCHECK(!g_service_manager_main_delegate.Get());

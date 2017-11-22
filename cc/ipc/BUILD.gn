@@ -20,7 +20,6 @@ cc_component("ipc") {
 
   public_deps = [
     "//cc",
-    "//cc/paint",
     "//components/viz/common",
     "//skia",
   ]

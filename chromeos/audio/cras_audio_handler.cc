@@ -483,11 +483,9 @@ void CrasAudioHandler::SwapInternalSpeakerLeftRightChannel(bool swap) {
   }
 }
 
-void CrasAudioHandler::SetOutputMonoEnabled(bool enabled) {
-  if (output_mono_enabled_ == enabled)
-    return;
-  output_mono_enabled_ = enabled;
-  if (enabled) {
+void CrasAudioHandler::SetOutputMono(bool mono_on) {
+  output_mono_on_ = mono_on;
+  if (mono_on) {
     GetCrasAudioClient()->SetGlobalOutputChannelRemix(
         output_channels_,
         std::vector<double>(kStereoToMono, std::end(kStereoToMono)));
@@ -498,7 +496,11 @@ void CrasAudioHandler::SetOutputMonoEnabled(bool enabled) {
   }
 
   for (auto& observer : observers_)
-    observer.OnOuputChannelRemixingChanged(enabled);
+    observer.OnOuputChannelRemixingChanged(mono_on);
+}
+
+bool CrasAudioHandler::IsOutputMonoEnabled() const {
+  return output_mono_on_;
 }
 
 bool CrasAudioHandler::has_alternative_input() const {
@@ -678,7 +680,7 @@ CrasAudioHandler::CrasAudioHandler(
       has_alternative_output_(false),
       output_mute_locked_(false),
       output_channels_(2),
-      output_mono_enabled_(false),
+      output_mono_on_(false),
       hdmi_rediscover_grace_period_duration_in_ms_(
           kHDMIRediscoverGracePeriodDurationInMs),
       hdmi_rediscovering_(false),
@@ -1653,14 +1655,14 @@ void CrasAudioHandler::GetDefaultOutputBufferSizeInternal() {
                  weak_ptr_factory_.GetWeakPtr()));
 }
 
-void CrasAudioHandler::HandleGetDefaultOutputBufferSize(
-    base::Optional<int> buffer_size) {
-  if (!buffer_size.has_value()) {
+void CrasAudioHandler::HandleGetDefaultOutputBufferSize(int32_t buffer_size,
+                                                        bool success) {
+  if (!success) {
     LOG(ERROR) << "Failed to retrieve output buffer size";
     return;
   }
 
-  default_output_buffer_size_ = buffer_size.value();
+  default_output_buffer_size_ = buffer_size;
 }
 
 }  // namespace chromeos

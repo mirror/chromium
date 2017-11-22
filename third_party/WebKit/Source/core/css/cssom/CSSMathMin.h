@@ -5,7 +5,6 @@
 #ifndef CSSMathMin_h
 #define CSSMathMin_h
 
-#include "base/macros.h"
 #include "core/css/cssom/CSSMathVariadic.h"
 
 namespace blink {
@@ -13,6 +12,7 @@ namespace blink {
 // Represents the minimum of one or more CSSNumericValues.
 // See CSSMathMin.idl for more information about this class.
 class CORE_EXPORT CSSMathMin final : public CSSMathVariadic {
+  WTF_MAKE_NONCOPYABLE(CSSMathMin);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -30,7 +30,6 @@ class CORE_EXPORT CSSMathMin final : public CSSMathVariadic {
  private:
   CSSMathMin(CSSNumericArray* values, const CSSNumericValueType& type)
       : CSSMathVariadic(values, type) {}
-  DISALLOW_COPY_AND_ASSIGN(CSSMathMin);
 };
 
 }  // namespace blink

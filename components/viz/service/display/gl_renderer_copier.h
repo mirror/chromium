@@ -28,7 +28,7 @@ namespace viz {
 
 class ContextProvider;
 class CopyOutputRequest;
-class TextureDeleter;
+class TextureMailboxDeleter;
 
 // Helper class for GLRenderer that executes CopyOutputRequests using GL, and
 // manages the caching of resources needed to ensure efficient video
@@ -52,9 +52,9 @@ class VIZ_SERVICE_EXPORT GLRendererCopier {
   using ComputeWindowRectCallback =
       base::RepeatingCallback<gfx::Rect(const gfx::Rect&)>;
 
-  // |texture_deleter| must outlive this instance.
+  // |texture_mailbox_deleter| must outlive this instance.
   GLRendererCopier(scoped_refptr<ContextProvider> context_provider,
-                   TextureDeleter* texture_deleter,
+                   TextureMailboxDeleter* texture_mailbox_deleter,
                    ComputeWindowRectCallback window_rect_callback);
 
   ~GLRendererCopier();
@@ -206,7 +206,7 @@ class VIZ_SERVICE_EXPORT GLRendererCopier {
 
   // Injected dependencies.
   const scoped_refptr<ContextProvider> context_provider_;
-  TextureDeleter* const texture_deleter_;
+  TextureMailboxDeleter* const texture_mailbox_deleter_;
   const ComputeWindowRectCallback window_rect_callback_;
 
   // Provides comprehensive, quality and efficient scaling and other utilities.

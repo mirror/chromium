@@ -22,6 +22,7 @@
 #include "content/browser/service_worker/service_worker_handle.h"
 #include "content/browser/service_worker/service_worker_navigation_handle_core.h"
 #include "content/browser/service_worker/service_worker_registration.h"
+#include "content/browser/service_worker/service_worker_registration_object_host.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_messages.h"
@@ -38,7 +39,6 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
-#include "third_party/WebKit/public/platform/web_feature.mojom.h"
 #include "url/gurl.h"
 
 using blink::MessagePortChannel;
@@ -168,6 +168,17 @@ void ServiceWorkerDispatcherHost::RegisterServiceWorkerHandle(
     std::unique_ptr<ServiceWorkerHandle> handle) {
   int handle_id = handle->handle_id();
   handles_.AddWithID(std::move(handle), handle_id);
+}
+
+void ServiceWorkerDispatcherHost::RegisterServiceWorkerRegistrationObjectHost(
+    ServiceWorkerRegistrationObjectHost* host) {
+  int handle_id = host->handle_id();
+  registration_object_hosts_.AddWithID(base::WrapUnique(host), handle_id);
+}
+
+void ServiceWorkerDispatcherHost::UnregisterServiceWorkerRegistrationObjectHost(
+    int handle_id) {
+  registration_object_hosts_.Remove(handle_id);
 }
 
 ServiceWorkerHandle* ServiceWorkerDispatcherHost::FindServiceWorkerHandle(
@@ -437,6 +448,22 @@ void ServiceWorkerDispatcherHost::ReleaseSourceInfo(
     handles_.Remove(source_info.handle_id);
 }
 
+ServiceWorkerRegistrationObjectHost*
+ServiceWorkerDispatcherHost::FindServiceWorkerRegistrationObjectHost(
+    int provider_id,
+    int64_t registration_id) {
+  for (base::IDMap<std::unique_ptr<ServiceWorkerRegistrationObjectHost>>::
+           iterator iter(&registration_object_hosts_);
+       !iter.IsAtEnd(); iter.Advance()) {
+    ServiceWorkerRegistrationObjectHost* host = iter.GetCurrentValue();
+    if (host->provider_id() == provider_id &&
+        host->registration()->id() == registration_id) {
+      return host;
+    }
+  }
+  return nullptr;
+}
+
 void ServiceWorkerDispatcherHost::OnCountFeature(int64_t version_id,
                                                  uint32_t feature) {
   if (!GetContext())
@@ -444,14 +471,6 @@ void ServiceWorkerDispatcherHost::OnCountFeature(int64_t version_id,
   ServiceWorkerVersion* version = GetContext()->GetLiveVersion(version_id);
   if (!version)
     return;
-  if (feature >=
-      static_cast<uint32_t>(blink::mojom::WebFeature::kNumberOfFeatures)) {
-    // We don't use BadMessageReceived here since this IPC will be converted to
-    // a Mojo method call soon, which will validate inputs for us.
-    // TODO(xiaofeng.zhang): Convert the OnCountFeature IPC into a Mojo method
-    // call.
-    return;
-  }
   version->CountFeature(feature);
 }
 

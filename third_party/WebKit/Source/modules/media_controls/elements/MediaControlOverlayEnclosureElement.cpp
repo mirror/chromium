@@ -15,17 +15,19 @@ MediaControlOverlayEnclosureElement::MediaControlOverlayEnclosureElement(
   SetShadowPseudoId(AtomicString("-webkit-media-controls-overlay-enclosure"));
 }
 
-void MediaControlOverlayEnclosureElement::DefaultEventHandler(Event* event) {
-  // When the user interacts with the media element, the Cast overlay button
-  // needs to be shown.
-  if (event->type() == EventTypeNames::gesturetap ||
-      event->type() == EventTypeNames::click ||
-      event->type() == EventTypeNames::pointerover ||
-      event->type() == EventTypeNames::pointermove) {
+EventDispatchHandlingState*
+MediaControlOverlayEnclosureElement::PreDispatchEventHandler(Event* event) {
+  // When the media element is clicked or touched we want to make the overlay
+  // cast button visible (if the other requirements are right) even if
+  // JavaScript is doing its own handling of the event.  Doing it in
+  // preDispatchEventHandler prevents any interference from JavaScript.
+  // Note that we can't simply test for click, since JS handling of touch events
+  // can prevent their translation to click events.
+  if (event && (event->type() == EventTypeNames::click ||
+                event->type() == EventTypeNames::touchstart)) {
     GetMediaControls().ShowOverlayCastButtonIfNeeded();
   }
-
-  MediaControlDivElement::DefaultEventHandler(event);
+  return MediaControlDivElement::PreDispatchEventHandler(event);
 }
 
 }  // namespace blink

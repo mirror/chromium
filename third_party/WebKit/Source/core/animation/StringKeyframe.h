@@ -35,17 +35,12 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
       const AtomicString& property_name,
       const PropertyRegistry*,
       const String& value,
-      SecureContextMode,
       StyleSheetContents*);
-  MutableCSSPropertyValueSet::SetResult SetCSSPropertyValue(
-      CSSPropertyID,
-      const String& value,
-      SecureContextMode,
-      StyleSheetContents*);
+  MutableCSSPropertyValueSet::SetResult
+  SetCSSPropertyValue(CSSPropertyID, const String& value, StyleSheetContents*);
   void SetCSSPropertyValue(CSSPropertyID, const CSSValue&);
   void SetPresentationAttributeValue(CSSPropertyID,
                                      const String& value,
-                                     SecureContextMode,
                                      StyleSheetContents*);
   void SetSVGAttributeValue(const QualifiedName&, const String& value);
 
@@ -55,8 +50,7 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
       index =
           css_property_map_->FindPropertyIndex(property.CustomPropertyName());
     else
-      index = css_property_map_->FindPropertyIndex(
-          property.GetCSSProperty().PropertyID());
+      index = css_property_map_->FindPropertyIndex(property.CssProperty());
     CHECK_GE(index, 0);
     return css_property_map_->PropertyAt(static_cast<unsigned>(index)).Value();
   }
@@ -90,7 +84,7 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
 
     const CSSValue* Value() const { return value_.Get(); }
 
-    bool PopulateAnimatableValue(const CSSProperty&,
+    bool PopulateAnimatableValue(CSSPropertyID,
                                  Element&,
                                  const ComputedStyle& base_style,
                                  const ComputedStyle* parent_style) const final;

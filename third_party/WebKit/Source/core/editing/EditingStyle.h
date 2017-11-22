@@ -56,7 +56,6 @@ class QualifiedName;
 class ComputedStyle;
 class CSSPropertyValueSet;
 enum class EditingTriState;
-enum class SecureContextMode;
 
 class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
  public:
@@ -93,10 +92,8 @@ class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
     return new EditingStyle(style);
   }
 
-  static EditingStyle* Create(CSSPropertyID property_id,
-                              const String& value,
-                              SecureContextMode secure_context_mode) {
-    return new EditingStyle(property_id, value, secure_context_mode);
+  static EditingStyle* Create(CSSPropertyID property_id, const String& value) {
+    return new EditingStyle(property_id, value);
   }
 
   MutableCSSPropertyValueSet* Style() { return mutable_style_.Get(); }
@@ -106,18 +103,17 @@ class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
   void Clear();
   EditingStyle* Copy() const;
   EditingStyle* ExtractAndRemoveBlockProperties();
-  EditingStyle* ExtractAndRemoveTextDirection(SecureContextMode);
+  EditingStyle* ExtractAndRemoveTextDirection();
   void RemoveBlockProperties();
   void RemoveStyleAddedByElement(Element*);
   void RemoveStyleConflictingWithStyleOfElement(Element*);
-  void CollapseTextDecorationProperties(SecureContextMode);
+  void CollapseTextDecorationProperties();
   enum ShouldIgnoreTextOnlyProperties {
     kIgnoreTextOnlyProperties,
     kDoNotIgnoreTextOnlyProperties
   };
-  EditingTriState TriStateOfStyle(EditingStyle*, SecureContextMode) const;
-  EditingTriState TriStateOfStyle(const VisibleSelection&,
-                                  SecureContextMode) const;
+  EditingTriState TriStateOfStyle(EditingStyle*) const;
+  EditingTriState TriStateOfStyle(const VisibleSelection&) const;
   bool ConflictsWithInlineStyleOfElement(HTMLElement* element) const {
     return ConflictsWithInlineStyleOfElement(element, 0, 0);
   }
@@ -165,10 +161,7 @@ class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
   float FontSizeDelta() const { return font_size_delta_; }
   bool HasFontSizeDelta() const { return font_size_delta_ != no_font_delta_; }
 
-  void SetProperty(CSSPropertyID,
-                   const String& value,
-                   bool important,
-                   SecureContextMode);
+  void SetProperty(CSSPropertyID, const String& value, bool important = false);
 
   void Trace(blink::Visitor*);
 
@@ -177,16 +170,14 @@ class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
   EditingStyle(ContainerNode*, PropertiesToInclude);
   EditingStyle(const Position&, PropertiesToInclude);
   explicit EditingStyle(const CSSPropertyValueSet*);
-  EditingStyle(CSSPropertyID, const String& value, SecureContextMode);
+  EditingStyle(CSSPropertyID, const String& value);
   void Init(Node*, PropertiesToInclude);
   void RemoveInheritedColorsIfNeeded(const ComputedStyle*);
   void ReplaceFontSizeByKeywordIfPossible(const ComputedStyle*,
-                                          SecureContextMode,
                                           CSSComputedStyleDeclaration*);
   void ExtractFontSizeDelta();
   EditingTriState TriStateOfStyle(CSSStyleDeclaration* style_to_compare,
-                                  ShouldIgnoreTextOnlyProperties,
-                                  SecureContextMode) const;
+                                  ShouldIgnoreTextOnlyProperties) const;
   bool ConflictsWithInlineStyleOfElement(
       HTMLElement*,
       EditingStyle* extracted_style,

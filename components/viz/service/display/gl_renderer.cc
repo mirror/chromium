@@ -29,8 +29,8 @@
 #include "build/build_config.h"
 #include "cc/base/container_util.h"
 #include "cc/base/math_util.h"
+#include "cc/base/render_surface_filters.h"
 #include "cc/debug/debug_colors.h"
-#include "cc/paint/render_surface_filters.h"
 #include "cc/raster/scoped_gpu_raster.h"
 #include "cc/resources/resource_pool.h"
 #include "cc/resources/scoped_resource.h"
@@ -51,7 +51,6 @@
 #include "components/viz/service/display/output_surface.h"
 #include "components/viz/service/display/output_surface_frame.h"
 #include "components/viz/service/display/static_geometry_binding.h"
-#include "components/viz/service/display/texture_deleter.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -388,18 +387,16 @@ class GLRenderer::SyncQuery {
   DISALLOW_COPY_AND_ASSIGN(SyncQuery);
 };
 
-GLRenderer::GLRenderer(
-    const RendererSettings* settings,
-    OutputSurface* output_surface,
-    cc::DisplayResourceProvider* resource_provider,
-    scoped_refptr<base::SingleThreadTaskRunner> current_task_runner)
+GLRenderer::GLRenderer(const RendererSettings* settings,
+                       OutputSurface* output_surface,
+                       cc::DisplayResourceProvider* resource_provider,
+                       TextureMailboxDeleter* texture_mailbox_deleter)
     : DirectRenderer(settings, output_surface, resource_provider),
       shared_geometry_quad_(QuadVertexRect()),
       gl_(output_surface->context_provider()->ContextGL()),
       context_support_(output_surface->context_provider()->ContextSupport()),
-      texture_deleter_(current_task_runner),
       copier_(output_surface->context_provider(),
-              &texture_deleter_,
+              texture_mailbox_deleter,
               base::BindRepeating(&GLRenderer::MoveFromDrawToWindowSpace,
                                   base::Unretained(this))),
       gl_composited_overlay_candidate_quad_border_(
@@ -409,7 +406,6 @@ GLRenderer::GLRenderer(
                        output_surface_->context_provider()
                            ->ContextCapabilities()
                            .texture_half_float_linear),
-      current_task_runner_(std::move(current_task_runner)),
       weak_ptr_factory_(this) {
   DCHECK(gl_);
   DCHECK(context_support_);
@@ -447,10 +443,8 @@ bool GLRenderer::CanPartialSwap() {
 }
 
 ResourceFormat GLRenderer::BackbufferFormat() const {
-  if (current_frame()->current_render_pass->color_space.IsHDR()) {
-    // If a platform does not support half-float renderbuffers then it should
-    // not should request HDR rendering.
-    DCHECK(resource_provider_->IsRenderBufferFormatSupported(RGBA_F16));
+  if (current_frame()->current_render_pass->color_space.IsHDR() &&
+      resource_provider_->IsRenderBufferFormatSupported(RGBA_F16)) {
     return RGBA_F16;
   }
   return resource_provider_->best_texture_format();
@@ -460,7 +454,7 @@ void GLRenderer::DidChangeVisibility() {
   if (visible_) {
     output_surface_->EnsureBackbuffer();
   } else {
-    TRACE_EVENT0("viz", "GLRenderer::DidChangeVisibility dropping resources");
+    TRACE_EVENT0("cc", "GLRenderer::DidChangeVisibility dropping resources");
     ReleaseRenderPassTextures();
     output_surface_->DiscardBackbuffer();
     gl_->ReleaseShaderCompiler();
@@ -540,7 +534,7 @@ void GLRenderer::ClearFramebuffer() {
 }
 
 void GLRenderer::BeginDrawingFrame() {
-  TRACE_EVENT0("viz", "GLRenderer::BeginDrawingFrame");
+  TRACE_EVENT0("cc", "GLRenderer::BeginDrawingFrame");
 
   scoped_refptr<ResourceFence> read_lock_fence;
   if (use_sync_query_) {
@@ -964,17 +958,16 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
   gfx::Vector2d clipping_offset =
       (rect.top_right() - unclipped_rect.top_right()) +
       (rect.bottom_left() - unclipped_rect.bottom_left());
-  auto paint_filter = cc::RenderSurfaceFilters::BuildImageFilter(
+  sk_sp<SkImageFilter> filter = cc::RenderSurfaceFilters::BuildImageFilter(
       background_filters, gfx::SizeF(rect.size()),
       gfx::Vector2dF(clipping_offset));
 
   // TODO(senorblanco): background filters should be moved to the
   // makeWithFilter fast-path, and go back to calling ApplyImageFilter().
   // See http://crbug.com/613233.
-  if (!paint_filter || !use_gr_context)
+  if (!filter || !use_gr_context)
     return nullptr;
 
-  auto filter = paint_filter->cached_sk_filter_;
   bool flip_texture = true;
   sk_sp<SkImage> src_image =
       WrapTexture(background_texture, GL_TEXTURE_2D, rect.size(),
@@ -1291,9 +1284,8 @@ bool GLRenderer::UpdateRPDQWithSkiaFilters(
   // Apply filters to the contents texture.
   if (params->filters) {
     DCHECK(!params->filters->IsEmpty());
-    auto paint_filter = cc::RenderSurfaceFilters::BuildImageFilter(
+    sk_sp<SkImageFilter> filter = cc::RenderSurfaceFilters::BuildImageFilter(
         *params->filters, gfx::SizeF(params->contents_texture->size()));
-    auto filter = paint_filter ? paint_filter->cached_sk_filter_ : nullptr;
     if (filter) {
       SkColorFilter* colorfilter_rawptr = nullptr;
       filter->asColorFilter(&colorfilter_rawptr);
@@ -2671,7 +2663,7 @@ void GLRenderer::EnsureScissorTestDisabled() {
 
 void GLRenderer::CopyDrawnRenderPass(
     std::unique_ptr<CopyOutputRequest> request) {
-  TRACE_EVENT0("viz", "GLRenderer::CopyDrawnRenderPass");
+  TRACE_EVENT0("cc", "GLRenderer::CopyDrawnRenderPass");
 
   if (overdraw_feedback_)
     FlushOverdrawFeedback(current_frame()->current_render_pass->output_rect);
@@ -2788,7 +2780,7 @@ void GLRenderer::DrawQuadGeometry(const gfx::Transform& projection_matrix,
 void GLRenderer::SwapBuffers(std::vector<ui::LatencyInfo> latency_info) {
   DCHECK(visible_);
 
-  TRACE_EVENT0("viz", "GLRenderer::SwapBuffers");
+  TRACE_EVENT0("cc", "GLRenderer::SwapBuffers");
   // We're done! Time to swapbuffers!
 
   gfx::Size surface_size = surface_size_for_swap_buffers();
@@ -2956,7 +2948,7 @@ void GLRenderer::SetViewport() {
 }
 
 void GLRenderer::InitializeSharedObjects() {
-  TRACE_EVENT0("viz", "GLRenderer::InitializeSharedObjects");
+  TRACE_EVENT0("cc", "GLRenderer::InitializeSharedObjects");
 
   // Create an FBO for doing offscreen rendering.
   gl_->GenFramebuffers(1, &offscreen_framebuffer_id_);
@@ -3411,9 +3403,8 @@ void GLRenderer::ScheduleRenderPassDrawQuad(
   DCHECK(ca_layer_overlay->rpdq);
 
   if (!overlay_resource_pool_) {
-    DCHECK(current_task_runner_);
     overlay_resource_pool_ = cc::ResourcePool::Create(
-        resource_provider_, current_task_runner_.get(),
+        resource_provider_, base::ThreadTaskRunnerHandle::Get().get(),
         ResourceTextureHint::kOverlay, base::TimeDelta::FromSeconds(3),
         settings_->disallow_non_exact_resource_reuse);
   }

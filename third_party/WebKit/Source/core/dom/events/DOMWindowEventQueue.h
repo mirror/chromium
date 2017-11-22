@@ -28,7 +28,8 @@
 #define DOMWindowEventQueue_h
 
 #include "core/dom/events/EventQueue.h"
-#include "platform/wtf/LinkedHashSet.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/ListHashSet.h"
 
 namespace blink {
 
@@ -54,7 +55,7 @@ class DOMWindowEventQueue final : public EventQueue {
   void DispatchEvent(Event*);
 
   Member<DOMWindowEventQueueTimer> pending_event_timer_;
-  HeapLinkedHashSet<Member<Event>> queued_events_;
+  HeapListHashSet<Member<Event>, 16> queued_events_;
   bool is_closed_;
 
   friend class DOMWindowEventQueueTimer;

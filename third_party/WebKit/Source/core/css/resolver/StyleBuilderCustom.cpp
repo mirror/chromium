@@ -879,8 +879,8 @@ void StyleBuilderFunctions::applyValueCSSPropertyVariable(
       return;
     }
 
-    const CSSValue* parsed_value = declaration.Value()->ParseForSyntax(
-        registration->Syntax(), state.GetDocument().SecureContextMode());
+    const CSSValue* parsed_value =
+        declaration.Value()->ParseForSyntax(registration->Syntax());
     if (parsed_value) {
       DCHECK(parsed_value);
       if (is_inherited_property)

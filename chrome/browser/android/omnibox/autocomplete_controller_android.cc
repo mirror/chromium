@@ -566,10 +566,9 @@ AutocompleteControllerAndroid::GetTopSynchronousResult(
   return BuildOmniboxSuggestion(env, *result.begin());
 }
 
-static jlong JNI_AutocompleteController_Init(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& jprofile) {
+static jlong Init(JNIEnv* env,
+                  const JavaParamRef<jobject>& obj,
+                  const JavaParamRef<jobject>& jprofile) {
   Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);
   if (!profile)
     return 0;
@@ -579,8 +578,7 @@ static jlong JNI_AutocompleteController_Init(
   return reinterpret_cast<intptr_t>(native_bridge);
 }
 
-static ScopedJavaLocalRef<jstring>
-JNI_AutocompleteController_QualifyPartialURLQuery(
+static ScopedJavaLocalRef<jstring> QualifyPartialURLQuery(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jquery) {
@@ -609,9 +607,8 @@ JNI_AutocompleteController_QualifyPartialURLQuery(
   return ConvertUTF8ToJavaString(env, match.destination_url.spec());
 }
 
-static void JNI_AutocompleteController_PrefetchZeroSuggestResults(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
+static void PrefetchZeroSuggestResults(JNIEnv* env,
+                                       const JavaParamRef<jclass>& clazz) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
   if (!profile)
     return;

@@ -660,7 +660,6 @@ extern const char kPowerMetricsDailySample[];
 extern const char kPowerMetricsIdleScreenDimCount[];
 extern const char kPowerMetricsIdleScreenOffCount[];
 extern const char kPowerMetricsIdleSuspendCount[];
-extern const char kPowerMetricsLidClosedSuspendCount[];
 #endif  // defined(OS_CHROMEOS)
 
 extern const char kClearPluginLSODataEnabled[];

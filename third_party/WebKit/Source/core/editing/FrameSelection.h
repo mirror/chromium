@@ -140,12 +140,7 @@ class CORE_EXPORT FrameSelection final
   bool ShouldPaintCaret(const LayoutBlock&) const;
 
   // Bounds of (possibly transformed) caret in absolute coords
-  IntRect AbsoluteCaretBounds() const;
-
-  // Returns anchor and focus bounds in absolute coords.
-  // If the selection range is empty, returns the caret bounds.
-  // Note: this updates styles and layout, use cautiously.
-  bool ComputeAbsoluteBounds(IntRect& anchor, IntRect& focus) const;
+  IntRect AbsoluteCaretBounds();
 
   void DidChangeFocus();
 

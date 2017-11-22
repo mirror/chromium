@@ -6,6 +6,14 @@
 
 namespace zucchini {
 
+std::unique_ptr<DisassemblerNoOp> DisassemblerNoOp::Make(
+    ConstBufferView image) {
+  std::unique_ptr<DisassemblerNoOp> disasm(new DisassemblerNoOp());
+  if (!disasm->Parse(image))
+    return nullptr;
+  return disasm;
+}
+
 DisassemblerNoOp::DisassemblerNoOp() = default;
 DisassemblerNoOp::~DisassemblerNoOp() = default;
 

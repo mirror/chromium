@@ -680,16 +680,17 @@ RequestCoordinator::TryImmediateStart(
       net::NetworkChangeNotifier::ConnectionType::CONNECTION_NONE) {
     RequestConnectedEventForStarting();
     return OfflinerImmediateStartStatus::NO_CONNECTION;
+  } else {
+    // Clear any pending connected event request since we have connection
+    // and will start processing.
+    ClearConnectedEventRequest();
   }
-  // Clear any pending connected event request since we have connection
-  // and will start processing.
-  ClearConnectedEventRequest();
 
   if (StartProcessingInternal(ProcessingWindowState::IMMEDIATE_WINDOW,
-                              callback)) {
+                              callback))
     return OfflinerImmediateStartStatus::STARTED;
-  }
-  return OfflinerImmediateStartStatus::NOT_ACCEPTED;
+  else
+    return OfflinerImmediateStartStatus::NOT_ACCEPTED;
 }
 
 void RequestCoordinator::RequestConnectedEventForStarting() {

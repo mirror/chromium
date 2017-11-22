@@ -1918,29 +1918,16 @@ void PaintLayerScrollableArea::UpdateScrollableAreaSet() {
 
 void PaintLayerScrollableArea::UpdateCompositingLayersAfterScroll() {
   PaintLayerCompositor* compositor = Box().View()->Compositor();
-  if (!compositor->InCompositingMode())
-    return;
-
-  if (UsesCompositedScrolling()) {
-    DCHECK(Layer()->HasCompositedLayerMapping());
-    Layer()->GetCompositedLayerMapping()->SetNeedsGraphicsLayerUpdate(
-        kGraphicsLayerUpdateSubtree);
-    compositor->SetNeedsCompositingUpdate(
-        kCompositingUpdateAfterGeometryChange);
-
-    // If we have fixed elements and we scroll the root layer in RLS we might
-    // change compositing since the fixed elements might now overlap a
-    // composited layer.
-    if (Layer()->IsRootLayer() &&
-        RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-      LocalFrame* frame = Box().GetFrame();
-      if (frame && frame->View() &&
-          frame->View()->HasViewportConstrainedObjects()) {
-        Layer()->SetNeedsCompositingInputsUpdate();
-      }
+  if (compositor->InCompositingMode()) {
+    if (UsesCompositedScrolling()) {
+      DCHECK(Layer()->HasCompositedLayerMapping());
+      Layer()->GetCompositedLayerMapping()->SetNeedsGraphicsLayerUpdate(
+          kGraphicsLayerUpdateSubtree);
+      compositor->SetNeedsCompositingUpdate(
+          kCompositingUpdateAfterGeometryChange);
+    } else {
+      Layer()->SetNeedsCompositingInputsUpdate();
     }
-  } else {
-    Layer()->SetNeedsCompositingInputsUpdate();
   }
 }
 

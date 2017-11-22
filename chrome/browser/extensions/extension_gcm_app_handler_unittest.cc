@@ -343,6 +343,7 @@ class ExtensionGCMAppHandlerTest : public testing::Test {
     extension_service_->UninstallExtension(
         extension->id(),
         extensions::UNINSTALL_REASON_FOR_TESTING,
+        base::Bind(&base::DoNothing),
         NULL);
   }
 

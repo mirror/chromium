@@ -634,7 +634,7 @@ bool TestNetworkDelegate::OnCanGetCookies(const URLRequest& request,
 }
 
 bool TestNetworkDelegate::OnCanSetCookie(const URLRequest& request,
-                                         const net::CanonicalCookie& cookie,
+                                         const std::string& cookie_line,
                                          CookieOptions* options) {
   bool allow = true;
   if (cookie_options_bit_mask_ & NO_SET_COOKIE)

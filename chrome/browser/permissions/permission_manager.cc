@@ -210,20 +210,20 @@ class PermissionManager::PendingRequest {
 // be run when a permission prompt has been ignored, but it's important that we
 // know when a prompt is ignored to clean up |pending_requests_| correctly.
 // If the callback is destroyed without being run, the destructor here will
-// cancel the request to clean up. |permission_manager| must outlive this
-// object.
+// cancel the request to clean up.
 class PermissionManager::PermissionResponseCallback {
  public:
-  PermissionResponseCallback(PermissionManager* permission_manager,
-                             int request_id,
-                             int permission_id)
+  PermissionResponseCallback(
+      const base::WeakPtr<PermissionManager>& permission_manager,
+      int request_id,
+      int permission_id)
       : permission_manager_(permission_manager),
         request_id_(request_id),
         permission_id_(permission_id),
         request_answered_(false) {}
 
   ~PermissionResponseCallback() {
-    if (!request_answered_ &&
+    if (!request_answered_ && permission_manager_.get() &&
         permission_manager_->pending_requests_.Lookup(request_id_)) {
       permission_manager_->pending_requests_.Remove(request_id_);
     }
@@ -231,14 +231,17 @@ class PermissionManager::PermissionResponseCallback {
 
   void OnPermissionsRequestResponseStatus(ContentSetting content_setting) {
     request_answered_ = true;
-    permission_manager_->OnPermissionsRequestResponseStatus(
-        request_id_, permission_id_, content_setting);
+    if (permission_manager_.get()) {
+      permission_manager_->OnPermissionsRequestResponseStatus(
+          request_id_, permission_id_, content_setting);
+    }
   }
 
  private:
-  PermissionManager* permission_manager_;
+  base::WeakPtr<PermissionManager> permission_manager_;
   int request_id_;
   int permission_id_;
+
   bool request_answered_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionResponseCallback);
@@ -257,7 +260,9 @@ PermissionManager* PermissionManager::Get(Profile* profile) {
   return PermissionManagerFactory::GetForProfile(profile);
 }
 
-PermissionManager::PermissionManager(Profile* profile) : profile_(profile) {
+PermissionManager::PermissionManager(Profile* profile)
+    : profile_(profile),
+      weak_ptr_factory_(this) {
   permission_contexts_[CONTENT_SETTINGS_TYPE_MIDI_SYSEX] =
       base::MakeUnique<MidiSysexPermissionContext>(profile);
   permission_contexts_[CONTENT_SETTINGS_TYPE_MIDI] =
@@ -366,8 +371,8 @@ int PermissionManager::RequestPermissions(
 
     PermissionContextBase* context = GetPermissionContext(permission);
     DCHECK(context);
-    auto callback =
-        base::MakeUnique<PermissionResponseCallback>(this, request_id, i);
+    auto callback = base::MakeUnique<PermissionResponseCallback>(
+        weak_ptr_factory_.GetWeakPtr(), request_id, i);
     context->RequestPermission(
         web_contents, request, canonical_requesting_origin, user_gesture,
         base::Bind(

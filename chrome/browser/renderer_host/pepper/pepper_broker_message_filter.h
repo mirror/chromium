@@ -23,6 +23,8 @@ struct HostMessageContext;
 }
 }
 
+namespace chrome {
+
 // This filter handles messages for the PepperBrokerHost on the UI thread.
 class PepperBrokerMessageFilter : public ppapi::host::ResourceMessageFilter {
  public:
@@ -46,5 +48,7 @@ class PepperBrokerMessageFilter : public ppapi::host::ResourceMessageFilter {
 
   DISALLOW_COPY_AND_ASSIGN(PepperBrokerMessageFilter);
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_BROWSER_RENDERER_HOST_PEPPER_PEPPER_BROKER_MESSAGE_FILTER_H_

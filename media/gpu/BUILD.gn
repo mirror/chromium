@@ -109,9 +109,7 @@ component("gpu") {
   # Only local test code, GPU-related IPC code in the media layer, and
   # media-related content code should access //media/gpu.
   visibility = [
-    "//components/arc/common:media",
     "//components/arc/video_accelerator",
-    "//components/viz/service/main",
     "//content/gpu:*",
     "//content/renderer:*",
     "//media/gpu/ipc/*",
@@ -138,8 +136,6 @@ component("gpu") {
     "format_utils.h",
     "gles2_decoder_helper.cc",
     "gles2_decoder_helper.h",
-    "gpu_jpeg_decode_accelerator_factory.cc",
-    "gpu_jpeg_decode_accelerator_factory.h",
     "gpu_video_accelerator_util.cc",
     "gpu_video_accelerator_util.h",
     "gpu_video_decode_accelerator_factory.cc",
@@ -548,7 +544,6 @@ if (use_v4l2_codec || use_vaapi) {
       "//media:test_support",
       "//media/gpu",
       "//media/gpu/ipc/service",
-      "//media/mojo/services",
       "//testing/gtest",
       "//third_party/libyuv",
       "//ui/base",
@@ -595,4 +590,23 @@ source_set("unit_tests") {
       "//ui/gfx/geometry",
     ]
   }
+}
+
+test("video_decode_accelerator_service_unittest") {
+  sources = [
+    "ipc/service/gpu_jpeg_decode_accelerator_unittest.cc",
+  ]
+
+  deps = [
+    ":gpu",
+    "//base",
+    "//base/test:test_support",
+    "//gpu:test_support",
+    "//media/gpu/ipc/common",
+    "//media/gpu/ipc/service",
+    "//media/test:run_all_unittests",
+    "//testing/gtest",
+    "//ui/gfx:test_support",
+    "//ui/gfx/geometry",
+  ]
 }

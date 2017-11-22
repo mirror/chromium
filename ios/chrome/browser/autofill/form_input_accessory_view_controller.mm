@@ -151,13 +151,12 @@ NSArray* FindDescendantToolbarItemsForActionName(
 // Clears the current custom accessory view and restores the default.
 - (void)reset;
 
+// The current web state.
+@property(nonatomic, readonly) web::WebState* webState;
+
 @end
 
 @implementation FormInputAccessoryViewController {
-  // The WebState this instance is observing. Will be null after
-  // -webStateDestroyed: has been called.
-  web::WebState* _webState;
-
   // Bridge to observe the web state from Objective-C.
   std::unique_ptr<web::WebStateObserverBridge> _webStateObserverBridge;
 
@@ -205,13 +204,10 @@ NSArray* FindDescendantToolbarItemsForActionName(
                        providers:(NSArray*)providers {
   self = [super init];
   if (self) {
-    DCHECK(webState);
-    _webState = webState;
     _JSSuggestionManager = JSSuggestionManager;
     _hiddenOriginalSubviews = [[NSMutableArray alloc] init];
-    _webStateObserverBridge =
-        std::make_unique<web::WebStateObserverBridge>(self);
-    _webState->AddObserver(_webStateObserverBridge.get());
+    _webStateObserverBridge.reset(
+        new web::WebStateObserverBridge(webState, self));
     _providers = [providers copy];
     _suggestionsHaveBeenShown = NO;
     _keyboardAccessoryMetricsLogger.reset(
@@ -260,24 +256,20 @@ NSArray* FindDescendantToolbarItemsForActionName(
 
 - (void)detachFromWebState {
   [self reset];
-  if (_webState) {
-    _webState->RemoveObserver(_webStateObserverBridge.get());
-    _webStateObserverBridge.reset();
-    _webState = nullptr;
-  }
+  _webStateObserverBridge.reset();
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  if (_webState) {
-    _webState->RemoveObserver(_webStateObserverBridge.get());
-    _webStateObserverBridge.reset();
-    _webState = nullptr;
-  }
+}
+
+- (web::WebState*)webState {
+  return _webStateObserverBridge ? _webStateObserverBridge->web_state()
+                                 : nullptr;
 }
 
 - (id<CRWWebViewProxy>)webViewProxy {
-  return _webState ? _webState->GetWebViewProxy() : nil;
+  return self.webState ? self.webState->GetWebViewProxy() : nil;
 }
 
 - (void)hideSubviewsInOriginalAccessoryView:(UIView*)accessoryView {
@@ -446,13 +438,11 @@ NSArray* FindDescendantToolbarItemsForActionName(
 #pragma mark CRWWebStateObserver
 
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
-  DCHECK_EQ(_webState, webState);
   [self reset];
 }
 
 - (void)webState:(web::WebState*)webState
     didRegisterFormActivity:(const web::FormActivityParams&)params {
-  DCHECK_EQ(_webState, webState);
   web::URLVerificationTrustLevel trustLevel;
   const GURL pageURL(webState->GetCurrentURL(&trustLevel));
   if (params.input_missing ||
@@ -470,7 +460,6 @@ NSArray* FindDescendantToolbarItemsForActionName(
 }
 
 - (void)webStateDestroyed:(web::WebState*)webState {
-  DCHECK_EQ(_webState, webState);
   [self detachFromWebState];
 }
 
@@ -531,7 +520,7 @@ NSArray* FindDescendantToolbarItemsForActionName(
           return;
         }
         FormInputAccessoryViewController* strongSelf = weakSelf;
-        if (!strongSelf || !strongSelf->_webState)
+        if (!strongSelf || ![strongSelf webState])
           return;
         id<FormInputAccessoryViewProvider> provider =
             strongSelf->_providers[providerIndex];
@@ -576,7 +565,7 @@ NSArray* FindDescendantToolbarItemsForActionName(
 }
 
 - (void)keyboardWillOrDidChangeFrame:(NSNotification*)notification {
-  if (!_webState || !_currentProvider)
+  if (!self.webState || !_currentProvider)
     return;
   CGRect keyboardFrame =
       [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];

@@ -126,10 +126,7 @@ TEST(CSSSelectorParserTest, ShadowDomPseudoInCompound) {
     const auto tokens = tokenizer.TokenizeToEOF();
     CSSParserTokenRange range(tokens);
     CSSSelectorList list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kHTMLStandardMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kHTMLStandardMode), nullptr);
     EXPECT_STREQ(test_case[1], list.SelectorsText().Ascii().data());
   }
 }
@@ -149,10 +146,7 @@ TEST(CSSSelectorParserTest, PseudoElementsInCompoundLists) {
     const auto tokens = tokenizer.TokenizeToEOF();
     CSSParserTokenRange range(tokens);
     CSSSelectorList list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kHTMLStandardMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kHTMLStandardMode), nullptr);
     EXPECT_FALSE(list.IsValid());
   }
 }
@@ -171,10 +165,7 @@ TEST(CSSSelectorParserTest, ValidSimpleAfterPseudoElementInCompound) {
     const auto tokens = tokenizer.TokenizeToEOF();
     CSSParserTokenRange range(tokens);
     CSSSelectorList list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kHTMLStandardMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kHTMLStandardMode), nullptr);
     EXPECT_TRUE(list.IsValid());
   }
 }
@@ -205,10 +196,7 @@ TEST(CSSSelectorParserTest, InvalidSimpleAfterPseudoElementInCompound) {
     const auto tokens = tokenizer.TokenizeToEOF();
     CSSParserTokenRange range(tokens);
     CSSSelectorList list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kHTMLStandardMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kHTMLStandardMode), nullptr);
     EXPECT_FALSE(list.IsValid());
   }
 }
@@ -224,10 +212,7 @@ TEST(CSSSelectorParserTest, WorkaroundForInvalidCustomPseudoInUAStyle) {
     const auto tokens = tokenizer.TokenizeToEOF();
     CSSParserTokenRange range(tokens);
     CSSSelectorList list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kUASheetMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kUASheetMode), nullptr);
     EXPECT_TRUE(list.IsValid());
   }
 }
@@ -240,10 +225,7 @@ TEST(CSSSelectorParserTest, ValidPseudoElementInNonRightmostCompound) {
     const auto tokens = tokenizer.TokenizeToEOF();
     CSSParserTokenRange range(tokens);
     CSSSelectorList list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kHTMLStandardMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kHTMLStandardMode), nullptr);
     EXPECT_TRUE(list.IsValid());
   }
 }
@@ -258,10 +240,7 @@ TEST(CSSSelectorParserTest, InvalidPseudoElementInNonRightmostCompound) {
     const auto tokens = tokenizer.TokenizeToEOF();
     CSSParserTokenRange range(tokens);
     CSSSelectorList list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kHTMLStandardMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kHTMLStandardMode), nullptr);
     EXPECT_FALSE(list.IsValid());
   }
 }
@@ -269,8 +248,7 @@ TEST(CSSSelectorParserTest, InvalidPseudoElementInNonRightmostCompound) {
 TEST(CSSSelectorParserTest, UnresolvedNamespacePrefix) {
   const char* test_cases[] = {"ns|div", "div ns|div", "div ns|div "};
 
-  CSSParserContext* context = CSSParserContext::Create(
-      kHTMLStandardMode, SecureContextMode::kInsecureContext);
+  CSSParserContext* context = CSSParserContext::Create(kHTMLStandardMode);
   StyleSheetContents* sheet = StyleSheetContents::Create(context);
 
   for (auto test_case : test_cases) {
@@ -296,8 +274,7 @@ TEST(CSSSelectorParserTest, SerializedUniversal) {
       {"ns|*::-webkit-volume-slider", "ns|*::-webkit-volume-slider"},
       {"ns|*::cue(i)", "ns|*::cue(i)"}};
 
-  CSSParserContext* context = CSSParserContext::Create(
-      kHTMLStandardMode, SecureContextMode::kInsecureContext);
+  CSSParserContext* context = CSSParserContext::Create(kHTMLStandardMode);
   StyleSheetContents* sheet = StyleSheetContents::Create(context);
   sheet->ParserAddNamespace("ns", "http://ns.org");
 
@@ -317,8 +294,7 @@ TEST(CSSSelectorParserTest, InvalidDescendantCombinatorInDynamicProfile) {
   const char* test_cases[] = {"div >>>> span", "div >>> span", "div >> span"};
 
   CSSParserContext* context = CSSParserContext::Create(
-      kHTMLStandardMode, SecureContextMode::kInsecureContext,
-      CSSParserContext::kDynamicProfile);
+      kHTMLStandardMode, CSSParserContext::kDynamicProfile);
   StyleSheetContents* sheet = StyleSheetContents::Create(context);
 
   for (auto test_case : test_cases) {
@@ -337,8 +313,7 @@ TEST(CSSSelectorParserTest, InvalidDescendantCombinatorInStaticProfile) {
                               "div > >> span", "div > > > span"};
 
   CSSParserContext* context = CSSParserContext::Create(
-      kHTMLStandardMode, SecureContextMode::kInsecureContext,
-      CSSParserContext::kStaticProfile);
+      kHTMLStandardMode, CSSParserContext::kStaticProfile);
   StyleSheetContents* sheet = StyleSheetContents::Create(context);
 
   for (auto test_case : test_cases) {
@@ -359,8 +334,7 @@ TEST(CSSSelectorParserTest, ShadowPiercingCombinatorInStaticProfile) {
                                  {"div >/**/>/**/> span", "div >>> span"}};
 
   CSSParserContext* context = CSSParserContext::Create(
-      kHTMLStandardMode, SecureContextMode::kInsecureContext,
-      CSSParserContext::kStaticProfile);
+      kHTMLStandardMode, CSSParserContext::kStaticProfile);
   StyleSheetContents* sheet = StyleSheetContents::Create(context);
 
   for (auto test_case : test_cases) {
@@ -378,8 +352,7 @@ TEST(CSSSelectorParserTest, ShadowPiercingCombinatorInStaticProfile) {
 TEST(CSSSelectorParserTest, AttributeSelectorUniversalInvalid) {
   const char* test_cases[] = {"[*]", "[*|*]"};
 
-  CSSParserContext* context = CSSParserContext::Create(
-      kHTMLStandardMode, SecureContextMode::kInsecureContext);
+  CSSParserContext* context = CSSParserContext::Create(kHTMLStandardMode);
   StyleSheetContents* sheet = StyleSheetContents::Create(context);
 
   for (auto test_case : test_cases) {
@@ -408,17 +381,11 @@ TEST(CSSSelectorParserTest, InternalPseudo) {
     CSSParserTokenRange range(tokens);
 
     CSSSelectorList author_list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kHTMLStandardMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kHTMLStandardMode), nullptr);
     EXPECT_FALSE(author_list.IsValid());
 
     CSSSelectorList ua_list = CSSSelectorParser::ParseSelector(
-        range,
-        CSSParserContext::Create(kUASheetMode,
-                                 SecureContextMode::kInsecureContext),
-        nullptr);
+        range, CSSParserContext::Create(kUASheetMode), nullptr);
     EXPECT_TRUE(ua_list.IsValid());
   }
 }
@@ -452,8 +419,7 @@ TEST(CSSSelectorParserTest, ASCIILowerHTMLStrict) {
       {".\\212alass", u"\u212alass", SelectorValue},
       {"#\\212alass", u"\u212alass", SelectorValue}};
 
-  CSSParserContext* context = CSSParserContext::Create(
-      kHTMLStandardMode, SecureContextMode::kInsecureContext);
+  CSSParserContext* context = CSSParserContext::Create(kHTMLStandardMode);
   StyleSheetContents* sheet = StyleSheetContents::Create(context);
 
   for (auto test_case : test_cases) {
@@ -477,8 +443,7 @@ TEST(CSSSelectorParserTest, ASCIILowerHTMLQuirks) {
       {".\\212aLASS", u"\u212alass", SelectorValue},
       {"#\\212aLASS", u"\u212alass", SelectorValue}};
 
-  CSSParserContext* context = CSSParserContext::Create(
-      kHTMLQuirksMode, SecureContextMode::kInsecureContext);
+  CSSParserContext* context = CSSParserContext::Create(kHTMLQuirksMode);
   StyleSheetContents* sheet = StyleSheetContents::Create(context);
 
   for (auto test_case : test_cases) {

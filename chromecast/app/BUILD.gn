@@ -20,7 +20,6 @@ cast_source_set("app") {
     "//chromecast/common",
     "//chromecast/renderer",
     "//chromecast/utility",
-    "//components/crash/core/common:crash_key",
     "//content/public/app:both",
     "//content/public/browser",
     "//content/public/common",

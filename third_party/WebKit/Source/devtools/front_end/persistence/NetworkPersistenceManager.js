@@ -55,14 +55,9 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    * @param {!Workspace.Project} project
    */
   addFileSystemOverridesProject(domain, project) {
-    var fileSystemPath = Persistence.FileSystemWorkspaceBinding.fileSystemPath(project.id());
-    if (!fileSystemPath || this.projectForDomain(domain))
+    if (this.projectForDomain(domain))
       return;
-    var oldDomain = this.domainForProject(project);
-    if (oldDomain) {
-      this._onProjectRemoved(project);
-      this._fileSystemForDomain.delete(oldDomain);
-    }
+    var fileSystemPath = Persistence.FileSystemWorkspaceBinding.fileSystemPath(project.id());
     this._domainForFileSystemMap.set(fileSystemPath, domain);
     this._fileSystemForDomain.set(domain, fileSystemPath);
     this._domainForFileSystemPathSetting.set(Array.from(this._domainForFileSystemMap.entries()));
@@ -111,17 +106,6 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    */
   projectForActiveDomain() {
     return this.projectForDomain(Persistence.NetworkPersistenceManager.inspectedPageDomain());
-  }
-
-  /**
-   * @param {!Persistence.IsolatedFileSystem} fileSystem
-   * @return {?Persistence.FileSystemWorkspaceBinding.FileSystem}
-   */
-  projectForFileSystem(fileSystem) {
-    if (!this._domainForFileSystemMap.has(fileSystem.path()))
-      return null;
-    return /** @type {?Persistence.FileSystemWorkspaceBinding.FileSystem} */ (
-        this._workspace.project(Persistence.FileSystemWorkspaceBinding.projectId(fileSystem.path())));
   }
 
   _enabledChanged() {

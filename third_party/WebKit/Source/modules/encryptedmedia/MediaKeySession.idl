@@ -24,7 +24,8 @@
  */
 
 [
-    ActiveScriptWrappable
+    ActiveScriptWrappable,
+    DependentLifetime
 ] interface MediaKeySession : EventTarget {
     // session properties
     readonly attribute DOMString sessionId;

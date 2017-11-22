@@ -31,7 +31,6 @@ class Button : public UiElement {
          int draw_phase,
          float width,
          float height,
-         float hover_offset,
          const gfx::VectorIcon& icon);
   ~Button() override;
 
@@ -56,7 +55,6 @@ class Button : public UiElement {
   bool hovered_ = false;
   bool pressed_ = false;
   base::Callback<void()> click_handler_;
-  float hover_offset_;
   ButtonColors colors_;
 
   Rect* background_;

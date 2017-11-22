@@ -29,7 +29,6 @@ namespace blink {
 
 class CSSStyleDeclaration;
 class CSSStyleSheet;
-class ExecutionContext;
 class StyleRulePage;
 class StyleRuleCSSStyleDeclaration;
 
@@ -49,7 +48,7 @@ class CORE_EXPORT CSSPageRule final : public CSSRule {
   CSSStyleDeclaration* style() const;
 
   String selectorText() const;
-  void setSelectorText(const ExecutionContext*, const String&);
+  void setSelectorText(const String&);
 
   virtual void Trace(blink::Visitor*);
 

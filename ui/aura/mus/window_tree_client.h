@@ -191,8 +191,6 @@ class AURA_EXPORT WindowTreeClient
   void AddTestObserver(WindowTreeClientTestObserver* observer);
   void RemoveTestObserver(WindowTreeClientTestObserver* observer);
 
-  ui::Gpu* gpu() { return gpu_.get(); }
-
  private:
   friend class InFlightBoundsChange;
   friend class InFlightFocusChange;
@@ -456,9 +454,6 @@ class AURA_EXPORT WindowTreeClient
 
   // Overridden from WindowManager:
   void OnConnect() override;
-  void WmOnAcceleratedWidgetForDisplay(
-      int64_t display,
-      gpu::SurfaceHandle surface_handle) override;
   void WmNewDisplayAdded(
       const display::Display& display,
       ui::mojom::WindowDataPtr root_data,

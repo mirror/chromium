@@ -23,8 +23,9 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/ui/app_list/arc/arc_default_app_list.h"
 #include "components/arc/common/app.mojom.h"
-#include "components/arc/connection_observer.h"
+#include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "ui/base/layout.h"
 
 class PrefService;
@@ -32,8 +33,6 @@ class Profile;
 
 namespace arc {
 class ArcPackageSyncableService;
-template <typename InstanceType, typename HostType>
-class ConnectionHolder;
 }  // namespace arc
 
 namespace content {
@@ -49,11 +48,12 @@ class PrefRegistrySyncable;
 // information is used to pre-create non-ready app items while ARC bridge
 // service is not ready to provide information about available ARC apps.
 // NOTE: ArcAppListPrefs is only created for the primary user.
-class ArcAppListPrefs : public KeyedService,
-                        public arc::mojom::AppHost,
-                        public arc::ConnectionObserver<arc::mojom::AppInstance>,
-                        public arc::ArcSessionManager::Observer,
-                        public ArcDefaultAppList::Delegate {
+class ArcAppListPrefs
+    : public KeyedService,
+      public arc::mojom::AppHost,
+      public arc::InstanceHolder<arc::mojom::AppInstance>::Observer,
+      public arc::ArcSessionManager::Observer,
+      public ArcDefaultAppList::Delegate {
  public:
   struct AppInfo {
     AppInfo(const std::string& name,
@@ -165,8 +165,7 @@ class ArcAppListPrefs : public KeyedService,
 
   static ArcAppListPrefs* Create(
       Profile* profile,
-      arc::ConnectionHolder<arc::mojom::AppInstance, arc::mojom::AppHost>*
-          app_connection_holder);
+      arc::InstanceHolder<arc::mojom::AppInstance>* app_instance_holder);
 
   // Convenience function to get the ArcAppListPrefs for a BrowserContext. It
   // will only return non-null pointer for the primary user.
@@ -244,9 +243,8 @@ class ArcAppListPrefs : public KeyedService,
   // Removes app with the given app_id.
   void RemoveApp(const std::string& app_id);
 
-  arc::ConnectionHolder<arc::mojom::AppInstance, arc::mojom::AppHost>*
-  app_connection_holder() {
-    return app_connection_holder_;
+  arc::InstanceHolder<arc::mojom::AppInstance>* app_instance_holder() {
+    return app_instance_holder_;
   }
 
   bool package_list_initial_refreshed() const {
@@ -268,12 +266,11 @@ class ArcAppListPrefs : public KeyedService,
   // See the Create methods.
   ArcAppListPrefs(
       Profile* profile,
-      arc::ConnectionHolder<arc::mojom::AppInstance, arc::mojom::AppHost>*
-          app_connection_holder);
+      arc::InstanceHolder<arc::mojom::AppInstance>* app_instance_holder);
 
-  // arc::ConnectionObserver<arc::mojom::AppInstance>:
-  void OnConnectionReady() override;
-  void OnConnectionClosed() override;
+  // arc::InstanceHolder<arc::mojom::AppInstance>::Observer:
+  void OnInstanceReady() override;
+  void OnInstanceClosed() override;
 
   // arc::mojom::AppHost:
   void OnAppListRefreshed(std::vector<arc::mojom::AppInfoPtr> apps) override;
@@ -426,8 +423,7 @@ class ArcAppListPrefs : public KeyedService,
   // Owned by the BrowserContext.
   PrefService* const prefs_;
 
-  arc::ConnectionHolder<arc::mojom::AppInstance, arc::mojom::AppHost>* const
-      app_connection_holder_;
+  arc::InstanceHolder<arc::mojom::AppInstance>* const app_instance_holder_;
 
   // List of observers.
   base::ObserverList<Observer> observer_list_;
@@ -468,6 +464,8 @@ class ArcAppListPrefs : public KeyedService,
   uint32_t invalidated_icon_scale_factor_mask_;
 
   arc::ArcPackageSyncableService* sync_service_ = nullptr;
+
+  mojo::Binding<arc::mojom::AppHost> binding_;
 
   bool default_apps_ready_ = false;
   ArcDefaultAppList default_apps_;

@@ -95,8 +95,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
     _prefObserverBridge.reset(new PrefObserverBridge(self));
     // Register to observe any changes on Perf backed values displayed by the
     // screen.
-    _prefObserverBridge->ObserveChangesForPreference(
-        prefs::kOfferTranslateEnabled, &_prefChangeRegistrar);
+    _prefObserverBridge->ObserveChangesForPreference(prefs::kEnableTranslate,
+                                                     &_prefChangeRegistrar);
 
     HostContentSettingsMap* settingsMap =
         ios::HostContentSettingsMapFactory::GetForBrowserState(browserState);
@@ -156,8 +156,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (CollectionViewItem*)translateItem {
   _translateDetailItem =
       [[CollectionViewDetailItem alloc] initWithType:ItemTypeSettingsTranslate];
-  BOOL enabled =
-      browserState_->GetPrefs()->GetBoolean(prefs::kOfferTranslateEnabled);
+  BOOL enabled = browserState_->GetPrefs()->GetBoolean(prefs::kEnableTranslate);
   NSString* subtitle = enabled ? l10n_util::GetNSString(IDS_IOS_SETTING_ON)
                                : l10n_util::GetNSString(IDS_IOS_SETTING_OFF);
   _translateDetailItem.text = l10n_util::GetNSString(IDS_IOS_TRANSLATE_SETTING);
@@ -222,7 +221,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 #pragma mark - PrefObserverDelegate
 
 - (void)onPreferenceChanged:(const std::string&)preferenceName {
-  if (preferenceName == prefs::kOfferTranslateEnabled) {
+  if (preferenceName == prefs::kEnableTranslate) {
     BOOL enabled = browserState_->GetPrefs()->GetBoolean(preferenceName);
     NSString* subtitle = enabled ? l10n_util::GetNSString(IDS_IOS_SETTING_ON)
                                  : l10n_util::GetNSString(IDS_IOS_SETTING_OFF);

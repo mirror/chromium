@@ -306,7 +306,7 @@ class TestAutofillManager : public AutofillManager {
     form_structure->set_form_parsed_timestamp(TimeTicks::Now());
     form_structures()->push_back(std::move(form_structure));
 
-    form_interactions_ukm_logger()->OnFormsParsed(form.main_frame_origin);
+    form_interactions_ukm_logger()->OnFormsParsed(form.origin);
   }
 
   // Calls AutofillManager::OnWillSubmitForm and waits for it to complete.
@@ -366,7 +366,7 @@ void VerifyDeveloperEngagementUkm(
   const ukm::UkmSource* source =
       ukm_recorder.GetSourceForSourceId(entry->source_id);
   ASSERT_NE(nullptr, source);
-  EXPECT_EQ(form.main_frame_origin, source->url());
+  EXPECT_EQ(form.origin, source->url());
 
   int expected_metric_value = 0;
   for (const auto it : expected_metric_values)
@@ -403,7 +403,7 @@ void VerifyFormInteractionUkm(const ukm::TestAutoSetUkmRecorder& ukm_recorder,
     const ukm::UkmSource* source =
         ukm_recorder.GetSourceForSourceId(entry->source_id);
     ASSERT_NE(nullptr, source);
-    EXPECT_EQ(form.main_frame_origin, source->url());
+    EXPECT_EQ(form.origin, source->url());
 
     ASSERT_LT(expected_metrics_index, expected_metrics.size());
     EXPECT_THAT(
@@ -572,7 +572,6 @@ TEST_F(AutofillMetricsTest, QualityMetrics) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   std::vector<ServerFieldType> heuristic_types, server_types;
   FormFieldData field;
@@ -882,7 +881,6 @@ TEST_P(QualityMetricsTest, Classification) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   std::vector<ServerFieldType> heuristic_types, server_types, actual_types;
   AutofillField field;
@@ -1051,7 +1049,6 @@ TEST_F(AutofillMetricsTest, TimingMetrics) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Autofilled", "autofilled", "Elvis Aaron Presley",
@@ -1091,7 +1088,6 @@ TEST_F(AutofillMetricsTest, QualityMetrics_NoSubmission) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   std::vector<ServerFieldType> heuristic_types, server_types;
   FormFieldData field;
@@ -1279,7 +1275,6 @@ TEST_F(AutofillMetricsTest, QualityMetrics_BasedOnAutocomplete) {
   form.name = ASCIIToUTF16("MyForm");
   form.origin = GURL("http://myform.com/form.html");
   form.action = GURL("http://myform.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   // Heuristic value will match with Autocomplete attribute.
@@ -1390,7 +1385,6 @@ TEST_F(AutofillMetricsTest, UpiVirtualPaymentAddress) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   std::vector<ServerFieldType> heuristic_types, server_types;
   FormFieldData field;
@@ -1439,7 +1433,6 @@ TEST_F(AutofillMetricsTest, PredictedMetricsWithAutocomplete) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field1;
   test::CreateTestFormField("Select", "select", "USA", "select-one", &field1);
@@ -1507,7 +1500,6 @@ TEST_F(AutofillMetricsTest, SaneMetricsWithCacheMismatch) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   std::vector<ServerFieldType> heuristic_types, server_types;
 
@@ -1604,7 +1596,6 @@ TEST_F(AutofillMetricsTest, StoredProfileCountAutofillableFormSubmission) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   // Three fields is enough to make it an autofillable form.
   FormFieldData field;
@@ -1636,7 +1627,6 @@ TEST_F(AutofillMetricsTest, StoredProfileCountNonAutofillableFormSubmission) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   // Two fields is not enough to make it an autofillable form.
   FormFieldData field;
@@ -1666,7 +1656,6 @@ TEST_F(AutofillMetricsTest, NumberOfEditedAutofilledFields) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   std::vector<ServerFieldType> heuristic_types, server_types;
 
@@ -1718,7 +1707,6 @@ TEST_F(AutofillMetricsTest, NumberOfEditedAutofilledFields_NoSubmission) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   std::vector<ServerFieldType> heuristic_types, server_types;
 
@@ -1769,7 +1757,6 @@ TEST_F(AutofillMetricsTest, DeveloperEngagement) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
@@ -1859,7 +1846,6 @@ TEST_F(AutofillMetricsTest,
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
@@ -1904,7 +1890,6 @@ TEST_F(AutofillMetricsTest,
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
@@ -1954,7 +1939,6 @@ TEST_F(AutofillMetricsTest, UkmDeveloperEngagement_LogUpiVpaTypeHint) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
@@ -2234,7 +2218,6 @@ TEST_F(AutofillMetricsTest, AddressSuggestionsCount) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -2306,7 +2289,6 @@ TEST_F(AutofillMetricsTest, CreditCardCheckoutFlowUserActions) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -2419,7 +2401,6 @@ TEST_F(AutofillMetricsTest, ProfileCheckoutFlowUserActions) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -2592,7 +2573,6 @@ TEST_F(AutofillMetricsTest, QueriedCreditCardFormIsSecure) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
   autofill_client_.set_form_origin(form.origin);
 
   FormFieldData field;
@@ -2611,7 +2591,6 @@ TEST_F(AutofillMetricsTest, QueriedCreditCardFormIsSecure) {
     // Simulate having seen this insecure form on page load.
     form.origin = GURL("http://example.com/form.html");
     form.action = GURL("http://example.com/submit.html");
-    form.main_frame_origin = GURL("http://example_root.com/form.html");
     autofill_manager_->AddSeenForm(form, field_types, field_types);
 
     // Simulate an Autofill query on a credit card field (HTTP, non-secure
@@ -2628,7 +2607,6 @@ TEST_F(AutofillMetricsTest, QueriedCreditCardFormIsSecure) {
     autofill_manager_->Reset();
     form.origin = GURL("https://example.com/form.html");
     form.action = GURL("https://example.com/submit.html");
-    form.main_frame_origin = GURL("https://example_root.com/form.html");
     autofill_client_.set_form_origin(form.origin);
     autofill_manager_->AddSeenForm(form, field_types, field_types);
 
@@ -2651,7 +2629,6 @@ TEST_F(AutofillMetricsTest, PolledProfileSuggestions_DebounceLogs) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -2704,7 +2681,6 @@ TEST_F(AutofillMetricsTest, CreditCardInteractedFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -2753,7 +2729,6 @@ TEST_F(AutofillMetricsTest, CreditCardShownFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -2894,7 +2869,6 @@ TEST_F(AutofillMetricsTest, CreditCardSelectedFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -2966,7 +2940,6 @@ TEST_F(AutofillMetricsTest, CreditCardFilledFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -3137,7 +3110,6 @@ TEST_F(AutofillMetricsTest, CreditCardGetRealPanDuration) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -3211,7 +3183,6 @@ TEST_F(AutofillMetricsTest,
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -3254,7 +3225,6 @@ TEST_F(AutofillMetricsTest,
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -3299,7 +3269,6 @@ TEST_F(AutofillMetricsTest,
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -3344,7 +3313,6 @@ TEST_F(AutofillMetricsTest,
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -3398,7 +3366,6 @@ TEST_F(AutofillMetricsTest, ShouldNotLogFormEventNoCardForAddressForm) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -3440,7 +3407,6 @@ TEST_F(AutofillMetricsTest, CreditCardSubmittedFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -3788,7 +3754,6 @@ TEST_F(AutofillMetricsTest, CreditCardWillSubmitFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -4010,7 +3975,6 @@ TEST_F(AutofillMetricsTest, AddressInteractedFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -4062,7 +4026,6 @@ TEST_F(AutofillMetricsTest, AddressShownFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -4152,7 +4115,6 @@ TEST_F(AutofillMetricsTest, AddressFilledFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -4218,7 +4180,6 @@ TEST_F(AutofillMetricsTest, AddressSubmittedFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -4419,7 +4380,6 @@ TEST_F(AutofillMetricsTest, AddressWillSubmitFormEvents) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -4591,7 +4551,6 @@ TEST_F(AutofillMetricsTest, CreditCardFormEventsAreSegmented) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -4700,7 +4659,6 @@ TEST_F(AutofillMetricsTest, AddressFormEventsAreSegmented) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;
@@ -4786,7 +4744,6 @@ TEST_F(AutofillMetricsTest, AutofillFormSubmittedState) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
@@ -5035,7 +4992,6 @@ TEST_F(
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
@@ -5158,7 +5114,6 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction_EmptyForm) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   std::vector<FormData> forms(1, form);
 
@@ -5185,7 +5140,6 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction_CreditCardForm) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("https://example.com/form.html");
   form.action = GURL("https://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   // Construct a valid credit card form with minimal fields.
   FormFieldData field;
@@ -5345,7 +5299,6 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction_AddressForm) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
@@ -5558,7 +5511,6 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
@@ -5950,7 +5902,6 @@ TEST_F(AutofillMetricsTest, ProfileActionOnFormSubmitted) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   // Create the form's fields.
   FormFieldData field;
@@ -6070,7 +6021,6 @@ class AutofillMetricsParseQueryResponseTest : public testing::Test {
   void SetUp() override {
     FormData form;
     form.origin = GURL("http://foo.com");
-    form.main_frame_origin = GURL("http://foo_root.com");
     FormFieldData field;
     field.form_control_type = "text";
 
@@ -6204,7 +6154,6 @@ TEST_F(AutofillMetricsTest, NonsecureCreditCardForm) {
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
   autofill_client_.set_form_origin(form.origin);
 
   FormFieldData field;
@@ -6261,7 +6210,6 @@ TEST_F(AutofillMetricsTest,
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("https://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
-  form.main_frame_origin = GURL("http://example_root.com/form.html");
 
   FormFieldData field;
   std::vector<ServerFieldType> field_types;

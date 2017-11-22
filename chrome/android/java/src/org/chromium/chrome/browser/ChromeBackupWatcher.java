@@ -18,7 +18,7 @@ import org.chromium.components.signin.ChromeSigninController;
  * Class for watching for changes to the Android preferences that are backed up using Android
  * key/value backup.
  */
-@JNINamespace("android")
+@JNINamespace("chrome::android")
 public class ChromeBackupWatcher {
     private BackupManager mBackupManager;
 

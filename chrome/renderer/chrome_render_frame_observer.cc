@@ -144,7 +144,8 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
     SetClientSidePhishingDetection(true);
 #endif
   translate_helper_ = new translate::TranslateHelper(
-      render_frame, ISOLATED_WORLD_ID_TRANSLATE, extensions::kExtensionScheme);
+      render_frame, chrome::ISOLATED_WORLD_ID_TRANSLATE,
+      extensions::kExtensionScheme);
 }
 
 ChromeRenderFrameObserver::~ChromeRenderFrameObserver() {

@@ -79,12 +79,9 @@ VrShellDelegate* VrShellDelegate::GetNativeVrShellDelegate(
 void VrShellDelegate::SetDelegate(VrShell* vr_shell,
                                   gvr::ViewerType viewer_type) {
   vr_shell_ = vr_shell;
-  device::VRDevice* device = GetDevice();
-  // When VrShell is created, we disable magic window mode as the user is inside
-  // the headset. As currently implemented, orientation-based magic window
-  // doesn't make sense when the window is fixed and the user is moving.
+  device::GvrDevice* device = static_cast<device::GvrDevice*>(GetDevice());
   if (device)
-    device->SetMagicWindowEnabled(false);
+    device->SetInBrowsingMode(true);
 
   if (pending_successful_present_request_) {
     CHECK(!present_callback_.is_null());
@@ -97,9 +94,9 @@ void VrShellDelegate::SetDelegate(VrShell* vr_shell,
 
 void VrShellDelegate::RemoveDelegate() {
   vr_shell_ = nullptr;
-  device::VRDevice* device = GetDevice();
+  device::GvrDevice* device = static_cast<device::GvrDevice*>(GetDevice());
   if (device) {
-    device->SetMagicWindowEnabled(true);
+    device->SetInBrowsingMode(false);
     device->OnExitPresent();
   }
 }
@@ -180,12 +177,9 @@ void VrShellDelegate::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
 void VrShellDelegate::SetDeviceId(unsigned int device_id) {
   device_id_ = device_id;
   if (vr_shell_) {
-    device::VRDevice* device = GetDevice();
-    // See comment in VrShellDelegate::SetDelegate. This handles the case where
-    // VrShell is created before the device/ code is initialized (like when
-    // entering VR browsing on a non-webVR page).
+    device::GvrDevice* device = static_cast<device::GvrDevice*>(GetDevice());
     if (device)
-      device->SetMagicWindowEnabled(false);
+      device->SetInBrowsingMode(true);
   }
 }
 
@@ -264,13 +258,11 @@ device::VRDevice* VrShellDelegate::GetDevice() {
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
-jlong JNI_VrShellDelegate_Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(new VrShellDelegate(env, obj));
 }
 
-static void JNI_VrShellDelegate_OnLibraryAvailable(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
+static void OnLibraryAvailable(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   device::GvrDelegateProviderFactory::Install(
       new VrShellDelegateProviderFactory);
 }

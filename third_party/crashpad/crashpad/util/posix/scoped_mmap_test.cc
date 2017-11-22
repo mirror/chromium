@@ -22,7 +22,6 @@
 #include "base/rand_util.h"
 #include "base/strings/stringprintf.h"
 #include "gtest/gtest.h"
-#include "test/gtest_death.h"
 
 namespace crashpad {
 namespace test {
@@ -119,7 +118,7 @@ TEST(ScopedMmapDeathTest, Destructor) {
     cookie.SetUp(mapping.addr_as<uint64_t*>());
   }
 
-  EXPECT_DEATH_CRASH(cookie.Check(), "");
+  EXPECT_DEATH(cookie.Check(), "");
 }
 
 TEST(ScopedMmapDeathTest, Reset) {
@@ -136,7 +135,7 @@ TEST(ScopedMmapDeathTest, Reset) {
 
   ASSERT_TRUE(mapping.Reset());
 
-  EXPECT_DEATH_CRASH(cookie.Check(), "");
+  EXPECT_DEATH(cookie.Check(), "");
 }
 
 TEST(ScopedMmapDeathTest, ResetAddrLen_Shrink) {
@@ -165,8 +164,8 @@ TEST(ScopedMmapDeathTest, ResetAddrLen_Shrink) {
 
   EXPECT_EQ(cookies[1].Observed(), cookies[1].Expected());
 
-  EXPECT_DEATH_CRASH(cookies[0].Check(), "");
-  EXPECT_DEATH_CRASH(cookies[2].Check(), "");
+  EXPECT_DEATH(cookies[0].Check(), "");
+  EXPECT_DEATH(cookies[2].Check(), "");
 }
 
 TEST(ScopedMmap, ResetAddrLen_Grow) {
@@ -231,7 +230,7 @@ TEST(ScopedMmapDeathTest, ResetAddrLen_MoveDownAndGrow) {
   EXPECT_EQ(cookies[0].Observed(), cookies[0].Expected());
   EXPECT_EQ(cookies[1].Observed(), cookies[1].Expected());
 
-  EXPECT_DEATH_CRASH(cookies[2].Check(), "");
+  EXPECT_DEATH(cookies[2].Check(), "");
 }
 
 TEST(ScopedMmapDeathTest, ResetAddrLen_MoveUpAndShrink) {
@@ -263,8 +262,8 @@ TEST(ScopedMmapDeathTest, ResetAddrLen_MoveUpAndShrink) {
 
   EXPECT_EQ(cookies[2].Observed(), cookies[2].Expected());
 
-  EXPECT_DEATH_CRASH(cookies[0].Check(), "");
-  EXPECT_DEATH_CRASH(cookies[1].Check(), "");
+  EXPECT_DEATH(cookies[0].Check(), "");
+  EXPECT_DEATH(cookies[1].Check(), "");
 }
 
 TEST(ScopedMmapDeathTest, ResetMmap) {
@@ -290,7 +289,7 @@ TEST(ScopedMmapDeathTest, ResetMmap) {
   EXPECT_NE(mapping.addr(), MAP_FAILED);
   EXPECT_EQ(mapping.len(), kPageSize);
 
-  EXPECT_DEATH_CRASH(cookie.Check(), "");
+  EXPECT_DEATH(cookie.Check(), "");
 }
 
 TEST(ScopedMmapDeathTest, Mprotect) {
@@ -307,7 +306,7 @@ TEST(ScopedMmapDeathTest, Mprotect) {
 
   ASSERT_TRUE(mapping.Mprotect(PROT_READ));
 
-  EXPECT_DEATH_CRASH(*addr = 0, "");
+  EXPECT_DEATH(*addr = 0, "");
 
   ASSERT_TRUE(mapping.Mprotect(PROT_READ | PROT_WRITE));
   EXPECT_EQ(*addr, 1);

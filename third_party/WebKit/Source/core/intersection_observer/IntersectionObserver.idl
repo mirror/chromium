@@ -12,7 +12,8 @@ callback IntersectionObserverCallback = void (sequence<IntersectionObserverEntry
     Constructor(IntersectionObserverCallback callback, optional IntersectionObserverInit options),
     ConstructorCallWith=ScriptState,
     MeasureAs=IntersectionObserver_Constructor,
-    RaisesException=Constructor
+    RaisesException=Constructor,
+    DependentLifetime
 ] interface IntersectionObserver {
     readonly attribute Element? root;
     readonly attribute DOMString rootMargin;

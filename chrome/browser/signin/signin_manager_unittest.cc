@@ -115,7 +115,7 @@ class SigninManagerTest : public testing::Test {
   void SetUp() override {
     manager_ = NULL;
     prefs_.reset(new TestingPrefServiceSimple);
-    RegisterLocalState(prefs_->registry());
+    chrome::RegisterLocalState(prefs_->registry());
     TestingBrowserProcess::GetGlobal()->SetLocalState(
         prefs_.get());
     TestingProfile::Builder builder;

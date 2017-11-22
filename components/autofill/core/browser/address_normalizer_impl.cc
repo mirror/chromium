@@ -16,7 +16,6 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/autofill/core/browser/address_i18n.h"
-#include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/phone_number_i18n.h"
 #include "third_party/libaddressinput/chromium/chrome_address_validator.h"
@@ -32,14 +31,14 @@ using ::i18n::addressinput::Source;
 using ::i18n::addressinput::Storage;
 
 bool NormalizeProfileWithValidator(AutofillProfile* profile,
-                                   const std::string& app_locale,
+                                   const std::string& region_code,
                                    AddressValidator* address_validator) {
   DCHECK(address_validator);
 
   // Create the AddressData from the profile.
   ::i18n::addressinput::AddressData address_data =
       *autofill::i18n::CreateAddressDataFromAutofillProfile(*profile,
-                                                            app_locale);
+                                                            region_code);
 
   // Normalize the address.
   if (!address_validator->NormalizeAddress(&address_data))
@@ -57,11 +56,10 @@ bool NormalizeProfileWithValidator(AutofillProfile* profile,
 // Formats the phone number in |profile| to E.164 format. Leaves the original
 // phone number if formatting was not possible (or already optimal).
 void FormatPhoneNumberToE164(AutofillProfile* profile,
-                             const std::string& region_code,
-                             const std::string& app_locale) {
+                             const std::string region_code) {
   const std::string formatted_number = autofill::i18n::FormatPhoneForResponse(
       base::UTF16ToUTF8(
-          profile->GetInfo(AutofillType(PHONE_HOME_WHOLE_NUMBER), app_locale)),
+          profile->GetInfo(AutofillType(PHONE_HOME_WHOLE_NUMBER), region_code)),
       region_code);
 
   profile->SetRawInfo(PHONE_HOME_WHOLE_NUMBER,
@@ -74,12 +72,12 @@ class AddressNormalizerImpl::NormalizationRequest {
  public:
   // |address_validator| needs to outlive this Request.
   NormalizationRequest(const AutofillProfile& profile,
-                       const std::string& app_locale,
+                       const std::string& region_code,
                        int timeout_seconds,
                        AddressNormalizer::NormalizationCallback callback,
                        AddressValidator* address_validator)
       : profile_(profile),
-        app_locale_(app_locale),
+        region_code_(region_code),
         callback_(std::move(callback)),
         address_validator_(address_validator),
         has_responded_(false),
@@ -102,9 +100,7 @@ class AddressNormalizerImpl::NormalizationRequest {
     has_responded_ = true;
 
     // In either case, format the phone number.
-    const std::string region_code =
-        data_util::GetCountryCodeWithFallback(profile_, app_locale_);
-    FormatPhoneNumberToE164(&profile_, region_code, app_locale_);
+    FormatPhoneNumberToE164(&profile_, region_code_);
 
     if (!success) {
       std::move(callback_).Run(/*success=*/false, profile_);
@@ -112,17 +108,17 @@ class AddressNormalizerImpl::NormalizationRequest {
     }
 
     // The rules should be loaded.
-    DCHECK(address_validator_->AreRulesLoadedForRegion(region_code));
+    DCHECK(address_validator_->AreRulesLoadedForRegion(region_code_));
 
     bool normalization_success = NormalizeProfileWithValidator(
-        &profile_, app_locale_, address_validator_);
+        &profile_, region_code_, address_validator_);
 
     std::move(callback_).Run(/*success=*/normalization_success, profile_);
   }
 
  private:
   AutofillProfile profile_;
-  const std::string app_locale_;
+  std::string region_code_;
   AddressNormalizer::NormalizationCallback callback_;
   AddressValidator* address_validator_;
 
@@ -133,10 +129,8 @@ class AddressNormalizerImpl::NormalizationRequest {
 };
 
 AddressNormalizerImpl::AddressNormalizerImpl(std::unique_ptr<Source> source,
-                                             std::unique_ptr<Storage> storage,
-                                             const std::string& app_locale)
-    : address_validator_(std::move(source), std::move(storage), this),
-      app_locale_(app_locale) {}
+                                             std::unique_ptr<Storage> storage)
+    : address_validator_(std::move(source), std::move(storage), this) {}
 
 AddressNormalizerImpl::~AddressNormalizerImpl() {}
 
@@ -144,21 +138,25 @@ void AddressNormalizerImpl::LoadRulesForRegion(const std::string& region_code) {
   address_validator_.LoadRules(region_code);
 }
 
+bool AddressNormalizerImpl::AreRulesLoadedForRegion(
+    const std::string& region_code) {
+  return address_validator_.AreRulesLoadedForRegion(region_code);
+}
+
 void AddressNormalizerImpl::NormalizeAddressAsync(
     const AutofillProfile& profile,
+    const std::string& region_code,
     int timeout_seconds,
     AddressNormalizer::NormalizationCallback callback) {
   DCHECK_GE(timeout_seconds, 0);
 
   std::unique_ptr<NormalizationRequest> request =
       std::make_unique<NormalizationRequest>(
-          profile, app_locale_, timeout_seconds, std::move(callback),
+          profile, region_code, timeout_seconds, std::move(callback),
           &address_validator_);
 
   // If the rules are already loaded for |region_code|, the |request| will
   // callback synchronously.
-  const std::string region_code =
-      data_util::GetCountryCodeWithFallback(profile, app_locale_);
   if (AreRulesLoadedForRegion(region_code)) {
     request->OnRulesLoaded(true);
     return;
@@ -183,22 +181,17 @@ void AddressNormalizerImpl::NormalizeAddressAsync(
   LoadRulesForRegion(region_code);
 }
 
-bool AddressNormalizerImpl::NormalizeAddressSync(AutofillProfile* profile) {
+bool AddressNormalizerImpl::NormalizeAddressSync(
+    AutofillProfile* profile,
+    const std::string& region_code) {
   // Phone number is always formatted, regardless of whether the address rules
   // are loaded for |region_code|.
-  const std::string region_code =
-      data_util::GetCountryCodeWithFallback(*profile, app_locale_);
-  FormatPhoneNumberToE164(profile, region_code, app_locale_);
+  FormatPhoneNumberToE164(profile, region_code);
   if (!AreRulesLoadedForRegion(region_code))
     return false;
 
-  return NormalizeProfileWithValidator(profile, app_locale_,
+  return NormalizeProfileWithValidator(profile, region_code,
                                        &address_validator_);
-}
-
-bool AddressNormalizerImpl::AreRulesLoadedForRegion(
-    const std::string& region_code) {
-  return address_validator_.AreRulesLoadedForRegion(region_code);
 }
 
 void AddressNormalizerImpl::OnAddressValidationRulesLoaded(

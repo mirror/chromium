@@ -83,9 +83,7 @@ void CronetOnUnLoad(JavaVM* jvm, void* reserved) {
   base::android::LibraryLoaderExitHook();
 }
 
-void JNI_CronetLibraryLoader_CronetInitOnInitThread(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller) {
+void CronetInitOnInitThread(JNIEnv* env, const JavaParamRef<jclass>& jcaller) {
 #if !BUILDFLAG(USE_PLATFORM_ICU_ALTERNATIVES)
   base::i18n::InitializeICU();
 #endif
@@ -102,7 +100,7 @@ void JNI_CronetLibraryLoader_CronetInitOnInitThread(
   g_network_change_notifier = net::NetworkChangeNotifier::Create();
 }
 
-ScopedJavaLocalRef<jstring> JNI_CronetLibraryLoader_GetCronetVersion(
+ScopedJavaLocalRef<jstring> GetCronetVersion(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   return base::android::ConvertUTF8ToJavaString(env, CRONET_VERSION);

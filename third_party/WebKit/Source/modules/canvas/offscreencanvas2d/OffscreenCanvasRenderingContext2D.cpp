@@ -20,7 +20,7 @@
 #include "platform/graphics/paint/PaintCanvas.h"
 #include "platform/text/BidiTextRun.h"
 #include "platform/wtf/Assertions.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 
 namespace blink {
 
@@ -211,7 +211,7 @@ bool OffscreenCanvasRenderingContext2D::StateHasFilter() {
   return GetState().HasFilterForOffscreenCanvas(Host()->Size());
 }
 
-sk_sp<PaintFilter> OffscreenCanvasRenderingContext2D::StateGetFilter() {
+sk_sp<SkImageFilter> OffscreenCanvasRenderingContext2D::StateGetFilter() {
   return GetState().GetFilterForOffscreenCanvas(Host()->Size());
 }
 
@@ -300,8 +300,7 @@ void OffscreenCanvasRenderingContext2D::setFont(const String& new_font) {
     return;
   }
 
-  CSSParser::ParseValue(style, CSSPropertyFont, new_font, true,
-                        Host()->GetTopExecutionContext()->SecureContextMode());
+  CSSParser::ParseValue(style, CSSPropertyFont, new_font, true);
 
   FontDescription desc =
       FontStyleResolver::ComputeFont(*style, Host()->GetFontSelector());

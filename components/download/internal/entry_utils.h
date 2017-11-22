@@ -39,8 +39,7 @@ MapEntriesToMetadataForClients(const std::set<DownloadClient>& clients,
 
 // Gets the least strict scheduling criteria from |entries|, the criteria is
 // used to schedule platform background tasks.
-Criteria GetSchedulingCriteria(const Model::EntryList& entries,
-                               int optimal_battery_percentage);
+Criteria GetSchedulingCriteria(const Model::EntryList& entries);
 
 // Returns if |lhs| entry is a better candidate to be the next download than
 // |rhs| based on their priority and cancel time.

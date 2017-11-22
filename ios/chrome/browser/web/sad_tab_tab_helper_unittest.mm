@@ -33,12 +33,11 @@
 @synthesize repeatedFailure = _repeatedFailure;
 
 - (void)sadTabTabHelper:(SadTabTabHelper*)tabHelper
-    presentSadTabForWebState:(web::WebState*)webState
-             repeatedFailure:(BOOL)repeatedFailure {
+    presentSadTabForRepeatedFailure:(BOOL)repeatedFailure {
   self.repeatedFailure = repeatedFailure;
   CRWContentView* contentView = [[CRWGenericContentView alloc]
       initWithView:[[UIView alloc] initWithFrame:CGRectZero]];
-  webState->ShowTransientContentView(contentView);
+  tabHelper->web_state()->ShowTransientContentView(contentView);
 }
 
 @end

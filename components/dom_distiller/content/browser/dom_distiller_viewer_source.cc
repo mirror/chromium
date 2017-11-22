@@ -245,14 +245,12 @@ void DomDistillerViewerSource::StartDataRequest(
     std::string css = viewer::GetCss();
     callback.Run(base::RefCountedString::TakeString(&css));
     return;
-  }
-  if (kViewerLoadingImagePath == path) {
+  } else if (kViewerLoadingImagePath == path) {
     std::string image = viewer::GetLoadingImage();
     callback.Run(base::RefCountedString::TakeString(&image));
     return;
-  }
-  if (base::StartsWith(path, kViewerSaveFontScalingPath,
-                       base::CompareCase::SENSITIVE)) {
+  } else if (base::StartsWith(path, kViewerSaveFontScalingPath,
+                              base::CompareCase::SENSITIVE)) {
     double scale = 1.0;
     if (base::StringToDouble(
         path.substr(strlen(kViewerSaveFontScalingPath)), &scale)) {
@@ -290,14 +288,15 @@ void DomDistillerViewerSource::StartDataRequest(
 
   // Place template on the page.
   callback.Run(base::RefCountedString::TakeString(&unsafe_page_html));
-}
+};
 
 std::string DomDistillerViewerSource::GetMimeType(
     const std::string& path) const {
-  if (kViewerCssPath == path)
+  if (kViewerCssPath == path) {
     return "text/css";
-  if (kViewerLoadingImagePath == path)
+  } else if (kViewerLoadingImagePath == path) {
     return "image/svg+xml";
+  }
   return "text/html";
 }
 

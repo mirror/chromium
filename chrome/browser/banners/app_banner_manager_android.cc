@@ -307,15 +307,13 @@ std::string AppBannerManagerAndroid::ExtractQueryValueForName(
 }
 
 // static
-jint JNI_AppBannerManager_GetHomescreenLanguageOption(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
+jint GetHomescreenLanguageOption(JNIEnv* env,
+                                 const JavaParamRef<jclass>& clazz) {
   return AppBannerSettingsHelper::GetHomescreenLanguageOption();
 }
 
 // static
-ScopedJavaLocalRef<jobject>
-JNI_AppBannerManager_GetJavaBannerManagerForWebContents(
+ScopedJavaLocalRef<jobject> GetJavaBannerManagerForWebContents(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& java_web_contents) {
@@ -326,28 +324,25 @@ JNI_AppBannerManager_GetJavaBannerManagerForWebContents(
 }
 
 // static
-void JNI_AppBannerManager_SetDaysAfterDismissAndIgnoreToTrigger(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    jint dismiss_days,
-    jint ignore_days) {
+void SetDaysAfterDismissAndIgnoreToTrigger(JNIEnv* env,
+                                           const JavaParamRef<jclass>& clazz,
+                                           jint dismiss_days,
+                                           jint ignore_days) {
   AppBannerSettingsHelper::SetDaysAfterDismissAndIgnoreToTrigger(dismiss_days,
                                                                  ignore_days);
 }
 
 // static
-void JNI_AppBannerManager_SetTimeDeltaForTesting(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    jint days) {
+void SetTimeDeltaForTesting(JNIEnv* env,
+                            const JavaParamRef<jclass>& clazz,
+                            jint days) {
   AppBannerManager::SetTimeDeltaForTesting(days);
 }
 
 // static
-void JNI_AppBannerManager_SetTotalEngagementToTrigger(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    jdouble engagement) {
+void SetTotalEngagementToTrigger(JNIEnv* env,
+                                 const JavaParamRef<jclass>& clazz,
+                                 jdouble engagement) {
   AppBannerSettingsHelper::SetTotalEngagementToTrigger(engagement);
 }
 

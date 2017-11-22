@@ -35,7 +35,6 @@ import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler.OverrideUrlLoadingResult;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
-import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.MenuUtils;
@@ -67,79 +66,43 @@ public class WebappNavigationTest {
     @Rule
     public final NativeLibraryTestRule mNativeLibraryTestRule = new NativeLibraryTestRule();
 
-    /**
-     * Test that navigating a webapp whose launch intent does not specify a theme colour outside of
-     * the webapp scope by tapping a regular link:
-     * - Shows a CCT-like webapp toolbar.
-     * - Uses the default theme colour as the toolbar colour.
-     */
     @Test
     @SmallTest
     @Feature({"Webapps"})
     @RetryOnFailure
-    public void testRegularLinkOffOriginNoWebappThemeColor() throws Exception {
+    public void testRegularLinkOffOriginInCctNoWebappThemeColor() throws Exception {
         WebappActivity activity = runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent());
-        assertToolbarShowState(activity, false);
-
-        addAnchorAndClick(offOriginUrl(), "_self");
-
-        ChromeTabUtils.waitForTabPageLoaded(activity.getActivityTab(), offOriginUrl());
-        assertToolbarShowState(activity, true);
         Assert.assertEquals(
-                getDefaultPrimaryColor(), activity.getToolbarManager().getPrimaryColor());
+                "Toolbar should use default primary color if theme color is not specified",
+                ApiCompatibilityUtils.getColor(
+                        activity.getResources(), R.color.default_primary_color),
+                activity.getToolbarManager().getPrimaryColor());
+
+        addAnchor("testId", offOriginUrl(), "_self");
+        DOMUtils.clickNode(activity.getActivityTab().getContentViewCore(), "testId");
+        mActivityTestRule.waitUntilIdle();
+
+        assertOffOrigin(activity);
     }
 
-    /**
-     * Test that navigating a webapp whose launch intent specifies a theme colour outside of the
-     * webapp scope by tapping a regular link:
-     * - Shows a CCT-like webapp toolbar.
-     * - Uses the webapp theme colour as the toolbar colour.
-     */
     @Test
     @SmallTest
     @Feature({"Webapps"})
     @RetryOnFailure
-    public void testRegularLinkOffOriginThemeColor() throws Exception {
+    public void testWindowTopLocationOffOriginInCctAndWebappThemeColor() throws Exception {
         WebappActivity activity =
                 runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent().putExtra(
                         ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN));
-        assertToolbarShowState(activity, false);
-
-        addAnchorAndClick(offOriginUrl(), "_self");
-
-        ChromeTabUtils.waitForTabPageLoaded(activity.getActivityTab(), offOriginUrl());
-        assertToolbarShowState(activity, true);
-        Assert.assertEquals(Color.CYAN, activity.getToolbarManager().getPrimaryColor());
-    }
-
-    /**
-     * Test that navigating outside of the webapp scope by changing the top location via JavaScript:
-     * - Shows a CCT-like webapp toolbar.
-     * - Preserves the theme color specified in the launch intent.
-     */
-    @Test
-    @SmallTest
-    @Feature({"Webapps"})
-    @RetryOnFailure
-    public void testWindowTopLocationOffOrigin() throws Exception {
-        WebappActivity activity =
-                runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent().putExtra(
-                        ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN));
-        assertToolbarShowState(activity, false);
+        Assert.assertEquals("Toolbar should use the theme color of a webapp", Color.CYAN,
+                activity.getToolbarManager().getPrimaryColor());
 
         mActivityTestRule.runJavaScriptCodeInCurrentTab(
                 String.format("window.top.location = '%s'", offOriginUrl()));
+        mActivityTestRule.waitUntilIdle();
 
-        ChromeTabUtils.waitForTabPageLoaded(activity.getActivityTab(), offOriginUrl());
-        assertToolbarShowState(activity, true);
-        Assert.assertEquals(Color.CYAN, activity.getToolbarManager().getPrimaryColor());
+        assertOffOrigin(activity);
     }
 
-    /**
-     * Test that navigating outside of the webapp scope by tapping a link with target="_blank":
-     * - Launches a CCT.
-     * - The CCT toolbar does not use the webapp theme colour.
-     */
     @Test
     @SmallTest
     @Feature({"Webapps"})
@@ -147,46 +110,40 @@ public class WebappNavigationTest {
     public void testOffScopeNewTabLinkOpensInCct() throws Exception {
         runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent().putExtra(
                 ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN));
-        addAnchorAndClick(offOriginUrl(), "_blank");
-        CustomTabActivity customTab = waitFor(CustomTabActivity.class);
-        ChromeTabUtils.waitForTabPageLoaded(customTab.getActivityTab(), offOriginUrl());
-
+        addAnchor("testId", offOriginUrl(), "_blank");
+        DOMUtils.clickNode(
+                mActivityTestRule.getActivity().getActivityTab().getContentViewCore(), "testId");
+        CustomTabActivity customTab = assertCustomTabActivityLaunchedForOffOriginUrl();
         Assert.assertEquals(
-                getDefaultPrimaryColor(), customTab.getToolbarManager().getPrimaryColor());
+                "CCT Toolbar should use default primary color even if webapp has theme color",
+                ApiCompatibilityUtils.getColor(
+                        customTab.getResources(), R.color.default_primary_color),
+                customTab.getToolbarManager().getPrimaryColor());
     }
 
-    /**
-     * Test that navigating within the webapp scope by tapping a link with target="_blank" launches
-     * a CCT.
-     */
     @Test
     @SmallTest
     @Feature({"Webapps"})
     @RetryOnFailure
     public void testInScopeNewTabLinkOpensInCct() throws Exception {
-        String inScopeUrl = mActivityTestRule.getTestServer().getURL(IN_SCOPE_PAGE_PATH);
         runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent().putExtra(
                 ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN));
-        addAnchorAndClick(inScopeUrl, "_blank");
+        addAnchor("testId", mActivityTestRule.getTestServer().getURL(IN_SCOPE_PAGE_PATH), "_blank");
+        DOMUtils.clickNode(
+                mActivityTestRule.getActivity().getActivityTab().getContentViewCore(), "testId");
         CustomTabActivity customTab = waitFor(CustomTabActivity.class);
-        ChromeTabUtils.waitForTabPageLoaded(customTab.getActivityTab(), inScopeUrl);
+        mActivityTestRule.waitUntilIdle(customTab);
         Assert.assertTrue(
                 mActivityTestRule.runJavaScriptCodeInCurrentTab("document.body.textContent")
                         .contains("Do-nothing page with a service worker"));
     }
 
-    /**
-     * Test that navigating outside of the webapp via window.open():
-     * - Launches a CCT.
-     * - The CCT toolbar does not use the webapp theme colour.
-     */
     @Test
     @SmallTest
     @Feature({"Webapps"})
     @RetryOnFailure
     public void testWindowOpenInCct() throws Exception {
-        runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent().putExtra(
-                ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN));
+        runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent());
         // Executing window.open() through a click on a link,
         // as it needs user gesture to avoid Chrome blocking it as a popup.
         mActivityTestRule.runJavaScriptCodeInCurrentTab(
@@ -202,28 +159,30 @@ public class WebappNavigationTest {
         DOMUtils.clickNode(
                 mActivityTestRule.getActivity().getActivityTab().getContentViewCore(), "testId");
 
-        CustomTabActivity customTab = waitFor(CustomTabActivity.class);
-        ChromeTabUtils.waitForTabPageLoaded(customTab.getActivityTab(), offOriginUrl());
-        Assert.assertEquals(
-                getDefaultPrimaryColor(), customTab.getToolbarManager().getPrimaryColor());
+        CustomTabActivity customTab = assertCustomTabActivityLaunchedForOffOriginUrl();
+        Assert.assertEquals("CCT Toolbar should use default primary color",
+                ApiCompatibilityUtils.getColor(
+                        customTab.getResources(), R.color.default_primary_color),
+                customTab.getToolbarManager().getPrimaryColor());
     }
 
-    /**
-     * Test that navigating a webapp within the webapp scope by tapping a regular link:
-     * - Does not show a CCT-like webapp toolbar.
-     * - Does not launch a CCT.
-     */
     @Test
     @SmallTest
     @Feature({"Webapps"})
     @RetryOnFailure
     public void testInScopeNavigationStaysInWebapp() throws Exception {
-        WebappActivity activity = runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent());
-        String otherPageUrl = mActivityTestRule.getTestServer().getURL(IN_SCOPE_PAGE_PATH);
-        addAnchorAndClick(otherPageUrl, "_self");
-        ChromeTabUtils.waitForTabPageLoaded(activity.getActivityTab(), otherPageUrl);
+        runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent());
 
-        assertToolbarShowState(activity, false);
+        String otherPageUrl = mActivityTestRule.getTestServer().getURL(IN_SCOPE_PAGE_PATH);
+        mActivityTestRule.loadUrlInTab(otherPageUrl, PageTransition.LINK,
+                mActivityTestRule.getActivity().getActivityTab());
+
+        mActivityTestRule.waitUntilIdle();
+        Assert.assertEquals(
+                otherPageUrl, mActivityTestRule.getActivity().getActivityTab().getUrl());
+
+        Assert.assertSame(
+                mActivityTestRule.getActivity(), ApplicationStatus.getLastTrackedFocusedActivity());
     }
 
     @Test
@@ -243,7 +202,9 @@ public class WebappNavigationTest {
                 R.id.contextmenu_open_in_chrome);
 
         ChromeTabbedActivity tabbedChrome = waitFor(ChromeTabbedActivity.class);
-        ChromeTabUtils.waitForTabPageLoaded(tabbedChrome.getActivityTab(), offOriginUrl());
+
+        mActivityTestRule.waitUntilIdle(tabbedChrome);
+        assertOffOrigin(tabbedChrome);
     }
 
     @Test
@@ -259,8 +220,11 @@ public class WebappNavigationTest {
                 InstrumentationRegistry.getInstrumentation(), activity, R.id.open_in_browser_id);
 
         ChromeTabbedActivity tabbedChrome = waitFor(ChromeTabbedActivity.class);
-        ChromeTabUtils.waitForTabPageLoaded(tabbedChrome.getActivityTab(),
-                mActivityTestRule.getTestServer().getURL(WEB_APP_PATH));
+        mActivityTestRule.waitUntilIdle(tabbedChrome);
+
+        Assert.assertEquals("Tab in tabbed activity should show the Web App page",
+                mActivityTestRule.getTestServer().getURL(WEB_APP_PATH),
+                tabbedChrome.getActivityTab().getUrl());
     }
 
     @Test
@@ -273,7 +237,9 @@ public class WebappNavigationTest {
         InterceptNavigationDelegateImpl navigationDelegate =
                 mActivityTestRule.getActivity().getActivityTab().getInterceptNavigationDelegate();
 
-        addAnchorAndClick(YOUTUBE_URL, "_self");
+        addAnchor("testLink", YOUTUBE_URL, "_self");
+        DOMUtils.clickNode(
+                mActivityTestRule.getActivity().getActivityTab().getContentViewCore(), "testLink");
 
         waitForExternalAppOrIntentPicker();
         Assert.assertEquals(OverrideUrlLoadingResult.OVERRIDE_WITH_EXTERNAL_INTENT,
@@ -287,7 +253,9 @@ public class WebappNavigationTest {
     public void testNewTabLinkToExternalApp() throws Exception {
         runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent());
 
-        addAnchorAndClick(YOUTUBE_URL, "_blank");
+        addAnchor("testLink", YOUTUBE_URL, "_blank");
+        DOMUtils.clickNode(
+                mActivityTestRule.getActivity().getActivityTab().getContentViewCore(), "testLink");
 
         waitForExternalAppOrIntentPicker();
     }
@@ -307,9 +275,13 @@ public class WebappNavigationTest {
                 mActivityTestRule.getActivity(), R.id.open_in_browser_id);
 
         ChromeTabbedActivity tabbedChrome = waitFor(ChromeTabbedActivity.class);
+        mActivityTestRule.waitUntilIdle(tabbedChrome);
+
         ThreadUtils.runOnUiThreadBlocking(
                 () -> tabbedChrome.getActivityTab().loadUrl(new LoadUrlParams(offOriginUrl())));
-        ChromeTabUtils.waitForTabPageLoaded(tabbedChrome.getActivityTab(), offOriginUrl());
+
+        mActivityTestRule.waitUntilIdle(tabbedChrome);
+        assertOffOrigin(tabbedChrome);
     }
 
     @Test
@@ -318,27 +290,30 @@ public class WebappNavigationTest {
     @RetryOnFailure
     public void testCloseButtonReturnsToMostRecentInScopeUrl() throws Exception {
         WebappActivity activity = runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent());
-        Tab tab = activity.getActivityTab();
 
         String otherInScopeUrl = mActivityTestRule.getTestServer().getURL(IN_SCOPE_PAGE_PATH);
         mActivityTestRule.loadUrlInTab(
                 otherInScopeUrl, PageTransition.LINK, activity.getActivityTab());
-        Assert.assertEquals(otherInScopeUrl, tab.getUrl());
+        Assert.assertEquals(otherInScopeUrl, activity.getActivityTab().getUrl());
 
-        mActivityTestRule.loadUrlInTab(offOriginUrl(), PageTransition.LINK, tab);
-        String mozillaUrl = mActivityTestRule.getTestServer().getURLWithHostName(
-                "mozilla.org", "/defaultresponse");
-        mActivityTestRule.loadUrlInTab(mozillaUrl, PageTransition.LINK, tab);
-
-        // Toolbar with the close button should be visible.
-        assertToolbarShowState(activity, true);
+        ThreadUtils.runOnUiThreadBlocking(() -> activity.getActivityTab().loadUrl(
+                new LoadUrlParams(offOriginUrl(), PageTransition.LINK)));
+        assertOffOrigin(activity);
+        ThreadUtils.runOnUiThreadBlocking(() -> activity.getActivityTab().loadUrl(
+                new LoadUrlParams("https://www.mozilla.org/", PageTransition.LINK)));
+        mActivityTestRule.waitUntilIdle();
 
         // Navigate back to in-scope through a close button.
         ThreadUtils.runOnUiThreadBlocking(() -> activity.getToolbarManager()
                 .getToolbarLayout().findViewById(R.id.close_button).callOnClick());
 
         // We should end up on most recent in-scope URL.
-        ChromeTabUtils.waitForTabPageLoaded(tab, otherInScopeUrl);
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return otherInScopeUrl.equals(activity.getActivityTab().getUrl());
+            }
+        });
     }
 
     @Test
@@ -378,22 +353,22 @@ public class WebappNavigationTest {
         return mActivityTestRule.getActivity();
     }
 
-    private void assertToolbarShowState(final ChromeActivity activity, final boolean showState) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertEquals(showState, activity.getActivityTab().canShowBrowserControls());
-            }
-        });
-    }
+    private CustomTabActivity assertCustomTabActivityLaunchedForOffOriginUrl()
+            throws InterruptedException {
+        CustomTabActivity customTab = waitFor(CustomTabActivity.class);
 
-    private long getDefaultPrimaryColor() {
-        return ApiCompatibilityUtils.getColor(
-                mActivityTestRule.getActivity().getResources(), R.color.default_primary_color);
+        mActivityTestRule.waitUntilIdle(customTab);
+        assertOffOrigin(customTab);
+
+        return customTab;
     }
 
     private String offOriginUrl() {
         return mActivityTestRule.getTestServer().getURLWithHostName("foo.com", "/defaultresponse");
+    }
+
+    private void assertOffOrigin(ChromeActivity activity) throws InterruptedException {
+        ChromeTabUtils.waitForTabPageLoaded(activity.getActivityTab(), offOriginUrl());
     }
 
     private void addAnchor(String id, String url, String target) throws Exception {
@@ -407,21 +382,14 @@ public class WebappNavigationTest {
                         id, url, target));
     }
 
-    private void addAnchorAndClick(String url, String target) throws Exception {
-        addAnchor("testId", url, target);
-        DOMUtils.clickNode(
-                mActivityTestRule.getActivity().getActivityTab().getContentViewCore(), "testId");
-    }
-
     @SuppressWarnings("unchecked")
-    private <T extends ChromeActivity> T waitFor(final Class<T> expectedClass) {
+    private <T extends Activity> T waitFor(final Class<T> expectedClass) {
         final Activity[] holder = new Activity[1];
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
                 holder[0] = ApplicationStatus.getLastTrackedFocusedActivity();
-                return holder[0] != null && expectedClass.isAssignableFrom(holder[0].getClass())
-                        && ((ChromeActivity) holder[0]).getActivityTab() != null;
+                return holder[0] != null && expectedClass.isAssignableFrom(holder[0].getClass());
             }
         });
         return (T) holder[0];

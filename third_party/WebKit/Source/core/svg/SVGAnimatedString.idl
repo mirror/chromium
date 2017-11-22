@@ -25,7 +25,9 @@
 
 // https://svgwg.org/svg2-draft/types.html#InterfaceSVGAnimatedString
 
-interface SVGAnimatedString {
+[
+    DependentLifetime
+] interface SVGAnimatedString {
     [RaisesException=Setter] attribute DOMString baseVal;
     readonly attribute DOMString animVal;
 };

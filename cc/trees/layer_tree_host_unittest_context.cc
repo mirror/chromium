@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 #include "base/memory/ptr_util.h"
+#include "cc/base/filter_operations.h"
 #include "cc/layers/heads_up_display_layer.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/painted_scrollbar_layer.h"
@@ -14,7 +15,6 @@
 #include "cc/layers/texture_layer_impl.h"
 #include "cc/layers/video_layer.h"
 #include "cc/layers/video_layer_impl.h"
-#include "cc/paint/filter_operations.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/test/fake_content_layer_client.h"
@@ -779,29 +779,29 @@ class LayerTreeHostContextTestLostContextAndEvictTextures
   bool lost_context_;
 };
 
-class LayerTreeHostContextTestLostContextAndEvictTexturesLoseAfterEvict
-    : public LayerTreeHostContextTestLostContextAndEvictTextures {
- public:
-  void SetUp() override {
-    LayerTreeHostContextTestLostContextAndEvictTextures::SetUp();
-    lose_after_evict_ = true;
-  }
-};
+TEST_F(LayerTreeHostContextTestLostContextAndEvictTextures,
+       LoseAfterEvict_SingleThread) {
+  lose_after_evict_ = true;
+  RunTest(CompositorMode::SINGLE_THREADED);
+}
 
-SINGLE_AND_MULTI_THREAD_TEST_F(
-    LayerTreeHostContextTestLostContextAndEvictTexturesLoseAfterEvict);
+TEST_F(LayerTreeHostContextTestLostContextAndEvictTextures,
+       LoseAfterEvict_MultiThread) {
+  lose_after_evict_ = true;
+  RunTest(CompositorMode::THREADED);
+}
 
-class LayerTreeHostContextTestLostContextAndEvictTexturesLoseBeforeEvict
-    : public LayerTreeHostContextTestLostContextAndEvictTextures {
- public:
-  void SetUp() override {
-    LayerTreeHostContextTestLostContextAndEvictTextures::SetUp();
-    lose_after_evict_ = false;
-  }
-};
+TEST_F(LayerTreeHostContextTestLostContextAndEvictTextures,
+       LoseBeforeEvict_SingleThread) {
+  lose_after_evict_ = false;
+  RunTest(CompositorMode::SINGLE_THREADED);
+}
 
-SINGLE_AND_MULTI_THREAD_TEST_F(
-    LayerTreeHostContextTestLostContextAndEvictTexturesLoseBeforeEvict);
+TEST_F(LayerTreeHostContextTestLostContextAndEvictTextures,
+       LoseBeforeEvict_MultiThread) {
+  lose_after_evict_ = false;
+  RunTest(CompositorMode::THREADED);
+}
 
 class LayerTreeHostContextTestLayersNotified : public LayerTreeHostContextTest {
  public:
@@ -916,12 +916,11 @@ class LayerTreeHostContextTestDontUseLostResources
         TextureLayer::CreateForMailbox(nullptr);
     texture->SetBounds(gfx::Size(10, 10));
     texture->SetIsDrawable(true);
-    auto resource = viz::TransferableResource::MakeGL(
-        mailbox, GL_LINEAR, GL_TEXTURE_2D, sync_token);
-    texture->SetTransferableResource(
-        resource, viz::SingleReleaseCallback::Create(
-                      base::Bind(&LayerTreeHostContextTestDontUseLostResources::
-                                     EmptyReleaseCallback)));
+    texture->SetTextureMailbox(
+        viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D),
+        viz::SingleReleaseCallback::Create(
+            base::Bind(&LayerTreeHostContextTestDontUseLostResources::
+                           EmptyReleaseCallback)));
     root->AddChild(texture);
 
     scoped_refptr<PictureLayer> mask = PictureLayer::Create(&client_);

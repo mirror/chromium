@@ -27,8 +27,6 @@ class PublicIpAddressGeolocator : public mojom::Geolocation {
 
   // Creates a PublicIpAddressGeolocatorsubscribed to the specified |notifier|.
   // This object will unbind and destroy itself if |notifier| is destroyed.
-  // |callback| is a  callback that should be called to signify reception of a
-  // bad Mojo message *only while processing that message*.
   PublicIpAddressGeolocator(const net::PartialNetworkTrafficAnnotationTag tag,
                             PublicIpAddressLocationNotifier* notifier,
                             BadMessageCallback callback);

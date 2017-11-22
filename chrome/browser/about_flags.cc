@@ -161,12 +161,12 @@
 #endif
 
 using flags_ui::FeatureEntry;
-using flags_ui::kOsAndroid;
-using flags_ui::kOsCrOS;
-using flags_ui::kOsCrOSOwnerOnly;
-using flags_ui::kOsLinux;
 using flags_ui::kOsMac;
 using flags_ui::kOsWin;
+using flags_ui::kOsLinux;
+using flags_ui::kOsCrOS;
+using flags_ui::kOsAndroid;
+using flags_ui::kOsCrOSOwnerOnly;
 
 namespace about_flags {
 
@@ -273,36 +273,9 @@ const FeatureEntry::Choice kDataReductionProxyLoFiChoices[] = {
 
 const FeatureEntry::Choice kDataReductionProxyServerExperiment[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kDataReductionProxyServerAlternative1,
+    {flag_descriptions::kDataReductionProxyServerAlternative,
      data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative1},
-    {flag_descriptions::kDataReductionProxyServerAlternative2,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative2},
-    {flag_descriptions::kDataReductionProxyServerAlternative3,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative3},
-    {flag_descriptions::kDataReductionProxyServerAlternative4,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative4},
-    {flag_descriptions::kDataReductionProxyServerAlternative5,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative5},
-    {flag_descriptions::kDataReductionProxyServerAlternative6,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative6},
-    {flag_descriptions::kDataReductionProxyServerAlternative7,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative7},
-    {flag_descriptions::kDataReductionProxyServerAlternative8,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative8},
-    {flag_descriptions::kDataReductionProxyServerAlternative9,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative9},
-    {flag_descriptions::kDataReductionProxyServerAlternative10,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative10}};
+     data_reduction_proxy::switches::kDataReductionProxyServerAlternative}};
 
 const FeatureEntry::Choice kShowSavedCopyChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
@@ -1147,12 +1120,6 @@ const FeatureEntry::Choice kUseDdljsonApiChoices[] = {
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop0.json"},
     {"(force test doodle 1)", search_provider_logos::switches::kGoogleDoodleUrl,
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop1.json"},
-    {"(force test doodle 2)", search_provider_logos::switches::kGoogleDoodleUrl,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop2.json"},
-    {"(force test doodle 3)", search_provider_logos::switches::kGoogleDoodleUrl,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop3.json"},
-    {"(force test doodle 4)", search_provider_logos::switches::kGoogleDoodleUrl,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop4.json"},
 #endif  // defined(OS_ANDROID)
 };
 
@@ -2246,6 +2213,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kV8CacheStrategiesForCacheStorageName,
      flag_descriptions::kV8CacheStrategiesForCacheStorageDescription, kOsAll,
      MULTI_VALUE_TYPE(kV8CacheStrategiesForCacheStorageChoices)},
+    {"enable-clear-browsing-data-counters",
+     flag_descriptions::kEnableClearBrowsingDataCountersName,
+     flag_descriptions::kEnableClearBrowsingDataCountersDescription, kOsAll,
+     ENABLE_DISABLE_VALUE_TYPE(switches::kEnableClearBrowsingDataCounters,
+                               switches::kDisableClearBrowsingDataCounters)},
     {"simplified-fullscreen-ui", flag_descriptions::kSimplifiedFullscreenUiName,
      flag_descriptions::kSimplifiedFullscreenUiDescription,
      kOsWin | kOsLinux | kOsCrOS,
@@ -3575,7 +3547,7 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"stop-loading-in-background",
      flag_descriptions::kStopLoadingInBackgroundName,
-     flag_descriptions::kStopLoadingInBackgroundDescription, kOsAndroid,
+     flag_descriptions::kStopLoadingInBackgroundDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kStopLoadingInBackground)},
 
 #if defined(TOOLKIT_VIEWS)

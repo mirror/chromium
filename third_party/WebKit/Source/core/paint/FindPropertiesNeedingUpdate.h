@@ -128,13 +128,15 @@ class FindObjectPropertiesNeedingUpdateScope {
     object.GetMutableForPainting()
         .SetOnlyThisNeedsPaintPropertyUpdateForTesting();
 
-    if (const auto* properties = fragment_data_.PaintProperties())
-      original_properties_ = properties->Clone();
+    if (auto* rare_paint_data = fragment_data_.GetRarePaintData()) {
+      if (const auto* properties = rare_paint_data->PaintProperties())
+        original_properties_ = properties->Clone();
 
-    if (const auto* local_border_box =
-            fragment_data_.LocalBorderBoxProperties()) {
-      original_local_border_box_properties_ =
-          WTF::WrapUnique(new PropertyTreeState(*local_border_box));
+      if (const auto* local_border_box =
+              rare_paint_data->LocalBorderBoxProperties()) {
+        original_local_border_box_properties_ =
+            WTF::WrapUnique(new PropertyTreeState(*local_border_box));
+      }
     }
   }
 
@@ -144,7 +146,9 @@ class FindObjectPropertiesNeedingUpdateScope {
     // property update.
     LayoutPoint paint_offset = fragment_data_.PaintOffset();
     DCHECK_OBJECT_PROPERTY_EQ(object_, &original_paint_offset_, &paint_offset);
-    const auto* object_properties = fragment_data_.PaintProperties();
+    auto* rare_paint_data = fragment_data_.GetRarePaintData();
+    const auto* object_properties =
+        rare_paint_data ? rare_paint_data->PaintProperties() : nullptr;
     if (original_properties_ && object_properties) {
       DCHECK_OBJECT_PROPERTY_EQ(object_,
                                 original_properties_->PaintOffsetTranslation(),
@@ -192,12 +196,16 @@ class FindObjectPropertiesNeedingUpdateScope {
       DCHECK_OBJECT_PROPERTY_EQ(object_,
                                 original_properties_->ScrollTranslation(),
                                 object_properties->ScrollTranslation());
+      DCHECK_OBJECT_PROPERTY_EQ(object_,
+                                original_properties_->ScrollbarPaintOffset(),
+                                object_properties->ScrollbarPaintOffset());
     } else {
       DCHECK_EQ(!!original_properties_, !!object_properties)
           << " Object: " << object_.DebugName();
     }
 
-    const auto* object_border_box = fragment_data_.LocalBorderBoxProperties();
+    const auto* object_border_box =
+        rare_paint_data ? rare_paint_data->LocalBorderBoxProperties() : nullptr;
     if (original_local_border_box_properties_ && object_border_box) {
       DCHECK_OBJECT_PROPERTY_EQ(
           object_, original_local_border_box_properties_->Transform(),

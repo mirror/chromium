@@ -9,7 +9,6 @@
 
 #include <map>
 #include <memory>
-#include <string>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"

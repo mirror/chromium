@@ -25,8 +25,7 @@ AddressNormalizerFactory::AddressNormalizerFactory()
                               std::make_unique<ChromeMetadataSource>(
                                   I18N_ADDRESS_VALIDATION_DATA_URL,
                                   g_browser_process->system_request_context())),
-                          ValidationRulesStorageFactory::CreateStorage(),
-                          g_browser_process->GetApplicationLocale()) {}
+                          ValidationRulesStorageFactory::CreateStorage()) {}
 
 AddressNormalizerFactory::~AddressNormalizerFactory() {}
 

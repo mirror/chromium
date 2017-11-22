@@ -82,7 +82,7 @@ bool ShouldSkipSession(const SyncedSession& session) {
   return true;
 }
 
-void JNI_ForeignSessionHelper_CopyTabToJava(
+void CopyTabToJava(
     JNIEnv* env,
     const sessions::SessionTab& tab,
     ScopedJavaLocalRef<jobject>& j_window) {
@@ -101,7 +101,7 @@ void JNI_ForeignSessionHelper_CopyTabToJava(
       tab.timestamp.ToJavaTime(), tab.tab_id.id());
 }
 
-void JNI_ForeignSessionHelper_CopyWindowToJava(
+void CopyWindowToJava(
     JNIEnv* env,
     const sessions::SessionWindow& window,
     ScopedJavaLocalRef<jobject>& j_window) {
@@ -111,11 +111,11 @@ void JNI_ForeignSessionHelper_CopyWindowToJava(
     if (ShouldSkipTab(session_tab))
       return;
 
-    JNI_ForeignSessionHelper_CopyTabToJava(env, session_tab, j_window);
+    CopyTabToJava(env, session_tab, j_window);
   }
 }
 
-void JNI_ForeignSessionHelper_CopySessionToJava(
+void CopySessionToJava(
     JNIEnv* env,
     const SyncedSession& session,
     ScopedJavaLocalRef<jobject>& j_session) {
@@ -129,16 +129,15 @@ void JNI_ForeignSessionHelper_CopySessionToJava(
     last_pushed_window.Reset(Java_ForeignSessionHelper_pushWindow(
         env, j_session, window.timestamp.ToJavaTime(), window.window_id.id()));
 
-    JNI_ForeignSessionHelper_CopyWindowToJava(env, window, last_pushed_window);
+    CopyWindowToJava(env, window, last_pushed_window);
   }
 }
 
 }  // namespace
 
-static jlong JNI_ForeignSessionHelper_Init(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobject>& profile) {
+static jlong Init(JNIEnv* env,
+                  const JavaParamRef<jclass>& clazz,
+                  const JavaParamRef<jobject>& profile) {
   ForeignSessionHelper* foreign_session_helper = new ForeignSessionHelper(
       ProfileAndroid::FromProfileAndroid(profile));
   return reinterpret_cast<intptr_t>(foreign_session_helper);
@@ -259,12 +258,11 @@ jboolean ForeignSessionHelper::GetForeignSessions(
       for (const sessions::SessionTab* tab : tabs) {
          if (ShouldSkipTab(*tab))
            continue;
-         JNI_ForeignSessionHelper_CopyTabToJava(env, *tab, last_pushed_window);
+         CopyTabToJava(env, *tab, last_pushed_window);
       }
     } else {
       // Push the full session, with tabs ordered by visual position.
-      JNI_ForeignSessionHelper_CopySessionToJava(env, session,
-                                                 last_pushed_session);
+      CopySessionToJava(env, session, last_pushed_session);
     }
   }
 

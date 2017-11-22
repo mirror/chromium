@@ -68,7 +68,7 @@ void NativeGetAllNodesCallback(
   Java_ProfileSyncService_onGetAllNodesResult(env, callback, java_json_string);
 }
 
-ScopedJavaLocalRef<jintArray> JNI_ProfileSyncService_ModelTypeSetToJavaIntArray(
+ScopedJavaLocalRef<jintArray> ModelTypeSetToJavaIntArray(
     JNIEnv* env,
     syncer::ModelTypeSet types) {
   std::vector<int> type_vector;
@@ -208,14 +208,14 @@ ScopedJavaLocalRef<jintArray> ProfileSyncServiceAndroid::GetActiveDataTypes(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   syncer::ModelTypeSet types = sync_service_->GetActiveDataTypes();
-  return JNI_ProfileSyncService_ModelTypeSetToJavaIntArray(env, types);
+  return ModelTypeSetToJavaIntArray(env, types);
 }
 
 ScopedJavaLocalRef<jintArray> ProfileSyncServiceAndroid::GetPreferredDataTypes(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
   syncer::ModelTypeSet types = sync_service_->GetPreferredDataTypes();
-  return JNI_ProfileSyncService_ModelTypeSetToJavaIntArray(env, types);
+  return ModelTypeSetToJavaIntArray(env, types);
 }
 
 void ProfileSyncServiceAndroid::SetPreferredDataTypes(
@@ -488,8 +488,7 @@ ProfileSyncServiceAndroid*
           AttachCurrentThread()));
 }
 
-static jlong JNI_ProfileSyncService_Init(JNIEnv* env,
-                                         const JavaParamRef<jobject>& obj) {
+static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   ProfileSyncServiceAndroid* profile_sync_service_android =
       new ProfileSyncServiceAndroid(env, obj);
   if (profile_sync_service_android->Init()) {

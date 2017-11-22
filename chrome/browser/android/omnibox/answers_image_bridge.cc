@@ -49,11 +49,10 @@ class AnswersImageObserverAndroid : public BitmapFetcherService::Observer {
 
 }  // namespace
 
-static void JNI_AnswersImage_CancelAnswersImageRequest(
-    JNIEnv* env,
-    const JavaParamRef<jclass>&,
-    const JavaParamRef<jobject>& java_profile,
-    jint java_request_id) {
+static void CancelAnswersImageRequest(JNIEnv* env,
+                                      const JavaParamRef<jclass>&,
+                                      const JavaParamRef<jobject>& java_profile,
+                                      jint java_request_id) {
   Profile* profile = ProfileAndroid::FromProfileAndroid(java_profile);
   DCHECK(profile);
   BitmapFetcherService* bitmap_fetcher_service =
@@ -61,12 +60,11 @@ static void JNI_AnswersImage_CancelAnswersImageRequest(
   bitmap_fetcher_service->CancelRequest(java_request_id);
 }
 
-static int JNI_AnswersImage_RequestAnswersImage(
-    JNIEnv* env,
-    const JavaParamRef<jclass>&,
-    const JavaParamRef<jobject>& java_profile,
-    const JavaParamRef<jstring>& java_url,
-    const JavaParamRef<jobject>& java_callback) {
+static int RequestAnswersImage(JNIEnv* env,
+                               const JavaParamRef<jclass>&,
+                               const JavaParamRef<jobject>& java_profile,
+                               const JavaParamRef<jstring>& java_url,
+                               const JavaParamRef<jobject>& java_callback) {
   Profile* profile = ProfileAndroid::FromProfileAndroid(java_profile);
   DCHECK(profile);
   BitmapFetcherService* bitmap_fetcher_service =

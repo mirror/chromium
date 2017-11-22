@@ -6,8 +6,6 @@
 #define CSSParserImpl_h
 
 #include <memory>
-
-#include "base/macros.h"
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSPropertySourceData.h"
 #include "core/css/CSSPropertyValue.h"
@@ -40,6 +38,7 @@ class Element;
 
 class CSSParserImpl {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(CSSParserImpl);
 
  public:
   CSSParserImpl(const CSSParserContext*, StyleSheetContents* = nullptr);
@@ -187,7 +186,6 @@ class CSSParserImpl {
   CSSParserObserver* observer_;
 
   Member<CSSLazyParsingState> lazy_state_;
-  DISALLOW_COPY_AND_ASSIGN(CSSParserImpl);
 };
 
 }  // namespace blink

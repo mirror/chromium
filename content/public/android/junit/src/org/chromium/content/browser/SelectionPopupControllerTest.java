@@ -55,7 +55,7 @@ public class SelectionPopupControllerTest {
     private static final String AMPHITHEATRE_FULL = "1600 Amphitheatre Parkway";
     private static final String AMPHITHEATRE = "Amphitheatre";
 
-    private static class TestSelectionClient implements SelectionClient {
+    private class TestSelectionClient implements SelectionClient {
         private SelectionClient.Result mResult;
         private SelectionClient.ResultCallback mResultCallback;
 
@@ -94,7 +94,7 @@ public class SelectionPopupControllerTest {
         }
     }
 
-    private static class SelectionClientOnlyReturnTrue extends TestSelectionClient {
+    class SelectionClientOnlyReturnTrue extends TestSelectionClient {
         @Override
         public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
             return true;

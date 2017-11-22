@@ -654,19 +654,17 @@ bool ComputedStyle::DiffNeedsPaintInvalidationObjectForPaintImage(
   for (CSSPropertyID property_id : *value->NativeInvalidationProperties()) {
     // TODO(ikilpatrick): remove IsInterpolableProperty check once
     // CSSPropertyEquality::PropertiesEqual correctly handles all properties.
-    const CSSProperty& property = CSSProperty::Get(property_id);
-    if (!property.IsInterpolable() ||
-        !CSSPropertyEquality::PropertiesEqual(PropertyHandle(property), *this,
-                                              other))
+    if (!CSSProperty::Get(property_id).IsInterpolable() ||
+        !CSSPropertyEquality::PropertiesEqual(PropertyHandle(property_id),
+                                              *this, other))
       return true;
   }
 
   if (InheritedVariables() || NonInheritedVariables() ||
       other.InheritedVariables() || other.NonInheritedVariables()) {
-    for (const AtomicString& property_name :
+    for (const AtomicString& property :
          *value->CustomInvalidationProperties()) {
-      if (!DataEquivalent(GetVariable(property_name),
-                          other.GetVariable(property_name)))
+      if (!DataEquivalent(GetVariable(property), other.GetVariable(property)))
         return true;
     }
   }

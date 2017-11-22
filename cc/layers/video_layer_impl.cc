@@ -116,7 +116,7 @@ bool VideoLayerImpl::WillDraw(DrawMode draw_mode,
     DCHECK_GT(external_resources.software_resource, viz::kInvalidResourceId);
     software_resource_ = external_resources.software_resource;
     software_release_callback_ =
-        std::move(external_resources.software_release_callback);
+        external_resources.software_release_callback;
     return true;
   }
   frame_resource_offset_ = external_resources.offset;
@@ -216,6 +216,17 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       break;
     }
     case VideoFrameExternalResources::YUV_RESOURCE: {
+      auto color_space = viz::YUVVideoDrawQuad::REC_601;
+      int videoframe_color_space;
+      if (frame_->metadata()->GetInteger(media::VideoFrameMetadata::COLOR_SPACE,
+                                         &videoframe_color_space)) {
+        if (videoframe_color_space == media::COLOR_SPACE_JPEG) {
+          color_space = viz::YUVVideoDrawQuad::JPEG;
+        } else if (videoframe_color_space == media::COLOR_SPACE_HD_REC709) {
+          color_space = viz::YUVVideoDrawQuad::REC_709;
+        }
+      }
+
       const gfx::Size ya_tex_size = coded_size;
 
       int u_width = media::VideoFrame::Columns(
@@ -261,7 +272,7 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
           frame_resources_[0].id, frame_resources_[1].id,
           frame_resources_.size() > 2 ? frame_resources_[2].id
                                       : frame_resources_[1].id,
-          frame_resources_.size() > 3 ? frame_resources_[3].id : 0,
+          frame_resources_.size() > 3 ? frame_resources_[3].id : 0, color_space,
           frame_->ColorSpace(), frame_resource_offset_,
           frame_resource_multiplier_, frame_bits_per_channel_);
       yuv_video_quad->require_overlay = frame_->metadata()->IsTrue(
@@ -322,8 +333,10 @@ void VideoLayerImpl::DidDraw(LayerTreeResourceProvider* resource_provider) {
   if (frame_resource_type_ ==
       VideoFrameExternalResources::SOFTWARE_RESOURCE) {
     DCHECK_GT(software_resource_, viz::kInvalidResourceId);
-    std::move(software_release_callback_).Run(gpu::SyncToken(), false);
+    software_release_callback_.Run(gpu::SyncToken(), false);
+
     software_resource_ = viz::kInvalidResourceId;
+    software_release_callback_.Reset();
   } else {
     for (const FrameResource& resource : frame_resources_)
       resource_provider->RemoveImportedResource(resource.id);

@@ -51,7 +51,7 @@ static bool CalculatePublicKeySha256(const net::X509Certificate& cert,
 
 }  // namespace
 
-static jlong JNI_MockCertVerifier_CreateMockCertVerifier(
+static jlong CreateMockCertVerifier(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     const JavaParamRef<jobjectArray>& jcerts,

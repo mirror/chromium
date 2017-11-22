@@ -36,7 +36,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace {
 
-void JNI_AccountChooserDialog_AddElementsToJavaCredentialArray(
+void AddElementsToJavaCredentialArray(
     JNIEnv* env,
     ScopedJavaLocalRef<jobjectArray> java_credentials_array,
     const std::vector<std::unique_ptr<autofill::PasswordForm>>& forms) {
@@ -132,7 +132,7 @@ void AccountChooserDialogAndroid::ShowDialog() {
   gfx::NativeWindow native_window = web_contents_->GetTopLevelNativeWindow();
   ScopedJavaLocalRef<jobjectArray> java_credentials_array =
       CreateNativeCredentialArray(env, local_credentials_forms().size());
-  JNI_AccountChooserDialog_AddElementsToJavaCredentialArray(
+  AddElementsToJavaCredentialArray(
       env, java_credentials_array, local_credentials_forms());
   base::android::ScopedJavaGlobalRef<jobject> java_dialog_global;
   const std::string origin = password_manager::GetShownOrigin(origin_);

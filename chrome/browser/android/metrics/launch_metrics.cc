@@ -24,14 +24,13 @@ namespace metrics {
 
 enum class HomeScreenLaunchType { STANDALONE = 0, SHORTCUT = 1, COUNT = 2 };
 
-static void JNI_LaunchMetrics_RecordLaunch(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& caller,
-    jboolean is_shortcut,
-    const JavaParamRef<jstring>& jurl,
-    int source,
-    int display_mode,
-    const JavaParamRef<jobject>& jweb_contents) {
+static void RecordLaunch(JNIEnv* env,
+                         const JavaParamRef<jclass>& caller,
+                         jboolean is_shortcut,
+                         const JavaParamRef<jstring>& jurl,
+                         int source,
+                         int display_mode,
+                         const JavaParamRef<jobject>& jweb_contents) {
   // Interpolate the legacy ADD_TO_HOMESCREEN source into standalone/shortcut.
   // Unfortunately, we cannot concretely determine whether a standalone add to
   // homescreen source means a full PWA (with service worker) or a site that has
@@ -118,7 +117,7 @@ static void JNI_LaunchMetrics_RecordLaunch(
                                           rappor_metric_action, url);
 }
 
-static void JNI_LaunchMetrics_RecordHomePageLaunchMetrics(
+static void RecordHomePageLaunchMetrics(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller,
     jboolean show_home_button,

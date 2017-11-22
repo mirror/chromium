@@ -54,9 +54,8 @@
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_utils.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_owner.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h"
-#import "ios/chrome/browser/ui/tools_menu/public/tools_menu_configuration_provider.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h"
+#import "ios/chrome/browser/ui/tools_menu/tools_menu_view_item.h"
 #import "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/common/material_timing.h"
@@ -206,7 +205,7 @@ NSString* const kTransitionToolbarAnimationKey =
 
 @end
 
-@interface StackViewController ()<ToolsMenuConfigurationProvider>
+@interface StackViewController (Private)
 
 // Clears the internal state of the object. Should only be called when the
 // object is not being shown. After this method is called, a call to
@@ -395,7 +394,8 @@ NSString* const kTransitionToolbarAnimationKey =
 // Returns the card corresponding to |view|. This is not an efficient lookup,
 // so this should *not* be called frequently.
 - (StackCard*)cardForView:(CardView*)view;
-
+// Shows the tools menu popup.
+- (void)showToolsMenuPopup;
 // All local tab state is cleared, and |currentlyClosingAllTabs_| is set to
 // |NO|.
 - (void)allModelTabsHaveClosed:(NSNotification*)notify;
@@ -519,7 +519,6 @@ NSString* const kTransitionToolbarAnimationKey =
 @synthesize transitionToolbarOwner = _transitionToolbarOwner;
 @synthesize transitionToolbarSnapshot = _transitionToolbarSnapshot;
 @synthesize transitionWasCancelled = _transitionWasCancelled;
-@synthesize toolsMenuCoordinator = _toolsMenuCoordinator;
 
 - (instancetype)initWithMainCardSet:(CardSet*)mainCardSet
                          otrCardSet:(CardSet*)otrCardSet
@@ -554,11 +553,6 @@ NSString* const kTransitionToolbarAnimationKey =
                               forProtocol:@protocol(BrowserCommands)];
     [_dispatcher startDispatchingToTarget:applicationCommandEndpoint
                               forProtocol:@protocol(ApplicationCommands)];
-
-    _toolsMenuCoordinator =
-        [[ToolsMenuCoordinator alloc] initWithBaseViewController:self];
-    _toolsMenuCoordinator.dispatcher = _dispatcher;
-    _toolsMenuCoordinator.configurationProvider = self;
   }
   return self;
 }
@@ -764,7 +758,6 @@ NSString* const kTransitionToolbarAnimationKey =
   _toolbarController =
       [[StackViewToolbarController alloc] initWithDispatcher:self.dispatcher];
   [self addChildViewController:_toolbarController];
-  self.toolsMenuCoordinator.presentationProvider = _toolbarController;
   CGRect toolbarFrame = [self.view bounds];
   toolbarFrame.origin.y = CGRectGetMinY([[_toolbarController view] frame]);
   toolbarFrame.size.height = CGRectGetHeight([[_toolbarController view] frame]);
@@ -900,7 +893,8 @@ NSString* const kTransitionToolbarAnimationKey =
     _isActive = NO;
     [self clearInternalState];
   }
-  [self.dispatcher dismissToolsMenu];
+  [_toolbarController dismissToolsMenuPopup];
+
   [super viewDidDisappear:animated];
 }
 
@@ -968,7 +962,9 @@ NSString* const kTransitionToolbarAnimationKey =
   }
 
   [self updateToolbarAppearanceWithAnimation:YES];
-  [self.dispatcher dismissToolsMenu];
+
+  [_toolbarController dismissToolsMenuPopup];
+
   [self refreshCardDisplayWithAnimation:YES];
 
   // Animate the update of the card tabs.
@@ -2238,8 +2234,8 @@ NSString* const kTransitionToolbarAnimationKey =
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer*)recognizer
        shouldReceiveTouch:(UITouch*)touch {
-  // Don't swallow any touches while the tools menu is open.
-  if ([self.toolsMenuCoordinator isShowingToolsMenu])
+  // Don't swallow any touches while the tools popup menu is open.
+  if ([_toolbarController toolsPopupController])
     return NO;
 
   if ((recognizer == _pinchRecognizer) ||
@@ -2816,10 +2812,9 @@ NSString* const kTransitionToolbarAnimationKey =
   return nil;
 }
 
-#pragma mark - ToolsMenuCoordinator Configuration
+#pragma mark - BrowserCommands
 
-- (ToolsMenuConfiguration*)menuConfigurationForToolsMenuCoordinator:
-    (ToolsMenuCoordinator*)coordinator {
+- (void)showToolsMenu {
   ToolsMenuConfiguration* configuration =
       [[ToolsMenuConfiguration alloc] initWithDisplayView:[self view]
                                        baseViewController:self];
@@ -2831,10 +2826,8 @@ NSString* const kTransitionToolbarAnimationKey =
     [configuration setNoOpenedTabs:YES];
   if (_activeCardSet == _otrCardSet)
     [configuration setInIncognito:YES];
-  return configuration;
+  [_toolbarController showToolsMenuPopupWithConfiguration:configuration];
 }
-
-#pragma mark - BrowserCommands
 
 - (void)openNewTab:(OpenNewTabCommand*)command {
   // Ensure that the right mode is showing.

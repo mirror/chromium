@@ -8,12 +8,12 @@
       "paintInvalidations": [
         {
           "object": "LayoutSVGPath path id='path'",
-          "rect": [29, 29, 142, 92],
+          "rect": [199, 49, 102, 52],
           "reason": "subtree"
         },
         {
           "object": "LayoutSVGPath path id='path'",
-          "rect": [179, 29, 122, 92],
+          "rect": [49, 49, 102, 52],
           "reason": "subtree"
         }
       ]

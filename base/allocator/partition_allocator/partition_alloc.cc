@@ -174,26 +174,28 @@ void PartitionAllocGlobalInit(void (*oom_handling_function)()) {
   PartitionRootBase::gOomHandlingFunction = oom_handling_function;
 }
 
-void PartitionRoot::Init(size_t num_buckets, size_t max_allocation) {
-  PartitionAllocBaseInit(this);
+void PartitionAllocInit(PartitionRoot* root,
+                        size_t num_buckets,
+                        size_t max_allocation) {
+  PartitionAllocBaseInit(root);
 
-  this->num_buckets = num_buckets;
-  this->max_allocation = max_allocation;
+  root->num_buckets = num_buckets;
+  root->max_allocation = max_allocation;
   size_t i;
-  for (i = 0; i < this->num_buckets; ++i) {
-    PartitionBucket* bucket = &this->buckets()[i];
+  for (i = 0; i < root->num_buckets; ++i) {
+    PartitionBucket* bucket = &root->buckets()[i];
     if (!i)
       bucket->slot_size = kAllocationGranularity;
     else
       bucket->slot_size = i << kBucketShift;
-    PartitionBucketInitBase(bucket, this);
+    PartitionBucketInitBase(bucket, root);
   }
 }
 
-void PartitionRootGeneric::Init() {
-  subtle::SpinLock::Guard guard(this->lock);
+void PartitionAllocGenericInit(PartitionRootGeneric* root) {
+  subtle::SpinLock::Guard guard(root->lock);
 
-  PartitionAllocBaseInit(this);
+  PartitionAllocBaseInit(root);
 
   // Precalculate some shift and mask constants used in the hot path.
   // Example: malloc(41) == 101001 binary.
@@ -209,7 +211,7 @@ void PartitionRootGeneric::Init() {
       order_index_shift = 0;
     else
       order_index_shift = order - (kGenericNumBucketsPerOrderBits + 1);
-    this->order_index_shifts[order] = order_index_shift;
+    root->order_index_shifts[order] = order_index_shift;
     size_t sub_order_index_mask;
     if (order == kBitsPerSizeT) {
       // This avoids invoking undefined behavior for an excessive shift.
@@ -219,7 +221,7 @@ void PartitionRootGeneric::Init() {
       sub_order_index_mask = ((static_cast<size_t>(1) << order) - 1) >>
                              (kGenericNumBucketsPerOrderBits + 1);
     }
-    this->order_sub_index_masks[order] = sub_order_index_mask;
+    root->order_sub_index_masks[order] = sub_order_index_mask;
   }
 
   // Set up the actual usable buckets first.
@@ -232,11 +234,11 @@ void PartitionRootGeneric::Init() {
   size_t current_size = kGenericSmallestBucket;
   size_t currentIncrement =
       kGenericSmallestBucket >> kGenericNumBucketsPerOrderBits;
-  PartitionBucket* bucket = &this->buckets[0];
+  PartitionBucket* bucket = &root->buckets[0];
   for (i = 0; i < kGenericNumBucketedOrders; ++i) {
     for (j = 0; j < kGenericNumBucketsPerOrder; ++j) {
       bucket->slot_size = current_size;
-      PartitionBucketInitBase(bucket, this);
+      PartitionBucketInitBase(bucket, root);
       // Disable psuedo buckets so that touching them faults.
       if (current_size % kGenericSmallestBucket)
         bucket->active_pages_head = nullptr;
@@ -246,16 +248,16 @@ void PartitionRootGeneric::Init() {
     currentIncrement <<= 1;
   }
   DCHECK(current_size == 1 << kGenericMaxBucketedOrder);
-  DCHECK(bucket == &this->buckets[0] + kGenericNumBuckets);
+  DCHECK(bucket == &root->buckets[0] + kGenericNumBuckets);
 
   // Then set up the fast size -> bucket lookup table.
-  bucket = &this->buckets[0];
-  PartitionBucket** bucketPtr = &this->bucket_lookups[0];
+  bucket = &root->buckets[0];
+  PartitionBucket** bucketPtr = &root->bucket_lookups[0];
   for (order = 0; order <= kBitsPerSizeT; ++order) {
     for (j = 0; j < kGenericNumBucketsPerOrder; ++j) {
       if (order < kGenericMinBucketedOrder) {
         // Use the bucket of the finest granularity for malloc(0) etc.
-        *bucketPtr++ = &this->buckets[0];
+        *bucketPtr++ = &root->buckets[0];
       } else if (order > kGenericMaxBucketedOrder) {
         *bucketPtr++ = &g_sentinel_bucket;
       } else {
@@ -268,9 +270,10 @@ void PartitionRootGeneric::Init() {
       }
     }
   }
-  DCHECK(bucket == &this->buckets[0] + kGenericNumBuckets);
-  DCHECK(bucketPtr == &this->bucket_lookups[0] +
-                          ((kBitsPerSizeT + 1) * kGenericNumBucketsPerOrder));
+  DCHECK(bucket == &root->buckets[0] + kGenericNumBuckets);
+  DCHECK(bucketPtr ==
+         &root->bucket_lookups[0] +
+             ((kBitsPerSizeT + 1) * kGenericNumBucketsPerOrder));
   // And there's one last bucket lookup that will be hit for e.g. malloc(-1),
   // which tries to overflow to a non-existant order.
   *bucketPtr = &g_sentinel_bucket;
@@ -809,9 +812,9 @@ void* PartitionAllocSlowPath(PartitionRootBase* root,
 
   PartitionPage* new_page = nullptr;
 
-  // For the PartitionRootGeneric::Alloc() API, we have a bunch of buckets
-  // marked as special cases. We bounce them through to the slow path so that
-  // we can still have a blazing fast hot path due to lack of corner-case
+  // For the PartitionAllocGeneric API, we have a bunch of buckets marked
+  // as special cases. We bounce them through to the slow path so that we
+  // can still have a blazing fast hot path due to lack of corner-case
   // branches.
   //
   // Note: The ordering of the conditionals matter! In particular,
@@ -1080,16 +1083,17 @@ bool PartitionReallocDirectMappedInPlace(PartitionRootGeneric* root,
   return true;
 }
 
-void* PartitionRootGeneric::Realloc(void* ptr,
-                                    size_t new_size,
-                                    const char* type_name) {
+void* PartitionReallocGeneric(PartitionRootGeneric* root,
+                              void* ptr,
+                              size_t new_size,
+                              const char* type_name) {
 #if defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
   return realloc(ptr, new_size);
 #else
   if (UNLIKELY(!ptr))
-    return this->Alloc(new_size, type_name);
+    return PartitionAllocGeneric(root, new_size, type_name);
   if (UNLIKELY(!new_size)) {
-    this->Free(ptr);
+    PartitionFreeGeneric(root, ptr);
     return nullptr;
   }
 
@@ -1105,13 +1109,13 @@ void* PartitionRootGeneric::Realloc(void* ptr,
     // We may be able to perform the realloc in place by changing the
     // accessibility of memory pages and, if reducing the size, decommitting
     // them.
-    if (PartitionReallocDirectMappedInPlace(this, page, new_size)) {
+    if (PartitionReallocDirectMappedInPlace(root, page, new_size)) {
       PartitionAllocHooks::ReallocHookIfEnabled(ptr, ptr, new_size, type_name);
       return ptr;
     }
   }
 
-  size_t actual_new_size = this->ActualSize(new_size);
+  size_t actual_new_size = PartitionAllocActualSize(root, new_size);
   size_t actual_old_size = PartitionAllocGetSize(ptr);
 
   // TODO: note that tcmalloc will "ignore" a downsizing realloc() unless the
@@ -1132,13 +1136,13 @@ void* PartitionRootGeneric::Realloc(void* ptr,
   }
 
   // This realloc cannot be resized in-place. Sadness.
-  void* ret = this->Alloc(new_size, type_name);
+  void* ret = PartitionAllocGeneric(root, new_size, type_name);
   size_t copy_size = actual_old_size;
   if (new_size < copy_size)
     copy_size = new_size;
 
   memcpy(ret, ptr, copy_size);
-  this->Free(ptr);
+  PartitionFreeGeneric(root, ptr);
   return ret;
 #endif
 }
@@ -1290,22 +1294,22 @@ static void PartitionPurgeBucket(PartitionBucket* bucket) {
   }
 }
 
-void PartitionRoot::PurgeMemory(int flags) {
+void PartitionPurgeMemory(PartitionRoot* root, int flags) {
   if (flags & PartitionPurgeDecommitEmptyPages)
-    PartitionDecommitEmptyPages(this);
+    PartitionDecommitEmptyPages(root);
   // We don't currently do anything for PartitionPurgeDiscardUnusedSystemPages
   // here because that flag is only useful for allocations >= system page
   // size. We only have allocations that large inside generic partitions
   // at the moment.
 }
 
-void PartitionRootGeneric::PurgeMemory(int flags) {
-  subtle::SpinLock::Guard guard(this->lock);
+void PartitionPurgeMemoryGeneric(PartitionRootGeneric* root, int flags) {
+  subtle::SpinLock::Guard guard(root->lock);
   if (flags & PartitionPurgeDecommitEmptyPages)
-    PartitionDecommitEmptyPages(this);
+    PartitionDecommitEmptyPages(root);
   if (flags & PartitionPurgeDiscardUnusedSystemPages) {
     for (size_t i = 0; i < kGenericNumBuckets; ++i) {
-      PartitionBucket* bucket = &this->buckets[i];
+      PartitionBucket* bucket = &root->buckets[i];
       if (bucket->slot_size >= kSystemPageSize)
         PartitionPurgeBucket(bucket);
     }
@@ -1391,13 +1395,14 @@ static void PartitionDumpBucketStats(PartitionBucketMemoryStats* stats_out,
   }
 }
 
-void PartitionRootGeneric::DumpStats(const char* partition_name,
-                                     bool is_light_dump,
-                                     PartitionStatsDumper* dumper) {
+void PartitionDumpStatsGeneric(PartitionRootGeneric* partition,
+                               const char* partition_name,
+                               bool is_light_dump,
+                               PartitionStatsDumper* dumper) {
   PartitionMemoryStats stats = {0};
-  stats.total_mmapped_bytes =
-      this->total_size_of_super_pages + this->total_size_of_direct_mapped_pages;
-  stats.total_committed_bytes = this->total_size_of_committed_pages;
+  stats.total_mmapped_bytes = partition->total_size_of_super_pages +
+                              partition->total_size_of_direct_mapped_pages;
+  stats.total_committed_bytes = partition->total_size_of_committed_pages;
 
   size_t direct_mapped_allocations_total_size = 0;
 
@@ -1414,13 +1419,13 @@ void PartitionRootGeneric::DumpStats(const char* partition_name,
   PartitionBucketMemoryStats bucket_stats[kGenericNumBuckets];
   size_t num_direct_mapped_allocations = 0;
   {
-    subtle::SpinLock::Guard guard(this->lock);
+    subtle::SpinLock::Guard guard(partition->lock);
 
     for (size_t i = 0; i < kGenericNumBuckets; ++i) {
-      const PartitionBucket* bucket = &this->buckets[i];
+      const PartitionBucket* bucket = &partition->buckets[i];
       // Don't report the pseudo buckets that the generic allocator sets up in
       // order to preserve a fast size->bucket map (see
-      // PartitionRootGeneric::Init() for details).
+      // PartitionAllocGenericInit for details).
       if (!bucket->active_pages_head)
         bucket_stats[i].is_valid = false;
       else
@@ -1433,7 +1438,7 @@ void PartitionRootGeneric::DumpStats(const char* partition_name,
       }
     }
 
-    for (PartitionDirectMapExtent *extent = this->direct_map_list;
+    for (PartitionDirectMapExtent *extent = partition->direct_map_list;
          extent && num_direct_mapped_allocations < kMaxReportableDirectMaps;
          extent = extent->next_extent, ++num_direct_mapped_allocations) {
       DCHECK(!extent->next_extent ||
@@ -1448,8 +1453,8 @@ void PartitionRootGeneric::DumpStats(const char* partition_name,
 
   if (!is_light_dump) {
     // Call |PartitionsDumpBucketStats| after collecting stats because it can
-    // try to allocate using |PartitionRootGeneric::Alloc()| and it can't
-    // obtain the lock.
+    // try to allocate using |PartitionAllocGeneric| and it can't obtain the
+    // lock.
     for (size_t i = 0; i < kGenericNumBuckets; ++i) {
       if (bucket_stats[i].is_valid)
         dumper->PartitionsDumpBucketStats(partition_name, &bucket_stats[i]);
@@ -1475,13 +1480,14 @@ void PartitionRootGeneric::DumpStats(const char* partition_name,
   dumper->PartitionDumpTotals(partition_name, &stats);
 }
 
-void PartitionRoot::DumpStats(const char* partition_name,
-                              bool is_light_dump,
-                              PartitionStatsDumper* dumper) {
+void PartitionDumpStats(PartitionRoot* partition,
+                        const char* partition_name,
+                        bool is_light_dump,
+                        PartitionStatsDumper* dumper) {
   PartitionMemoryStats stats = {0};
-  stats.total_mmapped_bytes = this->total_size_of_super_pages;
-  stats.total_committed_bytes = this->total_size_of_committed_pages;
-  DCHECK(!this->total_size_of_direct_mapped_pages);
+  stats.total_mmapped_bytes = partition->total_size_of_super_pages;
+  stats.total_committed_bytes = partition->total_size_of_committed_pages;
+  DCHECK(!partition->total_size_of_direct_mapped_pages);
 
   static const size_t kMaxReportableBuckets = 4096 / sizeof(void*);
   std::unique_ptr<PartitionBucketMemoryStats[]> memory_stats;
@@ -1489,12 +1495,12 @@ void PartitionRoot::DumpStats(const char* partition_name,
     memory_stats = std::unique_ptr<PartitionBucketMemoryStats[]>(
         new PartitionBucketMemoryStats[kMaxReportableBuckets]);
 
-  const size_t partitionNumBuckets = this->num_buckets;
+  const size_t partitionNumBuckets = partition->num_buckets;
   DCHECK(partitionNumBuckets <= kMaxReportableBuckets);
 
   for (size_t i = 0; i < partitionNumBuckets; ++i) {
     PartitionBucketMemoryStats bucket_stats = {0};
-    PartitionDumpBucketStats(&bucket_stats, &this->buckets()[i]);
+    PartitionDumpBucketStats(&bucket_stats, &partition->buckets()[i]);
     if (bucket_stats.is_valid) {
       stats.total_resident_bytes += bucket_stats.resident_bytes;
       stats.total_active_bytes += bucket_stats.active_bytes;
@@ -1510,8 +1516,7 @@ void PartitionRoot::DumpStats(const char* partition_name,
   }
   if (!is_light_dump) {
     // PartitionsDumpBucketStats is called after collecting stats because it
-    // can use PartitionRoot::Alloc() to allocate and this can affect the
-    // statistics.
+    // can use PartitionAlloc to allocate and this can affect the statistics.
     for (size_t i = 0; i < partitionNumBuckets; ++i) {
       if (memory_stats[i].is_valid)
         dumper->PartitionsDumpBucketStats(partition_name, &memory_stats[i]);

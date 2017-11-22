@@ -5,10 +5,10 @@
 #include "tools/gn/json_project_writer.h"
 
 #include <iostream>
-#include <memory>
 
 #include "base/command_line.h"
 #include "base/json/json_writer.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "tools/gn/builder.h"
 #include "tools/gn/commands.h"
@@ -86,7 +86,7 @@ std::string RenderJSON(const BuildSettings* build_settings,
                        std::vector<const Target*>& all_targets) {
   Label default_toolchain_label;
 
-  auto targets = std::make_unique<base::DictionaryValue>();
+  auto targets = base::MakeUnique<base::DictionaryValue>();
   for (const auto* target : all_targets) {
     if (default_toolchain_label.is_null())
       default_toolchain_label = target->settings()->default_toolchain_label();
@@ -105,7 +105,7 @@ std::string RenderJSON(const BuildSettings* build_settings,
         std::move(description));
   }
 
-  auto settings = std::make_unique<base::DictionaryValue>();
+  auto settings = base::MakeUnique<base::DictionaryValue>();
   settings->SetKey("root_path", base::Value(build_settings->root_path_utf8()));
   settings->SetKey("build_dir",
                    base::Value(build_settings->build_dir().value()));
@@ -113,7 +113,7 @@ std::string RenderJSON(const BuildSettings* build_settings,
       "default_toolchain",
       base::Value(default_toolchain_label.GetUserVisibleName(false)));
 
-  auto output = std::make_unique<base::DictionaryValue>();
+  auto output = base::MakeUnique<base::DictionaryValue>();
   output->SetWithoutPathExpansion("targets", std::move(targets));
   output->SetWithoutPathExpansion("build_settings", std::move(settings));
 

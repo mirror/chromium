@@ -25,8 +25,7 @@ class ActiveStyleSheetsTest : public PageTestBase {
  protected:
   static CSSStyleSheet* CreateSheet(const String& css_text = String()) {
     StyleSheetContents* contents =
-        StyleSheetContents::Create(CSSParserContext::Create(
-            kHTMLStandardMode, SecureContextMode::kInsecureContext));
+        StyleSheetContents::Create(CSSParserContext::Create(kHTMLStandardMode));
     contents->ParseString(css_text);
     contents->EnsureRuleSet(MediaQueryEvaluator(),
                             kRuleHasDocumentSecurityOrigin);

@@ -150,6 +150,8 @@ class PropertyTreePrinterTraits<TransformPaintPropertyNode> {
       printer.AddPropertyNode(t, "SvgLocalToBorderBoxTransform", object);
     if (const auto* t = properties.ScrollTranslation())
       printer.AddPropertyNode(t, "ScrollTranslation", object);
+    if (const auto* t = properties.ScrollbarPaintOffset())
+      printer.AddPropertyNode(t, "ScrollbarPaintOffset", object);
   }
 };
 
@@ -393,6 +395,11 @@ class PaintPropertyTreeGraphBuilder {
         properties->ScrollTranslation();
     if (scroll_translation)
       WritePaintPropertyNode(*scroll_translation, &object, "scrollTranslation");
+    const TransformPaintPropertyNode* scrollbar_paint_offset =
+        properties->ScrollbarPaintOffset();
+    if (scrollbar_paint_offset)
+      WritePaintPropertyNode(*scrollbar_paint_offset, &object,
+                             "scrollbarPaintOffset");
     const EffectPaintPropertyNode* effect = properties->Effect();
     if (effect)
       WritePaintPropertyNode(*effect, &object, "effect");

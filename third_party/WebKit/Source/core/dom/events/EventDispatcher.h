@@ -36,6 +36,7 @@
 namespace blink {
 
 class Event;
+class EventDispatchMediator;
 class EventDispatchHandlingState;
 class LocalFrameView;
 class Node;
@@ -52,8 +53,8 @@ class EventDispatcher {
   STACK_ALLOCATED();
 
  public:
-  static DispatchEventResult DispatchEvent(Node&, Event*);
-  static void DispatchScopedEvent(Node&, Event*);
+  static DispatchEventResult DispatchEvent(Node&, EventDispatchMediator*);
+  static void DispatchScopedEvent(Node&, EventDispatchMediator*);
 
   static void DispatchSimulatedClick(Node&,
                                      Event* underlying_event,

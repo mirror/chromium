@@ -35,7 +35,6 @@
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/UseCounter.h"
 #include "platform/wtf/text/StringBuilder.h"
 
@@ -49,8 +48,7 @@ CSSGroupingRule::CSSGroupingRule(StyleRuleGroup* group_rule,
 
 CSSGroupingRule::~CSSGroupingRule() {}
 
-unsigned CSSGroupingRule::insertRule(const ExecutionContext* execution_context,
-                                     const String& rule_string,
+unsigned CSSGroupingRule::insertRule(const String& rule_string,
                                      unsigned index,
                                      ExceptionState& exception_state) {
   DCHECK_EQ(child_rule_cssom_wrappers_.size(),
@@ -65,8 +63,8 @@ unsigned CSSGroupingRule::insertRule(const ExecutionContext* execution_context,
   }
 
   CSSStyleSheet* style_sheet = parentStyleSheet();
-  CSSParserContext* context = CSSParserContext::CreateWithStyleSheet(
-      ParserContext(execution_context->SecureContextMode()), style_sheet);
+  CSSParserContext* context =
+      CSSParserContext::CreateWithStyleSheet(ParserContext(), style_sheet);
   StyleRuleBase* new_rule = CSSParser::ParseRule(
       context, style_sheet ? style_sheet->Contents() : nullptr, rule_string);
   if (!new_rule) {

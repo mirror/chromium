@@ -8,7 +8,6 @@
 #include <atk/atk.h>
 
 #include "base/macros.h"
-#include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/ax_export.h"
 #include "ui/accessibility/platform/ax_platform_node_base.h"
 
@@ -24,8 +23,6 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   AX_EXPORT static void SetApplication(AXPlatformNode* application);
   static AXPlatformNode* application() { return application_; }
 
-  static void EnsureGTypeInit();
-
   // Do asynchronous static initialization.
   AX_EXPORT static void StaticInitialize();
 
@@ -36,12 +33,6 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
                   AtkCoordType coord_type);
   void GetPosition(gint* x, gint* y, AtkCoordType coord_type);
   void GetSize(gint* width, gint* height);
-  gfx::NativeViewAccessible HitTestSync(gint x,
-                                        gint y,
-                                        AtkCoordType coord_type);
-  bool GrabFocus();
-  bool DoDefaultAction();
-  const gchar* GetDefaultActionName();
 
   void SetExtentsRelativeToAtkCoordinateType(
       gint* x, gint* y, gint* width, gint* height,

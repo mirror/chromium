@@ -731,7 +731,8 @@ class PolicyTest : public InProcessBrowserTest {
       extensions::TestExtensionRegistryObserver observer(
           extensions::ExtensionRegistry::Get(browser()->profile()));
       extension_service()->UninstallExtension(
-          id, extensions::UNINSTALL_REASON_FOR_TESTING, NULL);
+          id, extensions::UNINSTALL_REASON_FOR_TESTING,
+          base::Bind(&base::DoNothing), NULL);
       observer.WaitForExtensionUninstalled();
     } else {
       content::WindowedNotificationObserver observer(
@@ -740,6 +741,7 @@ class PolicyTest : public InProcessBrowserTest {
       extension_service()->UninstallExtension(
           id,
           extensions::UNINSTALL_REASON_FOR_TESTING,
+          base::Bind(&base::DoNothing),
           NULL);
       observer.Wait();
     }

@@ -36,7 +36,7 @@ class PLATFORM_EXPORT FEMerge final : public FilterEffect {
  private:
   explicit FEMerge(Filter*);
 
-  sk_sp<PaintFilter> CreateImageFilter() override;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
 };
 
 }  // namespace blink

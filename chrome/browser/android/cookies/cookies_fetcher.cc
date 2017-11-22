@@ -129,20 +129,19 @@ static void RestoreToCookieJarInternal(net::URLRequestContextGetter* getter,
       cookie.Priority(), cb);
 }
 
-static void JNI_CookiesFetcher_RestoreCookies(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jstring>& name,
-    const JavaParamRef<jstring>& value,
-    const JavaParamRef<jstring>& domain,
-    const JavaParamRef<jstring>& path,
-    jlong creation,
-    jlong expiration,
-    jlong last_access,
-    jboolean secure,
-    jboolean httponly,
-    jint same_site,
-    jint priority) {
+static void RestoreCookies(JNIEnv* env,
+                           const JavaParamRef<jclass>& jcaller,
+                           const JavaParamRef<jstring>& name,
+                           const JavaParamRef<jstring>& value,
+                           const JavaParamRef<jstring>& domain,
+                           const JavaParamRef<jstring>& path,
+                           jlong creation,
+                           jlong expiration,
+                           jlong last_access,
+                           jboolean secure,
+                           jboolean httponly,
+                           jint same_site,
+                           jint priority) {
   Profile* profile = ProfileManager::GetPrimaryUserProfile();
   if (!profile->HasOffTheRecordProfile()) {
     return;  // Don't create it. There is nothing to do.
@@ -171,7 +170,6 @@ static void JNI_CookiesFetcher_RestoreCookies(
 }
 
 // JNI functions
-static jlong JNI_CookiesFetcher_Init(JNIEnv* env,
-                                     const JavaParamRef<jobject>& obj) {
+static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(new CookiesFetcher(env, obj, 0));
 }

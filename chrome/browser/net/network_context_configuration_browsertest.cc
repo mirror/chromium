@@ -141,16 +141,15 @@ class NetworkContextConfigurationBrowserTest
 };
 
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, BasicRequest) {
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
-  request->url = embedded_test_server()->GetURL("/echo");
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
-      content::SimpleURLLoader::Create(std::move(request),
-                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+      content::SimpleURLLoader::Create();
 
+  content::ResourceRequest request;
+  request.url = embedded_test_server()->GetURL("/echo");
   simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-      loader_factory(), simple_loader_helper.GetCallback());
+      request, loader_factory(), TRAFFIC_ANNOTATION_FOR_TESTS,
+      simple_loader_helper.GetCallback());
   simple_loader_helper.WaitForCallback();
 
   ASSERT_TRUE(simple_loader->ResponseInfo());
@@ -161,16 +160,15 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, BasicRequest) {
 }
 
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, DataURL) {
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
-  request->url = GURL("data:text/plain,foo");
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
-      content::SimpleURLLoader::Create(std::move(request),
-                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+      content::SimpleURLLoader::Create();
 
+  content::ResourceRequest request;
+  request.url = GURL("data:text/plain,foo");
   simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-      loader_factory(), simple_loader_helper.GetCallback());
+      request, loader_factory(), TRAFFIC_ANNOTATION_FOR_TESTS,
+      simple_loader_helper.GetCallback());
   simple_loader_helper.WaitForCallback();
 
   ASSERT_TRUE(simple_loader->ResponseInfo());
@@ -191,16 +189,15 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, FileURL) {
   ASSERT_EQ(static_cast<int>(strlen(kFileContents)),
             base::WriteFile(file_path, kFileContents, strlen(kFileContents)));
 
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
-  request->url = net::FilePathToFileURL(file_path);
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
-      content::SimpleURLLoader::Create(std::move(request),
-                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+      content::SimpleURLLoader::Create();
 
+  content::ResourceRequest request;
+  request.url = net::FilePathToFileURL(file_path);
   simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-      loader_factory(), simple_loader_helper.GetCallback());
+      request, loader_factory(), TRAFFIC_ANNOTATION_FOR_TESTS,
+      simple_loader_helper.GetCallback());
   simple_loader_helper.WaitForCallback();
 
   ASSERT_TRUE(simple_loader->ResponseInfo());
@@ -212,18 +209,16 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, FileURL) {
 
 // Make sure a cache is used when expected.
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, Cache) {
-  // Make a request whose response should be cached.
-  GURL request_url = embedded_test_server()->GetURL("/cachetime");
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
-  request->url = request_url;
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
-      content::SimpleURLLoader::Create(std::move(request),
-                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+      content::SimpleURLLoader::Create();
 
+  // Make a request whose response should be cached.
+  content::ResourceRequest request;
+  request.url = embedded_test_server()->GetURL("/cachetime");
   simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-      loader_factory(), simple_loader_helper.GetCallback());
+      request, loader_factory(), TRAFFIC_ANNOTATION_FOR_TESTS,
+      simple_loader_helper.GetCallback());
   simple_loader_helper.WaitForCallback();
 
   ASSERT_TRUE(simple_loader_helper.response_body());
@@ -234,15 +229,12 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, Cache) {
 
   // Make the request again, and make sure it's cached or not, according to
   // expectations. Reuse the content::ResourceRequest, but nothing else.
-  std::unique_ptr<content::ResourceRequest> request2 =
-      std::make_unique<content::ResourceRequest>();
-  request2->url = request_url;
   content::SimpleURLLoaderTestHelper simple_loader_helper2;
   std::unique_ptr<content::SimpleURLLoader> simple_loader2 =
-      content::SimpleURLLoader::Create(std::move(request2),
-                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+      content::SimpleURLLoader::Create();
   simple_loader2->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-      loader_factory(), simple_loader_helper2.GetCallback());
+      request, loader_factory(), TRAFFIC_ANNOTATION_FOR_TESTS,
+      simple_loader_helper2.GetCallback());
   simple_loader_helper2.WaitForCallback();
   if (GetHttpCacheType() == StorageType::kNone) {
     // If there's no cache, and not server running, the request should have
@@ -274,17 +266,17 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, PRE_DiskCache) {
             base::WriteFile(save_url_file_path, test_url.spec().c_str(),
                             test_url.spec().length()));
 
-  // Make a request whose response should be cached.
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
-  request->url = test_url;
-  request->headers.SetHeader("foo", "foopity foo");
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
-      content::SimpleURLLoader::Create(std::move(request),
-                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+      content::SimpleURLLoader::Create();
+
+  // Make a request whose response should be cached.
+  content::ResourceRequest request;
+  request.url = test_url;
+  request.headers.SetHeader("foo", "foopity foo");
   simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-      loader_factory(), simple_loader_helper.GetCallback());
+      request, loader_factory(), TRAFFIC_ANNOTATION_FOR_TESTS,
+      simple_loader_helper.GetCallback());
   simple_loader_helper.WaitForCallback();
 
   EXPECT_EQ(net::OK, simple_loader->NetError());
@@ -319,7 +311,7 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, DiskCache) {
   EXPECT_TRUE(mojo::common::BlockingCopyToString(client.response_body_release(),
                                                  &response_body));
   client.RunUntilComplete();
-  EXPECT_EQ(net::OK, client.completion_status().error_code);
+  EXPECT_EQ(net::OK, client.status().error_code);
 
   // The response body from the above test should only appear in the view-cache
   // result if there is an on-disk cache.
@@ -350,19 +342,18 @@ class NetworkContextConfigurationFixedPortBrowserTest
 // respected.
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationFixedPortBrowserTest,
                        TestingFixedPort) {
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
+  content::SimpleURLLoaderTestHelper simple_loader_helper;
+  std::unique_ptr<content::SimpleURLLoader> simple_loader =
+      content::SimpleURLLoader::Create();
+
+  content::ResourceRequest request;
   // This URL does not use the port the embedded test server is using. The
   // command line switch should make it result in the request being directed to
   // the test server anyways.
-  request->url = GURL("http://127.0.0.1/echo");
-  content::SimpleURLLoaderTestHelper simple_loader_helper;
-  std::unique_ptr<content::SimpleURLLoader> simple_loader =
-      content::SimpleURLLoader::Create(std::move(request),
-                                       TRAFFIC_ANNOTATION_FOR_TESTS);
-
+  request.url = GURL("http://127.0.0.1/echo");
   simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-      loader_factory(), simple_loader_helper.GetCallback());
+      request, loader_factory(), TRAFFIC_ANNOTATION_FOR_TESTS,
+      simple_loader_helper.GetCallback());
   simple_loader_helper.WaitForCallback();
 
   EXPECT_EQ(net::OK, simple_loader->NetError());

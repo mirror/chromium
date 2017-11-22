@@ -618,7 +618,6 @@ void DeleteSelectionCommand::HandleGeneralDelete(EditingState* editing_state) {
       return;
   }
 
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
   if (start_offset >= CaretMaxOffset(start_node) && start_node->IsTextNode()) {
     Text* text = ToText(start_node);
     if (text->length() > (unsigned)CaretMaxOffset(start_node))
@@ -699,7 +698,6 @@ void DeleteSelectionCommand::HandleGeneralDelete(EditingState* editing_state) {
           return;
         node = next_node;
       } else {
-        GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
         Node& n = NodeTraversal::LastWithinOrSelf(*node);
         if (downstream_end_.AnchorNode() == n &&
             downstream_end_.ComputeEditingOffset() >= CaretMaxOffset(&n)) {

@@ -60,7 +60,7 @@ void OnBrowsingDataRemoverDone(
 
 }  // namespace
 
-static void JNI_BrowsingDataBridge_ClearBrowsingData(
+static void ClearBrowsingData(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jintArray>& data_types,
@@ -159,7 +159,7 @@ static void EnableDialogAboutOtherFormsOfBrowsingHistory(
       env, listener);
 }
 
-static void JNI_BrowsingDataBridge_RequestInfoAboutOtherFormsOfBrowsingHistory(
+static void RequestInfoAboutOtherFormsOfBrowsingHistory(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jobject>& listener) {
@@ -172,10 +172,9 @@ static void JNI_BrowsingDataBridge_RequestInfoAboutOtherFormsOfBrowsingHistory(
                  ScopedJavaGlobalRef<jobject>(env, listener)));
 }
 
-static void JNI_BrowsingDataBridge_FetchImportantSites(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobject>& java_callback) {
+static void FetchImportantSites(JNIEnv* env,
+                                const JavaParamRef<jclass>& clazz,
+                                const JavaParamRef<jobject>& java_callback) {
   Profile* profile = GetOriginalProfile();
   std::vector<ImportantSitesUtil::ImportantDomainInfo> important_sites =
       ImportantSitesUtil::GetImportantRegisterableDomains(
@@ -204,13 +203,12 @@ static void JNI_BrowsingDataBridge_FetchImportantSites(
 }
 
 // This value should not change during a sessions, as it's used for UMA metrics.
-static jint JNI_BrowsingDataBridge_GetMaxImportantSites(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
+static jint GetMaxImportantSites(JNIEnv* env,
+                                 const JavaParamRef<jclass>& clazz) {
   return ImportantSitesUtil::kMaxImportantSites;
 }
 
-static void JNI_BrowsingDataBridge_MarkOriginAsImportantForTesting(
+static void MarkOriginAsImportantForTesting(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jorigin) {

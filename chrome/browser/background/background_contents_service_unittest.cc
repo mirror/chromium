@@ -10,6 +10,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/background/background_contents.h"
 #include "chrome/browser/background/background_contents_service_factory.h"
@@ -54,11 +55,11 @@ class BackgroundContentsServiceTest : public testing::Test {
   }
 
   // Returns the stored pref URL for the passed app id.
-  std::string GetPrefURLForApp(Profile* profile, const std::string& appid) {
+  std::string GetPrefURLForApp(Profile* profile, const base::string16& appid) {
     const base::DictionaryValue* pref = GetPrefs(profile);
-    EXPECT_TRUE(pref->HasKey(appid));
+    EXPECT_TRUE(pref->HasKey(base::UTF16ToUTF8(appid)));
     const base::DictionaryValue* value;
-    pref->GetDictionaryWithoutPathExpansion(appid, &value);
+    pref->GetDictionaryWithoutPathExpansion(base::UTF16ToUTF8(appid), &value);
     std::string url;
     value->GetString("url", &url);
     return url;
@@ -71,9 +72,13 @@ class BackgroundContentsServiceTest : public testing::Test {
 class MockBackgroundContents : public BackgroundContents {
  public:
   explicit MockBackgroundContents(Profile* profile)
-      : appid_("app_id"), profile_(profile) {}
+      : appid_(base::ASCIIToUTF16("app_id")),
+        profile_(profile) {
+  }
   MockBackgroundContents(Profile* profile, const std::string& id)
-      : appid_(id), profile_(profile) {}
+      : appid_(base::ASCIIToUTF16(id)),
+        profile_(profile) {
+  }
 
   void SendOpenedNotification(BackgroundContentsService* service) {
     BackgroundContentsOpenedDetails details = {
@@ -105,13 +110,13 @@ class MockBackgroundContents : public BackgroundContents {
         content::Details<BackgroundContents>(this));
   }
 
-  const std::string& appid() { return appid_; }
+  const base::string16& appid() { return appid_; }
 
  private:
   GURL url_;
 
   // The ID of our parent application
-  std::string appid_;
+  base::string16 appid_;
 
   // Parent profile
   Profile* profile_;
@@ -314,7 +319,8 @@ TEST_F(BackgroundContentsServiceTest, TestApplicationIDLinkage) {
   BackgroundContentsServiceFactory::GetInstance()->
       RegisterUserPrefsOnBrowserContextForTest(&profile);
 
-  EXPECT_EQ(NULL, service.GetAppBackgroundContents("appid"));
+  EXPECT_EQ(NULL,
+            service.GetAppBackgroundContents(base::ASCIIToUTF16("appid")));
   MockBackgroundContents* contents = new MockBackgroundContents(&profile,
                                                                 "appid");
   std::unique_ptr<MockBackgroundContents> contents2(
@@ -334,9 +340,10 @@ TEST_F(BackgroundContentsServiceTest, TestApplicationIDLinkage) {
   EXPECT_EQ(1U, GetPrefs(&profile)->size());
   contents2->Navigate(url2);
   EXPECT_EQ(2U, GetPrefs(&profile)->size());
-  service.ShutdownAssociatedBackgroundContents("appid");
+  service.ShutdownAssociatedBackgroundContents(base::ASCIIToUTF16("appid"));
   EXPECT_FALSE(service.IsTracked(contents));
-  EXPECT_EQ(NULL, service.GetAppBackgroundContents("appid"));
+  EXPECT_EQ(NULL,
+            service.GetAppBackgroundContents(base::ASCIIToUTF16("appid")));
   EXPECT_EQ(1U, GetPrefs(&profile)->size());
   EXPECT_EQ(url2.spec(), GetPrefURLForApp(&profile, contents2->appid()));
 }

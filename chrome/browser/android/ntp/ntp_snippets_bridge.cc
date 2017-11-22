@@ -53,7 +53,7 @@ using ntp_snippets::ContentSuggestion;
 namespace {
 
 // Converts a vector of ContentSuggestions to its Java equivalent.
-ScopedJavaLocalRef<jobject> JNI_SnippetsBridge_ToJavaSuggestionList(
+ScopedJavaLocalRef<jobject> ToJavaSuggestionList(
     JNIEnv* env,
     const Category& category,
     const std::vector<ContentSuggestion>& suggestions) {
@@ -117,16 +117,15 @@ ntp_snippets::RemoteSuggestionsScheduler* GetRemoteSuggestionsScheduler() {
 
 }  // namespace
 
-static jlong JNI_SnippetsBridge_Init(JNIEnv* env,
-                                     const JavaParamRef<jobject>& j_bridge,
-                                     const JavaParamRef<jobject>& j_profile) {
+static jlong Init(JNIEnv* env,
+                  const JavaParamRef<jobject>& j_bridge,
+                  const JavaParamRef<jobject>& j_profile) {
   NTPSnippetsBridge* snippets_bridge =
       new NTPSnippetsBridge(env, j_bridge, j_profile);
   return reinterpret_cast<intptr_t>(snippets_bridge);
 }
 
-static void
-JNI_SnippetsBridge_RemoteSuggestionsSchedulerOnPersistentSchedulerWakeUp(
+static void RemoteSuggestionsSchedulerOnPersistentSchedulerWakeUp(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller) {
   ntp_snippets::RemoteSuggestionsScheduler* scheduler =
@@ -138,7 +137,7 @@ JNI_SnippetsBridge_RemoteSuggestionsSchedulerOnPersistentSchedulerWakeUp(
   scheduler->OnPersistentSchedulerWakeUp();
 }
 
-static void JNI_SnippetsBridge_RemoteSuggestionsSchedulerOnBrowserUpgraded(
+static void RemoteSuggestionsSchedulerOnBrowserUpgraded(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller) {
   ntp_snippets::RemoteSuggestionsScheduler* scheduler =
@@ -152,7 +151,7 @@ static void JNI_SnippetsBridge_RemoteSuggestionsSchedulerOnBrowserUpgraded(
   scheduler->OnBrowserUpgraded();
 }
 
-static void JNI_SnippetsBridge_SetContentSuggestionsNotificationsEnabled(
+static void SetContentSuggestionsNotificationsEnabled(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller,
     jboolean enabled) {
@@ -165,7 +164,7 @@ static void JNI_SnippetsBridge_SetContentSuggestionsNotificationsEnabled(
   notifier_service->SetEnabled(enabled);
 }
 
-static jboolean JNI_SnippetsBridge_AreContentSuggestionsNotificationsEnabled(
+static jboolean AreContentSuggestionsNotificationsEnabled(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller) {
   ContentSuggestionsNotifierService* notifier_service =
@@ -236,7 +235,7 @@ ScopedJavaLocalRef<jobject> NTPSnippetsBridge::GetSuggestionsForCategory(
     const JavaParamRef<jobject>& obj,
     jint j_category_id) {
   Category category = Category::FromIDValue(j_category_id);
-  return JNI_SnippetsBridge_ToJavaSuggestionList(
+  return ToJavaSuggestionList(
       env, category,
       content_suggestions_service_->GetSuggestionsForCategory(category));
 }
@@ -429,9 +428,8 @@ void NTPSnippetsBridge::OnSuggestionsFetched(
   // TODO(fhorschig, dgn): Allow refetch or show notification acc. to status.
   JNIEnv* env = AttachCurrentThread();
   if (status.IsSuccess()) {
-    RunCallbackAndroid(
-        success_callback,
-        JNI_SnippetsBridge_ToJavaSuggestionList(env, category, suggestions));
+    RunCallbackAndroid(success_callback,
+        ToJavaSuggestionList(env, category, suggestions));
   } else {
     // The second parameter here means nothing - it was more convenient to pass
     // a Callback (which has 1 parameter) over to the native side than a
@@ -446,7 +444,7 @@ void NTPSnippetsBridge::OnContextualSuggestionsFetched(
     const GURL& url,
     std::vector<ContentSuggestion> suggestions) {
   JNIEnv* env = AttachCurrentThread();
-  auto j_suggestions = JNI_SnippetsBridge_ToJavaSuggestionList(
+  auto j_suggestions = ToJavaSuggestionList(
       env, Category::FromKnownCategory(KnownCategories::CONTEXTUAL),
       suggestions);
   RunCallbackAndroid(j_callback, j_suggestions);

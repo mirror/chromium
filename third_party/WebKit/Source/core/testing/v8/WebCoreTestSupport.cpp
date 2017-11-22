@@ -92,8 +92,9 @@ void InstallOriginTrialFeaturesForTesting(
 
   blink::ExecutionContext* execution_context =
       blink::ExecutionContext::From(script_state);
-  const blink::OriginTrialContext* originTrialContext =
-      blink::OriginTrialContext::From(execution_context);
+  blink::OriginTrialContext* originTrialContext =
+      blink::OriginTrialContext::From(
+          execution_context, blink::OriginTrialContext::kDontCreateIfNotExists);
 
   if (type == &blink::V8OriginTrialsTest::wrapperTypeInfo) {
     if (originTrialContext && originTrialContext->IsTrialEnabled("Frobulate")) {

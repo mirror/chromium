@@ -38,7 +38,7 @@
 #include "WebURL.h"
 
 #if INSIDE_BLINK
-#include "base/memory/scoped_refptr.h"
+#include "platform/wtf/RefPtr.h"
 #endif
 
 namespace blink {

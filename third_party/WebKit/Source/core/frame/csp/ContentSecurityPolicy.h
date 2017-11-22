@@ -446,6 +446,8 @@ class CORE_EXPORT ContentSecurityPolicy
 
   void ApplyPolicySideEffectsToExecutionContext();
 
+  KURL CompleteURL(const String&) const;
+
   void LogToConsole(const String& message, MessageLevel = kErrorMessageLevel);
 
   void AddAndReportPolicyFromHeaderValue(const String&,

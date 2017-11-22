@@ -598,11 +598,10 @@ void EncryptionMigrationScreenHandler::OnMountExistingVault(
   if (IsMinimalMigration())
     minimal_migration_start_ = tick_clock_->NowTicks();
 
-  cryptohome::MigrateToDircryptoRequest request;
-  request.set_minimal_migration(IsMinimalMigration());
   DBusThreadManager::Get()->GetCryptohomeClient()->AddObserver(this);
   cryptohome::HomedirMethods::GetInstance()->MigrateToDircrypto(
-      cryptohome::Identification(user_context_.GetAccountId()), request,
+      cryptohome::Identification(user_context_.GetAccountId()),
+      IsMinimalMigration(),
       base::Bind(&EncryptionMigrationScreenHandler::OnMigrationRequested,
                  weak_ptr_factory_.GetWeakPtr()));
 }

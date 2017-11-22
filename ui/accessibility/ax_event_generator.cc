@@ -274,6 +274,11 @@ void AXEventGenerator::OnTreeDataChanged(AXTree* tree,
 }
 
 void AXEventGenerator::OnNodeWillBeDeleted(AXTree* tree, AXNode* node) {
+  if (node->data().HasStringAttribute(ui::AX_ATTR_CONTAINER_LIVE_STATUS) &&
+      node->data().HasStringAttribute(ui::AX_ATTR_NAME)) {
+    FireLiveRegionEvents(node);
+  }
+
   DCHECK_EQ(tree_, tree);
   tree_events_.erase(node);
 }

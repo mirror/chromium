@@ -96,9 +96,10 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
   // using all resources.
   void GetAllPaymentAppsForMethods(
       const std::vector<std::string>& payment_method_identifiers) {
-    content::WebContents* web_contents =
-        browser()->tab_strip_model()->GetActiveWebContents();
-    content::BrowserContext* context = web_contents->GetBrowserContext();
+    content::BrowserContext* context = browser()
+                                           ->tab_strip_model()
+                                           ->GetActiveWebContents()
+                                           ->GetBrowserContext();
     auto downloader = std::make_unique<TestDownloader>(
         content::BrowserContext::GetDefaultStoragePartition(context)
             ->GetURLRequestContext());
@@ -110,16 +111,16 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
                                  frankpay_.GetURL("frankpay.com", "/"));
     downloader->AddTestServerURL("https://georgepay.com/",
                                  georgepay_.GetURL("georgepay.com", "/"));
-    ServiceWorkerPaymentAppFactory::GetInstance()
-        ->SetDownloaderAndIgnorePortInAppScopeForTesting(std::move(downloader));
+    ServiceWorkerPaymentAppFactory factory;
+    factory.IgnorePortInAppScopeForTesting();
 
     std::vector<mojom::PaymentMethodDataPtr> method_data;
     method_data.emplace_back(mojom::PaymentMethodData::New());
     method_data.back()->supported_methods = payment_method_identifiers;
 
     base::RunLoop run_loop;
-    ServiceWorkerPaymentAppFactory::GetInstance()->GetAllPaymentApps(
-        web_contents,
+    factory.GetAllPaymentApps(
+        context, std::move(downloader),
         WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
             Profile::FromBrowserContext(context),
             ServiceAccessType::EXPLICIT_ACCESS),

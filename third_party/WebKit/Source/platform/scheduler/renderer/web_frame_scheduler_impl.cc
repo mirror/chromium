@@ -389,9 +389,8 @@ void WebFrameSchedulerImpl::DidCommitProvisionalLoad(
                                                 is_reload, is_main_frame);
 }
 
-WebScopedVirtualTimePauser
-WebFrameSchedulerImpl::CreateWebScopedVirtualTimePauser() {
-  return WebScopedVirtualTimePauser(renderer_scheduler_);
+ScopedVirtualTimePauser WebFrameSchedulerImpl::CreateScopedVirtualTimePauser() {
+  return ScopedVirtualTimePauser(renderer_scheduler_);
 }
 
 void WebFrameSchedulerImpl::DidOpenActiveConnection() {

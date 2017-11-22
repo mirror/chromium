@@ -1182,7 +1182,7 @@ AutofillManager::AutofillManager(
                                              payments_client_.get(),
                                              personal_data,
                                              app_locale_)),
-      field_filler_(app_locale),
+      field_filler_("en-US"),
       autocomplete_history_manager_(
           std::make_unique<AutocompleteHistoryManager>(driver, client)),
       form_interactions_ukm_logger_(
@@ -1602,7 +1602,7 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
     return;
 
   // Setup the url for metrics that we will collect for this form.
-  form_interactions_ukm_logger_->OnFormsParsed(forms[0].main_frame_origin);
+  form_interactions_ukm_logger_->OnFormsParsed(forms[0].origin);
 
   std::vector<FormStructure*> non_queryable_forms;
   std::vector<FormStructure*> queryable_forms;

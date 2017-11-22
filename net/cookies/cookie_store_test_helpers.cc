@@ -98,17 +98,7 @@ void DelayedCookieMonster::SetCanonicalCookieAsync(
     bool secure_source,
     bool modify_http_only,
     SetCookiesCallback callback) {
-  did_run_ = false;
-  cookie_monster_->SetCanonicalCookieAsync(
-      std::move(cookie), secure_source, modify_http_only,
-      base::Bind(&DelayedCookieMonster::SetCookiesInternalCallback,
-                 base::Unretained(this)));
-  DCHECK_EQ(did_run_, true);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE,
-      base::BindOnce(&DelayedCookieMonster::InvokeSetCookiesCallback,
-                     base::Unretained(this), std::move(callback)),
-      base::TimeDelta::FromMilliseconds(kDelayedTime));
+  NOTREACHED();
 }
 
 void DelayedCookieMonster::GetCookiesWithOptionsAsync(

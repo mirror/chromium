@@ -10,7 +10,6 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
-#include "ios/chrome/browser/ios_chrome_field_trials.h"
 #include "ios/web/public/app/web_main_parts.h"
 
 class ApplicationContextImpl;
@@ -56,8 +55,6 @@ class IOSChromeMainParts : public web::WebMainParts {
 
   // Initialized in SetupMetricsAndFieldTrials.
   std::unique_ptr<ios::FieldTrialSynchronizer> field_trial_synchronizer_;
-
-  IOSChromeFieldTrials ios_field_trials_;
 
   DISALLOW_COPY_AND_ASSIGN(IOSChromeMainParts);
 };

@@ -822,7 +822,6 @@ split_static_library("browser") {
     "notifications/notification_display_service.h",
     "notifications/notification_display_service_factory.cc",
     "notifications/notification_display_service_factory.h",
-    "notifications/notification_handler.cc",
     "notifications/notification_handler.h",
     "notifications/notification_permission_context.cc",
     "notifications/notification_permission_context.h",
@@ -1753,7 +1752,6 @@ split_static_library("browser") {
     "//services/identity:lib",
     "//services/metrics",
     "//services/metrics/public/cpp:ukm_builders",
-    "//services/network/public/interfaces",
     "//services/preferences/public/cpp",
     "//services/preferences/public/cpp:service_main",
     "//services/preferences/public/cpp/tracked",
@@ -2555,18 +2553,12 @@ split_static_library("browser") {
       "resource_coordinator/background_tab_navigation_throttle.cc",
       "resource_coordinator/background_tab_navigation_throttle.h",
       "resource_coordinator/discard_condition.h",
-      "resource_coordinator/lifecycle_unit.cc",
-      "resource_coordinator/lifecycle_unit.h",
-      "resource_coordinator/tab_lifecycle_unit.cc",
-      "resource_coordinator/tab_lifecycle_unit.h",
       "resource_coordinator/tab_lifetime_observer.cc",
       "resource_coordinator/tab_lifetime_observer.h",
       "resource_coordinator/tab_manager.cc",
       "resource_coordinator/tab_manager.h",
       "resource_coordinator/tab_manager_delegate_chromeos.cc",
       "resource_coordinator/tab_manager_delegate_chromeos.h",
-      "resource_coordinator/tab_manager_features.cc",
-      "resource_coordinator/tab_manager_features.h",
       "resource_coordinator/tab_manager_resource_coordinator_signal_observer.cc",
       "resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
       "resource_coordinator/tab_manager_stats_collector.cc",
@@ -3013,8 +3005,6 @@ split_static_library("browser") {
 
   if (!is_android && !is_chromeos) {
     sources += [
-      "lifetime/switch_utils.cc",
-      "lifetime/switch_utils.h",
       "metrics/desktop_session_duration/audible_contents_tracker.cc",
       "metrics/desktop_session_duration/audible_contents_tracker.h",
       "metrics/desktop_session_duration/chrome_visibility_observer.cc",
@@ -4081,7 +4071,7 @@ split_static_library("browser") {
       ]
     }
     if (is_chromeos) {
-      deps += [ "//ash/public/cpp" ]
+      deps += [ "//ash/public/cpp:ash_public_cpp" ]
     }
   }
 }
@@ -4203,6 +4193,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/infobar/TranslateInfoBar.java",
       "../android/java/src/org/chromium/chrome/browser/infobar/UpdatePasswordInfoBar.java",
       "../android/java/src/org/chromium/chrome/browser/instantapps/InstantAppsSettings.java",
+      "../android/java/src/org/chromium/chrome/browser/interventions/FramebustBlockMessageDelegateBridge.java",
       "../android/java/src/org/chromium/chrome/browser/invalidation/InvalidationServiceFactory.java",
       "../android/java/src/org/chromium/chrome/browser/locale/LocaleManager.java",
       "../android/java/src/org/chromium/chrome/browser/locale/SpecialLocaleHandler.java",

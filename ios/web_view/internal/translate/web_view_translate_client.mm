@@ -46,7 +46,8 @@ WebViewBrowserState* GetMainBrowserState() {
 }  // namespace
 
 WebViewTranslateClient::WebViewTranslateClient(web::WebState* web_state)
-    : translate_manager_(base::MakeUnique<translate::TranslateManager>(
+    : web::WebStateObserver(web_state),
+      translate_manager_(base::MakeUnique<translate::TranslateManager>(
           this,
           WebViewTranslateRankerFactory::GetForBrowserState(
               WebViewBrowserState::FromBrowserState(GetMainBrowserState())),
@@ -54,9 +55,7 @@ WebViewTranslateClient::WebViewTranslateClient(web::WebState* web_state)
               WebViewBrowserState::FromBrowserState(GetMainBrowserState())))),
       translate_driver_(web_state,
                         web_state->GetNavigationManager(),
-                        translate_manager_.get()) {
-  web_state->AddObserver(this);
-}
+                        translate_manager_.get()) {}
 
 WebViewTranslateClient::~WebViewTranslateClient() = default;
 
@@ -91,6 +90,7 @@ PrefService* WebViewTranslateClient::GetPrefs() {
 
 std::unique_ptr<translate::TranslatePrefs>
 WebViewTranslateClient::GetTranslatePrefs() {
+  DCHECK(web_state());
   return base::MakeUnique<translate::TranslatePrefs>(
       GetPrefs(), prefs::kAcceptLanguages, nullptr);
 }
@@ -129,7 +129,6 @@ void WebViewTranslateClient::ShowReportLanguageDetectionErrorUI(
 }
 
 void WebViewTranslateClient::WebStateDestroyed(web::WebState* web_state) {
-  web_state->RemoveObserver(this);
   // Translation process can be interrupted.
   // Destroying the TranslateManager now guarantees that it never has to deal
   // with nullptr WebState.

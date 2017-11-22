@@ -44,7 +44,9 @@ typedef (CSSImageValue or
 enum CanvasFillRule { "nonzero", "evenodd" };
 enum ImageSmoothingQuality {"low", "medium", "high"};
 
-interface CanvasRenderingContext2D {
+[
+    DependentLifetime
+] interface CanvasRenderingContext2D {
     // back-reference to the canvas
     readonly attribute HTMLCanvasElement canvas;
 
@@ -64,7 +66,7 @@ interface CanvasRenderingContext2D {
     // compositing
     attribute unrestricted double globalAlpha; // (default 1.0)
     attribute DOMString globalCompositeOperation; // (default source-over)
-    [MeasureAs=Canvas2DFilter, SetterCallWith=ExecutionContext] attribute DOMString filter; // (default 'none')
+    [MeasureAs=Canvas2DFilter] attribute DOMString filter; // (default 'none')
 
     // image smoothing
     attribute boolean imageSmoothingEnabled; // (default True)

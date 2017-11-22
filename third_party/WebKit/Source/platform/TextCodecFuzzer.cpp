@@ -20,7 +20,8 @@ WTF::FlushBehavior kFlushBehavior[] = {WTF::kDoNotFlush, WTF::kFetchEOF,
                                        WTF::kDataEOF};
 
 WTF::UnencodableHandling kUnencodableHandlingOptions[] = {
-    WTF::kEntitiesForUnencodables, WTF::kURLEncodedEntitiesForUnencodables,
+    WTF::kQuestionMarksForUnencodables, WTF::kEntitiesForUnencodables,
+    WTF::kURLEncodedEntitiesForUnencodables,
     WTF::kCSSEncodedEntitiesForUnencodables};
 
 class TextCodecFuzzHarness {};

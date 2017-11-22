@@ -444,10 +444,6 @@ class CrasAudioHandlerTest : public testing::TestWithParam<int> {
         media::MEDIA_VIDEO_FACING_ENVIRONMENT);
   }
 
-  bool output_mono_enabled() const {
-    return cras_audio_handler_->output_mono_enabled_;
-  }
-
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::SystemMonitor system_monitor_;
@@ -1921,22 +1917,22 @@ TEST_P(CrasAudioHandlerTest,
   EXPECT_TRUE(changed_active_input->active);
 }
 
-TEST_P(CrasAudioHandlerTest, SetOutputMonoEnabled) {
+TEST_P(CrasAudioHandlerTest, SetOutputMono) {
   AudioNodeList audio_nodes = GenerateAudioNodeList({kHeadphone});
   SetUpCrasAudioHandler(audio_nodes);
   EXPECT_EQ(0, test_observer_->output_channel_remixing_changed_count());
 
   // Set output mono
-  cras_audio_handler_->SetOutputMonoEnabled(true);
+  cras_audio_handler_->SetOutputMono(true);
 
   // Verify the output is in mono mode, OnOuputChannelRemixingChanged event
   // is fired.
-  EXPECT_TRUE(output_mono_enabled());
+  EXPECT_TRUE(cras_audio_handler_->IsOutputMonoEnabled());
   EXPECT_EQ(1, test_observer_->output_channel_remixing_changed_count());
 
   // Set output stereo
-  cras_audio_handler_->SetOutputMonoEnabled(false);
-  EXPECT_FALSE(output_mono_enabled());
+  cras_audio_handler_->SetOutputMono(false);
+  EXPECT_FALSE(cras_audio_handler_->IsOutputMonoEnabled());
   EXPECT_EQ(2, test_observer_->output_channel_remixing_changed_count());
 }
 

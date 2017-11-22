@@ -42,6 +42,7 @@
 #include "content/common/frame_replication_state.h"
 #include "content/common/image_downloader/image_downloader.mojom.h"
 #include "content/common/input/input_handler.mojom.h"
+#include "content/common/navigation_params.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/javascript_dialog_type.h"
@@ -121,17 +122,12 @@ class SensorProviderProxyImpl;
 class StreamHandle;
 class TimeoutMonitor;
 class WebBluetoothServiceImpl;
-struct BeginNavigationParams;
-struct CommonNavigationParams;
 struct ContextMenuParams;
 struct FileChooserParams;
 struct FrameOwnerProperties;
 struct FileChooserParams;
-struct NavigationParams;
-struct RequestNavigationParams;
 struct ResourceResponse;
 struct SubresourceLoaderParams;
-struct StartNavigationParams;
 
 class CONTENT_EXPORT RenderFrameHostImpl
     : public RenderFrameHost,
@@ -1295,7 +1291,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   typedef std::pair<CommonNavigationParams, BeginNavigationParams>
       PendingNavigation;
-  std::unique_ptr<PendingNavigation> pending_navigate_;
+  std::unique_ptr<PendingNavigation> pendinging_navigate_;
 
   // A collection of non-network URLLoaderFactory implementations which are used
   // to service any supported non-network subresource requests for the currently

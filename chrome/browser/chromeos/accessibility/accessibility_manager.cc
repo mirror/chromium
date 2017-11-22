@@ -56,6 +56,7 @@
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/browser_resources.h"
+#include "chromeos/audio/audio_a11y_controller.h"
 #include "chromeos/audio/chromeos_sounds.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -245,6 +246,7 @@ AccessibilityManager::AccessibilityManager()
       autoclick_enabled_(false),
       autoclick_delay_ms_(ash::AutoclickController::GetDefaultAutoclickDelay()),
       virtual_keyboard_enabled_(false),
+      mono_audio_enabled_(false),
       caret_highlight_enabled_(false),
       cursor_highlight_enabled_(false),
       focus_highlight_enabled_(false),
@@ -769,15 +771,29 @@ void AccessibilityManager::EnableMonoAudio(bool enabled) {
 }
 
 bool AccessibilityManager::IsMonoAudioEnabled() const {
-  return profile_ && profile_->GetPrefs()->GetBoolean(
-                         ash::prefs::kAccessibilityMonoAudioEnabled);
+  return mono_audio_enabled_;
 }
 
-void AccessibilityManager::OnMonoAudioChanged() {
+void AccessibilityManager::UpdateMonoAudioFromPref() {
+  if (!profile_)
+    return;
+
+  const bool enabled = profile_->GetPrefs()->GetBoolean(
+      ash::prefs::kAccessibilityMonoAudioEnabled);
+
+  if (mono_audio_enabled_ == enabled)
+    return;
+  mono_audio_enabled_ = enabled;
+
   AccessibilityStatusEventDetails details(ACCESSIBILITY_TOGGLE_MONO_AUDIO,
-                                          IsMonoAudioEnabled(),
-                                          ash::A11Y_NOTIFICATION_NONE);
+                                          enabled, ash::A11Y_NOTIFICATION_NONE);
   NotifyAccessibilityStatusChanged(details);
+
+  // TODO(crbug.com/594887): Fix for mash by moving pref into ash.
+  if (GetAshConfig() == ash::Config::MASH)
+    return;
+
+  ash::Shell::Get()->audio_a11y_controller()->SetOutputMono(enabled);
 }
 
 void AccessibilityManager::SetCaretHighlightEnabled(bool enabled) {
@@ -1143,7 +1159,7 @@ void AccessibilityManager::SetProfile(Profile* profile) {
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilityMonoAudioEnabled,
-        base::Bind(&AccessibilityManager::OnMonoAudioChanged,
+        base::Bind(&AccessibilityManager::UpdateMonoAudioFromPref,
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilityCaretHighlightEnabled,
@@ -1215,6 +1231,7 @@ void AccessibilityManager::SetProfile(Profile* profile) {
   UpdateAutoclickFromPref();
   UpdateAutoclickDelayFromPref();
   UpdateVirtualKeyboardFromPref();
+  UpdateMonoAudioFromPref();
   UpdateCaretHighlightFromPref();
   UpdateCursorHighlightFromPref();
   UpdateFocusHighlightFromPref();
@@ -1272,9 +1289,7 @@ void AccessibilityManager::NotifyAccessibilityStatusChanged(
   // own updates to avoid race conditions (pref updates are asynchronous between
   // chrome and ash).
   if (details.notification_type != ACCESSIBILITY_MANAGER_SHUTDOWN &&
-      details.notification_type != ACCESSIBILITY_TOGGLE_HIGH_CONTRAST_MODE &&
-      details.notification_type != ACCESSIBILITY_TOGGLE_LARGE_CURSOR &&
-      details.notification_type != ACCESSIBILITY_TOGGLE_MONO_AUDIO) {
+      details.notification_type != ACCESSIBILITY_TOGGLE_LARGE_CURSOR) {
     ash::Shell::Get()->system_tray_notifier()->NotifyAccessibilityStatusChanged(
         details.notify);
   }

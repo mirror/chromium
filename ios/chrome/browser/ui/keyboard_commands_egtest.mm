@@ -10,6 +10,7 @@
 #include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
+#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -28,7 +29,8 @@
 #endif
 
 using chrome_test_util::NavigationBarDoneButton;
-using chrome_test_util::RecentTabsMenuButton;
+
+const CGFloat kScrollDisplacement = 50.0;
 
 // Test cases to verify that keyboard commands are and are not registered when
 // expected.
@@ -93,6 +95,18 @@ using chrome_test_util::RecentTabsMenuButton;
   GREYAssert(success, @"The bookmark editor was not displayed.");
 }
 
+// Open tools menu, find and tap on item specified by |toolsMenuItem| matcher.
+// TODO(crbug.com/638674): Evaluate if this can move to shared code.
+- (void)selectToolsMenuItem:(id<GREYMatcher>)toolsMenuItem {
+  [ChromeEarlGreyUI openToolsMenu];
+
+  id<GREYMatcher> toolsMenuTableView = chrome_test_util::ToolsMenuView();
+  [[[EarlGrey selectElementWithMatcher:toolsMenuItem]
+         usingSearchAction:grey_scrollInDirection(kGREYDirectionDown,
+                                                  kScrollDisplacement)
+      onElementWithMatcher:toolsMenuTableView] performAction:grey_tap()];
+}
+
 #pragma mark - Tests
 
 // Tests that keyboard commands are registered when the BVC is showing without
@@ -152,8 +166,7 @@ using chrome_test_util::RecentTabsMenuButton;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
 
   // Open Bookmarks
-  [ChromeEarlGreyUI openToolsMenu];
-  [ChromeEarlGreyUI tapToolsMenuButton:chrome_test_util::BookmarksMenuButton()];
+  [self selectToolsMenuItem:grey_accessibilityID(kToolsMenuBookmarksId)];
 
   if (IsIPadIdiom()) {
     [self verifyKeyboardCommandsAreRegistered];
@@ -169,8 +182,8 @@ using chrome_test_util::RecentTabsMenuButton;
 // shown on iPhone and registered on iPad.
 - (void)testKeyboardCommands_RecentTabsPresented {
   // Open Recent Tabs
-  [ChromeEarlGreyUI openToolsMenu];
-  [ChromeEarlGreyUI tapToolsMenuButton:RecentTabsMenuButton()];
+  id<GREYMatcher> recentTabs = grey_accessibilityID(kToolsMenuOtherDevicesId);
+  [self selectToolsMenuItem:recentTabs];
 
   if (IsIPadIdiom()) {
     [self verifyKeyboardCommandsAreRegistered];

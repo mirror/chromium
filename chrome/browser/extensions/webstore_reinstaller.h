@@ -44,6 +44,9 @@ class WebstoreReinstaller : public WebstoreStandaloneInstaller,
 
   // content::WebContentsObserver:
   void WebContentsDestroyed() override;
+
+  // Called once all data from the old extension installation is removed.
+  void OnDeletionDone();
 };
 
 }  // namespace extensions

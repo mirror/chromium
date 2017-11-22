@@ -284,9 +284,7 @@ ScopedJavaLocalRef<jobject> WindowAndroid::GetWindowToken() {
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
-jlong JNI_WindowAndroid_Init(JNIEnv* env,
-                             const JavaParamRef<jobject>& obj,
-                             int sdk_display_id) {
+jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj, int sdk_display_id) {
   WindowAndroid* window = new WindowAndroid(env, obj, sdk_display_id);
   return reinterpret_cast<intptr_t>(window);
 }

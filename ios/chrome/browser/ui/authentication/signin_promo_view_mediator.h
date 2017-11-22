@@ -33,10 +33,6 @@ enum class SigninPromoViewState {
 };
 }  // namespace ios
 
-namespace user_prefs {
-class PrefRegistrySyncable;
-}  // namespace user_prefs
-
 // Class that monitors the available identities and creates
 // SigninPromoViewConfigurator. This class makes the link between the model and
 // the view. The consumer will receive notification if default identity is
@@ -52,16 +48,6 @@ class PrefRegistrySyncable;
 
 // Sign-in promo view state.
 @property(nonatomic) ios::SigninPromoViewState signinPromoViewState;
-
-// Registers the feature preferences.
-+ (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry;
-
-// Tests if the sign-in promo view should be displayed according to the number
-// of times it has been displayed and if the user closed the sign-in promo view.
-+ (BOOL)shouldDisplaySigninPromoViewWithAccessPoint:
-            (signin_metrics::AccessPoint)accessPoint
-                                       browserState:(ios::ChromeBrowserState*)
-                                                        browserState;
 
 // See -[SigninPromoViewMediator initWithBrowserState:].
 - (instancetype)init NS_UNAVAILABLE;

@@ -9,12 +9,6 @@
   await TestRunner.showPanel('resources');
   await TestRunner.showPanel('timeline');
   await TestRunner.evaluateInPagePromise(`
-      function registerServiceWorkerAndwaitForActivated() {
-        const script = 'resources/v8-cache-worker.js';
-        const scope = 'resources/v8-cache-iframe.html';
-        return registerServiceWorker(script, scope)
-          .then(() => waitForActivated(scope));
-      }
       function loadScript() {
         const url = 'v8-cache-script.js';
         const frameId = 'frame_id';
@@ -24,25 +18,27 @@
       }
   `);
 
+  const scriptURL = 'resources/v8-cache-worker.js';
   const scope = 'resources/v8-cache-iframe.html';
   const frameId = 'frame_id';
 
-  await new Promise(
-        (r) =>
-        PerformanceTestRunner.invokeAsyncWithTimeline(
-            'registerServiceWorkerAndwaitForActivated', r));
-  TestRunner.addResult('--- Trace events while installing -------------');
-  PerformanceTestRunner.printTimelineRecordsWithDetails(
-      TimelineModel.TimelineModel.RecordType.CompileScript);
-  TestRunner.addResult('-----------------------------------------------');
-  await ApplicationTestRunner.waitForActivated(scope);
-  await TestRunner.addIframe(scope, {id: frameId});
-  await new Promise(
-        (r) =>
-        PerformanceTestRunner.invokeAsyncWithTimeline('loadScript', r));
-  TestRunner.addResult('--- Trace events while executing scripts ------');
-  PerformanceTestRunner.printTimelineRecordsWithDetails(
-      TimelineModel.TimelineModel.RecordType.CompileScript);
-  TestRunner.addResult('-----------------------------------------------');
-  TestRunner.completeTest();
+  ApplicationTestRunner.registerServiceWorker(scriptURL, scope)
+      .then(_ => ApplicationTestRunner.waitForActivated(scope))
+      .then(() => {
+        return TestRunner.addIframe(scope, {id: frameId});
+      })
+      .then(() => {
+        // Need to suspend targets, because V8 doesn't produce the cache when
+        // the debugger is loaded.
+        return SDK.targetManager.suspendAllTargets();
+      })
+      .then(() => {
+        return new Promise((r) => {
+          PerformanceTestRunner.invokeAsyncWithTimeline('loadScript', r);
+        });
+      })
+      .then(() => {
+        PerformanceTestRunner.printTimelineRecordsWithDetails(TimelineModel.TimelineModel.RecordType.CompileScript);
+        TestRunner.completeTest();
+      });
 })();

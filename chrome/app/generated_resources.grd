@@ -2087,9 +2087,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <message name="IDS_WEBSHARE_TARGET_PICKER_COMMIT" desc="Title of the button to share content to the chosen application.">
         Share
       </message>
-      <message name="IDS_WEBSHARE_TARGET_DIALOG_ITEM_TEXT" desc="Text for a Web Share Target item in the Web Share Target dialog.">
-        <ph name="APP_NAME">$1<ex>Google Maps</ex></ph> (<ph name="APP_URL">$2<ex>https://google.com/maps</ex></ph>)
-      </message>
 
       <!-- Content blocking strings -->
       <message name="IDS_MANAGE" desc="Text for a button on permission bubbles, which opens a more detailed content settings page where users can manage that particular setting.">
@@ -2358,14 +2355,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <message name="IDS_CERT_INFO_SHA1_FINGERPRINT_LABEL" desc="The label of the SHA-1 Fingerprint field in the general page of the certificate info dialog">
         SHA-1 Fingerprint
       </message>
-
-      <message name="IDS_CERT_DETAILS_EXTENSIONS" desc="The label of the Extensions element in the details page of the certificate info dialog.">
-        Extensions
-      </message>
-      <message name="IDS_CERT_X509_SUBJECT_ALT_NAME" desc="description of extension Certificate Subject Alternative Name">
-        Certificate Subject Alternative Name
-      </message>
-
       <message name="IDS_CERT_EXPORT_TYPE_BASE64" desc="The description of saving a single certificate in base64 encoding.">
         Base64-encoded ASCII, single certificate
       </message>
@@ -2481,6 +2470,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
 
   Public Exponent (<ph name="PUBLIC_EXPONENT_NUM_BITS">$3<ex>24</ex></ph> bits):
   <ph name="EXPONENT_HEX_DUMP">$4<ex>01 00 01</ex></ph>
+        </message>
+        <message name="IDS_CERT_DETAILS_EXTENSIONS" desc="The label of the Extensions element in the details page of the certificate info dialog.">
+          Extensions
         </message>
         <message name="IDS_CERT_DETAILS_CERTIFICATE_SIG_VALUE" desc="The label of the Certificate Signature Value element in the details page of the certificate info dialog.">
           Certificate Signature Value
@@ -2646,6 +2638,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         </message>
         <message name="IDS_CERT_X509_KEY_USAGE" desc="description of extension Certificate Key Usage">
           Certificate Key Usage
+        </message>
+        <message name="IDS_CERT_X509_SUBJECT_ALT_NAME" desc="description of extension Certificate Subject Alternative Name">
+          Certificate Subject Alternative Name
         </message>
         <message name="IDS_CERT_X509_ISSUER_ALT_NAME" desc="description of extension Certificate Issuer Alternative Name">
           Certificate Issuer Alternative Name
@@ -4576,10 +4571,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
         </message>
       </if>
 
-      <message name="IDS_HOSTED_APP_NAME_AND_DOMAIN" desc="The string that is always displayed in the window title in Hosted App app windows.">
-        <ph name="APP_NAME">$1<ex>GMail</ex></ph> by <ph name="SITE_ORIGIN">$2<ex>google.com</ex></ph>
-      </message>
-
       <!-- Components -->
       <message name="IDS_COMPONENTS_TITLE" desc="Title for the chrome://components page.">
         Components
@@ -6197,11 +6188,17 @@ I don't think this site should be blocked!
         <message name="IDS_PRINT_PREVIEW_RECENT_DESTINATIONS_TITLE" desc="Title of the section of recently used print destinations.">
           Recent Destinations
         </message>
-        <message name="IDS_PRINT_PREVIEW_PRINT_DESTINATIONS_TITLE" desc="Title of the section of print destinations.">
-          Print Destinations
+        <message name="IDS_PRINT_PREVIEW_LOCAL_DESTINATIONS_TITLE" desc="Title of the section of local print destinations.">
+          Local Destinations
+        </message>
+        <message name="IDS_PRINT_PREVIEW_CLOUD_DESTINATIONS_TITLE" desc="Title of the section of cloud print destinations.">
+          Google Cloud Print
         </message>
         <message name="IDS_PRINT_PREVIEW_MANAGE" desc="Text of link to manage printers.">
           Manage...
+        </message>
+        <message name="IDS_PRINT_PREVIEW_SETUP_CLOUD_PRINTERS" desc="Text of link to set up cloud printers.">
+          Set up to add printers…
         </message>
         <message name="IDS_PRINT_PREVIEW_CHANGE_DESTINATION" desc="Label on button to change print destination." meaning="Label text">
           Change...
@@ -9715,7 +9712,7 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
             Please unlock your profile before adding a person.
           </message>
           <message name="IDS_USER_MANAGER_PROMPT_MESSAGE" desc="Prompt message displayed on UserManager when force-sign-in policy is enabled.">
-            To use Chrome, please sign in.
+            Your administrator requires you to sign in to Chrome.
           </message>
           <message name="IDS_LOGIN_POD_USER_REMOVE_WARNING_NONSYNC" desc="Main text shown as a warning when attempting to remove an user.">
             This will permanently delete your browsing data from this device.
@@ -10872,6 +10869,12 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     <message name="IDS_IME_API_NEVER_SHOW" desc="Checkbox that controls whether this bubble will be shown every time.">
       Never show this again.
     </message>
+    <if expr="is_macosx">
+      <message name="IDS_ANNOUNCEMENT_COMPLETION_AVAILABLE_MAC" desc="Text to be
+read aloud to screenreader users to announce that a completion is available.">
+        Completion available: <ph name="COMPLETION_TEXT">$1</ph>
+      </message>
+    </if>
 
     <!-- Ad Blocking UI strings. -->
     <message name="IDS_ALWAYS_ALLOW_ADS" desc="Explanation associated with a toggle to allow ads after ads have been blocked on the page. To be used on pages where the ad blocking UI is governed by a persistent permissions-based whitelist.">

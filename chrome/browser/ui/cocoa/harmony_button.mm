@@ -4,7 +4,6 @@
 
 #import "chrome/browser/ui/cocoa/harmony_button.h"
 
-#import "base/mac/scoped_cftyperef.h"
 #import "chrome/browser/themes/theme_properties.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
 #include "skia/ext/skia_utils_mac.h"
@@ -220,9 +219,8 @@ constexpr NSTimeInterval kTransitionDuration = 0.25;
 
 - (void)layout {
   CALayer* layer = self.layer;
-  layer.shadowPath =
-      base::ScopedCFTypeRef<CGPathRef>(CGPathCreateWithRoundedRect(
-          layer.bounds, layer.cornerRadius, layer.cornerRadius, nullptr));
+  layer.shadowPath = CGPathCreateWithRoundedRect(
+      layer.bounds, layer.cornerRadius, layer.cornerRadius, nullptr);
   [self updateHoverButtonAppearanceAnimated:NO];
   self.title = self.title;  // Match the theme.
   [super layout];

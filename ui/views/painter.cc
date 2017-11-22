@@ -197,6 +197,7 @@ class PaintedLayer : public ui::LayerOwner, public ui::LayerDelegate {
 
   // LayerDelegate:
   void OnPaintLayer(const ui::PaintContext& context) override;
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override;
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override;
 
@@ -217,6 +218,9 @@ PaintedLayer::~PaintedLayer() {}
 void PaintedLayer::OnPaintLayer(const ui::PaintContext& context) {
   ui::PaintRecorder recorder(context, layer()->size());
   painter_->Paint(recorder.canvas(), layer()->size());
+}
+
+void PaintedLayer::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {
 }
 
 void PaintedLayer::OnDeviceScaleFactorChanged(float old_device_scale_factor,

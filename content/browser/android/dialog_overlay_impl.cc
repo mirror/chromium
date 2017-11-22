@@ -19,11 +19,11 @@ using base::android::ScopedJavaLocalRef;
 
 namespace content {
 
-static jlong JNI_DialogOverlayImpl_Init(JNIEnv* env,
-                                        const JavaParamRef<jobject>& obj,
-                                        jlong high,
-                                        jlong low,
-                                        jboolean power_efficient) {
+static jlong Init(JNIEnv* env,
+                  const JavaParamRef<jobject>& obj,
+                  jlong high,
+                  jlong low,
+                  jboolean power_efficient) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   RenderFrameHostImpl* rfhi =
@@ -226,17 +226,16 @@ void DialogOverlayImpl::OnDetachedFromWindow() {
     Java_DialogOverlayImpl_onWindowToken(env, obj, nullptr);
 }
 
-static jint JNI_DialogOverlayImpl_RegisterSurface(
-    JNIEnv* env,
-    const base::android::JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jobject>& surface) {
+static jint RegisterSurface(JNIEnv* env,
+                            const base::android::JavaParamRef<jclass>& jcaller,
+                            const JavaParamRef<jobject>& surface) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   return gpu::GpuSurfaceTracker::Get()->AddSurfaceForNativeWidget(
       gpu::GpuSurfaceTracker::SurfaceRecord(gfx::kNullAcceleratedWidget,
                                             surface.obj()));
 }
 
-static void JNI_DialogOverlayImpl_UnregisterSurface(
+static void UnregisterSurface(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     jint surface_id) {
@@ -244,8 +243,7 @@ static void JNI_DialogOverlayImpl_UnregisterSurface(
   gpu::GpuSurfaceTracker::Get()->RemoveSurface(surface_id);
 }
 
-static ScopedJavaLocalRef<jobject>
-JNI_DialogOverlayImpl_LookupSurfaceForTesting(
+static ScopedJavaLocalRef<jobject> LookupSurfaceForTesting(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     jint surfaceId) {

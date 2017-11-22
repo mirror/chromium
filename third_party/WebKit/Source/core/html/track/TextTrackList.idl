@@ -25,7 +25,9 @@
 
 // https://html.spec.whatwg.org/#texttracklist
 
-interface TextTrackList : EventTarget {
+[
+    DependentLifetime
+] interface TextTrackList : EventTarget {
     readonly attribute unsigned long length;
     getter TextTrack (unsigned long index);
     TextTrack? getTrackById(DOMString id);

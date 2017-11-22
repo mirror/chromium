@@ -95,10 +95,9 @@ class LayerTreeHostTestHasImplThreadTest : public LayerTreeHostTest {
  public:
   LayerTreeHostTestHasImplThreadTest() : single_threaded_(false) {}
 
-  void RunTest(CompositorMode mode,
-               bool using_synchronous_renderer_compositor) override {
+  void RunTest(CompositorMode mode) override {
     single_threaded_ = mode == CompositorMode::SINGLE_THREADED;
-    LayerTreeHostTest::RunTest(mode, using_synchronous_renderer_compositor);
+    LayerTreeHostTest::RunTest(mode);
   }
 
   void BeginTest() override {

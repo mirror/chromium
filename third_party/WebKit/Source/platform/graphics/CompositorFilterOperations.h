@@ -5,14 +5,15 @@
 #ifndef CompositorFilterOperations_h
 #define CompositorFilterOperations_h
 
-#include "cc/paint/filter_operations.h"
+#include "cc/base/filter_operations.h"
 #include "platform/PlatformExport.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/graphics/Color.h"
-#include "platform/graphics/paint/PaintFilter.h"
 #include "platform/wtf/text/WTFString.h"
 #include "third_party/skia/include/core/SkScalar.h"
+
+class SkImageFilter;
 
 namespace blink {
 
@@ -36,7 +37,7 @@ class PLATFORM_EXPORT CompositorFilterOperations {
   void AppendZoomFilter(float amount, int inset);
   void AppendSaturatingBrightnessFilter(float amount);
 
-  void AppendReferenceFilter(sk_sp<PaintFilter>);
+  void AppendReferenceFilter(sk_sp<SkImageFilter>);
 
   void Clear();
   bool IsEmpty() const;

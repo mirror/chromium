@@ -5,7 +5,6 @@
 #include "content/browser/notifications/notification_event_dispatcher_impl.h"
 
 #include "base/callback.h"
-#include "base/callback_helpers.h"
 #include "base/optional.h"
 #include "build/build_config.h"
 #include "content/browser/notifications/notification_message_filter.h"
@@ -25,7 +24,7 @@ namespace content {
 namespace {
 
 using NotificationDispatchCompleteCallback =
-    base::Callback<void(PersistentNotificationStatus)>;
+    NotificationEventDispatcher::NotificationDispatchCompleteCallback;
 using NotificationOperationCallback =
     base::Callback<void(const ServiceWorkerRegistration*,
                         const NotificationDatabaseData&)>;
@@ -371,17 +370,12 @@ void NotificationEventDispatcherImpl::DispatchNotificationClickEvent(
     const GURL& origin,
     const base::Optional<int>& action_index,
     const base::Optional<base::string16>& reply,
-    NotificationDispatchCompleteCallback dispatch_complete_callback) {
-  // TODO(peter): Remove AdaptCallbackForRepeating() when the dependencies of
-  // the NotificationEventDispatcherImpl have updated to using OnceCallbacks.
-  auto repeating_callback =
-      base::AdaptCallbackForRepeating(std::move(dispatch_complete_callback));
-
+    const NotificationDispatchCompleteCallback& dispatch_complete_callback) {
   DispatchNotificationEvent(
       browser_context, notification_id, origin,
       base::Bind(&DoDispatchNotificationClickEvent, action_index, reply,
-                 repeating_callback),
-      repeating_callback /* notification_error_callback */);
+                 dispatch_complete_callback),
+      dispatch_complete_callback);
 }
 
 void NotificationEventDispatcherImpl::DispatchNotificationCloseEvent(
@@ -389,17 +383,12 @@ void NotificationEventDispatcherImpl::DispatchNotificationCloseEvent(
     const std::string& notification_id,
     const GURL& origin,
     bool by_user,
-    NotificationDispatchCompleteCallback dispatch_complete_callback) {
-  // TODO(peter): Remove AdaptCallbackForRepeating() when the dependencies of
-  // the NotificationEventDispatcherImpl have updated to using OnceCallbacks.
-  auto repeating_callback =
-      base::AdaptCallbackForRepeating(std::move(dispatch_complete_callback));
-
+    const NotificationDispatchCompleteCallback& dispatch_complete_callback) {
   DispatchNotificationEvent(
       browser_context, notification_id, origin,
       base::Bind(&DoDispatchNotificationCloseEvent, notification_id, by_user,
-                 repeating_callback),
-      repeating_callback /* notification_error_callback */);
+                 dispatch_complete_callback),
+      dispatch_complete_callback);
 }
 
 void NotificationEventDispatcherImpl::RegisterNonPersistentNotification(
@@ -469,10 +458,6 @@ void NotificationEventDispatcherImpl::DispatchNonPersistentCloseEvent(
 
   sender->Send(new PlatformNotificationMsg_DidClose(
       non_persistent_ids_[notification_id]));
-
-  // No interaction will follow anymore once the notification has been closed.
-  non_persistent_ids_.erase(notification_id);
-  renderer_ids_.erase(notification_id);
 }
 
 void NotificationEventDispatcherImpl::RendererGone(int renderer_id) {

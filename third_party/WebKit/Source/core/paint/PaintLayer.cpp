@@ -360,15 +360,19 @@ bool PaintLayer::FixedToViewport() const {
   // An option for improving this is to cache the nearest scroll node in
   // the local border box properties.
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-    const auto* view_border_box_properties =
-        GetLayoutObject().View()->FirstFragment().LocalBorderBoxProperties();
+    const auto* view_border_box_properties = GetLayoutObject()
+                                                 .View()
+                                                 ->FirstFragment()
+                                                 .GetRarePaintData()
+                                                 ->LocalBorderBoxProperties();
     const auto* view_scroll = view_border_box_properties->Transform()
                                   ->NearestScrollTranslationNode()
                                   .ScrollNode();
 
     const auto* scroll = GetLayoutObject()
                              .FirstFragment()
-                             .LocalBorderBoxProperties()
+                             .GetRarePaintData()
+                             ->LocalBorderBoxProperties()
                              ->Transform()
                              ->NearestScrollTranslationNode()
                              .ScrollNode();
@@ -436,7 +440,7 @@ void PaintLayer::UpdateTransform(const ComputedStyle* old_style,
     // clip rects here.
     ClearClipRects();
   } else if (has_transform) {
-    ClearClipRects(kAbsoluteClipRectsIgnoringViewportClip);
+    ClearClipRects(kAbsoluteClipRects);
   }
 
   UpdateTransformationMatrix();
@@ -1260,8 +1264,8 @@ LayoutRect PaintLayer::PaintingExtent(const PaintLayer* root_layer,
 }
 
 void* PaintLayer::operator new(size_t sz) {
-  return WTF::Partitions::LayoutPartition()->Alloc(
-      sz, WTF_HEAP_PROFILER_TYPE_NAME(PaintLayer));
+  return WTF::PartitionAlloc(WTF::Partitions::LayoutPartition(), sz,
+                             WTF_HEAP_PROFILER_TYPE_NAME(PaintLayer));
 }
 
 void PaintLayer::operator delete(void* ptr) {

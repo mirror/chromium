@@ -24,6 +24,9 @@ class InProgressConversions {
 
   static metadata_pb::DownloadEntries DownloadEntriesToProto(
       const std::vector<DownloadEntry>& entries);
+
+ private:
+  DISALLOW_IMPLICIT_CONSTRUCTORS(InProgressConversions);
 };
 
 }  // namespace download

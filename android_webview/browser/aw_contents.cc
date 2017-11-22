@@ -173,11 +173,10 @@ AwContents* AwContents::FromID(int render_process_id, int render_view_id) {
 }
 
 // static
-void JNI_AwContents_UpdateDefaultLocale(
-    JNIEnv* env,
-    const JavaParamRef<jclass>&,
-    const JavaParamRef<jstring>& locale,
-    const JavaParamRef<jstring>& locale_list) {
+void UpdateDefaultLocale(JNIEnv* env,
+                         const JavaParamRef<jclass>&,
+                         const JavaParamRef<jstring>& locale,
+                         const JavaParamRef<jstring>& locale_list) {
   *g_locale() = ConvertJavaStringToUTF8(env, locale);
   *g_locale_list() = ConvertJavaStringToUTF8(env, locale_list);
 }
@@ -401,9 +400,9 @@ void AwContents::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   delete this;
 }
 
-static jlong JNI_AwContents_Init(JNIEnv* env,
-                                 const JavaParamRef<jclass>&,
-                                 const JavaParamRef<jobject>& browser_context) {
+static jlong Init(JNIEnv* env,
+                  const JavaParamRef<jclass>&,
+                  const JavaParamRef<jobject>& browser_context) {
   // TODO(joth): Use |browser_context| to get the native BrowserContext, rather
   // than hard-code the default instance lookup here.
   std::unique_ptr<WebContents> web_contents(content::WebContents::Create(
@@ -413,28 +412,26 @@ static jlong JNI_AwContents_Init(JNIEnv* env,
   return reinterpret_cast<intptr_t>(new AwContents(std::move(web_contents)));
 }
 
-static jboolean JNI_AwContents_HasRequiredHardwareExtensions(
-    JNIEnv* env,
-    const JavaParamRef<jclass>&) {
+static jboolean HasRequiredHardwareExtensions(JNIEnv* env,
+                                              const JavaParamRef<jclass>&) {
   return content::GpuDataManager::GetInstance()
       ->GetGPUInfo()
       .can_support_threaded_texture_mailbox;
 }
 
-static void JNI_AwContents_SetAwDrawSWFunctionTable(JNIEnv* env,
-                                                    const JavaParamRef<jclass>&,
-                                                    jlong function_table) {
+static void SetAwDrawSWFunctionTable(JNIEnv* env,
+                                     const JavaParamRef<jclass>&,
+                                     jlong function_table) {
   RasterHelperSetAwDrawSWFunctionTable(
       reinterpret_cast<AwDrawSWFunctionTable*>(function_table));
 }
 
-static void JNI_AwContents_SetAwDrawGLFunctionTable(JNIEnv* env,
-                                                    const JavaParamRef<jclass>&,
-                                                    jlong function_table) {}
+static void SetAwDrawGLFunctionTable(JNIEnv* env,
+                                     const JavaParamRef<jclass>&,
+                                     jlong function_table) {}
 
 // static
-jint JNI_AwContents_GetNativeInstanceCount(JNIEnv* env,
-                                           const JavaParamRef<jclass>&) {
+jint GetNativeInstanceCount(JNIEnv* env, const JavaParamRef<jclass>&) {
   return base::subtle::NoBarrier_Load(&g_instance_count);
 }
 
@@ -1312,9 +1309,8 @@ jlong AwContents::GetAutofillProvider(
   return reinterpret_cast<jlong>(autofill_provider_.get());
 }
 
-void JNI_AwContents_SetShouldDownloadFavicons(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jclazz) {
+void SetShouldDownloadFavicons(JNIEnv* env,
+                               const JavaParamRef<jclass>& jclazz) {
   g_should_download_favicons = true;
 }
 

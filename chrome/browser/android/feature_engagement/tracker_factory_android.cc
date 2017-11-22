@@ -9,8 +9,7 @@
 #include "components/feature_engagement/public/tracker.h"
 #include "jni/TrackerFactory_jni.h"
 
-static base::android::ScopedJavaLocalRef<jobject>
-JNI_TrackerFactory_GetTrackerForProfile(
+static base::android::ScopedJavaLocalRef<jobject> GetTrackerForProfile(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& clazz,
     const base::android::JavaParamRef<jobject>& jprofile) {

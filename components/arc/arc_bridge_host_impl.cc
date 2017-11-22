@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/instance_holder.h"
 
 namespace arc {
 
@@ -29,13 +30,12 @@ namespace {
 
 // The thin wrapper for InterfacePtr<T>, where T is one of ARC mojo Instance
 // class.
-template <typename InstanceType, typename HostType>
+template <typename T>
 class MojoChannelImpl : public ArcBridgeHostImpl::MojoChannel {
  public:
-  MojoChannelImpl(ConnectionHolder<InstanceType, HostType>* holder,
-                  mojo::InterfacePtr<InstanceType> ptr)
+  MojoChannelImpl(InstanceHolder<T>* holder, mojo::InterfacePtr<T> ptr)
       : holder_(holder), ptr_(std::move(ptr)) {
-    // Delay registration to the ConnectionHolder until the version is ready.
+    // Delay registration to the InstanceHolder until the version is ready.
   }
 
   ~MojoChannelImpl() override { holder_->SetInstance(nullptr, 0); }
@@ -46,8 +46,8 @@ class MojoChannelImpl : public ArcBridgeHostImpl::MojoChannel {
 
   void QueryVersion() {
     // Note: the callback will not be called if |ptr_| is destroyed.
-    ptr_.QueryVersion(
-        base::Bind(&MojoChannelImpl::OnVersionReady, base::Unretained(this)));
+    ptr_.QueryVersion(base::Bind(&MojoChannelImpl<T>::OnVersionReady,
+                                 base::Unretained(this)));
   }
 
  private:
@@ -56,11 +56,11 @@ class MojoChannelImpl : public ArcBridgeHostImpl::MojoChannel {
   }
 
   // Owned by ArcBridgeService.
-  ConnectionHolder<InstanceType, HostType>* const holder_;
+  InstanceHolder<T>* const holder_;
 
   // Put as a last member to ensure that any callback tied to the |ptr_|
   // is not invoked.
-  mojo::InterfacePtr<InstanceType> ptr_;
+  mojo::InterfacePtr<T> ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoChannelImpl);
 };
@@ -287,10 +287,9 @@ void ArcBridgeHostImpl::OnClosed() {
     binding_.Close();
 }
 
-template <typename InstanceType, typename HostType>
-void ArcBridgeHostImpl::OnInstanceReady(
-    ConnectionHolder<InstanceType, HostType>* holder,
-    mojo::InterfacePtr<InstanceType> ptr) {
+template <typename T>
+void ArcBridgeHostImpl::OnInstanceReady(InstanceHolder<T>* holder,
+                                        mojo::InterfacePtr<T> ptr) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(binding_.is_bound());
   DCHECK(ptr.is_bound());
@@ -298,8 +297,7 @@ void ArcBridgeHostImpl::OnInstanceReady(
   // Track |channel|'s lifetime via |mojo_channels_| so that it will be
   // closed on ArcBridgeHost/Instance closing or the ArcBridgeHostImpl's
   // destruction.
-  auto* channel =
-      new MojoChannelImpl<InstanceType, HostType>(holder, std::move(ptr));
+  auto* channel = new MojoChannelImpl<T>(holder, std::move(ptr));
   mojo_channels_.emplace_back(channel);
 
   // Since |channel| is managed by |mojo_channels_|, its lifetime is shorter

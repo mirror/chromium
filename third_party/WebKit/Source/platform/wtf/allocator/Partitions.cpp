@@ -90,15 +90,17 @@ void Partitions::DecommitFreeableMemory() {
   if (!initialized_)
     return;
 
-  ArrayBufferPartition()->PurgeMemory(
-      base::PartitionPurgeDecommitEmptyPages |
-      base::PartitionPurgeDiscardUnusedSystemPages);
-  BufferPartition()->PurgeMemory(base::PartitionPurgeDecommitEmptyPages |
+  base::PartitionPurgeMemoryGeneric(
+      ArrayBufferPartition(), base::PartitionPurgeDecommitEmptyPages |
+                                  base::PartitionPurgeDiscardUnusedSystemPages);
+  base::PartitionPurgeMemoryGeneric(
+      BufferPartition(), base::PartitionPurgeDecommitEmptyPages |
+                             base::PartitionPurgeDiscardUnusedSystemPages);
+  base::PartitionPurgeMemoryGeneric(
+      FastMallocPartition(), base::PartitionPurgeDecommitEmptyPages |
                                  base::PartitionPurgeDiscardUnusedSystemPages);
-  FastMallocPartition()->PurgeMemory(
-      base::PartitionPurgeDecommitEmptyPages |
-      base::PartitionPurgeDiscardUnusedSystemPages);
-  LayoutPartition()->PurgeMemory(base::PartitionPurgeDecommitEmptyPages |
+  base::PartitionPurgeMemory(LayoutPartition(),
+                             base::PartitionPurgeDecommitEmptyPages |
                                  base::PartitionPurgeDiscardUnusedSystemPages);
 }
 
@@ -126,12 +128,14 @@ void Partitions::DumpMemoryStats(
   DCHECK(IsMainThread());
 
   DecommitFreeableMemory();
-  FastMallocPartition()->DumpStats("fast_malloc", is_light_dump,
-                                   partition_stats_dumper);
-  ArrayBufferPartition()->DumpStats("array_buffer", is_light_dump,
-                                    partition_stats_dumper);
-  BufferPartition()->DumpStats("buffer", is_light_dump, partition_stats_dumper);
-  LayoutPartition()->DumpStats("layout", is_light_dump, partition_stats_dumper);
+  PartitionDumpStatsGeneric(FastMallocPartition(), "fast_malloc", is_light_dump,
+                            partition_stats_dumper);
+  PartitionDumpStatsGeneric(ArrayBufferPartition(), "array_buffer",
+                            is_light_dump, partition_stats_dumper);
+  PartitionDumpStatsGeneric(BufferPartition(), "buffer", is_light_dump,
+                            partition_stats_dumper);
+  PartitionDumpStats(LayoutPartition(), "layout", is_light_dump,
+                     partition_stats_dumper);
 }
 
 namespace {

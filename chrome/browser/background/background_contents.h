@@ -133,7 +133,7 @@ struct BackgroundContentsOpenedDetails {
   const std::string& frame_name;
 
   // The ID of the parent application (if any).
-  const std::string& application_id;
+  const base::string16& application_id;
 };
 
 #endif  // CHROME_BROWSER_BACKGROUND_BACKGROUND_CONTENTS_H_

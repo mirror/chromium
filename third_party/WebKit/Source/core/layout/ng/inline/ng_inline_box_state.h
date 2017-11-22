@@ -51,9 +51,6 @@ struct NGInlineBoxState {
   // text-top does not include leadings.
   LayoutUnit text_top;
 
-  // The height of the text fragments.
-  LayoutUnit text_height;
-
   // These values are to create a box fragment. Set only when needs_box_fragment
   // is set.
   LayoutUnit line_left_position;
@@ -96,7 +93,7 @@ struct NGInlineBoxState {
 // 1) Allow access to fragments belonging to the current box.
 // 2) Performs layout when the positin/size of a box was computed.
 // 3) Cache common values for a box.
-class CORE_EXPORT NGInlineLayoutStateStack {
+class NGInlineLayoutStateStack {
  public:
   // The box state for the line box.
   NGInlineBoxState& LineBoxState() { return stack_.front(); }
@@ -122,8 +119,6 @@ class CORE_EXPORT NGInlineLayoutStateStack {
   void OnEndPlaceItems(NGLineBoxFragmentBuilder::ChildList*,
                        FontBaseline,
                        LayoutUnit position);
-
-  LayoutObject* ContainingLayoutObjectForAbsolutePositionObjects() const;
 
  private:
   // End of a box state, either explicitly by close tag, or implicitly at the

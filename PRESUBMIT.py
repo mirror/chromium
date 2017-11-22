@@ -1508,15 +1508,11 @@ def _MatchesFile(input_api, patterns, path):
   return False
 
 
-def _GetOwnersFilesToCheckForIpcOwners(input_api):
-  """Gets a list of OWNERS files to check for correct security owners.
+def _CheckIpcOwners(input_api, output_api):
+  """Checks that affected files involving IPC have an IPC OWNERS rule.
 
-  Returns:
-    A dictionary mapping an OWNER file to the list of OWNERS rules it must
-    contain to cover IPC-related files with noparent reviewer rules.
-  """
-  # Whether or not a file affects IPC is (mostly) determined by a simple list
-  # of filename patterns.
+  Whether or not a file affects IPC is determined by a simple whitelist of
+  filename patterns."""
   file_patterns = [
       # Legacy IPC:
       '*_messages.cc',
@@ -1614,20 +1610,8 @@ def _GetOwnersFilesToCheckForIpcOwners(input_api):
         AddPatternToCheck(f, pattern)
         break
 
-  return to_check
-
-
-def _CheckIpcOwners(input_api, output_api):
-  """Checks that affected files involving IPC have an IPC OWNERS rule."""
-  to_check = _GetOwnersFilesToCheckForIpcOwners(input_api)
-
-  if to_check:
-    # If there are any OWNERS files to check, there are IPC-related changes in
-    # this CL. Auto-CC the review list.
-    output_api.AppendCC('ipc-security-reviews@chromium.org')
-
-  # Go through the OWNERS files to check, filtering out rules that are already
-  # present in that OWNERS file.
+  # Now go through the OWNERS files we collected, filtering out rules that are
+  # already present in that OWNERS file.
   for owners_file, patterns in to_check.iteritems():
     try:
       with file(owners_file) as f:

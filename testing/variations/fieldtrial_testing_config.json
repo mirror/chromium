@@ -1941,25 +1941,6 @@
             ]
         }
     ],
-    "NTPCaptureThumbnail": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "CaptureThumbnailDependingOnTransitionType",
-                        "CaptureThumbnailOnNavigatingAway"
-                    ]
-                }
-            ]
-        }
-    ],
     "NTPCondensedLayout": [
         {
             "platforms": [
@@ -1967,9 +1948,9 @@
             ],
             "experiments": [
                 {
-                    "name": "CondensedLayoutWithLargeLogo",
+                    "name": "CondensedLayoutWithSmallLogo",
                     "params": {
-                        "condensed_layout_logo_height": "100",
+                        "condensed_layout_logo_height": "50",
                         "condensed_layout_show_logo": "true",
                         "condensed_tile_layout_for_small_screens_enabled": "true"
                     },
@@ -3503,21 +3484,6 @@
             ]
         }
     ],
-    "StopLoadingInBackground": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Experiment",
-                    "enable_features": [
-                        "stop-loading-in-background"
-                    ]
-                }
-            ]
-        }
-    ],
     "SubresourceFilter": [
         {
             "platforms": [
@@ -3554,6 +3520,26 @@
                     "name": "Enabled",
                     "enable_features": [
                         "SuperfishInterstitial"
+                    ]
+                }
+            ]
+        }
+    ],
+    "SyncUSSAutocomplete": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "ios",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "SyncUSSAutocomplete"
                     ]
                 }
             ]

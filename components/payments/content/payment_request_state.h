@@ -15,8 +15,8 @@
 #include "components/payments/content/payment_request_spec.h"
 #include "components/payments/content/payment_response_helper.h"
 #include "components/payments/core/payments_profile_comparator.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/payment_app_provider.h"
-#include "content/public/browser/web_contents.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h"
 
 namespace autofill {
@@ -31,6 +31,7 @@ namespace payments {
 class ContentPaymentRequestDelegate;
 class JourneyLogger;
 class PaymentInstrument;
+class ServiceWorkerPaymentAppFactory;
 class ServiceWorkerPaymentInstrument;
 
 // Keeps track of the information currently selected by the user and whether the
@@ -74,7 +75,7 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   using StatusCallback = base::OnceCallback<void(bool)>;
 
-  PaymentRequestState(content::WebContents* web_contents,
+  PaymentRequestState(content::BrowserContext* context,
                       const GURL& top_level_origin,
                       const GURL& frame_origin,
                       PaymentRequestSpec* spec,
@@ -237,6 +238,7 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
       ServiceWorkerPaymentInstrument* instrument,
       bool result);
   void FinishedGetAllSWPaymentInstruments();
+  void OnServiceWorkerPaymentAppFactoryFinishedUsingResources();
 
   // Checks whether the user has at least one instrument that satisfies the
   // specified supported payment methods and call the |callback| to return the
@@ -294,6 +296,9 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   PaymentsProfileComparator profile_comparator_;
 
   base::ObserverList<Observer> observers_;
+
+  std::unique_ptr<ServiceWorkerPaymentAppFactory>
+      service_worker_payment_app_factory_;
 
   base::WeakPtrFactory<PaymentRequestState> weak_ptr_factory_;
 

@@ -52,7 +52,6 @@ class DEVICE_VR_EXPORT VRDisplayImpl : public mojom::VRMagicWindowProvider {
   void ExitPresent();
 
  private:
-  // mojom::VRMagicWindowProvider
   void GetPose(GetPoseCallback callback) override;
 
   mojo::Binding<mojom::VRMagicWindowProvider> binding_;

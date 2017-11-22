@@ -47,14 +47,6 @@ namespace {
 
 void NoOpSuccess(bool success) {}
 
-void SuccessCallback(base::OnceClosure callback,
-                     bool* success_out,
-                     bool success) {
-  if (success_out)
-    *success_out = success;
-  std::move(callback).Run();
-}
-
 void GetStorageUsageCallback(const base::Closure& callback,
                              std::vector<LocalStorageUsageInfo>* out_result,
                              std::vector<LocalStorageUsageInfo> result) {
@@ -944,15 +936,10 @@ class LocalStorageContextMojoTestWithService
                  const std::vector<uint8_t>& key,
                  const std::vector<uint8_t>& value) {
     mojom::LevelDBWrapperPtr wrapper;
-    bool success = false;
-    base::RunLoop run_loop;
     context->OpenLocalStorage(url::Origin::Create(GURL("http://foobar.com")),
                               MakeRequest(&wrapper));
-    wrapper->Put(
-        key, value, base::nullopt, "source",
-        base::BindOnce(&SuccessCallback, run_loop.QuitClosure(), &success));
-    run_loop.Run();
-    EXPECT_TRUE(success);
+    wrapper->Put(key, value, base::nullopt, "source",
+                 base::BindOnce(&NoOpSuccess));
     wrapper.reset();
     base::RunLoop().RunUntilIdle();
   }
@@ -1075,7 +1062,13 @@ TEST_F(LocalStorageContextMojoTestWithService, OnDisk) {
   context->ShutdownAndDelete();
 }
 
-TEST_F(LocalStorageContextMojoTestWithService, InvalidVersionOnDisk) {
+// Flaky on Android. https://crbug.com/756550
+#if defined(OS_ANDROID)
+#define MAYBE_InvalidVersionOnDisk DISABLED_InvalidVersionOnDisk
+#else
+#define MAYBE_InvalidVersionOnDisk InvalidVersionOnDisk
+#endif
+TEST_F(LocalStorageContextMojoTestWithService, MAYBE_InvalidVersionOnDisk) {
   base::FilePath test_path(FILE_PATH_LITERAL("test_path"));
 
   // Create context and add some data to it.

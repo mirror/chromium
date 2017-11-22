@@ -27,6 +27,7 @@
 #include <memory>
 #include "platform/MemoryCoordinator.h"
 #include "platform/PlatformExport.h"
+#include "platform/ScopedVirtualTimePauser.h"
 #include "platform/SharedBuffer.h"
 #include "platform/Timer.h"
 #include "platform/WebTaskRunner.h"
@@ -51,7 +52,6 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/CORSStatus.h"
 #include "public/platform/WebDataConsumerHandle.h"
-#include "public/platform/WebScopedVirtualTimePauser.h"
 
 namespace blink {
 
@@ -346,9 +346,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
         : AutoReset(&resource->is_revalidation_start_forbidden_, true) {}
   };
 
-  WebScopedVirtualTimePauser& VirtualTimePauser() {
-    return virtual_time_pauser_;
-  }
+  ScopedVirtualTimePauser& VirtualTimePauser() { return virtual_time_pauser_; }
 
  protected:
   Resource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
@@ -495,7 +493,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   scoped_refptr<SharedBuffer> data_;
 
-  WebScopedVirtualTimePauser virtual_time_pauser_;
+  ScopedVirtualTimePauser virtual_time_pauser_;
 };
 
 class ResourceFactory {

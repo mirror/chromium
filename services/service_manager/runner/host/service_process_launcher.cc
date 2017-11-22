@@ -175,8 +175,10 @@ void ServiceProcessLauncher::DoLaunch(
   if (!IsUnsandboxedSandboxType(sandbox_type_)) {
     child_process_ =
         sandbox::NamespaceSandbox::LaunchProcess(*child_command_line, options);
-    if (!child_process_.IsValid())
-      LOG(ERROR) << "Starting the process with a sandbox failed.";
+    if (!child_process_.IsValid()) {
+      LOG(ERROR) << "Starting the process with a sandbox failed. Missing kernel"
+                 << " support.";
+    }
   } else
 #endif
   {

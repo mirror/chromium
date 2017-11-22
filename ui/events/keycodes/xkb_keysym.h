@@ -17,7 +17,11 @@
 
 #else  // !BUILDFLAG(USE_XKBCOMMON)
 
-#include "ui/gfx/x/x11.h"
+#define XK_3270  // For XK_3270_BackTab in particular.
+#include <X11/X.h>
+#include <X11/keysym.h>
+#include <X11/Sunkeysym.h>
+#include <X11/XF86keysym.h>
 
 using xkb_keysym_t = uint32_t;
 

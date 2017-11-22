@@ -8,7 +8,7 @@
 #import "ios/chrome/browser/ui/stack_view/card_set.h"
 #import "ios/chrome/browser/ui/stack_view/stack_view_controller.h"
 
-@class ToolbarController, ToolsMenuCoordinator;
+@class ToolbarController;
 
 namespace {
 // Styles used to specify the transition animation type for presenting and
@@ -95,10 +95,6 @@ typedef enum {
 
 // |YES| if there is card set animation being processed.
 @property(nonatomic, readonly) BOOL inActiveDeckChangeAnimation;
-
-// Coordinator for the tools menu UI.
-@property(nonatomic, readonly, strong)
-    ToolsMenuCoordinator* toolsMenuCoordinator;
 
 @end
 

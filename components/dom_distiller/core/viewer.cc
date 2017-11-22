@@ -55,37 +55,41 @@ const char kMonospaceCssClass[] = "monospace";
 
 // Maps themes to JS themes.
 const std::string GetJsTheme(DistilledPagePrefs::Theme theme) {
-  if (theme == DistilledPagePrefs::DARK)
+  if (theme == DistilledPagePrefs::DARK) {
     return kDarkJsTheme;
-  if (theme == DistilledPagePrefs::SEPIA)
+  } else if (theme == DistilledPagePrefs::SEPIA) {
     return kSepiaJsTheme;
+  }
   return kLightJsTheme;
 }
 
 // Maps themes to CSS classes.
 const std::string GetThemeCssClass(DistilledPagePrefs::Theme theme) {
-  if (theme == DistilledPagePrefs::DARK)
+  if (theme == DistilledPagePrefs::DARK) {
     return kDarkCssClass;
-  if (theme == DistilledPagePrefs::SEPIA)
+  } else if (theme == DistilledPagePrefs::SEPIA) {
     return kSepiaCssClass;
+  }
   return kLightCssClass;
 }
 
 // Maps font families to JS font families.
 const std::string GetJsFontFamily(DistilledPagePrefs::FontFamily font_family) {
-  if (font_family == DistilledPagePrefs::SERIF)
+  if (font_family == DistilledPagePrefs::SERIF) {
     return kSerifJsFontFamily;
-  if (font_family == DistilledPagePrefs::MONOSPACE)
+  } else if (font_family == DistilledPagePrefs::MONOSPACE) {
     return kMonospaceJsFontFamily;
+  }
   return kSansSerifJsFontFamily;
 }
 
 // Maps fontFamilies to CSS fontFamily classes.
 const std::string GetFontCssClass(DistilledPagePrefs::FontFamily font_family) {
-  if (font_family == DistilledPagePrefs::SERIF)
+  if (font_family == DistilledPagePrefs::SERIF) {
     return kSerifCssClass;
-  if (font_family == DistilledPagePrefs::MONOSPACE)
+  } else if (font_family == DistilledPagePrefs::MONOSPACE) {
     return kMonospaceCssClass;
+  }
   return kSansSerifCssClass;
 }
 
@@ -156,6 +160,7 @@ const std::string GetUnsafeIncrementalDistilledPageJs(
   page_update += output + ");";
   return page_update + GetToggleLoadingIndicatorJs(
       is_last_page);
+
 }
 
 const std::string GetErrorPageJs() {
@@ -190,7 +195,8 @@ const std::string GetSetTextDirectionJs(const std::string& direction) {
 const std::string GetToggleLoadingIndicatorJs(const bool is_last_page) {
   if (is_last_page)
     return "showLoadingIndicator(true);";
-  return "showLoadingIndicator(false);";
+  else
+    return "showLoadingIndicator(false);";
 }
 
 const std::string GetUnsafeArticleTemplateHtml(
@@ -268,8 +274,7 @@ std::unique_ptr<ViewerHandle> CreateViewRequest(
         view_request_delegate,
         dom_distiller_service->CreateDefaultDistillerPage(render_view_size),
         entry_id);
-  }
-  if (has_valid_url) {
+  } else if (has_valid_url) {
     return dom_distiller_service->ViewUrl(
         view_request_delegate,
         dom_distiller_service->CreateDefaultDistillerPage(render_view_size),

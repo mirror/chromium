@@ -5,6 +5,7 @@
 // https://html.spec.whatwg.org/#audiotrack
 
 [
+    DependentLifetime,
     RuntimeEnabled=AudioVideoTracks
 ] interface AudioTrack {
   readonly attribute DOMString id;

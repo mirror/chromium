@@ -14,13 +14,13 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/base/filter_operation.h"
+#include "cc/base/filter_operations.h"
 #include "cc/layers/nine_patch_layer.h"
 #include "cc/layers/picture_layer.h"
 #include "cc/layers/solid_color_layer.h"
 #include "cc/layers/surface_layer.h"
 #include "cc/layers/texture_layer.h"
-#include "cc/paint/filter_operation.h"
-#include "cc/paint/filter_operations.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/resources/transferable_resource.h"
@@ -73,6 +73,7 @@ class Layer::LayerMirror : public LayerDelegate, LayerObserver {
     if (auto* delegate = source_->delegate())
       delegate->OnPaintLayer(context);
   }
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override {}
 
@@ -169,8 +170,8 @@ Layer::~Layer() {
     child->parent_ = nullptr;
 
   cc_layer_->RemoveFromParent();
-  if (transfer_release_callback_)
-    transfer_release_callback_->Run(gpu::SyncToken(), false);
+  if (mailbox_release_callback_)
+    mailbox_release_callback_->Run(gpu::SyncToken(), false);
 }
 
 std::unique_ptr<Layer> Layer::Clone() const {
@@ -729,12 +730,12 @@ void Layer::RemoveTrilinearFilteringRequest() {
     cc_layer_->SetTrilinearFiltering(false);
 }
 
-void Layer::SetTransferableResource(
-    const viz::TransferableResource& resource,
+void Layer::SetTextureMailbox(
+    const viz::TextureMailbox& mailbox,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback,
     gfx::Size texture_size_in_dip) {
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
-  DCHECK(!resource.mailbox_holder.mailbox.IsZero());
+  DCHECK(mailbox.IsValid());
   DCHECK(release_callback);
   if (!texture_layer_.get()) {
     scoped_refptr<cc::TextureLayer> new_layer =
@@ -746,10 +747,10 @@ void Layer::SetTransferableResource(
     // the frame_size_in_dip_ was for a previous (different) |texture_layer_|.
     frame_size_in_dip_ = gfx::Size();
   }
-  if (transfer_release_callback_)
-    transfer_release_callback_->Run(gpu::SyncToken(), false);
-  transfer_release_callback_ = std::move(release_callback);
-  transfer_resource_ = resource;
+  if (mailbox_release_callback_)
+    mailbox_release_callback_->Run(gpu::SyncToken(), false);
+  mailbox_release_callback_ = std::move(release_callback);
+  mailbox_ = mailbox;
   SetTextureSize(texture_size_in_dip);
 }
 
@@ -827,10 +828,10 @@ void Layer::SetShowSolidColorContent() {
   SwitchToLayer(new_layer);
   solid_color_layer_ = new_layer;
 
-  transfer_resource_ = viz::TransferableResource();
-  if (transfer_release_callback_) {
-    transfer_release_callback_->Run(gpu::SyncToken(), false);
-    transfer_release_callback_.reset();
+  mailbox_ = viz::TextureMailbox();
+  if (mailbox_release_callback_) {
+    mailbox_release_callback_->Run(gpu::SyncToken(), false);
+    mailbox_release_callback_.reset();
   }
   RecomputeDrawsContentAndUVRect();
 }
@@ -882,12 +883,10 @@ SkColor Layer::background_color() const {
 }
 
 bool Layer::SchedulePaint(const gfx::Rect& invalid_rect) {
-  if (type_ == LAYER_SOLID_COLOR && !texture_layer_)
+  if ((type_ == LAYER_SOLID_COLOR && !texture_layer_.get()) ||
+      type_ == LAYER_NINE_PATCH || (!delegate_ && !mailbox_.IsValid())) {
     return false;
-  if (type_ == LAYER_NINE_PATCH)
-    return false;
-  if (!delegate_ && transfer_resource_.mailbox_holder.mailbox.IsZero())
-    return false;
+  }
 
   damaged_region_.Union(invalid_rect);
   if (layer_mask_)
@@ -907,7 +906,7 @@ void Layer::ScheduleDraw() {
 void Layer::SendDamagedRects() {
   if (damaged_region_.IsEmpty())
     return;
-  if (!delegate_ && transfer_resource_.mailbox_holder.mailbox.IsZero())
+  if (!delegate_ && !mailbox_.IsValid())
     return;
   if (content_layer_ && deferred_paint_requests_)
     return;
@@ -964,6 +963,12 @@ void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
     child->OnDeviceScaleFactorChanged(device_scale_factor);
   if (layer_mask_)
     layer_mask_->OnDeviceScaleFactorChanged(device_scale_factor);
+}
+
+void Layer::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {
+  DCHECK(surface_layer_.get());
+  if (delegate_)
+    delegate_->OnDelegatedFrameDamage(damage_rect_in_dip);
 }
 
 void Layer::SetDidScrollCallback(
@@ -1035,13 +1040,13 @@ size_t Layer::GetApproximateUnsharedMemoryUsage() const {
   return 0;
 }
 
-bool Layer::PrepareTransferableResource(
-    viz::TransferableResource* resource,
+bool Layer::PrepareTextureMailbox(
+    viz::TextureMailbox* mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* release_callback) {
-  if (!transfer_release_callback_)
+  if (!mailbox_release_callback_)
     return false;
-  *resource = transfer_resource_;
-  *release_callback = std::move(transfer_release_callback_);
+  *mailbox = mailbox_;
+  *release_callback = std::move(mailbox_release_callback_);
   return true;
 }
 

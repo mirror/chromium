@@ -20,6 +20,10 @@ namespace {
 
 constexpr float kIconScaleFactor = 0.5;
 constexpr float kHitPlaneScaleFactorHovered = 1.2;
+constexpr float kBackgroundZOffset = -kTextureOffset;
+constexpr float kForegroundZOffset = kTextureOffset;
+constexpr float kBackgroundZOffsetHover = kTextureOffset;
+constexpr float kForegroundZOffsetHover = 4 * kTextureOffset;
 
 }  // namespace
 
@@ -27,9 +31,8 @@ Button::Button(base::Callback<void()> click_handler,
                int draw_phase,
                float width,
                float height,
-               float hover_offset,
                const gfx::VectorIcon& icon)
-    : click_handler_(click_handler), hover_offset_(hover_offset) {
+    : click_handler_(click_handler) {
   set_draw_phase(draw_phase);
   set_hit_testable(false);
   SetSize(width, height);
@@ -42,6 +45,7 @@ Button::Button(base::Callback<void()> click_handler,
   background->SetTransitionedProperties({TRANSFORM});
   background->set_corner_radius(width / 2);
   background->set_hit_testable(false);
+  background->SetTranslate(0.0, 0.0, kBackgroundZOffset);
   background_ = background.get();
   AddChild(std::move(background));
 
@@ -53,6 +57,7 @@ Button::Button(base::Callback<void()> click_handler,
   vector_icon->SetSize(width * kIconScaleFactor, height * kIconScaleFactor);
   vector_icon->SetTransitionedProperties({TRANSFORM});
   vector_icon->set_hit_testable(false);
+  vector_icon->SetTranslate(0.0, 0.0, kForegroundZOffset);
   foreground_ = vector_icon.get();
   AddChild(std::move(vector_icon));
 
@@ -120,13 +125,13 @@ void Button::OnStateUpdated() {
   pressed_ = hovered_ ? down_ : false;
 
   if (hovered_) {
-    background_->SetTranslate(0.0, 0.0, hover_offset_);
-    foreground_->SetTranslate(0.0, 0.0, hover_offset_);
+    background_->SetTranslate(0.0, 0.0, kBackgroundZOffsetHover);
+    foreground_->SetTranslate(0.0, 0.0, kForegroundZOffsetHover);
     hit_plane_->SetScale(kHitPlaneScaleFactorHovered,
                          kHitPlaneScaleFactorHovered, 1.0f);
   } else {
-    background_->SetTranslate(0.0, 0.0, 0.0);
-    foreground_->SetTranslate(0.0, 0.0, 0.0);
+    background_->SetTranslate(0.0, 0.0, kBackgroundZOffset);
+    foreground_->SetTranslate(0.0, 0.0, kForegroundZOffset);
     hit_plane_->SetScale(1.0f, 1.0f, 1.0f);
   }
 

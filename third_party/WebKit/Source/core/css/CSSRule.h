@@ -34,7 +34,6 @@ class CSSParserContext;
 class CSSRuleList;
 class CSSStyleSheet;
 class StyleRuleBase;
-enum class SecureContextMode;
 
 class CORE_EXPORT CSSRule : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
@@ -93,7 +92,7 @@ class CORE_EXPORT CSSRule : public ScriptWrappable {
     has_cached_selector_text_ = has_cached_selector_text;
   }
 
-  const CSSParserContext* ParserContext(SecureContextMode) const;
+  const CSSParserContext* ParserContext() const;
 
  private:
   mutable unsigned char has_cached_selector_text_ : 1;

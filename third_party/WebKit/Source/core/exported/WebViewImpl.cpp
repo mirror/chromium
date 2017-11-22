@@ -137,8 +137,8 @@
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/wtf/AutoReset.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
-#include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositeAndReadbackAsyncCallback.h"
 #include "public/platform/WebCompositorSupport.h"
@@ -1534,8 +1534,8 @@ PagePopup* WebViewImpl::OpenPagePopup(PagePopupClient* client) {
     HidePopups();
   DCHECK(!page_popup_);
 
-  WebWidget* popup_widget = client_->CreatePopup(kWebPopupTypePage);
-  // CreatePopup returns nullptr if this renderer process is about to die.
+  WebWidget* popup_widget = client_->CreatePopupMenu(kWebPopupTypePage);
+  // createPopupMenu returns nullptr if this renderer process is about to die.
   if (!popup_widget)
     return nullptr;
   page_popup_ = ToWebPagePopupImpl(popup_widget);
@@ -2172,22 +2172,50 @@ void WebViewImpl::SetFocus(bool enable) {
   }
 }
 
-bool WebViewImpl::SelectionBounds(WebRect& anchor_web,
-                                  WebRect& focus_web) const {
+// TODO(ekaramad):This method is almost duplicated in WebFrameWidgetImpl as
+// well. This code needs to be refactored  (http://crbug.com/629721).
+bool WebViewImpl::SelectionBounds(WebRect& anchor, WebRect& focus) const {
   const Frame* frame = FocusedCoreFrame();
   if (!frame || !frame->IsLocalFrame())
     return false;
+
   const LocalFrame* local_frame = ToLocalFrame(frame);
   if (!local_frame)
     return false;
-
-  IntRect anchor;
-  IntRect focus;
-  if (!local_frame->Selection().ComputeAbsoluteBounds(anchor, focus))
+  FrameSelection& selection = local_frame->Selection();
+  if (!selection.IsAvailable() || selection.GetSelectionInDOMTree().IsNone())
     return false;
 
-  anchor_web = local_frame->View()->ContentsToViewport(anchor);
-  focus_web = local_frame->View()->ContentsToViewport(focus);
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  local_frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  if (selection.ComputeVisibleSelectionInDOMTree().IsNone()) {
+    // plugins/mouse-capture-inside-shadow.html reaches here.
+    return false;
+  }
+
+  DocumentLifecycle::DisallowTransitionScope disallow_transition(
+      local_frame->GetDocument()->Lifecycle());
+
+  if (selection.ComputeVisibleSelectionInDOMTree().IsCaret()) {
+    anchor = focus = selection.AbsoluteCaretBounds();
+  } else {
+    const EphemeralRange selected_range =
+        selection.ComputeVisibleSelectionInDOMTree()
+            .ToNormalizedEphemeralRange();
+    if (selected_range.IsNull())
+      return false;
+    anchor = local_frame->GetEditor().FirstRectForRange(
+        EphemeralRange(selected_range.StartPosition()));
+    focus = local_frame->GetEditor().FirstRectForRange(
+        EphemeralRange(selected_range.EndPosition()));
+  }
+
+  anchor = local_frame->View()->ContentsToViewport(anchor);
+  focus = local_frame->View()->ContentsToViewport(focus);
+
+  if (!selection.ComputeVisibleSelectionInDOMTree().IsBaseFirst())
+    std::swap(anchor, focus);
   return true;
 }
 

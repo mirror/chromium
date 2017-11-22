@@ -10,7 +10,7 @@
 
 using base::android::JavaParamRef;
 
-static void JNI_SingleTabModel_PermanentlyBlockAllNewWindows(
+static void PermanentlyBlockAllNewWindows(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& j_tab_android) {

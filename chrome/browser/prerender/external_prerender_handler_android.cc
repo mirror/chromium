@@ -24,14 +24,13 @@ namespace prerender {
 
 namespace {
 
-bool JNI_ExternalPrerenderHandler_CheckAndConvertParams(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& jprofile,
-    const JavaParamRef<jstring>& jurl,
-    const JavaParamRef<jobject>& jweb_contents,
-    GURL* url,
-    PrerenderManager** prerender_manager,
-    content::WebContents** web_contents) {
+bool CheckAndConvertParams(JNIEnv* env,
+                           const JavaParamRef<jobject>& jprofile,
+                           const JavaParamRef<jstring>& jurl,
+                           const JavaParamRef<jobject>& jweb_contents,
+                           GURL* url,
+                           PrerenderManager** prerender_manager,
+                           content::WebContents** web_contents) {
   if (!jurl)
     return false;
 
@@ -118,25 +117,22 @@ void ExternalPrerenderHandlerAndroid::CancelCurrentPrerender(
   prerender_handle_.reset();
 }
 
-static jboolean JNI_ExternalPrerenderHandler_HasPrerenderedUrl(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jobject>& jprofile,
-    const JavaParamRef<jstring>& jurl,
-    const JavaParamRef<jobject>& jweb_contents) {
+static jboolean HasPrerenderedUrl(JNIEnv* env,
+                                  const JavaParamRef<jclass>& clazz,
+                                  const JavaParamRef<jobject>& jprofile,
+                                  const JavaParamRef<jstring>& jurl,
+                                  const JavaParamRef<jobject>& jweb_contents) {
   GURL url;
   PrerenderManager* prerender_manager;
   content::WebContents* web_contents;
-  if (!JNI_ExternalPrerenderHandler_CheckAndConvertParams(
-          env, jprofile, jurl, jweb_contents, &url, &prerender_manager,
-          &web_contents))
+  if (!CheckAndConvertParams(env, jprofile, jurl, jweb_contents, &url,
+                             &prerender_manager, &web_contents))
     return false;
 
   return prerender_manager->HasPrerenderedUrl(url, web_contents);
 }
 
-static jboolean
-JNI_ExternalPrerenderHandler_HasPrerenderedAndFinishedLoadingUrl(
+static jboolean HasPrerenderedAndFinishedLoadingUrl(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jprofile,
@@ -145,9 +141,8 @@ JNI_ExternalPrerenderHandler_HasPrerenderedAndFinishedLoadingUrl(
   GURL url;
   PrerenderManager* prerender_manager;
   content::WebContents* web_contents;
-  if (!JNI_ExternalPrerenderHandler_CheckAndConvertParams(
-          env, jprofile, jurl, jweb_contents, &url, &prerender_manager,
-          &web_contents))
+  if (!CheckAndConvertParams(env, jprofile, jurl, jweb_contents, &url,
+                             &prerender_manager, &web_contents))
     return false;
 
   return prerender_manager->HasPrerenderedAndFinishedLoadingUrl(url,
@@ -158,9 +153,7 @@ ExternalPrerenderHandlerAndroid::ExternalPrerenderHandlerAndroid() {}
 
 ExternalPrerenderHandlerAndroid::~ExternalPrerenderHandlerAndroid() {}
 
-static jlong JNI_ExternalPrerenderHandler_Init(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
+static jlong Init(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   ExternalPrerenderHandlerAndroid* external_handler =
       new ExternalPrerenderHandlerAndroid();
   return reinterpret_cast<intptr_t>(external_handler);

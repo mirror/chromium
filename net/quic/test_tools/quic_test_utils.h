@@ -425,7 +425,7 @@ class MockQuicConnection : public QuicConnection {
                void(QuicStreamId id, QuicStreamOffset byte_offset));
   MOCK_METHOD0(OnCanWrite, void());
   MOCK_METHOD2(SendConnectivityProbingPacket,
-               bool(QuicPacketWriter* probing_writer,
+               void(QuicPacketWriter* probing_writer,
                     const QuicSocketAddress& peer_address));
 
   MOCK_METHOD1(OnSendConnectionState, void(const CachedNetworkParameters&));
@@ -452,11 +452,10 @@ class MockQuicConnection : public QuicConnection {
     QuicConnection::SendGoAway(error, last_good_stream_id, reason);
   }
 
-  bool ReallySendConnectivityProbingPacket(
+  void ReallySendConnectivityProbingPacket(
       QuicPacketWriter* probing_writer,
       const QuicSocketAddress& peer_address) {
-    return QuicConnection::SendConnectivityProbingPacket(probing_writer,
-                                                         peer_address);
+    QuicConnection::SendConnectivityProbingPacket(probing_writer, peer_address);
   }
 
  private:

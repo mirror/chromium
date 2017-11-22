@@ -54,8 +54,7 @@ TEST_F(ProtoConversionsTest, NetworkRequirementsConversion) {
 TEST_F(ProtoConversionsTest, BatteryRequirementsConversion) {
   SchedulingParams::BatteryRequirements values[] = {
       SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE,
-      SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE,
-      SchedulingParams::BatteryRequirements::BATTERY_CHARGING};
+      SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE};
   for (auto value : values) {
     ASSERT_EQ(value,
               BatteryRequirementsFromProto(BatteryRequirementsToProto(value)));

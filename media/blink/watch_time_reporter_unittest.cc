@@ -167,10 +167,9 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool>,
       EXPECT_WATCH_TIME_FINALIZED();
 
     wtr_.reset(new WatchTimeReporter(
-        mojom::PlaybackProperties::New(kUnknownAudioCodec, kUnknownVideoCodec,
-                                       has_audio, has_video_, is_mse,
-                                       is_encrypted, false, initial_video_size,
-                                       url::Origin(), true /* is_top_frame */),
+        mojom::PlaybackProperties::New(
+            kUnknownAudioCodec, kUnknownVideoCodec, has_audio, has_video_,
+            is_mse, is_encrypted, false, initial_video_size, url::Origin()),
         base::Bind(&WatchTimeReporterTest::GetCurrentMediaTime,
                    base::Unretained(this)),
         this));

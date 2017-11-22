@@ -4,8 +4,6 @@
 
 #include <string>
 
-#include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "base/optional.h"
 #include "chrome/browser/extensions/api/notifications/extension_notification_handler.h"
 #include "chrome/browser/profiles/profile.h"
@@ -71,8 +69,7 @@ TEST_F(ExtensionNotificationHandlerTest, CloseHandler) {
   TestExtensionNotificationHandler handler;
   handler.SetTestExpectations(kChromeExtensionId, "notifications.onClosed", 2);
   handler.OnClose(profile.get(), GURL(kChromeExtensionOrigin),
-                  kChromeNotificationId, false /* by_user */,
-                  base::BindOnce(&base::DoNothing));
+                  kChromeNotificationId, false /* by_user */);
 }
 
 TEST_F(ExtensionNotificationHandlerTest, ClickHandler) {
@@ -84,7 +81,7 @@ TEST_F(ExtensionNotificationHandlerTest, ClickHandler) {
   handler.SetTestExpectations(kChromeExtensionId, "notifications.onClicked", 1);
   handler.OnClick(profile.get(), GURL(kChromeExtensionOrigin),
                   kChromeNotificationId, base::nullopt /* action_index */,
-                  base::nullopt /* reply */, base::BindOnce(&base::DoNothing));
+                  base::nullopt /* reply */);
 }
 
 TEST_F(ExtensionNotificationHandlerTest, ClickHandlerButton) {
@@ -97,7 +94,7 @@ TEST_F(ExtensionNotificationHandlerTest, ClickHandlerButton) {
                               "notifications.onButtonClicked", 2);
   handler.OnClick(profile.get(), GURL(kChromeExtensionOrigin),
                   kChromeNotificationId, 1 /* action_index */,
-                  base::nullopt /* reply */, base::BindOnce(&base::DoNothing));
+                  base::nullopt /* reply */);
 }
 
 }  // namespace extensions

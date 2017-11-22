@@ -6,6 +6,7 @@
 #define COMPONENTS_OMNIBOX_BROWSER_OMNIBOX_POPUP_MODEL_H_
 
 #include <stddef.h>
+#include <vector>
 
 #include "base/containers/mru_cache.h"
 #include "base/macros.h"

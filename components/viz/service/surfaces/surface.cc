@@ -45,19 +45,6 @@ void Surface::ResetSeenFirstFrameActivation() {
   seen_first_frame_activation_ = false;
 }
 
-bool Surface::InheritActivationDeadlineFrom(
-    const SurfaceDependencyDeadline& deadline) {
-  TRACE_EVENT1("viz", "Surface::InheritActivationDeadlineFrom", "FrameSinkId",
-               surface_id().frame_sink_id().ToString());
-  return deadline_.InheritFrom(deadline);
-}
-
-void Surface::SetActivationDeadline(uint32_t number_of_frames_to_deadline) {
-  TRACE_EVENT1("viz", "Surface::SetActivationDeadline", "FrameSinkId",
-               surface_id().frame_sink_id().ToString());
-  deadline_.Set(number_of_frames_to_deadline);
-}
-
 void Surface::SetPreviousFrameSurface(Surface* surface) {
   DCHECK(surface && (HasActiveFrame() || HasPendingFrame()));
   previous_frame_surface_id_ = surface->surface_id();
@@ -254,8 +241,6 @@ void Surface::ActivatePendingFrame() {
 // A frame is activated if all its Surface ID dependences are active or a
 // deadline has hit and the frame was forcibly activated.
 void Surface::ActivateFrame(FrameData frame_data) {
-  TRACE_EVENT1("viz", "Surface::ActivateFrame", "FrameSinkId",
-               surface_id().frame_sink_id().ToString());
   deadline_.Cancel();
 
   // Save root pass copy requests.
@@ -403,8 +388,6 @@ void Surface::SatisfyDestructionDependencies(
 }
 
 void Surface::OnDeadline() {
-  TRACE_EVENT1("viz", "Surface::OnDeadline", "FrameSinkId",
-               surface_id().frame_sink_id().ToString());
   ActivatePendingFrameForDeadline();
 }
 

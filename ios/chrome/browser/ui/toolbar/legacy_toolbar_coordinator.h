@@ -14,21 +14,19 @@
 #import "ios/chrome/browser/ui/toolbar/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/public/abstract_web_toolbar.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h"
-#import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_state_provider.h"
 
 @protocol ActivityServicePositioner;
 @protocol QRScannerResultLoading;
 @class Tab;
 @protocol TabHistoryPositioner;
 @protocol TabHistoryUIUpdater;
-@protocol VoiceSearchControllerDelegate;
-@protocol WebToolbarDelegate;
-@protocol ToolsMenuConfigurationProvider;
-
-@class CommandDispatcher;
 @class TabModel;
 @class ToolbarController;
+@class ToolsMenuConfiguration;
+@class ToolsPopupController;
+@protocol VoiceSearchControllerDelegate;
 @class WebToolbarController;
+@protocol WebToolbarDelegate;
 
 @protocol Toolbar<AbstractWebToolbar,
                   OmniboxFocuser,
@@ -36,9 +34,6 @@
                   ActivityServicePositioner,
                   QRScannerResultLoading,
                   BubbleViewAnchorPointProvider>
-- (void)setToolsMenuStateProvider:
-    (id<ToolsMenuPresentationStateProvider>)provider;
-- (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible;
 @end
 
 @interface LegacyToolbarCoordinator
@@ -46,16 +41,10 @@
                         IncognitoViewControllerDelegate,
                         OmniboxFocuser,
                         SideSwipeToolbarInteracting,
-                        ToolbarSnapshotProviding,
-                        ToolsMenuPresentationStateProvider>
+                        ToolbarSnapshotProviding>
 
 @property(nonatomic, weak) TabModel* tabModel;
 @property(nonatomic, strong) UIViewController* toolbarViewController;
-
-- (instancetype)initWithBaseViewController:(UIViewController*)viewController
-            toolsMenuConfigurationProvider:
-                (id<ToolsMenuConfigurationProvider>)configurationProvider
-                                dispatcher:(CommandDispatcher*)dispatcher;
 
 // Returns the different protocols and superclass now implemented by the
 - (id<VoiceSearchControllerDelegate>)voiceSearchDelegate;
@@ -82,10 +71,13 @@
 - (BOOL)isOmniboxFirstResponder;
 - (BOOL)showingOmniboxPopup;
 - (void)currentPageLoadStarted;
+- (void)showToolsMenuPopupWithConfiguration:
+    (ToolsMenuConfiguration*)configuration;
+- (ToolsPopupController*)toolsPopupController;
+- (void)dismissToolsMenuPopup;
 - (CGRect)visibleOmniboxFrame;
 - (void)triggerToolsMenuButtonAnimation;
 - (void)adjustToolbarHeight;
-- (BOOL)isShowingToolsMenu;
 
 @end
 

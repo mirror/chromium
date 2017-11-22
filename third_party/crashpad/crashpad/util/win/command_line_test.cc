@@ -53,7 +53,7 @@ void AppendCommandLineArgumentTest(size_t argc, const wchar_t* const argv[]) {
 
 TEST(CommandLine, AppendCommandLineArgument) {
   // Most of these test cases come from
-  // https://blogs.msdn.microsoft.com/twistylittlepassagesallalike/2011/04/23/everyone-quotes-command-line-arguments-the-wrong-way/,
+  // http://blogs.msdn.com/b/twistylittlepassagesallalike/archive/2011/04/23/everyone-quotes-arguments-the-wrong-way.aspx,
   // which was also a reference for the implementation of
   // AppendCommandLineArgument().
 

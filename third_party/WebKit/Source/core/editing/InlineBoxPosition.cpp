@@ -51,7 +51,7 @@ bool IsNonTextLeafChild(LayoutObject* object) {
   return true;
 }
 
-InlineTextBox* SearchAheadForBetterMatch(const LayoutText* layout_object) {
+InlineTextBox* SearchAheadForBetterMatch(LayoutObject* layout_object) {
   LayoutBlock* container = layout_object->ContainingBlock();
   for (LayoutObject* next = layout_object->NextInPreOrder(container); next;
        next = next->NextInPreOrder(container)) {
@@ -221,14 +221,13 @@ bool IsCaretAtEdgeOfInlineTextBox(int caret_offset,
 }
 
 InlineBoxPosition ComputeInlineBoxPositionForTextNode(
-    const LayoutText* text_layout_object,
+    LayoutObject* layout_object,
     int caret_offset,
     TextAffinity affinity,
     TextDirection primary_direction) {
-  // TODO(editing-dev): Add the following DCHECK when ready.
-  // DCHECK(CanUseInlineBox(*layout_object));
-
   InlineBox* inline_box = nullptr;
+  LayoutText* text_layout_object = ToLayoutText(layout_object);
+
   InlineTextBox* candidate = nullptr;
 
   for (InlineTextBox* box : InlineTextBoxesOf(*text_layout_object)) {
@@ -261,53 +260,8 @@ InlineBoxPosition ComputeInlineBoxPositionForTextNode(
   if (!inline_box)
     return InlineBoxPosition();
   return AdjustInlineBoxPositionForTextDirection(
-      inline_box, caret_offset, text_layout_object->Style()->GetUnicodeBidi(),
-      primary_direction);
-}
-
-InlineBoxPosition ComputeInlineBoxPositionForAtomicInline(
-    const LayoutObject* layout_object,
-    int caret_offset,
-    TextDirection primary_direction) {
-  // TODO(crbug.com/567964): Change the following branch to DCHECK once fixed.
-  if (!layout_object->IsInline())
-    return InlineBoxPosition();
-
-  // TODO(editing-dev): Add the following DCHECK when ready.
-  // DCHECK(CanUseInlineBox(*layout_object);
-  DCHECK(layout_object->IsBox());
-  DCHECK(ToLayoutBox(layout_object)->InlineBoxWrapper());
-  InlineBox* const inline_box = ToLayoutBox(layout_object)->InlineBoxWrapper();
-  if ((caret_offset > inline_box->CaretMinOffset() &&
-       caret_offset < inline_box->CaretMaxOffset()))
-    return InlineBoxPosition(inline_box, caret_offset);
-  return AdjustInlineBoxPositionForTextDirection(
       inline_box, caret_offset, layout_object->Style()->GetUnicodeBidi(),
       primary_direction);
-}
-
-template <typename Strategy>
-InlineBoxPosition ComputeInlineBoxPositionForBlockFlow(
-    const PositionTemplate<Strategy>& position,
-    TextDirection primary_direction) {
-  // Try a visually equivalent position with possibly opposite editability. This
-  // helps in case |position| is in an editable block but surrounded by
-  // non-editable positions. It acts to negate the logic at the beginning of
-  // |LayoutObject::CreatePositionWithAffinity()|.
-  const PositionTemplate<Strategy>& downstream_equivalent =
-      DownstreamIgnoringEditingBoundaries(position);
-  if (downstream_equivalent != position) {
-    return ComputeInlineBoxPosition(downstream_equivalent,
-                                    TextAffinity::kUpstream, primary_direction);
-  }
-  const PositionTemplate<Strategy>& upstream_equivalent =
-      UpstreamIgnoringEditingBoundaries(position);
-  if (upstream_equivalent == position ||
-      DownstreamIgnoringEditingBoundaries(upstream_equivalent) == position)
-    return InlineBoxPosition();
-
-  return ComputeInlineBoxPosition(upstream_equivalent, TextAffinity::kUpstream,
-                                  primary_direction);
 }
 
 template <typename Strategy>
@@ -325,20 +279,54 @@ InlineBoxPosition ComputeInlineBoxPositionTemplate(
   DCHECK(layout_object) << position;
 
   if (layout_object->IsText()) {
-    return ComputeInlineBoxPositionForTextNode(
-        ToLayoutText(layout_object), caret_offset, affinity, primary_direction);
+    return ComputeInlineBoxPositionForTextNode(layout_object, caret_offset,
+                                               affinity, primary_direction);
   }
 
-  if (layout_object->IsAtomicInlineLevel()) {
-    return ComputeInlineBoxPositionForAtomicInline(layout_object, caret_offset,
-                                                   primary_direction);
+  if (layout_object->IsLayoutBlockFlow()) {
+    if (CanHaveChildrenForEditing(anchor_node) &&
+        HasRenderedNonAnonymousDescendantsWithHeight(layout_object)) {
+      // Try a visually equivalent position with possibly opposite
+      // editability. This helps in case |this| is in an editable block
+      // but surrounded by non-editable positions. It acts to negate the
+      // logic at the beginning of
+      // |LayoutObject::createPositionWithAffinity()|.
+      const PositionTemplate<Strategy>& downstream_equivalent =
+          DownstreamIgnoringEditingBoundaries(position);
+      if (downstream_equivalent != position) {
+        return ComputeInlineBoxPosition(
+            downstream_equivalent, TextAffinity::kUpstream, primary_direction);
+      }
+      const PositionTemplate<Strategy>& upstream_equivalent =
+          UpstreamIgnoringEditingBoundaries(position);
+      if (upstream_equivalent == position ||
+          DownstreamIgnoringEditingBoundaries(upstream_equivalent) == position)
+        return InlineBoxPosition();
+
+      return ComputeInlineBoxPosition(
+          upstream_equivalent, TextAffinity::kUpstream, primary_direction);
+    }
+
+    // We can't return null here because atomic inlines can also be block flows,
+    // e.g., LayoutTextControl.
+    // TODO(xiaochengh): Move atomic inline handling before block flow handling
+    // so that we can directly return null here.
   }
 
-  if (!layout_object->IsLayoutBlockFlow() ||
-      !CanHaveChildrenForEditing(anchor_node) ||
-      !HasRenderedNonAnonymousDescendantsWithHeight(layout_object))
+  if (!layout_object->IsAtomicInlineLevel())
     return InlineBoxPosition();
-  return ComputeInlineBoxPositionForBlockFlow(position, primary_direction);
+
+  if (!layout_object->IsBox())
+    return InlineBoxPosition();
+  InlineBox* const inline_box = ToLayoutBox(layout_object)->InlineBoxWrapper();
+  if (!inline_box)
+    return InlineBoxPosition();
+  if ((caret_offset > inline_box->CaretMinOffset() &&
+       caret_offset < inline_box->CaretMaxOffset()))
+    return InlineBoxPosition(inline_box, caret_offset);
+  return AdjustInlineBoxPositionForTextDirection(
+      inline_box, caret_offset, layout_object->Style()->GetUnicodeBidi(),
+      primary_direction);
 }
 
 template <typename Strategy>

@@ -35,7 +35,6 @@
           "content::mojom::MemoryCoordinatorHandle",
           "content::mojom::PushMessaging",
           "content::mojom::RendererHost",
-          "content::mojom::ReportingServiceProxy",
           "content::mojom::ServiceWorkerDispatcherHost",
           "content::mojom::StoragePartitionService",
           "content::mojom::URLLoaderFactory",
@@ -91,7 +90,7 @@
           "url_loader"
         ],
         "patch_service": [ "patch_file" ],
-        "ui": [ "arc_manager", "display_output_protection", "video_detector" ],
+        "ui": [ "display_output_protection", "video_detector" ],
         "service_manager": [
           "service_manager:client_process",
           "service_manager:instance_name",

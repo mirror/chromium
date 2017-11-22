@@ -30,13 +30,13 @@ namespace blink {
 
 struct CSSPropertyValueMetadata {
   DISALLOW_NEW();
-  CSSPropertyValueMetadata(const CSSProperty& property,
+  CSSPropertyValueMetadata(CSSPropertyID property_id,
                            bool is_set_from_shorthand,
                            int index_in_shorthands_vector,
                            bool important,
                            bool implicit,
                            bool inherited)
-      : property_(&property),
+      : property_id_(property_id),
         is_set_from_shorthand_(is_set_from_shorthand),
         index_in_shorthands_vector_(index_in_shorthands_vector),
         important_(important),
@@ -44,10 +44,8 @@ struct CSSPropertyValueMetadata {
         inherited_(inherited) {}
 
   CSSPropertyID ShorthandID() const;
-  const CSSProperty& Property() const { return *property_; }
 
-  const CSSProperty* property_;
-
+  unsigned property_id_ : 10;
   unsigned is_set_from_shorthand_ : 1;
   // If this property was set as part of an ambiguous shorthand, gives the index
   // in the shorthands vector.
@@ -63,26 +61,27 @@ class CSSPropertyValue {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
-  CSSPropertyValue(const CSSProperty& property,
+  CSSPropertyValue(CSSPropertyID property_id,
                    const CSSValue& value,
                    bool important = false,
                    bool is_set_from_shorthand = false,
                    int index_in_shorthands_vector = 0,
                    bool implicit = false)
-      : metadata_(property,
+      : metadata_(property_id,
                   is_set_from_shorthand,
                   index_in_shorthands_vector,
                   important,
                   implicit,
-                  property.IsInherited()),
+                  CSSProperty::Get(property_id).IsInherited()),
         value_(value) {}
 
   // FIXME: Remove this.
   CSSPropertyValue(CSSPropertyValueMetadata metadata, const CSSValue& value)
       : metadata_(metadata), value_(value) {}
 
-  CSSPropertyID Id() const { return metadata_.Property().PropertyID(); }
-  const CSSProperty& Property() const { return metadata_.Property(); }
+  CSSPropertyID Id() const {
+    return static_cast<CSSPropertyID>(metadata_.property_id_);
+  }
   bool IsSetFromShorthand() const { return metadata_.is_set_from_shorthand_; }
   CSSPropertyID ShorthandID() const { return metadata_.ShorthandID(); }
   bool IsImportant() const { return metadata_.important_; }

@@ -1442,8 +1442,7 @@ static CSSValue* ConsumeGeneratedImage(CSSParserTokenRange& range,
   } else if (id == CSSValueWebkitCrossFade) {
     result = ConsumeCrossFade(args, context);
   } else if (id == CSSValuePaint) {
-    result = context->IsSecureContext() &&
-                     RuntimeEnabledFeatures::CSSPaintAPIEnabled()
+    result = RuntimeEnabledFeatures::CSSPaintAPIEnabled()
                  ? ConsumePaint(args, context)
                  : nullptr;
   }
@@ -1560,8 +1559,8 @@ void AddProperty(CSSPropertyID resolved_property,
   }
 
   properties.push_back(CSSPropertyValue(
-      CSSProperty::Get(resolved_property), value, important, set_from_shorthand,
-      shorthand_index, implicit == IsImplicitProperty::kImplicit));
+      resolved_property, value, important, set_from_shorthand, shorthand_index,
+      implicit == IsImplicitProperty::kImplicit));
 }
 
 CSSValue* ConsumeTransformList(CSSParserTokenRange& range,

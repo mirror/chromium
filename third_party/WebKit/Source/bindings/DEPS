@@ -1,5 +1,4 @@
 include_rules = [
-    "+base/memory/scoped_refptr.h",
     "+bindings",
     "+core",
     "+gin/public",

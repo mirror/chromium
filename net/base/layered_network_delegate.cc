@@ -191,16 +191,17 @@ void LayeredNetworkDelegate::OnCanGetCookiesInternal(
 }
 
 bool LayeredNetworkDelegate::OnCanSetCookie(const URLRequest& request,
-                                            const net::CanonicalCookie& cookie,
+                                            const std::string& cookie_line,
                                             CookieOptions* options) {
-  OnCanSetCookieInternal(request, cookie, options);
-  return nested_network_delegate_->CanSetCookie(request, cookie, options);
+  OnCanSetCookieInternal(request, cookie_line, options);
+  return nested_network_delegate_->CanSetCookie(request, cookie_line, options);
 }
 
 void LayeredNetworkDelegate::OnCanSetCookieInternal(
     const URLRequest& request,
-    const net::CanonicalCookie& cookie,
-    CookieOptions* options) {}
+    const std::string& cookie_line,
+    CookieOptions* options) {
+}
 
 bool LayeredNetworkDelegate::OnCanAccessFile(
     const URLRequest& request,

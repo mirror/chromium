@@ -112,8 +112,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   blink::WebThread* CompositorThread() const override;
   std::unique_ptr<blink::WebStorageNamespace> CreateLocalStorageNamespace()
       override;
-  std::unique_ptr<blink::WebStorageNamespace> CreateSessionStorageNamespace(
-      int64_t namespace_id) override;
   blink::Platform::FileHandle DatabaseOpenFile(
       const blink::WebString& vfs_file_name,
       int desired_flags) override;
@@ -219,7 +217,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   blink::WebPushProvider* PushProvider() override;
   std::unique_ptr<blink::WebTrialTokenValidator> CreateTrialTokenValidator()
       override;
-  blink::WebNotificationManager* GetWebNotificationManager() override;
+  blink::WebNotificationManager* GetNotificationManager() override;
   void DidStartWorkerThread() override;
   void WillStopWorkerThread() override;
   void WorkerContextCreated(const v8::Local<v8::Context>& worker) override;

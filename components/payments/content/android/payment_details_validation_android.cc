@@ -18,7 +18,7 @@
 
 namespace payments {
 
-jboolean JNI_PaymentValidator_ValidatePaymentDetailsAndroid(
+jboolean ValidatePaymentDetailsAndroid(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& jcaller,
     const base::android::JavaParamRef<jobject>& buffer) {

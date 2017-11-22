@@ -39,9 +39,8 @@ class QueuedWebMouseWheelEvent : public MouseWheelEventWithLatencyInfo {
 MouseWheelEventQueue::MouseWheelEventQueue(MouseWheelEventQueueClient* client,
                                            bool enable_scroll_latching)
     : client_(client),
-      needs_scroll_begin_when_scroll_latching_disabled_(true),
-      needs_scroll_end_when_scroll_latching_disabled_(false),
-      scroll_in_progress_(false),
+      needs_scroll_begin_(true),
+      needs_scroll_end_(false),
       enable_scroll_latching_(enable_scroll_latching),
       enable_async_wheel_events_(
           base::FeatureList::IsEnabled(features::kAsyncWheelEvents)),
@@ -183,23 +182,22 @@ void MouseWheelEventQueue::ProcessMouseWheelAck(
 
     // For every GSU event record whether it is latched or not.
     if (needs_update)
-      RecordLatchingUmaMetric(scroll_in_progress_);
+      RecordLatchingUmaMetric(!needs_scroll_begin_);
 
     if (enable_scroll_latching_) {
-      bool synthetic = event_sent_for_gesture_ack_->event.has_synthetic_phase;
       if (event_sent_for_gesture_ack_->event.phase ==
           blink::WebMouseWheelEvent::kPhaseBegan) {
         // Wheel event with phaseBegan must have non-zero deltas.
         DCHECK(needs_update);
         send_wheel_events_async_ = true;
-        SendScrollBegin(scroll_update, synthetic);
+        SendScrollBegin(scroll_update, false);
       }
 
       if (needs_update) {
         // It is possible that the wheel event with phaseBegan is consumed and
         // no GSB is sent.
-        if (!scroll_in_progress_)
-          SendScrollBegin(scroll_update, synthetic);
+        if (needs_scroll_begin_)
+          SendScrollBegin(scroll_update, false);
         ui::LatencyInfo latency = ui::LatencyInfo(ui::SourceEventType::WHEEL);
         latency.AddLatencyNumber(
             ui::INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL, 0,
@@ -207,10 +205,10 @@ void MouseWheelEventQueue::ProcessMouseWheelAck(
         client_->ForwardGestureEventWithLatencyInfo(scroll_update, latency);
       }
 
-      if (current_phase_ended && scroll_in_progress_) {
+      if (current_phase_ended && needs_scroll_end_) {
         // Send GSE when scroll latching is enabled, GSB is sent, and no fling
         // is going to happen next.
-        SendScrollEnd(scroll_update, synthetic);
+        SendScrollEnd(scroll_update, false);
       }
     } else {  // !enable_scroll_latching_
 
@@ -219,11 +217,10 @@ void MouseWheelEventQueue::ProcessMouseWheelAck(
       // because the events generated will be a GSB (non-synthetic) and GSE
       // (non-synthetic). This situation arises when OSX generates double
       // phase end information.
-      bool empty_sequence = !needs_update &&
-                            needs_scroll_begin_when_scroll_latching_disabled_ &&
-                            current_phase_ended;
+      bool empty_sequence =
+          !needs_update && needs_scroll_begin_ && current_phase_ended;
       if (needs_update || !empty_sequence) {
-        if (needs_scroll_begin_when_scroll_latching_disabled_) {
+        if (needs_scroll_begin_) {
           // If no GSB has been sent, it will be a non-synthetic GSB.
           SendScrollBegin(scroll_update, false);
         } else if (has_phase_info) {
@@ -272,8 +269,10 @@ void MouseWheelEventQueue::OnGestureScrollEvent(
               gesture_event.event.GetType() ==
                   blink::WebInputEvent::kGestureFlingStart)) {
     scrolling_device_ = blink::kWebGestureDeviceUninitialized;
-    if (enable_scroll_latching_)
-      scroll_in_progress_ = false;
+    if (enable_scroll_latching_) {
+      needs_scroll_begin_ = true;
+      needs_scroll_end_ = false;
+    }
   }
 }
 
@@ -305,12 +304,7 @@ void MouseWheelEventQueue::TryForwardNextEventToRenderer() {
 
 void MouseWheelEventQueue::SendScrollEnd(WebGestureEvent update_event,
                                          bool synthetic) {
-  DCHECK(enable_scroll_latching_ ||
-         (synthetic && !needs_scroll_end_when_scroll_latching_disabled_) ||
-         needs_scroll_end_when_scroll_latching_disabled_);
-
-  DCHECK(scroll_in_progress_);
-  scroll_in_progress_ = false;
+  DCHECK((synthetic && !needs_scroll_end_) || needs_scroll_end_);
 
   WebGestureEvent scroll_end(update_event);
   scroll_end.SetTimeStampSeconds(
@@ -324,8 +318,8 @@ void MouseWheelEventQueue::SendScrollEnd(WebGestureEvent update_event,
       update_event.data.scroll_update.delta_units;
 
   if (!synthetic) {
-    needs_scroll_begin_when_scroll_latching_disabled_ = true;
-    needs_scroll_end_when_scroll_latching_disabled_ = false;
+    needs_scroll_begin_ = true;
+    needs_scroll_end_ = false;
   }
   client_->ForwardGestureEventWithLatencyInfo(
       scroll_end, ui::LatencyInfo(ui::SourceEventType::WHEEL));
@@ -334,12 +328,7 @@ void MouseWheelEventQueue::SendScrollEnd(WebGestureEvent update_event,
 void MouseWheelEventQueue::SendScrollBegin(
     const WebGestureEvent& gesture_update,
     bool synthetic) {
-  DCHECK(enable_scroll_latching_ ||
-         (synthetic && !needs_scroll_begin_when_scroll_latching_disabled_) ||
-         needs_scroll_begin_when_scroll_latching_disabled_);
-
-  DCHECK(!scroll_in_progress_);
-  scroll_in_progress_ = true;
+  DCHECK((synthetic && !needs_scroll_begin_) || needs_scroll_begin_);
 
   WebGestureEvent scroll_begin(gesture_update);
   scroll_begin.SetType(WebInputEvent::kGestureScrollBegin);
@@ -354,8 +343,8 @@ void MouseWheelEventQueue::SendScrollBegin(
   scroll_begin.data.scroll_begin.delta_hint_units =
       gesture_update.data.scroll_update.delta_units;
 
-  needs_scroll_begin_when_scroll_latching_disabled_ = false;
-  needs_scroll_end_when_scroll_latching_disabled_ = true;
+  needs_scroll_begin_ = false;
+  needs_scroll_end_ = true;
   client_->ForwardGestureEventWithLatencyInfo(
       scroll_begin, ui::LatencyInfo(ui::SourceEventType::WHEEL));
 }

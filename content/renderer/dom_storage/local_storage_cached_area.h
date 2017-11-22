@@ -14,15 +14,8 @@
 #include "content/common/dom_storage/dom_storage_map.h"
 #include "content/common/leveldb_wrapper.mojom.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "third_party/WebKit/public/platform/WebScopedVirtualTimePauser.h"
 #include "url/gurl.h"
 #include "url/origin.h"
-
-namespace blink {
-namespace scheduler {
-class RendererScheduler;
-}
-}  // namespace blink
 
 namespace content {
 class LocalStorageArea;
@@ -40,22 +33,14 @@ class StoragePartitionService;
 // callbacks.
 // There is one LocalStorageCachedArea for potentially many LocalStorageArea
 // objects.
-// TODO(dmurph): Rename to remove LocalStorage.
 class CONTENT_EXPORT LocalStorageCachedArea
     : public mojom::LevelDBObserver,
       public base::RefCounted<LocalStorageCachedArea> {
  public:
   LocalStorageCachedArea(
-      int64_t namespace_id,
       const url::Origin& origin,
       mojom::StoragePartitionService* storage_partition_service,
-      LocalStorageCachedAreas* cached_areas,
-      blink::scheduler::RendererScheduler* renderer_schedule);
-  LocalStorageCachedArea(
-      const url::Origin& origin,
-      mojom::StoragePartitionService* storage_partition_service,
-      LocalStorageCachedAreas* cached_areas,
-      blink::scheduler::RendererScheduler* renderer_schedule);
+      LocalStorageCachedAreas* cached_areas);
 
   // These correspond to blink::WebStorageArea.
   unsigned GetLength();
@@ -75,7 +60,6 @@ class CONTENT_EXPORT LocalStorageCachedArea
   void AreaCreated(LocalStorageArea* area);
   void AreaDestroyed(LocalStorageArea* area);
 
-  int64_t namespace_id() { return namespace_id_; }
   const url::Origin& origin() { return origin_; }
 
   size_t memory_used() const { return map_ ? map_->memory_used() : 0; }
@@ -115,21 +99,14 @@ class CONTENT_EXPORT LocalStorageCachedArea
   // fetched already.
   void EnsureLoaded();
 
-  void OnSetItemComplete(const base::string16& key,
-                         blink::WebScopedVirtualTimePauser virtual_time_pauser,
-                         bool success);
-  void OnRemoveItemComplete(
-      const base::string16& key,
-      blink::WebScopedVirtualTimePauser virtual_time_pauser,
-      bool success);
-  void OnClearComplete(blink::WebScopedVirtualTimePauser virtual_time_pauser,
-                       bool success);
+  void OnSetItemComplete(const base::string16& key, bool success);
+  void OnRemoveItemComplete(const base::string16& key, bool success);
+  void OnClearComplete(bool success);
   void OnGetAllComplete(bool success);
 
   // Resets the object back to its newly constructed state.
   void Reset();
 
-  int64_t namespace_id_;
   url::Origin origin_;
   scoped_refptr<DOMStorageMap> map_;
   std::map<base::string16, int> ignore_key_mutations_;
@@ -140,7 +117,6 @@ class CONTENT_EXPORT LocalStorageCachedArea
   mojo::AssociatedBinding<mojom::LevelDBObserver> binding_;
   LocalStorageCachedAreas* cached_areas_;
   std::map<std::string, LocalStorageArea*> areas_;
-  blink::scheduler::RendererScheduler* renderer_scheduler_;  // NOT OWNED
   base::WeakPtrFactory<LocalStorageCachedArea> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(LocalStorageCachedArea);

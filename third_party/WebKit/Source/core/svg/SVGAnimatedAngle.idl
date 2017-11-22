@@ -25,7 +25,9 @@
 
 // https://svgwg.org/svg2-draft/types.html#InterfaceSVGAnimatedAngle
 
-interface SVGAnimatedAngle {
+[
+    DependentLifetime
+] interface SVGAnimatedAngle {
     readonly attribute SVGAngle baseVal;
     readonly attribute SVGAngle animVal;
 };

@@ -275,11 +275,9 @@ static bool ExecuteApplyStyle(LocalFrame& frame,
                               InputEvent::InputType input_type,
                               CSSPropertyID property_id,
                               const String& property_value) {
-  DCHECK(frame.GetDocument());
   MutableCSSPropertyValueSet* style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
-  style->SetProperty(property_id, property_value, /* important */ false,
-                     frame.GetDocument()->SecureContextMode());
+  style->SetProperty(property_id, property_value);
   return ApplyCommandToFrame(frame, source, input_type, style);
 }
 
@@ -305,7 +303,7 @@ static bool ExecuteToggleStyleInList(LocalFrame& frame,
                                      CSSValue* value) {
   EditingStyle* selection_style =
       EditingStyleUtilities::CreateStyleAtSelectionStart(
-          frame.Selection().ComputeVisibleSelectionInDOMTree());
+          frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
   if (!selection_style || !selection_style->Style())
     return false;
 
@@ -328,8 +326,7 @@ static bool ExecuteToggleStyleInList(LocalFrame& frame,
   // have setPropertyCSSValue.
   MutableCSSPropertyValueSet* new_mutable_style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
-  new_mutable_style->SetProperty(property_id, new_style, /* important */ false,
-                                 frame.GetDocument()->SecureContextMode());
+  new_mutable_style->SetProperty(property_id, new_style);
   return ApplyCommandToFrame(frame, source, input_type, new_mutable_style);
 }
 
@@ -351,9 +348,8 @@ static bool ExecuteToggleStyle(LocalFrame& frame,
     style_is_present = frame.GetEditor().SelectionHasStyle(
                            property_id, on_value) == EditingTriState::kTrue;
 
-  EditingStyle* style =
-      EditingStyle::Create(property_id, style_is_present ? off_value : on_value,
-                           frame.GetDocument()->SecureContextMode());
+  EditingStyle* style = EditingStyle::Create(
+      property_id, style_is_present ? off_value : on_value);
   return ApplyCommandToFrame(frame, source, input_type, style->Style());
 }
 
@@ -364,8 +360,7 @@ static bool ExecuteApplyParagraphStyle(LocalFrame& frame,
                                        const String& property_value) {
   MutableCSSPropertyValueSet* style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
-  style->SetProperty(property_id, property_value, /* important */ false,
-                     frame.GetDocument()->SecureContextMode());
+  style->SetProperty(property_id, property_value);
   // FIXME: We don't call shouldApplyStyle when the source is DOM; is there a
   // good reason for that?
   switch (source) {
@@ -404,9 +399,12 @@ static bool ExpandSelectionToGranularity(LocalFrame& frame,
                                          TextGranularity granularity) {
   const VisibleSelection& selection = CreateVisibleSelectionWithGranularity(
       SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(
-              frame.Selection().ComputeVisibleSelectionInDOMTree().Base(),
-              frame.Selection().ComputeVisibleSelectionInDOMTree().Extent())
+          .SetBaseAndExtent(frame.Selection()
+                                .ComputeVisibleSelectionInDOMTreeDeprecated()
+                                .Base(),
+                            frame.Selection()
+                                .ComputeVisibleSelectionInDOMTreeDeprecated()
+                                .Extent())
           .Build(),
       granularity);
   const EphemeralRange new_range = selection.ToNormalizedEphemeralRange();
@@ -617,13 +615,11 @@ static unsigned VerticalScrollDistance(LocalFrame& frame) {
         style->OverflowY() == EOverflow::kAuto ||
         HasEditableStyle(*focused_element)))
     return 0;
-  ScrollableArea* scrollable_area =
-      frame.View()->LayoutViewportScrollableArea();
   int height = std::min<int>(layout_box.ClientHeight().ToInt(),
-                             scrollable_area->VisibleHeight());
+                             frame.View()->VisibleHeight());
   return static_cast<unsigned>(
       max(max<int>(height * ScrollableArea::MinFractionToStepWhenPaging(),
-                   height - scrollable_area->MaxOverlapBetweenPages()),
+                   height - frame.View()->MaxOverlapBetweenPages()),
           1));
 }
 

@@ -4,7 +4,6 @@
 
 #include "chrome/browser/notifications/non_persistent_notification_handler.h"
 
-#include "base/callback.h"
 #include "base/strings/nullable_string16.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "content/public/browser/notification_event_dispatcher.h"
@@ -23,14 +22,9 @@ void NonPersistentNotificationHandler::OnClose(
     Profile* profile,
     const GURL& origin,
     const std::string& notification_id,
-    bool by_user,
-    base::OnceClosure completed_closure) {
+    bool by_user) {
   content::NotificationEventDispatcher::GetInstance()
       ->DispatchNonPersistentCloseEvent(notification_id);
-
-  // TODO(crbug.com/787459): Implement event acknowledgements once
-  // non-persistent notifications have updated to use Mojo instead of IPC.
-  std::move(completed_closure).Run();
 }
 
 void NonPersistentNotificationHandler::OnClick(
@@ -38,8 +32,7 @@ void NonPersistentNotificationHandler::OnClick(
     const GURL& origin,
     const std::string& notification_id,
     const base::Optional<int>& action_index,
-    const base::Optional<base::string16>& reply,
-    base::OnceClosure completed_closure) {
+    const base::Optional<base::string16>& reply) {
   // Non persistent notifications don't allow buttons or replies.
   // https://notifications.spec.whatwg.org/#create-a-notification
   DCHECK(!action_index.has_value());
@@ -47,10 +40,6 @@ void NonPersistentNotificationHandler::OnClick(
 
   content::NotificationEventDispatcher::GetInstance()
       ->DispatchNonPersistentClickEvent(notification_id);
-
-  // TODO(crbug.com/787459): Implement event acknowledgements once
-  // non-persistent notifications have updated to use Mojo instead of IPC.
-  std::move(completed_closure).Run();
 }
 
 void NonPersistentNotificationHandler::OpenSettings(Profile* profile) {

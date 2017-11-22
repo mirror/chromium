@@ -12,7 +12,6 @@
 #include "content/browser/background_sync/background_sync_manager.h"
 #include "content/browser/devtools/service_worker_devtools_agent_host.h"
 #include "content/browser/devtools/service_worker_devtools_manager.h"
-#include "content/browser/devtools/shared_worker_devtools_manager.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
@@ -397,6 +396,13 @@ void ServiceWorkerHandler::OnWorkerVersionUpdated(
           continue;
         client_set.insert(
             DevToolsAgentHost::GetOrCreateFor(web_contents)->GetId());
+      } else if (client.second.type ==
+                 SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER) {
+        scoped_refptr<DevToolsAgentHost> agent_host(
+            DevToolsAgentHost::GetForWorker(client.second.process_id,
+                                            client.second.route_id));
+        if (agent_host)
+          client_set.insert(agent_host->GetId());
       }
     }
     std::unique_ptr<protocol::Array<std::string>> clients =

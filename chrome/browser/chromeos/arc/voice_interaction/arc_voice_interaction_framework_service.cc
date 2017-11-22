@@ -40,7 +40,7 @@
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/arc_util.h"
-#include "components/arc/connection_holder.h"
+#include "components/arc/instance_holder.h"
 #include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -249,7 +249,7 @@ ArcVoiceInteractionFrameworkService::~ArcVoiceInteractionFrameworkService() {
   arc_bridge_service_->voice_interaction_framework()->RemoveObserver(this);
 }
 
-void ArcVoiceInteractionFrameworkService::OnConnectionReady() {
+void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
@@ -271,7 +271,7 @@ void ArcVoiceInteractionFrameworkService::OnConnectionReady() {
   highlighter_client_->Attach();
 }
 
-void ArcVoiceInteractionFrameworkService::OnConnectionClosed() {
+void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   binding_.Close();
   highlighter_client_->Detach();
@@ -349,6 +349,18 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
 
   state_ = state;
   voice_interaction_controller_client_->NotifyStatusChanged(state);
+}
+
+void ArcVoiceInteractionFrameworkService::OnMetalayerClosed() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  LOG(ERROR) << "Deprecated method called: "
+                "VoiceInteractionFrameworkHost.OnInstanceClosed";
+}
+
+void ArcVoiceInteractionFrameworkService::SetMetalayerEnabled(bool enabled) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  LOG(ERROR) << "Deprecated method called: "
+                "VoiceInteractionFrameworkHost.SetMetalayerEnabled";
 }
 
 void ArcVoiceInteractionFrameworkService::ShowMetalayer() {
@@ -609,7 +621,7 @@ bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction(
   }
 
   ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(context_);
-  if (!arc_bridge_service_->voice_interaction_framework()->IsConnected()) {
+  if (!arc_bridge_service_->voice_interaction_framework()->has_instance()) {
     VLOG(1) << "Instance not ready.";
     SetArcCpuRestriction(false);
     is_request_pending_ = true;

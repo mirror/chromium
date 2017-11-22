@@ -24,6 +24,7 @@
 
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/StaticNodeList.h"
+#include "core/dom/events/EventDispatchMediator.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/events/FocusEvent.h"
 #include "core/events/MouseEvent.h"
@@ -341,6 +342,10 @@ HeapVector<Member<EventTarget>> Event::PathInternal(ScriptState* script_state,
   return HeapVector<Member<EventTarget>>();
 }
 
+EventDispatchMediator* Event::CreateMediator() {
+  return EventDispatchMediator::Create(this);
+}
+
 EventTarget* Event::currentTarget() const {
   if (!current_target_)
     return nullptr;
@@ -369,10 +374,6 @@ double Event::timeStamp(ScriptState* script_state) const {
 void Event::setCancelBubble(ScriptState* script_state, bool cancel) {
   if (cancel)
     propagation_stopped_ = true;
-}
-
-DispatchEventResult Event::DispatchEvent(EventDispatcher& dispatcher) {
-  return dispatcher.Dispatch();
 }
 
 void Event::Trace(blink::Visitor* visitor) {

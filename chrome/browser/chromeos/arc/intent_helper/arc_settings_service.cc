@@ -105,7 +105,7 @@ class ArcSettingsServiceFactory
 class ArcSettingsServiceImpl
     : public chromeos::system::TimezoneSettings::Observer,
       public ArcSessionManager::Observer,
-      public ConnectionObserver<mojom::AppInstance>,
+      public InstanceHolder<mojom::AppInstance>::Observer,
       public chromeos::NetworkStateHandlerObserver {
  public:
   ArcSettingsServiceImpl(content::BrowserContext* context,
@@ -194,8 +194,8 @@ class ArcSettingsServiceImpl
   void SendSettingsBroadcast(const std::string& action,
                              const base::DictionaryValue& extras) const;
 
-  // ConnectionObserver<mojom::AppInstance>:
-  void OnConnectionReady() override;
+  // InstanceHolder<mojom::AppInstance>::Observer:
+  void OnInstanceReady() override;
 
   content::BrowserContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
@@ -222,9 +222,10 @@ ArcSettingsServiceImpl::ArcSettingsServiceImpl(
   DCHECK(ArcSessionManager::Get());
   ArcSessionManager::Get()->AddObserver(this);
 
-  // Note: if App connection is already established, OnConnectionReady()
-  // is synchronously called, so that initial sync is done in the method.
-  arc_bridge_service_->app()->AddObserver(this);
+  if (arc_bridge_service_->app()->has_instance())
+    SyncAppTimeSettings();
+  else
+    arc_bridge_service_->app()->AddObserver(this);
 }
 
 ArcSettingsServiceImpl::~ArcSettingsServiceImpl() {
@@ -716,8 +717,8 @@ void ArcSettingsServiceImpl::SendSettingsBroadcast(
       extras_json);
 }
 
-// ConnectionObserver<mojom::AppInstance>:
-void ArcSettingsServiceImpl::OnConnectionReady() {
+// InstanceHolder<mojom::AppInstance>::Observer:
+void ArcSettingsServiceImpl::OnInstanceReady() {
   arc_bridge_service_->app()->RemoveObserver(this);
   SyncAppTimeSettings();
 }
@@ -738,12 +739,12 @@ ArcSettingsService::~ArcSettingsService() {
   arc_bridge_service_->intent_helper()->RemoveObserver(this);
 }
 
-void ArcSettingsService::OnConnectionReady() {
+void ArcSettingsService::OnInstanceReady() {
   impl_ =
       std::make_unique<ArcSettingsServiceImpl>(context_, arc_bridge_service_);
 }
 
-void ArcSettingsService::OnConnectionClosed() {
+void ArcSettingsService::OnInstanceClosed() {
   impl_.reset();
 }
 

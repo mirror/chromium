@@ -129,12 +129,8 @@ class TranslatePrefs {
                  const char* accept_languages_pref,
                  const char* preferred_languages_pref);
 
-  // Checks if the "offer translate" (i.e. automatic translate bubble) feature
-  // is enabled.
-  bool IsOfferTranslateEnabled() const;
-
-  // Checks if translate is allowed by policy.
-  bool IsTranslateAllowedByPolicy() const;
+  // Checks if the translate feature is enabled.
+  bool IsEnabled() const;
 
   // Sets the country that the application is run in. Determined by the
   // VariationsService, can be left empty. Used by the TranslateRanker.

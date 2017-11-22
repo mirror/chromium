@@ -45,8 +45,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/network/FormDataEncoder.h"
-#include "platform/network/http_names.h"
-#include "platform/wtf/Time.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/TextEncoding.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
@@ -294,7 +293,7 @@ FrameLoadRequest FormSubmission::CreateFrameLoadRequest(
     frame_request.SetFrameName(target_);
 
   if (method_ == FormSubmission::kPostMethod) {
-    frame_request.GetResourceRequest().SetHTTPMethod(HTTPNames::POST);
+    frame_request.GetResourceRequest().SetHTTPMethod("POST");
     frame_request.GetResourceRequest().SetHTTPBody(form_data_);
 
     // construct some user headers if necessary

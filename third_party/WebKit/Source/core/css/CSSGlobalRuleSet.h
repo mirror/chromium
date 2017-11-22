@@ -5,7 +5,6 @@
 #ifndef CSSGlobalRuleSet_h
 #define CSSGlobalRuleSet_h
 
-#include "base/macros.h"
 #include "core/css/RuleFeatureSet.h"
 
 namespace blink {
@@ -23,6 +22,8 @@ class RuleSet;
 // rulesets on shadow tree changes. See https://crbug.com/401359
 
 class CSSGlobalRuleSet : public GarbageCollectedFinalized<CSSGlobalRuleSet> {
+  WTF_MAKE_NONCOPYABLE(CSSGlobalRuleSet);
+
  public:
   static CSSGlobalRuleSet* Create() { return new CSSGlobalRuleSet(); }
 
@@ -54,7 +55,6 @@ class CSSGlobalRuleSet : public GarbageCollectedFinalized<CSSGlobalRuleSet> {
 
   bool has_fullscreen_ua_style_ = false;
   bool is_dirty_ = true;
-  DISALLOW_COPY_AND_ASSIGN(CSSGlobalRuleSet);
 };
 
 }  // namespace blink

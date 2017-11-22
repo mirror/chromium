@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 class LogcatExtractor {
     private static final String TAG = "LogcatExtractor";
     private static final long HALF_SECOND = 500;
+    protected static final int LOGCAT_SIZE = 512; // Number of lines.
     protected static final String EMAIL_ELISION = "XXX@EMAIL.ELIDED";
     @VisibleForTesting
     protected static final String URL_ELISION = "HTTP://WEBADDRESS.ELIDED";
@@ -117,7 +118,7 @@ class LogcatExtractor {
                 while ((logLn = bReader.readLine()) != null) {
                     // Add each new string to the end of the queue.
                     rawLogcat.add(logLn);
-                    if (rawLogcat.size() > BuildConfig.LOGCAT_SIZE) {
+                    if (rawLogcat.size() > LOGCAT_SIZE) {
                         // Remove the head of the queue when it gets too large.
                         rawLogcat.remove();
                     }

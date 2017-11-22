@@ -6,13 +6,11 @@
 
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
-#include "chrome/browser/ui/tabs/tab_strip_model_experimental.h"
+#include "chrome/browser/ui/tabs/tab_data_experimental.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "components/grit/components_scaled_resources.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/label.h"
-#include "ui/views/masked_targeter_delegate.h"
-#include "ui/views/widget/widget.h"
 
 namespace {
 
@@ -29,12 +27,9 @@ float GetTabEndcapWidth() {
 
 }  // namespace
 
-TabExperimental::TabExperimental(TabStripModelExperimental* model,
-                                 const TabDataExperimental* data)
+TabExperimental::TabExperimental(const TabDataExperimental* data)
     : views::View(),
-      model_(model),
       data_(data),
-      type_(data->type()),
       title_(new views::Label),
       hover_controller_(this),
       paint_(this) {
@@ -44,8 +39,6 @@ TabExperimental::TabExperimental(TabStripModelExperimental* model,
   title_->SetAutoColorReadabilityEnabled(false);
   title_->SetText(CoreTabHelper::GetDefaultTitle());
   AddChildView(title_);
-
-  SetEventTargeter(std::make_unique<views::ViewTargeter>(this));
 
   // So we get don't get enter/exit on children and don't prematurely stop the
   // hover.
@@ -80,12 +73,7 @@ void TabExperimental::SetSelected(bool selected) {
 }
 
 void TabExperimental::DataUpdated() {
-  type_ = data_->type();
   title_->SetText(data_->GetTitle());
-}
-
-void TabExperimental::SetGroupLayoutParams(int first_child_begin_x) {
-  first_child_begin_x_ = first_child_begin_x;
 }
 
 int TabExperimental::GetOverlap() {
@@ -93,71 +81,15 @@ int TabExperimental::GetOverlap() {
   return gfx::ToCeiledInt(GetTabEndcapWidth());
 }
 
-bool TabExperimental::GetHitTestMask(gfx::Path* mask) const {
-  // When the window is maximized we don't want to shave off the edges or top
-  // shadow of the tab, such that the user can click anywhere along the top
-  // edge of the screen to select a tab. Ditto for immersive fullscreen.
-  const views::Widget* widget = GetWidget();
-  *mask = paint_.GetBorderPath(
-      GetWidget()->GetCompositor()->device_scale_factor(), true,
-      widget && (widget->IsMaximized() || widget->IsFullscreen()),
-      GetTabEndcapWidth(), size());
-  return true;
-}
-
 void TabExperimental::OnPaint(gfx::Canvas* canvas) {
-  if (type_ == TabDataExperimental::Type::kSingle)
-    paint_.PaintTabBackground(canvas, active_, 0, 0, nullptr);
-  else
-    paint_.PaintGroupBackground(canvas, active_);
+  paint_.PaintTabBackground(canvas, active_, 0, 0, nullptr);
 }
 
 void TabExperimental::Layout() {
-  // Space between the favicon and title.
   constexpr int kTitleSpacing = 6;
   const gfx::Rect bounds = GetContentsBounds();
 
-  int title_left = bounds.x() + kTitleSpacing;
-  int title_right;
-  if (first_child_begin_x_ >= 0)
-    title_right = first_child_begin_x_;
-  else
-    title_right = bounds.width() - kTitleSpacing;
-
-  title_->SetBoundsRect(gfx::Rect(title_left, bounds.y(),
-                                  title_right - title_left, bounds.height()));
-}
-
-bool TabExperimental::OnMousePressed(const ui::MouseEvent& event) {
-  // TODO(brettw) the non-experimental one has some stuff about touch and
-  // multi-selection here.
-  if (event.IsOnlyLeftMouseButton())
-    model_->ActivateTabAt(model_->GetViewIndexForData(data_), true);
-  return true;
-}
-
-void TabExperimental::OnMouseReleased(const ui::MouseEvent& event) {
-  // Close tab on middle click, but only if the button is released over the tab
-  // (normal windows behavior is to discard presses of a UI element where the
-  // releases happen off the element).
-  if (event.IsMiddleMouseButton()) {
-    if (HitTestPoint(event.location())) {
-      // TODO(brettw) old one did PrepareForCloseAt which does some animation
-      // stuff.
-      model_->CloseWebContentsAt(
-          model_->GetViewIndexForData(data_),
-          TabStripModel::CLOSE_USER_GESTURE |
-              TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
-    } else if (closing_) {
-      // We're animating closed and a middle mouse button was pushed on us but
-      // we don't contain the mouse anymore. We assume the user is clicking
-      // quicker than the animation and we should close the tab that falls under
-      // the mouse.
-      /* TODO(brettw) fast closing.
-      Tab* closest_tab = controller_->GetTabAt(this, event.location());
-      if (closest_tab)
-        controller_->CloseTab(closest_tab, CLOSE_TAB_FROM_MOUSE);
-      */
-    }
-  }
+  title_->SetBoundsRect(gfx::Rect(bounds.x() + kTitleSpacing, bounds.y(),
+                                  bounds.width() - (kTitleSpacing * 2),
+                                  bounds.height()));
 }

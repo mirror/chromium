@@ -13,7 +13,7 @@
 #include "base/threading/thread_checker.h"
 #include "cc/cc_export.h"
 #include "cc/layers/layer.h"
-#include "components/viz/common/resources/transferable_resource.h"
+#include "components/viz/common/quads/texture_mailbox.h"
 
 namespace gpu {
 struct SyncToken;
@@ -30,21 +30,21 @@ class TextureLayerClient;
 // A Layer containing a the rendered output of a plugin instance.
 class CC_EXPORT TextureLayer : public Layer {
  public:
-  class CC_EXPORT TransferableResourceHolder
-      : public base::RefCountedThreadSafe<TransferableResourceHolder> {
+  class CC_EXPORT TextureMailboxHolder
+      : public base::RefCountedThreadSafe<TextureMailboxHolder> {
    public:
     class CC_EXPORT MainThreadReference {
      public:
-      explicit MainThreadReference(TransferableResourceHolder* holder);
+      explicit MainThreadReference(TextureMailboxHolder* holder);
       ~MainThreadReference();
-      TransferableResourceHolder* holder() { return holder_.get(); }
+      TextureMailboxHolder* holder() { return holder_.get(); }
 
      private:
-      scoped_refptr<TransferableResourceHolder> holder_;
+      scoped_refptr<TextureMailboxHolder> holder_;
       DISALLOW_COPY_AND_ASSIGN(MainThreadReference);
     };
 
-    const viz::TransferableResource& resource() const { return resource_; }
+    const viz::TextureMailbox& mailbox() const { return mailbox_; }
     void Return(const gpu::SyncToken& sync_token, bool is_lost);
 
     // Gets a viz::ReleaseCallback that can be called from another thread. Note:
@@ -57,15 +57,15 @@ class CC_EXPORT TextureLayer : public Layer {
 
     // Protected visiblity so only TextureLayer and unit tests can create these.
     static std::unique_ptr<MainThreadReference> Create(
-        const viz::TransferableResource& resource,
+        const viz::TextureMailbox& mailbox,
         std::unique_ptr<viz::SingleReleaseCallback> release_callback);
-    virtual ~TransferableResourceHolder();
+    virtual ~TextureMailboxHolder();
 
    private:
-    friend class base::RefCountedThreadSafe<TransferableResourceHolder>;
+    friend class base::RefCountedThreadSafe<TextureMailboxHolder>;
     friend class MainThreadReference;
-    explicit TransferableResourceHolder(
-        const viz::TransferableResource& resource,
+    explicit TextureMailboxHolder(
+        const viz::TextureMailbox& mailbox,
         std::unique_ptr<viz::SingleReleaseCallback> release_callback);
 
     void InternalAddRef();
@@ -78,7 +78,7 @@ class CC_EXPORT TextureLayer : public Layer {
     // These members are only accessed on the main thread, or on the impl thread
     // during commit where the main thread is blocked.
     unsigned internal_references_;
-    viz::TransferableResource resource_;
+    viz::TextureMailbox mailbox_;
     std::unique_ptr<viz::SingleReleaseCallback> release_callback_;
 
     // This lock guards the sync_token_ and is_lost_ fields because they can be
@@ -89,7 +89,7 @@ class CC_EXPORT TextureLayer : public Layer {
     gpu::SyncToken sync_token_;
     bool is_lost_;
     base::ThreadChecker main_thread_checker_;
-    DISALLOW_COPY_AND_ASSIGN(TransferableResourceHolder);
+    DISALLOW_COPY_AND_ASSIGN(TextureMailboxHolder);
   };
 
   // Used when mailbox names are specified instead of texture IDs.
@@ -132,8 +132,8 @@ class CC_EXPORT TextureLayer : public Layer {
   void SetBlendBackgroundColor(bool blend);
 
   // Code path for plugins which supply their own mailbox.
-  void SetTransferableResource(
-      const viz::TransferableResource& resource,
+  void SetTextureMailbox(
+      const viz::TextureMailbox& mailbox,
       std::unique_ptr<viz::SingleReleaseCallback> release_callback);
 
   void SetNeedsDisplayRect(const gfx::Rect& dirty_rect) override;
@@ -149,10 +149,11 @@ class CC_EXPORT TextureLayer : public Layer {
   bool HasDrawableContent() const override;
 
  private:
-  void SetTransferableResourceInternal(
-      const viz::TransferableResource& resource,
+  void SetTextureMailboxInternal(
+      const viz::TextureMailbox& mailbox,
       std::unique_ptr<viz::SingleReleaseCallback> release_callback,
-      bool requires_commit);
+      bool requires_commit,
+      bool allow_mailbox_reuse);
 
   TextureLayerClient* client_;
 
@@ -165,8 +166,8 @@ class CC_EXPORT TextureLayer : public Layer {
   bool premultiplied_alpha_ = true;
   bool blend_background_color_ = false;
 
-  std::unique_ptr<TransferableResourceHolder::MainThreadReference> holder_ref_;
-  bool needs_set_resource_ = false;
+  std::unique_ptr<TextureMailboxHolder::MainThreadReference> holder_ref_;
+  bool needs_set_mailbox_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TextureLayer);
 };

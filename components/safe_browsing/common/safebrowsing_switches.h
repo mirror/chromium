@@ -8,6 +8,7 @@
 namespace safe_browsing {
 namespace switches {
 
+extern const char kSbDisableAutoUpdate[];
 extern const char kSbDisableDownloadProtection[];
 extern const char kSbDisableExtensionBlacklist[];
 extern const char kSbManualDownloadBlacklist[];

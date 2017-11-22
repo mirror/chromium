@@ -71,17 +71,16 @@ class DriveAppConverter::IconFetcher : public ImageDecoder::ImageRequest {
             policy_exception_justification:
               "Not implemented, considered not useful."
           })");
-    auto resource_request = std::make_unique<content::ResourceRequest>();
-    resource_request->url = icon_url_;
-    resource_request->load_flags = net::LOAD_DO_NOT_SAVE_COOKIES;
-    simple_loader_ = content::SimpleURLLoader::Create(
-        std::move(resource_request), traffic_annotation);
+    simple_loader_ = content::SimpleURLLoader::Create();
+    content::ResourceRequest resource_request = content::ResourceRequest();
+    resource_request.url = icon_url_;
+    resource_request.load_flags = net::LOAD_DO_NOT_SAVE_COOKIES;
     content::mojom::URLLoaderFactory* loader_factory =
         content::BrowserContext::GetDefaultStoragePartition(
             converter_->profile_)
             ->GetURLLoaderFactoryForBrowserProcess();
     simple_loader_->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-        loader_factory,
+        resource_request, loader_factory, traffic_annotation,
         base::BindOnce(&DriveAppConverter::IconFetcher::OnCompleteCallback,
                        base::Unretained(this)));
   }

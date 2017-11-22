@@ -65,8 +65,6 @@ WebCacheManager::WebCacheManager()
       weak_factory_(this) {
   registrar_.Add(this, content::NOTIFICATION_RENDERER_PROCESS_CREATED,
                  content::NotificationService::AllBrowserContextsAndSources());
-  registrar_.Add(this, content::NOTIFICATION_RENDERER_PROCESS_CLOSED,
-                 content::NotificationService::AllBrowserContextsAndSources());
   registrar_.Add(this, content::NOTIFICATION_RENDERER_PROCESS_TERMINATED,
                  content::NotificationService::AllBrowserContextsAndSources());
 }
@@ -76,7 +74,16 @@ WebCacheManager::~WebCacheManager() {
 
 void WebCacheManager::Add(int renderer_id) {
   DCHECK(inactive_renderers_.count(renderer_id) == 0);
-  DCHECK(active_renderers_.count(renderer_id) == 0);
+
+  // It is tempting to make the following DCHECK here, but it fails when a new
+  // tab is created as we observe activity from that tab because the
+  // RenderProcessHost is recreated and adds itself.
+  //
+  //   DCHECK(active_renderers_.count(renderer_id) == 0);
+  //
+  // However, there doesn't seem to be much harm in receiving the calls in this
+  // order.
+
   active_renderers_.insert(renderer_id);
 
   RendererInfo* stats = &(stats_[renderer_id]);
@@ -112,21 +119,13 @@ void WebCacheManager::ObserveActivity(int renderer_id) {
   if (item == stats_.end())
     return;  // We might see stats for a renderer that has been destroyed.
 
-  std::set<int>::iterator active_elmt = active_renderers_.find(renderer_id);
-  std::set<int>::iterator inactive_elmt = inactive_renderers_.find(renderer_id);
+  // Record activity.
+  active_renderers_.insert(renderer_id);
+  item->second.access = Time::Now();
 
-  // Record activity, but only if we already received the notification that the
-  // render process host exist. We might have stats from a destroyed renderer
-  // that is about to be recreated for a new tab from which we're already
-  // receiving activity.
-  if (active_elmt != active_renderers_.end() ||
-      inactive_elmt != inactive_renderers_.end()) {
-    active_renderers_.insert(renderer_id);
-    item->second.access = Time::Now();
-  }
-
-  if (inactive_elmt != inactive_renderers_.end()) {
-    inactive_renderers_.erase(inactive_elmt);
+  std::set<int>::iterator elmt = inactive_renderers_.find(renderer_id);
+  if (elmt != inactive_renderers_.end()) {
+    inactive_renderers_.erase(elmt);
 
     // A renderer that was inactive, just became active.  We should make sure
     // it is given a fair cache allocation, but we defer this for a bit in
@@ -175,7 +174,6 @@ void WebCacheManager::Observe(int type,
       Add(process->GetID());
       break;
     }
-    case content::NOTIFICATION_RENDERER_PROCESS_CLOSED:
     case content::NOTIFICATION_RENDERER_PROCESS_TERMINATED: {
       content::RenderProcessHost* process =
           content::Source<content::RenderProcessHost>(source).ptr();

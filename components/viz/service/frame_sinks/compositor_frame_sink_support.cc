@@ -116,19 +116,9 @@ void CompositorFrameSinkSupport::SetBeginFrameSource(
 void CompositorFrameSinkSupport::EvictCurrentSurface() {
   if (!current_surface_id_.is_valid())
     return;
-
   SurfaceId to_destroy_surface_id = current_surface_id_;
   current_surface_id_ = SurfaceId();
   surface_manager_->DestroySurface(to_destroy_surface_id);
-
-  // For display root surfaces the surface is no longer going to be visible.
-  // Make it unreachable from the top-level root.
-  if (referenced_local_surface_id_.has_value()) {
-    auto reference = MakeTopLevelRootReference(
-        SurfaceId(frame_sink_id_, referenced_local_surface_id_.value()));
-    surface_manager_->RemoveSurfaceReferences({reference});
-    referenced_local_surface_id_.reset();
-  }
 }
 
 void CompositorFrameSinkSupport::SetNeedsBeginFrame(bool needs_begin_frame) {
@@ -137,7 +127,7 @@ void CompositorFrameSinkSupport::SetNeedsBeginFrame(bool needs_begin_frame) {
 }
 
 void CompositorFrameSinkSupport::DidNotProduceFrame(const BeginFrameAck& ack) {
-  TRACE_EVENT2("viz", "CompositorFrameSinkSupport::DidNotProduceFrame",
+  TRACE_EVENT2("cc", "CompositorFrameSinkSupport::DidNotProduceFrame",
                "ack.source_id", ack.source_id, "ack.sequence_number",
                ack.sequence_number);
   DCHECK_GE(ack.sequence_number, BeginFrameArgs::kStartingFrameNumber);
@@ -165,8 +155,7 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     const LocalSurfaceId& local_surface_id,
     CompositorFrame frame,
     mojom::HitTestRegionListPtr hit_test_region_list) {
-  TRACE_EVENT1("viz", "CompositorFrameSinkSupport::SubmitCompositorFrame",
-               "FrameSinkId", frame_sink_id_.ToString());
+  TRACE_EVENT0("cc", "CompositorFrameSinkSupport::SubmitCompositorFrame");
   DCHECK(local_surface_id.is_valid());
   DCHECK(!frame.render_pass_list.empty());
 
@@ -404,8 +393,10 @@ gfx::Size CompositorFrameSinkSupport::GetSurfaceSize() {
   if (current_surface_id_.is_valid()) {
     Surface* current_surface =
         surface_manager_->GetSurfaceForId(current_surface_id_);
-    if (current_surface)
-      return current_surface->size_in_pixels();
+    if (current_surface->HasActiveFrame())
+      return current_surface->GetActiveFrame().size_in_pixels();
+    else if (current_surface->HasPendingFrame())
+      return current_surface->GetPendingFrame().size_in_pixels();
   }
   return gfx::Size();
 }

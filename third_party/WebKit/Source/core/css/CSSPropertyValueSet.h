@@ -21,7 +21,6 @@
 #ifndef CSSPropertyValueSet_h
 #define CSSPropertyValueSet_h
 
-#include "base/macros.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSPrimitiveValue.h"
@@ -40,10 +39,10 @@ class ImmutableCSSPropertyValueSet;
 class MutableCSSPropertyValueSet;
 class PropertyRegistry;
 class StyleSheetContents;
-enum class SecureContextMode;
 
 class CORE_EXPORT CSSPropertyValueSet
     : public GarbageCollectedFinalized<CSSPropertyValueSet> {
+  WTF_MAKE_NONCOPYABLE(CSSPropertyValueSet);
   friend class PropertyReference;
 
  public:
@@ -57,11 +56,7 @@ class CORE_EXPORT CSSPropertyValueSet
         : property_set_(&property_set), index_(index) {}
 
     CSSPropertyID Id() const {
-      return static_cast<CSSPropertyID>(
-          PropertyMetadata().Property().PropertyID());
-    }
-    const CSSProperty& Property() const {
-      return PropertyMetadata().Property();
+      return static_cast<CSSPropertyID>(PropertyMetadata().property_id_);
     }
     CSSPropertyID ShorthandID() const {
       return PropertyMetadata().ShorthandID();
@@ -164,18 +159,18 @@ class CORE_EXPORT CSSPropertyValueSet
   unsigned array_size_ : 28;
 
   friend class PropertySetCSSStyleDeclaration;
-  DISALLOW_COPY_AND_ASSIGN(CSSPropertyValueSet);
 };
 
 // Used for lazily parsing properties.
 class CSSLazyPropertyParser
     : public GarbageCollectedFinalized<CSSLazyPropertyParser> {
+  WTF_MAKE_NONCOPYABLE(CSSLazyPropertyParser);
+
  public:
   CSSLazyPropertyParser() {}
   virtual ~CSSLazyPropertyParser() {}
   virtual CSSPropertyValueSet* ParseProperties() = 0;
   virtual void Trace(blink::Visitor*);
-  DISALLOW_COPY_AND_ASSIGN(CSSLazyPropertyParser);
 };
 
 class CORE_EXPORT ImmutableCSSPropertyValueSet : public CSSPropertyValueSet {
@@ -243,14 +238,12 @@ class CORE_EXPORT MutableCSSPropertyValueSet : public CSSPropertyValueSet {
   // These expand shorthand properties into multiple properties.
   SetResult SetProperty(CSSPropertyID unresolved_property,
                         const String& value,
-                        bool important,
-                        SecureContextMode,
+                        bool important = false,
                         StyleSheetContents* context_style_sheet = 0);
   SetResult SetProperty(const AtomicString& custom_property_name,
                         const PropertyRegistry*,
                         const String& value,
                         bool important,
-                        SecureContextMode,
                         StyleSheetContents* context_style_sheet,
                         bool is_animation_tainted);
   void SetProperty(CSSPropertyID, const CSSValue&, bool important = false);
@@ -271,7 +264,6 @@ class CORE_EXPORT MutableCSSPropertyValueSet : public CSSPropertyValueSet {
 
   void Clear();
   void ParseDeclarationList(const String& style_declaration,
-                            SecureContextMode,
                             StyleSheetContents* context_style_sheet);
 
   CSSStyleDeclaration* EnsureCSSStyleDeclaration();

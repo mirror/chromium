@@ -106,10 +106,9 @@ void UmaSessionStats::RegisterSyntheticMultiGroupFieldTrial(
 // called immediately after for metrics services to be started or stopped as
 // needed. This is enforced by UmaSessionStats.changeMetricsReportingConsent on
 // the Java side.
-static void JNI_UmaSessionStats_ChangeMetricsReportingConsent(
-    JNIEnv*,
-    const JavaParamRef<jclass>&,
-    jboolean consent) {
+static void ChangeMetricsReportingConsent(JNIEnv*,
+                                          const JavaParamRef<jclass>&,
+                                          jboolean consent) {
   UpdateMetricsPrefsOnPermissionChange(consent);
 
   // This function ensures a consent file in the data directory is either
@@ -135,17 +134,16 @@ static void JNI_UmaSessionStats_ChangeMetricsReportingConsent(
 // This can be called at any time when consent hasn't changed, such as
 // connection type change, or start up. If consent has changed, then
 // ChangeMetricsReportingConsent() should be called first.
-static void JNI_UmaSessionStats_UpdateMetricsServiceState(
-    JNIEnv*,
-    const JavaParamRef<jclass>&,
-    jboolean may_upload) {
+static void UpdateMetricsServiceState(JNIEnv*,
+                                      const JavaParamRef<jclass>&,
+                                      jboolean may_upload) {
   // This will also apply the consent state, taken from Chrome Local State
   // prefs.
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(
       may_upload);
 }
 
-static void JNI_UmaSessionStats_RegisterExternalExperiment(
+static void RegisterExternalExperiment(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jtrial_name,
@@ -181,7 +179,7 @@ static void JNI_UmaSessionStats_RegisterExternalExperiment(
                                                          group_name_hashes);
 }
 
-static void JNI_UmaSessionStats_RegisterSyntheticFieldTrial(
+static void RegisterSyntheticFieldTrial(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jtrial_name,
@@ -191,11 +189,10 @@ static void JNI_UmaSessionStats_RegisterSyntheticFieldTrial(
   UmaSessionStats::RegisterSyntheticFieldTrial(trial_name, group_name);
 }
 
-static void JNI_UmaSessionStats_RecordMultiWindowSession(
-    JNIEnv*,
-    const JavaParamRef<jclass>&,
-    jint area_percent,
-    jint instance_count) {
+static void RecordMultiWindowSession(JNIEnv*,
+                                     const JavaParamRef<jclass>&,
+                                     jint area_percent,
+                                     jint instance_count) {
   UMA_HISTOGRAM_PERCENTAGE("MobileStartup.MobileMultiWindowSession",
                            area_percent);
   // Make sure the bucket count is the same as the range.  This currently
@@ -207,18 +204,16 @@ static void JNI_UmaSessionStats_RecordMultiWindowSession(
                               10 /* bucket count */);
 }
 
-static void JNI_UmaSessionStats_RecordTabCountPerLoad(
-    JNIEnv*,
-    const JavaParamRef<jclass>&,
-    jint num_tabs) {
+static void RecordTabCountPerLoad(JNIEnv*,
+                                  const JavaParamRef<jclass>&,
+                                  jint num_tabs) {
   // Record how many tabs total are open.
   UMA_HISTOGRAM_CUSTOM_COUNTS("Tabs.TabCountPerLoad", num_tabs, 1, 200, 50);
 }
 
-static void JNI_UmaSessionStats_RecordPageLoaded(
-    JNIEnv*,
-    const JavaParamRef<jclass>&,
-    jboolean is_desktop_user_agent) {
+static void RecordPageLoaded(JNIEnv*,
+                             const JavaParamRef<jclass>&,
+                             jboolean is_desktop_user_agent) {
   // Should be called whenever a page has been loaded.
   base::RecordAction(UserMetricsAction("MobilePageLoaded"));
   if (is_desktop_user_agent) {
@@ -226,14 +221,11 @@ static void JNI_UmaSessionStats_RecordPageLoaded(
   }
 }
 
-static void JNI_UmaSessionStats_RecordPageLoadedWithKeyboard(
-    JNIEnv*,
-    const JavaParamRef<jclass>&) {
+static void RecordPageLoadedWithKeyboard(JNIEnv*, const JavaParamRef<jclass>&) {
   base::RecordAction(UserMetricsAction("MobilePageLoadedWithKeyboard"));
 }
 
-static jlong JNI_UmaSessionStats_Init(JNIEnv* env,
-                                      const JavaParamRef<jclass>& obj) {
+static jlong Init(JNIEnv* env, const JavaParamRef<jclass>& obj) {
   // We should have only one UmaSessionStats instance.
   DCHECK(!g_uma_session_stats);
   g_uma_session_stats = new UmaSessionStats();

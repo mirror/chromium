@@ -19,6 +19,10 @@ namespace ios {
 class ChromeBrowserState;
 }
 
+namespace user_prefs {
+class PrefRegistrySyncable;
+}  // namespace user_prefs
+
 @class BookmarkTableView;
 @class MDCFlexibleHeaderView;
 
@@ -88,6 +92,9 @@ class ChromeBrowserState;
 - (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype) new NS_UNAVAILABLE;
+
+// Registers the feature preferences.
++ (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry;
 
 // Called when something outside the view causes the promo state to change.
 - (void)promoStateChangedAnimated:(BOOL)animated;

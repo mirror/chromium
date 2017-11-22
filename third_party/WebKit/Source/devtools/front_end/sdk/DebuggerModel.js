@@ -64,8 +64,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     Common.moduleSetting('pauseOnCaughtException').addChangeListener(this._pauseOnExceptionStateChanged, this);
     Common.moduleSetting('disableAsyncStackTraces').addChangeListener(this._asyncStackTracesStateChanged, this);
 
-    if (!target.suspended())
-      this._enableDebugger();
+    this._enableDebugger();
 
     /** @type {!Map<string, string>} */
     this._stringMap = new Map();

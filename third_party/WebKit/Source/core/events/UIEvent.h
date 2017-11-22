@@ -26,6 +26,7 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/events/Event.h"
+#include "core/dom/events/EventDispatchMediator.h"
 #include "core/events/UIEventInit.h"
 #include "core/frame/DOMWindow.h"
 

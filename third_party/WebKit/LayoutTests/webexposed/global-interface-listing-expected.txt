@@ -1078,6 +1078,7 @@ interface CredentialsContainer
     method create
     method get
     method preventSilentAccess
+    method requireUserMediation
     method store
 interface Crypto
     attribute @@toStringTag
@@ -1564,7 +1565,6 @@ interface Document : Node
     getter origin
     getter plugins
     getter pointerLockElement
-    getter policy
     getter preferredStylesheetSet
     getter readyState
     getter referrer
@@ -6780,7 +6780,6 @@ interface StylePropertyMap : StylePropertyMapReadonly
     method constructor
     method delete
     method set
-    method update
 interface StylePropertyMapReadonly
     attribute @@toStringTag
     method @@iterator
@@ -9149,6 +9148,7 @@ interface webkitURL
     attribute frames
     attribute gamepadController
     attribute internals
+    attribute layoutTestController
     attribute length
     attribute location
     attribute opener

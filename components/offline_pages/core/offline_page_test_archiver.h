@@ -39,7 +39,6 @@ class OfflinePageTestArchiver : public OfflinePageArchiver {
       ArchiverResult result,
       const base::string16& result_title,
       int64_t size_to_report,
-      const std::string& digest_to_report,
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
   ~OfflinePageTestArchiver() override;
 
@@ -79,7 +78,6 @@ class OfflinePageTestArchiver : public OfflinePageArchiver {
   bool create_archive_called_;
   bool delayed_;
   base::string16 result_title_;
-  std::string digest_to_report_;
   CreateArchiveCallback callback_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 

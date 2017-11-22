@@ -2,36 +2,40 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-if ((typeof mojo === 'undefined') || !mojo.bindingsLibraryInitialized) {
-  loadScript('mojo_bindings');
-}
-loadScript('extensions/common/mojo/keep_alive.mojom');
+define('keep_alive', [
+    'content/public/renderer/frame_interfaces',
+    'extensions/common/mojo/keep_alive.mojom',
+    'mojo/public/js/core',
+], function(frameInterfaces, mojom, core) {
 
-/**
- * An object that keeps the background page alive until closed.
- * @constructor
- * @alias module:keep_alive~KeepAlive
- */
-function KeepAlive() {
-  var pipe = Mojo.createMessagePipe();
   /**
-   * The handle to the keep-alive object in the browser.
-   * @type {!MojoHandle}
-   * @private
+   * An object that keeps the background page alive until closed.
+   * @constructor
+   * @alias module:keep_alive~KeepAlive
    */
-  this.handle_ = pipe.handle0;
-  Mojo.bindInterface(extensions.KeepAlive.name, pipe.handle1);
-}
+  function KeepAlive() {
+    /**
+     * The handle to the keep-alive object in the browser.
+     * @type {!MojoHandle}
+     * @private
+     */
+    this.handle_ = frameInterfaces.getInterface(mojom.KeepAlive.name);
+  }
 
-/**
- * Removes this keep-alive.
- */
-KeepAlive.prototype.close = function() {
-  this.handle_.close();
-};
+  /**
+   * Removes this keep-alive.
+   */
+  KeepAlive.prototype.close = function() {
+    core.close(this.handle_);
+  };
 
-/**
- * Creates a keep-alive.
- * @return {!module:keep_alive~KeepAlive} A new keep-alive.
- */
-exports.$set('createKeepAlive', function() { return new KeepAlive(); });
+  var exports = {};
+
+  return {
+    /**
+     * Creates a keep-alive.
+     * @return {!module:keep_alive~KeepAlive} A new keep-alive.
+     */
+    createKeepAlive: function() { return new KeepAlive(); }
+  };
+});

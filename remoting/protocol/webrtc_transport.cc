@@ -13,7 +13,6 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -490,9 +489,7 @@ void WebrtcTransport::OnLocalSessionDescriptionCreated(
 
   SdpMessage sdp_message(description_sdp);
   UpdateCodecParameters(&sdp_message, /*incoming=*/false);
-  if (preferred_video_codec_.empty()) {
-    sdp_message.PreferVideoCodec("VP8");
-  } else {
+  if (!preferred_video_codec_.empty()) {
     sdp_message.PreferVideoCodec(preferred_video_codec_);
   }
   description_sdp = sdp_message.ToString();
@@ -740,11 +737,8 @@ void WebrtcTransport::Close(ErrorCode error) {
     event_handler_->OnWebrtcTransportError(error);
 }
 
-void WebrtcTransport::ApplySessionOptions(const SessionOptions& options) {
-  base::Optional<std::string> video_codec = options.Get("Video-Codec");
-  if (video_codec) {
-    preferred_video_codec_ = *video_codec;
-  }
+void WebrtcTransport::SetPreferredVideoCodec(const std::string& codec) {
+  preferred_video_codec_ = codec;
 }
 
 }  // namespace protocol

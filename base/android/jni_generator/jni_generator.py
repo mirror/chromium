@@ -249,7 +249,7 @@ class JniParams(object):
     for match in re.finditer(re_import, contents):
       self._imports += ['L' + match.group('class').replace('.', '/')]
 
-    re_inner = re.compile(r'(class|interface|enum)\s+?(?P<name>\w+?)\W')
+    re_inner = re.compile(r'(class|interface)\s+?(?P<name>\w+?)\W')
     for match in re.finditer(re_inner, contents):
       inner = match.group('name')
       if not self._fully_qualified_class.endswith(inner):
@@ -580,12 +580,10 @@ RE_SCOPED_JNI_TYPES = re.compile('jobject|jclass|jstring|jthrowable|.*Array')
 # Regex to match a string like "@CalledByNative public void foo(int bar)".
 RE_CALLED_BY_NATIVE = re.compile(
     '@CalledByNative(?P<Unchecked>(Unchecked)*?)(?:\("(?P<annotation>.*)"\))?'
-    '\s+(?P<prefix>('
-    '(private|protected|public|static|abstract|final|default|synchronized)'
-    '\s*)*)'
+    '\s+(?P<prefix>[\w ]*?)'
     '(:?\s*@\w+)?'  # Ignore annotations in return types.
-    '\s*(?P<return_type>\S*?)'
-    '\s*(?P<name>\w+)'
+    '\s*(?P<return_type>\S+?)'
+    '\s+(?P<name>\w+)'
     '\s*\((?P<params>[^\)]*)\)')
 
 
@@ -610,23 +608,13 @@ def ExtractCalledByNatives(jni_params, contents):
   """
   called_by_natives = []
   for match in re.finditer(RE_CALLED_BY_NATIVE, contents):
-    return_type = match.group('return_type')
-    name = match.group('name')
-    if not return_type:
-      is_constructor = True
-      return_type = name
-      name = "Constructor"
-    else:
-      is_constructor = False
-
     called_by_natives += [CalledByNative(
         system_class=False,
         unchecked='Unchecked' in match.group('Unchecked'),
         static='static' in match.group('prefix'),
         java_class_name=match.group('annotation') or '',
-        return_type=return_type,
-        name=name,
-        is_constructor=is_constructor,
+        return_type=match.group('return_type'),
+        name=match.group('name'),
         params=JniParams.Parse(match.group('params')))]
   # Check for any @CalledByNative occurrences that weren't matched.
   unmatched_lines = re.sub(RE_CALLED_BY_NATIVE, '', contents).split('\n')
@@ -991,13 +979,6 @@ $CLOSE_NAMESPACE
     c_type = _GetJNIFirstParamType(native)
     return [self.GetJavaParamRefForCall(c_type, 'jcaller')]
 
-  def GetImplementationMethodName(self, native):
-    class_name = self.class_name
-    if native.java_class_name is not None:
-      # Inner class
-      class_name = native.java_class_name
-    return "JNI_%s_%s" % (class_name, native.name)
-
   def GetNativeStub(self, native):
     is_method = native.type == 'method'
 
@@ -1027,7 +1008,6 @@ $CLOSE_NAMESPACE
         'RETURN': return_type,
         'RETURN_DECLARATION': return_declaration,
         'NAME': native.name,
-        'IMPL_METHOD_NAME': self.GetImplementationMethodName(native),
         'PARAMS': _GetParamsInDeclaration(native),
         'PARAMS_IN_STUB': GetParamsInStub(native),
         'PARAMS_IN_CALL': params_in_call,
@@ -1055,11 +1035,11 @@ JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
 """)
     else:
       template = Template("""
-static ${RETURN_DECLARATION} ${IMPL_METHOD_NAME}(JNIEnv* env, ${PARAMS});
+static ${RETURN_DECLARATION} ${NAME}(JNIEnv* env, ${PARAMS});
 
 JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
   ${PROFILING_ENTERED_NATIVE}
-  return ${IMPL_METHOD_NAME}(${PARAMS_IN_CALL})${POST_CALL};
+  return ${NAME}(${PARAMS_IN_CALL})${POST_CALL};
 }
 """)
 

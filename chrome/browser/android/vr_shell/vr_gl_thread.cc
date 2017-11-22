@@ -224,39 +224,41 @@ void VrGLThread::SetWebVrMode(bool enabled, bool show_toast) {
                             enabled, show_toast));
 }
 
-void VrGLThread::SetAudioCaptureEnabled(bool enabled) {
+void VrGLThread::SetAudioCapturingIndicator(bool enabled) {
   DCHECK(OnMainThread());
   task_runner()->PostTask(
-      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAudioCaptureEnabled,
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAudioCapturingIndicator,
                             browser_ui_, enabled));
 }
 
-void VrGLThread::SetLocationAccess(bool enabled) {
-  DCHECK(OnMainThread());
-  task_runner()->PostTask(FROM_HERE,
-                          base::Bind(&vr::BrowserUiInterface::SetLocationAccess,
-                                     browser_ui_, enabled));
-}
-
-void VrGLThread::SetVideoCaptureEnabled(bool enabled) {
+void VrGLThread::SetLocationAccessIndicator(bool enabled) {
   DCHECK(OnMainThread());
   task_runner()->PostTask(
-      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetVideoCaptureEnabled,
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetLocationAccessIndicator,
                             browser_ui_, enabled));
 }
 
-void VrGLThread::SetScreenCaptureEnabled(bool enabled) {
+void VrGLThread::SetVideoCapturingIndicator(bool enabled) {
   DCHECK(OnMainThread());
   task_runner()->PostTask(
-      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetScreenCaptureEnabled,
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetVideoCapturingIndicator,
                             browser_ui_, enabled));
 }
 
-void VrGLThread::SetBluetoothConnected(bool enabled) {
+void VrGLThread::SetScreenCapturingIndicator(bool enabled) {
   DCHECK(OnMainThread());
   task_runner()->PostTask(
-      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetBluetoothConnected,
-                            browser_ui_, enabled));
+      FROM_HERE,
+      base::Bind(&vr::BrowserUiInterface::SetScreenCapturingIndicator,
+                 browser_ui_, enabled));
+}
+
+void VrGLThread::SetBluetoothConnectedIndicator(bool enabled) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&vr::BrowserUiInterface::SetBluetoothConnectedIndicator,
+                 browser_ui_, enabled));
 }
 
 void VrGLThread::SetIsExiting() {

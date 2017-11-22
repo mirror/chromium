@@ -52,12 +52,4 @@ CSSTransformComponent* CSSTransformComponent::FromCSSValue(
   }
 }
 
-String CSSTransformComponent::toString(
-    const ExecutionContext* execution_context) const {
-  const CSSValue* result = ToCSSValue(execution_context->SecureContextMode());
-  // TODO(meade): Remove this once all the number and length types are
-  // rewritten.
-  return result ? result->CssText() : "";
-}
-
 }  // namespace blink

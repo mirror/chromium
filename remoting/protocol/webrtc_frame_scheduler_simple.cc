@@ -55,9 +55,8 @@ int64_t GetRegionArea(const webrtc::DesktopRegion& region) {
 
 }  // namespace
 
-// TODO(zijiehe): Use |options| to select bandwidth estimator.
-WebrtcFrameSchedulerSimple::WebrtcFrameSchedulerSimple(
-    const SessionOptions& options)
+// TODO(zijiehe): Make the bandwidth estimator configurable.
+WebrtcFrameSchedulerSimple::WebrtcFrameSchedulerSimple()
     : pacing_bucket_(LeakyBucket::kUnlimitedDepth, 0),
       updated_region_area_(kStatsWindow),
       bandwidth_estimator_(new WebrtcBandwidthEstimator()),

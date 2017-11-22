@@ -5,7 +5,6 @@
 #ifndef CSSVariableData_h
 #define CSSVariableData_h
 
-#include "base/macros.h"
 #include "core/css/parser/CSSParserToken.h"
 #include "core/css/parser/CSSParserTokenRange.h"
 #include "platform/wtf/Forward.h"
@@ -15,9 +14,9 @@ namespace blink {
 
 class CSSParserTokenRange;
 class CSSSyntaxDescriptor;
-enum class SecureContextMode;
 
 class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
+  WTF_MAKE_NONCOPYABLE(CSSVariableData);
   USING_FAST_MALLOC(CSSVariableData);
 
  public:
@@ -47,8 +46,7 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
 
   bool NeedsVariableResolution() const { return needs_variable_resolution_; }
 
-  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&,
-                                 SecureContextMode) const;
+  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&) const;
 
  private:
   CSSVariableData(const CSSParserTokenRange&,
@@ -72,7 +70,6 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
   Vector<CSSParserToken> tokens_;
   const bool is_animation_tainted_;
   const bool needs_variable_resolution_;
-  DISALLOW_COPY_AND_ASSIGN(CSSVariableData);
 };
 
 }  // namespace blink

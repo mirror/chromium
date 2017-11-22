@@ -133,7 +133,7 @@ void JourneyLoggerAndroid::SetNotShown(
       static_cast<JourneyLogger::NotShownReason>(jreason));
 }
 
-static jlong JNI_JourneyLogger_InitJourneyLoggerAndroid(
+static jlong InitJourneyLoggerAndroid(
     JNIEnv* env,
     const JavaParamRef<jobject>& jcaller,
     jboolean jis_incognito,

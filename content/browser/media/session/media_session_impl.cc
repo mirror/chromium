@@ -586,7 +586,6 @@ void MediaSessionImpl::AbandonSystemAudioFocusIfNeeded() {
     return;
   }
   delegate_->AbandonAudioFocus();
-  is_ducking_ = false;
 
   SetAudioFocusState(State::INACTIVE);
   NotifyAboutStateChange();

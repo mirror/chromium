@@ -9,7 +9,6 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
-#include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"

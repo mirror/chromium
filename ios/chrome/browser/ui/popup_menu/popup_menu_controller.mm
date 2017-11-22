@@ -148,9 +148,8 @@ static CGPoint AnimateInIntermediaryPoint(CGPoint source, CGPoint destination) {
 }
 
 - (void)fadeInPopupFromSource:(CGPoint)source
-                toDestination:(CGPoint)destination
-                   completion:(ProceduralBlock)completion {
-  [self animateInFromPoint:source toPoint:destination completion:completion];
+                toDestination:(CGPoint)destination {
+  [self animateInFromPoint:source toPoint:destination];
   UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
                                   containerView_);
 }
@@ -182,9 +181,7 @@ static CGPoint AnimateInIntermediaryPoint(CGPoint source, CGPoint destination) {
   [self dismissPopupMenu];
 }
 
-- (void)animateInFromPoint:(CGPoint)source
-                   toPoint:(CGPoint)destination
-                completion:(ProceduralBlock)completion {
+- (void)animateInFromPoint:(CGPoint)source toPoint:(CGPoint)destination {
   sourceAnimationPoint_ = source;
 
   // Set anchor to top right for top right destinations.
@@ -200,11 +197,6 @@ static CGPoint AnimateInIntermediaryPoint(CGPoint source, CGPoint destination) {
   NSValue* destinationScaleValue =
       [NSValue valueWithCATransform3D:CATransform3DIdentity];
 
-  [CATransaction begin];
-  [CATransaction setCompletionBlock:^{
-    if (completion)
-      completion();
-  }];
   CABasicAnimation* scaleAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform"];
   CAMediaTimingFunction* easeOut = TimingFunction(ios::material::CurveEaseOut);
@@ -233,7 +225,6 @@ static CGPoint AnimateInIntermediaryPoint(CGPoint source, CGPoint destination) {
   [layer addAnimation:AnimationGroupMake(
                           @[ scaleAnimation, positionAnimation, fadeAnimation ])
                forKey:@"popup-in"];
-  [CATransaction commit];
 }
 
 - (void)animateOutToPoint:(CGPoint)destination

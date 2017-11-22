@@ -160,9 +160,8 @@ class SpdySessionTest : public PlatformTest {
   }
 
   void AddSSLSocketData() {
-    ssl_.ssl_info.cert =
-        ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
-    ASSERT_TRUE(ssl_.ssl_info.cert);
+    ssl_.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
+    ASSERT_TRUE(ssl_.cert);
     session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl_);
   }
 
@@ -348,7 +347,9 @@ TEST_F(SpdySessionTest, GoAwayImmediatelyWithNoActiveStreams) {
   AddSSLSocketData();
 
   CreateNetworkSession();
-  CreateSpdySession();
+
+  session_ = TryCreateSpdySessionExpectingFailure(
+      http_session_.get(), key_, ERR_CONNECTION_CLOSED, NetLogWithSource());
   base::RunLoop().RunUntilIdle();
 
   EXPECT_FALSE(session_);
@@ -904,7 +905,7 @@ TEST_F(SpdySessionTest, ClientPing) {
   EXPECT_EQ(0, session_->pings_in_flight());
   EXPECT_GE(session_->next_ping_id(), 1U);
   EXPECT_FALSE(session_->check_ping_status_pending());
-  EXPECT_GE(session_->last_read_time(), before_ping_time);
+  EXPECT_GE(session_->last_activity_time(), before_ping_time);
 
   data.Resume();
   base::RunLoop().RunUntilIdle();
@@ -1798,7 +1799,7 @@ TEST_F(SpdySessionTest, FailedPing) {
   // We set last time we have received any data in 1 sec less than now.
   // CheckPingStatus will trigger timeout because hung interval is zero.
   base::TimeTicks now = base::TimeTicks::Now();
-  session_->last_read_time_ = now - base::TimeDelta::FromSeconds(1);
+  session_->last_activity_time_ = now - base::TimeDelta::FromSeconds(1);
   session_->CheckPingStatus(now);
   base::RunLoop().RunUntilIdle();
 
@@ -2601,7 +2602,7 @@ TEST_F(SpdySessionTest, ConnectionPooledWithTlsChannelId) {
   SequencedSocketData data(nullptr, 0, nullptr, 0);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
-  ssl_.ssl_info.channel_id_sent = true;
+  ssl_.channel_id_sent = true;
   AddSSLSocketData();
 
   CreateNetworkSession();

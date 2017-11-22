@@ -23,7 +23,7 @@ bool ChromeWebApkHost::CanInstallWebApk() {
 }
 
 // static
-jboolean JNI_ChromeWebApkHost_CanLaunchRendererInWebApkProcess(
+jboolean CanLaunchRendererInWebApkProcess(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& clazz) {
   return variations::GetVariationParamValueByFeature(

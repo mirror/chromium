@@ -22,12 +22,12 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/omnibox/browser/autocomplete_match.h"
-#include "components/omnibox/browser/omnibox_client.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/range/range.h"
 
 class GURL;
+class OmniboxClient;
 class OmniboxEditController;
 class OmniboxViewMacTest;
 class OmniboxEditModel;
@@ -152,7 +152,7 @@ class OmniboxView {
   // existing selection. |notify_text_changed| is true if the model should be
   // notified of the change.
   virtual void OnTemporaryTextMaybeChanged(const base::string16& display_text,
-                                           const AutocompleteMatch& match,
+                                           AutocompleteMatch::Type match_type,
                                            bool save_original_selection,
                                            bool notify_text_changed) = 0;
 

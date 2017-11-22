@@ -107,21 +107,31 @@ class InputEvent final : public UIEvent {
 
   bool IsInputEvent() const override;
 
-  DispatchEventResult DispatchEvent(EventDispatcher&) override;
+  EventDispatchMediator* CreateMediator() override;
 
   virtual void Trace(blink::Visitor*);
 
  private:
+  friend class InputEventDispatchMediator;
   InputEvent(const AtomicString&, const InputEventInit&);
 
   InputType input_type_;
   String data_;
   Member<DataTransfer> data_transfer_;
   bool is_composing_;
-
   // We have to stored |Range| internally and only expose |StaticRange|, please
-  // see comments in |dispatchEvent()|.
+  // see comments in |InputEventDispatchMediator::dispatchEvent()|.
   RangeVector ranges_;
+};
+
+class InputEventDispatchMediator final : public EventDispatchMediator {
+ public:
+  static InputEventDispatchMediator* Create(InputEvent*);
+
+ private:
+  explicit InputEventDispatchMediator(InputEvent*);
+  InputEvent& Event() const;
+  DispatchEventResult DispatchEvent(EventDispatcher&) const override;
 };
 
 DEFINE_EVENT_TYPE_CASTS(InputEvent);

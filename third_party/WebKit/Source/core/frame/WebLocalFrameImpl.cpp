@@ -203,9 +203,9 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/PtrUtil.h"
-#include "platform/wtf/Time.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebDoubleSize.h"
 #include "public/platform/WebFloatPoint.h"
@@ -1686,8 +1686,8 @@ void WebLocalFrameImpl::SetCoreFrame(LocalFrame* frame) {
   frame_ = frame;
 
   local_frame_client_->SetVirtualTimePauser(
-      frame_ ? frame_->FrameScheduler()->CreateWebScopedVirtualTimePauser()
-             : WebScopedVirtualTimePauser());
+      frame_ ? frame_->FrameScheduler()->CreateScopedVirtualTimePauser()
+             : ScopedVirtualTimePauser());
 }
 
 void WebLocalFrameImpl::InitializeCoreFrame(Page& page,

@@ -4,7 +4,6 @@
 
 #include "tools/gn/ninja_binary_target_writer.h"
 
-#include <memory>
 #include <sstream>
 #include <utility>
 
@@ -583,7 +582,7 @@ TEST(NinjaBinaryTargetWriter, WinPrecompiledHeaders) {
   pch_settings.set_default_toolchain_label(setup.toolchain()->label());
 
   // Declare a C++ compiler that supports PCH.
-  std::unique_ptr<Tool> cxx_tool = std::make_unique<Tool>();
+  std::unique_ptr<Tool> cxx_tool(new Tool);
   TestWithScope::SetCommandForTool(
       "c++ {{source}} {{cflags}} {{cflags_cc}} {{defines}} {{include_dirs}} "
       "-o {{output}}",
@@ -594,7 +593,7 @@ TEST(NinjaBinaryTargetWriter, WinPrecompiledHeaders) {
   pch_toolchain.SetTool(Toolchain::TYPE_CXX, std::move(cxx_tool));
 
   // Add a C compiler as well.
-  std::unique_ptr<Tool> cc_tool = std::make_unique<Tool>();
+  std::unique_ptr<Tool> cc_tool(new Tool);
   TestWithScope::SetCommandForTool(
       "cc {{source}} {{cflags}} {{cflags_c}} {{defines}} {{include_dirs}} "
       "-o {{output}}",
@@ -710,7 +709,7 @@ TEST(NinjaBinaryTargetWriter, GCCPrecompiledHeaders) {
   pch_settings.set_default_toolchain_label(setup.toolchain()->label());
 
   // Declare a C++ compiler that supports PCH.
-  std::unique_ptr<Tool> cxx_tool = std::make_unique<Tool>();
+  std::unique_ptr<Tool> cxx_tool(new Tool);
   TestWithScope::SetCommandForTool(
       "c++ {{source}} {{cflags}} {{cflags_cc}} {{defines}} {{include_dirs}} "
       "-o {{output}}",
@@ -722,7 +721,7 @@ TEST(NinjaBinaryTargetWriter, GCCPrecompiledHeaders) {
   pch_toolchain.ToolchainSetupComplete();
 
   // Add a C compiler as well.
-  std::unique_ptr<Tool> cc_tool = std::make_unique<Tool>();
+  std::unique_ptr<Tool> cc_tool(new Tool);
   TestWithScope::SetCommandForTool(
       "cc {{source}} {{cflags}} {{cflags_c}} {{defines}} {{include_dirs}} "
       "-o {{output}}",

@@ -65,20 +65,20 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   base::i18n::InitializeICU();
 
   ui_ = base::MakeUnique<Ui>(this, nullptr, UiInitialState());
-  model_ = ui_->model_for_test();
 
-  ToolbarState state(GURL("https://dangerous.com/dir/file.html"),
-                     security_state::SecurityLevel::HTTP_SHOW_WARNING,
-                     &toolbar::kHttpIcon, base::string16(), true, false);
+  GURL gurl("https://dangerous.com/dir/file.html");
+  ToolbarState state(gurl, security_state::SecurityLevel::DANGEROUS,
+                     &toolbar::kHttpsInvalidIcon,
+                     base::UTF8ToUTF16("Not secure"), true, false);
   ui_->SetToolbarState(state);
   ui_->SetHistoryButtonsEnabled(true, true);
   ui_->SetLoading(true);
   ui_->SetLoadProgress(0.4);
-  ui_->SetVideoCaptureEnabled(true);
-  ui_->SetScreenCaptureEnabled(true);
-  ui_->SetAudioCaptureEnabled(true);
-  ui_->SetBluetoothConnected(true);
-  ui_->SetLocationAccess(true);
+  ui_->SetVideoCapturingIndicator(true);
+  ui_->SetScreenCapturingIndicator(true);
+  ui_->SetAudioCapturingIndicator(true);
+  ui_->SetBluetoothConnectedIndicator(true);
+  ui_->SetLocationAccessIndicator(true);
 }
 
 VrTestContext::~VrTestContext() = default;
@@ -127,10 +127,6 @@ void VrTestContext::HandleInput(ui::Event* event) {
       case ui::DomCode::US_S: {
         CreateFakeOmniboxSuggestions();
         break;
-        case ui::DomCode::US_V:
-          ui_->SetVideoCaptureEnabled(
-              !model_->permissions.video_capture_enabled);
-          break;
       }
       default:
         break;
@@ -250,9 +246,10 @@ ControllerModel VrTestContext::UpdateController() {
   return controller_model;
 }
 
-void VrTestContext::OnGlInitialized() {
+void VrTestContext::OnGlInitialized(const gfx::Size& window_size) {
   unsigned int content_texture_id = CreateFakeContentTexture();
 
+  window_size_ = window_size;
   ui_->OnGlInitialized(content_texture_id,
                        UiElementRenderer::kTextureLocationLocal, false);
 
@@ -297,13 +294,8 @@ void VrTestContext::CreateFakeOmniboxSuggestions() {
 }
 
 gfx::Transform VrTestContext::ProjectionMatrix() const {
-  gfx::Transform transform(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, -1, 0.5);
-  if (window_size_.height() > 0) {
-    transform.Scale(
-        view_scale_factor_,
-        view_scale_factor_ * window_size_.width() / window_size_.height());
-  }
-  return transform;
+  return gfx::Transform(view_scale_factor_, 0, 0, 0, 0, view_scale_factor_, 0,
+                        0, 0, 0, -1, 0, 0, 0, -1, 0.5);
 }
 
 gfx::Transform VrTestContext::ViewProjectionMatrix() const {
@@ -315,31 +307,23 @@ void VrTestContext::SetVoiceSearchActive(bool active) {
 }
 void VrTestContext::ExitPresent() {}
 void VrTestContext::ExitFullscreen() {}
-
-void VrTestContext::Navigate(GURL gurl) {
-  ToolbarState state(gurl, security_state::SecurityLevel::HTTP_SHOW_WARNING,
-                     &toolbar::kHttpIcon, base::string16(), true, false);
-  ui_->SetToolbarState(state);
-}
-
 void VrTestContext::NavigateBack() {}
 void VrTestContext::ExitCct() {}
-
 void VrTestContext::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
   if (mode == UiUnsupportedMode::kUnhandledPageInfo ||
       mode == UiUnsupportedMode::kAndroidPermissionNeeded) {
     ui_->SetExitVrPromptEnabled(true, mode);
   }
 }
-
 void VrTestContext::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                                          vr::ExitVrPromptChoice choice) {
   LOG(ERROR) << "exit prompt result: " << choice;
   ui_->SetExitVrPromptEnabled(false, UiUnsupportedMode::kCount);
 }
-
 void VrTestContext::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {}
+
 void VrTestContext::StartAutocomplete(const base::string16& string) {}
 void VrTestContext::StopAutocomplete() {}
+void VrTestContext::Navigate(GURL gurl) {}
 
 }  // namespace vr

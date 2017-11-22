@@ -25,7 +25,6 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
-#include "chrome/browser/resource_coordinator/tab_manager_features.h"
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
@@ -34,6 +33,7 @@
 #include "chrome/browser/ui/tab_ui_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_impl.h"
 #include "chrome/browser/ui/tabs/test_tab_strip_model_delegate.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
@@ -701,10 +701,6 @@ TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
   browser_info2.window_is_minimized = true;
   browser_info2.browser_is_app = false;
   tab_manager.test_browser_info_list_.push_back(browser_info2);
-
-  // Fast-forward time until no tab is protected from being discarded for having
-  // recently been used.
-  task_runner_->FastForwardBy(TabManager::kDiscardProtectionTime);
 
   for (int i = 0; i < 4; ++i)
     tab_manager.DiscardTab(DiscardCondition::kProactive);

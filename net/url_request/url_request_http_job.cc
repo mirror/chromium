@@ -60,6 +60,7 @@
 #include "net/ssl/ssl_cert_request_info.h"
 #include "net/ssl/ssl_config_service.h"
 #include "net/url_request/http_user_agent_settings.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_error_job.h"
@@ -76,7 +77,6 @@
 #if BUILDFLAG(ENABLE_REPORTING)
 #include "net/reporting/reporting_header_parser.h"
 #include "net/reporting/reporting_service.h"
-#include "net/url_request/network_error_logging_delegate.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace {
@@ -370,10 +370,8 @@ void URLRequestHttpJob::NotifyHeadersComplete() {
   ProcessStrictTransportSecurityHeader();
   ProcessPublicKeyPinsHeader();
   ProcessExpectCTHeader();
-#if BUILDFLAG(ENABLE_REPORTING)
   ProcessReportToHeader();
   ProcessNetworkErrorLoggingHeader();
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
   // The HTTP transaction may be restarted several times for the purposes
   // of sending authorization information. Each time it restarts, we get
@@ -650,17 +648,14 @@ void URLRequestHttpJob::SaveCookiesAndNotifyHeadersComplete(int result) {
     // Set all cookies, without waiting for them to be set. Any subsequent read
     // will see the combined result of all cookie operation.
     const base::StringPiece name("Set-Cookie");
-    std::string cookie_line;
+    std::string cookie;
     size_t iter = 0;
     HttpResponseHeaders* headers = GetResponseHeaders();
-    while (headers->EnumerateHeader(&iter, name, &cookie_line)) {
-      std::unique_ptr<CanonicalCookie> cookie = net::CanonicalCookie::Create(
-          request_->url(), cookie_line, base::Time::Now(), options);
-      if (!cookie || !CanSetCookie(*cookie, &options))
+    while (headers->EnumerateHeader(&iter, name, &cookie)) {
+      if (cookie.empty() || !CanSetCookie(cookie, &options))
         continue;
-      request_->context()->cookie_store()->SetCanonicalCookieAsync(
-          std::move(cookie), request_->url().SchemeIsCryptographic(),
-          !options.exclude_httponly(), net::CookieStore::SetCookiesCallback());
+      request_->context()->cookie_store()->SetCookieWithOptionsAsync(
+          request_->url(), cookie, options, CookieStore::SetCookiesCallback());
     }
   }
 
@@ -751,10 +746,10 @@ void URLRequestHttpJob::ProcessExpectCTHeader() {
   }
 }
 
-#if BUILDFLAG(ENABLE_REPORTING)
 void URLRequestHttpJob::ProcessReportToHeader() {
   DCHECK(response_info_);
 
+#if BUILDFLAG(ENABLE_REPORTING)
   HttpResponseHeaders* headers = GetResponseHeaders();
   std::string value;
   if (!headers->GetNormalizedHeader("Report-To", &value))
@@ -780,6 +775,7 @@ void URLRequestHttpJob::ProcessReportToHeader() {
   }
 
   service->ProcessHeader(request_info_.url.GetOrigin(), value);
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 }
 
 void URLRequestHttpJob::ProcessNetworkErrorLoggingHeader() {
@@ -805,7 +801,6 @@ void URLRequestHttpJob::ProcessNetworkErrorLoggingHeader() {
 
   delegate->OnHeader(url::Origin::Create(request_info_.url), value);
 }
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 void URLRequestHttpJob::OnStartCompleted(int result) {
   TRACE_EVENT0(kNetTracingCategory, "URLRequestHttpJob::OnStartCompleted");

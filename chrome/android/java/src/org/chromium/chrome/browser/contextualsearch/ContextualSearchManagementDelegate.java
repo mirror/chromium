@@ -74,9 +74,4 @@ public interface ContextualSearchManagementDelegate {
      * Called when the Contextual Search panel is expanded or maximized.
      */
     void onPanelExpandedOrMaximized();
-
-    /**
-     * Called when the Contextual Search panel is resized.
-     */
-    void onPanelResized();
 }

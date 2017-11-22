@@ -9,8 +9,9 @@
 namespace ui {
 namespace ws {
 
-TestServerWindowDelegate::TestServerWindowDelegate(VizHostProxy* viz_host_proxy)
-    : viz_host_proxy_(viz_host_proxy) {}
+TestServerWindowDelegate::TestServerWindowDelegate(
+    viz::HostFrameSinkManager* host_frame_sink_manager)
+    : host_frame_sink_manager_(host_frame_sink_manager) {}
 
 TestServerWindowDelegate::~TestServerWindowDelegate() {}
 
@@ -18,8 +19,8 @@ void TestServerWindowDelegate::AddRootWindow(ServerWindow* window) {
   roots_.insert(window);
 }
 
-VizHostProxy* TestServerWindowDelegate::GetVizHostProxy() {
-  return viz_host_proxy_;
+viz::HostFrameSinkManager* TestServerWindowDelegate::GetHostFrameSinkManager() {
+  return host_frame_sink_manager_;
 }
 
 ServerWindow* TestServerWindowDelegate::GetRootWindowForDrawn(

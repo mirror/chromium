@@ -7,7 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/math_util.h"
-#include "cc/paint/render_surface_filters.h"
+#include "cc/base/render_surface_filters.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
@@ -74,12 +74,12 @@ ResourceFormat SoftwareRenderer::BackbufferFormat() const {
 }
 
 void SoftwareRenderer::BeginDrawingFrame() {
-  TRACE_EVENT0("viz", "SoftwareRenderer::BeginDrawingFrame");
+  TRACE_EVENT0("cc", "SoftwareRenderer::BeginDrawingFrame");
   root_canvas_ = output_device_->BeginPaint(current_frame()->root_damage_rect);
 }
 
 void SoftwareRenderer::FinishDrawingFrame() {
-  TRACE_EVENT0("viz", "SoftwareRenderer::FinishDrawingFrame");
+  TRACE_EVENT0("cc", "SoftwareRenderer::FinishDrawingFrame");
   current_framebuffer_lock_ = nullptr;
   current_framebuffer_canvas_.reset();
   current_canvas_ = nullptr;
@@ -90,7 +90,7 @@ void SoftwareRenderer::FinishDrawingFrame() {
 
 void SoftwareRenderer::SwapBuffers(std::vector<ui::LatencyInfo> latency_info) {
   DCHECK(visible_);
-  TRACE_EVENT0("viz", "SoftwareRenderer::SwapBuffers");
+  TRACE_EVENT0("cc", "SoftwareRenderer::SwapBuffers");
   OutputSurfaceFrame output_frame;
   output_frame.latency_info = std::move(latency_info);
   output_surface_->SwapBuffers(std::move(output_frame));
@@ -216,7 +216,7 @@ void SoftwareRenderer::DoDrawQuad(const DrawQuad* quad,
   if (!current_canvas_)
     return;
 
-  TRACE_EVENT0("viz", "SoftwareRenderer::DoDrawQuad");
+  TRACE_EVENT0("cc", "SoftwareRenderer::DoDrawQuad");
   bool do_save = draw_region || is_scissor_enabled_;
   SkAutoCanvasRestore canvas_restore(current_canvas_, do_save);
   if (is_scissor_enabled_) {
@@ -339,7 +339,7 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
   const bool disable_image_filtering =
       disable_picture_quad_image_filtering_ || quad->nearest_neighbor;
 
-  TRACE_EVENT0("viz", "SoftwareRenderer::DrawPictureQuad");
+  TRACE_EVENT0("cc", "SoftwareRenderer::DrawPictureQuad");
 
   SkCanvas* raster_canvas = current_canvas_;
 
@@ -477,10 +477,9 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
   const cc::FilterOperations* filters = FiltersForPass(quad->render_pass_id);
   if (filters) {
     DCHECK(!filters->IsEmpty());
-    auto paint_filter = cc::RenderSurfaceFilters::BuildImageFilter(
-        *filters, gfx::SizeF(content_texture->size()));
-    auto image_filter =
-        paint_filter ? paint_filter->cached_sk_filter_ : nullptr;
+    sk_sp<SkImageFilter> image_filter =
+        cc::RenderSurfaceFilters::BuildImageFilter(
+            *filters, gfx::SizeF(content_texture->size()));
     if (image_filter) {
       SkIRect result_rect;
       // TODO(ajuma): Apply the filter in the same pass as the content where
@@ -788,12 +787,10 @@ sk_sp<SkShader> SoftwareRenderer::GetBackgroundFilterShader(
   gfx::Vector2dF clipping_offset =
       (unclipped_rect.top_right() - backdrop_rect.top_right()) +
       (backdrop_rect.bottom_left() - unclipped_rect.bottom_left());
-  sk_sp<SkImageFilter> filter =
-      cc::RenderSurfaceFilters::BuildImageFilter(
-          *background_filters,
-          gfx::SizeF(backdrop_bitmap.width(), backdrop_bitmap.height()),
-          clipping_offset)
-          ->cached_sk_filter_;
+  sk_sp<SkImageFilter> filter = cc::RenderSurfaceFilters::BuildImageFilter(
+      *background_filters,
+      gfx::SizeF(backdrop_bitmap.width(), backdrop_bitmap.height()),
+      clipping_offset);
   sk_sp<SkImage> filter_backdrop_image =
       ApplyImageFilter(filter.get(), quad, backdrop_bitmap, nullptr);
 

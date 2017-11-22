@@ -99,6 +99,10 @@ double PointerEvent::pageY() const {
              : page_location_.Y();
 }
 
+EventDispatchMediator* PointerEvent::CreateMediator() {
+  return PointerEventDispatchMediator::Create(this);
+}
+
 void PointerEvent::ReceivedTarget() {
   coalesced_events_targets_dirty_ = true;
   MouseEvent::ReceivedTarget();
@@ -118,13 +122,28 @@ void PointerEvent::Trace(blink::Visitor* visitor) {
   MouseEvent::Trace(visitor);
 }
 
-DispatchEventResult PointerEvent::DispatchEvent(EventDispatcher& dispatcher) {
-  if (type().IsEmpty())
+PointerEventDispatchMediator* PointerEventDispatchMediator::Create(
+    PointerEvent* pointer_event) {
+  return new PointerEventDispatchMediator(pointer_event);
+}
+
+PointerEventDispatchMediator::PointerEventDispatchMediator(
+    PointerEvent* pointer_event)
+    : EventDispatchMediator(pointer_event) {}
+
+PointerEvent& PointerEventDispatchMediator::Event() const {
+  return ToPointerEvent(EventDispatchMediator::GetEvent());
+}
+
+DispatchEventResult PointerEventDispatchMediator::DispatchEvent(
+    EventDispatcher& dispatcher) const {
+  if (Event().type().IsEmpty())
     return DispatchEventResult::kNotCanceled;  // Shouldn't happen.
 
-  DCHECK(!target() || target() != relatedTarget());
+  DCHECK(!Event().target() || Event().target() != Event().relatedTarget());
 
-  GetEventPath().AdjustForRelatedTarget(dispatcher.GetNode(), relatedTarget());
+  Event().GetEventPath().AdjustForRelatedTarget(dispatcher.GetNode(),
+                                                Event().relatedTarget());
 
   return dispatcher.Dispatch();
 }

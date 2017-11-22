@@ -68,6 +68,8 @@ static NSString* gSearchTerm;
 // Prevent scrolling past the end of the page.
 - (CGPoint)limitOverscroll:(CRWWebViewScrollViewProxy*)scrollViewProxy
                    atPoint:(CGPoint)point;
+// Returns the associated web state. May be null.
+- (web::WebState*)webState;
 @end
 
 @implementation FindInPageController {
@@ -81,10 +83,6 @@ static NSString* gSearchTerm;
   // True when a find is in progress. Used to avoid running JavaScript during
   // disable when there is nothing to clear.
   BOOL _findStringStarted;
-
-  // The WebState this instance is observing. Will be null after
-  // -webStateDestroyed: has been called.
-  web::WebState* _webState;
 
   // Bridge to observe the web state from Objective-C.
   std::unique_ptr<web::WebStateObserverBridge> _webStateObserverBridge;
@@ -105,18 +103,15 @@ static NSString* gSearchTerm;
               delegate:(id<FindInPageControllerDelegate>)delegate {
   self = [super init];
   if (self) {
-    DCHECK(webState);
-    _webState = webState;
     _findInPageModel = [[FindInPageModel alloc] init];
     _findInPageJsManager = base::mac::ObjCCastStrict<JsFindinpageManager>(
-        [_webState->GetJSInjectionReceiver()
+        [webState->GetJSInjectionReceiver()
             instanceOfClass:[JsFindinpageManager class]]);
     _findInPageJsManager.findInPageModel = _findInPageModel;
     _delegate = delegate;
-    _webStateObserverBridge =
-        std::make_unique<web::WebStateObserverBridge>(self);
-    _webState->AddObserver(_webStateObserverBridge.get());
-    _webViewProxy = _webState->GetWebViewProxy();
+    _webStateObserverBridge.reset(
+        new web::WebStateObserverBridge(webState, self));
+    _webViewProxy = webState->GetWebViewProxy();
     [[NSNotificationCenter defaultCenter]
         addObserver:self
            selector:@selector(findBarTextFieldWillBecomeFirstResponder:)
@@ -127,19 +122,13 @@ static NSString* gSearchTerm;
            selector:@selector(findBarTextFieldDidResignFirstResponder:)
                name:kFindBarTextFieldDidResignFirstResponderNotification
              object:nil];
-    DOMAlteringLock::CreateForWebState(_webState);
+    DOMAlteringLock::CreateForWebState(webState);
   }
   return self;
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-  if (_webState) {
-    _webState->RemoveObserver(_webStateObserverBridge.get());
-    _webStateObserverBridge.reset();
-    _webState = nullptr;
-  }
 }
 
 - (BOOL)canFindInPage {
@@ -209,7 +198,7 @@ static NSString* gSearchTerm;
                                completionHandler:completionHandler];
                    }];
   };
-  DOMAlteringLock::FromWebState(_webState)->Acquire(self, lockAction);
+  DOMAlteringLock::FromWebState([self webState])->Acquire(self, lockAction);
 }
 
 - (void)startPumpingWithCompletionHandler:(ProceduralBlock)completionHandler {
@@ -289,8 +278,10 @@ static NSString* gSearchTerm;
   __weak FindInPageController* weakSelf = self;
   ProceduralBlock handler = ^{
     FindInPageController* strongSelf = weakSelf;
-    if (strongSelf && strongSelf->_webState) {
-      DOMAlteringLock::FromWebState(strongSelf->_webState)->Release(strongSelf);
+    if (strongSelf) {
+      web::WebState* webState = [strongSelf webState];
+      if (webState)
+        DOMAlteringLock::FromWebState(webState)->Release(strongSelf);
     }
     if (completionHandler)
       completionHandler();
@@ -319,6 +310,11 @@ static NSString* gSearchTerm;
 
   NSString* term = [[self class] searchTerm];
   [[self findInPageModel] updateQuery:(term ? term : @"") matches:0];
+}
+
+- (web::WebState*)webState {
+  return _webStateObserverBridge ? _webStateObserverBridge->web_state()
+                                 : nullptr;
 }
 
 #pragma mark - Notification listeners
@@ -365,17 +361,12 @@ static NSString* gSearchTerm;
 }
 
 - (void)detachFromWebState {
-  if (_webState) {
-    _webState->RemoveObserver(_webStateObserverBridge.get());
-    _webStateObserverBridge.reset();
-    _webState = nullptr;
-  }
+  _webStateObserverBridge.reset();
 }
 
 #pragma mark - CRWWebStateObserver Methods
 
 - (void)webStateDestroyed:(web::WebState*)webState {
-  DCHECK_EQ(_webState, webState);
   [self detachFromWebState];
 }
 

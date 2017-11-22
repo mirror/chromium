@@ -29,7 +29,9 @@ void PublicIpAddressGeolocator::QueryNextPosition(
     return;
   }
 
-  DCHECK(notifier_);
+  if (!notifier_)
+    return;
+
   // Request the next position after the latest one we received.
   notifier_->QueryNextPosition(
       last_updated_timestamp_, *network_traffic_annotation_tag_,
@@ -46,8 +48,6 @@ void PublicIpAddressGeolocator::SetHighAccuracy(bool /* high_accuracy */) {}
 void PublicIpAddressGeolocator::OnPositionUpdate(
     const mojom::Geoposition& position) {
   last_updated_timestamp_ = position.timestamp;
-  // Use Clone since query_next_position_callback_ needs an
-  // device::mojom::GeopositionPtr.
   std::move(query_next_position_callback_).Run(position.Clone());
 }
 

@@ -41,8 +41,8 @@
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
-#include "platform/wtf/Time.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCORS.h"
@@ -375,8 +375,8 @@ bool ResourceLoader::WillFollowRedirect(
   Context().PrepareRequest(new_request,
                            FetchContext::RedirectType::kForRedirect);
   if (Context().GetFrameScheduler()) {
-    WebScopedVirtualTimePauser virtual_time_pauser =
-        Context().GetFrameScheduler()->CreateWebScopedVirtualTimePauser();
+    ScopedVirtualTimePauser virtual_time_pauser =
+        Context().GetFrameScheduler()->CreateScopedVirtualTimePauser();
     virtual_time_pauser.PauseVirtualTime(true);
     resource_->VirtualTimePauser() = std::move(virtual_time_pauser);
   }

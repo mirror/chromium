@@ -212,7 +212,8 @@ std::string PatternParser::ToString(
   if (parts.scheme == url::kFileScheme) {
     if (parts.is_path_wildcard)
       return str + kUrlPathSeparator + kPathWildcard;
-    return str + parts.path;
+    else
+      return str + parts.path;
   }
 
   if (parts.has_domain_wildcard) {

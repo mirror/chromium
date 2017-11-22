@@ -159,7 +159,7 @@ class ExtensionDataCollectionTest : public testing::Test {
     // Create prefs for the profile and safe browsing preferences accordingly.
     std::unique_ptr<sync_preferences::TestingPrefServiceSyncable> prefs(
         new sync_preferences::TestingPrefServiceSyncable);
-    RegisterUserProfilePrefs(prefs->registry());
+    chrome::RegisterUserProfilePrefs(prefs->registry());
     prefs->SetBoolean(
         prefs::kSafeBrowsingEnabled,
         safe_browsing_opt_in == SAFE_BROWSING_ONLY ||

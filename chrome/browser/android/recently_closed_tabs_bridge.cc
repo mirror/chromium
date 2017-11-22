@@ -25,10 +25,9 @@ using base::android::ScopedJavaGlobalRef;
 
 namespace {
 
-void JNI_RecentlyClosedBridge_AddTabToList(
-    JNIEnv* env,
-    const sessions::TabRestoreService::Tab& tab,
-    const JavaRef<jobject>& jtabs_list) {
+void AddTabToList(JNIEnv* env,
+                  const sessions::TabRestoreService::Tab& tab,
+                  const JavaRef<jobject>& jtabs_list) {
   const sessions::SerializedNavigationEntry& current_navigation =
       tab.navigations.at(tab.current_navigation_index);
   Java_RecentlyClosedBridge_pushTab(
@@ -37,17 +36,16 @@ void JNI_RecentlyClosedBridge_AddTabToList(
       ConvertUTF8ToJavaString(env, current_navigation.virtual_url().spec()));
 }
 
-void JNI_RecentlyClosedBridge_AddTabsToList(
-    JNIEnv* env,
-    const sessions::TabRestoreService::Entries& entries,
-    const JavaRef<jobject>& jtabs_list,
-    int max_tab_count) {
+void AddTabsToList(JNIEnv* env,
+                   const sessions::TabRestoreService::Entries& entries,
+                   const JavaRef<jobject>& jtabs_list,
+                   int max_tab_count) {
   int added_count = 0;
   for (const auto& entry : entries) {
     DCHECK_EQ(entry->type, sessions::TabRestoreService::TAB);
     if (entry->type == sessions::TabRestoreService::TAB) {
       auto& tab = static_cast<const sessions::TabRestoreService::Tab&>(*entry);
-      JNI_RecentlyClosedBridge_AddTabToList(env, tab, jtabs_list);
+      AddTabToList(env, tab, jtabs_list);
       if (++added_count == max_tab_count)
         break;
     }
@@ -82,8 +80,8 @@ jboolean RecentlyClosedTabsBridge::GetRecentlyClosedTabs(
   if (!tab_restore_service_)
     return false;
 
-  JNI_RecentlyClosedBridge_AddTabsToList(env, tab_restore_service_->entries(),
-                                         jtabs_list, max_tab_count);
+  AddTabsToList(env, tab_restore_service_->entries(), jtabs_list,
+                max_tab_count);
   return true;
 }
 
@@ -174,10 +172,9 @@ void RecentlyClosedTabsBridge::EnsureTabRestoreService() {
   }
 }
 
-static jlong JNI_RecentlyClosedBridge_Init(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& jbridge,
-    const JavaParamRef<jobject>& jprofile) {
+static jlong Init(JNIEnv* env,
+                  const JavaParamRef<jobject>& jbridge,
+                  const JavaParamRef<jobject>& jprofile) {
   RecentlyClosedTabsBridge* bridge = new RecentlyClosedTabsBridge(
       ScopedJavaGlobalRef<jobject>(env, jbridge.obj()),
       ProfileAndroid::FromProfileAndroid(jprofile));

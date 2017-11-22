@@ -529,6 +529,13 @@ class NET_EXPORT NetworkQualityEstimator
   // if there is a change in its value.
   void ComputeEffectiveConnectionType();
 
+  // May update the network quality of the current network if |network_id|
+  // matches the ID of the current network. |cached_network_quality| is the
+  // cached network quality of the network with id |network_id|.
+  void MaybeUpdateNetworkQualityFromCache(
+      const nqe::internal::NetworkID& network_id,
+      const nqe::internal::CachedNetworkQuality& cached_network_quality);
+
   const char* GetNameForStatistic(int i) const;
 
   // Gathers metrics for the next connection type. Called when there is a change
@@ -543,10 +550,6 @@ class NET_EXPORT NetworkQualityEstimator
 
   // Returns true if |observation| should be added to the observation buffer.
   bool ShouldAddObservation(const Observation& observation) const;
-
-  // Returns true if the socket watcher can run the callback to notify the RTT
-  // observations.
-  bool ShouldSocketWatcherNotifyRTT(base::TimeTicks now);
 
   // Determines if the requests to local host can be used in estimating the
   // network quality. Set to true only for tests.
@@ -674,9 +677,6 @@ class NET_EXPORT NetworkQualityEstimator
 
   // Manages the writing of events to the net log.
   nqe::internal::EventCreator event_creator_;
-
-  // Time when the last RTT observation from a socket watcher was received.
-  base::TimeTicks last_socket_watcher_rtt_notification_;
 
   base::WeakPtrFactory<NetworkQualityEstimator> weak_ptr_factory_;
 

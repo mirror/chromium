@@ -133,11 +133,9 @@ void MediaControlLoadingPanelElement::CleanupShadowDOM() {
 
 void MediaControlLoadingPanelElement::SetAnimationIterationCount(
     const String& count_value) {
-  mask1_background_->style()->setProperty(&GetDocument(),
-                                          kAnimationIterationCountName,
+  mask1_background_->style()->setProperty(kAnimationIterationCountName,
                                           count_value, "", ASSERT_NO_EXCEPTION);
-  mask2_background_->style()->setProperty(&GetDocument(),
-                                          kAnimationIterationCountName,
+  mask2_background_->style()->setProperty(kAnimationIterationCountName,
                                           count_value, "", ASSERT_NO_EXCEPTION);
 }
 

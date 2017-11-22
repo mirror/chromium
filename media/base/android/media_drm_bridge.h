@@ -20,7 +20,6 @@
 #include "base/sequenced_task_runner_helpers.h"
 #include "media/base/android/android_util.h"
 #include "media/base/android/media_drm_bridge_cdm_context.h"
-#include "media/base/android/media_drm_bridge_cdm_context_impl.h"
 #include "media/base/android/media_drm_storage.h"
 #include "media/base/android/media_drm_storage_bridge.h"
 #include "media/base/cdm_promise.h"
@@ -335,7 +334,7 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
   // Default task runner.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
-  MediaDrmBridgeCdmContextImpl media_drm_bridge_cdm_context_;
+  MediaDrmBridgeCdmContext media_drm_bridge_cdm_context_;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   base::WeakPtrFactory<MediaDrmBridge> weak_factory_;

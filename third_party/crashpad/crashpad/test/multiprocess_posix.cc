@@ -27,15 +27,9 @@
 #include "base/logging.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/strings/stringprintf.h"
-#include "build/build_config.h"
 #include "gtest/gtest.h"
 #include "test/errors.h"
 #include "util/misc/scoped_forbid_return.h"
-#include "util/posix/signals.h"
-
-#if defined(OS_MACOSX)
-#include "test/mac/exception_swallower.h"
-#endif
 
 namespace crashpad {
 namespace test {
@@ -72,16 +66,6 @@ void Multiprocess::Run() {
   base::AutoReset<internal::MultiprocessInfo*> reset_info(&info_, info.get());
 
   ASSERT_NO_FATAL_FAILURE(PreFork());
-
-#if defined(OS_MACOSX)
-  // If the child is expected to crash, set up an exception swallower to swallow
-  // the exception instead of allowing it to be seen by the system’s crash
-  // reporter.
-  std::unique_ptr<ExceptionSwallower> exception_swallower;
-  if (reason_ == kTerminationSignal && Signals::IsCrashSignal(code_)) {
-    exception_swallower.reset(new ExceptionSwallower());
-  }
-#endif  // OS_MACOSX
 
   pid_t pid = fork();
   ASSERT_GE(pid, 0) << ErrnoMessage("fork");
@@ -124,7 +108,7 @@ void Multiprocess::Run() {
                              strsignal(code),
                              WCOREDUMP(status) ? " (core dumped)" : "");
     } else {
-      FAIL() << base::StringPrintf("Unknown termination reason 0x%x", status);
+      FAIL() << "Unknown termination reason";
     }
 
     if (reason_ == kTerminationNormal) {
@@ -139,20 +123,12 @@ void Multiprocess::Run() {
       ADD_FAILURE() << message;
     }
   } else {
-#if defined(OS_MACOSX)
-    if (exception_swallower.get()) {
-      ExceptionSwallower::SwallowExceptions();
-    }
-#endif  // OS_MACOSX
-
     RunChild();
   }
 }
 
 void Multiprocess::SetExpectedChildTermination(TerminationReason reason,
                                                int code) {
-  EXPECT_EQ(info_, nullptr)
-      << "SetExpectedChildTermination() must be called before Run()";
   reason_ = reason;
   code_ = code;
 }

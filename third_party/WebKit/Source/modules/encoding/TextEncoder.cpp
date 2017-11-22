@@ -60,18 +60,12 @@ String TextEncoder::encoding() const {
 
 NotShared<DOMUint8Array> TextEncoder::encode(const String& input) {
   CString result;
-  // Note that the UnencodableHandling here is never used since the
-  // only possible encoding is UTF-8, which will use
-  // U+FFFD-replacement rather than ASCII fallback substitution when
-  // unencodable sequences (for instance, unpaired UTF-16 surrogates)
-  // are present in the input.
-  if (input.Is8Bit()) {
+  if (input.Is8Bit())
     result = codec_->Encode(input.Characters8(), input.length(),
-                            WTF::kEntitiesForUnencodables);
-  } else {
+                            WTF::kQuestionMarksForUnencodables);
+  else
     result = codec_->Encode(input.Characters16(), input.length(),
-                            WTF::kEntitiesForUnencodables);
-  }
+                            WTF::kQuestionMarksForUnencodables);
 
   const char* buffer = result.data();
   const unsigned char* unsigned_buffer =

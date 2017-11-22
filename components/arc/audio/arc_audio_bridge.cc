@@ -59,7 +59,7 @@ ArcAudioBridge::~ArcAudioBridge() {
   arc_bridge_service_->audio()->RemoveObserver(this);
 }
 
-void ArcAudioBridge::OnConnectionReady() {
+void ArcAudioBridge::OnInstanceReady() {
   mojom::AudioInstance* audio_instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->audio(), Init);
   DCHECK(audio_instance);  // the instance on ARC side is too old.
@@ -69,7 +69,7 @@ void ArcAudioBridge::OnConnectionReady() {
   available_ = true;
 }
 
-void ArcAudioBridge::OnConnectionClosed() {
+void ArcAudioBridge::OnInstanceClosed() {
   available_ = false;
 }
 

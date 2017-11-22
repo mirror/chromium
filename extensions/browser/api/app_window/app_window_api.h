@@ -26,9 +26,6 @@ class AppWindowCreateFunction : public UIThreadExtensionFunction {
   ResponseAction Run() override;
 
  private:
-  void OnAppWindowReadyToCommitFirstNavigationOrClosed(ResponseValue result_arg,
-                                                       bool ready_to_commit);
-
   bool GetBoundsSpec(
       const extensions::api::app_window::CreateWindowOptions& options,
       AppWindow::CreateParams* params,

@@ -21,8 +21,8 @@
 #include "components/translate/ios/browser/ios_translate_driver.h"
 #import "components/translate/ios/browser/js_translate_manager.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/translate/before_translate_infobar_controller.h"
 #include "ios/chrome/browser/translate/chrome_ios_translate_client.h"
-#include "ios/chrome/browser/ui/translate/language_selection_view_controller.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/app/tab_test_util.h"
 #include "ios/chrome/test/app/web_view_interaction_test_util.h"
@@ -336,8 +336,8 @@ using translate::LanguageDetectionController;
   // TODO(crbug.com/642892): Investigate moving into test-specific teardown.
   // Re-enable translate.
   chrome_test_util::SetBooleanUserPref(
-      chrome_test_util::GetOriginalBrowserState(),
-      prefs::kOfferTranslateEnabled, YES);
+      chrome_test_util::GetOriginalBrowserState(), prefs::kEnableTranslate,
+      YES);
   // Reset translate prefs to default.
   std::unique_ptr<translate::TranslatePrefs> translatePrefs(
       ChromeIOSTranslateClient::CreateTranslatePrefs(
@@ -574,8 +574,7 @@ using translate::LanguageDetectionController;
 
   // Disable translate.
   chrome_test_util::SetBooleanUserPref(
-      chrome_test_util::GetOriginalBrowserState(),
-      prefs::kOfferTranslateEnabled, NO);
+      chrome_test_util::GetOriginalBrowserState(), prefs::kEnableTranslate, NO);
 
   // Open some webpage.
   [ChromeEarlGrey loadURL:URL];

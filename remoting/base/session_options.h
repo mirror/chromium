@@ -8,6 +8,7 @@
 #include <map>
 #include <string>
 
+#include "base/macros.h"
 #include "base/optional.h"
 
 namespace remoting {
@@ -18,14 +19,9 @@ namespace remoting {
 class SessionOptions final {
  public:
   SessionOptions();
-  SessionOptions(const SessionOptions& other);
-  SessionOptions(SessionOptions&& other);
-  explicit SessionOptions(const std::string& parameter);
-
   ~SessionOptions();
 
-  SessionOptions& operator=(const SessionOptions& other);
-  SessionOptions& operator=(SessionOptions&& other);
+  SessionOptions(const std::string& parameter);
 
   // Appends one key-value pair into current instance.
   void Append(const std::string& key, const std::string& value);
@@ -55,6 +51,10 @@ class SessionOptions final {
 
  private:
   std::map<std::string, std::string> options_;
+
+  SessionOptions(SessionOptions&&) = delete;
+  SessionOptions& operator=(SessionOptions&&) = delete;
+  DISALLOW_COPY_AND_ASSIGN(SessionOptions);
 };
 
 }  // namespace remoting

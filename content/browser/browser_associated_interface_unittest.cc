@@ -47,12 +47,10 @@ class ProxyRunner : public IPC::Listener {
     std::unique_ptr<IPC::ChannelFactory> factory;
     if (for_server) {
       factory = IPC::ChannelMojo::CreateServerFactory(
-          std::move(pipe), ipc_task_runner,
-          base::ThreadTaskRunnerHandle::Get());
+          std::move(pipe), ipc_task_runner);
     } else {
       factory = IPC::ChannelMojo::CreateClientFactory(
-          std::move(pipe), ipc_task_runner,
-          base::ThreadTaskRunnerHandle::Get());
+          std::move(pipe), ipc_task_runner);
     }
     channel_ =
         IPC::ChannelProxy::Create(std::move(factory), this, ipc_task_runner,

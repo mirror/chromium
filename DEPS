@@ -74,11 +74,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'a0ec54829eb77ec51747d2c8fd1ecfb7c0587965',
+  'skia_revision': 'f9ec4707ee13db1cb76b368762ad551fe0cd3555',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'fdf73522c25a64ce9ff9adfd7c327c7cb83c43bf',
+  'v8_revision': 'f4f2b219905f3cf2df2a376a6986fd3e3d8341ae',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -86,7 +86,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': 'cce013c9b61466dd6571901aee44c7a04d5ab613',
+  'angle_revision': '90ed1e4971ae274d125654a0508d60a75a4be252',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -98,7 +98,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': 'd328d91f9e7a49f0d79048a7d10be9ba17ad9cb2',
+  'pdfium_revision': '07b4727a34d2f4aff851f0dc420faf617caca220',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -106,7 +106,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling BoringSSL
   # and whatever else without interference from each other.
-  'boringssl_revision': '8793942c5c7f4a46dcadea3a686c50f2b1c312ed',
+  'boringssl_revision': '6cc352e216938d78b65fb8ccbeebfc1f7f7486c4',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling google-toolbox-for-mac
   # and whatever else without interference from each other.
@@ -283,7 +283,7 @@ deps = {
 
   # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
   'src/third_party/chromite': {
-      'url': Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '575c52b3e1f9e893254d02f073e61437f99bf3a9',
+      'url': Var('chromium_git') + '/chromiumos/chromite.git' + '@' + 'ef632e4a473bfe196707200bc315293b59a121f7',
       'condition': 'checkout_linux',
   },
 
@@ -303,12 +303,12 @@ deps = {
   },
 
   'src/third_party/custom_tabs_client/src': {
-      'url': Var('chromium_git') + '/custom-tabs-client.git' + '@' + 'afe8a13457103292fb1ba49877a0b0e5abdc2f36',
+      'url': Var('chromium_git') + '/external/github.com/GoogleChrome/custom-tabs-client.git' + '@' + 'afe8a13457103292fb1ba49877a0b0e5abdc2f36',
       'condition': 'checkout_android',
   },
 
   'src/third_party/depot_tools':
-    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '049f076ab6d2b2d3474567294b0faf951de31a53',
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + 'ddfead3483f2c1b49419de2b9f561cb32763f2b3',
 
   # DevTools node modules. Used on Linux buildbots only.
   'src/third_party/devtools-node-modules': {
@@ -330,7 +330,7 @@ deps = {
   },
 
   'src/third_party/ffmpeg':
-    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'abead8cbcf890301cff0bd54b0cabb4ead67fcec',
+    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + '252244150ad759fe86470f40642514bf2a7aec98',
 
   'src/third_party/findbugs': {
       'url': Var('chromium_git') + '/chromium/deps/findbugs.git' + '@' + '4275d9ac8610db6b1bc9a5e887f97e41b33fac67',
@@ -419,7 +419,7 @@ deps = {
     Var('chromium_git') + '/external/libaddressinput.git' + '@' + '2a7c3d38915138189f4ac78e1188b58b2fbf5219',
 
   'src/third_party/libaom/source/libaom': {
-    'url': Var('aomedia_git') + '/aom.git' + '@' +  'cccda0db727c2282375b174104294b40911d1447',
+    'url': Var('aomedia_git') + '/aom.git' + '@' +  '535ecf6b31fe97f704f6725989cffad88ad960d8',
     'condition': 'checkout_libaom',
   },
 
@@ -647,7 +647,7 @@ deps = {
     Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
 
   'src-internal': {
-    'url': 'https://chrome-internal.googlesource.com/chrome/src-internal.git@426cf33451c07ad93dbc1ec8450d4817a5afca60',
+    'url': 'https://chrome-internal.googlesource.com/chrome/src-internal.git@d79c2901f5f810e9763cd7a816c3b87482877550',
     'condition': 'checkout_src_internal',
   },
 }
@@ -1074,7 +1074,7 @@ hooks = [
                 '--no_resume',
                 '--extract',
                 '--no_auth',
-                '--bucket', 'chromium-nodejs/8.9.1',
+                '--bucket', 'chromium-nodejs/6.9.4',
                 '-s', 'src/third_party/node/linux/node-linux-x64.tar.gz.sha1',
     ],
   },
@@ -1087,7 +1087,7 @@ hooks = [
                 '--no_resume',
                 '--extract',
                 '--no_auth',
-                '--bucket', 'chromium-nodejs/8.9.1',
+                '--bucket', 'chromium-nodejs/6.9.4',
                 '-s', 'src/third_party/node/mac/node-darwin-x64.tar.gz.sha1',
     ],
   },
@@ -1099,7 +1099,7 @@ hooks = [
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
                 '--no_auth',
-                '--bucket', 'chromium-nodejs/8.9.1',
+                '--bucket', 'chromium-nodejs/6.9.4',
                 '-s', 'src/third_party/node/win/node.exe.sha1',
     ],
   },
@@ -1165,22 +1165,6 @@ hooks = [
                 '--num_threads=4',
                 '--bucket', 'chromium-tools-traffic_annotation',
                 '-d', 'src/tools/traffic_annotation/bin/linux64',
-    ],
-  },
-
-# This is used to ensure that all network operations are properly
-# annotated so we can document what they're for.
-  {
-    'name': 'tools_traffic_annotation_windows',
-    'pattern': '.',
-    'condition': 'host_os == "windows" and checkout_traffic_annotation_tools',
-    'action': [ 'vpython',
-                'src/third_party/depot_tools/download_from_google_storage.py',
-                '--no_resume',
-                '--no_auth',
-                '--num_threads=4',
-                '--bucket', 'chromium-tools-traffic_annotation',
-                '-d', 'src/tools/traffic_annotation/bin/win32',
     ],
   },
 

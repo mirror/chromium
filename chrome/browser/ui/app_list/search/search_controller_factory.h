@@ -7,7 +7,7 @@
 
 #include <memory>
 
-#include "ash/app_list/model/app_list_model.h"
+#include "ui/app_list/app_list_model.h"
 
 class AppListControllerDelegate;
 class Profile;

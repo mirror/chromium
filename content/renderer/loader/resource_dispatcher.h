@@ -39,7 +39,7 @@ struct RedirectInfo;
 }
 
 namespace network {
-struct URLLoaderCompletionStatus;
+struct URLLoaderStatus;
 }
 
 namespace content {
@@ -242,7 +242,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
                       int encoded_data_length);
   void OnDownloadedData(int request_id, int data_len, int encoded_data_length);
   void OnRequestComplete(int request_id,
-                         const network::URLLoaderCompletionStatus& status);
+                         const network::URLLoaderStatus& status);
 
   // Dispatch the message to one of the message response handlers.
   void DispatchMessage(const IPC::Message& message);
