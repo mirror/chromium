@@ -88,6 +88,24 @@
       "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c792f75d_e6d2e94c",
+        "filename": "content/renderer/loader/web_url_request_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-22T03:20:39Z",
+      "side": 1,
+      "message": "As I suspected, in the first XHR case history serialization doesn\u0027t trigger because it\u0027s not a navigation.\n\nWith the formElem.submit(), the form is submitted but it ignores formData and takes whatever is in the input elements.\n\nI guess we can remove the BLOB case but from GetWebHTTPBodyForRequestBody but it wouldn\u0027t really give us much. I was worried about the DATA_PIPE case (currently unimplemented) when we might try to get a data pipe that was already taken.\n\nI\u0027ve been experimenting with some things (keep changing my mind) and now starting to think DataPipeGetter is the best. It seems we need that in the non-service worker case to handle 307 redirects anyway. Right now the UpdateDataStream created by URLLoader gets consumed on the first request and the only way to get the data pipe back is by finding the WebHTTPBody which I believe is gone: URLLoader is in the browser process/network service and WebHTTPBody is back at the renderer.",
+      "parentUuid": "d1c008d2_8786f483",
+      "revId": "08958f3afc32ef6ac3736713bfde8e8f4aca3a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
