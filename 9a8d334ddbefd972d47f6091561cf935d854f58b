@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca29b373_19c1e633",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-22T21:09:19Z",
+      "side": 1,
+      "message": "It is a little sad to export internal types like this. The reason is that:\nThe media router extension declares \"var mojo \u003d {}\" before loading this file. Our mojo JS bindings find that \"mojo\" is already defined, so it loads the contents directly into that object [1]. However, the media router extension directly re-assigns the \"mojo\" object it declares to the return value of this method. Because of this, whenever mojo JS bindings code refers to \"mojo.XXX\", it actually refers to the returned object of this method. And the outcome is that we have to export things like this.\n\nOne possible way to avoid this is to avoid declaring \"var mojo \u003d {}\" at the extension side, or avoid re-assigning \"mojo\". WDYT?\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n[1] I assume that this behavior is useful because that lets users control in what scope \"mojo\" is defined.",
+      "revId": "9a8d334ddbefd972d47f6091561cf935d854f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
