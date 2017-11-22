@@ -32,6 +32,11 @@ class PageTestBase : public ::testing::Test {
   LocalFrame& GetFrame() const;
   FrameSelection& Selection() const;
   DummyPageHolder& GetDummyPageHolder() const { return *dummy_page_holder_; }
+  StyleEngine& GetStyleEngine();
+  void SetBodyContent(const std::string&);
+  void SetBodyInnerHTML(const String&);
+  void UpdateAllLifecyclePhases();
+  Element* GetElementById(const char* id) const;
 
   // Load the 'Ahem' font to the LocalFrame.
   // The 'Ahem' font is the only font whose font metrics is consistent across
