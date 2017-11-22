@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
@@ -58,7 +59,8 @@ VRDeviceManager::~VRDeviceManager() {
   g_vr_device_manager = nullptr;
 }
 
-void VRDeviceManager::AddService(VRServiceImpl* service) {
+void VRDeviceManager::AddService(VRServiceImpl* service,
+                                 base::OnceClosure callback) {
   // Loop through any currently active devices and send Connected messages to
   // the service. Future devices that come online will send a Connected message
   // when they are created.
@@ -81,6 +83,8 @@ void VRDeviceManager::AddService(VRServiceImpl* service) {
   }
 
   services_.insert(service);
+
+  std::move(callback).Run();
 }
 
 void VRDeviceManager::RemoveService(VRServiceImpl* service) {
