@@ -306,6 +306,30 @@
       "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9da34380_d69fa456",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-22T14:19:55Z",
+      "side": 1,
+      "message": "Fair point. My tolerance to do delta-improvements is depleted for this CL, though ;)\n\n(If by any chance you really mean it, just let me know, I can fix it back in a next CL)",
+      "parentUuid": "0557a3fa_93fc7b28",
+      "range": {
+        "startLine": 91,
+        "startChar": 55,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "346d9fb9f7fbad627ea25e381a6e84a62a599a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
