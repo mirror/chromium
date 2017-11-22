@@ -141,6 +141,24 @@
       "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d849c0f8_7ecbaff7",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-22T12:42:47Z",
+      "side": 1,
+      "message": "I start with collecting metrics for web pages, but plan to collect the metrics for Android apps and system UI elements. Due to the restriction of the key of UKM, I may have to make them an URL like \u0027android-app://[package name of an app]\u0027. In this case, does it make sense to change it to GURL?\n\nsadrul@: WDYT?",
+      "parentUuid": "7b73da26_476670d8",
+      "revId": "779b8e4575f323a9f8cdf2e6fc5d37c7a9b1aee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
