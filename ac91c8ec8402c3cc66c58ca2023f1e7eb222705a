@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c3378a6_64fd450a",
+        "filename": "build/android/gyp/lint.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T14:55:50Z",
+      "side": 1,
+      "message": "just for debugging?",
+      "revId": "ac91c8ec8402c3cc66c58ca2023f1e7eb222705a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e9a985_1a5d9b24",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T14:55:50Z",
+      "side": 1,
+      "message": "Just had a couple lint-related thoughts:\n1: We should get rid of tools-lint and go back to using the copy in tools. We created this originally because the sdk was accidentally shipping stale versions of lint, but I think that\u0027s been resolved.\n2: I think the reason we\u0027ve had trouble with lint \u0026 platform-tools being out of sync is that lint needs platform-tools/api/ to be rolled to the latest. We should be able to roll just this subdirectory of platform-tools before the rest of platform-tools, as I think lint is the only thing that uses it.",
+      "revId": "ac91c8ec8402c3cc66c58ca2023f1e7eb222705a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c2b58a_cd9b7504",
+        "filename": "build/config/android/sdk.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T14:55:50Z",
+      "side": 1,
+      "message": "what happens if you remove this entry?",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 5
+      },
+      "revId": "ac91c8ec8402c3cc66c58ca2023f1e7eb222705a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0a0357_1f995123",
+        "filename": "chrome/android/java/res/layout/location_bar.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-22T14:55:50Z",
+      "side": 1,
+      "message": "if this is a TODO to fix, then might be better to add to the main lint suppressions. Otherwise, should add a comment saying why it\u0027s necessary.",
+      "revId": "ac91c8ec8402c3cc66c58ca2023f1e7eb222705a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
