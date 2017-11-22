@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56488d3e_001f6a76",
+        "filename": "chrome/browser/extensions/standard_management_policy_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-22T23:09:02Z",
+      "side": 1,
+      "message": "Can we be confident that this new codepath can\u0027t be abused?\n\nFor instance, I\u0027ve found in the codebase some traces of the FROM_BOOKMARK flag also being applied to something else (\"default apps\"):\nhttps://cs.chromium.org/chromium/src/chrome/browser/extensions/extension_service.cc?l\u003d629\u0026rcl\u003d910a824266ff9c6e912ee664cfd93c2754ec1b61\nhttps://cs.chromium.org/chromium/src/chrome/browser/web_applications/web_app.cc?l\u003d217\u0026rcl\u003db08f01ba16baffa0783efd5696a2c652facde0b9\n\nAlso it looks like all web apps are converted into extensions with FROM_BOOKMARK:\nhttps://cs.chromium.org/chromium/src/chrome/browser/extensions/convert_web_app.cc?l\u003d242\u0026rcl\u003d5e3d94753d0cb4d80d6247833f808bc151033096\nIs it true that all apps that go through this code path are bookmark apps? (Sorry, I don\u0027t have much background in this field.)\n\nSo, my overall concern is - can\u0027t this check on from_bookmark() here accidentally allow something that\u0027s not actually a trivial bookmark app?",
+      "revId": "d8418f4a2e4c8e8e21f31cf8048586cc44816ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
