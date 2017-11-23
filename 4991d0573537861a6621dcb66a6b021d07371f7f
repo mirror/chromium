@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "818c4ced_258beddf",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-23T23:15:20Z",
+      "side": 1,
+      "message": "FWIW, the mojo way is to call mojo::ReportBadMessage(). Is content still preferring to use ReceivedBadMessage()?",
+      "parentUuid": "16c13d91_68b902a1",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d88844f4_060d0277",
         "filename": "content/common/frame.mojom",
         "patchSetId": 16
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "It\u0027s invalid for the renderer process, however we also need to construct the BeginNavigationParams struct in the browser process for browser initiated navs, and in that case we would have a null initiator.",
       "parentUuid": "83669f67_0886c5e9",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "add3f089_d02e296d",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-23T23:15:20Z",
+      "side": 1,
+      "message": "I think it\u0027s OK to have it this way for now, but we should consider ways to express it so it\u0027s clear in the IPC definitions that it /should/ always be set if sent over IPC.\n\nIn a followup (since I\u0027m worried about potential regressions), can we change this comment to:\n- The renderer must specify an initiator origin.\n- Add a mojo::ReportBadMessage() if it is unset.",
+      "parentUuid": "b5e22ae9_2f30967a",
       "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
