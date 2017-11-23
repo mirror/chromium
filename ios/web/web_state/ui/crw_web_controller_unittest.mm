@@ -120,6 +120,7 @@ class CRWWebControllerTest : public WebTestWithWebController {
     WebTestWithWebController::SetUp();
     mock_web_view_ = CreateMockWebView();
     scroll_view_ = [[UIScrollView alloc] init];
+    url_string_ = @(kTestURLString);
     [[[mock_web_view_ stub] andReturn:scroll_view_] scrollView];
 
     TestWebViewContentView* web_view_content_view =
@@ -142,6 +143,8 @@ class CRWWebControllerTest : public WebTestWithWebController {
     return {CGPointZero, container_view_size};
   }
 
+  void SetWebViewURL(NSString* url_string) { url_string_ = url_string; }
+
   // Creates WebView mock.
   UIView* CreateMockWebView() {
     id result = [OCMockObject mockForClass:[WKWebView class]];
@@ -157,7 +160,10 @@ class CRWWebControllerTest : public WebTestWithWebController {
 
     mock_wk_list_ = [[CRWFakeBackForwardList alloc] init];
     OCMStub([result backForwardList]).andReturn(mock_wk_list_);
-    [[[result stub] andReturn:[NSURL URLWithString:@(kTestURLString)]] URL];
+    OCMStub([result URL]).andDo(^(NSInvocation* invocation) {
+      NSURL* url = [NSURL URLWithString:url_string_];
+      [invocation setReturnValue:&url];
+    });
     [[result stub] setNavigationDelegate:[OCMArg checkWithBlock:^(id delegate) {
                      navigation_delegate_ = delegate;
                      return YES;
@@ -177,6 +183,7 @@ class CRWWebControllerTest : public WebTestWithWebController {
   UIScrollView* scroll_view_;
   id mock_web_view_;
   CRWFakeBackForwardList* mock_wk_list_;
+  NSString* url_string_;
 };
 
 // Tests that AllowCertificateError is called with correct arguments if
@@ -642,6 +649,44 @@ TEST_F(CRWWebControllerTest, CurrentUrlWithTrustLevel) {
 
   EXPECT_EQ(GURL(kTestURLString), url);
   EXPECT_EQ(kAbsolute, trust_level);
+}
+
+// Tests that when a placeholder navigation is preempted by another navigation,
+// WebStateObservers get neither a DidStartNavigation nor a DidFinishNavigation
+// call for the corresponding native URL navigation.
+TEST_F(CRWWebControllerTest, AbortNativeUrlNavigation) {
+  // The legacy navigation manager doesn't have the concept of placeholder
+  // navigations.
+  if (!GetWebClient()->IsSlimNavigationManagerEnabled())
+    return;
+  GURL native_url("testnativecontent://ui");
+  NSString* placeholder_url = @"about:blank?for=testnativecontent://ui";
+  TestWebStateObserver observer(web_state());
+
+  WKNavigation* navigation =
+      static_cast<WKNavigation*>([[NSObject alloc] init]);
+  [static_cast<WKWebView*>([[mock_web_view_ stub] andReturn:navigation])
+      loadRequest:OCMOCK_ANY];
+  TestNativeContentProvider* mock_native_provider =
+      [[TestNativeContentProvider alloc] init];
+  [web_controller() setNativeProvider:mock_native_provider];
+
+  AddPendingItem(native_url, ui::PAGE_TRANSITION_TYPED);
+
+  // Trigger a placeholder navigation.
+  [web_controller() loadCurrentURL];
+
+  // Simulate the WKNavigationDelegate callbacks for the placeholder navigation
+  // arriving after another pending item has already been created.
+  AddPendingItem(GURL(kTestURLString), ui::PAGE_TRANSITION_TYPED);
+  SetWebViewURL(placeholder_url);
+  [navigation_delegate_ webView:mock_web_view_
+      didStartProvisionalNavigation:navigation];
+  [navigation_delegate_ webView:mock_web_view_ didCommitNavigation:navigation];
+  [navigation_delegate_ webView:mock_web_view_ didFinishNavigation:navigation];
+
+  EXPECT_FALSE(observer.did_start_navigation_info());
+  EXPECT_FALSE(observer.did_finish_navigation_info());
 }
 
 // Test fixture for testing CRWWebController presenting native content.
