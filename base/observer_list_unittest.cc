@@ -846,7 +846,7 @@ class AddInClearObserve : public Foo {
 };
 
 TEST(ObserverListTest, ClearNotifyAll) {
-  ObserverList<Foo> observer_list;
+  ObserverList<Foo> observer_list(ObserverListPolicy::ALL);
   AddInClearObserve a(&observer_list);
 
   observer_list.AddObserver(&a);
@@ -1156,8 +1156,8 @@ TEST(ObserverListTest, NonCompactList) {
   EXPECT_EQ(-13, b.total);
 }
 
-TEST(ObserverListTest, BecomesEmptyThanNonEmpty) {
-  ObserverList<Foo> observer_list;
+TEST(ObserverListTest, BecomesEmptyThenNonEmpty) {
+  ObserverList<Foo> observer_list(ObserverListPolicy::ALL);
   Adder a(1), b(-1);
 
   Disrupter disrupter1(&observer_list, true);
@@ -1190,7 +1190,7 @@ TEST(ObserverListTest, BecomesEmptyThanNonEmpty) {
 
 TEST(ObserverListTest, AddObserverInTheLastObserve) {
   using FooList = ObserverList<Foo>;
-  FooList observer_list;
+  FooList observer_list(ObserverListPolicy::ALL);
 
   AddInObserve<FooList> a(&observer_list);
   Adder b(-1);

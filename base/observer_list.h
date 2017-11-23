@@ -78,11 +78,11 @@ namespace base {
 // Enumeration of which observers are notified by ObserverList.
 enum class ObserverListPolicy {
   // Specifies that any observers added during notification are notified.
-  // This is the default policy if no policy is provided to the constructor.
   ALL,
 
   // Specifies that observers added while sending out notification are not
   // notified.
+  // This is the default policy if no policy is provided to the constructor.
   EXISTING_ONLY,
 };
 
@@ -273,7 +273,7 @@ class ObserverList
   // iterators.
   int live_iterator_count_ = 0;
 
-  const ObserverListPolicy policy_ = ObserverListPolicy::ALL;
+  const ObserverListPolicy policy_ = ObserverListPolicy::EXISTING_ONLY;
 
   DISALLOW_COPY_AND_ASSIGN(ObserverList);
 };
