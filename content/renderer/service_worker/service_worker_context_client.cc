@@ -61,6 +61,7 @@
 #include "storage/common/blob_storage/blob_handle.h"
 #include "third_party/WebKit/common/blob/blob.mojom.h"
 #include "third_party/WebKit/common/blob/blob_registry.mojom.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
@@ -173,8 +174,8 @@ WebURLRequest::FrameType GetBlinkFrameType(RequestContextFrameType frame_type) {
   return static_cast<WebURLRequest::FrameType>(frame_type);
 }
 
-blink::WebServiceWorkerClientInfo
-ToWebServiceWorkerClientInfo(const ServiceWorkerClientInfo& client_info) {
+blink::WebServiceWorkerClientInfo ToWebServiceWorkerClientInfo(
+    const blink::mojom::ServiceWorkerClientInfo& client_info) {
   DCHECK(client_info.IsValid());
 
   blink::WebServiceWorkerClientInfo web_client_info;
@@ -1730,7 +1731,7 @@ void ServiceWorkerContextClient::DispatchPushEvent(
 
 void ServiceWorkerContextClient::OnDidGetClient(
     int request_id,
-    const ServiceWorkerClientInfo& client) {
+    const blink::mojom::ServiceWorkerClientInfo& client) {
   TRACE_EVENT0("ServiceWorker", "ServiceWorkerContextClient::OnDidGetClient");
   blink::WebServiceWorkerClientCallbacks* callbacks =
       context_->client_callbacks.Lookup(request_id);
@@ -1749,7 +1750,8 @@ void ServiceWorkerContextClient::OnDidGetClient(
 }
 
 void ServiceWorkerContextClient::OnDidGetClients(
-    int request_id, const std::vector<ServiceWorkerClientInfo>& clients) {
+    int request_id,
+    const std::vector<blink::mojom::ServiceWorkerClientInfo>& clients) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::OnDidGetClients");
   blink::WebServiceWorkerClientsCallbacks* callbacks =
@@ -1770,7 +1772,7 @@ void ServiceWorkerContextClient::OnDidGetClients(
 
 void ServiceWorkerContextClient::OnOpenWindowResponse(
     int request_id,
-    const ServiceWorkerClientInfo& client) {
+    const blink::mojom::ServiceWorkerClientInfo& client) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::OnOpenWindowResponse");
   blink::WebServiceWorkerClientCallbacks* callbacks =
@@ -1807,7 +1809,8 @@ void ServiceWorkerContextClient::OnOpenWindowError(
 }
 
 void ServiceWorkerContextClient::OnFocusClientResponse(
-    int request_id, const ServiceWorkerClientInfo& client) {
+    int request_id,
+    const blink::mojom::ServiceWorkerClientInfo& client) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::OnFocusClientResponse");
   blink::WebServiceWorkerClientCallbacks* callback =
@@ -1833,7 +1836,7 @@ void ServiceWorkerContextClient::OnFocusClientResponse(
 
 void ServiceWorkerContextClient::OnNavigateClientResponse(
     int request_id,
-    const ServiceWorkerClientInfo& client) {
+    const blink::mojom::ServiceWorkerClientInfo& client) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::OnNavigateClientResponse");
   blink::WebServiceWorkerClientCallbacks* callbacks =

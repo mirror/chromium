@@ -43,6 +43,7 @@
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 #include "ui/base/mojo/window_open_disposition.mojom.h"
@@ -63,7 +64,6 @@ class ServiceWorkerContextCore;
 class ServiceWorkerInstalledScriptsSender;
 class ServiceWorkerProviderHost;
 class ServiceWorkerRegistration;
-struct ServiceWorkerClientInfo;
 struct ServiceWorkerVersionInfo;
 
 // This class corresponds to a specific version of a ServiceWorker
@@ -501,7 +501,8 @@ class CONTENT_EXPORT ServiceWorkerVersion
     ServiceWorkerMetrics::EventType event_type;
   };
 
-  using ServiceWorkerClients = std::vector<ServiceWorkerClientInfo>;
+  using ServiceWorkerClients =
+      std::vector<blink::mojom::ServiceWorkerClientInfo>;
   using RequestInfoPriorityQueue =
       std::priority_queue<RequestInfo,
                           std::vector<RequestInfo>,
@@ -574,9 +575,10 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnOpenWindow(int request_id,
                     GURL url,
                     WindowOpenDisposition disposition);
-  void OnOpenWindowFinished(int request_id,
-                            ServiceWorkerStatusCode status,
-                            const ServiceWorkerClientInfo& client_info);
+  void OnOpenWindowFinished(
+      int request_id,
+      ServiceWorkerStatusCode status,
+      const blink::mojom::ServiceWorkerClientInfo& client_info);
 
   void OnPostMessageToClient(
       const std::string& client_uuid,
@@ -586,15 +588,17 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnNavigateClient(int request_id,
                         const std::string& client_uuid,
                         const GURL& url);
-  void OnNavigateClientFinished(int request_id,
-                                ServiceWorkerStatusCode status,
-                                const ServiceWorkerClientInfo& client_info);
+  void OnNavigateClientFinished(
+      int request_id,
+      ServiceWorkerStatusCode status,
+      const blink::mojom::ServiceWorkerClientInfo& client_info);
   void OnSkipWaiting(int request_id);
   void OnClaimClients(int request_id);
   void OnPongFromWorker();
 
-  void OnFocusClientFinished(int request_id,
-                             const ServiceWorkerClientInfo& client_info);
+  void OnFocusClientFinished(
+      int request_id,
+      const blink::mojom::ServiceWorkerClientInfo& client_info);
 
   void DidEnsureLiveRegistrationForStartWorker(
       ServiceWorkerMetrics::EventType purpose,
@@ -614,8 +618,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
                              blink::mojom::ServiceWorkerEventStatus status,
                              base::Time dispatch_event_time);
 
-  void OnGetClientFinished(int request_id,
-                           const ServiceWorkerClientInfo& client_info);
+  void OnGetClientFinished(
+      int request_id,
+      const blink::mojom::ServiceWorkerClientInfo& client_info);
 
   void OnGetClientsFinished(int request_id,
                             std::unique_ptr<ServiceWorkerClients> clients);

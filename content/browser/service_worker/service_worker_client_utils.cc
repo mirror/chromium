@@ -20,7 +20,6 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
-#include "content/common/service_worker/service_worker_client_info.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
@@ -33,6 +32,7 @@
 #include "content/public/common/child_process_host.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -107,7 +107,7 @@ class OpenURLObserver : public WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(OpenURLObserver);
 };
 
-ServiceWorkerClientInfo GetWindowClientInfoOnUI(
+blink::mojom::ServiceWorkerClientInfo GetWindowClientInfoOnUI(
     int render_process_id,
     int render_frame_id,
     base::TimeTicks create_time,
@@ -116,24 +116,26 @@ ServiceWorkerClientInfo GetWindowClientInfoOnUI(
   RenderFrameHostImpl* render_frame_host =
       RenderFrameHostImpl::FromID(render_process_id, render_frame_id);
   if (!render_frame_host)
-    return ServiceWorkerClientInfo();
+    return blink::mojom::ServiceWorkerClientInfo();
 
   // TODO(mlamouri,michaeln): it is possible to end up collecting information
   // for a frame that is actually being navigated and isn't exactly what we are
   // expecting.
-  return ServiceWorkerClientInfo(
+  return blink::mojom::ServiceWorkerClientInfo(
       client_uuid, render_frame_host->GetVisibilityState(),
       render_frame_host->IsFocused(), render_frame_host->GetLastCommittedURL(),
-      render_frame_host->GetParent() ? REQUEST_CONTEXT_FRAME_TYPE_NESTED
-                                     : REQUEST_CONTEXT_FRAME_TYPE_TOP_LEVEL,
+      render_frame_host->GetParent()
+          ? blink::mojom::RequestContextFrameType::NESTED
+          : blink::mojom::RequestContextFrameType::TOP_LEVEL,
       render_frame_host->frame_tree_node()->last_focus_time(), create_time,
       blink::mojom::ServiceWorkerClientType::kWindow);
 }
 
-ServiceWorkerClientInfo FocusOnUI(int render_process_id,
-                                  int render_frame_id,
-                                  base::TimeTicks create_time,
-                                  const std::string& client_uuid) {
+blink::mojom::ServiceWorkerClientInfo FocusOnUI(
+    int render_process_id,
+    int render_frame_id,
+    base::TimeTicks create_time,
+    const std::string& client_uuid) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   RenderFrameHostImpl* render_frame_host =
       RenderFrameHostImpl::FromID(render_process_id, render_frame_id);
@@ -141,7 +143,7 @@ ServiceWorkerClientInfo FocusOnUI(int render_process_id,
       WebContents::FromRenderFrameHost(render_frame_host));
 
   if (!render_frame_host || !web_contents)
-    return ServiceWorkerClientInfo();
+    return blink::mojom::ServiceWorkerClientInfo();
 
   FrameTreeNode* frame_tree_node = render_frame_host->frame_tree_node();
 
@@ -264,13 +266,15 @@ void DidNavigate(const base::WeakPtr<ServiceWorkerContextCore>& context,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   if (!context) {
-    callback.Run(SERVICE_WORKER_ERROR_ABORT, ServiceWorkerClientInfo());
+    callback.Run(SERVICE_WORKER_ERROR_ABORT,
+                 blink::mojom::ServiceWorkerClientInfo());
     return;
   }
 
   if (render_process_id == ChildProcessHost::kInvalidUniqueID &&
       render_frame_id == MSG_ROUTING_NONE) {
-    callback.Run(SERVICE_WORKER_ERROR_FAILED, ServiceWorkerClientInfo());
+    callback.Run(SERVICE_WORKER_ERROR_FAILED,
+                 blink::mojom::ServiceWorkerClientInfo());
     return;
   }
 
@@ -293,7 +297,7 @@ void DidNavigate(const base::WeakPtr<ServiceWorkerContextCore>& context,
 
   // If here, it means that no provider_host was found, in which case, the
   // renderer should still be informed that the window was opened.
-  callback.Run(SERVICE_WORKER_OK, ServiceWorkerClientInfo());
+  callback.Run(SERVICE_WORKER_OK, blink::mojom::ServiceWorkerClientInfo());
 }
 
 void AddWindowClient(
@@ -319,11 +323,11 @@ void AddNonWindowClient(ServiceWorkerProviderHost* host,
       options.client_type != host_client_type)
     return;
 
-  ServiceWorkerClientInfo client_info(
+  blink::mojom::ServiceWorkerClientInfo client_info(
       host->client_uuid(), blink::mojom::PageVisibilityState::kHidden,
       false,  // is_focused
-      host->document_url(), REQUEST_CONTEXT_FRAME_TYPE_NONE, base::TimeTicks(),
-      host->create_time(), host_client_type);
+      host->document_url(), blink::mojom::RequestContextFrameType::NONE,
+      base::TimeTicks(), host->create_time(), host_client_type);
   clients->push_back(client_info);
 }
 
@@ -337,14 +341,18 @@ void OnGetWindowClientsOnUI(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   for (const auto& it : clients_info) {
-    ServiceWorkerClientInfo info = GetWindowClientInfoOnUI(
+    blink::mojom::ServiceWorkerClientInfo info = GetWindowClientInfoOnUI(
         std::get<0>(it), std::get<1>(it), std::get<2>(it), std::get<3>(it));
 
     // If the request to the provider_host returned an empty
     // ServiceWorkerClientInfo, that means that it wasn't possible to associate
     // it with a valid RenderFrameHost. It might be because the frame was killed
     // or navigated in between.
-    if (info.IsEmpty())
+    if (info.page_visibility_state ==
+            blink::mojom::PageVisibilityState::kLast &&
+        info.is_focused == false && info.url.is_empty() &&
+        info.frame_type == blink::mojom::RequestContextFrameType::TOP_LEVEL &&
+        info.client_type == blink::mojom::ServiceWorkerClientType::kLast)
       continue;
 
     // We can get info for a frame that was navigating end ended up with a
@@ -361,8 +369,8 @@ void OnGetWindowClientsOnUI(
 }
 
 struct ServiceWorkerClientInfoSort {
-  bool operator()(const ServiceWorkerClientInfo& a,
-                  const ServiceWorkerClientInfo& b) const {
+  bool operator()(const blink::mojom::ServiceWorkerClientInfo& a,
+                  const blink::mojom::ServiceWorkerClientInfo& b) const {
     // Clients for windows should be appeared earlier.
     if (a.client_type == blink::mojom::ServiceWorkerClientType::kWindow &&
         b.client_type != blink::mojom::ServiceWorkerClientType::kWindow) {
@@ -519,12 +527,12 @@ void GetClient(ServiceWorkerProviderHost* provider_host,
     return;
   }
 
-  ServiceWorkerClientInfo client_info(
+  blink::mojom::ServiceWorkerClientInfo client_info(
       provider_host->client_uuid(), blink::mojom::PageVisibilityState::kHidden,
       false,  // is_focused
-      provider_host->document_url(), REQUEST_CONTEXT_FRAME_TYPE_NONE,
-      base::TimeTicks(), provider_host->create_time(),
-      provider_host->client_type());
+      provider_host->document_url(),
+      blink::mojom::RequestContextFrameType::NONE, base::TimeTicks(),
+      provider_host->create_time(), provider_host->client_type());
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::BindOnce(callback, client_info));
 }

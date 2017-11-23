@@ -35,6 +35,8 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/origin_util.h"
 #include "ipc/ipc_message_macros.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
@@ -237,7 +239,7 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
           sender_provider_host,
           base::Bind(&ServiceWorkerDispatcherHost::
                          DispatchExtendableMessageEventInternal<
-                             ServiceWorkerClientInfo>,
+                             blink::mojom::ServiceWorkerClientInfo>,
                      this, worker, message, source_origin, sent_message_ports,
                      base::nullopt, callback));
       break;
@@ -389,7 +391,7 @@ void ServiceWorkerDispatcherHost::
 
   // Hide the client url if the client has a unique origin.
   if (source_origin.unique()) {
-    if (event->source.client_info.IsValid())
+    if (IsValidSourceInfo(event->source.client_info))
       event->source.client_info.url = GURL();
     else
       event->source.service_worker_info.url = GURL();
@@ -410,19 +412,30 @@ void ServiceWorkerDispatcherHost::DidFailToDispatchExtendableMessageEvent(
   callback.Run(status);
 }
 
-bool ServiceWorkerDispatcherHost::IsValidSourceInfo(
-    const ServiceWorkerClientInfo& source_info) {
-  return source_info.IsValid();
+bool ServiceWorkerDispatcherHost::IsEmptyClientInfo(
+    const blink::mojom::ServiceWorkerClientInfo& source_info) {
+  return source_info.page_visibility_state ==
+             blink::mojom::PageVisibilityState::kLast &&
+         source_info.is_focused == false && source_info.url.is_empty() &&
+         source_info.frame_type ==
+             blink::mojom::RequestContextFrameType::TOP_LEVEL &&
+         source_info.client_type ==
+             blink::mojom::ServiceWorkerClientType::kLast;
 }
 
 bool ServiceWorkerDispatcherHost::IsValidSourceInfo(
-    const blink::mojom::ServiceWorkerObjectInfo& source_info) {
+    const blink::mojom::ServiceWorkerClientInfo& source_info) const {
+  return IsEmptyClientInfo(source_info) && !source_info.client_uuid.empty();
+}
+
+bool ServiceWorkerDispatcherHost::IsValidSourceInfo(
+    const blink::mojom::ServiceWorkerObjectInfo& source_info) const {
   return source_info.handle_id != blink::mojom::kInvalidServiceWorkerHandleId &&
          source_info.version_id != blink::mojom::kInvalidServiceWorkerVersionId;
 }
 
 void ServiceWorkerDispatcherHost::ReleaseSourceInfo(
-    const ServiceWorkerClientInfo& source_info) {
+    const blink::mojom::ServiceWorkerClientInfo& source_info) {
   // ServiceWorkerClientInfo is just a snapshot of the client. There is no need
   // to do anything for it.
 }
