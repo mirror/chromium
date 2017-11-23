@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "2020a70e_3024c76b",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "701fa974_3c2797a5",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a7d5f6b_ee8ed498",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 12
@@ -56,6 +74,24 @@
       "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364e3929_6ffd3f0c",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a7d5f6b_ee8ed498",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "25dcf6d2_5c326842",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16c9e741_9bd4108b",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e372439f_4fcc0874",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 12
@@ -90,6 +144,24 @@
       "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe00442_ec3af6c6",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e372439f_4fcc0874",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "5967d314_dee09b1f",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea7d0ff_d94d7aa2",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94c891f6_cf92a5e9",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 12
@@ -127,6 +217,24 @@
     },
     {
       "key": {
+        "uuid": "2bca4c41_6e4678bc",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94c891f6_cf92a5e9",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b0dce6_3332eae4",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 12
@@ -138,6 +246,30 @@
       "writtenOn": "2017-11-20T23:43:00Z",
       "side": 1,
       "message": "This is not necessarily true. It has lower latency than all of the alternatives, but I wouldn\u0027t go as far as calling it \"low latency\". For that the only solution is to avoid the threadhop to begin with.",
+      "range": {
+        "startLine": 24,
+        "startChar": 67,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b7c530_91cb13b4",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97b0dce6_3332eae4",
       "range": {
         "startLine": 24,
         "startChar": 67,
@@ -173,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "65edd251_fe452a28",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04cbbf41_5cc42a28",
+      "range": {
+        "startLine": 28,
+        "startChar": 49,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "826386ce_80b550a7",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 12
@@ -184,6 +340,30 @@
       "writtenOn": "2017-11-20T23:43:00Z",
       "side": 1,
       "message": "This needs\n\n base::AssertBlockingAllowed();\n\nabove.",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe017290_4812baa0",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "826386ce_80b550a7",
       "range": {
         "startLine": 36,
         "startChar": 7,
@@ -213,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "a1e88a75_d829e785",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9256774_3ffba4c9",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f71caa99_4fbacc91",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 12
@@ -224,6 +422,30 @@
       "writtenOn": "2017-11-20T23:43:00Z",
       "side": 1,
       "message": "Another way to avoid the threadhop is to use\n\n  timer_.SetTaskRunner(base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()});\n\nin the ctor. That way you don\u0027t need to post the task.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2536ce_ad55622b",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f71caa99_4fbacc91",
       "range": {
         "startLine": 50,
         "startChar": 2,
@@ -259,6 +481,30 @@
     },
     {
       "key": {
+        "uuid": "51486945_f1e79e8b",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f35e5e16_9a36a9cf",
+      "range": {
+        "startLine": 51,
+        "startChar": 57,
+        "endLine": 51,
+        "endChar": 67
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f33ac4a0_73f6d89d",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 12
@@ -273,6 +519,24 @@
       "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a00eb9f_f59149bd",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f33ac4a0_73f6d89d",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +557,24 @@
     },
     {
       "key": {
+        "uuid": "e1bec8f0_5d5f255e",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aa18b8a_1c2c7edc",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b7d9bcd_58416956",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 12
@@ -307,6 +589,24 @@
       "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173eabc3_a3350b3a",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b7d9bcd_58416956",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -333,6 +633,30 @@
     },
     {
       "key": {
+        "uuid": "e0b283a2_c4d38513",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42a77a1c_60575e02",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 14
+      },
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec54b5a_182654ca",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 12
@@ -347,6 +671,24 @@
       "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2de7e7_e57d364b",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec54b5a_182654ca",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -384,6 +726,24 @@
     },
     {
       "key": {
+        "uuid": "fd77b239_b5acac58",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b383131_3d4aafd9",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4df3d01e_30a857e8",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 12
@@ -398,6 +758,24 @@
       "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d00d814_ad965872",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4df3d01e_30a857e8",
+      "revId": "d5a9a81935fc152d3cc32c04a9b79c9249896464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

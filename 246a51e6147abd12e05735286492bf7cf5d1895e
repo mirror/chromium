@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3787c677_0f1a7c59",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839e9466_9c3e2287",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1f79097_490235ee",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 10
@@ -440,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "3277c583_617f0739",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc1b0c0_62eda72a",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c628e11_82a082c8",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 10
@@ -487,6 +529,24 @@
       "side": 1,
       "message": "I meant, the lifetime of ArcTimer instances should be tied to the ArcTimer connection, rather than container instance lifetime, right?\nIf it should be tied to the container instance lifetime, could you explicitly document the background reason in details?\nIf not, could you tie the lifetime of mojo connection and ArcTimer instances, instead?",
       "parentUuid": "63382337_6ddb5b70",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af98130_01bc2fb3",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-23T03:00:00Z",
+      "side": 1,
+      "message": "Now, I stop the timer in the connection error handler. The ArcTimer unique ptrs are freed when the Instance is closed though.",
+      "parentUuid": "9af4b100_b8003470",
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
