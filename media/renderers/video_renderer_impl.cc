@@ -217,7 +217,9 @@ void VideoRendererImpl::StartPlayingFrom(base::TimeDelta timestamp) {
   start_timestamp_ = timestamp;
   painted_first_frame_ = false;
   has_playback_met_watch_time_duration_requirement_ = false;
-  video_frame_stream_->DropFramesBefore(start_timestamp_);
+  // TODO(dalecurtis): . The following line causes user-noticible
+  // freezes following a seek, but we don't know why. crbug/787626
+  // video_frame_stream_->DropFramesBefore(start_timestamp_);
   AttemptRead_Locked();
 }
 
