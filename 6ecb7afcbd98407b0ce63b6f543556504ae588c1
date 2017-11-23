@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e9e8f4c_ae1a7552",
+        "filename": "components/signin/core/browser/signin_header_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1252989
+      },
+      "writtenOn": "2017-11-23T15:36:42Z",
+      "side": 1,
+      "message": "Thank you for thinking ahead about this. If you look at the design document again, there\u0027s a comment from zalcorn@. After speaking with ewald@, he doesn\u0027t think that changing the current UI will be worth the trouble from a product perspective.\n\nI suggest dropping this new mode from your change, and planning on re-adding it if and when we decide that we want to investing in changing the experience.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "6ecb7afcbd98407b0ce63b6f543556504ae588c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
