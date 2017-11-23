@@ -52,6 +52,24 @@
       "revId": "d20276572f573405db7c96003181c4468f462eda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfbb5ec_3d4b4818",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-23T18:04:55Z",
+      "side": 1,
+      "message": "I think //ui/gl/ cannot depend on //gpu/command_buffer/common for now, because //gpu/command_buffer/common will pull all //gpu in for component build. See [1].\n\nI guess, we need move //ui/gl to //gpi/command_buffer/* first, and then start moving //ui/gfx.\n\nAnd I removed constants from mojom. Everywhere, will use //ui/gfx/presentation_feedback.h.\n\n[1] https://cs.chromium.org/chromium/src/gpu/command_buffer/common/BUILD.gn?type\u003dcs\u0026q\u003dcommand_buffer/common/BUILD.gn\u0026l\u003d12",
+      "parentUuid": "9fe96b2d_ff3b633b",
+      "revId": "d20276572f573405db7c96003181c4468f462eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
