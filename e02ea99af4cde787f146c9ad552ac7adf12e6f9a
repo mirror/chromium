@@ -88,6 +88,96 @@
     },
     {
       "key": {
+        "uuid": "54b598dd_3b9b9f03",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T20:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f303265_78e45185",
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2835356d_1b487bc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T20:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef94c42e_6ef74ea8",
+      "range": {
+        "startLine": 7,
+        "startChar": 46,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "790a9ee1_f471b62f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T20:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d540674d_4bbb2517",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecaf2eaf_16e978d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T20:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe2ead9a_548eb833",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1445dc71_4928b815",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012cac45_e30415dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T20:29:44Z",
+      "side": 1,
+      "message": "I have added a line about why we care about determining support for orientation events, as I don\u0027t think that is obvious.",
+      "parentUuid": "1445dc71_4928b815",
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "b6a24f7f_57b4bb45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T20:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebad5ba8_ee2e051d",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ac870a9_518a1802",
         "filename": "chrome/browser/vr/service/vr_device_manager.cc",
         "patchSetId": 3
@@ -142,6 +274,24 @@
       "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da9111a_05e9f656",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T20:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ac870a9_518a1802",
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +315,30 @@
       "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74b52b1_1430f975",
+        "filename": "chrome/browser/vr/service/vr_device_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T20:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "326622da_712f8bad",
+      "range": {
+        "startLine": 42,
+        "startChar": 42,
+        "endLine": 42,
+        "endChar": 59
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
