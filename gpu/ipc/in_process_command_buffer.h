@@ -72,6 +72,7 @@ class ProgramCache;
 class ShaderTranslatorCache;
 }
 
+class GpuChannelManager;
 class GpuMemoryBufferManager;
 class ImageFactory;
 class TransferBufferManager;
@@ -102,6 +103,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
       InProcessCommandBuffer* share_group,
       GpuMemoryBufferManager* gpu_memory_buffer_manager,
       ImageFactory* image_factory,
+      GpuChannelManager* gpu_channel_manager,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // CommandBuffer implementation:
@@ -333,6 +335,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   // Used to throttle PerformDelayedWorkOnGpuThread.
   bool delayed_work_pending_;
   ImageFactory* image_factory_;
+  GpuChannelManager* gpu_channel_manager_ = nullptr;
 
   base::Closure snapshot_requested_callback_;
   bool snapshot_requested_;
