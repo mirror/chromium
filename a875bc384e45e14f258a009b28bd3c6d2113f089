@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a85e36_3a53dd36",
+        "filename": "content/browser/renderer_host/render_message_filter.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-23T01:48:59Z",
+      "side": 1,
+      "message": "LoadFont is OSX only, add the following here ...\n\n#else\n   // TODO(https://crbug.com/676224): remove this reporting.\n   mojo::ReportBadMessage(\"loadFont is OS_MACOSX only.\");\n#endif  // defined(OS_MACOSX)",
+      "revId": "a875bc384e45e14f258a009b28bd3c6d2113f089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
