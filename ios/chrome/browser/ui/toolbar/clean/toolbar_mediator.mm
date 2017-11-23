@@ -67,35 +67,38 @@
 
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
   DCHECK_EQ(_webState, webState);
-  [self updateConsumerForWebState:self.webState];
+  [self updateConsumer];
 }
 
 - (void)webState:(web::WebState*)webState
     didStartNavigation:(web::NavigationContext*)navigation {
   DCHECK_EQ(_webState, webState);
-  [self updateConsumerForWebState:self.webState];
+  [self updateConsumer];
 }
 
 - (void)webState:(web::WebState*)webState
     didPruneNavigationItemsWithCount:(size_t)pruned_item_count {
   DCHECK_EQ(_webState, webState);
-  [self updateConsumerForWebState:self.webState];
+  [self updateConsumer];
 }
 
 - (void)webStateDidStartLoading:(web::WebState*)webState {
   DCHECK_EQ(_webState, webState);
   [self.consumer setIsLoading:self.webState->IsLoading()];
+  [self updateConsumer];
 }
 
 - (void)webStateDidStopLoading:(web::WebState*)webState {
   DCHECK_EQ(_webState, webState);
   [self.consumer setIsLoading:self.webState->IsLoading()];
+  [self updateConsumer];
 }
 
 - (void)webState:(web::WebState*)webState
     didChangeLoadingProgress:(double)progress {
   DCHECK_EQ(_webState, webState);
   [self.consumer setLoadingProgressFraction:progress];
+  [self updateConsumer];
 }
 
 - (void)webStateDestroyed:(web::WebState*)webState {
@@ -125,6 +128,15 @@
               atIndex:(int)index {
   DCHECK_EQ(_webStateList, webStateList);
   [self.consumer setTabCount:_webStateList->count()];
+}
+
+- (void)webStateList:(WebStateList*)webStateList
+    didChangeActiveWebState:(web::WebState*)newWebState
+                oldWebState:(web::WebState*)oldWebState
+                    atIndex:(int)atIndex
+                 userAction:(BOOL)userAction {
+  DCHECK_EQ(_webStateList, webStateList);
+  self.webState = newWebState;
 }
 
 #pragma mark - Setters
