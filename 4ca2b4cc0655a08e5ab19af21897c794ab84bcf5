@@ -52,6 +52,24 @@
       "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce53bf1_15cee1c3",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileCallback.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-23T15:56:42Z",
+      "side": 1,
+      "message": "Looks a bit odd, especially that the spec link to an unmaintained spec. I would ask jsbell@ and pwnall@ about what spec, if any, governs this now, and what this should do. It\u0027s not in any of these:\nhttps://w3c.github.io/FileAPI/\nhttps://wicg.github.io/entries-api/",
+      "parentUuid": "ced026a5_de65ac33",
+      "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
