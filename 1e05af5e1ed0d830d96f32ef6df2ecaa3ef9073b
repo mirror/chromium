@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8268c0b7_15f1f632",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-23T14:14:15Z",
+      "side": 1,
+      "message": "nit: This could be\nPasswordUIExportView* const password_ui_export_view_;\nbecause it stays with the exporter for its lifetime.",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "1e05af5e1ed0d830d96f32ef6df2ecaa3ef9073b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12273196_7876ef44",
+        "filename": "components/password_manager/core/browser/export/password_ui_export_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-23T14:14:15Z",
+      "side": 1,
+      "message": "I acknowledge that this is because of go/chrome-pwd-export being out of date (will fix that today), but as we discovered yesterday, reading PasswordStore is replaced by just using the cached passwords instantly (iOS has savedForms_ in save_passwords_collection_view_controller.mm and the rest has PasswordManagerPresenter::password_list_).\n\nSo I think we should actually remove this method from the API completely.",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "1e05af5e1ed0d830d96f32ef6df2ecaa3ef9073b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
