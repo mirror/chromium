@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "deb3b89c_22bee5ae",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-23T00:05:54Z",
+      "side": 1,
+      "message": "Added comments:\n  // The tree builder context for the whole object.\n  PaintPropertyTreeBuilderContext\u0026 full_context;\n  // The tree builder context for the current fragment, which is one of the\n  // entries in |full_context.fragments|.",
+      "parentUuid": "1a682c11_e2020a72",
+      "revId": "262a96dca186bb5d6a56460fed141e1b50da6b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ff9b3c2_1b0132b3",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fd9eacbb_9dda892c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-23T00:05:54Z",
+      "side": 1,
+      "message": "Yes. I forgot to mention that this patch-set without renaming was uploaded for ease of review. Done in the latest patch-set.",
+      "parentUuid": "8ff9b3c2_1b0132b3",
+      "revId": "262a96dca186bb5d6a56460fed141e1b50da6b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5596fe51_d24b0d7b",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-22T22:45:00Z",
       "side": 1,
       "message": "Because this updates the context (in the root layer scrolling case, below), WDYT of renaming this to Update[something]?",
+      "revId": "262a96dca186bb5d6a56460fed141e1b50da6b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179b4a45_611d40aa",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-23T00:05:54Z",
+      "side": 1,
+      "message": "Reverted to the original name. Renamed it because it\u0027s too similar to UpdatePaintOffsetTranslation() below, but CalculatePaintOffsetTranslation() doesn\u0027t look better.",
+      "parentUuid": "5596fe51_d24b0d7b",
       "revId": "262a96dca186bb5d6a56460fed141e1b50da6b98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
