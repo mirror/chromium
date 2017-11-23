@@ -33,6 +33,8 @@
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
+#include "chrome/browser/vr/assets.h"
+#include "chrome/browser/vr/metrics_helper.h"
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/browser/vr/web_contents_event_forwarder.h"
@@ -134,6 +136,8 @@ VrShell::VrShell(JNIEnv* env,
                  int display_width_pixels,
                  int display_height_pixels)
     : vr_shell_enabled_(base::FeatureList::IsEnabled(features::kVrBrowsing)),
+      web_vr_autopresentation_expected_(
+          ui_initial_state.web_vr_autopresentation_expected),
       window_(window),
       compositor_(base::MakeUnique<VrCompositor>(window_)),
       delegate_provider_(delegate),
@@ -164,6 +168,8 @@ VrShell::VrShell(JNIEnv* env,
       ui_initial_state.web_vr_autopresentation_expected) {
     UMA_HISTOGRAM_BOOLEAN("VRAutopresentedWebVR", !ui_initial_state.in_web_vr);
   }
+
+  vr::Assets::GetInstance()->metrics_helper()->OnEnter(vr::Mode::kVr);
 }
 
 void VrShell::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
@@ -418,6 +424,12 @@ void VrShell::SetWebVrMode(JNIEnv* env,
   PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::SetWebVrMode,
                                        gl_thread_->GetVrShellGl(), enabled));
   ui_->SetWebVrMode(enabled, show_toast);
+
+  if (!webvr_mode_ && !web_vr_autopresentation_expected_) {
+    vr::Assets::GetInstance()->metrics_helper()->OnEnter(vr::Mode::kVrBrowsing);
+  } else {
+    vr::Assets::GetInstance()->metrics_helper()->OnEnter(vr::Mode::kWebVr);
+  }
 }
 
 void VrShell::OnFullscreenChanged(bool enabled) {
