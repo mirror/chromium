@@ -890,7 +890,10 @@ TransportSecurityState::CheckCTRequirements(
   bool complies =
       (policy_compliance ==
            ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS ||
-       policy_compliance == ct::CTPolicyCompliance::CT_POLICY_BUILD_NOT_TIMELY);
+       policy_compliance ==
+           ct::CTPolicyCompliance::CT_POLICY_BUILD_NOT_TIMELY ||
+       policy_compliance ==
+           ct::CTPolicyCompliance::CT_POLICY_COMPLIANCE_DETAILS_NOT_AVAILABLE);
 
   // Check Expect-CT first so that other CT requirements do not prevent
   // Expect-CT reports from being sent.
@@ -1468,9 +1471,10 @@ void TransportSecurityState::ProcessExpectCTHeader(
       return;
     if (!ssl_info.is_issued_by_known_root)
       return;
-    if (!ssl_info.ct_compliance_details_available)
-      return;
     if (ssl_info.ct_policy_compliance ==
+            ct::CTPolicyCompliance::
+                CT_POLICY_COMPLIANCE_DETAILS_NOT_AVAILABLE ||
+        ssl_info.ct_policy_compliance ==
             ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS ||
         ssl_info.ct_policy_compliance ==
             ct::CTPolicyCompliance::CT_POLICY_BUILD_NOT_TIMELY) {
@@ -1502,8 +1506,6 @@ void TransportSecurityState::ProcessExpectCTHeader(
   // public root or did not comply with CT policy.
   if (!ssl_info.is_issued_by_known_root)
     return;
-  if (!ssl_info.ct_compliance_details_available)
-    return;
   if (ssl_info.ct_policy_compliance !=
       ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS) {
     // If an Expect-CT header is observed over a non-compliant connection, the
@@ -1514,9 +1516,12 @@ void TransportSecurityState::ProcessExpectCTHeader(
     // at connection setup time, so it needs to be reported here while
     // processing the header.
     if (ssl_info.ct_policy_compliance ==
-        ct::CTPolicyCompliance::CT_POLICY_BUILD_NOT_TIMELY) {
+            ct::CTPolicyCompliance::CT_POLICY_BUILD_NOT_TIMELY ||
+        ssl_info.ct_policy_compliance ==
+            ct::CTPolicyCompliance::
+                CT_POLICY_COMPLIANCE_DETAILS_NOT_AVAILABLE) {
       // Only send reports for truly non-compliant connections, not those for
-      // which compliance wasn't checked due to an out-of-date build.
+      // which compliance wasn't checked.
       return;
     }
     ExpectCTState state;
