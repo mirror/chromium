@@ -20,20 +20,44 @@ namespace vr {
 
 namespace {
 
-bool IsElementFacingCamera(const UiElement* element) {
+gfx::Vector3dF ComputeNormal(const gfx::Transform& transform) {
+  gfx::Vector3dF normal(0, 0, 1);
+  transform.TransformVector(&normal);
+  normal.GetNormalized(&normal);
+  return normal;
+}
+
+bool WillElementFaceCamera(const UiElement* element) {
   // Element might become invisible due to incorrect rotation, i.e when rotation
   // cause the visible side of the element flip.
   // Here we calculate the dot product of (origin - center) and normal. If the
   // result is greater than 0, it means the visible side of this element is
   // facing camera.
-  gfx::Point3F center = element->GetCenter();
+  gfx::Point3F center;
+  gfx::Transform transform = element->ComputeTargetWorldSpaceTransform();
+  transform.TransformPoint(&center);
+
   gfx::Point3F origin;
+  gfx::Vector3dF normal = ComputeNormal(transform);
   if (center == origin) {
     // If the center of element is at origin, as our camera facing negative z.
     // we only need to make sure the normal of the element have positive z.
-    return element->GetNormal().z() > 0.f;
+    return normal.z() > 0.f;
   }
-  return gfx::DotProduct(origin - center, element->GetNormal()) > 0.f;
+  return gfx::DotProduct(origin - center, normal) > 0.f;
+}
+
+// This method tests whether an element will be visible after all pending scene
+// animations complete.
+bool WillElementBeVisible(const UiScene* scene, UiElementName name) {
+  UiElement* element = scene->GetUiElementByName(name);
+  if (!element)
+    return false;
+  if (element->ComputeTargetOpacity() == 0.f)
+    return false;
+  if (!element->IsWorldPositioned())
+    return true;
+  return WillElementFaceCamera(element);
 }
 
 }  // namespace
@@ -55,50 +79,45 @@ void UiTest::CreateSceneForAutoPresentation() {
 
 bool UiTest::IsVisible(UiElementName name) const {
   OnBeginFrame();
-  UiElement* element = scene_->GetUiElementByName(name);
-  if (!element || !element->IsVisible())
-    return false;
-
-  if (!element->IsWorldPositioned())
-    return true;
-
-  return IsElementFacingCamera(element);
+  return WillElementBeVisible(scene_, name);
 }
 
 void UiTest::SetIncognito(bool incognito) {
   model_->incognito = incognito;
 }
 
-void UiTest::VerifyElementsVisible(const std::string& trace_context,
-                                   const std::set<UiElementName>& names) const {
+bool UiTest::VerifyVisibility(const std::set<UiElementName>& names,
+                              bool expected_visibility) const {
   OnBeginFrame();
-  SCOPED_TRACE(trace_context);
   for (auto name : names) {
     SCOPED_TRACE(UiElementNameToString(name));
-    auto* element = scene_->GetUiElementByName(name);
-    ASSERT_NE(nullptr, element);
-    EXPECT_TRUE(element->IsVisible());
-    EXPECT_TRUE(!element->IsWorldPositioned() ||
-                IsElementFacingCamera(element));
-    EXPECT_NE(kPhaseNone, element->draw_phase());
-  }
-}
-
-bool UiTest::VerifyVisibility(const std::set<UiElementName>& names,
-                              bool visible) const {
-  OnBeginFrame();
-  for (auto name : names) {
-    SCOPED_TRACE(name);
-    auto* element = scene_->GetUiElementByName(name);
-    EXPECT_NE(nullptr, element);
-    if (!element || element->IsVisible() != visible) {
+    bool will_be_visible = WillElementBeVisible(scene_, name);
+    EXPECT_EQ(will_be_visible, expected_visibility);
+    if (will_be_visible != expected_visibility)
       return false;
-    }
-    if (!element || (visible && element->draw_phase() == kPhaseNone)) {
-      return false;
-    }
   }
   return true;
+}
+
+void UiTest::VerifyVisible(const std::string& trace_context,
+                           const std::set<UiElementName>& names) const {
+  SCOPED_TRACE(trace_context);
+  VerifyVisibility(names, true);
+}
+
+// TODO(cjgrant): Restore this method. We previously checked that only a
+// specific set of elements is visible, and others are not. After eliminating
+// violations, it can replace VerifyVisible().
+void UiTest::VerifyOnlyElementsVisible(
+    const std::string& trace_context,
+    const std::set<UiElementName>& names) const {
+  SCOPED_TRACE(trace_context);
+  for (const auto& element : scene_->root_element()) {
+    SCOPED_TRACE(element.DebugName());
+    UiElementName name = element.name();
+    bool should_be_visibile = (names.find(name) != names.end());
+    EXPECT_EQ(WillElementBeVisible(scene_, name), should_be_visibile);
+  }
 }
 
 bool UiTest::VerifyIsAnimating(const std::set<UiElementName>& names,
@@ -174,7 +193,7 @@ void UiTest::CheckRendererOpacityRecursive(UiElement* element) {
   }
 }
 
-bool UiTest::AnimateBy(base::TimeDelta delta) {
+bool UiTest::RunFor(base::TimeDelta delta) {
   base::TimeTicks target_time = current_time_ + delta;
   base::TimeDelta frame_time = base::TimeDelta::FromSecondsD(1.0 / 60.0);
   bool changed = false;
@@ -228,6 +247,8 @@ void UiTest::CreateSceneInternal(InCct in_cct,
                            std::move(content_input_delegate), ui_initial_state);
   scene_ = ui_->scene();
   model_ = ui_->model_for_test();
+
+  OnBeginFrame();
 }
 
 }  // namespace vr
