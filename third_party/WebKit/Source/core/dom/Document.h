@@ -166,7 +166,6 @@ class ScriptRunner;
 class ScriptableDocumentParser;
 class ScriptedAnimationController;
 class SecurityOrigin;
-class SegmentedString;
 class SelectorQueryCache;
 class SerializedScriptValue;
 class Settings;
@@ -622,9 +621,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void CancelParsing();
 
-  void write(const SegmentedString& text,
-             Document* entered_document = nullptr,
-             ExceptionState& = ASSERT_NO_EXCEPTION);
   void write(const String& text,
              Document* entered_document = nullptr,
              ExceptionState& = ASSERT_NO_EXCEPTION);

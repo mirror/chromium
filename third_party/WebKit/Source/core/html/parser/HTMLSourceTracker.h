@@ -44,8 +44,10 @@ class HTMLSourceTracker {
   // FIXME: Once we move "end" into HTMLTokenizer, rename "start" to
   // something that makes it obvious that this method can be called multiple
   // times.
-  void Start(SegmentedString&, HTMLTokenizer*, HTMLToken&);
-  void end(SegmentedString&, HTMLTokenizer*, HTMLToken&);
+  void Start(SegmentedStringImpl<false>&, HTMLTokenizer*, HTMLToken&);
+  void Start(SegmentedStringImpl<true>&, HTMLTokenizer*, HTMLToken&);
+  void end(SegmentedStringImpl<false>&, HTMLTokenizer*, HTMLToken&);
+  void end(SegmentedStringImpl<true>&, HTMLTokenizer*, HTMLToken&);
 
   String SourceForToken(const HTMLToken&);
 

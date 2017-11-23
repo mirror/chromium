@@ -417,7 +417,8 @@ void HTMLDocumentParser::ValidateSpeculations(
   // we'd likely need to do something more sophisticated with the HTMLToken.
   if (chunk->tokenizer_state == HTMLTokenizer::kDataState &&
       tokenizer->GetState() == HTMLTokenizer::kDataState &&
-      input_.Current().IsEmpty() &&
+      (Is8Bit() ? input_8_bit_.Current().IsEmpty()
+                : input_16_bit_.Current().IsEmpty()) &&
       chunk->tree_builder_state ==
           HTMLTreeBuilderSimulator::StateFor(tree_builder_.Get())) {
     DCHECK(token->IsUninitialized());
@@ -456,9 +457,12 @@ void HTMLDocumentParser::DiscardSpeculationsAndResumeFrom(
   checkpoint->input_checkpoint = last_chunk_before_script->input_checkpoint;
   checkpoint->preload_scanner_checkpoint =
       last_chunk_before_script->preload_scanner_checkpoint;
-  checkpoint->unparsed_input = input_.Current().ToString().IsolatedCopy();
+  checkpoint->unparsed_input =
+      Is8Bit() ? input_8_bit_.Current().ToString().IsolatedCopy()
+               : input_16_bit_.Current().ToString().IsolatedCopy();
   // FIXME: This should be passed in instead of cleared.
-  input_.Current().Clear();
+  input_8_bit_.Current().Clear();
+  input_16_bit_.Current().Clear();
 
   DCHECK(checkpoint->unparsed_input.IsSafeToSendToAnotherThread());
   loading_task_runner_->PostTask(
@@ -654,36 +658,74 @@ void HTMLDocumentParser::PumpTokenizer() {
   if (!IsParsingFragment())
     xss_auditor_.Init(GetDocument(), &xss_auditor_delegate_);
 
-  while (CanTakeNextToken()) {
-    if (xss_auditor_.IsEnabled())
-      source_tracker_.Start(input_.Current(), tokenizer_.get(), Token());
-
-    {
-      RUNTIME_CALL_TIMER_SCOPE(
-          V8PerIsolateData::MainThreadIsolate(),
-          RuntimeCallStats::CounterId::kHTMLTokenizerNextToken);
-      if (!tokenizer_->NextToken(input_.Current(), Token()))
-        break;
-    }
-
-    if (xss_auditor_.IsEnabled()) {
-      source_tracker_.end(input_.Current(), tokenizer_.get(), Token());
-
-      // We do not XSS filter innerHTML, which means we (intentionally) fail
-      // http/tests/security/xssAuditor/dom-write-innerHTML.html
-      if (std::unique_ptr<XSSInfo> xss_info =
-              xss_auditor_.FilterToken(FilterTokenRequest(
-                  Token(), source_tracker_, tokenizer_->ShouldAllowCDATA()))) {
-        xss_auditor_delegate_.DidBlockScript(*xss_info);
-        // If we're in blocking mode, we might stop the parser in
-        // 'didBlockScript()'. In that case, exit early.
-        if (!IsParsing())
-          return;
+  if (Is8Bit()) {
+    while (CanTakeNextToken()) {
+      if (xss_auditor_.IsEnabled()) {
+        source_tracker_.Start(input_8_bit_.Current(), tokenizer_.get(),
+                              Token());
       }
-    }
 
-    ConstructTreeFromHTMLToken();
-    DCHECK(IsStopped() || Token().IsUninitialized());
+      {
+        RUNTIME_CALL_TIMER_SCOPE(
+            V8PerIsolateData::MainThreadIsolate(),
+            RuntimeCallStats::CounterId::kHTMLTokenizerNextToken);
+        if (!tokenizer_->NextToken(input_8_bit_.Current(), Token()))
+          break;
+      }
+
+      if (xss_auditor_.IsEnabled()) {
+        source_tracker_.end(input_8_bit_.Current(), tokenizer_.get(), Token());
+
+        // We do not XSS filter innerHTML, which means we (intentionally) fail
+        // http/tests/security/xssAuditor/dom-write-innerHTML.html
+        if (std::unique_ptr<XSSInfo> xss_info = xss_auditor_.FilterToken(
+                FilterTokenRequest(Token(), source_tracker_,
+                                   tokenizer_->ShouldAllowCDATA()))) {
+          xss_auditor_delegate_.DidBlockScript(*xss_info);
+          // If we're in blocking mode, we might stop the parser in
+          // 'didBlockScript()'. In that case, exit early.
+          if (!IsParsing())
+            return;
+        }
+      }
+
+      ConstructTreeFromHTMLToken();
+      DCHECK(IsStopped() || Token().IsUninitialized());
+    }
+  } else {
+    while (CanTakeNextToken()) {
+      if (xss_auditor_.IsEnabled()) {
+        source_tracker_.Start(input_16_bit_.Current(), tokenizer_.get(),
+                              Token());
+      }
+
+      {
+        RUNTIME_CALL_TIMER_SCOPE(
+            V8PerIsolateData::MainThreadIsolate(),
+            RuntimeCallStats::CounterId::kHTMLTokenizerNextToken);
+        if (!tokenizer_->NextToken(input_16_bit_.Current(), Token()))
+          break;
+      }
+
+      if (xss_auditor_.IsEnabled()) {
+        source_tracker_.end(input_16_bit_.Current(), tokenizer_.get(), Token());
+
+        // We do not XSS filter innerHTML, which means we (intentionally) fail
+        // http/tests/security/xssAuditor/dom-write-innerHTML.html
+        if (std::unique_ptr<XSSInfo> xss_info = xss_auditor_.FilterToken(
+                FilterTokenRequest(Token(), source_tracker_,
+                                   tokenizer_->ShouldAllowCDATA()))) {
+          xss_auditor_delegate_.DidBlockScript(*xss_info);
+          // If we're in blocking mode, we might stop the parser in
+          // 'didBlockScript()'. In that case, exit early.
+          if (!IsParsing())
+            return;
+        }
+      }
+
+      ConstructTreeFromHTMLToken();
+      DCHECK(IsStopped() || Token().IsUninitialized());
+    }
   }
 
   if (IsStopped())
@@ -705,7 +747,11 @@ void HTMLDocumentParser::PumpTokenizer() {
       if (!preload_scanner_) {
         preload_scanner_ = CreatePreloadScanner(
             TokenPreloadScanner::ScannerType::kMainDocument);
-        preload_scanner_->AppendToEnd(input_.Current());
+        if (Is8Bit()) {
+          preload_scanner_->AppendToEnd(input_8_bit_.Current());
+        } else {
+          preload_scanner_->AppendToEnd(input_16_bit_.Current());
+        }
       }
       ScanAndPreload(preload_scanner_.get());
     }
@@ -753,11 +799,15 @@ bool HTMLDocumentParser::HasInsertionPoint() {
   // model of the EOF character differs slightly from the one in the spec
   // because our treatment is uniform between network-sourced and script-sourced
   // input streams whereas the spec treats them differently.
-  return input_.HasInsertionPoint() ||
-         (WasCreatedByScript() && !input_.HaveSeenEndOfFile());
+  if (Is8Bit()) {
+    return input_8_bit_.HasInsertionPoint() ||
+           (WasCreatedByScript() && !input_8_bit_.HaveSeenEndOfFile());
+  }
+  return input_16_bit_.HasInsertionPoint() ||
+         (WasCreatedByScript() && !input_16_bit_.HaveSeenEndOfFile());
 }
 
-void HTMLDocumentParser::insert(const SegmentedString& source) {
+void HTMLDocumentParser::insert(const String& source) {
   if (IsStopped())
     return;
 
@@ -771,9 +821,13 @@ void HTMLDocumentParser::insert(const SegmentedString& source) {
     tokenizer_ = HTMLTokenizer::Create(options_);
   }
 
-  SegmentedString excluded_line_number_source(source);
-  excluded_line_number_source.SetExcludeLineNumbers();
-  input_.InsertAtCurrentInsertionPoint(excluded_line_number_source);
+  if (source.Is8Bit()) {
+    DCHECK(input_16_bit_.Current().IsEmpty());
+    input_8_bit_.InsertAtCurrentInsertionPoint(source);
+  } else {
+    DCHECK(input_8_bit_.Current().IsEmpty());
+    input_16_bit_.InsertAtCurrentInsertionPoint(source);
+  }
   PumpTokenizerIfPossible();
 
   if (IsPaused()) {
@@ -875,7 +929,6 @@ void HTMLDocumentParser::Append(const String& input_source) {
 
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("blink.debug"),
                "HTMLDocumentParser::append", "size", input_source.length());
-  const SegmentedString source(input_source);
 
   if (GetDocument()->IsPrefetchOnly()) {
     // Do not prefetch if there is an appcache.
@@ -887,7 +940,7 @@ void HTMLDocumentParser::Append(const String& input_source) {
           CreatePreloadScanner(TokenPreloadScanner::ScannerType::kMainDocument);
     }
 
-    preload_scanner_->AppendToEnd(source);
+    preload_scanner_->AppendToEnd(SegmentedString(input_source));
     ScanAndPreload(preload_scanner_.get());
 
     // Return after the preload scanner, do not actually parse the document.
@@ -895,19 +948,27 @@ void HTMLDocumentParser::Append(const String& input_source) {
   }
 
   if (preload_scanner_) {
-    if (input_.Current().IsEmpty() && !IsPaused()) {
+    if ((Is8Bit() ? input_8_bit_.Current().IsEmpty()
+                  : input_16_bit_.Current().IsEmpty()) &&
+        !IsPaused()) {
       // We have parsed until the end of the current input and so are now moving
       // ahead of the preload scanner. Clear the scanner so we know to scan
       // starting from the current input point if we block again.
       preload_scanner_.reset();
     } else {
-      preload_scanner_->AppendToEnd(source);
+      preload_scanner_->AppendToEnd(SegmentedString(input_source));
       if (IsPaused())
         ScanAndPreload(preload_scanner_.get());
     }
   }
 
-  input_.AppendToEnd(source);
+  if (Is8Bit()) {
+    DCHECK(input_16_bit_.Current().IsEmpty());
+    input_8_bit_.AppendToEnd(input_source);
+  } else {
+    DCHECK(input_8_bit_.Current().IsEmpty());
+    input_16_bit_.AppendToEnd(input_source);
+  }
 
   if (InPumpSession()) {
     // We've gotten data off the network in a nested write. We don't want to
@@ -981,8 +1042,13 @@ void HTMLDocumentParser::Finish() {
   // background parser. In those cases, we ignore shouldUseThreading() and fall
   // through to the non-threading case.
   if (have_background_parser_) {
-    if (!input_.HaveSeenEndOfFile())
-      input_.CloseWithoutMarkingEndOfFile();
+    if (Is8Bit()) {
+      if (!input_8_bit_.HaveSeenEndOfFile())
+        input_8_bit_.CloseWithoutMarkingEndOfFile();
+    } else {
+      if (!input_16_bit_.HaveSeenEndOfFile())
+        input_16_bit_.CloseWithoutMarkingEndOfFile();
+    }
     loading_task_runner_->PostTask(
         BLINK_FROM_HERE,
         WTF::Bind(&BackgroundHTMLParser::Finish, background_parser_));
@@ -1000,8 +1066,10 @@ void HTMLDocumentParser::Finish() {
   // We're not going to get any more data off the network, so we tell the input
   // stream we've reached the end of file. finish() can be called more than
   // once, if the first time does not call end().
-  if (!input_.HaveSeenEndOfFile())
-    input_.MarkEndOfFile();
+  if (!(Is8Bit() ? input_8_bit_.HaveSeenEndOfFile()
+                 : input_16_bit_.HaveSeenEndOfFile())) {
+    Is8Bit() ? input_8_bit_.MarkEndOfFile() : input_16_bit_.MarkEndOfFile();
+  }
 
   AttemptToEnd();
 }
@@ -1021,14 +1089,23 @@ OrdinalNumber HTMLDocumentParser::LineNumber() const {
   if (have_background_parser_)
     return text_position_.line_;
 
-  return input_.Current().CurrentLine();
+  return Is8Bit() ? input_8_bit_.Current().CurrentLine()
+                  : input_16_bit_.Current().CurrentLine();
 }
 
 TextPosition HTMLDocumentParser::GetTextPosition() const {
   if (have_background_parser_)
     return text_position_;
 
-  const SegmentedString& current_string = input_.Current();
+  if (Is8Bit()) {
+    const auto& current_string = input_8_bit_.Current();
+    OrdinalNumber line = current_string.CurrentLine();
+    OrdinalNumber column = current_string.CurrentColumn();
+
+    return TextPosition(line, column);
+  }
+
+  const auto& current_string = input_16_bit_.Current();
   OrdinalNumber line = current_string.CurrentLine();
   OrdinalNumber column = current_string.CurrentColumn();
 
@@ -1083,7 +1160,9 @@ void HTMLDocumentParser::ResumeParsingAfterPause() {
 
 void HTMLDocumentParser::AppendCurrentInputStreamToPreloadScannerAndScan() {
   DCHECK(preload_scanner_);
-  preload_scanner_->AppendToEnd(input_.Current());
+  preload_scanner_->AppendToEnd(
+      SegmentedString(Is8Bit() ? input_8_bit_.Current().ToString()
+                               : input_16_bit_.Current().ToString()));
   ScanAndPreload(preload_scanner_.get());
 }
 

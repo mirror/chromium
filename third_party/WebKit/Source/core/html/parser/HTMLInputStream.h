@@ -48,23 +48,43 @@ namespace blink {
 // m_last is a pointer to the last of the afterInsertionPoint strings. The
 // network adds data at the end of the InputStream, which appends them to the
 // "last" string.
-class HTMLInputStream {
+
+class HTMLInputStreamBase {
+ public:
+  virtual void SplitInto(SegmentedStringImpl<true>& next) = 0;
+  virtual void MergeFrom(SegmentedStringImpl<true>& next) = 0;
+  virtual void SplitInto(SegmentedStringImpl<false>& next) = 0;
+  virtual void MergeFrom(SegmentedStringImpl<false>& next) = 0;
+  virtual void SetCurrentPosition(OrdinalNumber, OrdinalNumber, int) = 0;
+  virtual unsigned Length() = 0;
+  virtual OrdinalNumber CurrentLine() = 0;
+  virtual OrdinalNumber CurrentColumn() = 0;
+  virtual bool Supports16Bit() = 0;
+};
+
+template <bool supports16bit>
+class HTMLInputStream : public HTMLInputStreamBase {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(HTMLInputStream);
 
  public:
   HTMLInputStream() : last_(&first_) {}
 
-  void AppendToEnd(const SegmentedString& string) { last_->Append(string); }
+  void AppendToEnd(const String& string) {
+    last_->Append(SegmentedStringImpl<supports16bit>(string));
+  }
 
-  void InsertAtCurrentInsertionPoint(const SegmentedString& string) {
-    first_.Append(string);
+  void InsertAtCurrentInsertionPoint(const String& string) {
+    SegmentedStringImpl<supports16bit> excluded_line_number_source(string);
+    excluded_line_number_source.SetExcludeLineNumbers();
+    first_.Append(excluded_line_number_source);
   }
 
   bool HasInsertionPoint() const { return &first_ != last_; }
 
   void MarkEndOfFile() {
-    last_->Append(SegmentedString(String(&kEndOfFileMarker, 1)));
+    last_->Append(
+        SegmentedStringImpl<supports16bit>(String(&kEndOfFileMarker, 1)));
     last_->Close();
   }
 
@@ -72,12 +92,12 @@ class HTMLInputStream {
 
   bool HaveSeenEndOfFile() const { return last_->IsClosed(); }
 
-  SegmentedString& Current() { return first_; }
-  const SegmentedString& Current() const { return first_; }
+  SegmentedStringImpl<supports16bit>& Current() { return first_; }
+  const SegmentedStringImpl<supports16bit>& Current() const { return first_; }
 
-  void SplitInto(SegmentedString& next) {
+  void SplitInto(SegmentedStringImpl<supports16bit>& next) final {
     next = first_;
-    first_ = SegmentedString();
+    first_ = SegmentedStringImpl<supports16bit>();
     if (last_ == &first_) {
       // We used to only have one SegmentedString in the InputStream but now we
       // have two.  That means m_first is no longer also the m_last string,
@@ -86,7 +106,11 @@ class HTMLInputStream {
     }
   }
 
-  void MergeFrom(SegmentedString& next) {
+  void SplitInto(SegmentedStringImpl<!supports16bit>& next) final {
+    NOTREACHED();
+  }
+
+  void MergeFrom(SegmentedStringImpl<supports16bit>& next) final {
     first_.Append(next);
     if (last_ == &next) {
       // The string |next| used to be the last SegmentedString in
@@ -101,9 +125,27 @@ class HTMLInputStream {
     }
   }
 
+  void MergeFrom(SegmentedStringImpl<!supports16bit>& next) final {
+    NOTREACHED();
+  }
+
+  void SetCurrentPosition(OrdinalNumber line,
+                          OrdinalNumber column_aftre_prolog,
+                          int prolog_length) final {
+    first_.SetCurrentPosition(line, column_aftre_prolog, prolog_length);
+  }
+
+  unsigned Length() final { return first_.length(); }
+
+  OrdinalNumber CurrentLine() final { return first_.CurrentLine(); }
+
+  OrdinalNumber CurrentColumn() final { return first_.CurrentColumn(); }
+
+  bool Supports16Bit() final { return supports16bit; }
+
  private:
-  SegmentedString first_;
-  SegmentedString* last_;
+  SegmentedStringImpl<supports16bit> first_;
+  SegmentedStringImpl<supports16bit>* last_;
 };
 
 class InsertionPointRecord {
@@ -111,32 +153,47 @@ class InsertionPointRecord {
   WTF_MAKE_NONCOPYABLE(InsertionPointRecord);
 
  public:
-  explicit InsertionPointRecord(HTMLInputStream& input_stream)
-      : input_stream_(&input_stream) {
-    line_ = input_stream_->Current().CurrentLine();
-    column_ = input_stream_->Current().CurrentColumn();
-    input_stream_->SplitInto(next_);
+  explicit InsertionPointRecord(HTMLInputStreamBase* input_stream)
+      : input_stream_(input_stream) {
+    line_ = input_stream_->CurrentLine();
+    column_ = input_stream_->CurrentColumn();
+    if (input_stream_->Supports16Bit()) {
+      new (&next_16_bit_) SegmentedStringImpl<true>();
+      input_stream_->SplitInto(next_16_bit_);
+    } else {
+      new (&next_8_bit_) SegmentedStringImpl<false>();
+      input_stream_->SplitInto(next_8_bit_);
+    }
     // We 'fork' current position and use it for the generated script part. This
     // is a bit weird, because generated part does not have positions within an
     // HTML document.
-    input_stream_->Current().SetCurrentPosition(line_, column_, 0);
+    input_stream_->SetCurrentPosition(line_, column_, 0);
   }
 
   ~InsertionPointRecord() {
     // Some inserted text may have remained in input stream. E.g. if script has
     // written "&amp" or "<table", it stays in buffer because it cannot be
     // properly tokenized before we see next part.
-    int unparsed_remainder_length = input_stream_->Current().length();
-    input_stream_->MergeFrom(next_);
+    int unparsed_remainder_length = input_stream_->Length();
+    if (input_stream_->Supports16Bit()) {
+      input_stream_->MergeFrom(next_16_bit_);
+      next_16_bit_.~SegmentedStringImpl<true>();
+    } else {
+      input_stream_->MergeFrom(next_8_bit_);
+      next_8_bit_.~SegmentedStringImpl<false>();
+    }
     // We restore position for the character that goes right after unparsed
     // remainder.
-    input_stream_->Current().SetCurrentPosition(line_, column_,
-                                                unparsed_remainder_length);
+    input_stream_->SetCurrentPosition(line_, column_,
+                                      unparsed_remainder_length);
   }
 
  private:
-  HTMLInputStream* input_stream_;
-  SegmentedString next_;
+  HTMLInputStreamBase* input_stream_;
+  union {
+    SegmentedStringImpl<false> next_8_bit_;
+    SegmentedStringImpl<true> next_16_bit_;
+  };
   OrdinalNumber line_;
   OrdinalNumber column_;
 };

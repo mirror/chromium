@@ -21,7 +21,8 @@
 
 namespace blink {
 
-unsigned SegmentedString::length() const {
+template <bool supports16bit>
+unsigned SegmentedStringImpl<supports16bit>::length() const {
   unsigned length = current_string_.length();
   if (IsComposite()) {
     for (auto& substring : substrings_)
@@ -29,16 +30,22 @@ unsigned SegmentedString::length() const {
   }
   return length;
 }
+template unsigned SegmentedStringImpl<false>::length() const;
+template unsigned SegmentedStringImpl<true>::length() const;
 
-void SegmentedString::SetExcludeLineNumbers() {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::SetExcludeLineNumbers() {
   current_string_.SetExcludeLineNumbers();
   if (IsComposite()) {
     for (auto& substring : substrings_)
       substring.SetExcludeLineNumbers();
   }
 }
+template void SegmentedStringImpl<false>::SetExcludeLineNumbers();
+template void SegmentedStringImpl<true>::SetExcludeLineNumbers();
 
-void SegmentedString::Clear() {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::Clear() {
   current_string_.Clear();
   number_of_characters_consumed_prior_to_current_string_ = 0;
   number_of_characters_consumed_prior_to_current_line_ = 0;
@@ -47,8 +54,12 @@ void SegmentedString::Clear() {
   closed_ = false;
   empty_ = true;
 }
+template void SegmentedStringImpl<false>::Clear();
+template void SegmentedStringImpl<true>::Clear();
 
-void SegmentedString::Append(const SegmentedSubstring& s) {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::Append(
+    const SegmentedSubstring<supports16bit>& s) {
   DCHECK(!closed_);
   if (!s.length())
     return;
@@ -62,8 +73,13 @@ void SegmentedString::Append(const SegmentedSubstring& s) {
   }
   empty_ = false;
 }
+template void SegmentedStringImpl<false>::Append(
+    const SegmentedSubstring<false>&);
+template void SegmentedStringImpl<true>::Append(
+    const SegmentedSubstring<true>&);
 
-void SegmentedString::Push(UChar c) {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::Push(UChar c) {
   DCHECK(c);
 
   // pushIfPossible attempts to rewind the pointer in the SegmentedSubstring,
@@ -75,8 +91,13 @@ void SegmentedString::Push(UChar c) {
 
   Prepend(SegmentedString(String(&c, 1)), PrependType::kUnconsume);
 }
+template void SegmentedStringImpl<false>::Push(UChar);
+template void SegmentedStringImpl<true>::Push(UChar);
 
-void SegmentedString::Prepend(const SegmentedSubstring& s, PrependType type) {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::Prepend(
+    const SegmentedSubstring<supports16bit>& s,
+    PrependType type) {
   DCHECK(!s.NumberOfCharactersConsumed());
   if (!s.length())
     return;
@@ -97,14 +118,25 @@ void SegmentedString::Prepend(const SegmentedSubstring& s, PrependType type) {
   }
   empty_ = false;
 }
+template void SegmentedStringImpl<false>::Prepend(
+    const SegmentedSubstring<false>&,
+    PrependType);
+template void SegmentedStringImpl<true>::Prepend(
+    const SegmentedSubstring<true>&,
+    PrependType);
 
-void SegmentedString::Close() {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::Close() {
   // Closing a stream twice is likely a coding mistake.
   DCHECK(!closed_);
   closed_ = true;
 }
+template void SegmentedStringImpl<false>::Close();
+template void SegmentedStringImpl<true>::Close();
 
-void SegmentedString::Append(const SegmentedString& s) {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::Append(
+    const SegmentedStringImpl<supports16bit>& s) {
   DCHECK(!closed_);
 
   Append(s.current_string_);
@@ -113,8 +145,15 @@ void SegmentedString::Append(const SegmentedString& s) {
       Append(substring);
   }
 }
+template void SegmentedStringImpl<false>::Append(
+    const SegmentedStringImpl<false>&);
+template void SegmentedStringImpl<true>::Append(
+    const SegmentedStringImpl<true>&);
 
-void SegmentedString::Prepend(const SegmentedString& s, PrependType type) {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::Prepend(
+    const SegmentedStringImpl<supports16bit>& s,
+    PrependType type) {
   if (s.IsComposite()) {
     auto it = s.substrings_.rbegin();
     auto e = s.substrings_.rend();
@@ -123,8 +162,15 @@ void SegmentedString::Prepend(const SegmentedString& s, PrependType type) {
   }
   Prepend(s.current_string_, type);
 }
+template void SegmentedStringImpl<false>::Prepend(
+    const SegmentedStringImpl<false>&,
+    PrependType);
+template void SegmentedStringImpl<true>::Prepend(
+    const SegmentedStringImpl<true>&,
+    PrependType);
 
-void SegmentedString::AdvanceSubstring() {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::AdvanceSubstring() {
   if (IsComposite()) {
     number_of_characters_consumed_prior_to_current_string_ +=
         current_string_.NumberOfCharactersConsumed() + 1;
@@ -139,8 +185,11 @@ void SegmentedString::AdvanceSubstring() {
     empty_ = true;
   }
 }
+template void SegmentedStringImpl<false>::AdvanceSubstring();
+template void SegmentedStringImpl<true>::AdvanceSubstring();
 
-String SegmentedString::ToString() const {
+template <bool supports16bit>
+String SegmentedStringImpl<supports16bit>::ToString() const {
   StringBuilder result;
   current_string_.AppendTo(result);
   if (IsComposite()) {
@@ -149,32 +198,54 @@ String SegmentedString::ToString() const {
   }
   return result.ToString();
 }
+template String SegmentedStringImpl<false>::ToString() const;
+template String SegmentedStringImpl<true>::ToString() const;
 
-void SegmentedString::Advance(unsigned count, UChar* consumed_characters) {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::Advance(unsigned count,
+                                                 UChar* consumed_characters) {
   SECURITY_DCHECK(count <= length());
   for (unsigned i = 0; i < count; ++i) {
     consumed_characters[i] = CurrentChar();
     Advance();
   }
 }
+template void SegmentedStringImpl<false>::Advance(unsigned, UChar*);
+template void SegmentedStringImpl<true>::Advance(unsigned, UChar*);
 
-OrdinalNumber SegmentedString::CurrentLine() const {
+template <bool supports16bit>
+OrdinalNumber SegmentedStringImpl<supports16bit>::CurrentLine() const {
   return OrdinalNumber::FromZeroBasedInt(current_line_);
 }
+template OrdinalNumber SegmentedStringImpl<false>::CurrentLine() const;
+template OrdinalNumber SegmentedStringImpl<true>::CurrentLine() const;
 
-OrdinalNumber SegmentedString::CurrentColumn() const {
+template <bool supports16bit>
+OrdinalNumber SegmentedStringImpl<supports16bit>::CurrentColumn() const {
   int zero_based_column = NumberOfCharactersConsumed() -
                           number_of_characters_consumed_prior_to_current_line_;
   return OrdinalNumber::FromZeroBasedInt(zero_based_column);
 }
+template OrdinalNumber SegmentedStringImpl<false>::CurrentColumn() const;
+template OrdinalNumber SegmentedStringImpl<true>::CurrentColumn() const;
 
-void SegmentedString::SetCurrentPosition(OrdinalNumber line,
-                                         OrdinalNumber column_aftre_prolog,
-                                         int prolog_length) {
+template <bool supports16bit>
+void SegmentedStringImpl<supports16bit>::SetCurrentPosition(
+    OrdinalNumber line,
+    OrdinalNumber column_aftre_prolog,
+    int prolog_length) {
   current_line_ = line.ZeroBasedInt();
   number_of_characters_consumed_prior_to_current_line_ =
       NumberOfCharactersConsumed() + prolog_length -
       column_aftre_prolog.ZeroBasedInt();
 }
+template void SegmentedStringImpl<false>::SetCurrentPosition(
+    OrdinalNumber line,
+    OrdinalNumber column_aftre_prolog,
+    int prolog_length);
+template void SegmentedStringImpl<true>::SetCurrentPosition(
+    OrdinalNumber line,
+    OrdinalNumber column_aftre_prolog,
+    int prolog_length);
 
 }  // namespace blink
