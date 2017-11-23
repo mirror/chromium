@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e85a9902_efb29fc5",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-23T12:06:04Z",
+      "side": 1,
+      "message": "nit: blank line? My mind read this as an if/else if/else block. Could also extract it to a separate method (WriteAttribution?)",
+      "revId": "90fa9ce2f2a8714678a65b56950cfb7190d00e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
