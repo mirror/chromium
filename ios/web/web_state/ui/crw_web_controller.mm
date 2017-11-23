@@ -1460,6 +1460,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
 }
 
+// TODO(crbug.com/738020): Verify that the history state management here are not
+// needed for WKBasedNavigationManagerImpl and delete this method. The
+// OnNavigationItemCommitted() call is likely the only thing that needs to be
+// retained.
 - (void)updateHTML5HistoryState {
   web::NavigationItemImpl* currentItem = self.currentNavItem;
   if (!currentItem)
@@ -1488,6 +1492,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   if (!shouldUpdateState)
     return;
 
+  // TODO(crbug.com/720786): WebStateObserver::NavigationItemCommitted
   // TODO(stuartmorgan): Make CRWSessionController manage this internally (or
   // remove it; it's not clear this matches other platforms' behavior).
   self.navigationManagerImpl->OnNavigationItemCommitted();
@@ -1550,8 +1555,14 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [self executeJavaScript:script
         completionHandler:^(id, NSError*) {
           CRWWebController* strongSelf = weakSelf;
-          if (strongSelf && !strongSelf->_isBeingDestroyed)
+          if (strongSelf &&
+              !strongSelf->_isBeingDestroyed
+              // Make sure that no new navigation has started since URL value
+              // was captured to avoid clobbering _lastRegisteredRequestURL.
+              // See crbug.com/788231.
+              && currentItem == self.currentNavItem) {
             strongSelf->_lastRegisteredRequestURL = URL;
+          }
         }];
 }
 
