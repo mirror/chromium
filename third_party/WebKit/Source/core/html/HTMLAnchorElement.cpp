@@ -24,6 +24,7 @@
 
 #include "core/html/HTMLAnchorElement.h"
 
+#include "core/dom/UserGestureIndicator.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
@@ -375,6 +376,14 @@ void HTMLAnchorElement::HandleClick(Event* event) {
   }
 
   if (hasAttribute(downloadAttr)) {
+    if (GetDocument().IsSandboxed(kSandboxDownloads)) {
+      UseCounter::Count(
+          GetDocument(),
+          UserGestureIndicator::ProcessingUserGesture()
+              ? WebFeature::kHTMLAnchorElementDownloadInSandboxWithUserGesture
+              : WebFeature::
+                    kHTMLAnchorElementDownloadInSandboxWithoutUserGesture);
+    }
     request.SetRequestContext(WebURLRequest::kRequestContextDownload);
     request.SetRequestorOrigin(SecurityOrigin::Create(GetDocument().Url()));
     frame->Client()->DownloadURL(request, FastGetAttribute(downloadAttr));
