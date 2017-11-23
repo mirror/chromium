@@ -1999,6 +1999,33 @@ bool ChromeContentBrowserClient::AllowServiceWorker(
   return allow_javascript && allow_serviceworker;
 }
 
+bool ChromeContentBrowserClient::AllowSharedWorker(
+    const GURL& worker_url,
+    const GURL& main_frame_url,
+    const std::string& name,
+    content::BrowserContext* context,
+    const base::Callback<content::WebContents*(void)>& wc_getter) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (main_frame_url.SchemeIs(extensions::kExtensionScheme))
+    return true;
+#endif
+
+  // Check if cookies are allowed.
+  bool allow =
+      CookieSettingsFactory::GetForProfile(Profile::FromBrowserContext(context))
+          ->IsCookieAccessAllowed(worker_url, main_frame_url);
+
+  // Record access to database for potential display in UI.
+  // Only post the task if this is for a specific tab.
+  if (!wc_getter.is_null()) {
+    TabSpecificContentSettings::SharedWorkerAccessed(wc_getter, worker_url,
+                                                     name, !allow);
+  }
+  return allow;
+}
+
 bool ChromeContentBrowserClient::AllowGetCookie(
     const GURL& url,
     const GURL& first_party,

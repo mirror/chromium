@@ -163,6 +163,12 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       const GURL& first_party,
       content::ResourceContext* context,
       const base::Callback<content::WebContents*(void)>& wc_getter) override;
+  bool AllowSharedWorker(
+      const GURL& worker_url,
+      const GURL& main_frame_url,
+      const std::string& name,
+      content::BrowserContext* context,
+      const base::Callback<content::WebContents*(void)>& wc_getter) override;
   bool AllowGetCookie(const GURL& url,
                       const GURL& first_party,
                       const net::CookieList& cookie_list,
