@@ -14,44 +14,65 @@ RenderingWindowManager* RenderingWindowManager::GetInstance() {
 }
 
 void RenderingWindowManager::RegisterParent(HWND parent) {
+  LOG(ERROR) << "RWM::RegisterParent parent=" << parent;
   base::AutoLock lock(lock_);
 
-  info_[parent] = nullptr;
+  info_[parent] = EmbeddingInfo();
 }
 
 bool RenderingWindowManager::RegisterChild(HWND parent, HWND child_window) {
+  LOG(ERROR) << "RWM::RegisterChild parent=" << parent
+             << ", child=" << child_window;
   if (!child_window)
     return false;
 
   base::AutoLock lock(lock_);
 
   auto it = info_.find(parent);
-  if (it == info_.end())
+  if (it == info_.end()) {
+    LOG(ERROR) << "failed it == info_.end()";
     return false;
-  if (it->second)
-    return false;
+  }
 
-  info_[parent] = child_window;
+  EmbeddingInfo& info = it.second;
+  if (info.child) {
+    LOG(ERROR) << "Child already registered";
+    return false;
+  }
+
+  info.child = child_window;
+  if (info.can_register_child)
+    ::SetParent(child, parent);
+
   return true;
 }
 
 void RenderingWindowManager::DoSetParentOnChild(HWND parent) {
-  HWND child;
-  {
-    base::AutoLock lock(lock_);
+  LOG(ERROR) << "RWM::DoSetParentOnChild parent=" << parent;
 
-    auto it = info_.find(parent);
-    if (it == info_.end())
-      return;
-    if (!it->second)
-      return;
-    child = it->second;
+  base::AutoLock lock(lock_);
+
+  auto it = info_.find(parent);
+  if (it == info_.end()) {
+    LOG(ERROR) << "failed it == info_.end()";
+    return;
   }
 
-  ::SetParent(child, parent);
+  EmbeddingInfo& info = it.second;
+
+  DCHECK(!info.can_register_child);
+  info.can_register_child = true;
+
+  if (!info.child) {
+    LOG(ERROR) << "register later";
+    return;
+  }
+
+  ::SetParent(info.child, parent);
 }
 
 void RenderingWindowManager::UnregisterParent(HWND parent) {
+  LOG(ERROR) << "RWM::UnregisterParent parent=" << parent;
   base::AutoLock lock(lock_);
   info_.erase(parent);
 }
@@ -61,7 +82,7 @@ bool RenderingWindowManager::HasValidChildWindow(HWND parent) {
   auto it = info_.find(parent);
   if (it == info_.end())
     return false;
-  return !!it->second && ::IsWindow(it->second);
+  return !!it->second.child && ::IsWindow(it->second.child);
 }
 
 RenderingWindowManager::RenderingWindowManager() {}

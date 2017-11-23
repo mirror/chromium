@@ -7,8 +7,7 @@
 
 #include <windows.h>
 
-#include <map>
-
+#include "base/containers/flat_map.h"
 #include "base/synchronization/lock.h"
 #include "ui/gfx/gfx_export.h"
 
@@ -34,11 +33,16 @@ class GFX_EXPORT RenderingWindowManager {
  private:
   friend struct base::DefaultSingletonTraits<RenderingWindowManager>;
 
+  struct EmeddingInfo {
+    HWND child = nullptr;
+    bool register_child = false;
+  }
+
   RenderingWindowManager();
   ~RenderingWindowManager();
 
   base::Lock lock_;
-  std::map<HWND, HWND> info_;
+  base::flat_map<HWND, EmeddingInfo> info_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderingWindowManager);
 };
