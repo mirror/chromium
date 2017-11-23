@@ -127,10 +127,16 @@ class UiSceneManager {
   void SetWebVrMode(bool web_vr, bool show_toast);
   void SetIsExiting();
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward);
+  void SetAlertDialogEnabled(bool enabled,
+                             ContentInputDelegate* delegate,
+                             int width,
+                             int height);
+  void SetAlertDialogSize(int width, int height);
 
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
                        UiElementRenderer::TextureLocation content_location,
+                       unsigned int ui_texture_id,
                        SkiaSurfaceProvider* provider);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
@@ -203,6 +209,7 @@ class UiSceneManager {
   ShowUntilSignalTransientElement* splash_screen_transient_parent_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   ContentElement* main_content_ = nullptr;
+  ContentElement* ui_dialog_ = nullptr;
   UiElement* screen_dimmer_ = nullptr;
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;

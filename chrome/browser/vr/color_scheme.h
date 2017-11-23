@@ -64,6 +64,10 @@ struct ColorScheme {
   SkColor audio_permission_prompt_primary_button_hover;
   SkColor audio_permission_prompt_primary_button_down;
 
+  SkColor alert_button_default;
+  SkColor alert_button_hover;
+  SkColor alert_button_background;
+
   // The colors used for text and buttons on prompts.
   SkColor prompt_foreground;
   SkColor prompt_primary_button_forground;
