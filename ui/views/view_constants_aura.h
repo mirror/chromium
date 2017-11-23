@@ -19,4 +19,6 @@ VIEWS_EXPORT extern const aura::WindowProperty<View*>* const kHostViewKey;
 
 }  // namespace views
 
+DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(VIEWS_EXPORT, views::View*);
+
 #endif  // UI_VIEWS_VIEW_CONSTANTS_AURA_H_
