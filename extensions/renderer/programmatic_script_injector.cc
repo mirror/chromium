@@ -47,6 +47,10 @@ bool ProgrammaticScriptInjector::IsUserGesture() const {
   return params_->user_gesture;
 }
 
+CSSOrigin ProgrammaticScriptInjector::css_origin() const {
+  return static_cast<CSSOrigin>(params_->css_origin);
+}
+
 bool ProgrammaticScriptInjector::ExpectsResults() const {
   return params_->wants_result;
 }
