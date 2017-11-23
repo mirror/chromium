@@ -352,6 +352,7 @@ int main(int argc, char* argv[]) {
   TrafficAnnotationAuditor auditor(source_path, build_path, tool_path);
 
   // Extract annotations.
+  LOG(ERROR) << "STARTING EXTRACT.";
   if (extractor_input.empty()) {
     if (!auditor.RunClangTool(path_filters, full_run)) {
       LOG(ERROR) << "Failed to run clang tool.";
@@ -375,15 +376,18 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  LOG(ERROR) << "STARTING PROCESS.";
   // Process extractor output.
   if (!auditor.ParseClangToolRawOutput())
     return 1;
 
+  LOG(ERROR) << "STARTING CHECKS.";
   // Perform checks.
   if (!auditor.RunAllChecks()) {
     LOG(ERROR) << "Running checks failed.";
     return 1;
   }
+  LOG(ERROR) << "END OF CHECKS.";
 
   // Write the summary file.
   if (!summary_file.empty() &&
