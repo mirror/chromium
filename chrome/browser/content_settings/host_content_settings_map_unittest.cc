@@ -1083,6 +1083,34 @@ TEST_F(HostContentSettingsMapTest, PrefExceptionsOperation) {
   EXPECT_EQ(SETTING_SOURCE_POLICY, tester.GetSettingSourceForURL(kUrl3));
 }
 
+TEST_F(HostContentSettingsMapTest, GetUserModifiableContentSetting) {
+  using content_settings::SETTING_SOURCE_POLICY;
+  using content_settings::SETTING_SOURCE_USER;
+
+  const char kUrl1[] = "http://user_exception_allow.com";
+
+  TestingProfile profile;
+  // Arbitrarily using cookies as content type to test.
+  profile.GetTestingPrefService()->SetManagedPref(
+      prefs::kManagedDefaultCookiesSetting,
+      base::MakeUnique<base::Value>(CONTENT_SETTING_BLOCK));
+
+  HostContentSettingsMap* map =
+      HostContentSettingsMapFactory::GetForProfile(&profile);
+  map->SetContentSettingDefaultScope(GURL(kUrl1), GURL(kUrl1),
+                                     CONTENT_SETTINGS_TYPE_COOKIES,
+                                     std::string(), CONTENT_SETTING_ALLOW);
+
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            map->GetUserModifiableContentSetting(GURL(kUrl1), GURL(kUrl1),
+                                                 CONTENT_SETTINGS_TYPE_COOKIES,
+                                                 std::string()));
+  EXPECT_EQ(
+      CONTENT_SETTING_BLOCK,
+      map->GetContentSetting(GURL(kUrl1), GURL(kUrl1),
+                             CONTENT_SETTINGS_TYPE_COOKIES, std::string()));
+}
+
 // For a single Unicode encoded pattern, check if it gets converted to punycode
 // and old pattern gets deleted.
 TEST_F(HostContentSettingsMapTest, CanonicalizeExceptionsUnicodeOnly) {

@@ -54,8 +54,12 @@ struct ProviderNamesSourceMapEntry {
   content_settings::SettingSource provider_source;
 };
 
+const HostContentSettingsMap::ProviderType kFirstProvider =
+    HostContentSettingsMap::POLICY_PROVIDER;
+const HostContentSettingsMap::ProviderType kFirstUserModifiableProvider =
+    HostContentSettingsMap::NOTIFICATION_ANDROID_PROVIDER;
+
 const ProviderNamesSourceMapEntry kProviderNamesSourceMap[] = {
-    {"platform_app", content_settings::SETTING_SOURCE_EXTENSION},
     {"policy", content_settings::SETTING_SOURCE_POLICY},
     {"supervised_user", content_settings::SETTING_SOURCE_SUPERVISED},
     {"extension", content_settings::SETTING_SOURCE_EXTENSION},
@@ -316,6 +320,19 @@ ContentSetting HostContentSettingsMap::GetContentSetting(
   return content_settings::ValueToContentSetting(value.get());
 }
 
+ContentSetting HostContentSettingsMap::GetUserModifiableContentSetting(
+    const GURL& primary_url,
+    const GURL& secondary_url,
+    ContentSettingsType content_type,
+    const std::string& resource_identifier) const {
+  DCHECK(content_settings::ContentSettingsRegistry::GetInstance()->Get(
+      content_type));
+  std::unique_ptr<base::Value> value = GetWebsiteSettingInternal(
+      primary_url, secondary_url, content_type, resource_identifier,
+      kFirstUserModifiableProvider, nullptr);
+  return content_settings::ValueToContentSetting(value.get());
+}
+
 void HostContentSettingsMap::GetSettingsForOneType(
     ContentSettingsType content_type,
     const std::string& resource_identifier,
@@ -431,7 +448,7 @@ content_settings::PatternPair HostContentSettingsMap::GetNarrowestPatterns (
   // of creating a new rule that would be hidden behind the existing rule.
   content_settings::SettingInfo info;
   std::unique_ptr<base::Value> v = GetWebsiteSettingInternal(
-      primary_url, secondary_url, type, std::string(), &info);
+      primary_url, secondary_url, type, std::string(), kFirstProvider, &info);
   if (info.source != content_settings::SETTING_SOURCE_USER) {
     // Return an invalid pattern if the current setting is not a user setting
     // and thus can't be changed.
@@ -704,7 +721,7 @@ std::unique_ptr<base::Value> HostContentSettingsMap::GetWebsiteSetting(
   }
 
   return GetWebsiteSettingInternal(primary_url, secondary_url, content_type,
-                                   resource_identifier, info);
+                                   resource_identifier, kFirstProvider, info);
 }
 
 // static
@@ -724,6 +741,7 @@ std::unique_ptr<base::Value> HostContentSettingsMap::GetWebsiteSettingInternal(
     const GURL& secondary_url,
     ContentSettingsType content_type,
     const std::string& resource_identifier,
+    ProviderType first_provider_to_search,
     content_settings::SettingInfo* info) const {
   UsedContentSettingsProviders();
   ContentSettingsPattern* primary_pattern = nullptr;
@@ -735,15 +753,14 @@ std::unique_ptr<base::Value> HostContentSettingsMap::GetWebsiteSettingInternal(
 
   // The list of |content_settings_providers_| is ordered according to their
   // precedence.
-  for (const auto& provider_pair : content_settings_providers_) {
+  auto it = content_settings_providers_.lower_bound(first_provider_to_search);
+  for (; it != content_settings_providers_.end(); ++it) {
     std::unique_ptr<base::Value> value = GetContentSettingValueAndPatterns(
-        provider_pair.second.get(), primary_url, secondary_url, content_type,
-        resource_identifier, is_incognito_, primary_pattern,
-        secondary_pattern);
+        it->second.get(), primary_url, secondary_url, content_type,
+        resource_identifier, is_incognito_, primary_pattern, secondary_pattern);
     if (value) {
       if (info)
-        info->source =
-            kProviderNamesSourceMap[provider_pair.first].provider_source;
+        info->source = kProviderNamesSourceMap[it->first].provider_source;
       return value;
     }
   }
