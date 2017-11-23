@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "54426dd0_ac3d530e",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-23T04:59:31Z",
+      "side": 1,
+      "message": "Hmm, I would have still expected this to be the default value :\\",
+      "parentUuid": "fe37f9c2_cefd23ff",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a20d2262_8989c98c",
         "filename": "components/content_settings/core/browser/content_settings_pref.cc",
         "patchSetId": 4
