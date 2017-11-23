@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d142b186_f84b6325",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-23T17:02:39Z",
+      "side": 1,
+      "message": "Optional: this could be replaced by a single call to base::EraseIf now.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 3
+      },
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
