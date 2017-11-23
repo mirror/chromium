@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a53d70ec_4e7ff9d2",
+        "filename": "chrome/browser/vr/test/ui_test.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-23T18:11:28Z",
+      "side": 1,
+      "message": "Good point. Done. I did a search for other uses of manager, and it seemed ok, though I may have missed something.",
+      "parentUuid": "838d7f2d_00d53e65",
+      "revId": "af0582a5180414856a8d938a1473a7525ac6e179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf806a0c_d5fdb98c",
         "filename": "chrome/browser/vr/ui_scene_creator.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-23T15:00:52Z",
       "side": 1,
       "message": "IMO, this should be a bug rather than in-code TODO.  It won\u0027t be these lines of code that trigger the rework...",
+      "revId": "af0582a5180414856a8d938a1473a7525ac6e179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21cdd83_f36bb937",
+        "filename": "chrome/browser/vr/ui_scene_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-23T18:11:28Z",
+      "side": 1,
+      "message": "Sg. I logged crbug.com/788188 for this, removed the comment, and updated the description of the bug to be about the goal of the task rather than being prescriptive about how its achieved.",
+      "parentUuid": "cf806a0c_d5fdb98c",
       "revId": "af0582a5180414856a8d938a1473a7525ac6e179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
