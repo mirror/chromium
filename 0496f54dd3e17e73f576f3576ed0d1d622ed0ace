@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3ce99a_1fbcbbed",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-23T10:29:32Z",
+      "side": 1,
+      "message": "nit: no need for braces here, but up to you.",
+      "range": {
+        "startLine": 493,
+        "startChar": 21,
+        "endLine": 493,
+        "endChar": 22
+      },
+      "revId": "0496f54dd3e17e73f576f3576ed0d1d622ed0ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
