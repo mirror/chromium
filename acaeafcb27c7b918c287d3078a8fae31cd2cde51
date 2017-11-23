@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "361b45ae_d7f8f117",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-23T01:37:15Z",
+      "side": 1,
+      "message": "Alternatively we could set |HoverButtons| as ui::AX_ROLE_MENU_ITEM (or BUTTON?) and check we aren\u0027t focusing those in the fallback in views::Widget::SetInitialFocus? Not sure if we want a more general fix.",
+      "revId": "acaeafcb27c7b918c287d3078a8fae31cd2cde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
