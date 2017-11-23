@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad3bf020_221fc901",
+        "filename": "ios/chrome/browser/browser_state/browser_state_services_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-23T12:10:07Z",
+      "side": 1,
+      "message": "You are 100% correct. This is a pattern that\u0027s used when the local variable holding the pipe handle would otherwise fall out of scope before the callback was fired from the other side, but that is not the case here. Fixed. (Mojo bindings definitely support having a pipe closed while a method call is outstanding, btw).",
+      "parentUuid": "dfc7b17a_4229df5c",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 55
+      },
+      "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98f71d32_e5ded42c",
         "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-20T10:57:38Z",
       "side": 1,
       "message": "Is this the pattern that is going to be used for all services? Add a method to create the instance to chrome_browser_state_impl.cc? Isn\u0027t this is a step back from KeyedServices?\n\nCan we at least move this to a free function in another file and add a TODO so that we refactor this to avoid having ChromeBrowserStateImpl depends on all services?",
+      "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff0a15a_9151e39e",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-23T12:10:07Z",
+      "side": 1,
+      "message": "This is a great question. You can think of this stage as being a rough analogue of ChromeBrowserMainExtraPartsProfiles::EnsureBrowserContextKeyedServicesBuilt(). *Something* needs to register all the services that are embedded in the chrome_browser service. We could certainly add a generic interface to ChromeBrowserState that adds a registration function; that interface would have to be invoked before this call to BrowserState::RegisterServices() is made. However, that just pushes the problem somewhere else: What is going to invoke that interface for e.g. the Identity Service to ensure that the Identity Service is registered with this ChromeBrowserState?\n\nAdded bug and TODO to track this issue.",
+      "parentUuid": "98f71d32_e5ded42c",
       "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
