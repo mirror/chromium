@@ -45,6 +45,8 @@ class PLATFORM_EXPORT TextRun final {
   DISALLOW_NEW();
 
  public:
+  enum OnlyWhitespace { kNo = 0, kYes = 1, kUnknown = 2 };
+
   enum ExpansionBehaviorFlags {
     kForbidTrailingExpansion = 0 << 0,
     kAllowTrailingExpansion = 1 << 0,
@@ -55,6 +57,7 @@ class PLATFORM_EXPORT TextRun final {
   enum TextCodePath { kAuto = 0, kForceSimple = 1, kForceComplex = 2 };
 
   typedef unsigned ExpansionBehavior;
+  // typedef unsigned OnlyWhitespace;
 
   TextRun(const LChar* c,
           unsigned len,
@@ -70,6 +73,7 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(OnlyWhitespace::kUnknown),
         is8_bit_(true),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
@@ -95,6 +99,7 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(OnlyWhitespace::kUnknown),
         is8_bit_(false),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
@@ -119,6 +124,7 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(OnlyWhitespace::kUnknown),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
         directional_override_(directional_override),
@@ -238,6 +244,12 @@ class PLATFORM_EXPORT TextRun final {
   float XPos() const { return xpos_; }
   void SetXPos(float x_pos) { xpos_ = x_pos; }
   float Expansion() const { return expansion_; }
+  OnlyWhitespace ContainsOnlyWhitespace() const {
+    return static_cast<OnlyWhitespace>(contains_only_whitespace_);
+  }
+  void SetContainsOnlyWhitespace(OnlyWhitespace contains_only_whitespace) {
+    contains_only_whitespace_ = static_cast<unsigned>(contains_only_whitespace);
+  }
   void SetExpansion(float expansion) { expansion_ = expansion; }
   bool AllowsLeadingExpansion() const {
     return expansion_behavior_ & kAllowLeadingExpansion;
@@ -292,6 +304,11 @@ class PLATFORM_EXPORT TextRun final {
 
   float expansion_;
   ExpansionBehavior expansion_behavior_ : 2;
+
+  // TODO(npm): Maybe we also need to set |contains_only_whitespace| in callers
+  // other than InlineTextBox::ConstructTextRun.
+  unsigned contains_only_whitespace_ : 2;
+
   unsigned is8_bit_ : 1;
   unsigned allow_tabs_ : 1;
   unsigned direction_ : 1;
