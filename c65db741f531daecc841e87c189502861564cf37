@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e349f461_217e72a8",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-23T15:58:20Z",
+      "side": 1,
+      "message": "Nit: since SwReporterInvocationSequence checks that on_done_callback is valid before calling it, you could just pass OnReporterSequenceDone() which would be easier to read.",
+      "revId": "c65db741f531daecc841e87c189502861564cf37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61f2e0d_6878e686",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-23T15:58:20Z",
+      "side": 1,
+      "message": "It would be safer to also set this to false if the test fails.",
+      "revId": "c65db741f531daecc841e87c189502861564cf37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4d0d1d_cdf2bf4c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-23T15:58:20Z",
+      "side": 1,
+      "message": "This also needs to copy reporter_logs_upload_enabled_. (Same for operator\u003d and operator\u003d\u003d)",
+      "revId": "c65db741f531daecc841e87c189502861564cf37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7494ae9_218d5727",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-23T15:58:20Z",
+      "side": 1,
+      "message": "I can\u0027t find a definition of this.",
+      "revId": "c65db741f531daecc841e87c189502861564cf37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
