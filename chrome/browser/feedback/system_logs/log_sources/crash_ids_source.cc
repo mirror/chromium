@@ -82,7 +82,7 @@ void CrashIdsSource::RespondWithCrashIds(
   (*response)[feedback::FeedbackReport::kCrashReportIdsKey] = crash_ids_list_;
 
   // We must respond anyways.
-  callback.Run(response.get());
+  callback.Run(std::move(response));
 }
 
 }  // namespace system_logs

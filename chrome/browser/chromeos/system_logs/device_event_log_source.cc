@@ -31,7 +31,7 @@ void DeviceEventLogSource::Fetch(const SysLogsSourceCallback& callback) {
   (*response)[kDeviceEventLogEntry] = device_event_log::GetAsString(
       device_event_log::OLDEST_FIRST, "time,file,type,level", "non-network",
       device_event_log::LOG_LEVEL_DEBUG, kMaxDeviceEventsForAboutSystem);
-  callback.Run(response.get());
+  callback.Run(std::move(response));
 }
 
 }  // namespace system_logs
