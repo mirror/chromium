@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6dbcbd23_53fca744",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T05:53:46Z",
+      "side": 1,
+      "message": "This is fine. It looks like the rest of the code in this file calling GetWebContents also checks for null.",
+      "parentUuid": "a759d629_879ffa75",
+      "revId": "f3f082ffd303ee1c33d41803e70079935e8f8e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1886047_728d558c",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 15

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c6225fa_ffff7c61",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T05:53:46Z",
+      "side": 1,
+      "message": "Nit: this can be ... \u0026\u0026 GetWebContents())...",
+      "range": {
+        "startLine": 595,
+        "startChar": 42,
+        "endLine": 595,
+        "endChar": 52
+      },
+      "revId": "1040283f73172a45cf7b168641eb36f9251aeb9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
