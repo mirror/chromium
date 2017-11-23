@@ -22,6 +22,30 @@
       "revId": "0496f54dd3e17e73f576f3576ed0d1d622ed0ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ae73ee_c8c2909b",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-23T13:57:53Z",
+      "side": 1,
+      "message": "Really? Nice. Well, it\u0027s done like that in the file now, so I\u0027ll stick to it (but we can change it later of course).",
+      "parentUuid": "9a3ce99a_1fbcbbed",
+      "range": {
+        "startLine": 493,
+        "startChar": 21,
+        "endLine": 493,
+        "endChar": 22
+      },
+      "revId": "0496f54dd3e17e73f576f3576ed0d1d622ed0ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
