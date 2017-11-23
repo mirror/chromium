@@ -37,7 +37,7 @@ enum class OverscrollSource {
 // overscroll gesture. This controller receives the events that are dispatched
 // to the renderer, and the ACKs of events, and updates the overscroll gesture
 // status accordingly.
-class OverscrollController {
+class CONTENT_EXPORT OverscrollController {
  public:
   // Exported for testing.
   // TODO(mcnee): Tests needing CONTENT_EXPORT are BrowserPlugin specific.
