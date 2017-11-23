@@ -53,8 +53,11 @@ class PrintJobWorker {
                    bool is_scripted,
                    bool is_modifiable);
 
-  // Set the new print settings.
+  // Set the new print settings from a dictionary value.
   void SetSettings(std::unique_ptr<base::DictionaryValue> new_settings);
+
+  // Set the new print settings from a POD type.
+  void SetSettings(std::unique_ptr<printing::PrintSettings> new_settings);
 
   // Starts the printing loop. Every pages are printed as soon as the data is
   // available. Makes sure the new_document is the right one.
@@ -118,6 +121,10 @@ class PrintJobWorker {
 
   // Called on the UI thread to update the print settings.
   void UpdatePrintSettings(std::unique_ptr<base::DictionaryValue> new_settings);
+
+  // Called on the UI thread to update the print settings.
+  void UpdatePrintSettings(
+      std::unique_ptr<printing::PrintSettings> new_settings);
 
   // Reports settings back to owner_.
   void GetSettingsDone(PrintingContext::Result result);
