@@ -346,6 +346,8 @@ class NET_EXPORT NetworkQualityEstimator
     return ComputeIncreaseInTransportRTT();
   }
 
+  virtual int32_t GetCurrentSignalStrength() const;
+
   // Observer list for RTT or throughput estimates. Protected for testing.
   base::ObserverList<RTTAndThroughputEstimatesObserver>
       rtt_and_throughput_estimates_observer_list_;
@@ -650,11 +652,6 @@ class NET_EXPORT NetworkQualityEstimator
   // the last computation was more than
   // |effective_connection_type_recomputation_interval_| ago).
   EffectiveConnectionType effective_connection_type_;
-
-  // Last known value of the wireless signal strength level. If the signal
-  // strength level is available, the value is set to between 0 and 4, both
-  // inclusive. If the value is unavailable, |signal_strength_| has null value.
-  base::Optional<int32_t> signal_strength_;
 
   // Minimum and maximum signal strength level observed since last connection
   // change. Updated on connection change and main frame requests.

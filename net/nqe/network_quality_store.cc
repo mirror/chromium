@@ -71,16 +71,31 @@ void NetworkQualityStore::Add(
 
 bool NetworkQualityStore::GetById(
     const nqe::internal::NetworkID& network_id,
-    nqe::internal::CachedNetworkQuality* cached_network_quality) {
+    nqe::internal::CachedNetworkQuality* cached_network_quality) const {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  CachedNetworkQualities::const_iterator it =
-      cached_network_qualities_.find(network_id);
+  CachedNetworkQualities::const_iterator matching_it =
+      cached_network_qualities_.end();
+  int matching_it_signal_strength = INT32_MAX;
 
-  if (it == cached_network_qualities_.end())
+  for (CachedNetworkQualities::const_iterator it =
+           cached_network_qualities_.begin();
+       it != cached_network_qualities_.end(); ++it) {
+    if (network_id.type == it->first.type && network_id.id == it->first.id) {
+      int diff_signal_strength =
+          std::abs(network_id.signal_strength - it->first.signal_strength);
+      if (matching_it == cached_network_qualities_.end() ||
+          diff_signal_strength < matching_it_signal_strength) {
+        matching_it = it;
+        matching_it_signal_strength = diff_signal_strength;
+      }
+    }
+  }
+
+  if (matching_it == cached_network_qualities_.end())
     return false;
 
-  *cached_network_quality = it->second;
+  *cached_network_quality = matching_it->second;
   return true;
 }
 
