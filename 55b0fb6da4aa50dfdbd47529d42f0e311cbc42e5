@@ -22,6 +22,30 @@
       "revId": "55b0fb6da4aa50dfdbd47529d42f0e311cbc42e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9592181_8ed80d5c",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-23T12:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d4ede0_94a69e11",
+      "range": {
+        "startLine": 282,
+        "startChar": 20,
+        "endLine": 282,
+        "endChar": 26
+      },
+      "revId": "55b0fb6da4aa50dfdbd47529d42f0e311cbc42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
