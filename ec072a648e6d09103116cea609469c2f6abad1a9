@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d086fd3a_fdebdfbd",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-23T14:45:58Z",
+      "side": 1,
+      "message": "Is this TODO still applicable?",
+      "revId": "ec072a648e6d09103116cea609469c2f6abad1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
