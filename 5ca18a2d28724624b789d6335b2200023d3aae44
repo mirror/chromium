@@ -16,6 +16,24 @@
       "revId": "5ca18a2d28724624b789d6335b2200023d3aae44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f4f150_b233281e",
+        "filename": "services/network/public/cpp/mutable_network_traffic_annotation_tag.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-23T07:01:23Z",
+      "side": 1,
+      "message": "I am not sure if it is needed, lets land as it is and if required, add them in a separate CL.",
+      "parentUuid": "70ad197a_6a1aa338",
+      "revId": "5ca18a2d28724624b789d6335b2200023d3aae44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
