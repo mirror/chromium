@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39163184_b29b27ab",
+        "filename": "ios/chrome/browser/open_url_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-11-23T12:01:37Z",
+      "side": 1,
+      "message": "Yes, there are lot of code leftover behind @available(iOS 10, *) after this change all over the place, this will be cleaned up after a bake in period after the CL lands.\n\nSome of the code won\u0027t be cleaned up however, as ios/web still need to compile for iOS 9 until iGSA follow suits.",
+      "parentUuid": "86658806_d3a7c231",
+      "revId": "2a8078ea1ed72735f97b23f6516ee5578f312b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdef3c44_522c9faf",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
         "patchSetId": 2
