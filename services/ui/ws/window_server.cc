@@ -916,7 +916,7 @@ void WindowServer::OnWindowHierarchyChanged(ServerWindow* window,
       new_parent ? display_manager_->GetWindowManagerDisplayRoot(new_parent)
                  : nullptr;
   UpdateNativeCursorFromMouseLocation(new_display_root);
-  if (old_display_root != new_display_root)
+  if (old_display_root != new_display_root && new_display_root != nullptr)
     UpdateNativeCursorFromMouseLocation(old_display_root);
 }
 
