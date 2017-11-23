@@ -1,0 +1,20 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module device.mojom;
+
+// The GeolocationPermissionContext in chrome is the only client of this
+// interface, and it is based on chrome's per-profile permission module.
+// But the Device Service is a global service, not a per-user service.
+// The profile switching in chrome might cause that more than one
+// GeolocationPermissionContext instances want to call this interface.
+// The implementation of GeolocationControl only handles the first requests
+// and ignores others.
+interface GeolocationControl {
+  // Calling this method indicates the user has opted into using location
+  // services, including sending network requests to [Google servers to] resolve
+  // the user's location. Use this method carefully, in line with the rules in
+  // go/chrome-privacy-doc.
+  UserDidOptIntoLocationServices();
+};

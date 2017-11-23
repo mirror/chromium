@@ -110,11 +110,21 @@ GeolocationProviderImpl* GeolocationProviderImpl::GetInstance() {
   return base::Singleton<GeolocationProviderImpl>::get();
 }
 
+void GeolocationProviderImpl::BindGeolocationControlRequest(
+    mojom::GeolocationControlRequest request) {
+  // The |binding_| has been bound already here means that more than one
+  // GeolocationPermissionContext in chrome try to bind to Device Service.
+  // We only bind the first request. See more info in geolocation_control.mojom.
+  if (!binding_.is_bound())
+    binding_.Bind(std::move(request));
+}
+
 GeolocationProviderImpl::GeolocationProviderImpl()
     : base::Thread("Geolocation"),
       user_did_opt_into_location_services_(false),
       ignore_location_updates_(false),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      binding_(this) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   high_accuracy_callbacks_.set_removal_callback(base::Bind(
       &GeolocationProviderImpl::OnClientsChanged, base::Unretained(this)));
