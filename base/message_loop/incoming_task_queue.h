@@ -109,7 +109,8 @@ class BASE_EXPORT IncomingTaskQueue
   // maintaining three queue queues to process tasks:
   //
   // TriageQueue
-  // The first queue to receive all tasks for the processing sequence. Tasks are
+  // The queue that receives all tasks from the thread-safe |incoming_queue_|
+  // (reloading from it every time it needs more tasks). From there: tasks are
   // generally either dispatched immediately or sent to the queues below.
   //
   // DelayedQueue
