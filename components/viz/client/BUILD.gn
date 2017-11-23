@@ -10,6 +10,8 @@ viz_component("client") {
     "client_layer_tree_frame_sink.h",
     "client_shared_bitmap_manager.cc",
     "client_shared_bitmap_manager.h",
+    "forwarding_compositing_mode_reporter_impl.cc",
+    "forwarding_compositing_mode_reporter_impl.h",
     "frame_eviction_manager.cc",
     "frame_eviction_manager.h",
     "frame_evictor.cc",
