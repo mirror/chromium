@@ -204,7 +204,7 @@ class _CompilerDispatcher(object):
 
   def Run(self):
     """Does the grunt work."""
-    pool = multiprocessing.Pool()
+    pool = multiprocessing.Pool(processes=48)
     result_iterator = pool.imap_unordered(
         functools.partial(_ExecuteTool, self.__toolname, self.__tool_args,
                           self.__build_directory),
