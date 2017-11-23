@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3841e59e_8c3d9838",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-11-23T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a455f1_76ce7dbb",
+      "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be2b6012_ac3c04e3",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320b2175_375a921b",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-11-23T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be2b6012_ac3c04e3",
+      "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4faed20c_b70ca91d",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-11-23T00:04:28Z",
+      "side": 1,
+      "message": "Yes. It is per submit. Forgot to update when copying the comments.",
+      "parentUuid": "1c82c6a6_6b3826e2",
+      "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4215335_fbc1db8c",
         "filename": "components/autofill/core/browser/validation.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b56da4_7bd266c8",
+        "filename": "components/autofill/core/browser/validation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-11-23T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4215335_fbc1db8c",
+      "revId": "ac8fa2b5f936c96fbf26f84ddb41370bf53c87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
