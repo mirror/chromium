@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "283ad283_4743e9d0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/video-resize-event.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-23T10:24:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "175131a6_8a8d7fe5",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "15f545728e2eca9250deb656cacc7b1beb0b51bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "291e7d97_f90ad2b6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/video-resize-event.https.html",
         "patchSetId": 7

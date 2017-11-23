@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b7e17ae_818d4aec",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-video-element/event_resize.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-23T10:24:05Z",
+      "side": 1,
+      "message": "The v.pause() can be removed.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "16cbb581ef9cb1d2962e96962671d60d49f4ac9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
