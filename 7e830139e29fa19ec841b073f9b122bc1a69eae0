@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9782c3fb_245325e0",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T06:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3343962f_4d515792",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c936b2_66ffed5e",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "514e057f_d465de92",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T06:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c936b2_66ffed5e",
+      "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70a454bf_be4a9fcb",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5aa554_e04ccc70",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T06:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a454bf_be4a9fcb",
+      "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
