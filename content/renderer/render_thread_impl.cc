@@ -143,6 +143,8 @@
 #include "device/gamepad/public/cpp/gamepads.h"
 #include "gin/public/debug.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/config/gpu_switches.h"
 #include "gpu/ipc/client/command_buffer_proxy_impl.h"
@@ -1491,7 +1493,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
     if (shared_context_provider) {
       viz::ContextProvider::ScopedContextLock lock(
           shared_context_provider.get());
-      if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
+      if (lock.RasterContext()->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
         return gpu_factories_.back().get();
       } else {
         scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
@@ -2467,7 +2469,7 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
     // Note: If context is lost, delete reference after releasing the lock.
     viz::ContextProvider::ScopedContextLock lock(
         shared_worker_context_provider_.get());
-    if (shared_worker_context_provider_->ContextGL()
+    if (shared_worker_context_provider_->RasterContext()
             ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
       return shared_worker_context_provider_;
   }
