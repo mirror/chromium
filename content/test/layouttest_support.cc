@@ -456,8 +456,8 @@ void EnableBrowserLayoutTestMode() {
 }
 
 void TerminateAllSharedWorkersForTesting(base::OnceClosure callback) {
-  SharedWorkerServiceImpl::GetInstance()->TerminateAllWorkersForTesting(
-      std::move(callback));
+  static_cast<SharedWorkerServiceImpl*>(SharedWorkerService::GetInstance())
+      ->TerminateAllWorkersForTesting(std::move(callback));
 }
 
 int GetLocalSessionHistoryLength(RenderView* render_view) {

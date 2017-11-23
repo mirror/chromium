@@ -211,6 +211,15 @@ bool ContentBrowserClient::AllowServiceWorker(
   return true;
 }
 
+bool ContentBrowserClient::AllowSharedWorker(
+    const GURL& worker_url,
+    const GURL& main_frame_url,
+    const std::string& name,
+    BrowserContext* context,
+    const base::Callback<WebContents*(void)>& wc_getter) {
+  return true;
+}
+
 bool ContentBrowserClient::IsDataSaverEnabled(BrowserContext* context) {
   return false;
 }
