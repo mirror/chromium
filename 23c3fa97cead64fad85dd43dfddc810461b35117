@@ -70,6 +70,30 @@
       "revId": "23c3fa97cead64fad85dd43dfddc810461b35117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e7e25b0_f8f06a8d",
+        "filename": "ash/system/session/tray_session_length_limit.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-11-23T21:18:46Z",
+      "side": 1,
+      "message": "Yes, kinda have a test case. Unable to link inside the patch sorry, here is the CS link, now that it is merged : https://cs.chromium.org/chromium/src/ash/system/session/tray_session_length_limit_unittest.cc?l\u003d155\u0026rcl\u003dc19bd1dbd9bf350b63f7835f4a80ebdba3b44684 Doesnt exactly use RepeatingTimer but simulates the same set of `Update()\u0027 code paths.",
+      "parentUuid": "2920ed4b_acca328f",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 54
+      },
+      "revId": "23c3fa97cead64fad85dd43dfddc810461b35117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
