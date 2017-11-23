@@ -22,6 +22,30 @@
       "revId": "afd34e62bef37b50d24339bd0852ca0b676c9531",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bb9638_00cd72c0",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-23T15:44:35Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s get rid of this specification (but keep the examples below)",
+      "parentUuid": "ec8b0d92_6241beed",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 77
+      },
+      "revId": "afd34e62bef37b50d24339bd0852ca0b676c9531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
