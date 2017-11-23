@@ -6,9 +6,9 @@
 
 namespace switches {
 
-// Disable surface lifetime management using surface references. This enables
-// adding surface sequences and disables adding temporary references.
-const char kDisableSurfaceReferences[] = "disable-surface-references";
+// Enable surface lifetime management using surface references. This disables
+// adding surface sequences and enables adding temporary references.
+const char kEnableSurfaceReferences[] = "enable-surface-references";
 
 // Enables multi-client Surface synchronization. In practice, this indicates
 // that LayerTreeHost expects to be given a valid viz::LocalSurfaceId provided
