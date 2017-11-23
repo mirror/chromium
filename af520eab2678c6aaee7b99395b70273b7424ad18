@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bff323c2_8e5a6507",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1252989
+      },
+      "writtenOn": "2017-11-23T13:46:57Z",
+      "side": 1,
+      "message": "child account",
+      "range": {
+        "startLine": 7,
+        "startChar": 125,
+        "endLine": 7,
+        "endChar": 140
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c5d5f8b_ac5c6a15",
         "filename": "google_apis/gaia/gaia_auth_fetcher_unittest.cc",
         "patchSetId": 13
@@ -41,6 +64,52 @@
         "startChar": 65,
         "endLine": 399,
         "endChar": 70
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed7098d_14f5a7f8",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1252989
+      },
+      "writtenOn": "2017-11-23T13:46:57Z",
+      "side": 1,
+      "message": "non-child account",
+      "range": {
+        "startLine": 86,
+        "startChar": 29,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaeedb2_5ae00c46",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1252989
+      },
+      "writtenOn": "2017-11-23T13:46:57Z",
+      "side": 1,
+      "message": "Remove the codename, make this just \"is a child account\"",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 31
       },
       "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
