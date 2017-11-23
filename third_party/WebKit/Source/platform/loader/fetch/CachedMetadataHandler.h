@@ -39,6 +39,10 @@ class CachedMetadataHandler
   // Returns the encoding to which the cache is specific.
   virtual String Encoding() const = 0;
 
+  // The cache name of the CacheStorage from where the response is served via
+  // the ServiceWorker. Null if the response isn't from the CacheStorage.
+  virtual String CacheStorageCacheName() const = 0;
+
  protected:
   CachedMetadataHandler() {}
 };
