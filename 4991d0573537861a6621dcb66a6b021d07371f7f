@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10911578_94a7cfbb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-23T10:58:32Z",
+      "side": 1,
+      "message": "Will need input from clamy@ on this one.",
+      "parentUuid": "8fc73207_d8278da1",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d88844f4_060d0277",
         "filename": "content/common/frame.mojom",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207fd810_9b738b4c",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-23T10:58:32Z",
+      "side": 1,
+      "message": "It doesn\u0027t! Predates the extraction of the types to their own file.",
+      "parentUuid": "d88844f4_060d0277",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "83669f67_0886c5e9",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-23T10:58:32Z",
+      "side": 1,
+      "message": "Taken from https://cs.chromium.org/chromium/src/content/common/navigation_params.h?l\u003d205 :\n\"This parameter can be null during browser-initiated navigations.\"",
+      "parentUuid": "f83cc4b1_464d385a",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5150930a_d80c9f41",
         "filename": "third_party/WebKit/public/platform/mixed_content_context_type.mojom",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064b7c06_0f9fbac7",
+        "filename": "third_party/WebKit/public/platform/mixed_content_context_type.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-11-23T10:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5150930a_d80c9f41",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
