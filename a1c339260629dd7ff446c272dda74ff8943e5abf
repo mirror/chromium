@@ -22,6 +22,30 @@
       "revId": "a1c339260629dd7ff446c272dda74ff8943e5abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97576407_8ef1d4ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-23T19:35:39Z",
+      "side": 1,
+      "message": "getConfiguration().densityDpi was added in JB MR1. It should be impossible to hit this on JB anyways.",
+      "parentUuid": "f4af90af_bb9ddf62",
+      "range": {
+        "startLine": 1155,
+        "startChar": 56,
+        "endLine": 1155,
+        "endChar": 70
+      },
+      "revId": "a1c339260629dd7ff446c272dda74ff8943e5abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
