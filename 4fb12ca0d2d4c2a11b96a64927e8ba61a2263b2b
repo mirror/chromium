@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb5dc5c_e3f8828b",
+        "filename": "chrome/browser/prefs/session_startup_pref.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-23T15:17:18Z",
+      "side": 1,
+      "message": "nit: \"via either mandatory or recommended policy\".",
+      "range": {
+        "startLine": 58,
+        "startChar": 55,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "4fb12ca0d2d4c2a11b96a64927e8ba61a2263b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3254b1a2_4855fea0",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-23T15:17:18Z",
+      "side": 1,
+      "message": "Honestly, I\u0027m not a massive fan of parametric tests. They have a completely different syntax for filtering, and below you end up with a special case for one of the parameter values anyway. It might be easier to split these up into separate test cases and pass the variant into StartBrowser().",
+      "range": {
+        "startLine": 1360,
+        "startChar": 0,
+        "endLine": 1360,
+        "endChar": 23
+      },
+      "revId": "4fb12ca0d2d4c2a11b96a64927e8ba61a2263b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
