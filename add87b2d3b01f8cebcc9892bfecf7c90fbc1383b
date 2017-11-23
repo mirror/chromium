@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4de7049_9d654b88",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2346,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-23T10:08:44Z",
+      "side": 1,
+      "message": "This is not correct. The PDFium APIs are rather confusing, and I\u0027ve stared at PDFiumAPIStringBufferAdapter multiple times over the years, and corrected off by 1 errors several times. I\u0027m pretty sure the existing code before this CL is correct. (I am rather paranoid about buffer overflows) So any bugs you have lies in the PDFium implementation, not here. Another way to thing about it is:\n\n- Searching worked fine for years.\n- The PDFium text APIs haven\u0027t changed.\n- The only thing that changed is PDFium internals.\n\nThis shouldn\u0027t need changing.\n\nTo explain why this is wonky, start with FPDFText_CountChars() returning N. Let\u0027s say N \u003d 5 and the text is \"hello\". Now FPDFText_GetText() needs to handle count \u003d 5, so it needs a buffer that can accommodate 6 characters, for \"hello\\0\".\n\nWhat this CL does for N \u003d 5 is:\n- Pass 6 to PDFiumAPIStringBufferAdapter, which internally calls base::WriteInto(str_ptr, length_with_null \u003d 7). e.g. |page_text| has room for \"helloX\\0\".\n- Then FPDFText_GetText() is being asked to retrieve 6 characters into a buffer of length 7... when FPDFText_CountChars() said there are only 5 characters.",
+      "revId": "add87b2d3b01f8cebcc9892bfecf7c90fbc1383b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
