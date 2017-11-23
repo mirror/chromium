@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "fcfa025c_d7b5b9e4",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-23T16:29:40Z",
+      "side": 1,
+      "message": "I\u0027m down with doing things incrementally, but I\u0027d rather not add more code just to try remove it. All these pieces are more complicated than they need to be cuz they are currently using pieces that are used elsewhere in the code.\n\nIf you\u0027d like to break this down, could we go the other direction? For example, write a patch to make it delete the object instead of Free() it, as a stand alone patch. ie work on simplifying things without changing types, then swap out the type?",
+      "parentUuid": "b2e3ecef_b2e18e95",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "541bceb0_39a3a57a",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
