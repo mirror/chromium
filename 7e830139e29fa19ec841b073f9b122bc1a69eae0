@@ -116,6 +116,23 @@
       "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b23e2864_29c86342",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-23T06:18:53Z",
+      "side": 1,
+      "message": "since you already overload operator \u003d\u003d, why not just EXPECT_EQ?",
+      "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
