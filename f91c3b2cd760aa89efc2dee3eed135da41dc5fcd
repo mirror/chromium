@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36fe4d41_f2cc3d8c",
+        "filename": "third_party/WebKit/Source/core/dom/SandboxFlags.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-23T16:53:23Z",
+      "side": 1,
+      "message": "We\u0027d also want to add this to `kSupportedSandboxTokens` in `HTMLIFrameElementSandbox.cpp`.",
+      "revId": "f91c3b2cd760aa89efc2dee3eed135da41dc5fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fdcaeb4_99dd78b4",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAnchorElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-23T16:53:23Z",
+      "side": 1,
+      "message": "This is great, thanks!\n\nWould it be possible to track things like `\u003cmeta\u003e` or `window.location` assignments that lead to downloadable endpoints (via `content-disposition`, etc)? I was imagining that we\u0027d need to tag navigation requests somehow with the sandbox state of their initiator, but I\u0027m not really familiar with where we make the decision to download something...",
+      "revId": "f91c3b2cd760aa89efc2dee3eed135da41dc5fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
