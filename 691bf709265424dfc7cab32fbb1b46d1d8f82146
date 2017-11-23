@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be0d9ee5_3013dddf",
+        "filename": "chrome/browser/download/download_dir_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-11-23T15:56:27Z",
+      "side": 1,
+      "message": "Put all of these symbols in a download_dir_util namespace (see download_crx_util.h as an example).",
+      "revId": "691bf709265424dfc7cab32fbb1b46d1d8f82146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
