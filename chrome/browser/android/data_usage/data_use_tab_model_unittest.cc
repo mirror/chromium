@@ -103,8 +103,6 @@ void ExpectDataUseLabelInNavigationEntry(
 
 }  // namespace
 
-namespace chrome {
-
 namespace android {
 
 class DataUseTabModelTest : public testing::Test {
@@ -1146,5 +1144,3 @@ TEST_F(DataUseTabModelTest, ReadyForNavigationEventAfterRuleFetch) {
 }
 
 }  // namespace android
-
-}  // namespace chrome
