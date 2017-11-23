@@ -16,6 +16,24 @@
       "revId": "a955931e2a93b541573964c9788a350104d8dad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02dd046_a3837886",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T15:27:50Z",
+      "side": 1,
+      "message": "Done, thanks (and thanks to XCode for not handling copy paste).",
+      "parentUuid": "6390269d_b834dbbb",
+      "revId": "a955931e2a93b541573964c9788a350104d8dad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

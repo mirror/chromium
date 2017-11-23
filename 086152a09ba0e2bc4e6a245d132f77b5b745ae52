@@ -16,6 +16,24 @@
       "revId": "086152a09ba0e2bc4e6a245d132f77b5b745ae52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afa2404_5306f289",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T15:27:50Z",
+      "side": 0,
+      "message": "Extracting works (sometimes, sometimes it breaks the whole script).\nAFAICT, filling these forms never worked (at least with WKWebView).",
+      "parentUuid": "84619e40_7073132d",
+      "revId": "086152a09ba0e2bc4e6a245d132f77b5b745ae52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
