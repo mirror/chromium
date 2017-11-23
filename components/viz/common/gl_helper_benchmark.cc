@@ -75,6 +75,7 @@ class GLHelperBenchmark : public testing::Test {
                                        attributes, gpu::SharedMemoryLimits(),
                                        nullptr, /* gpu_memory_buffer_manager */
                                        nullptr, /* image_factory */
+                                       nullptr, /* gpu_channel_manager */
                                        base::ThreadTaskRunnerHandle::Get());
     DCHECK_EQ(result, gpu::ContextResult::kSuccess);
     gl_ = context_->GetImplementation();
