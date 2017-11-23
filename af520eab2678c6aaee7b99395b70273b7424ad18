@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20db2f3b_d7b4ef0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T14:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bff323c2_8e5a6507",
+      "range": {
+        "startLine": 7,
+        "startChar": 125,
+        "endLine": 7,
+        "endChar": 140
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c5d5f8b_ac5c6a15",
         "filename": "google_apis/gaia/gaia_auth_fetcher_unittest.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80bc0c3_4350de13",
+        "filename": "google_apis/gaia/gaia_auth_fetcher_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T14:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c5d5f8b_ac5c6a15",
+      "range": {
+        "startLine": 360,
+        "startChar": 38,
+        "endLine": 360,
+        "endChar": 43
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dbbf1a5e_45f8044d",
+        "filename": "google_apis/gaia/gaia_auth_fetcher_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T14:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0598373_466922da",
+      "range": {
+        "startLine": 399,
+        "startChar": 65,
+        "endLine": 399,
+        "endChar": 70
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ed7098d_14f5a7f8",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
         "patchSetId": 13
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d10714c1_971ff1dd",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T14:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ed7098d_14f5a7f8",
+      "range": {
+        "startLine": 86,
+        "startChar": 29,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfaeedb2_5ae00c46",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
         "patchSetId": 13
@@ -114,6 +210,30 @@
       "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702340ea_09617e4c",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T14:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfaeedb2_5ae00c46",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
