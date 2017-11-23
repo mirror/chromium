@@ -27,8 +27,6 @@ class CORE_EXPORT ComputedStylePropertyMap : public StylePropertyMapReadonly {
     return new ComputedStylePropertyMap(node);
   }
 
-  Vector<String> getProperties() override;
-
   virtual void Trace(blink::Visitor* visitor) {
     visitor->Trace(node_);
     StylePropertyMapReadonly::Trace(visitor);
@@ -42,20 +40,17 @@ class CORE_EXPORT ComputedStylePropertyMap : public StylePropertyMapReadonly {
 
   const CSSValue* GetProperty(CSSPropertyID) override;
   const CSSValue* GetCustomProperty(AtomicString) override;
+  void ForEachProperty(const IterationCallback&) override;
 
-  HeapVector<StylePropertyMapEntry> GetIterationEntries() override {
-    return HeapVector<StylePropertyMapEntry>();
-  }
+ private:
+  Node* StyledNode() const;
+  const ComputedStyle* UpdateStyle();
 
   // TODO: Pseudo-element support requires reintroducing Element.pseudo(...).
   // See
   // https://github.com/w3c/css-houdini-drafts/issues/350#issuecomment-294690156
   PseudoId pseudo_id_;
   Member<Node> node_;
-
- private:
-  Node* StyledNode() const;
-  const ComputedStyle* UpdateStyle();
   DISALLOW_COPY_AND_ASSIGN(ComputedStylePropertyMap);
 };
 
