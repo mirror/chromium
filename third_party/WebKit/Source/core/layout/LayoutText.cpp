@@ -160,6 +160,7 @@ LayoutText::LayoutText(Node* node, scoped_refptr<StringImpl> str)
       lines_dirty_(false),
       contains_reversed_text_(false),
       known_to_have_no_overflow_and_no_fallback_fonts_(false),
+      contains_only_whitespace_(TextRun::OnlyWhitespace::kUnknown),
       min_width_(-1),
       max_width_(-1),
       first_line_min_width_(0),
@@ -1076,6 +1077,7 @@ void LayoutText::ComputePreferredLogicalWidths(
   has_breakable_start_ = false;
   has_breakable_end_ = false;
   has_end_white_space_ = false;
+  contains_only_whitespace_ = TextRun::OnlyWhitespace::kYes;
 
   const ComputedStyle& style_to_use = StyleRef();
   const Font& f = style_to_use.GetFont();  // FIXME: This ignores first-line.
@@ -1164,8 +1166,13 @@ void LayoutText::ComputePreferredLogicalWidths(
       } else {
         is_space = true;
       }
+    } else if (c == kSpaceCharacter) {
+      is_space = true;
+    } else if (c == kNoBreakSpaceCharacter) {
+      is_space = false;
     } else {
-      is_space = c == kSpaceCharacter;
+      is_space = false;
+      contains_only_whitespace_ = TextRun::OnlyWhitespace::kNo;
     }
 
     bool is_breakable_location =
@@ -1538,6 +1545,11 @@ static inline bool IsInlineFlowOrEmptyText(const LayoutObject* o) {
   if (!o->IsText())
     return false;
   return ToLayoutText(o)->GetText().IsEmpty();
+}
+
+unsigned LayoutText::ContainsOnlyWhitespace() const {
+  return PreferredLogicalWidthsDirty() ? TextRun::OnlyWhitespace::kUnknown
+                                       : contains_only_whitespace_;
 }
 
 UChar LayoutText::PreviousCharacter() const {
