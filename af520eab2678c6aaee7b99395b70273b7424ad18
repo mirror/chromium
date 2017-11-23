@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c5d5f8b_ac5c6a15",
+        "filename": "google_apis/gaia/gaia_auth_fetcher_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-23T13:03:24Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment to explain what false represents here:\ns/false/false /* is_child_account */",
+      "range": {
+        "startLine": 360,
+        "startChar": 38,
+        "endLine": 360,
+        "endChar": 43
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0598373_466922da",
+        "filename": "google_apis/gaia/gaia_auth_fetcher_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-23T13:03:24Z",
+      "side": 1,
+      "message": "s/false/false /* is_child_account */",
+      "range": {
+        "startLine": 399,
+        "startChar": 65,
+        "endLine": 399,
+        "endChar": 70
+      },
+      "revId": "af520eab2678c6aaee7b99395b70273b7424ad18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
