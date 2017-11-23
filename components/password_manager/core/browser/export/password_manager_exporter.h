@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 #include "components/password_manager/core/browser/export/destination.h"
+#include "components/password_manager/core/browser/export/password_ui_export_view.h"
 
 namespace autofill {
 struct PasswordForm;
@@ -30,7 +31,8 @@ class PasswordManagerExporter {
  public:
   explicit PasswordManagerExporter(
       password_manager::CredentialProviderInterface*
-          credential_provider_interface);
+          credential_provider_interface,
+      PasswordUIExportView* password_ui_export_view);
   virtual ~PasswordManagerExporter();
 
   // Pre-load the passwords from the password store.
@@ -60,6 +62,9 @@ class PasswordManagerExporter {
   // The source of the password list which will be exported.
   password_manager::CredentialProviderInterface* credential_provider_interface_;
 
+  // Callbacks to the UI.
+  PasswordUIExportView* password_ui_export_view_;
+
   // The password list that was read from the store. It will be cleared once
   // exporting is complete.
   std::vector<std::unique_ptr<autofill::PasswordForm>> password_list_;
@@ -68,9 +73,8 @@ class PasswordManagerExporter {
   // sent. It will be cleared once exporting is complete.
   std::unique_ptr<Destination> destination_;
 
-  // |task_runner_| is used for time-consuming tasks during exporting. The tasks
-  // will dereference a WeakPtr to |*this|, which means they all need to run on
-  // the same sequence.
+  // We use a TaskRunner for the time-consuming parts of exporting. WeakPtrs
+  // require to be dereferenced all on the same sequence.
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
   base::WeakPtrFactory<PasswordManagerExporter> weak_factory_;
 

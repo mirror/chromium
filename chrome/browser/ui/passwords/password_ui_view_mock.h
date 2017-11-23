@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_UI_PASSWORDS_PASSWORD_UI_VIEW_MOCK_H_
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/macros.h"
@@ -36,6 +37,10 @@ class MockPasswordUIView : public PasswordUIView {
   MOCK_METHOD1(
       SetPasswordExceptionList,
       void(const std::vector<std::unique_ptr<autofill::PasswordForm>>&));
+
+  // PasswordUIExportView
+  MOCK_METHOD1(OnCompletedReadingPasswordStore, void(const std::string&));
+  MOCK_METHOD1(OnCompletedWritingToDestination, void(const std::string&));
 
  private:
   Profile* profile_;

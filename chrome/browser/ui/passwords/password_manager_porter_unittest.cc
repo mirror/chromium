@@ -118,7 +118,7 @@ class MockPasswordManagerExporter
     : public password_manager::PasswordManagerExporter {
  public:
   MockPasswordManagerExporter()
-      : password_manager::PasswordManagerExporter(nullptr) {}
+      : password_manager::PasswordManagerExporter(nullptr, nullptr) {}
   ~MockPasswordManagerExporter() override = default;
 
   MOCK_METHOD0(PreparePasswordsForExport, void());
@@ -190,7 +190,7 @@ TEST_F(PasswordManagerPorterTest, PasswordImport) {
 // Matches a DestinationFileSystem* that is set to |path|.
 MATCHER_P(DestinationPointsToPath, path, "") {
   DestinationFileSystem* destination = static_cast<DestinationFileSystem*>(arg);
-  return destination->GetDestinationPathForTesting() == path;
+  return destination->GetDestinationPath() == path;
 }
 
 TEST_F(PasswordManagerPorterTest, PasswordExport) {
