@@ -987,40 +987,12 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         }
     }
 
-    /**
-     * @see View#onSizeChanged(int, int, int, int)
-     */
-    @SuppressWarnings("javadoc")
-    public void onSizeChanged(int wPix, int hPix, int owPix, int ohPix) {
-        updateAfterSizeChanged();
-    }
-
     @CalledByNative
     private void onTouchDown(MotionEvent event) {
         if (mShouldRequestUnbufferedDispatch) requestUnbufferedDispatch(event);
         cancelRequestToScrollFocusedEditableNodeIntoView();
         for (mGestureStateListenersIterator.rewind(); mGestureStateListenersIterator.hasNext();) {
             mGestureStateListenersIterator.next().onTouchDown();
-        }
-    }
-
-    private void updateAfterSizeChanged() {
-        mPopupZoomer.hide(false);
-
-        // Execute a delayed form focus operation because the OSK was brought
-        // up earlier.
-        Rect focusPreOSKViewportRect = mImeAdapter.getFocusPreOSKViewportRect();
-        if (!focusPreOSKViewportRect.isEmpty()) {
-            Rect rect = new Rect();
-            getContainerView().getWindowVisibleDisplayFrame(rect);
-            if (!rect.equals(focusPreOSKViewportRect)) {
-                // Only assume the OSK triggered the onSizeChanged if width was preserved.
-                if (rect.width() == focusPreOSKViewportRect.width()) {
-                    assert mWebContents != null;
-                    mWebContents.scrollFocusedEditableNodeIntoView();
-                }
-                cancelRequestToScrollFocusedEditableNodeIntoView();
-            }
         }
     }
 

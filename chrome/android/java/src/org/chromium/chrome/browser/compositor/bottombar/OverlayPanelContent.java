@@ -511,8 +511,6 @@ public class OverlayPanelContent {
     void onSizeChanged(int width, int height) {
         if (mContentViewCore == null || getWebContents() == null) return;
         getWebContents().setSize(width, height);
-        mContentViewCore.onSizeChanged(width, height, mContentViewCore.getViewportWidthPix(),
-                mContentViewCore.getViewportHeightPix());
     }
 
     void onPhysicalBackingSizeChanged(int width, int height) {
