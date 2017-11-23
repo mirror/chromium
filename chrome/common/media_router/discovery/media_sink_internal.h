@@ -7,6 +7,9 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "base/memory/scoped_refptr.h"
+#include "base/sequenced_task_runner.h"
 #include "chrome/common/media_router/media_sink.h"
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
@@ -127,6 +130,15 @@ class MediaSinkInternal {
     CastSinkExtraData cast_data_;
   };
 };
+
+using OnSinksDiscoveredCallback =
+    base::RepeatingCallback<void(std::vector<MediaSinkInternal>)>;
+
+// Runs |sinks_discovered_cb| with |sinks| on |task_runner|.
+void RunSinksDiscoveredCallbackOnSequence(
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner,
+    const OnSinksDiscoveredCallback& callback,
+    std::vector<MediaSinkInternal> sinks);
 
 }  // namespace media_router
 

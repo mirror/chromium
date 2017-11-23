@@ -6,6 +6,7 @@
 
 #include <new>
 
+#include "base/location.h"
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 
@@ -155,6 +156,13 @@ bool CastSinkExtraData::operator==(const CastSinkExtraData& other) const {
          capabilities == other.capabilities &&
          cast_channel_id == other.cast_channel_id &&
          discovered_by_dial == other.discovered_by_dial;
+}
+
+void RunSinksDiscoveredCallbackOnSequence(
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner,
+    const OnSinksDiscoveredCallback& callback,
+    std::vector<MediaSinkInternal> sinks) {
+  task_runner->PostTask(FROM_HERE, base::BindOnce(callback, std::move(sinks)));
 }
 
 }  // namespace media_router
