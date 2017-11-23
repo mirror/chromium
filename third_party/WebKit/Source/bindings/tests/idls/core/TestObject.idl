@@ -490,6 +490,8 @@ interface TestObject {
     [MeasureAs=TestFeatureB] void measureAsOverloadedMethod(long arg);
     [MeasureAs=TestFeature] void measureAsSameValueOverloadedMethod();
     [MeasureAs=TestFeature] void measureAsSameValueOverloadedMethod(long arg);
+    [CEReactions] void ceReactionsOverloadedMethod();
+    [CEReactions] void ceReactionsOverloadedMethod(long arg);
     [DeprecateAs=TestFeatureA, MeasureAs=TestFeature] void deprecateAsMeasureAsSameValueOverloadedMethod();
     [DeprecateAs=TestFeatureB, MeasureAs=TestFeature] void deprecateAsMeasureAsSameValueOverloadedMethod(long arg);
     [DeprecateAs=TestFeature, MeasureAs=TestFeatureA] void deprecateAsSameValueMeasureAsOverloadedMethod();
