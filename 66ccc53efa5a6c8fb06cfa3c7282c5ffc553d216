@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d673c3f7_2b629b24",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterGenerator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-23T10:19:14Z",
+      "side": 1,
+      "message": "Yup that\u0027s clang format.\nAlso renamed to Provider.",
+      "parentUuid": "75ef9799_ced7484d",
+      "revId": "66ccc53efa5a6c8fb06cfa3c7282c5ffc553d216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "042ab7f8_59c88524",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "66ccc53efa5a6c8fb06cfa3c7282c5ffc553d216",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1353064b_4b8accf4",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-23T10:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042ab7f8_59c88524",
+      "revId": "66ccc53efa5a6c8fb06cfa3c7282c5ffc553d216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "66ccc53efa5a6c8fb06cfa3c7282c5ffc553d216",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bd002c_6f29871c",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-23T10:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2a2805_4eef79de",
+      "range": {
+        "startLine": 168,
+        "startChar": 84,
+        "endLine": 168,
+        "endChar": 91
+      },
+      "revId": "66ccc53efa5a6c8fb06cfa3c7282c5ffc553d216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
