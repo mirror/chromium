@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a88bb3bb_a2269324",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-23T10:40:10Z",
+      "side": 1,
+      "message": "For what it\u0027s worth, I think the comment can be removed.",
+      "parentUuid": "f7915c3f_351b348f",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24542c4d_0ba689ec",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 19
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "@terelius",
       "parentUuid": "15aea4e4_66e5edf3",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a0d2ee_e5e836de",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-23T10:40:10Z",
+      "side": 1,
+      "message": "The logs contain RTP packet headers and RTCP feedback packets together with send and receive times. It does not contain IP/TCP/UDP or other routing headers that could identify users. It does not record the actual audio or video.\n\nIn addition to packet metadata, it contains timing information for some internal events. When was audio requested from the audio jitter buffer? (Should be every 10 ms.) When and why was the bandwidth estimate changed? (E.g. reduced because of high loss, reduced because of increasing delay, optimistically increased to try to find more bandwidth.)\n\nIt is currently not uploaded to any server. This CL does not change the existing behavior; logs are still manually started from chrome://webrtc-internals and stored locally. In the future, we would like to deprecate the RTP dumps and use this log instead. This would obviously require a more in-depth privacy review.",
+      "parentUuid": "0421bf2d_2b861452",
       "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
