@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "038ae50c_7b8f1511",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-23T09:46:36Z",
+      "side": 1,
+      "message": "For what it\u0027s worth, I think it\u0027s still probably OK to let these default to user origin. Extension developers would have to modify their code to set the style sheet programmatically if they want to make it author origin.\n\nAnyway I decided to do the safe thing and make it fully backwards compatible.",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
