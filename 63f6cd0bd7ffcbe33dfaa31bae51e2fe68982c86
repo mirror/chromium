@@ -16,6 +16,24 @@
       "revId": "63f6cd0bd7ffcbe33dfaa31bae51e2fe68982c86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c41b6be_cfc444db",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-23T16:53:15Z",
+      "side": 1,
+      "message": "Updated the patchset to make sure the frame does get the notification.\nAdded comments explaining why it shouldn\u0027t be done on RenderProcessGone() and why it is done here.",
+      "parentUuid": "a2764365_6e415a7f",
+      "revId": "63f6cd0bd7ffcbe33dfaa31bae51e2fe68982c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
