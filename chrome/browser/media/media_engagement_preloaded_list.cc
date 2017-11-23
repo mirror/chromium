@@ -5,6 +5,7 @@
 #include "chrome/browser/media/media_engagement_preloaded_list.h"
 
 #include "base/files/file_util.h"
+#include "base/memory/singleton.h"
 #include "base/path_service.h"
 #include "chrome/browser/media/media_engagement_preload.pb.h"
 #include "url/origin.h"
@@ -150,6 +151,11 @@ static const char kEndOfTable = 127;
 
 }  // namespace
 
+// static
+MediaEngagementPreloadedList* MediaEngagementPreloadedList::GetInstance() {
+  return base::Singleton<MediaEngagementPreloadedList>::get();
+}
+
 MediaEngagementPreloadedList::MediaEngagementPreloadedList() = default;
 
 MediaEngagementPreloadedList::~MediaEngagementPreloadedList() = default;
@@ -165,7 +171,7 @@ bool MediaEngagementPreloadedList::CheckStringIsPresent(std::string input,
   *out_found = false;
 
   // Check that we have data to look through.
-  if (!trie_bits_)
+  if (!IsLoaded())
     return true;
 
   HuffmanDecoder huffman(huffman_tree_.data(), huffman_tree_.size());
