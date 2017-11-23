@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "content/common/frame.mojom.h"
 #include "content/renderer/render_frame_impl.h"
 #include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
@@ -34,6 +35,15 @@ class TestRenderFrame : public RenderFrameImpl {
     return current_history_item_;
   }
 
+  // Force the FrameLoader to never try to send the request to the browser.
+  // Enabled by default for testing.
+  void short_circuit_browser_side_navigation_for_testing(bool short_circuit) {
+    short_circuit_browser_side_navigation_ = short_circuit;
+  }
+
+  void SetURLOverrideForNextWebURLRequest(const GURL& url);
+
+  void WillSendRequest(blink::WebURLRequest& request) override;
   void Navigate(const CommonNavigationParams& common_params,
                 const StartNavigationParams& start_params,
                 const RequestNavigationParams& request_params);
@@ -57,12 +67,17 @@ class TestRenderFrame : public RenderFrameImpl {
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
   TakeLastCommitParams();
 
+  service_manager::mojom::InterfaceProviderRequest
+  TakeLastInterfaceProviderRequest();
+
  private:
   explicit TestRenderFrame(RenderFrameImpl::CreateParams params);
 
   mojom::FrameHost* GetFrameHost() override;
 
+  bool short_circuit_browser_side_navigation_ = true;
   std::unique_ptr<MockFrameHost> mock_frame_host_;
+  base::Optional<GURL> next_request_url_override_;
 
   DISALLOW_COPY_AND_ASSIGN(TestRenderFrame);
 };

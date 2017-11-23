@@ -703,6 +703,7 @@ TEST_F(RenderViewImplTest, DecideNavigationPolicy) {
   blink::WebFrameClient::NavigationPolicyInfo policy_info(request);
   policy_info.navigation_type = blink::kWebNavigationTypeLinkClicked;
   policy_info.default_policy = blink::kWebNavigationPolicyCurrentTab;
+  frame()->short_circuit_browser_side_navigation_for_testing(false);
   blink::WebNavigationPolicy policy =
       frame()->DecidePolicyForNavigation(policy_info);
   if (!IsBrowserSideNavigationEnabled()) {

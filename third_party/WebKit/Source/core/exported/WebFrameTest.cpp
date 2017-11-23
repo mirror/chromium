@@ -4254,7 +4254,8 @@ class ClearScrollStateOnCommitWebFrameClient
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
     Frame()->View()->ResetScrollAndScaleState();
   }
 };
@@ -6545,7 +6546,8 @@ class TestSubstituteDataWebFrameClient
                             error.url(), true);
   }
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
     if (Frame()->GetDocumentLoader()->GetResponse().Url() !=
         WebURL(URLTestHelpers::ToKURL("about:blank")))
       commit_called_ = true;
@@ -6599,7 +6601,8 @@ class TestWillInsertBodyWebFrameClient
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
     num_bodies_ = 0;
     did_load_ = true;
   }
@@ -9431,9 +9434,9 @@ class RemoteToLocalSwapWebFrameClient
   ~RemoteToLocalSwapWebFrameClient() override {}
 
   // FrameTestHelpers::TestWebFrameClient:
-  void DidCommitProvisionalLoad(
-      const WebHistoryItem&,
-      WebHistoryCommitType history_commit_type) override {
+  void DidCommitProvisionalLoad(const WebHistoryItem&,
+                                WebHistoryCommitType history_commit_type,
+                                WebGlobalObjectReusePolicy) override {
     history_commit_type_ = history_commit_type;
     remote_frame_->Swap(Frame());
   }
@@ -9644,9 +9647,9 @@ class CommitTypeWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
   ~CommitTypeWebFrameClient() override {}
 
   // FrameTestHelpers::TestWebFrameClient:
-  void DidCommitProvisionalLoad(
-      const WebHistoryItem&,
-      WebHistoryCommitType history_commit_type) override {
+  void DidCommitProvisionalLoad(const WebHistoryItem&,
+                                WebHistoryCommitType history_commit_type,
+                                WebGlobalObjectReusePolicy) override {
     history_commit_type_ = history_commit_type;
   }
 
@@ -10584,7 +10587,8 @@ class CallbackOrderingWebFrameClient
     EXPECT_EQ(1, callback_count_++);
   }
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                WebGlobalObjectReusePolicy) override {
     EXPECT_EQ(2, callback_count_++);
   }
   void DidFinishDocumentLoad() override { EXPECT_EQ(3, callback_count_++); }
