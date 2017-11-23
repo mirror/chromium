@@ -30,6 +30,9 @@ static unsigned BufferFormatToInternalFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::BGRA_8888:
       return GL_BGRA_EXT;
 
+    case gfx::BufferFormat::RGBA_8888:
+      return GL_RGBA;
+
     case gfx::BufferFormat::YVU_420:
       return GL_RGB_YCRCB_420_CHROMIUM;
 
