@@ -10,7 +10,7 @@ namespace content {
 
 NavigationRequestInfo::NavigationRequestInfo(
     const CommonNavigationParams& common_params,
-    const BeginNavigationParams& begin_params,
+    mojom::BeginNavigationParams* begin_params,
     const GURL& site_for_cookies,
     bool is_main_frame,
     bool parent_is_main_frame,
