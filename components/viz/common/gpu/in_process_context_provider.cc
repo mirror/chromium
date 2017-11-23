@@ -56,7 +56,8 @@ InProcessContextProvider::InProcessContextProvider(
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
     const gpu::SharedMemoryLimits& limits,
-    InProcessContextProvider* shared_context)
+    InProcessContextProvider* shared_context,
+    gpu::GpuChannelManager* gpu_channel_manager)
     : attributes_(CreateAttributes()),
       context_(gpu::GLInProcessContext::CreateWithoutInit()),
       context_result_(context_->Initialize(
@@ -69,6 +70,7 @@ InProcessContextProvider::InProcessContextProvider(
           limits,
           gpu_memory_buffer_manager,
           image_factory,
+          gpu_channel_manager,
           base::ThreadTaskRunnerHandle::Get())),
       cache_controller_(std::make_unique<ContextCacheController>(
           context_->GetImplementation(),
