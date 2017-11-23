@@ -16,6 +16,24 @@
       "revId": "bda3b9840e573352455956467ad85701985d4da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5283af_9cde8d96",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-23T02:51:37Z",
+      "side": 1,
+      "message": "\u003e hmm - there may be a subtle change in logic doing this. If you don\u0027t have a Cancel button, then the close [x] will call Accept(), not Cancel(). That might not be what you want. See logic in\n\u003e \n\u003e bool DialogDelegate::Close() {\n\u003e   int buttons \u003d GetDialogButtons();\n\u003e   if ((buttons \u0026 ui::DIALOG_BUTTON_CANCEL) ||\n\u003e       (buttons \u003d\u003d ui::DIALOG_BUTTON_NONE)) {\n\u003e     return Cancel();\n\u003e   }\n\u003e   return Accept();\n\u003e }\n\noh, except you override Close(). But Close() does nothing :). Should it call controller_-\u003eOnCancelButton(); ?\n\nExcept, maybe you don\u0027t want that for the case that the dialog is just clicked outside. But if it doesn\u0027t matter any more whether the dialog was dismissed be the [x] or by clicking outside, then maybe the comment in Close() just needs to be updated.",
+      "parentUuid": "9296da31_d5ad1cfe",
+      "revId": "bda3b9840e573352455956467ad85701985d4da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
