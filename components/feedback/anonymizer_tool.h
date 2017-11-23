@@ -34,6 +34,8 @@ class AnonymizerTool {
 
   // Returns an anonymized version of |input|. PII-sensitive data (such as MAC
   // addresses) in |input| is replaced with unique identifiers.
+  // This is an expensive operation. Make sure not to execute this on the UI
+  // thread.
   std::string Anonymize(const std::string& input);
 
  private:
