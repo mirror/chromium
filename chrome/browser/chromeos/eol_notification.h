@@ -18,6 +18,10 @@ namespace chromeos {
 // and show notification accordingly.
 class EolNotification final {
  public:
+  // Returns true if the eol notification needs to be displayed for the given
+  // |profile|.
+  static bool ShouldShowEolNotification(Profile* profile);
+
   explicit EolNotification(Profile* profile);
   ~EolNotification();
 
