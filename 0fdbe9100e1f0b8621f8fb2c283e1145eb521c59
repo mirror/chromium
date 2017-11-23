@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e55fa508_3a4441bc",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultInlineHeaders.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 0,
+      "message": "Nice, so we don\u0027t need it anymore?",
+      "revId": "0fdbe9100e1f0b8621f8fb2c283e1145eb521c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3327b43_fee4de53",
+        "filename": "third_party/WebKit/Source/platform/testing/data/third_party/roboto-regular.woff2",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 0,
+      "message": "Please move this to \nWebKit/LayoutTests/third_party/\nand add the README.chromium, license info etc., similar to the other fonts in that directory.",
+      "revId": "0fdbe9100e1f0b8621f8fb2c283e1145eb521c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

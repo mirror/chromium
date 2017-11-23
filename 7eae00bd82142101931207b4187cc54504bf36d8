@@ -299,6 +299,41 @@
     },
     {
       "key": {
+        "uuid": "9cb3c46f_5c7c63c0",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "What I meant by that: Compare GetWidth of a substring to GetWidth of the full run, but modified with ZWJ characters to get the correct matching shaping result.\ni.e. \nEXPECT_EQ|EXPECT_NEAR(GetWidth(\"amiri\", u\"الخط\", false, 0, 2), GetWidth(\"amiri\", u\"ال‍\", false, 0, String(\"ال‍\").length())\n\nBut now I realize that, depending on the font, this might not work if the shaping result for some of the character sequences are really single glyphs that we interpolate. \n\nStill, explicitly using the concrete numbers is prone to test breakage when the used font changes. Could we phrase the expectation as a formula based on the whole or parts of the base string\u0027s width, so that it\u0027s clear in the test that we expect interpolation?",
+      "parentUuid": "7465a958_70d6ad64",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e59216_07357830",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "For example here, the input is 4 characters:\nا ل ل ه\n0,1 \u003d Width of initial ا\n0,2 \u003d Width of ZWJ ا ل shaped together?\n0,3 \u003d Width of ZWJ ا ل ل shaped together?\n\nWould that work?",
+      "revId": "7eae00bd82142101931207b4187cc54504bf36d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df8994a0_42d1e6c5",
         "filename": "third_party/WebKit/Source/platform/text/TextBreakIterator.h",
         "patchSetId": 3

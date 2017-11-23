@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabb98b9_21e0f6f2",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "spawn a cluster \u003d form Unicode grapheme cluster",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bd5d7a_94d90b0d",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "Okay, I think, I got the algorithm now :) Took me a while. Generally looks good, nice work! If you don\u0027t mind, I have some suggestion with regards to naming, and if possible, using a half inclusive, half exclusive interval to avoid a couple of -1 and +1\u0027s.",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61799d3_9de0fd46",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "How about renaming \"track\" to \"glyph sequence\", so\n\n// In this context, a glyph sequence is a sequence of glyphs near offset that shares the same character_index and therefore represent the same interval of source characters. glyph_sequence_start marks the character index at the beginning of the interval of characters for which this glyph sequence was formed as the result of shaping; glyph_sequence_end marks the end of the interval of characters for which this glyph sequence was formed.",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aed354b_841c387d",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "If it\u0027s possible, I think I\u0027d prefer if we could remove last_character here, use num_characters instead, and balance out the +1/-1 in num_characters_ - 1 and the track_end + 1 in the call to \nNumCursorGraphemesClusters. I believe that would make it clearer.",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "155b19c4_1432ea6a",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "track_pos -\u003e glyph_sequence_advance",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd3a81b_e8b06e05",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "position \u003d\u003e accumulated_position",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43c329c_a44aec86",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "How about glyph_char \u003d\u003e current_glyph_char_index?",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec5971b_47c9b9f1",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "Add a comment:\n// If this glyph is still part of the same glyph sequence for the grapheme cluster at character index track_start, add its advance to the glyph_sequence\u0027s advance.",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff798258_9ccda6ef",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "As mentioned above, if possible, I\u0027d prefer working with an exclusive boundary on the end side of the interval. So I\u0027d suggest to remove this comment, and instead, explain what step we\u0027re at in the run, e.g. something like:\n\n// We reached a glyph that has a higher character index than offset, so we know how long our glyph sequence is.",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5921934f_cc0d6c8a",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "See above.",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d7f04e_6e8e045b",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "ICU unit \u003d \"Unicode grapheme cluster\" http://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries, or in this case, since we\u0027re not using a grapheme cluster iterator exactly, but a cursor position iterator, we could also say \"cursor position stops\".",
+      "range": {
+        "startLine": 153,
+        "startChar": 63,
+        "endLine": 153,
+        "endChar": 72
+      },
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246e00bd_2c6fd065",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "Perhaps:\n// We use this to divide glyph_sequence_advance by the number of unicode grapheme clusters this glyph sequence was shaped for, and thus linearly interpolate the cursor position based on \naccumulated position and a fraction of glyph_sequence_advance.",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80985b9_f73e0f4c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "I think we can make this \nunsigned num_graphemes\nsince the division below should upgrade num_graphemes to float before performing the division, wouldn\u0027t it?",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcd604b_4342220a",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T09:16:48Z",
+      "side": 1,
+      "message": "Can we remove this line? track_start does not seem to be needed below here.",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
