@@ -6,15 +6,30 @@
 
 #include "media/gpu/vaapi_wrapper.h"
 #include "ui/gl/gl_bindings.h"
-#include "ui/gl/gl_implementation.h"
 
-#if defined(USE_OZONE)
 #include "media/gpu/vaapi/vaapi_drm_picture.h"
-#elif defined(USE_X11)
+
+#if defined(USE_X11)
 #include "media/gpu/vaapi/vaapi_tfp_picture.h"
 #endif
 
 namespace media {
+
+namespace {
+
+const struct {
+  gl::GLImplementation gl_impl;
+  VaapiPictureFactory::VaapiImplementation va_impl;
+} kVaapiImplementationPairs[] = {{gl::kGLImplementationEGLGLES2,
+                                  VaapiPictureFactory::kVaapiImplementationDrm}
+#if defined(USE_X11)
+                                 ,
+                                 {gl::kGLImplementationDesktopGL,
+                                  VaapiPictureFactory::kVaapiImplementationX11}
+#endif  // USE_X11
+};
+
+}  // namespace
 
 VaapiPictureFactory::VaapiPictureFactory() = default;
 
@@ -28,19 +43,42 @@ std::unique_ptr<VaapiPicture> VaapiPictureFactory::Create(
     const gfx::Size& size,
     uint32_t texture_id,
     uint32_t client_texture_id) {
-#if defined(USE_OZONE)
-  DCHECK_EQ(gl::kGLImplementationEGLGLES2, gl::GetGLImplementation());
-  return std::make_unique<VaapiDrmPicture>(
-      vaapi_wrapper, make_context_current_cb, bind_image_cb, picture_buffer_id,
-      size, texture_id, client_texture_id);
-#elif defined(USE_X11)
-  DCHECK_EQ(gl::kGLImplementationDesktopGL, gl::GetGLImplementation());
-  return std::make_unique<VaapiTFPPicture>(
-      vaapi_wrapper, make_context_current_cb, bind_image_cb, picture_buffer_id,
-      size, texture_id, client_texture_id);
-#else
-#error Unsupported platform
-#endif
+  std::unique_ptr<VaapiPicture> picture;
+
+  // Select DRM(egl) / TFP(glx) at runtime with --use-gl=egl / --use-gl=desktop
+  switch (GetVaapiImplementation(gl::GetGLImplementation())) {
+    case kVaapiImplementationDrm:
+      picture.reset(new VaapiDrmPicture(vaapi_wrapper, make_context_current_cb,
+                                        bind_image_cb, picture_buffer_id, size,
+                                        texture_id, client_texture_id));
+      break;
+
+#if defined(USE_X11)
+    case kVaapiImplementationX11:
+      picture.reset(new VaapiTFPPicture(vaapi_wrapper, make_context_current_cb,
+                                        bind_image_cb, picture_buffer_id, size,
+                                        texture_id, client_texture_id));
+
+      break;
+#endif  // USE_X11
+
+    default:
+      LOG(ERROR) << "VAAPI HW video decode acceleration not available for "
+                 << gl::GetGLImplementationName(gl::GetGLImplementation());
+      return nullptr;
+  }
+
+  return picture;
+}
+
+VaapiPictureFactory::VaapiImplementation
+VaapiPictureFactory::GetVaapiImplementation(gl::GLImplementation gl_impl) {
+  for (size_t i = 0; i < arraysize(kVaapiImplementationPairs); ++i) {
+    if (gl_impl == kVaapiImplementationPairs[i].gl_impl)
+      return kVaapiImplementationPairs[i].va_impl;
+  }
+
+  return kVaapiImplementationNone;
 }
 
 uint32_t VaapiPictureFactory::GetGLTextureTarget() {
