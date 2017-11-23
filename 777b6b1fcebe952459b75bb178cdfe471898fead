@@ -22,6 +22,30 @@
       "revId": "777b6b1fcebe952459b75bb178cdfe471898fead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c07f887_26b879fa",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/trusted-click.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-23T16:43:13Z",
+      "side": 1,
+      "message": "I meant a top-left-click avoiding any border/margin etc.  Replaced with a center-click.",
+      "parentUuid": "7b1d1458_b414e237",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "777b6b1fcebe952459b75bb178cdfe471898fead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
