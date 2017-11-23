@@ -31,6 +31,10 @@
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.h"
 
+#if defined(OS_WIN)
+#include "content/common/font_cache_win.mojom.h"
+#endif
+
 namespace base {
 class MessageLoop;
 }  // namespace base
@@ -86,6 +90,7 @@ class CONTENT_EXPORT ChildThreadImpl
 #if defined(OS_WIN)
   void PreCacheFont(const LOGFONT& log_font) override;
   void ReleaseCachedFonts() override;
+  mojom::FontCacheWin* GetFontCacheWin();
 #endif
   void RecordAction(const base::UserMetricsAction& action) override;
   void RecordComputedAction(const std::string& action) override;
@@ -206,6 +211,9 @@ class CONTENT_EXPORT ChildThreadImpl
   mojo::AssociatedBindingSet<mojom::AssociatedInterfaceProvider, int32_t>
       associated_interface_provider_bindings_;
   mojom::RouteProviderAssociatedPtr remote_route_provider_;
+#if defined(OS_WIN)
+  mojom::FontCacheWinPtr font_cache_win_ptr_;
+#endif
 
   std::unique_ptr<IPC::SyncChannel> channel_;
 
