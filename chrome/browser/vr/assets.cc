@@ -10,6 +10,7 @@
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
+#include "chrome/browser/vr/metrics_helper.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace vr {
@@ -67,6 +68,7 @@ void Assets::LoadAssetsTask(
 Assets::Assets()
     : main_thread_task_runner_(content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::UI)),
+      metrics_helper_(base::MakeUnique<MetricsHelper>()),
       weak_ptr_factory_(this) {
   DCHECK(main_thread_task_runner_.get());
 }
@@ -76,6 +78,7 @@ Assets::~Assets() = default;
 void Assets::OnComponentReadyInternal(const base::FilePath& install_dir) {
   component_install_dir_ = install_dir;
   component_ready_ = true;
+  metrics_helper_->OnComponentReady();
   if (on_assets_loaded_) {
     LoadWhenComponentReadyInternal(on_assets_loaded_task_runner_,
                                    std::move(on_assets_loaded_));
