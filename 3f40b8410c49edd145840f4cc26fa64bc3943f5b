@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf712587_99d612fd",
+        "filename": "chrome/browser/signin/chrome_signin_client_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-23T15:29:31Z",
+      "side": 1,
+      "message": "I\u0027m fairly sure the FeatureList is initialized at this point, so I *think* it\u0027s okay to just set a bool instead of a callback.",
+      "range": {
+        "startLine": 21,
+        "startChar": 75,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "3f40b8410c49edd145840f4cc26fa64bc3943f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4b174a_32f2193f",
+        "filename": "components/signin/core/browser/profile_management_switches.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-23T15:29:31Z",
+      "side": 1,
+      "message": "This introduces a memleak, which will presumably trigger some ASan bot? Should this maybe be a base::LazyInstance?",
+      "range": {
+        "startLine": 192,
+        "startChar": 70,
+        "endLine": 192,
+        "endChar": 0
+      },
+      "revId": "3f40b8410c49edd145840f4cc26fa64bc3943f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ecf461_42a84fe7",
+        "filename": "components/signin/core/browser/profile_management_switches.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-23T15:29:31Z",
+      "side": 1,
+      "message": "nit: Missing \")\"",
+      "range": {
+        "startLine": 131,
+        "startChar": 64,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "3f40b8410c49edd145840f4cc26fa64bc3943f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
