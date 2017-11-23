@@ -163,6 +163,24 @@
       "revId": "8d5463687c2411412d46ef7197ebc3f1e95af371",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9008f59f_d0bbb32a",
+        "filename": "ui/events/x/events_x.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-23T14:59:40Z",
+      "side": 1,
+      "message": "This comment is still unresolved.  The patch won\u0027t work unless we set PointerDetails::twist here.",
+      "parentUuid": "93e174ed_edb5082a",
+      "revId": "8d5463687c2411412d46ef7197ebc3f1e95af371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
