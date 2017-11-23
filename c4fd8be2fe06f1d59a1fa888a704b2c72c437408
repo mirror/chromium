@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3185d30_df7c1f79",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-23T17:13:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4160403_20f1b17a",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 74
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9f4127a_8f1bc2f0",
         "filename": "components/password_manager/core/browser/password_list_sorter.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b809936_0d3aa22a",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-23T17:13:45Z",
+      "side": 1,
+      "message": "Good point, std::pair seems to have a sensible definition of order based on ordering of its parts! :)",
+      "parentUuid": "e9f4127a_8f1bc2f0",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 56
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ca03f20e_d3d9c6d4",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-23T17:13:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50d9d1a5_3ba36292",
+      "range": {
+        "startLine": 119,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 69
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfd69edc_5d5c8e02",
         "filename": "components/password_manager/core/browser/password_list_sorter.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bc8e8b7f_40deaf7f",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-23T17:13:45Z",
+      "side": 1,
+      "message": "Good point! (But no longer applies.)",
+      "parentUuid": "dfd69edc_5d5c8e02",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 5
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f2ba568_3b0d7869",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de7e6ee_b9cf8b1c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58009,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-23T17:13:45Z",
+      "side": 1,
+      "message": "Acknowledged, and ultimately this is now becoming so temporary that it won\u0027t land. :)",
+      "parentUuid": "4f2ba568_3b0d7869",
+      "range": {
+        "startLine": 58007,
+        "startChar": 0,
+        "endLine": 58009,
+        "endChar": 35
+      },
+      "revId": "c4fd8be2fe06f1d59a1fa888a704b2c72c437408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
