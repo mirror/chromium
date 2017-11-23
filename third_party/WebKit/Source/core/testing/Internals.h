@@ -94,7 +94,7 @@ class Internals final : public ScriptWrappable {
 
   String elementLayoutTreeAsText(Element*, ExceptionState&);
 
-  GCObservation* observeGC(ScriptValue);
+  GCObservation* observeGC(const ScriptValue&);
 
   bool isPreloaded(const String& url);
   bool isPreloadedBy(const String& url, Document*);
@@ -378,7 +378,9 @@ class Internals final : public ScriptWrappable {
   int numberOfPages(float page_width_in_pixels,
                     float page_height_in_pixels,
                     ExceptionState&);
-  String pageProperty(String, int, ExceptionState& = ASSERT_NO_EXCEPTION) const;
+  String pageProperty(const String&,
+                      int,
+                      ExceptionState& = ASSERT_NO_EXCEPTION) const;
   String pageSizeAndMarginsInPixels(
       int,
       int,
@@ -432,10 +434,11 @@ class Internals final : public ScriptWrappable {
   DOMRectList* draggableRegions(Document*, ExceptionState&);
   DOMRectList* nonDraggableRegions(Document*, ExceptionState&);
 
-  DOMArrayBuffer* serializeObject(scoped_refptr<SerializedScriptValue>) const;
+  DOMArrayBuffer* serializeObject(
+      const scoped_refptr<SerializedScriptValue>&) const;
   scoped_refptr<SerializedScriptValue> deserializeBuffer(DOMArrayBuffer*) const;
 
-  DOMArrayBuffer* serializeWithInlineWasm(ScriptValue) const;
+  DOMArrayBuffer* serializeWithInlineWasm(const ScriptValue&) const;
   ScriptValue deserializeBufferContainingWasm(ScriptState*,
                                               DOMArrayBuffer*) const;
 
@@ -473,8 +476,8 @@ class Internals final : public ScriptWrappable {
 
   void setShouldRevealPassword(Element*, bool, ExceptionState&);
 
-  ScriptPromise createResolvedPromise(ScriptState*, ScriptValue);
-  ScriptPromise createRejectedPromise(ScriptState*, ScriptValue);
+  ScriptPromise createResolvedPromise(ScriptState*, const ScriptValue&);
+  ScriptPromise createRejectedPromise(ScriptState*, const ScriptValue&);
   ScriptPromise addOneToPromise(ScriptState*, ScriptPromise);
   ScriptPromise promiseCheck(ScriptState*,
                              long,

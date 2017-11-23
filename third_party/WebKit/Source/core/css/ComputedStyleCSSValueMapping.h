@@ -34,7 +34,7 @@ class ComputedStyleCSSValueMapping {
                              const LayoutObject* = nullptr,
                              Node* styled_node = nullptr,
                              bool allow_visited_style = false);
-  static const CSSValue* Get(const AtomicString custom_property_name,
+  static const CSSValue* Get(const AtomicString& custom_property_name,
                              const ComputedStyle&,
                              const PropertyRegistry*);
   static std::unique_ptr<HashMap<AtomicString, scoped_refptr<CSSVariableData>>>

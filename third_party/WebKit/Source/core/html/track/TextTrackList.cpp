@@ -311,11 +311,11 @@ void TextTrackList::Trace(blink::Visitor* visitor) {
 }
 
 void TextTrackList::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
-  for (auto track : add_track_tracks_)
+  for (const auto& track : add_track_tracks_)
     visitor->TraceWrappers(track);
-  for (auto track : element_tracks_)
+  for (const auto& track : element_tracks_)
     visitor->TraceWrappers(track);
-  for (auto track : inband_tracks_)
+  for (const auto& track : inband_tracks_)
     visitor->TraceWrappers(track);
   EventTargetWithInlineData::TraceWrappers(visitor);
 }

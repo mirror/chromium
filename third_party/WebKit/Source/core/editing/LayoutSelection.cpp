@@ -21,6 +21,8 @@
 
 #include "core/editing/LayoutSelection.h"
 
+#include <utility>
+
 #include "core/dom/Document.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/EphemeralRange.h"
@@ -41,9 +43,9 @@ SelectionPaintRange::SelectionPaintRange(LayoutObject* start_layout_object,
                                          LayoutObject* end_layout_object,
                                          WTF::Optional<int> end_offset)
     : start_layout_object_(start_layout_object),
-      start_offset_(start_offset),
+      start_offset_(std::move(start_offset)),
       end_layout_object_(end_layout_object),
-      end_offset_(end_offset) {}
+      end_offset_(std::move(end_offset)) {}
 
 bool SelectionPaintRange::operator==(const SelectionPaintRange& other) const {
   return start_layout_object_ == other.start_layout_object_ &&
@@ -195,7 +197,7 @@ class NewPaintRangeAndSelectedLayoutObjects {
   NewPaintRangeAndSelectedLayoutObjects() = default;
   NewPaintRangeAndSelectedLayoutObjects(SelectionPaintRange paint_range,
                                         SelectedLayoutObjects selected_objects)
-      : paint_range_(paint_range),
+      : paint_range_(std::move(paint_range)),
         selected_objects_(std::move(selected_objects)) {}
   NewPaintRangeAndSelectedLayoutObjects(
       NewPaintRangeAndSelectedLayoutObjects&& other) {
@@ -543,10 +545,10 @@ static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInTwoNodes(
     WTF::Optional<int> start_offset,
     LayoutObject* end_layout_object,
     WTF::Optional<int> end_offset) {
-  const LayoutObjectAndOffset& start =
-      MarkStart(&selected_objects, start_layout_object, start_offset);
+  const LayoutObjectAndOffset& start = MarkStart(
+      &selected_objects, start_layout_object, std::move(start_offset));
   const LayoutObjectAndOffset& end =
-      MarkEnd(&selected_objects, end_layout_object, end_offset);
+      MarkEnd(&selected_objects, end_layout_object, std::move(end_offset));
   return {{start.layout_object, start.offset, end.layout_object, end.offset},
           std::move(selected_objects)};
 }

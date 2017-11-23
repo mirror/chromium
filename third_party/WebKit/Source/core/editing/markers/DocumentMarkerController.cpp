@@ -248,7 +248,8 @@ void DocumentMarkerController::RemoveMarkersInRange(
 
 void DocumentMarkerController::AddMarkerInternal(
     const EphemeralRange& range,
-    std::function<DocumentMarker*(int, int)> create_marker_from_offsets) {
+    const std::function<DocumentMarker*(int, int)>&
+        create_marker_from_offsets) {
   for (TextIterator marked_text(range.StartPosition(), range.EndPosition());
        !marked_text.AtEnd(); marked_text.Advance()) {
     const int start_offset_in_current_container =

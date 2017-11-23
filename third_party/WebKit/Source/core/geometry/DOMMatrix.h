@@ -27,9 +27,9 @@ class CORE_EXPORT DOMMatrix : public DOMMatrixReadOnly {
   static DOMMatrix* Create(DOMMatrixReadOnly*,
                            ExceptionState& = ASSERT_NO_EXCEPTION);
   static DOMMatrix* Create(const SkMatrix44&, ExceptionState&);
-  static DOMMatrix* fromFloat32Array(NotShared<DOMFloat32Array>,
+  static DOMMatrix* fromFloat32Array(const NotShared<DOMFloat32Array>&,
                                      ExceptionState&);
-  static DOMMatrix* fromFloat64Array(NotShared<DOMFloat64Array>,
+  static DOMMatrix* fromFloat64Array(const NotShared<DOMFloat64Array>&,
                                      ExceptionState&);
   static DOMMatrix* fromMatrix(DOMMatrixInit&, ExceptionState&);
   static DOMMatrix* CreateForSerialization(double[], int size);

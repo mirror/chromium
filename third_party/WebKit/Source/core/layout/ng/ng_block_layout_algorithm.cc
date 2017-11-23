@@ -1227,8 +1227,8 @@ scoped_refptr<NGConstraintSpace>
 NGBlockLayoutAlgorithm::CreateConstraintSpaceForChild(
     const NGLayoutInputNode child,
     const NGInflowChildData& child_data,
-    const WTF::Optional<NGBfcOffset> floats_bfc_offset,
-    const WTF::Optional<LayoutUnit> fixed_inline_size) {
+    const WTF::Optional<NGBfcOffset>& floats_bfc_offset,
+    const WTF::Optional<LayoutUnit>& fixed_inline_size) {
   NGConstraintSpaceBuilder space_builder(ConstraintSpace());
 
   NGLogicalSize available_size(child_available_size_);

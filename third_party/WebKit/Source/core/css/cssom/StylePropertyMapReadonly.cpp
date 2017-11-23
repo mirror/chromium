@@ -4,6 +4,8 @@
 
 #include "core/css/cssom/StylePropertyMapReadonly.h"
 
+#include <utility>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/cssom/CSSStyleValue.h"
@@ -19,7 +21,7 @@ class StylePropertyMapIterationSource final
  public:
   explicit StylePropertyMapIterationSource(
       HeapVector<StylePropertyMapReadonly::StylePropertyMapEntry> values)
-      : index_(0), values_(values) {}
+      : index_(0), values_(std::move(values)) {}
 
   bool Next(ScriptState*,
             String& key,

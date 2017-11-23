@@ -63,7 +63,7 @@ ErrorEvent::ErrorEvent(ScriptState* script_state,
 
 ErrorEvent::ErrorEvent(const String& message,
                        std::unique_ptr<SourceLocation> location,
-                       ScriptValue error,
+                       const ScriptValue& error,
                        DOMWrapperWorld* world)
     : Event(EventTypeNames::error, false, true),
       sanitized_message_(message),

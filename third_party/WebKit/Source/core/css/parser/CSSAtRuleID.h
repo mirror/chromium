@@ -27,7 +27,7 @@ enum CSSAtRuleID {
   kCSSAtRuleWebkitKeyframes = 10,
 };
 
-CSSAtRuleID CssAtRuleID(StringView name);
+CSSAtRuleID CssAtRuleID(const StringView& name);
 
 void CountAtRule(const CSSParserContext*, CSSAtRuleID);
 

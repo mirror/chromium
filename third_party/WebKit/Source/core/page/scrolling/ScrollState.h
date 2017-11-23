@@ -7,6 +7,7 @@
 
 #include <deque>
 #include <memory>
+#include <utility>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/CoreExport.h"
 #include "core/dom/Element.h"
@@ -23,7 +24,7 @@ class CORE_EXPORT ScrollState final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static ScrollState* Create(ScrollStateInit);
+  static ScrollState* Create(const ScrollStateInit&);
   static ScrollState* Create(std::unique_ptr<ScrollStateData>);
 
   ~ScrollState() {}
@@ -69,7 +70,7 @@ class CORE_EXPORT ScrollState final : public ScriptWrappable {
 
   // TODO(tdresser): this needs to be web exposed. See crbug.com/483091.
   void SetScrollChain(std::deque<int> scroll_chain) {
-    scroll_chain_ = scroll_chain;
+    scroll_chain_ = std::move(scroll_chain);
   }
 
   Element* CurrentNativeScrollingElement();

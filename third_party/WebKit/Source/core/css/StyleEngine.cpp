@@ -986,7 +986,7 @@ void StyleEngine::ScheduleInvalidationsForRuleSets(
 #if DCHECK_IS_ON()
   // Full scope recalcs should be handled while collecting the ruleSets before
   // calling this method.
-  for (auto rule_set : rule_sets)
+  for (const auto& rule_set : rule_sets)
     DCHECK(!rule_set->Features().NeedsFullRecalcForRuleSetInvalidation());
 #endif  // DCHECK_IS_ON()
 
@@ -1001,7 +1001,7 @@ void StyleEngine::ScheduleInvalidationsForRuleSets(
     ScheduleRuleSetInvalidationsForElement(host, rule_sets);
     if (host.GetStyleChangeType() >= kSubtreeStyleChange)
       return;
-    for (auto rule_set : rule_sets) {
+    for (const auto& rule_set : rule_sets) {
       if (rule_set->HasSlottedRules()) {
         invalidate_slotted = true;
         break;
@@ -1339,7 +1339,7 @@ void StyleEngine::CustomPropertyRegistered() {
 }
 
 void StyleEngine::MarkForWhitespaceReattachment() {
-  for (auto element : whitespace_reattach_set_) {
+  for (const auto& element : whitespace_reattach_set_) {
     if (!element->GetLayoutObject())
       continue;
     element->SetChildNeedsReattachLayoutTree();
@@ -1389,7 +1389,7 @@ void StyleEngine::AddFontFaceRules(const RuleSet& rule_set) {
   if (!font_selector_)
     return;
 
-  const HeapVector<Member<StyleRuleFontFace>> font_face_rules =
+  const HeapVector<Member<StyleRuleFontFace>>& font_face_rules =
       rule_set.FontFaceRules();
   for (auto& font_face_rule : font_face_rules) {
     if (FontFace* font_face = FontFace::Create(document_, font_face_rule))
@@ -1400,7 +1400,7 @@ void StyleEngine::AddFontFaceRules(const RuleSet& rule_set) {
 }
 
 void StyleEngine::AddKeyframeRules(const RuleSet& rule_set) {
-  const HeapVector<Member<StyleRuleKeyframes>> keyframes_rules =
+  const HeapVector<Member<StyleRuleKeyframes>>& keyframes_rules =
       rule_set.KeyframesRules();
   for (unsigned i = 0; i < keyframes_rules.size(); ++i)
     AddKeyframeStyle(keyframes_rules[i]);

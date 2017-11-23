@@ -115,7 +115,7 @@ StringKeyframeVector KeyframesAtZeroAndOne(CSSPropertyID property,
 }
 
 void ExpectProperty(CSSPropertyID property,
-                    scoped_refptr<Interpolation> interpolation_value) {
+                    const scoped_refptr<Interpolation>& interpolation_value) {
   InvalidatableInterpolation* interpolation =
       ToInvalidatableInterpolation(interpolation_value.get());
   const PropertyHandle& property_handle = interpolation->GetProperty();

@@ -58,7 +58,7 @@ class ElementAnimation {
       ScriptState* script_state,
       Element& element,
       const DictionarySequenceOrDictionary& effect_input,
-      UnrestrictedDoubleOrKeyframeAnimationOptions options,
+      const UnrestrictedDoubleOrKeyframeAnimationOptions& options,
       ExceptionState& exception_state) {
     EffectModel* effect = EffectInput::Convert(
         &element, effect_input, ExecutionContext::From(script_state),

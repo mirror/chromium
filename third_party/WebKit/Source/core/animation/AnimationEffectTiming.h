@@ -23,13 +23,13 @@ class CORE_EXPORT AnimationEffectTiming : public AnimationEffectTimingReadOnly {
 
   void setDelay(double);
   void setEndDelay(double);
-  void setFill(String);
+  void setFill(const String&);
   void setIterationStart(double, ExceptionState&);
   void setIterations(double, ExceptionState&);
   void setDuration(const UnrestrictedDoubleOrString&, ExceptionState&);
   void SetPlaybackRate(double);
-  void setDirection(String);
-  void setEasing(String, ExceptionState&);
+  void setDirection(const String&);
+  void setEasing(const String&, ExceptionState&);
 
   bool IsAnimationEffectTiming() const override { return true; }
 

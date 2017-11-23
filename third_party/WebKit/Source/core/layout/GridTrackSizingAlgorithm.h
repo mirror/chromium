@@ -99,10 +99,10 @@ class GridTrackSizingAlgorithm final {
   const Vector<GridTrack>& Tracks(GridTrackSizingDirection) const;
 
   Optional<LayoutUnit> FreeSpace(GridTrackSizingDirection) const;
-  void SetFreeSpace(GridTrackSizingDirection, Optional<LayoutUnit>);
+  void SetFreeSpace(GridTrackSizingDirection, const Optional<LayoutUnit>&);
 
   Optional<LayoutUnit> AvailableSpace(GridTrackSizingDirection) const;
-  void SetAvailableSpace(GridTrackSizingDirection, Optional<LayoutUnit>);
+  void SetAvailableSpace(GridTrackSizingDirection, const Optional<LayoutUnit>&);
 
 #if DCHECK_IS_ON()
   bool TracksAreWiderThanMinTrackBreadth() const;

@@ -157,7 +157,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   String responseURL();
 
   // For Inspector.
-  void SendForInspectorXHRReplay(scoped_refptr<EncodedFormData>,
+  void SendForInspectorXHRReplay(const scoped_refptr<EncodedFormData>&,
                                  ExceptionState&);
 
   XMLHttpRequestUpload* upload();

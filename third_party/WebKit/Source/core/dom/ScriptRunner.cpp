@@ -253,7 +253,7 @@ void ScriptRunner::TryStreamAny() {
     return;
 
   // Look through async_scripts_to_execute_soon_, and stream any one of them.
-  for (auto script_loader : async_scripts_to_execute_soon_) {
+  for (const auto& script_loader : async_scripts_to_execute_soon_) {
     if (DoTryStream(script_loader))
       return;
   }

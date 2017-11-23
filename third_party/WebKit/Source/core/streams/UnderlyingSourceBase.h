@@ -31,12 +31,12 @@ class CORE_EXPORT UnderlyingSourceBase
   void Trace(blink::Visitor*) override;
   virtual ~UnderlyingSourceBase() {}
 
-  ScriptPromise startWrapper(ScriptState*, ScriptValue stream);
+  ScriptPromise startWrapper(ScriptState*, const ScriptValue& stream);
   virtual ScriptPromise Start(ScriptState*);
 
   virtual ScriptPromise pull(ScriptState*);
 
-  ScriptPromise cancelWrapper(ScriptState*, ScriptValue reason);
+  ScriptPromise cancelWrapper(ScriptState*, const ScriptValue& reason);
   virtual ScriptPromise Cancel(ScriptState*, ScriptValue reason);
 
   void notifyLockAcquired();

@@ -5,6 +5,8 @@
 #ifndef HitTestCanvasResult_h
 #define HitTestCanvasResult_h
 
+#include <utility>
+
 #include "core/dom/Element.h"
 
 namespace blink {
@@ -12,8 +14,9 @@ namespace blink {
 class CORE_EXPORT HitTestCanvasResult final
     : public GarbageCollectedFinalized<HitTestCanvasResult> {
  public:
-  static HitTestCanvasResult* Create(String id, Member<Element> control) {
-    return new HitTestCanvasResult(id, control);
+  static HitTestCanvasResult* Create(String id,
+                                     const Member<Element>& control) {
+    return new HitTestCanvasResult(std::move(id), control);
   }
 
   String GetId() const;
@@ -22,7 +25,7 @@ class CORE_EXPORT HitTestCanvasResult final
   void Trace(blink::Visitor*);
 
  private:
-  HitTestCanvasResult(String id, Member<Element> control);
+  HitTestCanvasResult(String id, const Member<Element>& control);
 
   String id_;
   Member<Element> control_;

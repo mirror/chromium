@@ -85,7 +85,7 @@ const char* SameOriginAttribution(Frame* observer_frame, Frame* culprit_frame) {
   return kSameOriginAttribution;
 }
 
-bool IsSameOrigin(String key) {
+bool IsSameOrigin(const String& key) {
   return key == kSameOriginAttribution ||
          key == kSameOriginDescendantAttribution ||
          key == kSameOriginAncestorAttribution ||

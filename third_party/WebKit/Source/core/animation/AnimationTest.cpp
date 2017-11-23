@@ -80,9 +80,10 @@ class AnimationAnimationTest : public RenderingTest {
     return KeyframeEffect::Create(nullptr, nullptr, timing);
   }
 
-  bool SimulateFrame(double time,
-                     Optional<CompositorElementIdSet> composited_element_ids =
-                         Optional<CompositorElementIdSet>()) {
+  bool SimulateFrame(
+      double time,
+      const Optional<CompositorElementIdSet>& composited_element_ids =
+          Optional<CompositorElementIdSet>()) {
     document->GetAnimationClock().UpdateTime(time);
     document->GetPendingAnimations().Update(composited_element_ids, false);
     // The timeline does not know about our animation, so we have to explicitly

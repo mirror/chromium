@@ -106,7 +106,7 @@ class CORE_EXPORT LinkLoader final : public SingleModuleClient,
 
  private:
   class FinishObserver;
-  LinkLoader(LinkLoaderClient*, scoped_refptr<WebTaskRunner>);
+  LinkLoader(LinkLoaderClient*, const scoped_refptr<WebTaskRunner>&);
 
   void NotifyFinished();
   // SingleModuleClient implementation

@@ -15,7 +15,7 @@ namespace {
 
 const double kInterpolationTestDuration = 1.0;
 
-double GetInterpolableNumber(scoped_refptr<Interpolation> value) {
+double GetInterpolableNumber(const scoped_refptr<Interpolation>& value) {
   TransitionInterpolation& interpolation =
       ToTransitionInterpolation(*value.get());
   std::unique_ptr<TypedInterpolationValue> interpolated_value =

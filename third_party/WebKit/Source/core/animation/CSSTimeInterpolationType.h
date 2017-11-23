@@ -11,7 +11,7 @@ namespace blink {
 
 class CSSTimeInterpolationType : public CSSInterpolationType {
  public:
-  CSSTimeInterpolationType(PropertyHandle property,
+  CSSTimeInterpolationType(const PropertyHandle& property,
                            const PropertyRegistration* registration = nullptr)
       : CSSInterpolationType(property, registration) {
     DCHECK(property.IsCSSCustomProperty());

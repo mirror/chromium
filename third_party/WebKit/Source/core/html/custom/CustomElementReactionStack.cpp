@@ -35,7 +35,7 @@ void CustomElementReactionStack::Trace(blink::Visitor* visitor) {
 
 void CustomElementReactionStack::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
-  for (auto key : map_.Keys()) {
+  for (const auto& key : map_.Keys()) {
     visitor->TraceWrappers(key);
   }
 }

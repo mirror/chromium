@@ -921,7 +921,7 @@ String StylePropertySerializer::GetLayeredShorthandValue(
 
 String StylePropertySerializer::GetShorthandValue(
     const StylePropertyShorthand& shorthand,
-    String separator) const {
+    const String& separator) const {
   StringBuilder result;
   for (unsigned i = 0; i < shorthand.length(); ++i) {
     const CSSValue* value =

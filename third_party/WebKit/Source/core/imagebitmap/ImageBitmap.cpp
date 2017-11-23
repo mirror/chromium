@@ -5,6 +5,7 @@
 #include "core/imagebitmap/ImageBitmap.h"
 
 #include <memory>
+#include <utility>
 #include "base/memory/scoped_refptr.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/ImageData.h"
@@ -157,7 +158,7 @@ bool DstBufferSizeHasOverflow(const ImageBitmap::ParsedOptions& options) {
   return false;
 }
 
-SkImageInfo GetSkImageInfo(sk_sp<SkImage> skia_image) {
+SkImageInfo GetSkImageInfo(const sk_sp<SkImage>& skia_image) {
   SkColorType color_type = kN32_SkColorType;
   if (skia_image->colorSpace() && skia_image->colorSpace()->gammaIsLinear())
     color_type = kRGBA_F16_SkColorType;
@@ -228,7 +229,7 @@ static inline bool ShouldAvoidPremul(
 }
 
 scoped_refptr<StaticBitmapImage> FlipImageVertically(
-    scoped_refptr<StaticBitmapImage> input,
+    const scoped_refptr<StaticBitmapImage>& input,
     const ImageBitmap::ParsedOptions& parsed_options) {
   sk_sp<SkImage> image = input->PaintImageForCurrentFrame().GetSkImage();
 
@@ -609,7 +610,7 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
                          const ImageBitmapOptions& options) {
   scoped_refptr<Image> input = image->CachedImage()->GetImage();
   ParsedOptions parsed_options =
-      ParseOptions(options, crop_rect, image->BitmapSourceSize());
+      ParseOptions(options, std::move(crop_rect), image->BitmapSourceSize());
   parsed_options.source_is_unpremul =
       (input->PaintImageForCurrentFrame().GetSkImage()->alphaType() ==
        kUnpremul_SkAlphaType);
@@ -630,7 +631,7 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
                          Document* document,
                          const ImageBitmapOptions& options) {
   ParsedOptions parsed_options =
-      ParseOptions(options, crop_rect, video->BitmapSourceSize());
+      ParseOptions(options, std::move(crop_rect), video->BitmapSourceSize());
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
@@ -667,7 +668,7 @@ ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
       static_cast<StaticBitmapImage*>(image_input.get());
 
   ParsedOptions parsed_options = ParseOptions(
-      options, crop_rect, IntSize(input->width(), input->height()));
+      options, std::move(crop_rect), IntSize(input->width(), input->height()));
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
@@ -695,7 +696,7 @@ ImageBitmap::ImageBitmap(OffscreenCanvas* offscreen_canvas,
     return;
 
   ParsedOptions parsed_options = ParseOptions(
-      options, crop_rect, IntSize(input->width(), input->height()));
+      options, std::move(crop_rect), IntSize(input->width(), input->height()));
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
@@ -725,7 +726,7 @@ ImageBitmap::ImageBitmap(const void* pixel_data,
 }
 
 ImageBitmap::ImageBitmap(ImageData* data,
-                         Optional<IntRect> crop_rect,
+                         const Optional<IntRect>& crop_rect,
                          const ImageBitmapOptions& options) {
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, data->BitmapSourceSize());
@@ -808,7 +809,7 @@ ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
   if (!input)
     return;
   ParsedOptions parsed_options =
-      ParseOptions(options, crop_rect, input->Size());
+      ParseOptions(options, std::move(crop_rect), input->Size());
   parsed_options.source_is_unpremul =
       (input->PaintImageForCurrentFrame().GetSkImage()->alphaType() ==
        kUnpremul_SkAlphaType);
@@ -828,7 +829,7 @@ ImageBitmap::ImageBitmap(scoped_refptr<StaticBitmapImage> image,
                          const ImageBitmapOptions& options) {
   bool origin_clean = image->OriginClean();
   ParsedOptions parsed_options =
-      ParseOptions(options, crop_rect, image->Size());
+      ParseOptions(options, std::move(crop_rect), image->Size());
   parsed_options.source_is_unpremul =
       (image->PaintImageForCurrentFrame().GetSkImage()->alphaType() ==
        kUnpremul_SkAlphaType);
@@ -860,44 +861,44 @@ ImageBitmap* ImageBitmap::Create(ImageElementBase* image,
                                  Optional<IntRect> crop_rect,
                                  Document* document,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(image, crop_rect, document, options);
+  return new ImageBitmap(image, std::move(crop_rect), document, options);
 }
 
 ImageBitmap* ImageBitmap::Create(HTMLVideoElement* video,
                                  Optional<IntRect> crop_rect,
                                  Document* document,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(video, crop_rect, document, options);
+  return new ImageBitmap(video, std::move(crop_rect), document, options);
 }
 
 ImageBitmap* ImageBitmap::Create(HTMLCanvasElement* canvas,
                                  Optional<IntRect> crop_rect,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(canvas, crop_rect, options);
+  return new ImageBitmap(canvas, std::move(crop_rect), options);
 }
 
 ImageBitmap* ImageBitmap::Create(OffscreenCanvas* offscreen_canvas,
                                  Optional<IntRect> crop_rect,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(offscreen_canvas, crop_rect, options);
+  return new ImageBitmap(offscreen_canvas, std::move(crop_rect), options);
 }
 
 ImageBitmap* ImageBitmap::Create(ImageData* data,
                                  Optional<IntRect> crop_rect,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(data, crop_rect, options);
+  return new ImageBitmap(data, std::move(crop_rect), options);
 }
 
 ImageBitmap* ImageBitmap::Create(ImageBitmap* bitmap,
                                  Optional<IntRect> crop_rect,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(bitmap, crop_rect, options);
+  return new ImageBitmap(bitmap, std::move(crop_rect), options);
 }
 
 ImageBitmap* ImageBitmap::Create(scoped_refptr<StaticBitmapImage> image,
                                  Optional<IntRect> crop_rect,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(std::move(image), crop_rect, options);
+  return new ImageBitmap(std::move(image), std::move(crop_rect), options);
 }
 
 ImageBitmap* ImageBitmap::Create(scoped_refptr<StaticBitmapImage> image) {
@@ -960,7 +961,7 @@ void ImageBitmap::ResolvePromiseOnOriginalThread(
 
 void ImageBitmap::RasterizeImageOnBackgroundThread(
     ScriptPromiseResolver* resolver,
-    sk_sp<PaintRecord> paint_record,
+    const sk_sp<PaintRecord>& paint_record,
     const IntRect& dst_rect,
     bool origin_clean,
     std::unique_ptr<ParsedOptions> parsed_options) {
@@ -997,7 +998,7 @@ ScriptPromise ImageBitmap::CreateAsync(ImageElementBase* image,
 
   scoped_refptr<Image> input = image->CachedImage()->GetImage();
   ParsedOptions parsed_options =
-      ParseOptions(options, crop_rect, image->BitmapSourceSize());
+      ParseOptions(options, std::move(crop_rect), image->BitmapSourceSize());
   if (DstBufferSizeHasOverflow(parsed_options)) {
     resolver->Reject(
         ScriptValue(resolver->GetScriptState(),

@@ -22,6 +22,8 @@
 
 #include "core/css/StyleRuleImport.h"
 
+#include <utility>
+
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
@@ -34,7 +36,7 @@ namespace blink {
 
 StyleRuleImport* StyleRuleImport::Create(const String& href,
                                          scoped_refptr<MediaQuerySet> media) {
-  return new StyleRuleImport(href, media);
+  return new StyleRuleImport(href, std::move(media));
 }
 
 StyleRuleImport::StyleRuleImport(const String& href,
@@ -43,7 +45,7 @@ StyleRuleImport::StyleRuleImport(const String& href,
       parent_style_sheet_(nullptr),
       style_sheet_client_(new ImportedStyleSheetClient(this)),
       str_href_(href),
-      media_queries_(media),
+      media_queries_(std::move(media)),
       loading_(false) {
   if (!media_queries_)
     media_queries_ = MediaQuerySet::Create(String());

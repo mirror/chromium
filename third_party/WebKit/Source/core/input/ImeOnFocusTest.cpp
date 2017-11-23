@@ -54,11 +54,11 @@ class ImeOnFocusTest : public ::testing::Test {
  protected:
   void SendGestureTap(WebView*, IntPoint);
   void Focus(const AtomicString& element);
-  void RunImeOnFocusTest(std::string file_name,
+  void RunImeOnFocusTest(const std::string& file_name,
                          int,
                          IntPoint tap_point = IntPoint(-1, -1),
                          const AtomicString& focus_element = g_null_atom,
-                         std::string frame = "");
+                         const std::string& frame = "");
 
   std::string base_url_;
   FrameTestHelpers::WebViewHelper web_view_helper_;
@@ -88,11 +88,11 @@ void ImeOnFocusTest::Focus(const AtomicString& element) {
 }
 
 void ImeOnFocusTest::RunImeOnFocusTest(
-    std::string file_name,
+    const std::string& file_name,
     int expected_virtual_keyboard_request_count,
     IntPoint tap_point,
     const AtomicString& focus_element,
-    std::string frame) {
+    const std::string& frame) {
   ImeRequestTrackingWebViewClient client;
   RegisterMockedURLLoadFromBase(WebString::FromUTF8(base_url_),
                                 testing::CoreTestDataPath(),

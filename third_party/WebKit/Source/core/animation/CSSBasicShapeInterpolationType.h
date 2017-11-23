@@ -5,6 +5,8 @@
 #ifndef CSSBasicShapeInterpolationType_h
 #define CSSBasicShapeInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSBasicShapeInterpolationType : public CSSInterpolationType {
  public:
   CSSBasicShapeInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+      : CSSInterpolationType(std::move(property)) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;

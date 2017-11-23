@@ -5,6 +5,8 @@
 #ifndef CSSPositionInterpolationType_h
 #define CSSPositionInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSLengthListInterpolationType.h"
 
 #include "core/animation/CSSPositionAxisListInterpolationType.h"
@@ -17,7 +19,7 @@ namespace blink {
 class CSSPositionInterpolationType : public CSSLengthListInterpolationType {
  public:
   CSSPositionInterpolationType(PropertyHandle property)
-      : CSSLengthListInterpolationType(property) {}
+      : CSSLengthListInterpolationType(std::move(property)) {}
 
  private:
   InterpolationValue MaybeConvertValue(const CSSValue& value,

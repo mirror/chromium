@@ -20,7 +20,7 @@ struct SizesCalcTestCase {
   const bool dont_run_in_css_calc;
 };
 
-static void VerifyCSSCalc(String text,
+static void VerifyCSSCalc(const String& text,
                           double value,
                           bool valid,
                           unsigned font_size,

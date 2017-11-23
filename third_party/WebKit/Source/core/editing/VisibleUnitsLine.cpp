@@ -186,7 +186,7 @@ PositionWithAffinityTemplate<Strategy> StartPositionForLine(
   if (!root_box) {
     // There are VisiblePositions at offset 0 in blocks without
     // RootInlineBoxes, like empty editable blocks and bordered blocks.
-    PositionTemplate<Strategy> p = c.GetPosition();
+    const PositionTemplate<Strategy>& p = c.GetPosition();
     if (p.AnchorNode()->GetLayoutObject() &&
         p.AnchorNode()->GetLayoutObject()->IsLayoutBlock() &&
         !p.ComputeEditingOffset())
@@ -408,7 +408,7 @@ static PositionWithAffinityTemplate<Strategy> EndPositionForLine(
   if (!root_box) {
     // There are VisiblePositions at offset 0 in blocks without
     // RootInlineBoxes, like empty editable blocks and bordered blocks.
-    const PositionTemplate<Strategy> p = c.GetPosition();
+    const PositionTemplate<Strategy>& p = c.GetPosition();
     if (p.AnchorNode()->GetLayoutObject() &&
         p.AnchorNode()->GetLayoutObject()->IsLayoutBlock() &&
         !p.ComputeEditingOffset())

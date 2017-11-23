@@ -52,7 +52,7 @@ class CORE_EXPORT MediaQuery {
                                             ExpressionHeapVector);
   static std::unique_ptr<MediaQuery> CreateNotAll();
 
-  MediaQuery(RestrictorType, String media_type, ExpressionHeapVector);
+  MediaQuery(RestrictorType, const String& media_type, ExpressionHeapVector);
   MediaQuery(const MediaQuery&);
   ~MediaQuery();
 

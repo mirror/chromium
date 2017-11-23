@@ -55,7 +55,7 @@ void CSSImageSetValue::FillImageSet() {
   size_t i = 0;
   while (i < length) {
     const CSSImageValue& image_value = ToCSSImageValue(Item(i));
-    String image_url = image_value.Url();
+    const String& image_url = image_value.Url();
 
     ++i;
     SECURITY_DCHECK(i < length);

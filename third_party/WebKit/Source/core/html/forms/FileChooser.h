@@ -48,7 +48,7 @@ struct FileChooserFileInfo {
   FileChooserFileInfo(const String& path, const String& display_name = String())
       : path(path), display_name(display_name) {}
 
-  FileChooserFileInfo(const KURL& file_system_url, const FileMetadata metadata)
+  FileChooserFileInfo(const KURL& file_system_url, const FileMetadata& metadata)
       : file_system_url(file_system_url), metadata(metadata) {}
 
   // Members for native files.

@@ -690,7 +690,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
 
     break_token = line_breaker.CreateBreakToken(nullptr);
     LayoutUnit inline_size = line_info.TextIndent();
-    for (const NGInlineItemResult item_result : line_info.Results())
+    for (const NGInlineItemResult& item_result : line_info.Results())
       inline_size += item_result.inline_size;
     result = std::max(inline_size, result);
   }

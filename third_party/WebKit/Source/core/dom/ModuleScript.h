@@ -35,7 +35,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   // and allows null ScriptModule.
   static ModuleScript* CreateForTest(
       Modulator*,
-      ScriptModule,
+      const ScriptModule&,
       const KURL& base_url,
       const ScriptFetchOptions& = ScriptFetchOptions());
 
@@ -55,7 +55,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   bool IsErrored() const;
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-set-pre-instantiation-error
-  void SetErrorAndClearRecord(ScriptValue error);
+  void SetErrorAndClearRecord(const ScriptValue& error);
 
   v8::Local<v8::Value> CreateError(v8::Isolate* isolate) const {
     return preinstantiation_error_.NewLocal(isolate);
@@ -76,7 +76,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
 
   static ModuleScript* CreateInternal(const String& source_text,
                                       Modulator*,
-                                      ScriptModule,
+                                      const ScriptModule&,
                                       const KURL& base_url,
                                       const ScriptFetchOptions&,
                                       const TextPosition&);

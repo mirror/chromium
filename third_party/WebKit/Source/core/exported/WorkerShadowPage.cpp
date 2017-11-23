@@ -56,7 +56,7 @@ void WorkerShadowPage::Initialize(const KURL& script_url) {
 
 void WorkerShadowPage::SetContentSecurityPolicyAndReferrerPolicy(
     ContentSecurityPolicy* content_security_policy,
-    String referrer_policy) {
+    const String& referrer_policy) {
   DCHECK(IsMainThread());
   content_security_policy->SetOverrideURLForSelf(GetDocument()->Url());
   GetDocument()->InitContentSecurityPolicy(content_security_policy);

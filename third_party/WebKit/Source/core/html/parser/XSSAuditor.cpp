@@ -837,7 +837,8 @@ String XSSAuditor::SnippetFromAttribute(const FilterTokenRequest& request,
       .Substring(name_start, length);
 }
 
-String XSSAuditor::Canonicalize(String snippet, TruncationKind treatment) {
+String XSSAuditor::Canonicalize(const String& snippet,
+                                TruncationKind treatment) {
   String decoded_snippet = FullyDecodeString(snippet, encoding_);
 
   if (treatment != kNoTruncation) {

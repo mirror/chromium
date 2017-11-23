@@ -132,7 +132,7 @@ inline static String AttemptStaticStringCreation(
   return AttemptStaticStringCreation(vector.data(), vector.size(), width);
 }
 
-inline static String AttemptStaticStringCreation(const String str) {
+inline static String AttemptStaticStringCreation(const String& str) {
   if (!str.Is8Bit())
     return AttemptStaticStringCreation(str.Characters16(), str.length(),
                                        kForce16Bit);

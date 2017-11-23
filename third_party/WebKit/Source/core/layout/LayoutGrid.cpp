@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <utility>
 #include "core/frame/UseCounter.h"
 #include "core/layout/GridLayoutUtils.h"
 #include "core/layout/LayoutState.h"
@@ -400,8 +401,9 @@ void LayoutGrid::UpdateBlockLayout(bool relayout_children) {
   ClearNeedsLayout();
 }
 
-LayoutUnit LayoutGrid::GridGap(GridTrackSizingDirection direction,
-                               Optional<LayoutUnit> available_size) const {
+LayoutUnit LayoutGrid::GridGap(
+    GridTrackSizingDirection direction,
+    const Optional<LayoutUnit>& available_size) const {
   const Length& gap = direction == kForColumns ? StyleRef().GridColumnGap()
                                                : StyleRef().GridRowGap();
   return ValueForLength(gap, available_size.value_or(LayoutUnit()));
@@ -430,7 +432,7 @@ LayoutUnit LayoutGrid::GuttersSize(const Grid& grid,
   if (span <= 1)
     return LayoutUnit();
 
-  LayoutUnit gap = GridGap(direction, available_size);
+  LayoutUnit gap = GridGap(direction, std::move(available_size));
 
   // Fast path, no collapsing tracks.
   if (!grid.HasAutoRepeatEmptyTracks(direction))
@@ -616,7 +618,7 @@ size_t LayoutGrid::ComputeAutoRepeatTracksCount(
   }
 
   LayoutUnit auto_repeat_tracks_size;
-  for (auto auto_track_size : auto_repeat_tracks) {
+  for (const auto& auto_track_size : auto_repeat_tracks) {
     DCHECK(auto_track_size.MinTrackBreadth().IsLength());
     DCHECK(!auto_track_size.MinTrackBreadth().IsFlex());
     bool has_definite_max_track_sizing_function =
@@ -746,8 +748,8 @@ void LayoutGrid::PlaceItemsOnGrid(
   size_t auto_repeat_rows = ComputeAutoRepeatTracksCount(
       kForRows, ConvertLayoutUnitToOptional(
                     AvailableLogicalHeightForPercentageComputation()));
-  size_t auto_repeat_columns =
-      ComputeAutoRepeatTracksCount(kForColumns, available_logical_width);
+  size_t auto_repeat_columns = ComputeAutoRepeatTracksCount(
+      kForColumns, std::move(available_logical_width));
 
   auto_repeat_rows = ClampAutoRepeatTracks(kForRows, auto_repeat_rows);
   auto_repeat_columns = ClampAutoRepeatTracks(kForColumns, auto_repeat_columns);
@@ -2033,7 +2035,7 @@ LayoutUnit LayoutGrid::RowAxisOffsetForChild(const LayoutBox& child) const {
 }
 
 bool LayoutGrid::GridPositionIsAutoForOutOfFlow(
-    GridPosition position,
+    const GridPosition& position,
     GridTrackSizingDirection direction) const {
   return (position.IsAuto() ||
           (position.IsNamedGridArea() &&

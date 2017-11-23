@@ -87,7 +87,7 @@ std::unique_ptr<MediaQuery> MediaQuery::Create(
 }
 
 MediaQuery::MediaQuery(RestrictorType restrictor,
-                       String media_type,
+                       const String& media_type,
                        ExpressionHeapVector expressions)
     : restrictor_(restrictor),
       media_type_(AttemptStaticStringCreation(media_type.LowerASCII())),

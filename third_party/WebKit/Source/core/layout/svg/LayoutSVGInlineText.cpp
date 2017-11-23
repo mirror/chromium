@@ -44,7 +44,7 @@ namespace blink {
 // should be removed in favor of letting the generic white-space code handle
 // this.
 static scoped_refptr<StringImpl> NormalizeWhitespace(
-    scoped_refptr<StringImpl> string) {
+    const scoped_refptr<StringImpl>& string) {
   scoped_refptr<StringImpl> new_string = string->Replace('\t', ' ');
   new_string = new_string->Replace('\n', ' ');
   new_string = new_string->Replace('\r', ' ');

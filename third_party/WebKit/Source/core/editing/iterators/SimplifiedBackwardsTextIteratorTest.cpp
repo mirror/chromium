@@ -22,7 +22,7 @@ TextIteratorBehavior EmitsSmallXForTextSecurityBehavior() {
 class SimplifiedBackwardsTextIteratorTest : public EditingTestBase {
  protected:
   std::string ExtractStringInRange(
-      const std::string selection_text,
+      const std::string& selection_text,
       const TextIteratorBehavior& behavior = TextIteratorBehavior()) {
     const SelectionInDOMTree selection = SetSelectionTextToBody(selection_text);
     StringBuilder builder;

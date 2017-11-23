@@ -1547,8 +1547,9 @@ WebLocalFrame* WebLocalFrame::CreateProvisional(
     WebRemoteFrame* old_web_frame,
     WebSandboxFlags flags,
     ParsedFeaturePolicy container_policy) {
-  return WebLocalFrameImpl::CreateProvisional(
-      client, interface_registry, old_web_frame, flags, container_policy);
+  return WebLocalFrameImpl::CreateProvisional(client, interface_registry,
+                                              old_web_frame, flags,
+                                              std::move(container_policy));
 }
 
 WebLocalFrameImpl* WebLocalFrameImpl::Create(
@@ -1586,7 +1587,7 @@ WebLocalFrameImpl* WebLocalFrameImpl::CreateProvisional(
     blink::InterfaceRegistry* interface_registry,
     WebRemoteFrame* old_web_frame,
     WebSandboxFlags flags,
-    ParsedFeaturePolicy container_policy) {
+    const ParsedFeaturePolicy& container_policy) {
   DCHECK(client);
   WebLocalFrameImpl* web_frame =
       new WebLocalFrameImpl(old_web_frame, client, interface_registry);

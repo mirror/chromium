@@ -189,7 +189,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   void DispatchDidFail(const ResourceError&);
 
   void LoadRequestAsync(const ResourceRequest&, ResourceLoaderOptions);
-  void LoadRequestSync(const ResourceRequest&, ResourceLoaderOptions);
+  void LoadRequestSync(const ResourceRequest&, const ResourceLoaderOptions&);
 
   void PrepareCrossOriginRequest(ResourceRequest&) const;
 

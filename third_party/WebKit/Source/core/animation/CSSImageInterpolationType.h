@@ -5,6 +5,8 @@
 #ifndef CSSImageInterpolationType_h
 #define CSSImageInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -15,7 +17,7 @@ class CSSImageInterpolationType : public CSSInterpolationType {
  public:
   CSSImageInterpolationType(PropertyHandle property,
                             const PropertyRegistration* registration = nullptr)
-      : CSSInterpolationType(property, registration) {}
+      : CSSInterpolationType(std::move(property), registration) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;

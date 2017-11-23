@@ -441,8 +441,9 @@ ReplaceSelectionCommand::ReplaceSelectionCommand(
       sanitize_fragment_(options & kSanitizeFragment),
       should_merge_end_(false) {}
 
-static bool HasMatchingQuoteLevel(VisiblePosition end_of_existing_content,
-                                  VisiblePosition end_of_inserted_content) {
+static bool HasMatchingQuoteLevel(
+    const VisiblePosition& end_of_existing_content,
+    const VisiblePosition& end_of_inserted_content) {
   Position existing = end_of_existing_content.DeepEquivalent();
   Position inserted = end_of_inserted_content.DeepEquivalent();
   bool is_inside_mail_blockquote = EnclosingNodeOfType(

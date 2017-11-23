@@ -208,7 +208,7 @@ MinMaxSize ComputeMinAndMaxContentContribution(
       builder.ToConstraintSpace(writing_mode);
 
   MinMaxSize computed_sizes;
-  Length inline_size = style.LogicalWidth();
+  const Length& inline_size = style.LogicalWidth();
   if (inline_size.IsAuto()) {
     CHECK(min_and_max.has_value());
     NGBoxStrut border_and_padding =
@@ -223,7 +223,7 @@ MinMaxSize ComputeMinAndMaxContentContribution(
                             LengthResolveType::kContentSize);
   }
 
-  Length max_length = style.LogicalMaxWidth();
+  const Length& max_length = style.LogicalMaxWidth();
   if (!max_length.IsMaxSizeNone()) {
     LayoutUnit max = ResolveInlineLength(*space, style, min_and_max, max_length,
                                          LengthResolveType::kMaxSize);
@@ -317,8 +317,8 @@ NGLogicalSize ComputeReplacedSize(const NGLayoutInputNode& node,
                      &computed_block_size, &aspect_ratio);
 
   const ComputedStyle& style = node.Style();
-  Length inline_length = style.LogicalWidth();
-  Length block_length = style.LogicalHeight();
+  const Length& inline_length = style.LogicalWidth();
+  const Length& block_length = style.LogicalHeight();
 
   // Compute inline size
   if (inline_length.IsAuto()) {

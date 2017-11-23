@@ -5,6 +5,8 @@
 #ifndef CSSBorderImageLengthBoxInterpolationType_h
 #define CSSBorderImageLengthBoxInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSBorderImageLengthBoxInterpolationType : public CSSInterpolationType {
  public:
   CSSBorderImageLengthBoxInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+      : CSSInterpolationType(std::move(property)) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;

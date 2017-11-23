@@ -568,7 +568,7 @@ StyleRuleCharset* CSSParserImpl::ConsumeCharsetRule(
 }
 
 StyleRuleImport* CSSParserImpl::ConsumeImportRule(
-    AtomicString uri,
+    const AtomicString& uri,
     CSSParserTokenRange prelude,
     const RangeOffset& prelude_offset) {
   if (uri.IsNull())

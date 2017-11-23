@@ -12,7 +12,7 @@
 
 namespace blink {
 
-SimRequest::SimRequest(String url, String mime_type)
+SimRequest::SimRequest(const String& url, const String& mime_type)
     : url_(url),
       client_(nullptr),
       total_encoded_data_length_(0),

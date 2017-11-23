@@ -99,7 +99,7 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
       Vector<NGPositionedFloat>& positioned_floats,
       Vector<scoped_refptr<NGUnpositionedFloat>>& unpositioned_floats,
       std::unique_ptr<const NGExclusionSpace> exclusion_space,
-      const WTF::Optional<NGBfcOffset> bfc_offset,
+      const WTF::Optional<NGBfcOffset>& bfc_offset,
       const NGMarginStrut end_margin_strut,
       const LayoutUnit intrinsic_block_size,
       NGLayoutResultStatus status);

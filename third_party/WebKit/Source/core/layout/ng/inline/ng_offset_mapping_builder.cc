@@ -137,7 +137,7 @@ void NGOffsetMappingBuilder::Composite(const NGOffsetMappingBuilder& other) {
     mapping_[i] = other.mapping_[mapping_[i]];
 }
 
-void NGOffsetMappingBuilder::SetDestinationString(String string) {
+void NGOffsetMappingBuilder::SetDestinationString(const String& string) {
   if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
     DCHECK_EQ(mapping_.back(), string.length());
   destination_string_ = string;

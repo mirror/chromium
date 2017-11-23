@@ -12,7 +12,7 @@ namespace blink {
 class CSSResolutionInterpolationType : public CSSInterpolationType {
  public:
   CSSResolutionInterpolationType(
-      PropertyHandle property,
+      const PropertyHandle& property,
       const PropertyRegistration* registration = nullptr)
       : CSSInterpolationType(property, registration) {
     DCHECK(property.IsCSSCustomProperty());

@@ -196,7 +196,7 @@ void SlotAssignment::ResolveAssignmentNg() {
     return;
   needs_assignment_recalc_ = false;
 
-  for (Member<HTMLSlotElement> slot : Slots())
+  for (const Member<HTMLSlotElement>& slot : Slots())
     slot->ClearAssignedNodes();
 
   for (Node& child : NodeTraversal::ChildrenOf(owner_->host())) {
@@ -216,7 +216,7 @@ void SlotAssignment::ResolveAssignmentNg() {
 void SlotAssignment::ResolveAssignment() {
   DCHECK(!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
 
-  for (Member<HTMLSlotElement> slot : Slots())
+  for (const Member<HTMLSlotElement>& slot : Slots())
     slot->SaveAndClearDistribution();
 
   for (Node& child : NodeTraversal::ChildrenOf(owner_->host())) {
@@ -238,7 +238,7 @@ void SlotAssignment::ResolveDistribution() {
   ResolveAssignment();
   const HeapVector<Member<HTMLSlotElement>>& slots = Slots();
 
-  for (auto slot : slots)
+  for (const auto& slot : slots)
     slot->ResolveDistributedNodes();
 
   // Update each slot's distribution in reverse tree order so that a child slot

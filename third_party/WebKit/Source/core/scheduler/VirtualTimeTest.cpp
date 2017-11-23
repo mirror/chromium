@@ -34,7 +34,7 @@ class ScriptExecutionCallbackHelper : public WebScriptExecutionCallback {
 
 class VirtualTimeTest : public SimTest {
  protected:
-  String ExecuteJavaScript(String script_source) {
+  String ExecuteJavaScript(const String& script_source) {
     ScriptExecutionCallbackHelper callback_helper;
     WebView()
         .MainFrame()

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <memory>
+#include <utility>
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
@@ -50,12 +51,12 @@ class GranularityStrategyTest : public PageTestBase {
   void ParseText(Text*);
   void ParseText(const TextNodeVector&);
 
-  Text* SetupTranslateZ(String);
-  Text* SetupTransform(String);
-  Text* SetupRotate(String);
-  void SetupTextSpan(String str1,
-                     String str2,
-                     String str3,
+  Text* SetupTranslateZ(const String&);
+  Text* SetupTransform(const String&);
+  Text* SetupRotate(const String&);
+  void SetupTextSpan(const String& str1,
+                     const String& str2,
+                     const String& str3,
                      size_t sel_begin,
                      size_t sel_end);
   void SetupVerticalAlign(String str1,
@@ -145,7 +146,7 @@ void GranularityStrategyTest::ParseText(const TextNodeVector& text_nodes) {
   }
 }
 
-Text* GranularityStrategyTest::SetupTranslateZ(String str) {
+Text* GranularityStrategyTest::SetupTranslateZ(const String& str) {
   SetInnerHTML(
       "<html>"
       "<head>"
@@ -170,7 +171,7 @@ Text* GranularityStrategyTest::SetupTranslateZ(String str) {
   return text;
 }
 
-Text* GranularityStrategyTest::SetupTransform(String str) {
+Text* GranularityStrategyTest::SetupTransform(const String& str) {
   SetInnerHTML(
       "<html>"
       "<head>"
@@ -195,7 +196,7 @@ Text* GranularityStrategyTest::SetupTransform(String str) {
   return text;
 }
 
-Text* GranularityStrategyTest::SetupRotate(String str) {
+Text* GranularityStrategyTest::SetupRotate(const String& str) {
   SetInnerHTML(
       "<html>"
       "<head>"
@@ -220,9 +221,9 @@ Text* GranularityStrategyTest::SetupRotate(String str) {
   return text;
 }
 
-void GranularityStrategyTest::SetupTextSpan(String str1,
-                                            String str2,
-                                            String str3,
+void GranularityStrategyTest::SetupTextSpan(const String& str1,
+                                            const String& str2,
+                                            const String& str3,
                                             size_t sel_begin,
                                             size_t sel_end) {
   Text* text1 = GetDocument().createTextNode(str1);
@@ -284,7 +285,8 @@ void GranularityStrategyTest::SetupVerticalAlign(String str1,
       "</body>"
       "</html>");
 
-  SetupTextSpan(str1, str2, str3, sel_begin, sel_end);
+  SetupTextSpan(std::move(str1), std::move(str2), std::move(str3), sel_begin,
+                sel_end);
 }
 
 void GranularityStrategyTest::SetupFontSize(String str1,
@@ -306,7 +308,8 @@ void GranularityStrategyTest::SetupFontSize(String str1,
       "</body>"
       "</html>");
 
-  SetupTextSpan(str1, str2, str3, sel_begin, sel_end);
+  SetupTextSpan(std::move(str1), std::move(str2), std::move(str3), sel_begin,
+                sel_end);
 }
 
 // Tests expanding selection on text "abcdef ghij kl mno^p|>qr stuvwi inm mnii,"

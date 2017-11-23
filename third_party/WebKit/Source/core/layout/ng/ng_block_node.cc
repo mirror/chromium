@@ -76,7 +76,7 @@ void UpdateLegacyMultiColumnFlowThread(
   bool has_processed_first_child = false;
 
   // Stitch the columns together.
-  for (const scoped_refptr<NGPhysicalFragment> child : fragment.Children()) {
+  for (const scoped_refptr<NGPhysicalFragment>& child : fragment.Children()) {
     NGFragment child_fragment(writing_mode, *child);
     flow_end += child_fragment.BlockSize();
     // Non-uniform fragmentainer widths not supported by legacy layout.

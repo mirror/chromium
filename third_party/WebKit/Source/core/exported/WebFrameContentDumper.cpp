@@ -129,7 +129,7 @@ class TextDumper final {
     required_line_breaks_ = std::max(required, required_line_breaks_);
   }
 
-  void DumpText(String text) {
+  void DumpText(const String& text) {
     if (!text.length())
       return;
 

@@ -18,13 +18,13 @@ namespace blink {
 class AnimationTimingInputTest : public ::testing::Test {
  public:
   Timing ApplyTimingInputNumber(v8::Isolate*,
-                                String timing_property,
+                                const String& timing_property,
                                 double timing_property_value,
                                 bool& timing_conversion_success,
                                 bool is_keyframeeffectoptions = true);
   Timing ApplyTimingInputString(v8::Isolate*,
-                                String timing_property,
-                                String timing_property_value,
+                                const String& timing_property,
+                                const String& timing_property_value,
                                 bool& timing_conversion_success,
                                 bool is_keyframeeffectoptions = true);
 
@@ -38,7 +38,7 @@ class AnimationTimingInputTest : public ::testing::Test {
 
 Timing AnimationTimingInputTest::ApplyTimingInputNumber(
     v8::Isolate* isolate,
-    String timing_property,
+    const String& timing_property,
     double timing_property_value,
     bool& timing_conversion_success,
     bool is_keyframeeffectoptions) {
@@ -69,8 +69,8 @@ Timing AnimationTimingInputTest::ApplyTimingInputNumber(
 
 Timing AnimationTimingInputTest::ApplyTimingInputString(
     v8::Isolate* isolate,
-    String timing_property,
-    String timing_property_value,
+    const String& timing_property,
+    const String& timing_property_value,
     bool& timing_conversion_success,
     bool is_keyframeeffectoptions) {
   v8::Local<v8::Object> timing_input = v8::Object::New(isolate);

@@ -46,7 +46,7 @@ class AnimationKeyframeEffectV8Test : public KeyframeEffectTest {
  protected:
   static KeyframeEffect* CreateAnimation(
       Element* element,
-      Vector<Dictionary> keyframe_dictionary_vector,
+      const Vector<Dictionary>& keyframe_dictionary_vector,
       double timing_input) {
     NonThrowableExceptionState exception_state;
     return KeyframeEffect::Create(
@@ -59,7 +59,7 @@ class AnimationKeyframeEffectV8Test : public KeyframeEffectTest {
   }
   static KeyframeEffect* CreateAnimation(
       Element* element,
-      Vector<Dictionary> keyframe_dictionary_vector,
+      const Vector<Dictionary>& keyframe_dictionary_vector,
       const KeyframeEffectOptions& timing_input) {
     NonThrowableExceptionState exception_state;
     return KeyframeEffect::Create(
@@ -72,7 +72,7 @@ class AnimationKeyframeEffectV8Test : public KeyframeEffectTest {
   }
   static KeyframeEffect* CreateAnimation(
       Element* element,
-      Vector<Dictionary> keyframe_dictionary_vector) {
+      const Vector<Dictionary>& keyframe_dictionary_vector) {
     NonThrowableExceptionState exception_state;
     return KeyframeEffect::Create(
         nullptr, element,

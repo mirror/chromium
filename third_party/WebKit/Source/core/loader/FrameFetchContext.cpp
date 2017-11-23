@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <utility>
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
@@ -190,7 +191,7 @@ struct FrameFetchContext::FrozenState final
               scoped_refptr<const SecurityOrigin> parent_security_origin,
               const Optional<WebAddressSpace>& address_space,
               const ContentSecurityPolicy* content_security_policy,
-              KURL site_for_cookies,
+              const KURL& site_for_cookies,
               scoped_refptr<SecurityOrigin> requestor_origin,
               scoped_refptr<SecurityOrigin> requestor_origin_for_frame_loading,
               const ClientHintsPreferences& client_hints_preferences,
@@ -206,8 +207,9 @@ struct FrameFetchContext::FrozenState final
         address_space(address_space),
         content_security_policy(content_security_policy),
         site_for_cookies(site_for_cookies),
-        requestor_origin(requestor_origin),
-        requestor_origin_for_frame_loading(requestor_origin_for_frame_loading),
+        requestor_origin(std::move(requestor_origin)),
+        requestor_origin_for_frame_loading(
+            std::move(requestor_origin_for_frame_loading)),
         client_hints_preferences(client_hints_preferences),
         device_pixel_ratio(device_pixel_ratio),
         user_agent(user_agent),

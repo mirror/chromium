@@ -24,6 +24,8 @@
 
 #include "core/style/NinePieceImage.h"
 
+#include <utility>
+
 #include "core/style/DataEquivalency.h"
 
 namespace blink {
@@ -46,7 +48,7 @@ NinePieceImage::NinePieceImage(StyleImage* image,
                                ENinePieceImageRule vertical_rule) {
   data_.Init();
   data_.Access()->image = image;
-  data_.Access()->image_slices = image_slices;
+  data_.Access()->image_slices = std::move(image_slices);
   data_.Access()->border_slices = border_slices;
   data_.Access()->outset = outset;
   data_.Access()->fill = fill;

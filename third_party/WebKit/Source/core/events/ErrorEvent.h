@@ -55,7 +55,7 @@ class ErrorEvent final : public Event {
 
   static ErrorEvent* Create(const String& message,
                             std::unique_ptr<SourceLocation> location,
-                            ScriptValue error,
+                            const ScriptValue& error,
                             DOMWrapperWorld* world) {
     return new ErrorEvent(message, std::move(location), error, world);
   }
@@ -100,7 +100,7 @@ class ErrorEvent final : public Event {
   ErrorEvent();
   ErrorEvent(const String& message,
              std::unique_ptr<SourceLocation>,
-             ScriptValue error,
+             const ScriptValue& error,
              DOMWrapperWorld*);
   ErrorEvent(ScriptState*, const AtomicString&, const ErrorEventInit&);
 

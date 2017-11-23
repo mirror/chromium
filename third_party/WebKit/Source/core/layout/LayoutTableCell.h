@@ -475,7 +475,7 @@ class CORE_EXPORT LayoutTableCell : public LayoutBlockFlow {
   void UpdateCollapsedBorderValues() const;
 
   Length LogicalWidthFromColumns(LayoutTableCol* first_col_for_this_cell,
-                                 Length width_from_style) const;
+                                 const Length& width_from_style) const;
 
   void UpdateColAndRowSpanFlags();
 

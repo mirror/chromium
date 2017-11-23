@@ -5,6 +5,8 @@
 #ifndef CSSTransformOriginInterpolationType_h
 #define CSSTransformOriginInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSLengthListInterpolationType.h"
 #include "core/animation/CSSPositionAxisListInterpolationType.h"
 #include "core/animation/LengthInterpolationFunctions.h"
@@ -17,7 +19,7 @@ class CSSTransformOriginInterpolationType
     : public CSSLengthListInterpolationType {
  public:
   CSSTransformOriginInterpolationType(PropertyHandle property)
-      : CSSLengthListInterpolationType(property) {}
+      : CSSLengthListInterpolationType(std::move(property)) {}
 
  private:
   InterpolationValue MaybeConvertValue(const CSSValue& value,

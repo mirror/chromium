@@ -162,7 +162,7 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   void CrossSiteOrCSPViolationOccurred(AtomicString);
   void EnqueueImageLoadingMicroTask(UpdateFromElementBehavior, ReferrerPolicy);
 
-  KURL ImageSourceToKURL(AtomicString) const;
+  KURL ImageSourceToKURL(const AtomicString&) const;
 
   // Used to determine whether to immediately initiate the load or to schedule a
   // microtask.

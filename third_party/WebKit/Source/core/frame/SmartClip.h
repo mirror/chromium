@@ -31,6 +31,8 @@
 #ifndef SmartClip_h
 #define SmartClip_h
 
+#include <utility>
+
 #include "core/CoreExport.h"
 #include "core/dom/Node.h"
 #include "core/frame/LocalFrame.h"
@@ -45,7 +47,7 @@ class CORE_EXPORT SmartClipData {
   SmartClipData() {}
 
   SmartClipData(IntRect rect, String string)
-      : rect_in_viewport_(rect), string_(string) {}
+      : rect_in_viewport_(rect), string_(std::move(string)) {}
 
   IntRect RectInViewport() const;
   const String& ClipData() const;

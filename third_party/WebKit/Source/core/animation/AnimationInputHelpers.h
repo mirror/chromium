@@ -33,7 +33,7 @@ class CORE_EXPORT AnimationInputHelpers {
                                                            Document*,
                                                            ExceptionState&);
 
-  static String PropertyHandleToKeyframeAttribute(PropertyHandle);
+  static String PropertyHandleToKeyframeAttribute(const PropertyHandle&);
 };
 
 }  // namespace blink

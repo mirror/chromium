@@ -56,7 +56,7 @@ class UseCounterTest : public ::testing::Test {
                           std::function<bool(T)> counted,
                           std::function<void(T)> count,
                           std::function<int(T)> histogram_map,
-                          std::function<void(KURL)> did_commit_load,
+                          const std::function<void(KURL)>& did_commit_load,
                           const std::string& url);
   std::unique_ptr<DummyPageHolder> dummy_;
   HistogramTester histogram_tester_;
@@ -70,7 +70,7 @@ void UseCounterTest::HistogramBasicTest(
     std::function<bool(T)> counted,
     std::function<void(T)> count,
     std::function<int(T)> histogram_map,
-    std::function<void(KURL)> did_commit_load,
+    const std::function<void(KURL)>& did_commit_load,
     const std::string& url) {
   int page_visit_bucket = GetPageVisitsBucketforHistogram(histogram);
 
