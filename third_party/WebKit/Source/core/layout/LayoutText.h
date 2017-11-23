@@ -256,6 +256,8 @@ class CORE_EXPORT LayoutText : public LayoutObject {
     known_to_have_no_overflow_and_no_fallback_fonts_ = false;
   }
 
+  bool ContainsOnlyWhitespace() const { return contains_only_whitespace_; };
+
   virtual UChar PreviousCharacter() const;
 
  protected:
@@ -345,6 +347,7 @@ class CORE_EXPORT LayoutText : public LayoutObject {
   // inserted or removed).
   bool lines_dirty_ : 1;
   bool contains_reversed_text_ : 1;
+  bool contains_only_whitespace_ : 1;
   mutable bool known_to_have_no_overflow_and_no_fallback_fonts_ : 1;
 
   float min_width_;

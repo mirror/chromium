@@ -70,6 +70,7 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(false),
         is8_bit_(true),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
@@ -95,6 +96,7 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(false),
         is8_bit_(false),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
@@ -119,6 +121,7 @@ class PLATFORM_EXPORT TextRun final {
         horizontal_glyph_stretch_(1),
         expansion_(expansion),
         expansion_behavior_(expansion_behavior),
+        contains_only_whitespace_(false),
         allow_tabs_(false),
         direction_(static_cast<unsigned>(direction)),
         directional_override_(directional_override),
@@ -238,6 +241,10 @@ class PLATFORM_EXPORT TextRun final {
   float XPos() const { return xpos_; }
   void SetXPos(float x_pos) { xpos_ = x_pos; }
   float Expansion() const { return expansion_; }
+  bool ContainsOnlyWhitespace() const { return contains_only_whitespace_; }
+  void SetContainsOnlyWhitespace(bool contains_only_whitespace) {
+    contains_only_whitespace_ = contains_only_whitespace;
+  }
   void SetExpansion(float expansion) { expansion_ = expansion; }
   bool AllowsLeadingExpansion() const {
     return expansion_behavior_ & kAllowLeadingExpansion;
@@ -292,6 +299,11 @@ class PLATFORM_EXPORT TextRun final {
 
   float expansion_;
   ExpansionBehavior expansion_behavior_ : 2;
+
+  // TODO(npm): Maybe we also need to set |contains_only_whitespace| in callers
+  // other than InlineTextBox::ConstructTextRun.
+  bool contains_only_whitespace_ : 1;
+
   unsigned is8_bit_ : 1;
   unsigned allow_tabs_ : 1;
   unsigned direction_ : 1;

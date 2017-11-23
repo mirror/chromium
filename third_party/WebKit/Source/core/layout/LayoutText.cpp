@@ -159,6 +159,7 @@ LayoutText::LayoutText(Node* node, scoped_refptr<StringImpl> str)
       has_tab_(false),
       lines_dirty_(false),
       contains_reversed_text_(false),
+      contains_only_whitespace_(false),
       known_to_have_no_overflow_and_no_fallback_fonts_(false),
       min_width_(-1),
       max_width_(-1),
@@ -1076,6 +1077,7 @@ void LayoutText::ComputePreferredLogicalWidths(
   has_breakable_start_ = false;
   has_breakable_end_ = false;
   has_end_white_space_ = false;
+  contains_only_whitespace_ = true;
 
   const ComputedStyle& style_to_use = StyleRef();
   const Font& f = style_to_use.GetFont();  // FIXME: This ignores first-line.
@@ -1164,8 +1166,12 @@ void LayoutText::ComputePreferredLogicalWidths(
       } else {
         is_space = true;
       }
+    } else if (c == kSpaceCharacter) {
+      is_space = true;
     } else {
-      is_space = c == kSpaceCharacter;
+      is_space = false;
+      if (c != kNoBreakSpaceCharacter)
+        contains_only_whitespace_ = false;
     }
 
     bool is_breakable_location =

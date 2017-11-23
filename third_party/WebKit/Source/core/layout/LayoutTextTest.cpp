@@ -121,6 +121,27 @@ TEST_F(LayoutTextTest, WidthLengthBeyondLength) {
   ASSERT_LE(width, 20.f);
 }
 
+TEST_F(LayoutTextTest, ContainsOnlyWhitespace) {
+  // Note that '&nbsp' is needed when only including whitespace to force
+  // LayoutText creation from the div.
+  SetBasicBody("&nbsp");
+  // GetWidth will also compute |contains_only_whitespace_|.
+  GetBasicText()->Width(0u, 1u, LayoutUnit(), TextDirection::kLtr, false);
+  EXPECT_EQ(true, GetBasicText()->ContainsOnlyWhitespace());
+
+  SetBasicBody("   \t\t\n \n\t &nbsp \n\t&nbsp\n \t");
+  GetBasicText()->Width(0u, 18u, LayoutUnit(), TextDirection::kLtr, false);
+  EXPECT_EQ(true, GetBasicText()->ContainsOnlyWhitespace());
+
+  SetBasicBody("abc");
+  GetBasicText()->Width(0u, 3u, LayoutUnit(), TextDirection::kLtr, false);
+  EXPECT_EQ(false, GetBasicText()->ContainsOnlyWhitespace());
+
+  SetBasicBody("  \t&nbsp\nx \n");
+  GetBasicText()->Width(0u, 8u, LayoutUnit(), TextDirection::kLtr, false);
+  EXPECT_EQ(false, GetBasicText()->ContainsOnlyWhitespace());
+}
+
 TEST_P(ParameterizedLayoutTextTest, CaretMinMaxOffset) {
   SetBasicBody("foo");
   EXPECT_EQ(0, GetBasicText()->CaretMinOffset());
