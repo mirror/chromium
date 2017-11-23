@@ -49,7 +49,6 @@ class CORE_EXPORT ScriptSourceCode final {
   ScriptSourceCode();
   // We lose the encoding information from ScriptResource.
   // Not sure if that matters.
-  explicit ScriptSourceCode(ScriptResource*);
   ScriptSourceCode(
       const String& source,
       ScriptSourceLocationType = ScriptSourceLocationType::kUnknown,
