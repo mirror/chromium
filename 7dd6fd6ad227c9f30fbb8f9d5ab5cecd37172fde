@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b91f385_581e929b",
+        "filename": "chrome/browser/vr/test/ui_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-23T21:47:04Z",
+      "side": 1,
+      "message": "I think any test should (1) be happy to start with and (2) tolerant of, the \"real\" initial state.",
+      "revId": "7dd6fd6ad227c9f30fbb8f9d5ab5cecd37172fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e71f5cb_72695cd0",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-23T21:47:04Z",
+      "side": 1,
+      "message": "Ian, can you sanity check this?",
+      "revId": "7dd6fd6ad227c9f30fbb8f9d5ab5cecd37172fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
