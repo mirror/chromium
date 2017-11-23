@@ -4,6 +4,7 @@
 
 #include "core/loader/AllowedByNosniff.h"
 
+#include "core/css/parser/CSSParserContext.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -151,6 +152,45 @@ bool AllowedByNosniff::MimeTypeAsScript(ExecutionContext* execution_context,
   }
 
   return true;
+}
+
+bool AllowedByNosniff::MimeTypeAsStyle(const CSSParserContext* parser_context,
+                                       const ResourceResponse& response,
+                                       MIMEMode mode) {
+  String mime_type = response.HttpContentType();
+  // printf("AllowedByNoSniff::MimeTypeAsStyle: %s, %s\n",
+         // response.Url().GetString().Utf8().data(), mime_type.Utf8().data());
+
+  // We always allow supported MIME types (e.g. `text/css`).
+  if (MIMETypeRegistry::IsSupportedStyleSheetMIMEType(mime_type)) {
+    return true;
+  }
+
+  // printf("- Not a supported type.\n");
+
+  bool no_sniffing =
+      ParseContentTypeOptionsHeader(response.HttpHeaderField(
+          HTTPNames::X_Content_Type_Options)) == kContentTypeOptionsNosniff;
+
+  // printf("- Nosniff? %s\n", no_sniffing ? "No sniffing!" : "Lots of sniffing!");
+
+  // We'll allow anything at all iff we're both in lax mode, and the server
+  // hasn't opted-into `nosniff`. We also allow an empty content type in strict
+  // mode, as long as the server hasn't opted-into `nosniff`, with the goal of
+  // enabling stylesheet usage on local files.
+  if ((mode == MIMEMode::kLax || mime_type.IsEmpty()) && !no_sniffing) {
+    if (parser_context) {
+      parser_context->Count(WebFeature::kStylesheetSniffedNonTextCSS);
+    }
+    return true;
+  }
+
+  if (mime_type.IsEmpty() && !no_sniffing) {
+    return true;
+  }
+
+  // printf("- Blocked!\n");
+  return false;
 }
 
 }  // namespace blink

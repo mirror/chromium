@@ -27,6 +27,7 @@
 #include "core/loader/resource/CSSStyleSheetResource.h"
 
 #include "core/css/StyleSheetContents.h"
+#include "core/loader/AllowedByNosniff.h"
 #include "core/loader/resource/StyleSheetResourceClient.h"
 #include "platform/SharedBuffer.h"
 #include "platform/loader/fetch/FetchParameters.h"
@@ -124,8 +125,21 @@ void CSSStyleSheetResource::DidAddClient(ResourceClient* c) {
 }
 
 const String CSSStyleSheetResource::SheetText(
+    const CSSParserContext* parser_context,
     MIMETypeCheck mime_type_check) const {
-  if (!CanUseSheet(mime_type_check))
+  // Check the MIME type before returning the sheet's text. If it isn't a valid
+  // type given the context, or given the response's `nosniff` state, 
+  /*
+  if (!AllowedByNosniff::MimeTypeAsStyle(
+          parser_context, GetResponse(),
+          mime_type_check == MIMETypeCheck::kStrict
+              ? AllowedByNosniff::MIMEMode::kStrict
+              : AllowedByNosniff::MIMEMode::kLax)) {
+    SetStatus(ResourceStatus::kDecodeError);
+  }
+  */
+
+  if (ErrorOccurred())
     return String();
 
   // Use cached decoded sheet text when available
@@ -157,6 +171,10 @@ void CSSStyleSheetResource::NotifyFinished() {
   // Decode the data to find out the encoding and cache the decoded sheet text.
   if (Data())
     SetDecodedSheetText(DecodedText());
+
+  if (!AllowedByNosniff::MimeTypeAsStyle(nullptr, GetResponse(), AllowedByNosniff::MIMEMode::kLax))
+    SetStatus(ResourceStatus::kDecodeError);
+    
 
   ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
   String referrer_policy_header =
@@ -194,26 +212,6 @@ void CSSStyleSheetResource::DestroyDecodedDataForFailedRevalidation() {
   DestroyDecodedDataIfPossible();
 }
 
-bool CSSStyleSheetResource::CanUseSheet(MIMETypeCheck mime_type_check) const {
-  if (ErrorOccurred())
-    return false;
-
-  // This check exactly matches Firefox. Note that we grab the Content-Type
-  // header directly because we want to see what the value is BEFORE content
-  // sniffing. Firefox does this by setting a "type hint" on the channel. This
-  // implementation should be observationally equivalent.
-  //
-  // This code defaults to allowing the stylesheet for non-HTTP protocols so
-  // folks can use standards mode for local HTML documents.
-  if (mime_type_check == MIMETypeCheck::kLax)
-    return true;
-  AtomicString content_type = HttpContentType();
-  return content_type.IsEmpty() ||
-         DeprecatedEqualIgnoringCase(content_type, "text/css") ||
-         DeprecatedEqualIgnoringCase(content_type,
-                                     "application/x-unknown-content-type");
-}
-
 StyleSheetContents* CSSStyleSheetResource::CreateParsedStyleSheetFromCache(
     const CSSParserContext* context) {
   if (!parsed_style_sheet_cache_)
@@ -234,7 +232,7 @@ StyleSheetContents* CSSStyleSheetResource::CreateParsedStyleSheetFromCache(
   DCHECK(!parsed_style_sheet_cache_->IsLoading());
 
   // If the stylesheet has a media query, we need to clone the cached sheet
-  // due to potential differences in the rule set.
+  // duhe to potential differences in the rule set.
   if (RuntimeEnabledFeatures::CacheStyleSheetWithMediaQueriesEnabled() &&
       parsed_style_sheet_cache_->HasMediaQueries()) {
     return parsed_style_sheet_cache_->Copy();

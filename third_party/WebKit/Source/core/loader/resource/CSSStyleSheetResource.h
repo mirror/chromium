@@ -52,7 +52,8 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
   ~CSSStyleSheetResource() override;
   void Trace(blink::Visitor*) override;
 
-  const String SheetText(MIMETypeCheck = MIMETypeCheck::kStrict) const;
+  const String SheetText(const CSSParserContext*,
+                         MIMETypeCheck = MIMETypeCheck::kStrict) const;
 
   void DidAddClient(ResourceClient*) override;
 
@@ -79,7 +80,6 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
                         const ResourceLoaderOptions&,
                         const TextResourceDecoderOptions&);
 
-  bool CanUseSheet(MIMETypeCheck) const;
   void NotifyFinished() override;
 
   void SetParsedStyleSheetCache(StyleSheetContents*);

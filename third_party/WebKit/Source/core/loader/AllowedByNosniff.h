@@ -8,12 +8,18 @@
 
 namespace blink {
 
+class CSSParserContext;
 class ExecutionContext;
 class ResourceResponse;
 
 class CORE_EXPORT AllowedByNosniff {
  public:
+  enum class MIMEMode { kStrict, kLax };
+
   static bool MimeTypeAsScript(ExecutionContext*, const ResourceResponse&);
+  static bool MimeTypeAsStyle(const CSSParserContext*,
+                              const ResourceResponse&,
+                              MIMEMode);
 };
 
 }  // namespace blink
