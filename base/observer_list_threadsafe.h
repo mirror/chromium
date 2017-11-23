@@ -219,7 +219,7 @@ class ObserverListThreadSafe : public internal::ObserverListThreadSafeBase {
     tls_current_notification.Set(previous_notification);
   }
 
-  const ObserverListPolicy policy_ = ObserverListPolicy::ALL;
+  const ObserverListPolicy policy_ = ObserverListPolicy::EXISTING_ONLY;
 
   // Synchronizes access to |observers_|.
   mutable Lock lock_;

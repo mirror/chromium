@@ -697,11 +697,12 @@ TEST(ObserverListThreadSafeTest, NotificationOnValidSequence) {
   EXPECT_TRUE(observer_2.called_on_valid_sequence());
 }
 
-// Verify that when an observer is added to a NOTIFY_ALL ObserverListThreadSafe
-// from a notification, it is itself notified.
+// Verify that when an observer is added to a ObserverListPolicy::ALL
+// ObserverListThreadSafe from a notification, it is itself notified.
 TEST(ObserverListThreadSafeTest, AddObserverFromNotificationNotifyAll) {
   test::ScopedTaskEnvironment scoped_task_environment;
-  auto observer_list = MakeRefCounted<ObserverListThreadSafe<Foo>>();
+  auto observer_list =
+      MakeRefCounted<ObserverListThreadSafe<Foo>>(ObserverListPolicy::ALL);
 
   Adder observer_added_from_notification(1);
 
@@ -846,7 +847,7 @@ class AddInClearObserve : public Foo {
 };
 
 TEST(ObserverListTest, ClearNotifyAll) {
-  ObserverList<Foo> observer_list;
+  ObserverList<Foo> observer_list(ObserverListPolicy::ALL);
   AddInClearObserve a(&observer_list);
 
   observer_list.AddObserver(&a);
@@ -1156,8 +1157,8 @@ TEST(ObserverListTest, NonCompactList) {
   EXPECT_EQ(-13, b.total);
 }
 
-TEST(ObserverListTest, BecomesEmptyThanNonEmpty) {
-  ObserverList<Foo> observer_list;
+TEST(ObserverListTest, BecomesEmptyThenNonEmpty) {
+  ObserverList<Foo> observer_list(ObserverListPolicy::ALL);
   Adder a(1), b(-1);
 
   Disrupter disrupter1(&observer_list, true);
@@ -1190,7 +1191,7 @@ TEST(ObserverListTest, BecomesEmptyThanNonEmpty) {
 
 TEST(ObserverListTest, AddObserverInTheLastObserve) {
   using FooList = ObserverList<Foo>;
-  FooList observer_list;
+  FooList observer_list(ObserverListPolicy::ALL);
 
   AddInObserve<FooList> a(&observer_list);
   Adder b(-1);
