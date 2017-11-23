@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "49a17489_0e1a92bb",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "It might be quite clear to you - it took me a while to grasp this one from reading the code. I think for someone who steps here, it might be helpful.",
+      "parentUuid": "7ef2a1c7_499a0335",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff798258_9ccda6ef",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4

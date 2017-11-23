@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b07ba370_a79f94da",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "Nit: \"a\" between form and Unicode.",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8133d18b_3f313270",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "Great! Thank you for updating the function and incorporating the review comments. I am really happy with the way this looks now.",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a3e766_29d60d48",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "Could you initialize these from GetWidth(megalopolis, \"FU\") and \"RA\" respectively?",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725186d1_7780e14e",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "These assertions look good now, thanks!",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad22578f_237b71bb",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "Dito.",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a713d5_e79de2ac",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "Nice, thanks for adding this one!",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3007358c_b6cf0c8f",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "Is it possible to initialize these from (sub)strings + ZWJ using GetWidth?\nSo that the test assertion practically becomes:\n\nGetWidth(amiri, u\"تخ\", false, 0, 1) \u003d \nGetWidth(amiri, u\"ت‍\", false) e.g. no parameters, for the whole string.\n\nWhere \"ت‍\" is U+062A U+200D (Zero Width Joiner)",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5129d8_bc4851be",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "Dito.",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0af2344_3bf2b191",
+        "filename": "third_party/WebKit/Source/platform/text/CursorPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-23T18:49:03Z",
+      "side": 1,
+      "message": "Dito.",
+      "revId": "f59f872d862d561a4bc83fbc2dfa0341734c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
