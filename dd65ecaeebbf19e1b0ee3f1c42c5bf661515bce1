@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4c8a84b_963df530",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-23T18:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c92ad3b_9ed97c19",
+      "range": {
+        "startLine": 747,
+        "startChar": 24,
+        "endLine": 747,
+        "endChar": 54
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46dcb1cf_4c147359",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f6a7fdf5_5bf80adb",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-23T18:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46dcb1cf_4c147359",
+      "range": {
+        "startLine": 252,
+        "startChar": 45,
+        "endLine": 252,
+        "endChar": 55
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e86e8e9d_a56979b9",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-21T22:07:48Z",
       "side": 1,
       "message": "Do we really need to continue supporting the old mode that uses data_?",
+      "range": {
+        "startLine": 113,
+        "startChar": 31,
+        "endLine": 113,
+        "endChar": 36
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8c8379_a92d3fc6",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-23T18:16:02Z",
+      "side": 1,
+      "message": "We still need this since HTMLCanvasElement::ToImageDataOrStaticBitmapImage() still uses ImageData if the GL texture is unpremul.",
+      "parentUuid": "e86e8e9d_a56979b9",
       "range": {
         "startLine": 113,
         "startChar": 31,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b90ec0f1_5f408df8",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-23T18:16:02Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "12dd6d92_39ddb6ed",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b52b715_3f60945f",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
         "patchSetId": 7
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d303dc5b_0c3c8aee",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-23T18:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b52b715_3f60945f",
+      "range": {
+        "startLine": 514,
+        "startChar": 7,
+        "endLine": 514,
+        "endChar": 17
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cffc547_fbd35027",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e37539c_6bc71fff",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-23T18:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cffc547_fbd35027",
+      "range": {
+        "startLine": 541,
+        "startChar": 15,
+        "endLine": 541,
+        "endChar": 22
+      },
+      "revId": "dd65ecaeebbf19e1b0ee3f1c42c5bf661515bce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
