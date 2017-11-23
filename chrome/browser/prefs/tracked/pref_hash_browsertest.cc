@@ -35,6 +35,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/search_engines/default_search_manager.h"
 #include "components/search_engines/template_url_data.h"
+#include "content/public/test/test_launcher.h"
 #include "extensions/browser/pref_names.h"
 #include "extensions/common/extension.h"
 #include "services/preferences/public/cpp/tracked/tracked_preference_histogram_names.h"
@@ -418,9 +419,8 @@ class PrefHashBrowserTestBase
  private:
   // Returns true if this is the PRE_ phase of the test.
   bool IsPRETest() {
-    return base::StartsWith(
-        testing::UnitTest::GetInstance()->current_test_info()->name(), "PRE_",
-        base::CompareCase::SENSITIVE);
+    auto* test = testing::UnitTest::GetInstance();
+    return content::IsPreTest(test->current_test_info()->name());
   }
 
   SettingsProtectionLevel GetProtectionLevelFromTrialGroup(
@@ -438,27 +438,24 @@ class PrefHashBrowserTestBase
     return PROTECTION_ENABLED_ALL;
 #else
     return PROTECTION_DISABLED_FOR_GROUP;
-#endif
+#endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
 #else  // defined(OFFICIAL_BUILD)
 
     using namespace chrome_prefs::internals;
-    if (trial_group == kSettingsEnforcementGroupNoEnforcement) {
+    if (trial_group == kSettingsEnforcementGroupNoEnforcement)
       return PROTECTION_DISABLED_FOR_GROUP;
-    } else if (trial_group == kSettingsEnforcementGroupEnforceAlways) {
+    if (trial_group == kSettingsEnforcementGroupEnforceAlways)
       return PROTECTION_ENABLED_BASIC;
-    } else if (trial_group == kSettingsEnforcementGroupEnforceAlwaysWithDSE) {
+    if (trial_group == kSettingsEnforcementGroupEnforceAlwaysWithDSE)
       return PROTECTION_ENABLED_DSE;
-    } else if (trial_group ==
-               kSettingsEnforcementGroupEnforceAlwaysWithExtensionsAndDSE) {
+    if (trial_group ==
+        kSettingsEnforcementGroupEnforceAlwaysWithExtensionsAndDSE) {
       return PROTECTION_ENABLED_EXTENSIONS;
-    } else {
-      ADD_FAILURE();
-      return static_cast<SettingsProtectionLevel>(-1);
     }
-
+    ADD_FAILURE();
+    return static_cast<SettingsProtectionLevel>(-1);
 #endif  // defined(OFFICIAL_BUILD)
-
   }
 
   int num_tracked_prefs_;
