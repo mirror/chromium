@@ -33,6 +33,24 @@
       "revId": "7dd6fd6ad227c9f30fbb8f9d5ab5cecd37172fde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234b1386_6fea3640",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-23T22:34:44Z",
+      "side": 1,
+      "message": "Looks sane.",
+      "parentUuid": "2e71f5cb_72695cd0",
+      "revId": "7dd6fd6ad227c9f30fbb8f9d5ab5cecd37172fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
