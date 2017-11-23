@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85054ecb_f7864de5",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T18:49:07Z",
+      "side": 1,
+      "message": "There\u0027s no good reason to wait just for one task.\n\n// Waits until all currently running tasks are done running.\n// Returns true if the method had to wait for at least one\n// task to finish running (useful for the check in the constructor).\nvoid ScopedTaskEnvironment::TestTaskTracker::DisallowRunTasks() {\n  AutoLock auto_lock(lock_);\n\n  bool had_to_wait \u003d false;\n  while (num_tasks_running_ \u003e 0) {\n    had_to_wait \u003d true;\n    task_completed_.Wait();\n  }\n\n  can_run_tasks_ \u003d false;\n  return had_to_wait;\n}",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 1
+      },
+      "revId": "89fc221a13c9af647327288249cfe380e4346bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
