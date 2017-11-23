@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0e90081_b3dc74a5",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T15:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b942c99_95afd433",
+      "range": {
+        "startLine": 248,
+        "startChar": 21,
+        "endLine": 248,
+        "endChar": 67
+      },
+      "revId": "d1a8ad7470f79e9675f50eeae5bd5076a3426538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0f69ad6_a4528c9d",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "351d5f73_87cc603d",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T15:22:07Z",
+      "side": 1,
+      "message": "I think JS guideline is  to always put braces.",
+      "parentUuid": "a0f69ad6_a4528c9d",
+      "revId": "d1a8ad7470f79e9675f50eeae5bd5076a3426538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "020435df_40d829dc",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-23T14:36:20Z",
       "side": 1,
       "message": "nit: no curlies?",
+      "range": {
+        "startLine": 275,
+        "startChar": 42,
+        "endLine": 275,
+        "endChar": 43
+      },
+      "revId": "d1a8ad7470f79e9675f50eeae5bd5076a3426538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949cf913_0276387c",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T15:22:07Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "020435df_40d829dc",
       "range": {
         "startLine": 275,
         "startChar": 42,
