@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9028bede_fcb66ea1",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-23T06:52:32Z",
+      "side": 1,
+      "message": "Urm, since we expect the close_sessions_on_ip_change, migrate_sessions_on_network_change, and migrate_sessions_on_network_change_v2 to be mutually exclusive. I wonder whether you wanna prioritize the flags: ignore other flags if one is set.\n\nIt\u0027s completely possible that a user might accidentally set more than one flags to be true.",
+      "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f491728_d74d3e7e",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-23T06:52:32Z",
+      "side": 1,
+      "message": "I think you want to register the network change notifier when any of the three switch is on:\nclose_session_on_ip_change,\nmigrate_session_on_network_change,\nmigrate_session_on_network_change_v2.\n\nAnd you have to be consistent with line 786.",
+      "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe075943_99f5e423",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-23T06:52:32Z",
+      "side": 1,
+      "message": "You\u0027ll want to remove network observer if v2 switch is set",
+      "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf76ca8_f0c86291",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-23T06:52:32Z",
+      "side": 1,
+      "message": "Interesting, why do we need this method?",
+      "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
