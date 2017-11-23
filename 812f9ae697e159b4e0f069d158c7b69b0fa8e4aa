@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b439975_6377e4d5",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-11-23T23:24:25Z",
+      "side": 1,
+      "message": "remove ws",
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67870dad_2edc0ce4",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-11-23T23:24:25Z",
+      "side": 1,
+      "message": "Use an enum class for WebInsecureRequestPolicy?\n\nhttp://en.cppreference.com/w/cpp/language/enum",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 7
+      },
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6f7d67_782f1cbd",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-11-23T23:24:25Z",
+      "side": 1,
+      "message": "return false here should be enough",
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
