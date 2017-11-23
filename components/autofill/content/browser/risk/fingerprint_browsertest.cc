@@ -129,7 +129,8 @@ class AutofillRiskFingerprintTest : public content::ContentBrowserTest {
     connector_ = service_manager::Connector::Create(&request);
     service_manager::Connector::TestApi test_api(connector_.get());
     test_api.OverrideBinderForTesting(
-        device::mojom::kServiceName, device::mojom::GeolocationContext::Name_,
+        service_manager::Identity(device::mojom::kServiceName),
+        device::mojom::GeolocationContext::Name_,
         base::Bind(&FakeGeolocation::Bind,
                    base::Unretained(fake_geolocation_.get())));
   }
