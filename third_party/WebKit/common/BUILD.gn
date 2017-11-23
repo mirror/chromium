@@ -123,11 +123,16 @@ mojom("mojo_platform_bindings") {
 # available from Source/platform.
 mojom("mojo_bindings") {
   sources = [
+    "feature_policy/feature_policy.mojom",
     "message_port/message_port.mojom",
   ]
 
   public_deps = [
     ":mojo_platform_bindings",
+  ]
+
+  deps = [
+    "//url/mojo:url_mojom_origin",
   ]
 
   overridden_deps = [ ":mojo_platform_bindings" ]
