@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6520e1e_eca543a7",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaed7f6c_84214560",
+      "revId": "715cf8c9b066446919d73e70e9f8c77069a950ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a52ccd4e_6104faba",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-23T15:14:33Z",
       "side": 1,
       "message": "no curlies here and below",
+      "range": {
+        "startLine": 243,
+        "startChar": 37,
+        "endLine": 243,
+        "endChar": 39
+      },
+      "revId": "715cf8c9b066446919d73e70e9f8c77069a950ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb551e22_4c997716",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "I think JS requires them.",
+      "parentUuid": "a52ccd4e_6104faba",
       "range": {
         "startLine": 243,
         "startChar": 37,
@@ -62,6 +104,30 @@
       "revId": "715cf8c9b066446919d73e70e9f8c77069a950ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fa4bef_2977e461",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1becaab5_19baa772",
+      "range": {
+        "startLine": 304,
+        "startChar": 18,
+        "endLine": 304,
+        "endChar": 32
+      },
+      "revId": "715cf8c9b066446919d73e70e9f8c77069a950ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
