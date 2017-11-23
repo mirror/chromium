@@ -22,9 +22,7 @@
 // This view controller will fill its container; it is up to the containing
 // view controller or presentation controller to configure an appropriate
 // height for it.
-@interface ToolbarViewController : UIViewController<TabHistoryPositioner,
-                                                    TabHistoryUIUpdater,
-                                                    ToolbarConsumer>
+@interface ToolbarViewController : UIViewController<ToolbarConsumer>
 
 - (instancetype)initWithDispatcher:
                     (id<ApplicationCommands, BrowserCommands>)dispatcher
