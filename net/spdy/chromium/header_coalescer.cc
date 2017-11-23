@@ -17,6 +17,7 @@
 
 namespace net {
 namespace {
+
 std::unique_ptr<base::Value> ElideNetLogHeaderCallback(
     SpdyStringPiece header_name,
     SpdyStringPiece header_value,
@@ -30,6 +31,20 @@ std::unique_ptr<base::Value> ElideNetLogHeaderCallback(
           capture_mode, header_name.as_string(), header_value.as_string())));
   dict->SetString("error", error_message);
   return std::move(dict);
+}
+
+// Return whether |c| is a |field-vchar| as defined by RFC 7230 Section 3.2:
+// field-vchar    = VCHAR / obs-text
+bool IsFieldVchar(unsigned char c) {
+  // RFC 5234 Appendix B.1 defines |VCHAR|:
+  // VCHAR          =  %x21-7E
+  if (0x21 <= c && c <= 0x7e)
+    return true;
+  // RFC 7230 Section 3.2.6 defines |obs-text|:
+  // obs-text       = %x80-FF
+  if (0x80 <= c)
+    return true;
+  return false;
 }
 
 }  // namespace
@@ -93,13 +108,33 @@ bool HeaderCoalescer::AddHeader(SpdyStringPiece key, SpdyStringPiece value) {
     return false;
   }
 
-  // End of line delimiter is forbidden according to RFC 7230 Section 3.2.
-  // Line folding, RFC 7230 Section 3.2.4., is a special case of this.
-  if (value.find("\r\n") != SpdyStringPiece::npos) {
+  // RFC 7540 Section 10.3: "Any request or response that contains a character
+  // not permitted in a header field value MUST be treated as malformed (Section
+  // 8.1.2.6). Valid characters are defined by the field-content ABNF rule in
+  // Section 3.2 of [RFC7230]." RFC 7230 Section 3.2 says:
+  // field-content  = field-vchar [ 1*( SP / HTAB ) field-vchar ]
+  if (value.empty()) {
     net_log_.AddEvent(NetLogEventType::HTTP2_SESSION_RECV_INVALID_HEADER,
                       base::Bind(&ElideNetLogHeaderCallback, key, value,
-                                 "Header value must not contain CR+LF."));
+                                 "Header value must not be empty."));
     return false;
+  }
+
+  if (!IsFieldVchar(value.front()) || !IsFieldVchar(value.back())) {
+    net_log_.AddEvent(
+        NetLogEventType::HTTP2_SESSION_RECV_INVALID_HEADER,
+        base::Bind(&ElideNetLogHeaderCallback, key, value,
+                   "Header value must start and end with field-vchar."));
+    return false;
+  }
+
+  for (char c : value) {
+    if (!IsFieldVchar(c) && c != ' ' && c != '\t') {
+      net_log_.AddEvent(NetLogEventType::HTTP2_SESSION_RECV_INVALID_HEADER,
+                        base::Bind(&ElideNetLogHeaderCallback, key, value,
+                                   "Invalid character in header value."));
+      return false;
+    }
   }
 
   auto iter = headers_.find(key);

@@ -2782,9 +2782,10 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushInvalidUrl) {
   // those pieces in.
   SpdyFramer response_spdy_framer(SpdyFramer::ENABLE_COMPRESSION);
   SpdyHeaderBlock push_promise_header_block;
-  push_promise_header_block[kHttp2AuthorityHeader] = "";
-  push_promise_header_block[kHttp2SchemeHeader] = "";
+  push_promise_header_block[kHttp2AuthorityHeader] = "example.org:invalid_port";
+  push_promise_header_block[kHttp2SchemeHeader] = "https";
   push_promise_header_block[kHttp2PathHeader] = "/index.html";
+  EXPECT_FALSE(GetUrlFromHeaderBlock(push_promise_header_block).is_valid());
 
   SpdyPushPromiseIR push_promise(1, 2, std::move(push_promise_header_block));
   SpdySerializedFrame push_promise_frame(
