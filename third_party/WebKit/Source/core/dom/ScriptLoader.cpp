@@ -727,91 +727,6 @@ PendingScript* ScriptLoader::TakePendingScript() {
   return pending_script;
 }
 
-// Steps 3--7 of https://html.spec.whatwg.org/#execute-the-script-block
-// with additional support for HTML imports.
-// Steps 2 and 8 are handled in ExecuteScriptBlock().
-ScriptLoader::ExecuteScriptResult ScriptLoader::DoExecuteScript(
-    const Script* script) {
-  DCHECK(already_started_);
-  CHECK_EQ(script->GetScriptType(), GetScriptType());
-
-  Document* element_document = &(element_->GetDocument());
-  Document* context_document = element_document->ContextDocument();
-  if (!context_document)
-    return ExecuteScriptResult::kShouldFireNone;
-
-  LocalFrame* frame = context_document->GetFrame();
-  if (!frame)
-    return ExecuteScriptResult::kShouldFireNone;
-
-  if (!is_external_script_) {
-    bool should_bypass_main_world_csp =
-        (frame->GetScriptController().ShouldBypassMainWorldCSP());
-
-    AtomicString nonce = element_->GetNonceForElement();
-    if (!should_bypass_main_world_csp &&
-        !element_->AllowInlineScriptForCSP(
-            nonce, start_line_number_, script->InlineSourceTextForCSP(),
-            ContentSecurityPolicy::InlineType::kBlock)) {
-      return ExecuteScriptResult::kShouldFireErrorEvent;
-    }
-  }
-
-  if (is_external_script_) {
-    if (!script->CheckMIMETypeBeforeRunScript(
-            context_document, element_->GetDocument().GetSecurityOrigin()))
-      return ExecuteScriptResult::kShouldFireErrorEvent;
-  }
-
-  const bool is_imported_script = context_document != element_document;
-
-  // 3. "If the script is from an external file,
-  //     or the script's type is module",
-  //     then increment the ignore-destructive-writes counter of the
-  //     script element's node document. Let neutralized doc be that Document."
-  IgnoreDestructiveWriteCountIncrementer
-      ignore_destructive_write_count_incrementer(
-          is_external_script_ ||
-                  script->GetScriptType() == ScriptType::kModule ||
-                  is_imported_script
-              ? context_document
-              : nullptr);
-
-  // 4. "Let old script element be the value to which the script element's
-  //     node document's currentScript object was most recently set."
-  // This is implemented as push/popCurrentScript().
-
-  // 5. "Switch on the script's type:"
-  //    - "classic":
-  //    1. "If the script element's root is not a shadow root,
-  //        then set the script element's node document's currentScript
-  //        attribute to the script element. Otherwise, set it to null."
-  //    - "module":
-  //    1. "Set the script element's node document's currentScript attribute
-  //        to null."
-  ScriptElementBase* current_script = nullptr;
-  if (script->GetScriptType() == ScriptType::kClassic)
-    current_script = element_;
-  context_document->PushCurrentScript(current_script);
-
-  //    - "classic":
-  //    2. "Run the classic script given by the script's script."
-  // Note: This is where the script is compiled and actually executed.
-  //    - "module":
-  //    2. "Run the module script given by the script's script."
-  script->RunScript(frame, element_->GetDocument().GetSecurityOrigin());
-
-  // 6. "Set the script element's node document's currentScript attribute
-  //     to old script element."
-  context_document->PopCurrentScript(current_script);
-
-  return ExecuteScriptResult::kShouldFireLoadEvent;
-
-  // 7. "Decrement the ignore-destructive-writes counter of neutralized doc,
-  //     if it was incremented in the earlier step."
-  // Implemented as the scope out of IgnoreDestructiveWriteCountIncrementer.
-}
-
 void ScriptLoader::Execute() {
   DCHECK(!will_be_parser_executed_);
   DCHECK(async_exec_type_ != ScriptRunner::kNone);
@@ -827,22 +742,57 @@ void ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
                                       const KURL& document_url) {
   DCHECK(pending_script);
   DCHECK_EQ(pending_script->IsExternal(), is_external_script_);
+  DCHECK(already_started_);
 
+  Document* element_document = &(element_->GetDocument());
+  Document* context_document = element_document->ContextDocument();
+
+  if (!context_document) {
+    pending_script->Dispose();
+    return;
+  }
+
+  LocalFrame* frame = context_document->GetFrame();
+  if (!frame) {
+    pending_script->Dispose();
+    return;
+  }
+
+  // Do not execute module scripts if they are moved between documents.
+  // TODO(hiroshige): Also do not execute classic scripts. crbug.com/721914
+  if (original_document_ != context_document &&
+      GetScriptType() == ScriptType::kModule)
+    return;
+
+  // |script| is "script's script" in the spec.
+  // If |error_occurred| is true, consider that "script's script" is null.
   bool error_occurred = false;
   Script* script = pending_script->GetSource(document_url, error_occurred);
+  CHECK_EQ(script->GetScriptType(), GetScriptType());
+
+  // Consider as if "the script's script is null" retrospectively,
+  // if any of the following checks fails, which are considered as load failure.
+  if (!pending_script->CheckMIMETypeBeforeRunScript(context_document))
+    error_occurred = true;
+
+  if (!error_occurred && !is_external_script_) {
+    bool should_bypass_main_world_csp =
+        frame->GetScriptController().ShouldBypassMainWorldCSP();
+
+    AtomicString nonce = element_->GetNonceForElement();
+    if (!should_bypass_main_world_csp &&
+        !element_->AllowInlineScriptForCSP(
+            nonce, start_line_number_, script->InlineSourceTextForCSP(),
+            ContentSecurityPolicy::InlineType::kBlock)) {
+      error_occurred = true;
+    }
+  }
+
   const bool was_canceled = pending_script->WasCanceled();
   const bool is_external = pending_script->IsExternal();
   const double parser_blocking_load_start_time =
       pending_script->ParserBlockingLoadStartTime();
   pending_script->Dispose();
-
-  // Do not execute module scripts if they are moved between documents.
-  // TODO(hiroshige): Also do not execute classic scripts. crbug.com/721914
-  Document* element_document = &(element_->GetDocument());
-  Document* context_document = element_document->ContextDocument();
-  if (original_document_ != context_document &&
-      GetScriptType() == ScriptType::kModule)
-    return;
 
   // 2. "If the script's script is null, fire an event named error at the
   //     element, and abort these steps."
@@ -863,8 +813,53 @@ void ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
 
   double script_exec_start_time = MonotonicallyIncreasingTime();
 
-  // Steps 3--7 are in DoExecuteScript().
-  ExecuteScriptResult result = DoExecuteScript(script);
+  {
+    // 3. "If the script is from an external file,
+    //     or the script's type is module",
+    //     then increment the ignore-destructive-writes counter of the
+    //     script element's node document. Let neutralized doc be that
+    //     Document."
+    const bool is_imported_script = context_document != element_document;
+    IgnoreDestructiveWriteCountIncrementer
+        ignore_destructive_write_count_incrementer(
+            is_external_script_ ||
+                    script->GetScriptType() == ScriptType::kModule ||
+                    is_imported_script
+                ? context_document
+                : nullptr);
+
+    // 4. "Let old script element be the value to which the script element's
+    //     node document's currentScript object was most recently set."
+    // This is implemented as push/popCurrentScript().
+
+    // 5. "Switch on the script's type:"
+    //    - "classic":
+    //    1. "If the script element's root is not a shadow root,
+    //        then set the script element's node document's currentScript
+    //        attribute to the script element. Otherwise, set it to null."
+    //    - "module":
+    //    1. "Set the script element's node document's currentScript attribute
+    //        to null."
+    ScriptElementBase* current_script = nullptr;
+    if (script->GetScriptType() == ScriptType::kClassic)
+      current_script = element_;
+    context_document->PushCurrentScript(current_script);
+
+    //    - "classic":
+    //    2. "Run the classic script given by the script's script."
+    // Note: This is where the script is compiled and actually executed.
+    //    - "module":
+    //    2. "Run the module script given by the script's script."
+    script->RunScript(frame, element_->GetDocument().GetSecurityOrigin());
+
+    // 6. "Set the script element's node document's currentScript attribute
+    //     to old script element."
+    context_document->PopCurrentScript(current_script);
+
+    // 7. "Decrement the ignore-destructive-writes counter of neutralized doc,
+    //     if it was incremented in the earlier step."
+    // Implemented as the scope out of IgnoreDestructiveWriteCountIncrementer.
+  }
 
   // NOTE: we do not check m_willBeParserExecuted here, since
   // m_willBeParserExecuted is false for inline scripts, and we want to
@@ -877,23 +872,10 @@ void ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
             WasCreatedDuringDocumentWrite());
   }
 
-  switch (result) {
-    case ExecuteScriptResult::kShouldFireLoadEvent:
-      // 8. "If the script is from an external file, then fire an event named
-      //     load at the script element."
-      if (is_external)
-        DispatchLoadEvent();
-      break;
-
-    case ExecuteScriptResult::kShouldFireErrorEvent:
-      // Consider as if "the script's script is null" retrospectively,
-      // due to CSP check failures etc., which are considered as load failure.
-      DispatchErrorEvent();
-      break;
-
-    case ExecuteScriptResult::kShouldFireNone:
-      break;
-  }
+  // 8. "If the script is from an external file, then fire an event named
+  //     load at the script element."
+  if (is_external)
+    DispatchLoadEvent();
 }
 
 void ScriptLoader::PendingScriptFinished(PendingScript* pending_script) {
