@@ -77,7 +77,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
             gvr_context* gvr_api,
             bool reprojected_rendering,
             bool daydream_support,
-            bool start_in_web_vr_mode);
+            bool start_in_web_vr_mode,
+            bool web_vr_autopresentation_expected);
   ~VrShellGl() override;
 
   void Initialize();
@@ -219,6 +220,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   std::unique_ptr<vr::Ui> ui_;
 
   bool web_vr_mode_ = false;
+  bool web_vr_autopresentation_expected_ = false;
   bool ready_to_draw_ = false;
   bool paused_ = true;
   const bool surfaceless_rendering_;

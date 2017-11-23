@@ -56,7 +56,7 @@ public class VrIntentUtils {
             @Override
             public boolean isTrustedDaydreamIntent(Intent intent) {
                 return isVrIntent(intent)
-                        && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE);
+                        /*&& IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE)*/;
             }
 
             @Override

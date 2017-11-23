@@ -183,6 +183,7 @@
 #include "ui/base/layout.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "chrome/browser/component_updater/vr_assets_component_installer.h"
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/metrics/thread_watcher_android.h"
@@ -528,6 +529,7 @@ void RegisterComponentsForUpdate(PrefService* profile_prefs) {
     RegisterOriginTrialsComponent(cus, path);
 
     RegisterFileTypePoliciesComponent(cus, path);
+    RegisterVrAssetsComponent(cus);
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
     RegisterSSLErrorAssistantComponent(cus, path);

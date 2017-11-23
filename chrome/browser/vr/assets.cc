@@ -26,6 +26,30 @@ struct AssetsSingletonTrait : public base::DefaultSingletonTraits<Assets> {
   static void Delete(Assets* assets) { delete assets; }
 };
 
+AssetsUmaHelper::AssetsUmaHelper(scoped_refptr<base::SingleThreadTaskRunner> task_runner) : task_runner_(task_runner), weak_ptr_factory_(this) {
+
+}
+
+AssetsUmaHelper::~AssetsUmaHelper() = default;
+
+void AssetsUmaHelper::OnEnterVrBrowsingMode() {
+  task_runner_->PostTask(FROM_HERE, base::BindOnce(&AssetsUmaHelper::OnEnterVrBrowsingModeInternal, weak_ptr_factory_.GetWeakPtr()));
+}
+
+void AssetsUmaHelper::OnComponentReady() {
+  LOG(INFO) << "AssetsUmaHelper::OnComponentReady " << entered_vr_browsing_mode_ << " " << (base::Time::Now() - enter_vr_browsing_mode_time_);
+  component_ready_ = true;
+  // TODO: UMA log time waited of if waited
+}
+
+void AssetsUmaHelper::OnEnterVrBrowsingModeInternal() {
+  entered_vr_browsing_mode_ = true;
+  enter_vr_browsing_mode_time_ = base::Time::Now();
+  LOG(INFO) << "AssetsUmaHelper::OnEnterVrBrowsingMode";
+
+  // TODO: UMA log if component is ready
+}
+
 // static
 Assets* Assets::GetInstance() {
   return base::Singleton<Assets, AssetsSingletonTrait>::get();
@@ -47,6 +71,10 @@ void Assets::LoadWhenComponentReady(OnAssetsLoadedCallback on_loaded) {
                                 std::move(on_loaded)));
 }
 
+AssetsUmaHelper* Assets::GetUmaHelper() {
+  return &uma_helper_;
+}
+
 // static
 void Assets::LoadAssetsTask(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -66,7 +94,7 @@ void Assets::LoadAssetsTask(
 
 Assets::Assets()
     : main_thread_task_runner_(content::BrowserThread::GetTaskRunnerForThread(
-          content::BrowserThread::UI)),
+          content::BrowserThread::UI)), uma_helper_(main_thread_task_runner_), 
       weak_ptr_factory_(this) {
   DCHECK(main_thread_task_runner_.get());
 }
@@ -76,6 +104,7 @@ Assets::~Assets() = default;
 void Assets::OnComponentReadyInternal(const base::FilePath& install_dir) {
   component_install_dir_ = install_dir;
   component_ready_ = true;
+  uma_helper_.OnComponentReady();
   if (on_assets_loaded_) {
     LoadWhenComponentReadyInternal(on_assets_loaded_task_runner_,
                                    std::move(on_assets_loaded_));
