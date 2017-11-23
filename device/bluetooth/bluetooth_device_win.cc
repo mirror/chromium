@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/callback_helpers.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
@@ -142,23 +143,21 @@ bool BluetoothDeviceWin::ExpectingConfirmation() const {
   return false;
 }
 
-void BluetoothDeviceWin::GetConnectionInfo(
-    const ConnectionInfoCallback& callback) {
+void BluetoothDeviceWin::GetConnectionInfo(ConnectionInfoCallback callback) {
   NOTIMPLEMENTED();
-  callback.Run(ConnectionInfo());
+  std::move(callback).Run(ConnectionInfo());
 }
 
 void BluetoothDeviceWin::SetConnectionLatency(
     ConnectionLatency connection_latency,
-    const base::Closure& callback,
-    const ErrorCallback& error_callback) {
+    base::OnceClosure callback,
+    ErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
-void BluetoothDeviceWin::Connect(
-    PairingDelegate* pairing_delegate,
-    const base::Closure& callback,
-    const ConnectErrorCallback& error_callback) {
+void BluetoothDeviceWin::Connect(PairingDelegate* pairing_delegate,
+                                 base::OnceClosure callback,
+                                 ConnectErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
@@ -182,39 +181,41 @@ void BluetoothDeviceWin::CancelPairing() {
   NOTIMPLEMENTED();
 }
 
-void BluetoothDeviceWin::Disconnect(
-    const base::Closure& callback,
-    const ErrorCallback& error_callback) {
+void BluetoothDeviceWin::Disconnect(base::OnceClosure callback,
+                                    ErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
-void BluetoothDeviceWin::Forget(const base::Closure& callback,
-                                const ErrorCallback& error_callback) {
+void BluetoothDeviceWin::Forget(base::OnceClosure callback,
+                                ErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
 void BluetoothDeviceWin::ConnectToService(
     const BluetoothUUID& uuid,
-    const ConnectToServiceCallback& callback,
-    const ConnectToServiceErrorCallback& error_callback) {
+    ConnectToServiceCallback callback,
+    ConnectToServiceErrorCallback error_callback) {
   scoped_refptr<BluetoothSocketWin> socket(
       BluetoothSocketWin::CreateBluetoothSocket(
           ui_task_runner_, socket_thread_));
-  socket->Connect(this, uuid, base::Bind(callback, socket), error_callback);
+  socket->Connect(this, uuid,
+                  base::AdaptCallbackForRepeating(
+                      base::BindOnce(std::move(callback), socket)),
+                  base::AdaptCallbackForRepeating(std::move(error_callback)));
 }
 
 void BluetoothDeviceWin::ConnectToServiceInsecurely(
     const BluetoothUUID& uuid,
-    const ConnectToServiceCallback& callback,
-    const ConnectToServiceErrorCallback& error_callback) {
-  error_callback.Run(kApiUnavailable);
+    ConnectToServiceCallback callback,
+    ConnectToServiceErrorCallback error_callback) {
+  std::move(error_callback).Run(kApiUnavailable);
 }
 
 void BluetoothDeviceWin::CreateGattConnection(
-      const GattConnectionCallback& callback,
-      const ConnectErrorCallback& error_callback) {
+    GattConnectionCallback callback,
+    ConnectErrorCallback error_callback) {
   // TODO(armansito): Implement.
-  error_callback.Run(ERROR_UNSUPPORTED_DEVICE);
+  std::move(error_callback).Run(ERROR_UNSUPPORTED_DEVICE);
 }
 
 const BluetoothServiceRecordWin* BluetoothDeviceWin::GetServiceRecord(

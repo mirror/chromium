@@ -7,6 +7,8 @@
 #include <string>
 
 #include "base/bind.h"
+
+#include "base/callback_helpers.h"
 #include "base/hash.h"
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/sequenced_task_runner.h"
@@ -174,10 +176,10 @@ bool BluetoothClassicDeviceMac::ExpectingConfirmation() const {
 }
 
 void BluetoothClassicDeviceMac::GetConnectionInfo(
-    const ConnectionInfoCallback& callback) {
+    ConnectionInfoCallback callback) {
   ConnectionInfo connection_info;
   if (![device_ isConnected]) {
-    callback.Run(connection_info);
+    std::move(callback).Run(connection_info);
     return;
   }
 
@@ -192,20 +194,19 @@ void BluetoothClassicDeviceMac::GetConnectionInfo(
   connection_info.max_transmit_power =
       GetHostTransmitPower(kReadMaximumTransmitPowerLevel);
 
-  callback.Run(connection_info);
+  std::move(callback).Run(connection_info);
 }
 
 void BluetoothClassicDeviceMac::SetConnectionLatency(
     ConnectionLatency connection_latency,
-    const base::Closure& callback,
-    const ErrorCallback& error_callback) {
+    base::OnceClosure callback,
+    ErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
-void BluetoothClassicDeviceMac::Connect(
-    PairingDelegate* pairing_delegate,
-    const base::Closure& callback,
-    const ConnectErrorCallback& error_callback) {
+void BluetoothClassicDeviceMac::Connect(PairingDelegate* pairing_delegate,
+                                        base::OnceClosure callback,
+                                        ConnectErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
@@ -229,38 +230,39 @@ void BluetoothClassicDeviceMac::CancelPairing() {
   NOTIMPLEMENTED();
 }
 
-void BluetoothClassicDeviceMac::Disconnect(
-    const base::Closure& callback,
-    const ErrorCallback& error_callback) {
+void BluetoothClassicDeviceMac::Disconnect(base::OnceClosure callback,
+                                           ErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
-void BluetoothClassicDeviceMac::Forget(const base::Closure& callback,
-                                       const ErrorCallback& error_callback) {
+void BluetoothClassicDeviceMac::Forget(base::OnceClosure callback,
+                                       ErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
 void BluetoothClassicDeviceMac::ConnectToService(
     const BluetoothUUID& uuid,
-    const ConnectToServiceCallback& callback,
-    const ConnectToServiceErrorCallback& error_callback) {
+    ConnectToServiceCallback callback,
+    ConnectToServiceErrorCallback error_callback) {
   scoped_refptr<BluetoothSocketMac> socket = BluetoothSocketMac::CreateSocket();
-  socket->Connect(device_.get(), uuid, base::Bind(callback, socket),
-                  error_callback);
+  socket->Connect(device_.get(), uuid,
+                  base::AdaptCallbackForRepeating(
+                      base::BindOnce(std::move(callback), socket)),
+                  base::AdaptCallbackForRepeating(std::move(error_callback)));
 }
 
 void BluetoothClassicDeviceMac::ConnectToServiceInsecurely(
     const BluetoothUUID& uuid,
-    const ConnectToServiceCallback& callback,
-    const ConnectToServiceErrorCallback& error_callback) {
-  error_callback.Run(kApiUnavailable);
+    ConnectToServiceCallback callback,
+    ConnectToServiceErrorCallback error_callback) {
+  std::move(error_callback).Run(kApiUnavailable);
 }
 
 void BluetoothClassicDeviceMac::CreateGattConnection(
-    const GattConnectionCallback& callback,
-    const ConnectErrorCallback& error_callback) {
+    GattConnectionCallback callback,
+    ConnectErrorCallback error_callback) {
   // TODO(armansito): Implement.
-  error_callback.Run(ERROR_UNSUPPORTED_DEVICE);
+  std::move(error_callback).Run(ERROR_UNSUPPORTED_DEVICE);
 }
 
 base::Time BluetoothClassicDeviceMac::GetLastUpdateTime() const {

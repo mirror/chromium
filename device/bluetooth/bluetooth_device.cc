@@ -7,6 +7,7 @@
 #include <iterator>
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
@@ -341,10 +342,10 @@ base::Optional<uint8_t> BluetoothDevice::GetAdvertisingDataFlags() const {
 }
 
 void BluetoothDevice::CreateGattConnection(
-    const GattConnectionCallback& callback,
-    const ConnectErrorCallback& error_callback) {
-  create_gatt_connection_success_callbacks_.push_back(callback);
-  create_gatt_connection_error_callbacks_.push_back(error_callback);
+    GattConnectionCallback callback,
+    ConnectErrorCallback error_callback) {
+  create_gatt_connection_success_callbacks_.push_back(std::move(callback));
+  create_gatt_connection_error_callbacks_.push_back(std::move(error_callback));
 
   if (IsGattConnected())
     return DidConnectGatt();
@@ -465,8 +466,8 @@ BluetoothDevice::GetPrimaryServicesByUUID(const BluetoothUUID& service_uuid) {
 }
 
 void BluetoothDevice::DidConnectGatt() {
-  for (const auto& callback : create_gatt_connection_success_callbacks_) {
-    callback.Run(
+  for (auto& callback : create_gatt_connection_success_callbacks_) {
+    std::move(callback).Run(
         std::make_unique<BluetoothGattConnection>(adapter_, GetAddress()));
   }
   create_gatt_connection_success_callbacks_.clear();
@@ -479,8 +480,8 @@ void BluetoothDevice::DidFailToConnectGatt(ConnectErrorCode error) {
   // connections.
   DCHECK(gatt_connections_.empty());
 
-  for (const auto& error_callback : create_gatt_connection_error_callbacks_)
-    error_callback.Run(error);
+  for (auto& error_callback : create_gatt_connection_error_callbacks_)
+    std::move(error_callback).Run(error);
   create_gatt_connection_success_callbacks_.clear();
   create_gatt_connection_error_callbacks_.clear();
 }
@@ -518,8 +519,8 @@ void BluetoothDevice::SetAsExpiredForTesting() {
 }
 
 void BluetoothDevice::Pair(PairingDelegate* pairing_delegate,
-                           const base::Closure& callback,
-                           const ConnectErrorCallback& error_callback) {
+                           base::OnceClosure callback,
+                           ConnectErrorCallback error_callback) {
   NOTREACHED();
 }
 
