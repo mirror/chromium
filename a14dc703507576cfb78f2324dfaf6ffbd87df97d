@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb8b8ef8_080208b2",
+        "filename": "chrome/browser/extensions/standard_management_policy_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-23T21:02:53Z",
+      "side": 1,
+      "message": "nit: Could you please leave a TODO for fixing this into a stricter check? I understand that it\u0027s only reverting to a previous behavior, but would be still better to track the issue of the checks missing in how the bookmark apps are detected.\nMaybe also create a crbug for that?",
+      "revId": "a14dc703507576cfb78f2324dfaf6ffbd87df97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b57c9a6_380f9717",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-23T21:02:53Z",
+      "side": 1,
+      "message": "Huh, clang-format going crazy? But OK, if that\u0027s what it comes up with... :)",
+      "range": {
+        "startLine": 1553,
+        "startChar": 19,
+        "endLine": 1553,
+        "endChar": 33
+      },
+      "revId": "a14dc703507576cfb78f2324dfaf6ffbd87df97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
