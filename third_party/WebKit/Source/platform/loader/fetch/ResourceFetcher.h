@@ -161,6 +161,8 @@ class PLATFORM_EXPORT ResourceFetcher
                                       WebURLRequest::RequestContext,
                                       const AtomicString& initiator_name);
 
+  ResourceTimingInfo* GetResourceTimingInfo(Resource*);
+
  private:
   friend class ResourceCacheValidationSuppressor;
   enum class StopFetchingTarget {
