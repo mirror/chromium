@@ -30,20 +30,22 @@ namespace {
 const double kSlackBeforeDeadline =
     0.001;  // a small slack period between deadline and current time for safety
 
-// The encoding task is highly likely to switch from idle task to alternative
-// code path when the startTimeoutDelay is set to be below 150ms. As we want the
-// majority of encoding tasks to take the usual async idle task, we set a
-// lenient limit -- 200ms here. This limit still needs to be short enough for
-// the latency to be negligible to the user.
-const double kIdleTaskStartTimeoutDelay = 200.0;
+/* These two timeout delays are based on user statistics on Nov 2017. */
+#if (defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN))
+const double kIdleTaskStartTimeoutDelay = 1000.0;
+#else
+const double kIdleTaskStartTimeoutDelay = 4000.0;  // For ChromeOS, Mobile
+#endif
 // We should be more lenient on completion timeout delay to ensure that the
 // switch from idle to main thread only happens to a minority of toBlob calls
-#if !defined(OS_ANDROID)
-// Png image encoding on 4k by 4k canvas on Mac HDD takes 5.7+ seconds
-const double kIdleTaskCompleteTimeoutDelay = 6700.0;
-#else
-// Png image encoding on 4k by 4k canvas on Android One takes 9.0+ seconds
-const double kIdleTaskCompleteTimeoutDelay = 10000.0;
+#if defined(OS_LINUX)
+const double kIdleTaskCompleteTimeoutDelay = 15.0;
+#elif defined(OS_MACOSX)
+const double kIdleTaskCompleteTimeoutDelay = 25.0;
+#elif (defined(OS_WIN) || defined(OS_CHROMEOS))
+const double kIdleTaskCompleteTimeoutDelay = 80.0;
+#else  // Mobile
+const double kIdleTaskCompleteTimeoutDelay = 160.0;
 #endif
 
 bool IsDeadlineNearOrPassed(double deadline_seconds) {
