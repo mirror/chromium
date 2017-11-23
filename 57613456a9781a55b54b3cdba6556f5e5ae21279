@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61cc83ea_fabcf757",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ComputedStylePropertyMap.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-23T04:10:53Z",
+      "side": 1,
+      "message": "Why this move?",
+      "revId": "57613456a9781a55b54b3cdba6556f5e5ae21279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
