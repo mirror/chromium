@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4174d659_7f30eee7",
+        "filename": "content/common/origin_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-23T12:00:59Z",
+      "side": 1,
+      "message": "The current implementation crashes in debug mode, whenever the --unsafely-treat-insecure-origin-as-secure flag is used. Release builds do not crash, but don\u0027t do anything useful at that point either. From what I can tell, this is the case since this code was originally implemented in http://crrev.com/1905033002, and apparently this wasn\u0027t tested together with the flag.\n\nThe cause is that GURL created from a hostname (without a scheme) doesn\u0027t create a \u0027spec\u0027 and hence asking it for possibly_invalid_spec produces the empty string. The operator\u003d\u003d implementation with the StringPiece guards against this (by checking that the possibly_invalid_spec is the same as the string being passed in). In Debug mode, that check crashes. In release mode, that means the comparison is always done against an empty string, which will always fail.\n\n\nRepro: \n$ out/x64.debug/chrome --user-data-dir\u003d$(mktemp -d) --nofirst-run --unsafely-treat-insecure-origin-as-secure\u003dhttp://www.spiegel.de http://www.spiegel.de\n\nStack trace:\n[13544:13544:1122/104735.052246:FATAL:gurl.cc(487)] Check failed: GURL(spec).possibly_invalid_spec() \u003d\u003d spec ( vs. www.spiegel.de)\n#0 0x7f70d9c60ecd base::debug::StackTrace::StackTrace()\n#1 0x7f70d9c5f2fc base::debug::StackTrace::StackTrace()\n#2 0x7f70d9ce6dba logging::LogMessage::~LogMessage()\n#3 0x7f70d801a765 operator\u003d\u003d()\n#4 0x7f70d322f964 base::ContainsValue\u003c\u003e()\n#5 0x7f70d322ea7a content::IsOriginWhiteListedTrustworthy()\n#6 0x7f70d322ec3a content::IsPotentiallyTrustworthyOrigin()\n#7 0x7f70d43c10e5 content::(anonymous namespace)::IsUrlPotentiallySecure()\n#8 0x7f70d43c0159 content::MixedContentNavigationThrottle::InWhichFrameIsContentMixed()\n#9 0x7f70d43bf89e content::MixedContentNavigationThrottle::ShouldBlockNavigation()\n#10 0x7f70d43bf7e7 content::MixedContentNavigationThrottle::WillStartRequest()\n#11 0x7f70d43f5372 content::NavigationHandleImpl::CheckWillStartRequest()\n#12 0x7f70d43f0657 content::NavigationHandleImpl::WillStartRequest()\n#13 0x7f70d43ff77e content::NavigationRequest::BeginNavigation()\n#14 0x7f70d44134a3 content::NavigatorImpl::OnBeginNavigation()\n#15 0x7f70d4425bb6 content::RenderFrameHostImpl::OnBeginNavigation()",
+      "range": {
+        "startLine": 66,
+        "startChar": 48,
+        "endLine": 66,
+        "endChar": 64
+      },
+      "revId": "63565f81ae5701e56905fe126cab2bed48bafd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
