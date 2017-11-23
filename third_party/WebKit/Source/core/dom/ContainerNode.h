@@ -351,12 +351,8 @@ class CORE_EXPORT ContainerNode : public Node {
                                            Element* attribute_owner_element,
                                            const ChildrenChange*);
 
-  void SetFirstChild(Node* child) {
-    first_child_ = child;
-  }
-  void SetLastChild(Node* child) {
-    last_child_ = child;
-  }
+  void SetFirstChild(Node* child) { first_child_ = child; }
+  void SetLastChild(Node* child) { last_child_ = child; }
 
   // Utility functions for NodeListsNodeData API.
   template <typename Collection>
@@ -386,8 +382,22 @@ class CORE_EXPORT ContainerNode : public Node {
                         Node* next,
                         const Functor&,
                         NodeVector* post_insertion_notification_targets);
+  template <typename Functor>
+  void InsertNodeVector(Node*,
+                        Node* next,
+                        const Functor&,
+                        NodeVector* post_insertion_notification_targets);
+  template <typename Functor>
+  void InsertNodeVectorCommon(Node* target_node,
+                              Node* next,
+                              const Functor& mutator,
+                              NodeVector* post_insertion_notification_targets);
   void DidInsertNodeVector(
       const NodeVector&,
+      Node* next,
+      const NodeVector& post_insertion_notification_targets);
+  void DidInsertNodeVector(
+      Node*,
       Node* next,
       const NodeVector& post_insertion_notification_targets);
   class AdoptAndInsertBefore;
@@ -421,6 +431,9 @@ class CORE_EXPORT ContainerNode : public Node {
   bool RecheckNodeInsertionStructuralPrereq(const NodeVector&,
                                             const Node* next,
                                             ExceptionState&);
+  bool RecheckNodeInsertionStructuralPrereq(const Node*,
+                                            const Node* next,
+                                            ExceptionState&);
   inline bool CheckParserAcceptChild(const Node& new_child) const;
   inline bool IsHostIncludingInclusiveAncestorOfThis(const Node&,
                                                      ExceptionState&) const;
@@ -428,6 +441,9 @@ class CORE_EXPORT ContainerNode : public Node {
 
   bool GetUpperLeftCorner(FloatPoint&) const;
   bool GetLowerRightCorner(FloatPoint&) const;
+
+  template <typename NodeOrNodeVector>
+  void ALotOfCommonCodeForAppendChild(Node*, NodeOrNodeVector, ExceptionState&);
 
   TraceWrapperMember<Node> first_child_;
   TraceWrapperMember<Node> last_child_;
