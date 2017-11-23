@@ -162,6 +162,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // the ContainerBehavior change is synchronous.
   void SetContainerType(const ContainerType type);
 
+  // Sets floating keyboard drggable rect.
+  bool SetDraggableRect(const gfx::Rect& rect);
+
  private:
   // For access to Observer methods for simulation.
   friend class KeyboardControllerTest;

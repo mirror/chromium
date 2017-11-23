@@ -134,6 +134,16 @@ ExtensionFunction::ResponseAction VirtualKeyboardPrivateSetModeFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction
+VirtualKeyboardPrivateSetDraggableRectFunction::Run() {
+  std::unique_ptr<keyboard::SetDraggableRect::Params> params =
+      keyboard::SetDraggableRect::Params::Create(*args_);
+  EXTENSION_FUNCTION_VALIDATE(params);
+  if (!delegate()->SetDraggableRect(params->rect))
+    return RespondNow(Error(kVirtualKeyboardNotEnabled));
+  return RespondNow(NoArguments());
+}
+
+ExtensionFunction::ResponseAction
 VirtualKeyboardPrivateSetKeyboardStateFunction::Run() {
   std::unique_ptr<keyboard::SetKeyboardState::Params> params =
       keyboard::SetKeyboardState::Params::Create(*args_);

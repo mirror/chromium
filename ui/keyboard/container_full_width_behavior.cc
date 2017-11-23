@@ -120,4 +120,8 @@ bool ContainerFullWidthBehavior::BoundsAffectWorkspaceLayout() const {
   return !controller_->keyboard_locked();
 }
 
+bool ContainerFullWidthBehavior::SetDraggableRect(const gfx::Rect& rect) {
+  return false;
+}
+
 }  //  namespace keyboard

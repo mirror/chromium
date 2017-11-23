@@ -744,4 +744,11 @@ void KeyboardController::SetContainerType(const ContainerType type) {
   }
 }
 
+bool KeyboardController::SetDraggableRect(const gfx::Rect& rect) {
+  if (container_behavior_) {
+    return container_behavior_->SetDraggableRect(rect);
+  }
+  return false;
+}
+
 }  // namespace keyboard
