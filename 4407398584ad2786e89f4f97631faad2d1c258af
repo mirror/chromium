@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3d11e5c_c50f8324",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-23T01:52:48Z",
+      "side": 1,
+      "message": "\"Don\u0027t drop frames before they reach VRI after seek.\"",
+      "revId": "4407398584ad2786e89f4f97631faad2d1c258af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476dc385_e2403c3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-23T01:52:48Z",
+      "side": 1,
+      "message": "s/caused/causes/ s/./for some reason which dalecurtis@ will debug later/",
+      "revId": "4407398584ad2786e89f4f97631faad2d1c258af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bee2b7_5f6c0131",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-23T01:52:48Z",
+      "side": 1,
+      "message": "TEST\u003d",
+      "revId": "4407398584ad2786e89f4f97631faad2d1c258af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4388114d_6b5f3d16",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-23T01:52:48Z",
+      "side": 1,
+      "message": "You can just delete this whole sale, it\u0027s \"just\" an \"optimization.\" :)",
+      "revId": "4407398584ad2786e89f4f97631faad2d1c258af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
