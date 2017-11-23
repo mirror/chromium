@@ -65,6 +65,12 @@ class TestNavigationObserver {
 
   bool last_navigation_succeeded() const { return last_navigation_succeeded_; }
 
+  bool last_navigation_is_post() const { return last_navigation_is_post_; }
+
+  const scoped_refptr<ResourceRequestBody>& last_resource_request_body() const {
+    return last_resource_request_body_;
+  }
+
   net::Error last_net_error_code() const { return last_net_error_code_; }
 
  protected:
@@ -92,9 +98,12 @@ class TestNavigationObserver {
   void OnDidStartLoading(WebContents* web_contents);
   void OnDidStopLoading(WebContents* web_contents);
   void OnDidStartNavigation();
-  void OnDidFinishNavigation(bool is_error_page,
-                             const GURL& url,
-                             net::Error error_code);
+  void OnDidFinishNavigation(
+      bool is_error_page,
+      const GURL& url,
+      bool is_post,
+      const scoped_refptr<ResourceRequestBody>& resource_request_body,
+      net::Error error_code);
   void EventTriggered();
 
   // The event that once triggered will quit the run loop.
@@ -117,6 +126,12 @@ class TestNavigationObserver {
 
   // True if the last navigation succeeded.
   bool last_navigation_succeeded_;
+
+  // True if the last navigation was a post.
+  bool last_navigation_is_post_;
+
+  // The request body of the last navigation if it was a post request.
+  scoped_refptr<ResourceRequestBody> last_resource_request_body_;
 
   // The net error code of the last navigation.
   net::Error last_net_error_code_;
