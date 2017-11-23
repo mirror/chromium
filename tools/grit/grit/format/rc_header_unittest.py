@@ -25,7 +25,7 @@ from grit.format import rc_header
 
 class RcHeaderFormatterUnittest(unittest.TestCase):
   def FormatAll(self, grd):
-    output = rc_header.FormatDefines(grd, grd.ShouldOutputAllResourceDefines())
+    output = rc_header.FormatDefines(grd)
     return ''.join(output).replace(' ', '')
 
   def _MakeTempPredeterminedIdsFile(self, content):
@@ -96,9 +96,8 @@ class RcHeaderFormatterUnittest(unittest.TestCase):
     output = self.FormatAll(grd)
     self.failUnless(output.count('IDS_FIRSTPRESENTSTRING10000'))
     self.failIf(output.count('IDS_MISSINGSTRING'))
-    self.failIf(output.count('10001'))  # IDS_MISSINGSTRING should get this ID
-    self.failUnless(output.count('IDS_LANGUAGESPECIFICSTRING10002'))
-    self.failUnless(output.count('IDS_THIRDPRESENTSTRING10003'))
+    self.failUnless(output.count('IDS_LANGUAGESPECIFICSTRING10001'))
+    self.failUnless(output.count('IDS_THIRDPRESENTSTRING10002'))
 
   def testExplicitFirstIdOverlaps(self):
     # second first_id will overlap preexisting range
@@ -181,8 +180,7 @@ class RcHeaderFormatterUnittest(unittest.TestCase):
       </grit>'''), '.')
 
     # Using the default rc_header format string.
-    output = rc_header.FormatDefines(grd, grd.ShouldOutputAllResourceDefines(),
-                                     grd.GetRcHeaderFormat())
+    output = rc_header.FormatDefines(grd, grd.GetRcHeaderFormat())
     self.assertEqual(('#define IDR_LOGO 300\n'
                       '#define IDS_GREETING 10000\n'
                       '#define IDS_BONGO 10001\n'), ''.join(output))
@@ -190,8 +188,7 @@ class RcHeaderFormatterUnittest(unittest.TestCase):
     # Using a custom rc_header format string.
     grd.AssignRcHeaderFormat(
         '#define {textual_id} _Pragma("{textual_id}") {numeric_id}')
-    output = rc_header.FormatDefines(grd, grd.ShouldOutputAllResourceDefines(),
-                                     grd.GetRcHeaderFormat())
+    output = rc_header.FormatDefines(grd, grd.GetRcHeaderFormat())
     self.assertEqual(('#define IDR_LOGO _Pragma("IDR_LOGO") 300\n'
                       '#define IDS_GREETING _Pragma("IDS_GREETING") 10000\n'
                       '#define IDS_BONGO _Pragma("IDS_BONGO") 10001\n'),
@@ -216,8 +213,7 @@ class RcHeaderFormatterUnittest(unittest.TestCase):
           </messages>
         </release>
       </grit>'''), '.', predetermined_ids_file=predetermined_ids_file)
-    output = rc_header.FormatDefines(grd, grd.ShouldOutputAllResourceDefines(),
-                                     grd.GetRcHeaderFormat())
+    output = rc_header.FormatDefines(grd, grd.GetRcHeaderFormat())
     self.assertEqual(('#define ID_LOGO 102\n'
                       '#define IDS_GREETING 10000\n'
                       '#define IDS_BONGO 101\n'), ''.join(output))
@@ -241,8 +237,7 @@ class RcHeaderFormatterUnittest(unittest.TestCase):
           </messages>
         </release>
       </grit>'''), '.', predetermined_ids_file=predetermined_ids_file)
-    output = rc_header.FormatDefines(grd, grd.ShouldOutputAllResourceDefines(),
-                                     grd.GetRcHeaderFormat())
+    output = rc_header.FormatDefines(grd, grd.GetRcHeaderFormat())
     self.assertRaises(exception.IdRangeOverlap, self.FormatAll, grd)
 
 if __name__ == '__main__':

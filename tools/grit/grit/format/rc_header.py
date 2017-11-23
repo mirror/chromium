@@ -30,33 +30,24 @@ def Format(root, lang='en', output_dir='.'):
   for line in emit_lines or default_includes:
     yield line + '\n'
 
-  for line in FormatDefines(root, root.ShouldOutputAllResourceDefines(),
-                            root.GetRcHeaderFormat()):
+  for line in FormatDefines(root, root.GetRcHeaderFormat()):
     yield line
 
 
-def FormatDefines(root, output_all_resource_defines=True,
-                  rc_header_format=None):
+def FormatDefines(root, rc_header_format=None):
   '''Yields #define SYMBOL 1234 lines.
 
   Args:
     root: A GritNode.
-    output_all_resource_defines: If False, output only the symbols used in the
-      current output configuration.
   '''
   from grit.node import message
   tids = GetIds(root)
-
-  if output_all_resource_defines:
-    items = root.Preorder()
-  else:
-    items = root.ActiveDescendants()
 
   if not rc_header_format:
     rc_header_format = "#define {textual_id} {numeric_id}"
   rc_header_format += "\n"
   seen = set()
-  for item in items:
+  for item in root.ActiveDescendants():
     if not isinstance(item, message.MessageNode):
       with item:
         for tid in item.GetTextualIds():
@@ -127,7 +118,7 @@ def _ComputeIds(root, predetermined_tids):
   predetermined_ids = {value: key
                        for key, value in predetermined_tids.iteritems()}
 
-  for item in root:
+  for item in root.ActiveDescendants():
     if isinstance(item, empty.GroupingNode):
       # Note: this won't work if any GroupingNode can be contained inside
       # another.
