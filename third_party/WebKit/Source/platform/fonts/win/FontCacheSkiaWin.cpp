@@ -103,8 +103,6 @@ void FontCache::SetStatusFontMetrics(const wchar_t* family_name,
 
 FontCache::FontCache() : purge_prevent_count_(0) {
   font_manager_ = sk_ref_sp(static_font_manager_);
-  if (!font_manager_)
-    font_manager_ = SkFontMgr_New_DirectWrite();
   DCHECK(font_manager_.get());
 }
 
