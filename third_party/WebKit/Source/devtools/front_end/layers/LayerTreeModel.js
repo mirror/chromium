@@ -42,6 +42,8 @@ Layers.LayerTreeModel = class extends SDK.SDKModel {
       resourceTreeModel.addEventListener(
           SDK.ResourceTreeModel.Events.MainFrameNavigated, this._onMainFrameNavigated, this);
     }
+    /** @type {?Array.<!Protocol.LayerTree.Layer>} */
+    this._pendingLayers = null;
     /** @type {?SDK.LayerTreeBase} */
     this._layerTree = null;
   }
@@ -80,6 +82,22 @@ Layers.LayerTreeModel = class extends SDK.SDKModel {
   async _layerTreeChanged(layers) {
     if (!this._enabled)
       return;
+    var updatePending = !!this._pendingLayers;
+    this._pendingLayers = layers;
+    if (updatePending)
+      return;
+    await new Promise(fulfill => setTimeout(fulfill, 20));
+    do {
+      var currentLayers = this._pendingLayers;
+      await this._innerSetLayers(currentLayers);
+    } while (currentLayers !== this._pendingLayers);
+    this._pendingLayers = null;
+  }
+
+  /**
+   * @param {?Array.<!Protocol.LayerTree.Layer>} layers
+   */
+  async _innerSetLayers(layers) {
     var layerTree = /** @type {!Layers.AgentLayerTree} */ (this._layerTree);
 
     await layerTree.setLayers(layers);
