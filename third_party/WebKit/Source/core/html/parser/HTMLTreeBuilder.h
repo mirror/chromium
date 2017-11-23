@@ -27,12 +27,12 @@
 #ifndef HTMLTreeBuilder_h
 #define HTMLTreeBuilder_h
 
+#include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "core/html/parser/HTMLConstructionSite.h"
 #include "core/html/parser/HTMLElementStack.h"
 #include "core/html/parser/HTMLParserOptions.h"
 #include "platform/heap/Handle.h"
-#include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/TextPosition.h"
@@ -47,8 +47,6 @@ class HTMLDocumentParser;
 
 class HTMLTreeBuilder final
     : public GarbageCollectedFinalized<HTMLTreeBuilder> {
-  WTF_MAKE_NONCOPYABLE(HTMLTreeBuilder);
-
  public:
   // HTMLTreeBuilder can be created for non-HTMLDocument (XHTMLDocument) from
   // editing code.
@@ -219,7 +217,7 @@ class HTMLTreeBuilder final
   bool ProcessEndOfFileForInTemplateContents(AtomicHTMLToken*);
 
   class FragmentParsingContext {
-    WTF_MAKE_NONCOPYABLE(FragmentParsingContext);
+    DISALLOW_COPY_AND_ASSIGN(FragmentParsingContext);
     DISALLOW_NEW();
 
    public:
@@ -276,6 +274,8 @@ class HTMLTreeBuilder final
   TextPosition script_to_process_start_position_;
 
   HTMLParserOptions options_;
+
+  DISALLOW_COPY_AND_ASSIGN(HTMLTreeBuilder);
 };
 
 }  // namespace blink

@@ -5,6 +5,8 @@
 #include "core/html/custom/CustomElementRegistry.h"
 
 #include <memory>
+
+#include "base/macros.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
@@ -166,8 +168,6 @@ TEST_F(CustomElementRegistryTest, collectCandidates_shouldBeInDocumentOrder) {
 // Classes which use trace macros cannot be local because of the
 // traceImpl template.
 class LogUpgradeDefinition : public TestCustomElementDefinition {
-  WTF_MAKE_NONCOPYABLE(LogUpgradeDefinition);
-
  public:
   LogUpgradeDefinition(const CustomElementDescriptor& descriptor)
       : TestCustomElementDefinition(
@@ -256,11 +256,13 @@ class LogUpgradeDefinition : public TestCustomElementDefinition {
     EXPECT_EQ(element, element_);
     attribute_changed_.push_back(AttributeChanged{name, old_value, new_value});
   }
+
+  DISALLOW_COPY_AND_ASSIGN(LogUpgradeDefinition);
 };
 
 class LogUpgradeBuilder final : public TestCustomElementDefinitionBuilder {
   STACK_ALLOCATED();
-  WTF_MAKE_NONCOPYABLE(LogUpgradeBuilder);
+  DISALLOW_COPY_AND_ASSIGN(LogUpgradeBuilder);
 
  public:
   LogUpgradeBuilder() {}
