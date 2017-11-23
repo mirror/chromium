@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e34a6c1_f6891bfe",
+        "filename": "third_party/WebKit/Source/core/frame/InterventionReport.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-23T20:51:03Z",
+      "side": 1,
+      "message": "You can remove this TODO now, right?",
+      "range": {
+        "startLine": 13,
+        "startChar": 29,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "330cc9e9d33f62e29b8539a7bf79f306bcc97c53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
