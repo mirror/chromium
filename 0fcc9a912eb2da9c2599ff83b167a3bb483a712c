@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50dab40f_ac1213d6",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-23T12:07:24Z",
+      "side": 1,
+      "message": "I don\u0027t really get what this if clause is supposed to accomplish, even though it has a long comment :). Seems like if there is no process host for the id, the code below will return null anyways?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "0fcc9a912eb2da9c2599ff83b167a3bb483a712c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0bc44a_2293ff4a",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-23T12:07:24Z",
+      "side": 1,
+      "message": "When reading this, I\u0027m wondering why it isn\u0027t\nstreams_.erase(sid);\nUpdateStreams();\n\nI think it\u0027s written this way to ensure that we update audibility of the frame if needed. This is a bit subtle, so maybe add a comment explaining it?\n\nBy the way, you need to do the same thing on line 80 (that\u0027s why the browser test is failing, I think).",
+      "range": {
+        "startLine": 145,
+        "startChar": 1,
+        "endLine": 148,
+        "endChar": 1
+      },
+      "revId": "0fcc9a912eb2da9c2599ff83b167a3bb483a712c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6088e9dc_a346837e",
+        "filename": "content/browser/media/audio_stream_monitor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-23T12:07:24Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "0fcc9a912eb2da9c2599ff83b167a3bb483a712c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9c652d_f41b0609",
+        "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-23T12:07:24Z",
+      "side": 1,
+      "message": "Could you just have an implicit stop on destruction? I\u0027m not a fan of adding any fancy logic to this class.",
+      "revId": "0fcc9a912eb2da9c2599ff83b167a3bb483a712c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
