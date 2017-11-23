@@ -44,6 +44,9 @@ class ASH_EXPORT DefaultFrameHeader : public FrameHeader,
       mojom::WindowStyle window_style = mojom::WindowStyle::DEFAULT);
   ~DefaultFrameHeader() override;
 
+  // Returns the FontList to use for the title.
+  static const gfx::FontList& GetTitleFontList();
+
   // FrameHeader overrides:
   int GetMinimumHeaderWidth() const override;
   void PaintHeader(gfx::Canvas* canvas, Mode mode) override;
@@ -75,9 +78,6 @@ class ASH_EXPORT DefaultFrameHeader : public FrameHeader,
   bool ShouldUseLightImages() const;
 
  protected:
-  // Returns the FontList to use for the title.
-  static const gfx::FontList& GetTitleFontList();
-
   // Paints the title bar, primarily the title string.
   virtual void PaintTitleBar(gfx::Canvas* canvas);
 

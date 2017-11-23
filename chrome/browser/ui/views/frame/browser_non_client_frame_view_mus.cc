@@ -285,7 +285,9 @@ void BrowserNonClientFrameViewMus::GetWindowMask(const gfx::Size& size,
   // Aura does not use window masks.
 }
 
-void BrowserNonClientFrameViewMus::ResetWindowControls() {}
+void BrowserNonClientFrameViewMus::ResetWindowControls() {
+  BrowserNonClientFrameView::ResetWindowControls();
+}
 
 void BrowserNonClientFrameViewMus::UpdateWindowIcon() {
   if (window_icon_)

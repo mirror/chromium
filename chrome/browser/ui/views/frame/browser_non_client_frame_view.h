@@ -116,6 +116,7 @@ class BrowserNonClientFrameView : public views::NonClientFrameView,
   void ActivationChanged(bool active) override;
   bool DoesIntersectRect(const views::View* target,
                          const gfx::Rect& rect) const override;
+  void ResetWindowControls() override;
 
  private:
   // views::NonClientFrameView:
