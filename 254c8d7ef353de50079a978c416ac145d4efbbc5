@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ad55d41_93eeae53",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layers/LayerTreeModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-23T15:32:12Z",
+      "side": 1,
+      "message": "Why not use Throttler? It will conveniently skip intermediate updates. This whole method becomes:\n\nthis._throttler.schedule(() \u003d\u003e this._innserSetLayers(layers));",
+      "revId": "254c8d7ef353de50079a978c416ac145d4efbbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
