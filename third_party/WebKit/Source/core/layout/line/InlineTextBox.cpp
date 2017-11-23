@@ -117,9 +117,10 @@ LayoutUnit InlineTextBox::BaselinePosition(FontBaseline baseline_type) const {
 LayoutUnit InlineTextBox::LineHeight() const {
   if (!IsText() || !GetLineLayoutItem().Parent())
     return LayoutUnit();
-  if (GetLineLayoutItem().IsBR())
+  if (GetLineLayoutItem().IsBR()) {
     return LayoutUnit(
         LineLayoutBR(GetLineLayoutItem()).LineHeight(IsFirstLineStyle()));
+  }
   if (Parent()->GetLineLayoutItem() == GetLineLayoutItem().Parent())
     return Parent()->LineHeight();
   return LineLayoutBoxModel(GetLineLayoutItem().Parent())
@@ -218,8 +219,7 @@ SelectionState InlineTextBox::GetSelectionState() const {
   }
 
   // If there are ellipsis following, make sure their selection is updated.
-  if (truncation_ != kCNoTruncation && Root().GetEllipsisBox()) {
-    EllipsisBox* ellipsis = Root().GetEllipsisBox();
+  if (EllipsisBox* ellipsis = Root().GetEllipsisBox()) {
     if (state != SelectionState::kNone) {
       int start, end;
       SelectionStartEnd(start, end);
