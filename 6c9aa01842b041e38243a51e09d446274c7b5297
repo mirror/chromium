@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e047a0_9ae2d5c0",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3129,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-23T14:41:57Z",
+      "side": 1,
+      "message": "This is a size_t to int comparison which is why syzasan is complaining about I believe.",
+      "range": {
+        "startLine": 3129,
+        "startChar": 58,
+        "endLine": 3129,
+        "endChar": 59
+      },
+      "revId": "6c9aa01842b041e38243a51e09d446274c7b5297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
