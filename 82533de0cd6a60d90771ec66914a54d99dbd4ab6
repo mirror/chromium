@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb531369_6c55ecbb",
+        "filename": "chrome/browser/signin/chromeos_mirror_account_consistency_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-23T17:42:00Z",
+      "side": 1,
+      "message": "Sorry for the late reply -- one follow-up improvement we could make is to change this to a std::string GetChromeConnectedHeaderValue(Profile* profile) function.\nThen the test would do\nEXPECT_EQ(\"expected_value\", GetChromeConnectedHeaderValue(profile));\ninstead of\nTestMirrorRequestForProfile(profile, \"expected_value\");\n\nThe benefit would be that if we mess up the threading/PostTask things here, the test would definitely fail. (Now, it could succeed because there\u0027s a possibility we never reach the EXPECT_EQ call if we make a mistake here.)",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 32
+      },
+      "revId": "82533de0cd6a60d90771ec66914a54d99dbd4ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
