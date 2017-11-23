@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "598b1270_912aa41d",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-23T15:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8268c0b7_15f1f632",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "1e05af5e1ed0d830d96f32ef6df2ecaa3ef9073b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12273196_7876ef44",
         "filename": "components/password_manager/core/browser/export/password_ui_export_view.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1e05af5e1ed0d830d96f32ef6df2ecaa3ef9073b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5799a5c5_023aa088",
+        "filename": "components/password_manager/core/browser/export/password_ui_export_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-23T15:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12273196_7876ef44",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "1e05af5e1ed0d830d96f32ef6df2ecaa3ef9073b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
