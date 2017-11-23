@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f50cae9c_a40cb490",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2017-11-23T06:12:09Z",
+      "side": 1,
+      "message": "i assume we need this prefix only while in transition?\n\na group name is unique within project, so \"chromium.\" is unnecessary in project \"chromium\"",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 35
+      },
+      "revId": "505106e53eb35f9350d495c34daa2b3f79e623f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
