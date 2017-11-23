@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3343962f_4d515792",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-23T05:47:39Z",
+      "side": 1,
+      "message": "nit: just call it detector? google style says to avoid abbreviations like this.",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c936b2_66ffed5e",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-23T05:47:39Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a454bf_be4a9fcb",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-23T05:47:39Z",
+      "side": 1,
+      "message": "nit: don\u0027t number these unless you\u0027re e.g. writing them out to disk or sending them to another system and need the numbers to always stay the same.",
+      "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

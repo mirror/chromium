@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6605b9c9_2e82a7ef",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-23T05:47:39Z",
+      "side": 1,
+      "message": "yes, my mistake -- make_unique is in \u003cmemory\u003e",
+      "parentUuid": "23f6aab0_7ae53217",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be8721b5_c1669854",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -661,6 +679,24 @@
       "side": 1,
       "message": "Thanks for your suggestion! I\u0027d have to keep the ctor, otherwise I can\u0027t pass in the two mandatory fields.",
       "parentUuid": "17f44d7f_af552631",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d59038_a6d40d52",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-23T05:47:39Z",
+      "side": 1,
+      "message": "the following example program works for me. does a similar approach not work here?\n\n  #include \u003ccstdio\u003e\n\n  struct Foo {\n    int a;\n    int b;\n    int c;\n  };\n\n  int main(int argc, char** argv) {\n    Foo foo \u003d {1, 2};\n    printf(\"a\u003d%d b\u003d%d c\u003d%d\\n\", foo.a, foo.b, foo.c);\n    return 0;\n  }",
+      "parentUuid": "5bb77d97_e4afeb21",
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
