@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "9eb026ff_0552ac45",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-23T01:09:30Z",
+      "side": 1,
+      "message": "Nit: Unnecessary parentheses. Same (paramValueSplit.length !\u003d 3).",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "79453c3028d37f9dfa6ad2cb275ade923f7e07bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6c8861_c3536735",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-23T01:09:30Z",
+      "side": 1,
+      "message": "Nit (optional): Passing |params| to parseViewParam_ and parseZoomParam_ and expecting those methods to mutate their input parameter is a bit odd (at least not as common in JS as it is in C++).\n\nAlternative suggestion: Make parseViewParam_(paramValue), return a new object. Then augment the original object with the returned value.\n\nvar params \u003d {};\n...\nif (\u0027view\u0027 in paramsDictionary)\n  Object.assign(params, this.parseViewParam_(paramsDictionary[\u0027view\u0027]));\n\nif (\u0027zoom\u0027 in paramsDictionary)\n  Object.assign(params, this.parseZoomParam_(paramsDictionary[\u0027zoom\u0027]);\n...\ncallback(params);",
+      "revId": "79453c3028d37f9dfa6ad2cb275ade923f7e07bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76f489e1_4abcf952",
         "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
         "patchSetId": 8
@@ -45,6 +85,46 @@
       "revId": "79453c3028d37f9dfa6ad2cb275ade923f7e07bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cef03fd_6357ff98",
+        "filename": "chrome/test/data/pdf/params_parser_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-23T01:09:30Z",
+      "side": 1,
+      "message": "Nit (optional): You can use the slightly shorter (by 1 character in this case):\n`${url}#view\u003dFitH,789`",
+      "revId": "79453c3028d37f9dfa6ad2cb275ade923f7e07bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d2fc5b_2f1ea021",
+        "filename": "chrome/test/data/pdf/params_parser_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-23T01:09:30Z",
+      "side": 1,
+      "message": "Nit: Maybe this should be named params?",
+      "range": {
+        "startLine": 114,
+        "startChar": 37,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "79453c3028d37f9dfa6ad2cb275ade923f7e07bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
