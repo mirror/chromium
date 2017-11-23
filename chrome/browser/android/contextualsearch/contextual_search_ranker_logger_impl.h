@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_ANDROID_CONTEXTUALSEARCH_CONTEXTUAL_SEARCH_RANKER_LOGGER_IMPL_H_
 
 #include "base/android/jni_android.h"
+#include "base/memory/weak_ptr.h"
 
 class ContextualSearchFieldTrial;
 class GURL;
@@ -101,7 +102,7 @@ class ContextualSearchRankerLoggerImpl {
   std::unique_ptr<ContextualSearchFieldTrial> field_trial_;
 
   // The Ranker Predictor for whether a tap gesture should be suppressed or not.
-  std::unique_ptr<assist_ranker::BinaryClassifierPredictor> predictor_;
+  base::WeakPtr<assist_ranker::BinaryClassifierPredictor> predictor_;
 
   // The |BrowserContext| currently associated with the above predictor.
   content::BrowserContext* browser_context_;

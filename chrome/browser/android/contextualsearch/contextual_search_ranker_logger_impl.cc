@@ -110,7 +110,7 @@ void ContextualSearchRankerLoggerImpl::SetUkmRecorder(
 void ContextualSearchRankerLoggerImpl::SetupRankerPredictor(
     content::WebContents* web_contents) {
   // Set up the Ranker predictor.
-  if (IsRankerEnabled()) {
+  if (IsRankerEnabled() && predictor_) {
     // Create one predictor for the current BrowserContext.
     content::BrowserContext* browser_context =
         web_contents->GetBrowserContext();
@@ -118,12 +118,16 @@ void ContextualSearchRankerLoggerImpl::SetupRankerPredictor(
       return;
 
     browser_context_ = browser_context;
+    // FIXME move config to Ranker code.
+    PredictorConfig config;
+    config.set_model_name(kContextualSearchModelFilename);
+    config.set_uma_prefix(kContextualSearchUmaPrefix);
+    // FIXME use Finch feature
+    config.set_default_model_url(kModelUrl.Get());
     assist_ranker::AssistRankerService* assist_ranker_service =
         assist_ranker::AssistRankerServiceFactory::GetForBrowserContext(
             browser_context);
-    predictor_ = assist_ranker_service->FetchBinaryClassifierPredictor(
-        GURL((kModelUrl.Get())), kContextualSearchModelFilename,
-        kContextualSearchUmaPrefix);
+    predictor_ = assist_ranker_service->FetchBinaryClassifierPredictor(config);
   }
 }
 
@@ -150,7 +154,7 @@ AssistRankerPrediction ContextualSearchRankerLoggerImpl::RunInference(
   has_predicted_decision_ = true;
   bool prediction = false;
   bool was_able_to_predict = false;
-  if (IsRankerEnabled()) {
+  if (IsRankerEnabled() && predictor_) {
     was_able_to_predict = predictor_->Predict(*ranker_example_, &prediction);
     // Log to UMA whether we were able to predict or not.
     base::UmaHistogramBoolean("Search.ContextualSearchRankerWasAbleToPredict",
