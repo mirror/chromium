@@ -549,6 +549,9 @@ void CdmAdapter::Initialize(std::unique_ptr<media::SimpleCdmPromise> promise) {
   cdm_->Initialize(cdm_config_.allow_distinctive_identifier,
                    cdm_config_.allow_persistent_state);
   promise->resolve();
+
+  // For testing only!!!!!!!!!!!!!!!!!!!!!!
+  CreateCdmProxy();
 }
 
 void CdmAdapter::SetServerCertificate(
@@ -1156,6 +1159,14 @@ void CdmAdapter::OnDeferredInitializationDone(cdm::StreamType stream_type,
 cdm::FileIO* CdmAdapter::CreateFileIO(cdm::FileIOClient* client) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   return helper_->CreateCdmFileIO(client);
+}
+
+void CdmAdapter::CreateCdmProxy() {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  cdm::CdmProxy* cdm_proxy = helper_->CreateCdmProxy();
+
+  // HACK, for testing only!
+  cdm_proxy->Initialize(nullptr);
 }
 
 void CdmAdapter::RequestStorageId(uint32_t version) {

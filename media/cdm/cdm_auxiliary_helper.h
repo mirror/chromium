@@ -20,6 +20,7 @@
 namespace cdm {
 class FileIO;
 class FileIOClient;
+class CdmProxy;
 }  // namespace cdm
 
 namespace media {
@@ -44,6 +45,8 @@ class MEDIA_EXPORT CdmAuxiliaryHelper : public CdmAllocator,
   // directly. Instead, it should call cdm::FileIO::Close() after it's not
   // needed anymore.
   virtual cdm::FileIO* CreateCdmFileIO(cdm::FileIOClient* client);
+
+  virtual cdm::CdmProxy* CreateCdmProxy();
 
   // CdmAllocator implementation.
   cdm::Buffer* CreateCdmBuffer(size_t capacity) override;

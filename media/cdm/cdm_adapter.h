@@ -142,6 +142,9 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
   cdm::FileIO* CreateFileIO(cdm::FileIOClient* client) override;
   void RequestStorageId(uint32_t version) override;
 
+  // For prototype.
+  void CreateCdmProxy();
+
   // cdm::Host_8 specific implementation.
   void OnRejectPromise(uint32_t promise_id,
                        cdm::Error error,
