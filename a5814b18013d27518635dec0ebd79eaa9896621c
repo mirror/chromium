@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7625b5cf_66aa2549",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-23T05:27:46Z",
+      "side": 1,
+      "message": "Can ArcSessionManager be created before TestingProfile in the test fixture?\nIn real usage, we did so, so following the same order sounds better to me. WDYT?",
+      "revId": "a5814b18013d27518635dec0ebd79eaa9896621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46a5d78_f3a378dc",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-23T05:27:46Z",
+      "side": 1,
+      "message": "nit: you can skip explicit reset(), I think.",
+      "revId": "a5814b18013d27518635dec0ebd79eaa9896621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985359de_10076623",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-23T05:27:46Z",
+      "side": 1,
+      "message": "(off topic): As you\u0027re here, how about renaming user_manager_enabler_ to scoped_user_manager_ following the class renaming?",
+      "revId": "a5814b18013d27518635dec0ebd79eaa9896621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
