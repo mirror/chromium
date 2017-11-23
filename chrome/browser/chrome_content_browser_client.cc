@@ -3067,12 +3067,8 @@ bool ChromeContentBrowserClient::BindAssociatedInterfaceRequestFromFrame(
     const std::string& interface_name,
     mojo::ScopedInterfaceEndpointHandle* handle) {
   // TODO(https://crbug.com/736357): Factor AssociatedInterfaceRegistryImpl out
-  // into content/public/ so it can be used here instead of this abomination.
+  // into content/public/ so it can be used here.
   if (interface_name == password_manager::mojom::CredentialManager::Name_) {
-    ChromePasswordManagerClient::BindCredentialManager(
-        password_manager::mojom::CredentialManagerAssociatedRequest(
-            std::move(*handle)),
-        render_frame_host);
     return true;
   }
   return false;
@@ -3556,7 +3552,8 @@ void ChromeContentBrowserClient::InitWebContextInterfaces() {
   frame_interfaces_parameterized_->AddInterface(
       base::Bind(&password_manager::ContentPasswordManagerDriverFactory::
                      BindPasswordManagerDriver));
-
+  frame_interfaces_parameterized_->AddInterface(
+      base::Bind(&ChromePasswordManagerClient::BindCredentialManager));
   frame_interfaces_parameterized_->AddInterface(
       base::Bind(&InsecureSensitiveInputDriverFactory::BindDriver));
 
