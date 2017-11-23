@@ -109,22 +109,27 @@ void SpeechRecognitionDispatcher::Abort(
 }
 
 void SpeechRecognitionDispatcher::OnRecognitionStarted(int request_id) {
+  NOTREACHED();
   recognizer_client_->DidStart(GetHandleFromID(request_id));
 }
 
 void SpeechRecognitionDispatcher::OnAudioStarted(int request_id) {
+  NOTREACHED();
   recognizer_client_->DidStartAudio(GetHandleFromID(request_id));
 }
 
 void SpeechRecognitionDispatcher::OnSoundStarted(int request_id) {
+  NOTREACHED();
   recognizer_client_->DidStartSound(GetHandleFromID(request_id));
 }
 
 void SpeechRecognitionDispatcher::OnSoundEnded(int request_id) {
+  NOTREACHED();
   recognizer_client_->DidEndSound(GetHandleFromID(request_id));
 }
 
 void SpeechRecognitionDispatcher::OnAudioEnded(int request_id) {
+  NOTREACHED();
   recognizer_client_->DidEndAudio(GetHandleFromID(request_id));
 }
 
@@ -160,6 +165,7 @@ static WebSpeechRecognizerClient::ErrorCode WebKitErrorCode(
 
 void SpeechRecognitionDispatcher::OnErrorOccurred(
     int request_id, const SpeechRecognitionError& error) {
+  NOTREACHED();
   if (error.code == SPEECH_RECOGNITION_ERROR_NO_MATCH) {
     recognizer_client_->DidReceiveNoMatch(GetHandleFromID(request_id),
                                           WebSpeechRecognitionResult());
@@ -172,6 +178,7 @@ void SpeechRecognitionDispatcher::OnErrorOccurred(
 }
 
 void SpeechRecognitionDispatcher::OnRecognitionEnded(int request_id) {
+  NOTREACHED();
   // TODO(tommi): It is possible that the handle isn't found in the array if
   // the user just refreshed the page. It seems that we then get a notification
   // for the previously loaded instance of the page.
@@ -190,6 +197,7 @@ void SpeechRecognitionDispatcher::OnRecognitionEnded(int request_id) {
 
 void SpeechRecognitionDispatcher::OnResultsRetrieved(
     int request_id, const SpeechRecognitionResults& results) {
+  NOTREACHED();
   size_t provisional_count = 0;
   SpeechRecognitionResults::const_iterator it = results.begin();
   for (; it != results.end(); ++it) {
