@@ -355,9 +355,13 @@ void WindowState::CreateDragDetails(const gfx::Point& point_in_parent,
                                     ::wm::WindowMoveSource source) {
   drag_details_ = std::make_unique<DragDetails>(window_, point_in_parent,
                                                 window_component, source);
+  if (drag_details_)
+    delegate_->StartDrag(window_component);
 }
 
 void WindowState::DeleteDragDetails() {
+  if (drag_details_)
+    delegate_->EndDrag();
   drag_details_.reset();
 }
 
