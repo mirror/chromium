@@ -7,6 +7,7 @@ import("//third_party/protobuf/proto_library.gni")
 proto_library("proto") {
   sources = [
     "generic_logistic_regression_model.proto",
+    "predictor_config.proto",
     "ranker_example.proto",
     "ranker_model.proto",
     "translate_ranker_model.proto",
