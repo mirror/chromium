@@ -175,6 +175,30 @@
       "revId": "a875bc384e45e14f258a009b28bd3c6d2113f089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "469663e7_310bbf46",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-23T23:02:38Z",
+      "side": 1,
+      "message": "Right--but maybe we should? Or we should fix the Mojo interfaces to make this possible to access. Can you file a bug for that?",
+      "parentUuid": "71d929b0_4f987530",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "a875bc384e45e14f258a009b28bd3c6d2113f089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
