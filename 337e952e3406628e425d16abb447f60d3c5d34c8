@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1b95cb4_bfbc4aa0",
+        "filename": "chrome/browser/ui/browser_focus_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-23T13:17:08Z",
+      "side": 1,
+      "message": "I found that it was failing on linux-chromeos-rel. Is OS_CHROMEOS by itself enough?",
+      "parentUuid": "1ff6d8e8_acdec589",
+      "revId": "337e952e3406628e425d16abb447f60d3c5d34c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f665ac07_5ba4d4b3",
         "filename": "chrome/browser/ui/browser_focus_uitest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T23:34:35Z",
       "side": 1,
       "message": "Is this equivalent to \n\n #if defined(OS_LINUX) \u0026\u0026 !defined(NDEBUG)",
+      "revId": "337e952e3406628e425d16abb447f60d3c5d34c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287e74b5_01b01cc5",
+        "filename": "chrome/browser/ui/browser_focus_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-23T13:17:08Z",
+      "side": 1,
+      "message": "I don\u0027t think so. This is the way the condition was structured in https://crrev.com/58059.",
+      "parentUuid": "f665ac07_5ba4d4b3",
       "revId": "337e952e3406628e425d16abb447f60d3c5d34c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
