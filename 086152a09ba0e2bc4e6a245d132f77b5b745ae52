@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84619e40_7073132d",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T14:39:50Z",
+      "side": 0,
+      "message": "Do we know if this ever worked?? So odd.",
+      "revId": "086152a09ba0e2bc4e6a245d132f77b5b745ae52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
