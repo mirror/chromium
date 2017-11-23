@@ -7,6 +7,8 @@
 #include <memory>
 
 #include "base/bind.h"
+#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "components/feedback/anonymizer_tool.h"
@@ -36,6 +38,19 @@ std::string GetLogName(SupportedSource source_type) {
   return "";
 }
 
+// Generates a SystemLogsResponse from |result|. This is factored into a
+// separate method to enable execution in a background TaskRunner.
+std::unique_ptr<SystemLogsResponse> GenerateAnonymizedResponse(
+    const std::string& log_name,
+    base::Optional<std::string> result) {
+  std::unique_ptr<SystemLogsResponse> response(new SystemLogsResponse);
+  // Return an empty result if the call to GetLog() failed.
+  if (result.has_value())
+    response->emplace(log_name,
+                      feedback::AnonymizerTool().Anonymize(result.value()));
+  return response;
+}
+
 }  // namespace
 
 SingleDebugDaemonLogSource::SingleDebugDaemonLogSource(
@@ -61,15 +76,10 @@ void SingleDebugDaemonLogSource::OnFetchComplete(
     const std::string& log_name,
     const SysLogsSourceCallback& callback,
     base::Optional<std::string> result) const {
-  // |result| and |response| are the same type, but |result| is passed in from
-  // DebugDaemonClient, which does not use the SystemLogsResponse alias.
-  std::unique_ptr<SystemLogsResponse> response(new SystemLogsResponse);
-  // Return an empty result if the call to GetLog() failed.
-  if (result.has_value())
-    response->emplace(log_name,
-                      feedback::AnonymizerTool().Anonymize(result.value()));
-
-  callback.Run(std::move(response));
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::TaskPriority::BACKGROUND},
+      base::Bind(&GenerateAnonymizedResponse, log_name, std::move(result)),
+      callback);
 }
 
 }  // namespace system_logs
