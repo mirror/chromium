@@ -16,6 +16,24 @@
       "revId": "ec072a648e6d09103116cea609469c2f6abad1a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4639acca_87a8cc71",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-23T15:00:20Z",
+      "side": 1,
+      "message": "I think. I am still unsure about how we will handle the UI changes.",
+      "parentUuid": "d086fd3a_fdebdfbd",
+      "revId": "ec072a648e6d09103116cea609469c2f6abad1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
