@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0db33e0e_cc57f60c",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-23T16:17:40Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "ab932026_325db113",
+      "revId": "0f22f2fb93479d02b94d59fd92c5d17542c4c63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59c2883b_9492180e",
         "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T21:57:24Z",
       "side": 1,
       "message": "We have AXNodeObject::StepValueForRange() implemented, I\u0027d love to see it\nplumbed through for platforms that can use it. I\u0027ve been asking for\naria-valuestep for a while now for ARIA range controls, too.",
+      "revId": "0f22f2fb93479d02b94d59fd92c5d17542c4c63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881868a8_7dd0e5ec",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-23T16:17:40Z",
+      "side": 1,
+      "message": "I will do it later. Reported as https://bugs.chromium.org/p/chromium/issues/detail?id\u003d788200",
+      "parentUuid": "59c2883b_9492180e",
       "revId": "0f22f2fb93479d02b94d59fd92c5d17542c4c63d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
