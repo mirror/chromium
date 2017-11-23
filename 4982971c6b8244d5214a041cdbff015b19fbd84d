@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a086b0bf_0b3f3f11",
+        "filename": "third_party/WebKit/LayoutTests/vr/VRDisplay_rAF_fires_with_window_rAF.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-23T23:19:35Z",
+      "side": 1,
+      "message": "Nit: English",
+      "range": {
+        "startLine": 67,
+        "startChar": 39,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "4982971c6b8244d5214a041cdbff015b19fbd84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
