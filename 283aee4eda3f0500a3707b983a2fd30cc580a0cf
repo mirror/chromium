@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f968a29_f3dc068f",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-23T15:25:52Z",
+      "side": 0,
+      "message": "isn\u0027t it required to move to the next state, when header line is empty? May be we need to relook into the kId state as we are already collecting ids along with regions?",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 24
+      },
+      "revId": "283aee4eda3f0500a3707b983a2fd30cc580a0cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
