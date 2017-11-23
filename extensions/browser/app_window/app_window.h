@@ -90,8 +90,9 @@ class AppWindow : public content::WebContentsDelegate,
                   public ExtensionRegistryObserver {
  public:
   enum WindowType {
-    WINDOW_TYPE_DEFAULT = 1 << 0,   // Default app window.
-    WINDOW_TYPE_PANEL = 1 << 1,     // OS controlled panel window (Ash only).
+    WINDOW_TYPE_DEFAULT = 0,  // Default app window.
+    WINDOW_TYPE_PANEL = 1,    // OS controlled panel window (Ash only).
+    WINDOW_TYPE_COUNT = 2,
   };
 
   enum Frame {
