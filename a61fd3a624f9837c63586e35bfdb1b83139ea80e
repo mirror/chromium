@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2ecf25_4a316072",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-23T13:30:23Z",
+      "side": 1,
+      "message": "nitpick: Why the funky quote signs?",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 12
+      },
+      "revId": "a61fd3a624f9837c63586e35bfdb1b83139ea80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1874e1f8_06da0294",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6087,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-23T13:30:23Z",
+      "side": 1,
+      "message": "nitpick: I\u0027m not sure the inlining is a readability win. Why not:\n\nDCHECK_EQ(secure_context_state_, SecureContextState::kUnknown);\nsecure_context_state_ \u003d IsSecureContextImpl() ? kSecure : kNonSecure;",
+      "revId": "a61fd3a624f9837c63586e35bfdb1b83139ea80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ea41e4_9e4547b9",
+        "filename": "third_party/WebKit/Source/core/html/forms/PasswordInputTypeTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-23T13:30:23Z",
+      "side": 1,
+      "message": "These test updates all follow a pattern of\n1, have a Document\n2, have a should-be-secure URL,\n3, call SetKURL, SetSecurityOrigin, SetSecureContextStateForTesting.\n\nIt seems they all want a document, and need to make sure that the document\u0027s security origin is setup properly. I wonder if there should be a Document::SetURLAndUpdateEverythingForTesting or something...",
+      "range": {
+        "startLine": 86,
+        "startChar": 1,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "a61fd3a624f9837c63586e35bfdb1b83139ea80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
