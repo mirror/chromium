@@ -281,6 +281,7 @@ LocalCaretRectOfPosition(const PositionWithAffinity&);
 CORE_EXPORT LocalCaretRect
 LocalCaretRectOfPosition(const PositionInFlatTreeWithAffinity&);
 bool HasRenderedNonAnonymousDescendantsWithHeight(const LayoutObject*);
+bool EmptyBlockHaveVisibleObjects(const LayoutObject*);
 
 // Returns a hit-tested VisiblePosition for the given point in contents-space
 // coordinates.
