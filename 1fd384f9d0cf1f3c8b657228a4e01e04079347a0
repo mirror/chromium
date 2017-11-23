@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70b79f57_c4e20575",
+        "filename": "ui/accessibility/platform/ax_platform_atk_hyperlink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-23T16:11:07Z",
+      "side": 1,
+      "message": "No, in this case get_uri transfers ownership of the return value. g_strdup() will copy the c_str to a newly allocated gchar*, and caller is the one that has to free it later.",
+      "parentUuid": "8c3c4434_e8c27e3f",
+      "revId": "1fd384f9d0cf1f3c8b657228a4e01e04079347a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2d5a94a_50a0ec11",
         "filename": "ui/accessibility/platform/ax_platform_atk_hyperlink.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "39618319_5b783e05",
+        "filename": "ui/accessibility/platform/ax_platform_atk_hyperlink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-23T16:11:07Z",
+      "side": 1,
+      "message": "Good catch. Thanks!",
+      "parentUuid": "a2d5a94a_50a0ec11",
+      "revId": "1fd384f9d0cf1f3c8b657228a4e01e04079347a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00b344e4_965622da",
         "filename": "ui/accessibility/platform/ax_platform_atk_hyperlink.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-22T21:56:05Z",
       "side": 1,
       "message": "Would it be possible to just use EnsureGTypeInit throughout\nall of the files in this directory?\n\nI know this function won\u0027t be called a lot, but it\u0027d have the\nadded benefit of getting rid of the preprocessor macro in the\nmiddle of the code.",
+      "revId": "1fd384f9d0cf1f3c8b657228a4e01e04079347a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55661aca_7c8ee965",
+        "filename": "ui/accessibility/platform/ax_platform_atk_hyperlink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-23T16:11:07Z",
+      "side": 1,
+      "message": "As the EnsureGTypeInit is public in AXPlatformNodeAuraLinux, I\u0027ll use that one directly. Though maybe I should move these helpers to somewhere else at some point.",
+      "parentUuid": "00b344e4_965622da",
       "revId": "1fd384f9d0cf1f3c8b657228a4e01e04079347a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
