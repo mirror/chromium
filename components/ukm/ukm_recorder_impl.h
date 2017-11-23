@@ -9,6 +9,7 @@
 #include <set>
 #include <vector>
 
+#include "base/containers/flat_map.h"
 #include "base/sequence_checker.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
@@ -55,6 +56,24 @@ class UkmRecorderImpl : public UkmRecorder {
   friend ::metrics::UkmBrowserTest;
   friend ::ukm::debug::DebugPage;
 
+  struct MetricAggregate {
+    double value_sum = 0;
+    double value_square_sum = 0.0;
+    uint64_t total_count = 0;
+    uint64_t dropped_due_to_limits = 0;
+    uint64_t dropped_due_to_sampling = 0;
+  };
+
+  struct EventAggregate {
+    EventAggregate();
+    ~EventAggregate();
+
+    base::flat_map<uint64_t, MetricAggregate> metrics;
+    uint64_t total_count = 0;
+    uint64_t dropped_due_to_limits = 0;
+    uint64_t dropped_due_to_sampling = 0;
+  };
+
   // UkmRecorder:
   void UpdateSourceURL(SourceId source_id, const GURL& url) override;
   void AddEntry(mojom::UkmEntryPtr entry) override;
@@ -69,6 +88,9 @@ class UkmRecorderImpl : public UkmRecorder {
 
   // Whitelisted Entry hashes, only the ones in this set will be recorded.
   std::set<uint64_t> whitelisted_entry_hashes_;
+
+  // Aggregate information for collected event metrics.
+  std::map<uint64_t, EventAggregate> event_aggregations_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 };
