@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11ced687_ede551df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-23T04:09:08Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me what a \"net win\" for the user is in this situation. Perhaps this is more accurately framed as:\n\nSeparate WebAPK launches from external intents by the source of the intent.\n\nThis CL divides the existing EXTERNAL_INTENT launch source for WebAPKs into\ntwo buckets - one for intents originated from the browser that hosts the WebAPK\n(i.e. links in the tabbed browser that were intercepted), and one for intents\nthat originated from other Android apps.\n\nThis allows us to determine whether WebAPKs launched via external intents are\nprimarily launched from links in the host browser, or from other apps.",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5969e6ae_45998eaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-23T04:09:08Z",
+      "side": 1,
+      "message": "Is it worth noting that if the link was from another browser, it would be treated as EXTERNAL_INTENT? Not sure if that situation should be counted here since it kind of feels similar (user was using a web browser and then they got pushed into the WebAPK - it just happens that the browser wasn\u0027t Chrome).\n\nMore generally, this also wouldn\u0027t work if a user has multiple versions of Chrome, and launches a WebAPK link from one of them that wasn\u0027t the WebAPK host. WDYT?",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 53
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7ce348_3d1dc224",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-23T04:09:08Z",
+      "side": 1,
+      "message": "Perhaps cleaner as:\n\nif (IntentHandler.determineExternalIntentSource(\n        ContextUtils.getApplicationContext().getPackageName(), intent) \u003d\u003d \n    IntentHandler.ExternalAppId.CHROME) {\n\n}",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff4d18a_67293ef8",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-23T04:09:08Z",
+      "side": 1,
+      "message": "This is more accurately written as:\n\nif the WebAPK is launched from the same host browser package",
+      "range": {
+        "startLine": 351,
+        "startChar": 50,
+        "endLine": 351,
+        "endChar": 87
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a77322d_65576f97",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-23T04:09:08Z",
+      "side": 1,
+      "message": "Can you also test the opposite case where the APPLICATION_ID isn\u0027t Chrome?",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 95
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5759eb7f_41051fde",
+        "filename": "chrome/browser/android/shortcut_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-23T04:09:08Z",
+      "side": 1,
+      "message": "Please clarify this comment to make it clear that this is external intents from other Android apps, and not from Chrome",
+      "range": {
+        "startLine": 46,
+        "startChar": 49,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
