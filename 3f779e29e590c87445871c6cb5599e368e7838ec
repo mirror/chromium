@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ba83073_b8f92684",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-23T17:15:30Z",
+      "side": 1,
+      "message": "Yes, I will update all the patches to use 3 lines... and also make it explicit it is defining an interface:\n\n//\n// AtkImage interface\n//",
+      "parentUuid": "d9dec9a0_9ba735be",
+      "revId": "3f779e29e590c87445871c6cb5599e368e7838ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ab1cdb6_478f028e",
         "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T22:00:51Z",
       "side": 1,
       "message": "I think this should be AX_ATTR_NAME. The terms differ from one\nplatform to the next, but internally, name is always the\nprimary accessible text and description is secondary.",
+      "revId": "3f779e29e590c87445871c6cb5599e368e7838ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec094ef5_461f55b1",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-23T17:15:30Z",
+      "side": 1,
+      "message": "It is a bit hard to answer here about the right mapping. In an AtkObject implementing AtkImage interface, we already have 3 description fields:\n- AtkObject::get_name (that will be mapped to AX_ATTR_NAME)\n- AtkObject::get_description (that will be mapped to AX_ATTR_DESCRIPTION\n- AtkImage::get_image_description.\n\nThe reason why ATK defines an extra interface is for atk objects that are representing something else, but will include an image for some reason. I.e. a button with an icon. But in the translation of aria model, the image will usually already be an independent node, so the get_name and get_description are already providing a all the information. So we can actually duplicate any of the values.\n\nI will keep description as it was the one already used in BrowserAccessibilityAuraLinux. I\u0027ve been checking also in WebKit and Mozilla, and both basically map get_image_description to same value obtained by AtkObject::get_description.",
+      "parentUuid": "5ab1cdb6_478f028e",
       "revId": "3f779e29e590c87445871c6cb5599e368e7838ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
