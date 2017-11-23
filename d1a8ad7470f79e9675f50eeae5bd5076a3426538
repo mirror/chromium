@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b942c99_95afd433",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T14:36:20Z",
+      "side": 1,
+      "message": "Can you comment what the value will be when it\u0027s a checkbox/radio? Is it \u0027true\u0027/\u0027false\u0027?",
+      "range": {
+        "startLine": 248,
+        "startChar": 21,
+        "endLine": 248,
+        "endChar": 67
+      },
+      "revId": "d1a8ad7470f79e9675f50eeae5bd5076a3426538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f69ad6_a4528c9d",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T14:36:20Z",
+      "side": 1,
+      "message": "nit: no curly braces?",
+      "revId": "d1a8ad7470f79e9675f50eeae5bd5076a3426538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020435df_40d829dc",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T14:36:20Z",
+      "side": 1,
+      "message": "nit: no curlies?",
+      "range": {
+        "startLine": 275,
+        "startChar": 42,
+        "endLine": 275,
+        "endChar": 43
+      },
+      "revId": "d1a8ad7470f79e9675f50eeae5bd5076a3426538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
