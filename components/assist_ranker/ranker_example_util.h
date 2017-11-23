@@ -25,6 +25,9 @@ bool GetFeatureValueAsFloat(const std::string& key,
                             const RankerExample& example,
                             float* value) WARN_UNUSED_RESULT;
 
+// FIXME comment.
+bool FeatureToInt(const Feature& feature, int* int_value) WARN_UNUSED_RESULT;
+
 // Extract category from one-hot feature. Returns true and fills
 // in |value| if the feature is found and is of type string_value. Returns false
 // otherwise.

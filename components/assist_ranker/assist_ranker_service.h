@@ -9,13 +9,13 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/keyed_service/core/keyed_service.h"
-
-class GURL;
 
 namespace assist_ranker {
 
 class BinaryClassifierPredictor;
+class PredictorConfig;
 
 // TODO(crbug.com/778468) : Refactor this so that the service owns the predictor
 // objects and enforce model uniqueness through internal registration in order
@@ -31,10 +31,8 @@ class AssistRankerService : public KeyedService {
   // collision. |model_url| represents a unique ID for the desired model (see
   // ranker_model_loader.h for more details). |uma_prefix| is used to log
   // histograms related to the loading of the model.
-  virtual std::unique_ptr<BinaryClassifierPredictor>
-  FetchBinaryClassifierPredictor(GURL model_url,
-                                 const std::string& model_filename,
-                                 const std::string& uma_prefix) = 0;
+  virtual base::WeakPtr<BinaryClassifierPredictor>
+  FetchBinaryClassifierPredictor(const PredictorConfig& config) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AssistRankerService);

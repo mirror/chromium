@@ -15,26 +15,27 @@
 #include "components/assist_ranker/ranker_model.h"
 #include "components/assist_ranker/ranker_model_loader_impl.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "url/gurl.h"
 
 namespace assist_ranker {
 
-BinaryClassifierPredictor::BinaryClassifierPredictor(){};
+BinaryClassifierPredictor::BinaryClassifierPredictor(
+    const PredictorConfig& config)
+    : BasePredictor(config){};
 BinaryClassifierPredictor::~BinaryClassifierPredictor(){};
 
 // static
 std::unique_ptr<BinaryClassifierPredictor> BinaryClassifierPredictor::Create(
-    net::URLRequestContextGetter* request_context_getter,
+    const PredictorConfig& config,
     const base::FilePath& model_path,
-    GURL model_url,
-    const std::string& uma_prefix) {
+    net::URLRequestContextGetter* request_context_getter) {
   std::unique_ptr<BinaryClassifierPredictor> predictor(
-      new BinaryClassifierPredictor());
+      new BinaryClassifierPredictor(config));
   auto model_loader = base::MakeUnique<RankerModelLoaderImpl>(
       base::Bind(&BinaryClassifierPredictor::ValidateModel),
       base::Bind(&BinaryClassifierPredictor::OnModelAvailable,
                  base::Unretained(predictor.get())),
-      request_context_getter, model_path, model_url, uma_prefix);
+      request_context_getter, model_path, predictor->GetModelUrl(),
+      config.uma_prefix());
   predictor->LoadModel(std::move(model_loader));
   return predictor;
 }

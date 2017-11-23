@@ -9,10 +9,20 @@
 #include <string>
 
 #include "base/files/file_path.h"
+#include "base/memory/weak_ptr.h"
+#include "components/assist_ranker/proto/predictor_config.pb.h"
 #include "components/assist_ranker/ranker_model_loader.h"
+
+class GURL;
+
+namespace ukm {
+class UkmEntryBuilder;
+}
 
 namespace assist_ranker {
 
+class Feature;
+class RankerExample;
 class RankerModel;
 
 // Predictors are objects that provide an interface for prediction, as well as
@@ -23,13 +33,23 @@ class RankerModel;
 // function with the following signature:
 //
 // static RankerModelStatus ValidateModel(const RankerModel& model);
-class BasePredictor {
+class BasePredictor : public base::SupportsWeakPtr<BasePredictor> {
  public:
-  BasePredictor();
+  BasePredictor(const PredictorConfig& config);
   virtual ~BasePredictor();
 
   bool IsReady();
 
+  void LogExampleToUkm(const RankerExample& example, const GURL& page_url);
+
+  // Returns the model URL.
+  GURL GetModelUrl() const;
+  // Returns the model name.
+  std::string GetModelName() const;
+
+  // // FIXME make this protected.
+  // // Returns a weak ptr of this instance.
+  // base::WeakPtr<BasePredictor> GetWeakPtr();
  protected:
   // The model used for prediction.
   std::unique_ptr<RankerModel> ranker_model_;
@@ -45,7 +65,13 @@ class BasePredictor {
   std::unique_ptr<RankerModelLoader> model_loader_;
 
  private:
+  void LogFeatureToUkm(const std::string& feature_name,
+                       const Feature& feature,
+                       ukm::UkmEntryBuilder* ukm_builder);
+
   bool is_ready_ = false;
+
+  PredictorConfig config_;
 
   DISALLOW_COPY_AND_ASSIGN(BasePredictor);
 };
