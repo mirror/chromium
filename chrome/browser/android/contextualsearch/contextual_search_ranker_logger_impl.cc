@@ -20,9 +20,6 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/ContextualSearchRankerLoggerImpl_jni.h"
-#include "services/metrics/public/cpp/ukm_entry_builder.h"
-#include "services/metrics/public/cpp/ukm_recorder.h"
-#include "url/gurl.h"
 
 namespace content {
 class BrowserContext;
@@ -33,17 +30,16 @@ const base::Feature kContextualSearchRankerQuery{
 
 namespace {
 
-const char kContextualSearchRankerModelUrlParamName[] =
-    "contextual-search-ranker-model-url";
+// const char kContextualSearchRankerModelUrlParamName[] =
+//     "contextual-search-ranker-model-url";
 const char kContextualSearchModelFilename[] = "contextual_search_model";
-const char kContextualSearchUmaPrefix[] = "Search.ContextualSearch.Ranker";
 
 const char kContextualSearchRankerDidPredict[] = "OutcomeRankerDidPredict";
 const char kContextualSearchRankerPrediction[] = "OutcomeRankerPrediction";
 
-const base::FeatureParam<std::string> kModelUrl{
-    &kContextualSearchRankerQuery, kContextualSearchRankerModelUrlParamName,
-    ""};
+// const base::FeatureParam<std::string> kModelUrl{
+//     &kContextualSearchRankerQuery, kContextualSearchRankerModelUrlParamName,
+//     ""};
 
 // TODO(donnd, hamelphi): move hex-hash-string to Ranker.
 std::string HexHashFeatureName(const std::string& feature_name) {
@@ -55,10 +51,7 @@ std::string HexHashFeatureName(const std::string& feature_name) {
 
 ContextualSearchRankerLoggerImpl::ContextualSearchRankerLoggerImpl(JNIEnv* env,
                                                                    jobject obj)
-    : ukm_recorder_(nullptr),
-      source_id_(0),
-      builder_(nullptr),
-      field_trial_(nullptr),
+    : field_trial_(nullptr),
       predictor_(nullptr),
       browser_context_(nullptr),
       ranker_example_(nullptr),
@@ -82,29 +75,13 @@ void ContextualSearchRankerLoggerImpl::SetupLoggingAndRanker(
   if (!web_contents)
     return;
 
-  GURL page_url = web_contents->GetURL();
-  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
-  SetUkmRecorder(ukm_recorder, page_url);
+  page_url_ = web_contents->GetURL();
 
   if (IsRankerEnabled()) {
     SetupRankerPredictor(web_contents);
     // Start building example data based on features to be gathered and logged.
     ranker_example_.reset(new assist_ranker::RankerExample());
   }
-}
-
-void ContextualSearchRankerLoggerImpl::SetUkmRecorder(
-    ukm::UkmRecorder* ukm_recorder,
-    const GURL& page_url) {
-  if (!ukm_recorder) {
-    builder_.reset();
-    return;
-  }
-
-  ukm_recorder_ = ukm_recorder;
-  source_id_ = ukm_recorder_->GetNewSourceID();
-  ukm_recorder_->UpdateSourceURL(source_id_, page_url);
-  builder_ = ukm_recorder_->GetEntryBuilder(source_id_, "ContextualSearch");
 }
 
 void ContextualSearchRankerLoggerImpl::SetupRankerPredictor(
@@ -121,10 +98,19 @@ void ContextualSearchRankerLoggerImpl::SetupRankerPredictor(
     assist_ranker::AssistRankerService* assist_ranker_service =
         assist_ranker::AssistRankerServiceFactory::GetForBrowserContext(
             browser_context);
+    // FIXME: Get string from predictor config.
     predictor_ = assist_ranker_service->FetchBinaryClassifierPredictor(
-        GURL((kModelUrl.Get())), kContextualSearchModelFilename,
-        kContextualSearchUmaPrefix);
+        kContextualSearchModelFilename);
   }
+}
+
+void ContextualSearchRankerLoggerImpl::LogToExample(
+    const std::string& feature_name,
+    int value) {
+  // FIXME move HexHashFeatureName to Ranker.
+  std::string hex_feature_key(HexHashFeatureName(feature_name));
+  auto& features = *ranker_example_->mutable_features();
+  features[hex_feature_key].set_int32_value(value);
 }
 
 void ContextualSearchRankerLoggerImpl::LogLong(
@@ -133,15 +119,7 @@ void ContextualSearchRankerLoggerImpl::LogLong(
     const base::android::JavaParamRef<jstring>& j_feature,
     jlong j_long) {
   std::string feature = base::android::ConvertJavaStringToUTF8(env, j_feature);
-  if (builder_)
-    builder_->AddMetric(feature.c_str(), j_long);
-
-  // Also write to Ranker if prediction of the decision has not been made yet.
-  if (IsRankerEnabled() && !has_predicted_decision_) {
-    std::string hex_feature_key(HexHashFeatureName(feature));
-    auto& features = *ranker_example_->mutable_features();
-    features[hex_feature_key].set_int32_value(j_long);
-  }
+  LogToExample(feature, j_long);
 }
 
 AssistRankerPrediction ContextualSearchRankerLoggerImpl::RunInference(
@@ -150,19 +128,17 @@ AssistRankerPrediction ContextualSearchRankerLoggerImpl::RunInference(
   has_predicted_decision_ = true;
   bool prediction = false;
   bool was_able_to_predict = false;
-  if (IsRankerEnabled()) {
+  if (IsRankerEnabled() && predictor_) {
     was_able_to_predict = predictor_->Predict(*ranker_example_, &prediction);
     // Log to UMA whether we were able to predict or not.
     base::UmaHistogramBoolean("Search.ContextualSearchRankerWasAbleToPredict",
                               was_able_to_predict);
-    // Log the Ranker decision to UKM, including whether we were able to make
-    // any prediction.
-    if (builder_) {
-      builder_->AddMetric(kContextualSearchRankerDidPredict,
-                          was_able_to_predict);
-      if (was_able_to_predict) {
-        builder_->AddMetric(kContextualSearchRankerPrediction, prediction);
-      }
+    // FIXME: this could be logged internally by ranker.
+    LogToExample(kContextualSearchRankerDidPredict,
+                 static_cast<int>(was_able_to_predict));
+    if (was_able_to_predict) {
+      LogToExample(kContextualSearchRankerPrediction,
+                   static_cast<int>(prediction));
     }
   }
   AssistRankerPrediction prediction_enum;
@@ -181,11 +157,9 @@ AssistRankerPrediction ContextualSearchRankerLoggerImpl::RunInference(
 void ContextualSearchRankerLoggerImpl::WriteLogAndReset(JNIEnv* env,
                                                         jobject obj) {
   has_predicted_decision_ = false;
-  if (!ukm_recorder_)
-    return;
-
-  // Set up another builder for the next record (in case it's needed).
-  builder_ = ukm_recorder_->GetEntryBuilder(source_id_, "ContextualSearch");
+  if (predictor_)
+    // FIXME: Should ranker take care of resetting the example?
+    predictor_->LogExample(*ranker_example_.get(), page_url_);
   ranker_example_.reset();
 }
 

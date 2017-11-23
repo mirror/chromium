@@ -7,13 +7,13 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
 #include "components/assist_ranker/assist_ranker_service.h"
-
-class GURL;
+#include "components/assist_ranker/proto/predictor_config.pb.h"
 
 namespace net {
 class URLRequestContextGetter;
@@ -21,7 +21,9 @@ class URLRequestContextGetter;
 
 namespace assist_ranker {
 
+class BasePredictor;
 class BinaryClassifierPredictor;
+class LogType;
 
 class AssistRankerServiceImpl : public AssistRankerService {
  public:
@@ -31,12 +33,18 @@ class AssistRankerServiceImpl : public AssistRankerService {
   ~AssistRankerServiceImpl() override;
 
   // AssistRankerService...
-  std::unique_ptr<BinaryClassifierPredictor> FetchBinaryClassifierPredictor(
-      GURL model_url,
-      const std::string& model_filename,
-      const std::string& uma_prefix) override;
+  base::WeakPtr<BinaryClassifierPredictor> FetchBinaryClassifierPredictor(
+      const std::string& model_name) override;
 
  private:
+  void RegisterConfig(const std::string& model_name,
+                      const std::string& logging_name,
+                      const std::string& uma_prefix,
+                      PredictorConfig::LogType log_type,
+                      const std::string& field_trial,
+                      const std::string& default_model_url);
+
+  void InitConfigMap();
   // Returns the full path to the model cache.
   base::FilePath GetModelPath(const std::string& model_filename);
 
@@ -45,6 +53,12 @@ class AssistRankerServiceImpl : public AssistRankerService {
 
   // Base path where models are stored.
   const base::FilePath base_path_;
+
+  std::unordered_map<std::string, std::unique_ptr<BasePredictor>>
+      predictor_map_;
+
+  // FIXME: Move this map in a separate file, as a static map.
+  std::unordered_map<std::string, PredictorConfig> config_map_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

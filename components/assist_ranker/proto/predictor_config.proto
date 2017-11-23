@@ -1,0 +1,46 @@
+// Copyright (c) 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
+// Configuration for a predictor model
+
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+package assist_ranker;
+
+message PredictorConfig {
+  // Unique identifier of the AssistRanker model. This string will also be used
+  // as a filename for the cached model.
+  optional string model_name = 1;
+
+  // Name used for feature logging.
+  optional string logging_name = 2;
+
+  // String used for logging UMA histograms related to the use of this model
+  // (timings, status, etc.)
+  optional string uma_prefix = 3;
+
+  // Infrastructure used for logging the examples.
+  // For now, only UKM logging is implemented.
+  // FIXME: Add bug for other logging types.
+  enum LogType {
+    NO_LOGGING = 0;
+    UKM = 1;
+    UMA = 2;
+    SYNC_EVENT = 3;
+  }
+  optional LogType log_type = 4;
+
+  // Name of the Finch feature that controls this model. If no field_trial is
+  // given, the model will be enabled by default if a default URL is specified.
+  // FIXME: Add bug to implement this.
+  optional string field_trial = 5;
+
+  // URL of the model. This URL will be used if no other URL is provided through
+  // Finch or command line.
+  optional string default_model_url = 6;
+
+  // FIXME: add whitelist of features to log.
+}

@@ -42,6 +42,28 @@ bool GetFeatureValueAsFloat(const std::string& key,
   return true;
 }
 
+bool FeatureToInt(const Feature& feature, int* int_value) {
+  switch (feature.feature_type_case()) {
+    case Feature::kBoolValue:
+      *int_value = static_cast<int>(feature.bool_value());
+      break;
+    case Feature::kInt32Value:
+      *int_value = feature.int32_value();
+      break;
+    case Feature::kFloatValue:
+      // FIXME: Implement this.
+      return false;
+      break;
+    case Feature::kStringValue:
+      // FIXME: Implement this.
+      return false;
+      break;
+    default:
+      return false;
+  }
+  return true;
+}
+
 bool GetOneHotValue(const std::string& key,
                     const RankerExample& example,
                     std::string* value) {

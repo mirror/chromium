@@ -15,26 +15,29 @@
 #include "components/assist_ranker/ranker_model.h"
 #include "components/assist_ranker/ranker_model_loader_impl.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "url/gurl.h"
 
 namespace assist_ranker {
 
-BinaryClassifierPredictor::BinaryClassifierPredictor(){};
+BinaryClassifierPredictor::BinaryClassifierPredictor(
+    const PredictorConfig& config)
+    : BasePredictor(config){};
 BinaryClassifierPredictor::~BinaryClassifierPredictor(){};
 
 // static
 std::unique_ptr<BinaryClassifierPredictor> BinaryClassifierPredictor::Create(
-    net::URLRequestContextGetter* request_context_getter,
+    const PredictorConfig& config,
     const base::FilePath& model_path,
-    GURL model_url,
-    const std::string& uma_prefix) {
+    net::URLRequestContextGetter* request_context_getter) {
   std::unique_ptr<BinaryClassifierPredictor> predictor(
-      new BinaryClassifierPredictor());
+      new BinaryClassifierPredictor(config));
+  DVLOG(1) << "Creating predictor instance for " << predictor->GetModelName();
+  DVLOG(1) << "Model URL: " << predictor->GetModelUrl();
   auto model_loader = base::MakeUnique<RankerModelLoaderImpl>(
       base::Bind(&BinaryClassifierPredictor::ValidateModel),
       base::Bind(&BinaryClassifierPredictor::OnModelAvailable,
                  base::Unretained(predictor.get())),
-      request_context_getter, model_path, model_url, uma_prefix);
+      request_context_getter, model_path, predictor->GetModelUrl(),
+      config.uma_prefix());
   predictor->LoadModel(std::move(model_loader));
   return predictor;
 }
@@ -42,18 +45,22 @@ std::unique_ptr<BinaryClassifierPredictor> BinaryClassifierPredictor::Create(
 bool BinaryClassifierPredictor::Predict(const RankerExample& example,
                                         bool* prediction) {
   if (!IsReady()) {
+    DVLOG(1) << "Predictor " << GetModelName() << " not ready for prediction.";
     return false;
   }
   *prediction = inference_module_->Predict(example);
+  DVLOG(1) << "Predictor " << GetModelName() << " made a prediction.";
   return true;
 }
 
 bool BinaryClassifierPredictor::PredictScore(const RankerExample& example,
                                              float* prediction) {
   if (!IsReady()) {
+    DVLOG(1) << "Predictor " << GetModelName() << " not ready for prediction.";
     return false;
   }
   *prediction = inference_module_->PredictScore(example);
+  DVLOG(1) << "Predictor " << GetModelName() << " made a prediction.";
   return true;
 }
 
@@ -61,14 +68,15 @@ bool BinaryClassifierPredictor::PredictScore(const RankerExample& example,
 RankerModelStatus BinaryClassifierPredictor::ValidateModel(
     const RankerModel& model) {
   if (model.proto().model_case() != RankerModelProto::kLogisticRegression) {
+    DVLOG(1) << "Model is incompatible.";
     return RankerModelStatus::INCOMPATIBLE;
   }
+  DVLOG(1) << "Model validation succesful.";
   return RankerModelStatus::OK;
 }
 
 bool BinaryClassifierPredictor::Initialize() {
-  // TODO(hamelphi): move the GLRM proto up one layer in the proto in order to
-  // be independent of the client feature.
+  // TODO(hamelphi): Check for model type once more than one model is supported.
   inference_module_.reset(new GenericLogisticRegressionInference(
       ranker_model_->proto().logistic_regression()));
   return true;
