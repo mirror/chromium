@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43bd526e_d681ec73",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-23T03:57:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we should do this for simplicity or use a vector and convert the map?\n\nI can also do PostTask, but I don\u0027t like the idea of using PostTask.",
+      "revId": "24276eb5c5c37bf2e56b5c701bca7ab87c3e58f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
