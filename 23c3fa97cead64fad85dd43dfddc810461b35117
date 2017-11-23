@@ -22,6 +22,30 @@
       "revId": "23c3fa97cead64fad85dd43dfddc810461b35117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b119021_e0ac4955",
+        "filename": "ash/system/session/tray_session_length_limit.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-11-23T20:34:28Z",
+      "side": 1,
+      "message": "Good point but https://cs.chromium.org/chromium/src/ash/system/session/tray_session_length_limit.cc?l\u003d118\u0026rcl\u003d8b411de0034dd83ccd909207895b4044f15c4066 already does that by putting `Update()\u0027 in a RepeatingTimer which in turn calls https://cs.chromium.org/chromium/src/ash/system/session/tray_session_length_limit.cc?l\u003d92\u0026rcl\u003d8b411de0034dd83ccd909207895b4044f15c4066 `UpdateState()\u0027 and `UpdateNotification()\u0027. This is run every 500 ms as of now and is responsible for updating the \"countdown\" in the UI.\n\nTested it manually too. A notification \"popped up\" when there was 1 hour left in the session.",
+      "parentUuid": "1c274945_f35cbcbe",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 54
+      },
+      "revId": "23c3fa97cead64fad85dd43dfddc810461b35117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
