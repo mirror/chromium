@@ -27,12 +27,11 @@ function trackLoaded(event) {
     var video = track.parentNode;
     var cues = video.textTracks[0].cues;
     {
-assert_equals(cues.length, 5);
-assert_equals(cues[0].id, " leading space");
-assert_equals(cues[1].id, "trailing space ");
-assert_equals(cues[2].id, "-- >");
-assert_equals(cues[3].id, "->");
-assert_equals(cues[4].id, " ");
+assert_equals(cues.length, 4);
+assert_equals(cues[0].region.id, "leading");
+assert_equals(cues[1].region.id, "--");
+assert_equals(cues[2].region.id, "->");
+assert_equals(cues[3].region.id, "*");
 
     }
     this.done();

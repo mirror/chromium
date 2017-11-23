@@ -1,17 +1,29 @@
 WEBVTT
 
-spaces
-   00:00:00.000    -->  00:00:01.000 
+REGION
+id:spaces
+lines:1
+
+REGION
+id:tabs
+lines:1
+
+REGION
+id:form feed
+lines:1
+
+REGION
+id:vertical tab
+lines:1
+
+   00:00:00.000    -->  00:00:01.000 region:spaces
    text0
 
-tabs
-			00:00:00.000				-->		00:00:01.000	
+			00:00:00.000				-->		00:00:01.000 region:tabs
 text1
 
-form feed
-00:00:00.000-->00:00:01.000
+00:00:00.000-->00:00:01.000 region:form
 text2
 
-vertical tab
-00:00:00.000-->00:00:01.000
+00:00:00.000-->00:00:01.000 region:vertical
 invalid
