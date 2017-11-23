@@ -3060,7 +3060,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   // associated RenderFrame. This is important for showing the correct security
   // state of the page and also honoring user override of bad certificates.
   registry_->AddInterface(base::Bind(&WebSocketManager::CreateWebSocket,
-                                     process_->GetID(), routing_id_));
+                                     process_->GetID(), routing_id_,
+                                     GetLastCommittedOrigin()));
 
   registry_->AddInterface(base::Bind(&SharedWorkerConnectorImpl::Create,
                                      process_->GetID(), routing_id_));
