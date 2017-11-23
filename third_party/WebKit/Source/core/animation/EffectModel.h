@@ -50,6 +50,8 @@ class CORE_EXPORT EffectModel : public GarbageCollectedFinalized<EffectModel> {
     kCompositeReplace,
     kCompositeAdd,
   };
+  static bool StringToCompositeOperation(String op, CompositeOperation&);
+  static String CompositeOperationToString(CompositeOperation);
 
   EffectModel() {}
   virtual ~EffectModel() {}
