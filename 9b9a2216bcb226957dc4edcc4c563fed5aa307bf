@@ -34,6 +34,24 @@
       "revId": "9b9a2216bcb226957dc4edcc4c563fed5aa307bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7148a6_4b043897",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-23T02:06:36Z",
+      "side": 0,
+      "message": "none - it just seemed out of place (and honestly, I missed the fact that there were two new lines) - you can remove the line if you want.",
+      "parentUuid": "9c77713a_74c10bf2",
+      "revId": "9b9a2216bcb226957dc4edcc4c563fed5aa307bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

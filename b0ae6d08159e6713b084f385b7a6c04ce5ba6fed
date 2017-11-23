@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "e290cde2_54274997",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-23T02:06:36Z",
+      "side": 1,
+      "message": "yes, I am (I actually find that preferable)",
+      "parentUuid": "86bb470c_c5d996cc",
+      "range": {
+        "startLine": 651,
+        "startChar": 21,
+        "endLine": 651,
+        "endChar": 25
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c02e5cd2_aaa7b3a8",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 21
@@ -213,6 +237,30 @@
       "side": 1,
       "message": "They should go through separate paths. What about better naming?\nOnAutoMountableDiskEvent and OnFixedDiskEvent.",
       "parentUuid": "b627bb6e_c0a3938f",
+      "range": {
+        "startLine": 776,
+        "startChar": 21,
+        "endLine": 776,
+        "endChar": 32
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1da685a_05a5f73a",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-23T02:06:36Z",
+      "side": 1,
+      "message": "or OnBootDeviceDiskEvent?\n(fixed is not really well defined in this context)",
+      "parentUuid": "ef5b0912_b6765bf0",
       "range": {
         "startLine": 776,
         "startChar": 21,
@@ -447,6 +495,30 @@
       "side": 1,
       "message": "I am not sure what is the scope of disk change. but I was expecting that it can be sent when partition is re-mounted. In that case mount point is not a fix identifier of a disk.\nLet\u0027s get back to that after I check with Ben about DISK_CHANGED event.\nAlso move to separate cl.",
       "parentUuid": "8e03fada_c312f734",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 32
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee4c9d2c_d4aef5d9",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-23T02:06:36Z",
+      "side": 1,
+      "message": "it is fixed for this |disk| - disks with mount_path !\u003d \"/mnt/stateful_partition\" are ignored.",
+      "parentUuid": "cdc83ec9_0e9243e3",
       "range": {
         "startLine": 180,
         "startChar": 12,
