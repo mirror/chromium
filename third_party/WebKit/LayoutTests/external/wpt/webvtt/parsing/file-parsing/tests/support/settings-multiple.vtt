@@ -1,9 +1,15 @@
 WEBVTT
 
-id0
-00:00:00.000 --> 00:00:01.000 align:start line:1% vertical:lr size:50% position:25%
+REGION
+id:id0
+lines:1
+
+REGION
+id:id1
+lines:2
+
+00:00:00.000 --> 00:00:01.000 region:id0 align:start line:1% vertical:lr size:50% position:25%
 text0
 
-id1
-00:00:00.000 --> 00:00:01.000 align:center line:1 vertical:rl size:0% position:100%
+00:00:00.000 --> 00:00:01.000 region:id1 align:center line:1 vertical:rl size:0% position:100%
 text1

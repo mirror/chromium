@@ -1,12 +1,29 @@
-WEBVTTcr00:00:00.000 --> 00:00:01.000text0
+WEBVTT
 
-lf
-00:00:00.000 --> 00:00:01.000
+REGION
+id:cr
+lines:1
+
+REGION
+id:lf
+lines:1
+
+REGION
+id:crlf
+lines:1
+
+REGION
+id:lfcr
+lines:1
+
+00:00:00.000 --> 00:00:01.000 region:cr
+text0
+
+00:00:00.000 --> 00:00:01.000 region:lf
 text1
 
-crlf
-00:00:00.000 --> 00:00:01.000
+00:00:00.000 --> 00:00:01.000 region:crlf
 text2
-lfcr00:00:00.000 --> 00:00:01.000
-text3
 
+00:00:00.000 --> 00:00:01.000 region:lfcr
+text3

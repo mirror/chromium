@@ -212,28 +212,33 @@ bool VTTParser::HasRequiredFileIdentifier(const String& line) {
   return true;
 }
 
-void VTTParser::CollectMetadataHeader(const String& line) {
+void VTTParser::CollectMetadataHeader(String& line) {
   // WebVTT header parsing (WebVTT parser algorithm step 12)
 
   // The only currently supported header is the "Region" header.
   if (!RuntimeEnabledFeatures::WebVTTRegionsEnabled())
     return;
 
-  // Step 12.4 If line contains the character ":" (A U+003A COLON), then set
-  // metadata's name to the substring of line before the first ":" character and
-  // metadata's value to the substring after this character.
-  size_t colon_position = line.find(':');
-  if (colon_position == kNotFound)
+  region_content_.Clear();
+  if (line.IsEmpty()) {
+    line_reader_.GetLine(line);
+  }
+
+  size_t colon_position = line.StartsWith("REGION");
+  if (!colon_position) {
     return;
+  }
 
-  String header_name = line.Substring(0, colon_position);
+  while (!line.IsEmpty()) {
+    region_content_.Append(line);
+    region_content_.Append(" ");
+    line_reader_.GetLine(line);
+  }
 
-  // Steps 12.5 If metadata's name equals "Region":
-  if (header_name == "Region") {
-    String header_value = line.Substring(colon_position + 1);
-    // Steps 12.5.1 - 12.5.11 Region creation: Let region be a new text track
-    // region [...]
-    CreateNewRegion(header_value);
+  CreateNewRegion(region_content_.ToString());
+  line_reader_.GetLine(line);
+  if (line.StartsWith("REGION")) {
+    CollectMetadataHeader(line);
   }
 }
 
