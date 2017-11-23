@@ -723,6 +723,10 @@ __gCrWeb.autofill['clearAutofilledFields'] = function(formName) {
  * This version still takes the minimumRequiredFields parameters. Whereas the
  * C++ version does not.
  *
+ * This version recursively scans its child frames. The C++ version does not
+ * because it has been converted to do only a single frame for Out Of Process
+ * Iframes.
+ *
  * @param {number} minimumRequiredFields The minimum number of fields a form
  *     should contain for autofill.
  * @return {Array<AutofillFormData>} The extracted forms.
@@ -736,13 +740,13 @@ __gCrWeb.autofill.extractNewForms = function(minimumRequiredFields) {
   var webForms = document.forms;
 
   var extractMask = __gCrWeb.autofill.EXTRACT_MASK_VALUE |
-      __gCrWeb.autofill.EXTRACT_MASK_OPTIONS;
+  __gCrWeb.autofill.EXTRACT_MASK_OPTIONS;
   var numFieldsSeen = 0;
   for (var formIndex = 0; formIndex < webForms.length; ++formIndex) {
     /** @type {HTMLFormElement} */
     var formElement = webForms[formIndex];
     var controlElements =
-        __gCrWeb.autofill.extractAutofillableElementsInForm(formElement);
+    __gCrWeb.autofill.extractAutofillableElementsInForm(formElement);
     var numEditableElements = scanFormControlElements_(controlElements);
 
     if (numEditableElements === 0) {
