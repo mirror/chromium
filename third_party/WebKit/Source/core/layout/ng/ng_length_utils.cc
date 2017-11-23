@@ -237,9 +237,6 @@ MinMaxSize ComputeMinAndMaxContentContribution(
   computed_sizes.min_size = std::max(computed_sizes.min_size, min);
   computed_sizes.max_size = std::max(computed_sizes.max_size, min);
 
-  NGBoxStrut margins = ComputeMarginsForSelf(*space, style);
-  computed_sizes.min_size += margins.InlineSum();
-  computed_sizes.max_size += margins.InlineSum();
   return computed_sizes;
 }
 
