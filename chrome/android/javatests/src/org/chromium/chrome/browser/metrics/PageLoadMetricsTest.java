@@ -112,6 +112,10 @@ public class PageLoadMetricsTest {
         @Override
         public void onNetworkQualityEstimate(WebContents webContents, int effectiveConnectionType,
                 long httpRttMs, long transportRttMs) {}
+
+        @Override
+        public void onResponseTiming(WebContents webContents, long navigationStartTick,
+                long responseStart, long responseEnd) {}
     }
 
     @Test

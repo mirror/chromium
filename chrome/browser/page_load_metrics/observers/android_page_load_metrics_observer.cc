@@ -107,6 +107,17 @@ void AndroidPageLoadMetricsObserver::OnLoadedResource(
   }
 }
 
+void AndroidPageLoadMetricsObserver::OnResponseEnd(
+    const page_load_metrics::mojom::PageLoadTiming& timing,
+    const page_load_metrics::PageLoadExtraInfo& extra_info) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  int64_t response_start_ms = timing.response_start->InMilliseconds();
+  int64_t response_end_ms = timing.response_end->InMilliseconds();
+  ReportResponseTiming(
+      (extra_info.navigation_start - base::TimeTicks()).InMicroseconds(),
+      response_start_ms, response_end_ms);
+}
+
 void AndroidPageLoadMetricsObserver::ReportNetworkQualityEstimate(
     net::EffectiveConnectionType connection_type,
     int64_t http_rtt_ms,
@@ -157,4 +168,17 @@ void AndroidPageLoadMetricsObserver::ReportLoadedMainResource(
       static_cast<jlong>(dns_end_ms), static_cast<jlong>(connect_start_ms),
       static_cast<jlong>(connect_end_ms), static_cast<jlong>(request_start_ms),
       static_cast<jlong>(send_start_ms), static_cast<jlong>(send_end_ms));
+}
+
+void AndroidPageLoadMetricsObserver::ReportResponseTiming(
+    int64_t navigation_start_tick,
+    int64_t response_start_ms,
+    int64_t response_end_ms) {
+  base::android::ScopedJavaLocalRef<jobject> java_web_contents =
+      web_contents_->GetJavaWebContents();
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_PageLoadMetrics_onResponseTiming(
+      env, java_web_contents, static_cast<jlong>(navigation_start_tick),
+      static_cast<jlong>(response_start_ms),
+      static_cast<jlong>(response_end_ms));
 }

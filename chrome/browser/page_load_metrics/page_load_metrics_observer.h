@@ -461,6 +461,11 @@ class PageLoadMetricsObserver {
   // Called when the event corresponding to |event_key| occurs in this page
   // load.
   virtual void OnEventOccurred(const void* const event_key) {}
+
+  // Called when the response end timing (as defined by the NavigationTiming
+  // API) is available.
+  virtual void OnResponseEnd(const mojom::PageLoadTiming& timing,
+                             const PageLoadExtraInfo& extra_info) {}
 };
 
 }  // namespace page_load_metrics

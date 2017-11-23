@@ -96,6 +96,7 @@ struct PageLoadTiming {
   // Time relative to navigation_start that the first byte of the response is
   // received.
   mojo.common.mojom.TimeDelta? response_start;
+  mojo.common.mojom.TimeDelta? response_end;
   DocumentTiming document_timing;
   PaintTiming paint_timing;
   ParseTiming parse_timing;

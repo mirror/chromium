@@ -35,6 +35,9 @@ class AndroidPageLoadMetricsObserver
       const page_load_metrics::PageLoadExtraInfo& info) override;
   void OnLoadedResource(const page_load_metrics::ExtraRequestCompleteInfo&
                             extra_request_complete_info) override;
+  void OnResponseEnd(
+      const page_load_metrics::mojom::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& extra_info) override;
 
  protected:
   AndroidPageLoadMetricsObserver(
@@ -62,6 +65,10 @@ class AndroidPageLoadMetricsObserver
                                         int64_t request_start_ms,
                                         int64_t send_start_ms,
                                         int64_t send_end_ms);
+
+  virtual void ReportResponseTiming(int64_t navigation_start_tick,
+                                    int64_t response_start_ms,
+                                    int64_t response_end_ms);
 
  private:
   content::WebContents* web_contents_;

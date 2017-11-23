@@ -199,9 +199,20 @@ public class CustomTabActivity extends ChromeActivity {
             args.putLong(PageLoadMetrics.CONNECT_START, connectStartMs);
             args.putLong(PageLoadMetrics.CONNECT_END, connectEndMs);
             args.putLong(PageLoadMetrics.REQUEST_START, requestStartMs);
-            args.putLong(PageLoadMetrics.RESPONSE_START, sendStartMs);
-            args.putLong(PageLoadMetrics.RESPONSE_END, sendEndMs);
+            args.putLong(PageLoadMetrics.SEND_START, sendStartMs);
+            args.putLong(PageLoadMetrics.SEND_END, sendEndMs);
             mConnection.notifyPageLoadMetrics(mSession, args);
+        }
+
+        @Override
+        public void onResponseTiming(WebContents webContents, long navigationStartTick,
+                long responseStartMs, long responseEndMs) {
+            if (webContents != mWebContents) return;
+
+            mConnection.notifySinglePageLoadMetric(
+                    mSession, PageLoadMetrics.RESPONSE_START, navigationStartTick, responseStartMs);
+            mConnection.notifySinglePageLoadMetric(
+                    mSession, PageLoadMetrics.RESPONSE_END, navigationStartTick, responseEndMs);
         }
     }
 

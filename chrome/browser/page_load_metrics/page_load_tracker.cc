@@ -150,6 +150,8 @@ void DispatchObserverTimingCallbacks(
   if (new_timing.parse_timing->parse_stop &&
       !last_timing.parse_timing->parse_stop)
     observer->OnParseStop(new_timing, extra_info);
+  if (new_timing.response_end && !last_timing.response_end)
+    observer->OnResponseEnd(new_timing, extra_info);
 }
 
 }  // namespace

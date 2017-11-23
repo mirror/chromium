@@ -24,6 +24,8 @@ public class PageLoadMetrics {
     public static final String CONNECT_START = "connectStart";
     public static final String CONNECT_END = "connectEnd";
     public static final String REQUEST_START = "requestStart";
+    public static final String SEND_START = "sendStart";
+    public static final String SEND_END = "sendEnd";
     public static final String RESPONSE_START = "responseStart";
     public static final String RESPONSE_END = "responseEnd";
     public static final String EFFECTIVE_CONNECTION_TYPE = "effectiveConnectionType";
@@ -80,6 +82,19 @@ public class PageLoadMetrics {
         public void onLoadedMainResource(WebContents webContents, long dnsStartMs, long dnsEndMs,
                 long connectStartMs, long connectEndMs, long requestStartMs, long sendStartMs,
                 long sendEndMs);
+
+        /**
+         * Called when response timing is available.
+         *
+         * The response timing is as defined in the NavigationTiming API.
+         *
+         * @param webContents the WebContents this metrics is related to.
+         * @param navigationStartTick Absolute navigation start time, as TimeTicks.
+         * @param responseStartMs Time to response start from navigation start.
+         * @param responseEndMs Time to response end from navigation start.
+         */
+        public void onResponseTiming(WebContents webContents, long navigationStartTick,
+                long responseStartMs, long responseEndMs);
     }
 
     private static ObserverList<Observer> sObservers;
@@ -139,6 +154,16 @@ public class PageLoadMetrics {
         for (Observer observer : sObservers) {
             observer.onLoadedMainResource(webContents, dnsStartMs, dnsEndMs, connectStartMs,
                     connectEndMs, requestStartMs, sendStartMs, sendEndMs);
+        }
+    }
+
+    @CalledByNative
+    static void onResponseTiming(WebContents webContents, long navigationStartTick,
+            long responseStart, long responseEnd) {
+        ThreadUtils.assertOnUiThread();
+        if (sObservers == null) return;
+        for (Observer observer : sObservers) {
+            observer.onResponseTiming(webContents, navigationStartTick, responseStart, responseEnd);
         }
     }
 

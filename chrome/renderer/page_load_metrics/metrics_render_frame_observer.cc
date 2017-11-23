@@ -119,6 +119,8 @@ mojom::PageLoadTimingPtr MetricsRenderFrameObserver::GetTiming() const {
   timing->navigation_start = base::Time::FromDoubleT(start);
   if (perf.ResponseStart() > 0.0)
     timing->response_start = ClampDelta(perf.ResponseStart(), start);
+  if (perf.ResponseEnd() > 0.0)
+    timing->response_end = ClampDelta(perf.ResponseEnd(), start);
   if (perf.DomContentLoadedEventStart() > 0.0) {
     timing->document_timing->dom_content_loaded_event_start =
         ClampDelta(perf.DomContentLoadedEventStart(), start);
