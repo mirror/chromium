@@ -16,6 +16,24 @@
       "revId": "92cf740a719c53a1956612ed43f24089aabbcb07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a1bea1_81afed54",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLOptionElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-23T09:16:05Z",
+      "side": 0,
+      "message": "Right, and the reason why we compute style for options here and not earlier is that we rely on SELECT being attached?",
+      "parentUuid": "670cfea4_ea38c3e7",
+      "revId": "92cf740a719c53a1956612ed43f24089aabbcb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
