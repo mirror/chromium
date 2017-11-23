@@ -514,6 +514,9 @@ void GpuServiceImpl::StoreShaderToDisk(int client_id,
 void GpuServiceImpl::SendAcceleratedSurfaceCreatedChildWindow(
     gpu::SurfaceHandle parent_window,
     gpu::SurfaceHandle child_window) {
+  LOG(ERROR)
+      << "GpuServiceImpl::SendAcceleratedSurfaceCreatedChildWindow parent="
+      << parent_window << ", child=" << child_window;
   DCHECK(main_runner_->BelongsToCurrentThread());
   (*gpu_host_)->SetChildSurface(parent_window, child_window);
 }
