@@ -22,6 +22,8 @@
 
 namespace vr {
 
+using SetClientCallback = base::OnceClosure;
+
 namespace {
 VRDeviceManager* g_vr_device_manager = nullptr;
 }
@@ -58,7 +60,8 @@ VRDeviceManager::~VRDeviceManager() {
   g_vr_device_manager = nullptr;
 }
 
-void VRDeviceManager::AddService(VRServiceImpl* service) {
+void VRDeviceManager::AddService(VRServiceImpl* service,
+                                 SetClientCallback callback) {
   // Loop through any currently active devices and send Connected messages to
   // the service. Future devices that come online will send a Connected message
   // when they are created.
@@ -81,6 +84,8 @@ void VRDeviceManager::AddService(VRServiceImpl* service) {
   }
 
   services_.insert(service);
+
+  std::move(callback).Run();
 }
 
 void VRDeviceManager::RemoveService(VRServiceImpl* service) {
