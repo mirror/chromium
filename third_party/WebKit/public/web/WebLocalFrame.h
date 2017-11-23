@@ -258,6 +258,8 @@ class WebLocalFrame : public WebFrame {
   // the referrer for a HTTP request).
   virtual void SetReferrerForRequest(WebURLRequest&, const WebURL&) = 0;
 
+  virtual void DidCommitProvisionalLoad(bool is_new_navigation) = 0;
+
   // Navigation State -------------------------------------------------------
 
   // Returns true if the current frame's load event has not completed.

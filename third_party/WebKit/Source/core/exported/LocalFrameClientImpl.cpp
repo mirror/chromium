@@ -1139,4 +1139,8 @@ void LocalFrameClientImpl::SetVirtualTimePauser(
   virtual_time_pauser_ = std::move(virtual_time_pauser);
 }
 
+void LocalFrameClientImpl::DidCommitProvisionalLoad(bool is_new_navigation) {
+  virtual_time_pauser_.PauseVirtualTime(false);
+}
+
 }  // namespace blink

@@ -4033,6 +4033,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
+  frame_->DidCommitProvisionalLoad(is_new_navigation);
   for (auto& observer : render_view_->observers_)
     observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
   {

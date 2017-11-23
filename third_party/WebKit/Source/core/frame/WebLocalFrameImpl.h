@@ -157,6 +157,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   void EnableViewSourceMode(bool enable) override;
   bool IsViewSourceModeEnabled() const override;
   void SetReferrerForRequest(WebURLRequest&, const WebURL& referrer) override;
+  void DidCommitProvisionalLoad(bool is_new_navigation) override;
   WebAssociatedURLLoader* CreateAssociatedURLLoader(
       const WebAssociatedURLLoaderOptions&) override;
   void SetMarkedText(const WebString&,

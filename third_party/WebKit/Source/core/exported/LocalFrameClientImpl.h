@@ -255,6 +255,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void SetVirtualTimePauser(WebScopedVirtualTimePauser) override;
 
+  void DidCommitProvisionalLoad(bool is_new_navigation) override;
+
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
 

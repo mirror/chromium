@@ -935,6 +935,10 @@ void WebLocalFrameImpl::SetReferrerForRequest(WebURLRequest& request,
           referrer));
 }
 
+void WebLocalFrameImpl::DidCommitProvisionalLoad(bool is_new_navigation) {
+  LocalRoot()->local_frame_client_->DidCommitProvisionalLoad(is_new_navigation);
+}
+
 WebAssociatedURLLoader* WebLocalFrameImpl::CreateAssociatedURLLoader(
     const WebAssociatedURLLoaderOptions& options) {
   return new WebAssociatedURLLoaderImpl(GetFrame()->GetDocument(), options);

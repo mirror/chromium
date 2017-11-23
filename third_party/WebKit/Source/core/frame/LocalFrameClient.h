@@ -375,6 +375,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void SetVirtualTimePauser(
       WebScopedVirtualTimePauser virtual_time_pauser) {}
+
+  virtual void DidCommitProvisionalLoad(bool is_new_navigation) {}
 };
 
 }  // namespace blink
