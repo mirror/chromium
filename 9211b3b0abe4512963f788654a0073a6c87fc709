@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1b3ab66_984d61d2",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-23T06:04:06Z",
+      "side": 1,
+      "message": "Given that the new runtime library will only be available with a new version of Chrome:\n- Can we assume that the channel will always be set on |notification| ?\n\nI see two scenarios:\n- new Chrome, new runtime library, new ShellAPK\n  |_\u003e |channel| is set on |notification|\n- new Chrome, new runtime library, old ShellAPK\n  |_\u003e |channel| is set on |notification|. This is harmless. However, we don\u0027t need to create channel",
+      "revId": "9211b3b0abe4512963f788654a0073a6c87fc709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
