@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c227fc93_09a1690c",
+        "filename": "chrome/browser/content_settings/content_settings_pref_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T04:40:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73c09f66_18522df7",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78d73f97_560609da",
         "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
         "patchSetId": 4
@@ -50,6 +68,24 @@
       "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29ba48b_b83f35b5",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T04:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78d73f97_560609da",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "7055606c_144d361c",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T04:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69ef202a_d05ef352",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a7df66c_1d70669f",
         "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
         "patchSetId": 4
@@ -81,6 +135,24 @@
       "writtenOn": "2017-11-21T03:26:28Z",
       "side": 1,
       "message": "Then you could keep the expected_default bool here \"true\"",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe37f9c2_cefd23ff",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T04:40:15Z",
+      "side": 1,
+      "message": "Actually with the other changes this still needs to stay as false (i.e. don\u0027t expect default). expect default is kind of weird (it seems to be whether the content setting is not for a specific resource id, and is for a wildcard [1], which might be a bug)..\n\n1: https://cs.chromium.org/chromium/src/chrome/browser/plugins/plugin_utils.cc?rcl\u003d6f2d8cbcc8724cdf7941b5f9554bdf8be7f86b03\u0026l\u003d64",
+      "parentUuid": "0a7df66c_1d70669f",
       "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +173,24 @@
       "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d60a034_8b27915d",
+        "filename": "components/content_settings/core/browser/content_settings_pref.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T04:40:15Z",
+      "side": 1,
+      "message": "Doh! Fixed.",
+      "parentUuid": "a20d2262_8989c98c",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
