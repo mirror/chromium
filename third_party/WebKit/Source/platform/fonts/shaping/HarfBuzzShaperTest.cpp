@@ -20,6 +20,9 @@
 #include "platform/wtf/Vector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#include "english_words.h"
+
+
 namespace blink {
 
 class HarfBuzzShaperTest : public ::testing::Test {
@@ -975,5 +978,29 @@ TEST_P(ShapeParameterTest, SafeToBreakMissingRun) {
   EXPECT_EQ(8u, result->PreviousSafeToBreakOffset(8));
   EXPECT_EQ(8u, result->PreviousSafeToBreakOffset(9));
 }
+
+TEST_F(HarfBuzzShaperTest, SimplePerformanceTest) {
+  TextDirection direction = TextDirection::kLtr;
+
+  for (unsigned k = 0; k < 500; ++k) {
+    FontFamily family;
+    family.SetFamily("Roboto");
+    font_description.SetFamily(family);
+    font = Font(font_description);
+    font.Update(nullptr);
+    for (unsigned i = 0; i < arraysize(english_words); i += 100) {
+      String line = String(english_words[i]);
+      for (unsigned j = 1; j < 100; ++j) {
+        if (i + j >= arraysize(english_words))
+          continue;
+        line.append(english_words[i + j]);
+        line.append(" ");
+      }
+      HarfBuzzShaper shaper(line.Characters16(), line.length());
+      scoped_refptr<ShapeResult> result = shaper.Shape(&font, direction);
+    }
+  }
+}
+
 
 }  // namespace blink
