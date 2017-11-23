@@ -1736,6 +1736,7 @@ void PasswordAutofillAgent::ClearPreview(
     password->SetAutofilled(was_password_autofilled_);
   }
 }
+
 void PasswordAutofillAgent::ProvisionallySavePassword(
     const blink::WebFormElement& form,
     const blink::WebInputElement& element,
