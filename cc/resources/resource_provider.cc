@@ -28,6 +28,7 @@
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/common/resources/returned_resource.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
+#include "components/viz/common/resources/texture_id_allocator.h"
 #include "components/viz/common/resources/transferable_resource.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
@@ -49,43 +50,6 @@
 using gpu::gles2::GLES2Interface;
 
 namespace cc {
-
-class TextureIdAllocator {
- public:
-  TextureIdAllocator(GLES2Interface* gl,
-                     size_t texture_id_allocation_chunk_size)
-      : gl_(gl),
-        id_allocation_chunk_size_(texture_id_allocation_chunk_size),
-        ids_(new GLuint[texture_id_allocation_chunk_size]),
-        next_id_index_(texture_id_allocation_chunk_size) {
-    DCHECK(id_allocation_chunk_size_);
-    DCHECK_LE(id_allocation_chunk_size_,
-              static_cast<size_t>(std::numeric_limits<int>::max()));
-  }
-
-  ~TextureIdAllocator() {
-    gl_->DeleteTextures(
-        static_cast<int>(id_allocation_chunk_size_ - next_id_index_),
-        ids_.get() + next_id_index_);
-  }
-
-  GLuint NextId() {
-    if (next_id_index_ == id_allocation_chunk_size_) {
-      gl_->GenTextures(static_cast<int>(id_allocation_chunk_size_), ids_.get());
-      next_id_index_ = 0;
-    }
-
-    return ids_[next_id_index_++];
-  }
-
- private:
-  GLES2Interface* gl_;
-  const size_t id_allocation_chunk_size_;
-  std::unique_ptr<GLuint[]> ids_;
-  size_t next_id_index_;
-
-  DISALLOW_COPY_AND_ASSIGN(TextureIdAllocator);
-};
 
 namespace {
 
@@ -115,50 +79,6 @@ class ScopedSetActiveTexture {
 base::AtomicSequenceNumber g_next_resource_provider_tracing_id;
 
 }  // namespace
-
-ResourceProvider::Settings::Settings(
-    viz::ContextProvider* compositor_context_provider,
-    bool delegated_sync_points_required,
-    const viz::ResourceSettings& resource_settings)
-    : yuv_highbit_resource_format(resource_settings.high_bit_for_testing
-                                      ? viz::R16_EXT
-                                      : viz::LUMINANCE_8),
-      use_gpu_memory_buffer_resources(
-          resource_settings.use_gpu_memory_buffer_resources),
-      delegated_sync_points_required(delegated_sync_points_required) {
-  if (!compositor_context_provider) {
-    // Pick an arbitrary limit here similar to what hardware might.
-    max_texture_size = 16 * 1024;
-    best_texture_format = viz::RGBA_8888;
-    return;
-  }
-
-  const auto& caps = compositor_context_provider->ContextCapabilities();
-  use_texture_storage = caps.texture_storage;
-  use_texture_format_bgra = caps.texture_format_bgra8888;
-  use_texture_usage_hint = caps.texture_usage;
-  use_texture_npot = caps.texture_npot;
-  use_sync_query = caps.sync_query;
-  use_texture_storage_image = caps.texture_storage_image;
-
-  if (caps.disable_one_component_textures) {
-    yuv_resource_format = yuv_highbit_resource_format = viz::RGBA_8888;
-  } else {
-    yuv_resource_format = caps.texture_rg ? viz::RED_8 : viz::LUMINANCE_8;
-    if (resource_settings.use_r16_texture && caps.texture_norm16)
-      yuv_highbit_resource_format = viz::R16_EXT;
-    else if (caps.texture_half_float_linear)
-      yuv_highbit_resource_format = viz::LUMINANCE_F16;
-  }
-
-  GLES2Interface* gl = compositor_context_provider->ContextGL();
-  gl->GetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size);
-
-  best_texture_format =
-      viz::PlatformColor::BestSupportedTextureFormat(use_texture_format_bgra);
-  best_render_buffer_format = viz::PlatformColor::BestSupportedTextureFormat(
-      caps.render_buffer_format_bgra8888);
-}
 
 ResourceProvider::ResourceProvider(
     viz::ContextProvider* compositor_context_provider,
@@ -196,7 +116,7 @@ ResourceProvider::ResourceProvider(
 
   DCHECK(!texture_id_allocator_);
   GLES2Interface* gl = ContextGL();
-  texture_id_allocator_.reset(new TextureIdAllocator(
+  texture_id_allocator_.reset(new viz::TextureIdAllocator(
       gl, resource_settings.texture_id_allocation_chunk_size));
 }
 
@@ -727,7 +647,7 @@ void ResourceProvider::ScopedWriteLockGL::LazyAllocate(
     return;
   allocated_ = true;
 
-  const ResourceProvider::Settings& settings = resource_provider_->settings_;
+  const viz::ResourceTextureSettings& settings = resource_provider_->settings_;
 
   gl->BindTexture(target_, texture_id);
 
