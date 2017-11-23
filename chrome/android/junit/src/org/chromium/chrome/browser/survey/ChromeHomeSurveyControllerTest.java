@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.survey;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -24,6 +26,8 @@ import org.robolectric.annotation.Config;
 import org.chromium.base.ContextUtils;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tab.TabObserver;
+import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
@@ -33,7 +37,7 @@ import org.chromium.testing.local.LocalRobolectricTestRunner;
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class ChromeHomeSurveyControllerTest {
-    private ChromeHomeSurveyController mController;
+    private TestChromeHomeSurveyController mController;
     private SharedPreferences mSharedPreferences;
 
     @Mock
@@ -42,14 +46,19 @@ public class ChromeHomeSurveyControllerTest {
     @Mock
     WebContents mWebContents;
 
+    @Mock
+    TabModelSelector mSelector;
+
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
 
         ContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);
-        mController = ChromeHomeSurveyController.createChromeHomeSurveyControllerForTests();
+        mController = new TestChromeHomeSurveyController();
+        mController.setTabModelSelector(mSelector);
         mSharedPreferences = ContextUtils.getAppSharedPreferences();
         mSharedPreferences.edit().clear().apply();
+        Assert.assertNull("Tab should be null", mController.getTab());
     }
 
     @After
@@ -97,7 +106,9 @@ public class ChromeHomeSurveyControllerTest {
     public void testValidTab() {
         doReturn(mWebContents).when(mTab).getWebContents();
         doReturn(false).when(mTab).isIncognito();
+
         Assert.assertTrue(mController.isValidTabForSurvey(mTab));
+
         verify(mTab, times(1)).getWebContents();
         verify(mTab, times(1)).isIncognito();
     }
@@ -111,7 +122,9 @@ public class ChromeHomeSurveyControllerTest {
     public void testIncognitoTab() {
         doReturn(mWebContents).when(mTab).getWebContents();
         doReturn(true).when(mTab).isIncognito();
+
         Assert.assertFalse(mController.isValidTabForSurvey(mTab));
+
         verify(mTab, times(1)).getWebContents();
         verify(mTab, times(1)).isIncognito();
     }
@@ -119,8 +132,107 @@ public class ChromeHomeSurveyControllerTest {
     @Test
     public void testTabWithNoWebContents() {
         doReturn(null).when(mTab).getWebContents();
+
         Assert.assertFalse(mController.isValidTabForSurvey(mTab));
+
         verify(mTab, times(1)).getWebContents();
         verify(mTab, never()).isIncognito();
+    }
+
+    @Test
+    public void testSurveyAvailableWebContentsLoaded() {
+        doReturn(mTab).when(mSelector).getCurrentTab();
+        doReturn(mWebContents).when(mTab).getWebContents();
+        doReturn(false).when(mTab).isIncognito();
+        doReturn(true).when(mTab).isUserInteractable();
+        doReturn(false).when(mWebContents).isLoading();
+
+        mController.onSurveyAvailable(null);
+        Assert.assertNotNull("Tab should not be null", mController.getTab());
+        Assert.assertEquals("Tabs should be equal", mTab, mController.getTab());
+
+        verify(mSelector, times(1)).getCurrentTab();
+        verify(mTab, times(1)).getWebContents();
+        verify(mTab, times(1)).isIncognito();
+        verify(mTab, times(1)).isUserInteractable();
+        verify(mTab, times(1)).isLoading();
+    }
+
+    @Test
+    public void testSurveyAvailableNullTab() {
+        doReturn(null).when(mSelector).getCurrentTab();
+
+        mController.onSurveyAvailable(null);
+        Assert.assertNull("Tab should be null", mController.getTab());
+        verify(mSelector).addObserver(any());
+    }
+
+    @Test
+    public void testOnInteractabilityChangedToTrue() {
+        doReturn(mWebContents).when(mTab).getWebContents();
+        doNothing().when(mSelector).removeObserver(any());
+        doNothing().when(mTab).removeObserver(any());
+        doReturn(false).when(mWebContents).isLoading();
+
+        TabObserver observer = mController.getTabObserver(mTab, null);
+        observer.onInteractabilityChanged(true);
+        Assert.assertNotNull("Tab should not be null", mController.getTab());
+        Assert.assertEquals("Tabs should be equal", mTab, mController.getTab());
+
+        verify(mTab, times(1)).getWebContents();
+        verify(mTab, times(1)).removeObserver(any());
+        verify(mWebContents, times(1)).isLoading();
+    }
+
+    @Test
+    public void testOnInteractabilityChangedToFalse() {
+        TabObserver observer = mController.getTabObserver(mTab, null);
+        observer.onInteractabilityChanged(false);
+
+        Assert.assertNull("Tab should be null", mController.getTab());
+        verify(mTab, never()).getWebContents();
+    }
+
+    @Test
+    public void testPageLoadFinishedInteractable() {
+        doReturn(true).when(mTab).isUserInteractable();
+        doNothing().when(mSelector).removeObserver(any());
+        doNothing().when(mTab).removeObserver(any());
+
+        TabObserver observer = mController.getTabObserver(mTab, null);
+        observer.onPageLoadFinished(mTab);
+        Assert.assertNotNull("Tab should not be null", mController.getTab());
+        Assert.assertEquals("Tabs should be equal", mTab, mController.getTab());
+
+        verify(mTab, times(1)).isUserInteractable();
+        verify(mSelector, times(1)).removeObserver(any());
+        verify(mTab, times(1)).removeObserver(any());
+    }
+
+    @Test
+    public void testPageLoadFinishedNotInteractable() {
+        doReturn(false).when(mTab).isUserInteractable();
+
+        TabObserver observer = mController.getTabObserver(mTab, null);
+        observer.onPageLoadFinished(mTab);
+
+        verify(mTab, never()).getWebContents();
+    }
+
+    class TestChromeHomeSurveyController extends ChromeHomeSurveyController {
+        private Tab mTab;
+
+        public TestChromeHomeSurveyController() {
+            super();
+        }
+
+        @Override
+        void showSurveyInfoBar(Tab tab, String siteId) {
+            mTab = tab;
+        }
+
+        public Tab getTab() {
+            return mTab;
+        }
     }
 }
