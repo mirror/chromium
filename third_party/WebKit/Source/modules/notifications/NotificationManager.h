@@ -42,6 +42,9 @@ class NotificationManager final
       ScriptState*,
       NotificationPermissionCallback* deprecated_callback);
 
+  // Displays a notification.
+  void Show(ExecutionContext*);
+
   virtual void Trace(blink::Visitor*);
 
  private:

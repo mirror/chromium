@@ -62,6 +62,12 @@ class CONTENT_EXPORT PlatformNotificationService {
       const PlatformNotificationData& notification_data,
       const NotificationResources& notification_resources) = 0;
 
+  // Displays a notification.
+  // TODO(crbug.com/595685): Remove this once fully implemented and just call
+  // |DisplayNotification()| instead.
+  virtual void DisplayNotificationFromMojo(ResourceContext* resource_context,
+                                           const GURL& origin) = 0;
+
   // Displays the persistent notification described in |notification_data| to
   // the user. This method must be called on the UI thread.
   virtual void DisplayPersistentNotification(

@@ -56,6 +56,8 @@ class MockPlatformNotificationService : public PlatformNotificationService {
       const GURL& origin,
       const PlatformNotificationData& notification_data,
       const NotificationResources& notification_resources) override;
+  void DisplayNotificationFromMojo(ResourceContext* resource_context,
+                                   const GURL& origin) override;
   void DisplayPersistentNotification(
       BrowserContext* browser_context,
       const std::string& notification_id,

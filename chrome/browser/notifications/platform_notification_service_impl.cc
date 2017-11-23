@@ -366,6 +366,12 @@ void PlatformNotificationServiceImpl::DisplayNotification(
       NotificationCommon::NON_PERSISTENT, notification);
 }
 
+void DisplayNotificationFromMojo(ResourceContext* resource_context,
+                                 const GURL& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
+}
+
 void PlatformNotificationServiceImpl::DisplayPersistentNotification(
     BrowserContext* browser_context,
     const std::string& notification_id,
