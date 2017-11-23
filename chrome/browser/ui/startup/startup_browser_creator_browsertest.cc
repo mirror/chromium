@@ -143,6 +143,12 @@ Browser* CloseBrowserAndOpenNew(Browser* browser, Profile* profile) {
 
 #endif  // !defined(OS_CHROMEOS)
 
+enum class WelcomePageTestVariants {
+  kNoPolicy,
+  kMandatoryPolicy,
+  kRecommendedPolicy
+};
+
 }  // namespace
 
 class StartupBrowserCreatorTest : public ExtensionBrowserTest {
@@ -1279,7 +1285,9 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest,
 
 #endif  // !defined(OS_CHROMEOS)
 
-class StartupBrowserCreatorWelcomeBackTest : public InProcessBrowserTest {
+class StartupBrowserCreatorWelcomeBackTest
+    : public InProcessBrowserTest,
+      public testing::WithParamInterface<WelcomePageTestVariants> {
  protected:
   StartupBrowserCreatorWelcomeBackTest() = default;
 
@@ -1302,20 +1310,26 @@ class StartupBrowserCreatorWelcomeBackTest : public InProcessBrowserTest {
     ASSERT_EQ(0U, BrowserList::GetInstance()->size());
   }
 
-  void StartBrowser(StartupBrowserCreator::WelcomeBackPage welcome_back_page,
-                    bool are_startup_prefs_mananged) {
+  void StartBrowser(StartupBrowserCreator::WelcomeBackPage welcome_back_page) {
+    WelcomePageTestVariants variant = GetParam();
     browser_creator_.set_welcome_back_page(welcome_back_page);
 
-    if (are_startup_prefs_mananged) {
+    if (variant != WelcomePageTestVariants::kNoPolicy) {
       policy::PolicyMap values;
-      values.Set(policy::key::kRestoreOnStartup, policy::POLICY_LEVEL_MANDATORY,
+      values.Set(policy::key::kRestoreOnStartup,
+                 variant == WelcomePageTestVariants::kMandatoryPolicy
+                     ? policy::POLICY_LEVEL_MANDATORY
+                     : policy::POLICY_LEVEL_RECOMMENDED,
                  policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_CLOUD,
                  base::MakeUnique<base::Value>(4), nullptr);
       auto url_list = base::MakeUnique<base::Value>(base::Value::Type::LIST);
       url_list->GetList().push_back(base::Value("http://managed.site.com/"));
       values.Set(policy::key::kRestoreOnStartupURLs,
-                 policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_MACHINE,
-                 policy::POLICY_SOURCE_CLOUD, std::move(url_list), nullptr);
+                 variant == WelcomePageTestVariants::kMandatoryPolicy
+                     ? policy::POLICY_LEVEL_MANDATORY
+                     : policy::POLICY_LEVEL_RECOMMENDED,
+                 policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_CLOUD,
+                 std::move(url_list), nullptr);
       provider_.UpdateChromePolicy(values);
     }
 
@@ -1343,26 +1357,36 @@ class StartupBrowserCreatorWelcomeBackTest : public InProcessBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(StartupBrowserCreatorWelcomeBackTest);
 };
 
-#if defined(OS_WIN)
-IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorWelcomeBackTest, WelcomeBackWin10) {
-  ASSERT_NO_FATAL_FAILURE(StartBrowser(
-      StartupBrowserCreator::WelcomeBackPage::kWelcomeWin10, false));
-  ExpectUrlInBrowserAtPosition(
-      StartupTabProviderImpl::GetWin10WelcomePageUrl(false), 0);
-}
+INSTANTIATE_TEST_CASE_P(
+    StartupBrowserCreatorWelcomeBackTest,
+    StartupBrowserCreatorWelcomeBackTest,
+    testing::Values(WelcomePageTestVariants::kNoPolicy,
+                    WelcomePageTestVariants::kMandatoryPolicy,
+                    WelcomePageTestVariants::kRecommendedPolicy));
 
-IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorWelcomeBackTest,
-                       NoWelcomeBackWin10WithPolicy) {
-  ASSERT_NO_FATAL_FAILURE(StartBrowser(
-      StartupBrowserCreator::WelcomeBackPage::kWelcomeWin10, true));
-  ExpectUrlInBrowserAtPosition(GURL("http://managed.site.com/"), 0);
+#if defined(OS_WIN)
+IN_PROC_BROWSER_TEST_P(StartupBrowserCreatorWelcomeBackTest, WelcomeBackWin10) {
+  WelcomePageTestVariants variant = GetParam();
+  ASSERT_NO_FATAL_FAILURE(
+      StartBrowser(StartupBrowserCreator::WelcomeBackPage::kWelcomeWin10));
+  if (variant == WelcomePageTestVariants::kNoPolicy) {
+    ExpectUrlInBrowserAtPosition(
+        StartupTabProviderImpl::GetWin10WelcomePageUrl(false), 0);
+  } else {
+    ExpectUrlInBrowserAtPosition(GURL("http://managed.site.com/"), 0);
+  }
 }
 #endif  // defined(OS_WIN)
 
-IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorWelcomeBackTest,
+IN_PROC_BROWSER_TEST_P(StartupBrowserCreatorWelcomeBackTest,
                        WelcomeBackStandard) {
-  ASSERT_NO_FATAL_FAILURE(StartBrowser(
-      StartupBrowserCreator::WelcomeBackPage::kWelcomeStandard, false));
-  ExpectUrlInBrowserAtPosition(StartupTabProviderImpl::GetWelcomePageUrl(false),
-                               0);
+  WelcomePageTestVariants variant = GetParam();
+  ASSERT_NO_FATAL_FAILURE(
+      StartBrowser(StartupBrowserCreator::WelcomeBackPage::kWelcomeStandard));
+  if (variant == WelcomePageTestVariants::kNoPolicy) {
+    ExpectUrlInBrowserAtPosition(
+        StartupTabProviderImpl::GetWelcomePageUrl(false), 0);
+  } else {
+    ExpectUrlInBrowserAtPosition(GURL("http://managed.site.com/"), 0);
+  }
 }
