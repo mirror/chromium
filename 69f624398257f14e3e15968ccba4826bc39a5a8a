@@ -52,6 +52,24 @@
       "revId": "69f624398257f14e3e15968ccba4826bc39a5a8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cba2da_d93fbd1c",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2626,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-23T15:18:31Z",
+      "side": 0,
+      "message": "OK, then keep it.",
+      "parentUuid": "56d899ee_b9cb17dc",
+      "revId": "69f624398257f14e3e15968ccba4826bc39a5a8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

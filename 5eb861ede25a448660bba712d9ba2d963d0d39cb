@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b2e3ecef_b2e18e95",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-23T15:18:31Z",
+      "side": 1,
+      "message": "The below two refer to the same thing. This is a good question. Currently I am just trying to keep the same logic as remote resource except remove mailbox. \n\nHow about land this CL first and then investigate your questions? \nhttps://chromium-review.googlesource.com/c/chromium/src/+/771130/18/components/viz/common/resources/scoped_local_resource.cc#48\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/771130/18/components/viz/service/display/gl_renderer.cc#3646",
+      "parentUuid": "21bc7d58_438a3373",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "541bceb0_39a3a57a",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
@@ -493,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "ff392616_3647f584",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-23T15:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15740324_1c5ff35c",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dc8aa8e_b225233a",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -739,6 +775,24 @@
     },
     {
       "key": {
+        "uuid": "1f30f7c7_ee5be69d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3609,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-23T15:18:31Z",
+      "side": 1,
+      "message": "It seems it is possible to be hinted as kMipmap (When render_pass-\u003egenerate_mipmap is true, in DirectRenderer::RenderPassTextureHint). When RenderPass::SetAll being called will turn render_pass-\u003egenerate_mipmap true. But I didn\u0027t see any code really make render_pass-\u003egenerate_mipmap true. Did I miss something or current render_pass-\u003egenerate_mipmap is always false?\n\nAnyway, I kept all the mipmap and hint related logic.",
+      "parentUuid": "9d5809e0_5f90349a",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bb82a3c_06b6b7ab",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -821,6 +875,24 @@
       "side": 1,
       "message": "Why do we want to not remove it there?",
       "parentUuid": "b9200646_aa55bd80",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0850f7d7_c9a5969a",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3646,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-23T15:18:31Z",
+      "side": 1,
+      "message": "Same as\nhttps://chromium-review.googlesource.com/c/chromium/src/+/771130/18/components/viz/common/resources/scoped_local_resource.cc#48",
+      "parentUuid": "38471848_1c4daeb0",
       "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
