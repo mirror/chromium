@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23f6aab0_7ae53217",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done. Sorry, when I synced the cl, I accidentally reintroduced the \"new\". :( Also, it works ok without the \"utility\" header. :)",
+      "parentUuid": "eca6776a_4b55f7bf",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be8721b5_c1669854",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a60180_45735351",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done. Yes \"initialized\". I\u0027ve added DCHECK.",
+      "parentUuid": "be8721b5_c1669854",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9b3bf27b_e59451b3",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e74ab74a_22271242",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b12b0ce_4277ea5d",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbd3f27_c402bf00",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b12b0ce_4277ea5d",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3fcf2ed4_a1dde347",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b66cf75a_402822ba",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23cfe33a_f118d789",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35503bbc_c38fbef7",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23cfe33a_f118d789",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c007ee84_93f3b010",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a821416_5ca1e823",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b41ebc9_11ed8478",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497afb5a_9ac5050f",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b41ebc9_11ed8478",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "04060f5d_ac440110",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de01b7d1_67123ebf",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e6b6b85_64e4eac4",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d045070_a3771a87",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6b6b85_64e4eac4",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "b1212cb5_f14d5ac8",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "090f15e6_f6201b65",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2797a6f2_5985cc90",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -203,6 +401,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808b08b8_426521be",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2797a6f2_5985cc90",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "daa25b11_25a88a3c",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c57e8fa3_0ad774d6",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef7c2281_435e4c1b",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -237,6 +471,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f8ce1a_19553b83",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef7c2281_435e4c1b",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "0a57957c_b1b928b6",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06f63d5c_0e6803f6",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dd5989d_3e5d33c7",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
         "patchSetId": 4
@@ -268,6 +538,24 @@
       "writtenOn": "2017-11-22T12:02:30Z",
       "side": 1,
       "message": "why always set last_mose_time_?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82947ec_f733d4cb",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Because a specific user activity is either key or mouse.",
+      "parentUuid": "3dd5989d_3e5d33c7",
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "ce8288ba_249ba82a",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3fec1b5_2d8e7187",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6263762_481a7c07",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 4
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "3d015f68_b3174b88",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6263762_481a7c07",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f44d7f_af552631",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 4
@@ -319,6 +643,24 @@
       "writtenOn": "2017-11-22T20:56:44Z",
       "side": 1,
       "message": "do you actually need these default args, or even any of these c\u0027tors? see http://en.cppreference.com/w/c/language/struct_initialization -- if you just use {time1, time2}, do these default to base::nullopt?",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb77d97_e4afeb21",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Thanks for your suggestion! I\u0027d have to keep the ctor, otherwise I can\u0027t pass in the two mandatory fields.",
+      "parentUuid": "17f44d7f_af552631",
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "aa1d1c44_1fcc2008",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90f1b23c_1ede175e",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4afc6b56_190b47fc",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 4
@@ -356,6 +716,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b5a36f_1748a8f2",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4afc6b56_190b47fc",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "a2851a0f_40763a97",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1e2c792_8721f38f",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8dea67_8a5ab559",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 4
@@ -390,6 +786,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65c3276_5f6f0b0f",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8dea67_8a5ab559",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "641423e9_a4749281",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b26ddd9_2e217400",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a367b443_0096442e",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 4
@@ -427,6 +859,24 @@
     },
     {
       "key": {
+        "uuid": "126e1636_54286c67",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a367b443_0096442e",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f355e4_47a91a88",
         "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
         "patchSetId": 4
@@ -441,6 +891,24 @@
       "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb73c2a0_fb7bf0c3",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T05:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f355e4_47a91a88",
+      "revId": "a0beb23e3ffd5ac4757d10f6e666481cd720a537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
