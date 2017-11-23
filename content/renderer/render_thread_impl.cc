@@ -285,14 +285,19 @@ base::LazyInstance<base::ThreadLocalPointer<RenderThreadImpl>>::DestructorAtExit
 
 // v8::MemoryPressureLevel should correspond to base::MemoryPressureListener.
 static_assert(static_cast<v8::MemoryPressureLevel>(
-    base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE) ==
-        v8::MemoryPressureLevel::kNone, "none level not align");
-static_assert(static_cast<v8::MemoryPressureLevel>(
-    base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE) ==
-        v8::MemoryPressureLevel::kModerate, "moderate level not align");
-static_assert(static_cast<v8::MemoryPressureLevel>(
-    base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL) ==
-        v8::MemoryPressureLevel::kCritical, "critical level not align");
+                  base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE) ==
+                  v8::MemoryPressureLevel::kNone,
+              "none level not align");
+static_assert(
+    static_cast<v8::MemoryPressureLevel>(
+        base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE) ==
+        v8::MemoryPressureLevel::kModerate,
+    "moderate level not align");
+static_assert(
+    static_cast<v8::MemoryPressureLevel>(
+        base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL) ==
+        v8::MemoryPressureLevel::kCritical,
+    "critical level not align");
 
 // WebMemoryPressureLevel should correspond to base::MemoryPressureListener.
 static_assert(static_cast<blink::WebMemoryPressureLevel>(
@@ -310,21 +315,20 @@ static_assert(
         blink::kWebMemoryPressureLevelCritical,
     "blink::WebMemoryPressureLevelCritical not align");
 
-void* CreateHistogram(
-    const char *name, int min, int max, size_t buckets) {
+void* CreateHistogram(const char* name, int min, int max, size_t buckets) {
   if (min <= 0)
     min = 1;
   std::string histogram_name;
   RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
   if (render_thread_impl) {  // Can be null in tests.
-    histogram_name = render_thread_impl->
-        histogram_customizer()->ConvertToCustomHistogramName(name);
+    histogram_name = render_thread_impl->histogram_customizer()
+                         ->ConvertToCustomHistogramName(name);
   } else {
     histogram_name = std::string(name);
   }
-  base::HistogramBase* histogram = base::Histogram::FactoryGet(
-      histogram_name, min, max, buckets,
-      base::Histogram::kUmaTargetedHistogramFlag);
+  base::HistogramBase* histogram =
+      base::Histogram::FactoryGet(histogram_name, min, max, buckets,
+                                  base::Histogram::kUmaTargetedHistogramFlag);
   return histogram;
 }
 
@@ -487,7 +491,8 @@ RenderThreadImpl::HistogramCustomizer::HistogramCustomizer() {
 RenderThreadImpl::HistogramCustomizer::~HistogramCustomizer() {}
 
 void RenderThreadImpl::HistogramCustomizer::RenderViewNavigatedToHost(
-    const std::string& host, size_t view_count) {
+    const std::string& host,
+    size_t view_count) {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableHistogramCustomizer)) {
     return;
@@ -579,14 +584,24 @@ bool RenderThreadImpl::HistogramCustomizer::IsAlexaTop10NonGoogleSite(
   return false;
 }
 
+RenderThreadImpl::ContextLostObserver::ContextLostObserver(
+    const base::Closure& callback)
+    : callback_(callback) {}
+
+RenderThreadImpl::ContextLostObserver::~ContextLostObserver() = default;
+
+void RenderThreadImpl::ContextLostObserver::OnContextLost() {
+  callback_.Run();
+}
+
 // static
 RenderThreadImpl* RenderThreadImpl::Create(
     const InProcessChildThreadParams& params) {
   std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler =
       blink::scheduler::RendererScheduler::Create();
   scoped_refptr<base::SingleThreadTaskRunner> test_task_counter;
-  return new RenderThreadImpl(
-      params, std::move(renderer_scheduler), test_task_counter);
+  return new RenderThreadImpl(params, std::move(renderer_scheduler),
+                              test_task_counter);
 }
 
 // static
@@ -646,6 +661,9 @@ RenderThreadImpl::RenderThreadImpl(
               .Build()),
       renderer_scheduler_(std::move(scheduler)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
+      shared_worker_context_lost_observer_(
+          base::Bind(&RenderThreadImpl::OnSharedWorkerContextLost,
+                     base::Unretained(this))),
       renderer_binding_(this),
       client_id_(1),
       compositing_mode_watcher_binding_(this) {
@@ -664,6 +682,9 @@ RenderThreadImpl::RenderThreadImpl(
       renderer_scheduler_(std::move(scheduler)),
       main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
+      shared_worker_context_lost_observer_(
+          base::Bind(&RenderThreadImpl::OnSharedWorkerContextLost,
+                     base::Unretained(this))),
       is_scroll_animator_enabled_(false),
       renderer_binding_(this),
       compositing_mode_watcher_binding_(this) {
@@ -713,19 +734,17 @@ void RenderThreadImpl::Init(
           shared_bitmap_allocation_notifier_ptr.PassInterface(),
           GetChannel()->ipc_task_runner_refptr()));
 
-  notification_dispatcher_ =
-      new NotificationDispatcher(thread_safe_sender());
+  notification_dispatcher_ = new NotificationDispatcher(thread_safe_sender());
   AddFilter(notification_dispatcher_->GetFilter());
 
-  resource_dispatcher_.reset(new ResourceDispatcher(
-      this, message_loop()->task_runner()));
+  resource_dispatcher_.reset(
+      new ResourceDispatcher(this, message_loop()->task_runner()));
   resource_message_filter_ =
       new ChildResourceMessageFilter(resource_dispatcher_.get());
   AddFilter(resource_message_filter_.get());
-  quota_message_filter_ =
-      new QuotaMessageFilter(thread_safe_sender());
-  quota_dispatcher_.reset(new QuotaDispatcher(thread_safe_sender(),
-                                              quota_message_filter_.get()));
+  quota_message_filter_ = new QuotaMessageFilter(thread_safe_sender());
+  quota_dispatcher_.reset(
+      new QuotaDispatcher(thread_safe_sender(), quota_message_filter_.get()));
 
   AddFilter(quota_message_filter_->GetFilter());
 
@@ -834,9 +853,8 @@ void RenderThreadImpl::Init(
 
   StartServiceManagerConnection();
 
-  GetAssociatedInterfaceRegistry()->AddInterface(
-      base::Bind(&RenderThreadImpl::OnRendererInterfaceRequest,
-                 base::Unretained(this)));
+  GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
+      &RenderThreadImpl::OnRendererInterfaceRequest, base::Unretained(this)));
 
   InitSkiaEventTracer();
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
@@ -947,8 +965,8 @@ void RenderThreadImpl::Init(
     mojom::MemoryCoordinatorHandlePtr parent_coordinator;
     GetConnector()->BindInterface(mojom::kBrowserServiceName,
                                   mojo::MakeRequest(&parent_coordinator));
-    memory_coordinator_ = CreateChildMemoryCoordinator(
-        std::move(parent_coordinator), this);
+    memory_coordinator_ =
+        CreateChildMemoryCoordinator(std::move(parent_coordinator), this);
   }
 
   int num_raster_threads = 0;
@@ -1130,6 +1148,7 @@ void RenderThreadImpl::AddRoute(int32_t routing_id, IPC::Listener* listener) {
 }
 
 void RenderThreadImpl::RemoveRoute(int32_t routing_id) {
+  frame_sinks_.erase(routing_id);
   ChildThreadImpl::GetRouter()->RemoveRoute(routing_id);
 }
 
@@ -1291,16 +1310,14 @@ void RenderThreadImpl::InitializeWebKit(
   }
   // Add a filter that forces resource messages to be dispatched via a
   // particular task runner.
-  scoped_refptr<ResourceSchedulingFilter> filter(
-      new ResourceSchedulingFilter(
-          resource_task_queue2, resource_dispatcher_.get()));
+  scoped_refptr<ResourceSchedulingFilter> filter(new ResourceSchedulingFilter(
+      resource_task_queue2, resource_dispatcher_.get()));
   channel()->AddFilter(filter.get());
   resource_dispatcher_->SetResourceSchedulingFilter(filter);
 
   // The ChildResourceMessageFilter and the ResourceDispatcher need to use the
   // same queue to ensure tasks are executed in the expected order.
-  resource_message_filter_->SetMainThreadTaskRunner(
-      resource_task_queue2);
+  resource_message_filter_->SetMainThreadTaskRunner(resource_task_queue2);
   resource_dispatcher_->SetThreadTaskRunner(resource_task_queue2);
 
   if (!command_line.HasSwitch(switches::kDisableThreadedCompositing))
@@ -1408,14 +1425,14 @@ void RenderThreadImpl::ScheduleIdleHandler(int64_t initial_delay_ms) {
   idle_notification_delay_in_ms_ = initial_delay_ms;
   idle_timer_.Stop();
   idle_timer_.Start(FROM_HERE,
-      base::TimeDelta::FromMilliseconds(initial_delay_ms),
-      this, &RenderThreadImpl::IdleHandler);
+                    base::TimeDelta::FromMilliseconds(initial_delay_ms), this,
+                    &RenderThreadImpl::IdleHandler);
 }
 
 void RenderThreadImpl::IdleHandler() {
-  bool run_in_foreground_tab = (widget_count_ > hidden_widget_count_) &&
-                               GetContentClient()->renderer()->
-                                   RunIdleHandlerWhenWidgetsHidden();
+  bool run_in_foreground_tab =
+      (widget_count_ > hidden_widget_count_) &&
+      GetContentClient()->renderer()->RunIdleHandlerWhenWidgetsHidden();
   if (run_in_foreground_tab) {
     if (idle_notifications_to_skip_ > 0) {
       --idle_notifications_to_skip_;
@@ -1449,7 +1466,7 @@ void RenderThreadImpl::IdleHandler() {
     ScheduleIdleHandler(
         std::max(kLongIdleHandlerDelayMs,
                  idle_notification_delay_in_ms_ +
-                 1000000 / (idle_notification_delay_in_ms_ + 2000)));
+                     1000000 / (idle_notification_delay_in_ms_ + 2000)));
 
   } else {
     idle_timer_.Stop();
@@ -1761,7 +1778,7 @@ void RenderThreadImpl::OnChannelError() {
   // more informative stack, since we will otherwise just crash later when we
   // try to restart it.
   CHECK(!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kSingleProcess));
+      switches::kSingleProcess));
   ChildThreadImpl::OnChannelError();
 }
 
@@ -2022,17 +2039,33 @@ scoped_refptr<gpu::GpuChannelHost> RenderThreadImpl::EstablishGpuChannelSync(
   return gpu_channel;
 }
 
+void RenderThreadImpl::DidCreateLayerTreeFrameSink(
+    int routing_id,
+    const LayerTreeFrameSinkCallback& callback,
+    std::unique_ptr<cc::LayerTreeFrameSink> frame_sink) {
+  frame_sinks_.insert(std::make_pair(routing_id, frame_sink->AsWeakPtr()));
+  callback.Run(std::move(frame_sink));
+}
+
 void RenderThreadImpl::RequestNewLayerTreeFrameSink(
     int routing_id,
     scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue,
     const GURL& url,
-    const LayerTreeFrameSinkCallback& callback) {
+    const LayerTreeFrameSinkCallback& client_callback) {
   // Misconfigured bots (eg. crbug.com/780757) could run layout tests on a
   // machine where gpu compositing doesn't work. Don't crash in that case.
   if (layout_test_mode() && is_gpu_compositing_disabled_) {
     LOG(FATAL) << "Layout tests require gpu compositing, but it is disabled.";
     return;
   }
+
+  // Wrap DidCreateLayerTreeFrameSink in a callback that forwards to the
+  // original callback that was passed in. We do this because the following code
+  // has too many branches where we pass the callback to other places. This
+  // initialization logic does not depend on what branch we take.
+  LayerTreeFrameSinkCallback callback =
+      base::Bind(&RenderThreadImpl::DidCreateLayerTreeFrameSink,
+                 base::Unretained(this), routing_id, client_callback);
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -2260,9 +2293,9 @@ void RenderThreadImpl::CreateFrame(mojom::CreateFrameParamsPtr params) {
                                 base::IntToString(params->opener_routing_id));
   base::debug::SetCrashKeyValue("newframe_parent_id",
                                 base::IntToString(params->parent_routing_id));
-  base::debug::SetCrashKeyValue("newframe_widget_id",
-                                base::IntToString(
-                                    params->widget_params->routing_id));
+  base::debug::SetCrashKeyValue(
+      "newframe_widget_id",
+      base::IntToString(params->widget_params->routing_id));
   base::debug::SetCrashKeyValue("newframe_widget_hidden",
                                 params->widget_params->hidden ? "yes" : "no");
   base::debug::SetCrashKeyValue("newframe_replicated_origin",
@@ -2459,6 +2492,16 @@ base::TaskRunner* RenderThreadImpl::GetWorkerTaskRunner() {
   return categorized_worker_pool_.get();
 }
 
+void RenderThreadImpl::OnSharedWorkerContextLost() {
+  LOG(INFO) << "RenderThreadImpl::OnSharedWorkerContextLost";
+  is_shared_worker_context_lost_ = true;
+  for (const auto& kv : frame_sinks_) {
+    compositor_task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&cc::LayerTreeFrameSink::OnWorkerContextLost, kv.second));
+  }
+}
+
 scoped_refptr<ui::ContextProviderCommandBuffer>
 RenderThreadImpl::SharedCompositorWorkerContextProvider() {
   DCHECK(IsMainThread());
@@ -2467,9 +2510,15 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
     // Note: If context is lost, delete reference after releasing the lock.
     viz::ContextProvider::ScopedContextLock lock(
         shared_worker_context_provider_.get());
-    if (shared_worker_context_provider_->ContextGL()
-            ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
+
+    if (!is_shared_worker_context_lost_ &&
+        shared_worker_context_provider_->ContextGL()
+                ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
       return shared_worker_context_provider_;
+
+    shared_worker_context_provider_->RemoveObserver(
+        &shared_worker_context_lost_observer_);
+    is_shared_worker_context_lost_ = false;
   }
 
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_host(
@@ -2495,6 +2544,8 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
       support_oop_rasterization,
       ui::command_buffer_metrics::RENDER_WORKER_CONTEXT, stream_id,
       stream_priority);
+  shared_worker_context_provider_->AddObserver(
+      &shared_worker_context_lost_observer_);
   auto result = shared_worker_context_provider_->BindToCurrentThread();
   if (result != gpu::ContextResult::kSuccess)
     shared_worker_context_provider_ = nullptr;
@@ -2575,8 +2626,7 @@ RenderThreadImpl::PendingFrameCreate::PendingFrameCreate(
       routing_id_(routing_id),
       frame_request_(std::move(frame_request)) {}
 
-RenderThreadImpl::PendingFrameCreate::~PendingFrameCreate() {
-}
+RenderThreadImpl::PendingFrameCreate::~PendingFrameCreate() {}
 
 void RenderThreadImpl::PendingFrameCreate::OnConnectionError() {
   size_t erased =

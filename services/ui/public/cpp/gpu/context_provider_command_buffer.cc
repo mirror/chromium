@@ -433,6 +433,7 @@ const gpu::GpuFeatureInfo& ContextProviderCommandBuffer::GetGpuFeatureInfo()
 }
 
 void ContextProviderCommandBuffer::OnLostContext() {
+  LOG(INFO) << "ContextProviderCommandBuffer::OnLostContext";
   CheckValidThreadOrLockAcquired();
 
   for (auto& observer : observers_)
