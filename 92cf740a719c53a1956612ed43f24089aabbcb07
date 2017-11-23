@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "670cfea4_ea38c3e7",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLOptionElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-23T00:51:48Z",
+      "side": 0,
+      "message": "In Element::AttachLayoutTree() we override this by setting AttachContext.resolved_style to GetNonAttachedStyle(). Which is why I am now storing this on the NonAttachedStyle so that we carry it through functions.",
+      "revId": "92cf740a719c53a1956612ed43f24089aabbcb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

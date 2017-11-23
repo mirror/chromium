@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbb0e128_16c8801e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-23T00:51:48Z",
+      "side": 1,
+      "message": "This will override all previous values that context.resolved_style is being set to.",
+      "revId": "ddfb5145e01c02c4cb20ae88f1d7433d49370bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
