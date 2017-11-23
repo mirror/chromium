@@ -52,6 +52,24 @@
       "revId": "f984d13f2244baa8e28813c5b70dee7324fd621c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839c0a9c_58ecca0a",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-23T00:08:48Z",
+      "side": 1,
+      "message": "\u003e \u003e Hmm. I did have a comment on AllowGpuLaunch that it\u0027s called on IO thread.\n\u003e \n\u003e Maybe the method should be FooOnIOThread()?\n\u003e \n\u003e \u003e We don\u0027t want to do that because we really want the most up to date state of whether the app i...\n\u003e \n\u003e MMmm can you comment here explaining that requirement?\n\nDone",
+      "parentUuid": "2566e897_da6c1074",
+      "revId": "f984d13f2244baa8e28813c5b70dee7324fd621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
