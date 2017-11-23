@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a31e5b9_0abf964a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-23T17:45:33Z",
+      "side": 1,
+      "message": "So if I read correctly, the BeginNavigationParams are no longer accessible after that call right? I wonder if we shouldn\u0027t clone and pass a copy instead.",
+      "revId": "9aaf33abf3b2cd73178b3ec5b7bd9fc00d01730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34924a63_5ba69d98",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-23T17:45:33Z",
+      "side": 1,
+      "message": "We seem to be losing the const here. Can we put it back?",
+      "revId": "9aaf33abf3b2cd73178b3ec5b7bd9fc00d01730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be928033_52024a12",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 3566,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-23T17:45:33Z",
+      "side": 1,
+      "message": "I don\u0027t think we use BeginNavigationParams in this function. Let\u0027s remove it from the arguments.",
+      "revId": "9aaf33abf3b2cd73178b3ec5b7bd9fc00d01730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

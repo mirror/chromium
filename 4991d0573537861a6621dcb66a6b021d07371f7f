@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "16c13d91_68b902a1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2957,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-23T17:45:33Z",
+      "side": 1,
+      "message": "No they shouldn\u0027t. Let\u0027s replace with a BadMessage. We don\u0027t have an appropriate message name, so I suggest creating RFH_ILLEGAL_NAVIGATION_REQUEST_URL.",
+      "parentUuid": "10911578_94a7cfbb",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d88844f4_060d0277",
         "filename": "content/common/frame.mojom",
         "patchSetId": 16
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Taken from https://cs.chromium.org/chromium/src/content/common/navigation_params.h?l\u003d205 :\n\"This parameter can be null during browser-initiated navigations.\"",
       "parentUuid": "f83cc4b1_464d385a",
+      "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5e22ae9_2f30967a",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-23T17:45:33Z",
+      "side": 1,
+      "message": "It\u0027s invalid for the renderer process, however we also need to construct the BeginNavigationParams struct in the browser process for browser initiated navs, and in that case we would have a null initiator.",
+      "parentUuid": "83669f67_0886c5e9",
       "revId": "4991d0573537861a6621dcb66a6b021d07371f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
