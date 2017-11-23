@@ -72,6 +72,7 @@ class ProgramCache;
 class ShaderTranslatorCache;
 }
 
+class GpuChannelManager;
 class GpuMemoryBufferManager;
 class ImageFactory;
 class TransferBufferManager;
@@ -94,6 +95,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   // If |surface| is not null, use it directly; in this case, the command
   // buffer gpu thread must be the same as the client thread. Otherwise create
   // a new GLSurface.
+  // |gpu_channel_manager| should be non-null when the command buffer is used in
+  // the GPU process for compositor to gpu thread communication.
   gpu::ContextResult Initialize(
       scoped_refptr<gl::GLSurface> surface,
       bool is_offscreen,
@@ -102,6 +105,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
       InProcessCommandBuffer* share_group,
       GpuMemoryBufferManager* gpu_memory_buffer_manager,
       ImageFactory* image_factory,
+      GpuChannelManager* gpu_channel_manager,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // CommandBuffer implementation:
@@ -333,6 +337,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   // Used to throttle PerformDelayedWorkOnGpuThread.
   bool delayed_work_pending_;
   ImageFactory* image_factory_;
+  GpuChannelManager* gpu_channel_manager_ = nullptr;
 
   base::Closure snapshot_requested_callback_;
   bool snapshot_requested_;

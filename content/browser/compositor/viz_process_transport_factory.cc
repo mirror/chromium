@@ -27,6 +27,10 @@
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "ui/compositor/reflector.h"
 
+#if defined(OS_WIN)
+#include "ui/gfx/win/rendering_window_manager.h"
+#endif
+
 namespace content {
 namespace {
 
@@ -120,6 +124,11 @@ void VizProcessTransportFactory::ConnectHostFrameSinkManager() {
 
 void VizProcessTransportFactory::CreateLayerTreeFrameSink(
     base::WeakPtr<ui::Compositor> compositor) {
+#if defined(OS_WIN)
+  gfx::RenderingWindowManager::GetInstance()->UnregisterParent(
+      compositor->widget());
+#endif
+
   gpu_channel_establish_factory_->EstablishGpuChannel(base::Bind(
       &VizProcessTransportFactory::CreateLayerTreeFrameSinkForGpuChannel,
       weak_ptr_factory_.GetWeakPtr(), compositor));
@@ -132,6 +141,11 @@ VizProcessTransportFactory::SharedMainThreadContextProvider() {
 }
 
 void VizProcessTransportFactory::RemoveCompositor(ui::Compositor* compositor) {
+#if defined(OS_WIN)
+  gfx::RenderingWindowManager::GetInstance()->UnregisterParent(
+      compositor->widget());
+#endif
+
   compositor_data_map_.erase(compositor);
 }
 
@@ -297,6 +311,11 @@ void VizProcessTransportFactory::CreateLayerTreeFrameSinkForGpuChannel(
   if (!compositor)
     return;
 
+#if defined(OS_WIN)
+  gfx::RenderingWindowManager::GetInstance()->RegisterParent(
+      compositor->widget());
+#endif
+
   if (!CreateContextProviders(std::move(gpu_channel_host))) {
     // TODO(kylechar): Retry ContextProvider creation if it failed.
     NOTIMPLEMENTED();
@@ -343,6 +362,11 @@ void VizProcessTransportFactory::CreateLayerTreeFrameSinkForGpuChannel(
       std::make_unique<viz::ClientLayerTreeFrameSink>(
           compositor_context_provider_, shared_worker_context_provider_,
           &params));
+
+#if defined(OS_WIN)
+  gfx::RenderingWindowManager::GetInstance()->DoSetParentOnChild(
+      compositor->widget());
+#endif
 }
 
 bool VizProcessTransportFactory::CreateContextProviders(
