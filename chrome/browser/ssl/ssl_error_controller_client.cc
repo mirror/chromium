@@ -14,6 +14,10 @@
 #include "chrome/browser/interstitials/chrome_metrics_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_commands.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
@@ -150,6 +154,13 @@ void SSLErrorControllerClient::GoBack() {
 }
 
 void SSLErrorControllerClient::Proceed() {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
+  if (browser &&
+      extensions::HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
+          browser)) {
+    chrome::OpenInChrome(browser);
+  }
+
   if (!AreCommittedInterstitialsEnabled()) {
     SecurityInterstitialControllerClient::Proceed();
     return;
