@@ -11,7 +11,9 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
-#include "device/geolocation/geolocation_provider.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "url/origin.h"
 
 GeolocationPermissionContext::GeolocationPermissionContext(Profile* profile)
@@ -83,11 +85,26 @@ void GeolocationPermissionContext::UpdateTabContext(
         requesting_frame.GetOrigin(), allowed);
 
   if (allowed) {
-    device::GeolocationProvider::GetInstance()
-        ->UserDidOptIntoLocationServices();
+    GetGeolocationControl()->UserDidOptIntoLocationServices();
   }
 }
 
 bool GeolocationPermissionContext::IsRestrictedToSecureOrigins() const {
   return true;
+}
+
+device::mojom::GeolocationControl*
+GeolocationPermissionContext::GetGeolocationControl() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (geolocation_context_)
+    return geolocation_context_.get();
+
+  auto request = mojo::MakeRequest(&geolocation_context_);
+  if (!content::ServiceManagerConnection::GetForProcess())
+    return geolocation_context_.get();
+
+  service_manager::Connector* connector =
+      content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  connector->BindInterface(device::mojom::kServiceName, std::move(request));
+  return geolocation_context_.get();
 }
