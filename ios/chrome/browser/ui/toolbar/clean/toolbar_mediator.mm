@@ -19,6 +19,10 @@
 #endif
 
 @interface ToolbarMediator ()<CRWWebStateObserver, WebStateListObserving>
+
+// The current web state associated with the toolbar.
+@property(nonatomic, assign) web::WebState* webState;
+
 @end
 
 @implementation ToolbarMediator {
@@ -67,19 +71,19 @@
 
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
   DCHECK_EQ(_webState, webState);
-  [self updateConsumerForWebState:self.webState];
+  [self updateConsumer];
 }
 
 - (void)webState:(web::WebState*)webState
     didStartNavigation:(web::NavigationContext*)navigation {
   DCHECK_EQ(_webState, webState);
-  [self updateConsumerForWebState:self.webState];
+  [self updateConsumer];
 }
 
 - (void)webState:(web::WebState*)webState
     didPruneNavigationItemsWithCount:(size_t)pruned_item_count {
   DCHECK_EQ(_webState, webState);
-  [self updateConsumerForWebState:self.webState];
+  [self updateConsumer];
 }
 
 - (void)webStateDidStartLoading:(web::WebState*)webState {
@@ -127,6 +131,15 @@
   [self.consumer setTabCount:_webStateList->count()];
 }
 
+- (void)webStateList:(WebStateList*)webStateList
+    didChangeActiveWebState:(web::WebState*)newWebState
+                oldWebState:(web::WebState*)oldWebState
+                    atIndex:(int)atIndex
+                 userAction:(BOOL)userAction {
+  DCHECK_EQ(_webStateList, webStateList);
+  self.webState = newWebState;
+}
+
 #pragma mark - Setters
 
 - (void)setWebState:(web::WebState*)webState {
@@ -164,6 +177,7 @@
   _webStateList = webStateList;
 
   if (_webStateList) {
+    self.webState = self.webStateList->GetActiveWebState();
     _webStateList->AddObserver(_webStateListObserver.get());
 
     if (self.consumer) {
