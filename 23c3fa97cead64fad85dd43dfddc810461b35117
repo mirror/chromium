@@ -46,6 +46,30 @@
       "revId": "23c3fa97cead64fad85dd43dfddc810461b35117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2920ed4b_acca328f",
+        "filename": "ash/system/session/tray_session_length_limit.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-23T20:59:09Z",
+      "side": 1,
+      "message": "Ack. Thanks, didn\u0027t notice the update and didn\u0027t expect that the timer is fired every 500 ms :)\nBTW, is it possible to add a unit test for this case, i.e.that notification pops up when about |kNotificationThreshold| left?",
+      "parentUuid": "8b119021_e0ac4955",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 54
+      },
+      "revId": "23c3fa97cead64fad85dd43dfddc810461b35117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
