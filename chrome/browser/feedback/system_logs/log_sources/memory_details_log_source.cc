@@ -23,7 +23,7 @@ class SystemLogsMemoryHandler : public MemoryDetails {
 
     std::unique_ptr<SystemLogsResponse> response(new SystemLogsResponse);
     (*response)["mem_usage"] = ToLogString();
-    callback_.Run(response.get());
+    callback_.Run(std::move(response));
   }
 
  private:

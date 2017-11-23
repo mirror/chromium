@@ -42,7 +42,7 @@ void BasicLogSource::Fetch(const SysLogsSourceCallback& callback) {
   PopulateVersionStrings(response.get());
   PopulateExtensionInfoLogs(response.get());
 
-  callback.Run(response.get());
+  callback.Run(std::move(response));
 }
 
 void BasicLogSource::PopulateVersionStrings(SystemLogsResponse* response) {

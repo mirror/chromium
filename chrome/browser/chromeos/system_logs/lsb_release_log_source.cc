@@ -25,7 +25,7 @@ void LsbReleaseLogSource::Fetch(const SysLogsSourceCallback& callback) {
        iter != lsb_map.end(); ++iter) {
     (*response)[iter->first] = iter->second;
   }
-  callback.Run(response.get());
+  callback.Run(std::move(response));
 }
 
 }  // namespace system_logs
