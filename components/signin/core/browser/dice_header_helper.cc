@@ -49,8 +49,10 @@ DiceAction GetDiceActionFromHeader(const std::string& value) {
 
 }  // namespace
 
-DiceHeaderHelper::DiceHeaderHelper(bool signed_in_with_auth_error)
-    : signed_in_with_auth_error_(signed_in_with_auth_error) {}
+DiceHeaderHelper::DiceHeaderHelper(bool signed_in_with_auth_error,
+                                   bool dice_fix_auth_errors_enabled)
+    : signed_in_with_auth_error_(signed_in_with_auth_error),
+      dice_fix_auth_errors_enabled_(dice_fix_auth_errors_enabled) {}
 
 // static
 DiceResponseParams DiceHeaderHelper::BuildDiceSigninResponseParams(
@@ -142,7 +144,7 @@ DiceResponseParams DiceHeaderHelper::BuildDiceSignoutResponseParams(
 }
 
 bool DiceHeaderHelper::IsUrlEligibleForRequestHeader(const GURL& url) {
-  if (!IsDiceFixAuthErrorsEnabled())
+  if (!dice_fix_auth_errors_enabled_)
     return false;
 
   // With kDiceFixAuthError, only set the request header if the user is signed

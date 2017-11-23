@@ -28,7 +28,8 @@ class DiceHeaderHelper : public SigninHeaderHelper {
     kShowSignoutConfirmation
   };
 
-  explicit DiceHeaderHelper(bool signed_in_with_auth_error);
+  explicit DiceHeaderHelper(bool signed_in_with_auth_error,
+                            bool dice_fix_auth_errors_enabled);
   ~DiceHeaderHelper() override {}
 
   // Returns the parameters contained in the X-Chrome-ID-Consistency-Response
@@ -55,6 +56,7 @@ class DiceHeaderHelper : public SigninHeaderHelper {
   bool IsUrlEligibleForRequestHeader(const GURL& url) override;
 
   bool signed_in_with_auth_error_;
+  bool dice_fix_auth_errors_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceHeaderHelper);
 };

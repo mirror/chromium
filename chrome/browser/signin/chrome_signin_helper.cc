@@ -391,7 +391,9 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
   // Dice header:
   bool dice_header_added = AppendOrRemoveDiceRequestHeader(
       request, redirect_url, account_id, io_data->IsSyncEnabled(),
-      io_data->SyncHasAuthError(), io_data->dice_enabled(),
+      io_data->SyncHasAuthError(),
+      AccountConsistencyManager::GetAccountConsistencyMethodForProfile(
+          io_data->dice_enabled()),
       io_data->GetCookieSettings());
 
   // Block the AccountReconcilor while the Dice requests are in flight. This

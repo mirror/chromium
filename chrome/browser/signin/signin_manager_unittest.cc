@@ -18,6 +18,7 @@
 #include "chrome/browser/prefs/browser_prefs.h"
 #include "chrome/browser/signin/account_fetcher_service_factory.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
+#include "chrome/browser/signin/chrome_signin_client.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/fake_account_fetcher_service_builder.h"
 #include "chrome/browser/signin/fake_profile_oauth2_token_service_builder.h"
@@ -61,7 +62,7 @@ std::unique_ptr<KeyedService> SigninManagerBuild(
       ChromeSigninClientFactory::GetInstance()->GetForProfile(profile),
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       AccountTrackerServiceFactory::GetForProfile(profile),
-      GaiaCookieManagerServiceFactory::GetForProfile(profile)));
+      GaiaCookieManagerServiceFactory::GetForProfile(profile), false));
   service->Initialize(NULL);
   return std::move(service);
 }
@@ -188,7 +189,7 @@ class SigninManagerTest : public testing::Test {
         ChromeSigninClientFactory::GetInstance()->GetForProfile(profile()),
         ProfileOAuth2TokenServiceFactory::GetForProfile(profile()),
         AccountTrackerServiceFactory::GetForProfile(profile()),
-        GaiaCookieManagerServiceFactory::GetForProfile(profile())));
+        GaiaCookieManagerServiceFactory::GetForProfile(profile()), false));
 
     manager_ = naked_manager_.get();
     manager_->AddObserver(&test_observer_);
