@@ -16,6 +16,24 @@
       "revId": "a38a42d6d6999f2cb1b584f55fccf8f0a0c401b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff74ee1d_df88c04a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/passwordcredential-basics.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-23T13:21:32Z",
+      "side": 0,
+      "message": "Yes, we should be able to, I\u0027ll do that in a follow up CL.",
+      "parentUuid": "99ce802e_dccd87d3",
+      "revId": "a38a42d6d6999f2cb1b584f55fccf8f0a0c401b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
