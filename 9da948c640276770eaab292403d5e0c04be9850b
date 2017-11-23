@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b4ca8e_10fde1a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-23T14:51:50Z",
+      "side": 1,
+      "message": "Let\u0027s explain why this is not needed. Something like:\nSigninManager calls its observers with GoogleSigninSucceeded only the first time the user\nsigns in to Chrome (not in case of a reauth). The logic in the ProfileSyncService was added\ninitially to avoid enabling sync using an old refresh token during a reauth.\n\nThis CL removes this check as it is not obsolete.",
+      "range": {
+        "startLine": 9,
+        "startChar": 32,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "9da948c640276770eaab292403d5e0c04be9850b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
