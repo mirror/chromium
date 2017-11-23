@@ -13,10 +13,6 @@
 #include "cc/test/geometry_test_utils.h"
 #include "cc/trees/element_id.h"
 
-namespace cc {
-class AnimationPlayer;
-}
-
 namespace gfx {
 class ScrollOffset;
 }

@@ -11,12 +11,12 @@
 #include "cc/animation/animation_curve.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
 #include "cc/animation/scroll_offset_animations.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/animation/timing_function.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/base/completion_event.h"
@@ -39,8 +39,8 @@ class LayerTreeHostAnimationTest : public LayerTreeTest {
         player_id_(AnimationIdProvider::NextPlayerId()),
         player_child_id_(AnimationIdProvider::NextPlayerId()) {
     timeline_ = AnimationTimeline::Create(timeline_id_);
-    player_ = AnimationPlayer::Create(player_id_);
-    player_child_ = AnimationPlayer::Create(player_child_id_);
+    player_ = SingleAnimationPlayer::Create(player_id_);
+    player_child_ = SingleAnimationPlayer::Create(player_child_id_);
 
     player_->set_animation_delegate(this);
   }
@@ -183,9 +183,11 @@ class LayerTreeHostAnimationTestAddAnimation
                               int group) override {
     EXPECT_LT(base::TimeTicks(), monotonic_time);
 
-    Animation* animation = player_->GetAnimation(TargetProperty::OPACITY);
+    Animation* animation = player_->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_->animation_ticker()->id());
     if (animation)
-      player_->RemoveAnimation(animation->id());
+      player_->RemoveAnimationFromTicker(animation->id(),
+                                         player_->animation_ticker()->id());
 
     EndTest();
   }
@@ -314,8 +316,8 @@ class LayerTreeHostAnimationTestAddAnimationWithTimingFunction
     scoped_refptr<AnimationPlayer> player_child_impl =
         timeline_impl->GetPlayerById(player_child_id_);
 
-    Animation* animation =
-        player_child_impl->GetAnimation(TargetProperty::OPACITY);
+    Animation* animation = player_child_impl->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_child_impl->animation_ticker()->id());
 
     const FloatAnimationCurve* curve =
         animation->curve()->ToFloatAnimationCurve();
@@ -366,9 +368,11 @@ class LayerTreeHostAnimationTestSynchronizeAnimationStartTimes
   void NotifyAnimationStarted(base::TimeTicks monotonic_time,
                               int target_property,
                               int group) override {
-    Animation* animation = player_child_->GetAnimation(TargetProperty::OPACITY);
+    Animation* animation = player_child_->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_child_->animation_ticker()->id());
     main_start_time_ = animation->start_time();
-    player_child_->RemoveAnimation(animation->id());
+    player_child_->RemoveAnimationFromTicker(
+        animation->id(), player_child_->animation_ticker()->id());
     EndTest();
   }
 
@@ -379,8 +383,8 @@ class LayerTreeHostAnimationTestSynchronizeAnimationStartTimes
     scoped_refptr<AnimationPlayer> player_child_impl =
         timeline_impl->GetPlayerById(player_child_id_);
 
-    Animation* animation =
-        player_child_impl->GetAnimation(TargetProperty::OPACITY);
+    Animation* animation = player_child_impl->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_child_impl->animation_ticker()->id());
     if (!animation)
       return;
 
@@ -415,9 +419,11 @@ class LayerTreeHostAnimationTestAnimationFinishedEvents
   void NotifyAnimationFinished(base::TimeTicks monotonic_time,
                                int target_property,
                                int group) override {
-    Animation* animation = player_->GetAnimation(TargetProperty::OPACITY);
+    Animation* animation = player_->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_->animation_ticker()->id());
     if (animation)
-      player_->RemoveAnimation(animation->id());
+      player_->RemoveAnimationFromTicker(animation->id(),
+                                         player_->animation_ticker()->id());
     EndTest();
   }
 
@@ -456,9 +462,10 @@ class LayerTreeHostAnimationTestDoNotSkipLayersWithAnimatedOpacity
     scoped_refptr<AnimationPlayer> player_impl =
         timeline_impl->GetPlayerById(player_id_);
 
-    Animation* animation_impl =
-        player_impl->GetAnimation(TargetProperty::OPACITY);
-    player_impl->RemoveAnimation(animation_impl->id());
+    Animation* animation_impl = player_impl->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_impl->animation_ticker()->id());
+    player_impl->RemoveAnimationFromTicker(
+        animation_impl->id(), player_impl->animation_ticker()->id());
     EndTest();
   }
 
@@ -499,7 +506,8 @@ class LayerTreeHostAnimationTestLayerAddedWithAnimation
       std::unique_ptr<AnimationCurve> curve(new FakeFloatAnimationCurve());
       std::unique_ptr<Animation> animation(
           Animation::Create(std::move(curve), 1, 1, TargetProperty::OPACITY));
-      player_->AddAnimation(std::move(animation));
+      player_->AddAnimationToTicker(std::move(animation),
+                                    player_->animation_ticker()->id());
 
       // We add the animation *before* attaching the layer to the tree.
       layer_tree_host()->root_layer()->AddChild(layer);
@@ -750,7 +758,8 @@ class LayerTreeHostAnimationTestScrollOffsetChangesArePropagated
         animation->set_needs_synchronized_start_time(true);
         bool impl_scrolling_supported = proxy()->SupportsImplScrolling();
         if (impl_scrolling_supported)
-          player_child_->AddAnimation(std::move(animation));
+          player_child_->AddAnimationToTicker(
+              std::move(animation), player_child_->animation_ticker()->id());
         else
           EndTest();
         break;
@@ -971,7 +980,8 @@ class LayerTreeHostAnimationTestScrollOffsetAnimationRemoval
 
     AttachPlayersToTimeline();
     player_child_->AttachElement(scroll_layer_->element_id());
-    player_child_->AddAnimation(std::move(animation));
+    player_child_->AddAnimationToTicker(
+        std::move(animation), player_child_->animation_ticker()->id());
   }
 
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
@@ -985,9 +995,11 @@ class LayerTreeHostAnimationTestScrollOffsetAnimationRemoval
       case 1: {
         EXPECT_GE(scroll_layer_->scroll_offset().x(), 100);
         EXPECT_GE(scroll_layer_->scroll_offset().y(), 200);
-        Animation* animation =
-            player_child_->GetAnimation(TargetProperty::SCROLL_OFFSET);
-        player_child_->RemoveAnimation(animation->id());
+        Animation* animation = player_child_->GetAnimationOfTicker(
+            TargetProperty::SCROLL_OFFSET,
+            player_child_->animation_ticker()->id());
+        player_child_->RemoveAnimationFromTicker(
+            animation->id(), player_child_->animation_ticker()->id());
         scroll_layer_->SetScrollOffset(final_postion_);
         break;
       }
@@ -1043,8 +1055,8 @@ class LayerTreeHostAnimationTestScrollOffsetAnimationRemoval
 
     LayerImpl* scroll_layer_impl =
         host_impl->active_tree()->LayerById(scroll_layer_->id());
-    Animation* animation =
-        player_impl->GetAnimation(TargetProperty::SCROLL_OFFSET);
+    Animation* animation = player_impl->GetAnimationOfTicker(
+        TargetProperty::SCROLL_OFFSET, player_impl->animation_ticker()->id());
 
     if (!animation || animation->run_state() != Animation::RUNNING)
       return false;
@@ -1134,21 +1146,25 @@ class LayerTreeHostAnimationTestAnimationsAddedToNewAndExistingLayers
         timeline_impl->GetPlayerById(player_child_id_);
 
     // wait for tree activation.
-    if (!player_impl->element_animations())
+    if (!player_impl->animation_ticker()->element_animations())
       return;
 
-    Animation* root_animation =
-        player_impl->GetAnimation(TargetProperty::OPACITY);
+    Animation* root_animation = player_impl->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_impl->animation_ticker()->id());
     if (!root_animation || root_animation->run_state() != Animation::RUNNING)
       return;
 
-    Animation* child_animation =
-        player_child_impl->GetAnimation(TargetProperty::OPACITY);
+    Animation* child_animation = player_child_impl->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_child_impl->animation_ticker()->id());
     EXPECT_EQ(Animation::RUNNING, child_animation->run_state());
     EXPECT_EQ(root_animation->start_time(), child_animation->start_time());
-    player_impl->AbortAnimations(TargetProperty::OPACITY, false);
-    player_impl->AbortAnimations(TargetProperty::TRANSFORM, false);
-    player_child_impl->AbortAnimations(TargetProperty::OPACITY, false);
+    player_impl->AbortAnimationsOfTicker(TargetProperty::OPACITY, false,
+                                         player_impl->animation_ticker()->id());
+    player_impl->AbortAnimationsOfTicker(TargetProperty::TRANSFORM, false,
+                                         player_impl->animation_ticker()->id());
+    player_child_impl->AbortAnimationsOfTicker(
+        TargetProperty::OPACITY, false,
+        player_child_impl->animation_ticker()->id());
     EndTest();
   }
 
@@ -1211,7 +1227,8 @@ class LayerTreeHostAnimationTestPendingTreeAnimatesFirstCommit
         timeline_impl->GetPlayerById(player_id_);
 
     LayerImpl* child = sync_tree->LayerById(layer_->id());
-    Animation* animation = player_impl->GetAnimation(TargetProperty::TRANSFORM);
+    Animation* animation = player_impl->GetAnimationOfTicker(
+        TargetProperty::TRANSFORM, player_impl->animation_ticker()->id());
 
     // The animation should be starting for the first frame.
     EXPECT_EQ(Animation::STARTING, animation->run_state());
@@ -1224,7 +1241,8 @@ class LayerTreeHostAnimationTestPendingTreeAnimatesFirstCommit
     // And the sync tree layer should know it is animating.
     EXPECT_TRUE(child->screen_space_transform_is_animating());
 
-    player_impl->AbortAnimations(TargetProperty::TRANSFORM, false);
+    player_impl->AbortAnimationsOfTicker(TargetProperty::TRANSFORM, false,
+                                         player_impl->animation_ticker()->id());
     EndTest();
   }
 
@@ -1253,7 +1271,7 @@ class LayerTreeHostAnimationTestAnimatedLayerRemovedAndAdded
     animation_host()->AddAnimationTimeline(timeline_.get());
     timeline_->AttachPlayer(player_.get());
     player_->AttachElement(layer_->element_id());
-    DCHECK(player_->element_animations());
+    DCHECK(player_->animation_ticker()->element_animations());
 
     AddOpacityTransitionToPlayer(player_.get(), 10000.0, 0.1f, 0.9f, true);
   }
@@ -1263,26 +1281,32 @@ class LayerTreeHostAnimationTestAnimatedLayerRemovedAndAdded
   void DidCommit() override {
     switch (layer_tree_host()->SourceFrameNumber()) {
       case 0:
-        EXPECT_TRUE(
-            player_->element_animations()->has_element_in_active_list());
-        EXPECT_FALSE(
-            player_->element_animations()->has_element_in_pending_list());
+        EXPECT_TRUE(player_->animation_ticker()
+                        ->element_animations()
+                        ->has_element_in_active_list());
+        EXPECT_FALSE(player_->animation_ticker()
+                         ->element_animations()
+                         ->has_element_in_pending_list());
         EXPECT_TRUE(animation_host()->NeedsTickAnimations());
         break;
       case 1:
         layer_->RemoveFromParent();
-        EXPECT_FALSE(
-            player_->element_animations()->has_element_in_active_list());
-        EXPECT_FALSE(
-            player_->element_animations()->has_element_in_pending_list());
+        EXPECT_FALSE(player_->animation_ticker()
+                         ->element_animations()
+                         ->has_element_in_active_list());
+        EXPECT_FALSE(player_->animation_ticker()
+                         ->element_animations()
+                         ->has_element_in_pending_list());
         EXPECT_FALSE(animation_host()->NeedsTickAnimations());
         break;
       case 2:
         layer_tree_host()->root_layer()->AddChild(layer_);
-        EXPECT_TRUE(
-            player_->element_animations()->has_element_in_active_list());
-        EXPECT_FALSE(
-            player_->element_animations()->has_element_in_pending_list());
+        EXPECT_TRUE(player_->animation_ticker()
+                        ->element_animations()
+                        ->has_element_in_active_list());
+        EXPECT_FALSE(player_->animation_ticker()
+                         ->element_animations()
+                         ->has_element_in_pending_list());
         EXPECT_TRUE(animation_host()->NeedsTickAnimations());
         break;
     }
@@ -1296,18 +1320,21 @@ class LayerTreeHostAnimationTestAnimatedLayerRemovedAndAdded
 
     switch (host_impl->active_tree()->source_frame_number()) {
       case 0:
-        EXPECT_TRUE(
-            player_impl->element_animations()->has_element_in_active_list());
+        EXPECT_TRUE(player_impl->animation_ticker()
+                        ->element_animations()
+                        ->has_element_in_active_list());
         EXPECT_TRUE(GetImplAnimationHost(host_impl)->NeedsTickAnimations());
         break;
       case 1:
-        EXPECT_FALSE(
-            player_impl->element_animations()->has_element_in_active_list());
+        EXPECT_FALSE(player_impl->animation_ticker()
+                         ->element_animations()
+                         ->has_element_in_active_list());
         EXPECT_FALSE(GetImplAnimationHost(host_impl)->NeedsTickAnimations());
         break;
       case 2:
-        EXPECT_TRUE(
-            player_impl->element_animations()->has_element_in_active_list());
+        EXPECT_TRUE(player_impl->animation_ticker()
+                        ->element_animations()
+                        ->has_element_in_active_list());
         EXPECT_TRUE(GetImplAnimationHost(host_impl)->NeedsTickAnimations());
         EndTest();
         break;
@@ -1377,11 +1404,12 @@ class LayerTreeHostAnimationTestAddAnimationAfterAnimating
         2u,
         GetImplAnimationHost(host_impl)->ticking_players_for_testing().size());
 
-    Animation* root_anim =
-        player_impl_->GetAnimation(TargetProperty::TRANSFORM);
+    Animation* root_anim = player_impl_->GetAnimationOfTicker(
+        TargetProperty::TRANSFORM, player_impl_->animation_ticker()->id());
     EXPECT_LT(base::TimeTicks(), root_anim->start_time());
 
-    Animation* anim = player_child_impl_->GetAnimation(TargetProperty::OPACITY);
+    Animation* anim = player_child_impl_->GetAnimationOfTicker(
+        TargetProperty::OPACITY, player_child_impl_->animation_ticker()->id());
     EXPECT_LT(base::TimeTicks(), anim->start_time());
 
     EndTest();
@@ -1424,9 +1452,10 @@ class LayerTreeHostAnimationTestRemoveAnimation
         AddAnimatedTransformToPlayer(player_child_.get(), 1.0, 5, 5);
         break;
       case 2:
-        Animation* animation =
-            player_child_->GetAnimation(TargetProperty::TRANSFORM);
-        player_child_->RemoveAnimation(animation->id());
+        Animation* animation = player_child_->GetAnimationOfTicker(
+            TargetProperty::TRANSFORM, player_child_->animation_ticker()->id());
+        player_child_->RemoveAnimationFromTicker(
+            animation->id(), player_child_->animation_ticker()->id());
         gfx::Transform transform;
         transform.Translate(10.f, 10.f);
         layer_->SetTransform(transform);
@@ -1525,8 +1554,10 @@ class LayerTreeHostAnimationTestIsAnimating
         AddAnimatedTransformToPlayer(player_.get(), 1.0, 5, 5);
         break;
       case 2:
-        Animation* animation = player_->GetAnimation(TargetProperty::TRANSFORM);
-        player_->RemoveAnimation(animation->id());
+        Animation* animation = player_->GetAnimationOfTicker(
+            TargetProperty::TRANSFORM, player_->animation_ticker()->id());
+        player_->RemoveAnimationFromTicker(animation->id(),
+                                           player_->animation_ticker()->id());
         break;
     }
   }
@@ -1788,7 +1819,7 @@ SINGLE_AND_MULTI_THREAD_TEST_F(
 
 // Check that transform sync happens correctly at commit when we remove and add
 // a different animation player to an element.
-class LayerTreeHostAnimationTestChangeAnimationPlayer
+class LayerTreeHostAnimationTestChangeSingleAnimationPlayer
     : public LayerTreeHostAnimationTest {
  public:
   void SetupTree() override {
@@ -1835,8 +1866,8 @@ class LayerTreeHostAnimationTestChangeAnimationPlayer
       player_child_->AttachElement(
           layer_tree_host()->root_layer()->element_id());
       AddAnimatedTransformToPlayer(player_child_.get(), 1.0, 10, 10);
-      Animation* animation =
-          player_child_->GetAnimation(TargetProperty::TRANSFORM);
+      Animation* animation = player_child_->GetAnimationOfTicker(
+          TargetProperty::TRANSFORM, player_child_->animation_ticker()->id());
       animation->set_start_time(base::TimeTicks::Now() +
                                 base::TimeDelta::FromSecondsD(1000));
       animation->set_fill_mode(Animation::FillMode::NONE);
@@ -1846,7 +1877,8 @@ class LayerTreeHostAnimationTestChangeAnimationPlayer
   void AfterTest() override {}
 };
 
-SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostAnimationTestChangeAnimationPlayer);
+SINGLE_AND_MULTI_THREAD_TEST_F(
+    LayerTreeHostAnimationTestChangeSingleAnimationPlayer);
 
 // Check that SetTransformIsPotentiallyAnimatingChanged is called
 // if we destroy ElementAnimations.
@@ -1930,7 +1962,8 @@ class LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction
 MULTI_THREAD_TEST_F(
     LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction);
 
-// Check that we invalidate property trees on AnimationPlayer::SetNeedsCommit.
+// Check that we invalidate property trees on
+// SingleAnimationPlayer::SetNeedsCommit.
 class LayerTreeHostAnimationTestRebuildPropertyTreesOnAnimationSetNeedsCommit
     : public LayerTreeHostAnimationTest {
  public:

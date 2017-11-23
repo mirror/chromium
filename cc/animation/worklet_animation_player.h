@@ -9,6 +9,7 @@
 #include "cc/animation/animation_export.h"
 #include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
+#include "cc/animation/single_animation_player.h"
 
 namespace cc {
 
@@ -18,7 +19,7 @@ class ScrollTimeline;
 // timing to be controlled by an animator instance that is running in a
 // AnimationWorkletGlobalScope.
 class CC_ANIMATION_EXPORT WorkletAnimationPlayer final
-    : public AnimationPlayer,
+    : public SingleAnimationPlayer,
       AnimationTicker::AnimationTimeProvider {
  public:
   WorkletAnimationPlayer(int id,
@@ -38,7 +39,7 @@ class CC_ANIMATION_EXPORT WorkletAnimationPlayer final
   void SetLocalTime(base::TimeDelta local_time);
   bool IsWorkletAnimationPlayer() const override;
 
-  void Tick(base::TimeTicks monotonic_time) override;
+  void Tick(base::TimeTicks monotonic_time);
 
   // Returns the current time to be passed into the underlying AnimationWorklet.
   // The current time is based on the timeline associated with the animation.
