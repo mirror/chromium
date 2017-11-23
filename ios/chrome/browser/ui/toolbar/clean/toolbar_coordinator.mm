@@ -117,6 +117,7 @@
 
   self.mediator.consumer = self.toolbarViewController;
   self.mediator.webStateList = self.webStateList;
+  self.mediator.webState = self.webStateList->GetActiveWebState();
 }
 
 - (void)stop {
