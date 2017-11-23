@@ -22,6 +22,30 @@
       "revId": "b95244e0bc63fc48b0e753e3a1935a44cf392d92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af98e01_1dc0ac01",
+        "filename": "chrome/browser/vr/service/vr_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-23T21:44:37Z",
+      "side": 1,
+      "message": "Yeah, that makes a lot more sense.",
+      "parentUuid": "681c8f21_9b35bde0",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "b95244e0bc63fc48b0e753e3a1935a44cf392d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
