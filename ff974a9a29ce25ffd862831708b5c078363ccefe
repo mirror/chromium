@@ -22,6 +22,30 @@
       "revId": "ff974a9a29ce25ffd862831708b5c078363ccefe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d68a04_16a3e803",
+        "filename": "content/renderer/pepper/ppb_broker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-23T02:05:00Z",
+      "side": 1,
+      "message": "Thanks for catching this, I did read that but forgot about it when implementing.\n\nI\u0027ve moved the recording into the browser process where it\u0027s easier to get at the top level origin. I also added a test along the lines of what you suggested. Thanks!",
+      "parentUuid": "181c873f_fdf0d1bd",
+      "range": {
+        "startLine": 48,
+        "startChar": 72,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "ff974a9a29ce25ffd862831708b5c078363ccefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
