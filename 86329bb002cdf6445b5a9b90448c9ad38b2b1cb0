@@ -652,6 +652,24 @@
     },
     {
       "key": {
+        "uuid": "8a6d2ff0_afa0d90d",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-23T01:34:11Z",
+      "side": 1,
+      "message": "I created a photo callback factory allowing to pass another implementation of photo callback to MediaFoundation. \nI added a test to check the correct release of the callback by MediaFoundation. \nThe test passes.\nPlease check that my test assertions are the good ones.",
+      "parentUuid": "a56adf07_df6bed80",
+      "revId": "86329bb002cdf6445b5a9b90448c9ad38b2b1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "614c2b95_79cb5764",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 16
