@@ -36,13 +36,14 @@ class GL_IN_PROCESS_CONTEXT_EXPORT GLInProcessContext {
   static std::unique_ptr<GLInProcessContext> CreateWithoutInit();
 
   // Initialize the GLInProcessContext, if |is_offscreen| is true, renders to an
-  // offscreen context. |attrib_list| must be NULL or a NONE-terminated list
+  // offscreen context. |attrib_list| must be null or a NONE-terminated list
   // of attribute/value pairs.
-  // If |surface| is not NULL, then it must match |is_offscreen|,
+  // If |surface| is not null, then it must match |is_offscreen|,
   // |window| must be gfx::kNullAcceleratedWidget, and the command buffer
   // service must run on the same thread as this client because GLSurface is
-  // not thread safe. If |surface| is NULL, then the other parameters are used
+  // not thread safe. If |surface| is null, then the other parameters are used
   // to correctly create a surface.
+  // |gpu_channel_manager| should be non-null when used in the GPU process.
   virtual gpu::ContextResult Initialize(
       scoped_refptr<gpu::InProcessCommandBuffer::Service> service,
       scoped_refptr<gl::GLSurface> surface,
@@ -53,6 +54,7 @@ class GL_IN_PROCESS_CONTEXT_EXPORT GLInProcessContext {
       const SharedMemoryLimits& memory_limits,
       GpuMemoryBufferManager* gpu_memory_buffer_manager,
       ImageFactory* image_factory,
+      GpuChannelManager* gpu_channel_manager,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) = 0;
 
   virtual const gpu::Capabilities& GetCapabilities() const = 0;
