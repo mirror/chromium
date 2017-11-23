@@ -247,9 +247,9 @@ void FreeFullPage(PartitionPage* page) {
 
 void CheckPageInCore(void* ptr, bool inCore) {
 #if defined(OS_LINUX)
-  unsigned char ret;
+  unsigned char ret = 0;
   EXPECT_EQ(0, mincore(ptr, kSystemPageSize, &ret));
-  EXPECT_EQ(inCore, ret);
+  EXPECT_EQ(inCore, (ret & 1) != 0);
 #endif
 }
 
