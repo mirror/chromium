@@ -42,7 +42,7 @@ class CORE_EXPORT CSSStyleDeclaration : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  virtual ~CSSStyleDeclaration() {}
+  virtual ~CSSStyleDeclaration() = default;
 
   virtual CSSRule* parentRule() const = 0;
   String cssFloat() { return GetPropertyValueInternal(CSSPropertyFloat); }
@@ -88,10 +88,10 @@ class CORE_EXPORT CSSStyleDeclaration : public ScriptWrappable {
                                    ExceptionState&) = 0;
 
   virtual bool CssPropertyMatches(CSSPropertyID, const CSSValue*) const = 0;
-  virtual CSSStyleSheet* ParentStyleSheet() const { return 0; }
+  virtual CSSStyleSheet* ParentStyleSheet() const { return nullptr; }
 
  protected:
-  CSSStyleDeclaration() {}
+  CSSStyleDeclaration() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CSSStyleDeclaration);

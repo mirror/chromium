@@ -43,7 +43,7 @@ class CSSRuleList : public ScriptWrappable {
   virtual CSSStyleSheet* GetStyleSheet() const = 0;
 
  protected:
-  CSSRuleList() {}
+  CSSRuleList() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CSSRuleList);
@@ -55,7 +55,7 @@ class StaticCSSRuleList final : public CSSRuleList {
 
   HeapVector<Member<CSSRule>>& Rules() { return rules_; }
 
-  CSSStyleSheet* GetStyleSheet() const override { return 0; }
+  CSSStyleSheet* GetStyleSheet() const override { return nullptr; }
 
   virtual void Trace(blink::Visitor*);
 

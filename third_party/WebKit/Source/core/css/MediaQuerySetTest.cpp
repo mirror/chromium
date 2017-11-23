@@ -166,7 +166,7 @@ TEST(MediaQuerySetTest, Basic) {
       {"(max-width: '40px')", "not all"},
       {"('max-width': 40px)", "not all"},
       {"'\"'\", (max-width: 900px)", "not all"},
-      {"'\"\"\"', (max-width: 900px)", "not all, (max-width: 900px)"},
+      {R"('"""', (max-width: 900px))", "not all, (max-width: 900px)"},
       {"\"'\"', (max-width: 900px)", "not all"},
       {"\"'''\", (max-width: 900px)", "not all, (max-width: 900px)"},
       {"not not", "not all"},

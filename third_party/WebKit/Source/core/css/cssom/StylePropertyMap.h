@@ -41,7 +41,7 @@ class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadonly {
   virtual void remove(CSSPropertyID, ExceptionState&) = 0;
 
  protected:
-  StylePropertyMap() {}
+  StylePropertyMap() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(StylePropertyMap);
