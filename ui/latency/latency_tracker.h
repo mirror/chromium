@@ -5,6 +5,7 @@
 #ifndef UI_LATENCY_LATENCY_TRACKER_H_
 #define UI_LATENCY_LATENCY_TRACKER_H_
 
+#include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "ui/latency/latency_info.h"
 
@@ -15,7 +16,7 @@ namespace ui {
 class LatencyTracker {
  public:
   explicit LatencyTracker(bool metric_sampling);
-  ~LatencyTracker() = default;
+  virtual ~LatencyTracker();
 
   // Terminates latency tracking for events that triggered rendering, also
   // performing relevant UMA latency reporting.
@@ -41,11 +42,22 @@ class LatencyTracker {
       const LatencyInfo::LatencyComponent& gpu_swap_end_component,
       const LatencyInfo& latency);
 
+  typedef struct SamplingScheme : public std::pair<int, int> {
+    SamplingScheme() {}
+    SamplingScheme(int interval)
+        : std::pair<int, int>(interval, rand() % interval) {}
+    bool ShouldReport() {
+      second++;
+      second %= first;
+      return second == 0;
+    }
+  } SamplingScheme;
+
   // Whether the sampling is needed for high volume metrics. This will be off
   // when we are in unit tests. This is a temporary field so we can come up with
   // a more permanent solution for crbug.com/739169.
   bool metric_sampling_;
-  int metric_sampling_events_since_last_sample_ = -1;
+  base::hash_map<std::string, SamplingScheme> sampling_scheme_;
 
   DISALLOW_COPY_AND_ASSIGN(LatencyTracker);
 };

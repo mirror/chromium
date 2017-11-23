@@ -26,7 +26,7 @@ class CONTENT_EXPORT RenderWidgetHostLatencyTracker
     : public ui::LatencyTracker {
  public:
   explicit RenderWidgetHostLatencyTracker(bool metric_sampling);
-  ~RenderWidgetHostLatencyTracker();
+  ~RenderWidgetHostLatencyTracker() override;
 
   // Associates the latency tracker with a given route and process.
   // Called once after the RenderWidgetHost is fully initialized.
