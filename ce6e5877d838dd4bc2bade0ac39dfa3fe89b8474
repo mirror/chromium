@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df963023_1fa545d7",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2097,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T23:50:56Z",
+      "side": 1,
+      "message": "Could we change the constant as well?",
+      "revId": "ce6e5877d838dd4bc2bade0ac39dfa3fe89b8474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
