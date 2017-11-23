@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6416716_efe40d58",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/textarea/cols-attribute.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-23T12:37:40Z",
+      "side": 1,
+      "message": "These tests already showed what the boundary close to 2^31 was, adding two tests further away from the boundary doesn\u0027t add value IMHO, but is also harmess to do.",
+      "range": {
+        "startLine": 47,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 29
+      },
+      "revId": "9567d56720d97328b33977b4c1a53473a8dbd511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b7ed9b_5026ec1f",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/textarea/cols-attribute.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-23T12:37:40Z",
+      "side": 1,
+      "message": "Looks like there isn\u0027t anything interesting at all that happens around 2^32, so can you add a comment about that and saying that you\u0027re testing 2^32-1, 2^32 and 2^32+1 to show it?",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "9567d56720d97328b33977b4c1a53473a8dbd511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf644dd_3838034b",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/textarea/rows-attribute.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-23T12:37:40Z",
+      "side": 1,
+      "message": "Ditto about these tests further away from the interesting edge case.",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "9567d56720d97328b33977b4c1a53473a8dbd511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
