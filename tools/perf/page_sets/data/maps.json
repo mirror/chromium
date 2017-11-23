@@ -1,5 +1,8 @@
 {
     "archives": {
+        "http://localhost:8000/performance.html": {
+            "DEFAULT": "maps_006.wprgo"
+        },
         "http://map-test/performance.html": {
             "DEFAULT": "maps_005.wprgo"
         }
