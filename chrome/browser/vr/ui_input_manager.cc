@@ -11,6 +11,7 @@
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/model/controller_model.h"
 #include "chrome/browser/vr/model/reticle_model.h"
+#include "chrome/browser/vr/model/text_input_info.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
 // TODO(tiborg): Remove include once we use a generic type to pass scroll/fling
@@ -322,6 +323,10 @@ void UiInputManager::SendButtonDown(UiElement* target,
   if (target) {
     target->OnButtonDown(target_point);
     input_locked_element_id_ = target->id();
+    if (target->name() != focused_element_name_ &&
+        target->name() != kKeyboard) {
+      ClearFocusedElement();
+    }
   } else {
     input_locked_element_id_ = 0;
   }
@@ -412,6 +417,56 @@ void UiInputManager::UpdateQuiescenceState(
              kControllerQuiescenceTemporalThresholdSeconds) {
     controller_quiescent_ = true;
   }
+}
+
+void UiInputManager::ClearFocusedElement() {
+  UiElement* focused = scene_->GetUiElementByName(focused_element_name_);
+  if (focused && focused->editable()) {
+    focused->OnFocusChanged(false);
+  }
+  focused_element_name_ = kNone;
+}
+
+void UiInputManager::RequestFocus(const UiElementName name) {
+  LOG(ERROR) << "lolk UiInputManager::RequestFocus: " << name;
+  if (name == focused_element_name_)
+    return;
+
+  ClearFocusedElement();
+
+  UiElement* focused = scene_->GetUiElementByName(name);
+  if (!focused || !focused->editable()) {
+    focused_element_name_ = kNone;
+    return;
+  }
+
+  LOG(ERROR) << "lolk focused element: " << focused->DebugName();
+  focused_element_name_ = name;
+  focused->OnFocusChanged(true);
+}
+
+void UiInputManager::OnInputEdited(const TextInputInfo& info) {
+  LOG(ERROR) << "lolk UiInputManager::OnInputEdited: " << info.DebugString();
+  UiElement* focused = scene_->GetUiElementByName(focused_element_name_);
+  if (focused)
+    LOG(ERROR) << "lolk UiInputManager focused: " << focused->DebugName();
+  if (!focused || !focused->editable())
+    return;
+  focused->OnInputEdited(info);
+}
+
+void UiInputManager::OnInputCommited(const TextInputInfo& info) {
+  LOG(ERROR) << "lolk UiInputManager::OnInputCommited: " << info.DebugString();
+  UiElement* focused = scene_->GetUiElementByName(focused_element_name_);
+  if (focused)
+    LOG(ERROR) << "lolk UiInputManager focused: " << focused->DebugName();
+  if (!focused || !focused->editable())
+    return;
+  focused->OnInputCommited(info);
+}
+
+void UiInputManager::OnKeyboardHidden() {
+  ClearFocusedElement();
 }
 
 }  // namespace vr

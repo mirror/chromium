@@ -29,7 +29,9 @@ TexturedElement::TexturedElement(int maximum_width, ResizeHorizontally unused)
 
 TexturedElement::~TexturedElement() = default;
 
-void TexturedElement::Initialize(SkiaSurfaceProvider* provider) {
+void TexturedElement::Initialize(SkiaSurfaceProvider* provider,
+                                 KeyboardDelegate* keyboard_delegate,
+                                 TextInputDelegate* text_input_delegate) {
   TRACE_EVENT0("gpu", "TexturedElement::Initialize");
   DCHECK(provider);
   provider_ = provider;

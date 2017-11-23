@@ -19,6 +19,7 @@
 #include "chrome/browser/vr/elements/full_screen_rect.h"
 #include "chrome/browser/vr/elements/grid.h"
 #include "chrome/browser/vr/elements/invisible_hit_target.h"
+#include "chrome/browser/vr/elements/keyboard.h"
 #include "chrome/browser/vr/elements/laser.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/rect.h"
@@ -27,6 +28,7 @@
 #include "chrome/browser/vr/elements/spinner.h"
 #include "chrome/browser/vr/elements/suggestion.h"
 #include "chrome/browser/vr/elements/text.h"
+#include "chrome/browser/vr/elements/text_input.h"
 #include "chrome/browser/vr/elements/throbber.h"
 #include "chrome/browser/vr/elements/transient_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -36,6 +38,7 @@
 #include "chrome/browser/vr/elements/vector_icon.h"
 #include "chrome/browser/vr/elements/viewport_aware_root.h"
 #include "chrome/browser/vr/elements/webvr_url_toast.h"
+#include "chrome/browser/vr/keyboard_delegate.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/target_property.h"
@@ -189,6 +192,7 @@ void UiSceneManager::CreateScene() {
   CreateUnderDevelopmentNotice();
   CreateVoiceSearchUiGroup();
   CreateController();
+  CreateKeyboard();
 }
 
 void UiSceneManager::Create2dBrowsingSubtreeRoots() {
@@ -907,6 +911,42 @@ void UiSceneManager::CreateController() {
   auto reticle = base::MakeUnique<Reticle>(scene_, model_);
   reticle->set_draw_phase(kPhaseForeground);
   scene_->AddUiElement(kControllerGroup, std::move(reticle));
+}
+
+void UiSceneManager::CreateKeyboard() {
+  LOG(ERROR) << "lolk creatking kb";
+  auto keyboard = base::MakeUnique<Keyboard>();
+  keyboard->set_draw_phase(kPhaseForeground);
+  keyboard->SetTranslate(0.0, kKeyboardVerticalOffset, -kKeyboardDistance);
+  keyboard->AddBinding(VR_BIND_FUNC(bool, Model, model_, editing_input,
+                                    UiElement, keyboard.get(), SetVisible));
+  scene_->AddUiElement(kRoot, std::move(keyboard));
+
+  auto focus_changed_callback = base::Bind(
+      [](Model* model, bool focused) { model->editing_input = focused; },
+      base::Unretained(model_));
+  auto input_edit_callback = base::Bind(
+      [](Model* model, const TextInputInfo& text_input_info) {
+        LOG(ERROR) << "lolk input_edit_callback: text: "
+                   << text_input_info.text;
+        model->text_input_info = text_input_info;
+      },
+      base::Unretained(model_));
+  auto text_input = base::MakeUnique<TextInput>(
+      512, 0.5, 2, focus_changed_callback, input_edit_callback);
+  text_input->AddBinding(base::MakeUnique<Binding<TextInputInfo>>(
+      base::Bind([](Model* m) { return m->text_input_info; },
+                 base::Unretained(model_)),
+      base::Bind(
+          [](TextInput* e, const TextInputInfo& value) { e->EditInput(value); },
+          base::Unretained(text_input.get()))));
+  text_input->SetTranslate(0, kContentVerticalOffset, -kContentDistance / 2);
+  text_input->set_draw_phase(kPhaseForeground);
+  text_input->set_name(kTestTextField);
+  text_input->set_hit_testable(true);
+  text_input->SetSize(kContentWidth / 6, kContentHeight / 6);
+  text_input->SetColor(0xFFFFFFFF);
+  scene_->AddUiElement(k2dBrowsingForeground, std::move(text_input));
 }
 
 void UiSceneManager::CreateUrlBar() {

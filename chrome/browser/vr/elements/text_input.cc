@@ -45,6 +45,10 @@ class TextInputTexture : public UiTexture {
     gfx::Rect text_bounds(texture_size.width(), pixel_font_height);
     size_ = gfx::SizeF(text_bounds.size());
 
+    // TODO(ymalik): Remove test code.
+    gfx::RectF bg((gfx::SizeF(texture_size)));
+    canvas->DrawRect(bg, SK_ColorBLACK);
+
     std::unique_ptr<gfx::RenderText> render_text(CreateRenderText());
     render_text->SetText(text_);
     render_text->SetFontList(font_list);
@@ -83,39 +87,73 @@ class TextInputTexture : public UiTexture {
 
 TextInput::TextInput(int maximum_width_pixels,
                      float font_height_meters,
-                     float text_width_meters)
+                     float text_width_meters,
+                     OnFocusChangedCallback focus_changed_callback,
+                     OnInputEditedCallback input_edit_callback)
     : TexturedElement(maximum_width_pixels),
       texture_(base::MakeUnique<TextInputTexture>(font_height_meters,
-                                                  text_width_meters)) {
+                                                  text_width_meters)),
+      focus_changed_callback_(focus_changed_callback),
+      input_edit_callback_(input_edit_callback) {
   SetSize(text_width_meters, font_height_meters);
 }
 TextInput::~TextInput() {}
 
-void TextInput::SetText(const base::string16& text) {
-  if (text_ == text)
+void TextInput::Initialize(SkiaSurfaceProvider* provider,
+                           KeyboardDelegate* keyboard_delegate,
+                           TextInputDelegate* text_input_delegate) {
+  TexturedElement::Initialize(provider, keyboard_delegate, text_input_delegate);
+  delegate_ = text_input_delegate;
+}
+
+bool TextInput::editable() {
+  return true;
+}
+
+void TextInput::OnButtonUp(const gfx::PointF& position) {
+  if (!delegate_)
     return;
-  text_ = text;
-  texture_->SetText(text);
-  if (text_changed_callback_)
-    text_changed_callback_.Run(text);
+
+  delegate_->RequestFocus(name());
 }
 
-void TextInput::SetCursorPosition(int position) {
-  texture_->SetCursorPosition(position);
+void TextInput::OnFocusChanged(bool focused) {
+  LOG(ERROR) << "lolk TextInput::OnFocusChanged: " << focused;
+  focused_ = focused;
+  texture_->SetCursorVisible(focused);
+  focus_changed_callback_.Run(focused);
 }
 
-void TextInput::SetTextChangedCallback(const TextInputCallback& callback) {
-  text_changed_callback_ = callback;
+void TextInput::OnInputEdited(const TextInputInfo& info) {
+  LOG(ERROR) << "lolk TextInput::OnInputEdited: " << info.DebugString();
+  input_edit_callback_.Run(info);
 }
+
+void TextInput::OnInputCommited(const TextInputInfo& info) {}
 
 void TextInput::SetColor(SkColor color) {
   texture_->SetColor(color);
 }
 
+void TextInput::EditInput(const TextInputInfo& info) {
+  if (text_info_ == info)
+    return;
+
+  LOG(ERROR) << "lolk TextInput::EditInput";
+  text_info_ = info;
+  texture_->SetText(info.text);
+  texture_->SetCursorPosition(info.selection_end);
+
+  if (delegate_ && focused_)
+    delegate_->EditInput(info);
+}
+
 bool TextInput::OnBeginFrame(const base::TimeTicks& time,
                              const gfx::Vector3dF& look_at) {
   base::TimeDelta delta = time - base::TimeTicks();
-  texture_->SetCursorVisible(delta.InMilliseconds() / 500 % 2);
+  if (focused_)
+    texture_->SetCursorVisible(delta.InMilliseconds() / 500 % 2);
+
   return false;
 }
 

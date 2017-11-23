@@ -50,7 +50,7 @@ void UiScene::AddUiElement(UiElementName parent,
   CHECK_GE(element->draw_phase(), 0);
   if (gl_initialized_) {
     for (auto& child : *element) {
-      child.Initialize(provider_);
+      child.Initialize(provider_, keyboard_delegate_, text_input_delegate_);
     }
   }
   GetUiElementByName(parent)->AddChild(std::move(element));
@@ -235,6 +235,14 @@ UiScene::Elements UiScene::GetVisibleControllerElements() const {
       });
 }
 
+UiScene::Elements UiScene::GetVisibleKeyboardElements() const {
+  return GetVisibleElements(GetUiElementByName(kKeyboard),
+                            GetUiElementByName(kReticle),
+                            [](UiElement* element) {
+                              return element->draw_phase() == kPhaseForeground;
+                            });
+}
+
 UiScene::UiScene() {
   root_element_ = base::MakeUnique<UiElement>();
   root_element_->set_name(kRoot);
@@ -245,12 +253,16 @@ UiScene::UiScene() {
 
 UiScene::~UiScene() = default;
 
-void UiScene::OnGlInitialized(SkiaSurfaceProvider* provider) {
+void UiScene::OnGlInitialized(SkiaSurfaceProvider* provider,
+                              KeyboardDelegate* keyboard_delegate,
+                              TextInputDelegate* text_input_delegate) {
   gl_initialized_ = true;
   provider_ = provider;
+  keyboard_delegate_ = keyboard_delegate;
+  text_input_delegate_ = text_input_delegate;
 
   for (auto& element : *root_element_)
-    element.Initialize(provider);
+    element.Initialize(provider, keyboard_delegate, text_input_delegate);
 }
 
 }  // namespace vr

@@ -45,6 +45,7 @@ class UiSceneManager {
   void CreateToasts();
   void CreateVoiceSearchUiGroup();
   void CreateController();
+  void CreateKeyboard();
 
   UiBrowserInterface* browser_;
   UiScene* scene_;
