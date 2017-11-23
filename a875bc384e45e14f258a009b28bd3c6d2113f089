@@ -16,6 +16,63 @@
       "revId": "a875bc384e45e14f258a009b28bd3c6d2113f089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd1080e_0a5c3891",
+        "filename": "content/common/mac/attributed_string_coder.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-23T02:43:08Z",
+      "side": 1,
+      "message": "I guess this code was just moved, but mind fixing it to pass by const ref while you\u0027re here? (Though I guess the param traits does a std::move() now, but Range is definitely not moveable)\n\n(Range *does* seem small enough that it\u0027s possible that it could be efficiently passed by value though... but someone would have to measure, and I think most code doesn\u0027t do it that way today)",
+      "revId": "a875bc384e45e14f258a009b28bd3c6d2113f089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271d644a_dce8b494",
+        "filename": "content/common/mac/attributed_string_coder.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-23T02:43:08Z",
+      "side": 1,
+      "message": "And returning a const ref here as well.",
+      "revId": "a875bc384e45e14f258a009b28bd3c6d2113f089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da79d16e_f826c9a8",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-23T02:43:08Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed, since the buffer size should come from UnwrapSharedMemoryHandle. Is it possible to use the value extracted from that?",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "a875bc384e45e14f258a009b28bd3c6d2113f089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
