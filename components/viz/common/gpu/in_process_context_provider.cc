@@ -55,6 +55,7 @@ InProcessContextProvider::InProcessContextProvider(
     gpu::SurfaceHandle widget,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
+    gpu::GpuChannelManager* gpu_channel_manager,
     const gpu::SharedMemoryLimits& limits,
     InProcessContextProvider* shared_context)
     : attributes_(CreateAttributes()),
@@ -69,6 +70,7 @@ InProcessContextProvider::InProcessContextProvider(
           limits,
           gpu_memory_buffer_manager,
           image_factory,
+          gpu_channel_manager,
           base::ThreadTaskRunnerHandle::Get())),
       cache_controller_(std::make_unique<ContextCacheController>(
           context_->GetImplementation(),
