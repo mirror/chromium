@@ -30,6 +30,8 @@ class WebPointerEvent : public WebInputEvent, public WebPointerProperties {
   BLINK_PLATFORM_EXPORT WebPointerEvent(WebInputEvent::Type,
                                         const WebMouseEvent&);
 
+  bool scroll_capable;
+
   // TODO(crbug.com/736014): We need a clarified definition of the scale and
   // the coordinate space on these attributes.
   float width;
