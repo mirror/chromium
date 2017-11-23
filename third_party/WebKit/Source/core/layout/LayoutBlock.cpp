@@ -1442,7 +1442,7 @@ void LayoutBlock::ComputeBlockPreferredLogicalWidths(
     LayoutUnit& min_logical_width,
     LayoutUnit& max_logical_width) const {
   const ComputedStyle& style_to_use = StyleRef();
-  bool nowrap = style_to_use.WhiteSpace() == EWhiteSpace::kNowrap;
+  // bool nowrap = style_to_use.WhiteSpace() == EWhiteSpace::kNowrap;
 
   LayoutObject* child = FirstChild();
   LayoutBlock* containing_block = this->ContainingBlock();
@@ -1504,8 +1504,8 @@ void LayoutBlock::ComputeBlockPreferredLogicalWidths(
     min_logical_width = std::max(w, min_logical_width);
 
     // IE ignores tables for calculation of nowrap. Makes some sense.
-    if (nowrap && !child->IsTable())
-      max_logical_width = std::max(w, max_logical_width);
+    // if (nowrap && !child->IsTable())
+    //  max_logical_width = std::max(w, max_logical_width);
 
     w = child_max_preferred_logical_width + margin;
 
