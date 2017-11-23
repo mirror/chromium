@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0d57aa7_836189e4",
+        "filename": "google_apis/gaia/gaia_auth_consumer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T12:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d95d78_004bbaca",
+      "range": {
+        "startLine": 52,
+        "startChar": 38,
+        "endLine": 52,
+        "endChar": 55
+      },
+      "revId": "4b27f12b9eab2c2aa618e3a3ac54256dbd4b6bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd775bda_cb9c946d",
         "filename": "google_apis/gaia/gaia_auth_consumer.h",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8b16f1d9_2ecb616b",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T12:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd775bda_cb9c946d",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 24
+      },
+      "revId": "4b27f12b9eab2c2aa618e3a3ac54256dbd4b6bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caf938f2_677b5bea",
         "filename": "google_apis/gaia/gaia_auth_fetcher.cc",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "4b27f12b9eab2c2aa618e3a3ac54256dbd4b6bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d5dd5a_0ebfb934",
+        "filename": "google_apis/gaia/gaia_auth_fetcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T12:52:24Z",
+      "side": 1,
+      "message": "result.get() does not work here because the method expects a reference, and result.get() returns a pointer to the object.",
+      "parentUuid": "caf938f2_677b5bea",
+      "range": {
+        "startLine": 963,
+        "startChar": 37,
+        "endLine": 963,
+        "endChar": 43
+      },
+      "revId": "4b27f12b9eab2c2aa618e3a3ac54256dbd4b6bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

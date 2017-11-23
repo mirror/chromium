@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aaae4505_9a369053",
+        "filename": "google_apis/gaia/gaia_auth_consumer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T12:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fae2a08_46272988",
+      "range": {
+        "startLine": 52,
+        "startChar": 38,
+        "endLine": 52,
+        "endChar": 55
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1382356_39a536aa",
         "filename": "google_apis/gaia/oauth2_id_token_decoder.cc",
         "patchSetId": 11
@@ -484,6 +508,30 @@
       "side": 1,
       "message": "I partially agree with Alexander:\n* It could make sense to have the GaiaAuthFetcher always decode the response data (but in that case, I\u0027d say we should extract from that data all information that Chrome needs from the id_token string and just expose a bool is_child_account in the ClientOAuthResult (in the future it may add more information extracted from the service flags). I think the main advantage would be that we do not need to parse the same information multiple times if we need to decode more stuff from the service flags.\n* Personally, I like the fact that the decoder is a separate file for 2 reasons: a) it makes the file of the fetcher shorter by separating decoding, b) it allows an easier way to add unit tests for the decoder.",
       "parentUuid": "f2a79368_3f7bdf62",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "d3d25ba12ab6154b6aab3bf244d1e17803462dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ec6efb7_cf591002",
+        "filename": "google_apis/gaia/oauth2_id_token_decoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-23T12:52:24Z",
+      "side": 1,
+      "message": "I agree. I said in another comment that we should either have the encoded ID token in the response, or decoded completely to is_child_account. I don\u0027t think passing the ID token dictionary in the response would be advantageous. It\u0027s an intermediate data regarding the information we need; we would still need to understand how service flags are represented there and how a service flag represents that the account is a child. Besides, we don\u0027t currently need any other piece of information from the ID token to justify having it there; but we could easily extend the response to accommodate more data if that changes.\n\nI was unsure which information is better to pass in the response. It makes sense to decode once and supply any data obtained from the ID token in the result. My reasoning in providing the raw ID token is to be more cohesive with the remaining data in the response, which is basically composed of tokens. There are even files naming the response variable as oauth2_tokens:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/signin/oauth2_token_initializer.cc?l\u003d29\n\nGiven the benefit of decoding once, I\u0027m adding is_child_account to the response.\n\nThank you both for the discussion!",
+      "parentUuid": "fa8dbbde_fdde5a75",
       "range": {
         "startLine": 19,
         "startChar": 2,
