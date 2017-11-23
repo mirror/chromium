@@ -34,8 +34,8 @@ CSSStyleValueVector ParseCSSStyleValue(
     return CSSStyleValueVector();
   }
 
-  const auto style_values = StyleValueFactory::FromString(
-      property_id, value, execution_context->SecureContextMode());
+  const auto style_values =
+      StyleValueFactory::FromString(property_id, value, execution_context);
   if (style_values.IsEmpty()) {
     exception_state.ThrowDOMException(
         kSyntaxError, "The value provided ('" + value +
