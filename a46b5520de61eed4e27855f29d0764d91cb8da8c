@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e4c01a0_15acbdb4",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-23T09:15:36Z",
+      "side": 1,
+      "message": "Hi Miguel, please keep the switch from https://chromium-review.googlesource.com/c/chromium/src/+/767375/8/media/gpu/vaapi/vaapi_picture.cc because this causes regression of allowing \"to select DRM(egl) or TFP(glx) at runtime, i.e. with --use-gl\u003degl or --use-gl\u003ddesktop\", see crbug.com/785201 . Thx a lot.",
+      "revId": "a46b5520de61eed4e27855f29d0764d91cb8da8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
