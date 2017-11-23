@@ -436,6 +436,12 @@
                   fromView:self.toolsMenuButton];
 }
 
+#pragma mark - ActivityServicePositioner
+
+- (UIView*)shareButtonView {
+  return self.shareButton;
+}
+
 #pragma mark - TabHistoryPositioner
 
 - (CGPoint)originPointForToolbarButton:(ToolbarButtonType)toolbarButton {
