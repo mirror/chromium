@@ -479,7 +479,7 @@ void IOThread::Init() {
 
 #if defined(OS_ANDROID)
   globals_->external_data_use_observer.reset(
-      new chrome::android::ExternalDataUseObserver(
+      new android::ExternalDataUseObserver(
           globals_->data_use_aggregator.get(),
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
           BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)));

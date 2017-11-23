@@ -69,8 +69,6 @@ class TestExternalDataUseObserverBridge
 
 }  // namespace
 
-namespace chrome {
-
 namespace android {
 
 class ExternalDataUseObserver;
@@ -554,5 +552,3 @@ TEST_F(DataUseMatcherTest, MatchesIgnoresExpiredRules) {
 }
 
 }  // namespace android
-
-}  // namespace chrome
