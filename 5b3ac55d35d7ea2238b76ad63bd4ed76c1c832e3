@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "0e202197_34bde3cc",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-11-23T02:53:13Z",
+      "side": 1,
+      "message": "I mean, add a comment like \"Some drivers incorrectly claim to support formats that they don\u0027t actually support; in these cases, snd_pcm_set_hw_params will fail with that format. Loop through until we find a format that works, or until there are no valid formats left.\"",
+      "parentUuid": "fcd72151_57d36e1d",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 317,
+        "endChar": 45
+      },
+      "revId": "5b3ac55d35d7ea2238b76ad63bd4ed76c1c832e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e81528b9_df423197",
         "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
         "patchSetId": 1

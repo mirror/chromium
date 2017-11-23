@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e54c7a41_7bdc630b",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-11-23T02:53:13Z",
+      "side": 1,
+      "message": "prefer base::flat_map",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "786456facb81a5a3382c60fc8a805a51c26e38da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3c8e1d_1efb5977",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-11-23T02:53:13Z",
+      "side": 1,
+      "message": "TODO(b/...)",
+      "range": {
+        "startLine": 314,
+        "startChar": 5,
+        "endLine": 314,
+        "endChar": 6
+      },
+      "revId": "786456facb81a5a3382c60fc8a805a51c26e38da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35658052_8235096c",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-11-23T02:53:13Z",
+      "side": 1,
+      "message": "formats",
+      "range": {
+        "startLine": 315,
+        "startChar": 48,
+        "endLine": 315,
+        "endChar": 54
+      },
+      "revId": "786456facb81a5a3382c60fc8a805a51c26e38da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89e9719_6c4fe3f0",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-11-23T02:53:13Z",
+      "side": 1,
+      "message": "You should check if this returns \u003c 0 (along with the \u0027return 0\u0027 change below); if so, return immediately. Otherwise, if there is some error in eg PcmHwParamsSetAccess, it could go into an infinite loop.",
+      "range": {
+        "startLine": 324,
+        "startChar": 4,
+        "endLine": 324,
+        "endChar": 74
+      },
+      "revId": "786456facb81a5a3382c60fc8a805a51c26e38da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6129f23_a00fae82",
+        "filename": "chromecast/media/cma/backend/alsa/mixer_output_stream_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-11-23T02:53:13Z",
+      "side": 1,
+      "message": "return 0",
+      "range": {
+        "startLine": 453,
+        "startChar": 9,
+        "endLine": 453,
+        "endChar": 12
+      },
+      "revId": "786456facb81a5a3382c60fc8a805a51c26e38da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
