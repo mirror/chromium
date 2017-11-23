@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2764365_6e415a7f",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-23T15:32:30Z",
+      "side": 1,
+      "message": "This doesn\u0027t look quite right. Consider the case:\n* There is a single stream for a frame.\n* The stream is audible (and so the frame is also audible).\n* The stream is being removed.\n\nIn this case, the frame will not get a notification, since the frame will not be added to the |audible_frame_map| in UpdateStreams(), so the frame will be audible without having any streams.",
+      "revId": "63f6cd0bd7ffcbe33dfaa31bae51e2fe68982c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
