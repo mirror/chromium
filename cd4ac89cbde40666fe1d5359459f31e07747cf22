@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3111ab5_7a32fad9",
+        "filename": "content/child/child_thread_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-23T06:49:48Z",
+      "side": 1,
+      "message": "This isn\u0027t part of ChildThread and should be private.",
+      "revId": "cd4ac89cbde40666fe1d5359459f31e07747cf22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
