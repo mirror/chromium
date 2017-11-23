@@ -42,21 +42,22 @@ const CSSValue* StyleValueToCSSValue(CSSPropertyID property_id,
 const CSSValue* CoerceStyleValueOrStringToCSSValue(
     CSSPropertyID property_id,
     const CSSStyleValueOrString& value,
-    SecureContextMode secure_context_mode) {
+    const ExecutionContext* execution_context) {
   if (value.IsCSSStyleValue()) {
     if (!value.GetAsCSSStyleValue())
       return nullptr;
     return StyleValueToCSSValue(property_id, *value.GetAsCSSStyleValue(),
-                                secure_context_mode);
+                                execution_context->SecureContextMode());
   }
 
   const auto values = StyleValueFactory::FromString(
-      property_id, value.GetAsString(), secure_context_mode);
+      property_id, value.GetAsString(), execution_context);
   // TODO(https://github.com/w3c/css-houdini-drafts/issues/512):
   // What is the correct behaviour here?
   if (values.size() != 1)
     return nullptr;
-  return StyleValueToCSSValue(property_id, *values[0], secure_context_mode);
+  return StyleValueToCSSValue(property_id, *values[0],
+                              execution_context->SecureContextMode());
 }
 
 }  // namespace
@@ -80,7 +81,7 @@ void StylePropertyMap::set(const ExecutionContext* execution_context,
     CSSValueList* result = CssValueListForPropertyID(property_id);
     for (const auto& value : values) {
       const CSSValue* css_value = CoerceStyleValueOrStringToCSSValue(
-          property_id, value, execution_context->SecureContextMode());
+          property_id, value, execution_context);
       if (!css_value || (css_value->IsCSSWideKeyword() && values.size() > 1)) {
         exception_state.ThrowTypeError("Invalid type for property");
         return;
@@ -100,7 +101,7 @@ void StylePropertyMap::set(const ExecutionContext* execution_context,
     }
 
     const CSSValue* result = CoerceStyleValueOrStringToCSSValue(
-        property_id, values[0], execution_context->SecureContextMode());
+        property_id, values[0], execution_context);
     if (!result) {
       exception_state.ThrowTypeError("Invalid type for property");
       return;
@@ -146,7 +147,7 @@ void StylePropertyMap::append(const ExecutionContext* execution_context,
 
   for (auto& value : values) {
     const CSSValue* css_value = CoerceStyleValueOrStringToCSSValue(
-        property_id, value, execution_context->SecureContextMode());
+        property_id, value, execution_context);
     if (!css_value) {
       exception_state.ThrowTypeError("Invalid type for property");
       return;
