@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a4d47e6_77ccc422",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-23T13:04:22Z",
+      "side": 1,
+      "message": "I think implementation of constructors should be done in the .cc file (not in headers).",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "524c1c5fe2447445c15b78b9185a1636329abf61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac67337e_c599e5f1",
+        "filename": "components/signin/core/browser/signin_pref_names.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-23T13:04:22Z",
+      "side": 1,
+      "message": "Rephrase to:\n\"Boolean identifying if Mirror account consistency is required for profile.\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "524c1c5fe2447445c15b78b9185a1636329abf61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45b2f41_4dd5ca82",
+        "filename": "components/signin/core/browser/signin_pref_names.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-23T13:04:22Z",
+      "side": 1,
+      "message": "I would really much like us to avoid having this pref on other platforms that on ChromeOS. My big fear is that otherwise it will be extremely easy to set this pref enabled by default and then Mirror would be on. Also, it would also be hard for a new person starting on this code to understand that Mirror can be enforced via this property only on ChromeOS.\n\nSo, I\u0027d like this property to only be defined on ChromeOS (move it inside a #if defined(OS_CHROMEOS)).",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 51
+      },
+      "revId": "524c1c5fe2447445c15b78b9185a1636329abf61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
