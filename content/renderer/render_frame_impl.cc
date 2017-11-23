@@ -150,6 +150,7 @@
 #include "content/renderer/service_worker/worker_fetch_context_impl.h"
 #include "content/renderer/shared_worker/shared_worker_repository.h"
 #include "content/renderer/skia_benchmarking_extension.h"
+#include "content/renderer/speech_recognition_dispatcher.h"
 #include "content/renderer/stats_collection_controller.h"
 #include "content/renderer/v8_value_converter_impl.h"
 #include "content/renderer/web_frame_utils.h"
@@ -7021,6 +7022,9 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
 
   registry_.AddInterface(
       base::Bind(&RenderFrameImpl::BindWidget, weak_factory_.GetWeakPtr()));
+
+  registry_.AddInterface(
+      base::Bind(&SpeechRecognitionDispatcher::Create, base::Unretained(this)));
 
   GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
       &DevToolsFrontendImpl::CreateMojoService, base::Unretained(this)));

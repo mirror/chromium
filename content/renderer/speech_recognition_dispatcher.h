@@ -9,8 +9,9 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "content/common/speech_recognition.mojom.h"
 #include "content/public/common/speech_recognition_result.h"
-#include "content/public/renderer/render_view_observer.h"
+#include "content/public/renderer/render_frame_observer.h"
 #include "third_party/WebKit/public/web/WebSpeechRecognitionHandle.h"
 #include "third_party/WebKit/public/web/WebSpeechRecognizer.h"
 
@@ -21,17 +22,34 @@ struct SpeechRecognitionError;
 // SpeechRecognitionDispatcher is a delegate for methods used by WebKit for
 // scripted JS speech APIs. It's the complement of
 // SpeechRecognitionDispatcherHost (owned by RenderViewHost).
-class SpeechRecognitionDispatcher : public RenderViewObserver,
-                                    public blink::WebSpeechRecognizer {
+class SpeechRecognitionDispatcher : public RenderFrameObserver,
+                                    public blink::WebSpeechRecognizer,
+                                    public mojom::SpeechRecognition {
  public:
-  explicit SpeechRecognitionDispatcher(RenderViewImpl* render_view);
+  explicit SpeechRecognitionDispatcher(RenderFrameImpl* render_frame);
   ~SpeechRecognitionDispatcher() override;
+
+  static void Create(RenderFrameImpl* render_frame,
+                     mojom::SpeechRecognitionRequest request);
 
   // Aborts all speech recognitions.
   void AbortAllRecognitions();
 
+  // mojom::SpeechRecognition:
+  void ResultRetrieved(
+      int64_t request_id,
+      const std::vector<content::SpeechRecognitionResult>& results) override;
+  void ErrorOccurred(int64_t request_id,
+                     const content::SpeechRecognitionError& error) override;
+  void Started(int64_t request_id) override;
+  void AudioStarted(int64_t request_id) override;
+  void SoundStarted(int64_t request_id) override;
+  void SoundEnded(int64_t request_id) override;
+  void AudioEnded(int64_t request_id) override;
+  void Ended(int64_t request_id) override;
+
  private:
-  // RenderViewObserver implementation.
+  // RenderFrameObserver implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
   void OnDestruct() override;
 

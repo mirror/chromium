@@ -37,6 +37,7 @@
 #include "content/common/host_zoom.mojom.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/common/renderer.mojom.h"
+#include "content/common/speech_recognition.mojom.h"
 #include "content/common/unique_name_helper.h"
 #include "content/common/url_loader_factory_bundle.h"
 #include "content/common/widget.mojom.h"
@@ -759,6 +760,8 @@ class CONTENT_EXPORT RenderFrameImpl
       mojom::FrameBindingsControlAssociatedRequest request);
   void BindFrameNavigationControl(
       mojom::FrameNavigationControlAssociatedRequest request);
+
+  void BindSpeechRecognition(mojom::SpeechRecognitionRequest request);
 
   ManifestManager* manifest_manager();
 

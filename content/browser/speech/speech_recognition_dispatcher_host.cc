@@ -18,6 +18,8 @@
 #include "content/public/browser/speech_recognition_session_config.h"
 #include "content/public/browser/speech_recognition_session_context.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_names.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
@@ -28,6 +30,10 @@ SpeechRecognitionDispatcherHost::SpeechRecognitionDispatcherHost(
       render_process_id_(render_process_id),
       context_getter_(context_getter),
       weak_factory_(this) {
+  auto request = mojo::MakeRequest(&speech_recognition_);
+  ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
+      mojom::kRendererServiceName, std::move(request));
+
   // Do not add any non-trivial initialization here, instead do it lazily when
   // required (e.g. see the method |SpeechRecognitionManager::GetInstance()|) or
   // add an Init() method.
@@ -205,43 +211,37 @@ void SpeechRecognitionDispatcherHost::OnStopCaptureRequest(
 void SpeechRecognitionDispatcherHost::OnRecognitionStart(int session_id) {
   const SpeechRecognitionSessionContext& context =
       SpeechRecognitionManager::GetInstance()->GetSessionContext(session_id);
-  Send(new SpeechRecognitionMsg_Started(context.render_view_id,
-                                        context.request_id));
+  speech_recognition_->Started(context.request_id);
 }
 
 void SpeechRecognitionDispatcherHost::OnAudioStart(int session_id) {
   const SpeechRecognitionSessionContext& context =
       SpeechRecognitionManager::GetInstance()->GetSessionContext(session_id);
-  Send(new SpeechRecognitionMsg_AudioStarted(context.render_view_id,
-                                             context.request_id));
+  speech_recognition_->AudioStarted(context.request_id);
 }
 
 void SpeechRecognitionDispatcherHost::OnSoundStart(int session_id) {
   const SpeechRecognitionSessionContext& context =
       SpeechRecognitionManager::GetInstance()->GetSessionContext(session_id);
-  Send(new SpeechRecognitionMsg_SoundStarted(context.render_view_id,
-                                             context.request_id));
+  speech_recognition_->SoundStarted(context.request_id);
 }
 
 void SpeechRecognitionDispatcherHost::OnSoundEnd(int session_id) {
   const SpeechRecognitionSessionContext& context =
       SpeechRecognitionManager::GetInstance()->GetSessionContext(session_id);
-  Send(new SpeechRecognitionMsg_SoundEnded(context.render_view_id,
-                                           context.request_id));
+  speech_recognition_->SoundEnded(context.request_id);
 }
 
 void SpeechRecognitionDispatcherHost::OnAudioEnd(int session_id) {
   const SpeechRecognitionSessionContext& context =
       SpeechRecognitionManager::GetInstance()->GetSessionContext(session_id);
-  Send(new SpeechRecognitionMsg_AudioEnded(context.render_view_id,
-                                           context.request_id));
+  speech_recognition_->AudioEnded(context.request_id);
 }
 
 void SpeechRecognitionDispatcherHost::OnRecognitionEnd(int session_id) {
   const SpeechRecognitionSessionContext& context =
       SpeechRecognitionManager::GetInstance()->GetSessionContext(session_id);
-  Send(new SpeechRecognitionMsg_Ended(context.render_view_id,
-                                      context.request_id));
+  speech_recognition_->Ended(context.request_id);
 }
 
 void SpeechRecognitionDispatcherHost::OnRecognitionResults(
@@ -249,9 +249,7 @@ void SpeechRecognitionDispatcherHost::OnRecognitionResults(
     const SpeechRecognitionResults& results) {
   const SpeechRecognitionSessionContext& context =
       SpeechRecognitionManager::GetInstance()->GetSessionContext(session_id);
-  Send(new SpeechRecognitionMsg_ResultRetrieved(context.render_view_id,
-                                                context.request_id,
-                                                results));
+  speech_recognition_->ResultRetrieved(context.request_id, results);
 }
 
 void SpeechRecognitionDispatcherHost::OnRecognitionError(
@@ -259,9 +257,7 @@ void SpeechRecognitionDispatcherHost::OnRecognitionError(
     const SpeechRecognitionError& error) {
   const SpeechRecognitionSessionContext& context =
       SpeechRecognitionManager::GetInstance()->GetSessionContext(session_id);
-  Send(new SpeechRecognitionMsg_ErrorOccurred(context.render_view_id,
-                                              context.request_id,
-                                              error));
+  speech_recognition_->ErrorOccurred(context.request_id, error);
 }
 
 // The events below are currently not used by speech JS APIs implementation.
