@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "extensions/common/permissions/permissions_data.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/user_script.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
 
@@ -43,6 +44,8 @@ class ScriptInjector {
 
   // Returns true if the script is running inside a user gesture.
   virtual bool IsUserGesture() const = 0;
+
+  virtual CSSOrigin css_origin() const = 0;
 
   // Returns true if the script expects results.
   virtual bool ExpectsResults() const = 0;
