@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "838d7f2d_00d53e65",
+        "filename": "chrome/browser/vr/test/ui_test.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-23T15:00:52Z",
+      "side": 1,
+      "message": "This naming is now invalid with your edits - should be CreateScene() and equivalent (there may be other lingering Scene Manager naming too).",
+      "revId": "af0582a5180414856a8d938a1473a7525ac6e179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf806a0c_d5fdb98c",
+        "filename": "chrome/browser/vr/ui_scene_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-23T15:00:52Z",
+      "side": 1,
+      "message": "IMO, this should be a bug rather than in-code TODO.  It won\u0027t be these lines of code that trigger the rework...",
+      "revId": "af0582a5180414856a8d938a1473a7525ac6e179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
