@@ -142,6 +142,29 @@
       "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326622da_712f8bad",
+        "filename": "chrome/browser/vr/service/vr_device_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-23T15:26:34Z",
+      "side": 1,
+      "message": "nit: It\u0027s equivalent, but you should probably use SetClientCallback for clarity.",
+      "range": {
+        "startLine": 42,
+        "startChar": 42,
+        "endLine": 42,
+        "endChar": 59
+      },
+      "revId": "e02ea99af4cde787f146c9ad552ac7adf12e6f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
