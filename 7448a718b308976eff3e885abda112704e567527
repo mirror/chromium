@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac8e912_4ce9b260",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-23T22:25:35Z",
+      "side": 1,
+      "message": "did you start a thread with ui/security about what we want here?",
+      "range": {
+        "startLine": 629,
+        "startChar": 19,
+        "endLine": 629,
+        "endChar": 30
+      },
+      "revId": "7448a718b308976eff3e885abda112704e567527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2776bbf2_8bf46b96",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/IWebApkApi.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-23T22:25:35Z",
+      "side": 1,
+      "message": "// Deprecated: Use notifyNotificationWithChannel",
+      "revId": "7448a718b308976eff3e885abda112704e567527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87d718a_2870d530",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-23T22:25:35Z",
+      "side": 1,
+      "message": "you need to bump the runtime library version too :S",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "7448a718b308976eff3e885abda112704e567527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4703d5c9_6a67c279",
+        "filename": "chrome/android/webapk/shell_apk/shell_apk_version.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-23T22:25:35Z",
+      "side": 1,
+      "message": "ugh, this is a rather unfortunate aspect of the ServiceImplWrapper - every runtime library change also results in this changing (but truthfully we don\u0027t care about it)",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "7448a718b308976eff3e885abda112704e567527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
