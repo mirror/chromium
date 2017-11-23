@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "821b23b1_73143dbc",
+        "filename": "base/run_loop.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-23T19:14:25Z",
+      "side": 1,
+      "message": "ngl it\u0027s really hard to keep all the redirection and clients and delegates in my head and I don\u0027t know that I could explain to someone how to use this correctly on the first try.\n\nNot that I see anything incorrect here just.. yeah.\n\nTrying to think of other options but not doing very well.\n\nMaybe if OverridenDelegateControllerForTesting was \"OriginalDelegate\"? OriginalDelegateProxy? idk.. the name as it is left me in a state of awe for a while.\n\nAnd it feels like maybe we want to override the client, but are settling for putting a bool in the prod client? Like this is returning a different Client* that will function correctly, while the original one becomes broken but it takes quite some thinking to see that and how to use it for tests (it lets u call Run on the original delete and always return and then call your own Client in a loop right?)\n\nI guess one core premise here is that this override will be called *after* setting up the original delegate. Is that required? Would this get less complicated if the override was set up before?",
+      "revId": "ba430bce5a0b5ad8e2c0f55b10ff6850e0899e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
