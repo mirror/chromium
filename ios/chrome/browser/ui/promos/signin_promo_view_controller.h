@@ -18,6 +18,8 @@ class ChromeBrowserState;
 // SSO Recall promo has been displayed.
 // Exposed for testing.
 extern NSString* kDisplayedSSORecallForMajorVersionKey;
+extern NSString* kLastShownAccountGaiaIdVersionKey;
+extern NSString* kSigninPromoViewDisplayCountKey;
 
 // Class to display a promotion view to encourage the user to sign on, if
 // SSO detects that the user has signed in with another application.
