@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38062720_75ae351d",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-23T19:09:48Z",
+      "side": 0,
+      "message": "IIRC, this code is similar to other code in textures that render text. Do we need to update them as well?",
+      "revId": "9cb09cf894c46a15cb56fa9456ab6f64fc12594a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
