@@ -391,15 +391,14 @@ int ProofVerifierChromium::Job::DoVerifyCertComplete(int result) {
   if (enforce_policy_checking_ &&
       (result == OK ||
        (IsCertificateError(result) && IsCertStatusMinorError(cert_status)))) {
-    verify_details_->ct_verify_result.ct_policies_applied = true;
     SCTList verified_scts = ct::SCTsMatchingStatus(
         verify_details_->ct_verify_result.scts, ct::SCT_STATUS_OK);
 
-    verify_details_->ct_verify_result.cert_policy_compliance =
+    verify_details_->ct_verify_result.policy_compliance =
         policy_enforcer_->DoesConformToCertPolicy(
             cert_verify_result.verified_cert.get(), verified_scts, net_log_);
     if (verify_details_->cert_verify_result.cert_status & CERT_STATUS_IS_EV) {
-      if (verify_details_->ct_verify_result.cert_policy_compliance !=
+      if (verify_details_->ct_verify_result.policy_compliance !=
           ct::CertPolicyCompliance::CERT_POLICY_COMPLIES_VIA_SCTS) {
         verify_details_->cert_verify_result.cert_status |=
             CERT_STATUS_CT_COMPLIANCE_FAILED;
@@ -411,7 +410,7 @@ int ProofVerifierChromium::Job::DoVerifyCertComplete(int result) {
       // compliance.
       UMA_HISTOGRAM_ENUMERATION(
           "Net.CertificateTransparency.EVCompliance.QUIC",
-          verify_details_->ct_verify_result.cert_policy_compliance,
+          verify_details_->ct_verify_result.policy_compliance,
           ct::CertPolicyCompliance::CERT_POLICY_MAX);
     }
 
@@ -419,7 +418,7 @@ int ProofVerifierChromium::Job::DoVerifyCertComplete(int result) {
     // how many connections are CT-compliant.
     UMA_HISTOGRAM_ENUMERATION(
         "Net.CertificateTransparency.ConnectionComplianceStatus.QUIC",
-        verify_details_->ct_verify_result.cert_policy_compliance,
+        verify_details_->ct_verify_result.policy_compliance,
         ct::CertPolicyCompliance::CERT_POLICY_MAX);
 
     int ct_result = OK;
@@ -431,7 +430,7 @@ int ProofVerifierChromium::Job::DoVerifyCertComplete(int result) {
             cert_verify_result.verified_cert.get(), cert_.get(),
             verify_details_->ct_verify_result.scts,
             TransportSecurityState::ENABLE_EXPECT_CT_REPORTS,
-            verify_details_->ct_verify_result.cert_policy_compliance);
+            verify_details_->ct_verify_result.policy_compliance);
     if (ct_requirement_status != TransportSecurityState::CT_NOT_REQUIRED) {
       verify_details_->ct_verify_result.policy_compliance_required = true;
       // Record the CT compliance of connections for which compliance is
@@ -440,7 +439,7 @@ int ProofVerifierChromium::Job::DoVerifyCertComplete(int result) {
       UMA_HISTOGRAM_ENUMERATION(
           "Net.CertificateTransparency.CTRequiredConnectionComplianceStatus."
           "QUIC",
-          verify_details_->ct_verify_result.cert_policy_compliance,
+          verify_details_->ct_verify_result.policy_compliance,
           ct::CertPolicyCompliance::CERT_POLICY_MAX);
     } else {
       verify_details_->ct_verify_result.policy_compliance_required = false;

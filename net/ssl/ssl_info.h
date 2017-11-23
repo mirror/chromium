@@ -128,20 +128,11 @@ class NET_EXPORT SSLInfo {
   // status.
   SignedCertificateTimestampAndStatusList signed_certificate_timestamps;
 
-  // True if Certificate Transparency policies were applied on this
-  // connection and results are available. If true, the field below
-  // (|ct_cert_policy_compliance|) will contain information about whether
-  // the connection complied with the policy and why the connection
-  // was considered non-compliant, if applicable.
-  bool ct_compliance_details_available;
-
   // Whether the connection complied with the CT cert policy, and if
-  // not, why not. Only meaningful if |ct_compliance_details_available|
-  // is true.
-  ct::CertPolicyCompliance ct_cert_policy_compliance;
+  // not, why not.
+  ct::CertPolicyCompliance ct_policy_compliance;
 
-  // True if the connection was required to comply with the CT cert policy. Only
-  // meaningful if |ct_compliance_details_available| is true.
+  // True if the connection was required to comply with the CT cert policy.
   bool ct_policy_compliance_required;
 
   // OCSP stapling details.

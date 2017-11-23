@@ -24,6 +24,9 @@ enum class CertPolicyCompliance {
   // isn't timely and therefore log information might be out of date
   // (for example a log might no longer be considered trustworthy).
   CERT_POLICY_BUILD_NOT_TIMELY = 3,
+  // Information about the connection's compliance isn't available or wasn't
+  // evaluated, e.g. because a resource was loaded from disk cache.
+  CERT_POLICY_COMPLIANCE_NOT_AVAILABLE = 4,
   CERT_POLICY_MAX
 };
 

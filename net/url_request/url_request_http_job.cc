@@ -100,8 +100,6 @@ void LogTrustAnchor(const net::HashValueVector& spki_hashes) {
 // Records per-request histograms relating to Certificate Transparency
 // compliance.
 void RecordCTHistograms(const net::SSLInfo& ssl_info) {
-  if (!ssl_info.ct_compliance_details_available)
-    return;
   if (!ssl_info.is_issued_by_known_root)
     return;
 
@@ -120,7 +118,7 @@ void RecordCTHistograms(const net::SSLInfo& ssl_info) {
   // percentage of overall requests that are CT-compliant.
   UMA_HISTOGRAM_ENUMERATION(
       "Net.CertificateTransparency.RequestComplianceStatus",
-      ssl_info.ct_cert_policy_compliance,
+      ssl_info.ct_policy_compliance,
       net::ct::CertPolicyCompliance::CERT_POLICY_MAX);
   // Record the CT compliance of each request which was required to be CT
   // compliant. This gives a picture of the sites that are supposed to be
@@ -128,7 +126,7 @@ void RecordCTHistograms(const net::SSLInfo& ssl_info) {
   if (ssl_info.ct_policy_compliance_required) {
     UMA_HISTOGRAM_ENUMERATION(
         "Net.CertificateTransparency.CTRequiredRequestComplianceStatus",
-        ssl_info.ct_cert_policy_compliance,
+        ssl_info.ct_policy_compliance,
         net::ct::CertPolicyCompliance::CERT_POLICY_MAX);
   }
 }

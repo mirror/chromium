@@ -85,6 +85,9 @@ const char* CertPolicyComplianceToString(ct::CertPolicyCompliance status) {
       return "NOT_DIVERSE_SCTS";
     case ct::CertPolicyCompliance::CERT_POLICY_BUILD_NOT_TIMELY:
       return "BUILD_NOT_TIMELY";
+    case ct::CertPolicyCompliance::CERT_POLICY_COMPLIANCE_NOT_AVAILABLE:
+      NOTREACHED();
+      return "COMPLIANCE_NOT_AVAILABLE";
     case ct::CertPolicyCompliance::CERT_POLICY_MAX:
       NOTREACHED();
       return "unknown";
