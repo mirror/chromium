@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "fdedc7ee_3040b991",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-23T14:31:20Z",
+      "side": 1,
+      "message": "I think the chrome/ way is better.\n\nIMO, it should be the responsibility of ios/chrome/app code to ensure that all the global objects that need to be registered are, and not the responsibility of ChromeBrowserStateImpl.\n\nWe already have a free function EnsureBrowserStateKeyedServiceFactoriesBuilt on iOS (in ios/chrome/browser/browser_state/browser_state_keyed_service_factories.h). Maybe we could add as a first step add a function there, and then invoke it from ChromeBrowserStateImpl as a first step.\n\nMarking as Resolved as I think this should be addressed once we have more than one service to register.",
+      "parentUuid": "1ff0a15a_9151e39e",
+      "revId": "cd33f84d5e14ea0f12f7b553128e92f668191515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cda4508_eb74012e",
         "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl.cc",
         "patchSetId": 4
