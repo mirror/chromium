@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb8d6afa_458d6abe",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaRemotingElements.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-23T15:46:57Z",
+      "side": 1,
+      "message": "Actually, now that you only have two elements inheriting from HTMLDivElement, you could stop using these classes and instead have this code inlined when you create the objects?\n\nSomething like:\n```\ncast_text_message_ \u003d HTMLDivElement::Create(GetDocument());\ncast_text_message_-\u003eSetShadowPseudoId(AtomicString(\"-internal-media-remoting-cast-text-message\"));\n```",
+      "revId": "e51e5e89233cebb7ba6b557e923cb99ef8fe5ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
