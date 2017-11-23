@@ -74,7 +74,6 @@ extern const size_t kTheRcHeaderSize;''', output)
 const GritResourceMap kTheRcHeader[] = {
   {"IDC_KLONKMENU", IDC_KLONKMENU},
   {"IDS_FIRSTPRESENT", IDS_FIRSTPRESENT},
-  {"IDS_MISSING", IDS_MISSING},
   {"IDS_LANGUAGESPECIFIC", IDS_LANGUAGESPECIFIC},
   {"IDS_THIRDPRESENT", IDS_THIRDPRESENT},
 };
@@ -89,9 +88,7 @@ const size_t kTheRcHeaderSize = arraysize(kTheRcHeader);''', output)
 const GritResourceMap kTheRcHeader[] = {
   {"grit/testdata/klonk.rc", IDC_KLONKMENU},
   {"abc", IDS_FIRSTPRESENT},
-  {"def", IDS_MISSING},
   {"ghi", IDS_LANGUAGESPECIFIC},
-  {"jkl", IDS_LANGUAGESPECIFIC},
   {"mno", IDS_THIRDPRESENT},
 };
 const size_t kTheRcHeaderSize = arraysize(kTheRcHeader);''', output)
