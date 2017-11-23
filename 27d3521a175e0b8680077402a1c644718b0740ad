@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d8cda84_36cd74c1",
+        "filename": "chrome/browser/extensions/browsertest_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-23T04:31:51Z",
+      "side": 1,
+      "message": "I get the point in a general context but I\u0027m unsure it applies here since this is an already defined pattern in Chromium[1] and internally.\n\n[1] https://cs.chromium.org/search/?q\u003d%22EXPECT_EQ(%2B%2B%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "2f80fc61_ae9716c6",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 28
+      },
+      "revId": "27d3521a175e0b8680077402a1c644718b0740ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f8b5bd0_2fcae4eb",
         "filename": "chrome/browser/extensions/browsertest_util.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-23T03:37:08Z",
       "side": 1,
       "message": "This is SOURCE_CHROME_INTERNAL in both of the places you\u0027re copying this code from. Why did it change to SOURCE_TEST?",
+      "range": {
+        "startLine": 109,
+        "startChar": 58,
+        "endLine": 109,
+        "endChar": 69
+      },
+      "revId": "27d3521a175e0b8680077402a1c644718b0740ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f8f610_b6fdd403",
+        "filename": "chrome/browser/extensions/browsertest_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-23T04:31:51Z",
+      "side": 1,
+      "message": "SOURCE_TEST seems more appropriate and it\u0027s used throughout tests including LoadAndLaunchApp in extension_browsertests. The second instance of the SOURCE_CHROME_INTERNAL was added by me when I copied the code.",
+      "parentUuid": "7f8b5bd0_2fcae4eb",
       "range": {
         "startLine": 109,
         "startChar": 58,
