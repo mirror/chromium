@@ -16,8 +16,6 @@
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
 
-namespace chrome {
-
 namespace android {
 
 namespace {
@@ -242,5 +240,3 @@ void ExternalDataUseObserver::SetProfileSigninStatus(bool signin_status) {
 }
 
 }  // namespace android
-
-}  // namespace chrome

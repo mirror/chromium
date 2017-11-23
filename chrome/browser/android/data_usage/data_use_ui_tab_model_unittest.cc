@@ -35,8 +35,6 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
-namespace chrome {
-
 namespace android {
 
 namespace {
@@ -627,5 +625,3 @@ TEST_F(DataUseUITabModelTest, ProcessBufferedNavigationEventsAfterMaxLimit) {
 }
 
 }  // namespace android
-
-}  // namespace chrome

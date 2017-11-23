@@ -216,8 +216,6 @@ void RecordEndTrackingMetrics(
 
 }  // namespace
 
-namespace chrome {
-
 namespace android {
 
 // static
@@ -617,5 +615,3 @@ void DataUseTabModel::CompactTabEntries() {
 }
 
 }  // namespace android
-
-}  // namespace chrome

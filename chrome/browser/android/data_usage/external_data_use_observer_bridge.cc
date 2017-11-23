@@ -54,8 +54,6 @@ variations::VariationID GetGoogleVariationID() {
 
 }  // namespace
 
-namespace chrome {
-
 namespace android {
 
 ExternalDataUseObserverBridge::ExternalDataUseObserverBridge()
@@ -231,5 +229,3 @@ void ExternalDataUseObserverBridge::RegisterGoogleVariationID(
 }
 
 }  // namespace android
-
-}  // namespace chrome

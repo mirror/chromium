@@ -19,8 +19,6 @@ const uint32_t kDefaultMaxNavigationEventsBuffered = 100;
 
 }  // namespace
 
-namespace chrome {
-
 namespace android {
 
 DataUseUITabModel::DataUseUITabModel()
@@ -350,5 +348,3 @@ void DataUseUITabModel::ProcessBufferedNavigationEvents() {
 }
 
 }  // namespace android
-
-}  // namespace chrome

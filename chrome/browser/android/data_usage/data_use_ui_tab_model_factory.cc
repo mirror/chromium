@@ -17,8 +17,6 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "content/public/browser/browser_thread.h"
 
-namespace chrome {
-
 namespace android {
 
 namespace {
@@ -101,5 +99,3 @@ KeyedService* DataUseUITabModelFactory::BuildServiceInstanceFor(
 }
 
 }  // namespace android
-
-}  // namespace chrome
