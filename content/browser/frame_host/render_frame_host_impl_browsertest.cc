@@ -24,6 +24,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "content/test/content_browser_test_utils_internal.h"
 #include "content/test/test_content_browser_client.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -492,6 +493,15 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest, StreamHandleReleased) {
 }
 
 namespace {
+
+// Kills a renderer and waits until its host notifies of process exit.
+void CrashRendererAndWait(RenderProcessHost* renderer_process) {
+  RenderProcessHostWatcher crash_observer(
+      renderer_process, RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
+  renderer_process->Shutdown(0, false);
+  crash_observer.Wait();
+}
+
 class DropStreamHandleConsumedFilter : public BrowserMessageFilter {
  public:
   DropStreamHandleConsumedFilter() : BrowserMessageFilter(FrameMsgStart) {}
@@ -507,6 +517,7 @@ class DropStreamHandleConsumedFilter : public BrowserMessageFilter {
 
   DISALLOW_COPY_AND_ASSIGN(DropStreamHandleConsumedFilter);
 };
+
 }  // namespace
 
 // After a renderer crash, the StreamHandle must be released.
@@ -536,11 +547,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
   EXPECT_NE(nullptr, main_frame->stream_handle_for_testing());
 
   // Make the renderer crash.
-  RenderProcessHost* renderer_process = main_frame->GetProcess();
-  RenderProcessHostWatcher crash_observer(
-      renderer_process, RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
-  renderer_process->Shutdown(0, false);
-  crash_observer.Wait();
+  CrashRendererAndWait(main_frame->GetProcess());
 
   // The |stream_handle_| must have been released now.
   EXPECT_EQ(nullptr, main_frame->stream_handle_for_testing());
@@ -870,6 +877,183 @@ IN_PROC_BROWSER_TEST_F(
   std::string second_part_received;
   EXPECT_TRUE(dom_message_queue.WaitForMessage(&second_part_received));
   EXPECT_EQ("\"Second part received\"", second_part_received);
+}
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
+                       PendingCommitFlagResetOnCommit) {
+  // The test makes sense only with PlzNavigate.
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  // Check the case when the committed navigation matches the NavigationHandle
+  // stored in the RFH.
+  {
+    GURL url(embedded_test_server()->GetURL("/title1.html"));
+    TestNavigationManager navigation_manager(shell()->web_contents(), url);
+    shell()->LoadURL(url);
+    RenderFrameHostImpl* main_rfh = static_cast<RenderFrameHostImpl*>(
+        shell()->web_contents()->GetMainFrame());
+    EXPECT_FALSE(main_rfh->pending_commit_for_testing());
+    EXPECT_TRUE(navigation_manager.WaitForResponse());
+    navigation_manager.ResumeNavigation();
+
+    ASSERT_EQ(main_rfh, shell()->web_contents()->GetMainFrame());
+    EXPECT_TRUE(main_rfh->pending_commit_for_testing());
+    UrlCommitObserver(main_rfh->frame_tree_node(), url).Wait();
+    EXPECT_FALSE(main_rfh->pending_commit_for_testing());
+
+    EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  }
+
+  // Check the case when the committed navigation does not match the
+  // NavigationHandle stored in the RFH.
+  {
+    GURL final_url(embedded_test_server()->GetURL("/title2.html"));
+    TestNavigationManager navigation_manager(shell()->web_contents(),
+                                             final_url);
+    RenderFrameHostImpl* main_rfh = static_cast<RenderFrameHostImpl*>(
+        shell()->web_contents()->GetMainFrame());
+    // The first NavigationHandle created for this navigation will be lost
+    // when the same-document navigation (see below) commits. UrlCommitObserver
+    // will wait until title2.html actually commits.
+    UrlCommitObserver final_commit_oberver(main_rfh->frame_tree_node(),
+                                           final_url);
+    shell()->LoadURL(final_url);
+    EXPECT_FALSE(main_rfh->pending_commit_for_testing());
+    EXPECT_TRUE(navigation_manager.WaitForResponse());
+    // Trigger a same-document navigation and resume navigation to title2.html.
+    GURL first_commit_url(embedded_test_server()->GetURL("/title1.html#foo"));
+    ExecuteScriptAsync(main_rfh, "history.pushState({}, '', '" +
+                                     first_commit_url.spec() + "')");
+    navigation_manager.ResumeNavigation();
+
+    ASSERT_EQ(main_rfh, shell()->web_contents()->GetMainFrame());
+    EXPECT_TRUE(main_rfh->pending_commit_for_testing());
+    UrlCommitObserver(main_rfh->frame_tree_node(), first_commit_url).Wait();
+    EXPECT_FALSE(main_rfh->pending_commit_for_testing());
+
+    // Now the navigation to title2.html is expected to commit.
+    final_commit_oberver.Wait();
+    EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+    EXPECT_EQ(final_url, shell()->web_contents()->GetLastCommittedURL());
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
+                       PendingCommitFlagResetOnCrash) {
+  // The test makes sense only with PlzNavigate.
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+  // Make sure the renderer does not commit before it is killed.
+  shell()->LoadURL(GURL(kChromeUIHangURL));
+
+  GURL url(embedded_test_server()->GetURL("/title1.html"));
+  TestNavigationManager navigation_manager(shell()->web_contents(), url);
+  shell()->LoadURL(url);
+  RenderFrameHostImpl* main_rfh = static_cast<RenderFrameHostImpl*>(
+      shell()->web_contents()->GetMainFrame());
+  EXPECT_FALSE(main_rfh->pending_commit_for_testing());
+  EXPECT_TRUE(navigation_manager.WaitForResponse());
+  navigation_manager.ResumeNavigation();
+  ASSERT_EQ(main_rfh, shell()->web_contents()->GetMainFrame());
+  EXPECT_TRUE(main_rfh->pending_commit_for_testing());
+  CrashRendererAndWait(main_rfh->GetProcess());
+  EXPECT_FALSE(main_rfh->pending_commit_for_testing());
+  EXPECT_FALSE(main_rfh->is_loading());
+  EXPECT_FALSE(shell()->web_contents()->IsLoading());
+}
+
+namespace {
+
+using RenderFrameHostPendingCommitTest = ContentBrowserTest;
+
+class BrowserInitiatedNavigationsChecker : public WebContentsObserver {
+ public:
+  BrowserInitiatedNavigationsChecker(WebContents* contents)
+      : WebContentsObserver(contents) {}
+
+  void DidStartNavigation(NavigationHandle* handle) override {
+    EXPECT_FALSE(handle->IsRendererInitiated());
+  }
+};
+
+// Helper for executing a callback right before a RFH processes a DidStopLoading
+// message.
+class RunOnFrameStopLoadingHelper : public WebContentsObserver {
+ public:
+  RunOnFrameStopLoadingHelper(WebContents* contents, base::OnceClosure callback)
+      : WebContentsObserver(contents), callback_(std::move(callback)) {}
+
+  // Waits until the callback is executed.
+  void Wait() { run_loop_.Run(); }
+
+ private:
+  bool OnMessageReceived(const IPC::Message& msg,
+                         RenderFrameHost* rfh) override {
+    IPC_BEGIN_MESSAGE_MAP(RunOnFrameStopLoadingHelper, msg)
+      IPC_MESSAGE_HANDLER(FrameHostMsg_DidStopLoading, OnDidStopLoading)
+    IPC_END_MESSAGE_MAP()
+
+    return false;
+  }
+
+  void OnDidStopLoading(bool) {
+    std::move(callback_).Run();
+    run_loop_.Quit();
+  }
+
+  base::RunLoop run_loop_;
+  base::OnceClosure callback_;
+};
+
+}  // namespace
+
+// Checks that when a navigation is expected to commit, a DidStopLoading message
+// from the previous page does not clear the |is_loading_| flag and does not
+// drop the NavigationHandle.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostPendingCommitTest,
+                       StopLoadingWithPendingCommit) {
+  // The behavior tested here is implemented only for PlzNavigate.
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  const std::string kFirstPagePath("/virtual/first_page");
+  ControllableHttpResponse first_response(embedded_test_server(),
+                                          kFirstPagePath);
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  BrowserInitiatedNavigationsChecker checker(shell()->web_contents());
+  const GURL first_url(embedded_test_server()->GetURL(kFirstPagePath));
+
+  UrlCommitObserver commit_observer(
+      static_cast<WebContentsImpl*>(shell()->web_contents())
+          ->GetFrameTree()
+          ->root(),
+      first_url);
+  shell()->LoadURL(first_url);
+  first_response.WaitForRequest();
+  first_response.Send("HTTP/1.1 200 OK\r\n\r\n<html>");
+  commit_observer.Wait();
+
+  // Ensure that the new navigation starts committing right before the first
+  // load finishes.
+  GURL new_url(embedded_test_server()->GetURL("/title2.html"));
+  TestNavigationManager navigation_manager_2(shell()->web_contents(), new_url);
+  shell()->LoadURL(new_url);
+  EXPECT_TRUE(navigation_manager_2.WaitForResponse());
+
+  {
+    RunOnFrameStopLoadingHelper helper(
+        shell()->web_contents(),
+        base::BindOnce(&TestNavigationManager::ResumeNavigation,
+                       base::Unretained(&navigation_manager_2)));
+    first_response.Done();
+    helper.Wait();
+  }
+  navigation_manager_2.WaitForNavigationFinished();
+  // Navigation finish should be caused by successfully committing the new URL.
+  EXPECT_EQ(new_url, shell()->web_contents()->GetLastCommittedURL());
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
 }
 
 }  // namespace content
