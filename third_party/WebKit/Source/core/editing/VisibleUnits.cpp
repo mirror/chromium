@@ -774,8 +774,8 @@ static LayoutUnit BoundingBoxLogicalHeight(LayoutObject* o,
 // with first-letter style, e.g., <div>F</div>, where the letter is laid-out in
 // an anonymous first-letter LayoutTextFragment instead of the LayoutObject of
 // the text node. It seems weird to return false in this case.
-// TODO(crbug.com/766448): Change parameter type to |const LayoutObject*|.
-bool HasRenderedNonAnonymousDescendantsWithHeight(LayoutObject* layout_object) {
+bool HasRenderedNonAnonymousDescendantsWithHeight(
+    const LayoutObject* layout_object) {
   LayoutObject* stop = layout_object->NextInPreOrderAfterChildren();
   // TODO(editing-dev): Avoid single-character parameter names.
   for (LayoutObject* o = layout_object->SlowFirstChild(); o && o != stop;
@@ -789,6 +789,21 @@ bool HasRenderedNonAnonymousDescendantsWithHeight(LayoutObject* layout_object) {
            BoundingBoxLogicalHeight(o, ToLayoutInline(o)->LinesBoundingBox())))
         return true;
     }
+  }
+  return false;
+}
+
+bool EmptyBlockHaveVisibleObjects(const LayoutObject* layout_object) {
+  bool has_size_attributes = false;
+  if (layout_object->IsLayoutBlock())
+    has_size_attributes = ToLayoutBlock(layout_object)->LogicalHeight();
+
+  if (layout_object->IsAtomicInlineLevel())
+    has_size_attributes = !ToLayoutBox(layout_object)->Size().IsEmpty();
+
+  if (has_size_attributes || IsHTMLBodyElement(layout_object->GetNode())) {
+    if (!HasRenderedNonAnonymousDescendantsWithHeight(layout_object))
+      return true;
   }
   return false;
 }
@@ -888,10 +903,8 @@ bool EndsOfNodeAreVisuallyDistinctPositions(const Node* node) {
     return true;
 
   // There is a VisiblePosition inside an empty inline-block container.
-  return layout_object->IsAtomicInlineLevel() &&
-         CanHaveChildrenForEditing(node) &&
-         !ToLayoutBox(layout_object)->Size().IsEmpty() &&
-         !HasRenderedNonAnonymousDescendantsWithHeight(layout_object);
+  return EmptyBlockHaveVisibleObjects(layout_object) &&
+         CanHaveChildrenForEditing(node);
 }
 
 template <typename Strategy>
@@ -1236,19 +1249,9 @@ static bool IsVisuallyEquivalentCandidateAlgorithm(
   if (!layout_object->IsSelectable())
     return false;
 
-  if (layout_object->IsLayoutBlockFlow() || layout_object->IsFlexibleBox() ||
-      layout_object->IsLayoutGrid()) {
-    if (ToLayoutBlock(layout_object)->LogicalHeight() ||
-        IsHTMLBodyElement(*anchor_node)) {
-      if (!HasRenderedNonAnonymousDescendantsWithHeight(layout_object))
-        return position.AtFirstEditingPositionForNode();
-      return HasEditableStyle(*anchor_node) && AtEditingBoundary(position);
-    }
-  } else {
-    return HasEditableStyle(*anchor_node) && AtEditingBoundary(position);
-  }
-
-  return false;
+  if (EmptyBlockHaveVisibleObjects(layout_object))
+    return position.AtFirstEditingPositionForNode();
+  return HasEditableStyle(*anchor_node) && AtEditingBoundary(position);
 }
 
 bool IsVisuallyEquivalentCandidate(const Position& position) {
