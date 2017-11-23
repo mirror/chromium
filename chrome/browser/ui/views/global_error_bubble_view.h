@@ -46,7 +46,7 @@ class GlobalErrorBubbleView : public views::BubbleDialogDelegateView,
   void CloseBubbleView() override;
 
  private:
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
   base::WeakPtr<GlobalErrorWithStandardBubble> error_;
 
   std::unique_ptr<ElevationIconSetter> elevation_icon_setter_;

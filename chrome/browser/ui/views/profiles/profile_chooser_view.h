@@ -163,7 +163,7 @@ class ProfileChooserView : public content::WebContentsDelegate,
   void PostActionPerformed(ProfileMetrics::ProfileDesktopMenu action_performed);
 
   std::unique_ptr<AvatarMenu> avatar_menu_;
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   // Other profiles used in the "fast profile switcher" view.
   ButtonIndexes open_other_profile_indexes_map_;

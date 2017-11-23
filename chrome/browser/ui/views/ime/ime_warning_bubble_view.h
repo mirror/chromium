@@ -68,12 +68,12 @@ class ImeWarningBubbleView : public views::BubbleDialogDelegateView,
   // Returns true if the action toolbar is animating.
   bool IsToolbarAnimating();
 
-  const extensions::Extension* extension_;
-  BrowserView* browser_view_;
+  const extensions::Extension* const extension_;  // Never nullptr.
+  BrowserView* const browser_view_;               // Never nullptr.
 
   // Saves the Browser instance of the browser view, which will be used in
   // OnBrowserRemoved(), as browser_view_->browser() may be null when
-  // OnBrowserRemoved() is called.
+  // OnBrowserRemoved() is called. |browser_| itself is never nullptr.
   Browser* const browser_;
 
   // True if bubble anchors to the action of the extension.
@@ -87,9 +87,7 @@ class ImeWarningBubbleView : public views::BubbleDialogDelegateView,
   // True if the warning bubble has been shown.
   bool bubble_has_shown_;
 
-  BrowserActionsContainer* container_;
-
-  ToolbarActionsBar* toolbar_actions_bar_;
+  BrowserActionsContainer* const container_;
 
   ScopedObserver<ToolbarActionsBar, ToolbarActionsBarObserver>
       toolbar_actions_bar_observer_;

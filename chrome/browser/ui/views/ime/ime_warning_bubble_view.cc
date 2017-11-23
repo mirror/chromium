@@ -95,10 +95,10 @@ ImeWarningBubbleView::ImeWarningBubbleView(
       never_show_checkbox_(nullptr),
       response_callback_(callback),
       bubble_has_shown_(false),
+      container_(browser_view_->toolbar()->browser_actions()),
       toolbar_actions_bar_observer_(this),
       weak_ptr_factory_(this) {
-  container_ = browser_view_->toolbar()->browser_actions();
-  toolbar_actions_bar_ = container_->toolbar_actions_bar();
+  ToolbarActionsBar* toolbar_actions_bar = container_->toolbar_actions_bar();
   BrowserList::AddObserver(this);
 
   // The lifetime of this bubble is tied to the lifetime of the browser.
@@ -110,7 +110,7 @@ ImeWarningBubbleView::ImeWarningBubbleView(
   // If the toolbar is not animating, shows the warning bubble directly.
   // Otherwise, shows the bubble in method OnToolbarActionsBarAnimationEnded().
   if (IsToolbarAnimating()) {
-    toolbar_actions_bar_observer_.Add(toolbar_actions_bar_);
+    toolbar_actions_bar_observer_.Add(toolbar_actions_bar);
     return;
   }
   views::BubbleDialogDelegateView::CreateBubble(this)->Show();
