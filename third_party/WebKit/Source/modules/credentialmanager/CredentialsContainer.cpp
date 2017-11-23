@@ -192,8 +192,12 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
 
     std::unique_ptr<WebCredential> credential =
         WTF::WrapUnique(web_credential.release());
-    if (!credential || !frame) {
+    if (!frame) {
       resolver_->Resolve();
+      return;
+    }
+    if (!credential) {
+      resolver_->Resolve(v8::Null(resolver_->GetScriptState()->GetIsolate()));
       return;
     }
 
