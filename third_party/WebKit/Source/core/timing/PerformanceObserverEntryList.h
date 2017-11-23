@@ -5,6 +5,7 @@
 #ifndef PerformanceObserverEntryList_h
 #define PerformanceObserverEntryList_h
 
+#include "core/CoreExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
@@ -14,7 +15,7 @@ namespace blink {
 class PerformanceEntry;
 using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 
-class PerformanceObserverEntryList : public ScriptWrappable {
+class CORE_EXPORT PerformanceObserverEntryList : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
