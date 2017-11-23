@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cecdead0_713eba63",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58caa325_599e6cc4",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 10
+      },
+      "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43501af6_44082b93",
         "filename": "tools/android/native_lib_memory/extract_symbols.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83d05e2_047e4259",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43501af6_44082b93",
+      "range": {
+        "startLine": 216,
+        "startChar": 28,
+        "endLine": 216,
+        "endChar": 42
+      },
+      "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c802be63_84ec9a04",
+        "filename": "tools/android/native_lib_memory/process_residency.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T18:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b678a676_82db709f",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "361422d2_8cc556b8",
         "filename": "tools/android/native_lib_memory/process_residency.py",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-22T15:44:42Z",
       "side": 1,
       "message": "we are correcting the offsets by adding this start in another script. Can we make this correction local to this script and deal with normal offset elsewhere? Seems it would reduce the hurdles of dealing with potential abstraction leak in other scripts.\n\nI have not verified that this is possible, so pardon in advance if it is a stupid suggestion. // this sentence should apply to every comment I post, I know, plus a note with apologies for being too verbose.",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "f3328b15bf4c0399fed8bf46d5a9c836c1d946b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c0089a_84b0b9a9",
+        "filename": "tools/android/native_lib_memory/process_residency.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T18:27:49Z",
+      "side": 1,
+      "message": "No, this is not possible, as some scripts care about the offset into .text, and others about the grouping per page in the process address space.",
+      "parentUuid": "361422d2_8cc556b8",
       "range": {
         "startLine": 37,
         "startChar": 6,
