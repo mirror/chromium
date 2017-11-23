@@ -30,6 +30,40 @@ class Tanks(page_module.Page):
         """document.getElementsByClassName('progress Dark')[0].style['display']
           == 'none'""")
 
+class SpaceBuggy(page_module.Page):
+
+  def __init__(self, page_set):
+    url = 'https://playcanv.as/p/3RerJIcy/'
+    super(SpaceBuggy, self).__init__(
+        url=url,
+        page_set=page_set,
+        shared_page_state_class=(
+            webgl_supported_shared_state.WebGLSupportedSharedState),
+        name='WasmSpaceBuggy')
+
+  @property
+  def skipped_gpus(self):
+    return []
+
+  def RunPageInteractions(self, action_runner):
+    action_runner.WaitForJavaScriptCondition("document.getElementById('frame')",
+        timeout=120)
+    action_runner.WaitForJavaScriptCondition("""document.getElementById('frame')
+        .contentDocument.getElementsByClassName('btn btn-primary btn-play')
+        .length != 0""", timeout=120)
+    action_runner.ClickElement(element_function="""(function() {return document
+        .getElementById("frame").contentDocument.getElementsByClassName(
+        "btn btn-primary btn-play")[0]})()""")
+    action_runner.WaitForJavaScriptCondition("""document.getElementById('frame')
+        .contentDocument.getElementsByClassName('panel level-select')[0]
+        .style.bottom != '-100px'""", timeout=120)
+    action_runner.ClickElement(element_function="""(function() {return document
+        .getElementById("frame").contentDocument.getElementsByClassName(
+        "btn btn-primary btn-play")[1]})()""")
+    action_runner.WaitForJavaScriptCondition("""document.getElementById('frame')
+        .contentDocument.getElementsByClassName('panel level-select')[0]
+        .style.bottom == '-100px'""", timeout=120)
+
 
 class WasmRealWorldPagesStorySet(story.StorySet):
   """Top apps, used to monitor web assembly apps."""
@@ -40,3 +74,4 @@ class WasmRealWorldPagesStorySet(story.StorySet):
         cloud_storage_bucket=story.INTERNAL_BUCKET)
 
     self.AddStory(Tanks(self))
+    self.AddStory(SpaceBuggy(self))
