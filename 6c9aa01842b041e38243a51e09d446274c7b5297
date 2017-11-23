@@ -22,6 +22,30 @@
       "revId": "6c9aa01842b041e38243a51e09d446274c7b5297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e1d9d7_a3bbf828",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3129,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-11-23T14:44:33Z",
+      "side": 1,
+      "message": "This isn\u0027t a SyzyAsan specific issue, this is a MSVC build failure. We recently switched the Win builders to Clang and there\u0027s no good coverage for the MSVC config right now (the team is working on this), in the meantime the SyzyAsan bot is one of the only one that allows us to catch this kind of issue...",
+      "parentUuid": "b0e047a0_9ae2d5c0",
+      "range": {
+        "startLine": 3129,
+        "startChar": 58,
+        "endLine": 3129,
+        "endChar": 59
+      },
+      "revId": "6c9aa01842b041e38243a51e09d446274c7b5297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
