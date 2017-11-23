@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b2856a_78cb6ca5",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-23T05:49:25Z",
+      "side": 1,
+      "message": "DCHECK(!response_.IsNull());",
+      "revId": "e0fdbeb80f8957bd9fab158ef7a1021300e9d151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b114b03_e8743c5d",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-23T05:49:25Z",
+      "side": 1,
+      "message": "DCHECK(!message_-\u003eIsNull());",
+      "revId": "e0fdbeb80f8957bd9fab158ef7a1021300e9d151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
