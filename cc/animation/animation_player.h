@@ -22,8 +22,8 @@ namespace cc {
 class AnimationDelegate;
 class AnimationEvents;
 class AnimationHost;
-class AnimationTimeline;
 class AnimationTicker;
+class AnimationTimeline;
 struct AnimationEvent;
 
 // An AnimationPlayer manages grouped sets of animations (each set of which are
@@ -37,9 +37,8 @@ struct AnimationEvent;
 // Each cc AnimationPlayer has a copy on the impl thread, and will take care of
 // synchronizing properties to/from the impl thread when requested.
 //
-// NOTE(smcgruer): As of 2017/09/06 there is a 1:1 relationship between
-// AnimationPlayer and the AnimationTicker. This is intended to become a 1:N
-// relationship to allow for grouped animations.
+// There is a 1:n relationship between AnimationPlayer and AnimationTicker which
+// owns multiple cc side animations.
 class CC_ANIMATION_EXPORT AnimationPlayer
     : public base::RefCounted<AnimationPlayer> {
  public:
@@ -47,7 +46,9 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   virtual scoped_refptr<AnimationPlayer> CreateImplInstance() const;
 
   int id() const { return id_; }
-  ElementId element_id() const;
+  virtual ElementId element_id() const;
+  ElementId element_id_of_ticker(int ticker_id) const;
+  bool IsElementAttached(ElementId id) const;
 
   // Parent AnimationHost. AnimationPlayer can be detached from
   // AnimationTimeline.
@@ -61,33 +62,40 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   const AnimationTimeline* animation_timeline() const {
     return animation_timeline_;
   }
-  void SetAnimationTimeline(AnimationTimeline* timeline);
+  virtual void SetAnimationTimeline(AnimationTimeline* timeline);
 
-  AnimationTicker* animation_ticker() const { return animation_ticker_.get(); }
+  virtual AnimationTicker* animation_ticker() const;
 
-  // TODO(smcgruer): Only used by a ui/ unittest: remove.
-  bool has_any_animation() const;
-
-  scoped_refptr<ElementAnimations> element_animations() const;
+  bool has_element_animations() const;
+  scoped_refptr<ElementAnimations> element_animations(int ticker_id) const;
 
   void set_animation_delegate(AnimationDelegate* delegate) {
     animation_delegate_ = delegate;
   }
 
-  void AttachElement(ElementId element_id);
-  void DetachElement();
+  virtual void AttachElement(ElementId element_id);
+  void AttachElementWithTicker(ElementId element_id, int ticker_id);
+  virtual void DetachElement();
 
-  void AddAnimation(std::unique_ptr<Animation> animation);
-  void PauseAnimation(int animation_id, double time_offset);
-  void RemoveAnimation(int animation_id);
-  void AbortAnimation(int animation_id);
-  void AbortAnimations(TargetProperty::Type target_property,
-                       bool needs_completion);
+  void AddAnimationToTicker(std::unique_ptr<Animation> animation,
+                            int ticker_id);
+  void PauseAnimationOfTicker(int animation_id,
+                              double time_offset,
+                              int ticker_id);
+  void RemoveAnimationFromTicker(int animation_id, int ticker_id);
+  void AbortAnimationOfTicker(int animation_id, int ticker_id);
+  void AbortAnimationsOfTicker(TargetProperty::Type target_property,
+                               bool needs_completion,
+                               int ticker_id);
 
   virtual void PushPropertiesTo(AnimationPlayer* player_impl);
 
-  void UpdateState(bool start_ready_animations, AnimationEvents* events);
-  virtual void Tick(base::TimeTicks monotonic_time);
+  virtual void UpdateState(bool start_ready_animations,
+                           AnimationEvents* events);
+  void UpdateStateForTicker(bool start_ready_animations,
+                            AnimationEvents* events,
+                            int ticker_id);
+  void Tick(base::TimeTicks monotonic_time);
 
   void AddToTicking();
   void AnimationRemovedFromTicking();
@@ -97,32 +105,44 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void NotifyAnimationFinished(const AnimationEvent& event);
   void NotifyAnimationAborted(const AnimationEvent& event);
   void NotifyAnimationTakeover(const AnimationEvent& event);
-  bool NotifyAnimationFinishedForTesting(TargetProperty::Type target_property,
-                                         int group_id);
-  size_t TickingAnimationsCount() const;
+  virtual size_t TickingAnimationsCount() const;
+  size_t TickingAnimationsCountOfTicker(int ticker_id) const;
 
   void SetNeedsPushProperties();
 
   // Make animations affect active elements if and only if they affect
   // pending elements. Any animations that no longer affect any elements
   // are deleted.
-  void ActivateAnimations();
+  virtual void ActivateAnimations();
+  void ActivateAnimationsOfTicker(int ticker_id);
 
   // Returns the animation animating the given property that is either
   // running, or is next to run, if such an animation exists.
-  Animation* GetAnimation(TargetProperty::Type target_property) const;
+  Animation* GetAnimationOfTicker(TargetProperty::Type target_property,
+                                  int ticker_id) const;
 
-  std::string ToString() const;
+  std::string ToString(int ticker_id) const;
 
   void SetNeedsCommit();
 
   virtual bool IsWorkletAnimationPlayer() const;
+  void AddTicker(std::unique_ptr<AnimationTicker>);
+
+  AnimationTicker* GetTickerById(int ticker_id) const;
 
  private:
   friend class base::RefCounted<AnimationPlayer>;
 
-  void RegisterPlayer();
-  void UnregisterPlayer();
+  void RegisterTicker(ElementId element_id, int ticker_id);
+  virtual void UnregisterTicker();
+
+  void PushAttachedTickersToImplThread(AnimationPlayer* player) const;
+  void RemoveDetachedTickersFromImplThread(AnimationPlayer* player) const;
+  void PushPropertiesToImplThread(AnimationPlayer* player);
+
+ protected:
+  explicit AnimationPlayer(int id);
+  virtual ~AnimationPlayer();
 
   AnimationHost* animation_host_;
   AnimationTimeline* animation_timeline_;
@@ -130,11 +150,13 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   int id_;
 
- protected:
-  explicit AnimationPlayer(int id);
-  virtual ~AnimationPlayer();
+  using ElementToTickerIdMap =
+      std::unordered_map<ElementId, std::unordered_set<int>, ElementIdHash>;
+  using IdToTickerMap =
+      std::unordered_map<int, std::unique_ptr<AnimationTicker>>;
 
-  std::unique_ptr<AnimationTicker> animation_ticker_;
+  ElementToTickerIdMap element_to_ticker_id_map_;
+  IdToTickerMap id_to_ticker_map_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };

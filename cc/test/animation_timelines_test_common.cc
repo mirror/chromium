@@ -365,7 +365,6 @@ AnimationTimelinesTest::~AnimationTimelinesTest() {
 
 void AnimationTimelinesTest::SetUp() {
   timeline_ = AnimationTimeline::Create(timeline_id_);
-  player_ = AnimationPlayer::Create(player_id_);
 }
 
 void AnimationTimelinesTest::TearDown() {
@@ -402,7 +401,7 @@ void AnimationTimelinesTest::AttachTimelinePlayerLayer() {
   timeline_->AttachPlayer(player_);
   player_->AttachElement(element_id_);
 
-  element_animations_ = player_->element_animations();
+  element_animations_ = player_->animation_ticker()->element_animations();
 }
 
 void AnimationTimelinesTest::CreateImplTimelineAndPlayer() {
@@ -416,7 +415,8 @@ void AnimationTimelinesTest::GetImplTimelineAndPlayerByID() {
   player_impl_ = timeline_impl_->GetPlayerById(player_id_);
   EXPECT_TRUE(player_impl_);
 
-  element_animations_impl_ = player_impl_->element_animations();
+  element_animations_impl_ =
+      player_impl_->animation_ticker()->element_animations();
 }
 
 void AnimationTimelinesTest::ReleaseRefPtrs() {
@@ -466,13 +466,14 @@ int AnimationTimelinesTest::NextTestLayerId() {
 }
 
 bool AnimationTimelinesTest::CheckTickerTimelineNeedsPushProperties(
-    bool needs_push_properties) const {
+    bool needs_push_properties,
+    int ticker_id) const {
   DCHECK(player_);
   DCHECK(timeline_);
 
   bool result = true;
 
-  AnimationTicker* ticker = player_->animation_ticker();
+  AnimationTicker* ticker = player_->GetTickerById(ticker_id);
   if (ticker->needs_push_properties() != needs_push_properties) {
     ADD_FAILURE() << "ticker->needs_push_properties() expected to be "
                   << needs_push_properties;
