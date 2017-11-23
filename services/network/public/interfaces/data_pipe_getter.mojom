@@ -1,0 +1,6 @@
+module network.mojom;
+
+interface DataPipeGetter {
+//  Clone(DataPipeGetter& request);
+  Read(handle<data_pipe_producer> pipe) => (uint64 calculated_size);
+};
