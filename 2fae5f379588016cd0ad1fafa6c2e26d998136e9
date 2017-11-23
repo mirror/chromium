@@ -22,6 +22,30 @@
       "revId": "2fae5f379588016cd0ad1fafa6c2e26d998136e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2521d786_41c6791e",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-23T00:58:55Z",
+      "side": 1,
+      "message": "I wanted to make it clear that this is for direct launching from an intent. It\u0027s not just autopresentation, which could happen for other reasons. This wouldn\u0027t appear if the user dropped the phone in the headset on a capable page, right?\n\nOther naming suggestions are definitely welcome.",
+      "parentUuid": "37a44a00_12d78625",
+      "range": {
+        "startLine": 392,
+        "startChar": 21,
+        "endLine": 392,
+        "endChar": 59
+      },
+      "revId": "2fae5f379588016cd0ad1fafa6c2e26d998136e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
