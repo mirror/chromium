@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc98e478_42b8e8f8",
+        "filename": "chrome/browser/vr/test/ui_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-23T22:30:54Z",
+      "side": 1,
+      "message": "My general thinking is that I dislike adding test-only helpers to production classes, but here, there\u0027s at least precedent.  Specifically, I didn\u0027t do it here because it\u0027d compute the target transform twice.  :)  If you\u0027d like to see ComputeTargetNormal(), I\u0027ll add it.",
+      "parentUuid": "d3b5f43b_0a97b2f9",
+      "revId": "ff1b0aae0003a1c3c44d615274b03cf008b3bbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52e59f2b_ced76cc3",
         "filename": "chrome/browser/vr/test/ui_test.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-23T22:06:37Z",
       "side": 1,
       "message": "Is OnBeginFrame still needed?",
+      "revId": "ff1b0aae0003a1c3c44d615274b03cf008b3bbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3520ba7e_fbe3f292",
+        "filename": "chrome/browser/vr/test/ui_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-23T22:30:54Z",
+      "side": 1,
+      "message": "Yeah, it is because a lot of tests modify state then check visibility without calling OnBeginFrame().  This CL isn\u0027t really changing that.  Instead, the CL is trying to let OnBeginFrame() suffice in place of AnimateBy(x).",
+      "parentUuid": "52e59f2b_ced76cc3",
       "revId": "ff1b0aae0003a1c3c44d615274b03cf008b3bbbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
