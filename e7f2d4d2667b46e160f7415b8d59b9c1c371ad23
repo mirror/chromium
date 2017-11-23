@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "718d7bae_8e19e14a",
+        "filename": "third_party/zlib/contrib/optimizations/arm/chunkcopy_arm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-23T12:30:26Z",
+      "side": 0,
+      "message": "re: this TODO(), indeed this code can be moved back to chunkcopy.h and be made generic for any port, and no need for fwd declarations.  All that is exactly what this CL does ...",
+      "revId": "e7f2d4d2667b46e160f7415b8d59b9c1c371ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
