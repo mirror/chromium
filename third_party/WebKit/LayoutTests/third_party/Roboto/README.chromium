@@ -1,0 +1,16 @@
+DroidSans Font:
+
+1. Source Origin
+Font Squirrel:
+    a) https://www.fontsquirrel.com/fonts/roboto
+
+2. LICENSE AND OPENSOURCE
+	For license information, see the LICENSE.txt file
+
+3. Reason:
+We need a a latin font with ligatures. Robot contains ffi and ff.
+
+Command to generate subset font:
+$ python pyftsubset.py DroidSans.ttf --unicodes=2E,41-42
+
+where pyftsubset comes from https://github.com/behdad/fonttools
