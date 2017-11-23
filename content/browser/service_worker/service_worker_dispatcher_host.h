@@ -21,6 +21,7 @@
 #include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding_set.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace blink {
@@ -164,10 +165,14 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       const SourceInfo& source_info,
       const StatusCallback& callback,
       ServiceWorkerStatusCode status);
-  bool IsValidSourceInfo(const ServiceWorkerClientInfo& source_info);
+  static bool IsEmptyClientInfo(
+      const blink::mojom::ServiceWorkerClientInfo& source_info);
   bool IsValidSourceInfo(
-      const blink::mojom::ServiceWorkerObjectInfo& source_info);
-  void ReleaseSourceInfo(const ServiceWorkerClientInfo& source_info);
+      const blink::mojom::ServiceWorkerClientInfo& source_info) const;
+  bool IsValidSourceInfo(
+      const blink::mojom::ServiceWorkerObjectInfo& source_info) const;
+  void ReleaseSourceInfo(
+      const blink::mojom::ServiceWorkerClientInfo& source_info);
   void ReleaseSourceInfo(
       const blink::mojom::ServiceWorkerObjectInfo& source_info);
 

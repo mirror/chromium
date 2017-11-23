@@ -29,6 +29,7 @@
 #include "ipc/ipc_listener.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/common/blob/blob_registry.mojom.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom.h"
@@ -60,7 +61,6 @@ namespace content {
 
 struct PlatformNotificationData;
 struct PushEventPayload;
-struct ServiceWorkerClientInfo;
 class ServiceWorkerNetworkProvider;
 class ServiceWorkerProviderContext;
 class ThreadSafeSender;
@@ -343,16 +343,21 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       const std::string& notification_id,
       const PlatformNotificationData& notification_data);
 
-  void OnDidGetClient(int request_id, const ServiceWorkerClientInfo& client);
-  void OnDidGetClients(int request_id,
-                       const std::vector<ServiceWorkerClientInfo>& clients);
-  void OnOpenWindowResponse(int request_id,
-                            const ServiceWorkerClientInfo& client);
+  void OnDidGetClient(int request_id,
+                      const blink::mojom::ServiceWorkerClientInfo& client);
+  void OnDidGetClients(
+      int request_id,
+      const std::vector<blink::mojom::ServiceWorkerClientInfo>& clients);
+  void OnOpenWindowResponse(
+      int request_id,
+      const blink::mojom::ServiceWorkerClientInfo& client);
   void OnOpenWindowError(int request_id, const std::string& message);
-  void OnFocusClientResponse(int request_id,
-                             const ServiceWorkerClientInfo& client);
-  void OnNavigateClientResponse(int request_id,
-                                const ServiceWorkerClientInfo& client);
+  void OnFocusClientResponse(
+      int request_id,
+      const blink::mojom::ServiceWorkerClientInfo& client);
+  void OnNavigateClientResponse(
+      int request_id,
+      const blink::mojom::ServiceWorkerClientInfo& client);
   void OnNavigateClientError(int request_id, const GURL& url);
   void OnDidSkipWaiting(int request_id);
   void OnDidClaimClients(int request_id);

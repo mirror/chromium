@@ -4,6 +4,11 @@
 
 module blink.mojom;
 
+import "mojo/common/time.mojom";
+import "third_party/WebKit/common/page/page_visibility_state.mojom";
+import "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom";
+import "url/mojo/url.mojom";
+
 // Indicates the service worker client type.
 // See https://w3c.github.io/ServiceWorker/#service-worker-client-concept
 // and https://w3c.github.io/ServiceWorker/#dom-clientqueryoptions-type.
@@ -12,4 +17,27 @@ enum ServiceWorkerClientType {
   kSharedWorker,
   kAll,
   kLast = kAll
+};
+
+// Holds the information related to a service worker window client.
+// https://w3c.github.io/ServiceWorker/#client
+struct ServiceWorkerClientInfo {
+  // Client#id
+  string client_uuid;
+
+  // Client#visibilityState
+  PageVisibilityState page_visibility_state = PageVisibilityState.kLast;
+
+  // Client#focused
+  bool is_focused = false;
+
+  // Client#url
+  url.mojom.Url url;
+
+  RequestContextFrameType frame_type = RequestContextFrameType.TOP_LEVEL;
+  mojo.common.mojom.TimeTicks last_focus_time;
+  mojo.common.mojom.TimeTicks create_time;
+
+  // Client#type
+  ServiceWorkerClientType client_type = ServiceWorkerClientType.kLast;
 };
