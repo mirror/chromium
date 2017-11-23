@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "939bfffe_ce36ca76",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/UseCounterCallback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-23T13:00:29Z",
+      "side": 1,
+      "message": "note that the string is all information we have in the dashboard, so I\u0027d prefer if we made it a bit more verbose.\n\nYou\u0027re also not referencing a tracking bug, but I assume you intend to do something with this information...\n\nwould be great if you could update that in a follow-up CL",
+      "revId": "cd4a636f59f6dcb1dac5c5e4336c6ba869eab6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
