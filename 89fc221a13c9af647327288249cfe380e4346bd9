@@ -22,6 +22,30 @@
       "revId": "89fc221a13c9af647327288249cfe380e4346bd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194bf335_3975a242",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-23T22:46:37Z",
+      "side": 1,
+      "message": "As discussed offline: there is because it prevents hang akin to what we would have with TaskScheduler::FlushForTesting() if a TaskScheduler task synchronously blocks on the main thread to complete.\n\nThis discussion made us realize we could deadlock hang with PS8 still if there was only one such task (preventing the condition of \"one task completing\" from happening and deadlocking with the main thread\u0027s wait).\n\nWe therefore settled on a TimedWait() CV with ideas dropped in code comments for future improvements.\n\nThanks for the discussion!",
+      "parentUuid": "85054ecb_f7864de5",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 1
+      },
+      "revId": "89fc221a13c9af647327288249cfe380e4346bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
