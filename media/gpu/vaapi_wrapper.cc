@@ -108,21 +108,23 @@ namespace media {
 
 namespace {
 
-// Maximum framerate of encoded profile. This value is an arbitary limit
+// Maximum framerate of encoded profile. This value is an arbitrary limit
 // and not taken from HW documentation.
 const int kMaxEncoderFramerate = 30;
 
-// Config attributes common for both encode and decode.
-static const VAConfigAttrib kCommonVAConfigAttribs[] = {
-    {VAConfigAttribRTFormat, VA_RT_FORMAT_YUV420},
-};
+// Bit depths to enumerate support for.
+static const int kBitDepths[] = {VA_RT_FORMAT_YUV420,
+                                 VA_RT_FORMAT_YUV420_10BPP};
+
+// Config attribute common for both encode and decode.
+static const VAConfigAttrib kCommonAttribute({VAConfigAttribRTFormat,
+                                              VA_RT_FORMAT_YUV420});
 
 // Attributes required for encode.
-static const VAConfigAttrib kEncodeVAConfigAttribs[] = {
-    {VAConfigAttribRateControl, VA_RC_CBR},
-    {VAConfigAttribEncPackedHeaders,
-     VA_ENC_PACKED_HEADER_SEQUENCE | VA_ENC_PACKED_HEADER_PICTURE},
-};
+static const std::vector<VAConfigAttrib> kEncodingAttributes(
+    {{VAConfigAttribRateControl, VA_RC_CBR},
+     {VAConfigAttribEncPackedHeaders,
+      VA_ENC_PACKED_HEADER_SEQUENCE | VA_ENC_PACKED_HEADER_PICTURE}});
 
 // A map between VideoCodecProfile and VAProfile.
 static const struct {
@@ -300,17 +302,18 @@ void VADisplayState::Deinitialize(VAStatus* status) {
   va_display_ = nullptr;
 }
 
-static std::vector<VAConfigAttrib> GetRequiredAttribs(
+// Gets the specific VAConfigAttribs for the given |mode|.
+static std::vector<VAConfigAttrib> GetSpecificAttributes(
     VaapiWrapper::CodecMode mode) {
-  std::vector<VAConfigAttrib> required_attribs;
-  required_attribs.insert(
-      required_attribs.end(), kCommonVAConfigAttribs,
-      kCommonVAConfigAttribs + arraysize(kCommonVAConfigAttribs));
-  if (mode == VaapiWrapper::kEncode) {
-    required_attribs.insert(
-        required_attribs.end(), kEncodeVAConfigAttribs,
-        kEncodeVAConfigAttribs + arraysize(kEncodeVAConfigAttribs));
-  }
+  return mode == VaapiWrapper::kEncode ? kEncodingAttributes
+                                       : std::vector<VAConfigAttrib>();
+}
+
+// Gets all the required VAConfigAttribs for the given |mode|.
+static std::vector<VAConfigAttrib> GetRequiredAttributes(
+    VaapiWrapper::CodecMode mode) {
+  std::vector<VAConfigAttrib> required_attribs = GetSpecificAttributes(mode);
+  required_attribs.push_back(kCommonAttribute);
   return required_attribs;
 }
 
@@ -321,6 +324,7 @@ class VASupportedProfiles {
   struct ProfileInfo {
     VAProfile va_profile;
     gfx::Size max_resolution;
+    size_t bit_depth;
   };
   static VASupportedProfiles* Get();
 
@@ -428,25 +432,32 @@ VASupportedProfiles::GetSupportedProfileInfosForCodecModeInternal(
   if (!GetSupportedVAProfiles(&va_profiles))
     return supported_profile_infos;
 
-  std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
-  VAEntrypoint entrypoint =
-      (mode == VaapiWrapper::kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
+  const std::vector<VAConfigAttrib> attributes = GetSpecificAttributes(mode);
+  const VAEntrypoint entrypoint =
+      mode == VaapiWrapper::kEncode ? VAEntrypointEncSlice : VAEntrypointVLD;
 
   base::AutoLock auto_lock(*va_lock_);
   for (const auto& va_profile : va_profiles) {
     if (!IsEntrypointSupported_Locked(va_profile, entrypoint))
       continue;
-    if (!AreAttribsSupported_Locked(va_profile, entrypoint, required_attribs))
-      continue;
-    ProfileInfo profile_info;
-    if (!GetMaxResolution_Locked(va_profile, entrypoint, required_attribs,
-                                 &profile_info.max_resolution)) {
-      LOG(ERROR) << "GetMaxResolution failed for va_profile " << va_profile
-                 << " and entrypoint " << entrypoint;
-      continue;
+
+    for (const auto bit_depth : kBitDepths) {
+      std::vector<VAConfigAttrib> required_attribs = attributes;
+      required_attribs.push_back({VAConfigAttribRTFormat, bit_depth});
+
+      if (!AreAttribsSupported_Locked(va_profile, entrypoint, required_attribs))
+        continue;
+      ProfileInfo profile_info;
+      if (!GetMaxResolution_Locked(va_profile, entrypoint, required_attribs,
+                                   &profile_info.max_resolution)) {
+        LOG(ERROR) << "GetMaxResolution failed for va_profile " << va_profile
+                   << " and entrypoint " << entrypoint;
+        continue;
+      }
+      profile_info.va_profile = va_profile;
+      profile_info.bit_depth = bit_depth == VA_RT_FORMAT_YUV420 ? 8 : 10;
+      supported_profile_infos.push_back(profile_info);
     }
-    profile_info.va_profile = va_profile;
-    supported_profile_infos.push_back(profile_info);
   }
   return supported_profile_infos;
 }
@@ -736,7 +747,7 @@ bool VaapiWrapper::Initialize(CodecMode mode, VAProfile va_profile) {
 
   VAEntrypoint entrypoint =
       (mode == kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
-  std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
+  std::vector<VAConfigAttrib> required_attribs = GetRequiredAttributes(mode);
   base::AutoLock auto_lock(*va_lock_);
   VAStatus va_res =
       vaCreateConfig(va_display_, va_profile, entrypoint, &required_attribs[0],
