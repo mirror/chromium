@@ -39,8 +39,9 @@ class UserScript {
   // canExecuteScriptEverywhere is true, this will return ALL_SCHEMES.
   static int ValidUserScriptSchemes(bool canExecuteScriptEverywhere = false);
 
-  // TODO(rdevlin.cronin) This and RunLocataion don't really belong here, since
-  // they are used for more than UserScripts (e.g., tabs.executeScript()).
+  // TODO(rdevlin.cronin) This and RunLocataion don't really belong
+  // here, since they are used for more than UserScripts
+  // (e.g., tabs.executeScript()).
   // The type of injected script.
   enum InjectionType {
     // A content script specified in the extension's manifest.
