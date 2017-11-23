@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5df004f6_efc9e335",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-23T17:45:19Z",
+      "side": 1,
+      "message": "just for fun: do you know a system that has .bss for executable binaries and that would consume memory for untouched parts of .bss?\n\nOkay, I think I know a few: Cygwin, NaCl with newlib. Okay. Thanks.\n\nAlso, to be most picky, the job of interpreting .bss is on the loader from the C library.",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "8fc5f4572f2f80651dfe4313c3f0fa54cfc5d73f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
