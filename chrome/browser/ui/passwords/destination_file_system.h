@@ -20,7 +20,7 @@ class DestinationFileSystem : public password_manager::Destination {
   bool Write(const std::string& data) override;
 
   // Get this instance's target.
-  const base::FilePath& GetDestinationPathForTesting();
+  const base::FilePath& GetDestinationPath();
 
  private:
   // The file, to which the data will be written.

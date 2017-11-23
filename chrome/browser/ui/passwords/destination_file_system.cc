@@ -15,6 +15,6 @@ bool DestinationFileSystem::Write(const std::string& data) {
   return base::WriteFile(destination_path_, data.c_str(), data.size());
 }
 
-const base::FilePath& DestinationFileSystem::GetDestinationPathForTesting() {
+const base::FilePath& DestinationFileSystem::GetDestinationPath() {
   return destination_path_;
 }

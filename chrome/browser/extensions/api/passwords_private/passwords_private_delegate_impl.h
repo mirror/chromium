@@ -68,6 +68,10 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   gfx::NativeWindow GetNativeWindow() const override;
 #endif
 
+  // PasswordUIExportView implementation
+  void OnCompletedReadingPasswordStore(const std::string& error) override;
+  void OnCompletedWritingToDestination(const std::string& error) override;
+
   // KeyedService overrides:
   void Shutdown() override;
 
