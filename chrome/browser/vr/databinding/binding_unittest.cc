@@ -21,6 +21,21 @@ struct TestView {
   std::unique_ptr<Binding<bool>> binding;
 };
 
+template <typename T>
+class TestBinding : public Binding<T> {
+ public:
+  TestBinding(const base::Callback<T()>& getter,
+              const base::Callback<void(const T&)>& setter)
+      : Binding<T>(getter, setter), weak_ptr_factory_(this) {}
+
+  base::WeakPtr<TestBinding> GetWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
+ private:
+  base::WeakPtrFactory<TestBinding> weak_ptr_factory_;
+};
+
 }  // namespace
 
 TEST(Binding, BoundBool) {
@@ -55,18 +70,25 @@ TEST(Binding, BoundBool) {
 }
 
 TEST(Binding, Lifetime) {
-  base::WeakPtr<BindingBase> binding;
+  base::WeakPtr<TestBinding<bool>> weak_binding;
   {
     TestModel a;
     TestView b;
-    b.binding = VR_BIND_FIELD(bool, TestModel, &a, value, TestView, &b, value);
-    binding = b.binding->GetWeakPtr();
+    std::unique_ptr<TestBinding<bool>> binding =
+        base::MakeUnique<TestBinding<bool>>(
+            base::Bind([](TestModel* model) { return model->value; },
+                       base::Unretained(&a)),
+            base::Bind(
+                [](TestView* view, const bool& value) { view->value = value; },
+                base::Unretained(&b)));
+    weak_binding = binding->GetWeakPtr();
+    b.binding = std::move(binding);
   }
   // This test is not particularly useful, since we're just testing the behavior
   // of base::WeakPtr, but it confirms that when an object owning a binding
   // falls out of scope, weak pointers to its bindings are correctly
   // invalidated.
-  EXPECT_FALSE(!!binding);
+  EXPECT_FALSE(!!weak_binding);
 }
 
 }  // namespace vr
