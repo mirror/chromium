@@ -873,6 +873,22 @@
     ]
   },
 
+  "DefaultDownloadDirectory": {
+    "os": ["win", "linux", "mac", "chbromeos"],
+    "test_policy": { "DefaultDownloadDirectory": "${user_home}/test-downloads" },
+    "can_be_recommended": true,
+    "pref_mappings": [
+      { "pref": "download.default_directory",
+        "check_for_mandatory": false,
+        "check_for_recommended": true
+      },
+      { "pref": "savefile.default_directory",
+        "check_for_mandatory": false,
+        "check_for_recommended": true
+      }
+    ]
+  },
+
   "ExtensionInstallBlacklist": {
     "os": ["win", "linux", "mac", "chromeos"],
     "test_policy": { "ExtensionInstallBlacklist": ["*"] },
