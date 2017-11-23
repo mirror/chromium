@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b1dd79_ddd243dc",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "#if BUILDFLAG(ENABLE_RESOURCE_COORDINATOR)",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 48
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9f8c8c_cbcac0be",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "What\u0027s the benefit of doing this?",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabb0af6_829072da",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "etienneb@ found that containers that grow indefinitely contribute a lot to the memory consumption of Chrome. Could this timestamp be stored in TabsTracker::WebContentsData? Or could throttling be per Chrome instance instead of per source id?",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 70
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce57f61_537cad51",
+        "filename": "chrome/browser/ui/tabs/tab_logger.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "|web_contents| is redundant if you have TabStripModel + index.",
+      "range": {
+        "startLine": 85,
+        "startChar": 31,
+        "endLine": 85,
+        "endChar": 72
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d065a7_1e877356",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "s/old_index/index/, since it\u0027s the current index?",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a8037d_a199e7fc",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "Explain why.",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 33
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76acd200_eb96d408",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "Since this member isn\u0027t optional and never changes, it shouldn\u0027t be an std::unique_ptr.\n\n\"if it would otherwise make sense to use a type as a member by-value, don\u0027t convert it to a pointer just to be able to forward-declare the type.\"\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4021de_b3def277",
+        "filename": "chrome/browser/ui/tabs/tabs_tracker_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "implicit",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 16
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be23d69f_102d3c70",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "Why is this important?",
+      "range": {
+        "startLine": 1566,
+        "startChar": 51,
+        "endLine": 1567,
+        "endChar": 9
+      },
+      "revId": "76aad8d6974fbcb9034b995a40493889502d1288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

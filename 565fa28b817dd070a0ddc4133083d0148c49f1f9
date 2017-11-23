@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ed6140b2_f500ac8d",
+        "filename": "chrome/browser/tabs/tabs_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-23T15:46:18Z",
+      "side": 1,
+      "message": "fyi, I\u0027m working on adding WebContentsObserver::OnOcclusionChanged() to track when a WebContents is covered by another window. That\u0027s something that might be interesting to record and that won\u0027t be exposed in TabStripModelObserver.",
+      "parentUuid": "253dbabe_bd3ec93f",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "565fa28b817dd070a0ddc4133083d0148c49f1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab983ec3_762f767d",
         "filename": "chrome/browser/tabs/tabs_tracker.cc",
         "patchSetId": 9
