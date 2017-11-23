@@ -32,6 +32,10 @@ class GLVirtualContextsEXTWindowRectanglesTest : public testing::Test {
   }
 
   bool IsApplicable() const {
+    // Not applicable for devices not supporting OpenGLES3.
+    if (!gl_real_shared_.IsInitialized()) {
+      return false;
+    }
     // If a driver isn't capable of supporting ES3 context, creating
     // ContextGroup will fail.
     bool have_es3 = gl_real_shared_.decoder() &&
