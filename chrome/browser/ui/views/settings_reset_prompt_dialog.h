@@ -52,7 +52,7 @@ class SettingsResetPromptDialog : public views::DialogDelegateView {
   gfx::Size CalculatePreferredSize() const override;
 
  private:
-  Browser* browser_;
+  Browser* const browser_;
   safe_browsing::SettingsResetPromptController* controller_;
 
   DISALLOW_COPY_AND_ASSIGN(SettingsResetPromptDialog);
