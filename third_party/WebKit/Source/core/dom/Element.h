@@ -826,6 +826,9 @@ class CORE_EXPORT Element : public ContainerNode {
   EnsureResizeObserverData();
   void SetNeedsResizeObserverUpdate();
 
+  void WillBeginCustomizedScrollPhase(const ScrollState&);
+  void DidEndCustomizedScrollPhase();
+
  protected:
   Element(const QualifiedName& tag_name, Document*, ConstructionType);
 
