@@ -68,4 +68,9 @@ void BlinkNotificationServiceImpl::OnConnectionError() {
   // |this| has now been deleted.
 }
 
+void BlinkNotificationServiceImpl::Show(const std::string& notification_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (Service())
+    Service()->DisplayNotificationFromMojo(resource_context_, notification_id);
+}
 }  // namespace content

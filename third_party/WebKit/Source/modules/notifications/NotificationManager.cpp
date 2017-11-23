@@ -108,6 +108,15 @@ void NotificationManager::OnPermissionServiceConnectionError() {
   permission_service_.reset();
 }
 
+void NotificationManager::Show(ExecutionContext* execution_context) {
+  if (!notification_service_) {
+    Platform::Current()->GetInterfaceProvider()->GetInterface(
+        mojo::MakeRequest(&notification_service_));
+  }
+  // TODO(crbug.com/595685): Get a real notification id to pass here.
+  notification_service_->Show("temp_notification_id");
+}
+
 void NotificationManager::Trace(blink::Visitor* visitor) {
   Supplement<ExecutionContext>::Trace(visitor);
 }

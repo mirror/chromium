@@ -366,6 +366,11 @@ void PlatformNotificationServiceImpl::DisplayNotification(
       NotificationCommon::NON_PERSISTENT, notification);
 }
 
+// TODO(crbug.com/595685): Remove this and just call |DisplayNotification()|
+// instead.
+void DisplayNotificationFromMojo(ResourceContext* resource_context,
+                                 const std::string& notification_id) {}
+
 void PlatformNotificationServiceImpl::DisplayPersistentNotification(
     BrowserContext* browser_context,
     const std::string& notification_id,

@@ -43,6 +43,15 @@ void MockPlatformNotificationService::DisplayNotification(
       notification_id;
 }
 
+void MockPlatformNotificationService::DisplayNotificationFromMojo(
+    ResourceContext* resource_context,
+    const std::string& notification_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
+  //NotificationEventDispatcher::GetInstance()->DispatchNonPersistentShowEvent(
+  //    notification_id);
+}
+
 void MockPlatformNotificationService::DisplayPersistentNotification(
     BrowserContext* browser_context,
     const std::string& notification_id,
