@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4da68a9a_5e34420f",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_event_log_apitest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-23T12:33:33Z",
+      "side": 1,
+      "message": "The test was flaky to begin with (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d787938), but this test made the flakiness more pronounced. This is not a proper fix, but it\u0027s not worth it to bother over a non-trivial proper fix, since this entire file is about to be deleted (we\u0027re deprecating the UUT, so we\u0027ll also remove its tests).",
+      "revId": "b309b89f959a4fa98a6493e67a186e97a96afbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
