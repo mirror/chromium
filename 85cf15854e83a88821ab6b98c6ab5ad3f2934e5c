@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7888e746_dfd6f413",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-23T16:26:57Z",
+      "side": 1,
+      "message": "maybe also mention in the commit description that it reenables the histogram?",
+      "range": {
+        "startLine": 238,
+        "startChar": 20,
+        "endLine": 238,
+        "endChar": 62
+      },
+      "revId": "85cf15854e83a88821ab6b98c6ab5ad3f2934e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
