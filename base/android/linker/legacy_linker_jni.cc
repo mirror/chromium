@@ -93,7 +93,7 @@ bool GenericLoadLibrary(JNIEnv* env,
   crazy_context_t* context = GetCrazyContext();
 
   if (!IsValidAddress(load_address)) {
-    LOG_ERROR("Invalid address 0x%llx", load_address);
+    LOG_ERROR("Invalid address 0x%llx", (unsigned long long)load_address);
     return false;
   }
 
@@ -328,7 +328,7 @@ jboolean CreateSharedRelro(JNIEnv* env,
   LOG_INFO("Called for %s", lib_name.c_str());
 
   if (!IsValidAddress(load_address)) {
-    LOG_ERROR("Invalid address 0x%llx", load_address);
+    LOG_ERROR("Invalid address 0x%llx", (unsigned long long)load_address);
     return false;
   }
 
