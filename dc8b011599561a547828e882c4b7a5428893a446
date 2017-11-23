@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9067c435_116d910f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-23T15:59:27Z",
+      "side": 1,
+      "message": "Ah, got it. I wasn\u0027t aware how this worked. Thanks for explaining.",
+      "parentUuid": "13a9dc94_fc67fceb",
+      "range": {
+        "startLine": 1646,
+        "startChar": 3,
+        "endLine": 1646,
+        "endChar": 32
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cfd75c5_00a926de",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e I\u0027m not seeing how either frame gets scrolling in this test case. iframe_out_of_view has just an iframe and it looks like it\u0027d be in view, at least the top left part of it, on load.\n\nI am not sure if this is true. Please take a look at:\nhttps://ehsan-karamad.github.io/iframe_out_of_view.html\nwhich is the same file. The iframe is way out of bounds on my screen. \n\n\u003e page_with_input_field also has the input box near the top so I\u0027d assume that\u0027s in view too. Even if there\u0027s overflow, you\u0027re not scrolling the input box out of view before you call ScrollFocusedEditableNodeIntoRect.\n\u003e \nThis call is actually scrolling the \u003cinput/\u003e _into_ view. We have first made sure the \u003ciframe\u003e is not visible. Then when asking to scroll the \u003cinput/\u003e inside the \u003ciframe\u003e to scroll into view the expectation is that the \u003ciframe\u003e is scrolled.\n\n\u003e If I am just missing it, you might want to add an assert at the beginning of the test to make sure the input box starts off out of view, to make it sure your test isn\u0027t passing because the setup is broken.\n\nScrolling the \u003cinput/\u003e itself was not part of the test. It is just there for the setup so that ScrollFocusedEditableNodeIntoRect can work. So for the purpose of the CL I think having only the \u003ciframe\u003e scroll should be fine.\n\nIn the new CL the test waits until the precondition for child frame being initially out of view holds true (similarly to the other test: SitePerProcessBrowserTest.ScrollElementIntoView). Also manually testing and logging locally, the child frame view bounds changes from \"7863x5923...\" to \"486x496...\" from before to after ScrollFocusedEditableNodeIntoRect() call.",
       "parentUuid": "3cfd75c5_00a926de",
+      "range": {
+        "startLine": 1648,
+        "startChar": 39,
+        "endLine": 1648,
+        "endChar": 72
+      },
+      "revId": "dc8b011599561a547828e882c4b7a5428893a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4c5c85_456438eb",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-23T15:59:27Z",
+      "side": 1,
+      "message": "\u003e The iframe is way out of bounds on my screen. \n\nBwah, I missed the \"common lines\" that gerrit was hiding. Yeah, that makes more sense. Sorry for additional churn.",
+      "parentUuid": "03baa9c2_1208e0d9",
       "range": {
         "startLine": 1648,
         "startChar": 39,
