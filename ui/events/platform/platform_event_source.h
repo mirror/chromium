@@ -89,12 +89,11 @@ class EVENTS_EXPORT PlatformEventSource {
   void OnOverriddenDispatcherRestored();
 
   // Use an base::ObserverList<> instead of an std::vector<> to store the list
-  // of
-  // dispatchers, so that adding/removing dispatchers during an event dispatch
-  // is well-defined.
+  // of dispatchers, so that adding/removing dispatchers during an event
+  // dispatch is well-defined.
   typedef base::ObserverList<PlatformEventDispatcher>
       PlatformEventDispatcherList;
-  PlatformEventDispatcherList dispatchers_;
+  PlatformEventDispatcherList dispatchers_{base::ObserverListPolicy::ALL};
   PlatformEventDispatcher* overridden_dispatcher_;
 
   // Used to keep track of whether the current override-dispatcher has been
