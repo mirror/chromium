@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "438b8970_43936530",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "That would save some typing, but I would prefer to not deal with raw function pointers in our code.",
+      "parentUuid": "83019a66_18dcadfb",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc236f1_e598b449",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19d3cf8_97308569",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc236f1_e598b449",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf33a995_bc652135",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "6507eda8_1aa4d848",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd1f4adb_b29c38fd",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5e37ee_d5509d11",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd1f4adb_b29c38fd",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "474dcdd8_16cf0931",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8601da49_679e1b3f",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce3c61e5_1076c39a",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-22T18:57:49Z",
       "side": 1,
       "message": "Or just \"InvokeSinkDiscoveryCallback\" ?",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc0a64d_3d410ed9",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "I think \"Force\" is the better term here since the invocation of the callback is associated with the discovery timer.",
+      "parentUuid": "ce3c61e5_1076c39a",
       "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2d6d9654_bde10939",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3efeb006_c2c5f82d",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4418876e_36076df6",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 10
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-22T18:57:49Z",
       "side": 1,
       "message": "Maybe |task_runner_| should be passed to the impl so that the callbacks can be invoked directly upon it, instead of having to maintain a trampoline callback API for the impl back to the service.\n\nThis would reduce coupling between the two classes and might simplify unit testing (the test could provide an alternative task runner and mock callback).",
+      "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28401df_bd26e2f2",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "Perhaps. But this would mean DMSSImpl need to keep track of 3 task runners, which could be confusing. So I prefer binding the task runner to the trampoline callback.",
+      "parentUuid": "4418876e_36076df6",
       "revId": "a8073ff22022a60224d6968cb638556f0fffa5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

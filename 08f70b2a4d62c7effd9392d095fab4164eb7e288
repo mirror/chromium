@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "66415477_47f6136f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "On second thought, I don\u0027t think this is going to work because that would violate WeakPtr\u0027s contract of dereferencing and invalidating on the same sequence. So the trampoline method cannot be in DMSS unless we also invalidate the WeakPtr in DMSSImpl\u0027s sequence. I think it would be easier accounting if we go back to the original design of binding a free function since the callback really has nothing to do with DMSS itself.",
+      "parentUuid": "cec63de0_05e284e4",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675eb480_f74d1a1b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -922,6 +946,30 @@
     },
     {
       "key": {
+        "uuid": "67aa9356_ff7d96cb",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "Reverted to binding to free function; see previous comment.",
+      "parentUuid": "6fb63525_6362b9e3",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c792743_450d25d6",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 8
@@ -1022,6 +1070,24 @@
       "side": 1,
       "message": "Can the DIAL impl pass a handle to the task runner to use for its callback?",
       "parentUuid": "652c0d2a_43dbbeb5",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dcb5b0_76cb2762",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-23T00:41:37Z",
+      "side": 1,
+      "message": "Yes, we can do that (see latest PS), but exposing the internals of CMSS is not ideal in terms of layering. But I did it anyway so we can save 1 thread hop, and because this code will likely change again later to merge DMSS/CMSS into a single class managed by Cast MRP.",
+      "parentUuid": "c34c97f7_2eabfe2d",
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
