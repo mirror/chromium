@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e93929de_f5d46c9d",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-23T09:35:35Z",
+      "side": 1,
+      "message": "base::nullopt here is correct?",
+      "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b414192_4eaef77c",
+        "filename": "chrome/test/data/extensions/api_test/executescript/css_origin/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-23T09:35:35Z",
+      "side": 1,
+      "message": "There\u0027s a new test to verify that passing cssOrigin to executeScript is an error.\n\nAbout the error message, it seems like there\u0027s no choice but to specify the exact error message here?",
+      "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6158e27_46f44bbc",
+        "filename": "extensions/browser/api/execute_code_function.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-23T09:35:35Z",
+      "side": 1,
+      "message": "Let me know if this looks OK.",
+      "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0d89f6_d94b0130",
+        "filename": "extensions/browser/api/execute_code_function.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-23T09:35:35Z",
+      "side": 1,
+      "message": "cssOrigin for JavaScript is now an error.",
+      "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07d344e_45215bff",
+        "filename": "extensions/renderer/user_script_injector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-23T09:35:35Z",
+      "side": 1,
+      "message": "Using base::Optional\u003c\u003e didn\u0027t seems like a huge improvement, and here we\u0027re still specifying author origin, even though it should be more like \"no origin\". Maybe there should be a CSS_ORIGIN_UNDEFINED instead that propagates all the way down to WebDocument, where it\u0027s decided if it should be author or user? Then there\u0027s no need for base::Optional\u003c\u003e either.",
+      "revId": "f9f4f29e114c79b60fcf8dc5390ba7b6beb44589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
