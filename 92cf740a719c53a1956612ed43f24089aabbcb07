@@ -34,6 +34,24 @@
       "revId": "92cf740a719c53a1956612ed43f24089aabbcb07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ca923e_3ae9fcbf",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLOptionElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-23T11:38:13Z",
+      "side": 0,
+      "message": "Yes as HTMLSelectElement::SetOptionsChangedOnLayoutObject() needs a LayoutObject.",
+      "parentUuid": "f1a1bea1_81afed54",
+      "revId": "92cf740a719c53a1956612ed43f24089aabbcb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b733c2f8_dd86c552",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-23T11:38:13Z",
+      "side": 1,
+      "message": "Per my understanding yes, though if it\u0027s ok with you, I would like to do that in a follow up patch?",
+      "parentUuid": "91b8e74c_95a2d014",
+      "revId": "ddfb5145e01c02c4cb20ae88f1d7433d49370bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c77ff068_3bc05d24",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 6
@@ -48,6 +66,24 @@
       "writtenOn": "2017-11-23T09:16:05Z",
       "side": 1,
       "message": "Clearing non-attached-style now also needs to happen for descendant elements being attached I think.\n\nCould we reset it as part of retrieving it in Element::AttachLayoutTree?",
+      "revId": "ddfb5145e01c02c4cb20ae88f1d7433d49370bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367dc4c8_a217a97c",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-23T11:38:13Z",
+      "side": 1,
+      "message": "Yup good catch, since we are clearing NeedsReattachLayoutTree makes sense to clear the NonAttachedStyle there too. Done in latest patch.",
+      "parentUuid": "c77ff068_3bc05d24",
       "revId": "ddfb5145e01c02c4cb20ae88f1d7433d49370bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
