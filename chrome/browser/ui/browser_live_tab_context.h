@@ -25,7 +25,7 @@ class Rect;
 }
 
 // Implementation of LiveTabContext which uses an instance of
-// Browser in order to fulfil its duties.
+// Browser in order to fulfill its duties.
 class BrowserLiveTabContext : public sessions::LiveTabContext {
  public:
   explicit BrowserLiveTabContext(Browser* browser) : browser_(browser) {}
@@ -81,7 +81,7 @@ class BrowserLiveTabContext : public sessions::LiveTabContext {
       SessionID::id_type desired_id);
 
  private:
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   DISALLOW_COPY_AND_ASSIGN(BrowserLiveTabContext);
 };

@@ -38,7 +38,7 @@ class BrowserSyncedWindowDelegate : public sync_sessions::SyncedWindowDelegate {
   bool ShouldSync() const override;
 
  private:
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   DISALLOW_COPY_AND_ASSIGN(BrowserSyncedWindowDelegate);
 };
