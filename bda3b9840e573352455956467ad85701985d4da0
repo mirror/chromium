@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9296da31_d5ad1cfe",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-23T02:48:24Z",
+      "side": 1,
+      "message": "hmm - there may be a subtle change in logic doing this. If you don\u0027t have a Cancel button, then the close [x] will call Accept(), not Cancel(). That might not be what you want. See logic in\n\nbool DialogDelegate::Close() {\n  int buttons \u003d GetDialogButtons();\n  if ((buttons \u0026 ui::DIALOG_BUTTON_CANCEL) ||\n      (buttons \u003d\u003d ui::DIALOG_BUTTON_NONE)) {\n    return Cancel();\n  }\n  return Accept();\n}",
+      "revId": "bda3b9840e573352455956467ad85701985d4da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
