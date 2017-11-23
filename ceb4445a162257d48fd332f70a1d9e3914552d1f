@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6cd158b0_569336ef",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabb98b9_21e0f6f2",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82bd5d7a_94d90b0d",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eecf7947_9fb9e7b7",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82bd5d7a_94d90b0d",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a8f90c1_4e7aaae2",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61799d3_9de0fd46",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aed354b_841c387d",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af1d30d_380d1736",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aed354b_841c387d",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "aeff1ba2_073ee926",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "155b19c4_1432ea6a",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd3a81b_e8b06e05",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10507df_eae68c6e",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd3a81b_e8b06e05",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "bc335249_d15a3f11",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43c329c_a44aec86",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ec5971b_47c9b9f1",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef2a1c7_499a0335",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "I added it, but this one feels a bit weird. You are literally describing the code. :)",
+      "parentUuid": "4ec5971b_47c9b9f1",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "00caa047_b3ec2ae0",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff798258_9ccda6ef",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5921934f_cc0d6c8a",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26542cdf_db029e3c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5921934f_cc0d6c8a",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +375,30 @@
     },
     {
       "key": {
+        "uuid": "d6c118a5_95addaea",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d7f04e_6e8e045b",
+      "range": {
+        "startLine": 153,
+        "startChar": 63,
+        "endLine": 153,
+        "endChar": 72
+      },
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246e00bd_2c6fd065",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -209,6 +413,24 @@
       "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763f6f93_ab739382",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "246e00bd_2c6fd065",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "4333d225_061b4d05",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d80985b9_f73e0f4c",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffcd604b_4342220a",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -243,6 +483,24 @@
       "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3690984f_3df8f83b",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffcd604b_4342220a",
+      "revId": "ceb4445a162257d48fd332f70a1d9e3914552d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edbf760d_c1679faa",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultInlineHeaders.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 0,
+      "message": "yep, given that we always have a TextRun and that we are always doing the inside-cluster matching, the adjustment is never needed. :)",
+      "parentUuid": "e55fa508_3a4441bc",
+      "revId": "0fdbe9100e1f0b8621f8fb2c283e1145eb521c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3327b43_fee4de53",
         "filename": "third_party/WebKit/Source/platform/testing/data/third_party/roboto-regular.woff2",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0fdbe9100e1f0b8621f8fb2c283e1145eb521c59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c712797a_1849c48a",
+        "filename": "third_party/WebKit/Source/platform/testing/data/third_party/roboto-regular.woff2",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-23T18:06:39Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b3327b43_fee4de53",
+      "revId": "0fdbe9100e1f0b8621f8fb2c283e1145eb521c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
