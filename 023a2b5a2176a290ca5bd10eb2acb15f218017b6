@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae17a5fe_976f14e7",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_js_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T14:46:26Z",
+      "side": 1,
+      "message": "All forms are named* \"TestForm\".\n\nEven then I don\u0027t understand the comment, as it seems that only the first form is named TestForm",
+      "range": {
+        "startLine": 1410,
+        "startChar": 7,
+        "endLine": 1410,
+        "endChar": 38
+      },
+      "revId": "023a2b5a2176a290ca5bd10eb2acb15f218017b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25145ffb_a09cb8c0",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T14:46:26Z",
+      "side": 1,
+      "message": "This could get expensive, do we know if this function (getFormIdentifier) is called a whole lot?",
+      "range": {
+        "startLine": 552,
+        "startChar": 24,
+        "endLine": 552,
+        "endChar": 52
+      },
+      "revId": "023a2b5a2176a290ca5bd10eb2acb15f218017b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
