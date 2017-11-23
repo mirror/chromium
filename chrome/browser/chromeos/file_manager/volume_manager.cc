@@ -530,7 +530,7 @@ void VolumeManager::OnFileSystemBeingUnmounted() {
   DoUnmountEvent(chromeos::MOUNT_ERROR_NONE, *Volume::CreateForDrive(profile_));
 }
 
-void VolumeManager::OnDiskEvent(
+void VolumeManager::OnAutoMountableDiskEvent(
     chromeos::disks::DiskMountManager::DiskEvent event,
     const chromeos::disks::DiskMountManager::Disk* disk) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -589,6 +589,10 @@ void VolumeManager::OnDiskEvent(
   }
   NOTREACHED();
 }
+
+void VolumeManager::OnBootDeviceDiskEvent(
+    chromeos::disks::DiskMountManager::DiskEvent event,
+    const chromeos::disks::DiskMountManager::Disk* disk) {}
 
 void VolumeManager::OnDeviceEvent(
     chromeos::disks::DiskMountManager::DeviceEvent event,

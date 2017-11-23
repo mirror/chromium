@@ -80,6 +80,12 @@ class TestStorageMonitorCros : public StorageMonitorCros {
     StorageMonitorCros::OnMountEvent(event, error_code, mount_info);
   }
 
+  void OnBootDeviceDiskEvent(
+      DiskMountManager::DiskEvent event,
+      const chromeos::disks::DiskMountManager::Disk* disk) override {
+    StorageMonitorCros::OnBootDeviceDiskEvent(event, disk);
+  }
+
   bool GetStorageInfoForPath(const base::FilePath& path,
                              StorageInfo* device_info) const override {
     return StorageMonitorCros::GetStorageInfoForPath(path, device_info);
@@ -531,6 +537,43 @@ TEST_F(StorageMonitorCrosTest, EjectTest) {
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(StorageMonitor::EJECT_OK, status_);
+}
+
+TEST_F(StorageMonitorCrosTest, FixedStroageTest) {
+  const std::string uuid = "fixed1-uuid";
+  const std::string mount_point = "/mnt/stateful_partition";
+
+  // Fixed storage added.
+  const std::string label = "fixed1";
+  const chromeos::disks::DiskMountManager::Disk disk(
+      "", mount_point, false, "", "", label, "", "", "", "", "", uuid, "",
+      chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, false, false, false,
+      false, "", "");
+  monitor_->OnBootDeviceDiskEvent(DiskMountManager::DiskEvent::DISK_ADDED,
+                                  &disk);
+  std::vector<StorageInfo> disks = monitor_->GetAllAvailableStorages();
+  EXPECT_EQ(1U, disks.size());
+  EXPECT_EQ(mount_point, disks[0].location());
+  EXPECT_EQ(base::UTF8ToUTF16(label), disks[0].storage_label());
+
+  // Fixed storage changed.
+  const std::string new_label = "fixed2";
+  const chromeos::disks::DiskMountManager::Disk remounted_disk(
+      "", mount_point, false, "", "", new_label, "", "", "", "", "", uuid, "",
+      chromeos::DEVICE_TYPE_UNKNOWN, 0, false, false, false, false, false,
+      false, "", "");
+  monitor_->OnBootDeviceDiskEvent(DiskMountManager::DiskEvent::DISK_CHANGED,
+                                  &remounted_disk);
+  disks = monitor_->GetAllAvailableStorages();
+  EXPECT_EQ(1U, disks.size());
+  EXPECT_EQ(mount_point, disks[0].location());
+  EXPECT_EQ(base::UTF8ToUTF16(new_label), disks[0].storage_label());
+
+  // Fixed storage removed.
+  monitor_->OnBootDeviceDiskEvent(DiskMountManager::DiskEvent::DISK_REMOVED,
+                                  &remounted_disk);
+  disks = monitor_->GetAllAvailableStorages();
+  EXPECT_EQ(0U, disks.size());
 }
 
 }  // namespace

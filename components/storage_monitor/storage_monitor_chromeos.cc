@@ -78,11 +78,27 @@ bool GetDeviceInfo(const DiskMountManager::MountPointInfo& mount_info,
   return true;
 }
 
+// Returns true if the requested device is valid, else false. On success, fills
+// in |info| for fixed storage device.
+bool GetFixedStorageInfo(const DiskMountManager::Disk& disk,
+                         StorageInfo* info) {
+  DCHECK(info);
+
+  std::string unique_id = MakeDeviceUniqueId(disk);
+  if (unique_id.empty())
+    return false;
+
+  *info = StorageInfo(
+      StorageInfo::MakeDeviceId(StorageInfo::FIXED_MASS_STORAGE, unique_id),
+      disk.mount_path(), base::UTF8ToUTF16(disk.device_label()),
+      base::UTF8ToUTF16(disk.vendor_name()),
+      base::UTF8ToUTF16(disk.product_name()), disk.total_size_in_bytes());
+  return true;
+}
+
 }  // namespace
 
-StorageMonitorCros::StorageMonitorCros()
-    : weak_ptr_factory_(this) {
-}
+StorageMonitorCros::StorageMonitorCros() : weak_ptr_factory_(this) {}
 
 StorageMonitorCros::~StorageMonitorCros() {
   DiskMountManager* manager = DiskMountManager::GetInstance();
@@ -134,8 +150,64 @@ void StorageMonitorCros::CheckExistingMountPoints() {
                  weak_ptr_factory_.GetWeakPtr()));
 }
 
-void StorageMonitorCros::OnDiskEvent(DiskMountManager::DiskEvent event,
-                                     const DiskMountManager::Disk* disk) {}
+void StorageMonitorCros::OnAutoMountableDiskEvent(
+    DiskMountManager::DiskEvent event,
+    const DiskMountManager::Disk* disk) {}
+
+void StorageMonitorCros::OnBootDeviceDiskEvent(
+    DiskMountManager::DiskEvent event,
+    const DiskMountManager::Disk* disk) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // Only track stateful partition, because it has information relevant for the
+  // user.
+  if (!disk->IsStatefulPartition())
+    return;
+
+  StorageInfo info;
+  if (!GetFixedStorageInfo(*disk, &info))
+    return;
+
+  switch (event) {
+    case DiskMountManager::DiskEvent::DISK_ADDED: {
+      const auto result =
+          mount_map_.insert(std::make_pair(disk->mount_path(), info));
+      DCHECK(result.second);
+      receiver()->ProcessAttach(info);
+      break;
+    }
+    case DiskMountManager::DiskEvent::DISK_CHANGED: {
+      for (auto it = mount_map_.cbegin(); it != mount_map_.end();) {
+        if (it->second.device_id() == info.device_id()) {
+          receiver()->ProcessDetach((info.device_id()));
+          mount_map_.erase(it++);
+          const auto result =
+              mount_map_.insert(std::make_pair(disk->mount_path(), info));
+          DCHECK(result.second);
+          receiver()->ProcessAttach(info);
+          break;
+        } else {
+          ++it;
+        }
+      }
+      break;
+    }
+    case DiskMountManager::DiskEvent::DISK_REMOVED: {
+      for (auto it = mount_map_.cbegin(); it != mount_map_.end();) {
+        if (it->second.device_id() == info.device_id()) {
+          receiver()->ProcessDetach((info.device_id()));
+          mount_map_.erase(it++);
+          break;
+        } else {
+          ++it;
+        }
+      }
+      break;
+    }
+    default:
+      NOTREACHED();
+  }
+}
 
 void StorageMonitorCros::OnDeviceEvent(DiskMountManager::DeviceEvent event,
                                        const std::string& device_path) {}
@@ -193,115 +265,115 @@ void StorageMonitorCros::SetMediaTransferProtocolManagerForTest(
     device::MediaTransferProtocolManager* test_manager) {
   DCHECK(!media_transfer_protocol_manager_);
   media_transfer_protocol_manager_.reset(test_manager);
-}
+  }
 
+  bool StorageMonitorCros::GetStorageInfoForPath(
+      const base::FilePath& path,
+      StorageInfo* device_info) const {
+    DCHECK(device_info);
 
-bool StorageMonitorCros::GetStorageInfoForPath(
-    const base::FilePath& path,
-    StorageInfo* device_info) const {
-  DCHECK(device_info);
+    if (media_transfer_protocol_device_observer_->GetStorageInfoForPath(
+            path, device_info)) {
+      return true;
+    }
 
-  if (media_transfer_protocol_device_observer_->GetStorageInfoForPath(
-          path, device_info)) {
+    if (!path.IsAbsolute())
+      return false;
+
+    base::FilePath current = path;
+    while (!base::ContainsKey(mount_map_, current.value()) &&
+           current != current.DirName()) {
+      current = current.DirName();
+    }
+
+    MountMap::const_iterator info_it = mount_map_.find(current.value());
+    if (info_it == mount_map_.end())
+      return false;
+
+    *device_info = info_it->second;
     return true;
   }
 
-  if (!path.IsAbsolute())
-    return false;
-
-  base::FilePath current = path;
-  while (!base::ContainsKey(mount_map_, current.value()) &&
-         current != current.DirName()) {
-    current = current.DirName();
+  // Callback executed when the unmount call is run by DiskMountManager.
+  // Forwards result to |EjectDevice| caller.
+  void NotifyUnmountResult(
+      base::Callback<void(StorageMonitor::EjectStatus)> callback,
+      chromeos::MountError error_code) {
+    if (error_code == chromeos::MOUNT_ERROR_NONE)
+      callback.Run(StorageMonitor::EJECT_OK);
+    else
+      callback.Run(StorageMonitor::EJECT_FAILURE);
   }
 
-  MountMap::const_iterator info_it = mount_map_.find(current.value());
-  if (info_it == mount_map_.end())
-    return false;
+  void StorageMonitorCros::EjectDevice(
+      const std::string& device_id,
+      base::Callback<void(EjectStatus)> callback) {
+    StorageInfo::Type type;
+    if (!StorageInfo::CrackDeviceId(device_id, &type, NULL)) {
+      callback.Run(EJECT_FAILURE);
+      return;
+    }
 
-  *device_info = info_it->second;
-  return true;
-}
+    if (type == StorageInfo::MTP_OR_PTP) {
+      media_transfer_protocol_device_observer_->EjectDevice(device_id,
+                                                            callback);
+      return;
+    }
 
-// Callback executed when the unmount call is run by DiskMountManager.
-// Forwards result to |EjectDevice| caller.
-void NotifyUnmountResult(
-    base::Callback<void(StorageMonitor::EjectStatus)> callback,
-    chromeos::MountError error_code) {
-  if (error_code == chromeos::MOUNT_ERROR_NONE)
-    callback.Run(StorageMonitor::EJECT_OK);
-  else
-    callback.Run(StorageMonitor::EJECT_FAILURE);
-}
+    std::string mount_path;
+    for (MountMap::const_iterator info_it = mount_map_.begin();
+         info_it != mount_map_.end(); ++info_it) {
+      if (info_it->second.device_id() == device_id)
+        mount_path = info_it->first;
+    }
 
-void StorageMonitorCros::EjectDevice(
-    const std::string& device_id,
-    base::Callback<void(EjectStatus)> callback) {
-  StorageInfo::Type type;
-  if (!StorageInfo::CrackDeviceId(device_id, &type, NULL)) {
-    callback.Run(EJECT_FAILURE);
-    return;
+    if (mount_path.empty()) {
+      callback.Run(EJECT_NO_SUCH_DEVICE);
+      return;
+    }
+
+    DiskMountManager* manager = DiskMountManager::GetInstance();
+    if (!manager) {
+      callback.Run(EJECT_FAILURE);
+      return;
+    }
+
+    manager->UnmountPath(mount_path, chromeos::UNMOUNT_OPTIONS_NONE,
+                         base::Bind(NotifyUnmountResult, callback));
   }
 
-  if (type == StorageInfo::MTP_OR_PTP) {
-    media_transfer_protocol_device_observer_->EjectDevice(device_id, callback);
-    return;
+  device::MediaTransferProtocolManager*
+  StorageMonitorCros::media_transfer_protocol_manager() {
+    return media_transfer_protocol_manager_.get();
   }
 
-  std::string mount_path;
-  for (MountMap::const_iterator info_it = mount_map_.begin();
-       info_it != mount_map_.end(); ++info_it) {
-    if (info_it->second.device_id() == device_id)
-      mount_path = info_it->first;
+  void StorageMonitorCros::AddMountedPath(
+      const DiskMountManager::MountPointInfo& mount_info,
+      bool has_dcim) {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+    if (base::ContainsKey(mount_map_, mount_info.mount_path)) {
+      // CheckExistingMountPoints() added the mount point information in the map
+      // before the device attached handler is called. Therefore, an entry for
+      // the device already exists in the map.
+      return;
+    }
+
+    // Get the media device uuid and label if exists.
+    StorageInfo info;
+    if (!GetDeviceInfo(mount_info, has_dcim, &info))
+      return;
+
+    if (info.device_id().empty())
+      return;
+
+    mount_map_.insert(std::make_pair(mount_info.mount_path, info));
+
+    receiver()->ProcessAttach(info);
   }
 
-  if (mount_path.empty()) {
-    callback.Run(EJECT_NO_SUCH_DEVICE);
-    return;
+  StorageMonitor* StorageMonitor::CreateInternal() {
+    return new StorageMonitorCros();
   }
-
-  DiskMountManager* manager = DiskMountManager::GetInstance();
-  if (!manager) {
-    callback.Run(EJECT_FAILURE);
-    return;
-  }
-
-  manager->UnmountPath(mount_path, chromeos::UNMOUNT_OPTIONS_NONE,
-                       base::Bind(NotifyUnmountResult, callback));
-}
-
-device::MediaTransferProtocolManager*
-StorageMonitorCros::media_transfer_protocol_manager() {
-  return media_transfer_protocol_manager_.get();
-}
-
-void StorageMonitorCros::AddMountedPath(
-    const DiskMountManager::MountPointInfo& mount_info,
-    bool has_dcim) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  if (base::ContainsKey(mount_map_, mount_info.mount_path)) {
-    // CheckExistingMountPoints() added the mount point information in the map
-    // before the device attached handler is called. Therefore, an entry for
-    // the device already exists in the map.
-    return;
-  }
-
-  // Get the media device uuid and label if exists.
-  StorageInfo info;
-  if (!GetDeviceInfo(mount_info, has_dcim, &info))
-    return;
-
-  if (info.device_id().empty())
-    return;
-
-  mount_map_.insert(std::make_pair(mount_info.mount_path, info));
-
-  receiver()->ProcessAttach(info);
-}
-
-StorageMonitor* StorageMonitor::CreateInternal() {
-  return new StorageMonitorCros();
-}
 
 }  // namespace storage_monitor
