@@ -567,6 +567,13 @@ void WriteAndroidPackage(MimeWriter& writer,
 
   // Not using sprintf to ensure no heap allocations.
   my_strlcpy(buf, android_build_info->package_name(), kMaxSize);
+  // Fudge the packageId for -next builds so that the correct proguard
+  // deobfuscation map is used on the server.
+  const char* version_suffix =
+      my_strchr(android_build_info->package_version_name(), '-');
+  if (version_suffix != nullptr && my_strcmp(version_suffix, "-next") == 0) {
+    my_strlcat(buf, ".next", kMaxSize);
+  }
   my_strlcat(buf, " v", kMaxSize);
   my_strlcat(buf, android_build_info->package_version_code(), kMaxSize);
   my_strlcat(buf, " (", kMaxSize);
