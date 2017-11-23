@@ -46,6 +46,30 @@
       "revId": "2fae5f379588016cd0ad1fafa6c2e26d998136e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236c46ae_2015b062",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-23T01:12:13Z",
+      "side": 1,
+      "message": "Currently, we only show the splash screen for autopresentation.\n\nAll of this will change soon as Ian\u0027s working on specifying the scene decoratively, so name SGTM for now :)",
+      "parentUuid": "2521d786_41c6791e",
+      "range": {
+        "startLine": 392,
+        "startChar": 21,
+        "endLine": 392,
+        "endChar": 59
+      },
+      "revId": "2fae5f379588016cd0ad1fafa6c2e26d998136e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
