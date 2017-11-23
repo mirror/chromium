@@ -52,6 +52,24 @@
       "revId": "38516468fe97e047447b497c0cc9bb2917de21ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5fb792_c734ce99",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-23T16:42:04Z",
+      "side": 1,
+      "message": "Talked offline. Added a comment here.",
+      "parentUuid": "75c4439d_67244c97",
+      "revId": "38516468fe97e047447b497c0cc9bb2917de21ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
