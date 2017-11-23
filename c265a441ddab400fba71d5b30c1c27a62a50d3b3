@@ -51,6 +51,24 @@
       "revId": "c265a441ddab400fba71d5b30c1c27a62a50d3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14bd89b_b2855f5f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineController.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-23T00:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "416f1fce_bf3e0d95",
+      "revId": "c265a441ddab400fba71d5b30c1c27a62a50d3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
