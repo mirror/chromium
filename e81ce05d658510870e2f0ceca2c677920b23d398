@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09c76aab_faf61944",
+        "filename": "ios/chrome/browser/passwords/password_manager_internals_service_factory.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-23T15:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "561d9816_5819ba45",
+      "revId": "e81ce05d658510870e2f0ceca2c677920b23d398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73833574_e10c9a94",
         "filename": "ios/chrome/browser/ui/webui/password_manager_internals_ui_ios.h",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "e81ce05d658510870e2f0ceca2c677920b23d398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5ac76b_da8b09f1",
+        "filename": "ios/chrome/browser/ui/webui/password_manager_internals_ui_ios.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-23T15:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73833574_e10c9a94",
+      "revId": "e81ce05d658510870e2f0ceca2c677920b23d398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
