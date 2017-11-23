@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4988edb_8d9c54e5",
+        "filename": "third_party/breakpad/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-23T02:25:41Z",
+      "side": 1,
+      "message": "I think this is probably wrong, and should be $ORIGIN, but I\u0027m not positive. @rsesek / @mark, any idea?",
+      "revId": "6a3201b116a9170cd1fd47c44ade6c1f1bb4491f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
