@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87cf42ca_783dd8d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T10:02:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "484f6240_12643537",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "b414f1493329841aaaa795a2d64f24f8ba5b7a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4abeec4_5962d41b",
         "filename": "base/android/library_loader/anchor_functions.h",
         "patchSetId": 3
@@ -36,6 +60,54 @@
       "writtenOn": "2017-11-22T18:35:24Z",
       "side": 1,
       "message": "this rules out aarch64, which we may want to touch later for libmonochrome. Many other things would probably fail on aarch64, but you can drop \u0027|| defined(ARCH_CPU_ARM64)\u0027 pretty harmlessly here, I think",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "b414f1493329841aaaa795a2d64f24f8ba5b7a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5148cb_e680c04f",
+        "filename": "base/android/library_loader/anchor_functions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T10:02:45Z",
+      "side": 1,
+      "message": "Yes, I wanted to take the opposite approach, as long as it hasn\u0027t been tested on ARM64, don\u0027t allow it there.",
+      "parentUuid": "d4abeec4_5962d41b",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "b414f1493329841aaaa795a2d64f24f8ba5b7a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce98a315_5ad008ca",
+        "filename": "base/android/library_loader/anchor_functions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T10:02:45Z",
+      "side": 1,
+      "message": "I wanted to take the opposite approach, as long as it hasn\u0027t been tested on ARM64, don\u0027t allow it there.",
+      "parentUuid": "d4abeec4_5962d41b",
       "range": {
         "startLine": 12,
         "startChar": 4,
@@ -71,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8f0bdab1_c20241a8",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T10:02:45Z",
+      "side": 1,
+      "message": "That\u0027s what I wanted to do initially, but then we rely on all callers to properly call CheckOrderingSanity() first, and I prefer a compile-time failure to a runtime one.",
+      "parentUuid": "d8eb24e5_192ed62f",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "b414f1493329841aaaa795a2d64f24f8ba5b7a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7fe963c_21441bf4",
         "filename": "base/android/library_loader/library_prefetcher.cc",
         "patchSetId": 3
@@ -82,6 +178,30 @@
       "writtenOn": "2017-11-22T18:35:24Z",
       "side": 1,
       "message": "would this blow up on aarch64?",
+      "range": {
+        "startLine": 320,
+        "startChar": 2,
+        "endLine": 320,
+        "endChar": 43
+      },
+      "revId": "b414f1493329841aaaa795a2d64f24f8ba5b7a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7feefd_8803f755",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-23T10:02:45Z",
+      "side": 1,
+      "message": "Haven\u0027t tested it!\nThough I\u0027m quite confident it would work.",
+      "parentUuid": "c7fe963c_21441bf4",
       "range": {
         "startLine": 320,
         "startChar": 2,
