@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb9126d4_30219db4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-23T03:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd8757c_997f07c6",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "ff398cb12ddc9d80718eda9c2a42673c43f55edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de6839da_08839b3d",
         "filename": "content/common/mac/font_loader.mm",
         "patchSetId": 4
@@ -39,6 +63,42 @@
       "revId": "ff398cb12ddc9d80718eda9c2a42673c43f55edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8333f690_057ce0b7",
+        "filename": "content/common/mac/font_loader.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-23T03:30:23Z",
+      "side": 1,
+      "message": "I didn\u0027t hit the DCHECK.  I figured that it would be better to make this error checking consistent with the rest in this function.\n\nLike you noticed, the size\u003d\u003d0 check is redundant.\n\nSince I\u0027m doing an explicit font_id\u003d\u003d0 check, I don\u0027t see the point of having the DCHECK.",
+      "parentUuid": "de6839da_08839b3d",
+      "revId": "ff398cb12ddc9d80718eda9c2a42673c43f55edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd3e084b_2eeb7fbf",
+        "filename": "content/common/mac/font_loader.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-23T03:30:23Z",
+      "side": 1,
+      "message": "I didn\u0027t hit the DCHECK.  I figured that it would be better to make this error checking consistent with the rest in this function.\n\nLike you noticed, the size\u003d\u003d0 check is redundant.\n\nSince I\u0027m doing an explicit font_id\u003d\u003d0 check, I don\u0027t see the point of having the DCHECK.",
+      "parentUuid": "de6839da_08839b3d",
+      "revId": "ff398cb12ddc9d80718eda9c2a42673c43f55edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
