@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fbf3ae9_49b26044",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-23T18:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed739e8f_cf3faa48",
+      "revId": "990a311ba93e6d2fd6fb090bd4ed507df8a4e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2fb03b_378c22e0",
         "filename": "third_party/WebKit/Source/core/layout/line/InlineTextBox.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bbb17136_48191897",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineTextBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-23T18:15:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bc2fb03b_378c22e0",
+      "revId": "990a311ba93e6d2fd6fb090bd4ed507df8a4e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faec82ad_bc7d1270",
         "filename": "third_party/WebKit/Source/core/paint/TextPainter.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-22T23:14:21Z",
       "side": 1,
       "message": "The painter classes are really just wrappers around static functions and don\u0027t typically store any state since they are alive a very short time. I think it would be best to pass this state down in a different way.\n\nWe typically paint a LayoutObject more than we lay it out so I think it would be better to store the contains_only_whitespace bit on the LayoutObject itself, when the text is set, then use the bit when painting. Another approach would be to store the bit on the DOM node.",
+      "revId": "990a311ba93e6d2fd6fb090bd4ed507df8a4e61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f533948_0659791e",
+        "filename": "third_party/WebKit/Source/core/paint/TextPainter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-23T18:15:24Z",
+      "side": 1,
+      "message": "I\u0027ve added it to LayoutText.",
+      "parentUuid": "faec82ad_bc7d1270",
       "revId": "990a311ba93e6d2fd6fb090bd4ed507df8a4e61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
