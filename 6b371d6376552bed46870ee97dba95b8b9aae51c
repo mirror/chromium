@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43e086c7_46b4dde4",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-23T10:22:13Z",
+      "side": 1,
+      "message": "Collapse this condition to just be:\n\n[location_bar_view_ setLeadingButtonHidden:IsIPadIdiom()] \n\n?",
+      "range": {
+        "startLine": 335,
+        "startChar": 5,
+        "endLine": 335,
+        "endChar": 23
+      },
+      "revId": "6b371d6376552bed46870ee97dba95b8b9aae51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d72bf3d_c32ab88c",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-23T10:22:13Z",
+      "side": 1,
+      "message": "nit: imageID",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 40
+      },
+      "revId": "6b371d6376552bed46870ee97dba95b8b9aae51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
