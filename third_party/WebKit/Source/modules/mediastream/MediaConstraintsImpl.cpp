@@ -102,6 +102,7 @@ const char kGoogArrayGeometry[] = "googArrayGeometry";
 const char kGoogHighpassFilter[] = "googHighpassFilter";
 const char kGoogTypingNoiseDetection[] = "googTypingNoiseDetection";
 const char kGoogAudioMirroring[] = "googAudioMirroring";
+const char kDisableHwNoiseSuppression[] = "disableHwNoiseSuppression";
 
 // From
 // third_party/libjingle/source/talk/app/webrtc/mediaconstraintsinterface.cc
@@ -350,6 +351,9 @@ static void ParseOldStyleNames(
       result.goog_typing_noise_detection.SetExact(ToBoolean(constraint.value_));
     } else if (constraint.name_.Equals(kGoogAudioMirroring)) {
       result.goog_audio_mirroring.SetExact(ToBoolean(constraint.value_));
+    } else if (constraint.name_.Equals(kDisableHwNoiseSuppression)) {
+      result.disable_hw_noise_suppression.SetExact(
+          ToBoolean(constraint.value_));
     } else if (constraint.name_.Equals(kDAEchoCancellation)) {
       result.goog_da_echo_cancellation.SetExact(ToBoolean(constraint.value_));
     } else if (constraint.name_.Equals(kNoiseReduction)) {

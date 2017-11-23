@@ -54,6 +54,9 @@ static AudioObjectPropertyAddress GetAudioObjectPropertyAddress(
   return property_address;
 }
 
+static const AudioObjectPropertyAddress kNoiseReductionPropertyAddress = {
+    'nzca', kAudioDevicePropertyScopeInput, kAudioObjectPropertyElementMaster};
+
 // Get IO buffer size range from HAL given device id and scope.
 static OSStatus GetIOBufferFrameSizeRange(AudioDeviceID device_id,
                                           bool is_input,
@@ -642,9 +645,15 @@ AudioParameters AudioManagerMac::GetInputStreamParameters(
   const int buffer_size = ChooseBufferSize(true, sample_rate);
 
   // TODO(xians): query the native channel layout for the specific device.
-  return AudioParameters(
-      AudioParameters::AUDIO_PCM_LOW_LATENCY, channel_layout,
-      sample_rate, 16, buffer_size);
+  AudioParameters params(AudioParameters::AUDIO_PCM_LOW_LATENCY, channel_layout,
+                         sample_rate, 16, buffer_size);
+
+  // TODO(ossu): Also check if it's enabled?
+  if (DeviceSupportsAmbientNoiseReduction(device)) {
+    params.set_effects(AudioParameters::AMBIENT_NOISE_SUPPRESSION);
+  }
+
+  return params;
 }
 
 std::string AudioManagerMac::GetAssociatedOutputDeviceID(
@@ -1113,6 +1122,65 @@ base::TimeDelta AudioManagerMac::GetHardwareLatency(
   return base::TimeDelta::FromSecondsD(audio_unit_latency_sec) +
          AudioTimestampHelper::FramesToTime(
              device_latency_frames + stream_latency_frames, sample_rate);
+}
+
+bool AudioManagerMac::DeviceSupportsAmbientNoiseReduction(
+    AudioDeviceID device_id) {
+  return AudioObjectHasProperty(device_id, &kNoiseReductionPropertyAddress);
+}
+
+bool AudioManagerMac::SuppressNoiseReduction(AudioDeviceID device_id) {
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+  NoiseReductionState& state = device_noise_reduction_states_[device_id];
+  if (state.suppression_count == 0) {
+    if (!DeviceSupportsAmbientNoiseReduction(device_id))
+      return false;
+
+    UInt32 initially_enabled = 0;
+    UInt32 size = sizeof(initially_enabled);
+    OSStatus result =
+        AudioObjectGetPropertyData(device_id, &kNoiseReductionPropertyAddress,
+                                   0, nullptr, &size, &initially_enabled);
+    if (result != noErr)
+      return false;
+
+    state.initial_state = (initially_enabled == 1)
+                              ? NoiseReductionState::ENABLED
+                              : NoiseReductionState::DISABLED;
+    if (initially_enabled == 1) {
+      const UInt32 disable = 0;
+      OSStatus result =
+          AudioObjectSetPropertyData(device_id, &kNoiseReductionPropertyAddress,
+                                     0, nullptr, sizeof(disable), &disable);
+      if (result != noErr) {
+        OSSTATUS_DLOG(WARNING, result)
+            << "Failed to disable ambient noise reduction for device: "
+            << std::hex << device_id;
+      }
+    }
+  }
+  ++state.suppression_count;
+  return true;
+}
+
+void AudioManagerMac::UnsuppressNoiseReduction(AudioDeviceID device_id) {
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+  NoiseReductionState& state = device_noise_reduction_states_[device_id];
+  DCHECK_NE(state.suppression_count, 0);
+  --state.suppression_count;
+  if (state.suppression_count == 0) {
+    if (state.initial_state == NoiseReductionState::ENABLED) {
+      const UInt32 enable = 1;
+      OSStatus result =
+          AudioObjectSetPropertyData(device_id, &kNoiseReductionPropertyAddress,
+                                     0, nullptr, sizeof(enable), &enable);
+      if (result != noErr) {
+        OSSTATUS_DLOG(WARNING, result)
+            << "Failed to re-enable ambient noise reduction for device: "
+            << std::hex << device_id;
+      }
+    }
+  }
 }
 
 bool AudioManagerMac::IncreaseIOBufferSizeIfPossible(AudioDeviceID device_id) {

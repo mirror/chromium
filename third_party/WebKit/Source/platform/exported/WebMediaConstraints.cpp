@@ -376,6 +376,7 @@ WebMediaTrackConstraintSet::WebMediaTrackConstraintSet()
       goog_beamforming("googBeamforming"),
       goog_array_geometry("googArrayGeometry"),
       goog_audio_mirroring("googAudioMirroring"),
+      disable_hw_noise_suppression("disableHwNoiseSuppression"),
       goog_da_echo_cancellation("googDAEchoCancellation"),
       goog_noise_reduction("googNoiseReduction"),
       offer_to_receive_audio("offerToReceiveAudio"),
