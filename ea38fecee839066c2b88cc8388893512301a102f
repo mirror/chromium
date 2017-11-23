@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa6b18b3_ea493d96",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-23T03:10:49Z",
+      "side": 1,
+      "message": "I got one more question: do we want to call chromeos::DBusThreadManager::Initialize() here? My understanding is that the call is redundant (correct?), but our existing code in **/arc/ does that.",
+      "revId": "ea38fecee839066c2b88cc8388893512301a102f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
