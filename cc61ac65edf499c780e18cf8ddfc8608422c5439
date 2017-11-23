@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431a9113_e0002156",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "Shared Worker\u0027s",
+      "range": {
+        "startLine": 2819,
+        "startChar": 95,
+        "endLine": 2819,
+        "endChar": 112
+      },
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4052b16_97b4a25b",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "I think this was done for consistency with the service worker helper, but maybe the new code could use OnceCallback?\n\nAlso, document that GURL /* worker script URL */, string /* name */ ?",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fc8fdf_f9748f5c",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "Should the comment mention that this is fetching/returning the list of shared workers.",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e284b58_2409fdcd",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "Should it be DeleteSharedWorker (not plural)?",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03cc7dad_6b448adb",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "base::MakeRefCounted? (same comment throughout)\n\n(I realize it\u0027s probably from old code...)",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa913218_6e274434",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "Seems these should be EXPECTs not ASSERTs?",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461d2b95_9910f02b",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "EXPECTs?",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea889a9d_df0d614f",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2021,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "For service worker wc_getter was needed because sometimes service workers can start up without a frame (e.g., due to a push notification). But I think for shared worker it always is created due to \"new Shared Worker()\". So it might make more sense to just pass render_process_id and render_frame_id like AllowGetCookie() does, and you don\u0027t need the comment about \"only post the task...\".",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb1a293_1910b9b6",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "Also here it might be easier to use render_process_id and frame_id like other *Accessed (other than ServiceWorkerAccessed)",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5127f40e_00381106",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "should it be SHARED_WORKER_NAME_LABEL?",
+      "range": {
+        "startLine": 1822,
+        "startChar": 37,
+        "endLine": 1822,
+        "endChar": 63
+      },
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d607276e_855d9b28",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "Just to be sure, we don\u0027t need to do this check in CreateWorker() because worker creation always comes here anyway?",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde1d97f_a0204285",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "The sentence looks like a stale comment; there was originally something called \"WorkerService\" but it seems not anymore:\nhttps://chromium.googlesource.com/chromium/src/+/78adcb0655fc2a0c8dd86bfa827623ccf30abd6f%5E%21/content/browser/shared_worker/shared_worker_service_impl.h\n\nIt\u0027s more jarring now that this class is inheriting SharedWorkerService. I guess for correctness we can just say \"implementation of SharedWorkerService\" but the class seems to be doing more than that.",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3535ec4_15012641",
+        "filename": "content/public/browser/shared_worker_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-23T22:07:59Z",
+      "side": 1,
+      "message": "Use modern copyright header (no (c)):\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers",
+      "revId": "cc61ac65edf499c780e18cf8ddfc8608422c5439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
