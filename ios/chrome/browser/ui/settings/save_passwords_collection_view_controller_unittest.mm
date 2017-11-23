@@ -286,17 +286,22 @@ TEST_F(SavePasswordsCollectionViewControllerTest, DeleteItemsWithDuplicates) {
 TEST_F(SavePasswordsCollectionViewControllerTest, PropagateDeletionToStore) {
   SavePasswordsCollectionViewController* save_password_controller =
       static_cast<SavePasswordsCollectionViewController*>(controller());
-  autofill::PasswordForm form;
-  form.origin = GURL("http://www.example.com/accounts/LoginAuth");
-  form.action = GURL("http://www.example.com/accounts/Login");
-  form.username_element = base::ASCIIToUTF16("Email");
-  form.username_value = base::ASCIIToUTF16("test@egmail.com");
-  form.password_element = base::ASCIIToUTF16("Passwd");
-  form.password_value = base::ASCIIToUTF16("test");
-  form.signon_realm = "http://www.example.com/";
-  form.scheme = autofill::PasswordForm::SCHEME_HTML;
-  EXPECT_CALL(GetMockStore(), RemoveLogin(form));
-  [save_password_controller deletePassword:form];
+  auto form = base::MakeUnique<autofill::PasswordForm>();
+  form->origin = GURL("http://www.example.com/accounts/LoginAuth");
+  form->action = GURL("http://www.example.com/accounts/Login");
+  form->username_element = base::ASCIIToUTF16("Email");
+  form->username_value = base::ASCIIToUTF16("test@egmail.com");
+  form->password_element = base::ASCIIToUTF16("Passwd");
+  form->password_value = base::ASCIIToUTF16("test");
+  form->submit_element = base::ASCIIToUTF16("signIn");
+  form->signon_realm = "http://www.example.com/";
+  form->preferred = false;
+  form->scheme = autofill::PasswordForm::SCHEME_HTML;
+  form->blacklisted_by_user = false;
+  autofill::PasswordForm* formPointer = form.get();
+  AddPasswordForm(std::move(form));
+  EXPECT_CALL(GetMockStore(), RemoveLogin(*formPointer));
+  [save_password_controller deletePassword:*formPointer];
 }
 
 }  // namespace
