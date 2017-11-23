@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ed8fe19_afda9a8b",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-23T14:34:29Z",
+      "side": 1,
+      "message": "Removed this.",
+      "parentUuid": "50dab40f_ac1213d6",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "0fcc9a912eb2da9c2599ff83b167a3bb483a712c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b0bc44a_2293ff4a",
         "filename": "content/browser/media/audio_stream_monitor.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "0fcc9a912eb2da9c2599ff83b167a3bb483a712c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e1cbdc_d36df651",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-23T14:34:29Z",
+      "side": 1,
+      "message": "Actually this was the bug that was making the test fail.\nstreams_[sid] \u003d false creates a new entry for the a stream (and possibly frame) that wasn\u0027t being monitored and this can cause an extra notification in UpdateStreams().\nDoing the same on line 80 also causes the test to fail.\nRestored to original behavior.",
+      "parentUuid": "3b0bc44a_2293ff4a",
+      "range": {
+        "startLine": 145,
+        "startChar": 1,
+        "endLine": 148,
+        "endChar": 1
+      },
+      "revId": "0fcc9a912eb2da9c2599ff83b167a3bb483a712c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "350c23ed_d4f71277",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-23T14:34:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc3367ca_5a7cbe54",
+      "range": {
+        "startLine": 168,
+        "startChar": 3,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "e21963d6eed346705ac3c5d66c96bb53d10bc0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6896bd1_c52fac7e",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-23T12:07:24Z",
       "side": 1,
       "message": "What\u0027s the use case for a stream without an observer?",
+      "range": {
+        "startLine": 186,
+        "startChar": 35,
+        "endLine": 186,
+        "endChar": 53
+      },
+      "revId": "e21963d6eed346705ac3c5d66c96bb53d10bc0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0998d45_976f5562",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-23T14:34:29Z",
+      "side": 1,
+      "message": "Checking for null observers is intended to cover the case where the observer becomes null due to some mojo issue.",
+      "parentUuid": "a6896bd1_c52fac7e",
       "range": {
         "startLine": 186,
         "startChar": 35,

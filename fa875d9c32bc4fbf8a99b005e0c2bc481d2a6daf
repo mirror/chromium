@@ -609,6 +609,24 @@
     },
     {
       "key": {
+        "uuid": "18bf3322_a390fafe",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-23T14:34:29Z",
+      "side": 1,
+      "message": "Added one such test.",
+      "parentUuid": "6880c122_a8b0fef0",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e029e87_800f173f",
         "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
         "patchSetId": 6
