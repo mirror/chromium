@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f455f6dc_90648675",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T17:04:52Z",
+      "side": 1,
+      "message": "I think guideline is to put comments in interface.",
+      "range": {
+        "startLine": 94,
+        "startChar": 42,
+        "endLine": 94,
+        "endChar": 47
+      },
+      "revId": "b1e9e3d7c1e42f0d14f13a8f4768f0001b7239c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34363c6c_c42b40ee",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T17:04:52Z",
+      "side": 1,
+      "message": "is it a problem to keep a reference to an old webstate if _webStateList is nullptr?",
+      "range": {
+        "startLine": 180,
+        "startChar": 39,
+        "endLine": 180,
+        "endChar": 56
+      },
+      "revId": "b1e9e3d7c1e42f0d14f13a8f4768f0001b7239c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73944cea_55b64a5c",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-23T17:04:52Z",
+      "side": 1,
+      "message": "same question",
+      "range": {
+        "startLine": 184,
+        "startChar": 21,
+        "endLine": 184,
+        "endChar": 32
+      },
+      "revId": "b1e9e3d7c1e42f0d14f13a8f4768f0001b7239c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
