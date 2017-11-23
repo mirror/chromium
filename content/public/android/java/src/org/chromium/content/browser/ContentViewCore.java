@@ -606,18 +606,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     }
 
     /**
-     * @return The amount of the top controls height if controls are in the state
-     *    of shrinking Blink's view size, otherwise 0.
-     */
-    @VisibleForTesting
-    public int getTopControlsShrinkBlinkHeightForTesting() {
-        // TODO(jinsukkim): Let callsites provide with its own top controls height to remove
-        //                  the test-only method in content layer.
-        if (mNativeContentViewCore == 0) return 0;
-        return nativeGetTopControlsShrinkBlinkHeightPixForTesting(mNativeContentViewCore);
-    }
-
-    /**
      * @return The number of pixels (DIPs) each tick of the mouse wheel should scroll.
      */
     @CalledByNative
@@ -1950,9 +1938,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     private native void nativeSetFocus(long nativeContentViewCore, boolean focused);
 
     private native void nativeSetDIPScale(long nativeContentViewCore, float dipScale);
-
-    private native int nativeGetTopControlsShrinkBlinkHeightPixForTesting(
-            long nativeContentViewCore);
 
     private native void nativeSendOrientationChangeEvent(
             long nativeContentViewCore, int orientation);

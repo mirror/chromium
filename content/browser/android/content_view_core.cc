@@ -635,15 +635,6 @@ void ContentViewCore::SetFocusInternal(bool focused) {
     GetRenderWidgetHostViewAndroid()->LostFocus();
 }
 
-int ContentViewCore::GetTopControlsShrinkBlinkHeightPixForTesting(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
-  RenderWidgetHostViewAndroid* rwhv = GetRenderWidgetHostViewAndroid();
-  return !rwhv || !rwhv->DoBrowserControlsShrinkBlinkSize()
-             ? 0
-             : rwhv->GetTopControlsHeight() * dpi_scale_;
-}
-
 void ContentViewCore::SendOrientationChangeEvent(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
