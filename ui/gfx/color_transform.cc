@@ -116,6 +116,13 @@ float FromLinear(ColorSpace::TransferID id, float v) {
       return a * log(v - b) + c;
     }
 
+    case ColorSpace::TransferID::PSEUDO_HDR: {
+      v /= 5.0f;
+      v = max(v, 0.0f);
+      v = pow(v, 1.0f / 2.2f);
+      return v;
+    }
+
     default:
       // Handled by SkColorSpaceTransferFn.
       break;
@@ -191,6 +198,12 @@ float ToLinear(ColorSpace::TransferID id, float v) {
       if (v <= 0.5f)
         return (v * 2.0f) * (v * 2.0f);
       return exp((v - c) / a) + b;
+    }
+
+    case ColorSpace::TransferID::PSEUDO_HDR: {
+      v = max(v, 0.0f);
+      v = pow(v, 2.2f);
+      return v * 5.0f;
     }
 
     default:
@@ -550,6 +563,25 @@ class ColorTransformFromLinear : public ColorTransformPerChannelTransferFn {
                 "    return 0.5 * sqrt(v);\n"
                 "  return a * log(v - b) + c;\n";
         return;
+
+      case ColorSpace::TransferID::PSEUDO_HDR:
+        *src << "  v /= 5.0;\n"
+                "  v = max(v, 0.0);\n"
+                "  v = pow(v, 1.0 / 2.2);\n"
+                "  int x_mod = int(mod(gl_FragCoord.x, 4.0));\n"
+                "  int y_mod = int(mod(gl_FragCoord.y, 4.0));\n"
+                "  vec4 tmp;\n"
+                "  if (x_mod == 0) tmp = vec4(0.0, 8.0, 2.0, 10.0);\n"
+                "  if (x_mod == 1) tmp = vec4(12.0, 4.0, 14.0, 6.0);\n"
+                "  if (x_mod == 2) tmp = vec4(3.0, 11.0, 1.0, 9.0);\n"
+                "  if (x_mod == 3) tmp = vec4(15.0, 7.0, 13.0, 5.0);\n"
+                "  if (y_mod == 0) v += (tmp.x-7.5) / 16.0 / 255.0;\n"
+                "  if (y_mod == 1) v += (tmp.y-7.5) / 16.0 / 255.0;;\n"
+                "  if (y_mod == 2) v += (tmp.z-7.5) / 16.0 / 255.0;;\n"
+                "  if (y_mod == 3) v += (tmp.w-7.5) / 16.0 / 255.0;;\n"
+                "  return v;\n";
+        return;
+
       default:
         break;
     }
@@ -621,9 +653,14 @@ class ColorTransformToLinear : public ColorTransformPerChannelTransferFn {
                 "  float c1 = 3424.0 / 4096.0;\n"
                 "  float c2 = (2413.0 / 4096.0) * 32.0;\n"
                 "  float c3 = (2392.0 / 4096.0) * 32.0;\n"
-                "  v = pow(max(pow(v, 1.0 / m2) - c1, 0.0) /\n"
+                "  #ifdef GL_FRAGMENT_PRECISION_HIGH\n"
+                "  highp float v2;\n"
+                "  #else\n"
+                "  float v2;\n"
+                "  #endif\n"
+                "  v2 = pow(max(pow(v, 1.0 / m2) - c1, 0.0) /\n"
                 "              (c2 - c3 * pow(v, 1.0 / m2)), 1.0 / m1);\n"
-                "  v *= 10000.0 / 80.0;\n"
+                "  v = v2 * 10000.0 / 80.0;\n"
                 "  return v;\n";
         return;
       case ColorSpace::TransferID::SMPTEST2084_NON_HDR:
@@ -638,6 +675,11 @@ class ColorTransformToLinear : public ColorTransformPerChannelTransferFn {
                 "  if (v <= 0.5)\n"
                 "    return (v * 2.0) * (v * 2.0);\n"
                 "  return exp((v - c) / a) + b;\n";
+        return;
+      case ColorSpace::TransferID::PSEUDO_HDR:
+        *src << "  v = max(v, 0.0);\n"
+                "  v = pow(v, 2.2);\n"
+                " return v * 5.0;\n";
         return;
       default:
         break;
