@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/vr/ui_scene_manager.h"
+#include "chrome/browser/vr/ui_scene_creator.h"
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -160,7 +160,7 @@ TransientElement* AddTransientParent(UiElementName name,
 
 }  // namespace
 
-UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
+UiSceneCreator::UiSceneCreator(UiBrowserInterface* browser,
                                UiScene* scene,
                                ContentInputDelegate* content_input_delegate,
                                Model* model)
@@ -169,9 +169,9 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
       content_input_delegate_(content_input_delegate),
       model_(model) {}
 
-UiSceneManager::~UiSceneManager() {}
+UiSceneCreator::~UiSceneCreator() {}
 
-void UiSceneManager::CreateScene() {
+void UiSceneCreator::CreateScene() {
   Create2dBrowsingSubtreeRoots();
   CreateWebVrRoot();
   CreateBackground();
@@ -193,7 +193,7 @@ void UiSceneManager::CreateScene() {
   CreateController();
 }
 
-void UiSceneManager::Create2dBrowsingSubtreeRoots() {
+void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
   auto element = base::MakeUnique<UiElement>();
   element->set_name(k2dBrowsingRoot);
   element->SetVisible(true);
@@ -252,7 +252,7 @@ void UiSceneManager::Create2dBrowsingSubtreeRoots() {
   scene_->AddUiElement(k2dBrowsingForeground, std::move(element));
 }
 
-void UiSceneManager::CreateWebVrRoot() {
+void UiSceneCreator::CreateWebVrRoot() {
   auto element = base::MakeUnique<UiElement>();
   element->set_name(kWebVrRoot);
   element->SetVisible(true);
@@ -263,7 +263,7 @@ void UiSceneManager::CreateWebVrRoot() {
   scene_->AddUiElement(kRoot, std::move(element));
 }
 
-void UiSceneManager::CreateWebVRExitWarning() {
+void UiSceneCreator::CreateWebVRExitWarning() {
   auto scrim = base::MakeUnique<FullScreenRect>();
   scrim->set_name(kScreenDimmer);
   scrim->set_draw_phase(kPhaseOverlayBackground);
@@ -293,7 +293,7 @@ void UiSceneManager::CreateWebVRExitWarning() {
   scene_->AddUiElement(k2dBrowsingViewportAwareRoot, std::move(exit_warning));
 }
 
-void UiSceneManager::CreateSystemIndicators() {
+void UiSceneCreator::CreateSystemIndicators() {
   struct Indicator {
     UiElementName name;
     const gfx::VectorIcon& icon;
@@ -358,7 +358,7 @@ void UiSceneManager::CreateSystemIndicators() {
   }
 }
 
-void UiSceneManager::CreateContentQuad() {
+void UiSceneCreator::CreateContentQuad() {
   // Place an invisible but hittable plane behind the content quad, to keep the
   // reticle roughly planar with the content if near content.
   auto hit_plane = base::MakeUnique<InvisibleHitTarget>();
@@ -572,7 +572,7 @@ void UiSceneManager::CreateWebVrTimeoutScreen() {
   scene_->AddUiElement(kWebVrTimeoutMessageButton, std::move(timeout_text));
 }
 
-void UiSceneManager::CreateUnderDevelopmentNotice() {
+void UiSceneCreator::CreateUnderDevelopmentNotice() {
   auto text = base::MakeUnique<Text>(512, kUnderDevelopmentNoticeFontHeightM,
                                      kUnderDevelopmentNoticeWidthM);
   BindColor(model_, text.get(), &ColorScheme::world_background_text,
@@ -589,7 +589,7 @@ void UiSceneManager::CreateUnderDevelopmentNotice() {
   scene_->AddUiElement(kUrlBar, std::move(text));
 }
 
-void UiSceneManager::CreateBackground() {
+void UiSceneCreator::CreateBackground() {
   // Background solid-color panels.
   struct Panel {
     UiElementName name;
@@ -657,7 +657,7 @@ void UiSceneManager::CreateBackground() {
   scene_->set_first_foreground_draw_phase(kPhaseForeground);
 }
 
-void UiSceneManager::CreateViewportAwareRoot() {
+void UiSceneCreator::CreateViewportAwareRoot() {
   auto element = base::MakeUnique<ViewportAwareRoot>();
   element->set_name(kWebVrViewportAwareRoot);
   element->SetVisible(true);
@@ -671,7 +671,7 @@ void UiSceneManager::CreateViewportAwareRoot() {
   scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
 }
 
-void UiSceneManager::CreateVoiceSearchUiGroup() {
+void UiSceneCreator::CreateVoiceSearchUiGroup() {
   auto voice_search_button = base::MakeUnique<Button>(
       base::Bind(&UiBrowserInterface::SetVoiceSearchActive,
                  base::Unretained(browser_), true),
@@ -859,7 +859,7 @@ void UiSceneManager::CreateVoiceSearchUiGroup() {
                  base::Unretained(browser_foregroud))));
 }
 
-void UiSceneManager::CreateController() {
+void UiSceneCreator::CreateController() {
   auto root = base::MakeUnique<UiElement>();
   root->set_name(kControllerRoot);
   root->SetVisible(true);
@@ -921,7 +921,7 @@ void UiSceneManager::CreateController() {
   scene_->AddUiElement(kControllerGroup, std::move(reticle));
 }
 
-void UiSceneManager::CreateUrlBar() {
+void UiSceneCreator::CreateUrlBar() {
   auto url_bar = base::MakeUnique<UrlBar>(
       512,
       base::Bind(&UiBrowserInterface::NavigateBack, base::Unretained(browser_)),
@@ -983,7 +983,7 @@ void UiSceneManager::CreateUrlBar() {
   scene_->AddUiElement(kLoadingIndicator, std::move(indicator_fg));
 }
 
-void UiSceneManager::CreateOmnibox() {
+void UiSceneCreator::CreateOmnibox() {
   auto omnibox_root = base::MakeUnique<UiElement>();
   omnibox_root->set_name(kOmniboxRoot);
   omnibox_root->set_draw_phase(kPhaseNone);
@@ -1054,7 +1054,7 @@ void UiSceneManager::CreateOmnibox() {
   scene_->AddUiElement(kOmniboxContainer, std::move(suggestions_layout));
 }
 
-void UiSceneManager::CreateWebVrUrlToast() {
+void UiSceneCreator::CreateWebVrUrlToast() {
   auto* parent =
       AddTransientParent(kWebVrUrlToastTransientParent, kWebVrViewportAwareRoot,
                          kWebVrUrlToastTimeoutSeconds, true, scene_);
@@ -1087,7 +1087,7 @@ void UiSceneManager::CreateWebVrUrlToast() {
   scene_->AddUiElement(kWebVrUrlToastTransientParent, std::move(element));
 }
 
-void UiSceneManager::CreateCloseButton() {
+void UiSceneCreator::CreateCloseButton() {
   std::unique_ptr<Button> element = base::MakeUnique<Button>(
       base::Bind(
           [](Model* model, UiBrowserInterface* browser) {
@@ -1128,7 +1128,7 @@ void UiSceneManager::CreateCloseButton() {
   scene_->AddUiElement(k2dBrowsingForeground, std::move(element));
 }
 
-void UiSceneManager::CreateExitPrompt() {
+void UiSceneCreator::CreateExitPrompt() {
   std::unique_ptr<UiElement> element;
 
   // Place an invisible but hittable plane behind the exit prompt, to keep the
@@ -1194,7 +1194,7 @@ void UiSceneManager::CreateExitPrompt() {
   scene_->AddUiElement(kExitPromptBackplane, std::move(exit_prompt));
 }
 
-void UiSceneManager::CreateAudioPermissionPrompt() {
+void UiSceneCreator::CreateAudioPermissionPrompt() {
   std::unique_ptr<UiElement> element;
 
   // Place an invisible but hittable plane behind the exit prompt, to keep the
@@ -1260,7 +1260,7 @@ void UiSceneManager::CreateAudioPermissionPrompt() {
   scene_->AddUiElement(k2dBrowsingRoot, std::move(backplane));
 }
 
-void UiSceneManager::CreateToasts() {
+void UiSceneCreator::CreateToasts() {
   // Create fullscreen toast.
   auto* parent = AddTransientParent(kExclusiveScreenToastTransientParent,
                                     k2dBrowsingForeground, kToastTimeoutSeconds,
