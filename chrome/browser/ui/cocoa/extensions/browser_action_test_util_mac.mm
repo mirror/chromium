@@ -104,6 +104,7 @@ BrowserActionTestUtil::BrowserActionTestUtil(Browser* browser)
 BrowserActionTestUtil::BrowserActionTestUtil(Browser* browser,
                                              bool is_real_window)
     : browser_(browser) {
+  DCHECK(browser_);
   if (!is_real_window)
     test_helper_.reset(new TestToolbarActionsBarHelperCocoa(browser, nullptr));
   // We disable animations on extension popups so that tests aren't waiting for

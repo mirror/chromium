@@ -153,6 +153,8 @@ ExtensionContextMenuModel::ExtensionContextMenuModel(
       delegate_(delegate),
       action_type_(NO_ACTION),
       button_visibility_(button_visibility) {
+  DCHECK(profile_);
+  DCHECK(delegate_);
   InitMenu(extension, button_visibility);
 }
 
@@ -255,8 +257,8 @@ void ExtensionContextMenuModel::ExecuteCommand(int command_id,
       break;
     case TOGGLE_VISIBILITY: {
       bool currently_visible = button_visibility_ == VISIBLE;
-      ToolbarActionsModel::Get(browser_->profile())
-          ->SetActionVisibility(extension->id(), !currently_visible);
+      ToolbarActionsModel::Get(profile_)->SetActionVisibility(
+          extension->id(), !currently_visible);
       break;
     }
     case UNINSTALL: {
@@ -341,8 +343,8 @@ void ExtensionContextMenuModel::InitMenu(const Extension* extension,
   const ActionInfo* action_info = ActionInfo::GetPageActionInfo(extension);
   if (!action_info)
     action_info = ActionInfo::GetBrowserActionInfo(extension);
-  if (profile_->GetPrefs()->GetBoolean(prefs::kExtensionsUIDeveloperMode) &&
-      delegate_ && !is_component_ && action_info && !action_info->synthesized) {
+  if (!is_component_ && action_info && !action_info->synthesized &&
+      profile_->GetPrefs()->GetBoolean(prefs::kExtensionsUIDeveloperMode)) {
     AddSeparator(ui::NORMAL_SEPARATOR);
     AddItemWithStringId(INSPECT_POPUP, IDS_EXTENSION_ACTION_INSPECT_POPUP);
   }

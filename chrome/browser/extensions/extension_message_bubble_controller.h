@@ -211,11 +211,11 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver,
 
   std::set<Profile*>* GetProfileSet();
 
-  // A weak pointer to the Browser we are associated with. Not owned by us.
+  // The associated Browser. Not owned and never nullptr.
   Browser* const browser_;
 
-  // The associated ToolbarActionsModel. Not owned.
-  ToolbarActionsModel* model_;
+  // The associated ToolbarActionsModel. Not owned and never nullptr.
+  ToolbarActionsModel* const model_;
 
   // The list of extensions found.
   ExtensionIdList extension_list_;
