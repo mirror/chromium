@@ -63,8 +63,8 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   scoped_refptr<NGConstraintSpace> CreateConstraintSpaceForChild(
       const NGLayoutInputNode child,
       const NGInflowChildData& child_data,
-      const WTF::Optional<NGBfcOffset> floats_bfc_offset = WTF::nullopt,
-      const WTF::Optional<LayoutUnit> fixed_inline_size = WTF::nullopt);
+      const WTF::Optional<NGBfcOffset>& floats_bfc_offset = WTF::nullopt,
+      const WTF::Optional<LayoutUnit>& fixed_inline_size = WTF::nullopt);
 
   // @return Estimated BFC offset for the "to be layout" child.
   NGInflowChildData ComputeChildData(const NGPreviousInflowPosition&,

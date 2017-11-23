@@ -5,6 +5,8 @@
 #ifndef CSSTranslateInterpolationType_h
 #define CSSTranslateInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSTranslateInterpolationType : public CSSInterpolationType {
  public:
   CSSTranslateInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+      : CSSInterpolationType(std::move(property)) {
     DCHECK_EQ(CssProperty(), CSSPropertyTranslate);
   }
 

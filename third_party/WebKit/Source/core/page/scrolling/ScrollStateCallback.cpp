@@ -9,7 +9,7 @@
 namespace blink {
 
 WebNativeScrollBehavior ScrollStateCallback::ToNativeScrollBehavior(
-    String native_scroll_behavior) {
+    const String& native_scroll_behavior) {
   static const char kDisable[] = "disable-native-scroll";
   static const char kBefore[] = "perform-before-native-scroll";
   static const char kAfter[] = "perform-after-native-scroll";

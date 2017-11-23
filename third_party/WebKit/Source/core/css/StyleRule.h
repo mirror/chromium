@@ -22,6 +22,8 @@
 #ifndef StyleRule_h
 #define StyleRule_h
 
+#include <utility>
+
 #include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSPropertyValueSet.h"
@@ -241,7 +243,7 @@ class CORE_EXPORT StyleRuleMedia : public StyleRuleCondition {
   static StyleRuleMedia* Create(
       scoped_refptr<MediaQuerySet> media,
       HeapVector<Member<StyleRuleBase>>& adopt_rules) {
-    return new StyleRuleMedia(media, adopt_rules);
+    return new StyleRuleMedia(std::move(media), adopt_rules);
   }
 
   MediaQuerySet* MediaQueries() const { return media_queries_.get(); }

@@ -64,8 +64,9 @@ DOMMatrix* DOMMatrix::CreateForSerialization(double sequence[], int size) {
   return new DOMMatrix(sequence, size);
 }
 
-DOMMatrix* DOMMatrix::fromFloat32Array(NotShared<DOMFloat32Array> float32_array,
-                                       ExceptionState& exception_state) {
+DOMMatrix* DOMMatrix::fromFloat32Array(
+    const NotShared<DOMFloat32Array>& float32_array,
+    ExceptionState& exception_state) {
   if (float32_array.View()->length() != 6 &&
       float32_array.View()->length() != 16) {
     exception_state.ThrowTypeError(
@@ -77,8 +78,9 @@ DOMMatrix* DOMMatrix::fromFloat32Array(NotShared<DOMFloat32Array> float32_array,
                        float32_array.View()->length());
 }
 
-DOMMatrix* DOMMatrix::fromFloat64Array(NotShared<DOMFloat64Array> float64_array,
-                                       ExceptionState& exception_state) {
+DOMMatrix* DOMMatrix::fromFloat64Array(
+    const NotShared<DOMFloat64Array>& float64_array,
+    ExceptionState& exception_state) {
   if (float64_array.View()->length() != 6 &&
       float64_array.View()->length() != 16) {
     exception_state.ThrowTypeError(

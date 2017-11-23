@@ -184,7 +184,7 @@ class Serializer final {
 
  private:
   void HandleCharacterData(const CharacterData& node) {
-    const String text = node.data();
+    const String& text = node.data();
     if (selection_.IsNone()) {
       builder_.Append(text);
       return;

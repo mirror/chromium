@@ -85,7 +85,7 @@ void FrameConsole::ReportMessageToClient(MessageSource source,
   if (source == kNetworkMessageSource)
     return;
 
-  String url = location->Url();
+  const String& url = location->Url();
   String stack_trace;
   if (source == kConsoleAPIMessageSource) {
     if (!frame_->GetPage())

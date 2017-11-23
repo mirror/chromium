@@ -344,7 +344,7 @@ class CORE_EXPORT WebLocalFrameImpl final
                                               InterfaceRegistry*,
                                               WebRemoteFrame*,
                                               WebSandboxFlags,
-                                              ParsedFeaturePolicy);
+                                              const ParsedFeaturePolicy&);
 
   ~WebLocalFrameImpl() override;
 

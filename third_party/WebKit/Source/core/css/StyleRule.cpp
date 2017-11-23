@@ -21,6 +21,8 @@
 
 #include "core/css/StyleRule.h"
 
+#include <utility>
+
 #include "core/css/CSSFontFaceRule.h"
 #include "core/css/CSSImportRule.h"
 #include "core/css/CSSKeyframesRule.h"
@@ -355,7 +357,8 @@ StyleRuleCondition::StyleRuleCondition(const StyleRuleCondition& condition_rule)
 
 StyleRuleMedia::StyleRuleMedia(scoped_refptr<MediaQuerySet> media,
                                HeapVector<Member<StyleRuleBase>>& adopt_rules)
-    : StyleRuleCondition(kMedia, adopt_rules), media_queries_(media) {}
+    : StyleRuleCondition(kMedia, adopt_rules),
+      media_queries_(std::move(media)) {}
 
 StyleRuleMedia::StyleRuleMedia(const StyleRuleMedia& media_rule)
     : StyleRuleCondition(media_rule) {

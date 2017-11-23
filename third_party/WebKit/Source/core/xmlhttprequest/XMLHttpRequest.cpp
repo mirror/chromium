@@ -981,7 +981,7 @@ void XMLHttpRequest::SendBytesData(const void* data,
 }
 
 void XMLHttpRequest::SendForInspectorXHRReplay(
-    scoped_refptr<EncodedFormData> form_data,
+    const scoped_refptr<EncodedFormData>& form_data,
     ExceptionState& exception_state) {
   CreateRequest(form_data ? form_data->DeepCopy() : nullptr, exception_state);
   exception_code_ = exception_state.Code();

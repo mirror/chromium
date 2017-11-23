@@ -120,7 +120,7 @@ Response InspectorApplicationCacheAgent::getFramesWithManifests(
 }
 
 Response InspectorApplicationCacheAgent::AssertFrameWithDocumentLoader(
-    String frame_id,
+    const String& frame_id,
     DocumentLoader*& result) {
   LocalFrame* frame =
       IdentifiersFactory::FrameById(inspected_frames_, frame_id);

@@ -268,7 +268,7 @@ HeapVector<Member<Element>> TreeScope::ElementsFromHitTestResult(
   HeapVector<Member<Element>> elements;
 
   Node* last_node = nullptr;
-  for (const auto rect_based_node : result.ListBasedTestResult()) {
+  for (const auto& rect_based_node : result.ListBasedTestResult()) {
     Node* node = rect_based_node.Get();
     if (!node || !node->IsElementNode() || node->IsDocumentNode())
       continue;

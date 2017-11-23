@@ -6,6 +6,8 @@
 #ifndef FontFaceSet_h
 #define FontFaceSet_h
 
+#include <utility>
+
 #include "base/macros.h"
 #include "bindings/core/v8/Iterable.h"
 #include "bindings/core/v8/ScriptPromise.h"
@@ -144,7 +146,7 @@ class CORE_EXPORT FontFaceSet : public EventTargetWithInlineData,
    public:
     static LoadFontPromiseResolver* Create(FontFaceArray faces,
                                            ScriptState* script_state) {
-      return new LoadFontPromiseResolver(faces, script_state);
+      return new LoadFontPromiseResolver(std::move(faces), script_state);
     }
 
     void LoadFonts();

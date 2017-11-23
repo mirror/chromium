@@ -5,6 +5,8 @@
 #ifndef CSSPathInterpolationType_h
 #define CSSPathInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSPathInterpolationType : public CSSInterpolationType {
  public:
   CSSPathInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+      : CSSInterpolationType(std::move(property)) {}
 
   void ApplyStandardPropertyValue(const InterpolableValue&,
                                   const NonInterpolableValue*,

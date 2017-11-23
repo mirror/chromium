@@ -28,6 +28,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <utility>
+
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/ShadowRoot.h"
@@ -117,7 +119,8 @@ class TouchActionTest : public ::testing::Test {
   void RunShadowDOMTest(std::string file);
   void RunIFrameTest(std::string file);
   void SendTouchEvent(WebView*, WebInputEvent::Type, IntPoint client_point);
-  WebViewImpl* SetupTest(std::string file, TouchActionTrackingWebWidgetClient&);
+  WebViewImpl* SetupTest(const std::string& file,
+                         TouchActionTrackingWebWidgetClient&);
   void RunTestOnTree(ContainerNode* root,
                      WebView*,
                      TouchActionTrackingWebWidgetClient&);
@@ -139,7 +142,7 @@ void TouchActionTest::RunTouchActionTest(std::string file) {
   // turn them into persistent, stack allocated references. This
   // workaround is sufficient to handle this artificial test
   // scenario.
-  WebViewImpl* web_view = SetupTest(file, client);
+  WebViewImpl* web_view = SetupTest(std::move(file), client);
 
   Persistent<Document> document =
       static_cast<Document*>(web_view->MainFrameImpl()->GetDocument());
@@ -152,7 +155,7 @@ void TouchActionTest::RunTouchActionTest(std::string file) {
 void TouchActionTest::RunShadowDOMTest(std::string file) {
   TouchActionTrackingWebWidgetClient client;
 
-  WebViewImpl* web_view = SetupTest(file, client);
+  WebViewImpl* web_view = SetupTest(std::move(file), client);
 
   DummyExceptionStateForTesting es;
 
@@ -180,7 +183,7 @@ void TouchActionTest::RunShadowDOMTest(std::string file) {
 void TouchActionTest::RunIFrameTest(std::string file) {
   TouchActionTrackingWebWidgetClient client;
 
-  WebViewImpl* web_view = SetupTest(file, client);
+  WebViewImpl* web_view = SetupTest(std::move(file), client);
   WebFrame* cur_frame = web_view->MainFrame()->FirstChild();
   ASSERT_TRUE(cur_frame);
 
@@ -197,7 +200,7 @@ void TouchActionTest::RunIFrameTest(std::string file) {
 }
 
 WebViewImpl* TouchActionTest::SetupTest(
-    std::string file,
+    const std::string& file,
     TouchActionTrackingWebWidgetClient& client) {
   URLTestHelpers::RegisterMockedURLLoadFromBase(WebString::FromUTF8(base_url_),
                                                 testing::CoreTestDataPath(),

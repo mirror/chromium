@@ -30,7 +30,7 @@ bool ConsumeCharacterAndWhitespace(const String& string,
   return true;
 }
 
-CSSSyntaxType ParseSyntaxType(String type) {
+CSSSyntaxType ParseSyntaxType(const String& type) {
   // TODO(timloh): Are these supposed to be case sensitive?
   if (type == "length")
     return CSSSyntaxType::kLength;

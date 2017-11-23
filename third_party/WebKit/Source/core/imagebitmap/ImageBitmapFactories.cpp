@@ -31,6 +31,7 @@
 #include "core/imagebitmap/ImageBitmapFactories.h"
 
 #include <memory>
+#include <utility>
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/DOMException.h"
@@ -129,7 +130,7 @@ ScriptPromise ImageBitmapFactories::CreateImageBitmapFromBlob(
     const ImageBitmapOptions& options) {
   Blob* blob = static_cast<Blob*>(bitmap_source);
   ImageBitmapLoader* loader = ImageBitmapFactories::ImageBitmapLoader::Create(
-      From(event_target), crop_rect, options, script_state);
+      From(event_target), std::move(crop_rect), options, script_state);
   ScriptPromise promise = loader->Promise();
   From(event_target).AddLoader(loader);
   loader->LoadBlobAsync(event_target.GetExecutionContext(), blob);
@@ -249,7 +250,7 @@ ImageBitmapFactories::ImageBitmapLoader::ImageBitmapLoader(
           FileReaderLoader::Create(FileReaderLoader::kReadAsArrayBuffer, this)),
       factory_(&factory),
       resolver_(ScriptPromiseResolver::Create(script_state)),
-      crop_rect_(crop_rect),
+      crop_rect_(std::move(crop_rect)),
       options_(options) {}
 
 void ImageBitmapFactories::ImageBitmapLoader::LoadBlobAsync(
@@ -308,7 +309,7 @@ void ImageBitmapFactories::ImageBitmapLoader::ScheduleAsyncImageBitmapDecoding(
 }
 
 void ImageBitmapFactories::ImageBitmapLoader::DecodeImageOnDecoderThread(
-    scoped_refptr<WebTaskRunner> task_runner,
+    const scoped_refptr<WebTaskRunner>& task_runner,
     DOMArrayBuffer* array_buffer,
     const String& premultiply_alpha_option,
     const String& color_space_conversion_option) {

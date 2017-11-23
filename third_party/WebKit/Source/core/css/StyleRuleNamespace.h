@@ -5,6 +5,8 @@
 #ifndef StyleRuleNamespace_h
 #define StyleRuleNamespace_h
 
+#include <utility>
+
 #include "core/css/StyleRule.h"
 
 namespace blink {
@@ -14,7 +16,7 @@ namespace blink {
 class StyleRuleNamespace final : public StyleRuleBase {
  public:
   static StyleRuleNamespace* Create(AtomicString prefix, AtomicString uri) {
-    return new StyleRuleNamespace(prefix, uri);
+    return new StyleRuleNamespace(std::move(prefix), std::move(uri));
   }
 
   StyleRuleNamespace* Copy() const {
@@ -30,7 +32,9 @@ class StyleRuleNamespace final : public StyleRuleBase {
 
  private:
   StyleRuleNamespace(AtomicString prefix, AtomicString uri)
-      : StyleRuleBase(kNamespace), prefix_(prefix), uri_(uri) {}
+      : StyleRuleBase(kNamespace),
+        prefix_(std::move(prefix)),
+        uri_(std::move(uri)) {}
 
   AtomicString prefix_;
   AtomicString uri_;

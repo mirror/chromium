@@ -28,7 +28,7 @@ class CORE_EXPORT ReadableStreamOperations {
   // negative sizes, or doesn't have appropriate properties), this will crash.
   static ScriptValue CreateReadableStream(ScriptState*,
                                           UnderlyingSourceBase*,
-                                          ScriptValue strategy);
+                                          const ScriptValue& strategy);
 
   // createBuiltInCountQueuingStrategy
   static ScriptValue CreateCountQueuingStrategy(ScriptState*,
@@ -39,43 +39,44 @@ class CORE_EXPORT ReadableStreamOperations {
   // Returns an empty value and throws an error via the ExceptionState when
   // errored.
   static ScriptValue GetReader(ScriptState*,
-                               ScriptValue stream,
+                               const ScriptValue& stream,
                                ExceptionState&);
 
   // IsReadableStream
-  static bool IsReadableStream(ScriptState*, ScriptValue);
+  static bool IsReadableStream(ScriptState*, const ScriptValue&);
 
   // IsReadableStreamDisturbed
   // This function assumes |isReadableStream(stream)|.
-  static bool IsDisturbed(ScriptState*, ScriptValue stream);
+  static bool IsDisturbed(ScriptState*, const ScriptValue& stream);
 
   // IsReadableStreamLocked
   // This function assumes |isReadableStream(stream)|.
-  static bool IsLocked(ScriptState*, ScriptValue stream);
+  static bool IsLocked(ScriptState*, const ScriptValue& stream);
 
   // IsReadableStreamReadable
   // This function assumes |isReadableStream(stream)|.
-  static bool IsReadable(ScriptState*, ScriptValue stream);
+  static bool IsReadable(ScriptState*, const ScriptValue& stream);
 
   // IsReadableStreamClosed
   // This function assumes |isReadableStream(stream)|.
-  static bool IsClosed(ScriptState*, ScriptValue stream);
+  static bool IsClosed(ScriptState*, const ScriptValue& stream);
 
   // IsReadableStreamErrored
   // This function assumes |isReadableStream(stream)|.
-  static bool IsErrored(ScriptState*, ScriptValue stream);
+  static bool IsErrored(ScriptState*, const ScriptValue& stream);
 
   // IsReadableStreamDefaultReader
-  static bool IsReadableStreamDefaultReader(ScriptState*, ScriptValue);
+  static bool IsReadableStreamDefaultReader(ScriptState*, const ScriptValue&);
 
   // ReadableStreamDefaultReaderRead
   // This function assumes |isReadableStreamDefaultReader(reader)|.
-  static ScriptPromise DefaultReaderRead(ScriptState*, ScriptValue reader);
+  static ScriptPromise DefaultReaderRead(ScriptState*,
+                                         const ScriptValue& reader);
 
   // ReadableStreamTee
   // This function assumes |isReadableStream(stream)| and |!isLocked(stream)|
   static void Tee(ScriptState*,
-                  ScriptValue stream,
+                  const ScriptValue& stream,
                   ScriptValue* new_stream1,
                   ScriptValue* new_stream2);
 };

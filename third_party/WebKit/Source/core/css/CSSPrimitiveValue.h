@@ -260,7 +260,7 @@ class CORE_EXPORT CSSPrimitiveValue : public CSSValue {
   inline T ConvertTo() const;  // Defined in CSSPrimitiveValueMappings.h
 
   static const char* UnitTypeToString(UnitType);
-  static UnitType StringToUnitType(StringView string) {
+  static UnitType StringToUnitType(const StringView& string) {
     if (string.Is8Bit())
       return StringToUnitType(string.Characters8(), string.length());
     return StringToUnitType(string.Characters16(), string.length());

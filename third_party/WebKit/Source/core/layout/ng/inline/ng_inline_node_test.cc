@@ -75,7 +75,7 @@ class NGInlineNodeTest : public NGLayoutTest {
     style_->GetFont().Update(nullptr);
   }
 
-  void SetupHtml(const char* id, String html) {
+  void SetupHtml(const char* id, const String& html) {
     SetBodyInnerHTML(html);
     layout_block_flow_ = ToLayoutNGBlockFlow(GetLayoutObjectByElementId(id));
     layout_object_ = layout_block_flow_->FirstChild();

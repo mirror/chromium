@@ -189,7 +189,7 @@ static void TokenizeDescriptors(const CharType* attribute_start,
   }
 }
 
-static void SrcsetError(Document* document, String message) {
+static void SrcsetError(Document* document, const String& message) {
   if (document && document->GetFrame()) {
     StringBuilder error_message;
     error_message.Append("Failed parsing 'srcset' attribute value since ");

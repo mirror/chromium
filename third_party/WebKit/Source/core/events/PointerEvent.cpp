@@ -106,7 +106,7 @@ void PointerEvent::ReceivedTarget() {
 
 HeapVector<Member<PointerEvent>> PointerEvent::getCoalescedEvents() {
   if (coalesced_events_targets_dirty_) {
-    for (auto coalesced_event : coalesced_events_)
+    for (const auto& coalesced_event : coalesced_events_)
       coalesced_event->SetTarget(target());
     coalesced_events_targets_dirty_ = false;
   }

@@ -1688,7 +1688,7 @@ void Converter::Visit(const SupportsRule& supports_rule, int depth) {
 
 void Converter::AppendBinarySupportsCondition(
     const BinarySupportsCondition& binary_condition,
-    std::string binary_operator,
+    const std::string& binary_operator,
     int depth) {
   Visit(binary_condition.condition_1(), depth);
   string_ += " " + binary_operator + " ";

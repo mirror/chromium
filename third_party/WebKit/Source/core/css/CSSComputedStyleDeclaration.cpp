@@ -24,6 +24,8 @@
 
 #include "core/css/CSSComputedStyleDeclaration.h"
 
+#include <utility>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSIdentifierValue.h"
@@ -313,7 +315,7 @@ const CSSValue* CSSComputedStyleDeclaration::GetPropertyCSSValue(
   // Don't use styled_node in case it was discarded or replaced in
   // UpdateStyleAndLayoutTreeForNode.
   return ComputedStyleCSSValueMapping::Get(
-      custom_property_name, *style,
+      std::move(custom_property_name), *style,
       StyledNode()->GetDocument().GetPropertyRegistry());
 }
 

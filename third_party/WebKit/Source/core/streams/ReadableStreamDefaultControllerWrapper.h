@@ -21,7 +21,7 @@ class CORE_EXPORT ReadableStreamDefaultControllerWrapper final
  public:
   void Trace(blink::Visitor* visitor) {}
 
-  explicit ReadableStreamDefaultControllerWrapper(ScriptValue controller)
+  explicit ReadableStreamDefaultControllerWrapper(const ScriptValue& controller)
       : script_state_(controller.GetScriptState()),
         js_controller_(controller.GetIsolate(), controller.V8Value()) {
     js_controller_.SetPhantom();

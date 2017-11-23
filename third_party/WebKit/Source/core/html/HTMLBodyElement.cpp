@@ -101,7 +101,7 @@ void HTMLBodyElement::ParseAttribute(
         GetDocument().GetTextLinkColors().ResetActiveLinkColor();
     } else {
       Color color;
-      String string_value = value;
+      const String& string_value = value;
       if (!HTMLElement::ParseColorWithLegacyRules(string_value, color))
         return;
 

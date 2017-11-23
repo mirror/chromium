@@ -75,14 +75,14 @@ class CORE_EXPORT ImageData final : public ScriptWrappable,
                            CanvasColorSpace,
                            ImageDataStorageFormat);
   static ImageData* Create(const IntSize&,
-                           NotShared<DOMArrayBufferView>,
+                           const NotShared<DOMArrayBufferView>&,
                            const ImageDataColorSettings* = nullptr);
 
   static ImageData* Create(unsigned width, unsigned height, ExceptionState&);
-  static ImageData* Create(NotShared<DOMUint8ClampedArray>,
+  static ImageData* Create(const NotShared<DOMUint8ClampedArray>&,
                            unsigned width,
                            ExceptionState&);
-  static ImageData* Create(NotShared<DOMUint8ClampedArray>,
+  static ImageData* Create(const NotShared<DOMUint8ClampedArray>&,
                            unsigned width,
                            unsigned height,
                            ExceptionState&);

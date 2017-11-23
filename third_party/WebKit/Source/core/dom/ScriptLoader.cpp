@@ -500,7 +500,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
       case ScriptType::kModule: {
         // 1. "Let base URL be the script element's node document's document
         //     base URL."
-        KURL base_url = element_document.BaseURL();
+        const KURL& base_url = element_document.BaseURL();
 
         // 2. "Let script be the result of creating a module script using
         //     source text, settings, base URL, cryptographic nonce,

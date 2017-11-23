@@ -16,13 +16,13 @@ namespace blink {
 namespace {
 
 bool AbsoluteHorizontalNeedsEstimate(const ComputedStyle& style) {
-  Length width = style.Width();
+  const Length& width = style.Width();
   return width.IsIntrinsic() ||
          (width.IsAuto() && (style.Left().IsAuto() || style.Right().IsAuto()));
 }
 
 bool AbsoluteVerticalNeedsEstimate(const ComputedStyle& style) {
-  Length height = style.Height();
+  const Length& height = style.Height();
   return height.IsIntrinsic() ||
          (height.IsAuto() && (style.Top().IsAuto() || style.Bottom().IsAuto()));
 }

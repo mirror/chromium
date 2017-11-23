@@ -5,6 +5,8 @@
 #ifndef NGPhysicalTextFragment_h
 #define NGPhysicalTextFragment_h
 
+#include <utility>
+
 #include "core/CoreExport.h"
 #include "core/layout/ng/inline/ng_text_end_effect.h"
 #include "core/layout/ng/ng_physical_fragment.h"
@@ -55,7 +57,7 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
         item_index_(item_index),
         start_offset_(start_offset),
         end_offset_(end_offset),
-        shape_result_(shape_result),
+        shape_result_(std::move(shape_result)),
         expansion_(expansion),
         line_orientation_(static_cast<unsigned>(line_orientation)),
         end_effect_(static_cast<unsigned>(end_effect)) {}

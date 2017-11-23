@@ -57,7 +57,8 @@ void TestAccumulatePixelsAndPercent(
   EXPECT_EQ(expected_percent, value.percent);
 }
 
-CSSLengthArray& SetLengthArray(CSSLengthArray& length_array, String text) {
+CSSLengthArray& SetLengthArray(CSSLengthArray& length_array,
+                               const String& text) {
   for (double& x : length_array.values)
     x = 0;
   MutableCSSPropertyValueSet* property_set =

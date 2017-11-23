@@ -898,7 +898,7 @@ void FrameSelection::SetFocusedNodeIfNeeded() {
 }
 
 static String ExtractSelectedText(const FrameSelection& selection,
-                                  TextIteratorBehavior behavior) {
+                                  const TextIteratorBehavior& behavior) {
   const VisibleSelectionInFlatTree& visible_selection =
       selection.ComputeVisibleSelectionInFlatTree();
   const EphemeralRangeInFlatTree& range =

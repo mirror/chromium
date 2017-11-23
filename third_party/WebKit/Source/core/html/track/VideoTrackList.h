@@ -23,7 +23,7 @@ class CORE_EXPORT VideoTrackList final : public TrackListBase<VideoTrack> {
   // EventTarget
   const AtomicString& InterfaceName() const override;
 
-  void TrackSelected(WebMediaPlayer::TrackId selected_track_id);
+  void TrackSelected(const WebMediaPlayer::TrackId& selected_track_id);
 
   void Trace(blink::Visitor* visitor) {
     TrackListBase<VideoTrack>::Trace(visitor);

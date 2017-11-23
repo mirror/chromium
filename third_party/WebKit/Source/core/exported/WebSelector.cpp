@@ -36,7 +36,7 @@
 
 namespace blink {
 
-WebString CanonicalizeSelector(WebString web_selector,
+WebString CanonicalizeSelector(const WebString& web_selector,
                                WebSelectorType restriction) {
   // NOTE: We will always parse the selector in an insecure context mode, if we
   // have selectors which are only parsed in secure contexts, this will need to

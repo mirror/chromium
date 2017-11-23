@@ -26,6 +26,8 @@
 
 #include "core/dom/Node.h"
 
+#include <utility>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/node_or_string.h"
 #include "core/css/CSSSelector.h"
@@ -141,7 +143,8 @@ struct SameSizeAsNode : EventTarget {
 NodeRenderingData::NodeRenderingData(
     LayoutObject* layout_object,
     scoped_refptr<ComputedStyle> non_attached_style)
-    : layout_object_(layout_object), non_attached_style_(non_attached_style) {}
+    : layout_object_(layout_object),
+      non_attached_style_(std::move(non_attached_style)) {}
 
 NodeRenderingData::~NodeRenderingData() {
   CHECK(!layout_object_);
@@ -150,7 +153,7 @@ NodeRenderingData::~NodeRenderingData() {
 void NodeRenderingData::SetNonAttachedStyle(
     scoped_refptr<ComputedStyle> non_attached_style) {
   DCHECK_NE(&SharedEmptyData(), this);
-  non_attached_style_ = non_attached_style;
+  non_attached_style_ = std::move(non_attached_style);
 }
 
 NodeRenderingData& NodeRenderingData::SharedEmptyData() {
@@ -660,7 +663,7 @@ void Node::SetLayoutObject(LayoutObject* layout_object) {
 }
 
 void Node::SetNonAttachedStyle(
-    scoped_refptr<ComputedStyle> non_attached_style) {
+    const scoped_refptr<ComputedStyle>& non_attached_style) {
   NodeRenderingData* node_layout_data =
       HasRareData() ? data_.rare_data_->GetNodeRenderingData()
                     : data_.node_layout_data_;

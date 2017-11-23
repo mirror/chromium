@@ -4,10 +4,13 @@
 
 #include "core/layout/HitTestCanvasResult.h"
 
+#include <utility>
+
 namespace blink {
 
-HitTestCanvasResult::HitTestCanvasResult(String id, Member<Element> control)
-    : id_(id), control_(control) {}
+HitTestCanvasResult::HitTestCanvasResult(String id,
+                                         const Member<Element>& control)
+    : id_(std::move(id)), control_(control) {}
 
 String HitTestCanvasResult::GetId() const {
   return id_;

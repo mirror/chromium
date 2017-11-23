@@ -94,7 +94,7 @@ struct CORE_EXPORT ViewportDescription {
 
   // All arguments are in CSS units.
   PageScaleConstraints Resolve(const FloatSize& initial_viewport_size,
-                               Length legacy_fallback_width) const;
+                               const Length& legacy_fallback_width) const;
 
   Length min_width;
   Length max_width;

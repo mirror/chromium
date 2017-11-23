@@ -4,6 +4,8 @@
 
 #include "core/layout/ng/ng_positioned_float.h"
 
+#include <utility>
+
 #include "core/layout/ng/ng_layout_result.h"
 
 namespace blink {
@@ -11,6 +13,6 @@ namespace blink {
 NGPositionedFloat::NGPositionedFloat(
     scoped_refptr<NGLayoutResult> layout_result,
     const NGBfcOffset& bfc_offset)
-    : layout_result(layout_result), bfc_offset(bfc_offset) {}
+    : layout_result(std::move(layout_result)), bfc_offset(bfc_offset) {}
 
 }  // namespace blink

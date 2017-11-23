@@ -198,7 +198,7 @@ class LayoutGrid final : public LayoutBlock {
       PositionedLayoutBehavior = kDefaultLayout) override;
   void PopulateGridPositionsForDirection(GridTrackSizingDirection);
 
-  bool GridPositionIsAutoForOutOfFlow(GridPosition,
+  bool GridPositionIsAutoForOutOfFlow(const GridPosition&,
                                       GridTrackSizingDirection) const;
   LayoutUnit ResolveAutoStartGridPosition(GridTrackSizingDirection) const;
   LayoutUnit ResolveAutoEndGridPosition(GridTrackSizingDirection) const;
@@ -302,7 +302,7 @@ class LayoutGrid final : public LayoutBlock {
   LayoutUnit RowAxisBaselineOffsetForChild(const LayoutBox&) const;
 
   LayoutUnit GridGap(GridTrackSizingDirection,
-                     Optional<LayoutUnit> available_size) const;
+                     const Optional<LayoutUnit>& available_size) const;
 
   size_t GridItemSpan(const LayoutBox&, GridTrackSizingDirection);
 

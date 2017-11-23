@@ -67,7 +67,7 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   void Composite(const NGOffsetMappingBuilder&);
 
   // Set the destination string of the offset mapping.
-  void SetDestinationString(String);
+  void SetDestinationString(const String&);
 
   // Called when entering a non-atomic inline node (e.g., SPAN), before
   // collecting any of its inline descendants.

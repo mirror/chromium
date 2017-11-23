@@ -23,6 +23,7 @@
 #include "core/loader/ImageLoader.h"
 
 #include <memory>
+#include <utility>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
@@ -330,7 +331,7 @@ inline void ImageLoader::DispatchErrorEvent() {
 
 inline void ImageLoader::CrossSiteOrCSPViolationOccurred(
     AtomicString image_source_url) {
-  failed_load_url_ = image_source_url;
+  failed_load_url_ = std::move(image_source_url);
 }
 
 inline void ImageLoader::ClearFailedLoadURL() {
@@ -537,7 +538,8 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
     EnqueueImageLoadingMicroTask(update_behavior, referrer_policy);
 }
 
-KURL ImageLoader::ImageSourceToKURL(AtomicString image_source_url) const {
+KURL ImageLoader::ImageSourceToKURL(
+    const AtomicString& image_source_url) const {
   KURL url;
 
   // Don't load images for inactive documents. We don't want to slow down the

@@ -83,7 +83,7 @@ AXObject* DateTimeChooserImpl::RootAXObject() {
   return popup_ ? popup_->RootAXObject() : nullptr;
 }
 
-static String ValueToDateTimeString(double value, AtomicString type) {
+static String ValueToDateTimeString(double value, const AtomicString& type) {
   DateComponents components;
   if (type == InputTypeNames::date)
     components.SetMillisecondsSinceEpochForDate(value);

@@ -5,6 +5,8 @@
 #ifndef CSSAnimationUpdate_h
 #define CSSAnimationUpdate_h
 
+#include <utility>
+
 #include "base/macros.h"
 #include "core/animation/EffectStack.h"
 #include "core/animation/InertEffect.h"
@@ -32,10 +34,10 @@ class NewCSSAnimation {
                   const InertEffect& effect,
                   Timing timing,
                   StyleRuleKeyframes* style_rule)
-      : name(name),
+      : name(std::move(name)),
         name_index(name_index),
         effect(effect),
-        timing(timing),
+        timing(std::move(timing)),
         style_rule(style_rule),
         style_rule_version(this->style_rule->Version()) {}
 
@@ -64,7 +66,7 @@ class UpdatedCSSAnimation {
       : index(index),
         animation(animation),
         effect(&effect),
-        specified_timing(specified_timing),
+        specified_timing(std::move(specified_timing)),
         style_rule(style_rule),
         style_rule_version(this->style_rule->Version()) {}
 

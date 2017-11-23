@@ -5,10 +5,11 @@
 #ifndef CSSColorInterpolationType_h
 #define CSSColorInterpolationType_h
 
+#include <memory>
+#include <utility>
 #include "core/CSSValueKeywords.h"
 #include "core/animation/CSSInterpolationType.h"
 #include "platform/graphics/Color.h"
-#include <memory>
 
 namespace blink {
 
@@ -19,7 +20,7 @@ class CSSColorInterpolationType : public CSSInterpolationType {
  public:
   CSSColorInterpolationType(PropertyHandle property,
                             const PropertyRegistration* registration = nullptr)
-      : CSSInterpolationType(property, registration) {}
+      : CSSInterpolationType(std::move(property), registration) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;

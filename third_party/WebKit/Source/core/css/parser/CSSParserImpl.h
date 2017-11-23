@@ -131,7 +131,7 @@ class CSSParserImpl {
   StyleRuleBase* ConsumeQualifiedRule(CSSParserTokenStream&, AllowedRulesType);
 
   static StyleRuleCharset* ConsumeCharsetRule(CSSParserTokenRange prelude);
-  StyleRuleImport* ConsumeImportRule(AtomicString prelude_uri,
+  StyleRuleImport* ConsumeImportRule(const AtomicString& prelude_uri,
                                      CSSParserTokenRange prelude,
                                      const RangeOffset& prelude_offset);
   StyleRuleNamespace* ConsumeNamespaceRule(CSSParserTokenRange prelude);

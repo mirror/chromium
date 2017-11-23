@@ -33,7 +33,7 @@ class CORE_EXPORT ScrollTimeline final : public AnimationTimeline {
   };
 
   static ScrollTimeline* Create(Document&,
-                                ScrollTimelineOptions,
+                                const ScrollTimelineOptions&,
                                 ExceptionState&);
 
   // AnimationTimeline implementation.

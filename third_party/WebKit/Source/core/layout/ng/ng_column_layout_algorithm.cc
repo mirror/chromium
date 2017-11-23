@@ -46,7 +46,7 @@ LayoutUnit ConstrainColumnBlockSize(LayoutUnit size,
   size += extra;
 
   Optional<LayoutUnit> max_length;
-  Length logical_max_height = style.LogicalMaxHeight();
+  const Length& logical_max_height = style.LogicalMaxHeight();
   if (!logical_max_height.IsMaxSizeNone()) {
     max_length = ResolveBlockLength(space, style, logical_max_height, size,
                                     LengthResolveType::kMaxSize);

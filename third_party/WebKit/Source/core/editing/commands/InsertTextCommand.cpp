@@ -54,7 +54,7 @@ String InsertTextCommand::TextDataForInputEvent() const {
 Position InsertTextCommand::PositionInsideTextNode(
     const Position& p,
     EditingState* editing_state) {
-  Position pos = p;
+  const Position& pos = p;
   if (IsTabHTMLSpanElementTextNode(pos.AnchorNode())) {
     Text* text_node = GetDocument().CreateEditingTextNode("");
     InsertNodeAtTabSpanPosition(text_node, pos, editing_state);

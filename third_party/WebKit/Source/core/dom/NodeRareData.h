@@ -72,10 +72,10 @@ class NodeMutationObserverData final
   }
 
   void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
-    for (auto registration : registry_) {
+    for (const auto& registration : registry_) {
       visitor->TraceWrappers(registration);
     }
-    for (auto registration : transient_registry_) {
+    for (const auto& registration : transient_registry_) {
       visitor->TraceWrappers(registration);
     }
   }

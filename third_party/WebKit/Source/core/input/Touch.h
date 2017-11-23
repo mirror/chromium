@@ -26,6 +26,8 @@
 #ifndef Touch_h
 #define Touch_h
 
+#include <utility>
+
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
 #include "core/dom/events/EventTarget.h"
@@ -54,7 +56,7 @@ class CORE_EXPORT Touch final : public ScriptWrappable {
                        float force,
                        String region) {
     return new Touch(frame, target, identifier, screen_pos, page_pos, radius,
-                     rotation_angle, force, region);
+                     rotation_angle, force, std::move(region));
   }
 
   static Touch* Create(const Document& document, const TouchInit& initializer) {

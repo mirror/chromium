@@ -54,10 +54,10 @@ void NodeListsNodeData::Trace(blink::Visitor* visitor) {
 void NodeListsNodeData::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(child_node_list_);
-  for (const auto list : atomic_name_caches_.Values()) {
+  for (const auto& list : atomic_name_caches_.Values()) {
     visitor->TraceWrappers(list);
   }
-  for (const auto list : tag_collection_ns_caches_.Values()) {
+  for (const auto& list : tag_collection_ns_caches_.Values()) {
     visitor->TraceWrappers(list);
   }
 }

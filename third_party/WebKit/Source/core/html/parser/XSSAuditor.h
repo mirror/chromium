@@ -121,7 +121,7 @@ class XSSAuditor {
                            const HTMLToken::Attribute&);
   String SnippetFromAttribute(const FilterTokenRequest&,
                               const HTMLToken::Attribute&);
-  String Canonicalize(String, TruncationKind);
+  String Canonicalize(const String&, TruncationKind);
 
   bool IsContainedInRequest(const String&);
   bool IsLikelySafeResource(const String& url);

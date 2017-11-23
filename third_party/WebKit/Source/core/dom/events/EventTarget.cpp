@@ -635,7 +635,7 @@ DispatchEventResult EventTarget::FireEventListeners(Event* event) {
     return DispatchEventResult::kNotCanceled;
 
   EventListenerVector* legacy_listeners_vector = nullptr;
-  AtomicString legacy_type_name = LegacyType(event);
+  const AtomicString& legacy_type_name = LegacyType(event);
   if (!legacy_type_name.IsEmpty())
     legacy_listeners_vector = d->event_listener_map.Find(legacy_type_name);
 

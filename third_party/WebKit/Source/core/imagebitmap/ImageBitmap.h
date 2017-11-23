@@ -153,7 +153,7 @@ class CORE_EXPORT ImageBitmap final : public ScriptWrappable,
               const ImageBitmapOptions&);
   ImageBitmap(HTMLCanvasElement*, Optional<IntRect>, const ImageBitmapOptions&);
   ImageBitmap(OffscreenCanvas*, Optional<IntRect>, const ImageBitmapOptions&);
-  ImageBitmap(ImageData*, Optional<IntRect>, const ImageBitmapOptions&);
+  ImageBitmap(ImageData*, const Optional<IntRect>&, const ImageBitmapOptions&);
   ImageBitmap(ImageBitmap*, Optional<IntRect>, const ImageBitmapOptions&);
   ImageBitmap(scoped_refptr<StaticBitmapImage>);
   ImageBitmap(scoped_refptr<StaticBitmapImage>,
@@ -170,7 +170,7 @@ class CORE_EXPORT ImageBitmap final : public ScriptWrappable,
                                              bool origin_clean,
                                              std::unique_ptr<ParsedOptions>);
   static void RasterizeImageOnBackgroundThread(ScriptPromiseResolver*,
-                                               sk_sp<PaintRecord>,
+                                               const sk_sp<PaintRecord>&,
                                                const IntRect&,
                                                bool origin_clean,
                                                std::unique_ptr<ParsedOptions>);

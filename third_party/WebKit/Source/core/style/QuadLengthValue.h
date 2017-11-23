@@ -15,7 +15,7 @@ struct QuadLengthValue {
 
   QuadLengthValue() {}
 
-  explicit QuadLengthValue(Length length)
+  explicit QuadLengthValue(const Length& length)
       : top(length), right(length), bottom(length), left(length) {}
 
   QuadLengthValue(const QuadLengthValue& other)

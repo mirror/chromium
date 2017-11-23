@@ -86,7 +86,7 @@ void PropertyRegistration::registerProperty(
   DCHECK(descriptor.hasInherits());
   DCHECK(descriptor.hasSyntax());
 
-  String name = descriptor.name();
+  const String& name = descriptor.name();
   if (!CSSVariableParser::IsValidVariableName(name)) {
     exception_state.ThrowDOMException(
         kSyntaxError, "Custom property names must start with '--'.");

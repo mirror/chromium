@@ -5,6 +5,8 @@
 #ifndef CSSFontVariationSettingsInterpolationType_h
 #define CSSFontVariationSettingsInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSFontVariationSettingsInterpolationType : public CSSInterpolationType {
  public:
   CSSFontVariationSettingsInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+      : CSSInterpolationType(std::move(property)) {
     DCHECK_EQ(CssProperty(), CSSPropertyFontVariationSettings);
   }
 

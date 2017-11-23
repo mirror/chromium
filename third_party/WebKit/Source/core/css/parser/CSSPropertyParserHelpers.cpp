@@ -4,6 +4,8 @@
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
+#include <utility>
+
 #include "core/StylePropertyShorthand.h"
 #include "core/css/CSSCalculationValue.h"
 #include "core/css/CSSColorValue.h"
@@ -886,8 +888,8 @@ CSSValuePair* ConsumePosition(CSSParserTokenRange& range,
                               WTF::Optional<WebFeature> threeValuePosition) {
   CSSValue* result_x = nullptr;
   CSSValue* result_y = nullptr;
-  if (ConsumePosition(range, context, unitless, threeValuePosition, result_x,
-                      result_y))
+  if (ConsumePosition(range, context, unitless, std::move(threeValuePosition),
+                      result_x, result_y))
     return CSSValuePair::Create(result_x, result_y,
                                 CSSValuePair::kKeepIdenticalValues);
   return nullptr;
@@ -1524,7 +1526,7 @@ CSSValue* ConsumeImage(CSSParserTokenRange& range,
 }
 
 // https://drafts.csswg.org/css-values-4/#css-wide-keywords
-bool IsCSSWideKeyword(StringView keyword) {
+bool IsCSSWideKeyword(const StringView& keyword) {
   return EqualIgnoringASCIICase(keyword, "initial") ||
          EqualIgnoringASCIICase(keyword, "inherit") ||
          EqualIgnoringASCIICase(keyword, "unset");

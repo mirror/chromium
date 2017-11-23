@@ -271,7 +271,8 @@ class CORE_EXPORT Node : public EventTarget {
 
   bool SupportsAltText();
 
-  void SetNonAttachedStyle(scoped_refptr<ComputedStyle> non_attached_style);
+  void SetNonAttachedStyle(
+      const scoped_refptr<ComputedStyle>& non_attached_style);
 
   ComputedStyle* GetNonAttachedStyle() const {
     return HasRareData()

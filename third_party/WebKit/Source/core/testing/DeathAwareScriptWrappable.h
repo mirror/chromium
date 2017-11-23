@@ -46,7 +46,7 @@ class DeathAwareScriptWrappable : public ScriptWrappable {
 
   virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
     visitor->TraceWrappers(wrapped_dependency_);
-    for (auto dep : wrapped_vector_dependency_) {
+    for (const auto& dep : wrapped_vector_dependency_) {
       visitor->TraceWrappers(dep);
     }
     for (auto pair : wrapped_hash_map_dependency_) {

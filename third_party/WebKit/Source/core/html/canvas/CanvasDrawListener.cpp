@@ -4,6 +4,8 @@
 
 #include "core/html/canvas/CanvasDrawListener.h"
 
+#include <utility>
+
 #include "platform/graphics/WebGraphicsContext3DProviderWrapper.h"
 #include "third_party/skia/include/core/SkImage.h"
 
@@ -15,7 +17,8 @@ void CanvasDrawListener::SendNewFrame(
     sk_sp<SkImage> image,
     WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider) {
   handler_->SendNewFrame(
-      image, context_provider ? context_provider->ContextProvider() : nullptr);
+      std::move(image),
+      context_provider ? context_provider->ContextProvider() : nullptr);
 }
 
 bool CanvasDrawListener::NeedsNewFrame() const {

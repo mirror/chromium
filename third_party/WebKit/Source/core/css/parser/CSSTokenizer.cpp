@@ -99,7 +99,7 @@ CSSParserToken CSSTokenizer::BlockStart(CSSParserTokenType type) {
 
 CSSParserToken CSSTokenizer::BlockStart(CSSParserTokenType block_type,
                                         CSSParserTokenType type,
-                                        StringView name) {
+                                        const StringView& name) {
   block_stack_.push_back(block_type);
   return CSSParserToken(type, name, CSSParserToken::kBlockStart);
 }

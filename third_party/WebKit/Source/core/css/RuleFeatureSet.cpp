@@ -541,7 +541,7 @@ void RuleFeatureSet::UpdateRuleSetInvalidation(
     type_rule_invalidation_set_->SetTreeBoundaryCrossing();
   }
 
-  for (auto tag_name : features.tag_names)
+  for (const auto& tag_name : features.tag_names)
     type_rule_invalidation_set_->AddTagName(tag_name);
 }
 

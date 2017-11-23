@@ -5,6 +5,8 @@
 #ifndef CSSVisibilityInterpolationType_h
 #define CSSVisibilityInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 #include "core/style/ComputedStyleConstants.h"
 
@@ -13,7 +15,7 @@ namespace blink {
 class CSSVisibilityInterpolationType : public CSSInterpolationType {
  public:
   CSSVisibilityInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+      : CSSInterpolationType(std::move(property)) {
     DCHECK_EQ(CssProperty(), CSSPropertyVisibility);
   }
 

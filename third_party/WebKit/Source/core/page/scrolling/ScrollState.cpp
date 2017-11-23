@@ -27,7 +27,7 @@ Element* ElementForId(int element_id) {
 }
 }  // namespace
 
-ScrollState* ScrollState::Create(ScrollStateInit init) {
+ScrollState* ScrollState::Create(const ScrollStateInit& init) {
   std::unique_ptr<ScrollStateData> scroll_state_data =
       std::make_unique<ScrollStateData>();
   scroll_state_data->delta_x = init.deltaX();

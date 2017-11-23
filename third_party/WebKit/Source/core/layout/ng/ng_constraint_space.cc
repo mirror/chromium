@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <utility>
 
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutView.h"
@@ -55,7 +56,7 @@ NGConstraintSpace::NGConstraintSpace(
     : available_size_(available_size),
       percentage_resolution_size_(percentage_resolution_size),
       parent_percentage_resolution_inline_size_(
-          parent_percentage_resolution_inline_size),
+          std::move(parent_percentage_resolution_inline_size)),
       initial_containing_block_size_(initial_containing_block_size),
       fragmentainer_block_size_(fragmentainer_block_size),
       fragmentainer_space_at_bfc_start_(fragmentainer_space_at_bfc_start),

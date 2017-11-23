@@ -77,7 +77,7 @@ class CORE_EXPORT CSSParserToken {
   CSSParserToken(CSSParserTokenType type, BlockType block_type = kNotBlock)
       : type_(type), block_type_(block_type) {}
   CSSParserToken(CSSParserTokenType type,
-                 StringView value,
+                 const StringView& value,
                  BlockType block_type = kNotBlock)
       : type_(type), block_type_(block_type) {
     InitValueFromStringView(value);
@@ -93,7 +93,7 @@ class CORE_EXPORT CSSParserToken {
                  UChar32,
                  UChar32);  // for UnicodeRangeToken
 
-  CSSParserToken(HashTokenType, StringView);
+  CSSParserToken(HashTokenType, const StringView&);
 
   bool operator==(const CSSParserToken& other) const;
   bool operator!=(const CSSParserToken& other) const {
@@ -101,7 +101,7 @@ class CORE_EXPORT CSSParserToken {
   }
 
   // Converts NumberToken to DimensionToken.
-  void ConvertToDimensionWithUnit(StringView);
+  void ConvertToDimensionWithUnit(const StringView&);
 
   // Converts NumberToken to PercentageToken.
   void ConvertToPercentage();
@@ -151,7 +151,7 @@ class CORE_EXPORT CSSParserToken {
   CSSParserToken CopyWithUpdatedString(const StringView&) const;
 
  private:
-  void InitValueFromStringView(StringView string) {
+  void InitValueFromStringView(const StringView& string) {
     value_length_ = string.length();
     value_is8_bit_ = string.Is8Bit();
     value_data_char_raw_ = string.Bytes();

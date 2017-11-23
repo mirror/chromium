@@ -5,6 +5,8 @@
 #ifndef TaskAttributionTiming_h
 #define TaskAttributionTiming_h
 
+#include <utility>
+
 #include "core/timing/PerformanceEntry.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
@@ -25,9 +27,10 @@ class TaskAttributionTiming final : public PerformanceEntry {
                                        double start_time,
                                        double finish_time,
                                        String script_url) {
-    return new TaskAttributionTiming(type, container_type, container_src,
-                                     container_id, container_name, start_time,
-                                     finish_time, script_url);
+    return new TaskAttributionTiming(
+        std::move(type), std::move(container_type), std::move(container_src),
+        std::move(container_id), std::move(container_name), start_time,
+        finish_time, std::move(script_url));
   }
 
   // Used when the LongTaskV2 flag is disabled.
@@ -36,9 +39,10 @@ class TaskAttributionTiming final : public PerformanceEntry {
                                        String container_src,
                                        String container_id,
                                        String container_name) {
-    return new TaskAttributionTiming(type, container_type, container_src,
-                                     container_id, container_name, 0.0, 0.0,
-                                     g_empty_string);
+    return new TaskAttributionTiming(
+        std::move(type), std::move(container_type), std::move(container_src),
+        std::move(container_id), std::move(container_name), 0.0, 0.0,
+        g_empty_string);
   }
   String containerType() const;
   String containerSrc() const;
@@ -51,7 +55,7 @@ class TaskAttributionTiming final : public PerformanceEntry {
   ~TaskAttributionTiming() override;
 
  private:
-  TaskAttributionTiming(String type,
+  TaskAttributionTiming(const String& type,
                         String container_type,
                         String container_src,
                         String container_id,

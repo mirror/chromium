@@ -26,6 +26,8 @@
 #ifndef VTTElement_h
 #define VTTElement_h
 
+#include <utility>
+
 #include "core/html/HTMLElement.h"
 
 namespace blink {
@@ -62,7 +64,7 @@ class VTTElement final : public Element {
 
   bool IsVTTElement() const override { return true; }
   AtomicString Language() const { return language_; }
-  void SetLanguage(AtomicString value) { language_ = value; }
+  void SetLanguage(AtomicString value) { language_ = std::move(value); }
 
   static const QualifiedName& VoiceAttributeName() {
     DEFINE_STATIC_LOCAL(QualifiedName, voice_attr,

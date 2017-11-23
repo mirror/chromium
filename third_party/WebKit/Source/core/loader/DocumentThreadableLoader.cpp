@@ -422,7 +422,7 @@ void DocumentThreadableLoader::LoadPreflightRequest(
   actual_request_.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
 
   // Create a ResourceLoaderOptions for preflight.
-  ResourceLoaderOptions preflight_options = actual_options;
+  const ResourceLoaderOptions& preflight_options = actual_options;
 
   LoadRequest(preflight_request, preflight_options);
 }
@@ -1241,7 +1241,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
 
 void DocumentThreadableLoader::LoadRequestSync(
     const ResourceRequest& request,
-    ResourceLoaderOptions resource_loader_options) {
+    const ResourceLoaderOptions& resource_loader_options) {
   FetchParameters fetch_params(request, resource_loader_options);
   if (request.GetFetchRequestMode() ==
       network::mojom::FetchRequestMode::kNoCORS)

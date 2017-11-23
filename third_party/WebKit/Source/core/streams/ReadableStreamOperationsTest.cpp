@@ -47,7 +47,7 @@ class Iteration final : public GarbageCollectedFinalized<Iteration> {
  public:
   Iteration() : is_set_(false), is_done_(false), is_valid_(true) {}
 
-  void Set(ScriptValue v) {
+  void Set(const ScriptValue& v) {
     DCHECK(!v.IsEmpty());
     is_set_ = true;
     v8::TryCatch block(v.GetScriptState()->GetIsolate());
@@ -108,9 +108,9 @@ class TestUnderlyingSource final : public UnderlyingSourceBase {
       : UnderlyingSourceBase(script_state) {}
 
   // Just expose the controller methods for easy testing
-  void Enqueue(ScriptValue value) { Controller()->Enqueue(value); }
+  void Enqueue(const ScriptValue& value) { Controller()->Enqueue(value); }
   void Close() { Controller()->Close(); }
-  void GetError(ScriptValue value) { Controller()->GetError(value); }
+  void GetError(const ScriptValue& value) { Controller()->GetError(value); }
   double DesiredSize() { return Controller()->DesiredSize(); }
 };
 

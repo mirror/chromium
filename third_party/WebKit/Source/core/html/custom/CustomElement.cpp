@@ -85,7 +85,7 @@ bool CustomElement::ShouldCreateCustomizedBuiltinElement(
 
 static CustomElementDefinition* DefinitionFor(
     const Document& document,
-    const CustomElementDescriptor desc) {
+    const CustomElementDescriptor& desc) {
   if (CustomElementRegistry* registry = CustomElement::Registry(document))
     return registry->DefinitionFor(desc);
   return nullptr;

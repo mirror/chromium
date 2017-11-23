@@ -653,7 +653,7 @@ void LayoutBoxModelObject::UpdateFromStyle() {
 }
 
 LayoutBlock* LayoutBoxModelObject::ContainingBlockForAutoHeightDetection(
-    Length logical_height) const {
+    const Length& logical_height) const {
   // For percentage heights: The percentage is calculated with respect to the
   // height of the generated box's containing block. If the height of the
   // containing block is not specified explicitly (i.e., it depends on content

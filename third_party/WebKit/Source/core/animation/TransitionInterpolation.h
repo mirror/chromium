@@ -44,8 +44,8 @@ class CORE_EXPORT TransitionInterpolation : public Interpolation {
       const InterpolationType& type,
       InterpolationValue&& start,
       InterpolationValue&& end,
-      const scoped_refptr<AnimatableValue> compositor_start,
-      const scoped_refptr<AnimatableValue> compositor_end) {
+      const scoped_refptr<AnimatableValue>& compositor_start,
+      const scoped_refptr<AnimatableValue>& compositor_end) {
     return base::AdoptRef(new TransitionInterpolation(
         property, type, std::move(start), std::move(end),
         std::move(compositor_start), std::move(compositor_end)));
@@ -64,12 +64,13 @@ class CORE_EXPORT TransitionInterpolation : public Interpolation {
   void Interpolate(int iteration, double fraction) final;
 
  protected:
-  TransitionInterpolation(const PropertyHandle& property,
-                          const InterpolationType& type,
-                          InterpolationValue&& start,
-                          InterpolationValue&& end,
-                          const scoped_refptr<AnimatableValue> compositor_start,
-                          const scoped_refptr<AnimatableValue> compositor_end)
+  TransitionInterpolation(
+      const PropertyHandle& property,
+      const InterpolationType& type,
+      InterpolationValue&& start,
+      InterpolationValue&& end,
+      const scoped_refptr<AnimatableValue>& compositor_start,
+      const scoped_refptr<AnimatableValue>& compositor_end)
       : property_(property),
         type_(type),
         start_(std::move(start)),

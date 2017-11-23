@@ -287,7 +287,7 @@ void DataObject::Trace(blink::Visitor* visitor) {
   Supplementable<DataObject>::Trace(visitor);
 }
 
-DataObject* DataObject::Create(WebDragData data) {
+DataObject* DataObject::Create(const WebDragData& data) {
   DataObject* data_object = Create();
   bool has_file_system = false;
 

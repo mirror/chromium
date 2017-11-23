@@ -53,7 +53,7 @@ enum WebSelectorType {
 // restrictions.
 // The canonical form is not guaranteed to stay the same over time.
 BLINK_EXPORT WebString
-CanonicalizeSelector(WebString selector,
+CanonicalizeSelector(const WebString& selector,
                      WebSelectorType restriction = kWebSelectorTypeComplex);
 
 }  // namespace blink

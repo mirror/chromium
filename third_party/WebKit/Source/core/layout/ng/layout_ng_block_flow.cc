@@ -189,7 +189,7 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
   // There could be multiple fragments, when this node has descendants whose
   // container is this node's container.
   // Example: fixed descendant of fixed element.
-  for (scoped_refptr<NGPhysicalFragment> child_fragment :
+  for (const scoped_refptr<NGPhysicalFragment>& child_fragment :
        fragment->Children()) {
     DCHECK(child_fragment->GetLayoutObject()->IsBox());
     LayoutBox* child_legacy_box =

@@ -21,7 +21,7 @@ static void RunWatchCallback(V8MojoWatchCallback* callback,
 }
 
 // static
-MojoWatcher* MojoWatcher::Create(mojo::Handle handle,
+MojoWatcher* MojoWatcher::Create(const mojo::Handle& handle,
                                  const MojoHandleSignals& signals_dict,
                                  V8MojoWatchCallback* callback,
                                  ExecutionContext* context) {
@@ -77,7 +77,7 @@ MojoWatcher::MojoWatcher(ExecutionContext* context,
       task_runner_(context->GetTaskRunner(TaskType::kUnspecedTimer)),
       callback_(callback) {}
 
-MojoResult MojoWatcher::Watch(mojo::Handle handle,
+MojoResult MojoWatcher::Watch(const mojo::Handle& handle,
                               const MojoHandleSignals& signals_dict) {
   ::MojoHandleSignals signals = MOJO_HANDLE_SIGNAL_NONE;
   if (signals_dict.readable())

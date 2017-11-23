@@ -22,7 +22,7 @@ class WebURLLoaderClient;
 // requests must be finished.
 class SimRequest final {
  public:
-  SimRequest(String url, String mime_type);
+  SimRequest(const String& url, const String& mime_type);
   ~SimRequest();
 
   // Starts the response from the server, this is as if the headers and 200 OK

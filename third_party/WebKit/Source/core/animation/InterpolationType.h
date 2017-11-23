@@ -6,6 +6,7 @@
 #define InterpolationType_h
 
 #include <memory>
+#include <utility>
 
 #include "base/macros.h"
 #include "core/animation/InterpolationValue.h"
@@ -117,7 +118,8 @@ class InterpolationType {
   }
 
  protected:
-  explicit InterpolationType(PropertyHandle property) : property_(property) {}
+  explicit InterpolationType(PropertyHandle property)
+      : property_(std::move(property)) {}
 
   const PropertyHandle property_;
   DISALLOW_COPY_AND_ASSIGN(InterpolationType);

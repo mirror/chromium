@@ -25,7 +25,7 @@ class MojoWatcher final : public ScriptWrappable,
   USING_GARBAGE_COLLECTED_MIXIN(MojoWatcher);
 
  public:
-  static MojoWatcher* Create(mojo::Handle,
+  static MojoWatcher* Create(const mojo::Handle&,
                              const MojoHandleSignals&,
                              V8MojoWatchCallback*,
                              ExecutionContext*);
@@ -46,7 +46,7 @@ class MojoWatcher final : public ScriptWrappable,
   friend class V8MojoWatcher;
 
   MojoWatcher(ExecutionContext*, V8MojoWatchCallback*);
-  MojoResult Watch(mojo::Handle, const MojoHandleSignals&);
+  MojoResult Watch(const mojo::Handle&, const MojoHandleSignals&);
   MojoResult Arm(MojoResult* ready_result);
 
   static void OnHandleReady(uintptr_t context,

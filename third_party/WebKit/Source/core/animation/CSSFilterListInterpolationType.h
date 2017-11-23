@@ -5,6 +5,8 @@
 #ifndef CSSFilterListInterpolationType_h
 #define CSSFilterListInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSFilterListInterpolationType : public CSSInterpolationType {
  public:
   CSSFilterListInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+      : CSSInterpolationType(std::move(property)) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;

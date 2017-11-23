@@ -32,6 +32,7 @@
 
 #include <limits.h>
 #include <memory>
+#include <utility>
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/Document.h"
 #include "core/loader/DocumentThreadableLoader.h"
@@ -164,8 +165,8 @@ WebAssociatedURLLoaderImpl::ClientAdapter::Create(
     const WebAssociatedURLLoaderOptions& options,
     network::mojom::FetchRequestMode fetch_request_mode,
     scoped_refptr<WebTaskRunner> task_runner) {
-  return WTF::WrapUnique(new ClientAdapter(loader, client, options,
-                                           fetch_request_mode, task_runner));
+  return WTF::WrapUnique(new ClientAdapter(
+      loader, client, options, fetch_request_mode, std::move(task_runner)));
 }
 
 WebAssociatedURLLoaderImpl::ClientAdapter::ClientAdapter(

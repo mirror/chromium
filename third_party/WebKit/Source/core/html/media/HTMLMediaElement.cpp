@@ -166,7 +166,7 @@ enum class PlayPromiseRejectReason {
 const double kMinRate = 0.0625;
 const double kMaxRate = 16.0;
 
-void ReportContentTypeResultToUMA(String content_type,
+void ReportContentTypeResultToUMA(const String& content_type,
                                   MIMETypeRegistry::SupportsType result) {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       EnumerationHistogram, content_type_parseable_histogram,
@@ -2623,7 +2623,7 @@ WebMediaPlayer::TrackId HTMLMediaElement::AddAudioTrack(
     const WebString& label,
     const WebString& language,
     bool enabled) {
-  AtomicString kind_string = AudioKindToString(kind);
+  const AtomicString& kind_string = AudioKindToString(kind);
   BLINK_MEDIA_LOG << "addAudioTrack(" << (void*)this << ", '" << (String)id
                   << "', ' " << (AtomicString)kind_string << "', '"
                   << (String)label << "', '" << (String)language << "', "
@@ -2671,7 +2671,7 @@ WebMediaPlayer::TrackId HTMLMediaElement::AddVideoTrack(
     const WebString& label,
     const WebString& language,
     bool selected) {
-  AtomicString kind_string = VideoKindToString(kind);
+  const AtomicString& kind_string = VideoKindToString(kind);
   BLINK_MEDIA_LOG << "addVideoTrack(" << (void*)this << ", '" << (String)id
                   << "', '" << (AtomicString)kind_string << "', '"
                   << (String)label << "', '" << (String)language << "', "

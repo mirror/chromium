@@ -167,9 +167,13 @@ class CORE_EXPORT BasicShapeCircle final : public BasicShape {
   const BasicShapeRadius& Radius() const { return radius_; }
 
   float FloatValueForRadiusInBox(FloatSize) const;
-  void SetCenterX(BasicShapeCenterCoordinate center_x) { center_x_ = center_x; }
-  void SetCenterY(BasicShapeCenterCoordinate center_y) { center_y_ = center_y; }
-  void SetRadius(BasicShapeRadius radius) { radius_ = radius; }
+  void SetCenterX(const BasicShapeCenterCoordinate& center_x) {
+    center_x_ = center_x;
+  }
+  void SetCenterY(const BasicShapeCenterCoordinate& center_y) {
+    center_y_ = center_y;
+  }
+  void SetRadius(const BasicShapeRadius& radius) { radius_ = radius; }
 
   void GetPath(Path&, const FloatRect&) override;
   scoped_refptr<BasicShape> Blend(const BasicShape*, double) const override;
@@ -201,10 +205,14 @@ class BasicShapeEllipse final : public BasicShape {
                                  float center,
                                  float box_width_or_height) const;
 
-  void SetCenterX(BasicShapeCenterCoordinate center_x) { center_x_ = center_x; }
-  void SetCenterY(BasicShapeCenterCoordinate center_y) { center_y_ = center_y; }
-  void SetRadiusX(BasicShapeRadius radius_x) { radius_x_ = radius_x; }
-  void SetRadiusY(BasicShapeRadius radius_y) { radius_y_ = radius_y; }
+  void SetCenterX(const BasicShapeCenterCoordinate& center_x) {
+    center_x_ = center_x;
+  }
+  void SetCenterY(const BasicShapeCenterCoordinate& center_y) {
+    center_y_ = center_y;
+  }
+  void SetRadiusX(const BasicShapeRadius& radius_x) { radius_x_ = radius_x; }
+  void SetRadiusY(const BasicShapeRadius& radius_y) { radius_y_ = radius_y; }
 
   void GetPath(Path&, const FloatRect&) override;
   scoped_refptr<BasicShape> Blend(const BasicShape*, double) const override;

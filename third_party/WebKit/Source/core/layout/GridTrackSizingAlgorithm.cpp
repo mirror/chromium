@@ -4,6 +4,8 @@
 
 #include "core/layout/GridTrackSizingAlgorithm.h"
 
+#include <utility>
+
 #include "core/layout/Grid.h"
 #include "core/layout/GridLayoutUtils.h"
 #include "core/layout/LayoutGrid.h"
@@ -554,7 +556,7 @@ Optional<LayoutUnit> GridTrackSizingAlgorithm::AvailableSpace() const {
 
 void GridTrackSizingAlgorithm::SetAvailableSpace(
     GridTrackSizingDirection direction,
-    Optional<LayoutUnit> available_space) {
+    const Optional<LayoutUnit>& available_space) {
   if (direction == kForColumns)
     available_space_columns_ = available_space;
   else
@@ -571,8 +573,9 @@ const Vector<GridTrack>& GridTrackSizingAlgorithm::Tracks(
   return direction == kForColumns ? columns_ : rows_;
 }
 
-void GridTrackSizingAlgorithm::SetFreeSpace(GridTrackSizingDirection direction,
-                                            Optional<LayoutUnit> free_space) {
+void GridTrackSizingAlgorithm::SetFreeSpace(
+    GridTrackSizingDirection direction,
+    const Optional<LayoutUnit>& free_space) {
   if (direction == kForColumns)
     free_space_columns_ = free_space;
   else
@@ -726,7 +729,7 @@ void GridTrackSizingAlgorithm::InitializeTrackSizes() {
     track.SetInfinitelyGrowable(false);
 
     if (track_size.IsFitContent()) {
-      GridLength grid_length = track_size.FitContentTrackBreadth();
+      const GridLength& grid_length = track_size.FitContentTrackBreadth();
       if (!grid_length.HasPercentage() || has_definite_free_space) {
         track.SetGrowthLimitCap(ValueForLength(
             grid_length.length(), AvailableSpace().value_or(LayoutUnit())));
@@ -1329,7 +1332,7 @@ void GridTrackSizingAlgorithm::StretchFlexibleTracks(
     return;
 
   double flex_fraction = strategy_->FindUsedFlexFraction(
-      flexible_sized_tracks_index_, direction_, free_space);
+      flexible_sized_tracks_index_, direction_, std::move(free_space));
 
   LayoutUnit total_growth;
   Vector<LayoutUnit> increments;

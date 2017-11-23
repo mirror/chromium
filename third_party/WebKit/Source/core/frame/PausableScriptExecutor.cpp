@@ -127,7 +127,7 @@ Vector<v8::Local<v8::Value>> V8FunctionExecutor::Execute(LocalFrame* frame) {
 
 PausableScriptExecutor* PausableScriptExecutor::Create(
     LocalFrame* frame,
-    scoped_refptr<DOMWrapperWorld> world,
+    const scoped_refptr<DOMWrapperWorld>& world,
     const HeapVector<ScriptSourceCode>& sources,
     bool user_gesture,
     WebScriptExecutionCallback* callback) {

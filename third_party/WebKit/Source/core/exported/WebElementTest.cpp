@@ -73,11 +73,11 @@ static const char kBlockWithEmptyFirstChild[] =
 
 class WebElementTest : public PageTestBase {
  protected:
-  void InsertHTML(String html);
+  void InsertHTML(const String& html);
   WebElement TestElement();
 };
 
-void WebElementTest::InsertHTML(String html) {
+void WebElementTest::InsertHTML(const String& html) {
   GetDocument().documentElement()->SetInnerHTMLFromString(html);
 }
 
