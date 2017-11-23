@@ -2271,7 +2271,7 @@ PaintLayerScrollableArea::PreventRelayoutScope::PreventRelayoutScope(
 PaintLayerScrollableArea::PreventRelayoutScope::~PreventRelayoutScope() {
   if (--count_ == 0) {
     if (relayout_needed_) {
-      for (auto scrollable_area : *needs_relayout_) {
+      for (const auto& scrollable_area : *needs_relayout_) {
         DCHECK(scrollable_area->NeedsRelayout());
         LayoutBox& box = scrollable_area->Box();
         layout_scope_->SetNeedsLayout(

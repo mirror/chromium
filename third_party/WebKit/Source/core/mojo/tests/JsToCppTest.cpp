@@ -74,7 +74,7 @@ v8::Local<v8::Value> ExecuteScript(const String& script_path,
       ScriptSourceCode(String(script_src->Data(), script_src->size())));
 }
 
-void CheckDataPipe(mojo::DataPipeConsumerHandle data_pipe_handle) {
+void CheckDataPipe(const mojo::DataPipeConsumerHandle& data_pipe_handle) {
   MojoResult result = Wait(data_pipe_handle, MOJO_HANDLE_SIGNAL_READABLE);
   EXPECT_EQ(MOJO_RESULT_OK, result);
 
@@ -90,7 +90,7 @@ void CheckDataPipe(mojo::DataPipeConsumerHandle data_pipe_handle) {
   data_pipe_handle.EndReadData(num_bytes);
 }
 
-void CheckMessagePipe(mojo::MessagePipeHandle message_pipe_handle) {
+void CheckMessagePipe(const mojo::MessagePipeHandle& message_pipe_handle) {
   MojoResult result = Wait(message_pipe_handle, MOJO_HANDLE_SIGNAL_READABLE);
   EXPECT_EQ(MOJO_RESULT_OK, result);
 
@@ -173,7 +173,8 @@ void CheckCorruptedStringArray(const Optional<Vector<String>>& string_array) {
     CheckCorruptedString((*string_array)[i]);
 }
 
-void CheckCorruptedDataPipe(mojo::DataPipeConsumerHandle data_pipe_handle) {
+void CheckCorruptedDataPipe(
+    const mojo::DataPipeConsumerHandle& data_pipe_handle) {
   unsigned char buffer[100];
   uint32_t buffer_size = static_cast<uint32_t>(sizeof(buffer));
   MojoResult result =
@@ -184,7 +185,8 @@ void CheckCorruptedDataPipe(mojo::DataPipeConsumerHandle data_pipe_handle) {
     g_waste_accumulator += buffer[i];
 }
 
-void CheckCorruptedMessagePipe(mojo::MessagePipeHandle message_pipe_handle) {
+void CheckCorruptedMessagePipe(
+    const mojo::MessagePipeHandle& message_pipe_handle) {
   std::vector<uint8_t> bytes;
   std::vector<mojo::ScopedHandle> handles;
   MojoResult result = ReadMessageRaw(message_pipe_handle, &bytes, &handles, 0);

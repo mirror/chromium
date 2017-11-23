@@ -19,7 +19,7 @@ class URLSearchParamsIterationSource final
     : public PairIterable<String, String>::IterationSource {
  public:
   URLSearchParamsIterationSource(Vector<std::pair<String, String>> params)
-      : params_(params), current_(0) {}
+      : params_(std::move(params)), current_(0) {}
 
   bool Next(ScriptState*,
             String& key,

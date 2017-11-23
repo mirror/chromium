@@ -294,7 +294,7 @@ bool CSSPropertyValueSet::ShorthandIsImportant(
 }
 
 bool CSSPropertyValueSet::ShorthandIsImportant(
-    AtomicString custom_property_name) const {
+    const AtomicString& custom_property_name) const {
   // Custom properties are never shorthands.
   return false;
 }

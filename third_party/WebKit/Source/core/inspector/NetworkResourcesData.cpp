@@ -214,7 +214,7 @@ void NetworkResourcesData::ResponseReceived(const String& request_id,
   resource_data->SetHTTPStatusCode(response.HttpStatusCode());
   resource_data->SetRawHeaderSize(response.EncodedDataLength());
 
-  String file_path = response.DownloadedFilePath();
+  const String& file_path = response.DownloadedFilePath();
   if (!file_path.IsEmpty()) {
     std::unique_ptr<BlobData> blob_data =
         BlobData::CreateForFileWithUnknownSize(file_path);
@@ -303,7 +303,7 @@ void NetworkResourcesData::MaybeAddResourceData(const String& request_id,
 
 void NetworkResourcesData::MaybeAddResourceData(
     const String& request_id,
-    scoped_refptr<const SharedBuffer> data) {
+    const scoped_refptr<const SharedBuffer>& data) {
   DCHECK(data);
   if (ResourceData* resource_data =
           PrepareToAddResourceData(request_id, data->size())) {

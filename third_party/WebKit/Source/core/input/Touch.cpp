@@ -25,6 +25,8 @@
 
 #include "core/input/Touch.h"
 
+#include <utility>
+
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "platform/geometry/FloatPoint.h"
@@ -58,7 +60,7 @@ Touch::Touch(LocalFrame* frame,
       radius_(radius),
       rotation_angle_(rotation_angle),
       force_(force),
-      region_(region) {
+      region_(std::move(region)) {
   float scale_factor = frame ? frame->PageZoomFactor() : 1.0f;
   absolute_location_ = LayoutPoint(page_pos.ScaledBy(scale_factor));
 }
@@ -81,7 +83,7 @@ Touch::Touch(EventTarget* target,
       radius_(radius),
       rotation_angle_(rotation_angle),
       force_(force),
-      region_(region),
+      region_(std::move(region)),
       absolute_location_(absolute_location) {}
 
 Touch::Touch(LocalFrame* frame, const TouchInit& initializer)

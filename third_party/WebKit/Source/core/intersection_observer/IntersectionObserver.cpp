@@ -59,7 +59,7 @@ class IntersectionObserverDelegateImpl final
   IntersectionObserver::EventCallback callback_;
 };
 
-void ParseRootMargin(String root_margin_parameter,
+void ParseRootMargin(const String& root_margin_parameter,
                      Vector<Length>& root_margin,
                      ExceptionState& exception_state) {
   // TODO(szager): Make sure this exact syntax and behavior is spec-ed

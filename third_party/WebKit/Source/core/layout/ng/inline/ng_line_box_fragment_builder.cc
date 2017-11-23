@@ -4,6 +4,8 @@
 
 #include "core/layout/ng/inline/ng_line_box_fragment_builder.h"
 
+#include <utility>
+
 #include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
@@ -20,7 +22,9 @@ NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(
     scoped_refptr<const ComputedStyle> style,
     WritingMode writing_mode,
     TextDirection)
-    : NGContainerFragmentBuilder(style, writing_mode, TextDirection::kLtr),
+    : NGContainerFragmentBuilder(std::move(style),
+                                 writing_mode,
+                                 TextDirection::kLtr),
       node_(node) {}
 
 NGLineBoxFragmentBuilder::~NGLineBoxFragmentBuilder() {}

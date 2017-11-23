@@ -641,8 +641,8 @@ static bool EqualSelectionsAlgorithm(
   if (selection1.IsNone())
     return selection2.IsNone();
 
-  const VisibleSelectionTemplate<Strategy> selection_wrapper1(selection1);
-  const VisibleSelectionTemplate<Strategy> selection_wrapper2(selection2);
+  const VisibleSelectionTemplate<Strategy>& selection_wrapper1(selection1);
+  const VisibleSelectionTemplate<Strategy>& selection_wrapper2(selection2);
 
   return selection_wrapper1.Base() == selection_wrapper2.Base() &&
          selection_wrapper1.Extent() == selection_wrapper2.Extent();

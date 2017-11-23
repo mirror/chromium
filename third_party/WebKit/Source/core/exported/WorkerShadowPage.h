@@ -55,7 +55,7 @@ class CORE_EXPORT WorkerShadowPage : public WebFrameClient {
   void Initialize(const KURL& script_url);
 
   void SetContentSecurityPolicyAndReferrerPolicy(ContentSecurityPolicy*,
-                                                 String referrer_policy);
+                                                 const String& referrer_policy);
 
   // WebFrameClient overrides.
   std::unique_ptr<WebApplicationCacheHost> CreateApplicationCacheHost(

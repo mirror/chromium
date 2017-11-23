@@ -4,6 +4,8 @@
 
 #include "core/layout/ng/inline/ng_offset_mapping.h"
 
+#include <utility>
+
 #include "core/dom/Node.h"
 #include "core/dom/Text.h"
 #include "core/editing/EphemeralRange.h"
@@ -156,7 +158,7 @@ NGOffsetMapping::NGOffsetMapping(NGOffsetMapping&& other)
 NGOffsetMapping::NGOffsetMapping(UnitVector&& units,
                                  RangeMap&& ranges,
                                  String text)
-    : units_(units), ranges_(ranges), text_(text) {}
+    : units_(units), ranges_(ranges), text_(std::move(text)) {}
 
 NGOffsetMapping::~NGOffsetMapping() = default;
 

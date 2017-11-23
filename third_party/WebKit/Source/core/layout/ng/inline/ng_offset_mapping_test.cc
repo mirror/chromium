@@ -24,7 +24,7 @@ class NGOffsetMappingTest : public NGLayoutTest {
     style_->GetFont().Update(nullptr);
   }
 
-  void SetupHtml(const char* id, String html) {
+  void SetupHtml(const char* id, const String& html) {
     SetBodyInnerHTML(html);
     layout_block_flow_ = ToLayoutBlockFlow(GetLayoutObjectByElementId(id));
     DCHECK(layout_block_flow_->IsLayoutNGMixin());

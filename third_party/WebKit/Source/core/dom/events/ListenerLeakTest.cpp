@@ -86,7 +86,7 @@ class ListenerLeakTest : public ::testing::Test {
  public:
   void RunTest(const std::string& filename) {
     std::string base_url("http://www.example.com/");
-    std::string file_name(filename);
+    const std::string& file_name(filename);
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url), blink::testing::CoreTestDataPath(),
         WebString::FromUTF8(file_name));

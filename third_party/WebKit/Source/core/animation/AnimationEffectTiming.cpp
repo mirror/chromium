@@ -34,7 +34,7 @@ void AnimationEffectTiming::setEndDelay(double end_delay) {
   parent_->UpdateSpecifiedTiming(timing);
 }
 
-void AnimationEffectTiming::setFill(String fill) {
+void AnimationEffectTiming::setFill(const String& fill) {
   Timing timing = parent_->SpecifiedTiming();
   TimingInput::SetFillMode(timing, fill);
   parent_->UpdateSpecifiedTiming(timing);
@@ -68,13 +68,13 @@ void AnimationEffectTiming::SetPlaybackRate(double playback_rate) {
   parent_->UpdateSpecifiedTiming(timing);
 }
 
-void AnimationEffectTiming::setDirection(String direction) {
+void AnimationEffectTiming::setDirection(const String& direction) {
   Timing timing = parent_->SpecifiedTiming();
   TimingInput::SetPlaybackDirection(timing, direction);
   parent_->UpdateSpecifiedTiming(timing);
 }
 
-void AnimationEffectTiming::setEasing(String easing,
+void AnimationEffectTiming::setEasing(const String& easing,
                                       ExceptionState& exception_state) {
   Timing timing = parent_->SpecifiedTiming();
   if (TimingInput::SetTimingFunction(timing, easing, nullptr, exception_state))

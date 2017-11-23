@@ -2050,7 +2050,7 @@ void ApplyStyleCommand::JoinChildTextNodes(ContainerNode* node,
     if (end.IsOffsetInAnchor() && next == end.ComputeContainerNode())
       new_end = Position(child_text,
                          child_text->length() + end.OffsetInContainerNode());
-    String text_to_move = next_text->data();
+    const String& text_to_move = next_text->data();
     InsertTextIntoNode(child_text, child_text->length(), text_to_move);
     // Removing a Text node doesn't dispatch synchronous events.
     RemoveNode(next, ASSERT_NO_EDITING_ABORT);

@@ -5,6 +5,7 @@
 #include "core/animation/CSSLengthListInterpolationType.h"
 
 #include <memory>
+#include <utility>
 #include "core/animation/LengthInterpolationFunctions.h"
 #include "core/animation/LengthListPropertyFunctions.h"
 #include "core/animation/ListInterpolationFunctions.h"
@@ -19,7 +20,7 @@ namespace blink {
 
 CSSLengthListInterpolationType::CSSLengthListInterpolationType(
     PropertyHandle property)
-    : CSSInterpolationType(property),
+    : CSSInterpolationType(std::move(property)),
       value_range_(LengthListPropertyFunctions::GetValueRange(CssProperty())) {}
 
 InterpolationValue CSSLengthListInterpolationType::MaybeConvertNeutral(

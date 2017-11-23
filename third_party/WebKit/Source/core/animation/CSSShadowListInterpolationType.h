@@ -5,6 +5,8 @@
 #ifndef CSSShadowListInterpolationType_h
 #define CSSShadowListInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -14,7 +16,7 @@ class ShadowList;
 class CSSShadowListInterpolationType : public CSSInterpolationType {
  public:
   CSSShadowListInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+      : CSSInterpolationType(std::move(property)) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;

@@ -311,7 +311,7 @@ unsigned Internals::workerThreadCount() const {
   return WorkerThread::WorkerThreadCount();
 }
 
-GCObservation* Internals::observeGC(ScriptValue script_value) {
+GCObservation* Internals::observeGC(const ScriptValue& script_value) {
   v8::Local<v8::Value> observed_value = script_value.V8Value();
   DCHECK(!observed_value.IsEmpty());
   if (observed_value->IsNull() || observed_value->IsUndefined()) {
@@ -1115,7 +1115,7 @@ void Internals::addTextMatchMarker(const Range* range,
 static bool ParseColor(const String& value,
                        Color& color,
                        ExceptionState& exception_state,
-                       String error_message) {
+                       const String& error_message) {
   if (!color.SetFromString(value)) {
     exception_state.ThrowDOMException(kInvalidAccessError, error_message);
     return false;
@@ -1140,8 +1140,8 @@ void addStyleableMarkerHelper(
     const String& thickness_value,
     const String& background_color_value,
     ExceptionState& exception_state,
-    std::function<
-        void(const EphemeralRange&, Color, StyleableMarker::Thickness, Color)>
+    const std::function<
+        void(const EphemeralRange&, Color, StyleableMarker::Thickness, Color)>&
         create_marker) {
   DCHECK(range);
   range->OwnerDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
@@ -2442,7 +2442,7 @@ int Internals::numberOfPages(float page_width,
                                      FloatSize(page_width, page_height));
 }
 
-String Internals::pageProperty(String property_name,
+String Internals::pageProperty(const String& property_name,
                                int page_number,
                                ExceptionState& exception_state) const {
   if (!GetFrame()) {
@@ -2870,7 +2870,7 @@ bool Internals::fakeMouseMovePending() const {
 }
 
 DOMArrayBuffer* Internals::serializeObject(
-    scoped_refptr<SerializedScriptValue> value) const {
+    const scoped_refptr<SerializedScriptValue>& value) const {
   StringView view = value->GetWireData();
   DCHECK(view.Is8Bit());
   DOMArrayBuffer* buffer =
@@ -2887,7 +2887,8 @@ scoped_refptr<SerializedScriptValue> Internals::deserializeBuffer(
   return SerializedScriptValue::Create(value);
 }
 
-DOMArrayBuffer* Internals::serializeWithInlineWasm(ScriptValue value) const {
+DOMArrayBuffer* Internals::serializeWithInlineWasm(
+    const ScriptValue& value) const {
   v8::Isolate* isolate = value.GetIsolate();
   ExceptionState exception_state(isolate, ExceptionState::kExecutionContext,
                                  "Internals", "serializeWithInlineWasm");
@@ -3122,7 +3123,7 @@ class AddOneFunction : public ScriptFunction {
 }  // namespace
 
 ScriptPromise Internals::createResolvedPromise(ScriptState* script_state,
-                                               ScriptValue value) {
+                                               const ScriptValue& value) {
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
   resolver->Resolve(value);
@@ -3130,7 +3131,7 @@ ScriptPromise Internals::createResolvedPromise(ScriptState* script_state,
 }
 
 ScriptPromise Internals::createRejectedPromise(ScriptState* script_state,
-                                               ScriptValue value) {
+                                               const ScriptValue& value) {
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
   resolver->Reject(value);

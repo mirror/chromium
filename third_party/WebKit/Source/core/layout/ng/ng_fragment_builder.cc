@@ -4,6 +4,8 @@
 
 #include "core/layout/ng/ng_fragment_builder.h"
 
+#include <utility>
+
 #include "core/layout/LayoutObject.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
@@ -20,7 +22,7 @@ NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
                                      scoped_refptr<const ComputedStyle> style,
                                      WritingMode writing_mode,
                                      TextDirection direction)
-    : NGContainerFragmentBuilder(style, writing_mode, direction),
+    : NGContainerFragmentBuilder(std::move(style), writing_mode, direction),
       node_(node),
       layout_object_(node.GetLayoutObject()),
       box_type_(NGPhysicalFragment::NGBoxType::kNormalBox),
@@ -30,7 +32,7 @@ NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
                                      scoped_refptr<const ComputedStyle> style,
                                      WritingMode writing_mode,
                                      TextDirection direction)
-    : NGContainerFragmentBuilder(style, writing_mode, direction),
+    : NGContainerFragmentBuilder(std::move(style), writing_mode, direction),
       node_(nullptr),
       layout_object_(layout_object),
       box_type_(NGPhysicalFragment::NGBoxType::kNormalBox),
@@ -84,14 +86,14 @@ NGFragmentBuilder& NGFragmentBuilder::AddBreakBeforeChild(
 }
 
 NGFragmentBuilder& NGFragmentBuilder::PropagateBreak(
-    scoped_refptr<NGLayoutResult> child_layout_result) {
+    const scoped_refptr<NGLayoutResult>& child_layout_result) {
   if (!did_break_)
     return PropagateBreak(child_layout_result->PhysicalFragment());
   return *this;
 }
 
 NGFragmentBuilder& NGFragmentBuilder::PropagateBreak(
-    scoped_refptr<NGPhysicalFragment> child_fragment) {
+    const scoped_refptr<NGPhysicalFragment>& child_fragment) {
   if (!did_break_) {
     const auto* token = child_fragment->BreakToken();
     did_break_ = token && !token->IsFinished();

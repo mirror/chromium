@@ -51,7 +51,7 @@ class StylePropertySerializer {
   String Get4Values(const StylePropertyShorthand&) const;
   String BorderSpacingValue(const StylePropertyShorthand&) const;
   String GetShorthandValue(const StylePropertyShorthand&,
-                           String separator = " ") const;
+                           const String& separator = " ") const;
   String FontValue() const;
   String FontVariantValue() const;
   void AppendFontLonghandValueIfNotNormal(CSSPropertyID,
@@ -82,7 +82,7 @@ class StylePropertySerializer {
 
    public:
     explicit PropertyValueForSerializer(
-        CSSPropertyValueSet::PropertyReference property)
+        const CSSPropertyValueSet::PropertyReference& property)
         : value_(property.Value()),
           id_(property.Id()),
           is_important_(property.IsImportant()),

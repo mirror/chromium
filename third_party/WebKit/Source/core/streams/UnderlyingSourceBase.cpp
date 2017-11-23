@@ -12,8 +12,9 @@
 
 namespace blink {
 
-ScriptPromise UnderlyingSourceBase::startWrapper(ScriptState* script_state,
-                                                 ScriptValue js_controller) {
+ScriptPromise UnderlyingSourceBase::startWrapper(
+    ScriptState* script_state,
+    const ScriptValue& js_controller) {
   // Cannot call start twice (e.g., cannot use the same UnderlyingSourceBase to
   // construct multiple streams).
   DCHECK(!controller_);
@@ -32,7 +33,7 @@ ScriptPromise UnderlyingSourceBase::pull(ScriptState* script_state) {
 }
 
 ScriptPromise UnderlyingSourceBase::cancelWrapper(ScriptState* script_state,
-                                                  ScriptValue reason) {
+                                                  const ScriptValue& reason) {
   if (controller_)
     controller_->NoteHasBeenCanceled();
   return Cancel(script_state, reason);

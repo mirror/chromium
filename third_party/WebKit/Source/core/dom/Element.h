@@ -121,7 +121,7 @@ struct FocusParams {
   FocusParams(SelectionBehaviorOnFocus selection,
               WebFocusType focus_type,
               InputDeviceCapabilities* capabilities,
-              FocusOptions focus_options = FocusOptions())
+              const FocusOptions& focus_options = FocusOptions())
       : selection_behavior(selection),
         type(focus_type),
         source_capabilities(capabilities),
@@ -250,7 +250,7 @@ class CORE_EXPORT Element : public ContainerNode {
   // attributes.
   AttributeCollection AttributesWithoutUpdate() const;
 
-  void scrollIntoView(ScrollIntoViewOptionsOrBoolean);
+  void scrollIntoView(const ScrollIntoViewOptionsOrBoolean&);
   void scrollIntoView(bool align_to_top = true);
   void scrollIntoViewWithOptions(const ScrollIntoViewOptions&);
   void scrollIntoViewIfNeeded(bool center_if_needed = true);
@@ -573,7 +573,7 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual Image* ImageContents() { return nullptr; }
 
   virtual void focus(const FocusParams& = FocusParams());
-  void focus(FocusOptions);
+  void focus(const FocusOptions&);
 
   void UpdateFocusAppearance(SelectionBehaviorOnFocus);
   virtual void UpdateFocusAppearanceWithOptions(SelectionBehaviorOnFocus,

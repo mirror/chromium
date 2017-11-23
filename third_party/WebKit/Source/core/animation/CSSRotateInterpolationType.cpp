@@ -5,6 +5,7 @@
 #include "core/animation/CSSRotateInterpolationType.h"
 
 #include <memory>
+#include <utility>
 #include "core/css/resolver/StyleBuilderConverter.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/transforms/RotateTransformOperation.h"
@@ -18,7 +19,7 @@ class OptionalRotation {
   OptionalRotation() : is_none_(true) {}
 
   explicit OptionalRotation(Rotation rotation)
-      : rotation_(rotation), is_none_(false) {}
+      : rotation_(std::move(rotation)), is_none_(false) {}
 
   bool IsNone() const { return is_none_; }
   const Rotation& GetRotation() const {

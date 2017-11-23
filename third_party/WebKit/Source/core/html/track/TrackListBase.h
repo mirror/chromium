@@ -86,7 +86,7 @@ class TrackListBase : public EventTargetWithInlineData {
   }
 
   virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
-    for (auto track : tracks_) {
+    for (const auto& track : tracks_) {
       visitor->TraceWrappers(track);
     }
     EventTargetWithInlineData::TraceWrappers(visitor);

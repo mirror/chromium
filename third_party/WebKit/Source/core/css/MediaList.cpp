@@ -20,6 +20,7 @@
 #include "core/css/MediaList.h"
 
 #include <memory>
+#include <utility>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/MediaQueryExp.h"
@@ -151,13 +152,13 @@ String MediaQuerySet::MediaText() const {
 
 MediaList::MediaList(scoped_refptr<MediaQuerySet> media_queries,
                      CSSStyleSheet* parent_sheet)
-    : media_queries_(media_queries),
+    : media_queries_(std::move(media_queries)),
       parent_style_sheet_(parent_sheet),
       parent_rule_(nullptr) {}
 
 MediaList::MediaList(scoped_refptr<MediaQuerySet> media_queries,
                      CSSRule* parent_rule)
-    : media_queries_(media_queries),
+    : media_queries_(std::move(media_queries)),
       parent_style_sheet_(nullptr),
       parent_rule_(parent_rule) {}
 
@@ -208,7 +209,7 @@ void MediaList::appendMedium(const String& medium,
     parent_style_sheet_->DidMutate();
 }
 
-void MediaList::Reattach(scoped_refptr<MediaQuerySet> media_queries) {
+void MediaList::Reattach(const scoped_refptr<MediaQuerySet>& media_queries) {
   // TODO(keishi) Changed DCHECK to CHECK for crbug.com/699269 diagnosis
   CHECK(media_queries);
   for (const auto& query : media_queries->QueryVector()) {

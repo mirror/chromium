@@ -25,6 +25,8 @@
 
 #include "core/css/ComputedStyleCSSValueMapping.h"
 
+#include <utility>
+
 #include "base/macros.h"
 #include "core/StylePropertyShorthand.h"
 #include "core/animation/css/CSSAnimationData.h"
@@ -1062,7 +1064,7 @@ void OrderedNamedLinesCollector::AppendLines(
   if (iter == end_iter)
     return;
 
-  for (auto line_name : iter->value)
+  for (const auto& line_name : iter->value)
     line_names_value.Append(
         *CSSCustomIdentValue::Create(AtomicString(line_name)));
 }
@@ -1463,7 +1465,7 @@ static CSSValue* ValueForAnimationTimingFunction(
   return list;
 }
 
-static CSSValueList* ValuesForBorderRadiusCorner(LengthSize radius,
+static CSSValueList* ValuesForBorderRadiusCorner(const LengthSize& radius,
                                                  const ComputedStyle& style) {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   if (radius.Width().GetType() == kPercent)
@@ -1481,7 +1483,7 @@ static CSSValueList* ValuesForBorderRadiusCorner(LengthSize radius,
 
 static const CSSValue& ValueForBorderRadiusCorner(LengthSize radius,
                                                   const ComputedStyle& style) {
-  CSSValueList& list = *ValuesForBorderRadiusCorner(radius, style);
+  CSSValueList& list = *ValuesForBorderRadiusCorner(std::move(radius), style);
   if (list.Item(0) == list.Item(1))
     return list.Item(0);
   return list;
@@ -2169,7 +2171,7 @@ static CSSValue* ValueForWebkitColumnBreakInside(EBreakInside break_value) {
 }
 
 const CSSValue* ComputedStyleCSSValueMapping::Get(
-    const AtomicString custom_property_name,
+    const AtomicString& custom_property_name,
     const ComputedStyle& style,
     const PropertyRegistry* registry) {
   if (registry) {
@@ -2795,14 +2797,14 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
         return CSSIdentifierValue::Create(CSSValueAuto);
       return CSSStringValue::Create(style.Locale());
     case CSSPropertyMarginTop: {
-      Length margin_top = style.MarginTop();
+      const Length& margin_top = style.MarginTop();
       if (margin_top.IsFixed() || !layout_object || !layout_object->IsBox())
         return ZoomAdjustedPixelValueForLength(margin_top, style);
       return ZoomAdjustedPixelValue(ToLayoutBox(layout_object)->MarginTop(),
                                     style);
     }
     case CSSPropertyMarginRight: {
-      Length margin_right = style.MarginRight();
+      const Length& margin_right = style.MarginRight();
       if (margin_right.IsFixed() || !layout_object || !layout_object->IsBox())
         return ZoomAdjustedPixelValueForLength(margin_right, style);
       float value;
@@ -2822,14 +2824,14 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ZoomAdjustedPixelValue(value, style);
     }
     case CSSPropertyMarginBottom: {
-      Length margin_bottom = style.MarginBottom();
+      const Length& margin_bottom = style.MarginBottom();
       if (margin_bottom.IsFixed() || !layout_object || !layout_object->IsBox())
         return ZoomAdjustedPixelValueForLength(margin_bottom, style);
       return ZoomAdjustedPixelValue(ToLayoutBox(layout_object)->MarginBottom(),
                                     style);
     }
     case CSSPropertyMarginLeft: {
-      Length margin_left = style.MarginLeft();
+      const Length& margin_left = style.MarginLeft();
       if (margin_left.IsFixed() || !layout_object || !layout_object->IsBox())
         return ZoomAdjustedPixelValueForLength(margin_left, style);
       return ZoomAdjustedPixelValue(ToLayoutBox(layout_object)->MarginLeft(),
@@ -2905,28 +2907,28 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyOverflowY:
       return CSSIdentifierValue::Create(style.OverflowY());
     case CSSPropertyPaddingTop: {
-      Length padding_top = style.PaddingTop();
+      const Length& padding_top = style.PaddingTop();
       if (padding_top.IsFixed() || !layout_object || !layout_object->IsBox())
         return ZoomAdjustedPixelValueForLength(padding_top, style);
       return ZoomAdjustedPixelValue(
           ToLayoutBox(layout_object)->ComputedCSSPaddingTop(), style);
     }
     case CSSPropertyPaddingRight: {
-      Length padding_right = style.PaddingRight();
+      const Length& padding_right = style.PaddingRight();
       if (padding_right.IsFixed() || !layout_object || !layout_object->IsBox())
         return ZoomAdjustedPixelValueForLength(padding_right, style);
       return ZoomAdjustedPixelValue(
           ToLayoutBox(layout_object)->ComputedCSSPaddingRight(), style);
     }
     case CSSPropertyPaddingBottom: {
-      Length padding_bottom = style.PaddingBottom();
+      const Length& padding_bottom = style.PaddingBottom();
       if (padding_bottom.IsFixed() || !layout_object || !layout_object->IsBox())
         return ZoomAdjustedPixelValueForLength(padding_bottom, style);
       return ZoomAdjustedPixelValue(
           ToLayoutBox(layout_object)->ComputedCSSPaddingBottom(), style);
     }
     case CSSPropertyPaddingLeft: {
-      Length padding_left = style.PaddingLeft();
+      const Length& padding_left = style.PaddingLeft();
       if (padding_left.IsFixed() || !layout_object || !layout_object->IsBox())
         return ZoomAdjustedPixelValueForLength(padding_left, style);
       return ZoomAdjustedPixelValue(

@@ -59,7 +59,7 @@ class NGLengthUtilsTest : public ::testing::Test {
   }
 
   LayoutUnit ComputeInlineSizeForFragment(
-      scoped_refptr<const NGConstraintSpace> constraint_space =
+      const scoped_refptr<const NGConstraintSpace>& constraint_space =
           ConstructConstraintSpace(200, 300),
       const MinMaxSize& sizes = MinMaxSize()) {
     return ::blink::ComputeInlineSizeForFragment(*constraint_space, *style_,
@@ -67,7 +67,7 @@ class NGLengthUtilsTest : public ::testing::Test {
   }
 
   LayoutUnit ComputeBlockSizeForFragment(
-      scoped_refptr<const NGConstraintSpace> constraint_space =
+      const scoped_refptr<const NGConstraintSpace>& constraint_space =
           ConstructConstraintSpace(200, 300),
       LayoutUnit content_size = LayoutUnit()) {
     return ::blink::ComputeBlockSizeForFragment(*constraint_space, *style_,

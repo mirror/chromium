@@ -4,6 +4,8 @@
 
 #include "core/loader/InteractiveDetector.h"
 
+#include <utility>
+
 #include "core/dom/Document.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -143,7 +145,7 @@ void InteractiveDetector::OnResourceLoadBegin(
     return;
   // The request that is about to begin is not counted in ActiveConnections(),
   // so we add one to it.
-  UpdateNetworkQuietState(ActiveConnections() + 1, load_begin_time);
+  UpdateNetworkQuietState(ActiveConnections() + 1, std::move(load_begin_time));
 }
 
 // The optional load_finish_time, if provided, saves us a call to
@@ -154,7 +156,7 @@ void InteractiveDetector::OnResourceLoadEnd(
     return;
   if (interactive_time_ != 0.0)
     return;
-  UpdateNetworkQuietState(ActiveConnections(), load_finish_time);
+  UpdateNetworkQuietState(ActiveConnections(), std::move(load_finish_time));
 }
 
 void InteractiveDetector::OnLongTaskDetected(double start_time,

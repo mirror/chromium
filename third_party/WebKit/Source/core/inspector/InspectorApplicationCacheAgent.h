@@ -83,7 +83,7 @@ class CORE_EXPORT InspectorApplicationCacheAgent final
   BuildObjectForApplicationCacheResource(
       const ApplicationCacheHost::ResourceInfo&);
 
-  protocol::Response AssertFrameWithDocumentLoader(String frame_id,
+  protocol::Response AssertFrameWithDocumentLoader(const String& frame_id,
                                                    DocumentLoader*&);
 
   Member<InspectedFrames> inspected_frames_;

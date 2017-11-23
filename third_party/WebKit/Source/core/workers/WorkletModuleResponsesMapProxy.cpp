@@ -4,6 +4,8 @@
 
 #include "core/workers/WorkletModuleResponsesMapProxy.h"
 
+#include <utility>
+
 #include "core/loader/modulescript/ModuleScriptCreationParams.h"
 #include "platform/CrossThreadFunctional.h"
 
@@ -88,8 +90,8 @@ WorkletModuleResponsesMapProxy::WorkletModuleResponsesMapProxy(
     scoped_refptr<WebTaskRunner> outside_settings_task_runner,
     scoped_refptr<WebTaskRunner> inside_settings_task_runner)
     : module_responses_map_(module_responses_map),
-      outside_settings_task_runner_(outside_settings_task_runner),
-      inside_settings_task_runner_(inside_settings_task_runner) {
+      outside_settings_task_runner_(std::move(outside_settings_task_runner)),
+      inside_settings_task_runner_(std::move(inside_settings_task_runner)) {
   DCHECK(module_responses_map_);
   DCHECK(outside_settings_task_runner_);
   DCHECK(inside_settings_task_runner_);

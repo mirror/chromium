@@ -29,8 +29,9 @@ namespace blink {
 namespace {
 
 service_manager::mojom::blink::InterfaceProviderPtrInfo
-ConnectToWorkerInterfaceProvider(Document* document,
-                                 scoped_refptr<SecurityOrigin> script_origin) {
+ConnectToWorkerInterfaceProvider(
+    Document* document,
+    const scoped_refptr<SecurityOrigin>& script_origin) {
   mojom::blink::DedicatedWorkerFactoryPtr worker_factory;
   document->GetInterfaceProvider()->GetInterface(&worker_factory);
   service_manager::mojom::blink::InterfaceProviderPtrInfo

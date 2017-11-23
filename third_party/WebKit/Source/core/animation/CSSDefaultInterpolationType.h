@@ -35,7 +35,7 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSDefaultNonInterpolableValue);
 // A catch all default for CSSValue interpolation.
 class CSSDefaultInterpolationType : public InterpolationType {
  public:
-  CSSDefaultInterpolationType(PropertyHandle property)
+  CSSDefaultInterpolationType(const PropertyHandle& property)
       : InterpolationType(property) {
     DCHECK(property.IsCSSProperty());
   }

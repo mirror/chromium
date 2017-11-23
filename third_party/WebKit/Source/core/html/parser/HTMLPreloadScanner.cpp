@@ -781,7 +781,7 @@ void TokenPreloadScanner::ScanCommon(const Token& token,
         const typename Token::Attribute* equiv_attribute =
             token.GetAttributeItem(http_equivAttr);
         if (equiv_attribute) {
-          String equiv_attribute_value(equiv_attribute->Value());
+          const String& equiv_attribute_value(equiv_attribute->Value());
           if (DeprecatedEqualIgnoringCase(equiv_attribute_value,
                                           "content-security-policy")) {
             *is_csp_meta_tag = true;

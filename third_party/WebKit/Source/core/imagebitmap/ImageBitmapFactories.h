@@ -32,6 +32,7 @@
 #define ImageBitmapFactories_h
 
 #include <memory>
+#include <utility>
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/image_bitmap_source.h"
@@ -106,7 +107,8 @@ class ImageBitmapFactories final
                                      Optional<IntRect> crop_rect,
                                      const ImageBitmapOptions& options,
                                      ScriptState* script_state) {
-      return new ImageBitmapLoader(factory, crop_rect, script_state, options);
+      return new ImageBitmapLoader(factory, std::move(crop_rect), script_state,
+                                   options);
     }
 
     void LoadBlobAsync(ExecutionContext*, Blob*);
@@ -131,7 +133,7 @@ class ImageBitmapFactories final
 
     void ScheduleAsyncImageBitmapDecoding(DOMArrayBuffer*);
     void DecodeImageOnDecoderThread(
-        scoped_refptr<WebTaskRunner>,
+        const scoped_refptr<WebTaskRunner>&,
         DOMArrayBuffer*,
         const String& premultiply_alpha_option,
         const String& color_space_conversion_option);

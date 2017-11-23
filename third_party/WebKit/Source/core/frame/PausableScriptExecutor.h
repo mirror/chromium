@@ -31,7 +31,7 @@ class CORE_EXPORT PausableScriptExecutor final
 
   static PausableScriptExecutor* Create(
       LocalFrame*,
-      scoped_refptr<DOMWrapperWorld>,
+      const scoped_refptr<DOMWrapperWorld>&,
       const HeapVector<ScriptSourceCode>& sources,
       bool user_gesture,
       WebScriptExecutionCallback*);

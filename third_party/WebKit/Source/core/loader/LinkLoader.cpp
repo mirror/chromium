@@ -125,7 +125,7 @@ class LinkLoader::FinishObserver final
 };
 
 LinkLoader::LinkLoader(LinkLoaderClient* client,
-                       scoped_refptr<WebTaskRunner> task_runner)
+                       const scoped_refptr<WebTaskRunner>& task_runner)
     : client_(client) {
   DCHECK(client_);
 }

@@ -76,8 +76,8 @@ class CSSPropertyParser {
   DISALLOW_COPY_AND_ASSIGN(CSSPropertyParser);
 };
 
-CSSPropertyID UnresolvedCSSPropertyID(StringView);
-CSSValueID CssValueKeywordID(StringView);
+CSSPropertyID UnresolvedCSSPropertyID(const StringView&);
+CSSValueID CssValueKeywordID(const StringView&);
 
 }  // namespace blink
 

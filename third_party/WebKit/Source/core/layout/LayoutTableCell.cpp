@@ -139,7 +139,7 @@ void LayoutTableCell::ColSpanOrRowSpanChanged() {
 
 Length LayoutTableCell::LogicalWidthFromColumns(
     LayoutTableCol* first_col_for_this_cell,
-    Length width_from_style) const {
+    const Length& width_from_style) const {
   DCHECK(first_col_for_this_cell);
   DCHECK_EQ(first_col_for_this_cell,
             Table()

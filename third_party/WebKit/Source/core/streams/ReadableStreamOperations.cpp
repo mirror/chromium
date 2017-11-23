@@ -15,7 +15,7 @@ namespace blink {
 ScriptValue ReadableStreamOperations::CreateReadableStream(
     ScriptState* script_state,
     UnderlyingSourceBase* underlying_source,
-    ScriptValue strategy) {
+    const ScriptValue& strategy) {
   ScriptState::Scope scope(script_state);
 
   v8::Local<v8::Value> js_underlying_source =
@@ -42,7 +42,7 @@ ScriptValue ReadableStreamOperations::CreateCountQueuingStrategy(
 }
 
 ScriptValue ReadableStreamOperations::GetReader(ScriptState* script_state,
-                                                ScriptValue stream,
+                                                const ScriptValue& stream,
                                                 ExceptionState& es) {
   DCHECK(IsReadableStream(script_state, stream));
 
@@ -58,7 +58,7 @@ ScriptValue ReadableStreamOperations::GetReader(ScriptState* script_state,
 }
 
 bool ReadableStreamOperations::IsReadableStream(ScriptState* script_state,
-                                                ScriptValue value) {
+                                                const ScriptValue& value) {
   DCHECK(!value.IsEmpty());
 
   if (!value.IsObject())
@@ -72,7 +72,7 @@ bool ReadableStreamOperations::IsReadableStream(ScriptState* script_state,
 }
 
 bool ReadableStreamOperations::IsDisturbed(ScriptState* script_state,
-                                           ScriptValue stream) {
+                                           const ScriptValue& stream) {
   DCHECK(IsReadableStream(script_state, stream));
 
   v8::Local<v8::Value> args[] = {stream.V8Value()};
@@ -83,7 +83,7 @@ bool ReadableStreamOperations::IsDisturbed(ScriptState* script_state,
 }
 
 bool ReadableStreamOperations::IsLocked(ScriptState* script_state,
-                                        ScriptValue stream) {
+                                        const ScriptValue& stream) {
   DCHECK(IsReadableStream(script_state, stream));
 
   v8::Local<v8::Value> args[] = {stream.V8Value()};
@@ -94,7 +94,7 @@ bool ReadableStreamOperations::IsLocked(ScriptState* script_state,
 }
 
 bool ReadableStreamOperations::IsReadable(ScriptState* script_state,
-                                          ScriptValue stream) {
+                                          const ScriptValue& stream) {
   DCHECK(IsReadableStream(script_state, stream));
 
   v8::Local<v8::Value> args[] = {stream.V8Value()};
@@ -105,7 +105,7 @@ bool ReadableStreamOperations::IsReadable(ScriptState* script_state,
 }
 
 bool ReadableStreamOperations::IsClosed(ScriptState* script_state,
-                                        ScriptValue stream) {
+                                        const ScriptValue& stream) {
   DCHECK(IsReadableStream(script_state, stream));
 
   v8::Local<v8::Value> args[] = {stream.V8Value()};
@@ -116,7 +116,7 @@ bool ReadableStreamOperations::IsClosed(ScriptState* script_state,
 }
 
 bool ReadableStreamOperations::IsErrored(ScriptState* script_state,
-                                         ScriptValue stream) {
+                                         const ScriptValue& stream) {
   DCHECK(IsReadableStream(script_state, stream));
 
   v8::Local<v8::Value> args[] = {stream.V8Value()};
@@ -128,7 +128,7 @@ bool ReadableStreamOperations::IsErrored(ScriptState* script_state,
 
 bool ReadableStreamOperations::IsReadableStreamDefaultReader(
     ScriptState* script_state,
-    ScriptValue value) {
+    const ScriptValue& value) {
   DCHECK(!value.IsEmpty());
 
   if (!value.IsObject())
@@ -143,7 +143,7 @@ bool ReadableStreamOperations::IsReadableStreamDefaultReader(
 
 ScriptPromise ReadableStreamOperations::DefaultReaderRead(
     ScriptState* script_state,
-    ScriptValue reader) {
+    const ScriptValue& reader) {
   DCHECK(IsReadableStreamDefaultReader(script_state, reader));
 
   v8::Local<v8::Value> args[] = {reader.V8Value()};
@@ -153,7 +153,7 @@ ScriptPromise ReadableStreamOperations::DefaultReaderRead(
 }
 
 void ReadableStreamOperations::Tee(ScriptState* script_state,
-                                   ScriptValue stream,
+                                   const ScriptValue& stream,
                                    ScriptValue* new_stream1,
                                    ScriptValue* new_stream2) {
   DCHECK(IsReadableStream(script_state, stream));

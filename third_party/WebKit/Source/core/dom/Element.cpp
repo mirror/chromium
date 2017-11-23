@@ -27,6 +27,7 @@
 #include "core/dom/Element.h"
 
 #include <memory>
+#include <utility>
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
@@ -456,7 +457,7 @@ void Element::setNonce(const AtomicString& nonce) {
   EnsureElementRareData().SetNonce(nonce);
 }
 
-void Element::scrollIntoView(ScrollIntoViewOptionsOrBoolean arg) {
+void Element::scrollIntoView(const ScrollIntoViewOptionsOrBoolean& arg) {
   ScrollIntoViewOptions options;
   if (arg.IsBoolean()) {
     if (arg.GetAsBoolean())
@@ -556,7 +557,8 @@ void Element::scrollIntoViewIfNeeded(bool center_if_needed) {
 void Element::setDistributeScroll(ScrollStateCallback* scroll_state_callback,
                                   String native_scroll_behavior) {
   scroll_state_callback->SetNativeScrollBehavior(
-      ScrollStateCallback::ToNativeScrollBehavior(native_scroll_behavior));
+      ScrollStateCallback::ToNativeScrollBehavior(
+          std::move(native_scroll_behavior)));
   GetScrollCustomizationCallbacks().SetDistributeScroll(this,
                                                         scroll_state_callback);
 }
@@ -564,7 +566,8 @@ void Element::setDistributeScroll(ScrollStateCallback* scroll_state_callback,
 void Element::setApplyScroll(ScrollStateCallback* scroll_state_callback,
                              String native_scroll_behavior) {
   scroll_state_callback->SetNativeScrollBehavior(
-      ScrollStateCallback::ToNativeScrollBehavior(native_scroll_behavior));
+      ScrollStateCallback::ToNativeScrollBehavior(
+          std::move(native_scroll_behavior)));
   GetScrollCustomizationCallbacks().SetApplyScroll(this, scroll_state_callback);
 }
 
@@ -1386,8 +1389,8 @@ ALWAYS_INLINE void Element::SetAttributeInternal(
 
   const Attribute& existing_attribute =
       GetElementData()->Attributes().at(index);
-  AtomicString existing_attribute_value = existing_attribute.Value();
-  QualifiedName existing_attribute_name = existing_attribute.GetName();
+  const AtomicString& existing_attribute_value = existing_attribute.Value();
+  const QualifiedName& existing_attribute_name = existing_attribute.GetName();
 
   if (!in_synchronization_of_lazy_attribute)
     WillModifyAttribute(existing_attribute_name, existing_attribute_value,
@@ -2834,7 +2837,7 @@ bool Element::hasAttributeNS(const AtomicString& namespace_uri,
   return GetElementData()->Attributes().Find(q_name);
 }
 
-void Element::focus(FocusOptions options) {
+void Element::focus(const FocusOptions& options) {
   focus(FocusParams(SelectionBehaviorOnFocus::kRestore, kWebFocusTypeNone,
                     nullptr, options));
 }

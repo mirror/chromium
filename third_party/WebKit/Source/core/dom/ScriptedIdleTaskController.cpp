@@ -54,7 +54,7 @@ class IdleRequestCallbackWrapper
   }
 
   static void TimeoutFired(
-      scoped_refptr<IdleRequestCallbackWrapper> callback_wrapper) {
+      const scoped_refptr<IdleRequestCallbackWrapper>& callback_wrapper) {
     if (ScriptedIdleTaskController* controller =
             callback_wrapper->Controller()) {
       controller->CallbackFired(callback_wrapper->Id(),

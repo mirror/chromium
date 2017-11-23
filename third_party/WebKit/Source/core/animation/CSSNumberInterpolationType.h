@@ -12,7 +12,7 @@ namespace blink {
 
 class CORE_EXPORT CSSNumberInterpolationType : public CSSInterpolationType {
  public:
-  CSSNumberInterpolationType(PropertyHandle property,
+  CSSNumberInterpolationType(const PropertyHandle& property,
                              const PropertyRegistration* registration = nullptr,
                              bool round_to_integer = false)
       : CSSInterpolationType(property, registration),

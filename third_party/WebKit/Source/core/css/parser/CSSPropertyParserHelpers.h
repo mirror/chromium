@@ -109,7 +109,7 @@ CSSValue* ConsumeImage(
     ConsumeGeneratedImagePolicy = ConsumeGeneratedImagePolicy::kAllow);
 CSSValue* ConsumeImageOrNone(CSSParserTokenRange&, const CSSParserContext*);
 
-bool IsCSSWideKeyword(StringView);
+bool IsCSSWideKeyword(const StringView&);
 
 CSSIdentifierValue* ConsumeShapeBox(CSSParserTokenRange&);
 

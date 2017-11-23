@@ -28,12 +28,12 @@ class AnimationAnimationInputHelpersTest : public ::testing::Test {
     return AnimationInputHelpers::PropertyHandleToKeyframeAttribute(handle);
   }
 
-  String PropertyHandleToKeyframeAttribute(AtomicString property) {
+  String PropertyHandleToKeyframeAttribute(const AtomicString& property) {
     PropertyHandle handle(property);
     return AnimationInputHelpers::PropertyHandleToKeyframeAttribute(handle);
   }
 
-  String PropertyHandleToKeyframeAttribute(QualifiedName property) {
+  String PropertyHandleToKeyframeAttribute(const QualifiedName& property) {
     PropertyHandle handle(property);
     return AnimationInputHelpers::PropertyHandleToKeyframeAttribute(handle);
   }

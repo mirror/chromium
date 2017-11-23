@@ -280,7 +280,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   // |mime_type| and populated with the contents of |data|. Only intended for
   // use in internal-implementation LocalFrames that aren't in the frame tree.
   void ForceSynchronousDocumentInstall(const AtomicString& mime_type,
-                                       scoped_refptr<SharedBuffer> data);
+                                       const scoped_refptr<SharedBuffer>& data);
 
  private:
   friend class FrameNavigationDisabler;

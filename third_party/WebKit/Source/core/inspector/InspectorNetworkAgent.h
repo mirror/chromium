@@ -130,7 +130,7 @@ class CORE_EXPORT InspectorNetworkAgent final
                    const AtomicString& method,
                    const KURL&,
                    bool async,
-                   scoped_refptr<EncodedFormData> body,
+                   const scoped_refptr<EncodedFormData>& body,
                    const HTTPHeaderMap& headers,
                    bool include_crendentials);
   void DidFailXHRLoading(ExecutionContext*,

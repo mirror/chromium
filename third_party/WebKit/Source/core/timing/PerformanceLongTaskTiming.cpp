@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 #include "core/timing/PerformanceLongTaskTiming.h"
+
+#include <utility>
 #include "core/frame/DOMWindow.h"
 #include "core/timing/SubTaskAttribution.h"
 #include "core/timing/TaskAttributionTiming.h"
@@ -19,18 +21,18 @@ PerformanceLongTaskTiming* PerformanceLongTaskTiming::Create(
     String frame_id,
     String frame_name,
     const SubTaskAttribution::EntriesVector& sub_task_attributions) {
-  return new PerformanceLongTaskTiming(start_time, end_time, name, frame_src,
-                                       frame_id, frame_name,
-                                       sub_task_attributions);
+  return new PerformanceLongTaskTiming(
+      start_time, end_time, std::move(name), std::move(frame_src),
+      std::move(frame_id), std::move(frame_name), sub_task_attributions);
 }
 
 PerformanceLongTaskTiming::PerformanceLongTaskTiming(
     double start_time,
     double end_time,
-    String name,
-    String culprit_frame_src,
-    String culprit_frame_id,
-    String culprit_frame_name,
+    const String& name,
+    const String& culprit_frame_src,
+    const String& culprit_frame_id,
+    const String& culprit_frame_name,
     const SubTaskAttribution::EntriesVector& sub_task_attributions)
     : PerformanceEntry(name, "longtask", start_time, end_time) {
   // Only one possible container type exists currently: "iframe".

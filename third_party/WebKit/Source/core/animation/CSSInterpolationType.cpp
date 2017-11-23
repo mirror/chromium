@@ -5,6 +5,7 @@
 #include "core/animation/CSSInterpolationType.h"
 
 #include <memory>
+#include <utility>
 #include "core/StylePropertyShorthand.h"
 #include "core/animation/CSSInterpolationEnvironment.h"
 #include "core/animation/StringKeyframe.h"
@@ -135,7 +136,7 @@ class ResolvedRegisteredCustomPropertyChecker
 CSSInterpolationType::CSSInterpolationType(
     PropertyHandle property,
     const PropertyRegistration* registration)
-    : InterpolationType(property), registration_(registration) {
+    : InterpolationType(std::move(property)), registration_(registration) {
   DCHECK(!GetProperty().IsCSSCustomProperty() || registration);
   DCHECK(!CSSProperty::Get(CssProperty()).IsShorthand());
 }

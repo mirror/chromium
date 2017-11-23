@@ -5,6 +5,7 @@
 #include "core/animation/CSSLengthInterpolationType.h"
 
 #include <memory>
+#include <utility>
 #include "core/animation/LengthInterpolationFunctions.h"
 #include "core/animation/LengthPropertyFunctions.h"
 #include "core/animation/css/CSSAnimatableValueFactory.h"
@@ -21,7 +22,7 @@ namespace blink {
 CSSLengthInterpolationType::CSSLengthInterpolationType(
     PropertyHandle property,
     const PropertyRegistration* registration)
-    : CSSInterpolationType(property, registration),
+    : CSSInterpolationType(std::move(property), registration),
       value_range_(LengthPropertyFunctions::GetValueRange(CssProperty())) {}
 
 float CSSLengthInterpolationType::EffectiveZoom(

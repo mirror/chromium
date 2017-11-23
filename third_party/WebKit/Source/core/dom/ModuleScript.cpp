@@ -87,7 +87,7 @@ ModuleScript* ModuleScript::Create(const String& source_text,
 }
 
 ModuleScript* ModuleScript::CreateForTest(Modulator* modulator,
-                                          ScriptModule record,
+                                          const ScriptModule& record,
                                           const KURL& base_url,
                                           const ScriptFetchOptions& options) {
   String dummy_source_text = "";
@@ -97,7 +97,7 @@ ModuleScript* ModuleScript::CreateForTest(Modulator* modulator,
 
 ModuleScript* ModuleScript::CreateInternal(const String& source_text,
                                            Modulator* modulator,
-                                           ScriptModule result,
+                                           const ScriptModule& result,
                                            const KURL& base_url,
                                            const ScriptFetchOptions& options,
                                            const TextPosition& start_position) {
@@ -192,7 +192,7 @@ bool ModuleScript::IsErrored() const {
   return RecordStatus() == ScriptModuleState::kErrored;
 }
 
-void ModuleScript::SetErrorAndClearRecord(ScriptValue error) {
+void ModuleScript::SetErrorAndClearRecord(const ScriptValue& error) {
   DVLOG(1) << *this << "::SetErrorAndClearRecord()";
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-set-pre-instantiation-error

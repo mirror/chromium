@@ -30,7 +30,7 @@ class CORE_EXPORT DOMArrayBuffer final : public DOMArrayBufferBase {
   static DOMArrayBuffer* Create(WTF::ArrayBufferContents& contents) {
     return Create(WTF::ArrayBuffer::Create(contents));
   }
-  static DOMArrayBuffer* Create(scoped_refptr<SharedBuffer>);
+  static DOMArrayBuffer* Create(const scoped_refptr<SharedBuffer>&);
 
   // Only for use by XMLHttpRequest::responseArrayBuffer and
   // Internals::serializeObject.

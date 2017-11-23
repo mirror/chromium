@@ -34,7 +34,7 @@ class ScrollStateCallback
   }
 
   static WebNativeScrollBehavior ToNativeScrollBehavior(
-      String native_scroll_behavior);
+      const String& native_scroll_behavior);
 
  protected:
   WebNativeScrollBehavior native_scroll_behavior_;

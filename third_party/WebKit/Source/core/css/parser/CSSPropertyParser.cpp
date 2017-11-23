@@ -170,7 +170,7 @@ CSSPropertyID unresolvedCSSPropertyID(const String& string) {
              : UnresolvedCSSPropertyID(string.Characters16(), length);
 }
 
-CSSPropertyID UnresolvedCSSPropertyID(StringView string) {
+CSSPropertyID UnresolvedCSSPropertyID(const StringView& string) {
   unsigned length = string.length();
   return string.Is8Bit()
              ? UnresolvedCSSPropertyID(string.Characters8(), length)
@@ -195,7 +195,7 @@ static CSSValueID CssValueKeywordID(const CharacterType* value_keyword,
                           : CSSValueInvalid;
 }
 
-CSSValueID CssValueKeywordID(StringView string) {
+CSSValueID CssValueKeywordID(const StringView& string) {
   unsigned length = string.length();
   if (!length)
     return CSSValueInvalid;

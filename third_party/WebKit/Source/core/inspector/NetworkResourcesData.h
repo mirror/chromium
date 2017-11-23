@@ -249,7 +249,7 @@ class NetworkResourcesData final
   ResourceData* PrepareToAddResourceData(const String& request_id,
                                          size_t data_length);
   void MaybeAddResourceData(const String& request_id,
-                            scoped_refptr<const SharedBuffer>);
+                            const scoped_refptr<const SharedBuffer>&);
 
   Deque<String> request_ids_deque_;
 

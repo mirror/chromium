@@ -58,7 +58,7 @@ ScopedStyleResolver* ScopedStyleResolver::Parent() const {
 }
 
 void ScopedStyleResolver::AddKeyframeRules(const RuleSet& rule_set) {
-  const HeapVector<Member<StyleRuleKeyframes>> keyframes_rules =
+  const HeapVector<Member<StyleRuleKeyframes>>& keyframes_rules =
       rule_set.KeyframesRules();
   for (unsigned i = 0; i < keyframes_rules.size(); ++i)
     AddKeyframeStyle(keyframes_rules[i]);
@@ -73,7 +73,7 @@ void ScopedStyleResolver::AddFontFaceRules(const RuleSet& rule_set) {
   Document& document = GetTreeScope().GetDocument();
   CSSFontSelector* css_font_selector =
       document.GetStyleEngine().GetFontSelector();
-  const HeapVector<Member<StyleRuleFontFace>> font_face_rules =
+  const HeapVector<Member<StyleRuleFontFace>>& font_face_rules =
       rule_set.FontFaceRules();
   for (auto& font_face_rule : font_face_rules) {
     if (FontFace* font_face = FontFace::Create(&document, font_face_rule))

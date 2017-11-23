@@ -37,10 +37,10 @@ class PerformanceLongTaskTiming final : public PerformanceEntry {
   PerformanceLongTaskTiming(
       double start_time,
       double end_time,
-      String name,
-      String frame_src,
-      String frame_id,
-      String frame_name,
+      const String& name,
+      const String& frame_src,
+      const String& frame_id,
+      const String& frame_name,
       const SubTaskAttribution::EntriesVector& sub_task_attributions);
   ~PerformanceLongTaskTiming() override;
 

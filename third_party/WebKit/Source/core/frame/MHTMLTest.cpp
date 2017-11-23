@@ -151,7 +151,7 @@ class MHTMLTest : public ::testing::Test {
   }
 
   static std::map<std::string, std::string> ExtractMHTMLHeaders(
-      scoped_refptr<RawData> mhtml_data) {
+      const scoped_refptr<RawData>& mhtml_data) {
     // Read the MHTML data per line until reaching the empty line.
     std::map<std::string, std::string> mhtml_headers;
     LineReader line_reader(

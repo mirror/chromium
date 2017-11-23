@@ -375,7 +375,7 @@ void MutationObserver::Trace(blink::Visitor* visitor) {
 void MutationObserver::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(delegate_);
-  for (auto record : records_)
+  for (const auto& record : records_)
     visitor->TraceWrappers(record);
 }
 

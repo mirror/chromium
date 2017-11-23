@@ -54,7 +54,7 @@ void ReportingContext::SendReports() {
   // of the callbacks.
   auto reports_to_send = reports_;
   reports_.clear();
-  for (auto observer : observers_)
+  for (const auto& observer : observers_)
     observer->ReportToCallback(reports_to_send);
 }
 

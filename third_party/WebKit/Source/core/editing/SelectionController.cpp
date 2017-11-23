@@ -551,7 +551,7 @@ bool SelectionController::UpdateSelectionForMouseDownDispatchingSelectStart(
   return true;
 }
 
-static bool IsEmptyWordRange(const EphemeralRangeInFlatTree range) {
+static bool IsEmptyWordRange(const EphemeralRangeInFlatTree& range) {
   const String& str = PlainText(
       range, TextIteratorBehavior::Builder()
                  .SetEmitsObjectReplacementCharacter(

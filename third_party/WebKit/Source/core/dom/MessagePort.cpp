@@ -27,6 +27,7 @@
 #include "core/dom/MessagePort.h"
 
 #include <memory>
+#include <utility>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
@@ -72,7 +73,7 @@ void MessagePort::postMessage(ScriptState* script_state,
   DCHECK(!IsNeutered());
 
   BlinkTransferableMessage msg;
-  msg.message = message;
+  msg.message = std::move(message);
 
   // Make sure we aren't connected to any of the passed-in ports.
   for (unsigned i = 0; i < ports.size(); ++i) {

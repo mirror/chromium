@@ -19,6 +19,8 @@
 
 #include "core/css/MediaQueryList.h"
 
+#include <utility>
+
 #include "core/css/MediaList.h"
 #include "core/css/MediaQueryEvaluator.h"
 #include "core/css/MediaQueryListListener.h"
@@ -31,7 +33,7 @@ MediaQueryList* MediaQueryList::Create(ExecutionContext* context,
                                        MediaQueryMatcher* matcher,
                                        scoped_refptr<MediaQuerySet> media) {
   return new MediaQueryList(context, matcher,
-                            scoped_refptr<MediaQuerySet>(media));
+                            scoped_refptr<MediaQuerySet>(std::move(media)));
 }
 
 MediaQueryList::MediaQueryList(ExecutionContext* context,
@@ -39,7 +41,7 @@ MediaQueryList::MediaQueryList(ExecutionContext* context,
                                scoped_refptr<MediaQuerySet> media)
     : ContextLifecycleObserver(context),
       matcher_(matcher),
-      media_(media),
+      media_(std::move(media)),
       matches_dirty_(true),
       matches_(false) {
   matcher_->AddMediaQueryList(this);

@@ -5,6 +5,8 @@
 #ifndef CSSOffsetRotateInterpolationType_h
 #define CSSOffsetRotateInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSOffsetRotateInterpolationType : public CSSInterpolationType {
  public:
   CSSOffsetRotateInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+      : CSSInterpolationType(std::move(property)) {
     DCHECK(CssProperty() == CSSPropertyOffsetRotate);
   }
 

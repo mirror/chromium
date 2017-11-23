@@ -882,7 +882,7 @@ void StyleBuilderConverter::ConvertGridTrackList(
   }
 
   size_t current_named_grid_line = 0;
-  for (auto curr_value : ToCSSValueList(value)) {
+  for (const auto& curr_value : ToCSSValueList(value)) {
     if (curr_value->IsGridLineNamesValue()) {
       ConvertGridLineNamesList(*curr_value, current_named_grid_line,
                                named_grid_lines, ordered_named_grid_lines);
@@ -899,7 +899,7 @@ void StyleBuilderConverter::ConvertGridTrackList(
       auto_repeat_type = auto_repeat_id == CSSValueAutoFill
                              ? AutoRepeatType::kAutoFill
                              : AutoRepeatType::kAutoFit;
-      for (auto auto_repeat_value : ToCSSValueList(*curr_value)) {
+      for (const auto& auto_repeat_value : ToCSSValueList(*curr_value)) {
         if (auto_repeat_value->IsGridLineNamesValue()) {
           ConvertGridLineNamesList(*auto_repeat_value, auto_repeat_index,
                                    auto_repeat_named_grid_lines,

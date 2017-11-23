@@ -44,7 +44,7 @@ class BorderImageLengthBox {
   DISALLOW_NEW();
 
  public:
-  BorderImageLengthBox(Length length)
+  BorderImageLengthBox(const Length& length)
       : left_(length), right_(length), top_(length), bottom_(length) {}
 
   BorderImageLengthBox(double number)

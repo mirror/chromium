@@ -100,7 +100,7 @@ TEST_F(WorkletModuleResponsesMapTest, Basic) {
 
   // Serve the fetch request. This should notify the waiting clients.
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
-  for (auto client : clients) {
+  for (const auto& client : clients) {
     EXPECT_EQ(ClientImpl::Result::kOK, client->GetResult());
     EXPECT_TRUE(client->GetParams().has_value());
   }
@@ -129,7 +129,7 @@ TEST_F(WorkletModuleResponsesMapTest, Failure) {
 
   // Serve the fetch request with 404. This should fail the waiting clients.
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
-  for (auto client : clients) {
+  for (const auto& client : clients) {
     EXPECT_EQ(ClientImpl::Result::kFailed, client->GetResult());
     EXPECT_FALSE(client->GetParams().has_value());
   }
@@ -190,7 +190,7 @@ TEST_F(WorkletModuleResponsesMapTest, InvalidURL) {
   EXPECT_EQ(ClientImpl::Result::kFailed, client1->GetResult());
   EXPECT_FALSE(client1->GetParams().has_value());
 
-  const KURL kNullURL = NullURL();
+  const KURL& kNullURL = NullURL();
   ASSERT_TRUE(kNullURL.IsNull());
   ClientImpl* client2 = new ClientImpl;
   ReadEntry(kNullURL, client2);
@@ -242,7 +242,7 @@ TEST_F(WorkletModuleResponsesMapTest, Dispose) {
 
   // Dispose() should notify to all waiting clients.
   map_->Dispose();
-  for (auto client : clients) {
+  for (const auto& client : clients) {
     EXPECT_EQ(ClientImpl::Result::kFailed, client->GetResult());
     EXPECT_FALSE(client->GetParams().has_value());
   }

@@ -700,7 +700,7 @@ bool LayoutFlexibleBox::UseChildAspectRatio(const LayoutBox& child) const {
 
 LayoutUnit LayoutFlexibleBox::ComputeMainSizeFromAspectRatioUsing(
     const LayoutBox& child,
-    Length cross_size_length) const {
+    const Length& cross_size_length) const {
   DCHECK(HasAspectRatio(child));
   DCHECK_NE(child.IntrinsicSize().Height(), 0);
 
@@ -984,7 +984,7 @@ bool LayoutFlexibleBox::UpdateAutoMarginsInCrossAxis(
   return false;
 }
 
-LayoutUnit LayoutFlexibleBox::ComputeChildMarginValue(Length margin) {
+LayoutUnit LayoutFlexibleBox::ComputeChildMarginValue(const Length& margin) {
   // When resolving the margins, we use the content size for resolving percent
   // and calc (for percents in calc expressions) margins. Fortunately, percent
   // margins are always computed with respect to the block's width, even for

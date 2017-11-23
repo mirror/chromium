@@ -57,7 +57,7 @@ ContentSecurityPolicyHashAlgorithm ConvertHashAlgorithmToCSPHashAlgorithm(
 
 // IntegrityMetadata (from SRI) has base64-encoded digest values, but CSP uses
 // binary format. This converts from the former to the latter.
-bool ParseBase64Digest(String base64, DigestValue& hash) {
+bool ParseBase64Digest(const String& base64, DigestValue& hash) {
   Vector<char> hash_vector;
   // We accept base64url-encoded data here by normalizing it to base64.
   if (!Base64Decode(NormalizeToBase64(base64), hash_vector))

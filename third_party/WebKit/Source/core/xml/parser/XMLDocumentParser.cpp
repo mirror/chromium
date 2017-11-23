@@ -540,7 +540,7 @@ static bool IsLibxmlDefaultCatalogFile(const String& url_string) {
 }
 
 static bool ShouldAllowExternalLoad(const KURL& url) {
-  String url_string = url.GetString();
+  const String& url_string = url.GetString();
 
   // libxml should not be configured with catalogs enabled, so it
   // should not be asking to load default catalogs.

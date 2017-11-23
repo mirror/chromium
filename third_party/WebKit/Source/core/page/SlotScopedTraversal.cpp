@@ -123,7 +123,7 @@ Element* SlotScopedTraversal::Previous(const Element& current) {
 
 Element* SlotScopedTraversal::FirstAssignedToSlot(HTMLSlotElement& slot) {
   const HeapVector<Member<Node>>& assigned_nodes = slot.AssignedNodes();
-  for (auto assigned_node : assigned_nodes) {
+  for (const auto& assigned_node : assigned_nodes) {
     if (assigned_node->IsElementNode())
       return ToElement(assigned_node);
   }

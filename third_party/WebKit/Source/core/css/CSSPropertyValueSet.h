@@ -109,7 +109,7 @@ class CORE_EXPORT CSSPropertyValueSet
   bool PropertyIsImportant(T property) const;
 
   bool ShorthandIsImportant(CSSPropertyID) const;
-  bool ShorthandIsImportant(AtomicString custom_property_name) const;
+  bool ShorthandIsImportant(const AtomicString& custom_property_name) const;
 
   CSSPropertyID GetPropertyShorthand(CSSPropertyID) const;
   bool IsPropertyImplicit(CSSPropertyID) const;

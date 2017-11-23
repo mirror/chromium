@@ -5,6 +5,8 @@
 #ifndef CSSScaleInterpolationType_h
 #define CSSScaleInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSScaleInterpolationType : public CSSInterpolationType {
  public:
   CSSScaleInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+      : CSSInterpolationType(std::move(property)) {
     DCHECK_EQ(CssProperty(), CSSPropertyScale);
   }
 

@@ -272,7 +272,7 @@ void PointerEventManager::DispatchPointerCancelEvents(
     }
   }
 
-  for (auto pointer_event : canceled_pointer_events) {
+  for (const auto& pointer_event : canceled_pointer_events) {
     // If we are sending a pointercancel we have sent the pointerevent to some
     // target before.
     DCHECK(node_under_pointer_.Contains(pointer_event->pointerId()));

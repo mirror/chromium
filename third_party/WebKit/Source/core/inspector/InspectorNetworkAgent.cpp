@@ -566,7 +566,7 @@ void InspectorNetworkAgent::ShouldBlockRequest(const KURL& url, bool* result) {
   if (!blocked_urls)
     return;
 
-  String url_string = url.GetString();
+  const String& url_string = url.GetString();
   for (size_t i = 0; i < blocked_urls->size(); ++i) {
     auto entry = blocked_urls->at(i);
     if (Matches(url_string, entry.first)) {
@@ -957,7 +957,7 @@ void InspectorNetworkAgent::WillLoadXHR(
     const AtomicString& method,
     const KURL& url,
     bool async,
-    scoped_refptr<EncodedFormData> form_data,
+    const scoped_refptr<EncodedFormData>& form_data,
     const HTTPHeaderMap& headers,
     bool include_credentials) {
   DCHECK(xhr);
@@ -1354,8 +1354,6 @@ Response InspectorNetworkAgent::setBlockedURLs(
 }
 
 Response InspectorNetworkAgent::replayXHR(const String& request_id) {
-  String actual_request_id = request_id;
-
   XHRReplayData* xhr_replay_data = resources_data_->XhrReplayData(request_id);
   if (!xhr_replay_data)
     return Response::Error("Given id does not correspond to XHR");

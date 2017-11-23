@@ -11,7 +11,7 @@
 namespace blink {
 
 namespace {
-bool StringToScrollDirection(String scroll_direction,
+bool StringToScrollDirection(const String& scroll_direction,
                              ScrollTimeline::ScrollDirection& result) {
   // TODO(smcgruer): Support 'auto' value.
   if (scroll_direction == "block") {
@@ -27,7 +27,7 @@ bool StringToScrollDirection(String scroll_direction,
 }  // namespace
 
 ScrollTimeline* ScrollTimeline::Create(Document& document,
-                                       ScrollTimelineOptions options,
+                                       const ScrollTimelineOptions& options,
                                        ExceptionState& exception_state) {
   Element* scroll_source = options.scrollSource() ? options.scrollSource()
                                                   : document.scrollingElement();

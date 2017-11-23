@@ -5,6 +5,8 @@
 #ifndef CSSFontWeightInterpolationType_h
 #define CSSFontWeightInterpolationType_h
 
+#include <utility>
+
 #include "core/animation/CSSInterpolationType.h"
 
 namespace blink {
@@ -12,7 +14,7 @@ namespace blink {
 class CSSFontWeightInterpolationType : public CSSInterpolationType {
  public:
   CSSFontWeightInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+      : CSSInterpolationType(std::move(property)) {
     DCHECK_EQ(CssProperty(), CSSPropertyFontWeight);
   }
 

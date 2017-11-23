@@ -97,7 +97,7 @@ class MediaList final : public ScriptWrappable {
 
   const MediaQuerySet* Queries() const { return media_queries_.get(); }
 
-  void Reattach(scoped_refptr<MediaQuerySet>);
+  void Reattach(const scoped_refptr<MediaQuerySet>&);
 
   void Trace(blink::Visitor*);
 

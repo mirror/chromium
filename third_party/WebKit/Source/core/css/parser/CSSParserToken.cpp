@@ -43,12 +43,12 @@ CSSParserToken::CSSParserToken(CSSParserTokenType type,
   unicode_range_.end = end;
 }
 
-CSSParserToken::CSSParserToken(HashTokenType type, StringView value)
+CSSParserToken::CSSParserToken(HashTokenType type, const StringView& value)
     : type_(kHashToken), block_type_(kNotBlock), hash_token_type_(type) {
   InitValueFromStringView(value);
 }
 
-void CSSParserToken::ConvertToDimensionWithUnit(StringView unit) {
+void CSSParserToken::ConvertToDimensionWithUnit(const StringView& unit) {
   DCHECK_EQ(type_, static_cast<unsigned>(kNumberToken));
   type_ = kDimensionToken;
   InitValueFromStringView(unit);

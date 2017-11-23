@@ -1231,8 +1231,9 @@ void CompositeEditCommand::CleanupAfterDeletion(EditingState* editing_state) {
   CleanupAfterDeletion(editing_state, VisiblePosition());
 }
 
-void CompositeEditCommand::CleanupAfterDeletion(EditingState* editing_state,
-                                                VisiblePosition destination) {
+void CompositeEditCommand::CleanupAfterDeletion(
+    EditingState* editing_state,
+    const VisiblePosition& destination) {
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   VisiblePosition caret_after_delete = EndingVisibleSelection().VisibleStart();

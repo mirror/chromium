@@ -563,7 +563,7 @@ bool CompositedLayerMapping::AncestorRoundedCornersWillClip(
       owning_layer_, clip_inheritance_ancestor, zero_offset, true,
       LayerClipRecorder::kDoNotIncludeSelfForBorderRadius, rounded_rect_clips);
 
-  for (auto clip_rect : rounded_rect_clips) {
+  for (const auto& clip_rect : rounded_rect_clips) {
     FloatRect inner_clip_rect = clip_rect.RadiusCenterRect();
     // The first condition catches cases where the child is certainly inside
     // the rounded corner portion of the border, and cannot be clipped by

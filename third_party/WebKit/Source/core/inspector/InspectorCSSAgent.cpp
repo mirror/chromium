@@ -155,7 +155,7 @@ HeapVector<Member<Element>> ElementsFromRect(LayoutRect rect,
   document.GetFrame()->ContentLayoutItem().HitTest(result);
   HeapVector<Member<Element>> elements;
   Node* previous_node = nullptr;
-  for (const auto hit_test_result_node : result.ListBasedTestResult()) {
+  for (const auto& hit_test_result_node : result.ListBasedTestResult()) {
     Node* node = hit_test_result_node.Get();
     if (!node || node->IsDocumentNode())
       continue;
@@ -2376,13 +2376,13 @@ Response InspectorCSSAgent::takeCoverageDelta(
 
     HeapHashMap<Member<const StyleRule>, Member<CSSStyleRule>> rule_to_css_rule;
     const CSSRuleVector& css_rules = style_sheet->FlatRules();
-    for (auto css_rule : css_rules) {
+    for (const auto& css_rule : css_rules) {
       if (css_rule->type() != CSSRule::kStyleRule)
         continue;
       CSSStyleRule* css_style_rule = AsCSSStyleRule(css_rule);
       rule_to_css_rule.Set(css_style_rule->GetStyleRule(), css_style_rule);
     }
-    for (auto used_rule : entry.value) {
+    for (const auto& used_rule : entry.value) {
       CSSStyleRule* css_style_rule = rule_to_css_rule.at(used_rule);
       if (std::unique_ptr<protocol::CSS::RuleUsage> rule_usage_object =
               style_sheet->BuildObjectForRuleUsage(css_style_rule, true)) {

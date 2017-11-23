@@ -4,6 +4,8 @@
 
 #include "core/layout/ng/inline/ng_text_fragment_builder.h"
 
+#include <utility>
+
 #include "core/layout/ng/inline/ng_inline_item_result.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
@@ -48,7 +50,7 @@ void NGTextFragmentBuilder::SetItem(NGInlineItemResult* item_result,
 }
 
 void NGTextFragmentBuilder::SetText(
-    scoped_refptr<const ComputedStyle> style,
+    const scoped_refptr<const ComputedStyle>& style,
     scoped_refptr<const ShapeResult> shape_result,
     NGLogicalSize size) {
   DCHECK(style);
@@ -56,14 +58,14 @@ void NGTextFragmentBuilder::SetText(
   SetStyle(style);
   size_ = size;
   end_effect_ = NGTextEndEffect::kNone;
-  shape_result_ = shape_result;
+  shape_result_ = std::move(shape_result);
   expansion_ = 0;
   layout_object_ = inline_node_.GetLayoutObject();
   ;
 }
 
 void NGTextFragmentBuilder::SetAtomicInline(
-    scoped_refptr<const ComputedStyle> style,
+    const scoped_refptr<const ComputedStyle>& style,
     NGLogicalSize size) {
   DCHECK(style);
 

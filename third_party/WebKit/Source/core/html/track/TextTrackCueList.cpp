@@ -149,7 +149,7 @@ void TextTrackCueList::Trace(blink::Visitor* visitor) {
 
 void TextTrackCueList::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
-  for (auto cue : list_) {
+  for (const auto& cue : list_) {
     visitor->TraceWrappers(cue);
   }
 }

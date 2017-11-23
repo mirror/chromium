@@ -9,7 +9,7 @@
 
 namespace blink {
 
-CSSAtRuleID CssAtRuleID(StringView name) {
+CSSAtRuleID CssAtRuleID(const StringView& name) {
   if (EqualIgnoringASCIICase(name, "charset"))
     return kCSSAtRuleCharset;
   if (EqualIgnoringASCIICase(name, "font-face"))
