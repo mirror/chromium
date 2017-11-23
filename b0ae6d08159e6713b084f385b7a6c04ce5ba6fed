@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2ff6a9e_00eb8ac8",
+        "filename": "DEPS",
+        "patchSetId": 21
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "617092b9_43500d7c",
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64a019bc_5e66d859",
         "filename": "chromeos/dbus/cros_disks_client.h",
         "patchSetId": 21
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "21c92128_322e64eb",
+        "filename": "chromeos/dbus/cros_disks_client.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a019bc_5e66d859",
+      "range": {
+        "startLine": 268,
+        "startChar": 70,
+        "endLine": 268,
+        "endChar": 71
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97e936f1_cc4d22f9",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 21
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-22T19:07:18Z",
       "side": 1,
       "message": "not related to this cl - but this ctor should be changed to Disk::Disk(const DiskInfo\u0026 info) :)\nAnd maybe introduce a DiskBuilder class for tests.",
+      "range": {
+        "startLine": 651,
+        "startChar": 21,
+        "endLine": 651,
+        "endChar": 25
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bb470c_c5d996cc",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "Are you fine with a TODO in this cl and follow up?",
+      "parentUuid": "97e936f1_cc4d22f9",
       "range": {
         "startLine": 651,
         "startChar": 21,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "447498ba_0531bf32",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c02e5cd2_aaa7b3a8",
+      "range": {
+        "startLine": 774,
+        "startChar": 8,
+        "endLine": 774,
+        "endChar": 53
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b627bb6e_c0a3938f",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 21
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-22T19:07:18Z",
       "side": 1,
       "message": "auto-mountable disks are also disks :)\n\nmaybe:\nfor (auto\u0026 observer : observers_) {\n  observer.OnDiskEvent();\n  if (disk-\u003eAutoMountable())   \n    observer.OnAutoMountableDiskEvent()\n}",
+      "range": {
+        "startLine": 776,
+        "startChar": 21,
+        "endLine": 776,
+        "endChar": 32
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5b0912_b6765bf0",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "They should go through separate paths. What about better naming?\nOnAutoMountableDiskEvent and OnFixedDiskEvent.",
+      "parentUuid": "b627bb6e_c0a3938f",
       "range": {
         "startLine": 776,
         "startChar": 21,
@@ -125,6 +239,24 @@
       "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9630d82_154bc7b9",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "559c2861_79523884",
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "76a8f733_d8eeb531",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf71b9cd_7dd61d30",
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e13d46e4_218a4249",
         "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
         "patchSetId": 21
@@ -188,6 +338,30 @@
       "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c177289_df2c4c0b",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "Will be resolved in separate cl.",
+      "parentUuid": "e13d46e4_218a4249",
+      "range": {
+        "startLine": 163,
+        "startChar": 6,
+        "endLine": 163,
+        "endChar": 53
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "f433e588_29f84d33",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cefd2abb_396f1e30",
+      "range": {
+        "startLine": 178,
+        "startChar": 38,
+        "endLine": 178,
+        "endChar": 50
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e03fada_c312f734",
         "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
         "patchSetId": 21
@@ -234,6 +432,30 @@
       "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc83ec9_0e9243e3",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 1,
+      "message": "I am not sure what is the scope of disk change. but I was expecting that it can be sent when partition is re-mounted. In that case mount point is not a fix identifier of a disk.\nLet\u0027s get back to that after I check with Ben about DISK_CHANGED event.\nAlso move to separate cl.",
+      "parentUuid": "8e03fada_c312f734",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 32
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "9b9a2216bcb226957dc4edcc4c563fed5aa307bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c77713a_74c10bf2",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-23T01:55:44Z",
+      "side": 0,
+      "message": "What\u0027s the reason for 2 new lines here?",
+      "parentUuid": "77f118be_df84f848",
+      "revId": "9b9a2216bcb226957dc4edcc4c563fed5aa307bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
