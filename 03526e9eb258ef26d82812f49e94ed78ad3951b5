@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bba6cf41_db7e786c",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-23T13:19:28Z",
+      "side": 1,
+      "message": "This design makes an assumption on ordering. Please verify that the assumption is valid:\n\nconstexpr bool NonUserModifiableBeforeUserModifiable() {\n  bool seen_user_modifiable \u003d false;\n  for (const auto\u0026 entry : kProviderNamesSourceMap) {\n    if (entry.provider_source \u003d\u003d SETTING_SOURCE_USER)\n      seen_user_modifiable \u003d true;\n    else if (seen_user_modifiable)\n      return false;\n  }\n  return true;\n}\n\nstatic_assert(NonUserModifiableBeforeUserModifiable());\n\nOr if the compiler doesn\u0027t buy that this is a constexpr, just DCHECK() at an appropriate place.\n\nAlternatively, you could drop the ordering assumption and skip providers !\u003d SETTING_SOURCE_USER in GetWebsiteSettingInternal(). Though I like the current solution better, as the ordering is a very intentional aspect of HCSM.",
+      "revId": "03526e9eb258ef26d82812f49e94ed78ad3951b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
