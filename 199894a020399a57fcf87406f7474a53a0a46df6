@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d9f70795_8c6f9709",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-23T09:20:53Z",
+      "side": 1,
+      "message": "You are using it correctly. I looked in more detail, and indeed while WRO::Invalidate() destroys WRO::flag_, calling WeakReferenceOwner::GetRef() will create a new flag_ if needed. All is good, sorry for the noise.",
+      "parentUuid": "eff06824_fc5f7d18",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 34
+      },
+      "revId": "199894a020399a57fcf87406f7474a53a0a46df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b06137d_23903ec6",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
         "patchSetId": 5
