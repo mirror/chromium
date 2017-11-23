@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d95ae35_2e81c989",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-23T11:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6922789_20d8e57e",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 57
+      },
+      "revId": "7599da04d841de27b720535e8b17b65ace69ab57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f03722c5_f1b8c7a2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e82e1e89_15815364",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-23T11:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03722c5_f1b8c7a2",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "7599da04d841de27b720535e8b17b65ace69ab57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb49f4bb_bd67087f",
         "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_configurator.mm",
         "patchSetId": 7
@@ -59,6 +107,24 @@
       "writtenOn": "2017-11-23T10:36:52Z",
       "side": 1,
       "message": "No need for changes: usually we prefer using properties instead of direct ivars (except in init and dealloc).",
+      "revId": "7599da04d841de27b720535e8b17b65ace69ab57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "769bb877_4f5bf8aa",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_configurator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-23T11:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb49f4bb_bd67087f",
       "revId": "7599da04d841de27b720535e8b17b65ace69ab57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -85,6 +151,30 @@
       "revId": "7599da04d841de27b720535e8b17b65ace69ab57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10430342_fc81da88",
+        "filename": "ios/chrome/browser/ui/settings/material_cell_catalog_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-23T11:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7684a1cb_3d2faad9",
+      "range": {
+        "startLine": 493,
+        "startChar": 65,
+        "endLine": 493,
+        "endChar": 0
+      },
+      "revId": "7599da04d841de27b720535e8b17b65ace69ab57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
