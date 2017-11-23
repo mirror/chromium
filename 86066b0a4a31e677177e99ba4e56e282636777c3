@@ -22,6 +22,122 @@
       "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac174a8_ea96e26f",
+        "filename": "chrome/browser/chromeos/policy/variations_service_policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-23T22:30:01Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "d73891e4_0885a7cc",
+      "range": {
+        "startLine": 53,
+        "startChar": 59,
+        "endLine": 53,
+        "endChar": 63
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d12470a_a6585905",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-23T22:30:01Z",
+      "side": 1,
+      "message": "Nit: const",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 4
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e46a06_2e071e48",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-23T22:30:01Z",
+      "side": 1,
+      "message": "Nit: No need for static since these are in an anon namespace. Same for the one below.",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67765c76_bc1c9d85",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-23T22:30:01Z",
+      "side": 1,
+      "message": "Do we really need two command line flags?\n\nHow about just having logic to replace https:// prefix with http:// on the existing one?",
+      "range": {
+        "startLine": 363,
+        "startChar": 60,
+        "endLine": 363,
+        "endChar": 0
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429e2457_de56335c",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-23T22:30:01Z",
+      "side": 1,
+      "message": "Please do so in this CL.",
+      "range": {
+        "startLine": 640,
+        "startChar": 30,
+        "endLine": 640,
+        "endChar": 34
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
