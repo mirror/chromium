@@ -93,7 +93,6 @@ class CORE_EXPORT CanvasRenderingContext : public ScriptWrappable,
 
   virtual scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint,
                                                     SnapshotReason) const = 0;
-  virtual ImageData* ToImageData(SnapshotReason reason) { return nullptr; }
   virtual ContextType GetContextType() const = 0;
   virtual bool IsComposited() const = 0;
   virtual bool IsAccelerated() const = 0;
