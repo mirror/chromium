@@ -52,6 +52,24 @@
       "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d7dc51_5da92a52",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-23T08:18:21Z",
+      "side": 1,
+      "message": "Ideally, we would report the exact amount of memory back to V8. Where are all the resources hanging of the MediaStreamTrack allocated? All on the same malloc\u0027ed heap?",
+      "parentUuid": "299705fc_a9b1e25f",
+      "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
