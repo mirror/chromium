@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b178d5d_817dfbf5",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-23T21:20:23Z",
+      "side": 1,
+      "message": "Maybe specify the lambda return type explicitly, so that both return points can be written simpler?",
+      "revId": "4c3502f75441207c113ff5752256e6f1af1ea927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f2ab51_7f84f9a0",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-23T21:20:23Z",
+      "side": 1,
+      "message": "nit: Use GetTestDataDirectory()?",
+      "revId": "4c3502f75441207c113ff5752256e6f1af1ea927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
