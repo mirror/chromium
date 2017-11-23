@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82d7d410_2a8e1175",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-23T13:10:49Z",
+      "side": 1,
+      "message": "I guess you meant \"stretch fit\", but yeah I added it.",
+      "parentUuid": "b0b781c3_93206969",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b0e19da_9883ea01",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138cd0b1_af104064",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-23T13:10:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b0e19da_9883ea01",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2efa37c7_2a1cac7c",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-23T13:10:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b489f327_d9660529",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d079b0b8_00226523",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dd3266a9_e49a79f5",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-23T13:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d079b0b8_00226523",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aa6c040_322c4618",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-22T20:48:40Z",
       "side": 1,
       "message": "I guess it\u0027s a matter of taste but, don\u0027t you think it\u0027s be clearer to write it as \u0027min_size \u003e max_breadth\u0027 ? Considering that we are implementing a clamping logic, I think it\u0027s more appropriated.",
+      "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53be03a4_092f4af7",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-23T13:10:49Z",
+      "side": 1,
+      "message": "Yep right, changed that too.",
+      "parentUuid": "2aa6c040_322c4618",
       "revId": "2bdc7a342826edc350bbb6c669c07ad88e36695d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
