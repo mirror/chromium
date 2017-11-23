@@ -40,6 +40,8 @@
 #include "platform/fonts/Font.h"
 #include "platform/fonts/shaping/ShapeResultInlineHeaders.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
+#include "platform/text/TextBreakIterator.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -69,64 +71,117 @@ unsigned ShapeResult::RunInfo::PreviousSafeToBreakOffset(
   return 0;
 }
 
-float ShapeResult::RunInfo::XPositionForVisualOffset(
-    unsigned offset,
-    AdjustMidCluster adjust_mid_cluster) const {
+float ShapeResult::RunInfo::XPositionForVisualOffset(const TextRun& text_run,
+                                                     unsigned offset) const {
   DCHECK_LT(offset, num_characters_);
   if (Rtl())
     offset = num_characters_ - offset - 1;
-  return XPositionForOffset(offset, adjust_mid_cluster);
+  return XPositionForOffset(text_run, offset);
 }
 
-float ShapeResult::RunInfo::XPositionForOffset(
-    unsigned offset,
-    AdjustMidCluster adjust_mid_cluster) const {
+// XPositionForOffset returns the X position (in layout space) from the
+// beginning of the run to the beginning of the cluster of glyphs for X
+// character.
+// For RTL, beginning means the right most side of the cluster.
+// Characters may spawn multiple glyphs.
+// In the case that multiple characters form a Unicode grapheme cluster, we
+// distribute the width of the grapheme cluster among the number of cursor
+// positions returned by cursor-based TextBreakIterator.
+float ShapeResult::RunInfo::XPositionForOffset(const TextRun& text_run,
+                                               unsigned offset) const {
   DCHECK_LE(offset, num_characters_);
   const unsigned num_glyphs = glyph_data_.size();
-  unsigned glyph_index = 0;
-  float position = 0;
-  if (Rtl()) {
-    while (glyph_index < num_glyphs &&
-           glyph_data_[glyph_index].character_index > offset) {
-      position += glyph_data_[glyph_index].advance;
-      ++glyph_index;
-    }
-    // Adjust offset if it's not on the cluster boundary. In RTL, this means
-    // that the adjusted position is the left side of the character.
-    if (adjust_mid_cluster == kAdjustToEnd &&
-        (glyph_index < num_glyphs ? glyph_data_[glyph_index].character_index
-                                  : num_characters_) < offset) {
-      return position;
-    }
-    // For RTL, we need to return the right side boundary of the character.
-    // Add advance of glyphs which are part of the character.
-    while (glyph_index < num_glyphs - 1 &&
-           glyph_data_[glyph_index].character_index ==
-               glyph_data_[glyph_index + 1].character_index) {
-      position += glyph_data_[glyph_index].advance;
-      ++glyph_index;
-    }
-    position += glyph_data_[glyph_index].advance;
-  } else {
-    while (glyph_index < num_glyphs &&
-           glyph_data_[glyph_index].character_index < offset) {
-      position += glyph_data_[glyph_index].advance;
-      ++glyph_index;
-    }
-    // Adjust offset if it's not on the cluster boundary.
-    if (adjust_mid_cluster == kAdjustToStart && glyph_index &&
-        (glyph_index < num_glyphs ? glyph_data_[glyph_index].character_index
-                                  : num_characters_) > offset) {
-      offset = glyph_data_[--glyph_index].character_index;
-      for (; glyph_data_[glyph_index].character_index == offset;
-           --glyph_index) {
-        position -= glyph_data_[glyph_index].advance;
-        if (!glyph_index)
-          break;
+
+  // In this context, a glyph sequence is a sequence of glyphs that shares the
+  // same character_index and therefore represent the same interval of source
+  // characters. glyph_sequence_start marks the character index at the beginning
+  // of the interval of characters for which this glyph sequence was formed as
+  // the result of shaping; glyph_sequence_end marks the end of the interval of
+  // characters for which this glyph sequence was formed. [glyph_sequence_start,
+  // glyph_sequence_end) is inclusive on the start for the range of characters
+  // of the current sequence we are visiting.
+  unsigned glyph_sequence_start = 0;
+  unsigned glyph_sequence_end = num_characters_;
+  // the advance of the current glyph sequence.
+  float glyph_sequence_advance = 0.0;
+  // the accumulated advance up to the current glyph sequence.
+  float accumulated_position = 0;
+
+  if (!Rtl()) {
+    for (unsigned i = 0; i < num_glyphs; ++i) {
+      unsigned current_glyph_char_index = glyph_data_[i].character_index;
+      // If this glyph is still part of the same glyph sequence for the grapheme
+      // cluster at character index glyph_sequence_start, add its advance to the
+      // glyph_sequence's advance.
+      if (glyph_sequence_start == current_glyph_char_index) {
+        glyph_sequence_advance += glyph_data_[i].advance;
+        continue;
       }
+
+      // We are about to move out of a glyph sequence that contains offset, so
+      // the current glyph sequence is the one we are looking for.
+      if (glyph_sequence_start <= offset && offset < current_glyph_char_index) {
+        glyph_sequence_end = current_glyph_char_index;
+        break;
+      }
+
+      glyph_sequence_start = current_glyph_char_index;
+      // since we always update glyph_sequence_end when we break, set this to
+      // last_character in case this is the final iteration of the loop.
+      glyph_sequence_end = num_characters_;
+      accumulated_position += glyph_sequence_advance;
+      glyph_sequence_advance = glyph_data_[i].advance;
+    }
+
+  } else {
+    glyph_sequence_start = glyph_sequence_end = num_characters_;
+
+    for (unsigned i = 0; i < num_glyphs; ++i) {
+      unsigned current_glyph_char_index = glyph_data_[i].character_index;
+      // If this glyph is still part of the same glyph sequence for the grapheme
+      // cluster at character index glyph_sequence_start, add its advance to the
+      // glyph_sequence's advance.
+      if (glyph_sequence_end == current_glyph_char_index) {
+        glyph_sequence_advance += glyph_data_[i].advance;
+        continue;
+      }
+
+      // We are about to move out of a glyph sequence that contains offset, so
+      // the current glyph sequence is the one we are looking for.
+      if (glyph_sequence_start <= offset && offset < glyph_sequence_end) {
+        break;
+      }
+
+      glyph_sequence_end = glyph_sequence_start;
+      glyph_sequence_start = current_glyph_char_index;
+      accumulated_position += glyph_sequence_advance;
+      glyph_sequence_advance = glyph_data_[i].advance;
     }
   }
-  return position;
+
+  // At this point, we have accumulated_position at the left side of the offset,
+  // and glyph_sequence_advance containing the length of the cluster of glyphs
+  // where offset is in. We calculate the number of Unicode grapheme clusters
+  // (actually cursor position stops) on the subset of characters. We use this
+  // to divide glyph_sequence_advance by the number of unicode grapheme clusters
+  // this glyph sequence was shaped for, and thus linearly interpolate the
+  // cursor position based on accumulated position and a fraction of
+  // glyph_sequence_advance.
+  unsigned graphemes = static_cast<float>(NumCursorGraphemesClusters(
+      text_run, glyph_sequence_start, glyph_sequence_end));
+  if (graphemes > 0) {
+    int pos =
+        Rtl() ? glyph_sequence_end - offset - 1 : offset - glyph_sequence_start;
+    glyph_sequence_advance = glyph_sequence_advance / graphemes;
+    accumulated_position += glyph_sequence_advance * pos;
+  }
+
+  if (Rtl()) {
+    // For RTL, we return the right side.
+    accumulated_position += glyph_sequence_advance;
+  }
+
+  return accumulated_position;
 }
 
 static bool TargetPastEdge(bool rtl, float target_x, float next_x) {
@@ -371,7 +426,8 @@ float ShapeResult::PositionForOffset(unsigned absolute_offset) const {
     unsigned num_characters = runs_[i]->num_characters_;
 
     if (!offset_x && offset < num_characters) {
-      offset_x = runs_[i]->XPositionForVisualOffset(offset, kAdjustToEnd) + x;
+      // offset_x = runs_[i]->XPositionForVisualOffset(offset, kAdjustToEnd) +
+      // x;
       break;
     }
 
