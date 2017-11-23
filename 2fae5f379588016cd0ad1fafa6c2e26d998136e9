@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37a44a00_12d78625",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-23T00:55:37Z",
+      "side": 1,
+      "message": "nit: we\u0027ve been calling it \"Autopresentation\" in code.",
+      "range": {
+        "startLine": 392,
+        "startChar": 21,
+        "endLine": 392,
+        "endChar": 59
+      },
+      "revId": "2fae5f379588016cd0ad1fafa6c2e26d998136e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
