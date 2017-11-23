@@ -108,12 +108,15 @@ static const struct wl_message zcr_remote_surface_v1_events[] = {
 	{ "close", "", types + 0 },
 	{ "state_type_changed", "u", types + 0 },
 	{ "configure", "5iiau", types + 0 },
+	{ "bounds_changed", "8iiiiu", types + 0 },
+	{ "start_resize", "8u", types + 0 },
+	{ "end_resize", "8", types + 0 },
 };
 
 WL_EXPORT const struct wl_interface zcr_remote_surface_v1_interface = {
-	"zcr_remote_surface_v1", 7,
+	"zcr_remote_surface_v1", 8,
 	26, zcr_remote_surface_v1_requests,
-	3, zcr_remote_surface_v1_events,
+	6, zcr_remote_surface_v1_events,
 };
 
 static const struct wl_message zcr_notification_surface_v1_requests[] = {
