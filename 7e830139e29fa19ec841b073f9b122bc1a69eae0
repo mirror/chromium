@@ -133,6 +133,24 @@
       "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ad278a_f3f559e1",
+        "filename": "chrome/browser/chromeos/power/ml/idle_event_notifier_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-23T06:28:31Z",
+      "side": 1,
+      "message": "EXPECT_EQ doesn\u0027t work even with the overloaded operator \u003d\u003d. According to the guideline (https://cs.chromium.org/chromium/src/third_party/googletest/src/googletest/include/gtest/gtest.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1892), it\u0027s better to use EXPECT_TRUE to compare two user defined objects.",
+      "parentUuid": "b23e2864_29c86342",
+      "revId": "7e830139e29fa19ec841b073f9b122bc1a69eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
