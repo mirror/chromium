@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d51f17fd_4a5df981",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a161b62_d7172338",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "684c932a_872a6de2",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a2ae32_94bab9b6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "684c932a_872a6de2",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5e92bc53_96a5de59",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e67c4b_984bf93d",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29baa720_693e1958",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d856d7ab_91d5d293",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29baa720_693e1958",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a098795e_934972b7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1789,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "If request body is present, we first need to add a header to the ignore set, then put headers into command, then append a body. We can go without the \u0027data\u0027 variable by adding another if (request.requestFormData), which is less elegant in my opinion. Please let me know if you prefer two ifs over two variables.",
+      "parentUuid": "ad7ec6a8_1e193d51",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ed26d37_323dae00",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2d0f62_e1d72e08",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed26d37_323dae00",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "b1a89eba_c8342519",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d3b5a77_374b63fe",
+      "range": {
+        "startLine": 1800,
+        "startChar": 62,
+        "endLine": 1800,
+        "endChar": 69
+      },
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff45306_3e9c5b66",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 1
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "7579efbf_266d7cd9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1803,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "The escaped strings are quoted, so h: } will get transformed to @{\"h\"\u003d\"}\"}, no failures.",
+      "parentUuid": "0ff45306_3e9c5b66",
+      "range": {
+        "startLine": 1803,
+        "startChar": 59,
+        "endLine": 1803,
+        "endChar": 71
+      },
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f9cbb17_c8c28aa1",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 1
@@ -164,6 +320,24 @@
       "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8bb077_25c4c4e4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1805,
+      "author": {
+        "id": 1250931
+      },
+      "writtenOn": "2017-11-23T17:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9cbb17_c8c28aa1",
+      "revId": "cf21bc48af794a18d40a26323e19ae91b58ede65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
