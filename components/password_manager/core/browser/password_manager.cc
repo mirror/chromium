@@ -482,8 +482,6 @@ void PasswordManager::OnPasswordFormSubmitted(
   for (size_t i = 0; i < submission_callbacks_.size(); ++i) {
     submission_callbacks_[i].Run(password_form);
   }
-
-  pending_login_managers_.clear();
 }
 
 void PasswordManager::OnPasswordFormForceSaveRequested(
