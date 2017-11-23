@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5c286e0_d2cd2eb9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-23T19:10:12Z",
+      "side": 1,
+      "message": "I think this would be slightly easier to read if it wasn\u0027t nested.",
+      "range": {
+        "startLine": 1173,
+        "startChar": 6,
+        "endLine": 1173,
+        "endChar": 38
+      },
+      "revId": "289cfef347515507bc475b73ad70bde8ce50df1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee934e0_7f965eb5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-23T19:10:12Z",
+      "side": 1,
+      "message": "Should this be an enum, so we can have an \"unset\" value?",
+      "range": {
+        "startLine": 350,
+        "startChar": 2,
+        "endLine": 350,
+        "endChar": 6
+      },
+      "revId": "289cfef347515507bc475b73ad70bde8ce50df1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
