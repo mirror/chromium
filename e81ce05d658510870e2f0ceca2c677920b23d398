@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "561d9816_5819ba45",
+        "filename": "ios/chrome/browser/passwords/password_manager_internals_service_factory.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-23T14:36:28Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "e81ce05d658510870e2f0ceca2c677920b23d398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73833574_e10c9a94",
+        "filename": "ios/chrome/browser/ui/webui/password_manager_internals_ui_ios.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-23T14:36:28Z",
+      "side": 1,
+      "message": "This needs to listen to WebStateDestroyed() and call web_state-\u003eRemoveObserver(this); or assert it is never invoked (i.e. if PasswordManagerInternalsUIIOS outlives the WebState) with NOTREACHED();",
+      "revId": "e81ce05d658510870e2f0ceca2c677920b23d398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
