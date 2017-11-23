@@ -33,6 +33,24 @@
       "revId": "d812074181ea42747c4aac179fc7c4f6aae072a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0838d9_73ef65a3",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-11-23T07:38:19Z",
+      "side": 1,
+      "message": "It should be an enum. One of the values from HalPixelFormatExtension. Will upload a new patch to make both \"input_pixel_format\" and \"output_pixel_format\" enum.",
+      "parentUuid": "3fe6d3db_ff3f5fa3",
+      "revId": "d812074181ea42747c4aac179fc7c4f6aae072a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
