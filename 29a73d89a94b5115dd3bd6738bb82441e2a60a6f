@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00e94ca7_8b058846",
+        "filename": "chrome/android/java/res/layout/main.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faf3ffc6_6edc66d7",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b0574cb_65727ddf",
         "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T00:08:36Z",
       "side": 1,
       "message": "Is it the intent to use this long term?\n\nShould this be renamed to dialog_bg?\n\nI know our menu asset used to be biased with the shadow towards the bottom, but I\u0027m not sure that is still the case.",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78749c93_22ac389b",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "This is not the intent background for long term. I haven\u0027t get the spec for the dialog view yet. And reaming this to dialog_bg is not appropriate here since this is also used for menu background. And yes, the shadow is biased at the bottom. Promo dialog currently uses this background, so I think either we should rename menu_bg or we unify the dialog background to be another asset.\n\nLet\u0027s add a TODO here and fix this once Hannah has a spec.",
+      "parentUuid": "1b0574cb_65727ddf",
       "range": {
         "startLine": 13,
         "startChar": 34,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a407a748_3494e9f2",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "Yes let\u0027s rename this one. I think in general the max width should be consistent among all dialogs. We can change the value once the spec is ready.",
+      "parentUuid": "a115d4b0_f2b097c4",
+      "range": {
+        "startLine": 14,
+        "startChar": 28,
+        "endLine": 14,
+        "endChar": 50
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc945175_898ffc9b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 5
@@ -85,6 +157,24 @@
       "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107a696a_56e52c86",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "Moved to ChromeActivity. See design doc for more details.",
+      "parentUuid": "bc945175_898ffc9b",
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "42e3e366_06babf65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "Done.. moved to ChromeActivity.",
+      "parentUuid": "575e216e_eecea826",
+      "range": {
+        "startLine": 2181,
+        "startChar": 7,
+        "endLine": 2181,
+        "endChar": 17
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7af166_76bed7c0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
         "patchSetId": 5
@@ -131,6 +245,30 @@
       "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0add077c_10f2796a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "5a7af166_76bed7c0",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "4c5e425b_6da026db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "79a9d75e_9818c84e",
+      "range": {
+        "startLine": 74,
+        "startChar": 85,
+        "endLine": 74,
+        "endChar": 95
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e31d9de_90a2ea0a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
         "patchSetId": 5
@@ -168,6 +330,30 @@
       "writtenOn": "2017-11-15T00:08:36Z",
       "side": 1,
       "message": "Hmm...this seems kind of odd to me (for this class to be accessing the manager).\n\nAs a client, I think it might be better to do:\n\nModalDialog dialog \u003d new ModalDialog(\n    new Controller() { onUserDidStuff() {}});\nDialogManager.getForContext(context).show(dialog);\n\nThat would change ModalDialog\u0027s interface slightly as the activity wouldn\u0027t necessarily be passed in the constructor.  Maybe prepareBeforeShow would now take the context.  But I think it would be nice for the manager to be in charge of determining what container the dialog should be in.\n\nThe DialogManager.getForContext(...) could be a longer term strategy (definitely not in this CL) for when this lives outside of chrome/ and we\u0027d want to be able for dialogs in content/ ui/ to use this logic w/o the complexity to live anywhere but chrome.\n\nMy broad thinking is that it would be nice if ModalDialogs didn\u0027t care whether they were going to be plopped into the tab modal world or app modal world.  The manager would handle wrapping the view\u0027s in the correct container based on what is requested.\n\nI suspect this is quite long winded for a comment and potentially unclear.  We should sync on the design doc and see what makes sense here.",
+      "range": {
+        "startLine": 149,
+        "startChar": 21,
+        "endLine": 149,
+        "endChar": 31
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66393ee8_af0276a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "See design doc:)",
+      "parentUuid": "3e31d9de_90a2ea0a",
       "range": {
         "startLine": 149,
         "startChar": 21,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "a09c0fa1_172107d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "Yes if this is called after show, it will not be updated. We could probably add a check for this being called before prepareBeforeShow is called.\n\nBut if doing that, the client wouldn\u0027t be able to do setCustomView-\u003eshow-\u003edismiss-\u003esetCustomView-\u003eshow again. Do we want to support this type of use?",
+      "parentUuid": "6041d5c9_c9b73f30",
+      "range": {
+        "startLine": 195,
+        "startChar": 16,
+        "endLine": 195,
+        "endChar": 29
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "403bfaf9_821511ce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
         "patchSetId": 5
@@ -223,6 +433,30 @@
       "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5a7500_0c959d90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "403bfaf9_821511ce",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "cdc16eee_49288bdd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "Right, they could all be passed via constructor.",
+      "parentUuid": "dbd9bc06_8c2a4ec4",
+      "range": {
+        "startLine": 62,
+        "startChar": 16,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "305eeca6_6a0de7b9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
         "patchSetId": 5
@@ -260,6 +518,30 @@
       "writtenOn": "2017-11-15T00:08:36Z",
       "side": 1,
       "message": "should we have this here:\nassert isTabModal();",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "29a73d89a94b5115dd3bd6738bb82441e2a60a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0370f8ee_5172c2b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-23T02:26:42Z",
+      "side": 1,
+      "message": "Now that we don\u0027t have app/tab modal in the ModalDialog. It\u0027s not possible to assert.",
+      "parentUuid": "305eeca6_6a0de7b9",
       "range": {
         "startLine": 91,
         "startChar": 8,
