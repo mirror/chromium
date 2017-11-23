@@ -83,6 +83,8 @@ import org.chromium.chrome.browser.metrics.LaunchMetrics;
 import org.chromium.chrome.browser.metrics.MainIntentBehaviorMetrics;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.metrics.UmaUtils;
+import org.chromium.chrome.browser.modaldialog.ChromeModalDialogManager;
+import org.chromium.chrome.browser.modaldialog.ModalDialogManager;
 import org.chromium.chrome.browser.multiwindow.MultiInstanceChromeTabbedActivity;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
@@ -1861,6 +1863,8 @@ public class ChromeTabbedActivity
         super.onOmniboxFocusChanged(hasFocus);
 
         mMainIntentMetrics.onOmniboxFocused();
+
+        ((ChromeModalDialogManager) getModalDialogManager()).onOmniboxFocusChanged(hasFocus);
     }
 
     private void recordBackPressedUma(String logMessage, @BackPressedResult int action) {
@@ -1894,6 +1898,8 @@ public class ChromeTabbedActivity
     public boolean handleBackPressed() {
         if (!mUIInitialized) return false;
         final Tab currentTab = getActivityTab();
+
+        if (getModalDialogManager().handleBackPress()) return true;
 
         if (exitFullscreenIfShowing()) {
             recordBackPressedUma("Exited fullscreen", BACK_PRESSED_EXITED_FULLSCREEN);
@@ -2380,6 +2386,11 @@ public class ChromeTabbedActivity
     @Override
     protected ChromeFullscreenManager createFullscreenManager() {
         return new ChromeFullscreenManager(this, FeatureUtilities.isChromeHomeEnabled());
+    }
+
+    @Override
+    protected ModalDialogManager createModalDialogManager() {
+        return new ChromeModalDialogManager(this);
     }
 
     /**
