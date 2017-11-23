@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "490a0b40_9f737444",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-23T12:03:45Z",
+      "side": 1,
+      "message": "nit: should be around line 6",
+      "revId": "8361a8c4165173985391faab143ace15319f4aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692f5ad8_773819cf",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-23T12:03:45Z",
+      "side": 1,
+      "message": "nit: blank line here too, and maybe a comment explaining that the message historically hasn\u0027t been included for list-style notifications?",
+      "revId": "8361a8c4165173985391faab143ace15319f4aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8ecd2b_cf329cdb",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-23T12:03:45Z",
+      "side": 1,
+      "message": "const auto\u0026, don\u0027t make a copy",
+      "revId": "8361a8c4165173985391faab143ace15319f4aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
