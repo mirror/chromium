@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b5f43b_0a97b2f9",
+        "filename": "chrome/browser/vr/test/ui_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-23T22:06:37Z",
+      "side": 1,
+      "message": "Should we have something like GetTargetCenter and GetTargetNormal? Similar to GetTargetOpacity or Transform.",
+      "revId": "ff1b0aae0003a1c3c44d615274b03cf008b3bbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e59f2b_ced76cc3",
+        "filename": "chrome/browser/vr/test/ui_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-23T22:06:37Z",
+      "side": 1,
+      "message": "Is OnBeginFrame still needed?",
+      "revId": "ff1b0aae0003a1c3c44d615274b03cf008b3bbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
