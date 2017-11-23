@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "0c588a46_080b536e",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T05:27:47Z",
+      "side": 1,
+      "message": "Yeah ... it isn\u0027t though. I think any time GetPluginContentSetting is called with the empty resource identifier it will think it isn\u0027t the default, as uses_plugin_specific_setting will be true (specific_setting and general_setting) will both be the same.\n\nThis could be fixed in GetPluginContentSetting (maybe by not getting specific_setting if resource is \u0027\u0027) but it feels orthogonal to this change.",
+      "parentUuid": "54426dd0_ac3d530e",
+      "revId": "a4fee2f7756ca982c089055a671982aa8378820c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a20d2262_8989c98c",
         "filename": "components/content_settings/core/browser/content_settings_pref.cc",
         "patchSetId": 4
