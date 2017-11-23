@@ -22,6 +22,30 @@
       "revId": "78eff575c5f7abcc256b9cd82a8a9168baeb24c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16655cc7_ffc3a28d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/instantapps/InstantAppsHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-23T05:10:40Z",
+      "side": 1,
+      "message": "It won\u0027t matter in this case, that happens in upstream patch #2 when I remove the deprecated method. Since the downstream code still only calls the 2 param method which we haven\u0027t cut out or modified yet, things will carry on as they were.",
+      "parentUuid": "7601642f_9f697186",
+      "range": {
+        "startLine": 399,
+        "startChar": 19,
+        "endLine": 399,
+        "endChar": 40
+      },
+      "revId": "78eff575c5f7abcc256b9cd82a8a9168baeb24c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
