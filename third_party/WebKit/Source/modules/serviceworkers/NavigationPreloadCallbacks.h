@@ -7,11 +7,11 @@
 
 #include "platform/heap/Persistent.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
+#include "public/platform/modules/serviceworker/navigation_preload_state.mojom-blink.h"
 
 namespace blink {
 
 class ScriptPromiseResolver;
-struct WebNavigationPreloadState;
 struct WebServiceWorkerError;
 
 class EnableNavigationPreloadCallbacks final
@@ -37,7 +37,7 @@ class GetNavigationPreloadStateCallbacks final
   ~GetNavigationPreloadStateCallbacks() override;
 
   // WebGetNavigationPreloadStateCallbacks interface.
-  void OnSuccess(const WebNavigationPreloadState&) override;
+  void OnSuccess(const mojom::blink::NavigationPreloadState&) override;
   void OnError(const WebServiceWorkerError&) override;
 
  private:

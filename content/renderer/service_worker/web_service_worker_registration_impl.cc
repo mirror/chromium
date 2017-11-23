@@ -16,7 +16,6 @@
 #include "content/renderer/service_worker/service_worker_provider_context.h"
 #include "content/renderer/service_worker/web_service_worker_impl.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/WebNavigationPreloadState.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistrationProxy.h"
 
@@ -357,8 +356,7 @@ void WebServiceWorkerRegistrationImpl::OnDidGetNavigationPreloadState(
         error, blink::WebString::FromUTF8(*error_msg)));
     return;
   }
-  callbacks->OnSuccess(blink::WebNavigationPreloadState(
-      state->enabled, blink::WebString::FromUTF8(state->header)));
+  callbacks->OnSuccess(*state);
 }
 
 void WebServiceWorkerRegistrationImpl::OnDidSetNavigationPreloadHeader(
