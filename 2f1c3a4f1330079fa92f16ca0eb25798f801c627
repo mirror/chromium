@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a18c416_127c983b",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-11-23T17:03:55Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure of this, you can open a new tab without navigating to it. I\u0027m relying on the SetActiveTab method to set this field.",
+      "parentUuid": "27fbbdeb_cbb35336",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68900e94_e16b0b4f",
         "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-03T00:35:42Z",
       "side": 1,
       "message": "I think you can just set it to true here because active is visible.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 69
+      },
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e680d0a_e297f4bb",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-11-23T17:03:55Z",
+      "side": 1,
+      "message": "I prefer to not make this kind of assumption and just call the IsVisible method, I think that this is safer if we end up having some situation where the active tab is not visible (I can\u0027t think of any now but I don\u0027t want to assume that it\u0027s impossible).",
+      "parentUuid": "68900e94_e16b0b4f",
       "range": {
         "startLine": 117,
         "startChar": 0,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b5790ec0_5af3d369",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-11-23T17:03:55Z",
+      "side": 1,
+      "message": "|interacted_during_interval| should already be set at this point (and I shouldn\u0027t unset it ).\n\nI guess you meant |visible_during_interval|, I\u0027ll need to add a WebContentsObserver and use the WasHidden/WasShown methods to track this.",
+      "parentUuid": "786007bc_06ed3a57",
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a80412c_043def1a",
         "filename": "chrome/browser/metrics/tab_stats_data_store.h",
         "patchSetId": 11
@@ -76,6 +142,24 @@
       "writtenOn": "2017-11-03T00:35:42Z",
       "side": 1,
       "message": "Can you also illustrate in comments here what kind of interactions are tracked?",
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b7b094_a89a5665",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-11-23T17:03:55Z",
+      "side": 1,
+      "message": "It\u0027s still something that I need to clarify. Currently I consider that a tab has been interacted with only if it became the active tab but this is too simplistic, I should also track some other signals (audio, etc).",
+      "parentUuid": "7a80412c_043def1a",
       "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d2722599_ef418a31",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-11-23T17:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79e8fd0_368964d2",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3977481_891a37f0",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 11
@@ -119,6 +227,24 @@
       "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4905bfe7_dadc4063",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-11-23T17:03:55Z",
+      "side": 1,
+      "message": "Ha, thanks!\n\nDone.",
+      "parentUuid": "d3977481_891a37f0",
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
