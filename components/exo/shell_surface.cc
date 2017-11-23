@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "ash/frame/custom_frame_view_ash.h"
+#include "ash/frame/header_view.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
@@ -15,6 +16,7 @@
 #include "ash/wm/drag_window_resizer.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm/window_state_delegate.h"
 #include "ash/wm/window_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -73,16 +75,21 @@ const struct {
     {ui::VKEY_W, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN},
     {ui::VKEY_F4, ui::EF_ALT_DOWN}};
 
-class CustomFrameView : public ash::CustomFrameViewAshBase {
+class CustomFrameView : public ash::CustomFrameViewAsh {
  public:
   using ShapeRects = std::vector<gfx::Rect>;
 
-  explicit CustomFrameView(views::Widget* widget) : widget_(widget) {}
+  explicit CustomFrameView(views::Widget* widget) : CustomFrameViewAsh(widget) {
+    CustomFrameViewAsh::SetShouldPaintHeader(false);
+    // TODO(oshima): Enable this when caption is moved to chrome.
+    SetEnabled(false);
+  }
+
   ~CustomFrameView() override {}
 
   // Overridden from ash::CustomFrameViewAshBase:
   void SetShouldPaintHeader(bool paint) override {
-    aura::Window* window = widget_->GetNativeWindow();
+    aura::Window* window = GetWidget()->GetNativeWindow();
     ui::Layer* layer = window->layer();
     if (paint) {
       if (layer->alpha_shape()) {
@@ -111,7 +118,7 @@ class CustomFrameView : public ash::CustomFrameViewAshBase {
     return client_bounds;
   }
   int NonClientHitTest(const gfx::Point& point) override {
-    return widget_->client_view()->NonClientHitTest(point);
+    return GetWidget()->client_view()->NonClientHitTest(point);
   }
   void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask) override {}
   void ResetWindowControls() override {}
@@ -120,8 +127,6 @@ class CustomFrameView : public ash::CustomFrameViewAshBase {
   void SizeConstraintsChanged() override {}
 
  private:
-  views::Widget* const widget_;
-
   DISALLOW_COPY_AND_ASSIGN(CustomFrameView);
 };
 
@@ -962,6 +967,23 @@ views::View* ShellSurface::GetContentsView() {
   return this;
 }
 
+class ExoWindowStateDelegate : public ash::wm::WindowStateDelegate {
+ public:
+  ExoWindowStateDelegate() {}
+  ~ExoWindowStateDelegate() override {}
+
+  bool ToggleFullscreen(ash::wm::WindowState* window_state) override {
+    return false;
+  }
+
+  bool RestoreAlwaysOnTop(ash::wm::WindowState* window_state) override {
+    return false;
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ExoWindowStateDelegate);
+};
+
 views::NonClientFrameView* ShellSurface::CreateNonClientFrameView(
     views::Widget* widget) {
   aura::Window* window = widget_->GetNativeWindow();
@@ -969,7 +991,8 @@ views::NonClientFrameView* ShellSurface::CreateNonClientFrameView(
   window->SetProperty(aura::client::kImmersiveFullscreenKey, true);
   if (frame_enabled_)
     return new ash::CustomFrameViewAsh(widget);
-
+  ash::wm::WindowState* window_state = ash::wm::GetWindowState(window);
+  window_state->SetDelegate(std::make_unique<ExoWindowStateDelegate>());
   return new CustomFrameView(widget);
 }
 
