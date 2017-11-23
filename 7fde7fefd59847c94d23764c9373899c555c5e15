@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2afaf31_4169bfac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-23T22:09:30Z",
+      "side": 1,
+      "message": "functionality",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36de9baa_c6975d1e",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-23T22:09:30Z",
+      "side": 1,
+      "message": "Might be worth a comment describing what this means.",
+      "range": {
+        "startLine": 49,
+        "startChar": 51,
+        "endLine": 49,
+        "endChar": 65
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85449908_743f531d",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-23T22:09:30Z",
+      "side": 1,
+      "message": "This is doing multiple hashtable lookups, which will pretty expensive for something this hot.\n\nWe should be able to do this without any, perhaps using an enum?",
+      "range": {
+        "startLine": 113,
+        "startChar": 23,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3aa0765_9d88ffc3",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-23T22:09:30Z",
+      "side": 1,
+      "message": "I think having named members would be clearer.",
+      "range": {
+        "startLine": 45,
+        "startChar": 34,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
