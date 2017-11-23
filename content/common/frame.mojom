@@ -9,6 +9,7 @@ import "content/public/common/url_loader.mojom";
 import "content/public/common/window_container_type.mojom";
 import "mojo/common/unguessable_token.mojom";
 import "services/service_manager/public/interfaces/interface_provider.mojom";
+import "third_party/WebKit/common/feature_policy/feature_policy.mojom";
 import "third_party/WebKit/public/platform/referrer.mojom";
 import "third_party/WebKit/public/web/window_features.mojom";
 import "ui/base/mojo/window_open_disposition.mojom";
@@ -170,4 +171,21 @@ interface FrameHost {
   // Sent by the renderer when a navigation commits in the frame.
   DidCommitProvisionalLoad(
       DidCommitProvisionalLoadParams params);
+
+  // Sent when the frame changes its window.name.
+  DidChangeName(string name, string unique_name);
+
+  // Sent when the frame starts enforcing an insecure request policy. Sending
+  // this information in DidCommitProvisionalLoad isn't sufficient; this
+  // message is needed because, for example, a document can dynamically insert
+  // a <meta> tag that causes strict mixed content checking to be enforced.
+  // policy type is actually blink::WebInsecureRequestPolicy which just an
+  // to uint8 which we use here as the wire format.
+  EnforceInsecureRequestPolicy(
+      /*blink::WebInsecureRequestPolicy*/ uint8 policy);
+
+  // Notifies the browser process that a non-empty Feature-Policy HTTP header was
+  // delivered with the document being loaded into the frame. |parsed_header| is
+  // a list of an origin whitelist for each feature in the policy.
+  DidSetFeaturePolicyHeader(array<blink.mojom.ParsedFeaturePolicyDeclaration> parsed_header);
 };
