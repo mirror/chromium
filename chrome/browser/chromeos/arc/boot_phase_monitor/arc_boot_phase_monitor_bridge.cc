@@ -83,6 +83,11 @@ class ArcBootPhaseMonitorBridgeFactory
 }  // namespace
 
 // static
+BrowserContextKeyedServiceFactory* ArcBootPhaseMonitorBridge::GetFactory() {
+  return ArcBootPhaseMonitorBridgeFactory::GetInstance();
+}
+
+// static
 ArcBootPhaseMonitorBridge* ArcBootPhaseMonitorBridge::GetForBrowserContext(
     content::BrowserContext* context) {
   return ArcBootPhaseMonitorBridgeFactory::GetForBrowserContext(context);
@@ -128,8 +133,8 @@ ArcBootPhaseMonitorBridge::~ArcBootPhaseMonitorBridge() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   arc_bridge_service_->boot_phase_monitor()->RemoveObserver(this);
   auto* arc_session_manager = ArcSessionManager::Get();
-  DCHECK(arc_session_manager);
-  arc_session_manager->RemoveObserver(this);
+  if (arc_session_manager)  // for unit tests
+    arc_session_manager->RemoveObserver(this);
   SessionRestore::RemoveObserver(this);
 }
 
