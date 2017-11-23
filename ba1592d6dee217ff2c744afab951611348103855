@@ -222,6 +222,30 @@
       "revId": "ba1592d6dee217ff2c744afab951611348103855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf28785_bf91092c",
+        "filename": "components/signin/core/browser/signin_header_helper_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-23T12:20:17Z",
+      "side": 1,
+      "message": "Done, it\u0027s not needed anymore after refactoring.",
+      "parentUuid": "274bac4d_0a5a74fa",
+      "range": {
+        "startLine": 171,
+        "startChar": 5,
+        "endLine": 171,
+        "endChar": 29
+      },
+      "revId": "ba1592d6dee217ff2c744afab951611348103855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
