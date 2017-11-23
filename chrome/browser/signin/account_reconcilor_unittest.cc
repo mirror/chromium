@@ -6,7 +6,6 @@
 #include <memory>
 #include <utility>
 
-#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/scoped_observer.h"
