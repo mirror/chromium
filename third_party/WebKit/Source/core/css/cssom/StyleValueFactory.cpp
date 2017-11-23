@@ -43,8 +43,7 @@ CSSStyleValue* CreateStyleValue(const CSSValue& value) {
   if (value.IsVariableReferenceValue())
     return CSSUnparsedValue::FromCSSValue(ToCSSVariableReferenceValue(value));
   if (value.IsImageValue()) {
-    return CSSURLImageValue::Create(
-        ToCSSImageValue(value).ValueWithURLMadeAbsolute());
+    return CSSURLImageValue::Create(ToCSSImageValue(value).ValueWithURL());
   }
   return nullptr;
 }
@@ -70,7 +69,7 @@ CSSStyleValueVector UnsupportedCSSValue(const CSSValue& value) {
 CSSStyleValueVector StyleValueFactory::FromString(
     CSSPropertyID property_id,
     const String& value,
-    SecureContextMode secure_context_mode) {
+    const ExecutionContext* execution_context) {
   DCHECK_NE(property_id, CSSPropertyInvalid);
   DCHECK(!CSSProperty::Get(property_id).IsShorthand());
 
@@ -79,10 +78,8 @@ CSSStyleValueVector StyleValueFactory::FromString(
     return CSSStyleValueVector();
   }
 
-  // TODO(crbug.com/783031): This should probably use an existing parser context
-  // (e.g. from execution context) to parse relative URLs correctly.
   const CSSValue* css_value = CSSParser::ParseSingleValue(
-      property_id, value, StrictCSSParserContext(secure_context_mode));
+      property_id, value, CSSParserContext::Create(*execution_context));
   if (!css_value)
     return CSSStyleValueVector();
 
