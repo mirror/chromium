@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73891e4_0885a7cc",
+        "filename": "chrome/browser/chromeos/policy/variations_service_policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-11-23T10:32:24Z",
+      "side": 1,
+      "message": "This is fine, but my preference when defining new params like this is to actually take an ENUM like so:\n\nenum VariationsServerHttpOptions {\n  USE_HTTP,\n  USE_HTTPS\n}\n\nThen I know what\u0027s happening I\u0027m reading this code:\n\nGetVariationsServerURL(local_state, std::string(), USE_HTTPS)\n\nAnyhow, LGTM as is, but it could be better/more readable so consider this change.",
+      "range": {
+        "startLine": 53,
+        "startChar": 59,
+        "endLine": 53,
+        "endChar": 63
+      },
+      "revId": "86066b0a4a31e677177e99ba4e56e282636777c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
