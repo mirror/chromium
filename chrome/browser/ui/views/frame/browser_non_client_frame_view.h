@@ -13,6 +13,10 @@ class BrowserFrame;
 class BrowserView;
 class HostedAppButtonContainer;
 
+namespace gfx {
+class FontList;
+}
+
 // A specialization of the NonClientFrameView object that provides additional
 // Browser-specific methods.
 class BrowserNonClientFrameView : public views::NonClientFrameView,
@@ -67,6 +71,10 @@ class BrowserNonClientFrameView : public views::NonClientFrameView,
   // Provided for mus to update the minimum window size property.
   virtual void UpdateMinimumSize();
 
+  // Updates the visibility of buttons inside the HostedAppButtonContainer, if
+  // it exists.
+  void UpdateHostedAppButtonContainer();
+
   // Overriden from views::View.
   void ChildPreferredSizeChanged(views::View* child) override;
   void VisibilityChanged(views::View* starting_from, bool is_visible) override;
@@ -99,7 +107,8 @@ class BrowserNonClientFrameView : public views::NonClientFrameView,
 
   // Creates the View for extra buttons displayed in the Hosted App frame.
   void CreateHostedAppButtonContainer(SkColor active_icon_color,
-                                      SkColor inactive_icon_color);
+                                      SkColor inactive_icon_color,
+                                      const gfx::FontList& font_list);
 
   const views::View* profile_indicator_icon() const {
     return profile_indicator_icon_;

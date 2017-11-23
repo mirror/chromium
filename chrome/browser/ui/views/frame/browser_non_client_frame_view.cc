@@ -84,6 +84,13 @@ void BrowserNonClientFrameView::UpdateClientArea() {}
 
 void BrowserNonClientFrameView::UpdateMinimumSize() {}
 
+void BrowserNonClientFrameView::UpdateHostedAppButtonContainer() {
+  if (!hosted_app_button_container_)
+    return;
+
+  hosted_app_button_container_->RefreshContentSettingViews();
+}
+
 void BrowserNonClientFrameView::ChildPreferredSizeChanged(views::View* child) {
   if (child == GetProfileSwitcherView()) {
     // Perform a re-layout if the avatar button has changed, since that can
@@ -218,9 +225,10 @@ void BrowserNonClientFrameView::PaintToolbarBackground(
 
 void BrowserNonClientFrameView::CreateHostedAppButtonContainer(
     SkColor active_icon_color,
-    SkColor inactive_icon_color) {
+    SkColor inactive_icon_color,
+    const gfx::FontList& font_list) {
   hosted_app_button_container_ = new HostedAppButtonContainer(
-      browser_view(), active_icon_color, inactive_icon_color);
+      browser_view(), active_icon_color, inactive_icon_color, font_list);
 }
 
 void BrowserNonClientFrameView::ViewHierarchyChanged(
