@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fc6ff240_3ed6f089",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-23T12:01:08Z",
+      "side": 1,
+      "message": "Okay, Björn; I\u0027ll remove it in the next revision.",
+      "parentUuid": "a88bb3bb_a2269324",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24542c4d_0ba689ec",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 19
