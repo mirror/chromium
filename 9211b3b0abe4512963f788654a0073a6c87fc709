@@ -16,6 +16,24 @@
       "revId": "9211b3b0abe4512963f788654a0073a6c87fc709",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3607319a_99d00898",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-23T21:00:25Z",
+      "side": 1,
+      "message": "Thanks! Change to always set notification channel when running on android o+.",
+      "parentUuid": "f1b3ab66_984d61d2",
+      "revId": "9211b3b0abe4512963f788654a0073a6c87fc709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
