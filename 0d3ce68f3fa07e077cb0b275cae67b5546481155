@@ -121,6 +121,24 @@
       "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a082fbb_3636a91e",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-11-23T08:17:50Z",
+      "side": 1,
+      "message": "Huh -- missed this. Yup, don\u0027t need it, so removed it.",
+      "parentUuid": "3bf76ca8_f0c86291",
+      "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
