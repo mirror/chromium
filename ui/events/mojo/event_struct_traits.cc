@@ -267,7 +267,6 @@ StructTraits<ui::mojom::EventDataView, EventUniquePtr>::pointer_data(
   // TODO(rjk): this is in the wrong coordinate system
   brush_data->width = pointer_details->radius_x;
   brush_data->height = pointer_details->radius_y;
-  // TODO(rjk): update for touch_event->rotation_angle();
   brush_data->pressure = pointer_details->force;
   // In theory only pen events should have tilt, tangential_pressure and twist.
   // In practive a JavaScript PointerEvent could have type touch and still have
