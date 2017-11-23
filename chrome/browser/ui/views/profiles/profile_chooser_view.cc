@@ -524,7 +524,14 @@ bool ProfileChooserView::AcceleratorPressed(
 }
 
 views::View* ProfileChooserView::GetInitiallyFocusedView() {
-  return signin_current_profile_button_;
+  // On Mac, buttons are not focusable when full keyboard access is turned off,
+  // causing views::Widget to fall back to focusing the first focusable View.
+  // This behavior is not desired in the |ProfileChooserView| because of its
+  // menu-like design using |HoverButtons|. Avoid this by checking whether full
+  // keyboard access is on first.
+  if (GetFocusManager() && GetFocusManager()->keyboard_accessible())
+    return signin_current_profile_button_;
+  return nullptr;
 }
 
 int ProfileChooserView::GetDialogButtons() const {
