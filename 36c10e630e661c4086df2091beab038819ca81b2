@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "028a7f7f_38898902",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-23T15:04:35Z",
+      "side": 1,
+      "message": "THere\u0027s a WebSocketManager::CreateWebSocket binder here ...",
+      "range": {
+        "startLine": 3062,
+        "startChar": 13,
+        "endLine": 3062,
+        "endChar": 25
+      },
+      "revId": "36c10e630e661c4086df2091beab038819ca81b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628cfd55_bef8893f",
+        "filename": "content/browser/renderer_interface_binders.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-23T15:04:35Z",
+      "side": 1,
+      "message": "And another WebSocketManager::CreateWebSocket binder here.  Is one of them redundant?",
+      "revId": "36c10e630e661c4086df2091beab038819ca81b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
