@@ -253,6 +253,14 @@ float UiElement::GetTargetOpacity() const {
                                                opacity_);
 }
 
+float UiElement::ComputeTargetOpacity() const {
+  float opacity = 1.0;
+  for (const UiElement* current = this; current; current = current->parent()) {
+    opacity *= current->GetTargetOpacity();
+  }
+  return opacity;
+}
+
 float UiElement::computed_opacity() const {
   DCHECK_LE(kUpdatedComputedOpacity, phase_);
   return computed_opacity_;
@@ -456,11 +464,8 @@ gfx::PointF UiElement::GetUnitRectangleCoordinates(
 }
 
 gfx::Vector3dF UiElement::GetNormal() const {
-  gfx::Vector3dF x_axis(1, 0, 0);
-  gfx::Vector3dF y_axis(0, 1, 0);
-  world_space_transform_.TransformVector(&x_axis);
-  world_space_transform_.TransformVector(&y_axis);
-  gfx::Vector3dF normal = CrossProduct(x_axis, y_axis);
+  gfx::Vector3dF normal(0, 0, 1);
+  world_space_transform_.TransformVector(&normal);
   normal.GetNormalized(&normal);
   return normal;
 }
