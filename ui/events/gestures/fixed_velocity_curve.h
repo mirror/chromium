@@ -25,6 +25,8 @@ class EVENTS_BASE_EXPORT FixedVelocityCurve : public GestureCurve {
                            gfx::Vector2dF* offset,
                            gfx::Vector2dF* velocity) override;
 
+  gfx::Vector2dF GetCurveFinalOffset() override;
+
  private:
   const gfx::Vector2dF velocity_;
   const base::TimeTicks start_timestamp_;

@@ -11,25 +11,26 @@ namespace ui {
 TEST(FlingCurveTest, Basic) {
   const gfx::Vector2dF velocity(0, 5000);
   base::TimeTicks now = base::TimeTicks::Now();
-  FlingCurve curve(velocity, now);
+  std::unique_ptr<FlingCurve> curve(
+      FlingCurve::CreateFromVelocity(velocity, now));
 
   gfx::Vector2dF delta;
-  EXPECT_TRUE(curve.ComputeScrollDeltaAtTime(
+  EXPECT_TRUE(curve->ComputeScrollDeltaAtTime(
       now + base::TimeDelta::FromMilliseconds(20), &delta));
   EXPECT_EQ(0, delta.x());
   EXPECT_NEAR(delta.y(), 96, 1);
 
-  EXPECT_TRUE(curve.ComputeScrollDeltaAtTime(
+  EXPECT_TRUE(curve->ComputeScrollDeltaAtTime(
       now + base::TimeDelta::FromMilliseconds(250), &delta));
   EXPECT_EQ(0, delta.x());
   EXPECT_NEAR(delta.y(), 705, 1);
 
-  EXPECT_FALSE(curve.ComputeScrollDeltaAtTime(
+  EXPECT_FALSE(curve->ComputeScrollDeltaAtTime(
       now + base::TimeDelta::FromSeconds(10), &delta));
   EXPECT_EQ(0, delta.x());
   EXPECT_NEAR(delta.y(), 392, 1);
 
-  EXPECT_FALSE(curve.ComputeScrollDeltaAtTime(
+  EXPECT_FALSE(curve->ComputeScrollDeltaAtTime(
       now + base::TimeDelta::FromSeconds(20), &delta));
   EXPECT_TRUE(delta.IsZero());
 }

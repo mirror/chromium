@@ -42,6 +42,14 @@ class InputHandlerProxyClient {
       const blink::WebFloatPoint& velocity,
       const blink::WebSize& cumulative_scroll) = 0;
 
+  // Creates a new fling animation curve instance for device |device_source|
+  // with |distance| and already scrolled |cumulative_scroll| pixels.
+  virtual std::unique_ptr<blink::WebGestureCurve>
+  CreateFlingAnimationCurveFromDistance(
+      blink::WebGestureDevice device_source,
+      const blink::WebFloatPoint& distance,
+      const blink::WebSize& cumulative_scroll) = 0;
+
   // |HandleInputEvent/WithLatencyInfo| will respond to overscroll by calling
   // the passed in callback.
   // Otherwise |DidOverscroll| will be fired.

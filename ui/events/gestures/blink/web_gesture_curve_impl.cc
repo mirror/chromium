@@ -50,7 +50,20 @@ std::unique_ptr<GestureCurve> CreateDefaultPlatformCurve(
                   base::TimeTicks());
   return std::move(scroller);
 #else
-  return std::make_unique<FlingCurve>(initial_velocity, base::TimeTicks());
+  return FlingCurve::CreateFromVelocity(initial_velocity, base::TimeTicks());
+#endif
+}
+
+std::unique_ptr<GestureCurve> CreatePlatformCurveByDistance(
+    blink::WebGestureDevice device_source,
+    const gfx::Vector2dF& distance) {
+#if defined(OS_ANDROID)
+  auto scroller = std::make_unique<Scroller>(Scroller::Config());
+  scroller->FlingTo(0, 0, distance.x(), distance.y(), INT_MIN, INT_MAX, INT_MIN,
+                    INT_MAX, base::TimeTicks());
+  return std::move(scroller);
+#else
+  return FlingCurve::CreateFromDistance(distance, base::TimeTicks());
 #endif
 }
 
@@ -65,6 +78,18 @@ WebGestureCurveImpl::CreateFromDefaultPlatformCurve(
     bool on_main_thread) {
   return std::unique_ptr<WebGestureCurve>(new WebGestureCurveImpl(
       CreateDefaultPlatformCurve(device_source, initial_velocity),
+      initial_offset, on_main_thread ? ThreadType::MAIN : ThreadType::IMPL));
+}
+
+// static
+std::unique_ptr<WebGestureCurve>
+WebGestureCurveImpl::CreateFromDefaultPlatformCurveByDistance(
+    blink::WebGestureDevice device_source,
+    const gfx::Vector2dF& total_distance,
+    const gfx::Vector2dF& initial_offset,
+    bool on_main_thread) {
+  return std::unique_ptr<WebGestureCurve>(new WebGestureCurveImpl(
+      CreatePlatformCurveByDistance(device_source, total_distance),
       initial_offset, on_main_thread ? ThreadType::MAIN : ThreadType::IMPL));
 }
 
@@ -124,6 +149,10 @@ bool WebGestureCurveImpl::Apply(double time,
   bool did_scroll = target->ScrollBy(blink::WebFloatSize(delta),
                                      blink::WebFloatSize(velocity));
   return did_scroll && still_active;
+}
+
+gfx::Vector2dF WebGestureCurveImpl::GetFinalOffset() {
+  return curve_->GetCurveFinalOffset();
 }
 
 }  // namespace ui

@@ -25,4 +25,8 @@ bool FixedVelocityCurve::ComputeScrollOffset(base::TimeTicks time,
   return true;
 }
 
+gfx::Vector2dF FixedVelocityCurve::GetCurveFinalOffset() {
+  return gfx::Vector2dF(INT_MAX, INT_MAX);
+}
+
 }  // namespace ui

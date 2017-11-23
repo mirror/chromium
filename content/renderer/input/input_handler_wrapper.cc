@@ -71,6 +71,15 @@ InputHandlerWrapper::CreateFlingAnimationCurve(
       deviceSource, velocity, cumulative_scroll);
 }
 
+std::unique_ptr<blink::WebGestureCurve>
+InputHandlerWrapper::CreateFlingAnimationCurveFromDistance(
+    blink::WebGestureDevice deviceSource,
+    const blink::WebFloatPoint& distance,
+    const blink::WebSize& cumulative_scroll) {
+  return blink::Platform::Current()->CreateFlingAnimationCurveFromDistance(
+      deviceSource, distance, cumulative_scroll);
+}
+
 void InputHandlerWrapper::DidOverscroll(
     const gfx::Vector2dF& accumulated_overscroll,
     const gfx::Vector2dF& latest_overscroll_delta,

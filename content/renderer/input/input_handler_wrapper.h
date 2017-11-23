@@ -49,6 +49,10 @@ class InputHandlerWrapper : public ui::InputHandlerProxyClient {
       blink::WebGestureDevice deviceSource,
       const blink::WebFloatPoint& velocity,
       const blink::WebSize& cumulativeScroll) override;
+  std::unique_ptr<blink::WebGestureCurve> CreateFlingAnimationCurveFromDistance(
+      blink::WebGestureDevice deviceSource,
+      const blink::WebFloatPoint& distance,
+      const blink::WebSize& cumulativeScroll) override;
   void DidOverscroll(
       const gfx::Vector2dF& accumulated_overscroll,
       const gfx::Vector2dF& latest_overscroll_delta,

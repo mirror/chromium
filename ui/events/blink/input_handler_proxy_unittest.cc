@@ -272,6 +272,7 @@ class FakeWebGestureCurve : public blink::WebGestureCurve {
     // touch any member variables after making that call.
     return target->ScrollBy(increment, velocity_);
   }
+  gfx::Vector2dF GetFinalOffset() override { return gfx::Vector2dF(); }
 
  private:
   blink::WebFloatSize velocity_;
@@ -311,6 +312,14 @@ class MockInputHandlerProxyClient
     return std::make_unique<FakeWebGestureCurve>(
         blink::WebFloatSize(velocity.x, velocity.y),
         blink::WebFloatSize(cumulative_scroll.width, cumulative_scroll.height));
+  }
+
+  std::unique_ptr<blink::WebGestureCurve> CreateFlingAnimationCurveFromDistance(
+      WebGestureDevice deviceSource,
+      const WebFloatPoint& distance,
+      const WebSize& cumulative_scroll) override {
+    return std::make_unique<FakeWebGestureCurve>(blink::WebFloatSize(),
+                                                 blink::WebFloatSize());
   }
 
   MOCK_METHOD5(
