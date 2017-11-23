@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f80fc61_ae9716c6",
+        "filename": "chrome/browser/extensions/browsertest_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-23T03:37:08Z",
+      "side": 1,
+      "message": "Don\u0027t do this. Side-effects in expressions are difficult to reason about (especially in a macro).\n\nSince you don\u0027t use num_extensions again after this, just write \"num_extensions + 1\". Or if you feel the need to keep num_extensions updated, ++num_extensions on the line before.\n\n(Edit: Oh, I see this was in the old code being moved. Still, please fix it now.)",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 28
+      },
+      "revId": "27d3521a175e0b8680077402a1c644718b0740ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8b5bd0_2fcae4eb",
+        "filename": "chrome/browser/extensions/browsertest_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-23T03:37:08Z",
+      "side": 1,
+      "message": "This is SOURCE_CHROME_INTERNAL in both of the places you\u0027re copying this code from. Why did it change to SOURCE_TEST?",
+      "range": {
+        "startLine": 109,
+        "startChar": 58,
+        "endLine": 109,
+        "endChar": 69
+      },
+      "revId": "27d3521a175e0b8680077402a1c644718b0740ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
