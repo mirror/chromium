@@ -108,9 +108,20 @@ private int mSuperNiftyDrawingProperty;
 
 *   To debug early startup, pass `--wait-for-java-debugger` to the wrapper
     scripts (works for both apk wrappers as well as test wrappers).
+*   To debug the GPU process, pass `--debug-process-name privileged_process0`
 *   To debug a renderer process: `--args="--renderer-wait-for-java-debugger"`
-*   To debug the GPU process:
-    `adb shell am set-debug-app -w org.chromium.chrome:privileged_process0`
+
+Example:
+
+```shell
+out/Default/bin/chrome_public_apk run --wait-for-java-debugger
+```
+
+The flag is also recognized by test scripts:
+
+```shell
+out/Default/bin/run_chrome_public_test_apk --wait-for-java-debugger
+```
 
 ## Debugging C/C++
 
