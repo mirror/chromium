@@ -1469,12 +1469,12 @@ void TransportSecurityState::ProcessExpectCTHeader(
       return;
     if (!ssl_info.is_issued_by_known_root)
       return;
-    if (!ssl_info.ct_compliance_details_available)
-      return;
-    if (ssl_info.ct_cert_policy_compliance ==
+    if (ssl_info.ct_policy_compliance ==
             ct::CertPolicyCompliance::CERT_POLICY_COMPLIES_VIA_SCTS ||
-        ssl_info.ct_cert_policy_compliance ==
-            ct::CertPolicyCompliance::CERT_POLICY_BUILD_NOT_TIMELY) {
+        ssl_info.ct_policy_compliance ==
+            ct::CertPolicyCompliance::CERT_POLICY_BUILD_NOT_TIMELY ||
+        ssl_info.ct_policy_compliance ==
+            ct::CertPolicyCompliance::CERT_POLICY_COMPLIANCE_NOT_AVAILABLE) {
       return;
     }
     ExpectCTState state;
@@ -1503,9 +1503,7 @@ void TransportSecurityState::ProcessExpectCTHeader(
   // public root or did not comply with CT policy.
   if (!ssl_info.is_issued_by_known_root)
     return;
-  if (!ssl_info.ct_compliance_details_available)
-    return;
-  if (ssl_info.ct_cert_policy_compliance !=
+  if (ssl_info.ct_policy_compliance !=
       ct::CertPolicyCompliance::CERT_POLICY_COMPLIES_VIA_SCTS) {
     // If an Expect-CT header is observed over a non-compliant connection, the
     // site owner should be notified about the misconfiguration. If the site was
@@ -1514,10 +1512,12 @@ void TransportSecurityState::ProcessExpectCTHeader(
     // however, the lack of CT compliance would not have been evaluated/reported
     // at connection setup time, so it needs to be reported here while
     // processing the header.
-    if (ssl_info.ct_cert_policy_compliance ==
-        ct::CertPolicyCompliance::CERT_POLICY_BUILD_NOT_TIMELY) {
+    if (ssl_info.ct_policy_compliance ==
+            ct::CertPolicyCompliance::CERT_POLICY_BUILD_NOT_TIMELY ||
+        ssl_info.ct_policy_compliance ==
+            ct::CertPolicyCompliance::CERT_POLICY_COMPLIANCE_NOT_AVAILABLE) {
       // Only send reports for truly non-compliant connections, not those for
-      // which compliance wasn't checked due to an out-of-date build.
+      // which compliance wasn't checked.
       return;
     }
     ExpectCTState state;
