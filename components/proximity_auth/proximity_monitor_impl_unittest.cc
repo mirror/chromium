@@ -121,7 +121,7 @@ class ProximityAuthProximityMonitorImplTest : public testing::Test {
   void ProvideConnectionInfo(
       const BluetoothDevice::ConnectionInfo& connection_info) {
     RunPendingTasks();
-    connection_info_callback_.Run(connection_info);
+    std::move(connection_info_callback_).Run(connection_info);
 
     // Reset the callback to ensure that tests correctly only respond at most
     // once per call to GetConnectionInfo().

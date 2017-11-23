@@ -141,22 +141,21 @@ bool BluetoothDeviceAndroid::ExpectingConfirmation() const {
 }
 
 void BluetoothDeviceAndroid::GetConnectionInfo(
-    const ConnectionInfoCallback& callback) {
+    ConnectionInfoCallback callback) {
   NOTIMPLEMENTED();
-  callback.Run(ConnectionInfo());
+  std::move(callback).Run(ConnectionInfo());
 }
 
 void BluetoothDeviceAndroid::SetConnectionLatency(
     ConnectionLatency connection_latency,
-    const base::Closure& callback,
-    const ErrorCallback& error_callback) {
+    base::OnceClosure callback,
+    ErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
-void BluetoothDeviceAndroid::Connect(
-    PairingDelegate* pairing_delegate,
-    const base::Closure& callback,
-    const ConnectErrorCallback& error_callback) {
+void BluetoothDeviceAndroid::Connect(PairingDelegate* pairing_delegate,
+                                     base::OnceClosure callback,
+                                     ConnectErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
@@ -180,28 +179,28 @@ void BluetoothDeviceAndroid::CancelPairing() {
   NOTIMPLEMENTED();
 }
 
-void BluetoothDeviceAndroid::Disconnect(const base::Closure& callback,
-                                        const ErrorCallback& error_callback) {
+void BluetoothDeviceAndroid::Disconnect(base::OnceClosure callback,
+                                        ErrorCallback error_callback) {
   // TODO(scheib): Also update unit tests for BluetoothGattConnection.
   NOTIMPLEMENTED();
 }
 
-void BluetoothDeviceAndroid::Forget(const base::Closure& callback,
-                                    const ErrorCallback& error_callback) {
+void BluetoothDeviceAndroid::Forget(base::OnceClosure callback,
+                                    ErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
 void BluetoothDeviceAndroid::ConnectToService(
     const BluetoothUUID& uuid,
-    const ConnectToServiceCallback& callback,
-    const ConnectToServiceErrorCallback& error_callback) {
+    ConnectToServiceCallback callback,
+    ConnectToServiceErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 
 void BluetoothDeviceAndroid::ConnectToServiceInsecurely(
     const BluetoothUUID& uuid,
-    const ConnectToServiceCallback& callback,
-    const ConnectToServiceErrorCallback& error_callback) {
+    ConnectToServiceCallback callback,
+    ConnectToServiceErrorCallback error_callback) {
   NOTIMPLEMENTED();
 }
 

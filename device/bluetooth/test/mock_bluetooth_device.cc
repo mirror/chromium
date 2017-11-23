@@ -7,8 +7,11 @@
 #include <memory>
 #include <utility>
 
+#include "base/callback_helpers.h"
 #include "base/strings/utf_string_conversions.h"
+#include "device/bluetooth/bluetooth_gatt_connection.h"
 #include "device/bluetooth/bluetooth_remote_gatt_service.h"
+#include "device/bluetooth/bluetooth_socket.h"
 #include "device/bluetooth/test/mock_bluetooth_adapter.h"
 
 namespace device {
@@ -64,6 +67,73 @@ MockBluetoothDevice::MockBluetoothDevice(MockBluetoothAdapter* adapter,
 }
 
 MockBluetoothDevice::~MockBluetoothDevice() {}
+
+void MockBluetoothDevice::GetConnectionInfo(ConnectionInfoCallback callback) {
+  GetConnectionInfo(base::AdaptCallbackForRepeating(std::move(callback)));
+}
+
+void MockBluetoothDevice::SetConnectionLatency(
+    ConnectionLatency connection_latency,
+    base::OnceClosure callback,
+    ErrorCallback error_callback) {
+  SetConnectionLatency(
+      connection_latency, base::AdaptCallbackForRepeating(std::move(callback)),
+      base::AdaptCallbackForRepeating(std::move(error_callback)));
+}
+
+void MockBluetoothDevice::Connect(
+    BluetoothDevice::PairingDelegate* pairing_delegate,
+    base::OnceClosure callback,
+    ConnectErrorCallback error_callback) {
+  Connect(pairing_delegate,
+          base::AdaptCallbackForRepeating(std::move(callback)),
+          base::AdaptCallbackForRepeating(std::move(error_callback)));
+}
+
+void MockBluetoothDevice::Pair(
+    BluetoothDevice::PairingDelegate* pairing_delegate,
+    base::OnceClosure callback,
+    ConnectErrorCallback error_callback) {
+  Pair(pairing_delegate, base::AdaptCallbackForRepeating(std::move(callback)),
+       base::AdaptCallbackForRepeating(std::move(error_callback)));
+}
+
+void MockBluetoothDevice::Disconnect(base::OnceClosure callback,
+                                     ErrorCallback error_callback) {
+  Disconnect(base::AdaptCallbackForRepeating(std::move(callback)),
+             base::AdaptCallbackForRepeating(std::move(error_callback)));
+}
+
+void MockBluetoothDevice::Forget(base::OnceClosure callback,
+                                 ErrorCallback error_callback) {
+  Forget(base::AdaptCallbackForRepeating(std::move(callback)),
+         base::AdaptCallbackForRepeating(std::move(error_callback)));
+}
+
+void MockBluetoothDevice::ConnectToService(
+    const BluetoothUUID& uuid,
+    ConnectToServiceCallback callback,
+    ConnectToServiceErrorCallback error_callback) {
+  ConnectToService(uuid, base::AdaptCallbackForRepeating(std::move(callback)),
+                   base::AdaptCallbackForRepeating(std::move(error_callback)));
+}
+
+void MockBluetoothDevice::ConnectToServiceInsecurely(
+    const BluetoothUUID& uuid,
+    ConnectToServiceCallback callback,
+    ConnectToServiceErrorCallback error_callback) {
+  ConnectToServiceInsecurely(
+      uuid, base::AdaptCallbackForRepeating(std::move(callback)),
+      base::AdaptCallbackForRepeating(std::move(error_callback)));
+}
+
+void MockBluetoothDevice::CreateGattConnection(
+    GattConnectionCallback callback,
+    ConnectErrorCallback error_callback) {
+  CreateGattConnection(
+      base::AdaptCallbackForRepeating(std::move(callback)),
+      base::AdaptCallbackForRepeating(std::move(error_callback)));
+}
 
 void MockBluetoothDevice::AddMockService(
     std::unique_ptr<MockBluetoothGattService> mock_service) {

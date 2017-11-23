@@ -463,8 +463,8 @@ class CryptAuthBluetoothLowEnergyWeaveClientConnectionTest
             SaveArg<1>(&characteristics_finder_error_callback_),
             Return(new NiceMock<MockBluetoothLowEnergyCharacteristicsFinder>)));
 
-    create_gatt_connection_success_callback_.Run(
-        base::MakeUnique<NiceMock<device::MockBluetoothGattConnection>>(
+    std::move(create_gatt_connection_success_callback_)
+        .Run(base::MakeUnique<NiceMock<device::MockBluetoothGattConnection>>(
             adapter_, kTestRemoteDeviceBluetoothAddress));
 
     EXPECT_EQ(connection->sub_status(), SubStatus::WAITING_CHARACTERISTICS);
@@ -1320,8 +1320,8 @@ TEST_F(CryptAuthBluetoothLowEnergyWeaveClientConnectionTest,
           SaveArg<1>(&characteristics_finder_error_callback_),
           Return(new NiceMock<MockBluetoothLowEnergyCharacteristicsFinder>)));
 
-  create_gatt_connection_success_callback_.Run(
-      base::MakeUnique<NiceMock<device::MockBluetoothGattConnection>>(
+  std::move(create_gatt_connection_success_callback_)
+      .Run(base::MakeUnique<NiceMock<device::MockBluetoothGattConnection>>(
           adapter_, kTestRemoteDeviceBluetoothAddress));
 
   CharacteristicsFound(connection.get());
@@ -1354,7 +1354,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeaveClientConnectionTest,
   EXPECT_CALL(*mock_bluetooth_device_, CreateGattConnection(_, _))
       .WillOnce(DoAll(SaveArg<0>(&create_gatt_connection_success_callback_),
                       SaveArg<1>(&create_gatt_connection_error_callback_)));
-  connection_latency_error_callback_.Run();
+  std::move(connection_latency_error_callback_).Run();
   EXPECT_FALSE(create_gatt_connection_error_callback_.is_null());
   ASSERT_FALSE(create_gatt_connection_success_callback_.is_null());
 
@@ -1365,8 +1365,8 @@ TEST_F(CryptAuthBluetoothLowEnergyWeaveClientConnectionTest,
           SaveArg<1>(&characteristics_finder_error_callback_),
           Return(new NiceMock<MockBluetoothLowEnergyCharacteristicsFinder>)));
 
-  create_gatt_connection_success_callback_.Run(
-      base::MakeUnique<NiceMock<device::MockBluetoothGattConnection>>(
+  std::move(create_gatt_connection_success_callback_)
+      .Run(base::MakeUnique<NiceMock<device::MockBluetoothGattConnection>>(
           adapter_, kTestRemoteDeviceBluetoothAddress));
 
   CharacteristicsFound(connection.get());

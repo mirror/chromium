@@ -144,7 +144,7 @@ class ProximityAuthBluetoothConnectionTest : public testing::Test {
     EXPECT_CALL(*socket_, Receive(_, _, _))
         .WillOnce(DoAll(SaveArg<1>(&receive_callback_),
                         SaveArg<2>(&receive_error_callback_)));
-    callback.Run(socket_);
+    std::move(callback).Run(socket_);
 
     EXPECT_EQ(cryptauth::Connection::CONNECTED, connection->status());
     ON_CALL(device_, IsConnected()).WillByDefault(Return(true));
@@ -266,7 +266,7 @@ TEST_F(ProximityAuthBluetoothConnectionTest, Connect_ConnectionFails) {
 
   EXPECT_CALL(connection, SetStatusProxy(cryptauth::Connection::DISCONNECTED));
   EXPECT_CALL(*adapter_, RemoveObserver(&connection));
-  error_callback.Run("super descriptive error message");
+  std::move(error_callback).Run("super descriptive error message");
 }
 
 TEST_F(ProximityAuthBluetoothConnectionTest, Connect_ConnectionSucceeds) {
@@ -391,7 +391,7 @@ TEST_F(ProximityAuthBluetoothConnectionTest,
 
   EXPECT_CALL(connection, SetStatusProxy(_)).Times(0);
   EXPECT_CALL(*socket_, Receive(_, _, _)).Times(0);
-  callback.Run(socket_);
+  std::move(callback).Run(socket_);
 }
 
 TEST_F(ProximityAuthBluetoothConnectionTest,
