@@ -13,7 +13,6 @@ import org.chromium.base.BuildInfo;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.StrictModeContext;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.annotations.MainDex;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 
 import java.io.File;
@@ -29,7 +28,6 @@ import java.util.UUID;
  *
  * This class is written in pure Java, so it can handle exception happens before native is loaded.
  */
-@MainDex
 public class PureJavaExceptionReporter {
     // report fields, please keep the name sync with MIME blocks in breakpad_linux.cc
     public static final String CHANNEL = "channel";
