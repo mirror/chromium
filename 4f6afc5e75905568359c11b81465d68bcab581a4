@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8267a37d_49da2ec5",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-23T10:26:49Z",
+      "side": 1,
+      "message": "\u003ddefault",
+      "range": {
+        "startLine": 178,
+        "startChar": 39,
+        "endLine": 178,
+        "endChar": 42
+      },
+      "revId": "4f6afc5e75905568359c11b81465d68bcab581a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b4a59e_87723c4f",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-23T10:26:49Z",
+      "side": 1,
+      "message": ".count(node)",
+      "range": {
+        "startLine": 188,
+        "startChar": 17,
+        "endLine": 188,
+        "endChar": 44
+      },
+      "revId": "4f6afc5e75905568359c11b81465d68bcab581a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47e6d2f_a207c9f2",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-23T10:26:49Z",
+      "side": 1,
+      "message": "see base/containers/readme.md\n\n\"\"\"\nChromium code should always use `base::circular_deque` or `base::queue` in\npreference to `std::deque` or `std::queue` due to memory usage and platform\nvariation.\n\"\"\"\n\nI think you want base::queue here ?",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "4f6afc5e75905568359c11b81465d68bcab581a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7dc1a11_fd2c0a03",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-23T10:26:49Z",
+      "side": 1,
+      "message": "i think this should be a base::queue",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 14
+      },
+      "revId": "4f6afc5e75905568359c11b81465d68bcab581a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa77dab8_10e97b4e",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-23T10:26:49Z",
+      "side": 1,
+      "message": "and this could be just a vector, as you essentially use it like a stack.\nI think that if you replace s/front/back/ in the .cc file that should work with a vector.",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 21
+      },
+      "revId": "4f6afc5e75905568359c11b81465d68bcab581a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
