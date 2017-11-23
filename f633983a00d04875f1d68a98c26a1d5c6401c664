@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8970544_bd58175d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-23T00:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f9aab0_a59d8256",
+      "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e3dc655_3ca489d1",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88b2e4d_3f553350",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-23T00:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e3dc655_3ca489d1",
+      "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "02f707ac_e8348f36",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-23T00:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc8c1316_47c82904",
+      "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de5bf362_577857e7",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666dae60_7fdd323a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-23T00:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de5bf362_577857e7",
+      "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bffa7e8b_9be4b8f1",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-23T00:37:46Z",
+      "side": 1,
+      "message": "If a copy constructor is not defined, the following error is issued by the compiler:\n  error: [chromium-style] Complex class/struct needs an explicit out-of-line copy constructor.\n\nThe assignment operator is also required by the style guide since this class has a copy constructor.",
+      "parentUuid": "f4287e37_8d73f623",
+      "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "787a49d6_5bcd1e79",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "57825509_f3a3cb4d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-23T00:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "787a49d6_5bcd1e79",
+      "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96d87ad2_37dd69e1",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/mock_chrome_cleaner_process_win.cc",
         "patchSetId": 8
@@ -118,6 +226,24 @@
       "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf13c89_ee484fa2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/mock_chrome_cleaner_process_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-23T00:37:46Z",
+      "side": 1,
+      "message": "Added a comment explaining intent. Didn\u0027t explain base::in_place so that we don\u0027t duplicate documentation (in the case of this specific API, it\u0027s deferred to the corresponding C++ std::optional docs). Please let me know if you think it\u0027s needed.",
+      "parentUuid": "96d87ad2_37dd69e1",
+      "revId": "f633983a00d04875f1d68a98c26a1d5c6401c664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
