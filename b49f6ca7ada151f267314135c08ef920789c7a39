@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c116fe8_9811744b",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-23T09:36:58Z",
+      "side": 1,
+      "message": "use leading/trailing",
+      "range": {
+        "startLine": 115,
+        "startChar": 18,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "b49f6ca7ada151f267314135c08ef920789c7a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
