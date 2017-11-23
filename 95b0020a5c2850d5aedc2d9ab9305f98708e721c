@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17660f99_6f4c18ec",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2017-11-23T00:01:32Z",
+      "side": 1,
+      "message": "\"Android\" is probably sufficient, everything else seems redundant, since the group is already named \"Tryservers\".  Same for Win/Mac/Linux/Blink",
+      "revId": "95b0020a5c2850d5aedc2d9ab9305f98708e721c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
