@@ -25,6 +25,99 @@
     },
     {
       "key": {
+        "uuid": "93ea30b8_b2b6b8f7",
+        "filename": "chrome/browser/autofill/autofill_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T15:35:40Z",
+      "side": 1,
+      "message": "Thanks for taking the time to explore better solutions",
+      "parentUuid": "31b2feee_02a9d911",
+      "range": {
+        "startLine": 1758,
+        "startChar": 7,
+        "endLine": 1758,
+        "endChar": 19
+      },
+      "revId": "b0c32362584eb7e53ed79bab1878d1cb15b4e21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1541e09_ec6c6b45",
+        "filename": "chrome/browser/autofill/autofill_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1857,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T15:35:40Z",
+      "side": 1,
+      "message": "Great test!",
+      "range": {
+        "startLine": 1857,
+        "startChar": 23,
+        "endLine": 1857,
+        "endChar": 51
+      },
+      "revId": "b0c32362584eb7e53ed79bab1878d1cb15b4e21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85029ba2_d89886ef",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T15:35:40Z",
+      "side": 1,
+      "message": "consider removing comment",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 33
+      },
+      "revId": "b0c32362584eb7e53ed79bab1878d1cb15b4e21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81d1f61_4a99a3cf",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T15:35:40Z",
+      "side": 1,
+      "message": "nit: popup_controller_for_testing and put in here?",
+      "range": {
+        "startLine": 101,
+        "startChar": 45,
+        "endLine": 101,
+        "endChar": 70
+      },
+      "revId": "b0c32362584eb7e53ed79bab1878d1cb15b4e21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88ba6e63_1013c6a1",
         "filename": "components/autofill/core/browser/autofill_popup_delegate.h",
         "patchSetId": 3
@@ -45,6 +138,30 @@
       "revId": "b0c32362584eb7e53ed79bab1878d1cb15b4e21e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a208280f_544e83b2",
+        "filename": "components/autofill/core/browser/autofill_popup_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T15:35:40Z",
+      "side": 1,
+      "message": "Keeping everything pure virtual in here sgtm :)",
+      "parentUuid": "88ba6e63_1013c6a1",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "b0c32362584eb7e53ed79bab1878d1cb15b4e21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
