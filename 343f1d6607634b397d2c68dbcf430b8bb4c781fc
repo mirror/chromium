@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "24961c16_bb6dcfd5",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-23T01:53:22Z",
+      "side": 1,
+      "message": "This is fine, thanks.",
+      "parentUuid": "2a091b36_08fc42ec",
+      "revId": "343f1d6607634b397d2c68dbcf430b8bb4c781fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c440f05a_f562a19e",
         "filename": "chrome/browser/ui/extensions/extension_name.h",
         "patchSetId": 14
