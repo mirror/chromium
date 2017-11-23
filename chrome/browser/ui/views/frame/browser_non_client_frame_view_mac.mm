@@ -85,9 +85,6 @@ void BrowserNonClientFrameViewMac::GetWindowMask(const gfx::Size& size,
                                                  gfx::Path* window_mask) {
 }
 
-void BrowserNonClientFrameViewMac::ResetWindowControls() {
-}
-
 void BrowserNonClientFrameViewMac::UpdateWindowIcon() {
 }
 

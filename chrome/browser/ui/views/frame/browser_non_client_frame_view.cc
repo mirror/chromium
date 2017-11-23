@@ -15,6 +15,7 @@
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/view_ids.h"
+#include "chrome/browser/ui/views/frame/browser_frame.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/frame/hosted_app_button_container.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
@@ -28,6 +29,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/views/background.h"
+#include "ui/views/widget/native_widget_private.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/ui/views/frame/taskbar_decorator_win.h"
@@ -220,7 +222,8 @@ void BrowserNonClientFrameView::CreateHostedAppButtonContainer(
     SkColor active_icon_color,
     SkColor inactive_icon_color) {
   hosted_app_button_container_ = new HostedAppButtonContainer(
-      browser_view(), active_icon_color, inactive_icon_color);
+      browser_view(), active_icon_color, inactive_icon_color,
+      views::internal::NativeWidgetPrivate::GetWindowTitleFontList());
 }
 
 void BrowserNonClientFrameView::ViewHierarchyChanged(
@@ -292,6 +295,11 @@ bool BrowserNonClientFrameView::DoesIntersectRect(const views::View* target,
   // not in the tabstrip itself. In particular, the avatar label/button is left
   // of the tabstrip and the window controls are right of the tabstrip.
   return true;
+}
+
+void BrowserNonClientFrameView::ResetWindowControls() {
+  if (hosted_app_button_container_)
+    hosted_app_button_container_->RefreshContentSettingViews();
 }
 
 void BrowserNonClientFrameView::OnProfileAdded(

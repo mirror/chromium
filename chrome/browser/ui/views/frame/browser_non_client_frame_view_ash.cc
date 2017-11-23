@@ -241,6 +241,7 @@ void BrowserNonClientFrameViewAsh::GetWindowMask(const gfx::Size& size,
 }
 
 void BrowserNonClientFrameViewAsh::ResetWindowControls() {
+  BrowserNonClientFrameView::ResetWindowControls();
   caption_button_container_->SetVisible(true);
   caption_button_container_->ResetWindowControls();
 }
@@ -511,12 +512,13 @@ BrowserNonClientFrameViewAsh::CreateFrameHeader() {
         caption_button_container_, back_button_);
 
     // Add the container for extra hosted app buttons (e.g app menu button).
-    SkColor text_color = default_frame_header->GetTitleColor();
+    SkColor button_color = ash::FrameCaptionButton::GetButtonColor(
+        default_frame_header->ShouldUseLightImages());
     CreateHostedAppButtonContainer(
-        text_color,
-        SkColorSetA(text_color, 255 * ash::kInactiveFrameButtonIconAlphaRatio));
+        button_color,
+        SkColorSetA(button_color,
+                    255 * ash::kInactiveFrameButtonIconAlphaRatio));
     caption_button_container_->AddChildViewAt(hosted_app_button_container(), 0);
-
   } else {
     default_frame_header = std::make_unique<ash::DefaultFrameHeader>(
         frame(), this, caption_button_container_, back_button_);
