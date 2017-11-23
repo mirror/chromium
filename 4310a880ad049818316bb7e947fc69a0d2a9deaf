@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0cf42f97_bbb34f27",
+        "filename": "tools/media_engagement_preload/generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-23T15:12:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23088866_7ed76808",
+      "revId": "4310a880ad049818316bb7e947fc69a0d2a9deaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0469ac53_3aebd070",
         "filename": "tools/media_engagement_preload/trie_writer.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-22T21:44:56Z",
       "side": 1,
       "message": "In case you are encoding hostnames; reversing the hostnames and storing them in reverse in the trie could result in a more compact binary structure because the TLDs are shared.",
+      "revId": "4310a880ad049818316bb7e947fc69a0d2a9deaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23df8baf_3bc91927",
+        "filename": "tools/media_engagement_preload/trie_writer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-23T15:12:10Z",
+      "side": 1,
+      "message": "At the moment we are encoding origins. We are deciding whether to drop the prefix and go with HTTPs only. If we do we will reverse the hostnames.",
+      "parentUuid": "0469ac53_3aebd070",
       "revId": "4310a880ad049818316bb7e947fc69a0d2a9deaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
