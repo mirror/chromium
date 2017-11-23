@@ -25,10 +25,13 @@ class CORE_EXPORT ScrollCustomizationCallbacks
   void SetApplyScroll(Element*, ScrollStateCallback*);
   void RemoveApplyScroll(Element*);
   ScrollStateCallback* GetApplyScroll(Element*);
+  bool HasCustomizedScroll(Element*) const;
+  void SetHasCustomizedScroll(Element*, bool);
 
   void Trace(blink::Visitor* visitor) {
     visitor->Trace(apply_scroll_callbacks_);
     visitor->Trace(distribute_scroll_callbacks_);
+    visitor->Trace(has_customized_scroll_);
   };
 
  private:
@@ -36,6 +39,7 @@ class CORE_EXPORT ScrollCustomizationCallbacks
       HeapHashMap<WeakMember<Element>, Member<ScrollStateCallback>>;
   ScrollStateCallbackList apply_scroll_callbacks_;
   ScrollStateCallbackList distribute_scroll_callbacks_;
+  HeapHashMap<WeakMember<Element>, bool> has_customized_scroll_;
 };
 
 }  // namespace blink

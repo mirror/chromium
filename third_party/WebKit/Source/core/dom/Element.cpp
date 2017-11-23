@@ -130,6 +130,7 @@
 #include "core/page/PointerLockController.h"
 #include "core/page/SpatialNavigation.h"
 #include "core/page/scrolling/RootScrollerController.h"
+#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollCustomizationCallbacks.h"
 #include "core/page/scrolling/ScrollState.h"
 #include "core/page/scrolling/ScrollStateCallback.h"
@@ -148,6 +149,7 @@
 #include "platform/bindings/V8DOMWrapper.h"
 #include "platform/bindings/V8PerContextData.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scroll/ScrollCustomization.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/scroll/SmoothScrollSequencer.h"
 #include "platform/wtf/BitVector.h"
@@ -612,7 +614,13 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
-  if (!callback || disable_custom_callbacks) {
+  bool prohibited_by_scroll_customization =
+      !RootScrollerUtil::IsGlobal(this) &&
+      RuntimeEnabledFeatures::ScrollCustomizationEnabled() &&
+      !MatchesScrollCustomizationEnabledDirection(scroll_state);
+
+  if (!callback || disable_custom_callbacks ||
+      prohibited_by_scroll_customization) {
     NativeDistributeScroll(scroll_state);
     return;
   }
@@ -625,7 +633,7 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
   if (callback->NativeScrollBehavior() ==
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
-};
+}
 
 void Element::NativeApplyScroll(ScrollState& scroll_state) {
   // All elements in the scroll chain should be boxes.
@@ -697,7 +705,13 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
-  if (!callback || disable_custom_callbacks) {
+  bool prohibited_by_scroll_customization =
+      !RootScrollerUtil::IsGlobal(this) &&
+      RuntimeEnabledFeatures::ScrollCustomizationEnabled() &&
+      !MatchesScrollCustomizationEnabledDirection(scroll_state);
+
+  if (!callback || disable_custom_callbacks ||
+      prohibited_by_scroll_customization) {
     NativeApplyScroll(scroll_state);
     return;
   }
@@ -3552,6 +3566,36 @@ Locale& Element::GetLocale() const {
 void Element::CancelFocusAppearanceUpdate() {
   if (GetDocument().FocusedElement() == this)
     GetDocument().CancelFocusAppearanceUpdate();
+}
+
+bool Element::MatchesScrollCustomizationEnabledDirection(
+    const ScrollState& scroll_state) {
+  if (scroll_state.isBeginning()) {
+    LayoutBox* box = GetLayoutBox();
+    if (!box)
+      return false;
+
+    ScrollCustomizationEnabledDirection scroll_customization =
+        box->Style()->ScrollCustomization();
+
+    DCHECK(!GetScrollCustomizationCallbacks().HasCustomizedScroll(this));
+    GetScrollCustomizationCallbacks().SetHasCustomizedScroll(
+        this,
+        scroll_customization != ScrollCustomizationEnabledDirection::kNone &&
+            ((scroll_customization ==
+              ScrollCustomizationEnabledDirection::kAuto) ||
+             (GetScrollCustomizationForDirection(scroll_state.deltaXHint(),
+                                                 scroll_state.deltaYHint()) &
+              scroll_customization)));
+  }
+
+  bool should_call_handlers =
+      GetScrollCustomizationCallbacks().HasCustomizedScroll(this);
+
+  if (scroll_state.isEnding())
+    GetScrollCustomizationCallbacks().SetHasCustomizedScroll(this, false);
+
+  return should_call_handlers;
 }
 
 void Element::UpdatePseudoElement(PseudoId pseudo_id,
