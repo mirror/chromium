@@ -230,6 +230,34 @@ __gCrWeb['common'] = __gCrWeb.common;
            element.type === 'number';
   };
 
+ /**
+  * Sets the value of a data-bound input using AngularJS.
+  *
+  * The method first set the value using the val() method. Then, if input is
+  * bound to a model value, it sets the model value.
+  *
+  * @param {string} value The value the input element will be set.
+  * @param {Element} input The input element of which the value is set.
+  **/
+  function setInputElementAngularValue_(value, input) {
+    if (!input || !window['angular']) {
+      return;
+    }
+    var angular_element = window['angular'].element(input);
+    if (!angular_element) {
+      return;
+    }
+    angular_element.val(value);
+    var angular_model = angular_element.data('ngModel');
+    if (!angular_model) {
+      return;
+    }
+    angular_element.injector().invoke(['$parse', function(parse) {
+      var setter = parse(angular_model);
+      setter.assign(angular_element.scope(), value);
+    }])
+  }
+
   /**
    * Sets the value of an input and dispatches an change event if
    * |shouldSendChangeEvent|.
@@ -252,9 +280,9 @@ __gCrWeb['common'] = __gCrWeb.common;
    */
   __gCrWeb.common.setInputElementValue = function(
       value, input, shouldSendChangeEvent) {
-     if (!input) {
-       return;
-     }
+    if (!input) {
+      return;
+    }
     var changed = false;
     if (input.type === 'checkbox' || input.type === 'radio') {
       changed = input.checked !== value;
@@ -271,6 +299,11 @@ __gCrWeb['common'] = __gCrWeb.common;
           value, input);
       changed = sanitizedValue !== input.value;
       input.value = sanitizedValue;
+    }
+    if (window['angular']) {
+      // The page use the anglar framework. Update the angular value before
+      // sending events.
+      setInputElementAngularValue_(value, input);
     }
     if (changed && shouldSendChangeEvent) {
       __gCrWeb.common.notifyElementValueChanged(input);
