@@ -39,6 +39,10 @@ class PasswordUIViewAndroid : public PasswordUIView {
       const std::vector<std::unique_ptr<autofill::PasswordForm>>&
           password_exception_list) override;
 
+  // PasswordUIExportView implementation.
+  void OnCompletedReadingPasswordStore(const std::string& error) override;
+  void OnCompletedWritingToDestination(const std::string& error) override;
+
   // Calls from Java.
   base::android::ScopedJavaLocalRef<jobject> GetSavedPasswordEntry(
       JNIEnv* env,

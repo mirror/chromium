@@ -62,6 +62,16 @@ void PasswordUIViewAndroid::SetPasswordExceptionList(
   }
 }
 
+void PasswordUIViewAndroid::OnCompletedReadingPasswordStore(
+    const std::string& error) {
+  // TODO(crbug.com/785237) Implementing sending event to UI.
+}
+
+void PasswordUIViewAndroid::OnCompletedWritingToDestination(
+    const std::string& error) {
+  // TODO(crbug.com/785237) Implementing sending event to UI.
+}
+
 void PasswordUIViewAndroid::UpdatePasswordLists(JNIEnv* env,
                                                 const JavaParamRef<jobject>&) {
   password_manager_presenter_.UpdatePasswordLists();
