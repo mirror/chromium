@@ -106,7 +106,9 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
   //
   // Subclasses should override this to add the (property, value) pairs they
   // store, and call into the base version to add the basic Keyframe properties.
-  virtual void AddKeyframePropertiesToV8Object(V8ObjectBuilder&) const;
+  virtual void AddKeyframePropertiesToV8Object(
+      V8ObjectBuilder&,
+      EffectModel::CompositeOperation) const;
 
   virtual bool IsStringKeyframe() const { return false; }
   virtual bool IsTransitionKeyframe() const { return false; }

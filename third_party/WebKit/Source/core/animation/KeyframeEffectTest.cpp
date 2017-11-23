@@ -38,6 +38,10 @@ class KeyframeEffectTest : public ::testing::Test {
 
   Document& GetDocument() const { return page_holder->GetDocument(); }
 
+  KeyframeEffectModelBase* CreateEmptyEffectModel() {
+    return StringKeyframeEffectModel::Create(StringKeyframeVector());
+  }
+
   std::unique_ptr<DummyPageHolder> page_holder;
   Persistent<Element> element;
 };
@@ -326,7 +330,8 @@ TEST_F(KeyframeEffectTest, TimeToEffectChange) {
   timing.start_delay = 100;
   timing.end_delay = 100;
   timing.fill_mode = Timing::FillMode::NONE;
-  KeyframeEffect* animation = KeyframeEffect::Create(nullptr, nullptr, timing);
+  KeyframeEffect* animation =
+      KeyframeEffect::Create(nullptr, CreateEmptyEffectModel(), timing);
   Animation* player = GetDocument().Timeline().Play(animation);
   double inf = std::numeric_limits<double>::infinity();
 
@@ -358,7 +363,8 @@ TEST_F(KeyframeEffectTest, TimeToEffectChangeWithPlaybackRate) {
   timing.end_delay = 100;
   timing.playback_rate = 2;
   timing.fill_mode = Timing::FillMode::NONE;
-  KeyframeEffect* animation = KeyframeEffect::Create(nullptr, nullptr, timing);
+  KeyframeEffect* animation =
+      KeyframeEffect::Create(nullptr, CreateEmptyEffectModel(), timing);
   Animation* player = GetDocument().Timeline().Play(animation);
   double inf = std::numeric_limits<double>::infinity();
 
@@ -390,7 +396,8 @@ TEST_F(KeyframeEffectTest, TimeToEffectChangeWithNegativePlaybackRate) {
   timing.end_delay = 100;
   timing.playback_rate = -2;
   timing.fill_mode = Timing::FillMode::NONE;
-  KeyframeEffect* animation = KeyframeEffect::Create(nullptr, nullptr, timing);
+  KeyframeEffect* animation =
+      KeyframeEffect::Create(nullptr, CreateEmptyEffectModel(), timing);
   Animation* player = GetDocument().Timeline().Play(animation);
   double inf = std::numeric_limits<double>::infinity();
 
@@ -420,7 +427,7 @@ TEST_F(KeyframeEffectTest, ElementDestructorClearsAnimationTarget) {
   Timing timing;
   timing.iteration_duration = 5;
   KeyframeEffect* animation =
-      KeyframeEffect::Create(element.Get(), nullptr, timing);
+      KeyframeEffect::Create(element.Get(), CreateEmptyEffectModel(), timing);
   EXPECT_EQ(element.Get(), animation->Target());
   GetDocument().Timeline().Play(animation);
   page_holder.reset();

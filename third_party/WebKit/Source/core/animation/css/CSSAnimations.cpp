@@ -184,8 +184,8 @@ StringKeyframeEffectModel* CreateKeyframeEffectModel(
   DCHECK(!keyframes.front()->Offset());
   DCHECK_EQ(keyframes.back()->Offset(), 1);
 
-  StringKeyframeEffectModel* model =
-      StringKeyframeEffectModel::Create(keyframes, &keyframes[0]->Easing());
+  StringKeyframeEffectModel* model = StringKeyframeEffectModel::Create(
+      keyframes, EffectModel::kCompositeReplace, &keyframes[0]->Easing());
   if (animation_index > 0 && model->HasSyntheticKeyframes()) {
     UseCounter::Count(element_for_scoping->GetDocument(),
                       WebFeature::kCSSAnimationsStackedNeutralKeyframe);
@@ -473,7 +473,7 @@ void CSSAnimations::MaybeApplyPendingUpdate(Element* element) {
     KeyframeEffectReadOnly* effect =
         ToKeyframeEffectReadOnly(entry.animation->effect());
 
-    effect->SetModel(entry.effect->Model());
+    effect->SetModel(ToKeyframeEffectModelBase(entry.effect->Model()));
     effect->UpdateSpecifiedTiming(entry.effect->SpecifiedTiming());
 
     running_animations_[entry.index]->Update(entry);
@@ -496,7 +496,8 @@ void CSSAnimations::MaybeApplyPendingUpdate(Element* element) {
     AnimationEventDelegate* event_delegate =
         new AnimationEventDelegate(element, entry.name);
     KeyframeEffect* effect = KeyframeEffect::Create(
-        element, inert_animation->Model(), inert_animation->SpecifiedTiming(),
+        element, ToKeyframeEffectModelBase(inert_animation->Model()),
+        inert_animation->SpecifiedTiming(),
         KeyframeEffectReadOnly::kDefaultPriority, event_delegate);
     Animation* animation = element->GetDocument().Timeline().Play(effect);
     animation->setId(entry.name);
@@ -606,7 +607,8 @@ void CSSAnimations::MaybeApplyPendingUpdate(Element* element) {
     }
 
     KeyframeEffect* transition = KeyframeEffect::Create(
-        element, model, inert_animation->SpecifiedTiming(),
+        element, ToKeyframeEffectModelBase(model),
+        inert_animation->SpecifiedTiming(),
         KeyframeEffectReadOnly::kTransitionPriority, event_delegate);
     Animation* animation = element->GetDocument().Timeline().Play(transition);
     if (property.IsCSSCustomProperty()) {

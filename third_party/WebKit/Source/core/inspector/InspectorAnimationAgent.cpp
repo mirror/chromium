@@ -295,7 +295,7 @@ blink::Animation* InspectorAnimationAgent::AnimationClone(
     DCHECK(old_effect->Model()->IsKeyframeEffectModel());
     KeyframeEffectModelBase* old_model =
         ToKeyframeEffectModelBase(old_effect->Model());
-    EffectModel* new_model = nullptr;
+    KeyframeEffectModelBase* new_model = nullptr;
     // Clone EffectModel.
     // TODO(samli): Determine if this is an animations bug.
     if (old_model->IsStringKeyframeEffectModel()) {

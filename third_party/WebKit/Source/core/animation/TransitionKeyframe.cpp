@@ -26,8 +26,9 @@ PropertyHandleSet TransitionKeyframe::Properties() const {
 }
 
 void TransitionKeyframe::AddKeyframePropertiesToV8Object(
-    V8ObjectBuilder& object_builder) const {
-  Keyframe::AddKeyframePropertiesToV8Object(object_builder);
+    V8ObjectBuilder& object_builder,
+    EffectModel::CompositeOperation effect_composite) const {
+  Keyframe::AddKeyframePropertiesToV8Object(object_builder, effect_composite);
   // TODO(crbug.com/777971): Add in the property/value for TransitionKeyframe.
 }
 

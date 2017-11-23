@@ -10,20 +10,6 @@
 
 namespace blink {
 
-namespace {
-StringView CompositeOperationToString(EffectModel::CompositeOperation op) {
-  switch (op) {
-    case EffectModel::kCompositeAdd:
-      return "add";
-    case EffectModel::kCompositeReplace:
-      return "replace";
-    default:
-      NOTREACHED();
-      return "";
-  }
-}
-}  // namespace
-
 scoped_refptr<Interpolation>
 Keyframe::PropertySpecificKeyframe::CreateInterpolation(
     const PropertyHandle& property_handle,
@@ -35,12 +21,16 @@ Keyframe::PropertySpecificKeyframe::CreateInterpolation(
 }
 
 void Keyframe::AddKeyframePropertiesToV8Object(
-    V8ObjectBuilder& object_builder) const {
+    V8ObjectBuilder& object_builder,
+    EffectModel::CompositeOperation effect_composite) const {
   object_builder.Add("offset", offset_);
   object_builder.Add("easing", easing_->ToString());
-  // TODO(crbug.com/785526): This should be absent if it matches the composite
-  // operation of the keyframe effect (which is not yet implemented).
-  object_builder.AddString("composite", CompositeOperationToString(composite_));
+  // The keyframe specific composite operation should be absent if it matches
+  // the composite operation specified on the keyframe effect.
+  if (composite_ != effect_composite) {
+    object_builder.AddString(
+        "composite", EffectModel::CompositeOperationToString(composite_));
+  }
 }
 
 bool Keyframe::CompareOffsets(const scoped_refptr<Keyframe>& a,
