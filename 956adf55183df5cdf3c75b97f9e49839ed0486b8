@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "9d16a294_e25c6ea4",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-23T18:16:56Z",
+      "side": 1,
+      "message": "What\u0027s the : uint32_t doing for us?",
+      "revId": "956adf55183df5cdf3c75b97f9e49839ed0486b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "787d6948_48bc51b8",
         "filename": "ui/gfx/presentation_feedback.h",
         "patchSetId": 32
