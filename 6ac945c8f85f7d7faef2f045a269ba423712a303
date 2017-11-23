@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7915c3f_351b348f",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-23T09:30:05Z",
+      "side": 1,
+      "message": "FROM_HERE binds to a location in a file. If you use a helper function such as this one in order to post, your FROM_HERE points back to that function, rather than to the original call location.\n\nI can\u0027t think of a clearer way of commenting this without significantly losing brevity. Even as it currently stands, I\u0027m not sure the comment deserves to be in the code.\n\nWdyt?",
+      "parentUuid": "ae42d4e7_77cae9d8",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24542c4d_0ba689ec",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 19
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8206a07a_69d2c9da",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-23T09:30:05Z",
+      "side": 1,
+      "message": "There are only two places from which this call can come (and that\u0027s by design, so it shouldn\u0027t change):\n1. Direct user input (chrome://webrtc-internals -\u003e create dump -\u003e RTC event logging). In that case, I think it\u0027s reasonable to let the user save those files anywhere he wishes. Or do we suspect Chrome might have permissions that the logged-in user doesn\u0027t?\n2. Outdates JS hooks that are only accessible from Google domains (pinging @terelius for confirmation), that\u0027s nobody currently using. We intend to remove these. We can land the CL that removes this before, if you think it\u0027s a security issue, but otherwise, I\u0027d prefer to do it after.",
+      "parentUuid": "24542c4d_0ba689ec",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15aea4e4_66e5edf3",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 19
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-22T20:26:16Z",
       "side": 1,
       "message": "What kinds of things will be in these logs?\n\nWhat remote servers?",
+      "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0421bf2d_2b861452",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-23T09:30:05Z",
+      "side": 1,
+      "message": "@terelius",
+      "parentUuid": "15aea4e4_66e5edf3",
       "revId": "6ac945c8f85f7d7faef2f045a269ba423712a303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
