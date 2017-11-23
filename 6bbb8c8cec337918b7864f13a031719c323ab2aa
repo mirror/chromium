@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8432fdf1_cc56bb23",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-23T00:22:13Z",
+      "side": 1,
+      "message": "But now you\u0027re copying unnecessarily, right? Maybe std:move? Or a raw ptr?",
+      "revId": "6bbb8c8cec337918b7864f13a031719c323ab2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
