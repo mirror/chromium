@@ -63,7 +63,6 @@ class ChildURLLoaderFactoryGetter;
 class LocalStorageCachedAreas;
 class NotificationDispatcher;
 class PlatformEventObserverBase;
-class QuotaMessageFilter;
 class RendererClipboardDelegate;
 class ThreadSafeSender;
 class WebClipboardImpl;
@@ -322,7 +321,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
   scoped_refptr<IPC::SyncMessageFilter> sync_message_filter_;
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
-  scoped_refptr<QuotaMessageFilter> quota_message_filter_;
   viz::ClientSharedBitmapManager* shared_bitmap_manager_;
 
   std::unique_ptr<WebDatabaseObserverImpl> web_database_observer_impl_;
