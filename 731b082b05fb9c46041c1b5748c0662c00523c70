@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "317885c8_6ba52521",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-23T04:21:14Z",
+      "side": 1,
+      "message": "no need for the curly braces around each return and no \"else\" after return.",
+      "revId": "731b082b05fb9c46041c1b5748c0662c00523c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb38a59f_d7e4df38",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-23T04:21:14Z",
+      "side": 1,
+      "message": "this needs to be passed in or this helper needs to be a member of AutofillManager. Taking the extra param is probably better",
+      "revId": "731b082b05fb9c46041c1b5748c0662c00523c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
