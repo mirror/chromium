@@ -80,6 +80,32 @@ private int mSuperNiftyDrawingProperty;
 
 ## Debugging Java
 
+For both apk and test targets, pass `--wait-for-java-debugger` to the wrapper
+scripts.
+
+Examples:
+
+```shell
+out/Default/bin/chrome_public_apk run --wait-for-java-debugger
+
+# Have GPU process wait rather than Browser process:
+out/Default/bin/chrome_public_apk run --wait-for-java-debugger --debug-process-name privileged_process0
+
+# Have Renderers wait:
+out/Default/bin/chrome_public_apk run --args="--renderer-wait-for-java-debugger"
+```
+
+The flag is also recognized by test scripts:
+
+```shell
+out/Default/bin/run_chrome_public_test_apk --wait-for-java-debugger
+```
+
+### Android Studio
+*   Open Android Studio ([instructions](android_studio.md))
+*   Click "Build"->"Attach debugger to Android process" (see
+[here](https://developer.android.com/studio/debug/index.html) for more)
+
 ### Eclipse
 *   In Eclipse, make a debug configuration of type "Remote Java Application".
     Choose a "Name" and set "Port" to `8700`.
@@ -97,20 +123,6 @@ private int mSuperNiftyDrawingProperty;
     should now mention 8700 or xxxx/8700).
 
 *   Run your debug configuration, and switch to the Debug perspective.
-
-### Android Studio
-*   Build and install the desired target
-*   Open Android Studio ([instructions](android_studio.md))
-*   Click the "Attach debugger to Android process" (see
-[here](https://developer.android.com/studio/debug/index.html) for more)
-
-## Waiting for Java Debugger on Early Startup
-
-*   To debug early startup, pass `--wait-for-java-debugger` to the wrapper
-    scripts (works for both apk wrappers as well as test wrappers).
-*   To debug a renderer process: `--args="--renderer-wait-for-java-debugger"`
-*   To debug the GPU process:
-    `adb shell am set-debug-app -w org.chromium.chrome:privileged_process0`
 
 ## Debugging C/C++
 
