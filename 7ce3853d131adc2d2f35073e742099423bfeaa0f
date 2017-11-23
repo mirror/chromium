@@ -70,6 +70,24 @@
       "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91250608_c8fe77ad",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-23T15:28:19Z",
+      "side": 1,
+      "message": "I agree we should ideally do that.\n\nI\u0027m not exactly sure where all the memory is allocated as I\u0027m new to the codebase and don\u0027t know it quite well yet. But following the recommendation from the team and the complexity of all the code paths for this media pipeline, we think it\u0027s impossible to reasonably compute any good value.\n\nThat\u0027s why we decided to pick a simple value in the right order of magnitude instead.",
+      "parentUuid": "c0d7dc51_5da92a52",
+      "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
