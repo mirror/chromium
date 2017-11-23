@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15f03722_3baea6aa",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-23T23:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b439975_6377e4d5",
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67870dad_2edc0ce4",
         "filename": "content/common/frame.mojom",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8abbedba_1cb338a3",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-23T23:47:17Z",
+      "side": 1,
+      "message": "WebInsecureRequestPolicy is a bitmask, so IMO it seems more natural to just declare here as uint8 on the both ends is handled as WebInsecureRequestPolicy alias type.\n\nBased on your comment I amended the doc above it.",
+      "parentUuid": "67870dad_2edc0ce4",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 7
+      },
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f6f7d67_782f1cbd",
         "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aed8bcd_243a214f",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-23T23:47:17Z",
+      "side": 1,
+      "message": "Ha! Good catch copy\u0027n\u0027pasta error. :-)",
+      "parentUuid": "5f6f7d67_782f1cbd",
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
