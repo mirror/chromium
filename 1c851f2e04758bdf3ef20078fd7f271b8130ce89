@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eea09604_816029b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-23T16:03:13Z",
+      "side": 1,
+      "message": "Is there a version of this that takes a default value?  You probably have to add a long method like, \"getFieldTrialParamByFeatureAsLong.\"  They have AsInt and AsDouble already and they all take default values.  Then make the default TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS in MIN instead and pass it in.  wdyt?",
+      "range": {
+        "startLine": 976,
+        "startChar": 66,
+        "endLine": 976,
+        "endChar": 93
+      },
+      "revId": "1c851f2e04758bdf3ef20078fd7f271b8130ce89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
