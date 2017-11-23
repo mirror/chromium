@@ -22,6 +22,30 @@
       "revId": "79b9a74f532a4e9b3404fdef8156173e332c5d72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4b694f_12aec1b1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-23T15:17:12Z",
+      "side": 1,
+      "message": "The computation will not be identical for WebGL, as the previous computation is not correct--it hardcoded the number of bytes per pixel to be 4, which is not true for certain types of images like greyscale images. This CL will reduce memory pressure in these cases; but for RGBA_8888, the computation will be the same.\n\nCurrently, HTML canvas use global_gpu_memory_usage_ to determine whether we should create accelerated 2d context. But the same logic is not applied to WebGL. Not sure if this can be seen as an alternative mechanism to release GPU resource earlier (\"earlier\" \u003d \"never adopt it at the very beginning\").",
+      "parentUuid": "2dcb1493_51c14a36",
+      "range": {
+        "startLine": 1572,
+        "startChar": 2,
+        "endLine": 1572,
+        "endChar": 30
+      },
+      "revId": "79b9a74f532a4e9b3404fdef8156173e332c5d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
