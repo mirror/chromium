@@ -84,6 +84,7 @@ int LaunchTests(TestLauncherDelegate* launcher_delegate,
 
 TestLauncherDelegate* GetCurrentTestLauncherDelegate();
 ContentMainParams* GetContentMainParams();
+bool IsPreTest(const std::string& test_name);
 
 }  // namespace content
 
