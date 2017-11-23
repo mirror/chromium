@@ -31,6 +31,9 @@ public class WebApkServiceFactory extends Service {
     private static final String WEBAPK_SERVICE_IMPL_CLASS_NAME =
             "org.chromium.webapk.lib.runtime_library.WebApkServiceImpl";
 
+    /** The target SDK of this WebAPK. */
+    private static final String KEY_TARGET_SDK = "target_sdk";
+
     /**
      * Key for passing id of icon to represent WebAPK notifications in status bar.
      */
@@ -54,6 +57,7 @@ public class WebApkServiceFactory extends Service {
             Bundle bundle = new Bundle();
             bundle.putInt(KEY_SMALL_ICON_ID, R.drawable.notification_badge);
             bundle.putInt(KEY_HOST_BROWSER_UID, hostBrowserUid);
+            bundle.putInt(KEY_TARGET_SDK, getApplicationInfo().targetSdkVersion);
             IBinder webApkServiceImpl =
                     (IBinder) webApkServiceImplConstructor.newInstance(new Object[] {this, bundle});
             return new WebApkServiceImplWrapper(this, webApkServiceImpl, hostBrowserUid);
