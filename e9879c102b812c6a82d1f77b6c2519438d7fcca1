@@ -16,6 +16,24 @@
       "revId": "e9879c102b812c6a82d1f77b6c2519438d7fcca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b898dd5_bba8a1d6",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2017-11-23T13:16:06Z",
+      "side": 1,
+      "message": "Done. I replaced some of the autos since I think it makes it easier to read.",
+      "parentUuid": "0635abb7_11bd6b71",
+      "revId": "e9879c102b812c6a82d1f77b6c2519438d7fcca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
