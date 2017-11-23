@@ -57,6 +57,7 @@ include_rules = [
   "+storage/common",
   "+third_party/WebKit/common/page/page_visibility_state.mojom.h",
   "+third_party/metrics_proto",
+  "+third_party/WebKit/common",
   "-components/spellcheck/browser",  # Allow all spellcheck but browser.
 ]
 
