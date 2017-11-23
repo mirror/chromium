@@ -24,24 +24,6 @@
 #endif
 
 namespace {
-// Enum is used to record the actions performed by the user on the promo cell.
-// |Stars.PromoActions|.
-enum {
-  // Recorded each time the promo cell is presented to the user.
-  BOOKMARKS_PROMO_ACTION_DISPLAYED,
-  // The user selected the NO THANKS button.
-  BOOKMARKS_PROMO_ACTION_DISMISSED,
-  // The user selected the SIGN-IN button.
-  BOOKMARKS_PROMO_ACTION_COMPLETED,
-  // NOTE: Add new promo actions in sources only immediately above this line.
-  // Also, make sure the enum list for histogram |Stars.PromoActions| in
-  // histograms.xml is updated with any change in here.
-  BOOKMARKS_PROMO_ACTION_COUNT
-};
-
-// The histogram used to record user actions performed on the promo cell.
-const char kBookmarksPromoActionsHistogram[] = "Stars.PromoActions";
-
 class SignInObserver;
 }  // namespace
 
@@ -132,9 +114,6 @@ class SignInObserver : public SigninManagerBase::Observer {
 }
 
 - (void)showSignInFromViewController:(UIViewController*)baseViewController {
-  UMA_HISTOGRAM_ENUMERATION(kBookmarksPromoActionsHistogram,
-                            BOOKMARKS_PROMO_ACTION_COMPLETED,
-                            BOOKMARKS_PROMO_ACTION_COUNT);
   base::RecordAction(
       base::UserMetricsAction("Signin_Signin_FromBookmarkManager"));
   ShowSigninCommand* command = [[ShowSigninCommand alloc]
@@ -147,10 +126,6 @@ class SignInObserver : public SigninManagerBase::Observer {
 - (void)hidePromoCell {
   DCHECK(!_isIncognito);
   DCHECK(_browserState);
-
-  UMA_HISTOGRAM_ENUMERATION(kBookmarksPromoActionsHistogram,
-                            BOOKMARKS_PROMO_ACTION_DISMISSED,
-                            BOOKMARKS_PROMO_ACTION_COUNT);
   self.promoState = NO;
 }
 
@@ -185,9 +160,6 @@ class SignInObserver : public SigninManagerBase::Observer {
   if (_promoDisplayedRecorded)
     return;
   _promoDisplayedRecorded = YES;
-  UMA_HISTOGRAM_ENUMERATION(kBookmarksPromoActionsHistogram,
-                            BOOKMARKS_PROMO_ACTION_DISPLAYED,
-                            BOOKMARKS_PROMO_ACTION_COUNT);
   base::RecordAction(
       base::UserMetricsAction("Signin_Impression_FromBookmarkManager"));
 }
