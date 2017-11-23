@@ -14,8 +14,6 @@
 namespace ui {
 namespace {
 
-constexpr int kSamplingInterval = 10;
-
 std::string LatencySourceEventTypeToInputModalityString(
     ui::SourceEventType type) {
   switch (type) {
@@ -47,9 +45,15 @@ void RecordUmaEventLatencyScrollWheelTimeToScrollUpdateSwapBegin2Histogram(
 
 LatencyTracker::LatencyTracker(bool metric_sampling)
     : metric_sampling_(metric_sampling) {
-  if (metric_sampling)
-    metric_sampling_events_since_last_sample_ = rand() % kSamplingInterval;
+  if (metric_sampling) {
+    sampling_scheme_["Event.ScrollUpdate.Touch"] = SamplingScheme(50);
+    sampling_scheme_["Event.ScrollBegin.Touch"] = SamplingScheme(5);
+    sampling_scheme_["Event.ScrollUpdate.Wheel"] = SamplingScheme(2);
+    sampling_scheme_["Event.ScrollBegin.wheel"] = SamplingScheme(5);
+  }
 }
+
+LatencyTracker::~LatencyTracker() {}
 
 void LatencyTracker::OnGpuSwapBuffersCompleted(const LatencyInfo& latency) {
   LatencyInfo::LatencyComponent gpu_swap_end_component;
@@ -105,12 +109,10 @@ void LatencyTracker::ReportUkmScrollLatency(
   CONFIRM_VALID_TIMING(start_component, end_component)
 
   // Only report a subset of this metric as the volume is too high.
-  if (event_name == "Event.ScrollUpdate.Touch") {
-    metric_sampling_events_since_last_sample_++;
-    metric_sampling_events_since_last_sample_ %= kSamplingInterval;
-    if (metric_sampling_ && metric_sampling_events_since_last_sample_)
-      return;
-  }
+  if (metric_sampling_ &&
+      sampling_scheme_.find(event_name) != sampling_scheme_.end() &&
+      !sampling_scheme_[event_name].ShouldReport())
+    return;
 
   ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
   if (ukm_source_id == ukm::kInvalidSourceId || !ukm_recorder)
