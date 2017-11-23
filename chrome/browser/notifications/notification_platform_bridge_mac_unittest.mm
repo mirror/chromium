@@ -58,7 +58,9 @@ class NotificationPlatformBridgeMacTest : public testing::Test {
     [builder setNotificationId:@"notification_id"];
     [builder setProfileId:@"profile_id"];
     [builder setIncognito:false];
-    [builder setNotificationType:@(NotificationCommon::PERSISTENT)];
+    [builder
+        setNotificationType:@ static_cast<unsigned int>(
+                                NotificationHandler::Type::WEB_PERSISTENT)];
     [builder setShowSettingsButton:true];
 
     return [builder buildUserNotification];
@@ -212,8 +214,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestDisplayNoButtons) {
   std::unique_ptr<NotificationPlatformBridgeMac> bridge(
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  *notification, nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *notification, nullptr);
   NSArray* notifications = [notification_center() deliveredNotifications];
 
   EXPECT_EQ(1u, [notifications count]);
@@ -233,8 +235,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestDisplayOneButton) {
   std::unique_ptr<NotificationPlatformBridgeMac> bridge(
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  *notification, nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *notification, nullptr);
 
   NSArray* notifications = [notification_center() deliveredNotifications];
   EXPECT_EQ(1u, [notifications count]);
@@ -257,8 +259,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestDisplayProgress) {
   std::unique_ptr<NotificationPlatformBridgeMac> bridge(
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  *notification, nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *notification, nullptr);
 
   // Progress notifications are considered alerts
   EXPECT_EQ(0u, [[notification_center() deliveredNotifications] count]);
@@ -280,8 +282,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestCloseNotification) {
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
   EXPECT_EQ(0u, [[notification_center() deliveredNotifications] count]);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  *notification, nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *notification, nullptr);
   EXPECT_EQ(1u, [[notification_center() deliveredNotifications] count]);
 
   bridge->Close("profile_id", "id1");
@@ -296,8 +298,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestCloseNonExistingNotification) {
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
   EXPECT_EQ(0u, [[notification_center() deliveredNotifications] count]);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  *notification, nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *notification, nullptr);
   EXPECT_EQ(1u, [[notification_center() deliveredNotifications] count]);
 
   bridge->Close("profile_id_does_not_exist", "id1");
@@ -311,8 +313,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestGetDisplayed) {
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
   EXPECT_EQ(0u, [[notification_center() deliveredNotifications] count]);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  *notification, nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *notification, nullptr);
   EXPECT_EQ(1u, [[notification_center() deliveredNotifications] count]);
 
   int notification_count = -1;
@@ -330,8 +332,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestGetDisplayedUnknownProfile) {
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
   EXPECT_EQ(0u, [[notification_center() deliveredNotifications] count]);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  *notification, nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *notification, nullptr);
   EXPECT_EQ(1u, [[notification_center() deliveredNotifications] count]);
   int notification_count = -1;
   bridge->GetDisplayed(
@@ -349,8 +351,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestQuitRemovesNotifications) {
         new NotificationPlatformBridgeMac(notification_center(),
                                           alert_dispatcher()));
     EXPECT_EQ(0u, [[notification_center() deliveredNotifications] count]);
-    bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                    *notification, nullptr);
+    bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                    false, *notification, nullptr);
     EXPECT_EQ(1u, [[notification_center() deliveredNotifications] count]);
   }
 
@@ -364,8 +366,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestDisplayAlert) {
   std::unique_ptr<NotificationPlatformBridgeMac> bridge(
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false, *alert,
-                  nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *alert, nullptr);
   EXPECT_EQ(0u, [[notification_center() deliveredNotifications] count]);
   EXPECT_EQ(1u, [[alert_dispatcher() alerts] count]);
 }
@@ -378,10 +380,10 @@ TEST_F(NotificationPlatformBridgeMacTest, TestDisplayBannerAndAlert) {
   std::unique_ptr<NotificationPlatformBridgeMac> bridge(
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  Notification("notification_id1", *banner), nullptr);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  Notification("notification_id2", *alert), nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, Notification("notification_id1", *banner), nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, Notification("notification_id2", *alert), nullptr);
   EXPECT_EQ(1u, [[notification_center() deliveredNotifications] count]);
   EXPECT_EQ(1u, [[alert_dispatcher() alerts] count]);
 }
@@ -393,8 +395,8 @@ TEST_F(NotificationPlatformBridgeMacTest, TestCloseAlert) {
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
   EXPECT_EQ(0u, [[alert_dispatcher() alerts] count]);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false, *alert,
-                  nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, *alert, nullptr);
   EXPECT_EQ(1u, [[alert_dispatcher() alerts] count]);
 
   bridge->Close("profile_id", "id1");
@@ -412,10 +414,11 @@ TEST_F(NotificationPlatformBridgeMacTest, TestQuitRemovesBannersAndAlerts) {
                                           alert_dispatcher()));
     EXPECT_EQ(0u, [[notification_center() deliveredNotifications] count]);
     EXPECT_EQ(0u, [[alert_dispatcher() alerts] count]);
-    bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                    Notification("notification_id1", *notification), nullptr);
-    bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                    Notification("notification_id2", *alert), nullptr);
+    bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                    false, Notification("notification_id1", *notification),
+                    nullptr);
+    bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                    false, Notification("notification_id2", *alert), nullptr);
     EXPECT_EQ(1u, [[notification_center() deliveredNotifications] count]);
     EXPECT_EQ(1u, [[alert_dispatcher() alerts] count]);
   }
@@ -433,35 +436,41 @@ TEST_F(NotificationPlatformBridgeMacTest, TestDisplayETLDPlusOne) {
   std::unique_ptr<NotificationPlatformBridgeMac> bridge(
       new NotificationPlatformBridgeMac(notification_center(),
                                         alert_dispatcher()));
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  Notification("notification_id1", *notification), nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, Notification("notification_id1", *notification),
+                  nullptr);
 
   notification = CreateBanner("Title", "Context", "https://mail.appspot.com",
                               "Button 1", nullptr);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  Notification("notification_id2", *notification), nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, Notification("notification_id2", *notification),
+                  nullptr);
 
   notification = CreateBanner("Title", "Context", "https://tests.peter.sh",
                               "Button 1", nullptr);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  Notification("notification_id3", *notification), nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, Notification("notification_id3", *notification),
+                  nullptr);
 
   notification = CreateBanner(
       "Title", "Context",
       "https://somereallylongsubdomainthatactuallyisanaliasfortests.peter.sh/",
       "Button 1", nullptr);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  Notification("notification_id4", *notification), nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, Notification("notification_id4", *notification),
+                  nullptr);
 
   notification = CreateBanner("Title", "Context", "http://localhost:8080",
                               "Button 1", nullptr);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  Notification("notification_id5", *notification), nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, Notification("notification_id5", *notification),
+                  nullptr);
 
   notification = CreateBanner("Title", "Context", "https://93.186.186.172",
                               "Button 1", nullptr);
-  bridge->Display(NotificationCommon::PERSISTENT, "profile_id", false,
-                  Notification("notification_id6", *notification), nullptr);
+  bridge->Display(NotificationHandler::Type::WEB_PERSISTENT, "profile_id",
+                  false, Notification("notification_id6", *notification),
+                  nullptr);
 
   NSArray* notifications = [notification_center() deliveredNotifications];
   EXPECT_EQ(6u, [notifications count]);
