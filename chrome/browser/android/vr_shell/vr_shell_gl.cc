@@ -218,9 +218,11 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
                      gvr_context* gvr_api,
                      bool reprojected_rendering,
                      bool daydream_support,
-                     bool start_in_web_vr_mode)
+                     bool start_in_web_vr_mode,
+                     bool web_vr_autopresentation_expected)
     : ui_(std::move(ui)),
       web_vr_mode_(start_in_web_vr_mode),
+      web_vr_autopresentation_expected_(web_vr_autopresentation_expected),
       surfaceless_rendering_(reprojected_rendering),
       daydream_support_(daydream_support),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
@@ -1226,6 +1228,9 @@ void VrShellGl::SetWebVrMode(bool enabled) {
 
   if (!web_vr_mode_)
     ClosePresentationBindings();
+
+  if (!web_vr_mode_ && !web_vr_autopresentation_expected_)
+    vr::Assets::GetInstance()->GetUmaHelper()->OnEnterVrBrowsingMode();
 }
 
 void VrShellGl::ContentBoundsChanged(int width, int height) {

@@ -24,6 +24,25 @@ constexpr uint32_t kCompatibleMajorVrAssetsComponentVersion = 0;
 
 struct AssetsSingletonTrait;
 
+class AssetsUmaHelper {
+public:
+  AssetsUmaHelper(scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+  ~AssetsUmaHelper();
+
+  void OnEnterVrBrowsingMode();
+  void OnComponentReady();
+
+private:
+  void OnEnterVrBrowsingModeInternal();
+
+  base::Time enter_vr_browsing_mode_time_;
+  bool entered_vr_browsing_mode_ = false;
+  bool component_ready_ = false;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  base::WeakPtrFactory<AssetsUmaHelper> weak_ptr_factory_;
+};
+
 // Manages VR assets such as the environment. Gets updated by the VR assets
 // component.
 //
@@ -48,6 +67,8 @@ class Assets {
   // assets are loaded. |on_loaded| will be called on the caller's thread.
   void LoadWhenComponentReady(OnAssetsLoadedCallback on_loaded);
 
+  AssetsUmaHelper* GetUmaHelper();
+
  private:
   static void LoadAssetsTask(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -66,6 +87,7 @@ class Assets {
   OnAssetsLoadedCallback on_assets_loaded_;
   scoped_refptr<base::SingleThreadTaskRunner> on_assets_loaded_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
+  AssetsUmaHelper uma_helper_;
 
   base::WeakPtrFactory<Assets> weak_ptr_factory_;
 
