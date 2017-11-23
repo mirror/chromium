@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c274945_f35cbcbe",
+        "filename": "ash/system/session/tray_session_length_limit.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-23T20:18:42Z",
+      "side": 1,
+      "message": "AFAIU, the notification will never be shown in this case?\nShouldn\u0027t a timer be scheduled here to fire an event to show the notification, when it will be exactly kNotificationThreshold left?",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 54
+      },
+      "revId": "23c3fa97cead64fad85dd43dfddc810461b35117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
