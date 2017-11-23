@@ -5,10 +5,17 @@
 #include "chrome/browser/metrics/tab_usage_recorder.h"
 
 #include "base/metrics/histogram_macros.h"
+#include "base/optional.h"
 #include "base/time/time.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/tabs/tab_logger.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 #include "content/public/common/page_importance_signals.h"
+#include "services/metrics/public/cpp/ukm_source_id.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(metrics::TabUsageRecorder::WebContentsData);
 
@@ -24,7 +31,8 @@ TabUsageRecorder* g_tab_usage_recorder = nullptr;
 // This class is responsible for recording the metrics. It also keeps track of
 // the pinned state of the tab.
 class TabUsageRecorder::WebContentsData
-    : public content::WebContentsUserData<WebContentsData> {
+    : public content::WebContentsUserData<WebContentsData>,
+      public content::WebContentsObserver {
  public:
   ~WebContentsData() override;
 
@@ -33,16 +41,24 @@ class TabUsageRecorder::WebContentsData
 
   void OnTabPinnedStateChanging(bool is_pinned);
 
+  // content::WebContentsObserver:
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
+  void WasHidden() override;
+
  private:
   friend class content::WebContentsUserData<WebContentsData>;
 
   explicit WebContentsData(content::WebContents* contents);
 
-  // The WebContents associated to this instance.
-  content::WebContents* contents_;
+  // Logs a UKM entry representing the state of the tab.
+  void LogTabState();
+
+  // Updated when a navigation is finished.
+  ukm::SourceId ukm_source_id_ = 0;
 
   // Indicates if the tab is pinned to the tab strip.
-  bool is_pinned_;
+  base::Optional<bool> is_pinned_;
 
   base::TimeTicks last_inactive_time_;
 
@@ -53,32 +69,38 @@ TabUsageRecorder::WebContentsData::~WebContentsData() = default;
 
 void TabUsageRecorder::WebContentsData::OnTabPinnedStateChanging(
     bool is_pinned) {
+  bool is_initial_state = !is_pinned_.has_value();
   is_pinned_ = is_pinned;
+
+  // Don't log initial state until the tab is changed or finishes navigating.
+  if (!is_initial_state) {
+    LogTabState();
+  }
 }
 
 TabUsageRecorder::WebContentsData::WebContentsData(
     content::WebContents* contents)
-    : contents_(contents), is_pinned_(false) {}
+    : WebContentsObserver(contents) {}
 
 void TabUsageRecorder::WebContentsData::RecordTabDeactivation() {
   last_inactive_time_ = base::TimeTicks::Now();
-  UMA_HISTOGRAM_BOOLEAN("Tab.Deactivation.Pinned", is_pinned_);
+  UMA_HISTOGRAM_BOOLEAN("Tab.Deactivation.Pinned", is_pinned_.value());
   UMA_HISTOGRAM_BOOLEAN(
       "Tab.Deactivation.HadFormInteraction",
-      contents_->GetPageImportanceSignals().had_form_interaction);
+      web_contents()->GetPageImportanceSignals().had_form_interaction);
 }
 
 void TabUsageRecorder::WebContentsData::RecordTabReactivation() {
   bool had_form_interaction =
-      contents_->GetPageImportanceSignals().had_form_interaction;
+      web_contents()->GetPageImportanceSignals().had_form_interaction;
 
-  UMA_HISTOGRAM_BOOLEAN("Tab.Reactivation.Pinned", is_pinned_);
+  UMA_HISTOGRAM_BOOLEAN("Tab.Reactivation.Pinned", is_pinned_.value());
   UMA_HISTOGRAM_BOOLEAN("Tab.Reactivation.HadFormInteraction",
                         had_form_interaction);
 
   base::TimeDelta time_to_reactivation =
       base::TimeTicks::Now() - last_inactive_time_;
-  if (is_pinned_ || had_form_interaction) {
+  if (is_pinned_.value() || had_form_interaction) {
     UMA_HISTOGRAM_CUSTOM_TIMES(
         "Tab.TimeToReactivation.Important", time_to_reactivation,
         base::TimeDelta::FromSeconds(1), base::TimeDelta::FromHours(2), 100);
@@ -89,10 +111,53 @@ void TabUsageRecorder::WebContentsData::RecordTabReactivation() {
   }
 }
 
+void TabUsageRecorder::WebContentsData::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() ||
+      navigation_handle->IsSameDocument()) {
+    return;
+  }
+
+  // Use the same SourceId that SourceUrlRecorderWebContentsObserver populates
+  // and updates.
+  ukm_source_id_ = ukm::ConvertToSourceId(navigation_handle->GetNavigationId(),
+                                          ukm::SourceIdType::NAVIGATION_ID);
+  LogTabState();
+}
+
+void TabUsageRecorder::WebContentsData::WasHidden() {
+  DCHECK(!web_contents()->IsBeingDestroyed());
+  LogTabState();
+}
+
+void TabUsageRecorder::WebContentsData::LogTabState() {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents());
+  if (!browser)
+    return;
+
+  TabStripModel* model = browser->tab_strip_model();
+  int index = model->GetIndexOfWebContents(web_contents());
+  DCHECK_NE(index, TabStripModel::kNoTab);
+
+  // Only log state for background tabs.
+  if (model->active_index() == index)
+    return;
+
+  TabUsageRecorder::InitializeIfNeeded();
+  g_tab_usage_recorder->tab_logger()->LogTabState(ukm_source_id_,
+                                                  web_contents(), model, index);
+}
+
 // static
 void TabUsageRecorder::InitializeIfNeeded() {
   if (!g_tab_usage_recorder)
     g_tab_usage_recorder = new TabUsageRecorder();
+}
+
+// static
+TabUsageRecorder* TabUsageRecorder::GetInstance() {
+  DCHECK(g_tab_usage_recorder);
+  return g_tab_usage_recorder;
 }
 
 void TabUsageRecorder::OnTabDeactivated(content::WebContents* contents) {
@@ -118,9 +183,15 @@ void TabUsageRecorder::TabPinnedStateChanged(TabStripModel* tab_strip_model,
       tab_strip_model->IsTabPinned(index));
 }
 
+void TabUsageRecorder::SetTabLoggerForTest(
+    std::unique_ptr<TabLogger> tab_logger) {
+  tab_logger_ = std::move(tab_logger);
+}
+
 TabUsageRecorder::TabUsageRecorder()
     : tab_reactivation_tracker_(this),
-      browser_tab_strip_tracker_(this, nullptr, nullptr) {
+      browser_tab_strip_tracker_(this, nullptr, nullptr),
+      tab_logger_(std::make_unique<TabLogger>()) {
   browser_tab_strip_tracker_.Init();
 }
 

@@ -5,10 +5,14 @@
 #ifndef CHROME_BROWSER_METRICS_TAB_USAGE_RECORDER_H_
 #define CHROME_BROWSER_METRICS_TAB_USAGE_RECORDER_H_
 
+#include <memory>
+
 #include "base/macros.h"
 #include "chrome/browser/metrics/tab_reactivation_tracker.h"
 #include "chrome/browser/ui/browser_tab_strip_tracker.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
+
+class TabLogger;
 
 namespace metrics {
 
@@ -17,6 +21,7 @@ namespace metrics {
 // The ratio of both can be calculated for tabs with different properties (e.g.
 // If the tab is pinned to the tab strip) to see if they are correlated with
 // higher probability of tab reactivation.
+// It also records UKMs for deactivated tabs.
 class TabUsageRecorder : public TabReactivationTracker::Delegate,
                          public TabStripModelObserver {
  public:
@@ -25,6 +30,9 @@ class TabUsageRecorder : public TabReactivationTracker::Delegate,
 
   // Starts recording tab usage for all browsers.
   static void InitializeIfNeeded();
+
+  // Returns the single instance. Must have called InitializeIfNeeded() first.
+  static TabUsageRecorder* GetInstance();
 
   // TabReactivationTracker::Delegate:
   void OnTabDeactivated(content::WebContents* contents) override;
@@ -39,6 +47,10 @@ class TabUsageRecorder : public TabReactivationTracker::Delegate,
                              content::WebContents* contents,
                              int index) override;
 
+  void SetTabLoggerForTest(std::unique_ptr<TabLogger> tab_logger);
+
+  TabLogger* tab_logger() { return tab_logger_.get(); }
+
  private:
   TabUsageRecorder();
   ~TabUsageRecorder() override;
@@ -49,6 +61,8 @@ class TabUsageRecorder : public TabReactivationTracker::Delegate,
 
   TabReactivationTracker tab_reactivation_tracker_;
   BrowserTabStripTracker browser_tab_strip_tracker_;
+
+  std::unique_ptr<TabLogger> tab_logger_;
 
   DISALLOW_COPY_AND_ASSIGN(TabUsageRecorder);
 };

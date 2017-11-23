@@ -1539,6 +1539,36 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="TabManager.Tab">
+  <owner>michaelpg@chromium.org</owner>
+  <summary>
+    Collects tab information for a tab after navigations, activations and close
+    events.
+  </summary>
+  <metric name="ContentType">
+    <summary>
+      Enumeration for the MIME type of the page. Values are enumerated in
+      metrics::TabEvent::ContentType.
+    </summary>
+  </metric>
+  <metric name="HasFormEntry">
+    <summary>
+      Boolean value indicating whether the page has any user-input text.
+    </summary>
+  </metric>
+  <metric name="IsPinned">
+    <summary>
+      Boolean value indicating whether the tab is pinned in the tabstrip.
+    </summary>
+  </metric>
+  <metric name="SiteEngagementScore">
+    <summary>
+      Site engagement score in the range [0, 100], rounded down to a multiple of
+      10.
+    </summary>
+  </metric>
+</event>
+
 <event name="TabManager.Background.ForegroundedOrClosed">
   <owner>chrisha@chromium.org</owner>
   <owner>lpy@chromium.org</owner>
