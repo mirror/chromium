@@ -145,7 +145,7 @@ bool Font::DrawText(PaintCanvas* canvas,
   word_shaper.FillResultBuffer(run_info, &buffer);
   bloberizer.FillGlyphs(run_info, buffer);
   DrawBlobs(canvas, flags, bloberizer.Blobs(), point);
-  return true;
+  return run_info.run.ContainsOnlyWhitespace() != TextRun::OnlyWhitespace::kYes;
 }
 
 bool Font::DrawText(PaintCanvas* canvas,
@@ -162,6 +162,8 @@ bool Font::DrawText(PaintCanvas* canvas,
   bloberizer.FillGlyphs(text_info.text, text_info.from, text_info.to,
                         text_info.shape_result);
   DrawBlobs(canvas, flags, bloberizer.Blobs(), point);
+  // TODO(npm): Maybe we need to also add |contains_only_whitespace| to
+  // NGTextFragmentPaintInfo.
   return true;
 }
 

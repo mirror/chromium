@@ -256,6 +256,9 @@ class CORE_EXPORT LayoutText : public LayoutObject {
     known_to_have_no_overflow_and_no_fallback_fonts_ = false;
   }
 
+  // Return value per enum TextRun::OnlyWhitespace.
+  unsigned ContainsOnlyWhitespace() const;
+
   virtual UChar PreviousCharacter() const;
 
  protected:
@@ -346,6 +349,7 @@ class CORE_EXPORT LayoutText : public LayoutObject {
   bool lines_dirty_ : 1;
   bool contains_reversed_text_ : 1;
   mutable bool known_to_have_no_overflow_and_no_fallback_fonts_ : 1;
+  unsigned contains_only_whitespace_ : 2;
 
   float min_width_;
   float max_width_;
