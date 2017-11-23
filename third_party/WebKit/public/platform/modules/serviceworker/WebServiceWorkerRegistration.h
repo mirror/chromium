@@ -10,12 +10,12 @@
 #include "public/platform/WebCallbacks.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerError.h"
+#include "public/platform/modules/serviceworker/navigation_preload_state.mojom-shared.h"
 #include "public/platform/modules/serviceworker/service_worker_registration.mojom-shared.h"
 
 namespace blink {
 
 class WebServiceWorkerRegistrationProxy;
-struct WebNavigationPreloadState;
 
 // The interface of the registration representation in the embedder. The
 // embedder implements this interface and passes its handle
@@ -32,7 +32,7 @@ class WebServiceWorkerRegistration {
   using WebEnableNavigationPreloadCallbacks =
       WebCallbacks<void, const WebServiceWorkerError&>;
   using WebGetNavigationPreloadStateCallbacks =
-      WebCallbacks<const WebNavigationPreloadState&,
+      WebCallbacks<const mojom::blink::NavigationPreloadState&,
                    const WebServiceWorkerError&>;
   using WebSetNavigationPreloadHeaderCallbacks =
       WebCallbacks<void, const WebServiceWorkerError&>;

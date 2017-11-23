@@ -8,7 +8,8 @@
 #include "core/dom/DOMException.h"
 #include "modules/serviceworkers/NavigationPreloadState.h"
 #include "modules/serviceworkers/ServiceWorkerError.h"
-#include "public/platform/modules/serviceworker/WebNavigationPreloadState.h"
+#include "public/platform/WebString.h"
+#include "public/platform/modules/serviceworker/navigation_preload_state.mojom-blink.h"
 
 namespace blink {
 
@@ -44,13 +45,13 @@ GetNavigationPreloadStateCallbacks::GetNavigationPreloadStateCallbacks(
 GetNavigationPreloadStateCallbacks::~GetNavigationPreloadStateCallbacks() {}
 
 void GetNavigationPreloadStateCallbacks::OnSuccess(
-    const WebNavigationPreloadState& state) {
+    const mojom::blink::NavigationPreloadState& state) {
   if (!resolver_->GetExecutionContext() ||
       resolver_->GetExecutionContext()->IsContextDestroyed())
     return;
   NavigationPreloadState dict;
   dict.setEnabled(state.enabled);
-  dict.setHeaderValue(state.header_value);
+  dict.setHeaderValue(blink::WebString::FromUTF8(state.header));
   resolver_->Resolve(dict);
 }
 
