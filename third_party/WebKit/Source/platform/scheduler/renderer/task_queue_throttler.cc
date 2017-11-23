@@ -281,6 +281,7 @@ CPUTimeBudgetPool* TaskQueueThrottler::CreateCPUTimeBudgetPool(
   CPUTimeBudgetPool* time_budget_pool =
       new CPUTimeBudgetPool(name, this, tick_clock_->NowTicks());
   budget_pools_[time_budget_pool] = base::WrapUnique(time_budget_pool);
+  LOG(ERROR) << "Booooooo";
   return time_budget_pool;
 }
 
@@ -303,6 +304,13 @@ void TaskQueueThrottler::OnTaskRunTimeReported(TaskQueue* task_queue,
 
   for (BudgetPool* budget_pool : find_it->second.budget_pools) {
     budget_pool->RecordTaskRunTime(task_queue, start_time, end_time);
+  }
+}
+
+void TaskQueueThrottler::OnTraceLogEnabled() {
+  for (const auto& map_entry : budget_pools_) {
+    BudgetPool* pool = map_entry.first;
+    pool->OnTraceLogEnabled();
   }
 }
 

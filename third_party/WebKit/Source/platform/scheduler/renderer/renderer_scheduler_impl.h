@@ -29,6 +29,7 @@
 #include "platform/scheduler/renderer/render_widget_signals.h"
 #include "platform/scheduler/renderer/renderer_metrics_helper.h"
 #include "platform/scheduler/renderer/task_cost_estimator.h"
+#include "platform/scheduler/renderer/tracing.h"
 #include "platform/scheduler/renderer/user_model.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
 #include "platform/scheduler/util/tracing_helper.h"
@@ -604,6 +605,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // We have decided to improve thread safety at the cost of some boilerplate
   // (the accessors) for the following data members.
 
+  RendererSchedulerTracer tracer_;
+
   struct MainThreadOnly {
     MainThreadOnly(
         RendererSchedulerImpl* renderer_scheduler_impl,
@@ -645,7 +648,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool begin_frame_not_expected_soon;
     bool in_idle_period_for_testing;
     bool use_virtual_time;
-    TraceableState<bool, kTracingCategoryNameDefault> is_audio_playing;
+    ObservableValue<bool> is_audio_playing;
     bool compositor_will_send_main_frame_not_expected;
     bool has_navigated;
     bool pause_timers_for_webview;
