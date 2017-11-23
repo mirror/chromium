@@ -71,11 +71,6 @@ BookmarkAppNavigationThrottle::MaybeCreateThrottleFor(
     return nullptr;
   }
 
-  if (navigation_handle->IsPost()) {
-    DVLOG(1) << "Don't intercept: Method is POST.";
-    return nullptr;
-  }
-
   content::BrowserContext* browser_context =
       navigation_handle->GetWebContents()->GetBrowserContext();
   Profile* profile = Profile::FromBrowserContext(browser_context);
@@ -112,7 +107,9 @@ BookmarkAppNavigationThrottle::WillRedirectRequest() {
 content::NavigationThrottle::ThrottleCheckResult
 BookmarkAppNavigationThrottle::ProcessNavigation() {
   ui::PageTransition transition_type = navigation_handle()->GetPageTransition();
-  if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
+  if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK) ||
+        PageTransitionCoreTypeIs(transition_type,
+                                 ui::PAGE_TRANSITION_FORM_SUBMIT))) {
     DVLOG(1) << "Don't intercept: Transition type is "
              << PageTransitionGetCoreTransitionString(transition_type);
     return content::NavigationThrottle::PROCEED;
@@ -124,6 +121,15 @@ BookmarkAppNavigationThrottle::ProcessNavigation() {
   if (app_for_window_ref == target_app_ref) {
     DVLOG(1) << "Don't intercept: The target URL is in the same scope as the "
              << "current app.";
+    return content::NavigationThrottle::PROCEED;
+  }
+
+  // If this is a browser tab, and the user is submitting a form then keep the
+  // navigation in the browser tab.
+  if (!app_for_window_ref &&
+      PageTransitionCoreTypeIs(transition_type,
+                               ui::PAGE_TRANSITION_FORM_SUBMIT)) {
+    DVLOG(1) << "Keep form submissions in the browser.";
     return content::NavigationThrottle::PROCEED;
   }
 
@@ -229,6 +235,8 @@ void BookmarkAppNavigationThrottle::OpenInNewTab() {
                                     WindowOpenDisposition::NEW_FOREGROUND_TAB,
                                     navigation_handle()->GetPageTransition(),
                                     navigation_handle()->IsRendererInitiated());
+  url_params.uses_post = navigation_handle()->IsPost();
+  url_params.post_data = navigation_handle()->GetResourceRequestBody();
   url_params.redirect_chain = navigation_handle()->GetRedirectChain();
   url_params.frame_tree_node_id = navigation_handle()->GetFrameTreeNodeId();
   url_params.user_gesture = navigation_handle()->HasUserGesture();
