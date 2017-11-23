@@ -526,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "31dc858e_6c142760",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-11-23T04:50:06Z",
+      "side": 1,
+      "message": "Got it. I\u0027ll get this in now - that\u0027ll give me the thanksgiving downtime for US folks to get the next patch ready for review.",
+      "parentUuid": "11d6b8a7_f17bcf9e",
+      "revId": "3ba4cc67bf581ebfd0eced976201400aaa72a433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21402732_a289cf8b",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 17
