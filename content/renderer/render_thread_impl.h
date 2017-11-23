@@ -28,6 +28,7 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "components/viz/common/gpu/context_lost_observer.h"
 #include "content/child/child_thread_impl.h"
 #include "content/child/memory/child_memory_coordinator_impl.h"
 #include "content/common/associated_interface_registry_impl.h"
@@ -297,6 +298,10 @@ class CONTENT_EXPORT RenderThreadImpl
       scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue,
       const GURL& url,
       const LayerTreeFrameSinkCallback& callback);
+  void DidCreateLayerTreeFrameSink(
+      int routing_id,
+      const LayerTreeFrameSinkCallback& callback,
+      std::unique_ptr<cc::LayerTreeFrameSink> frame_sink);
 
   AssociatedInterfaceRegistry* GetAssociatedInterfaceRegistry();
 
@@ -356,9 +361,7 @@ class CONTENT_EXPORT RenderThreadImpl
     return midi_message_filter_.get();
   }
 
-  QuotaDispatcher* quota_dispatcher() const {
-    return quota_dispatcher_.get();
-  }
+  QuotaDispatcher* quota_dispatcher() const { return quota_dispatcher_.get(); }
 
   QuotaMessageFilter* quota_message_filter() const {
     return quota_message_filter_.get();
@@ -508,9 +511,7 @@ class CONTENT_EXPORT RenderThreadImpl
     DISALLOW_COPY_AND_ASSIGN(HistogramCustomizer);
   };
 
-  HistogramCustomizer* histogram_customizer() {
-    return &histogram_customizer_;
-  }
+  HistogramCustomizer* histogram_customizer() { return &histogram_customizer_; }
 
   // Retrieve current gamepad data.
   void SampleGamepads(device::Gamepads* data);
@@ -647,6 +648,8 @@ class CONTENT_EXPORT RenderThreadImpl
 
   void OnRendererInterfaceRequest(mojom::RendererAssociatedRequest request);
 
+  void OnSharedWorkerContextLost();
+
   std::unique_ptr<discardable_memory::ClientDiscardableSharedMemoryManager>
       discardable_shared_memory_manager_;
 
@@ -768,8 +771,27 @@ class CONTENT_EXPORT RenderThreadImpl
 
   base::ObserverList<RenderThreadObserver> observers_;
 
+  class ContextLostObserver : public viz::ContextLostObserver {
+   public:
+    ContextLostObserver(const base::Closure& callback);
+    ~ContextLostObserver() override;
+
+    void OnContextLost() override;
+
+   private:
+    base::Closure callback_;
+
+    DISALLOW_COPY_AND_ASSIGN(ContextLostObserver);
+  };
+
+  ContextLostObserver shared_worker_context_lost_observer_;
+
   scoped_refptr<ui::ContextProviderCommandBuffer>
       shared_worker_context_provider_;
+
+  bool is_shared_worker_context_lost_ = false;
+
+  base::flat_map<int, base::WeakPtr<cc::LayerTreeFrameSink>> frame_sinks_;
 
   std::unique_ptr<AudioRendererMixerManager> audio_renderer_mixer_manager_;
 

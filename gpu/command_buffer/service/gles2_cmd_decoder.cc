@@ -23,6 +23,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_math.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
@@ -17808,6 +17809,15 @@ void GLES2DecoderImpl::TexStorageImpl(GLenum target,
                                       GLsizei depth,
                                       ContextState::Dimension dimension,
                                       const char* function_name) {
+  if (base::StartsWith(debug_marker_manager_.GetMarker(), ".RenderWorker",
+                       base::CompareCase::SENSITIVE)) {
+    static int count = 0;
+    LOG(ERROR) << "TexStorageImpl " << count;
+    if (++count > 30) {
+      OnOutOfMemoryError();
+      return;
+    }
+  }
   if (levels == 0) {
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, function_name, "levels == 0");
     return;

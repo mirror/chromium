@@ -26,13 +26,15 @@ LayerTreeFrameSink::LayerTreeFrameSink(
     : context_provider_(std::move(context_provider)),
       worker_context_provider_(std::move(worker_context_provider)),
       gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
-      shared_bitmap_manager_(shared_bitmap_manager) {}
+      shared_bitmap_manager_(shared_bitmap_manager),
+      weak_ptr_factory_(this) {}
 
 LayerTreeFrameSink::LayerTreeFrameSink(
     scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider)
     : vulkan_context_provider_(vulkan_context_provider),
       gpu_memory_buffer_manager_(nullptr),
-      shared_bitmap_manager_(nullptr) {}
+      shared_bitmap_manager_(nullptr),
+      weak_ptr_factory_(this) {}
 
 LayerTreeFrameSink::~LayerTreeFrameSink() {
   if (client_)
@@ -42,35 +44,43 @@ LayerTreeFrameSink::~LayerTreeFrameSink() {
 bool LayerTreeFrameSink::BindToClient(LayerTreeFrameSinkClient* client) {
   DCHECK(client);
   DCHECK(!client_);
+
+  if (!context_provider_)
+    return false;
+
   client_ = client;
-  bool success = true;
 
-  if (context_provider_.get()) {
-    auto result = context_provider_->BindToCurrentThread();
-    success = result == gpu::ContextResult::kSuccess;
-    if (success) {
-      context_provider_->AddObserver(this);
-    }
-  }
+  context_provider_->AddObserver(this);
 
-  if (!success) {
-    // Destroy the viz::ContextProvider on the thread attempted to be bound.
+  auto result = context_provider_->BindToCurrentThread();
+  if (result != gpu::ContextResult::kSuccess) {
     context_provider_ = nullptr;
     client_ = nullptr;
+    return false;
   }
 
-  return success;
+  return true;
 }
 
 void LayerTreeFrameSink::DetachFromClient() {
   DCHECK(client_);
 
-  if (context_provider_.get())
+  weak_ptr_factory_.InvalidateWeakPtrs();
+
+  if (context_provider_)
     context_provider_->RemoveObserver(this);
 
-  // Destroy the viz::ContextProvider on the bound thread.
   context_provider_ = nullptr;
   client_ = nullptr;
+}
+
+base::WeakPtr<LayerTreeFrameSink> LayerTreeFrameSink::AsWeakPtr() {
+  return weak_ptr_factory_.GetWeakPtr();
+}
+
+void LayerTreeFrameSink::OnWorkerContextLost() {
+  TRACE_EVENT0("cc", "LayerTreeFrameSink::OnWorkerContextLost");
+  client_->DidLoseLayerTreeFrameSink();
 }
 
 void LayerTreeFrameSink::OnContextLost() {
