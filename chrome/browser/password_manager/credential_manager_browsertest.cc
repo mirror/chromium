@@ -124,7 +124,7 @@ class CredentialManagerBrowserTest : public PasswordManagerBrowserTestBase {
   // handler before a same-RenderFrame navigation, the request is guaranteed to
   // be serviced in the context of the initial document.
   //
-  // If |preestablish_mojo_pipe| is set, then the CredentialManagerClient will
+  // If |preestablish_mojo_pipe| is set, then the CredentialManagerProxy will
   // establish the Mojo connection to the ContentCredentialManager ahead of
   // time, instead of letting the Mojo connection be established on-demand when
   // the call to store() triggered from the unload handler.
@@ -216,7 +216,7 @@ class CredentialManagerBrowserTest : public PasswordManagerBrowserTestBase {
   // Tests the when navigator.credentials.store() is called in an `unload`
   // handler before a cross-site transfer navigation, the request is ignored.
   //
-  // If |preestablish_mojo_pipe| is set, then the CredentialManagerClient will
+  // If |preestablish_mojo_pipe| is set, then the CredentialManagerProxy will
   // establish the Mojo connection to the ContentCredentialManager ahead of
   // time, instead of letting the Mojo connection be established on-demand when
   // the call to store() triggered from the unload handler.
