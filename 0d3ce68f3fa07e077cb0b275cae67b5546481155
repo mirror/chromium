@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "142cabe6_c058c12c",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-11-23T08:08:19Z",
+      "side": 1,
+      "message": "Indeed. This CL is simply reverting to old behavior, which used to not enforce anything. I\u0027ll do your suggested enforcement in a separate CL.",
+      "parentUuid": "9028bede_fcb66ea1",
+      "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f491728_d74d3e7e",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-23T06:52:32Z",
       "side": 1,
       "message": "I think you want to register the network change notifier when any of the three switch is on:\nclose_session_on_ip_change,\nmigrate_session_on_network_change,\nmigrate_session_on_network_change_v2.\n\nAnd you have to be consistent with line 786.",
+      "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8778d878_2b21319c",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-11-23T08:08:19Z",
+      "side": 1,
+      "message": "Good point -- I\u0027ve removed the \"else\". And thanks for catching the inconsistency with the destructor!",
+      "parentUuid": "5f491728_d74d3e7e",
       "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37284d7_db7ae055",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-11-23T08:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe075943_99f5e423",
+      "revId": "0d3ce68f3fa07e077cb0b275cae67b5546481155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
