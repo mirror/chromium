@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2417f95f_6925357d",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-23T00:48:42Z",
+      "side": 1,
+      "message": "Nit: Can we add a comment explaining that in-dev-mode CSS class is applied by i18n{loadTimeClasses}. It could save the reader a trip to codesearch to figure that out.",
+      "revId": "559d35deb715bd588503befd4bfc5c7370cc7958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aacd21c_b7ea7183",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-23T00:48:42Z",
+      "side": 1,
+      "message": "Nit (optional): Perhaps add a comment to discourage copy-paste of this in other WebUIs. Something like\n\n\"Normally volatile data does not belong in loadTimeData, but in this case prevents flickering on a very prominent surface (top of the landing page).\"",
+      "revId": "559d35deb715bd588503befd4bfc5c7370cc7958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
