@@ -95,6 +95,7 @@ class SigninPromoViewControllerTest : public BlockCleanupTest {
   void TearDown() override {
     NSUserDefaults* standardDefaults = [NSUserDefaults standardUserDefaults];
     [standardDefaults removeObjectForKey:kDisplayedSSORecallForMajorVersionKey];
+    [standardDefaults removeObjectForKey:kLastShownAccountGaiaIdVersionKey];
     [standardDefaults synchronize];
     [FakeVersionSigninPromoViewController clearFakeCurrentVersion];
     BlockCleanupTest::TearDown();
