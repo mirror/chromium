@@ -34,6 +34,24 @@
       "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced026a5_de65ac33",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileCallback.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-23T14:58:27Z",
+      "side": 1,
+      "message": "+foolip@ since we talked about the File|BlobCallBack issues spec-wise a while back in crbug.com/568603\n\nfoolip@ does this change fit with your spec plans?",
+      "parentUuid": "56985c7a_7d5358a3",
+      "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
