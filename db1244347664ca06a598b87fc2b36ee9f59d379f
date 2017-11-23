@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68042847_b82d4709",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "nit: This should be moved up one spot to match the order of the functions in the .cc file (or you can change the order there, but I think that will make a much bigger diff)",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d52c68f_34a04c71",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "It seems a bit odd that this function modifies the state of launched_invocations_, I wouldn\u0027t have expect that from the same (it sounds just like a check). I\u0027m guessing that it doesn\u0027t make sense to modify the function, so maybe change the name ConsumeAndCheckExperimentalInvocationInSeries?",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e98080_a0d503d3",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "Instead of having BadTypesInManifest{number}, could you drop the number and expand the name to better describe the bad type (missing list here maybe?)",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd393e87_45a1516c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "None of the callers seem to ever use this argument, remove and just hard code?\n\nOr maybe have the callers set it and ensure the right exe was called?",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798bd7d5_b51d85d5",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "This should probably be ExpectNumReporterLaunches, since I don\u0027t think it is clear what the difference between ExpectReporterLaunches(1, false) and ExpectReporterLaunches(FilePath(), false) is.\n(I know you didn\u0027t create it, but I happen to notice it with the test changes).",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d34df4_119ee758",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used anywhere, remove?",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cb1de6_e5b1f694",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "I wonder if it would be clearer to pass reporter_launch_parameters_[0] instead of 0 here. It isn\u0027t too clear what the zero represents here (same with ExpectNoReporterLoggingWithLastTimeSentReportNotSet). I don\u0027t really have any other ideas on how this could be clarified though.",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b38316_79e0bf34",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "I don\u0027t really understand this. If the second sequence needs to finish for the first sequence to run, how is this checking that only the first sequence ran? Didn\u0027t the second sequence have to run first?",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6232195c_3e96594d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "This test is very similar to the previous one, what about pulling out all the common functionality into a helper function? (I think the only difference is the first argument to RunSwReporters)",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab348547_c279e088",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "Since only one type wasn\u0027t printable, maybe just a comment referring to it directly",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba7d09e_6a018563",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "This comment seems incorrect.",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5b1ade_1830d63a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "The reporter shouldn\u0027t return exit codes related to reboots being needed, these should probably be errors (maybe worth adding a comment explaining that so we don\u0027t accidentally \"fix\" it in the future)",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1d818d_b0aa3465",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "Does doing this add much?",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0ab9bf_1d8daafe",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "Does this comment next to be updated now that the given invocation is schedule to run right away, instead of some time in the future?",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98482350_e409f5a5",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "nit: next_invocation -\u003e invocation?",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a129e3a0_80e6a39f",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-23T22:16:08Z",
+      "side": 1,
+      "message": "Add a NOTREACHED too?",
+      "revId": "db1244347664ca06a598b87fc2b36ee9f59d379f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
