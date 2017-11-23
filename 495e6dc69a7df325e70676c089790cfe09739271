@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2fd320_29627f4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-23T22:22:29Z",
+      "side": 1,
+      "message": "worth a comment saying that this will fail if queried too early. I naively assumed this would be tri-state to handle unresolved yet. I guess we may not need it yet?",
+      "range": {
+        "startLine": 180,
+        "startChar": 16,
+        "endLine": 180,
+        "endChar": 35
+      },
+      "revId": "495e6dc69a7df325e70676c089790cfe09739271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
