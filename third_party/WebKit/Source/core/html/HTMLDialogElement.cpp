@@ -95,7 +95,7 @@ static void InertSubtreesChanged(Document& document) {
   // it, though a more clever way is probably possible.
   document.ClearAXObjectCache();
   if (AXObjectCache* cache = document.ExistingAXObjectCache())
-    cache->ChildrenChanged(&document);
+    CHECK(0);
 }
 
 inline HTMLDialogElement::HTMLDialogElement(Document& document)
