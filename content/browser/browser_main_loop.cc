@@ -1507,13 +1507,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       transport_factory->ConnectHostFrameSinkManager();
       ImageTransportFactory::SetFactory(std::move(transport_factory));
     } else {
-      // TODO(crbug.com/676384): Remove flag along with surface sequences.
-      auto surface_lifetime_type =
-          parsed_command_line_.HasSwitch(switches::kDisableSurfaceReferences)
-              ? viz::SurfaceManager::LifetimeType::SEQUENCES
-              : viz::SurfaceManager::LifetimeType::REFERENCES;
-      frame_sink_manager_impl_ =
-          std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
+      frame_sink_manager_impl_ = std::make_unique<viz::FrameSinkManagerImpl>(
+          viz::SurfaceManager::LifetimeType::REFERENCES);
 
       surface_utils::ConnectWithLocalFrameSinkManager(
           host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
