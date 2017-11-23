@@ -481,7 +481,7 @@ IN_PROC_BROWSER_TEST_F(HostedAppNonClientFrameViewAshTest, HostedAppFrame) {
           browser_view->frame()->GetFrameView());
 
   HostedAppButtonContainer* button_container =
-      frame_view->hosted_app_button_container_;
+      frame_view->hosted_app_button_container();
   EXPECT_TRUE(button_container->visible());
 
   // Ensure the theme color is set.
