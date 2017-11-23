@@ -16,6 +16,24 @@
       "revId": "484e6077eb5e4876bd03fe720fbdec44bd463622",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed531d22_ee01edef",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-23T14:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7b95384_40904fdf",
+      "revId": "484e6077eb5e4876bd03fe720fbdec44bd463622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
