@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "36f0c764_2eb50465",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-23T16:24:51Z",
+      "side": 1,
+      "message": "How about making this private to make sure it\u0027s always called through RunReporterQueueAndWait?\n\nOr just move these two lines into that function. Which I guess means there was no point adding \"AndWait\" to distinguish them, but I think it\u0027s clearer so might as well keep it if you do this.",
+      "revId": "c65db741f531daecc841e87c189502861564cf37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0b81e8_e4b94dec",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-23T16:24:51Z",
+      "side": 1,
+      "message": "Please add a comment explaining why this doesn\u0027t apply to user-initiated launches.",
+      "revId": "c65db741f531daecc841e87c189502861564cf37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9966c221_3ac0214a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-23T16:24:51Z",
+      "side": 1,
+      "message": "Nit: set the string to \"path2\"?",
+      "revId": "c65db741f531daecc841e87c189502861564cf37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f61f2e0d_6878e686",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 12
