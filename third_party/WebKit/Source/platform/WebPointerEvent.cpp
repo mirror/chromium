@@ -34,6 +34,7 @@ WebPointerEvent::WebPointerEvent(const WebTouchEvent& touch_event,
                                  const WebTouchPoint& touch_point)
     : WebInputEvent(sizeof(WebPointerEvent)),
       WebPointerProperties(touch_point),
+      scroll_capable(true),
       // TODO(crbug.com/731725): This mapping needs a times by 2.
       width(touch_point.radius_x),
       height(touch_point.radius_y) {
@@ -56,6 +57,7 @@ WebPointerEvent::WebPointerEvent(WebInputEvent::Type type,
                                  const WebMouseEvent& mouse_event)
     : WebInputEvent(sizeof(WebPointerEvent)),
       WebPointerProperties(mouse_event),
+      scroll_capable(false),
       width(1),
       height(1) {
   DCHECK_GE(type, WebInputEvent::kPointerTypeFirst);
