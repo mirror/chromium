@@ -246,6 +246,24 @@
       "revId": "11f8305361635d98dff5493e1ed3a69205831448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f985555_070fc1e8",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-23T16:44:43Z",
+      "side": 1,
+      "message": "It actually turns out that SetFeaturePolicy is called twice -- once from InitSecurityContext with a blank policy, and again from DocumentLoader::InstallNewDocument. (DocumentLoader is the only path by which a header set a declared policy, but we want to have a default for the code paths which don\u0027t go through the loader)\n\nI split SetFeaturePolicy into two methods: DeclareFeaturePolicy, which calls this, and ApplyFeaturePolicy, which doesn\u0027t. Hopefully this is clearer and more deliberate.",
+      "parentUuid": "5fd62f2c_9509f147",
+      "revId": "11f8305361635d98dff5493e1ed3a69205831448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
