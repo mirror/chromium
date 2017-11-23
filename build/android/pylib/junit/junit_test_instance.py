@@ -12,7 +12,11 @@ class JunitTestInstance(test_instance.TestInstance):
 
     self._android_manifest_path = args.android_manifest_path
     self._coverage_dir = args.coverage_dir
-    self._debug_socket = args.debug_socket
+    self._debug_socket = None
+    if args.debug_socket:
+      self._debug_socket = args.debug_socket
+    elif args.wait_for_java_debugger:
+      self._debug_socket = '8701'
     self._package_filter = args.package_filter
     self._package_name = args.package_name
     self._resource_zips = args.resource_zips
