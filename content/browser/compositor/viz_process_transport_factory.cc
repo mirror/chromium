@@ -10,6 +10,7 @@
 #include "base/single_thread_task_runner.h"
 #include "cc/raster/single_thread_task_graph_runner.h"
 #include "components/viz/client/client_layer_tree_frame_sink.h"
+#include "components/viz/client/forwarding_compositing_mode_reporter_impl.h"
 #include "components/viz/client/local_surface_id_provider.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/switches.h"
@@ -71,13 +72,16 @@ bool CheckContextLost(viz::ContextProvider* context_provider) {
 
 VizProcessTransportFactory::VizProcessTransportFactory(
     gpu::GpuChannelEstablishFactory* gpu_channel_establish_factory,
-    scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner,
+    viz::ForwardingCompositingModeReporterImpl* forwarding_mode_reporter)
     : gpu_channel_establish_factory_(gpu_channel_establish_factory),
       resize_task_runner_(std::move(resize_task_runner)),
+      forwarding_compositing_mode_reporter_(forwarding_mode_reporter),
       frame_sink_id_allocator_(kBrowserClientId),
       task_graph_runner_(std::make_unique<cc::SingleThreadTaskGraphRunner>()),
       renderer_settings_(
           viz::CreateRendererSettings(CreateBufferToTextureTargetMap())),
+      compositing_mode_watcher_binding_(this),
       weak_ptr_factory_(this) {
   DCHECK(gpu_channel_establish_factory_);
   task_graph_runner_->Start("CompositorTileWorker1",
@@ -104,18 +108,40 @@ void VizProcessTransportFactory::ConnectHostFrameSinkManager() {
       std::move(frame_sink_manager_client_request), resize_task_runner_,
       std::move(frame_sink_manager));
 
+  if (compositing_mode_watcher_binding_.is_bound()) {
+    compositing_mode_reporter_.reset();
+    compositing_mode_watcher_binding_.Unbind();
+  }
+
+  viz::mojom::CompositingModeReporterRequest mode_request =
+      mojo::MakeRequest(&compositing_mode_reporter_);
+
   // Hop to the IO thread, then send the other side of interface to viz process.
+  auto connect_on_io_thread =
+      [](viz::mojom::FrameSinkManagerRequest request,
+         viz::mojom::FrameSinkManagerClientPtr client,
+         viz::mojom::CompositingModeReporterRequest mode_request) {
+        // TODO(kylechar): Check GpuProcessHost isn't null but don't enter a
+        // restart loop.
+        GpuProcessHost::Get()->ConnectFrameSinkManager(
+            std::move(request), std::move(client), std::move(mode_request));
+      };
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(
-                              [](viz::mojom::FrameSinkManagerRequest request,
-                                 viz::mojom::FrameSinkManagerClientPtr client) {
-                                // TODO(kylechar): Check GpuProcessHost isn't
-                                // null but don't enter a restart loop.
-                                GpuProcessHost::Get()->ConnectFrameSinkManager(
-                                    std::move(request), std::move(client));
-                              },
-                              std::move(frame_sink_manager_request),
-                              std::move(frame_sink_manager_client)));
+                          base::BindOnce(connect_on_io_thread,
+                                         std::move(frame_sink_manager_request),
+                                         std::move(frame_sink_manager_client),
+                                         std::move(mode_request)));
+
+  // Make |this| a CompositingModeWatcher for the
+  // |compositing_mode_reporter_|.
+  viz::mojom::CompositingModeWatcherPtr watcher_ptr;
+  compositing_mode_watcher_binding_.Bind(mojo::MakeRequest(&watcher_ptr));
+  compositing_mode_reporter_->AddCompositingModeWatcher(std::move(watcher_ptr));
+
+  // The |forwarding_mode_reporter_| also wants to to watch the authoritative
+  // |compositing_mode_reporter_|.
+  compositing_mode_reporter_->AddCompositingModeWatcher(
+      forwarding_mode_reporter_->BindAsWatcher());
 }
 
 void VizProcessTransportFactory::CreateLayerTreeFrameSink(
@@ -281,6 +307,11 @@ void VizProcessTransportFactory::SetCompositorSuspendedForRecycle(
   NOTIMPLEMENTED();
 }
 #endif
+
+void VizProcessTransportFactory::CompositingModeFallbackToSoftware() {
+  // TODO(crbug.com/730660): Make the UI compositors fallback to software.
+  NOTIMPLEMENTED();
+}
 
 void VizProcessTransportFactory::OnGpuProcessLost() {
   // Reconnect HostFrameSinkManager to new GPU process.
