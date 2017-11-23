@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aa9c026_97665f44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-23T23:10:33Z",
+      "side": 1,
+      "message": "Nit: prefer to wrap at 72 characters in CL descriptions.",
+      "revId": "57664bb7a96a5f790fcdd1287a923f15c8b0afa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538bc2b7_5ba5d738",
+        "filename": "base/memory/memory_pressure_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-23T23:10:33Z",
+      "side": 1,
+      "message": "Nit: the (\u0027a\u0027 can be read to imply more than 1)",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 9
+      },
+      "revId": "57664bb7a96a5f790fcdd1287a923f15c8b0afa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
