@@ -21,4 +21,8 @@ interface IWebApkApi {
 
     // Cancel a notification.
     void cancelNotification(String platformTag, int platformID);
+
+    // Display a notification with a specified channel name.
+    void notifyNotificationWithChannel(String platformTag, int platformID,
+                                       in Notification notification, String channelName);
 }
