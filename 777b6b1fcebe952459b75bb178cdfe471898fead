@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b1d1458_b414e237",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/trusted-click.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-23T16:19:11Z",
+      "side": 1,
+      "message": "Why the +10 here?",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "777b6b1fcebe952459b75bb178cdfe471898fead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
