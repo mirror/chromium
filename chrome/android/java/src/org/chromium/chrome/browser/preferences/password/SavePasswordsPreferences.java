@@ -17,8 +17,10 @@ import android.text.style.ForegroundColorSpan;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordUIView;
 import org.chromium.chrome.browser.PasswordUIView.PasswordListObserver;
+import org.chromium.chrome.browser.preferences.ButtonPreference;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
 import org.chromium.chrome.browser.preferences.ChromeBasePreference;
 import org.chromium.chrome.browser.preferences.ChromeSwitchPreference;
@@ -47,18 +49,22 @@ public class SavePasswordsPreferences extends PreferenceFragment
 
     public static final String PREF_SAVE_PASSWORDS_SWITCH = "save_passwords_switch";
     public static final String PREF_AUTOSIGNIN_SWITCH = "autosignin_switch";
+    public static final String PREF_EXPORT_BUTTON = "export_button";
 
     private static final String PREF_CATEGORY_SAVED_PASSWORDS = "saved_passwords";
     private static final String PREF_CATEGORY_EXCEPTIONS = "exceptions";
     private static final String PREF_MANAGE_ACCOUNT_LINK = "manage_account_link";
     private static final String PREF_CATEGORY_SAVED_PASSWORDS_NO_TEXT = "saved_passwords_no_text";
 
+    private static final String EXPORT_PASSWORDS = "password-export";
+
     private static final int ORDER_SWITCH = 0;
     private static final int ORDER_AUTO_SIGNIN_CHECKBOX = 1;
     private static final int ORDER_MANAGE_ACCOUNT_LINK = 2;
-    private static final int ORDER_SAVED_PASSWORDS = 3;
-    private static final int ORDER_EXCEPTIONS = 4;
-    private static final int ORDER_SAVED_PASSWORDS_NO_TEXT = 5;
+    private static final int ORDER_EXPORT_PASSWORDS = 3;
+    private static final int ORDER_SAVED_PASSWORDS = 4;
+    private static final int ORDER_EXCEPTIONS = 5;
+    private static final int ORDER_SAVED_PASSWORDS_NO_TEXT = 6;
 
     private final PasswordUIView mPasswordManagerHandler = new PasswordUIView();
     private boolean mNoPasswords;
@@ -66,6 +72,7 @@ public class SavePasswordsPreferences extends PreferenceFragment
     private Preference mLinkPref;
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
+    private ButtonPreference mExportButton;
     private TextMessagePreference mEmptyView;
 
     // Used for verifying if 60 seconds have passed since last authenticating, its value is set in
@@ -120,6 +127,9 @@ public class SavePasswordsPreferences extends PreferenceFragment
         getPreferenceScreen().removeAll();
         createSavePasswordsSwitch();
         createAutoSignInCheckbox();
+        if (ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)) {
+            createExportButton();
+        }
         mPasswordManagerHandler.updatePasswordLists();
     }
 
@@ -286,6 +296,14 @@ public class SavePasswordsPreferences extends PreferenceFragment
         getPreferenceScreen().addPreference(mAutoSignInSwitch);
         mAutoSignInSwitch.setChecked(
                 PrefServiceBridge.getInstance().isPasswordManagerAutoSigninEnabled());
+    }
+
+    private void createExportButton() {
+        mExportButton = new ButtonPreference(getActivity(), null);
+        mExportButton.setKey(PREF_EXPORT_BUTTON);
+        mExportButton.setTitle(R.string.password_export_title);
+        mExportButton.setOrder(ORDER_EXPORT_PASSWORDS);
+        getPreferenceScreen().addPreference(mExportButton);
     }
 
     private void displayManageAccountLink() {

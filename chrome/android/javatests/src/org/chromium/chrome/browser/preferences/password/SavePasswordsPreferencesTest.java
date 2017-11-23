@@ -10,17 +10,21 @@ import android.support.test.filters.SmallTest;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.chrome.browser.preferences.ButtonPreference;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
 import org.chromium.chrome.browser.preferences.ChromeSwitchPreference;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesTest;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
+import org.chromium.chrome.test.util.browser.Features;
+import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 
 /**
  * Tests for the "Save Passwords" settings screen.
@@ -29,6 +33,9 @@ import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
 public class SavePasswordsPreferencesTest {
     @Rule
     public final ChromeBrowserTestRule mBrowserTestRule = new ChromeBrowserTestRule();
+
+    @Rule
+    public TestRule mProcessor = new Features.InstrumentationProcessor();
 
     /**
      * Ensure that the on/off switch in "Save Passwords" settings actually enables and disables
@@ -140,6 +147,31 @@ public class SavePasswordsPreferencesTest {
                         (ChromeBaseCheckBoxPreference) passwordPrefs.findPreference(
                                 SavePasswordsPreferences.PREF_AUTOSIGNIN_SWITCH);
                 Assert.assertFalse(onOffSwitch.isChecked());
+            }
+        });
+    }
+
+    /**
+     * Ensure that the export button is included.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("password-export")
+    public void testExportButton() throws Exception {
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                SavePasswordsPreferences savedPasswordPrefs =
+                        (SavePasswordsPreferences) preferences.getFragmentForTest();
+                ButtonPreference exportButton =
+                        (ButtonPreference) savedPasswordPrefs.findPreference(
+                                SavePasswordsPreferences.PREF_EXPORT_BUTTON);
+                Assert.assertNotNull(exportButton);
             }
         });
     }
