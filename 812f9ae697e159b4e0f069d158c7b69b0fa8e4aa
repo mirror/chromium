@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "05ecf2b3_97abd1b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-23T23:55:24Z",
+      "side": 1,
+      "message": "[required] Make sure the first line is readable on its own and contains a short summary.  You want to aim for about 70 chars so that it can fit on a single 80 char line when formatted in a git summary.\n\n[optional] You have probably included more detail here than needed.  For example, I think it is useful to mention that you have created struct traits and updated one of the OWNERS file with SECURITY_OWNERS details, but the description can probably be more succint.\n\nSuggested commit message:\n\nConvert FrameHost_* ipc calls to mojo\n\nConvert FrameHost_DidChangeName, FrameHost_DidSetFeaturePolicyHeader, and\nFrameHost_EnforceInsecureRequestPolicy ipc calls to mojo.\n\nCreated mojo conversions for enum FeaturePolicyFeature and struct ParsedFeaturePolicyDeclaration.\n\nUpdated third_party/WebKit/common/feature_policy/OWNERS with ipc\nSECURITY_OWNERS settings for new mojo files.",
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b439975_6377e4d5",
         "filename": "content/common/frame.mojom",
         "patchSetId": 8
@@ -34,6 +51,29 @@
       "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd6e8430_9f7b5dd4",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-23T23:55:24Z",
+      "side": 1,
+      "message": "This extra comment is a good idea to describe why policy is a uint8.\n\n[optional] Make it a new paragraph (leave a blank line).\n[required] Start the new sentence with a capital letter and generally use correct grammar.  I understand you have used lowercase |policy| since it is the field name.  Maybe enclose it in vertical bar of use expression \u0027Argument policy ...\u0027 or \u0027Field policy ...\u0027\n\nStuart\u0027s suggestion to use an enum is quite a reasonable suggestion to make, but I don\u0027t believe it is a good option, so this description should explain a bit more.  I think the most important piece of information is that |policy| is a bitmask.  Maybe even make the argument named |policy_bitmap|\n\nSuggestion:\n//\n// Field |policy_bitmap| represents blink::WebInsecureRequestPolicy uint8 bitmap.\nEnforceInsecureRequestPolicy(uint8 policy_bitmap);",
+      "range": {
+        "startLine": 183,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 51
+      },
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -113,6 +153,24 @@
       "side": 1,
       "message": "Ha! Good catch copy\u0027n\u0027pasta error. :-)",
       "parentUuid": "5f6f7d67_782f1cbd",
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62cc9e06_09f09e8d",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-23T23:55:24Z",
+      "side": 1,
+      "message": "Yes, the file we copied from is strange.  It definitely makes sense to just be returning false after a NOTREACHED statement.\n\nhttps://cs.chromium.org/chromium/src/content/common/url_request_struct_traits.cc?l\u003d55\u0026rcl\u003d80b1a063280d0f39d4d49ae51702dbbbf5509cd6",
+      "parentUuid": "8aed8bcd_243a214f",
       "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
