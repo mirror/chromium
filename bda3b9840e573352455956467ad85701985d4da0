@@ -34,6 +34,24 @@
       "revId": "bda3b9840e573352455956467ad85701985d4da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dcefed_d099cb34",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-23T03:42:24Z",
+      "side": 1,
+      "message": "Good catch. In this case, since there is no more explicit Cancel option (only effectively hiding the bubble without removing the location bar icon), I\u0027ve updated the comment in Close() only. With Secondary UI enabled we will no longer receive Cancel calls, we should clean that up eventually. \n\nIn the ideal world, I would know whether the bubble was simply ignored or rather the [X] was clicked (a stronger, Cancel-like signal). I don\u0027t think I can achieve this easily now (there seems to be multiple paths into Close() and I don\u0027t see how to pick out the [X] explicitly).",
+      "parentUuid": "8f5283af_9cde8d96",
+      "revId": "bda3b9840e573352455956467ad85701985d4da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
