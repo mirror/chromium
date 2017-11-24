@@ -16,6 +16,24 @@
       "revId": "ce6e5877d838dd4bc2bade0ac39dfa3fe89b8474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03665753_162f5e05",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2097,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-24T00:13:40Z",
+      "side": 1,
+      "message": "The flag_descriptions constants: Yes, oops, done.\n\nThe feature name constant (features::kDesktopPWAWindowing): I don\u0027t think it\u0027s worth doing. It would require updating references to this feature name in about 20 files, as well as creating a new histogram (since the histogram is keyed off the feature name). It\u0027s an unfortunate inconsistency that the flag and feature are not named the same, but there are lots of cases where the flag name hasn\u0027t matched the feature name.",
+      "parentUuid": "df963023_1fa545d7",
+      "revId": "ce6e5877d838dd4bc2bade0ac39dfa3fe89b8474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
