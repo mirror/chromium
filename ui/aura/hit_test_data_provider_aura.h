@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "components/viz/client/hit_test_data_provider.h"
 #include "ui/aura/aura_export.h"
+#include "ui/aura/window_targeter.h"
 
 namespace aura {
 
@@ -28,9 +29,10 @@ class AURA_EXPORT HitTestDataProviderAura : public viz::HitTestDataProvider {
   // Recursively walks the children of |window| and uses |window|'s
   // EventTargeter to generate hit-test data for the |window|'s descendants.
   // Populates |hit_test_region_list|.
-  void GetHitTestDataRecursively(
+  uint32_t GetHitTestDataRecursively(
       aura::Window* window,
-      viz::mojom::HitTestRegionList* hit_test_region_list) const;
+      viz::mojom::HitTestRegionList* hit_test_region_list,
+      WindowTargeter* parent_targeter) const;
 
   aura::Window* const window_ = nullptr;
 

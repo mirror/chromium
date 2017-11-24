@@ -79,7 +79,8 @@ class VIZ_SERVICE_EXPORT HitTestAggregator {
   // build the tree.  |region_index| indicates the current index of the end of
   // the list.
   size_t AppendRegion(size_t region_index,
-                      const mojom::HitTestRegionPtr& region);
+                      const mojom::HitTestRegionPtr& region,
+                      size_t region_rect_index);
 
   // Populates the HitTestRegion element at the given element |index|.
   // Access to the HitTestRegion list is localized to this call
