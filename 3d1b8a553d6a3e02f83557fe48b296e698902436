@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65641949_4057c1ec",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T15:32:13Z",
+      "side": 1,
+      "message": "My hope was actually to start moving the processing of the two policies even closer together, so that we have some assurance that feature policy and sandbox have the same processing model.\n\nIf you feel that that\u0027s not the right direction for now, I can split this into two IPCs in this layer.",
+      "parentUuid": "ecf57f48_18adcdd0",
+      "revId": "3d1b8a553d6a3e02f83557fe48b296e698902436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c0be001_14b71707",
         "filename": "third_party/WebKit/Source/core/dom/Document.h",
         "patchSetId": 22
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2f78093c_8de3b72f",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T15:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c0be001_14b71707",
+      "revId": "3d1b8a553d6a3e02f83557fe48b296e698902436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbdff4a4_ca32c164",
         "filename": "third_party/WebKit/Source/core/dom/Document.h",
         "patchSetId": 22
@@ -50,6 +86,24 @@
       "revId": "3d1b8a553d6a3e02f83557fe48b296e698902436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac7d9e8_9cd4c7be",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T15:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbdff4a4_ca32c164",
+      "revId": "3d1b8a553d6a3e02f83557fe48b296e698902436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
