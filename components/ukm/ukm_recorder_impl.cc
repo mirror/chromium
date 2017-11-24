@@ -103,15 +103,21 @@ void UkmRecorderImpl::Purge() {
 
 void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  std::set<int> ids_seen;
+
+  for (const auto& entry : entries_) {
+    Entry* proto_entry = report->add_entries();
+    StoreEntryProto(*entry, proto_entry);
+    ids_seen.insert(entry->source_id);
+  }
+
   for (const auto& kv : sources_) {
+    if (!base::ContainsKey(ids_seen, kv.second->id()))
+      continue;
     Source* proto_source = report->add_sources();
     kv.second->PopulateProto(proto_source);
     if (!ShouldRecordInitialUrl())
       proto_source->clear_initial_url();
-  }
-  for (const auto& entry : entries_) {
-    Entry* proto_entry = report->add_entries();
-    StoreEntryProto(*entry, proto_entry);
   }
 
   UMA_HISTOGRAM_COUNTS_1000("UKM.Sources.SerializedCount", sources_.size());
