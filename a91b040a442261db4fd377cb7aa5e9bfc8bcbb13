@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "a443d6ab_f1aeb19e",
+        "filename": "chrome/test/data/devtools/dispatch_key_event_shows_auto_fill.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T18:14:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3823738e_95d35ba1",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8290379_09c2a5b9",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 25
@@ -110,6 +134,30 @@
       "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be56991d_73588502",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T18:14:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9493813_b9d3de83",
+      "range": {
+        "startLine": 5722,
+        "startChar": 28,
+        "endLine": 5722,
+        "endChar": 44
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +255,30 @@
     },
     {
       "key": {
+        "uuid": "3772d6b5_e4c503fb",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 6124,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T18:14:10Z",
+      "side": 1,
+      "message": "Makes sense, thanks for the clarification.",
+      "parentUuid": "73988699_f9348f66",
+      "range": {
+        "startLine": 6124,
+        "startChar": 3,
+        "endLine": 6124,
+        "endChar": 42
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78becdcd_3fa3be3d",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 25
@@ -251,6 +323,30 @@
       "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed9421d_da0ff2ea",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T18:14:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a0e345e_fa235996",
+      "range": {
+        "startLine": 322,
+        "startChar": 32,
+        "endLine": 322,
+        "endChar": 52
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -336,6 +432,30 @@
       "side": 1,
       "message": "I turned off enforcement of the minimum required fields for upload in form_structure_browsertest.{cc|mm} to validate what will happen if (on clients) for whom we do this via Finch.",
       "parentUuid": "d8c00243_1f9e6f04",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3256a3f_b3fdc4d8",
+        "filename": "components/test/data/autofill/heuristics/output/017_checkout_advanceautoparts.com.out",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T18:14:10Z",
+      "side": 1,
+      "message": "Ah I understand now. They got parsed but didn\u0027t go through our prediction logic.",
+      "parentUuid": "63dfce86_23a5fb26",
       "range": {
         "startLine": 1,
         "startChar": 0,
