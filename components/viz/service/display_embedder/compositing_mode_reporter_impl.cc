@@ -6,13 +6,14 @@
 
 namespace viz {
 
-CompositingModeReporterImpl::CompositingModeReporterImpl() = default;
+CompositingModeReporterImpl::CompositingModeReporterImpl() : binding_(this) {}
 
 CompositingModeReporterImpl::~CompositingModeReporterImpl() = default;
 
 void CompositingModeReporterImpl::BindRequest(
     mojom::CompositingModeReporterRequest request) {
-  bindings_.AddBinding(this, std::move(request));
+  DCHECK(!binding_.is_bound());
+  binding_.Bind(std::move(request));
 }
 
 void CompositingModeReporterImpl::SetUsingSoftwareCompositing() {

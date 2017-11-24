@@ -147,8 +147,10 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   // Connects to FrameSinkManager running in the viz process. In this
   // configuration the display compositor runs in the viz process and the
   // browser must submit CompositorFrames over IPC.
-  void ConnectFrameSinkManager(viz::mojom::FrameSinkManagerRequest request,
-                               viz::mojom::FrameSinkManagerClientPtr client);
+  void ConnectFrameSinkManager(
+      viz::mojom::FrameSinkManagerRequest request,
+      viz::mojom::FrameSinkManagerClientPtr client,
+      viz::mojom::CompositingModeReporterRequest mode_reporter_request);
 
   void RequestGPUInfo(RequestGPUInfoCallback request_cb);
   void RequestHDRStatus(RequestHDRStatusCallback request_cb);

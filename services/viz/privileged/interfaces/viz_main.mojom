@@ -4,6 +4,7 @@
 
 module viz.mojom;
 
+import "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom";
 import "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom";
 import "services/viz/privileged/interfaces/gl/gpu_host.mojom";
 import "services/viz/privileged/interfaces/gl/gpu_service.mojom";
@@ -15,6 +16,8 @@ struct FrameSinkManagerParams {
   FrameSinkManager& frame_sink_manager;
   // Viz to host interface.
   FrameSinkManagerClient frame_sink_manager_client;
+  // Interface to watch what compositing mode is active.
+  CompositingModeReporter& compositing_mode_reporter;
 };
 
 // This is the primordial interface used to (re)start the viz services.
