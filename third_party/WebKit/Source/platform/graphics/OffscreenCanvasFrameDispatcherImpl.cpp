@@ -135,6 +135,9 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
     scoped_refptr<StaticBitmapImage> image,
     double commit_start_time,
     const SkIRect& damage_rect) {
+  TRACE_EVENT2("cc", "OffscreenCanvasFrameDispatcherImpl::DispatchFrame",
+               "FrameSinkId", frame_sink_id_.ToString(), "SequenceNumber",
+               current_begin_frame_ack_.sequence_number);
   if (!image || !VerifyImageSize(image->Size()))
     return;
 
@@ -157,9 +160,9 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
   } else {
     current_begin_frame_ack_.has_damage = true;
   }
-  frame.metadata.begin_frame_ack = current_begin_frame_ack_;
+  frame.metadata.begin_frame_ack = current_begin_frame_ack_
 
-  const gfx::Rect bounds(width_, height_);
+      const gfx::Rect bounds(width_, height_);
   const int kRenderPassId = 1;
   bool is_clipped = false;
   // TODO(crbug.com/705019): optimize for contexts that have {alpha: false}
@@ -403,6 +406,8 @@ void OffscreenCanvasFrameDispatcherImpl::OnBeginFrame(
 
   Client()->BeginFrame();
   // TODO(eseckler): Tell |m_sink| if we did not draw during the BeginFrame.
+
+  // TODO(junov): stop resetting the sequence number here.
   current_begin_frame_ack_.sequence_number =
       viz::BeginFrameArgs::kInvalidFrameNumber;
 }
