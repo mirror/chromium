@@ -252,10 +252,7 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       begin_frame_not_expected_soon(false),
       in_idle_period_for_testing(false),
       use_virtual_time(false),
-      is_audio_playing(false,
-                       "RendererScheduler.AudioPlaying",
-                       renderer_scheduler_impl,
-                       AudioPlayingStateToString),
+      is_audio_playing(false, renderer_scheduler_impl->tracer_.audio_playing.get()),
       compositor_will_send_main_frame_not_expected(false),
       has_navigated(false),
       pause_timers_for_webview(false),
@@ -1095,6 +1092,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
     main_thread_only().stopped_when_backgrounded = false;
   }
 
+  // Trace new_policy_duration
   if (new_policy_duration > base::TimeDelta()) {
     main_thread_only().current_policy_expiration_time =
         now + new_policy_duration;
@@ -2279,6 +2277,8 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
 
+  tracer_.OnTraceLogEnabled();
+
   main_thread_only().current_use_case.OnTraceLogEnabled();
   main_thread_only().expensive_task_policy.OnTraceLogEnabled();
   main_thread_only().rail_mode_for_tracing.OnTraceLogEnabled();
@@ -2286,12 +2286,13 @@ void RendererSchedulerImpl::OnTraceLogEnabled() {
   main_thread_only().loading_tasks_seem_expensive.OnTraceLogEnabled();
   main_thread_only().timer_tasks_seem_expensive.OnTraceLogEnabled();
   main_thread_only().touchstart_expected_soon.OnTraceLogEnabled();
-  main_thread_only().is_audio_playing.OnTraceLogEnabled();
+  //main_thread_only().is_audio_playing.OnTraceLogEnabled();
 
   for (WebViewSchedulerImpl* web_view_scheduler :
        main_thread_only().web_view_schedulers) {
     web_view_scheduler->OnTraceLogEnabled();
   }
+  task_queue_throttler_->OnTraceLogEnabled();
 }
 
 void RendererSchedulerImpl::OnTraceLogDisabled() {}

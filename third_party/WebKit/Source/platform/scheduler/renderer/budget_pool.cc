@@ -92,5 +92,9 @@ void BudgetPool::BlockThrottledQueues(base::TimeTicks now) {
     budget_pool_controller_->UpdateQueueThrottlingState(now, queue);
 }
 
+void BudgetPool::OnTraceLogEnabled() {
+  LOG(ERROR) << "BudgetPool::OnTraceLogEnabled";
+}
+
 }  // namespace scheduler
 }  // namespace blink

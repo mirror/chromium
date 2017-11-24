@@ -149,6 +149,8 @@ class PLATFORM_EXPORT TaskQueueThrottler : public TaskQueue::Observer,
                              base::TimeTicks start_time,
                              base::TimeTicks end_time);
 
+  void OnTraceLogEnabled();
+
   void AsValueInto(base::trace_event::TracedValue* state,
                    base::TimeTicks now) const;
  private:

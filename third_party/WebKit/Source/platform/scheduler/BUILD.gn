@@ -106,6 +106,8 @@ jumbo_source_set("scheduler") {
     "renderer/task_queue_throttler.h",
     "renderer/throttled_time_domain.cc",
     "renderer/throttled_time_domain.h",
+    "renderer/tracing.cc",
+    "renderer/tracing.h",
     "renderer/user_model.cc",
     "renderer/user_model.h",
     "renderer/wake_up_budget_pool.cc",

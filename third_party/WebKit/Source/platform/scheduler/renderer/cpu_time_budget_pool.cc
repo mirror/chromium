@@ -15,11 +15,20 @@
 namespace blink {
 namespace scheduler {
 
+double TimeDeltaInMillis(const base::TimeDelta& value) {
+  return value.InMillisecondsF();
+}
+
 CPUTimeBudgetPool::CPUTimeBudgetPool(
     const char* name,
     BudgetPoolController* budget_pool_controller,
     base::TimeTicks now)
     : BudgetPool(name, budget_pool_controller),
+      current_budget_level_tracer_(
+          "RendererScheduler.BudgetLevel",
+          budget_pool_controller,
+          TimeDeltaInMillis),
+      current_budget_level_(base::TimeDelta(), &current_budget_level_tracer_),
       last_checkpoint_(now),
       cpu_percentage_(1) {}
 
@@ -62,7 +71,7 @@ void CPUTimeBudgetPool::SetTimeBudgetRecoveryRate(base::TimeTicks now,
 void CPUTimeBudgetPool::GrantAdditionalBudget(base::TimeTicks now,
                                               base::TimeDelta budget_level) {
   Advance(now);
-  current_budget_level_ += budget_level;
+  current_budget_level_ = current_budget_level_.get() + budget_level;
   EnforceBudgetLevelRestrictions();
 }
 
@@ -86,12 +95,12 @@ base::Optional<base::TimeTicks> CPUTimeBudgetPool::GetTimeTasksCanRunUntil(
 
 base::TimeTicks CPUTimeBudgetPool::GetNextAllowedRunTime(
     base::TimeTicks desired_run_time) const {
-  if (!is_enabled_ || current_budget_level_.InMicroseconds() >= 0) {
+  if (!is_enabled_ || current_budget_level_.get().InMicroseconds() >= 0) {
     return last_checkpoint_;
   } else {
     // Subtract because current_budget is negative.
     return last_checkpoint_ +
-           (-current_budget_level_ + min_budget_level_to_run_) /
+           (-current_budget_level_.get() + min_budget_level_to_run_) /
                cpu_percentage_;
   }
 }
@@ -103,16 +112,17 @@ void CPUTimeBudgetPool::RecordTaskRunTime(TaskQueue* queue,
   Advance(end_time);
   if (is_enabled_) {
     base::TimeDelta old_budget_level = current_budget_level_;
-    current_budget_level_ -= (end_time - start_time);
+    current_budget_level_ =
+        current_budget_level_.get() - (end_time - start_time);
     EnforceBudgetLevelRestrictions();
 
     if (!reporting_callback_.is_null() && old_budget_level.InSecondsF() > 0 &&
-        current_budget_level_.InSecondsF() < 0) {
-      reporting_callback_.Run(-current_budget_level_ / cpu_percentage_);
+        current_budget_level_.get().InSecondsF() < 0) {
+      reporting_callback_.Run(-current_budget_level_.get() / cpu_percentage_);
     }
   }
 
-  if (current_budget_level_.InSecondsF() < 0)
+  if (current_budget_level_.get().InSecondsF() < 0)
     BlockThrottledQueues(end_time);
 }
 
@@ -125,14 +135,21 @@ void CPUTimeBudgetPool::OnQueueNextWakeUpChanged(
 
 void CPUTimeBudgetPool::OnWakeUp(base::TimeTicks now) {}
 
+void CPUTimeBudgetPool::OnTraceLogEnabled() {
+  current_budget_level_tracer_.OnUpdated();
+}
+
 void CPUTimeBudgetPool::AsValueInto(base::trace_event::TracedValue* state,
                                     base::TimeTicks now) const {
+
+  TRACE_COUNTER1("renderer.scheduler", "RendererScheduler.Foo",
+      current_budget_level_.get().InMillisecondsF());
   state->BeginDictionary(name_);
 
   state->SetString("name", name_);
   state->SetDouble("time_budget", cpu_percentage_);
   state->SetDouble("time_budget_level_in_seconds",
-                   current_budget_level_.InSecondsF());
+                   current_budget_level_.get().InSecondsF());
   state->SetDouble("last_checkpoint_seconds_ago",
                    (now - last_checkpoint_).InSecondsF());
   state->SetBoolean("is_enabled", is_enabled_);
@@ -160,7 +177,8 @@ void CPUTimeBudgetPool::AsValueInto(base::trace_event::TracedValue* state,
 void CPUTimeBudgetPool::Advance(base::TimeTicks now) {
   if (now > last_checkpoint_) {
     if (is_enabled_) {
-      current_budget_level_ += cpu_percentage_ * (now - last_checkpoint_);
+      current_budget_level_ = current_budget_level_.get() +
+          cpu_percentage_ * (now - last_checkpoint_);
       EnforceBudgetLevelRestrictions();
     }
     last_checkpoint_ = now;
@@ -170,12 +188,12 @@ void CPUTimeBudgetPool::Advance(base::TimeTicks now) {
 void CPUTimeBudgetPool::EnforceBudgetLevelRestrictions() {
   if (max_budget_level_) {
     current_budget_level_ =
-        std::min(current_budget_level_, max_budget_level_.value());
+        std::min(current_budget_level_.get(), max_budget_level_.value());
   }
   if (max_throttling_delay_) {
     // Current budget level may be negative.
     current_budget_level_ =
-        std::max(current_budget_level_,
+        std::max(current_budget_level_.get(),
                  -max_throttling_delay_.value() * cpu_percentage_);
   }
 }

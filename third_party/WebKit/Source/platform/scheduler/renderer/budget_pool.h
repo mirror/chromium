@@ -99,6 +99,8 @@ class PLATFORM_EXPORT BudgetPool {
   // Block all associated queues and schedule them to run when appropriate.
   void BlockThrottledQueues(base::TimeTicks now);
 
+  virtual void OnTraceLogEnabled();
+
  protected:
   BudgetPool(const char* name, BudgetPoolController* budget_pool_controller);
 
