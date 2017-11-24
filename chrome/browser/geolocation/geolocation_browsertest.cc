@@ -35,11 +35,16 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "device/geolocation/network_location_request.h"
+#include "device/geolocation/public/cpp/fake_geolocation.h"
+#include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
 #include "device/geolocation/public/interfaces/geoposition.mojom.h"
 #include "google_apis/google_api_keys.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "net/base/escape.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/url_request/test_url_fetcher_factory.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/service_context.h"
 
 namespace {
 
@@ -321,18 +326,28 @@ class GeolocationBrowserTest : public InProcessBrowserTest {
   double fake_latitude_ = 1.23;
   double fake_longitude_ = 4.56;
 
+  std::unique_ptr<device::FakeGeolocationContext> fake_geolocation_;
+
   DISALLOW_COPY_AND_ASSIGN(GeolocationBrowserTest);
 };
 
 GeolocationBrowserTest::GeolocationBrowserTest() {
+  device::mojom::Geoposition position;
+  position.latitude = fake_latitude_;
+  position.longitude = fake_longitude_;
+  position.altitude = 0.;
+  position.accuracy = 0.;
+  position.timestamp = base::Time::Now();
+  fake_geolocation_ =
+      std::make_unique<device::FakeGeolocationContext>(position);
+
+  service_manager::ServiceContext::SetGlobalBinderForTesting(
+      device::mojom::kServiceName, device::mojom::GeolocationContext::Name_,
+      base::Bind(&device::FakeGeolocationContext::BindForOverrideService,
+                 base::Unretained(fake_geolocation_.get())));
 }
 
-GeolocationBrowserTest::~GeolocationBrowserTest() {
-}
-
-void GeolocationBrowserTest::SetUpOnMainThread() {
-  ui_test_utils::OverrideGeolocation(fake_latitude_, fake_longitude_);
-}
+GeolocationBrowserTest::~GeolocationBrowserTest() {}
 
 void GeolocationBrowserTest::TearDownInProcessBrowserTestFixture() {
   LOG(WARNING) << "TearDownInProcessBrowserTestFixture. Test Finished.";
@@ -455,7 +470,16 @@ bool GeolocationBrowserTest::SetPositionAndWaitUntilUpdated(double latitude,
 
   fake_latitude_ = latitude;
   fake_longitude_ = longitude;
-  ui_test_utils::OverrideGeolocation(latitude, longitude);
+
+  device::mojom::Geoposition position;
+  position.latitude = latitude;
+  position.longitude = longitude;
+  position.altitude = 0.;
+  position.accuracy = 0.;
+  position.timestamp = base::Time::Now();
+
+  DCHECK(fake_geolocation_);
+  fake_geolocation_->UpdateLocation(position);
 
   std::string result;
   if (!dom_message_queue.WaitForMessage(&result))
@@ -501,7 +525,10 @@ IN_PROC_BROWSER_TEST_F(GeolocationBrowserTest, Geoposition) {
 // detected in a scan: https://crbug.com/767300.
 #define MAYBE_UrlWithApiKey DISABLED_UrlWithApiKey
 #else
-#define MAYBE_UrlWithApiKey UrlWithApiKey
+#define MAYBE_UrlWithApiKey DISABLED_UrlWithApiKey
+// TODO(ke.he@intel.com): Move the UrlWithApiKey test to service_unittest.
+// This test is disabled because the FakeGeolocationContext which is used by
+// this GeolocationBrowserTest never calls the URLFetcher.
 #endif
 // Tests that Chrome makes a network geolocation request to the correct URL
 // including Google API key query param.
