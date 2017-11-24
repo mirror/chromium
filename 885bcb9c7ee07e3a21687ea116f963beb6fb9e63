@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "261dc3e8_4ddfbd9e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "I think this method should be removed from ThreadController. A ThreadController impl should just do this in its destructor.",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2602406f_cad5c9c3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "controls",
+      "range": {
+        "startLine": 69,
+        "startChar": 52,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38304f7e_6506af30",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "remove where",
+      "range": {
+        "startLine": 70,
+        "startChar": 14,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d92ab1_5dad07bc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "Sets the SingleThreadTaskRunner that will be returned by ThreadTaskRunnerHandle::Get() on the thread associated with this TaskQueueManager.",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 28
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a523f79_72ddd2c4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3275,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "base::MakeRefCounted\u003cbase::TestSimpleTaskRunner\u003e()",
+      "range": {
+        "startLine": 3275,
+        "startChar": 6,
+        "endLine": 3275,
+        "endChar": 38
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5f0bcb_332c8f22",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/create_task_queue_manager_for_test.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "Could be forward-declared.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 43
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf5ce52_0b80f8d0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/create_task_queue_manager_for_test.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "WithUnownedTickClockForTest ?\n\nsince the other function below could also take a SimpleTestTickClock as argument...",
+      "range": {
+        "startLine": 16,
+        "startChar": 56,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ea8ad4_ee0473af",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "I think this should be a DCHECK_EQ(message_loop_-\u003etask_runner()-\u003eBelongsToCurrentThread()), to match more closely the behavior of the production ThreadControllerImpl which has a SEQUENCE_CHECKER https://chromium-review.googlesource.com/c/chromium/src/+/763511/12/third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc#122\n\nIf tests don\u0027t pass with a DCHECK, at least add a TODO to make this a DCHECK in the future.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 52
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282a78c9_d72c3d1b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-24T18:26:08Z",
+      "side": 1,
+      "message": "Not useful. The default constructor does that.",
+      "range": {
+        "startLine": 48,
+        "startChar": 75,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "885bcb9c7ee07e3a21687ea116f963beb6fb9e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
