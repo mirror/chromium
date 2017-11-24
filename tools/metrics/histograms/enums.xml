@@ -17020,6 +17020,8 @@ Called by update_net_error_codes.py.-->
   <int value="2245" label="HTMLAnchorElementDownloadInSandboxWithUserGesture"/>
   <int value="2246"
       label="HTMLAnchorElementDownloadInSandboxWithoutUserGesture"/>
+  <int value="2247" label="DuplicatedAttribute"/>
+  <int value="2248" label="DuplicatedAttributeForExecutedScript"/>
 </enum>
 
 <enum name="FeedbackSource">
