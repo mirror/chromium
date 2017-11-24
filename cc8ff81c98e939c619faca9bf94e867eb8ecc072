@@ -16,6 +16,24 @@
       "revId": "cc8ff81c98e939c619faca9bf94e867eb8ecc072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "498ba604_309a9b48",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-24T00:19:53Z",
+      "side": 1,
+      "message": "Sorry, just realized I used the wrong terminology.  I would _define_ them in the header (not declare).",
+      "parentUuid": "e98ffa1b_6d5c6a7b",
+      "revId": "cc8ff81c98e939c619faca9bf94e867eb8ecc072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
