@@ -339,6 +339,11 @@ h2 {
   margin-left: -100%;
 }
 
+[dir='rtl'] .tabs li:nth-child(2) .tab-content {
+  margin-left: 0;
+  margin-right: -100%;
+}
+
 .selected .tab-content {
   display: block;
 }
@@ -415,6 +420,14 @@ h2 {
   #experiment-reset-all {
     font-size: 0.8em;
     padding: 2px 8px;
+  }
+
+  #flagsTemplate > .flex-container {
+    flex-direction: column;
+  }
+
+  #version {
+    text-align: initial;
   }
 
   .experiment-restart-button {
