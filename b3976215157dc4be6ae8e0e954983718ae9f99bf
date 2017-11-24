@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7381a16e_dea90125",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-24T19:39:33Z",
+      "side": 1,
+      "message": "CONTENT_SCROLLING is not accurate anymore since when wheel events are processed it doesn\u0027t necessarily mean that the content is scrolling. Maybe something like CONTENT_CONSUMED or CONTENT_PROCESSED?",
+      "range": {
+        "startLine": 162,
+        "startChar": 22,
+        "endLine": 162,
+        "endChar": 52
+      },
+      "revId": "b3976215157dc4be6ae8e0e954983718ae9f99bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03eefb6f_d5c9913a",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-24T19:39:33Z",
+      "side": 1,
+      "message": "If we return here when does the state change from content_scrolling to none?\n\nThe user first scrolls a page and the state goes to content_scrolling. Then he does the second scroll in the opposite direction to do a history navigation or pull to refresh. If no mousemove or keyboard event happens in between the state will still be content_scrolling, right?\n\nI think we need to reset the state on GSB or GSE even when it is equal to CONTENT_SCROLLING",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 17
+      },
+      "revId": "b3976215157dc4be6ae8e0e954983718ae9f99bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
