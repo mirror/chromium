@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163ee4df_325128b4",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-24T05:32:14Z",
+      "side": 1,
+      "message": "nit, doesn\u0027t have to be solved in this CL: does border-radius not have an entry in StylePropertyShorthand?",
+      "revId": "052344ca955ad283c1d35811e84ebfbef6267cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352f9980_7a887f9b",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 3533,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-24T05:32:14Z",
+      "side": 1,
+      "message": "Ditto here for border, do you know why this doesn\u0027t use StylePropertyShorthand?",
+      "revId": "052344ca955ad283c1d35811e84ebfbef6267cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

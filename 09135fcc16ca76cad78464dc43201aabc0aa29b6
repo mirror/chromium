@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "709ee6ed_e707720d",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-24T05:32:14Z",
+      "side": 1,
+      "message": "Eh, I still don\u0027t really like it, but I like being able to find them easily. /shrug, this is fine.",
+      "parentUuid": "03c454cd_c27f1c83",
+      "revId": "09135fcc16ca76cad78464dc43201aabc0aa29b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15cbbb78_b38d7257",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 6
