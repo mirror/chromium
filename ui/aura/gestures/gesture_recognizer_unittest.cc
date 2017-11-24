@@ -655,7 +655,7 @@ void SetTouchRadius(ui::TouchEvent* event, float radius_x, float radius_y) {
       event->pointer_details().tilt_x, event->pointer_details().tilt_y,
       event->pointer_details().tangential_pressure,
       event->pointer_details().twist);
-  event->set_pointer_details(details);
+  event->SetPointerDetailsForTest(details);
 }
 
 }  // namespace
