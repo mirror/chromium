@@ -69,6 +69,24 @@
       "revId": "558195893cadaf4673d59a3aa7c47503b6af4797",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf5e13d_db7ff10f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T22:16:29Z",
+      "side": 1,
+      "message": "Oh I see what you mean, we need to PassInteface before we jump to the IO thread. I still had it happening on the IO thread, fixed in the latest PS.",
+      "parentUuid": "54bcd9ac_7d3e88c6",
+      "revId": "558195893cadaf4673d59a3aa7c47503b6af4797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
