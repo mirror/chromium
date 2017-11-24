@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0751b91_1e4502e8",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ActivityWindowAndroid.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-24T15:15:06Z",
+      "side": 0,
+      "message": "Perhaps we can add a check here:\nif (activity instanceof ChromeActivity\n                    \u0026\u0026 ((ChromeActivity) activity).didFinishNativeInitialization()) {\n   logUMA...();\n}\n\nIf it works, then you don\u0027t need to revert the whole patch.",
+      "revId": "bb89a0deef6e61a98da76c588348f0e06395fab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
