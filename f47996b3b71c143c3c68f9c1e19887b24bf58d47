@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4088df1_0c10f521",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T04:46:40Z",
+      "side": 1,
+      "message": "perhaps ok for a follow up.... but ContentSettingImageModel::GetIcon() doesn\u0027t look very efficient. And UpdateImage is called for every content settings icon (even if it is currently hidden) each time the window becomes active or inactive. Perhaps in HostedAppButtonContainer::SetPaintAsActive() add a TODO to cache icons?",
+      "revId": "f47996b3b71c143c3c68f9c1e19887b24bf58d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2740b6b0_0e02a90d",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T04:46:40Z",
+      "side": 1,
+      "message": "Perhaps comment in here - ~\n\n// For hosted apps, the location bar is normally hidden and icons appear in the\n// window frame instead.\n\nAlso can this move into the `if (RefreshContentSettingViews())` above, or is that too scary?",
+      "revId": "f47996b3b71c143c3c68f9c1e19887b24bf58d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
