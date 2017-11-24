@@ -1,0 +1,6 @@
+include_rules = [
+  "+chrome/browser",
+  "+content/public/browser",
+  "+mojo",
+  "+services/service_manager",
+]
