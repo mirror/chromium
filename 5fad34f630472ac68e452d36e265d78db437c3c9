@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b58e5b11_9d434280",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T12:42:44Z",
+      "side": 1,
+      "message": "s/has/have\nor",
+      "range": {
+        "startLine": 30,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "5fad34f630472ac68e452d36e265d78db437c3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f0cd0a_d529a1f7",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T12:42:44Z",
+      "side": 1,
+      "message": "This comment is not related to the CL, but this enum was confusing to me when I was trying to understand the code.\n\nI think SigninStarted also represents a state when the promo view was used at least once. Also, it looks like UsedAtLeastOnce is used only once in the code when the sign-in is finished (either with success or error).\n\nI think this enum should be renamed to SigninFinished (and the command should be // Sign-in finished either with success or error). This can be done in a follow-up CL if you want.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "5fad34f630472ac68e452d36e265d78db437c3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b768dcc0_100d0923",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T12:42:44Z",
+      "side": 1,
+      "message": "It is not clear to me what |_isSigninPromoViewVisible| means, but if the view is removed then theoretically it is not visible anymore.\nMaybe add _isSigninPromoViewVisible \u003d NO (I\u0027m not sure though as I do not know the code)?",
+      "range": {
+        "startLine": 442,
+        "startChar": 8,
+        "endLine": 442,
+        "endChar": 31
+      },
+      "revId": "5fad34f630472ac68e452d36e265d78db437c3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ffe510_26729ccc",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T12:42:44Z",
+      "side": 1,
+      "message": "It looks like signinPromoViewCloseButtonWasTapped also checks DCHECK(_isSigninPromoViewVisible). Should the same be dchecked here?",
+      "range": {
+        "startLine": 542,
+        "startChar": 10,
+        "endLine": 542,
+        "endChar": 26
+      },
+      "revId": "5fad34f630472ac68e452d36e265d78db437c3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df3f105_5c170875",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T12:42:44Z",
+      "side": 1,
+      "message": "Ditto: DCHECK(_isSigninPromoViewVisible)?",
+      "range": {
+        "startLine": 554,
+        "startChar": 25,
+        "endLine": 554,
+        "endChar": 26
+      },
+      "revId": "5fad34f630472ac68e452d36e265d78db437c3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0e1b88_c9d5894a",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T12:42:44Z",
+      "side": 1,
+      "message": "Ditto: DCHECK(_isSigninPromoViewVisible)?",
+      "range": {
+        "startLine": 566,
+        "startChar": 9,
+        "endLine": 566,
+        "endChar": 25
+      },
+      "revId": "5fad34f630472ac68e452d36e265d78db437c3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
