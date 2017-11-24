@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a57dfdb1_c188957f",
+        "filename": "tools/cygprofile/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T15:42:37Z",
+      "side": 1,
+      "message": "why keeping it apart from the lightweight_cygprofile library?",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7587f126_4659ede8",
+        "filename": "tools/cygprofile/delayed_dumper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T15:42:37Z",
+      "side": 1,
+      "message": "Needs clarifying which logging this is about. Also it reads to me as disabling first, then waiting, which is not the case.",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410bb8e5_42572585",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T15:42:37Z",
+      "side": 1,
+      "message": "constexpr?",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 8
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e47efdb_2755427b",
+        "filename": "tools/cygprofile/lightweight_cygprofile.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T15:42:37Z",
+      "side": 1,
+      "message": "nit: plz move the for-testing function to go after the main exported ones.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389ee367_b5d605ad",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T15:42:37Z",
+      "side": 1,
+      "message": "our usual convention is to have unittests split from perftests. I think the main rationale is that unittests should be fast to run without listing them explicitly.\n\nIn our case I am suggesting to split this file into:\nlightweight_cygprofile_unittest.cc\nlightweight_cygprofile_perftest.cc\n\nwe have about 55 files that end with _perftest.cc",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53a9da6_90d8f00d",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T15:42:37Z",
+      "side": 1,
+      "message": "no defaults please",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992beeda_f2fef4dd",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T15:42:37Z",
+      "side": 1,
+      "message": "%zu for size_t, though not sure whether VStudio would appreciate it",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260b0b4b_2b2d190e",
+        "filename": "tools/cygprofile/lightweight_cygprofile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-24T15:42:37Z",
+      "side": 1,
+      "message": "You should name it RecordTheCostOfAddress. Oh wait. Parse failed.\n\nMaybe .. RunBenchmark?",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "dd056098bf34aaabf85c19ad25c9649a7ebd1955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
