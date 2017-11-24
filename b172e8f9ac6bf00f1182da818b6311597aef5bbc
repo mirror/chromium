@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "972a3b47_f12b2d3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T06:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0e49d4e_71e60d3e",
+      "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66fad1e5_1323f1ad",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "540e500a_853c1d21",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T06:32:11Z",
+      "side": 1,
+      "message": "It turns out recreating UploadDataStream isn\u0027t the right way to do things. URLRequest expects the UploadDataStream to be intact when it\u0027s informed of the redirect, since it checks it for UploadProgress which ultimately fires the XHR upload progress events. So if the UplaodDataStream is recreated it gets confused:\n\nURLRequest::Redirect\n  if (!final_upload_progress_.position() \u0026\u0026 upload_data_stream_)\n    final_upload_progress_ \u003d upload_data_stream_-\u003eGetUploadProgress();  // this is empty if we recreate the stream\n\nInstead, UploadDataStream has an Init method which is supposed to rewind the stream. So I changed the patch to do the rewinding in Init, which ends up meaning that we don\u0027t need to keep |body_| around for recreating.",
+      "parentUuid": "66fad1e5_1323f1ad",
+      "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b6eb996_5b5390ca",
         "filename": "content/renderer/loader/web_url_request_util.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-22T08:18:55Z",
       "side": 1,
       "message": "Would this error go away if we re-bind this blob ptr on the task runner?",
+      "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035bd1c5_adf4ccfc",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T06:32:11Z",
+      "side": 1,
+      "message": "Good idea. Looks good. Thanks.",
+      "parentUuid": "8b6eb996_5b5390ca",
       "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +136,24 @@
       "side": 1,
       "message": "Currently storage doesn\u0027t explicitly depend on services/network while this file makes it, if we do so storage/common/BUILD.gn should explicitly list it as a dependency.",
       "parentUuid": "49c299fb_11ea807e",
+      "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58db3f0b_8ab27e3e",
+        "filename": "storage/common/data_element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T06:32:11Z",
+      "side": 1,
+      "message": "Oh somehow I thought DEPS was enough and it was another tricky target issue. Done. Thanks.",
+      "parentUuid": "19615958_7a41bd77",
       "revId": "b172e8f9ac6bf00f1182da818b6311597aef5bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
