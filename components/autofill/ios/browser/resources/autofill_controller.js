@@ -1114,6 +1114,11 @@ __gCrWeb.autofill.findChildTextInner = function(node, depth, divsToSkip) {
     }
   }
 
+  if (skip) {
+    return __gCrWeb.autofill.findChildTextInner(node.nextSibling, depth - 1,
+                                                divsToSkip);
+  }
+
   // Extract the text exactly at this node.
   var nodeText = __gCrWeb.autofill.nodeValue(node);
   if (node.nodeType === Node.TEXT_NODE && !nodeText) {
@@ -1601,6 +1606,33 @@ __gCrWeb.autofill.isTraversableContainerElement = function(node) {
 
 /**
  * Helper for |InferLabelForElement()| that infers a label, if possible, from
+ * an enclosing label.
+ * e.g. <label>Some Text<span><input ...></span></label>
+ *
+ * It is based on the logic in
+ *    string16 InferLabelFromEnclosingLabel(
+ *        const WebFormControlElement& element)
+ * in chromium/src/components/autofill/content/renderer/form_autofill_util.cc.
+ *
+ * @param {FormControlElement} element An element to examine.
+ * @return {string} The label of element.
+ */
+__gCrWeb.autofill.inferLabelFromEnclosingLabel = function(element) {
+  if (!element) {
+    return '';
+  }
+  var node = element.parentNode;
+  while (node && !__gCrWeb.autofill.hasTagName(node, 'label')) {
+    node = node.parentNode;
+  }
+  if (node) {
+    return __gCrWeb.autofill.findChildText(node);
+  }
+  return '';
+}
+
+/**
+ * Helper for |InferLabelForElement()| that infers a label, if possible, from
  * a surrounding div table,
  * e.g. <div>Some Text<span><input ...></span></div>
  * e.g. <div>Some Text</div><div><input ...></div>
@@ -1786,7 +1818,9 @@ __gCrWeb.autofill.inferLabelForElement = function(element) {
     }
 
     seenTagNames[tagName] = true;
-    if (tagName === "DIV") {
+    if (tagName == "LABEL") {
+      inferredLabel = __gCrWeb.autofill.inferLabelFromEnclosingLabel(element);
+    } else if (tagName === "DIV") {
       inferredLabel = __gCrWeb.autofill.inferLabelFromDivTable(element);
     } else if (tagName === "TD") {
       inferredLabel = __gCrWeb.autofill.inferLabelFromTableColumn(element);
