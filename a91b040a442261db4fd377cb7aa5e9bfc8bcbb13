@@ -25,6 +25,121 @@
     },
     {
       "key": {
+        "uuid": "f8290379_09c2a5b9",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T14:35:16Z",
+      "side": 1,
+      "message": "I really like this test, could you do it for the 2 other restrictions too?",
+      "range": {
+        "startLine": 5722,
+        "startChar": 28,
+        "endLine": 5722,
+        "endChar": 44
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d58e7d1_1e6c7427",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 6123,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T14:35:16Z",
+      "side": 1,
+      "message": "enabled?",
+      "range": {
+        "startLine": 6123,
+        "startChar": 70,
+        "endLine": 6123,
+        "endChar": 78
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3296cac_741a66ab",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 6124,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T14:35:16Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 6124,
+        "startChar": 3,
+        "endLine": 6124,
+        "endChar": 42
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78becdcd_3fa3be3d",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T14:35:16Z",
+      "side": 1,
+      "message": "Should this be done in a different change?",
+      "range": {
+        "startLine": 322,
+        "startChar": 32,
+        "endLine": 322,
+        "endChar": 52
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86947ac9_1584342f",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T14:35:16Z",
+      "side": 1,
+      "message": "nit: should",
+      "range": {
+        "startLine": 106,
+        "startChar": 55,
+        "endLine": 106,
+        "endChar": 61
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8c00243_1f9e6f04",
         "filename": "components/test/data/autofill/heuristics/output/017_checkout_advanceautoparts.com.out",
         "patchSetId": 25
