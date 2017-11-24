@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67145b4b_46dbfe66",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T04:30:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we should put this before line 133 or after line 144 though.",
+      "revId": "68452b284a511d702632b9172b44827ae6013cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
