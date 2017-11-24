@@ -100,7 +100,7 @@ CharacterRange CachingWordShaper::GetCharacterRange(const TextRun& run,
   ShapeResultBuffer buffer;
   float total_width = ShapeResultsForRun(GetShapeCache(), &font_, run, &buffer);
 
-  return buffer.GetCharacterRange(run.Direction(), total_width, from, to);
+  return buffer.GetCharacterRange(run, total_width, from, to);
 }
 
 Vector<CharacterRange> CachingWordShaper::IndividualCharacterRanges(
