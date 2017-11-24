@@ -70,6 +70,30 @@
       "revId": "777b6b1fcebe952459b75bb178cdfe471898fead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a1373da_ee659ace",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/trusted-click.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-24T14:51:59Z",
+      "side": 1,
+      "message": "In this particular case, yes.  A click anywhere bubbles to the document which contains the \"click\" listener (added above).",
+      "parentUuid": "a1195833_7bcf374e",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "777b6b1fcebe952459b75bb178cdfe471898fead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
