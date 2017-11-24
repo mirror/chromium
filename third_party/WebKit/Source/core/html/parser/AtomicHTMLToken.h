@@ -64,6 +64,8 @@ class CORE_EXPORT AtomicHTMLToken {
     return self_closing_;
   }
 
+  bool HasDuplicateAttribute() const { return duplicate_attribute_; }
+
   Attribute* GetAttributeItem(const QualifiedName& attribute_name) {
     DCHECK(UsesAttributes());
     return FindAttributeInVector(attributes_, attribute_name);
@@ -101,7 +103,8 @@ class CORE_EXPORT AtomicHTMLToken {
     return doctype_data_->system_identifier_;
   }
 
-  explicit AtomicHTMLToken(HTMLToken& token) : type_(token.GetType()) {
+  explicit AtomicHTMLToken(HTMLToken& token)
+      : type_(token.GetType()), duplicate_attribute_(false) {
     switch (type_) {
       case HTMLToken::kUninitialized:
         NOTREACHED();
@@ -134,7 +137,7 @@ class CORE_EXPORT AtomicHTMLToken {
   }
 
   explicit AtomicHTMLToken(const CompactHTMLToken& token)
-      : type_(token.GetType()) {
+      : type_(token.GetType()), duplicate_attribute_(false) {
     switch (type_) {
       case HTMLToken::kUninitialized:
         NOTREACHED();
@@ -157,9 +160,12 @@ class CORE_EXPORT AtomicHTMLToken {
           QualifiedName name(g_null_atom, AtomicString(attribute.GetName()),
                              g_null_atom);
           // FIXME: This is N^2 for the number of attributes.
-          if (!FindAttributeInVector(attributes_, name))
+          if (!FindAttributeInVector(attributes_, name)) {
             attributes_.push_back(
                 Attribute(name, AtomicString(attribute.Value())));
+          } else {
+            duplicate_attribute_ = true;
+          }
         }
       // Fall through!
       case HTMLToken::kEndTag:
@@ -174,7 +180,7 @@ class CORE_EXPORT AtomicHTMLToken {
   }
 
   explicit AtomicHTMLToken(HTMLToken::TokenType type)
-      : type_(type), self_closing_(false) {}
+      : type_(type), self_closing_(false), duplicate_attribute_(false) {}
 
   AtomicHTMLToken(HTMLToken::TokenType type,
                   const AtomicString& name,
@@ -182,6 +188,7 @@ class CORE_EXPORT AtomicHTMLToken {
       : type_(type),
         name_(name),
         self_closing_(false),
+        duplicate_attribute_(false),
         attributes_(attributes) {
     DCHECK(UsesName());
   }
@@ -212,6 +219,8 @@ class CORE_EXPORT AtomicHTMLToken {
   // For StartTag and EndTag
   bool self_closing_;
 
+  bool duplicate_attribute_;
+
   Vector<Attribute> attributes_;
 
   DISALLOW_COPY_AND_ASSIGN(AtomicHTMLToken);
@@ -241,8 +250,11 @@ inline void AtomicHTMLToken::InitializeAttributes(
     }
     const QualifiedName& name = NameForAttribute(attribute);
     // FIXME: This is N^2 for the number of attributes.
-    if (!FindAttributeInVector(attributes_, name))
+    if (!FindAttributeInVector(attributes_, name)) {
       attributes_.push_back(Attribute(name, value));
+    } else {
+      duplicate_attribute_ = true;
+    }
   }
 }
 
