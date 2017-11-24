@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "7cdfcd0c_2e021bd2",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-24T11:43:01Z",
+      "side": 1,
+      "message": "nitpick: mime_type.\n\nOr just eliminate that variable, if it\u0027s only used once  and it\u0027s name doesn\u0027t add much info.",
+      "range": {
+        "startLine": 315,
+        "startChar": 43,
+        "endLine": 315,
+        "endChar": 69
+      },
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce1e4fa_7fcf9ef0",
         "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
         "patchSetId": 1
@@ -64,6 +87,24 @@
       "writtenOn": "2017-11-24T10:08:47Z",
       "side": 1,
       "message": "From what I can tell this only does the nosniff checks for style currently. Maybe add another TODO?",
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625fa6a9_3feb9f94",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-24T11:43:01Z",
+      "side": 1,
+      "message": "Not sure. Since it\u0027s the CheckResponseNosniff that decides what to check, and the TODO there indicates that it should check more stuff in the future, wouldn\u0027t that be the place for additional comments/TODOs?",
+      "parentUuid": "b093595b_762c0517",
       "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
