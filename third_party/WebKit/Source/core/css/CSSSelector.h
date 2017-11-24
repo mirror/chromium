@@ -262,6 +262,8 @@ class CORE_EXPORT CSSSelector {
     return is_last_in_tag_history_ ? 0 : const_cast<CSSSelector*>(this + 1);
   }
 
+  static universal_selector_atom = g_null_atom;
+  static AtomicString UniversalSelectorAtom() { return g_null_atom; }
   const QualifiedName& TagQName() const;
   const AtomicString& Value() const;
   const AtomicString& SerializingValue() const;

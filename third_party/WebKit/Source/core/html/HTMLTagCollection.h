@@ -58,7 +58,7 @@ DEFINE_TYPE_CASTS(HTMLTagCollection,
 
 inline bool HTMLTagCollection::ElementMatches(
     const Element& test_element) const {
-  if (qualified_name_ == g_star_atom)
+  if (qualified_name_ == g_null_atom)
     return true;
   if (test_element.IsHTMLElement())
     return lowered_qualified_name_ == test_element.TagQName().ToString();
