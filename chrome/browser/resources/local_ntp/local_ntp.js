@@ -17,6 +17,15 @@ function LocalNTP() {
 
 
 /**
+ * Whether the most visited tiles have finished loading, i.e. we've received the
+ * 'loaded' postMessage from the iframe. Used by tests to detect that loading
+ * has completed.
+ * @type {boolean}
+ */
+var tilesAreLoaded = false;
+
+
+/**
  * Alias for document.getElementById.
  * @param {string} id The ID of the element to find.
  * @return {HTMLElement} The found element or null if not found.
@@ -546,6 +555,7 @@ function handlePostMessage(event) {
   var cmd = event.data.cmd;
   var args = event.data;
   if (cmd == 'loaded') {
+    tilesAreLoaded = true;
     if (configData.isGooglePage && !$('one-google-loader')) {
       // Load the OneGoogleBar script. It'll create a global variable name "og"
       // which is a dict corresponding to the native OneGoogleBarData type.
@@ -969,10 +979,10 @@ var applyDoodleMetadata = function(metadata) {
 
 
 return {
-  init: init,  // Exposed for testing.
+  tilesAreLoaded: tilesAreLoaded,  // Exposed for testing.
+  init: init,                      // Exposed for testing.
   listen: listen
 };
-
 }
 
 if (!window.localNTPUnitTest) {
