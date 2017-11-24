@@ -29,8 +29,8 @@ crbug.com/506754 http/tests/serviceworker/chromium/window-close-during-registrat
 crbug.com/506754 virtual/mojo-loading/http/tests/serviceworker/chromium/window-close-during-registration.html [ Leak ]
 crbug.com/506754 virtual/service-worker-script-streaming/http/tests/serviceworker/chromium/window-close-during-registration.html [ Leak ]
 
-crbug.com/664874 http/tests/xmlhttprequest/workers/xmlhttprequest-allowed-with-disabled-web-security.html [ Leak ]
-crbug.com/664874 virtual/mojo-loading/http/tests/xmlhttprequest/workers/xmlhttprequest-allowed-with-disabled-web-security.html [ Leak ]
+#crbug.com/664874 http/tests/xmlhttprequest/workers/xmlhttprequest-allowed-with-disabled-web-security.html [ Leak ]
+#crbug.com/664874 virtual/mojo-loading/http/tests/xmlhttprequest/workers/xmlhttprequest-allowed-with-disabled-web-security.html [ Leak ]
 
 crbug.com/672740 http/tests/security/mixedContent/websocket/insecure-websocket-in-secure-page-worker-allowed.html [ Leak Pass ]
 crbug.com/672740 virtual/mojo-loading/http/tests/security/mixedContent/websocket/insecure-websocket-in-secure-page-worker-allowed.html [ Leak Pass ]
