@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b1a5fc_9815e2a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T18:21:40Z",
+      "side": 1,
+      "message": "Should this mention that the supporting InstallOriginTrialFeaturesOnGlobal methods are also removed?",
+      "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa5a722_2b7966ca",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T18:21:40Z",
+      "side": 1,
+      "message": "Maybe the dummy v8::Object and v8::Function should be commented with something like \"/* unused */\" here, to make it clear that we don\u0027t need them to install features on the global? (Same in WorkerOrWorkletScriptController.cpp)",
+      "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cdff2f_eeae270e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T18:21:40Z",
+      "side": 1,
+      "message": "It\u0027s not part of this CL, but I\u0027m curious to know if there\u0027s a reason that WrapperTypeInfo::InstallConditionalFeatures doesn\u0027t take a ScriptState, and needs a separate v8::Context and DOMWrapperWorld instead?",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 22
+      },
+      "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69871e5_cf84cf09",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T18:21:40Z",
+      "side": 1,
+      "message": "Is there a reason that attributes are \"conditionally_enabled_attributes\", while methods are just \"conditional_methods\"? It looks like the choice of names might be expressing a subtle difference between the two, but I expect that they are actually the same.",
+      "range": {
+        "startLine": 447,
+        "startChar": 0,
+        "endLine": 447,
+        "endChar": 78
+      },
+      "revId": "b552a348bbe08c626180bd0b36f01245516f0279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
