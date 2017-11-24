@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10471d76_f7b04979",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2084,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-24T16:05:30Z",
+      "side": 1,
+      "message": "I think neither time-stamp nor type matters, so why not skip setting these fields?",
+      "revId": "ffbdded51ca5169b9229f66b3192db2b8fa5d6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de80ee8_96903ef5",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-24T16:05:30Z",
+      "side": 1,
+      "message": "Add a dcheck that the event is not of the new type.\n\nSame for FlushEvents() and any other places where an event is going *out of PEM*.  We don\u0027t want to miss type inequality checks like this:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/TouchEventManager.cpp?rcl\u003dec2216ae09e309b874ec698a2beb427395f4073b\u0026l\u003d416",
+      "revId": "ffbdded51ca5169b9229f66b3192db2b8fa5d6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e746770f_2b00749f",
+        "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-24T16:05:30Z",
+      "side": 1,
+      "message": "I think we should replace this event with the new event very soon: they are the same event.  We needs some upstream work though, because of IsTouchEventType-like checks routes this event to touch handler codes, like this:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp?rcl\u003d454ce26d2d44131a13cf1d6d56de63e4da3cf919\u0026l\u003d209\n\nLet\u0027s do it separately: add a TODO and/or file a bug for now.",
+      "revId": "ffbdded51ca5169b9229f66b3192db2b8fa5d6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff34eba_63e3b9dd",
+        "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-24T16:05:30Z",
+      "side": 1,
+      "message": "I got confused with the two very similar terms \"cancelled\" vs \"interrupted\".  Then after our discussion, I am convinced we need two types of events into Blink anyways (as we have TouchCancel and TouchScrollStarted today) to perform different sets of tasks.\n\nLet\u0027s make it clear through a completely different event name, plus a comment that it\u0027s an internal event to notify Blink etc.  Moreover, this event should never reach beyond PEM, may be it worth commenting about.\n\nRe possible alternate names, what about PointerTouchAction or PointerTouchActionStarted or PointerActionStarted?  I slightly prefer the second one but it\u0027s too long!",
+      "range": {
+        "startLine": 189,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 23
+      },
+      "revId": "ffbdded51ca5169b9229f66b3192db2b8fa5d6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
