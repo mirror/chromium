@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "ebeb5778_5c4dd34f",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-24T00:30:44Z",
+      "side": 1,
+      "message": "I looks like it would also be correct to call ResetBindings in SendBannerPromptRequest in the non-experimental case.\n\nWould you be OK with that? In conjunction with that I would delete the\n\n  binding_.Close();\n\nin RequestAppBanner.",
+      "parentUuid": "0cfc2d09_a6f00266",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94a7a79d_4b07d608",
         "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
         "patchSetId": 1
