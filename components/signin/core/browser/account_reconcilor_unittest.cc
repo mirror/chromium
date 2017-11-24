@@ -67,6 +67,7 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
             client,
             cookie_manager_service,
             CreateAccountReconcilorDelegate(client,
+                                            token_service,
                                             signin_manager,
                                             account_consistency)) {
     Initialize(false /* start_reconcile_if_tokens_available */);
@@ -75,6 +76,7 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
   static std::unique_ptr<signin::AccountReconcilorDelegate>
   CreateAccountReconcilorDelegate(
       SigninClient* signin_client,
+      ProfileOAuth2TokenService* token_service,
       SigninManagerBase* signin_manager,
       signin::AccountConsistencyMethod account_consistency) {
     switch (account_consistency) {
@@ -89,7 +91,7 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
       case signin::AccountConsistencyMethod::kDice:
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
         return std::make_unique<signin::DiceAccountReconcilorDelegate>(
-            signin_client->GetPrefs(), false);
+            token_service, signin_client->GetPrefs(), false);
 #else
         NOTREACHED();
         return nullptr;
@@ -982,6 +984,49 @@ TEST_F(AccountReconcilorTest, DiceNoMigrationAfterReconcile) {
   ASSERT_EQ(signin_metrics::ACCOUNT_RECONCILOR_OK, reconcilor->GetState());
 
   // Migration did not happen.
+  EXPECT_FALSE(
+      dice_delegate->IsReadyForDiceMigration(false /* is_new_profile */));
+  EXPECT_FALSE(signin::IsDiceEnabledForProfile(pref_service()));
+  EXPECT_FALSE(dice_delegate->IsAccountConsistencyEnforced());
+}
+
+// Tests that secondary refresh tokens are cleared when cookie is empty during
+// Dice migration.
+TEST_F(AccountReconcilorTest, MigrationClearSecondaryTokens) {
+  // Enable Dice migration.
+  SetAccountConsistency(signin::AccountConsistencyMethod::kDiceMigration);
+
+  // Add a tokens in Chrome but no Gaia cookies.
+  const std::string account_id_1 =
+      ConnectProfileToAccount("12345", "user@gmail.com");
+  const std::string account_id_2 =
+      PickAccountIdForAccount("67890", "other@gmail.com");
+  token_service()->UpdateCredentials(account_id_2, "refresh_token");
+  cookie_manager_service()->SetListAccountsResponseNoAccounts();
+  ASSERT_TRUE(token_service()->RefreshTokenIsAvailable(account_id_1));
+  ASSERT_TRUE(token_service()->RefreshTokenIsAvailable(account_id_2));
+
+  // Reconcile should revoke the secondary account.
+  AccountReconcilor* reconcilor = GetMockReconcilor();
+  EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(account_id_1));
+  EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(account_id_2));
+  signin::DiceAccountReconcilorDelegate* dice_delegate =
+      static_cast<signin::DiceAccountReconcilorDelegate*>(
+          reconcilor->delegate_.get());
+  reconcilor->StartReconcile();
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(reconcilor->is_reconcile_started_);
+  SimulateAddAccountToCookieCompleted(reconcilor, account_id_1,
+                                      GoogleServiceAuthError::AuthErrorNone());
+  SimulateAddAccountToCookieCompleted(reconcilor, account_id_2,
+                                      GoogleServiceAuthError::AuthErrorNone());
+  ASSERT_FALSE(reconcilor->is_reconcile_started_);
+  ASSERT_EQ(signin_metrics::ACCOUNT_RECONCILOR_OK, reconcilor->GetState());
+
+  EXPECT_TRUE(token_service()->RefreshTokenIsAvailable(account_id_1));
+  EXPECT_FALSE(token_service()->RefreshTokenIsAvailable(account_id_2));
+
+  // Profile was not migrated.
   EXPECT_FALSE(
       dice_delegate->IsReadyForDiceMigration(false /* is_new_profile */));
   EXPECT_FALSE(signin::IsDiceEnabledForProfile(pref_service()));

@@ -12,6 +12,7 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
 
 namespace signin {
 
@@ -38,9 +39,11 @@ enum class DiceMigrationStatus {
 }  // namespace
 
 DiceAccountReconcilorDelegate::DiceAccountReconcilorDelegate(
+    ProfileOAuth2TokenService* token_service,
     PrefService* user_prefs,
     bool is_new_profile)
-    : user_prefs_(user_prefs) {
+    : token_service_(token_service), user_prefs_(user_prefs) {
+  DCHECK(token_service_);
   DCHECK(user_prefs_);
   bool is_ready_for_dice = IsReadyForDiceMigration(is_new_profile);
   if (is_ready_for_dice && IsDiceMigrationEnabled()) {
@@ -153,6 +156,23 @@ std::string DiceAccountReconcilorDelegate::GetFirstGaiaAccountForReconcile(
   // Changing the first Gaia account while Chrome is running would be
   // confusing for the user. Logout everything.
   return std::string();
+}
+
+void DiceAccountReconcilorDelegate::OnReconcileStarted(
+    const std::vector<std::string>& chrome_accounts,
+    const std::vector<gaia::ListedAccount>& gaia_accounts,
+    const std::string& primary_account) {
+  // During the Dice migration step, before Dice is actually enabled, chrome
+  // tokens must be cleared when the cookies are cleared.
+  if (signin::IsDicePrepareMigrationEnabled() &&
+      !signin::IsDiceEnabledForProfile(user_prefs_) && gaia_accounts.empty()) {
+    for (const std::string& account : chrome_accounts) {
+      if (account != primary_account) {
+        VLOG(1) << "Revoking token for " << account;
+        token_service_->RevokeCredentials(account);
+      }
+    }
+  }
 }
 
 void DiceAccountReconcilorDelegate::OnReconcileFinished(

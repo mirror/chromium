@@ -85,6 +85,7 @@ AccountReconcilorFactory::CreateAccountReconcilorDelegate(Profile* profile) {
     case signin::AccountConsistencyMethod::kDice:
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
       delegate = std::make_unique<signin::DiceAccountReconcilorDelegate>(
+          ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
           profile->GetPrefs(), profile->IsNewProfile());
 #else
       NOTREACHED();

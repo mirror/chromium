@@ -41,6 +41,12 @@ class AccountReconcilorDelegate {
       const std::string& primary_account,
       bool first_execution) const;
 
+  // Called when reconcile has started.
+  virtual void OnReconcileStarted(
+      const std::vector<std::string>& chrome_accounts,
+      const std::vector<gaia::ListedAccount>& gaia_accounts,
+      const std::string& primary_account) {}
+
   // Called when reconcile is finished.
   virtual void OnReconcileFinished(const std::string& first_account,
                                    bool reconcile_is_noop) {}
