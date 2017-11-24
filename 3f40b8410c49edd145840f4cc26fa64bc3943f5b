@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c3493617_af89dd33",
+        "filename": "components/signin/core/browser/profile_management_switches.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T09:48:18Z",
+      "side": 1,
+      "message": "I think LazyInstance/Singleton is bad, because it has a lot of overhead (thread safety).\n\nGoing with a local static.",
+      "parentUuid": "396153f7_9fc283a2",
+      "range": {
+        "startLine": 192,
+        "startChar": 70,
+        "endLine": 192,
+        "endChar": 0
+      },
+      "revId": "3f40b8410c49edd145840f4cc26fa64bc3943f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ecf461_42a84fe7",
         "filename": "components/signin/core/browser/profile_management_switches.h",
         "patchSetId": 8
@@ -92,6 +116,30 @@
       "revId": "3f40b8410c49edd145840f4cc26fa64bc3943f5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23741549_03b54dae",
+        "filename": "components/signin/core/browser/profile_management_switches.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T09:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5ecf461_42a84fe7",
+      "range": {
+        "startLine": 131,
+        "startChar": 64,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "3f40b8410c49edd145840f4cc26fa64bc3943f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
