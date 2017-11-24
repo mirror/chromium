@@ -254,8 +254,9 @@ void Surface::ActivatePendingFrame() {
 // A frame is activated if all its Surface ID dependences are active or a
 // deadline has hit and the frame was forcibly activated.
 void Surface::ActivateFrame(FrameData frame_data) {
-  TRACE_EVENT1("viz", "Surface::ActivateFrame", "FrameSinkId",
-               surface_id().frame_sink_id().ToString());
+  TRACE_EVENT2("viz", "Surface::ActivateFrame", "FrameSinkId",
+               surface_id().frame_sink_id().ToString(), "SequenceNumber",
+               frame_data.frame.metadata.begin_frame_ack.sequence_number);
   deadline_.Cancel();
 
   // Save root pass copy requests.

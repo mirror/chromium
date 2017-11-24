@@ -31,6 +31,7 @@ class VIZ_COMMON_EXPORT CompositorFrame {
   CompositorFrame& operator=(CompositorFrame&& other);
 
   float device_scale_factor() const { return metadata.device_scale_factor; }
+  bool low_latency() const { return metadata.low_latency; }
 
   const gfx::Size& size_in_pixels() const {
     DCHECK(!render_pass_list.empty());

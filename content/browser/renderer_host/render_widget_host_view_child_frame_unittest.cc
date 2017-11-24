@@ -225,7 +225,8 @@ TEST_F(RenderWidgetHostViewChildFrameTest, SwapCompositorFrame) {
 
     // Surface ID should have been passed to FrameConnectorDelegate to
     // be sent to the embedding renderer.
-    EXPECT_EQ(viz::SurfaceInfo(id, scale_factor, view_size),
+    constexpr bool low_latency = false;
+    EXPECT_EQ(viz::SurfaceInfo(id, scale_factor, view_size, low_latency),
               test_frame_connector_->last_surface_info_);
   }
 }

@@ -138,6 +138,10 @@ struct StructTraits<viz::mojom::CompositorFrameMetadataDataView,
     return metadata.presentation_token;
   }
 
+  static bool low_latency(const viz::CompositorFrameMetadata& metadata) {
+    return metadata.low_latency;
+  }
+
   static bool Read(viz::mojom::CompositorFrameMetadataDataView data,
                    viz::CompositorFrameMetadata* out);
 };
