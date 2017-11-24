@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.text.TextUtils;
 
 import org.chromium.base.annotations.CalledByNative;
@@ -124,6 +125,7 @@ public class BuildInfo {
         return "eng".equals(Build.TYPE) || "userdebug".equals(Build.TYPE);
     }
 
+    // Begin:BuildCompat O,OMR1,P
     /**
      * @return Whether the current device is running Android O release or newer.
      *
@@ -131,6 +133,7 @@ public class BuildInfo {
      */
     @Deprecated
     public static boolean isAtLeastO() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+        return VERSION.SDK_INT >= Build.VERSION_CODES.O;
     }
+    // End:BuildCompat
 }
