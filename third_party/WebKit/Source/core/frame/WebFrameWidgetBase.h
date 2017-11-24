@@ -111,6 +111,12 @@ class CORE_EXPORT WebFrameWidgetBase
   // Image decode functionality.
   void RequestDecode(const PaintImage&, WTF::Function<void(bool)> callback);
 
+  // This method returns the focused frame belonging to this WebWidget, that
+  // is, a focused frame with the same local root as the one corresponding
+  // to this widget. It will return nullptr if no frame is focused or, the
+  // focused frame has a different local root.
+  LocalFrame* FocusedLocalFrameInWidget() const;
+
   virtual void Trace(blink::Visitor*);
 
  protected:
@@ -158,7 +164,6 @@ class CORE_EXPORT WebFrameWidgetBase
   WebGestureEvent CreateGestureScrollEventFromFling(WebInputEvent::Type,
                                                     WebGestureDevice) const;
   void CancelDrag();
-  LocalFrame* FocusedLocalFrameInWidget() const;
 
   std::unique_ptr<WebActiveGestureAnimation> gesture_animation_;
   WebPoint position_on_fling_start_;
