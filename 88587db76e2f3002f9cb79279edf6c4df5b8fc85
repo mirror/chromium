@@ -22,6 +22,30 @@
       "revId": "88587db76e2f3002f9cb79279edf6c4df5b8fc85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8167d369_42420562",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T10:44:46Z",
+      "side": 1,
+      "message": "I think the latter is preferrable.",
+      "parentUuid": "b6bc07d2_d188dbf1",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 31
+      },
+      "revId": "88587db76e2f3002f9cb79279edf6c4df5b8fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
