@@ -5,6 +5,7 @@
 package org.chromium.webapk.lib.runtime_library;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Binder;
@@ -20,8 +21,6 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
 
     public static final String KEY_SMALL_ICON_ID = "small_icon_id";
     public static final String KEY_HOST_BROWSER_UID = "host_browser_uid";
-
-    private static final String TAG = "WebApkServiceImpl";
 
     private final Context mContext;
 
@@ -63,6 +62,7 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
         return mSmallIconId;
     }
 
+    @SuppressWarnings("NewApi")
     @Override
     public void notifyNotification(String platformTag, int platformID, Notification notification) {
         getNotificationManager().notify(platformTag, platformID, notification);
@@ -78,7 +78,30 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
         return NotificationManagerCompat.from(mContext).areNotificationsEnabled();
     }
 
+    @SuppressWarnings("NewApi")
+    @Override
+    public void notifyNotificationWithChannel(
+            String platformTag, int platformID, Notification notification, String channelName) {
+        NotificationManager manager = getNotificationManager();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            // The channel id shouldn't be empty since Chrome always sets the channel id for a
+            // notification when running on Android O+ devices.
+            ensureNotificationChannelExists(notification.getChannelId(), channelName);
+        }
+        manager.notify(platformTag, platformID, notification);
+    }
+
     private NotificationManager getNotificationManager() {
         return (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    @SuppressWarnings("NewApi")
+    /** Creates a WebAPK notification channel on Android O+ if one does not exist. */
+    private void ensureNotificationChannelExists(String channelId, String channelName) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) return;
+
+        NotificationChannel channel = new NotificationChannel(
+                channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+        getNotificationManager().createNotificationChannel(channel);
     }
 }
