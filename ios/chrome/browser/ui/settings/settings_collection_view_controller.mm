@@ -336,13 +336,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(_browserState);
   if (!authService->IsAuthenticated()) {
-    if (!_hasRecordedSigninImpression) {
-      // Once the Settings are open, this button impression will at most be
-      // recorded once until they are closed.
-      base::RecordAction(
-          base::UserMetricsAction("Signin_Impression_FromSettings"));
-      _hasRecordedSigninImpression = YES;
-    }
     if ([SigninPromoViewMediator
             shouldDisplaySigninPromoViewWithAccessPoint:
                 signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS
@@ -362,6 +355,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     [model addItem:[self signInTextItem]
         toSectionWithIdentifier:SectionIdentifierSignIn];
   } else {
+    _hasRecordedSigninImpression = NO;
     [_signinPromoViewMediator signinPromoViewRemoved];
     _signinPromoViewMediator = nil;
     [model addItem:[self accountCellItem]
@@ -448,6 +442,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
         [_signinPromoViewMediator createConfigurator];
     [_signinPromoViewMediator signinPromoViewVisible];
     return signinPromoItem;
+  }
+  if (!_hasRecordedSigninImpression) {
+    // Once the Settings are open, this button impression will at most be
+    // recorded once until they are closed.
+    base::RecordAction(
+        base::UserMetricsAction("Signin_Impression_FromSettings"));
+    _hasRecordedSigninImpression = YES;
   }
   AccountSignInItem* signInTextItem =
       [[AccountSignInItem alloc] initWithType:ItemTypeSignInButton];
@@ -1237,6 +1238,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)signinPromoViewMediatorCloseButtonWasTapped:
     (SigninPromoViewMediator*)mediator {
   [self reloadData];
+}
+
+- (void)signinDidFinishWithSuccess:(BOOL)succeeded {
+  // The sign-in is done. The sign-in promo cell or account cell can be
+  // reloaded.
+  if (!_settingsHasBeenDismissed && succeeded)
+    [self reloadData];
 }
 
 @end

@@ -258,7 +258,7 @@ TEST_F(SigninPromoViewMediatorTest, SigninPromoViewStateSignedin) {
   EXPECT_EQ(ios::SigninPromoViewState::UsedAtLeastOnce,
             mediator_.signinPromoViewState);
   EXPECT_NE(nil, (id)completion);
-  OCMExpect([consumer_ signinDidFinish]);
+  OCMExpect([consumer_ signinDidFinishWithSuccess:YES]);
   completion(YES);
   EXPECT_FALSE(mediator_.isSigninInProgress);
   EXPECT_EQ(ios::SigninPromoViewState::UsedAtLeastOnce,
