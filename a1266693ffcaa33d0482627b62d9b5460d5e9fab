@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42165ba9_300888e5",
+        "filename": "content/common/child_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-24T01:32:10Z",
+      "side": 1,
+      "message": "+jam, I\u0027m curious if you know why ChildProcessHostImpl / ChildProcessHost are in content/common? I would have expected this to be browser-process specific.",
+      "revId": "a1266693ffcaa33d0482627b62d9b5460d5e9fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9953301_51bb1f45",
+        "filename": "mojo/common/logfont_win.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-24T01:32:10Z",
+      "side": 1,
+      "message": "We\u0027ll still be adding a Mojo struct and typemapping this at a later date, I assume?",
+      "revId": "a1266693ffcaa33d0482627b62d9b5460d5e9fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
