@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5312c25c_728176ab",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T06:30:58Z",
+      "side": 1,
+      "message": "Can we add DCHECK(!prototype_template.IsEmpty()) instead?",
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a389e4a5_142a41eb",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T06:30:58Z",
+      "side": 1,
+      "message": "Ah, it\u0027s not really nice to duplicate this code.\n\nMaybe we can pass in an enum (e.g., CreatedFromSnapshot, CreatedFromConstructor) and conditionally call InstallConditionalFeatures?",
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
