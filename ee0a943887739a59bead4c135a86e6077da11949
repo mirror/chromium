@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8298e224_c0b0e221",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-11-24T16:11:47Z",
+      "side": 1,
+      "message": "With this construct, the origin trial will only disable the new constraint from triggering this, but setting echoCancellation to false would still disable the hardware noise suppressor. We should probably think this over - echoCancellation, though it promises to disable \"all\" signal processing if set to false, doesn\u0027t necessarily mean \"even stuff outside of WebRTC\".",
+      "revId": "ee0a943887739a59bead4c135a86e6077da11949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
