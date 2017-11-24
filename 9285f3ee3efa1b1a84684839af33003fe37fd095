@@ -228,6 +228,24 @@
       "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc26aef_3de17541",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T14:48:28Z",
+      "side": 1,
+      "message": "Or maybe another option would be to rename the fields to make it more clear:\n\nAccountInfo existing_account_info_;\nstd::string new_account_email_;\nstd::string new_account_gaia_id_;\nstd::string new_account_refresh_token_;",
+      "parentUuid": "f3c4537b_90d134b5",
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
