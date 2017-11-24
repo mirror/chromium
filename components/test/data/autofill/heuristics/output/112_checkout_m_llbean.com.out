@@ -23,7 +23,7 @@ ADDRESS_HOME_ZIP | _1_INTLPostal | Postal Code |  | _1_zipCode_1-default
 UNKNOWN_TYPE | _1_addressSelect | Home | homeAddress | _1_zipCode_1-default
 UNKNOWN_TYPE | _1_addressSelect | Business | bizAddress | _1_zipCode_1-default
 COMPANY_NAME | _1_otherAddress | Company Name (optional) |  | _1_zipCode_1-default
-PHONE_HOME_WHOLE_NUMBER | _1_phone1 | Daytime Phone Number |  | _1_zipCode_1-default
+PHONE_HOME_WHOLE_NUMBER | _1_phone1 | Daytime Phone Number Ex.: 555-123-4567 |  | _1_zipCode_1-default
 PHONE_HOME_WHOLE_NUMBER | _1_intlPhone1Prefix | Daytime Phone Number |  | _1_zipCode_1-default
 PHONE_HOME_WHOLE_NUMBER | _1_intlPhone1 | Daytime Phone Number |  | _1_zipCode_1-default
 UNKNOWN_TYPE | _1_phone1_Loc | Home | H | _1_zipCode_1-default

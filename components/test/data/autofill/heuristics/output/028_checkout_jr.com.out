@@ -5,7 +5,7 @@ ADDRESS_HOME_LINE2 | billingAddress.address2 | Street address or P.O. box |  | b
 ADDRESS_HOME_CITY | billingAddress.city |  |  | billingAddress.firstName_1-default
 ADDRESS_HOME_STATE | billingAddress.stateCode |  | XX | billingAddress.firstName_1-default
 ADDRESS_HOME_ZIP | billingAddress.postalCode |  |  | billingAddress.firstName_1-default
-ADDRESS_HOME_COUNTRY | billingAddress.country |  | US | billingAddress.firstName_1-default
+ADDRESS_HOME_COUNTRY | billingAddress.country | International billing instructions | US | billingAddress.firstName_1-default
 PHONE_HOME_WHOLE_NUMBER | billingAddress.phoneNumber |  |  | billingAddress.firstName_1-default
 EMAIL_ADDRESS | customer.emailAddress |  |  | billingAddress.firstName_1-default
 UNKNOWN_TYPE | customer.optIn | Yes, send me J&R's promotional email newsletter. | on | billingAddress.firstName_1-default

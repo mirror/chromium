@@ -54,4 +54,4 @@ ADDRESS_HOME_COUNTRY | onlineTransferCountry | Country | US | salutation_1-defau
 UNKNOWN_TYPE | onlineTransferInstitute | Bank | ACHSECUR | salutation_1-default
 UNKNOWN_TYPE | otAccountNumber | Account No. |  | salutation_1-default
 UNKNOWN_TYPE | otBankCode | Bank Code |  | salutation_1-default
-UNKNOWN_TYPE | accept | I read and understood and I accept the terms in force in                                         IKEA | on | salutation_1-default
+UNKNOWN_TYPE | accept | I read and understood and I accept the terms in force in                                         IKEA general sales terms . | on | salutation_1-default
