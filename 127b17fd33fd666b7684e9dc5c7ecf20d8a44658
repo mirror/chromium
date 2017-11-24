@@ -22,6 +22,98 @@
       "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbf75b7_0229c422",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-24T15:49:45Z",
+      "side": 1,
+      "message": "Looks like this would allow region definitions after the first cue has been \"seen\" (the \"seen cue\" flag in the spec.)",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 156,
+        "endChar": 16
+      },
+      "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfbc4e5_3fcb29d8",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-24T15:49:45Z",
+      "side": 1,
+      "message": "There doesn\u0027t appear to be any reason to call this in the kHeader state anymore (REGION\u0027s can\u0027t appear there AFAICT.), so this should probably be renamed (and presumably no longer called in the kHeader state - unless the spec model is adapted.)",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 37
+      },
+      "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200bde81_4094de0a",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-24T15:49:45Z",
+      "side": 1,
+      "message": "Rather than doing this one could call VTTRegion::SetRegionSettings repeatedly I think. But well see where we end up...",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 32
+      },
+      "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f4f643_1fc3abe0",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-24T15:49:45Z",
+      "side": 1,
+      "message": "How will this handle buffer boundaries? Looks like will result in a corrupted region.",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 31
+      },
+      "revId": "127b17fd33fd666b7684e9dc5c7ecf20d8a44658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

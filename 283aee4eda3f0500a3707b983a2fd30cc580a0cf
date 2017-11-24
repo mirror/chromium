@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "dfd2abca_6d74bfd4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/regions-lines.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-24T15:49:45Z",
+      "side": 0,
+      "message": "This was touched upon fairly recently, although changing the type to \u0027unsigned long\u0027 did not come up at the time:\n\nhttps://github.com/w3c/webvtt/issues/333\n\nFeel free to raise an issue about that if you like.\n\nAs for the test, I think it could still be valuable to test these \"large\", out-of-range-for-the-attribute values. It\u0027s a bit difficult to say if they are invalid or valid (they are valid from a parsing PoV, but cannot be represented), but I\u0027d say they are valid, and should perhaps return the largest representable number (INT_MAX). (IIRC there at least used to be similar tests, but maybe the types were changed in those cases.)",
+      "parentUuid": "f9bb3bde_a1b72bab",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "283aee4eda3f0500a3707b983a2fd30cc580a0cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b09c3a46_fcead13f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-lines.vtt",
         "patchSetId": 3
