@@ -8,9 +8,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
 import android.os.StrictMode;
-import android.text.TextUtils;
 
-import org.chromium.base.CommandLine;
 import org.chromium.base.test.util.AnnotationProcessor;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
@@ -34,9 +32,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface ChromeHome {
     boolean value() default true;
-
-    String FEATURES = ChromeFeatureList.CHROME_HOME;
-    String ENABLE_FLAGS = "enable-features=" + FEATURES;
 
     /**
      * Rule to Handle setting and resetting the feature flag and preference for ChromeHome. Can be
@@ -90,23 +85,6 @@ public @interface ChromeHome {
         public void clearTestState() {
             assertNotNull(mOldState);
             ChromePreferenceManager.getInstance().setChromeHomeEnabled(mOldState);
-        }
-
-        private void updateCommandLine() {
-            // TODO(dgn): Possible extra work: detect the flag and combine them with existing ones
-            // or support explicitly disabling the feature. Ideally this will be done by refactoring
-            // the entire features setting system for tests instead or string manipulation.
-            CommandLine commandLine = CommandLine.getInstance();
-            String existingFeatures = commandLine.getSwitchValue("enable-features");
-
-            if (TextUtils.equals(existingFeatures, FEATURES)) return;
-
-            if (existingFeatures != null) {
-                throw new IllegalStateException("Unable to enable ChromeHome, the feature flag is"
-                        + " already set to " + existingFeatures);
-            }
-
-            commandLine.appendSwitch(ENABLE_FLAGS);
         }
 
         private boolean getRequestedState() {
