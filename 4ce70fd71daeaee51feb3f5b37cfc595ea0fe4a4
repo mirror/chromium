@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "03799b25_5225a83d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "|prototype_template| is a really confusing name.\n\nShall we call this \"parent_interface\"?",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1babebf0_447b35f2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "Why not Function?",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b5e914_d4df0ade",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "Do we need this header?",
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5312c25c_728176ab",
         "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
         "patchSetId": 10
@@ -19,6 +82,155 @@
     },
     {
       "key": {
+        "uuid": "19769285_6040b67b",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "This should be: |\u003d\u003d kWrapperTypeObjectPrototype| ?",
+      "range": {
+        "startLine": 93,
+        "startChar": 35,
+        "endLine": 94,
+        "endChar": 46
+      },
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2957fa_19d23f1e",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this condition.  This must always be true, right?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 56
+      },
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceaf0943_b0fb4ce6",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "Let\u0027s write an API comment.  What the return value is in what case?\n\nIf this function is going to return the empty handle, then we should use v8::MaybeLocal as the return type, and also should guarantee that an exception is thrown in the case of Nothing.",
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60eb8e1e_24e54dad",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 85,
+        "startChar": 28,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53efc311_dcfb3f2b",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "Function?",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 22
+      },
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b08d15_e77f0018",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 93,
+        "startChar": 24,
+        "endLine": 93,
+        "endChar": 42
+      },
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdeaa18_97b356b5",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "I think we\u0027ll hit the CHECK on line 80.\nIn general, it\u0027s not a good idea to return the empty V8 handle.  We should stop using the empty handle.  v8::Nothing should be only the exceptional case.\n\nNot limited to this line, of course.",
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a389e4a5_142a41eb",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
         "patchSetId": 10
@@ -30,6 +242,24 @@
       "writtenOn": "2017-11-24T06:30:58Z",
       "side": 1,
       "message": "Ah, it\u0027s not really nice to duplicate this code.\n\nMaybe we can pass in an enum (e.g., CreatedFromSnapshot, CreatedFromConstructor) and conditionally call InstallConditionalFeatures?",
+      "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef195e20_526c7e55",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:17:51Z",
+      "side": 1,
+      "message": "+1 not to call Get(\"prototype\") twice.\n\nAn enum flag seems fine.  Otherwise, make V8ObjectConstructor::CreateInterfaceObject return the prototype object, too, in addition to the interface object?  I\u0027m fine with either way.",
+      "parentUuid": "a389e4a5_142a41eb",
       "revId": "4ce70fd71daeaee51feb3f5b37cfc595ea0fe4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
