@@ -236,6 +236,8 @@ class _CompilerDispatcher(object):
 
 
 def main():
+  sys.stderr.write("CPU COUNT IS: %i" % multiprocessing.cpu_count())
+  return -1
   parser = argparse.ArgumentParser()
   parser.add_argument(
       '--options-file',

@@ -129,6 +129,7 @@ void TrafficAnnotationFileFilter::GetRelevantFiles(
     const std::vector<std::string>& ignore_list,
     std::string directory_name,
     std::vector<std::string>* file_paths) {
+  LOG(ERROR) << "GETTING FORM GIT.";
   if (!git_files_.size())
     GetFilesFromGit(source_path);
 
@@ -151,4 +152,5 @@ void TrafficAnnotationFileFilter::GetRelevantFiles(
         file_paths->push_back(file_path);
     }
   }
+  LOG(ERROR) << "GIT DONE WITH " << file_paths->size() << " FILES.";
 }
