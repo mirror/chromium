@@ -65,6 +65,21 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner =
           base::ThreadTaskRunnerHandle::Get());
 
+  using GivenLoader =
+      std::pair<mojom::URLLoaderPtr, mojom::URLLoaderClientRequest>;
+
+  // Similar to the method above, but uses |loader| instead of a
+  // mojom::URLLoaderFactory to start the loader.
+  static std::unique_ptr<ThrottlingURLLoader> CreateLoaderAndStart(
+      GivenLoader loader,
+      std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+      int32_t routing_id,
+      const ResourceRequest& url_request,
+      mojom::URLLoaderClient* client,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+          base::ThreadTaskRunnerHandle::Get());
+
   ~ThrottlingURLLoader() override;
 
   void FollowRedirect();
@@ -94,6 +109,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
              int32_t request_id,
              uint32_t options,
              StartLoaderCallback start_loader_callback,
+             GivenLoader given_loader,
              const ResourceRequest& url_request,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
@@ -102,6 +118,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
                 int32_t request_id,
                 uint32_t options,
                 StartLoaderCallback start_loader_callback,
+                GivenLoader given_loader,
                 const ResourceRequest& url_request,
                 scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
@@ -185,6 +202,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
               int32_t in_request_id,
               uint32_t in_options,
               StartLoaderCallback in_start_loader_callback,
+              GivenLoader given_loader,
               const ResourceRequest& in_url_request,
               scoped_refptr<base::SingleThreadTaskRunner> in_task_runner);
     ~StartInfo();
@@ -195,6 +213,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
     uint32_t options;
 
     StartLoaderCallback start_loader_callback;
+    GivenLoader given_loader;
 
     ResourceRequest url_request;
     // |task_runner_| is used to set up |client_binding_|.
