@@ -99,8 +99,9 @@ PropertyHandleSet StringKeyframe::Properties() const {
 }
 
 void StringKeyframe::AddKeyframePropertiesToV8Object(
-    V8ObjectBuilder& object_builder) const {
-  Keyframe::AddKeyframePropertiesToV8Object(object_builder);
+    V8ObjectBuilder& object_builder,
+    EffectModel::CompositeOperation effect_composite) const {
+  Keyframe::AddKeyframePropertiesToV8Object(object_builder, effect_composite);
   for (const PropertyHandle& property : Properties()) {
     String property_name =
         AnimationInputHelpers::PropertyHandleToKeyframeAttribute(property);
@@ -124,11 +125,15 @@ scoped_refptr<Keyframe> StringKeyframe::Clone() const {
 }
 
 scoped_refptr<Keyframe::PropertySpecificKeyframe>
-StringKeyframe::CreatePropertySpecificKeyframe(const PropertyHandle& property,
-                                               double offset) const {
+StringKeyframe::CreatePropertySpecificKeyframe(
+    const PropertyHandle& property,
+    EffectModel::CompositeOperation effect_composite,
+    double offset) const {
+  EffectModel::CompositeOperation composite =
+      composite_.value_or(effect_composite);
   if (property.IsCSSProperty()) {
     return CSSPropertySpecificKeyframe::Create(
-        offset, &Easing(), &CssPropertyValue(property), Composite());
+        offset, &Easing(), &CssPropertyValue(property), composite);
   }
 
   if (property.IsPresentationAttribute()) {
@@ -136,13 +141,12 @@ StringKeyframe::CreatePropertySpecificKeyframe(const PropertyHandle& property,
         offset, &Easing(),
         &PresentationAttributeValue(
             property.PresentationAttribute().PropertyID()),
-        Composite());
+        composite);
   }
 
   DCHECK(property.IsSVGAttribute());
   return SVGPropertySpecificKeyframe::Create(
-      offset, &Easing(), SvgPropertyValue(property.SvgAttribute()),
-      Composite());
+      offset, &Easing(), SvgPropertyValue(property.SvgAttribute()), composite);
 }
 
 bool StringKeyframe::CSSPropertySpecificKeyframe::PopulateAnimatableValue(

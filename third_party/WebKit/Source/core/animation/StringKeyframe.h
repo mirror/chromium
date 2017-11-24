@@ -69,7 +69,9 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
 
   PropertyHandleSet Properties() const override;
 
-  void AddKeyframePropertiesToV8Object(V8ObjectBuilder&) const override;
+  void AddKeyframePropertiesToV8Object(
+      V8ObjectBuilder&,
+      EffectModel::CompositeOperation) const override;
 
   class CSSPropertySpecificKeyframe
       : public Keyframe::PropertySpecificKeyframe {
@@ -167,8 +169,10 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
 
   scoped_refptr<Keyframe> Clone() const override;
   scoped_refptr<Keyframe::PropertySpecificKeyframe>
-  CreatePropertySpecificKeyframe(const PropertyHandle&,
-                                 double offset) const override;
+  CreatePropertySpecificKeyframe(
+      const PropertyHandle&,
+      EffectModel::CompositeOperation effect_composite,
+      double offset) const override;
 
   bool IsStringKeyframe() const override { return true; }
 
