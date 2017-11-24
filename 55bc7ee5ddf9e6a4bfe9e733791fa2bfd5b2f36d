@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aa4677f_80bb0c92",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-24T17:30:05Z",
+      "side": 1,
+      "message": "Why is this line needed?",
+      "revId": "55bc7ee5ddf9e6a4bfe9e733791fa2bfd5b2f36d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e321f6a3_5b074d07",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-24T17:30:05Z",
+      "side": 1,
+      "message": "How about renaming the function to:\n\ncreateNotificationChannelIfNeeded(notification, channelName)\n\nThat way you can do the sdk version check in one place (and as a bonus remove @SuppressWarnings(\"NewApi\") from notifyNotificationWithChannel() as well)",
+      "revId": "55bc7ee5ddf9e6a4bfe9e733791fa2bfd5b2f36d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b44601b_4f5f0234",
+        "filename": "chrome/android/webapk/libs/runtime_library_version.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-24T17:30:05Z",
+      "side": 1,
+      "message": "I recently increased this to 3 :) Your number is 4",
+      "revId": "55bc7ee5ddf9e6a4bfe9e733791fa2bfd5b2f36d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
