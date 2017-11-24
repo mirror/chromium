@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a10ed2c_4c3ebd9f",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-24T06:12:11Z",
+      "side": 1,
+      "message": "nit: try_memfd_create?",
+      "range": {
+        "startLine": 89,
+        "startChar": 14,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e63204_381c40cb",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-24T06:12:11Z",
+      "side": 1,
+      "message": "nit: mention that there\u0027s no guarantee that we only try once but that\u0027s OK as the result should always be the same?",
+      "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a4f889_63dba0bf",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-24T06:12:11Z",
+      "side": 1,
+      "message": "nit: this comment doesn\u0027t add much..",
+      "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f453a84b_cec172cd",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-24T06:12:11Z",
+      "side": 1,
+      "message": "Could we use F_SEAL_WRITE here instead? Not needed as part of this patch but maybe add a TODO?",
+      "revId": "c7b7f73bfc22621b964949e97ec9a7e479b56e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
