@@ -4,6 +4,8 @@
 
 #include "services/shape_detection/face_detection_impl_win.h"
 
+#include "base/files/file_util.h"
+#include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/win/scoped_com_initializer.h"
@@ -11,8 +13,17 @@
 #include "face_detection_provider_win.h"
 #include "services/shape_detection/public/interfaces/facedetection_provider.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/codec/jpeg_codec.h"
 
 namespace shape_detection {
+
+namespace {
+
+const int kJpegImageWidth = 120;
+const int kJpegImageHeight = 120;
+const char kJpegImagePath[] = "services/test/data/mona_lisa.jpg";
+
+}  // namespace
 
 class FaceDetectionImplWinTest : public testing::Test {
  protected:
@@ -26,7 +37,9 @@ class FaceDetectionImplWinTest : public testing::Test {
   void CreateFaceDetectorCallback(bool succeeded) { EXPECT_TRUE(succeeded); }
 
   void DetectCallback(base::Closure quit_closure,
+                      uint32_t expect_faces,
                       std::vector<mojom::FaceDetectionResultPtr> results) {
+    ASSERT_EQ(expect_faces, results.size());
     CloseConnection(quit_closure);
   }
 
@@ -65,8 +78,52 @@ TEST_F(FaceDetectionImplWinTest, CreateFaceDetector) {
       base::Bind(&FaceDetectionImplWinTest::CloseConnection,
                  base::Unretained(this), run_loop.QuitClosure()));
   face_service->Detect(
-      bitmap, base::BindOnce(&FaceDetectionImplWinTest::DetectCallback,
-                             base::Unretained(this), run_loop.QuitClosure()));
+      bitmap,
+      base::BindOnce(&FaceDetectionImplWinTest::DetectCallback,
+                     base::Unretained(this), run_loop.QuitClosure(), 0u));
+  run_loop.Run();
+}
+
+TEST_F(FaceDetectionImplWinTest, ScanOneFace) {
+  mojom::FaceDetectionProviderPtr provider;
+  mojom::FaceDetectionPtr face_service;
+
+  auto request = mojo::MakeRequest(&provider);
+  auto providerWin = base::MakeUnique<FaceDetectionProviderWin>();
+  auto* provider_ptr = providerWin.get();
+  provider_ptr->binding_ =
+      mojo::MakeStrongBinding(std::move(providerWin), std::move(request));
+
+  auto options = shape_detection::mojom::FaceDetectorOptions::New();
+  provider->CreateFaceDetection(mojo::MakeRequest(&face_service),
+                                std::move(options));
+
+  // Load image data from test directory.
+  base::FilePath image_path;
+  ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &image_path));
+  image_path = image_path.AppendASCII(kJpegImagePath);
+  ASSERT_TRUE(base::PathExists(image_path));
+  std::string image_data;
+  ASSERT_TRUE(base::ReadFileToString(image_path, &image_data));
+
+  std::unique_ptr<SkBitmap> image = gfx::JPEGCodec::Decode(
+      reinterpret_cast<const uint8_t*>(image_data.data()), image_data.size());
+  ASSERT_TRUE(image);
+  ASSERT_EQ(kJpegImageWidth, image->width());
+  ASSERT_EQ(kJpegImageHeight, image->height());
+
+  const gfx::Size size(image->width(), image->height());
+  const uint32_t num_bytes = size.GetArea() * 4 /* bytes per pixel */;
+  ASSERT_EQ(num_bytes, image->computeByteSize());
+
+  base::RunLoop run_loop;
+  face_service.set_connection_error_handler(
+      base::Bind(&FaceDetectionImplWinTest::CloseConnection,
+                 base::Unretained(this), run_loop.QuitClosure()));
+  face_service->Detect(
+      *image,
+      base::BindOnce(&FaceDetectionImplWinTest::DetectCallback,
+                     base::Unretained(this), run_loop.QuitClosure(), 1u));
   run_loop.Run();
 }
 

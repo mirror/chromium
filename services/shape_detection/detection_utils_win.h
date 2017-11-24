@@ -5,6 +5,7 @@
 #ifndef SERVICES_SHAPE_DETECTION_DETECTION_UTILS_WIN_H_
 #define SERVICES_SHAPE_DETECTION_DETECTION_UTILS_WIN_H_
 
+#include <windows.storage.streams.h>
 #include <wrl\event.h>
 #include <wrl\implements.h>
 #include <utility>
@@ -18,8 +19,13 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 
+class SkBitmap;
+
 using ABI::Windows::Foundation::IAsyncOperation;
 using ABI::Windows::Foundation::IAsyncOperationCompletedHandler;
+using ABI::Windows::Graphics::Imaging::ISoftwareBitmapStatics;
+using ABI::Windows::Graphics::Imaging::ISoftwareBitmap;
+using ABI::Windows::Graphics::Imaging::BitmapPixelFormat;
 
 namespace shape_detection {
 
@@ -63,8 +69,8 @@ class AsyncOperation {
           // A reference to |async_op| is kept in |async_op_ptr_|, safe to pass
           // outside.  This is happening on an OS thread.
           task_runner->PostTask(
-              FROM_HERE, base::Bind(&AsyncOperation::AsyncCallbackInternal,
-                                    std::move(weak_ptr), async_op, status));
+              FROM_HERE, base::BindOnce(&AsyncOperation::AsyncCallbackInternal,
+                                        std::move(weak_ptr), async_op, status));
 
           return S_OK;
         });
@@ -96,10 +102,20 @@ class AsyncOperation {
 
   IAsyncOperationPtr async_op_ptr_;
   Callback callback_;
+  // TODO(junwei.fu): Guarantee |callback_| will be called instead of canceling
+  // the callback if this object is freed.
   base::WeakPtrFactory<AsyncOperation<RuntimeType>> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AsyncOperation);
 };
+
+// Create ISoftwareBitmap from SKBitmap that is kN32_SkColorType and convert
+// Rgba8/Bgra8 pixel format to Gray8/Nv12 SoftwareBitmap that is supported
+// in current version, or a nullptr is something goes wrong.
+Microsoft::WRL::ComPtr<ISoftwareBitmap> CreateWinBitmapFromSkBitmap(
+    ISoftwareBitmapStatics* bitmap_factory,
+    BitmapPixelFormat pixel_format,
+    const SkBitmap& bitmap);
 
 }  // namespace shape_detection
 
