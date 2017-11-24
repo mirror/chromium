@@ -222,6 +222,11 @@ deps = {
       'condition': 'checkout_ios',
   },
 
+  'src/ios/third_party/motion_interchange_objc/src': {
+      'url': Var('chromium_git') + '/external/github.com/material-animation/motion-interchange-objc.git' + '@' + '02e2308e1c68cd966a91807b17bcdf57f92af401',
+      'condition': 'checkout_ios',
+  },
+
   'src/ios/third_party/ochamcrest/src': {
       'url': Var('chromium_git') + '/external/github.com/hamcrest/OCHamcrest.git' + '@' + '92d9c14d13bb864255e65c09383564653896916b',
       'condition': 'checkout_ios',
