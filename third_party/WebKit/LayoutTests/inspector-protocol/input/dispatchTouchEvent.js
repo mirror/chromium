@@ -25,8 +25,8 @@
         log('id: ' + i);
         log('pageX: ' + touch.pageX);
         log('pageY: ' + touch.pageY);
-        log('radiusX: ' + touch.radiusX);
-        log('radiusY: ' + touch.radiusY);
+        log('radiusX: ' + touch.radiusX / 2);
+        log('radiusY: ' + touch.radiusY / 2);
         log('rotationAngle: ' + touch.rotationAngle);
         log('force: ' + touch.force);
       }

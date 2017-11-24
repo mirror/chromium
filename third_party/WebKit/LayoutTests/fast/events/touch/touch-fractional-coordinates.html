@@ -80,8 +80,8 @@ iframe {
             shouldBeCloseTo('lastEvent.changedTouches[0].clientY', 4.5, floatPrecision);
             shouldBeCloseTo('lastEvent.changedTouches[0].pageX', 30.33 + scrollX, floatPrecision);
             shouldBeCloseTo('lastEvent.changedTouches[0].pageY', 4.5 + scrollY, floatPrecision);
-            shouldBeCloseTo('lastEvent.changedTouches[0].radiusX', 5.2, floatPrecision);
-            shouldBeCloseTo('lastEvent.changedTouches[0].radiusY', 6.3, floatPrecision);
+            shouldBeCloseTo('lastEvent.changedTouches[0].radiusX', 10.4, floatPrecision);
+            shouldBeCloseTo('lastEvent.changedTouches[0].radiusY', 12.6, floatPrecision);
         }
         eventSender.releaseTouchPoint(0);
         eventSender.touchEnd();
