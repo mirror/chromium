@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed290218_4bac3c05",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "you probably meant to pass in a chromeos::PowerManagerClient* here and add yourself as an observer, and then remove yourself in the d\u0027tor, right?",
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e80a7dae_bedd7032",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-11-23T10:35:35Z",
       "side": 1,
       "message": "Dan, we need lid state as a feature, which would be required when UserActivityLogger runs ExtractFeatures method. If we haven\u0027t received any LidEventReceived signal from PowerManagerClient when ExtractFeatures is run for the first time, is there some way to force LidEventReceived to be sent? Or a method to query for the current lid state?",
+      "range": {
+        "startLine": 45,
+        "startChar": 25,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94fd630_d81231ba",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/chromeos/dbus/power_manager_client.h#230",
+      "parentUuid": "e80a7dae_bedd7032",
       "range": {
         "startLine": 45,
         "startChar": 25,
@@ -48,6 +89,64 @@
     },
     {
       "key": {
+        "uuid": "6252cb36_68971cda",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/chromeos/dbus/power_manager_client.h#184\n\n(the powerd interface here is old and poorly-designed. it\u0027s probably safest to call this yourself to make sure that it gets called, but note that other code in chrome will also call this at startup, so you\u0027ll probably see this called multiple times.)",
+      "parentUuid": "479abdfb_06bb9f73",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa193065_95482c0d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "nit:\n\n  on_battery_ \u003d (proto.external_power() \u003d\u003d\n      power_manager::PowerSupplyProperties::DISCONNECTED);",
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4faaf5ce_6fb57fe2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "might want to check if the proto field is set and use base::Optional\u003cdouble\u003e to represent the no-battery case",
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb8496f7_1738ff4c",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
         "patchSetId": 1
@@ -65,6 +164,132 @@
         "endLine": 63,
         "endChar": 48
       },
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbf90e0_395fb294",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "GetSwitchStates here as well",
+      "parentUuid": "bb8496f7_1738ff4c",
+      "range": {
+        "startLine": 63,
+        "startChar": 25,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a427d7_beeed633",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "nit: these overridden methods should all be public to match the visibility in the interfaces",
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e92c6c_11c01151",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "nit: this method looks like it can be const",
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6897f8fb_34e604e3",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "nit: remove \"default to ...\" from all of these comments since the values are obvious from the code",
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c523ff22_99aec864",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "use EXPECT_DOUBLE_EQ for double values",
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e505d18_b631b399",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "it\u0027d probably be a better idea to instantiate a chromeos::FakePowerManagerClient in this test and use it to notify about all of these events. then your tests are also verifying that the logger is actually registering as an observer.",
+      "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08e7975_9a9b71be",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:30:29Z",
+      "side": 1,
+      "message": "it\u0027d probably be less code to just compare the fields directly, which will also give you better failure messages:\n\n  const UserActivityEvent::Features\u0026 features \u003d events[0].features();\n  EXPECT_EQ(...::CLAMSHELL, features.device_mode());\n  etc.",
       "revId": "c416221b81922a494adf177af49b2a94872fe9b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
