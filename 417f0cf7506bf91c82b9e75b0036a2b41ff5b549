@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3919b86a_07ba5123",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-24T19:38:08Z",
+      "side": 0,
+      "message": "Strange this was forward declared and included.",
+      "revId": "417f0cf7506bf91c82b9e75b0036a2b41ff5b549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

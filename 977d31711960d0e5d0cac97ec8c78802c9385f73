@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ea82a9a_25ff0f9b",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-24T19:38:08Z",
+      "side": 1,
+      "message": "Should we maybe have StringToCompositeOperation take exception_state and just throw an error directly rather than reproducing this?",
+      "revId": "977d31711960d0e5d0cac97ec8c78802c9385f73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d083d2e_ca8f6938",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectModel.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-24T19:38:08Z",
+      "side": 1,
+      "message": "Maybe have the caller do this conversion? That way we convert as early as possible to an actual enum so that we know to expect it to be safe.",
+      "revId": "977d31711960d0e5d0cac97ec8c78802c9385f73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
