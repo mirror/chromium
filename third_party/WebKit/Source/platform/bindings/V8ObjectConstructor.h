@@ -68,6 +68,11 @@ class PLATFORM_EXPORT V8ObjectConstructor {
   STATIC_ONLY(V8ObjectConstructor);
 
  public:
+  enum class ConditionalFeatures {
+    kInstalled,
+    kNotInstalled,
+  };
+
   static v8::MaybeLocal<v8::Object> NewInstance(
       v8::Isolate*,
       v8::Local<v8::Function>,
@@ -76,6 +81,17 @@ class PLATFORM_EXPORT V8ObjectConstructor {
 
   static void IsValidConstructorMode(
       const v8::FunctionCallbackInfo<v8::Value>&);
+
+  // Returns the interface object of the wrapper type in the context. If you
+  // call with ConditionalFeaures::kNotInstalled, no conditional features are
+  // installed.
+  static v8::Local<v8::Function> CreateInterfaceObject(
+      const WrapperTypeInfo*,
+      v8::Local<v8::Context>,
+      const DOMWrapperWorld&,
+      v8::Isolate*,
+      v8::Local<v8::Function> parent_template,
+      ConditionalFeatures);
 };
 
 }  // namespace blink
