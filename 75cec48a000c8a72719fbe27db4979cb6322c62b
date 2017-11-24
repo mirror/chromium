@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60cb2a92_0d79ee72",
+        "filename": "components/metrics_services_manager/metrics_services_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-24T15:14:48Z",
+      "side": 0,
+      "message": "Seems this causes some errors on the bots, for example:\n\n/..\\chrome/browser/metrics/chrome_metrics_services_manager_client.h(84,64):  error: only virtual member functions can be marked \u0027override\u0027\n  void UpdateRunningServices(bool may_record, bool may_upload) override;",
+      "range": {
+        "startLine": 62,
+        "startChar": 73,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "75cec48a000c8a72719fbe27db4979cb6322c62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
