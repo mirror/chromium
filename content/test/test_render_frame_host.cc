@@ -318,7 +318,7 @@ void TestRenderFrameHost::SimulateFeaturePolicyHeader(
   header[0].feature = feature;
   header[0].matches_all_origins = false;
   header[0].origins = whitelist;
-  OnDidSetFramePolicyHeaders(blink::WebSandboxFlags::kNone, header);
+  OnDidSetFeaturePolicyHeader(header);
 }
 
 const std::vector<std::string>& TestRenderFrameHost::GetConsoleMessages() {
@@ -591,7 +591,8 @@ void TestRenderFrameHost::SimulateWillStartRequest(
 void TestRenderFrameHost::SendFramePolicy(
     blink::WebSandboxFlags sandbox_flags,
     const blink::ParsedFeaturePolicy& declared_policy) {
-  OnDidSetFramePolicyHeaders(sandbox_flags, declared_policy);
+  OnDidSetSandboxThroughCSPHeader(sandbox_flags);
+  OnDidSetFeaturePolicyHeader(declared_policy);
 }
 
 mojom::FrameNavigationControl* TestRenderFrameHost::GetNavigationControl() {
