@@ -105,6 +105,8 @@ class BaseDialogContainer : public views::DialogDelegateView {
     return true;
   }
 
+  const char* GetClassName() const override { return "AppInfoDialogContainer"; }
+
   // Overridden from views::DialogDelegate:
   int GetDialogButtons() const override { return ui::DIALOG_BUTTON_NONE; }
 
