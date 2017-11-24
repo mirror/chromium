@@ -6,10 +6,10 @@ ADDRESS_HOME_STATE | enterAddressStateOrRegion | State/Province/Region |  | ente
 ADDRESS_HOME_ZIP | enterAddressPostalCode | ZIP |  | enterAddressFullName_1-default
 UNKNOWN_TYPE | enterAddressTaxId |  |  | enterAddressFullName_1-default
 PHONE_HOME_WHOLE_NUMBER | enterAddressPhoneNumber | Phone number |  | enterAddressFullName_1-default
-ADDRESS_HOME_COUNTRY | enterAddressCountryCode |  | US | enterAddressFullName_1-default
-UNKNOWN_TYPE | AddressType | Optional Delivery Preferences | OTH | enterAddressFullName_1-default
+ADDRESS_HOME_COUNTRY | enterAddressCountryCode | United States | US | enterAddressFullName_1-default
+UNKNOWN_TYPE | AddressType | Select your preference | OTH | enterAddressFullName_1-default
 UNKNOWN_TYPE | GateCode | Security Access Code |  | enterAddressFullName_1-default
 CREDIT_CARD_NAME_FULL | name | Name on card |  | name_1-cc
 CREDIT_CARD_NUMBER | addCreditCardNumber | Card number |  | name_1-cc
-CREDIT_CARD_EXP_MONTH | month | Expiration date | 1 | name_1-cc
-CREDIT_CARD_EXP_4_DIGIT_YEAR | year | Expiration date | 2014 | name_1-cc
+CREDIT_CARD_EXP_MONTH | month | 01 | 1 | name_1-cc
+CREDIT_CARD_EXP_4_DIGIT_YEAR | year | 2014 | 2014 | name_1-cc

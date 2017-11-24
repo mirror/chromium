@@ -22,10 +22,10 @@ UNKNOWN_TYPE | CC | CreditCardValue | CreditCardValue | ShippingFirstName_1-defa
 CREDIT_CARD_NUMBER | CC_number | Credit Card #: |  | ShippingFirstName_1-cc
 CREDIT_CARD_EXP_MONTH | exp_month | Expiration Date: | 0 | ShippingFirstName_1-cc
 CREDIT_CARD_EXP_4_DIGIT_YEAR | exp_year | Expiration Date: |  | ShippingFirstName_1-cc
-UNKNOWN_TYPE | CC | PayPal | PayPal | ShippingFirstName_1-default
-UNKNOWN_TYPE | CC | bml | bml | ShippingFirstName_1-default
+UNKNOWN_TYPE | CC | The safer, easier way to pay. | PayPal | ShippingFirstName_1-default
+UNKNOWN_TYPE | CC | The safer, easier way to pay. | bml | ShippingFirstName_1-default
 UNKNOWN_TYPE | UsePromoCode | Use Promo Code | on | ShippingFirstName_1-default
-UNKNOWN_TYPE | PromoCode | See Terms |  | ShippingFirstName_1-default
+UNKNOWN_TYPE | PromoCode | Use Promo Code |  | ShippingFirstName_1-default
 UNKNOWN_TYPE | UseGiftCards | Use Gift Card | on | ShippingFirstName_1-default
 UNKNOWN_TYPE | GiftCardNumber0 | Gift Card 1: |  | ShippingFirstName_1-default
 UNKNOWN_TYPE | PINNumber0 | PIN: |  | ShippingFirstName_1-default

@@ -1,4 +1,4 @@
-UNKNOWN_TYPE | shipto | Select a Saved Shipping Address |  | shipto_1-default
+UNKNOWN_TYPE | shipto | Select a Saved Shipping Addressenter a new shipping address |  | shipto_1-default
 NAME_FIRST | shippingFirstName | First Name | First Name | shipto_1-default
 NAME_LAST | shippingLastName | Last Name | Last Name | shipto_1-default
 ADDRESS_HOME_LINE1 | shippingAddress | Street Address | Street Address | shipto_1-default
@@ -24,7 +24,7 @@ ADDRESS_HOME_COUNTRY | billingCountries |  |  | billingFirstName_1-default
 PHONE_HOME_WHOLE_NUMBER | billingPhone | Phone | Phone | billingFirstName_1-default
 PHONE_HOME_WHOLE_NUMBER | altBillingPhone | Alternate Phone (optional) | Alternate Phone (optional) | billingFirstName_1-default
 UNKNOWN_TYPE | defaultBilling | Make this my default billing address | true | billingFirstName_1-default
-UNKNOWN_TYPE | savedCreditCard |  |  | billingFirstName_1-default
+UNKNOWN_TYPE | savedCreditCard | enter a new credit card |  | billingFirstName_1-default
 CREDIT_CARD_TYPE | payment_cardtype |  |  | billingFirstName_1-cc
 CREDIT_CARD_NUMBER | payment_acctnum | Card Number (no spaces or dashes) | Card Number (no spaces or dashes) | billingFirstName_1-cc
 CREDIT_CARD_EXP_MONTH | expmonth |  |  | billingFirstName_1-cc

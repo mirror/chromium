@@ -1,5 +1,5 @@
 NAME_FIRST | firstname | First Last |  | firstname_1-default
-NAME_LAST | lastname |  |  | firstname_1-default
+NAME_LAST | lastname | Last |  | firstname_1-default
 ADDRESS_HOME_LINE1 | address1 | Street Address |  | firstname_1-default
 ADDRESS_HOME_CITY | city | City |  | firstname_1-default
 ADDRESS_HOME_STATE | state | State / Province / Region |  | firstname_1-default
