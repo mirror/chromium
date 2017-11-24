@@ -88,6 +88,24 @@
       "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ebd8ac_249abebd",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T03:44:29Z",
+      "side": 1,
+      "message": "FWIW Blink, CPU, cc and all other places are reporting exact values, so it should be worth exploring how media\u0027s memory is allocated.\n\nIf you don\u0027t know how media\u0027s memory is allocated, how can you know that kApproximateTrackSizeInBytes is a reasonable estimation?",
+      "parentUuid": "91250608_c8fe77ad",
+      "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
