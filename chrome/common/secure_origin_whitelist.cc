@@ -11,11 +11,12 @@
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "extensions/common/constants.h"
+#include "url/gurl.h"
 
 namespace secure_origin_whitelist {
 
-std::vector<GURL> GetWhitelist() {
-  std::vector<GURL> origins;
+std::vector<url::Origin> GetWhitelist() {
+  std::vector<url::Origin> origins;
   // If kUnsafelyTreatInsecureOriginAsSecure option is given, then treat the
   // value as a comma-separated list of origins:
   const base::CommandLine& command_line =
@@ -25,7 +26,7 @@ std::vector<GURL> GetWhitelist() {
         switches::kUnsafelyTreatInsecureOriginAsSecure);
     for (const std::string& origin : base::SplitString(
              origins_str, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL))
-      origins.push_back(GURL(origin));
+      origins.push_back(url::Origin::Create(GURL(origin)));
   }
 
   UMA_HISTOGRAM_COUNTS_100("Security.TreatInsecureOriginAsSecure",
