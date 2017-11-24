@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
@@ -44,6 +45,12 @@
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/base/clipboard/clipboard.h"
+
+#if defined(TOOLKIT_VIEWS)
+#include "ui/views/widget/widget.h"
+#include "ui/views/window/dialog_client_view.h"
+#include "ui/views/window/dialog_delegate.h"
+#endif
 
 #if defined(OS_MACOSX)
 #include "chrome/common/chrome_features.h"
@@ -444,6 +451,41 @@ IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, OpenInChrome) {
   content::RunAllPendingInMessageLoop();
   ASSERT_EQ(1u, chrome::GetBrowserCount(browser()->profile()));
 }
+
+#if defined(TOOLKIT_VIEWS)
+// Check the 'App info' menu button for Hosted App windows.
+IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, AppInfo) {
+  WebApplicationInfo web_app_info;
+  web_app_info.app_url = GURL(kExampleURL);
+  const extensions::Extension* app = InstallBookmarkApp(web_app_info);
+  Browser* app_browser = LaunchAppBrowser(app);
+
+  {
+    views::Widget::Widgets widgets;
+    views::Widget::GetAllOwnedWidgets(
+        views::Widget::GetWidgetForNativeWindow(
+            app_browser->window()->GetNativeWindow())
+            ->GetNativeView(),
+        &widgets);
+    EXPECT_EQ(0u, widgets.size());
+  }
+
+  chrome::ExecuteCommand(app_browser, IDC_APP_INFO);
+
+  {
+    views::Widget::Widgets widgets;
+    views::Widget::GetAllOwnedWidgets(
+        views::Widget::GetWidgetForNativeWindow(
+            app_browser->window()->GetNativeWindow())
+            ->GetNativeView(),
+        &widgets);
+    EXPECT_EQ(1u, widgets.size());
+    views::Widget* widget = *widgets.begin();
+    EXPECT_EQ(std::string("AppInfoDialogContainer"),
+              widget->client_view()->child_at(0)->GetClassName());
+  }
+}
+#endif
 
 class HostedAppVsTdiTest : public HostedAppTest {
  public:
