@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f0af06c5_145332c6",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-24T21:10:50Z",
+      "side": 1,
+      "message": "Do we ever get a WM_POINTERDOWN that we really should be forwarding to DM and causing a SetContact for?",
+      "range": {
+        "startLine": 338,
+        "startChar": 10,
+        "endLine": 338,
+        "endChar": 30
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0acb56_0b28e7c6",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-24T21:10:50Z",
+      "side": 1,
+      "message": "This can probably be rolled into the IsEnabled check and then simplify this code via\n\nreturn WrapUnique(new DirectManipulationHelper());",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61d110b2_eb34455f",
         "filename": "ui/base/win/direct_manipulation.cc",
         "patchSetId": 11
@@ -25,6 +71,53 @@
     },
     {
       "key": {
+        "uuid": "b7789636_834681f4",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-24T21:10:50Z",
+      "side": 1,
+      "message": "I believe we only need to call Update on DManip when it has the capture correct?\n\nWe should get a WM_POINTERCAPTURECHANGED event and then we can bind the hook from BeginFrame to call Update no? Does it have to be called if nothing changed?\n\nAlternatively we could start a timer when pointer capture changed if we needed to fire it off at an internal.",
+      "parentUuid": "61d110b2_eb34455f",
+      "range": {
+        "startLine": 161,
+        "startChar": 39,
+        "endLine": 161,
+        "endChar": 54
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50bdfa94_0f42b9c8",
+        "filename": "ui/base/win/window_event_target.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-24T21:10:50Z",
+      "side": 1,
+      "message": "This method name needs to be better. It isn\u0027t clear what a DManipMessage is. Sounds like you want to apply a transform so it isn\u0027t necessarily handling a message.",
+      "range": {
+        "startLine": 93,
+        "startChar": 18,
+        "endLine": 93,
+        "endChar": 37
+      },
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1f58538_d6446fa0",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 11
@@ -36,6 +129,24 @@
       "writtenOn": "2017-11-20T19:22:03Z",
       "side": 1,
       "message": "does it convert to ScrollEvent better than MouseWheelEvent here? Since we convert ScrollEvent to GestureEvent in render_widget_host_view_event_handler. But MouseWheelEvent to WebMouseWheelEvent.",
+      "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dc17f3_61ca9191",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-24T21:10:50Z",
+      "side": 1,
+      "message": "It needs to be a MouseWheelEvent.. We ultimately want to define a Touchpad event. You could get the cursorposition from GetCursorPos(..) instead of storing it possibly.\n\nThe modifiers really should be populated correctly as well.",
+      "parentUuid": "c1f58538_d6446fa0",
       "revId": "ef42dc329d87a7b3f6a9a4ca8b00891b95675471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
