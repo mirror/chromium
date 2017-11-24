@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "871d6d3c_246acadc",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T18:52:42Z",
+      "side": 1,
+      "message": "Can you add a comment on why this is kVr mode is needed? It is not very obvious to me.",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4488095e_a5568898",
         "filename": "chrome/browser/vr/assets.h",
         "patchSetId": 5
@@ -19,6 +36,41 @@
     },
     {
       "key": {
+        "uuid": "aa190f4e_54adeaad",
+        "filename": "chrome/browser/vr/assets.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T18:52:42Z",
+      "side": 1,
+      "message": "As discussed offline, it would be nice to have something in chrome/browser/vr that could live longer than a VR session. Then we could move some code in vr_shell_delegate or vr_shell to that object. But it is out of scope of this CL. Perhaps file a bug and start discussion about it?",
+      "parentUuid": "4488095e_a5568898",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a668bcd6_908efc24",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T18:52:42Z",
+      "side": 1,
+      "message": "nit: is this templated function necessary? you could probably copy everything to the above function and remove the implementation of the above function?",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e671477d_1e2dea16",
         "filename": "chrome/browser/vr/metrics_helper.h",
         "patchSetId": 5
@@ -30,6 +82,24 @@
       "writtenOn": "2017-11-24T00:02:11Z",
       "side": 1,
       "message": "This is very similar to VRMode (https://cs.chromium.org/chromium/src/chrome/browser/android/vr_shell/vr_usage_monitor.h?rcl\u003d80b1a063280d0f39d4d49ae51702dbbbf5509cd6\u0026l\u003d15). Do you think I should refactor it into one enum?",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2df995e_6d24aad6",
+        "filename": "chrome/browser/vr/metrics_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T18:52:42Z",
+      "side": 1,
+      "message": "It would be nice to refactor it into one enum. it would also be nice to refactor VrMetricsHelper to here when make sense.",
+      "parentUuid": "e671477d_1e2dea16",
       "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

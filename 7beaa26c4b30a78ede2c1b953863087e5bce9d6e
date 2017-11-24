@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f23e97d_b56f0828",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T18:52:42Z",
+      "side": 1,
+      "message": "why not use Mode as a argument? It doesn\u0027t look like that you are pass anything other type other than Mode? Or is this reversed for future use?",
+      "revId": "7beaa26c4b30a78ede2c1b953863087e5bce9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
