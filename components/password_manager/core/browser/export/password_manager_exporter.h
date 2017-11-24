@@ -15,10 +15,6 @@
 #include "components/password_manager/core/browser/export/destination.h"
 #include "components/password_manager/core/browser/export/password_ui_export_view.h"
 
-namespace autofill {
-struct PasswordForm;
-}
-
 namespace password_manager {
 
 class CredentialProviderInterface;
@@ -46,6 +42,10 @@ class PasswordManagerExporter {
   virtual void Cancel();
 
  private:
+  // Caches the serialised password list and proceeds to export, if all the
+  // parts are ready.
+  void SetSerialisedPasswordList(size_t count, const std::string& serialised);
+
   // Returns true if all the necessary data is available.
   bool IsReadyForExport();
 
@@ -53,9 +53,10 @@ class PasswordManagerExporter {
   // At the end, it clears cached fields.
   void Export();
 
-  // Callback after the passwords have been serialised.
-  void OnPasswordsSerialised(std::unique_ptr<Destination> destination,
-                             const std::string& serialised);
+  // Callback after the passwords have been serialised. |count| is the number of
+  // passwords we tried to write and |success| whether they were actually
+  // written.
+  void OnPasswordsExported(size_t count, bool success);
 
   // The source of the password list which will be exported.
   CredentialProviderInterface* const credential_provider_interface_;
@@ -63,9 +64,10 @@ class PasswordManagerExporter {
   // Callbacks to the UI.
   PasswordUIExportView* const password_ui_export_view_;
 
-  // The password list that was read from the store. It will be cleared once
-  // exporting is complete.
-  std::vector<std::unique_ptr<autofill::PasswordForm>> password_list_;
+  // The password list that was read from the store and serialised.
+  std::string serialised_password_list_;
+  // The number of passwords that were serialised. Useful for metrics.
+  size_t password_list_size_;
 
   // The destination which was provided and where the password list will be
   // sent. It will be cleared once exporting is complete.

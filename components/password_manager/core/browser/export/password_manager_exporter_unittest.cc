@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/export/destination.h"
@@ -107,6 +108,7 @@ class PasswordManagerExporterTest : public testing::Test {
   FakeCredentialProvider fake_credential_provider_;
   std::unique_ptr<MockPasswordUIExportView> mock_password_ui_export_view_;
   password_manager::PasswordManagerExporter exporter_;
+  base::HistogramTester histogram_tester_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerExporterTest);
@@ -129,6 +131,9 @@ TEST_F(PasswordManagerExporterTest, PasswordExportSetPasswordListFirst) {
   exporter_.SetDestination(std::move(mock_destination));
 
   scoped_task_environment_.RunUntilIdle();
+
+  histogram_tester_.ExpectUniqueSample(
+      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 1);
 }
 
 TEST_F(PasswordManagerExporterTest, PasswordExportSetDestinationFirst) {
@@ -148,6 +153,9 @@ TEST_F(PasswordManagerExporterTest, PasswordExportSetDestinationFirst) {
   exporter_.PreparePasswordsForExport();
 
   scoped_task_environment_.RunUntilIdle();
+
+  histogram_tester_.ExpectUniqueSample(
+      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 1);
 }
 
 TEST_F(PasswordManagerExporterTest, WriteToDestinationFails) {
@@ -167,6 +175,9 @@ TEST_F(PasswordManagerExporterTest, WriteToDestinationFails) {
   exporter_.SetDestination(std::move(mock_destination));
 
   scoped_task_environment_.RunUntilIdle();
+
+  histogram_tester_.ExpectUniqueSample(
+      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 0);
 }
 
 TEST_F(PasswordManagerExporterTest, DontExportWithOnlyDestination) {
@@ -184,6 +195,9 @@ TEST_F(PasswordManagerExporterTest, DontExportWithOnlyDestination) {
   exporter_.SetDestination(std::move(mock_destination));
 
   scoped_task_environment_.RunUntilIdle();
+
+  histogram_tester_.ExpectUniqueSample(
+      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 0);
 }
 
 TEST_F(PasswordManagerExporterTest, CancelAfterPasswords) {
@@ -203,6 +217,9 @@ TEST_F(PasswordManagerExporterTest, CancelAfterPasswords) {
   exporter_.SetDestination(std::move(mock_destination));
 
   scoped_task_environment_.RunUntilIdle();
+
+  histogram_tester_.ExpectUniqueSample(
+      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 0);
 }
 
 TEST_F(PasswordManagerExporterTest, CancelAfterDestination) {
@@ -222,6 +239,9 @@ TEST_F(PasswordManagerExporterTest, CancelAfterDestination) {
   exporter_.PreparePasswordsForExport();
 
   scoped_task_environment_.RunUntilIdle();
+
+  histogram_tester_.ExpectUniqueSample(
+      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 0);
 }
 
 // Test that PasswordManagerExporter is reusable, after an export has been
@@ -245,6 +265,9 @@ TEST_F(PasswordManagerExporterTest, CancelAfterPasswordsThenExport) {
   exporter_.PreparePasswordsForExport();
 
   scoped_task_environment_.RunUntilIdle();
+
+  histogram_tester_.ExpectUniqueSample(
+      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 1);
 }
 
 // Test that PasswordManagerExporter is reusable, after an export has been
@@ -271,6 +294,9 @@ TEST_F(PasswordManagerExporterTest, CancelAfterDestinationThenExport) {
   exporter_.SetDestination(std::move(mock_destination));
 
   scoped_task_environment_.RunUntilIdle();
+
+  histogram_tester_.ExpectUniqueSample(
+      "PasswordManager.ExportedPasswordsPerUserInCSV", password_list.size(), 1);
 }
 
 }  // namespace
