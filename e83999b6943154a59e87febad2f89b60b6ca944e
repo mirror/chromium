@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1987b40_ed37e2cf",
+        "filename": "content/renderer/media/aec_dump_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-24T13:42:36Z",
+      "side": 1,
+      "message": "Just \"delegate\".",
+      "range": {
+        "startLine": 193,
+        "startChar": 12,
+        "endLine": 193,
+        "endChar": 23
+      },
+      "revId": "e83999b6943154a59e87febad2f89b60b6ca944e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
