@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcff1f19_03d2d9f2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-24T23:46:56Z",
+      "side": 1,
+      "message": "I think we need to do the AddObserver logic here and RemoveObserver in d\u0027ctor",
+      "revId": "a5a483a8038e0c5480119ebe5fd1708a8a744f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
