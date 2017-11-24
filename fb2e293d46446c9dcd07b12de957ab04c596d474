@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "238a22ae_f00b2054",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T23:32:19Z",
+      "side": 1,
+      "message": "Yep, you are right! Good catch!",
+      "parentUuid": "2aba5b10_5f80791d",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4488095e_a5568898",
         "filename": "chrome/browser/vr/assets.h",
         "patchSetId": 5
@@ -87,6 +105,24 @@
       "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f907326_c1db121e",
+        "filename": "chrome/browser/vr/assets.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T23:32:19Z",
+      "side": 1,
+      "message": "Started discussion.",
+      "parentUuid": "aa190f4e_54adeaad",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "997015ec_4fcfc06d",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T23:32:19Z",
+      "side": 1,
+      "message": "Ah, that makes a lot of sense. Done!",
+      "parentUuid": "5900662e_3e2e1a29",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e671477d_1e2dea16",
         "filename": "chrome/browser/vr/metrics_helper.h",
         "patchSetId": 5
@@ -175,6 +229,24 @@
       "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260db98c_9e62ba0d",
+        "filename": "chrome/browser/vr/metrics_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T23:32:19Z",
+      "side": 1,
+      "message": "Refactored into one enum. Leaving the VrMetricsHelper refactor for another CL.",
+      "parentUuid": "c2df995e_6d24aad6",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

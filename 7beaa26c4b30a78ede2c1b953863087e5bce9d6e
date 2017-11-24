@@ -52,6 +52,24 @@
       "revId": "7beaa26c4b30a78ede2c1b953863087e5bce9d6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a424f5_96a15db2",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T23:32:19Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "55c83d5a_fb8b34bd",
+      "revId": "7beaa26c4b30a78ede2c1b953863087e5bce9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
