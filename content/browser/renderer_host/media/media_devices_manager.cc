@@ -49,23 +49,23 @@ std::string GetLogMessageString(MediaDeviceType device_type,
   return output_string;
 }
 
-MediaDeviceInfoArray GetFakeAudioDevices(bool is_input) {
-  MediaDeviceInfoArray result;
+media::AudioDeviceDescriptions GetFakeAudioDevices(bool is_input) {
+  media::AudioDeviceDescriptions result;
   if (is_input) {
-    result.emplace_back(media::AudioDeviceDescription::kDefaultDeviceId,
-                        "Fake Default Audio Input",
-                        "fake_group_audio_input_default");
-    result.emplace_back("fake_audio_input_1", "Fake Audio Input 1",
-                        "fake_group_audio_input_1");
-    result.emplace_back("fake_audio_input_2", "Fake Audio Input 2",
+    result.emplace_back("Fake Default Audio Input",
+                        media::AudioDeviceDescription::kDefaultDeviceId,
+                        "fake_group_audio_1");
+    result.emplace_back("Fake Audio Input 1", "fake_audio_input_1",
+                        "fake_group_audio_1");
+    result.emplace_back("Fake Audio Input 2", "fake_audio_input_2",
                         "fake_group_audio_input_2");
   } else {
-    result.emplace_back(media::AudioDeviceDescription::kDefaultDeviceId,
-                        "Fake Default Audio Output",
-                        "fake_group_audio_output_default");
-    result.emplace_back("fake_audio_output_1", "Fake Audio Output 1",
-                        "fake_group_audio_output_1");
-    result.emplace_back("fake_audio_output_2", "Fake Audio Output 2",
+    result.emplace_back("Fake Default Audio Output",
+                        media::AudioDeviceDescription::kDefaultDeviceId,
+                        "fake_group_audio_1");
+    result.emplace_back("Fake Audio Output 1", "fake_audio_output_1",
+                        "fake_group_audio_1");
+    result.emplace_back("Fake Audio Output 2", "fake_audio_output_2",
                         "fake_group_audio_output_2");
   }
 
@@ -337,7 +337,7 @@ void MediaDevicesManager::EnumerateAudioDevices(bool is_input) {
       is_input ? MEDIA_DEVICE_TYPE_AUDIO_INPUT : MEDIA_DEVICE_TYPE_AUDIO_OUTPUT;
   if (use_fake_devices_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(&MediaDevicesManager::DevicesEnumerated,
+        FROM_HERE, base::BindOnce(&MediaDevicesManager::AudioDevicesEnumerated,
                                   weak_factory_.GetWeakPtr(), type,
                                   GetFakeAudioDevices(is_input)));
     return;
@@ -363,10 +363,45 @@ void MediaDevicesManager::AudioDevicesEnumerated(
     media::AudioDeviceDescriptions device_descriptions) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  auto it_default_device =
+      std::find_if(device_descriptions.begin(), device_descriptions.end(),
+                   [](const media::AudioDeviceDescription& description) {
+                     return media::AudioDeviceDescription::IsDefaultDevice(
+                         description.unique_id);
+                   });
+
+  auto it_real_default_device = device_descriptions.end();
+  if (it_default_device != device_descriptions.end()) {
+    it_real_default_device = std::find_if(
+        device_descriptions.begin(), device_descriptions.end(),
+        [it_default_device](const media::AudioDeviceDescription& description) {
+          return description.group_id == it_default_device->group_id &&
+                 !media::AudioDeviceDescription::IsDefaultDevice(
+                     description.unique_id);
+        });
+  }
+
+  // The label for the default device (if it exists) in |snapshot| has appended
+  // the label for the real device being used as default. This implementation
+  // uses the group ID to identify the real default device, but this works
+  // only for input devices that have an an associated output device on
+  // platforms where the group ID is properly supported.
+  // TODO(guidou): Get the real ID of the default input device from
+  // media::AudioSystem when the functionality becomes available.
+  // http://crbug.com/780492
   MediaDeviceInfoArray snapshot;
   for (const media::AudioDeviceDescription& description : device_descriptions) {
-    snapshot.emplace_back(description);
+    if (it_real_default_device != device_descriptions.end() &&
+        media::AudioDeviceDescription::IsDefaultDevice(description.unique_id)) {
+      snapshot.emplace_back(
+          description.unique_id,
+          description.device_name + " - " + it_real_default_device->device_name,
+          description.group_id);
+    } else {
+      snapshot.emplace_back(description);
+    }
   }
+
   DevicesEnumerated(type, snapshot);
 }
 
