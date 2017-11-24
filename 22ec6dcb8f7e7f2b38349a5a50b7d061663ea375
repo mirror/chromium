@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "b6960611_dcde76f0",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-24T20:59:22Z",
+      "side": 1,
+      "message": "This should be 200ms at most. 1 second is pretty slow.",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee58a219_06d235f5",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-24T20:59:22Z",
+      "side": 1,
+      "message": "Why not just use the constant directly?",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 25
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfcd1b3_0e089de3",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-24T20:59:22Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be quite correct. This will start a timer for |kUpdateFrequencyMs| from now, and do the update now? We should be doing one or the other, no?\n\nHow about this be something like,\n\n// An update is already queued, nothing to do, return out.\nif (timer_.IsRunning())\n  return;\n\nbase::TimeDelta ms_since_last_update \u003d base::Time::Now() - last_update_time_;\nif (ms_since_last_update \u003c kUpdateFrequencyMs) {\n  // It hasn\u0027t been enough time since our last update. Queue up an update that will trigger\n  // |kUpdateFrequencyMs| milliseconds from the last update.\n  timer_.Start(FROM_HERE,\n    base::TimeDelta::FromMilliseconds(kUpdateFrequencyMs - ms_since_last_update),\n    this, \u0026BluetoothDetailedView::DoUpdate);\n} else {\n  DoUpdate();\n}\n\n\nThen in DoUpdate, set the last_update_time_ to base::Time::Now();",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 12
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11bd6442_43344ec6",
         "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
         "patchSetId": 4
@@ -104,6 +173,29 @@
     },
     {
       "key": {
+        "uuid": "c86824a7_7cc0759d",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-24T20:59:22Z",
+      "side": 1,
+      "message": "This entire logic is very confusing to me. Could you add comments explaining what you\u0027re trying to do?\n\nPlease see my comment on the update limiting logic in the system tray. It looks like the same comment also applies here.",
+      "range": {
+        "startLine": 483,
+        "startChar": 6,
+        "endLine": 493,
+        "endChar": 35
+      },
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5db202fd_e5568151",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
         "patchSetId": 4
@@ -121,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "a6a438e7_14a622e6",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-24T20:59:22Z",
+      "side": 1,
+      "message": "I like the idea of there being an abstraction layer for devices, and controlling devices there, but we may be going for an overkill. Though it would reduce the limiting and sorting code from two places to one, I am not sure there will be any other benefit. Given that we will end up introducing quite a bit more complexity and new code to handle the layer, I am not convinced that it will be worth it.\n\nFor 64, I\u0027m \"more\" comfortable with having this limited and sorted in the UI, even though it does mean it needs to be done here and in the tray code.\n\nWDYT? We can discuss this offline more if needed.",
+      "parentUuid": "5db202fd_e5568151",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be20cc0e_fbff11cc",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
         "patchSetId": 4
@@ -132,6 +242,29 @@
       "writtenOn": "2017-11-21T21:03:11Z",
       "side": 1,
       "message": "Same comment as in the C++ about testing the list lenght here instead of in the for statement.",
+      "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c1387d_9d607f63",
+        "filename": "chrome/test/data/webui/settings/bluetooth_page_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-24T20:59:22Z",
+      "side": 1,
+      "message": "This needs to be a constant.\n\nI don\u0027t know enough of this code to say for sure, but this test should be deterministic - i.e., if the bots take sixty times as long to execute this code, the test should still pass as long as we do the right thing (i.e., still update, and ensure no update happens under kUpdateFrequencyInterval). Please do ensure that this does not introduce flakiness.",
+      "range": {
+        "startLine": 144,
+        "startChar": 28,
+        "endLine": 144,
+        "endChar": 32
+      },
       "revId": "22ec6dcb8f7e7f2b38349a5a50b7d061663ea375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
