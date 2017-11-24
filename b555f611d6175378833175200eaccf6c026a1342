@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "630b2c57_d12f0c4b",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-24T09:22:54Z",
+      "side": 1,
+      "message": "You added this argument because it is needed by the ThrottlingURLLoader constructor, but in reality it will not be used. It is used only when a URLLoaderFactory is used.\n\nIt will force callers of this function to provide a fake traffic_annotation.\n\nMaybe we can remove this argument and use a fake traffic annotation in the implementation or make traffic_annotation_ an optional member. What do you think?",
+      "range": {
+        "startLine": 174,
+        "startChar": 43,
+        "endLine": 174,
+        "endChar": 44
+      },
+      "revId": "b555f611d6175378833175200eaccf6c026a1342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
