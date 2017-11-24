@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3fced56_9f6ce37e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-24T10:08:47Z",
+      "side": 1,
+      "message": "Could you also link to the spec here?",
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce1e4fa_7fcf9ef0",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-24T10:08:47Z",
+      "side": 1,
+      "message": "I would rather this message be a bit more generic, I know that currently the only supported stylesheet mime type is \u0027text/css\u0027 but still...\nPerhaps something like: \"... it\u0027s MIME type () is not a supported stylesheet MIME type and strict ...\"",
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e310bd_9b54194f",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-24T10:08:47Z",
+      "side": 1,
+      "message": "Is there some plan or timeline for this? I don\u0027t particularly like the split right now.",
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b093595b_762c0517",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-24T10:08:47Z",
+      "side": 1,
+      "message": "From what I can tell this only does the nosniff checks for style currently. Maybe add another TODO?",
+      "revId": "8ef1bd29687c20bf20a4950718d663bcbeafec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
