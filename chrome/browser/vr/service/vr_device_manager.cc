@@ -11,7 +11,9 @@
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_features.h"
+#include "content/public/common/service_manager_connection.h"
 #include "device/vr/features/features.h"
+#include "device/vr/orientation/orientation_device_provider.h"
 
 #if defined(OS_ANDROID)
 #include "device/vr/android/gvr/gvr_device_provider.h"
@@ -25,7 +27,15 @@ namespace vr {
 
 namespace {
 VRDeviceManager* g_vr_device_manager = nullptr;
+
+void ProvideDevice(VRServiceImpl* service,
+                   base::OnceClosure callback,
+                   device::VRDevice* device) {
+  service->ConnectDevice(device);
+  std::move(callback).Run();
 }
+
+}  // namespace
 
 VRDeviceManager* VRDeviceManager::GetInstance() {
   if (!g_vr_device_manager) {
@@ -50,6 +60,17 @@ bool VRDeviceManager::HasInstance() {
 
 VRDeviceManager::VRDeviceManager(ProviderList providers)
     : providers_(std::move(providers)) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+#if defined(OS_ANDROID)
+  content::ServiceManagerConnection* connection =
+      content::ServiceManagerConnection::GetForProcess();
+  if (connection) {
+    default_provider_ = std::make_unique<device::OrientationDeviceProvider>(
+        connection->GetConnector());
+  }
+#endif
+
   CHECK(!g_vr_device_manager);
   g_vr_device_manager = this;
 }
@@ -85,7 +106,13 @@ void VRDeviceManager::AddService(
 
   services_.insert(service);
 
-  std::move(callback).Run();
+  // If there are no devices, try to at least provide the orientation API.
+  if (devices.size() == 0 && default_provider_) {
+    default_provider_->GetDevice(
+        base::BindOnce(&ProvideDevice, service, std::move(callback)));
+  } else {
+    std::move(callback).Run();
+  }
 }
 
 void VRDeviceManager::RemoveService(VRServiceImpl* service) {
@@ -116,6 +143,10 @@ void VRDeviceManager::InitializeProviders() {
 
   for (const auto& provider : providers_)
     provider->Initialize();
+
+  if (default_provider_) {
+    default_provider_->Initialize();
+  }
 
   vr_initialized_ = true;
 }

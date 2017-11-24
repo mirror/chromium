@@ -17,6 +17,7 @@
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/vr/service/vr_service_impl.h"
+#include "device/vr/orientation/orientation_device_provider.h"
 #include "device/vr/vr_device.h"
 #include "device/vr/vr_device_provider.h"
 #include "device/vr/vr_service.mojom.h"
@@ -57,6 +58,7 @@ class VRDeviceManager {
   void InitializeProviders();
 
   ProviderList providers_;
+  std::unique_ptr<device::OrientationDeviceProvider> default_provider_;
 
   // Devices are owned by their providers.
   using DeviceMap = std::map<unsigned int, device::VRDevice*>;
