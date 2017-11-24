@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d64618_4f36438d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:36:59Z",
+      "side": 1,
+      "message": "nit: add a comment before this line like:\n\n  // UserActivityLoggerDelegate:\n\nto show where the overridden method came from.",
+      "revId": "c629a8789e0050f298a53590977c87a8a6236e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c66f909_c9bd81e1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:36:59Z",
+      "side": 1,
+      "message": "nit: delete blank line",
+      "revId": "c629a8789e0050f298a53590977c87a8a6236e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d624db36_3ab1ed35",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:36:59Z",
+      "side": 1,
+      "message": "nit: use something like base::Time::UnixEpoch() instead so that you don\u0027t end up with different values on each test run\n\nplease also update calls below",
+      "revId": "c629a8789e0050f298a53590977c87a8a6236e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8e13f0_c6f1379d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:36:59Z",
+      "side": 1,
+      "message": "nit: use explicit type here instead of \u0027auto\u0027 since the type isn\u0027t obvious\n\nplease also update calls below",
+      "revId": "c629a8789e0050f298a53590977c87a8a6236e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
