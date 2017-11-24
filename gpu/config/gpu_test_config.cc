@@ -223,6 +223,8 @@ bool GPUTestBotConfig::Matches(const GPUTestConfig& config) const {
   DCHECK(config.IsValid());
   if (config.os() != kOsUnknown && (os() & config.os()) == 0)
     return false;
+  if (gpu_vendor().empty())
+    return false;
   if (config.gpu_vendor().size() > 0) {
     bool contained = false;
     for (size_t i = 0; i < config.gpu_vendor().size(); ++i) {
