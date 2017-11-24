@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c64efbe3_16066ff0",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T18:56:48Z",
+      "side": 1,
+      "message": "Talked offline. I moved this to the header file to make it cleaner and to be able to use initializer list.",
+      "parentUuid": "0a3165e7_712231c1",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "2b462fc35a21ffe1b6ccd6c8e1c10c166ab63a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8be921ec_1a52cf01",
         "filename": "ui/latency/latency_tracker.h",
         "patchSetId": 3
@@ -116,6 +140,30 @@
       "revId": "2b462fc35a21ffe1b6ccd6c8e1c10c166ab63a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9348dceb_14472124",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T18:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c1185a_6e431d5d",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 33
+      },
+      "revId": "2b462fc35a21ffe1b6ccd6c8e1c10c166ab63a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
