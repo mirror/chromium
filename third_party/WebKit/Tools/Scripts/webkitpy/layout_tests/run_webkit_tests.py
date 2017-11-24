@@ -31,6 +31,7 @@
 import logging
 import optparse
 import sys
+import threading
 import traceback
 
 from webkitpy.common import exit_codes
@@ -602,6 +603,17 @@ def run(port, options, args, logging_stream, stdout):
     try:
         run_details = _run_tests(port, options, args, printer)
         printer.flush()
+
+        _log.debug('Live threads:')
+        for i, thread in enumerate(threading.enumerate()):
+            _log.debug('  %d: %s %s%s', i, str(thread.ident), thread.name,
+                       ' (daemon)' if thread.daemon else '')
+            if thread.ident:
+                stack = sys._current_frames()[thread.ident]  # pylint: disable=protected-access
+                for filename, lineno, name, line in traceback.extract_stack(stack):
+                    _log.debug('    %s %s:%d', name, filename, lineno)
+                    if line:
+                        _log.debug('      %s', line.strip())
 
         _log.debug('')
         _log.debug('Testing completed. Exit status: %d', run_details.exit_code)
