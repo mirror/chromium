@@ -69,7 +69,8 @@ class UserActivityLoggerTest : public testing::Test {
 // UserActivityEvent.
 TEST_F(UserActivityLoggerTest, LogAfterIdleEvent) {
   // Trigger an idle event.
-  ReportIdleEvent({base::Time::Now()});
+  base::Time now = base::Time::Now();
+  ReportIdleEvent({now, now});
   ReportUserActivity(nullptr);
 
   const auto& events = GetEvents();
@@ -85,7 +86,8 @@ TEST_F(UserActivityLoggerTest, LogAfterIdleEvent) {
 TEST_F(UserActivityLoggerTest, LogBeforeIdleEvent) {
   ReportUserActivity(nullptr);
   // Trigger an idle event.
-  ReportIdleEvent({base::Time::Now()});
+  base::Time now = base::Time::Now();
+  ReportIdleEvent({now, now});
 
   EXPECT_EQ(0U, GetEvents().size());
 }
@@ -95,7 +97,8 @@ TEST_F(UserActivityLoggerTest, LogBeforeIdleEvent) {
 TEST_F(UserActivityLoggerTest, LogSecondEvent) {
   ReportUserActivity(nullptr);
   // Trigger an idle event.
-  ReportIdleEvent({base::Time::Now()});
+  base::Time now = base::Time::Now();
+  ReportIdleEvent({now, now});
   // Another user event.
   ReportUserActivity(nullptr);
 
@@ -111,12 +114,14 @@ TEST_F(UserActivityLoggerTest, LogSecondEvent) {
 // Log multiple events.
 TEST_F(UserActivityLoggerTest, LogMultipleEvents) {
   // Trigger an idle event.
-  ReportIdleEvent({base::Time::Now()});
+  base::Time now = base::Time::Now();
+  ReportIdleEvent({now, now});
   // First user event.
   ReportUserActivity(nullptr);
 
   // Trigger an idle event.
-  ReportIdleEvent({base::Time::Now()});
+  now = base::Time::Now();
+  ReportIdleEvent({now, now});
   // Second user event.
   ReportUserActivity(nullptr);
 
