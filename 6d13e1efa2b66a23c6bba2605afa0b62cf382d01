@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbcc6b0a_5b65a0d8",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-24T17:10:54Z",
+      "side": 1,
+      "message": "I guess that we\u0027d have to define a delegate type and everything if we\u0027d want to avoid storing delegate_ in here? That\u0027s probably not worth the effort.",
+      "revId": "6d13e1efa2b66a23c6bba2605afa0b62cf382d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4b9f41_64f3ecd4",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-24T17:10:54Z",
+      "side": 1,
+      "message": "It looks like only the placeholder is being used - do you expect other values, or could we change the NotificationButtonMD constructor to something like (renaming `text` for clarity):\n\n  NotificationButtonMD(views::ButtonListener* listener,\n                       bool is_inline_reply,\n                       const base::string16\u0026 label,\n                       const base::string16\u0026 placeholder)\n\nThat\u0027d avoid keeping copies of the message_center::Notification data in the layout code, which we\u0027ve tried to avoid.\n\nNotificationInputMD::set_button_info() could then be dropped by calling set_placeholder_text() directly.",
+      "revId": "6d13e1efa2b66a23c6bba2605afa0b62cf382d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8c2874_d8f1295d",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-24T17:10:54Z",
+      "side": 1,
+      "message": "(unrelated to this line)\n\nIf button_info.placeholder is the empty string, views::Textfield will not render any placeholder at all. Do we want to (and should we?) define our own placeholder text in that case? A blue bar without context may not be obvious.",
+      "revId": "6d13e1efa2b66a23c6bba2605afa0b62cf382d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdead3a_0d03401c",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-24T17:10:54Z",
+      "side": 1,
+      "message": "Ohh, I like that doing a collapsing/expanding cycle is a way to get out of inline reply again :)",
+      "revId": "6d13e1efa2b66a23c6bba2605afa0b62cf382d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
