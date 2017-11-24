@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be13db6d_b41d96ff",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-24T14:54:55Z",
+      "side": 1,
+      "message": "It is not necessary, but it ensure that the class invariant is always true which I think is important to do if possible.",
+      "parentUuid": "d4403eb0_0ca176b7",
+      "range": {
+        "startLine": 298,
+        "startChar": 4,
+        "endLine": 298,
+        "endChar": 19
+      },
+      "revId": "6125c6253d34ce7995bd0aba02a43fa3043c6338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c2051f5_79bc737a",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6125c6253d34ce7995bd0aba02a43fa3043c6338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaee0f9a_c08735fa",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-24T14:54:55Z",
+      "side": 1,
+      "message": "Not necessary, but the compiler should be smart enough to remove this. I think it make the code easier to read.",
+      "parentUuid": "2c2051f5_79bc737a",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 308,
+        "endChar": 19
+      },
+      "revId": "6125c6253d34ce7995bd0aba02a43fa3043c6338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
