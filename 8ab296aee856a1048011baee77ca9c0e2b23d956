@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1813c24d_e504e834",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-24T15:04:32Z",
+      "side": 1,
+      "message": "maybe drop this temporary?\n\niframe.allow \u003d featurePolicies.join(\u0027 \\\u0027none\\\u0027; \u0027) + \u0027 \\\u0027none\\\u0027;\u0027;",
+      "revId": "8ab296aee856a1048011baee77ca9c0e2b23d956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4b27d5_620a3e64",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-24T15:04:32Z",
+      "side": 1,
+      "message": "std::any_of?",
+      "revId": "8ab296aee856a1048011baee77ca9c0e2b23d956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8a418a_9b16a1e3",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-24T15:04:32Z",
+      "side": 1,
+      "message": "Access to sensor features is disallowed by feature policy?",
+      "revId": "8ab296aee856a1048011baee77ca9c0e2b23d956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
