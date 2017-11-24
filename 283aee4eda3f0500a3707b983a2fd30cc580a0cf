@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f9bb3bde_a1b72bab",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/regions-lines.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-24T14:35:36Z",
+      "side": 0,
+      "message": "Spec says\n***************************\nThe lines attribute, on getting, must return the WebVTT region lines of the WebVTT region that the VTTRegion object represents. On setting, if the new value is negative, then an IndexSizeError exception must be thrown. Otherwise, the WebVTT region lines must be set to the new value.\n*****************************\n\nMay be this should be \"unsigned long\" instead of \"long\" and probably needs clarification from the spec itself.\nlets get opinion from fs.\n@fs, WDYT?",
+      "parentUuid": "d3be0705_845871a1",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "283aee4eda3f0500a3707b983a2fd30cc580a0cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b09c3a46_fcead13f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-lines.vtt",
         "patchSetId": 3

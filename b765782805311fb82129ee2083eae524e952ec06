@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d0aa700_e7af32bd",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-24T14:35:36Z",
+      "side": 1,
+      "message": "may be CollectRegion or some other name which suites better than RecoverRegion, as we are not actually recovering it?",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 26
+      },
+      "revId": "b765782805311fb82129ee2083eae524e952ec06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
