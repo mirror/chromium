@@ -49,6 +49,9 @@ class WM_CORE_EXPORT Shadow : public ui::ImplicitAnimationObserver {
   // Sets the radius for the rounded corners to take into account when
   // adjusting the shadow layer to frame |content_bounds|. 0 or greater.
   void SetRoundedCornerRadius(int rounded_corner_radius);
+  int effective_rounded_corner_radius_for_testing() const {
+    return effective_rounded_corner_radius_;
+  }
 
   // ui::ImplicitAnimationObserver overrides:
   void OnImplicitAnimationsCompleted() override;
@@ -73,6 +76,10 @@ class WM_CORE_EXPORT Shadow : public ui::ImplicitAnimationObserver {
   // Rounded corners are drawn on top of the window's content layer,
   // we need to exclude them from the occlusion area.
   int rounded_corner_radius_;
+
+  // The rounded corner radius of the shadow image that's currently set on
+  // |shadow_layer_|.
+  int effective_rounded_corner_radius_ = 0;
 
   // The parent layer of the shadow layer. It serves as a container accessible
   // from the outside to control the visibility of the shadow.
