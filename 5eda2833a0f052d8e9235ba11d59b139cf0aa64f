@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "952407e3_005414bb",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-24T19:59:28Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think json.load will close the file, and generally best not to leave it to GC.\n\nwith open(args.residency) as f:\n  residency \u003d json.load(f)",
+      "revId": "5eda2833a0f052d8e9235ba11d59b139cf0aa64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cf924f_3362d080",
+        "filename": "tools/android/native_lib_memory/process_residency.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-24T19:59:28Z",
+      "side": 1,
+      "message": "nit: type\u003dstr, required\u003dFalse, and default\u003dNone are the defaults. I\u0027d omit them.",
+      "revId": "5eda2833a0f052d8e9235ba11d59b139cf0aa64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf71f36_a6872070",
+        "filename": "tools/android/native_lib_memory/process_residency.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-24T19:59:28Z",
+      "side": 1,
+      "message": "nit: this line\u0027s a bit hard to read. How about:\n\nstart, end \u003d f.readline().split()\nresult \u003d {\u0027start\u0027: int(start), \u0027end\u0027: int(end), \u0027residency\u0027: {}}",
+      "revId": "5eda2833a0f052d8e9235ba11d59b139cf0aa64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002031c2_5bd228ec",
+        "filename": "tools/android/native_lib_memory/visualize.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-24T19:59:28Z",
+      "side": 1,
+      "message": "nit: I think this is the default sort. Remove lambda?",
+      "range": {
+        "startLine": 213,
+        "startChar": 39,
+        "endLine": 213,
+        "endChar": 54
+      },
+      "revId": "5eda2833a0f052d8e9235ba11d59b139cf0aa64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
