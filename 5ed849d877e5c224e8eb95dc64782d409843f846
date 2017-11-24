@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c780f892_7d254174",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "410a16cd_565ed8b2",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5534bcd4_3754fc29",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55acd036_f6de9ca2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5534bcd4_3754fc29",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6e173140_5d5e3578",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Generally agreed, but let\u0027s do it in a follow-up patch. Added a TODO.",
+      "parentUuid": "e2d00d40_bb16adab",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d7a9419_0482809f",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590cdafd_73905f7d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "See an earlier discussion with Alex -- the first step will be just to run TaskQueueManager::DoWork as before and run the selector inside.",
+      "parentUuid": "7d7a9419_0482809f",
+      "range": {
+        "startLine": 738,
+        "startChar": 36,
+        "endLine": 738,
+        "endChar": 44
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ac53332e_b47d8dc8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Thanks, done. Removed this method in favour of doing this automatically upon TaskQueueManager deletion. Added a test.",
+      "parentUuid": "b4ab55ba_f213e07d",
+      "range": {
+        "startLine": 759,
+        "startChar": 50,
+        "endLine": 759,
+        "endChar": 52
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aa0f8d6_43324994",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a201eac_c75601a4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aa0f8d6_43324994",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f98889fc_d6234701",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "I plan to split TaskQueueManager into TQM interface and TaskQueueManagerImpl. It will be resolved by it.",
+      "parentUuid": "f6172617_197c3203",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 30
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "548327df_2f407b95",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37de96ea_7381efa0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548327df_2f407b95",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 67
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "d41ef3ce_234fd49a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "I wasn\u0027t planning to move CreateTaskQueueManagerWithTestTimeForTest to base/. Maybe we should, let\u0027s discuss later.",
+      "parentUuid": "a33a5828_1e7cb260",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53c338ca_f1ac7c9c",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
         "patchSetId": 8
@@ -229,6 +445,30 @@
       "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f5d757_6b70a6cd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53c338ca_f1ac7c9c",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "c395a521_05ca16af",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "At that point we\u0027ll rename them to SequenceController. Let\u0027s not worry about that for now.",
+      "parentUuid": "c4807134_d0fea427",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fea39d52_f0fe7a66",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/compositor_worker_scheduler.h",
         "patchSetId": 8
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "e165f355_c28afb4f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/compositor_worker_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea39d52_f0fe7a66",
+      "range": {
+        "startLine": 28,
+        "startChar": 22,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a6a15e_d6d2cc50",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/scheduler_helperh",
         "patchSetId": 8
@@ -292,6 +580,24 @@
       "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a372edce_3999801d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/scheduler_helperh",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T13:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a6a15e_d6d2cc50",
+      "revId": "5ed849d877e5c224e8eb95dc64782d409843f846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
