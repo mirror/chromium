@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dd7227ab_52cf140f",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-24T07:23:05Z",
+      "side": 1,
+      "message": "Also have a brief comment about what this params is about, and how this is passed from whom (i.e. which process) to whom.",
+      "revId": "1468a1288fa13d01ecd735b7a155048f678a5d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcfb9bd7_82b84442",
         "filename": "content/common/service_worker/embedded_worker.mojom",
         "patchSetId": 5
