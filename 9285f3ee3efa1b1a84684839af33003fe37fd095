@@ -210,6 +210,24 @@
       "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c4537b_90d134b5",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T14:22:16Z",
+      "side": 1,
+      "message": "My concern was not about the API. The API I think is clear enough, because there is one function taking a refresh token, and another that does not, which makes clear that one is an existing account and the other is a new account.\n\nMy concern was about having both AccountInfo and the other fields internally. I think it is confusing.\n\nWhat about removing account_info_ and adding either:\n\n1) bool is_existing_account_;\n2) Or a function:\nbool IsExistingAccount() { return !refresh_token.empty(); }",
+      "parentUuid": "f1d87a48_d0d09dac",
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
