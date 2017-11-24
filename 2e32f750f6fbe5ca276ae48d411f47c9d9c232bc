@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f64c1b6_6ce06148",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-24T20:20:26Z",
+      "side": 1,
+      "message": "So TabLifecycleUnitSource will be the one to maintain and update these properties? Is there a reason why that\u0027s better than having the units update themselves?\n\nEither way, can we document the model?",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "2e32f750f6fbe5ca276ae48d411f47c9d9c232bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
