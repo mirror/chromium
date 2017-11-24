@@ -244,13 +244,19 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
 
  protected:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
-#if defined(HEAP_INCREMENTAL_MARKING)
+#if HEAP_INCREMENTAL_MARKING
     if (value) {
-      BasePage const* const page = PageFromObject(value);
+      BasePage* const page = PageFromObject(value);
       if (page->IsIncrementalMarking()) {
         DCHECK(ThreadState::Current()->IsIncrementalMarking());
-        // TODO(mlippautz): Add to marking work list once include-cycles have
-        // been resolved.
+        HeapObjectHeader* const header =
+            reinterpret_cast<NormalPage*>(page)->FindHeaderFromAddress(
+                reinterpret_cast<Address>(const_cast<T*>(value)));
+        if (header->IsMarked()) {
+          ThreadState::Current()->Heap().PushTraceCallback(
+              header->Payload(),
+              ThreadHeap::GcInfo(header->GcInfoIndex())->trace_);
+        }
       }
     }
 #endif  // HEAP_INCREMENTAL_MARKING
