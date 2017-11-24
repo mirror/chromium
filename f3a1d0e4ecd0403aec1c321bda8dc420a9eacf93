@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "027b723e_576a69b4",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 3573,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T00:17:14Z",
+      "side": 1,
+      "message": "Adding a build flag for every chrome feature isn\u0027t sustainable.. This file would have if (enable_tabstrip), if (enable_favicons) if (enable_tooltips) if (enable_bookmarks) if (enable_tabstrip_animations) if (enable_passwords) if (enable_payments) if (enable_app_info_dialog) if (enable_autofill) if (enable_cookies) if (enable_sync) if (enable_packaged_apps) if (enable_hosted_apps) if (enable_ime) if (enable_downloads) if (enable_infobars)...\n\nJust adding a feature that\u0027s always enabled on particular platforms isn\u0027t reason enough to have a build flag, unless it is experimental or temporary \u003d\u003e likely to be removed in future. Or if it\u0027s a large number of files (although ideally in that case it is both (a) in its own subfolder and (b) a separate static_library/component target).\n\nI think hooking `!is_android` or just `toolkit_views` is fine. But if someone feels strongly about keeping a build flag that\u0027s fine too.",
+      "parentUuid": "372d4ea2_e701ff3e",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "368437e3_e80b1532",
         "filename": "chrome/browser/ui/tabs/tab_logger.cc",
         "patchSetId": 14
@@ -352,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "39e55e7c_679b7eac",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T00:17:14Z",
+      "side": 1,
+      "message": "Can you expand the class comment to mention the relationship and roles? Or pick better names? It\u0027s hard to distinguish between `TabLogger` and `TabTracker`. (and to distinguish them from TabUsageRecorder / TabReactivationTracker )\n\nMaybe\n\nTabTracker -\u003e ResourceCoordinationBrowserTabWatcher/Observer/Tracker\nTabLogger -\u003e UKMTabUsageLogger",
+      "parentUuid": "7cf62935_3cbca1cb",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b055805f_1d7c7900",
         "filename": "chrome/browser/ui/tabs/tab_logger.h",
         "patchSetId": 14
@@ -381,6 +417,24 @@
       "side": 1,
       "message": "I asked sky@ but haven\u0027t heard back: Isn\u0027t chrome::FindBrowserWithWebContents potentially expensive? Sometimes the caller will have a Browser* already.\n\nIs there a better way to get |browser| from |web_contents|? I don\u0027t need the Browser here now, but will at some point.",
       "parentUuid": "b055805f_1d7c7900",
+      "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55ab952_25a620d3",
+        "filename": "chrome/browser/ui/tabs/tab_logger.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T00:17:14Z",
+      "side": 1,
+      "message": "I don\u0027t think chrome::FindBrowserWithWebContents is expensive in the grand scheme of things. It just compares pointers from a few collections. Even if someone manages to get 1000 tabs, a single call to `malloc` is probably more expensive and we do that every time a std::string gets copied.",
+      "parentUuid": "37ee573d_f8a4565b",
       "revId": "f3a1d0e4ecd0403aec1c321bda8dc420a9eacf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
