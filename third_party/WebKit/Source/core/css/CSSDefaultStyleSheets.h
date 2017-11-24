@@ -69,7 +69,8 @@ class CSSDefaultStyleSheets
   // module.
   class CORE_EXPORT UAStyleSheetLoader {
    public:
-    UAStyleSheetLoader(){};
+    UAStyleSheetLoader() = default;
+    ;
     virtual ~UAStyleSheetLoader() = default;
     virtual String GetUAStyleSheet() = 0;
 
