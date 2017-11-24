@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55a398eb_3176a377",
+        "filename": "components/viz/client/forwarding_compositing_mode_reporter_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T20:34:57Z",
+      "side": 1,
+      "message": "Done good point",
+      "parentUuid": "45cff13a_ae835dc2",
+      "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8a14b4d_6d31b41c",
         "filename": "components/viz/client/forwarding_compositing_mode_reporter_impl.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-24T16:49:12Z",
       "side": 1,
       "message": "Should this be in components/viz/host/?",
+      "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec8b8fa_b7b68963",
+        "filename": "components/viz/client/forwarding_compositing_mode_reporter_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T20:34:57Z",
+      "side": 1,
+      "message": "HMMM yeah I guess so~!",
+      "parentUuid": "d8a14b4d_6d31b41c",
       "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ae33d30_2c599efd",
+        "filename": "components/viz/client/forwarding_compositing_mode_reporter_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T20:34:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7de65cb4_12157a06",
+      "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8c6261f_3d6eae69",
         "filename": "components/viz/service/display_embedder/compositing_mode_reporter_impl.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1d4b1756_72e05115",
+        "filename": "components/viz/service/display_embedder/compositing_mode_reporter_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T20:34:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c6261f_3d6eae69",
+      "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c59f7bd_47c28345",
         "filename": "content/browser/browser_main_loop.h",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-24T16:49:12Z",
       "side": 1,
       "message": "Slightly outside the scope of this CL but I don\u0027t think this should be necessary? Both CompositingModeReporterImpl (well before the change) and ForwardingCompositingModeReporterImpl have a BindingSet. The mojo stuff can be self contained there.\n\nBrowserMainLoop::GetCompositingModeReporter() {\n...\ncompositing_mode_reporter_impl_-\u003eBindRequest(std::move(request));\n...\n}",
+      "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3c75b1_2a66f0f6",
+        "filename": "content/browser/browser_main_loop.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T20:34:57Z",
+      "side": 1,
+      "message": "Good thought, done.",
+      "parentUuid": "9c59f7bd_47c28345",
       "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "84cde0c8_4cd75006",
+        "filename": "content/browser/browser_main_loop.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T20:34:57Z",
+      "side": 1,
+      "message": "That\u0027s true, but the .cc would need to know the difference since it makes it anyway. Given that I think 2 pointers and less interfaces/inheritance is simpler without adding knowledge to the system. Esp cuz eventually one of these pointers will go away.",
+      "parentUuid": "3ffc841f_baac1b92",
+      "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2459dad7_2ca9a7b6",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-24T16:49:12Z",
       "side": 1,
       "message": "I don\u0027t think |compositing_mode_reporter_| or |compositing_mode_watcher_binding_| is necessary. You pass a m::CompositingModeReporterPtr to the GPU which gets bound and then you use it to bind m::CompositingModeWatcherPtr.\n\nInstead you can just pass the m::CompositingModeWatcherPtr in FrameSinkManagerParams. That will get added to the CompositingModeWatcherImpl in the GPU when it\u0027s created and then everything in browser can use the ForwardingCompositingModeWatcherImpl.",
+      "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb79baf4_d2f38e44",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T20:34:57Z",
+      "side": 1,
+      "message": "I think I need compositing_mode_watcher_binding_ still. That\u0027s the binding of the mojo ptr for the VizProcessTransportFactory to listen to the ForwardingReporter now. I could make a non-mojo observer list instead but is that worth?",
+      "parentUuid": "2459dad7_2ca9a7b6",
       "revId": "5c6a6911c918063b62e9b32d9b4bcd199d431a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
