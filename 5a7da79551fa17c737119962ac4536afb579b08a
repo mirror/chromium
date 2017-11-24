@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b814b8e1_eee280f2",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-24T17:35:29Z",
+      "side": 1,
+      "message": "Can you add a note here that WindowNoLongerValidTarget() will update the cursor, and we don\u0027t need to do it here?",
+      "revId": "5a7da79551fa17c737119962ac4536afb579b08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
