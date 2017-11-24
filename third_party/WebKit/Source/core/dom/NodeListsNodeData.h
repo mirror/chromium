@@ -63,7 +63,9 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
   struct NodeListAtomicCacheMapEntryHash {
     STATIC_ONLY(NodeListAtomicCacheMapEntryHash);
     static unsigned GetHash(const NamedNodeListKey& entry) {
-      return DefaultHash<AtomicString>::Hash::GetHash(entry.second) +
+      return DefaultHash<AtomicString>::Hash::GetHash(
+                 entry.second == g_any_name.LocalName() ? g_star_atom
+                                                        : entry.second) +
              entry.first;
     }
     static bool Equal(const NamedNodeListKey& a, const NamedNodeListKey& b) {
@@ -100,7 +102,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
   T* AddCache(ContainerNode& node, CollectionType collection_type) {
     DCHECK(ThreadState::Current()->IsGCForbidden());
     NodeListAtomicNameCacheMap::AddResult result = atomic_name_caches_.insert(
-        NamedNodeListKey(collection_type, g_star_atom), nullptr);
+        NamedNodeListKey(collection_type, g_any_name.LocalName()), nullptr);
     if (!result.is_new_entry) {
       return static_cast<T*>(result.stored_value->value.Get());
     }
@@ -112,8 +114,8 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
 
   template <typename T>
   T* Cached(CollectionType collection_type) {
-    return static_cast<T*>(
-        atomic_name_caches_.at(NamedNodeListKey(collection_type, g_star_atom)));
+    return static_cast<T*>(atomic_name_caches_.at(
+        NamedNodeListKey(collection_type, g_any_name.LocalName())));
   }
 
   TagCollectionNS* AddCache(ContainerNode& node,

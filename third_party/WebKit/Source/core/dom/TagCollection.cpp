@@ -37,7 +37,7 @@ TagCollection::TagCollection(ContainerNode& root_node,
 TagCollection::~TagCollection() {}
 
 bool TagCollection::ElementMatches(const Element& test_node) const {
-  if (qualified_name_ == g_star_atom)
+  if (qualified_name_ == g_any_name.LocalName())
     return true;
 
   return qualified_name_ == test_node.TagQName().ToString();
@@ -58,7 +58,8 @@ TagCollectionNS::~TagCollectionNS() {}
 bool TagCollectionNS::ElementMatches(const Element& test_node) const {
   // Implements
   // https://dom.spec.whatwg.org/#concept-getelementsbytagnamens
-  if (local_name_ != g_star_atom && local_name_ != test_node.localName())
+  if (local_name_ != g_any_name.LocalName() &&
+      local_name_ != test_node.localName())
     return false;
 
   return namespace_uri_ == g_star_atom ||

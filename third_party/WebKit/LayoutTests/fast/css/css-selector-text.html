@@ -30,6 +30,8 @@ function testSelectorRoundTrip(selector)
 }
 
 testSelectorRoundTrip('*');
+testSelectorRoundTrip('\\*');
+testSelectorRoundTrip('\\2a');
 testSelectorRoundTrip('a');
 testSelectorRoundTrip('#a');
 testSelectorRoundTrip('.a');

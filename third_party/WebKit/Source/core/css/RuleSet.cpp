@@ -107,7 +107,7 @@ static void ExtractSelectorValues(const CSSSelector* selector,
       class_name = selector->Value();
       break;
     case CSSSelector::kTag:
-      if (selector->TagQName().LocalName() != g_star_atom)
+      if (selector->TagQName().LocalName() != g_any_name.LocalName())
         tag_name = selector->TagQName().LocalName();
       break;
     case CSSSelector::kPseudoClass:
