@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0963408_41b97401",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-24T09:50:54Z",
+      "side": 1,
+      "message": "Do we really need both location_container_for_sticky and location_container here? Just calling Container() instead of ToLayoutTableCell(this)-\u003eRow() should have the same effect, and maybe you could instead initialize location_container to the row in the first place.\n\nI.e.\nLayoutObject* location_container \u003d\n      IsLayoutInline() || IsTableCell() ? Container() : ToLayoutBox(this)-\u003eLocationContainer();",
+      "revId": "08991a8a05af452eef30fff0641a64f6bf97506c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
