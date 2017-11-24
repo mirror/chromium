@@ -69,8 +69,13 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kJoinADDomainMethod);
     dbus::MessageWriter writer(&method_call);
-    writer.AppendString(machine_name);
-    writer.AppendString(user_principal_name);
+    authpolicy::JoinDomainRequest request;
+    request.set_machine_name(machine_name);
+    request.set_user_principal_name(user_principal_name);
+    if (!writer.AppendProtoAsArrayOfBytes(request)) {
+      std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
+      return;
+    }
     writer.AppendFileDescriptor(password_fd);
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
@@ -85,8 +90,14 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kAuthenticateUserMethod);
     dbus::MessageWriter writer(&method_call);
-    writer.AppendString(user_principal_name);
-    writer.AppendString(object_guid);
+    authpolicy::AuthenticateUserRequest request;
+    request.set_user_principal_name(user_principal_name);
+    request.set_account_id(object_guid);
+    if (!writer.AppendProtoAsArrayOfBytes(request)) {
+      std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE,
+                              authpolicy::ActiveDirectoryAccountInfo());
+      return;
+    }
     writer.AppendFileDescriptor(password_fd);
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
@@ -136,7 +147,7 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
     dbus::MethodCall method_call(authpolicy::kAuthPolicyInterface,
                                  authpolicy::kRefreshUserPolicyMethod);
     dbus::MessageWriter writer(&method_call);
-    writer.AppendString(account_id.GetAccountIdKey());
+    writer.AppendString(account_id.GetObjGuid());
     proxy_->CallMethod(
         &method_call, kSlowDbusTimeoutMilliseconds,
         base::BindOnce(&AuthPolicyClientImpl::HandleRefreshPolicyCallback,
