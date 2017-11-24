@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f54b69c_3f7355db",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestObject.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T08:42:04Z",
+      "side": 1,
+      "message": "This is missing points.  We\u0027d like to cover all the cases, and confirm that every case is okay.\n\ncase A) An IDL operation is NOT overloaded.\ncase A-1) With [CEReactions] \u003d\u003e Generated code must have the CER scope.\ncase A-2) Without [CEReactions] \u003d\u003e Must NOT have the CER scope.\n\ncase B) An IDL operation is overloaded.  One with [CEReactions] and the other without [CEReactions].\nWith [CEReactions] \u003d\u003e Must have the CER scope.\nWithout [CEReactions] \u003d\u003e Must NOT have the CER scope.",
+      "revId": "e4545e7797ad5cbc4b4a1fa576a139892544e7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
