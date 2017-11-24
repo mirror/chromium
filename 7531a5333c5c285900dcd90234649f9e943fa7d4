@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3ca2006_73714c8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-24T03:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80a0fec8_545d78ce",
+      "revId": "7531a5333c5c285900dcd90234649f9e943fa7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a455e354_4a6b9351",
         "filename": "device/geolocation/geolocation_provider_impl.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a19f63f_950a361a",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-24T03:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a455e354_4a6b9351",
+      "revId": "7531a5333c5c285900dcd90234649f9e943fa7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08aaf4cc_f0856216",
         "filename": "device/geolocation/public/interfaces/geolocation_control.mojom",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-23T10:15:59Z",
       "side": 1,
       "message": "This is a great starter for this comment. It\u0027s a complex issue to try to get across in a comment, but is important. I think that we want to avoid mentioning //chrome too heavily here. How about:\n\n\"GeolocationControl manages Geolocation\u0027s permission model. In particular, before geolocation can be accessed by any client, a trusted client must connect to GeolocationControl to inform the geolocation implementation that the user has opted into location services. It is assumed that before making this connection, that trusted client has interacted with the user to obtain this permission. Note that as the Device Service is a global service, this permission is also granted globally once it is granted at all. If a finer-granularity permission model is desired in a specific context, it is up to the client of the Device Service to manage that permission model (for example, the chrome_browser trusted client manages the web\u0027s per-origin permission model).\"",
+      "revId": "7531a5333c5c285900dcd90234649f9e943fa7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa3616f_e0624c42",
+        "filename": "device/geolocation/public/interfaces/geolocation_control.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-24T03:58:18Z",
+      "side": 1,
+      "message": "Thanks very much!\nDone.",
+      "parentUuid": "08aaf4cc_f0856216",
       "revId": "7531a5333c5c285900dcd90234649f9e943fa7d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
