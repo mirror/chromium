@@ -45,6 +45,30 @@
       "revId": "b0704b04b4b81a64be808ab1ce1abcaa96e462c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4314acf9_3fe8326f",
+        "filename": "ui/keyboard/container_full_width_behavior.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-11-24T03:39:27Z",
+      "side": 1,
+      "message": "for an initial version, I think this is okay. The full-width and any future container layout should be entirely agnostic to draggable regions if that particular layout is not draggable itself. For persistent data that spans the lifetime of any keyboard object, we usually use static fields in the keyboard util, but that can be sorted out later. For now, I would leave this as a no-op function.",
+      "parentUuid": "e4ab4f7c_60513ef3",
+      "range": {
+        "startLine": 124,
+        "startChar": 9,
+        "endLine": 124,
+        "endChar": 14
+      },
+      "revId": "b0704b04b4b81a64be808ab1ce1abcaa96e462c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
