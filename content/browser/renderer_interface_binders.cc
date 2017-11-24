@@ -101,12 +101,15 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
   parameterized_binder_registry_.AddInterface(
       base::Bind(&ForwardServiceRequest<device::mojom::VibrationManager>,
                  device::mojom::kServiceName));
+  // HACK: quick test to not forward the origin here.  Failed bot tests in
+  // the first patch now pass locally for me, so let's see about the bots.
   parameterized_binder_registry_.AddInterface(
       base::Bind([](blink::mojom::WebSocketRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         WebSocketManager::CreateWebSocket(host->GetID(), MSG_ROUTING_NONE,
                                           std::move(request));
       }));
+
   parameterized_binder_registry_.AddInterface(
       base::Bind([](payments::mojom::PaymentManagerRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {

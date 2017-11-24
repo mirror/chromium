@@ -28,10 +28,9 @@ class CONTENT_EXPORT WebSocketManager
       public net::URLRequestContextGetterObserver {
  public:
   // Called on the UI thread:
-  static void CreateWebSocket(
-      int process_id,
-      int frame_id,
-      blink::mojom::WebSocketRequest request);
+  static void CreateWebSocket(int process_id,
+                              int frame_id,
+                              blink::mojom::WebSocketRequest request);
 
   // net::URLRequestContextGetterObserver implementation.
   void OnContextShuttingDown() override;
@@ -46,7 +45,9 @@ class CONTENT_EXPORT WebSocketManager
   // All other methods must run on the IO thread.
 
   ~WebSocketManager() override;
-  void DoCreateWebSocket(int frame_id, blink::mojom::WebSocketRequest request);
+  void DoCreateWebSocket(int frame_id,
+                         url::Origin frame_origin,
+                         blink::mojom::WebSocketRequest request);
   base::TimeDelta CalculateDelay() const;
   void ThrottlingPeriodTimerCallback();
 
@@ -56,6 +57,7 @@ class CONTENT_EXPORT WebSocketManager
       blink::mojom::WebSocketRequest request,
       int child_id,
       int frame_id,
+      url::Origin frame_origin,
       base::TimeDelta delay);
 
   // WebSocketImpl::Delegate methods:

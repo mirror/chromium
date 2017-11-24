@@ -14,6 +14,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/rand_util.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/storage_partition.h"
@@ -54,10 +55,9 @@ class WebSocketManager::Handle : public base::SupportsUserData::Data,
 };
 
 // static
-void WebSocketManager::CreateWebSocket(
-    int process_id,
-    int frame_id,
-    blink::mojom::WebSocketRequest request) {
+void WebSocketManager::CreateWebSocket(int process_id,
+                                       int frame_id,
+                                       blink::mojom::WebSocketRequest request) {
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
 
   RenderProcessHost* host = RenderProcessHost::FromID(process_id);
@@ -78,10 +78,15 @@ void WebSocketManager::CreateWebSocket(
     DCHECK(handle->manager());
   }
 
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(&WebSocketManager::DoCreateWebSocket,
-                                         base::Unretained(handle->manager()),
-                                         frame_id, base::Passed(&request)));
+  url::Origin frame_origin;
+  if (RenderFrameHost* frame = RenderFrameHost::FromID(process_id, frame_id))
+    frame_origin = frame->GetLastCommittedOrigin();
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&WebSocketManager::DoCreateWebSocket,
+                     base::Unretained(handle->manager()), frame_id,
+                     frame_origin, base::Passed(&request)));
 }
 
 WebSocketManager::WebSocketManager(int process_id,
@@ -119,6 +124,7 @@ WebSocketManager::~WebSocketManager() {
 
 void WebSocketManager::DoCreateWebSocket(
     int frame_id,
+    url::Origin frame_origin,
     blink::mojom::WebSocketRequest request) {
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
 
@@ -129,6 +135,7 @@ void WebSocketManager::DoCreateWebSocket(
         "Error in connection establishment: net::ERR_INSUFFICIENT_RESOURCES");
     return;
   }
+
   if (context_destroyed_) {
     request.ResetWithReason(
         blink::mojom::WebSocket::kInsufficientResources,
@@ -140,7 +147,7 @@ void WebSocketManager::DoCreateWebSocket(
   // connection (see OnLostConnectionToClient) or we need to shutdown.
 
   impls_.insert(CreateWebSocketImpl(this, std::move(request), process_id_,
-                                    frame_id, CalculateDelay()));
+                                    frame_id, frame_origin, CalculateDelay()));
   ++num_pending_connections_;
 
   if (!throttling_period_timer_.IsRunning()) {
@@ -184,9 +191,10 @@ WebSocketImpl* WebSocketManager::CreateWebSocketImpl(
     blink::mojom::WebSocketRequest request,
     int child_id,
     int frame_id,
+    url::Origin frame_origin,
     base::TimeDelta delay) {
   return new WebSocketImpl(delegate, std::move(request), child_id, frame_id,
-                           delay);
+                           frame_origin, delay);
 }
 
 int WebSocketManager::GetClientProcessId() {
