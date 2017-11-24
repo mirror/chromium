@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f08d219_710d3981",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "I\u0027d suggest |parent_interface_object|.  It\u0027s not a template (i.e. v8::FunctionTemplate).  Why template?",
+      "range": {
+        "startLine": 34,
+        "startChar": 32,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df654387_d41a17ce",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "If V8ObjectConstructor::CreateInterfaceObject is responsible to return non-empty v8::Function (and the function has CHECK inside it), we shouldn\u0027t need this (this CHECK must be a duplicate).",
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95155f2d_a74942a5",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "DCHECK should be enough?\nBecause we must never set a non-object + this code only runs right after the creation of the interface object, i.e. there must be no chance for author scripts to run.",
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8428e5f8_222804af",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "It\u0027s fine so far because there is no case so far that Blink needs to install conditional features onto legacy callback interface objects, etc.\n\nHowever, we should call InstallConditionalFeatures even if there is no prototype object.",
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa833db_652831bf",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "This is a confusing name, I think.  This is not \"conditional features\", this is a kind of command to specify whether to install or to not install conditional features.\n\nWhat about the following?  (I\u0027m fine with other names, too. :)\n\n    enum class CreationMode {\n      kInstallConditionalFeatures,\n      kDoNotInstallConditionalFeatures,\n    };",
+      "range": {
+        "startLine": 71,
+        "startChar": 13,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8311e66f_2b2741eb",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "These flags are used to specify whether we do or do not install conditional features.  Thus, |kInstall| and |kDoNotInstall| would be better.  kInstalled looks like that it\u0027s already installed.  (state\u003dadjective vs command\u003dimperative-verb)",
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdda5918_c9cd11b0",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "Ditto.  parent_interface_object?",
+      "range": {
+        "startLine": 93,
+        "startChar": 36,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7ea9fc_9844fc62",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 93,
+        "startChar": 32,
+        "endLine": 93,
+        "endChar": 41
+      },
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d526371_dd23d988",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cbfdc2_fad60c8a",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:26:15Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "df38d213651a4f15f87d88dcabbc14ea4e1f826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
