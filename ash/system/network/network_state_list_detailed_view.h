@@ -35,6 +35,8 @@ class NetworkStateListDetailedView
   // Manager properties (e.g. technology state) have changed.
   void Update();
 
+  void ToggleInfoBubbleForTesting();
+
  protected:
   enum ListType { LIST_TYPE_NETWORK, LIST_TYPE_VPN };
 
