@@ -88,6 +88,24 @@
       "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7029ac_68364268",
+        "filename": "third_party/WebKit/Source/modules/filesystem/FileCallback.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T09:07:44Z",
+      "side": 1,
+      "message": "FYI, I\u0027m changing the spec links here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/788719",
+      "parentUuid": "42d71e76_8268c8cf",
+      "revId": "4ca2b4cc0655a08e5ab19af21897c794ab84bcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
