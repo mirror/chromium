@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecf57f48_18adcdd0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-24T01:16:08Z",
+      "side": 1,
+      "message": "I\u0027m wondering if it makes sense to still combine these. It seems like this one will only ever set sandbox flags, while the other call will only ever change feature policy flags.",
+      "revId": "3d1b8a553d6a3e02f83557fe48b296e698902436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0be001_14b71707",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-24T01:16:08Z",
+      "side": 1,
+      "message": "Maybe call this ApplyFeaturePolicyFromHeader()? I think that might be a clearer name (despite the fact that it\u0027d be named similarly to ApplyFeaturePolicy)",
+      "revId": "3d1b8a553d6a3e02f83557fe48b296e698902436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdff4a4_ca32c164",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-24T01:16:08Z",
+      "side": 1,
+      "message": "Perhaps add a comment to note that the caller must ensure that the declared policy is relayed to the embedder via LocalFrameClient.",
+      "revId": "3d1b8a553d6a3e02f83557fe48b296e698902436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
