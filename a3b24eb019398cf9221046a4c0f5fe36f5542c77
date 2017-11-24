@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c279d87_ed8dde34",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T19:03:36Z",
+      "side": 1,
+      "message": "I noticed that, but I do think we don\u0027t want to fire FirstContentfulPaint on something like\n\u003cdiv\u003e\u0026nbsp\u003c/div\u003e so we do need to check for that. I realized this when I added the unittest. I\u0027m not quite sure what\u0027s the best way to avoid more confusion. The ContainsOnlyWhitespace implementations here are also different to the one in WTF::StringImpl.",
+      "parentUuid": "47cf7fde_561d6bf9",
+      "revId": "a3b24eb019398cf9221046a4c0f5fe36f5542c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cff73818_d8f59870",
         "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-24T18:33:00Z",
       "side": 1,
       "message": "WYDT of calling \"paint_controller_.SetTextPainted();\" in \"InlineTextBoxPainter::Paint\" right above the call to \"text_painter.Paint()\"? This would save having to plumb the whitespace bit through TextRun. I think it would also let you make it a bool instead of a tri-state since text has to be laid out before painting.",
+      "revId": "a3b24eb019398cf9221046a4c0f5fe36f5542c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150e963b_57000ab5",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T19:03:36Z",
+      "side": 1,
+      "message": "The problem with that is: what happens with all other codepaths to GraphicsContext::DrawTextInternal? If we stop calling SetTextPainted() in that method, then FCP will not trigger on any of those codepaths (which also render text). If we keep calling SetTextPainted(), then we somehow need to make sure that, when the caller is from InlineTextBoxPainter::Paint then it does not fire FCP under certain circumstances. The only reasonable places to have that bit of information are TextRunPaintInfo or PaintFlags.\n\nTo give a concrete example, I think this would no longer SetTextPainted:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/exported/WebFont.cpp?dr\u003dSs\u0026l\u003d98",
+      "parentUuid": "cff73818_d8f59870",
       "revId": "a3b24eb019398cf9221046a4c0f5fe36f5542c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
