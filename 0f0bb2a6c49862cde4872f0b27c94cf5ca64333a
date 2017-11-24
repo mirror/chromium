@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fea16254_21baebe6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-11-24T13:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6ac1ee2_8f8022c1",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "0f0bb2a6c49862cde4872f0b27c94cf5ca64333a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42cc6208_05aeb3a3",
         "filename": "chrome/android/java/res/drawable-xxxhdpi/card_modern.9.png",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "753cdec2_8a03f4a5",
+        "filename": "chrome/android/java/res/drawable-xxxhdpi/card_modern.9.png",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-11-24T13:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42cc6208_05aeb3a3",
+      "revId": "0f0bb2a6c49862cde4872f0b27c94cf5ca64333a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "978581a0_9b24eab7",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-24T11:35:31Z",
       "side": 1,
       "message": "s/Layout/Design/?",
+      "range": {
+        "startLine": 1943,
+        "startChar": 21,
+        "endLine": 1943,
+        "endChar": 27
+      },
+      "revId": "0f0bb2a6c49862cde4872f0b27c94cf5ca64333a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3391b30_dc17080a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-11-24T13:30:22Z",
+      "side": 1,
+      "message": "There are some layout changes, e.g. the thumbnails and badges are in a different place. It\u0027s not just colors, shadows, and spacing. I\u0027m not sure it matters much one way or the other, so I think I\u0027ll leave this as is.",
+      "parentUuid": "978581a0_9b24eab7",
       "range": {
         "startLine": 1943,
         "startChar": 21,
