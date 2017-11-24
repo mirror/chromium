@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6f94f14_f1d50d74",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "I am wondering in release build, if somehow gvr_keyboard_ is null, what would happen if we call keyboard api with a nullptr? Does it crash or just noop?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0d81e0a_2768b701",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
         "patchSetId": 6
@@ -25,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "26a990dd_9a87ccaa",
+        "filename": "chrome/browser/android/vr_shell/gvr_text_input_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "Why not move this to chrome/browser/vr? It doesn\u0027t look like this is GVR specific?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a8c9d4e_ec658f75",
         "filename": "chrome/browser/android/vr_shell/gvr_util.h",
         "patchSetId": 6
@@ -42,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "df3ec16c_6b4d59c2",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "nit: it maybe safer to call SetVisibleImmediately here. Although, this also works since you didn\u0027t set animation property yet. So it is optional.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37c87267_c2e9730a",
         "filename": "chrome/browser/vr/elements/keyboard.cc",
         "patchSetId": 6
@@ -53,6 +104,23 @@
       "writtenOn": "2017-11-24T13:33:07Z",
       "side": 1,
       "message": "Say the delegate gets set after the element has been animated to visible, would we need to call Show/HideKeyboard here? Perhaps the code at the end of NotifyClientFooAnimated could be moved to an UpdateDelegateFOO function that could also be called from here?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5fb0db_cce8d171",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "nit: check if delegate_ is null first?",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +161,23 @@
     },
     {
       "key": {
+        "uuid": "dfbdfcf3_4d7c1bb3",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "nit: add brackets to be consistent with other places in the file?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2747eb5_02efa390",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 6
@@ -104,6 +189,23 @@
       "writtenOn": "2017-11-24T13:33:07Z",
       "side": 1,
       "message": "Debugging code to be removed?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80aa71da_51d6f186",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "why do we want element RequestFocus manually? It feels like input_manager\u0027s job to request focus for current target on a button up? And each element can decide how should it response to focus change in the overrided OnFocusChanged function.",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +263,91 @@
     },
     {
       "key": {
+        "uuid": "6f8c1d7d_e9933dbe",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "nit: s/currently this/currently",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e772b59c_98060685",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "nit: define -1 in a const",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd2f982_ccfa3770",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "It probably makes more sense to divide this check to individual Draw calls? e.g\nif (!keyboard_elements.empty())\n  DrawUiView(render_info, keyboard_elements);\nif (!elements_overlay.empty()) {\n  glDisable(GL_CULL_FACE);\n  DrawUiView(render_info, elements_overlay);\n}\n...",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d544d45b_a20cb472",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "Does GetVisible2dBrowsingElements already contains Keyboard elements? why do you need to special caes keyboard element here? If you want to make sure that it drew after  browsing elements, perhaps we should introduce a new draw phase or have a way to make sure it is added in the correct order in the tree?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377770b2_8ecf22fe",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "nit: use child is probably easier to read here given that the new element is also called element.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a26d810f_f48bf5cf",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 6
@@ -184,6 +371,23 @@
     },
     {
       "key": {
+        "uuid": "8845e0bc_cc8428ee",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61f7e981_50791bb6",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 6
@@ -195,6 +399,40 @@
       "writtenOn": "2017-11-24T13:33:07Z",
       "side": 1,
       "message": "Please either inline these below, or make an AddTextInput function similar to AddTransientParent if you want to prepare for the addition of more text fields. This will keep the definition of these callbacks right next to the definition of the text fields.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1bfec14_c10b3388",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "nit: this and above can probably encapsulated in the constructor of Keyboard element.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d1cdd8_50d5dbea",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T16:27:18Z",
+      "side": 1,
+      "message": "you can probably use VR_BIND here? e.g.\nVR_BIND(TextInputInfo, Model, model_, omnibox_text_field_info, UiBrowserInterface, browser_, StartAutocomplete(value.text));",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
