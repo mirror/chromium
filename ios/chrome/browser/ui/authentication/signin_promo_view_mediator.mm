@@ -270,6 +270,8 @@ const char* AlreadySeenSigninViewPreferenceKey(
                                       ChromeBrowserProviderObserver>
 // Presenter which can show signin UI.
 @property(nonatomic, readonly, weak) id<SigninPresenter> presenter;
+
+@property(nonatomic, getter=isSigninInProgress) BOOL signinInProgress;
 @end
 
 @implementation SigninPromoViewMediator {
@@ -285,6 +287,7 @@ const char* AlreadySeenSigninViewPreferenceKey(
 @synthesize defaultIdentity = _defaultIdentity;
 @synthesize signinPromoViewState = _signinPromoViewState;
 @synthesize presenter = _presenter;
+@synthesize signinInProgress = _signinInProgress;
 
 + (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry {
   // Bookmarks
@@ -355,6 +358,11 @@ const char* AlreadySeenSigninViewPreferenceKey(
          _signinPromoViewState == ios::SigninPromoViewState::Invalid;
 }
 
+- (BOOL)isInvalidClosedOrNeverVisible {
+  return [self isInvalidOrClosed] ||
+         _signinPromoViewState == ios::SigninPromoViewState::NeverVisible;
+}
+
 - (SigninPromoViewConfigurator*)createConfigurator {
   BOOL hasCloseButton =
       AlreadySeenSigninViewPreferenceKey(_accessPoint) != nullptr;
@@ -400,9 +408,7 @@ const char* AlreadySeenSigninViewPreferenceKey(
 }
 
 - (void)sendImpressionsTillSigninButtonsHistogram {
-  DCHECK(![self isInvalidOrClosed] ||
-         _signinPromoViewState != ios::SigninPromoViewState::Unused);
-  _signinPromoViewState = ios::SigninPromoViewState::SigninStarted;
+  DCHECK(![self isInvalidClosedOrNeverVisible]);
   const char* displayedCountPreferenceKey =
       DisplayedCountPreferenceKey(_accessPoint);
   if (!displayedCountPreferenceKey)
@@ -417,6 +423,8 @@ const char* AlreadySeenSigninViewPreferenceKey(
   DCHECK(![self isInvalidOrClosed]);
   if (_isSigninPromoViewVisible)
     return;
+  if (_signinPromoViewState == ios::SigninPromoViewState::NeverVisible)
+    _signinPromoViewState = ios::SigninPromoViewState::Unused;
   _isSigninPromoViewVisible = YES;
   const char* displayedCountPreferenceKey =
       DisplayedCountPreferenceKey(_accessPoint);
@@ -429,14 +437,20 @@ const char* AlreadySeenSigninViewPreferenceKey(
 }
 
 - (void)signinPromoViewHidden {
-  DCHECK(![self isInvalidOrClosed]);
+  DCHECK(![self isInvalidClosedOrNeverVisible]);
   _isSigninPromoViewVisible = NO;
 }
 
 - (void)signinPromoViewRemoved {
   DCHECK_NE(ios::SigninPromoViewState::Invalid, _signinPromoViewState);
+  DCHECK(!self.signinInProgress);
+  BOOL wasNeverVisible =
+      _signinPromoViewState == ios::SigninPromoViewState::NeverVisible;
   BOOL wasUnused = _signinPromoViewState == ios::SigninPromoViewState::Unused;
   _signinPromoViewState = ios::SigninPromoViewState::Invalid;
+  _isSigninPromoViewVisible = NO;
+  if (wasNeverVisible)
+    return;
   // If the sign-in promo view has been used at least once, it should not be
   // counted as dismissed (even if the sign-in has been canceled).
   const char* displayedCountPreferenceKey =
@@ -457,14 +471,17 @@ const char* AlreadySeenSigninViewPreferenceKey(
 }
 
 - (void)signinCallback {
-  DCHECK_EQ(ios::SigninPromoViewState::SigninStarted, _signinPromoViewState);
-  _signinPromoViewState = ios::SigninPromoViewState::UsedAtLeastOnce;
+  DCHECK_EQ(ios::SigninPromoViewState::UsedAtLeastOnce, _signinPromoViewState);
+  DCHECK(self.signinInProgress);
+  self.signinInProgress = NO;
   if ([_consumer respondsToSelector:@selector(signinDidFinish)])
     [_consumer signinDidFinish];
 }
 
 - (void)showSigninWithIdentity:(ChromeIdentity*)identity
                    promoAction:(signin_metrics::PromoAction)promoAction {
+  _signinPromoViewState = ios::SigninPromoViewState::UsedAtLeastOnce;
+  self.signinInProgress = YES;
   __weak SigninPromoViewMediator* weakSelf = self;
   ShowSigninCommandCompletionCallback completion = ^(BOOL succeeded) {
     [weakSelf signinCallback];
@@ -490,6 +507,10 @@ const char* AlreadySeenSigninViewPreferenceKey(
 #pragma mark - ChromeIdentityServiceObserver
 
 - (void)identityListChanged {
+  // Don't update the sign-in promo view while doing sign-in, to avoid UI
+  // glitches.
+  if (self.signinInProgress)
+    return;
   ChromeIdentity* newIdentity = nil;
   NSArray* identities = ios::GetChromeBrowserProvider()
                             ->GetChromeIdentityService()
@@ -504,6 +525,10 @@ const char* AlreadySeenSigninViewPreferenceKey(
 }
 
 - (void)profileUpdate:(ChromeIdentity*)identity {
+  // Don't update the sign-in promo view while doing sign-in, to avoid UI
+  // glitches.
+  if (!self.signinInProgress)
+    return;
   if (identity == _defaultIdentity) {
     [self sendConsumerNotificationWithIdentityChanged:NO];
   }
@@ -529,7 +554,9 @@ const char* AlreadySeenSigninViewPreferenceKey(
 
 - (void)signinPromoViewDidTapSigninWithNewAccount:
     (SigninPromoView*)signinPromoView {
-  DCHECK(!_defaultIdentity && ![self isInvalidOrClosed]);
+  DCHECK(!_defaultIdentity);
+  DCHECK(_isSigninPromoViewVisible);
+  DCHECK(![self isInvalidClosedOrNeverVisible]);
   [self sendImpressionsTillSigninButtonsHistogram];
   signin_metrics::RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninNewAccountUserActionForAccessPoint(_accessPoint);
@@ -540,7 +567,9 @@ const char* AlreadySeenSigninViewPreferenceKey(
 
 - (void)signinPromoViewDidTapSigninWithDefaultAccount:
     (SigninPromoView*)signinPromoView {
-  DCHECK(_defaultIdentity && ![self isInvalidOrClosed]);
+  DCHECK(_defaultIdentity);
+  DCHECK(_isSigninPromoViewVisible);
+  DCHECK(![self isInvalidClosedOrNeverVisible]);
   [self sendImpressionsTillSigninButtonsHistogram];
   signin_metrics::RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninDefaultUserActionForAccessPoint(_accessPoint);
@@ -551,7 +580,9 @@ const char* AlreadySeenSigninViewPreferenceKey(
 
 - (void)signinPromoViewDidTapSigninWithOtherAccount:
     (SigninPromoView*)signinPromoView {
-  DCHECK(_defaultIdentity && ![self isInvalidOrClosed]);
+  DCHECK(_defaultIdentity);
+  DCHECK(_isSigninPromoViewVisible);
+  DCHECK(![self isInvalidClosedOrNeverVisible]);
   [self sendImpressionsTillSigninButtonsHistogram];
   signin_metrics::RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninNotDefaultUserActionForAccessPoint(_accessPoint);
@@ -561,7 +592,8 @@ const char* AlreadySeenSigninViewPreferenceKey(
 }
 
 - (void)signinPromoViewCloseButtonWasTapped:(SigninPromoView*)view {
-  DCHECK(_isSigninPromoViewVisible && ![self isInvalidOrClosed]);
+  DCHECK(_isSigninPromoViewVisible);
+  DCHECK(![self isInvalidClosedOrNeverVisible]);
   _signinPromoViewState = ios::SigninPromoViewState::Closed;
   const char* alreadySeenSigninViewPreferenceKey =
       AlreadySeenSigninViewPreferenceKey(_accessPoint);
