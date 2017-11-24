@@ -47,6 +47,9 @@ enum class NewTabButtonStyle { UNINITIALIZED, BLUE, GRAY, HIDDEN };
 // button.
 - (void)updateOverlayButtonState;
 
+- (void)wasShown;
+- (void)wasHidden;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TAB_SWITCHER_TAB_SWITCHER_VIEW_H_

@@ -48,6 +48,32 @@ bool IsSupportedAccessPoint(signin_metrics::AccessPoint access_point) {
   }
 }
 
+void RecordSigninImpressionUserActionForAccessPoint(
+    signin_metrics::AccessPoint access_point) {
+  switch (access_point) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Impression_FromBookmarkManager"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Impression_FromRecentTabs"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Impression_FromSettings"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Impression_FromTabSwitcher"));
+      break;
+    default:
+      NOTREACHED() << "Unexpected value for access point "
+                   << static_cast<int>(access_point);
+      break;
+  }
+}
+
 void RecordSigninImpressionWithAccountUserActionForAccessPoint(
     signin_metrics::AccessPoint access_point) {
   switch (access_point) {
@@ -270,6 +296,8 @@ const char* AlreadySeenSigninViewPreferenceKey(
                                       ChromeBrowserProviderObserver>
 // Presenter which can show signin UI.
 @property(nonatomic, readonly, weak) id<SigninPresenter> presenter;
+
+@property(nonatomic, readwrite) BOOL isSigninActive;
 @end
 
 @implementation SigninPromoViewMediator {
@@ -285,6 +313,7 @@ const char* AlreadySeenSigninViewPreferenceKey(
 @synthesize defaultIdentity = _defaultIdentity;
 @synthesize signinPromoViewState = _signinPromoViewState;
 @synthesize presenter = _presenter;
+@synthesize isSigninActive = _isSigninActive;
 
 + (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry {
   // Bookmarks
@@ -332,11 +361,6 @@ const char* AlreadySeenSigninViewPreferenceKey(
                               ->GetAllIdentitiesSortedForDisplay();
     if (identities.count != 0) {
       [self selectIdentity:identities[0]];
-    }
-    if (_defaultIdentity) {
-      RecordSigninImpressionWithAccountUserActionForAccessPoint(accessPoint);
-    } else {
-      RecordSigninImpressionWithNoAccountUserActionForAccessPoint(accessPoint);
     }
     _identityServiceObserver =
         base::MakeUnique<ChromeIdentityServiceObserverBridge>(self);
@@ -399,9 +423,11 @@ const char* AlreadySeenSigninViewPreferenceKey(
 }
 
 - (void)sendConsumerNotificationWithIdentityChanged:(BOOL)identityChanged {
-  SigninPromoViewConfigurator* configurator = [self createConfigurator];
-  [_consumer configureSigninPromoWithConfigurator:configurator
-                                  identityChanged:identityChanged];
+  if (!self.isSigninActive) {
+    SigninPromoViewConfigurator* configurator = [self createConfigurator];
+    [_consumer configureSigninPromoWithConfigurator:configurator
+                                    identityChanged:identityChanged];
+  }
 }
 
 - (void)sendImpressionsTillSigninButtonsHistogram {
@@ -424,6 +450,12 @@ const char* AlreadySeenSigninViewPreferenceKey(
   if (_signinPromoViewState == ios::SigninPromoViewState::NeverVisible)
     _signinPromoViewState = ios::SigninPromoViewState::Unused;
   _isSigninPromoViewVisible = YES;
+  RecordSigninImpressionUserActionForAccessPoint(_accessPoint);
+  if (_defaultIdentity) {
+    RecordSigninImpressionWithAccountUserActionForAccessPoint(_accessPoint);
+  } else {
+    RecordSigninImpressionWithNoAccountUserActionForAccessPoint(_accessPoint);
+  }
   const char* displayedCountPreferenceKey =
       DisplayedCountPreferenceKey(_accessPoint);
   if (!displayedCountPreferenceKey)
@@ -466,19 +498,22 @@ const char* AlreadySeenSigninViewPreferenceKey(
                                                      displayedCount);
 }
 
-- (void)signinCallback {
+- (void)signinCallbackWithSucceeded:(BOOL)succeeded {
   DCHECK_EQ(ios::SigninPromoViewState::SigninStarted, _signinPromoViewState);
   _signinPromoViewState = ios::SigninPromoViewState::UsedAtLeastOnce;
-  if ([_consumer respondsToSelector:@selector(signinDidFinish)])
-    [_consumer signinDidFinish];
+  DCHECK(self.isSigninActive);
+  self.isSigninActive = NO;
+  if ([_consumer respondsToSelector:@selector(signinDidFinishWithSuccess:)])
+    [_consumer signinDidFinishWithSuccess:succeeded];
 }
 
 - (void)showSigninWithIdentity:(ChromeIdentity*)identity
                    promoAction:(signin_metrics::PromoAction)promoAction {
   __weak SigninPromoViewMediator* weakSelf = self;
   ShowSigninCommandCompletionCallback completion = ^(BOOL succeeded) {
-    [weakSelf signinCallback];
+    [weakSelf signinCallbackWithSucceeded:succeeded];
   };
+  self.isSigninActive = YES;
   if ([self.consumer respondsToSelector:@selector
                      (signinPromoViewMediator:shouldOpenSigninWithIdentity
                                                 :promoAction:completion:)]) {

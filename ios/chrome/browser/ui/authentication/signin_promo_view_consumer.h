@@ -25,7 +25,7 @@
 @optional
 
 // Called when the sign-in is finished.
-- (void)signinDidFinish;
+- (void)signinDidFinishWithSuccess:(BOOL)succeeded;
 
 // Called when one of the sign-in promo view button is being tapped. This method
 // is optional. If it is not implementated, the mediator will open the sign-in

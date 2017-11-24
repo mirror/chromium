@@ -53,6 +53,8 @@ class PrefRegistrySyncable;
 // contains nil.
 @property(nonatomic, readonly, strong) ChromeIdentity* defaultIdentity;
 
+@property(nonatomic, readonly) BOOL isSigninActive;
+
 // Sign-in promo view state.
 @property(nonatomic) ios::SigninPromoViewState signinPromoViewState;
 
