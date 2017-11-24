@@ -97,9 +97,11 @@ bool ThreadControllerImpl::IsNested() {
 
 void ThreadControllerImpl::DoWork(Sequence::WorkType work_type) {
   DCHECK(sequence_);
-  base::PendingTask task = sequence_->TakeTask(work_type);
+  base::Optional<base::PendingTask> task = sequence_->TakeTask(work_type);
+  if (!task)
+    return;
   base::WeakPtr<ThreadControllerImpl> weak_ptr = weak_factory_.GetWeakPtr();
-  task_annotator_.RunTask("ThreadControllerImpl::DoWork", &task);
+  task_annotator_.RunTask("ThreadControllerImpl::DoWork", &task.value());
   if (weak_ptr)
     sequence_->DidRunTask();
 }
