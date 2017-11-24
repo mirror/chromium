@@ -34,6 +34,24 @@
       "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a568e04_1204b0f6",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1252989
+      },
+      "writtenOn": "2017-11-24T11:52:03Z",
+      "side": 1,
+      "message": "I think we all agree that it\u0027s undesired to \"swallow\" errors in fetching the id_token. However, IMO if we fail to get an id_token, we shouldn\u0027t let the user session resume -- we should stop it immediately. I don\u0027t think that a consumer should try to run without this information.\n\nTo address this, there\u0027s likely a bigger change to be made earlier in the flow so that this can happen. Alexander, do you think we should just return nullptr from |ExtractOAuth2TokenPairResponse| if we fail to find an id_token? That\u0027s what Luciana and I were considering before, but we decided to play it safe for now and let the session proceed as a non-child session.",
+      "parentUuid": "2f7bf00d_53dd454c",
+      "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
