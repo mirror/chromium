@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebb1755c_d7b28917",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 0,
+      "message": "Sorry for the late reply. I think I can live with this design. On the other hand, I\u0027m not convinced that making this a ref counted type and having the Receiver intermediate class is worth the trouble, if the main goal is avoiding a delete this in OnConnectionError(). As you point out, the forwarding indirection is a bit clumsy. I\u0027m starting to become accustomed to bare `delete this` when bindings_ is empty...\n\nI\u0027m tending to think this should just do `delete this` until there is something like StrongBindingSet which is really a strong binding.",
+      "revId": "38c9257b930f883c3ab936b1274590c94cc08012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "6403cc0b_22a3668d",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "the reference",
+      "range": {
+        "startLine": 473,
+        "startChar": 38,
+        "endLine": 473,
+        "endChar": 49
+      },
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90824a6_fd79d414",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "the reference",
+      "range": {
+        "startLine": 484,
+        "startChar": 36,
+        "endLine": 484,
+        "endChar": 49
+      },
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d885cb7a_eeebb169",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "lost \u003d\u003e loses\nno \u0027",
+      "range": {
+        "startLine": 1217,
+        "startChar": 32,
+        "endLine": 1217,
+        "endChar": 33
+      },
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95d5f7d4_b0021d3b",
         "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
         "patchSetId": 7
@@ -19,6 +88,125 @@
         "endLine": 50,
         "endChar": 3
       },
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3bcf7d_4335dec5",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "This can just be DCHECK(registration_)",
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6c2c88_1ef79d72",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "This DCHECK seems unneeded, this class holds a strong reference to registration and I don\u0027t expect it to ever change the reference.",
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e354264_79537f73",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "I think this can be base::WrapRefCounted(this)",
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22e6fe5_16e71180",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "why checking provider_host now?",
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773b4b90_bfaaf9d9",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "If we go with this design this comment should explain why this class is RefCounted.",
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50a2bfa_98fce4c1",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "I think you usually don\u0027t need this friend for member classes",
+      "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a51eb70_79fd2802",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:22:31Z",
+      "side": 1,
+      "message": "use DCHECK_EQ for this and below",
       "revId": "ef7f434a1025993e650f5e155d8a1ee3abc0b194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
