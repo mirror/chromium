@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47cf7fde_561d6bf9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-24T18:33:00Z",
+      "side": 1,
+      "message": "It\u0027s confusing that \"bool LayoutText::ContainsOnlyWhitespace(unsigned from, unsigned len)\" returns true if the string contains only spaces, newlines, and tabs, but \"OnlyWhitespace LayoutText::ContainsOnlyWhitespace()\" returns kYes if the string contains only spaces, newlines, tabs, and kNoBreakSpaceCharacter. Is it necessary to include kNoBreakSpaceCharacter?",
+      "revId": "a3b24eb019398cf9221046a4c0f5fe36f5542c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff73818_d8f59870",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-24T18:33:00Z",
+      "side": 1,
+      "message": "WYDT of calling \"paint_controller_.SetTextPainted();\" in \"InlineTextBoxPainter::Paint\" right above the call to \"text_painter.Paint()\"? This would save having to plumb the whitespace bit through TextRun. I think it would also let you make it a bool instead of a tri-state since text has to be laid out before painting.",
+      "revId": "a3b24eb019398cf9221046a4c0f5fe36f5542c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
