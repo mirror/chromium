@@ -719,68 +719,51 @@ void HTMLCanvasElement::PrepareSurfaceForPaintingIfNeeded() {
     image_buffer_->PrepareSurfaceForPaintingIfNeeded();
 }
 
+scoped_refptr<StaticBitmapImage> HTMLCanvasElement::ToStaticBitmapImage(
+    SourceDrawingBuffer source_buffer,
+    SnapshotReason reason) const {
+  if (size_.IsEmpty())
+    return nullptr;
+  scoped_refptr<StaticBitmapImage> image_bitmap = nullptr;
+  if (Is3d()) {
+    context_->PaintRenderingResultsToCanvas(source_buffer);
+    if (GetImageBuffer()) {
+      image_bitmap =
+          GetImageBuffer()->NewImageSnapshot(kPreferNoAcceleration, reason);
+      }
+  } else if (context_ || PlaceholderFrame()) {
+    DCHECK(Is2d() || PlaceholderFrame());
+    if (GetImageBuffer()) {
+      image_bitmap =
+          GetImageBuffer()->NewImageSnapshot(kPreferNoAcceleration, reason);
+    } else if (PlaceholderFrame()) {
+      DCHECK(PlaceholderFrame()->OriginClean());
+      image_bitmap = PlaceholderFrame();
+    }
+  }
+  if (image_bitmap)
+    return image_bitmap;
+  sk_sp<SkSurface> surface =
+      SkSurface::MakeRasterN32Premul(size_.Width(), size_.Height());
+  return StaticBitmapImage::Create(surface->makeImageSnapshot());
+}
+
 ImageData* HTMLCanvasElement::ToImageData(SourceDrawingBuffer source_buffer,
                                           SnapshotReason reason) const {
+  // Using ImageData requires pixel read back and converting the color
+  // components from half float to float32 if the context is using a wide color
+  // gamut. Therefore, we do this only if the context is texture backed and
+  // premultipledAlpha is set to false by the user.
+  DCHECK(Is3d() && !context_->CreationAttributes().premultipliedAlpha());
   if (Size().IsEmpty())
     return nullptr;
   ImageData* image_data;
-  if (Is3d()) {
-    // Get non-premultiplied data because of inaccurate premultiplied alpha
-    // conversion of buffer()->toDataURL().
-    image_data = context_->PaintRenderingResultsToImageData(source_buffer);
-    if (image_data)
-      return image_data;
-
-    context_->PaintRenderingResultsToCanvas(source_buffer);
-    image_data = ImageData::Create(size_);
-    if (image_data && GetImageBuffer()) {
-      scoped_refptr<StaticBitmapImage> snapshot =
-          GetImageBuffer()->NewImageSnapshot(kPreferNoAcceleration, reason);
-      if (snapshot) {
-        SkImageInfo image_info = SkImageInfo::Make(
-            width(), height(), kRGBA_8888_SkColorType, kUnpremul_SkAlphaType);
-        sk_sp<SkImage> sk_image =
-            snapshot->PaintImageForCurrentFrame().GetSkImage();
-        bool read_pixels_successful =
-            sk_image->readPixels(image_info, image_data->data()->Data(),
-                                 image_info.minRowBytes(), 0, 0);
-        DCHECK(read_pixels_successful);
-        if (!read_pixels_successful)
-          return nullptr;
-      }
-    }
+  // Get non-premultiplied data because of inaccurate premultiplied alpha
+  // conversion of buffer()->toDataURL().
+  image_data = context_->PaintRenderingResultsToImageData(source_buffer);
+  if (image_data)
     return image_data;
-  }
-
-  image_data = ImageData::Create(size_);
-
-  if ((!context_ || !image_data) && !PlaceholderFrame())
-    return image_data;
-
-  DCHECK(Is2d() || PlaceholderFrame());
-  scoped_refptr<StaticBitmapImage> snapshot;
-  if (GetImageBuffer()) {
-    snapshot =
-        GetImageBuffer()->NewImageSnapshot(kPreferNoAcceleration, reason);
-  } else if (PlaceholderFrame()) {
-    DCHECK(PlaceholderFrame()->OriginClean());
-    snapshot = PlaceholderFrame();
-  }
-
-  if (snapshot) {
-    SkImageInfo image_info = SkImageInfo::Make(
-        width(), height(), kRGBA_8888_SkColorType, kUnpremul_SkAlphaType);
-    sk_sp<SkImage> sk_image =
-        snapshot->PaintImageForCurrentFrame().GetSkImage();
-    bool read_pixels_successful = sk_image->readPixels(
-        image_info, image_data->data()->Data(), image_info.minRowBytes(), 0, 0);
-    DCHECK(read_pixels_successful || sk_image->bounds().isEmpty() ||
-           image_info.isEmpty());
-    if (!read_pixels_successful)
-      return nullptr;
-  }
-
-  return image_data;
+  return ImageData::Create(size_);
 }
 
 String HTMLCanvasElement::ToDataURLInternal(
@@ -814,13 +797,21 @@ String HTMLCanvasElement::ToDataURLInternal(
     NOTREACHED();
   }
 
-  ImageData* image_data = ToImageData(source_buffer, kSnapshotReasonToDataURL);
-
-  if (!image_data)  // allocation failure
-    return String("data:,");
-
-  return ImageDataBuffer(image_data->Size(), image_data->data()->Data())
-      .ToDataURL(encoding_mime_type, quality);
+  if (Is3d() && !context_->CreationAttributes().premultipliedAlpha()) {
+    ImageData* image_data = ToImageData(source_buffer, kSnapshotReasonToBlob);
+    if (image_data) {
+      return ImageDataBuffer(image_data->Size(), image_data->data()->Data())
+          .ToDataURL(encoding_mime_type, quality);
+    }
+  } else {
+    scoped_refptr<StaticBitmapImage> image_bitmap =
+        ToStaticBitmapImage(source_buffer, kSnapshotReasonToBlob);
+    if (image_bitmap) {
+      return ImageDataBuffer(image_bitmap)
+          .ToDataURL(encoding_mime_type, quality);
+    }
+  }
+  return String("data:,");
 }
 
 String HTMLCanvasElement::toDataURL(const String& mime_type,
@@ -872,23 +863,33 @@ void HTMLCanvasElement::toBlob(BlobCallback* callback,
   String encoding_mime_type = ImageEncoderUtils::ToEncodingMimeType(
       mime_type, ImageEncoderUtils::kEncodeReasonToBlobCallback);
 
-  ImageData* image_data = ToImageData(kBackBuffer, kSnapshotReasonToBlob);
+  CanvasAsyncBlobCreator* async_creator = nullptr;
+  if (Is3d() && !context_->CreationAttributes().premultipliedAlpha()) {
+    ImageData* image_data = ToImageData(kBackBuffer, kSnapshotReasonToBlob);
+    if (image_data) {
+      async_creator = CanvasAsyncBlobCreator::Create(
+          image_data->data(), encoding_mime_type, image_data->Size(), callback,
+          start_time, &GetDocument());
+    }
+  } else {
+    scoped_refptr<StaticBitmapImage> image_bitmap =
+        ToStaticBitmapImage(kBackBuffer, kSnapshotReasonToBlob);
+    if (image_bitmap) {
+      async_creator =
+          CanvasAsyncBlobCreator::Create(image_bitmap, encoding_mime_type,
+                                         callback, start_time, &GetDocument());
+    }
+  }
 
-  if (!image_data) {
-    // ImageData allocation faillure
+  if (async_creator) {
+    async_creator->ScheduleAsyncBlobCreation(quality);
+  } else {
     GetDocument()
         .GetTaskRunner(TaskType::kCanvasBlobSerialization)
         ->PostTask(BLINK_FROM_HERE,
                    WTF::Bind(&BlobCallback::handleEvent,
                              WrapPersistent(callback), nullptr));
-    return;
   }
-
-  CanvasAsyncBlobCreator* async_creator = CanvasAsyncBlobCreator::Create(
-      image_data->data(), encoding_mime_type, image_data->Size(), callback,
-      start_time, &GetDocument());
-
-  async_creator->ScheduleAsyncBlobCreation(quality);
 }
 
 void HTMLCanvasElement::AddListener(CanvasDrawListener* listener) {
