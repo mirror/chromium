@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "2c0b5a51_0c09203d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T04:13:33Z",
+      "side": 1,
+      "message": "+1.\n\nIt would be nicer to move the caching to ExecutionContext and enable it for WorkerGlobalScope as well.",
+      "parentUuid": "b326b6cb_ca486a72",
+      "revId": "a61fd3a624f9837c63586e35bfdb1b83139ea80e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84ea41e4_9e4547b9",
         "filename": "third_party/WebKit/Source/core/html/forms/PasswordInputTypeTest.cpp",
         "patchSetId": 2
