@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "396e97bc_ede8f6b7",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestObject.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:36:15Z",
+      "side": 1,
+      "message": "s/Method/method/",
+      "range": {
+        "startLine": 494,
+        "startChar": 57,
+        "endLine": 494,
+        "endChar": 63
+      },
+      "revId": "0315b78060c51f811d97bd97fb78fa2c3ea2f4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2161b9b5_da413d10",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestObject.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:36:15Z",
+      "side": 1,
+      "message": "nit: As we have a lot of non-[CEReactions] IDL operations in this IDL file, we might not need this specific version.\n\nIf we\u0027ll have this, then the name looks weird because this is not [CEReactions] but the name is ceReactionsMethod.",
+      "revId": "0315b78060c51f811d97bd97fb78fa2c3ea2f4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a411dac_f9b8d47e",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestObject.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T10:36:15Z",
+      "side": 1,
+      "message": "s/Method/method/",
+      "range": {
+        "startLine": 497,
+        "startChar": 53,
+        "endLine": 497,
+        "endChar": 59
+      },
+      "revId": "0315b78060c51f811d97bd97fb78fa2c3ea2f4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
