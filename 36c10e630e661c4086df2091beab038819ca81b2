@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92f7c90e_46fb6fc0",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-24T05:04:24Z",
+      "side": 1,
+      "message": "This one includes the frame\u0027s routing ID. Interfaces registered here are tried first for requests from frames.",
+      "parentUuid": "028a7f7f_38898902",
+      "range": {
+        "startLine": 3062,
+        "startChar": 13,
+        "endLine": 3062,
+        "endChar": 25
+      },
+      "revId": "36c10e630e661c4086df2091beab038819ca81b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "628cfd55_bef8893f",
         "filename": "content/browser/renderer_interface_binders.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-23T15:04:35Z",
       "side": 1,
       "message": "And another WebSocketManager::CreateWebSocket binder here.  Is one of them redundant?",
+      "revId": "36c10e630e661c4086df2091beab038819ca81b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a45a1b_f4ddc766",
+        "filename": "content/browser/renderer_interface_binders.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-24T05:04:24Z",
+      "side": 1,
+      "message": "This one is for workers. Interfaces registered here are tried for requests from workers, or requests from frames that weren\u0027t handled by the frame-level registry.",
+      "parentUuid": "628cfd55_bef8893f",
       "revId": "36c10e630e661c4086df2091beab038819ca81b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
