@@ -148,8 +148,6 @@ class VADisplayState {
 
   // Initialize static data before sandbox is enabled.
   static void PreSandboxInitialization();
-  // Returns false on init failure.
-  static bool PostSandboxInitialization();
 
   VADisplayState();
   ~VADisplayState() = delete;
@@ -164,6 +162,9 @@ class VADisplayState {
   void SetDrmFd(base::PlatformFile fd) { drm_fd_.reset(HANDLE_EINTR(dup(fd))); }
 
  private:
+  // Returns false on init failure.
+  static bool PostSandboxInitialization();
+
   // Protected by |va_lock_|.
   int refcount_;
 
@@ -199,37 +200,14 @@ void VADisplayState::PreSandboxInitialization() {
 }
 
 // static
-bool VADisplayState::PostSandboxInitialization() {
-  const std::string va_suffix(std::to_string(VA_MAJOR_VERSION + 1));
-  StubPathMap paths;
-
-  paths[kModuleVa].push_back(std::string("libva.so.") + va_suffix);
-#if defined(USE_X11)
-  // libva-x11 does not exist on libva >= 2
-  if (VA_MAJOR_VERSION == 0)
-    paths[kModuleVa_x11].push_back("libva-x11.so.1");
-#elif defined(USE_OZONE)
-  paths[kModuleVa_drm].push_back(std::string("libva-drm.so.") + va_suffix);
-#endif
-
-  const bool success = InitializeStubs(paths);
-  if (!success) {
-    static const char kErrorMsg[] = "Failed to initialize VAAPI libs";
-#if defined(OS_CHROMEOS)
-    // When Chrome runs on Linux with target_os="chromeos", do not log error
-    // message without VAAPI libraries.
-    LOG_IF(ERROR, base::SysInfo::IsRunningOnChromeOS()) << kErrorMsg;
-#else
-    DVLOG(1) << kErrorMsg;
-#endif
-  }
-  return success;
-}
-
 VADisplayState::VADisplayState()
     : refcount_(0), va_display_(nullptr), va_initialized_(false) {}
 
 bool VADisplayState::Initialize() {
+  static bool result = VADisplayState::PostSandboxInitialization();
+  if (!result)
+    return;
+
   va_lock_.AssertAcquired();
   if (refcount_++ > 0)
     return true;
@@ -298,6 +276,33 @@ void VADisplayState::Deinitialize(VAStatus* status) {
     *status = vaTerminate(va_display_);
   va_initialized_ = false;
   va_display_ = nullptr;
+}
+
+bool VADisplayState::PostSandboxInitialization() {
+  const std::string va_suffix(std::to_string(VA_MAJOR_VERSION + 1));
+  StubPathMap paths;
+
+  paths[kModuleVa].push_back(std::string("libva.so.") + va_suffix);
+#if defined(USE_X11)
+  // libva-x11 does not exist on libva >= 2
+  if (VA_MAJOR_VERSION == 0)
+    paths[kModuleVa_x11].push_back("libva-x11.so.1");
+#elif defined(USE_OZONE)
+  paths[kModuleVa_drm].push_back(std::string("libva-drm.so.") + va_suffix);
+#endif
+
+  const bool success = InitializeStubs(paths);
+  if (!success) {
+    static const char kErrorMsg[] = "Failed to initialize VAAPI libs";
+#if defined(OS_CHROMEOS)
+    // When Chrome runs on Linux with target_os="chromeos", do not log error
+    // message without VAAPI libraries.
+    LOG_IF(ERROR, base::SysInfo::IsRunningOnChromeOS()) << kErrorMsg;
+#else
+    DVLOG(1) << kErrorMsg;
+#endif
+  }
+  return success;
 }
 
 static std::vector<VAConfigAttrib> GetRequiredAttribs(
@@ -394,10 +399,6 @@ VASupportedProfiles::VASupportedProfiles()
       report_error_to_uma_cb_(base::Bind(&base::DoNothing)) {
   static_assert(arraysize(supported_profiles_) == VaapiWrapper::kCodecModeMax,
                 "The array size of supported profile is incorrect.");
-
-  static bool result = VADisplayState::PostSandboxInitialization();
-  if (!result)
-    return;
   {
     base::AutoLock auto_lock(*va_lock_);
     if (!VADisplayState::Get()->Initialize())
