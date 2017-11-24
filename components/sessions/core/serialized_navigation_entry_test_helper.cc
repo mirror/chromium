@@ -168,4 +168,11 @@ void SerializedNavigationEntryTestHelper::SetTimestamp(
   navigation->timestamp_ = timestamp;
 }
 
+// static
+void SerializedNavigationEntryTestHelper::SetReplacedEntryData(
+    const SerializedNavigationEntry::ReplacedNavigationEntryData& data,
+    SerializedNavigationEntry* navigation) {
+  navigation->replaced_entry_data_ = data;
+}
+
 }  // namespace sessions
