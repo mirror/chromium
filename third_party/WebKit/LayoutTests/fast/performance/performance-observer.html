@@ -10,8 +10,8 @@ var entries = [];
 
 var expectedEntries = [
     {entryType:'mark', name:'mark_1'},
+    {entryType:'measure', name:'measure_1'},
     {entryType:'mark', name:'mark_2'},
-    {entryType:'measure', name:'measure_1'}
 ];
 
 var observer = new PerformanceObserver(performanceCallback);
@@ -21,6 +21,7 @@ function performanceCallback(performanceEntryList)
     entries = entries.concat(performanceEntryList.getEntries());
     if (entries.length != expectedEntries.length)
         return;
+    entries.sort((a, b) => a.startTime > b.startTime);
     shouldBe('entries[0].entryType', 'expectedEntries[0].entryType');
     shouldBe('entries[0].name', 'expectedEntries[0].name');
     shouldBe('entries[1].entryType', 'expectedEntries[1].entryType');
