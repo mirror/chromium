@@ -33,6 +33,21 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/WebKit/public/platform/web_feature.mojom.h"
 
+namespace {
+
+// Returns the RenderFrameHost corresponding to the most visited iframe in the
+// given |tab|. |tab| must correspond to an NTP.
+content::RenderFrameHost* GetMostVisitedIframe(content::WebContents* tab) {
+  for (content::RenderFrameHost* frame : tab->GetAllFrames()) {
+    if (frame->GetFrameName() == "mv-single") {
+      return frame;
+    }
+  }
+  return nullptr;
+}
+
+}  // namespace
+
 class LocalNTPTest : public InProcessBrowserTest {
  public:
   LocalNTPTest() {}
@@ -47,6 +62,7 @@ class LocalNTPTest : public InProcessBrowserTest {
     // Attach a message queue *before* navigating to the NTP, to make sure we
     // don't miss the 'loaded' message.
     content::DOMMessageQueue msg_queue(active_tab);
+    std::string message;
 
     // Navigate to the NTP.
     ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
@@ -54,8 +70,28 @@ class LocalNTPTest : public InProcessBrowserTest {
     ASSERT_EQ(GURL(chrome::kChromeSearchLocalNtpUrl),
               active_tab->GetController().GetVisibleEntry()->GetURL());
 
-    // When the iframe has loaded all the tiles, it sends a 'loaded' postMessage
-    // to the page. Wait for that message to arrive.
+    // At this point, the MV iframe may or may not be ready.
+    content::RenderFrameHost* iframe = GetMostVisitedIframe(active_tab);
+    if (iframe) {
+      // The iframe exists, but it hasn't necessarily finished loading. Check if
+      // there is an element with the ID 'mv-tiles', which is only created once
+      // all the tiles are loaded.
+      bool mv_tiles_loaded = false;
+      ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+          iframe, "!!document.getElementById('mv-tiles')", &mv_tiles_loaded));
+      // Get rid of the message that the GetBoolFromJS produces.
+      ASSERT_TRUE(msg_queue.PopMessage(&message));
+
+      if (mv_tiles_loaded) {
+        // The iframe is already done, i.e. we missed its 'loaded' message. All
+        // is well.
+        return;
+      }
+    }
+
+    // Either the iframe hasn't even been created, or (more likely) it hasn't
+    // finished loading the MV tiles. Once it does, it sends a 'loaded'
+    // postMessage to the page. Wait for that message to arrive.
     ASSERT_TRUE(content::ExecuteScript(active_tab, R"js(
       window.addEventListener('message', function(event) {
         if (event.data.cmd == 'loaded') {
@@ -63,7 +99,6 @@ class LocalNTPTest : public InProcessBrowserTest {
         }
       });
     )js"));
-    std::string message;
     // First get rid of a message produced by the ExecuteScript call above.
     ASSERT_TRUE(msg_queue.PopMessage(&message));
     // Now wait for the "NavigateToNTPAndWaitUntilLoaded" message.
@@ -506,21 +541,6 @@ IN_PROC_BROWSER_TEST_F(LocalNTPVoiceJavascriptTest, ViewTests) {
       active_tab, "!!runSimpleTests('view')", &success));
   EXPECT_TRUE(success);
 }
-
-namespace {
-
-// Returns the RenderFrameHost corresponding to the most visited iframe in the
-// given |tab|. |tab| must correspond to an NTP.
-content::RenderFrameHost* GetMostVisitedIframe(content::WebContents* tab) {
-  for (content::RenderFrameHost* frame : tab->GetAllFrames()) {
-    if (frame->GetFrameName() == "mv-single") {
-      return frame;
-    }
-  }
-  return nullptr;
-}
-
-}  // namespace
 
 IN_PROC_BROWSER_TEST_F(LocalNTPJavascriptTest, LoadsIframe) {
   content::WebContents* active_tab = local_ntp_test_utils::OpenNewTab(
