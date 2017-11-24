@@ -16,6 +16,24 @@
       "revId": "38c9257b930f883c3ab936b1274590c94cc08012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1ebd8a_fee84dad",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-24T07:46:37Z",
+      "side": 0,
+      "message": "OK, now \u0027the Receiver intermediate class\u0027 solution has 1 vote from shimazu-san, while \u0027delete this\u0027 has 1 vote from Matt, I\u0027d like to know kinuko-san\u0027s opinion to make final decision ;-) #Personally I\u0027d like to keep \u0027delete this\u0027.",
+      "parentUuid": "ebb1755c_d7b28917",
+      "revId": "38c9257b930f883c3ab936b1274590c94cc08012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
