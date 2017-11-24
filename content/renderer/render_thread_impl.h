@@ -619,6 +619,10 @@ class CONTENT_EXPORT RenderThreadImpl
   void SetProcessBackgrounded(bool backgrounded) override;
   void ProcessPurgeAndSuspend() override;
 
+  void CheckpointInstrumentation(const std::string& option) override;
+  void DumpInstrumentationData(
+      DumpInstrumentationDataCallback callback) override;
+
   void OnMemoryPressure(
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);
 

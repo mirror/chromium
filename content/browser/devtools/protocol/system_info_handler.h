@@ -27,6 +27,10 @@ class SystemInfoHandler : public DevToolsDomainHandler,
 
   void GetInfo(std::unique_ptr<GetInfoCallback> callback) override;
 
+  DispatchResponse InstrumentationCheckpoint(
+      Maybe<String> checkpoint_option) override;
+  DispatchResponse DumpInstrumentationData() override;
+
  private:
   friend class SystemInfoHandlerGpuObserver;
 

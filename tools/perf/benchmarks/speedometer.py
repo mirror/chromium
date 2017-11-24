@@ -22,6 +22,7 @@ from core import perf_benchmark
 
 from telemetry import benchmark
 from telemetry import page as page_module
+from telemetry.internal.backends.chrome_inspector import inspector_websocket
 from telemetry.page import legacy_page_test
 from telemetry import story
 from telemetry.value import list_of_scalar_values
@@ -48,6 +49,8 @@ class SpeedometerMeasurement(legacy_page_test.LegacyPageTest):
 
   def ValidateAndMeasurePage(self, page, tab, results):
     tab.WaitForDocumentReadyStateToBeComplete()
+    self._DevtoolsSend(tab, {'method': 'SystemInfo.instrumentationCheckpoint',
+                             'params': {'option': 'postload'}})
     iterationCount = 10
     # A single iteration on android takes ~75 seconds, the benchmark times out
     # when running for 10 iterations.
@@ -65,6 +68,8 @@ class SpeedometerMeasurement(legacy_page_test.LegacyPageTest):
         startTest();
         """,
         count=iterationCount)
+    self._DevtoolsSend(tab, {'method': 'SystemInfo.instrumentationCheckpoint',
+                             'params': {'option': 'postload'}})
     tab.WaitForJavaScriptCondition(
         'benchmarkClient._finishedTestCount == benchmarkClient.testsCount',
         timeout=600)
@@ -78,6 +83,8 @@ class SpeedometerMeasurement(legacy_page_test.LegacyPageTest):
             '[parseFloat(document.getElementById("result-number").innerText)];'
         ),
         important=True))
+
+    self._DevtoolsSend(tab, {'method': 'SystemInfo.dumpInstrumentationData'})
 
     # Extract the timings for each suite
     for suite_name in self.enabled_suites:
@@ -93,6 +100,18 @@ class SpeedometerMeasurement(legacy_page_test.LegacyPageTest):
               """,
               key=suite_name), important=False))
     keychain_metric.KeychainMetric().AddResults(tab, results)
+
+  def _DevtoolsSend(self, tab, msg):
+    """Send a devtools message."""
+    client = tab.browser._browser_backend._devtools_client
+    target_ws = client._BrowserTargetWebSocket()
+    websocket = inspector_websocket.InspectorWebsocket()
+    try:
+      websocket.Connect(target_ws, 5)
+      res = websocket.SyncRequest(msg, 5)
+      print '+++ %s' % res
+    finally:
+      websocket.Disconnect()
 
 
 @benchmark.Owner(emails=['hablich@chromium.org'])

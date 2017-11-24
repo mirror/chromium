@@ -214,6 +214,10 @@
 #include "ui/gl/gpu_switching_manager.h"
 #include "ui/native_theme/native_theme_features.h"
 
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+#include "tools/cygprofile/lightweight_cygprofile.h"
+#endif
+
 #if defined(OS_ANDROID)
 #include "content/public/browser/android/java_interfaces.h"
 #include "ipc/ipc_sync_channel.h"
@@ -2374,6 +2378,38 @@ RenderProcessHost*
 RenderProcessHostImpl::GetSpareRenderProcessHostForTesting() {
   return g_spare_render_process_host_manager.Get().spare_render_process_host();
 }
+
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+// static
+void RenderProcessHostImpl::CheckpointInstrumentationInRenderers(
+    const std::string& option) {
+  for (content::RenderProcessHost::iterator i(
+           content::RenderProcessHost::AllHostsIterator());
+       !i.IsAtEnd(); i.Advance()) {
+    i.GetCurrentValue()->GetRendererInterface()->CheckpointInstrumentation(
+        option);
+  }
+}
+
+// static
+void RenderProcessHostImpl::DumpInstrumentationInRenderers() {
+  for (content::RenderProcessHost::iterator i(
+           content::RenderProcessHost::AllHostsIterator());
+       !i.IsAtEnd(); i.Advance()) {
+    i.GetCurrentValue()->GetRendererInterface()->DumpInstrumentationData(
+        base::BindOnce(&DumpInstrumentationDataFromRenderer));
+  }
+}
+
+// static
+void RenderProcessHostImpl::DumpInstrumentationDataFromRenderer(
+    mojom::InstrumentationDataPtr data) {
+  cygprofile::DumpInstrumentationArray("startup-renderer", data->pid,
+                                       data->startup_offsets);
+  cygprofile::DumpInstrumentationArray("postload-renderer", data->pid,
+                                       data->postload_offsets);
+}
+#endif
 
 bool RenderProcessHostImpl::HostHasNotBeenUsed() {
   return IsUnused() && listeners_.IsEmpty() && keep_alive_ref_count_ == 0 &&

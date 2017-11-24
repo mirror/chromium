@@ -60,6 +60,8 @@ include_rules = [
   # Don't allow inclusion of these other libs we shouldn't be calling directly.
   "-v8",
   "-tools",
+  # Code ordering instrumentation library.
+  "+tools/cygprofile",
 
   # Allow inclusion of third-party code:
   "+third_party/angle",

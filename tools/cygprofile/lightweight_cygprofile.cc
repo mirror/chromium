@@ -22,9 +22,11 @@ void dummy_function_to_check_ordering() {}
 void dummy_function_to_anchor_text() {}
 }
 
+namespace cygprofile {
+
 namespace {
 
-constexpr size_t kMaxTextSizeInBytes = 0x02b458b4;  // Must be an overestimate.
+constexpr size_t kMaxTextSizeInBytes = 0x02b46fe4;  // Must be an overestimate.
 constexpr size_t kArraySize = kMaxTextSizeInBytes / (4 * 32);
 
 // Allocated in .bss. std::atomic<uint32_t> is guaranteed to behave as uint32_t
@@ -33,7 +35,7 @@ constexpr size_t kArraySize = kMaxTextSizeInBytes / (4 * 32);
 // first code executed within the binary, as well as making it possible to swap
 // arrays cheaply to change instrumentation strategies.
 std::atomic<uint32_t> g_startup_return_offsets[kArraySize];
-std::atomic<uint32_t> g_post_loading_return_offsets[kArraySize];
+std::atomic<uint32_t> g_postload_return_offsets[kArraySize];
 
 // Non-null iff collection is enabled. Also used as the pointer to the array
 // to save a global load in the instrumentation function.
@@ -45,83 +47,33 @@ std::atomic<std::atomic<uint32_t>*> g_enabled_and_array = {g_startup_return_offs
 const size_t kStartOfText =
     reinterpret_cast<size_t>(dummy_function_to_anchor_text);
 
-// Disables the logging and dumps the result after |kDelayInSeconds|.
-class DelayedDumper {
- public:
-  DelayedDumper() {
-    // The linker usually keeps the input file ordering for symbols.
-    // dummy_function_to_anchor_text() should then be after
-    // dummy_function_to_check_ordering() without ordering.
-    // This check is thus intended to catch the lack of ordering.
-    CHECK_LT(kStartOfText,
-             reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
-
-    std::thread([]() {
-      // TODO(mattcary): explicit dump signal rather than waiting. Particularly
-      // with the array check below, we could race on the dump.
-      sleep(kDelayInSeconds);
-      // As Dump() is called from the same thread, ensures that the
-      // base functions called in the dumping code will not spuriously appear
-      // in the profile.
-
-      // Delay dump until post_loading array has been used.
-      // TODO(mattcary): confirm std::memory_order_relaxed usage.
-      while (g_enabled_and_array.load(std::memory_order_relaxed) !=
-             g_post_loading_return_offsets) {
-        sleep(kDelayInSeconds);
-      }
-
-      g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
-      Dump();
-    })
-        .detach();
-  }
-
- private:
-  // Dumps the data to disk.
-  static void Dump() {
-    CHECK(!g_enabled_and_array.load(std::memory_order_relaxed));
-
-    DumpArray("startup", g_startup_return_offsets);
-    DumpArray("postload", g_post_loading_return_offsets);
-  }
-
-  static void DumpArray(const std::string& specifier,
-                        std::atomic<uint32_t>* offset_array) {
-    auto dir = base::FilePath("/data/local/tmp/chrome");
-    if (!base::PathExists(dir)) {
-      PLOG(WARNING) << "Could not find " << dir
-                  << ", it must be created manually. Trying to continue";
+void ExtractReturnOffsets(std::atomic<uint32_t>* offsets,
+                          std::vector<int8_t>* extracted_data) {
+  *extracted_data = std::vector<int8_t>(kArraySize * 32 + 1, '\0');
+  for (size_t i = 0; i < kArraySize; i++) {
+    uint32_t value = offsets[i].load(std::memory_order_relaxed);
+    for (int bit = 0; bit < 32; bit++) {
+      (*extracted_data)[32 * i + bit] = value & (1 << bit) ? '1' : '0';
     }
-    base::FilePath path = dir.Append(
-        base::StringPrintf("cygprofile-instrumented-code-hitmap-%s-%d.txt",
-                           specifier.c_str(), getpid()));
-
-    auto file = base::File(
-        path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
-    if (!file.IsValid()) {
-      PLOG(ERROR) << "Could not open " << path;
-      return;
-    }
-
-    auto data = std::vector<char>(kArraySize * 32 + 1, '\0');
-    for (size_t i = 0; i < kArraySize; i++) {
-      uint32_t value = offset_array[i].load(std::memory_order_relaxed);
-      for (int bit = 0; bit < 32; bit++) {
-        data[32 * i + bit] = value & (1 << bit) ? '1' : '0';
-      }
-    }
-    data[32 * kArraySize] = '\n';
-    file.WriteAtCurrentPos(&data[0], static_cast<int>(data.size()));
-    PLOG(INFO) << "Wrote dump information to " << path;
   }
+}
 
-  static constexpr int kDelayInSeconds = 60;
-};
+void DumpInstrumentationData() {
+  // The linker usually keeps the input file ordering for symbols.
+  // dummy_function_to_anchor_text() should then be after
+  // dummy_function_to_check_ordering() without ordering.
+  // This check is thus intended to catch the lack of ordering.
+  CHECK_LT(kStartOfText,
+           reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
 
-// Static initializer on purpose. Will disable instrumentation after
-// |kDelayInSeconds|.
-DelayedDumper g_dump_later;
+  CHECK(!g_enabled_and_array.load(std::memory_order_relaxed));
+
+  std::vector<int8_t> data;
+  ExtractReturnOffsets(g_startup_return_offsets, &data);
+  DumpInstrumentationArray("startup", getpid(), data);
+  ExtractReturnOffsets(g_postload_return_offsets, &data);
+  DumpInstrumentationArray("postload", getpid(), data);
+}
 
 extern "C" {
 void __cyg_profile_func_enter_bare() {
@@ -165,12 +117,63 @@ void __cyg_profile_func_enter_bare() {
 
 }  // namespace
 
-namespace cygprofile {
+void Checkpoint(const std::string& option) {
+  auto* current_value = g_enabled_and_array.load(std::memory_order_relaxed);
 
-void OnDidStopLoading() {
-  // Swap return offset array.
-  g_enabled_and_array.store(g_post_loading_return_offsets,
-                            std::memory_order_relaxed);
+  if (!option.empty()) {
+    CHECK_EQ(option, "postload") << "Only valid checkpoint option is postload";
+
+    // Advance to postload if we aren't already there, otherwise do nothing.
+    if (current_value != g_postload_return_offsets) {
+      g_enabled_and_array.store(g_postload_return_offsets,
+                                std::memory_order_relaxed);
+    }
+    return;
+  }
+
+  // If no option, advance through startup -> postload -> null sequence.
+  if (current_value != g_postload_return_offsets) {
+    g_enabled_and_array.store(g_postload_return_offsets,
+                              std::memory_order_relaxed);
+  } else if (current_value != nullptr) {
+    g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
+  }
+}
+
+void DumpCheckpoints() {
+  g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
+  DumpInstrumentationData();
+}
+
+void ExtractInstrumentationData(std::vector<int8_t>* startup_offsets,
+                                std::vector<int8_t>* postload_offsets) {
+  g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
+  ExtractReturnOffsets(g_startup_return_offsets, startup_offsets);
+  ExtractReturnOffsets(g_postload_return_offsets, postload_offsets);
+}
+
+void DumpInstrumentationArray(const std::string& specifier,
+                              int pid,
+                              const std::vector<int8_t>& offset_array) {
+  auto dir = base::FilePath("/data/data/com.google.android.apps.chrome");
+  if (!base::PathExists(dir)) {
+    PLOG(WARNING) << "Could not find " << dir
+                  << ", it must be created manually. Trying to continue";
+  }
+  base::FilePath path = dir.Append(base::StringPrintf(
+      "cygprofile-instrumented-code-hitmap-%s-%d.txt", specifier.c_str(), pid));
+
+  auto file =
+      base::File(path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  if (!file.IsValid()) {
+    PLOG(ERROR) << "Could not open " << path;
+    return;
+  }
+  // static_cast<char*> as a char is neither an int8_t nor a uint8_t.
+  file.WriteAtCurrentPos(reinterpret_cast<const char*>(&offset_array[0]),
+                         static_cast<int>(offset_array.size()));
+  file.WriteAtCurrentPos("\n", 1);
+  PLOG(INFO) << "Wrote dump information to " << path;
 }
 
 }  // namespace cygprofile

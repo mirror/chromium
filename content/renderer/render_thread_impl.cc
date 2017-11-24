@@ -4,6 +4,8 @@
 
 #include "content/renderer/render_thread_impl.h"
 
+#include <unistd.h>
+
 #include <algorithm>
 #include <limits>
 #include <map>
@@ -191,6 +193,10 @@
 #include "ui/base/ui_base_switches.h"
 #include "ui/display/display_switches.h"
 #include "ui/gl/gl_switches.h"
+
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+#include "tools/cygprofile/lightweight_cygprofile.h"
+#endif
 
 #if defined(OS_ANDROID)
 #include <cpu-features.h>
@@ -1837,6 +1843,24 @@ void RenderThreadImpl::ProcessPurgeAndSuspend() {
           &RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
           base::Unretained(this), "90min", process_foregrounded_count_),
       base::TimeDelta::FromMinutes(90));
+}
+
+void RenderThreadImpl::CheckpointInstrumentation(const std::string& option) {
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+  cygprofile::Checkpoint(option);
+#endif
+}
+
+void RenderThreadImpl::DumpInstrumentationData(
+    DumpInstrumentationDataCallback callback) {
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+  std::vector<int8_t> startup_offsets;
+  std::vector<int8_t> postload_offsets;
+  cygprofile::ExtractInstrumentationData(&startup_offsets, &postload_offsets);
+  mojom::InstrumentationDataPtr data = mojom::InstrumentationData::New(
+      startup_offsets, postload_offsets, getpid());
+  std::move(callback).Run(std::move(data));
+#endif
 }
 
 bool RenderThreadImpl::GetRendererMemoryMetrics(

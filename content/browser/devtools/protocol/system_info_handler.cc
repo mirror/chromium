@@ -13,10 +13,12 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/gpu/compositor_util.h"
+#include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "gpu/config/gpu_feature_type.h"
 #include "gpu/config/gpu_info.h"
 #include "gpu/config/gpu_switches.h"
+#include "tools/cygprofile/lightweight_cygprofile.h"
 
 namespace content {
 namespace protocol {
@@ -216,6 +218,32 @@ void SystemInfoHandler::GetInfo(
     // information is available.
     new SystemInfoHandlerGpuObserver(std::move(callback));
   }
+}
+
+DispatchResponse SystemInfoHandler::InstrumentationCheckpoint(
+    Maybe<String> maybe_checkpoint_option) {
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+  String checkpoint_option = maybe_checkpoint_option.fromMaybe("");
+  cygprofile::Checkpoint(checkpoint_option);
+  RenderProcessHostImpl::CheckpointInstrumentationInRenderers(
+      checkpoint_option);
+  return DispatchResponse::OK();
+#else
+  return DispatchResponse::Error("Unimplemented method");
+#endif
+}
+
+DispatchResponse SystemInfoHandler::DumpInstrumentationData() {
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // Dump checkpoints in browser process.
+  cygprofile::DumpCheckpoints();
+  RenderProcessHostImpl::DumpInstrumentationInRenderers();
+  // TODO(mattcary): dump checkpoints in GPU and all other processes.
+  return DispatchResponse::OK();
+#else
+  return DispatchResponse::Error("Unimplemented method");
+#endif
 }
 
 }  // namespace protocol

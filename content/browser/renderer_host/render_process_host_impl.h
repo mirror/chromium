@@ -392,6 +392,13 @@ class CONTENT_EXPORT RenderProcessHostImpl
     return *permission_service_context_;
   };
 
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+  // Checkpoint instrumentation in all renderers, best-effort.
+  static void CheckpointInstrumentationInRenderers(const std::string& option);
+  // Dump instrumentation in all renderers, best-effort.
+  static void DumpInstrumentationInRenderers();
+#endif
+
  protected:
   // A proxy for our IPC::Channel that lives on the IO thread.
   std::unique_ptr<IPC::ChannelProxy> channel_;
@@ -566,6 +573,13 @@ class CONTENT_EXPORT RenderProcessHostImpl
                    instance_weak_factory_->GetWeakPtr(), callback),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::UI));
   }
+
+#if defined(LIGHTWEIGHT_INSTRUMENTATION)
+  // Callback from Renderer::DumpInstrumentationData that contains the memory
+  // region to dump.
+  static void DumpInstrumentationDataFromRenderer(
+      mojom::InstrumentationDataPtr data);
+#endif
 
   std::unique_ptr<mojo::edk::OutgoingBrokerClientInvitation>
       broker_client_invitation_;

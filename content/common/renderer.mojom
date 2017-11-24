@@ -161,6 +161,16 @@ struct UpdateScrollbarThemeParams {
   bool scroll_view_rubber_banding;
 };
 
+// Data to dump for instrumentation. See DumpInstrumentationData, below.
+struct InstrumentationData {
+  // Each uint8 in these offset arrays corresponds to a word (sizeof(int)) of
+  // address space, and is the ascii character '1' if that word is a return
+  // target for an mcount() instrumented call, or '0' if it was untouched.
+  array<int8> startup_offsets;
+  array<int8> postload_offsets;
+  int32 pid;
+};
+
 // The primordial Channel-associated interface implemented by a render process.
 // This should be used for implementing browser-to-renderer control messages
 // which need to retain FIFO with respect to legacy IPC messages.
@@ -229,4 +239,10 @@ interface Renderer {
 
   // Tells the renderer process to purge and suspend.
   ProcessPurgeAndSuspend();
+
+  // Tells the renderer process to checkpoint instrumentation.
+  CheckpointInstrumentation(string option);
+
+  // Tells the renderer process to dump instrumentation data.
+  DumpInstrumentationData() => (InstrumentationData data);
 };
