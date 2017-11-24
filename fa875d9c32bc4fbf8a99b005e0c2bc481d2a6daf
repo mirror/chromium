@@ -616,6 +616,30 @@
     },
     {
       "key": {
+        "uuid": "c8f7dee9_93a15cba",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-24T08:57:34Z",
+      "side": 1,
+      "message": "Not really, up to you.",
+      "parentUuid": "873a8dfc_eb549ab3",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6880c122_a8b0fef0",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
         "patchSetId": 6
@@ -680,6 +704,24 @@
       "side": 1,
       "message": "I don\u0027t think we should do anything in this destructor since this object is deliberately stateless.",
       "parentUuid": "9e029e87_800f173f",
+      "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6db70a2_b1662a58",
+        "filename": "content/browser/renderer_host/media/audio_output_stream_observer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-24T08:57:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5bdb3c73_1473bd96",
       "revId": "fa875d9c32bc4fbf8a99b005e0c2bc481d2a6daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

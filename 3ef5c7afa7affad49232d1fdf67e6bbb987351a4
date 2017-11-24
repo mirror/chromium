@@ -45,6 +45,57 @@
       "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb1367d_6e44d255",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-24T08:57:34Z",
+      "side": 1,
+      "message": "Preserve a comment from AudioStreamMonitor::kPowerMeasurementsPerSecond?",
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766f65c2_0cba24fc",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-24T08:57:34Z",
+      "side": 1,
+      "message": "nit: extra spaces at the end of several lines here",
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052ac520_a53f5b6b",
+        "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-24T08:57:34Z",
+      "side": 1,
+      "message": "Why do we need this?\nAnd what if no stream is acquired - observer will receive \"stopped\" without \"started\"?\nWhich unit test covers this?",
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
