@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8d82c2c_82d26daa",
+        "filename": "services/network/public/cpp/mutable_partial_network_traffic_annotation_tag_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-24T00:52:10Z",
+      "side": 1,
+      "message": "I think this should be MutablePartialNetworkTrafficAnnotationTag",
+      "revId": "c83cedc227da37bd7371bf17e1d4d03df400c8ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ae2b46_fdfcd748",
+        "filename": "services/network/public/cpp/mutable_partial_network_traffic_annotation_tag_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-24T00:52:10Z",
+      "side": 1,
+      "message": "data.completing_id_hash_code()",
+      "revId": "c83cedc227da37bd7371bf17e1d4d03df400c8ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
