@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecfbb112_52617f50",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-24T12:37:42Z",
+      "side": 1,
+      "message": "nit: I think we will only need this and pref_service.h when the TODO code at the bottom gets uncommented.",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "68650e47cb2005cb8be0d73cab070a4c2869a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835c62fb_0494b395",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 4723,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-24T12:37:42Z",
+      "side": 1,
+      "message": "Is it a good idea to make a distinction of URL vs domain here? Could it be that we will want to use a URL as a webauthn RP ID in the future?\n\n(The alternative would probably be a json-based policy which actually has two separate arrays in it).",
+      "range": {
+        "startLine": 4723,
+        "startChar": 6,
+        "endLine": 4723,
+        "endChar": 136
+      },
+      "revId": "68650e47cb2005cb8be0d73cab070a4c2869a70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
