@@ -81,4 +81,8 @@ void ContentElement::SetTexture(unsigned int texture_id,
   texture_location_ = location;
 }
 
+void ContentElement::SetDelegate(ContentInputDelegate* delegate) {
+  delegate_ = delegate;
+}
+
 }  // namespace vr

@@ -7,6 +7,7 @@
 
 #include "chrome/browser/vr/model/controller_model.h"
 #include "chrome/browser/vr/model/modal_prompt_type.h"
+#include "chrome/browser/vr/model/native_ui_model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/permissions_model.h"
 #include "chrome/browser/vr/model/reticle_model.h"
@@ -36,6 +37,7 @@ struct Model {
   ModalPromptType active_modal_prompt_type = kModalPromptTypeNone;
 
   PermissionsModel permissions;
+  NativeUiModel native_ui;
 
   ToolbarState toolbar_state;
   bool omnibox_input_active = false;

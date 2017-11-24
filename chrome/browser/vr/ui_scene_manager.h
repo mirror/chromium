@@ -131,6 +131,7 @@ class UiSceneManager {
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
                        UiElementRenderer::TextureLocation content_location,
+                       unsigned int ui_texture_id,
                        SkiaSurfaceProvider* provider);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
@@ -162,6 +163,7 @@ class UiSceneManager {
   void CreateWebVRExitWarning();
   void CreateSystemIndicators(Model* model);
   void CreateContentQuad(ContentInputDelegate* delegate);
+  void CreateUiDialog(Model* model, ContentInputDelegate* delegate);
   void CreateSplashScreen(Model* model);
   void CreateUnderDevelopmentNotice();
   void CreateBackground();
@@ -203,6 +205,7 @@ class UiSceneManager {
   ShowUntilSignalTransientElement* splash_screen_transient_parent_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   ContentElement* main_content_ = nullptr;
+  ContentElement* ui_dialog_ = nullptr;
   UiElement* screen_dimmer_ = nullptr;
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
