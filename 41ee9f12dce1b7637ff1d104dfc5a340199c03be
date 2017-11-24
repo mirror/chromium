@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c48d0a8_3f32abe5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T16:02:38Z",
+      "side": 1,
+      "message": "What effect does this line have? It looks like it can only be a local, unreferenced variable",
+      "revId": "41ee9f12dce1b7637ff1d104dfc5a340199c03be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ef54e7_9d772221",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/video-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T16:02:38Z",
+      "side": 1,
+      "message": "Would this be more accurately named as |simulateViewportClick| or something similar? It\u0027s not just a mousedown, and it wasn\u0027t clear to me in the tests what the difference between simulateMouseDown and simulateFrameClick is.",
+      "revId": "41ee9f12dce1b7637ff1d104dfc5a340199c03be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3496dd9_847218ab",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T16:02:38Z",
+      "side": 1,
+      "message": "Includes from common should use \"third_party/WebKit/common/...\", afaik",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "41ee9f12dce1b7637ff1d104dfc5a340199c03be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b222f2c_ff9fd63f",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T16:02:38Z",
+      "side": 1,
+      "message": "Can you add a comment here -- I think that the return value is true if *any* frame between this one and the root has been activated by a gesture, but it would be good to spell that out.",
+      "revId": "41ee9f12dce1b7637ff1d104dfc5a340199c03be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093f566f_27f69c1c",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-24T16:02:38Z",
+      "side": 1,
+      "message": "If the runtime feature is not enabled, then this looks like a behavior change -- activating any frame up to the root will allow autoplay in this document. Is that intended?\n\nIf not, then maybe the parent check in |HasBeenActivated| should be conditional on the FeaturePolicyAutoplayFeatureEnabled flag as well; I think that will restore the original behavior.",
+      "revId": "41ee9f12dce1b7637ff1d104dfc5a340199c03be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
