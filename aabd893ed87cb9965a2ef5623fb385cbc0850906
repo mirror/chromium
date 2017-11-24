@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3df002c_0e37c21c",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-24T05:04:55Z",
+      "side": 1,
+      "message": "Change \"+device/geolocation/public/interfaces\" back to \"\"+device/geolocation\" because the GeolocationBrowsertest still depends on device::NetworkLocationRequest.\nSee https://cs.chromium.org/chromium/src/chrome/browser/geolocation/geolocation_browsertest.cc?rcl\u003df386e8f4cc527392cf5708cdf30a8fe0cec4399d\u0026l\u003d512\n\nI\u0027ll break that deps in another CL.",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 22
+      },
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
