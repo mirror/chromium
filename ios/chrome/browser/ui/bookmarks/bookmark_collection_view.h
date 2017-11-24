@@ -18,6 +18,8 @@
 // TODO(crbug.com/753599) : Delete this file after new bookmarks ui is launched.
 
 @class BookmarkCollectionView;
+@class SigninPromoViewMediator;
+@class SigninPromoViewConfigurator;
 class GURL;
 @protocol SigninPresenter;
 @protocol UrlLoader;
@@ -27,6 +29,8 @@ class BookmarkNode;
 }  // namespace bookmarks
 
 @protocol BookmarkCollectionViewDelegate<NSObject>
+
+@property(nonatomic, readonly) SigninPromoViewMediator* signinPromoViewMediator;
 
 // This method tells the delegate to add the node and cell
 // to the list of those being edited.
@@ -61,12 +65,6 @@ class BookmarkNode;
 
 // Returns true if a bookmarks promo cell should be shown.
 - (BOOL)bookmarkCollectionViewShouldShowPromoCell:(BookmarkCollectionView*)view;
-
-// Shows a sign-in view controller.
-- (void)bookmarkCollectionViewShowSignIn:(BookmarkCollectionView*)view;
-
-// Dismisses the promo.
-- (void)bookmarkCollectionViewDismissPromo:(BookmarkCollectionView*)view;
 
 // Tells the delegate that a folder was selected for navigation.
 - (void)bookmarkCollectionView:(BookmarkCollectionView*)view
@@ -104,6 +102,10 @@ class BookmarkNode;
 
 // Called when something outside the view causes the promo state to change.
 - (void)promoStateChangedAnimated:(BOOL)animated;
+
+- (void)configureSigninPromoWithConfigurator:
+            (SigninPromoViewConfigurator*)configurator
+                             identityChanged:(BOOL)identityChanged;
 
 @property(nonatomic, assign, readonly) bookmarks::BookmarkModel* bookmarkModel;
 @property(nonatomic, weak, readonly) id<UrlLoader> loader;

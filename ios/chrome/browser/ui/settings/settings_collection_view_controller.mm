@@ -336,13 +336,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(_browserState);
   if (!authService->IsAuthenticated()) {
-    if (!_hasRecordedSigninImpression) {
-      // Once the Settings are open, this button impression will at most be
-      // recorded once until they are closed.
-      base::RecordAction(
-          base::UserMetricsAction("Signin_Impression_FromSettings"));
-      _hasRecordedSigninImpression = YES;
-    }
     if ([SigninPromoViewMediator
             shouldDisplaySigninPromoViewWithAccessPoint:
                 signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS
@@ -362,6 +355,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     [model addItem:[self signInTextItem]
         toSectionWithIdentifier:SectionIdentifierSignIn];
   } else {
+    _hasRecordedSigninImpression = NO;
     [_signinPromoViewMediator signinPromoViewRemoved];
     _signinPromoViewMediator = nil;
     [model addItem:[self accountCellItem]
@@ -448,6 +442,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
         [_signinPromoViewMediator createConfigurator];
     [_signinPromoViewMediator signinPromoViewVisible];
     return signinPromoItem;
+  }
+  if (!_hasRecordedSigninImpression) {
+    // Once the Settings are open, this button impression will at most be
+    // recorded once until they are closed.
+    base::RecordAction(
+        base::UserMetricsAction("Signin_Impression_FromSettings"));
+    _hasRecordedSigninImpression = YES;
   }
   AccountSignInItem* signInTextItem =
       [[AccountSignInItem alloc] initWithType:ItemTypeSignInButton];
@@ -1205,20 +1206,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)configureSigninPromoWithConfigurator:
             (SigninPromoViewConfigurator*)configurator
                              identityChanged:(BOOL)identityChanged {
-  if (self.signinInteractionCoordinator.isActive) {
-    // When sign-in is started in a cold state (no default account), the sign-in
-    // interaction coordinator does the sign-in and then asks for sync
-    // authorization. If the user cancels this operation, the coordinator
-    // signs-out from this new account, and then the sign in UI disappears while
-    // removing the new account asynchronously.
-    // This leads to an UI glitch. The sign in UI disappears before the newly
-    // added account is removed. The user can see the sign-in promo in warm
-    // state quickly before being replaced by the cold state sign-in promo. To
-    // avoid this UI glitch, all notifications from the mediator should be
-    // ignored, while the sign-in is in progress to avoid showing the warm
-    // state.
-    return;
-  }
+  DCHECK(!self.signinInteractionCoordinator.isActive);
   if (![self.collectionViewModel hasItemForItemType:ItemTypeSigninPromo
                                   sectionIdentifier:SectionIdentifierSignIn]) {
     return;
@@ -1250,6 +1238,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)signinPromoViewMediatorCloseButtonWasTapped:
     (SigninPromoViewMediator*)mediator {
   [self reloadData];
+}
+
+- (void)signinDidFinishWithSuccess:(BOOL)succeeded {
+  // The sign-in is done. The sign-in promo cell or account cell can be
+  // reloaded.
+  if (!_settingsHasBeenDismissed && succeeded)
+    [self reloadData];
 }
 
 @end

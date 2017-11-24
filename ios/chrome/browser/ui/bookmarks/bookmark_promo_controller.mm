@@ -10,7 +10,10 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
+#import "ios/chrome/browser/ui/authentication/signin_promo_view_configurator.h"
+#import "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/show_signin_command.h"
 #import "ios/chrome/browser/ui/signin_interaction/public/signin_presenter.h"
 
@@ -22,19 +25,17 @@ namespace {
 class SignInObserver;
 }  // namespace
 
-@interface BookmarkPromoController () {
+@interface BookmarkPromoController ()<SigninPromoViewConsumer> {
   bool _isIncognito;
   ios::ChromeBrowserState* _browserState;
   std::unique_ptr<SignInObserver> _signinObserver;
-  bool _promoDisplayedRecorded;
 }
 
 // Presenter which can show signin UI.
 @property(nonatomic, readonly, weak) id<SigninPresenter> presenter;
 
-// Records that the promo was displayed. Can be called several times per
-// instance but will effectively record the user action only once per instance.
-- (void)recordPromoDisplayed;
+@property(nonatomic, readwrite)
+    SigninPromoViewMediator* signinPromoViewMediator;
 
 // SignInObserver Callbacks
 
@@ -73,8 +74,9 @@ class SignInObserver : public SigninManagerBase::Observer {
 @implementation BookmarkPromoController
 
 @synthesize delegate = _delegate;
-@synthesize promoState = _promoState;
+@synthesize shouldShowSigninPromo = _shouldShowSigninPromo;
 @synthesize presenter = _presenter;
+@synthesize signinPromoViewMediator = _signinPromoViewMediator;
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                             delegate:
@@ -94,12 +96,14 @@ class SignInObserver : public SigninManagerBase::Observer {
           ios::SigninManagerFactory::GetForBrowserState(_browserState);
       signinManager->AddObserver(_signinObserver.get());
     }
-    [self updatePromoState];
+    [self updateShouldShowSigninPromo];
   }
   return self;
 }
 
 - (void)dealloc {
+  [_signinPromoViewMediator signinPromoViewRemoved];
+
   if (!_isIncognito) {
     DCHECK(_browserState);
     SigninManager* signinManager =
@@ -121,18 +125,18 @@ class SignInObserver : public SigninManagerBase::Observer {
 - (void)hidePromoCell {
   DCHECK(!_isIncognito);
   DCHECK(_browserState);
-  self.promoState = NO;
+  self.shouldShowSigninPromo = NO;
 }
 
-- (void)setPromoState:(BOOL)promoState {
-  if (_promoState != promoState) {
-    _promoState = promoState;
-    [self.delegate promoStateChanged:promoState];
+- (void)setShouldShowSigninPromo:(BOOL)shouldShowSigninPromo {
+  if (_shouldShowSigninPromo != shouldShowSigninPromo) {
+    _shouldShowSigninPromo = shouldShowSigninPromo;
+    [self.delegate shouldShowSigninPromoChanged:shouldShowSigninPromo];
   }
 }
 
-- (void)updatePromoState {
-  self.promoState = NO;
+- (void)updateShouldShowSigninPromo {
+  self.shouldShowSigninPromo = NO;
   if (_isIncognito)
     return;
 
@@ -143,20 +147,18 @@ class SignInObserver : public SigninManagerBase::Observer {
                                          browserState:_browserState]) {
     SigninManager* signinManager =
         ios::SigninManagerFactory::GetForBrowserState(_browserState);
-    self.promoState = !signinManager->IsAuthenticated();
-    if (self.promoState)
-      [self recordPromoDisplayed];
+    self.shouldShowSigninPromo = !signinManager->IsAuthenticated();
+    if (self.shouldShowSigninPromo) {
+      if (!_signinPromoViewMediator) {
+        _signinPromoViewMediator = [[SigninPromoViewMediator alloc]
+            initWithBrowserState:_browserState
+                     accessPoint:signin_metrics::AccessPoint::
+                                     ACCESS_POINT_BOOKMARK_MANAGER
+                       presenter:_presenter];
+        _signinPromoViewMediator.consumer = self;
+      }
+    }
   }
-}
-
-#pragma mark - Private
-
-- (void)recordPromoDisplayed {
-  if (_promoDisplayedRecorded)
-    return;
-  _promoDisplayedRecorded = YES;
-  base::RecordAction(
-      base::UserMetricsAction("Signin_Impression_FromBookmarkManager"));
 }
 
 #pragma mark - SignInObserver
@@ -164,13 +166,33 @@ class SignInObserver : public SigninManagerBase::Observer {
 // Called when a user signs into Google services such as sync.
 - (void)googleSigninSucceededWithAccountId:(const std::string&)account_id
                                   username:(const std::string&)username {
-  self.promoState = NO;
+  if (!_signinPromoViewMediator.isSigninActive)
+    self.shouldShowSigninPromo = NO;
 }
 
 // Called when the currently signed-in user for a user has been signed out.
 - (void)googleSignedOutWithAcountId:(const std::string&)account_id
                            username:(const std::string&)username {
-  [self updatePromoState];
+  [self updateShouldShowSigninPromo];
+}
+
+#pragma mark - SigninPromoViewConsumer
+
+- (void)configureSigninPromoWithConfigurator:
+            (SigninPromoViewConfigurator*)configurator
+                             identityChanged:(BOOL)identityChanged {
+  [self.delegate configureSigninPromoWithConfigurator:configurator
+                                      identityChanged:identityChanged];
+}
+
+- (void)signinDidFinishWithSuccess:(BOOL)succeeded {
+  if (succeeded)
+    [self updateShouldShowSigninPromo];
+}
+
+- (void)signinPromoViewMediatorCloseButtonWasTapped:
+    (SigninPromoViewMediator*)mediator {
+  [self updateShouldShowSigninPromo];
 }
 
 @end
