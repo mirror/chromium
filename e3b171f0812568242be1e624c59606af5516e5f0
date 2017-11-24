@@ -22,6 +22,30 @@
       "revId": "e3b171f0812568242be1e624c59606af5516e5f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5178efdd_1ea74e83",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-24T03:01:36Z",
+      "side": 0,
+      "message": "Actually,it is not exactly equivalent,\nLayoutBlock is base for LayoutBlockFLow, LayoutTable, LayoutGrid, LayoutFlexibleBox, LayoutScrollbarPart,  LayoutDepricatedFlexibleBox, SVGForeignObjectPainter.\nSince this part of code wants to see EmptyBlocks which have visible position, which could have come in any LayoutBlock, so I tried to check LayoutBlock to check if every thing passes.\nPlease let me know if this is not correct.",
+      "parentUuid": "dd69131f_ea8e524d",
+      "range": {
+        "startLine": 1239,
+        "startChar": 6,
+        "endLine": 1240,
+        "endChar": 35
+      },
+      "revId": "e3b171f0812568242be1e624c59606af5516e5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
