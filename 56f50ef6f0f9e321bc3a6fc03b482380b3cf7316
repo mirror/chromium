@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78508f44_e2255c91",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/nonce-enforce-blocked.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-24T15:01:53Z",
+      "side": 1,
+      "message": "Indeed!",
+      "parentUuid": "2113dbd0_eb3c4a5d",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2adbc761_fad967f9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/nonce-enforce-blocked.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-13T15:08:17Z",
       "side": 1,
       "message": "I\u0027m surprised this does not fail now that the expectations don\u0027t match the URLs below... could you investigate?",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba88e19_8120fa6a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/nonce-enforce-blocked.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-24T15:01:53Z",
+      "side": 1,
+      "message": "Fixed. :)",
+      "parentUuid": "2adbc761_fad967f9",
       "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf33689d_62f76545",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptElementBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-24T15:01:53Z",
+      "side": 1,
+      "message": "Because curly quotes are cool? Idunno. It\u0027s `\u003d` now.",
+      "parentUuid": "8e3f0676_a36fcbc8",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1232a750_3994834a",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da38004e_d50fb9bb",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-24T15:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1232a750_3994834a",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c782b6a5_3a04bd8f",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-24T15:01:53Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3f05e328_d5e95f53",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e57fb6a7_5ce62bd9",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.cpp",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-14T11:01:49Z",
       "side": 1,
       "message": "+1 to hiroshige@\u0027s comments.\nCan we make this a NodeFlag or store this as a new ElementRareData field?",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96532b59_0d049501",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-24T15:01:53Z",
+      "side": 1,
+      "message": "Looks like we have free bits floating around on `NodeFlag`. I\u0027ll try that.",
+      "parentUuid": "e57fb6a7_5ce62bd9",
       "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
