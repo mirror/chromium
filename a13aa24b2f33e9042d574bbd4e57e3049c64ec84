@@ -22,6 +22,30 @@
       "revId": "a13aa24b2f33e9042d574bbd4e57e3049c64ec84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8177f1d0_596d1567",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/time_domain.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-24T14:23:23Z",
+      "side": 0,
+      "message": "Addressed by https://chromium-review.googlesource.com/c/chromium/src/+/789076.",
+      "parentUuid": "6e8dd60c_7ed245bd",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "a13aa24b2f33e9042d574bbd4e57e3049c64ec84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
