@@ -118,7 +118,7 @@ class MockPasswordManagerExporter
     : public password_manager::PasswordManagerExporter {
  public:
   MockPasswordManagerExporter()
-      : password_manager::PasswordManagerExporter(nullptr) {}
+      : password_manager::PasswordManagerExporter(nullptr, nullptr) {}
   ~MockPasswordManagerExporter() override = default;
 
   MOCK_METHOD0(PreparePasswordsForExport, void());

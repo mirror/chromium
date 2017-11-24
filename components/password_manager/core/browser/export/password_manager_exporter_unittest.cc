@@ -14,6 +14,7 @@
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/export/destination.h"
 #include "components/password_manager/core/browser/export/password_csv_writer.h"
+#include "components/password_manager/core/browser/export/password_ui_export_view.h"
 #include "components/password_manager/core/browser/ui/credential_provider_interface.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -21,6 +22,8 @@
 namespace {
 
 using ::testing::_;
+using ::testing::Ne;
+using ::testing::Return;
 using ::testing::StrictMock;
 
 // Provides a predetermined set of credentials
@@ -65,6 +68,17 @@ class MockDestination : public password_manager::Destination {
   DISALLOW_COPY_AND_ASSIGN(MockDestination);
 };
 
+class MockPasswordUIExportView : public password_manager::PasswordUIExportView {
+ public:
+  MockPasswordUIExportView() = default;
+  ~MockPasswordUIExportView() override = default;
+
+  MOCK_METHOD1(OnCompletedWritingToDestination, void(const std::string&));
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockPasswordUIExportView);
+};
+
 // Creates a hardcoded set of credentials for tests.
 std::vector<std::unique_ptr<autofill::PasswordForm>> CreatePasswordList() {
   auto password_form = std::make_unique<autofill::PasswordForm>();
@@ -82,12 +96,16 @@ class PasswordManagerExporterTest : public testing::Test {
   PasswordManagerExporterTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
-        exporter_(&fake_credential_provider_) {}
+        mock_password_ui_export_view_(
+            std::make_unique<StrictMock<MockPasswordUIExportView>>()),
+        exporter_(&fake_credential_provider_,
+                  mock_password_ui_export_view_.get()) {}
   ~PasswordManagerExporterTest() override = default;
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   FakeCredentialProvider fake_credential_provider_;
+  std::unique_ptr<MockPasswordUIExportView> mock_password_ui_export_view_;
   password_manager::PasswordManagerExporter exporter_;
 
  private:
@@ -100,10 +118,12 @@ TEST_F(PasswordManagerExporterTest, PasswordExportSetPasswordListFirst) {
   fake_credential_provider_.SetPasswordList(password_list);
   const std::string serialised(
       password_manager::PasswordCSVWriter::SerializePasswords(password_list));
-
   std::unique_ptr<MockDestination> mock_destination =
       std::make_unique<StrictMock<MockDestination>>();
-  EXPECT_CALL(*mock_destination, Write(serialised));
+
+  EXPECT_CALL(*mock_destination, Write(serialised)).WillOnce(Return(true));
+  EXPECT_CALL(*mock_password_ui_export_view_,
+              OnCompletedWritingToDestination(""));
 
   exporter_.PreparePasswordsForExport();
   exporter_.SetDestination(std::move(mock_destination));
@@ -117,13 +137,34 @@ TEST_F(PasswordManagerExporterTest, PasswordExportSetDestinationFirst) {
   fake_credential_provider_.SetPasswordList(password_list);
   const std::string serialised(
       password_manager::PasswordCSVWriter::SerializePasswords(password_list));
-
   std::unique_ptr<MockDestination> mock_destination =
       std::make_unique<MockDestination>();
-  EXPECT_CALL(*mock_destination, Write(serialised));
+
+  EXPECT_CALL(*mock_destination, Write(serialised)).WillOnce(Return(true));
+  EXPECT_CALL(*mock_password_ui_export_view_,
+              OnCompletedWritingToDestination(""));
 
   exporter_.SetDestination(std::move(mock_destination));
   exporter_.PreparePasswordsForExport();
+
+  scoped_task_environment_.RunUntilIdle();
+}
+
+TEST_F(PasswordManagerExporterTest, WriteToDestinationFails) {
+  std::vector<std::unique_ptr<autofill::PasswordForm>> password_list =
+      CreatePasswordList();
+  fake_credential_provider_.SetPasswordList(password_list);
+  const std::string serialised(
+      password_manager::PasswordCSVWriter::SerializePasswords(password_list));
+  std::unique_ptr<MockDestination> mock_destination =
+      std::make_unique<MockDestination>();
+
+  EXPECT_CALL(*mock_destination, Write(serialised)).WillOnce(Return(false));
+  EXPECT_CALL(*mock_password_ui_export_view_,
+              OnCompletedWritingToDestination(Ne("")));
+
+  exporter_.PreparePasswordsForExport();
+  exporter_.SetDestination(std::move(mock_destination));
 
   scoped_task_environment_.RunUntilIdle();
 }
@@ -136,6 +177,9 @@ TEST_F(PasswordManagerExporterTest, DontExportWithOnlyDestination) {
   std::unique_ptr<MockDestination> mock_destination =
       std::make_unique<MockDestination>();
   EXPECT_CALL(*mock_destination, Write(_)).Times(0);
+  EXPECT_CALL(*mock_password_ui_export_view_,
+              OnCompletedWritingToDestination(_))
+      .Times(0);
 
   exporter_.SetDestination(std::move(mock_destination));
 
@@ -150,6 +194,9 @@ TEST_F(PasswordManagerExporterTest, CancelAfterPasswords) {
       std::make_unique<MockDestination>();
 
   EXPECT_CALL(*mock_destination, Write(_)).Times(0);
+  EXPECT_CALL(*mock_password_ui_export_view_,
+              OnCompletedWritingToDestination(_))
+      .Times(0);
 
   exporter_.PreparePasswordsForExport();
   exporter_.Cancel();
@@ -166,6 +213,9 @@ TEST_F(PasswordManagerExporterTest, CancelAfterDestination) {
       std::make_unique<MockDestination>();
 
   EXPECT_CALL(*mock_destination, Write(_)).Times(0);
+  EXPECT_CALL(*mock_password_ui_export_view_,
+              OnCompletedWritingToDestination(_))
+      .Times(0);
 
   exporter_.SetDestination(std::move(mock_destination));
   exporter_.Cancel();
@@ -185,7 +235,9 @@ TEST_F(PasswordManagerExporterTest, CancelAfterPasswordsThenExport) {
   std::unique_ptr<MockDestination> mock_destination =
       std::make_unique<MockDestination>();
 
-  EXPECT_CALL(*mock_destination, Write(serialised));
+  EXPECT_CALL(*mock_destination, Write(serialised)).WillOnce(Return(true));
+  EXPECT_CALL(*mock_password_ui_export_view_,
+              OnCompletedWritingToDestination(""));
 
   exporter_.PreparePasswordsForExport();
   exporter_.Cancel();
@@ -209,7 +261,9 @@ TEST_F(PasswordManagerExporterTest, CancelAfterDestinationThenExport) {
       std::make_unique<MockDestination>();
 
   EXPECT_CALL(*mock_destination_cancelled, Write(_)).Times(0);
-  EXPECT_CALL(*mock_destination, Write(serialised));
+  EXPECT_CALL(*mock_destination, Write(serialised)).WillOnce(Return(true));
+  EXPECT_CALL(*mock_password_ui_export_view_,
+              OnCompletedWritingToDestination(""));
 
   exporter_.SetDestination(std::move(mock_destination_cancelled));
   exporter_.Cancel();

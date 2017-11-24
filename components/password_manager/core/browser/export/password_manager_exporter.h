@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 #include "components/password_manager/core/browser/export/destination.h"
+#include "components/password_manager/core/browser/export/password_ui_export_view.h"
 
 namespace autofill {
 struct PasswordForm;
@@ -30,11 +31,11 @@ class PasswordManagerExporter {
  public:
   explicit PasswordManagerExporter(
       password_manager::CredentialProviderInterface*
-          credential_provider_interface);
+          credential_provider_interface,
+      PasswordUIExportView* password_ui_export_view);
   virtual ~PasswordManagerExporter();
 
   // Pre-load the passwords from the password store.
-  // TODO(crbug.com/785237) Notify the UI about the result.
   virtual void PreparePasswordsForExport();
 
   // Set the destination, where the passwords will be written when they are
@@ -50,7 +51,6 @@ class PasswordManagerExporter {
 
   // Performs the export. It should not be called before the data is available.
   // At the end, it clears cached fields.
-  // TODO(crbug.com/785237) Notify the UI about the result.
   void Export();
 
   // Callback after the passwords have been serialised.
@@ -58,7 +58,10 @@ class PasswordManagerExporter {
                              const std::string& serialised);
 
   // The source of the password list which will be exported.
-  password_manager::CredentialProviderInterface* credential_provider_interface_;
+  CredentialProviderInterface* const credential_provider_interface_;
+
+  // Callbacks to the UI.
+  PasswordUIExportView* const password_ui_export_view_;
 
   // The password list that was read from the store. It will be cleared once
   // exporting is complete.

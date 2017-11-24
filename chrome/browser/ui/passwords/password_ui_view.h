@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "build/build_config.h"
+#include "components/password_manager/core/browser/export/password_ui_export_view.h"
 #include "ui/gfx/native_widget_types.h"
 
 namespace autofill {
@@ -23,9 +24,9 @@ class Profile;
 // An interface for a passwords UI View. A UI view is responsible for
 // displaying passwords in the UI and routing UI commands to the
 // PasswordManagerPresenter.
-class PasswordUIView {
+class PasswordUIView : public password_manager::PasswordUIExportView {
  public:
-  virtual ~PasswordUIView() {}
+  ~PasswordUIView() override = default;
 
   // Returns the profile associated with the currently active profile.
   virtual Profile* GetProfile() = 0;
