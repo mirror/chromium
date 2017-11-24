@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6d41920_cdbbea8e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T13:57:29Z",
+      "side": 1,
+      "message": "Can we type this?",
+      "range": {
+        "startLine": 1550,
+        "startChar": 0,
+        "endLine": 1550,
+        "endChar": 8
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2668aca_8de4ed8f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T13:57:29Z",
+      "side": 1,
+      "message": "Could this ever be unknown when we want to know it for paint timing? If it is, what should we do?",
+      "range": {
+        "startLine": 1551,
+        "startChar": 2,
+        "endLine": 1551,
+        "endChar": 3
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdf6a28_efce0650",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T13:57:29Z",
+      "side": 1,
+      "message": "Can this be typed?",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 10
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f91ab28_ff3bd107",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T13:57:29Z",
+      "side": 1,
+      "message": "Can this refer to the enum?",
+      "range": {
+        "startLine": 352,
+        "startChar": 2,
+        "endLine": 352,
+        "endChar": 10
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d1d530_71f0b7d9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T13:57:29Z",
+      "side": 1,
+      "message": "Add a test for unknown.",
+      "range": {
+        "startLine": 130,
+        "startChar": 37,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1aa0f5_5bdde3ed",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T13:57:29Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment here.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 80
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bc30d0_16ae2792",
+        "filename": "third_party/WebKit/Source/platform/text/TextRun.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T13:57:29Z",
+      "side": 1,
+      "message": "Generally 0 is the default value. I\u0027d move kUnknown to 0.\n\nCould this be an enum class? I\u0027m not sure if you can bit pack an enum class, but if so, it would make sense to do so.",
+      "range": {
+        "startLine": 48,
+        "startChar": 35,
+        "endLine": 48,
+        "endChar": 69
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
