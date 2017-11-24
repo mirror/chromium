@@ -6,11 +6,13 @@
 #define CHROME_BROWSER_VR_UI_SCENE_MANAGER_H_
 
 #include "base/macros.h"
+#include "chrome/browser/vr/elements/text_input.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
 
 namespace vr {
 
 class ContentInputDelegate;
+class TextInput;
 class UiBrowserInterface;
 class UiScene;
 struct Model;
@@ -25,6 +27,11 @@ class UiSceneManager {
   ~UiSceneManager();
 
   void CreateScene();
+
+  static TextInput::OnFocusChangedCallback GetFocusChangedCallbackForTextInput(
+      Model* model);
+  static TextInput::OnInputEditedCallback GetInputEditedCallbackForTextInput(
+      TextInputInfo* model);
 
  private:
   void Create2dBrowsingSubtreeRoots();
@@ -45,6 +52,7 @@ class UiSceneManager {
   void CreateToasts();
   void CreateVoiceSearchUiGroup();
   void CreateController();
+  void CreateKeyboard();
 
   UiBrowserInterface* browser_;
   UiScene* scene_;

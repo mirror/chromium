@@ -10,6 +10,7 @@
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
+#include "chrome/browser/vr/model/camera_model.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/skia/include/core/SkRRect.h"
 #include "third_party/skia/include/core/SkRect.h"
@@ -74,7 +75,8 @@ void UiElement::Render(UiElementRenderer* renderer,
   NOTREACHED();
 }
 
-void UiElement::Initialize(SkiaSurfaceProvider* provider) {}
+void UiElement::Initialize(SkiaSurfaceProvider* provider,
+                           TextInputDelegate* text_input_delegate) {}
 
 void UiElement::OnHoverEnter(const gfx::PointF& position) {
   if (event_handlers_.hover_enter) {
@@ -126,6 +128,25 @@ void UiElement::OnScrollUpdate(std::unique_ptr<blink::WebGestureEvent> gesture,
                                const gfx::PointF& position) {}
 void UiElement::OnScrollEnd(std::unique_ptr<blink::WebGestureEvent> gesture,
                             const gfx::PointF& position) {}
+
+bool UiElement::editable() {
+  return false;
+}
+
+void UiElement::OnFocusChanged(bool focused) {
+  // This should only be called for editable elements.
+  NOTREACHED();
+}
+
+void UiElement::OnInputEdited(const TextInputInfo& info) {
+  // This should only be called for editable elements.
+  NOTREACHED();
+}
+
+void UiElement::OnInputCommited(const TextInputInfo& info) {
+  // This should only be called for editable elements.
+  NOTREACHED();
+}
 
 bool UiElement::PrepareToDraw() {
   return false;

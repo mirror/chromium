@@ -11,6 +11,7 @@
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/model/controller_model.h"
 #include "chrome/browser/vr/model/reticle_model.h"
+#include "chrome/browser/vr/model/text_input_info.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
 // TODO(tiborg): Remove include once we use a generic type to pass scroll/fling
@@ -322,6 +323,13 @@ void UiInputManager::SendButtonDown(UiElement* target,
   if (target) {
     target->OnButtonDown(target_point);
     input_locked_element_id_ = target->id();
+    // Clicking outside of the focused element causes it to loose focus. Note
+    // that currently this means that the focused element's children should not
+    // be hittestable, otherwise we'll loose focus if we hit something inside
+    // focused element, which is incorrect behavior.
+    if (target->id() != focused_element_id_ && target->name() != kKeyboard) {
+      ClearFocusedElement();
+    }
   } else {
     input_locked_element_id_ = 0;
   }
@@ -412,6 +420,49 @@ void UiInputManager::UpdateQuiescenceState(
              kControllerQuiescenceTemporalThresholdSeconds) {
     controller_quiescent_ = true;
   }
+}
+
+void UiInputManager::ClearFocusedElement() {
+  if (focused_element_id_ == -1)
+    return;
+
+  UiElement* focused = scene_->GetUiElementById(focused_element_id_);
+  if (focused && focused->editable()) {
+    focused->OnFocusChanged(false);
+  }
+  focused_element_id_ = -1;
+}
+
+void UiInputManager::RequestFocus(int element_id) {
+  if (element_id == focused_element_id_)
+    return;
+
+  ClearFocusedElement();
+
+  UiElement* focused = scene_->GetUiElementById(element_id);
+  if (!focused || !focused->editable())
+    return;
+
+  focused_element_id_ = element_id;
+  focused->OnFocusChanged(true);
+}
+
+void UiInputManager::OnInputEdited(const TextInputInfo& info) {
+  UiElement* focused = scene_->GetUiElementById(focused_element_id_);
+  if (!focused || !focused->editable())
+    return;
+  focused->OnInputEdited(info);
+}
+
+void UiInputManager::OnInputCommited(const TextInputInfo& info) {
+  UiElement* focused = scene_->GetUiElementById(focused_element_id_);
+  if (!focused || !focused->editable())
+    return;
+  focused->OnInputCommited(info);
+}
+
+void UiInputManager::OnKeyboardHidden() {
+  ClearFocusedElement();
 }
 
 }  // namespace vr

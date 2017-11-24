@@ -37,7 +37,10 @@ class TexturedElement : public UiElement {
   TexturedElement(int maximum_width, ResizeHorizontally);
   ~TexturedElement() override;
 
-  void Initialize(SkiaSurfaceProvider* provider) final;
+  virtual void SetTextInputDelegate(TextInputDelegate* delegate) {}
+
+  void Initialize(SkiaSurfaceProvider* provider,
+                  TextInputDelegate* text_input_delegate) final;
 
   void Render(UiElementRenderer* renderer,
               const CameraModel& model) const final;

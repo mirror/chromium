@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
+#include "chrome/browser/vr/keyboard_ui_interface.h"
 #include "chrome/browser/vr/platform_controller.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
 
@@ -17,7 +18,9 @@ namespace vr {
 class BrowserUiInterface;
 class ContentInputDelegate;
 class ContentInputForwarder;
+class KeyboardDelegate;
 class SkiaSurfaceProvider;
+class TextInputDelegate;
 class UiBrowserInterface;
 class UiInputManager;
 class UiRenderer;
@@ -38,7 +41,7 @@ struct UiInitialState {
 
 // This class manages all GLThread owned objects and GL rendering for VrShell.
 // It is not threadsafe and must only be used on the GL thread.
-class Ui : public BrowserUiInterface {
+class Ui : public BrowserUiInterface, public KeyboardUiInterface {
  public:
   Ui(UiBrowserInterface* browser,
      ContentInputForwarder* content_input_forwarder,
@@ -84,6 +87,8 @@ class Ui : public BrowserUiInterface {
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
                        UiElementRenderer::TextureLocation content_location,
+                       KeyboardDelegate* keyboard_delegate,
+                       TextInputDelegate* text_input_delegate,
                        bool use_ganesh);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
@@ -103,6 +108,12 @@ class Ui : public BrowserUiInterface {
   Model* model_for_test() { return model_.get(); }
 
   void Dump();
+
+  // Keyboard input related.
+  void RequestFocus(int element_id);
+  void OnInputEdited(const TextInputInfo& info) override;
+  void OnInputCommited(const TextInputInfo& info) override;
+  void OnKeyboardHidden() override;
 
  private:
   UiBrowserInterface* browser_;
