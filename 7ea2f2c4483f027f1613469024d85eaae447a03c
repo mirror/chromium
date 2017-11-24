@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "987370d8_cf01af62",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ab90fde_462a8477",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d46c0031_c297c0fe",
         "filename": "content/shell/test_runner/event_sender.cc",
         "patchSetId": 33
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T19:45:28Z",
       "side": 1,
       "message": "Add `// fallthrough` to make it clear the omitted `break` is intentional (here and for kGestureScrollBegin)",
+      "range": {
+        "startLine": 2369,
+        "startChar": 6,
+        "endLine": 2369,
+        "endChar": 7
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff825aa_f88bb089",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "Ended up undoing the change here. The logic in Element.cpp allows all scroll events when customization is set to kAuto. The change here would have been useful (although I should have changed the scroll_being instead of scroll_update) but since eventSender is deprecated and we are also adding web-platform-tests then it is no longer needed.",
+      "parentUuid": "d46c0031_c297c0fe",
       "range": {
         "startLine": 2369,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6d32f8fd_05e8f5a5",
+        "filename": "third_party/WebKit/LayoutTests/LeakExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "The test is using the ScrollCustomization API (setApplyScroll/setDistributeScroll) similarly to the other related tests such as touch-scroll-customization.html. The leak itself is not introduced in the CL and is a separate bug tracked by majidvp@. I believe the root cause is a dependency loop form Document -\u003e handler -\u003e element -\u003e Document or something similar. majidvp@ should have a better idea.",
+      "parentUuid": "65e55407_d5d66dad",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 131
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d5d44c4_fc2aaa2d",
         "filename": "third_party/WebKit/LayoutTests/TestExpectations",
         "patchSetId": 33
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-20T19:45:28Z",
       "side": 1,
       "message": "Why is it flaky?",
+      "range": {
+        "startLine": 650,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 110
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9498c862_17cc8f21",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "I just repeated what we have done for other ScrollCustomization tests here. IIUC we have to make it pass since the real test is supposed to pass as a virtual/scroll_customization/... where --enbale-fetures\u003dScrollCustomization is present?",
+      "parentUuid": "7d5d44c4_fc2aaa2d",
       "range": {
         "startLine": 650,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "edd113be_47a01bc3",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "Thanks I vaguely remembered this (perhaps you\u0027d told me :)) but was not sure. Done.",
+      "parentUuid": "20841c89_dc345a7d",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 5
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cc5c0ea_a8cd6340",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 33
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "79b66413_f9f5c3e1",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "I believe not. We are only interested in class\u003d\"a\" div and whether or not the handlers are called. Thanks for catching these. :)",
+      "parentUuid": "5cc5c0ea_a8cd6340",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaea12a7_7aaacc65",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 33
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-20T19:45:28Z",
       "side": 1,
       "message": "Check for the internals object before calling.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c033b9c_8e21c782",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "Done...but do we need to assert it too?",
+      "parentUuid": "aaea12a7_7aaacc65",
       "range": {
         "startLine": 42,
         "startChar": 2,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "278e4834_6e29945d",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "Yes. Thanks.",
+      "parentUuid": "2fe6d68c_60be4203",
+      "range": {
+        "startLine": 145,
+        "startChar": 36,
+        "endLine": 145,
+        "endChar": 70
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9781118e_485d5849",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 33
@@ -197,6 +389,30 @@
       "writtenOn": "2017-10-20T19:45:28Z",
       "side": 1,
       "message": "Should only do this if we have chrome.gpuBenchmarking (generally we make the test loadable and testable manually but it\u0027d be a little difficult in this case...)",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 33
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cdd707_a44797e9",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "Hmm....right. I know it is not ideal but if we do not use \"chrome.gpuBenchmarking\" when it does not exist, then the test will fail. Does it make it better (new patch)?",
+      "parentUuid": "9781118e_485d5849",
       "range": {
         "startLine": 206,
         "startChar": 2,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "14c31766_a004754e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "Good point. How about changing this to \"should_consider_scroll_customization\" and then adding IsScrollCustomized(this, scroll_state) to the conditional on line 653, instead?",
+      "parentUuid": "7a93fac7_de30bcfc",
+      "range": {
+        "startLine": 648,
+        "startChar": 6,
+        "endLine": 648,
+        "endChar": 59
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "545a0af0_d30ec1fd",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 33
@@ -252,6 +492,30 @@
       "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c683a9a_3e7a6ab5",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 33
+      },
+      "lineNbr": 26051,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-24T15:07:26Z",
+      "side": 1,
+      "message": "No sorry. I guess bad rebase. Un-done.",
+      "parentUuid": "545a0af0_d30ec1fd",
+      "range": {
+        "startLine": 26051,
+        "startChar": 2,
+        "endLine": 26051,
+        "endChar": 39
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
