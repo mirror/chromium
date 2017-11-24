@@ -1539,18 +1539,6 @@ bool UnownedCheckoutFormElementsAndFieldSetsToFormData(
         form, field);
   }
 
-  // A potential problem is that this only checks document.title(), but should
-  // actually check the main frame's title. Thus it may make bad decisions for
-  // iframes.
-  base::string16 title(base::ToLowerASCII(document.Title().Utf16()));
-
-  // Don't check the path for url's without a standard format path component,
-  // such as data:.
-  std::string path;
-  GURL url(document.Url());
-  if (url.IsStandard())
-    path = base::ToLowerASCII(url.path());
-
   const char* const kKeywords[] = {
     "payment",
     "checkout",
@@ -1560,18 +1548,35 @@ bool UnownedCheckoutFormElementsAndFieldSetsToFormData(
     "wallet"
   };
 
-  for (const auto* keyword : kKeywords) {
-    // Compare char16 elements of |title| with char elements of |keyword| using
-    // operator==.
-    auto title_pos = std::search(title.begin(), title.end(),
-                                 keyword, keyword + strlen(keyword));
-    if (title_pos != title.end() ||
-        path.find(keyword) != std::string::npos) {
-      form->is_formless_checkout = true;
-      // Found a keyword: treat this as an unowned form.
-      return UnownedFormElementsAndFieldSetsToFormData(
-          fieldsets, control_elements, element, document, nullptr, extract_mask,
-          form, field);
+  // Iterate up the frame hierarchy and for each frame, check it's title and
+  // url for checkout related keywords. Note that in many/most cases, the top
+  // frame and current frame are the same. This code is to handle cases where
+  // part of a form is in an iframe.
+  for (blink::WebFrame* frame = document.GetFrame(); frame != nullptr;
+       frame = frame->Parent()) {
+    // Remote (out-of-process) frames cannot inspected.
+    if (!frame->IsWebLocalFrame())
+      continue;
+
+    // Normalize the document title and path.
+    const auto& doc_to_check = frame->ToWebLocalFrame()->GetDocument();
+    base::string16 title(base::ToLowerASCII(doc_to_check.Title().Utf16()));
+    GURL url(doc_to_check.Url());
+    std::string path(url.IsStandard() ? base::ToLowerASCII(url.path()) : "");
+
+    // Search for payment related keywords.
+    for (const auto* keyword : kKeywords) {
+      // Compare char16 elements of |title| with char elements of |keyword|
+      // using operator==.
+      auto title_pos = std::search(title.begin(), title.end(), keyword,
+                                   keyword + strlen(keyword));
+      if (title_pos != title.end() || path.find(keyword) != std::string::npos) {
+        form->is_formless_checkout = true;
+        // Found a keyword: treat this as an unowned form.
+        return UnownedFormElementsAndFieldSetsToFormData(
+            fieldsets, control_elements, element, document, nullptr,
+            extract_mask, form, field);
+      }
     }
   }
 
