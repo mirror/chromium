@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d9a0bc7_78172ab5",
+        "filename": "extensions/common/api/virtual_keyboard_private.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-11-24T03:29:32Z",
+      "side": 1,
+      "message": "nit: can we name it setDraggableRegion or setDraggableArea, etc.?\nIMHO, \"Rect\" sounds more restrict, and less flexible to support non-rect area (e.g. round) in the future.",
+      "range": {
+        "startLine": 206,
+        "startChar": 29,
+        "endLine": 206,
+        "endChar": 33
+      },
+      "revId": "b0704b04b4b81a64be808ab1ce1abcaa96e462c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ab4f7c_60513ef3",
+        "filename": "ui/keyboard/container_full_width_behavior.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-11-24T03:29:32Z",
+      "side": 1,
+      "message": "Suggest to don\u0027t ignore this for full-width virtual keyboard.\nInstead, the virtual keyboard should remember the draggable area when it goes to floating mode.",
+      "range": {
+        "startLine": 124,
+        "startChar": 9,
+        "endLine": 124,
+        "endChar": 14
+      },
+      "revId": "b0704b04b4b81a64be808ab1ce1abcaa96e462c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
