@@ -16,6 +16,24 @@
       "revId": "291127c36649989cda23519f56471fc35879d836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edba7969_f6127677",
+        "filename": "components/arc/video_accelerator/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-11-24T07:37:12Z",
+      "side": 1,
+      "message": "We didn\u0027t use ARGB for a long time. (Since the first release of ARC++)\n\nIt was used because it was the only format supported on Intel platform. We have switched to YV12 after it is supported. (We must support a flexible yuv compatible format).",
+      "parentUuid": "493e9e4b_9b21b27d",
+      "revId": "291127c36649989cda23519f56471fc35879d836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
