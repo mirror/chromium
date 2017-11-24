@@ -1,0 +1,13 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module network.mojom;
+
+// An interface that can vend a data pipe multiple times. You can think of it
+// as backed by persistent content like a Blob that can be read multiple times.
+interface DataPipeGetter {
+  // Writes the content to |pipe|. Calls the callback once the size of
+  // the content is known.
+  Read(handle<data_pipe_producer> pipe) => (uint64 calculated_size);
+};
