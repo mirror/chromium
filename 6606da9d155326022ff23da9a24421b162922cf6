@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa6d5caa_1c5a04b9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-24T17:45:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40db44cb_18fae60f",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e240323c_e3a70cf6",
         "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-24T16:23:28Z",
       "side": 1,
       "message": "Is it possible to completely delete this special handling for webgl non-premultipliedAlpha and reconcile it with the rest of cases? Looks like this results in quite a lot of extra codes in CanvasAsyncBlobCreator just to handle this case.\n\nAlso, it is odd that you only differentiate it in html canvas toBlob and not in OffscreenCanvas.convertToBlob. It should be the same in canvas and OffscreenCanvas.",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016677dc_bf2f8452",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-24T17:45:32Z",
+      "side": 1,
+      "message": "I tried to remove ImageData code path once, and it failed. I believe the reason is that the call to RenderingContext()-\u003eGetImage() (see WebGLRenderingContextBase::GetImage() for example) takes the snapshot from the surface, which will be premul.\n\nI fixed the code on OffscreenCanvas::convertToBlob().",
+      "parentUuid": "e240323c_e3a70cf6",
       "revId": "6606da9d155326022ff23da9a24421b162922cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9803b032_de0e8d38",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-24T17:45:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2352e20_1ac58ac5",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f9286e4_b6eaded9",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "6606da9d155326022ff23da9a24421b162922cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d5725c_1abe4c74",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-24T17:45:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9286e4_b6eaded9",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cbb40b5c_8aa94e20",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-24T17:45:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e8a752_ffc26205",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c25a100_091f531e",
         "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-24T16:23:28Z",
       "side": 1,
       "message": "Why \"Prefer No Acceleration\"?",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3c425d_1e5a7e0c",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-24T17:45:32Z",
+      "side": 1,
+      "message": "Because CanvasAsyncBlobCreator() cannot use texture backed images directly (because SkEncoders require the pixmap which only exists for unaccelerated images). If we create an accelerated snapshot here, we eventually have to call SkImage::makeNonTextureImage down the path.",
+      "parentUuid": "5c25a100_091f531e",
       "revId": "6606da9d155326022ff23da9a24421b162922cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
