@@ -206,8 +206,10 @@ base::string16 FindChildTextInner(const WebNode& node,
   if (node.IsCommentNode())
     return FindChildTextInner(node.NextSibling(), depth - 1, divs_to_skip);
 
+  bool skip = false;
+
   if (!node.IsElementNode() && !node.IsTextNode())
-    return base::string16();
+    skip = true;
 
   // Ignore elements known not to contain inferable labels.
   if (node.IsElementNode()) {
@@ -216,13 +218,16 @@ base::string16 FindChildTextInner(const WebNode& node,
         IsNoScriptElement(element) ||
         (element.IsFormControlElement() &&
          IsAutofillableElement(element.ToConst<WebFormControlElement>()))) {
-      return base::string16();
+      skip = true;
     }
 
     if (element.HasHTMLTagName("div") && base::ContainsKey(divs_to_skip, node))
-      return base::string16();
+      skip = true;
   }
 
+  if (skip) {
+    return FindChildTextInner(node.NextSibling(), depth - 1, divs_to_skip);
+  }
   // Extract the text exactly at this node.
   base::string16 node_text = node.NodeValue().Utf16();
 
