@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b127ecfb_7aa93396",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-24T16:33:26Z",
+      "side": 1,
+      "message": "So, really this is `enabled !\u003d\u003d undefined` (or something similar)? Can you use something that is a bit more explicit? Or if that doesn\u0027t work, at least add a comment?",
+      "parentUuid": "a04e7cf8_3e0a8afc",
+      "range": {
+        "startLine": 90,
+        "startChar": 20,
+        "endLine": 90,
+        "endChar": 51
+      },
+      "revId": "58c29026ff04bb7923707d4da86f4efb5cb04fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b8ada5e_a7e16c1f",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 6
