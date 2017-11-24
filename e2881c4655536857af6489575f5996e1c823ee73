@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af7aede1_52ba018f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-24T16:03:02Z",
+      "side": 1,
+      "message": "Why write it then? Just return early or something as it\u0027ll never be hit.",
+      "range": {
+        "startLine": 342,
+        "startChar": 32,
+        "endLine": 342,
+        "endChar": 61
+      },
+      "revId": "e2881c4655536857af6489575f5996e1c823ee73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
