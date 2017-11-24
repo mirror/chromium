@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32ff800c_80761184",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-24T08:32:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "163ee4df_325128b4",
+      "revId": "052344ca955ad283c1d35811e84ebfbef6267cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "352f9980_7a887f9b",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "052344ca955ad283c1d35811e84ebfbef6267cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b309825d_07a49298",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 3533,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-24T08:32:21Z",
+      "side": 1,
+      "message": "Ack\n\nYes, they are represented. I\u0027m not sure why they aren\u0027t being used here. I\u0027ll look into it when I Ribbonize this.",
+      "parentUuid": "352f9980_7a887f9b",
+      "revId": "052344ca955ad283c1d35811e84ebfbef6267cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
