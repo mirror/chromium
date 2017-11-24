@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "34ad79d9_26240db5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-24T16:50:35Z",
+      "side": 1,
+      "message": "You should probably use `find` here instead of `Take`. Looks like Take deletes the value from the map[1], which might explain why you\u0027re running into issue of timing being released although it is not nullptr.\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/HashMap.h?dr\u003dCSs\u0026l\u003d166",
+      "revId": "c1abf788bcc56aa9b827512b9596928737657be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55b44ff3_46deacf2",
         "filename": "third_party/WebKit/Source/platform/network/NetworkInstrumentation.cpp",
         "patchSetId": 2
