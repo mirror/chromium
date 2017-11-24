@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b46110d_98d9960b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T19:53:06Z",
+      "side": 1,
+      "message": "Do you mean that VR.AssetsComponent.ReadyLatency.OnEnter.VR will always either be VR.AssetsComponent.ReadyLatency.OnEnter.VRBrowsing or VR.AssetsComponent.ReadyLatency.OnEnter.WebVR?",
+      "parentUuid": "871d6d3c_246acadc",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4488095e_a5568898",
         "filename": "chrome/browser/vr/assets.h",
         "patchSetId": 5
