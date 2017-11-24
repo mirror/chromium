@@ -46,6 +46,30 @@
       "revId": "f5c66fa6f3122ba1544de844aeebbf3268dbac49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef48477e_77c0b0e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-24T16:15:57Z",
+      "side": 1,
+      "message": "Oh right, we\u0027re verifying calls directly on the LogoCache which lives on a different thread. That seems like a dangerous thing to do...",
+      "parentUuid": "461d0490_01a45d2d",
+      "range": {
+        "startLine": 10,
+        "startChar": 67,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "f5c66fa6f3122ba1544de844aeebbf3268dbac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
