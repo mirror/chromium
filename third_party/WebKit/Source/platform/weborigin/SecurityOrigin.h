@@ -288,11 +288,18 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   void BuildRawString(StringBuilder&, bool include_suborigin) const;
 
   String ToRawStringIgnoreSuborigin() const;
-  static bool DeserializeSuboriginAndProtocolAndHost(const String&,
-                                                     const String&,
-                                                     String&,
-                                                     String&,
-                                                     String&);
+
+  // Parses a serialization of a Suborigin. Returns true if successful with
+  // the results stored in |suborigin|, |scheme| and |host|. Otherwise,
+  // returns false leaving the out parameters untouched.
+  //
+  // https://w3c.github.io/webappsec-suborigins/#serializing
+  static bool DeserializeSuboriginAndProtocolAndHost(
+      const String& scheme_with_suffix,
+      const String& host_with_prefix,
+      String& suborigin,
+      String& scheme,
+      String& host);
 
   bool HasSameSuboriginAs(const SecurityOrigin* other) const;
 
