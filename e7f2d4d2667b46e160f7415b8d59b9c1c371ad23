@@ -16,6 +16,23 @@
       "revId": "e7f2d4d2667b46e160f7415b8d59b9c1c371ad23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64505cbb_8b685df8",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-11-24T20:48:39Z",
+      "side": 0,
+      "message": "While at it, why remove ARM\u0027s copyright?\n\nOpensource thrives on respect for copyrights and building on each others ideas.",
+      "revId": "e7f2d4d2667b46e160f7415b8d59b9c1c371ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
