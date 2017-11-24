@@ -22,6 +22,30 @@
       "revId": "556dbf1e5a3413212c28530ba5b399c16205ba46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f9c002_bad09c01",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-24T18:00:05Z",
+      "side": 1,
+      "message": "It looks like calling XInitThreads() multiple times is actually OK. So this should be safe.\n\n[1] http://9p.io/sources/contrib/fgb/root/sys/src/ape/X11/lib/X11/src/locking.c",
+      "parentUuid": "4ac383ba_886f3a33",
+      "range": {
+        "startLine": 482,
+        "startChar": 2,
+        "endLine": 482,
+        "endChar": 11
+      },
+      "revId": "556dbf1e5a3413212c28530ba5b399c16205ba46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
