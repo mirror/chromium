@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46f3febf_9a90c761",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-24T07:13:48Z",
+      "side": 1,
+      "message": "This might slightly change how the extension localization peer work? Hm, looking into how the code uses the given URL it\u0027d be probably just fine...",
+      "revId": "757319dda4b84c262dd33049d3150c8ce4a84b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
