@@ -1,6 +1,6 @@
 This is a testharness.js-based test.
-FAIL Updating a StylePropertyMap with an unsupported property name throws TypeError assert_throws: function "() => styleMap.update(property, () => value)" did not throw
-FAIL Updating a StylePropertyMap with an null property name throws TypeError assert_throws: function "() => styleMap.update(property, () => value)" did not throw
+PASS Updating a StylePropertyMap with an unsupported property name throws TypeError
+PASS Updating a StylePropertyMap with an null property name throws TypeError
 FAIL Updating a StylePropertyMap with an invalid CSSStyleValue throws TypeError assert_throws: function "() => styleMap.update(property, () => value)" did not throw
 FAIL Updating a StylePropertyMap with an invalid String throws TypeError assert_throws: function "() => styleMap.update(property, () => value)" did not throw
 FAIL Updating a property with CSSStyleValue updates its value Cannot read property 'length' of null
