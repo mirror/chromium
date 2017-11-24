@@ -16,6 +16,24 @@
       "revId": "7beaa26c4b30a78ede2c1b953863087e5bce9d6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b389efc9_ae93f643",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T19:02:55Z",
+      "side": 1,
+      "message": "Same reason as for OnEnter (see my other comment).",
+      "parentUuid": "7f23e97d_b56f0828",
+      "revId": "7beaa26c4b30a78ede2c1b953863087e5bce9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

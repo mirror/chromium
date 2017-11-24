@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "c58cd840_e739d216",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T19:02:55Z",
+      "side": 1,
+      "message": "The histogram macros expect to be used for a single histogram only. If I move it up the histogram macro in line 99 would be used for all three ready histograms. By using the template  I make the compiler generate three versions of this function so that each histogram macro is only used for a single histogram.",
+      "parentUuid": "a668bcd6_908efc24",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e671477d_1e2dea16",
         "filename": "chrome/browser/vr/metrics_helper.h",
         "patchSetId": 5
