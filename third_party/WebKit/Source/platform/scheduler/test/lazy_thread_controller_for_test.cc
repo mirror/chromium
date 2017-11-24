@@ -33,6 +33,10 @@ void LazyThreadControllerForTest::EnsureMessageLoop() {
     base::RunLoop::AddNestingObserverOnCurrentThread(pending_observer_);
     pending_observer_ = nullptr;
   }
+  if (pending_default_task_runner_) {
+    ThreadControllerImpl::SetDefaultTaskRunner(pending_default_task_runner_);
+    pending_default_task_runner_ = nullptr;
+  }
 }
 
 bool LazyThreadControllerForTest::HasMessageLoop() {
@@ -69,6 +73,7 @@ void LazyThreadControllerForTest::AddNestingObserver(
     pending_observer_ = observer;
     return;
   }
+  DCHECK(message_loop_->task_runner()->BelongsToCurrentThread());
   base::RunLoop::AddNestingObserverOnCurrentThread(observer);
 }
 
@@ -79,6 +84,9 @@ void LazyThreadControllerForTest::RemoveNestingObserver(
     pending_observer_ = nullptr;
     return;
   }
+  DCHECK(message_loop_->task_runner()->BelongsToCurrentThread());
+  if (base::MessageLoop::current() != message_loop_)
+    return;
   base::RunLoop::RemoveNestingObserverOnCurrentThread(observer);
 }
 
@@ -111,6 +119,21 @@ void LazyThreadControllerForTest::PostNonNestableTask(
     base::OnceClosure task) {
   EnsureMessageLoop();
   ThreadControllerImpl::PostNonNestableTask(from_here, std::move(task));
+}
+
+void LazyThreadControllerForTest::SetDefaultTaskRunner(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  if (!HasMessageLoop()) {
+    pending_default_task_runner_ = task_runner;
+    return;
+  }
+  ThreadControllerImpl::SetDefaultTaskRunner(task_runner);
+}
+
+void LazyThreadControllerForTest::RestoreDefaultTaskRunner() {
+  pending_default_task_runner_ = nullptr;
+  if (HasMessageLoop() && base::MessageLoop::current() == message_loop_)
+    ThreadControllerImpl::RestoreDefaultTaskRunner();
 }
 
 }  // namespace scheduler
