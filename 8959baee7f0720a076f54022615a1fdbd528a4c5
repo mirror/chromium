@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f85d68_e4cb6c0a",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T14:19:11Z",
+      "side": 1,
+      "message": "s/LOG(ERROR)/NOTREACHED()/ to let the debug builds crash?\nIOW I think it\u0027d be very bad to reach this point of the code\nand not support some kind of Vaapi implementation, so a debug\ncrash would let us know in bots etc. that something is odd.",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 16
+      },
+      "revId": "8959baee7f0720a076f54022615a1fdbd528a4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15bcff1_edc1d7c3",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T14:19:11Z",
+      "side": 1,
+      "message": "for (const auto\u0026 implementation_pair : kVaapiImplementationPairs) {\n...",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 69
+      },
+      "revId": "8959baee7f0720a076f54022615a1fdbd528a4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a236970_f35a9d42",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T14:19:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be virtual, right? It\u0027s not\noverriden anywhere.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "8959baee7f0720a076f54022615a1fdbd528a4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
