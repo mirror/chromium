@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57dc533e_16541f22",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-24T06:40:36Z",
+      "side": 1,
+      "message": "fine as consistent with above but why are we calling this when data_ didn\u0027t change?",
+      "revId": "59c8a01ae22539e866b88d28f40737cf0b1319c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5522e44e_e3460fb8",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-24T06:40:36Z",
+      "side": 1,
+      "message": "nit: SetClipboardData to be consistent with DataOffer function name",
+      "revId": "59c8a01ae22539e866b88d28f40737cf0b1319c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
