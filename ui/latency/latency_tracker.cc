@@ -14,8 +14,6 @@
 namespace ui {
 namespace {
 
-constexpr int kSamplingInterval = 10;
-
 std::string LatencySourceEventTypeToInputModalityString(
     ui::SourceEventType type) {
   switch (type) {
@@ -48,8 +46,19 @@ void RecordUmaEventLatencyScrollWheelTimeToScrollUpdateSwapBegin2Histogram(
 LatencyTracker::LatencyTracker(bool metric_sampling,
                                ukm::SourceId ukm_source_id)
     : metric_sampling_(metric_sampling), ukm_source_id_(ukm_source_id) {
-  if (metric_sampling)
-    metric_sampling_events_since_last_sample_ = rand() % kSamplingInterval;
+  if (metric_sampling) {
+    // Initializing SamplingScheme with number X means that from every X events
+    // one will be reported. Note that the first event to report is also
+    // randomized.
+    sampling_scheme_[static_cast<int>(InputMetricEvent::SCROLL_BEGIN_TOUCH)] =
+        SamplingScheme(5);
+    sampling_scheme_[static_cast<int>(InputMetricEvent::SCROLL_UPDATE_TOUCH)] =
+        SamplingScheme(50);
+    sampling_scheme_[static_cast<int>(InputMetricEvent::SCROLL_BEGIN_WHEEL)] =
+        SamplingScheme(5);
+    sampling_scheme_[static_cast<int>(InputMetricEvent::SCROLL_UPDATE_WHEEL)] =
+        SamplingScheme(2);
+  }
 }
 
 void LatencyTracker::OnEventStart(LatencyInfo* latency) {
@@ -104,7 +113,7 @@ void LatencyTracker::ReportRapporScrollLatency(
 }
 
 void LatencyTracker::ReportUkmScrollLatency(
-    const std::string& event_name,
+    const InputMetricEvent& metric_event,
     const std::string& metric_name,
     const LatencyInfo::LatencyComponent& start_component,
     const LatencyInfo::LatencyComponent& end_component,
@@ -112,17 +121,29 @@ void LatencyTracker::ReportUkmScrollLatency(
   CONFIRM_VALID_TIMING(start_component, end_component)
 
   // Only report a subset of this metric as the volume is too high.
-  if (event_name == "Event.ScrollUpdate.Touch") {
-    metric_sampling_events_since_last_sample_++;
-    metric_sampling_events_since_last_sample_ %= kSamplingInterval;
-    if (metric_sampling_ && metric_sampling_events_since_last_sample_)
-      return;
-  }
+  if (metric_sampling_ &&
+      !sampling_scheme_[static_cast<int>(metric_event)].ShouldReport())
+    return;
 
   ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
   if (ukm_source_id == ukm::kInvalidSourceId || !ukm_recorder)
     return;
 
+  std::string event_name = "";
+  switch (metric_event) {
+    case InputMetricEvent::SCROLL_BEGIN_TOUCH:
+      event_name = "Event.ScrollBegin.Touch";
+      break;
+    case InputMetricEvent::SCROLL_UPDATE_TOUCH:
+      event_name = "Event.ScrollUpdate.Touch";
+      break;
+    case InputMetricEvent::SCROLL_BEGIN_WHEEL:
+      event_name = "Event.ScrollBegin.Wheel";
+      break;
+    case InputMetricEvent::SCROLL_UPDATE_WHEEL:
+      event_name = "Event.ScrollUpdate.Wheel";
+      break;
+  }
   std::unique_ptr<ukm::UkmEntryBuilder> builder =
       ukm_recorder->GetEntryBuilder(ukm_source_id, event_name.c_str());
   builder->AddMetric(metric_name.c_str(), (end_component.last_event_time -
@@ -166,7 +187,9 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
                                   ".TimeToScrollUpdateSwapBegin2",
                               original_component, gpu_swap_begin_component);
 
-    ReportUkmScrollLatency("Event.ScrollBegin." + input_modality,
+    ReportUkmScrollLatency(input_modality == "Touch"
+                               ? InputMetricEvent::SCROLL_BEGIN_TOUCH
+                               : InputMetricEvent::SCROLL_BEGIN_WHEEL,
                            "TimeToScrollUpdateSwapBegin", original_component,
                            gpu_swap_begin_component, latency.ukm_source_id());
 
@@ -192,7 +215,9 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
                                   ".TimeToScrollUpdateSwapBegin2",
                               original_component, gpu_swap_begin_component);
 
-    ReportUkmScrollLatency("Event.ScrollUpdate." + input_modality,
+    ReportUkmScrollLatency(input_modality == "Touch"
+                               ? InputMetricEvent::SCROLL_UPDATE_TOUCH
+                               : InputMetricEvent::SCROLL_UPDATE_WHEEL,
                            "TimeToScrollUpdateSwapBegin", original_component,
                            gpu_swap_begin_component, latency.ukm_source_id());
   } else if (latency.FindLatency(ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0,

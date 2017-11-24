@@ -5,6 +5,7 @@
 #ifndef UI_LATENCY_LATENCY_TRACKER_H_
 #define UI_LATENCY_LATENCY_TRACKER_H_
 
+#include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "services/metrics/public/cpp/ukm_source_id.h"
 #include "ui/latency/latency_info.h"
@@ -35,8 +36,17 @@ class LatencyTracker {
       const LatencyInfo::LatencyComponent& end_component);
 
  private:
+  enum class InputMetricEvent {
+    SCROLL_BEGIN_TOUCH = 0,
+    SCROLL_UPDATE_TOUCH,
+    SCROLL_BEGIN_WHEEL,
+    SCROLL_UPDATE_WHEEL,
+
+    INPUT_METRIC_EVENT_MAX = SCROLL_UPDATE_WHEEL
+  };
+
   void ReportUkmScrollLatency(
-      const std::string& event_name,
+      const InputMetricEvent& metric_event,
       const std::string& metric_name,
       const LatencyInfo::LatencyComponent& start_component,
       const LatencyInfo::LatencyComponent& end_component,
@@ -47,11 +57,27 @@ class LatencyTracker {
       const LatencyInfo::LatencyComponent& gpu_swap_end_component,
       const LatencyInfo& latency);
 
+  typedef struct SamplingScheme {
+    SamplingScheme() : interval_(1), last_sample_(0) {}
+    SamplingScheme(int interval)
+        : interval_(interval), last_sample_(rand() % interval) {}
+    bool ShouldReport() {
+      last_sample_++;
+      last_sample_ %= interval_;
+      return last_sample_ == 0;
+    }
+
+   private:
+    int interval_;
+    int last_sample_;
+  } SamplingScheme;
+
   // Whether the sampling is needed for high volume metrics. This will be off
   // when we are in unit tests. This is a temporary field so we can come up with
   // a more permanent solution for crbug.com/739169.
   bool metric_sampling_;
-  int metric_sampling_events_since_last_sample_ = -1;
+  SamplingScheme sampling_scheme_
+      [static_cast<int>(InputMetricEvent::INPUT_METRIC_EVENT_MAX) + 1];
   const ukm::SourceId ukm_source_id_;
 
   DISALLOW_COPY_AND_ASSIGN(LatencyTracker);
