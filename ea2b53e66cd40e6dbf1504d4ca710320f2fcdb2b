@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4f0d641_fa83db3a",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T09:07:47Z",
+      "side": 1,
+      "message": "Hmm, I\u0027d prefer not adding a custom version (to avoid increasing implicit behaviors around Oilpan handles).",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
