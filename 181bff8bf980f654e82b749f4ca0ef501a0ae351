@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "47ba0f61_cb54986c",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T06:23:50Z",
+      "side": 1,
+      "message": "Then can we add a comment to the mojom file and mention that the API is temporary?\n\nI don\u0027t really want to introduce mojom APIs to communicate inside renderers.",
+      "parentUuid": "571b2d88_43e5aac0",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fff9129_4d1a45cb",
         "filename": "content/renderer/devtools/devtools_agent.cc",
         "patchSetId": 14
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "It\u0027s set in the constructor and never changed.",
       "parentUuid": "3acc34b5_3a0dffd2",
+      "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bfa124_76f6a825",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-24T06:23:50Z",
+      "side": 1,
+      "message": "Can we change RenderFrameImpl::manifest_manager_ a std::unique_ptr? It will clarify the ownership.",
+      "parentUuid": "18613d06_1bc30a38",
       "revId": "181bff8bf980f654e82b749f4ca0ef501a0ae351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
