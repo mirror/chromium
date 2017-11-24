@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb2e7725_6c68bc14",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-24T15:34:48Z",
+      "side": 1,
+      "message": "This helps keep the class invariant. Not necessary, but not harmful.",
+      "parentUuid": "58303469_186d60d5",
+      "range": {
+        "startLine": 163,
+        "startChar": 4,
+        "endLine": 163,
+        "endChar": 21
+      },
+      "revId": "0c2dfd2d6276d3587b789e0ac72cd4e309bb8fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7879c06a_5088101e",
         "filename": "ios/web_view/internal/cwv_web_view.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0c2dfd2d6276d3587b789e0ac72cd4e309bb8fac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f92ced_69f83b9d",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-24T15:34:48Z",
+      "side": 1,
+      "message": "Yes, it is lazily created.",
+      "parentUuid": "7879c06a_5088101e",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 25
+      },
+      "revId": "0c2dfd2d6276d3587b789e0ac72cd4e309bb8fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
