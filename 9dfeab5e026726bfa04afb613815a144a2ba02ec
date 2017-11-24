@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d0d81e0a_2768b701",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-24T15:26:49Z",
+      "side": 1,
+      "message": "All it does is set_text and set_selection, perhaps rename it to SetInputField?",
+      "range": {
+        "startLine": 115,
+        "startChar": 26,
+        "endLine": 115,
+        "endChar": 35
+      },
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a8c9d4e_ec658f75",
         "filename": "chrome/browser/android/vr_shell/gvr_util.h",
         "patchSetId": 6
@@ -132,6 +155,29 @@
       "writtenOn": "2017-11-24T13:33:07Z",
       "side": 1,
       "message": "Why have this function if you have operator\u003d\u003d below?\n\nChris had a neat suggestion for safeguarding against additions to model classes whose equality operators may go stale -- static asserting on the size of the struct with a comment about updating operator\u003d\u003d. Check out UrlBarColors, eg.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26d810f_f48bf5cf",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-24T15:26:49Z",
+      "side": 1,
+      "message": "is it used?",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 45
+      },
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
