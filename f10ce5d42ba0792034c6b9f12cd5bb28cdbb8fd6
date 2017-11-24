@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f35cefa8_d35c62ba",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-24T18:12:21Z",
+      "side": 1,
+      "message": "maybe also add a DCHECK to make sure this is only called once? (as written in the comment in the .h file)",
+      "revId": "f10ce5d42ba0792034c6b9f12cd5bb28cdbb8fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78971539_a7080365",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-24T18:12:21Z",
+      "side": 1,
+      "message": "you mean: Use the default system location provider if the custom provider is null?",
+      "revId": "f10ce5d42ba0792034c6b9f12cd5bb28cdbb8fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
