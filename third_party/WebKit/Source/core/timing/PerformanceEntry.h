@@ -74,6 +74,7 @@ class CORE_EXPORT PerformanceEntry : public ScriptWrappable {
   // finish time available at construction time.
   // Other classes must NOT override this.
   virtual DOMHighResTimeStamp duration() const;
+  int index() { return index_; }
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 
@@ -85,8 +86,10 @@ class CORE_EXPORT PerformanceEntry : public ScriptWrappable {
   bool IsMark() const { return entry_type_enum_ == kMark; }
   bool IsMeasure() const { return entry_type_enum_ == kMeasure; }
 
-  static bool StartTimeCompareLessThan(PerformanceEntry* a,
-                                       PerformanceEntry* b) {
+  static bool StartTimeCompareLessThan(const PerformanceEntry* a,
+                                       const PerformanceEntry* b) {
+    DCHECK(a);
+    DCHECK(b);
     if (a->startTime() == b->startTime())
       return a->index_ < b->index_;
     return a->startTime() < b->startTime();

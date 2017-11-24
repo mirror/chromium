@@ -27,7 +27,7 @@ using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 class CORE_EXPORT PerformanceObserver final
     : public ScriptWrappable,
       public ActiveScriptWrappable<PerformanceObserver>,
-      public ContextClient {
+      public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(PerformanceObserver);
   friend class PerformanceBase;
@@ -49,6 +49,9 @@ class CORE_EXPORT PerformanceObserver final
 
   void Trace(blink::Visitor*) override;
   void TraceWrappers(const ScriptWrappableVisitor*) const override;
+
+ protected:
+  void ContextDestroyed(ExecutionContext*) override;
 
  private:
   PerformanceObserver(ExecutionContext*,

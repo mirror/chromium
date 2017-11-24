@@ -6,35 +6,42 @@
 <script src="/resources/testharnessreport.js"></script>
 <body>
 <script>
-  var img_entries = 0;
-  var observed = 0;
-  var img_url = "resources/blue.png";
-  var observer = new PerformanceObserver(
+async_test((t) => {
+  let img_entries = 0;
+  const img_url = "resources/blue.png";
+  const observer = new PerformanceObserver(
     function (entryList, obs) {
-      var entries = entryList.getEntriesByType("resource");
-      for (var i = 0; i < entries.length; ++i) {
-        ++observed;
-        if (entries[i].name.indexOf(img_url) != -1)
+      const resourceEntries = entryList.getEntriesByType("resource");
+      if (resourceEntries.length > 0) {
+        for (let resourceEntry of resourceEntries) {
+          if (resourceEntry.name.indexOf(img_url) != -1) {
             ++img_entries;
+          }
+        }
+        // When this mark is received, all resource timing entries for the
+        // images will have been received.
+        performance.mark("done");
+        return;
       }
-    });
-  observer.observe({entryTypes: ["resource"]});
-  window.onload = function() {
-    // A timeout is needed as PerformanceObserver is not guaranteed to run before onload triggered.
-    setTimeout(function() {
-      test(function(){
-        assert_equals(observed, 1);
+
+      const markEntries = entryList.getEntriesByType("mark");
+      if (markEntries.length > 0) {
         assert_equals(img_entries, 1);
-      }, "Only one resource entry per resource");
-    },0)
-  };
+        t.done();
+        return;
+      }
+    }
+  );
+  observer.observe({entryTypes: ["resource", "mark"]});
+
   // Images are added dynamically to make sure the observer is registered before their download finishes.
-  var img1 = document.createElement("img");
+  const img1 = document.createElement("img");
   img1.src = img_url;
   document.body.appendChild(img1);
-  var img2 = document.createElement("img");
+  const img2 = document.createElement("img");
   img2.src = img_url;
   document.body.appendChild(img2);
+}, "Only one resource entry per resource");
 </script>
 <h1>One resource when reusing data</h1>
 <p>
@@ -42,4 +49,3 @@ If the user agent is to reuse the data from another existing or completed fetch 
 </p>
 <div id="log"></div>
 </body>
-
