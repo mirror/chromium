@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bd1d071_d53fd55a",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-24T20:02:26Z",
+      "side": 1,
+      "message": "In production code this is only called once. but I found in services_unittests, the device_service_test_client.cc calls this multiple times, so I didn\u0027t add the DCHECK.",
+      "parentUuid": "f35cefa8_d35c62ba",
+      "revId": "f10ce5d42ba0792034c6b9f12cd5bb28cdbb8fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78971539_a7080365",
         "filename": "device/geolocation/location_arbitrator.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-24T18:12:21Z",
       "side": 1,
       "message": "you mean: Use the default system location provider if the custom provider is null?",
+      "revId": "f10ce5d42ba0792034c6b9f12cd5bb28cdbb8fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a0d4be_99c5d12b",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-24T20:02:26Z",
+      "side": 1,
+      "message": "yes. thanks.",
+      "parentUuid": "78971539_a7080365",
       "revId": "f10ce5d42ba0792034c6b9f12cd5bb28cdbb8fd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
