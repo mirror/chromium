@@ -68,4 +68,46 @@ TEST_F(TypingCommandTest,
             GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
 }
 
+// http://crbug.com/777378
+TEST_F(TypingCommandTest, CrashOnInsertParaGraphSeperatorWithAppearance) {
+  SetBodyContent(
+      "<table contenteditable>"
+      "    <colgroup style='-webkit-appearance:radio;'></colgroup>"
+      "</table>");
+  LocalFrame* frame = GetDocument().GetFrame();
+  frame->Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .Collapse(Position(GetDocument().QuerySelector("colgroup"), 0))
+          .Build());
+
+  // Crash should not be observed here.
+  GetDocument().execCommand("InsertParagraph", false, "", ASSERT_NO_EXCEPTION);
+  EXPECT_EQ(
+      "<table contenteditable>"
+      "    <colgroup style=\"-webkit-appearance:radio;\">|<br></colgroup>"
+      "</table>",
+      GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
+}
+
+TEST_F(TypingCommandTest,
+       CrashOnInsertParaGraphSeperatorWithAppearanceWithEmptyColoumn) {
+  SetBodyContent(
+      "<table contenteditable>"
+      "    <colgroup style='-webkit-appearance:radio;'><col></col></colgroup>"
+      "</table>");
+  LocalFrame* frame = GetDocument().GetFrame();
+  frame->Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .Collapse(Position(GetDocument().QuerySelector("colgroup"), 0))
+          .Build());
+
+  // Crash should not be observed here.
+  GetDocument().execCommand("InsertParagraph", false, "", ASSERT_NO_EXCEPTION);
+  EXPECT_EQ(
+      "<table contenteditable>"
+      "    <colgroup style=\"-webkit-appearance:radio;\">|<br><col></colgroup>"
+      "</table>",
+      GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
+}
+
 }  // namespace blink
