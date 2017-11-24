@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abfabcdf_2ce678e3",
+        "filename": "components/autofill/core/browser/field_filler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T13:46:06Z",
+      "side": 1,
+      "message": "For future improvement, we should probably try to sanitize these before normalizing. WDYT?",
+      "range": {
+        "startLine": 175,
+        "startChar": 16,
+        "endLine": 175,
+        "endChar": 26
+      },
+      "revId": "c9ed8025d8ecb5d75b152a2686aefddcd5459045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24b4624_c53c9d1c",
+        "filename": "components/autofill/core/browser/field_filler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T13:46:06Z",
+      "side": 1,
+      "message": "Can you add a comment explaining your use of the best_match_index in the context of this operation (post normalization)?",
+      "range": {
+        "startLine": 188,
+        "startChar": 55,
+        "endLine": 188,
+        "endChar": 71
+      },
+      "revId": "c9ed8025d8ecb5d75b152a2686aefddcd5459045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6c7c2d_d623030e",
+        "filename": "components/autofill/core/browser/field_filler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T13:46:06Z",
+      "side": 1,
+      "message": "Remove if not useful?",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 74
+      },
+      "revId": "c9ed8025d8ecb5d75b152a2686aefddcd5459045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d8418c_d3b56b58",
+        "filename": "components/autofill/core/browser/field_filler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T13:46:06Z",
+      "side": 1,
+      "message": "Did they work before the change?",
+      "range": {
+        "startLine": 395,
+        "startChar": 35,
+        "endLine": 395,
+        "endChar": 58
+      },
+      "revId": "c9ed8025d8ecb5d75b152a2686aefddcd5459045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de1145f_3c846008",
+        "filename": "components/autofill/core/browser/test_autofill_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-24T13:46:06Z",
+      "side": 1,
+      "message": "Could you open a bug to make this return a TestAddressNormalizer here? I think it could help us have much better tests.\n\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/test_address_normalizer.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 16
+      },
+      "revId": "c9ed8025d8ecb5d75b152a2686aefddcd5459045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
