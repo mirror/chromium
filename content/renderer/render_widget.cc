@@ -1826,9 +1826,11 @@ void RenderWidget::OnRepaint(gfx::Size size_to_paint) {
 }
 
 void RenderWidget::OnSetTextDirection(WebTextDirection direction) {
-  if (!GetWebWidget())
+  if (!GetWebWidget() || !GetWebWidget()->IsWebFrameWidget())
     return;
-  GetWebWidget()->SetTextDirection(direction);
+  static_cast<blink::WebFrameWidget*>(GetWebWidget())
+      ->LocalRoot()
+      ->SetTextDirection(direction);
 }
 
 void RenderWidget::OnUpdateScreenRects(const gfx::Rect& view_screen_rect,
@@ -2172,7 +2174,7 @@ void RenderWidget::GetSelectionBounds(gfx::Rect* focus, gfx::Rect* anchor) {
 
 void RenderWidget::UpdateSelectionBounds() {
   TRACE_EVENT0("renderer", "RenderWidget::UpdateSelectionBounds");
-  if (!GetWebWidget())
+  if (!GetWebWidget() || !GetWebWidget()->IsWebFrameWidget())
     return;
   if (ime_event_guard_)
     return;
@@ -2197,9 +2199,11 @@ void RenderWidget::UpdateSelectionBounds() {
         selection_focus_rect_ != params.focus_rect) {
       selection_anchor_rect_ = params.anchor_rect;
       selection_focus_rect_ = params.focus_rect;
-      GetWebWidget()->SelectionTextDirection(params.focus_dir,
-                                             params.anchor_dir);
-      params.is_anchor_first = GetWebWidget()->IsSelectionAnchorFirst();
+      if (auto* focused_frame = GetFocusedWebLocalFrameInWidget()) {
+        focused_frame->SelectionTextDirection(params.focus_dir,
+                                              params.anchor_dir);
+        params.is_anchor_first = focused_frame->IsSelectionAnchorFirst();
+      }
       Send(new ViewHostMsg_SelectionBoundsChanged(routing_id_, params));
     }
   }
@@ -2569,6 +2573,15 @@ void RenderWidget::UpdateURLForCompositorUkm() {
     return;
 
   compositor_->SetURLForUkm(render_frame->GetWebFrame()->GetDocument().Url());
+}
+
+blink::WebLocalFrame* RenderWidget::GetFocusedWebLocalFrameInWidget() const {
+  if (!GetWebWidget() || !GetWebWidget()->IsWebFrameWidget())
+    return nullptr;
+  blink::WebLocalFrame* local_root =
+      static_cast<blink::WebFrameWidget*>(GetWebWidget())->LocalRoot();
+  blink::WebLocalFrame* focused_frame = local_root->View()->FocusedFrame();
+  return focused_frame->LocalRoot() == local_root ? focused_frame : nullptr;
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)

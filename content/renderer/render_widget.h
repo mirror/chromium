@@ -883,6 +883,8 @@ class CONTENT_EXPORT RenderWidget
   // recorded.
   void UpdateURLForCompositorUkm();
 
+  blink::WebLocalFrame* GetFocusedWebLocalFrameInWidget() const;
+
   // Indicates whether this widget has focus.
   bool has_focus_;
 
