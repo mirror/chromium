@@ -103,8 +103,7 @@ BuildObjectForAnimationEffect(KeyframeEffectReadOnly* effect,
   if (is_transition) {
     // Obtain keyframes and convert keyframes back to delay
     DCHECK(effect->Model()->IsKeyframeEffectModel());
-    const KeyframeVector& keyframes =
-        ToKeyframeEffectModelBase(effect->Model())->GetFrames();
+    const KeyframeVector& keyframes = effect->Model()->GetFrames();
     if (keyframes.size() == 3) {
       DCHECK(!IsNull(keyframes.at(1)->Offset()));
       delay = keyframes.at(1)->Offset() * duration;
@@ -149,8 +148,7 @@ static std::unique_ptr<protocol::Animation::KeyframesRule>
 BuildObjectForAnimationKeyframes(const KeyframeEffectReadOnly* effect) {
   if (!effect || !effect->Model() || !effect->Model()->IsKeyframeEffectModel())
     return nullptr;
-  const KeyframeEffectModelBase* model =
-      ToKeyframeEffectModelBase(effect->Model());
+  const KeyframeEffectModelBase* model = effect->Model();
   Vector<double> computed_offsets =
       KeyframeEffectModelBase::GetComputedOffsets(model->GetFrames());
   std::unique_ptr<protocol::Array<protocol::Animation::KeyframeStyle>>
@@ -293,9 +291,8 @@ blink::Animation* InspectorAnimationAgent::AnimationClone(
     KeyframeEffectReadOnly* old_effect =
         ToKeyframeEffectReadOnly(animation->effect());
     DCHECK(old_effect->Model()->IsKeyframeEffectModel());
-    KeyframeEffectModelBase* old_model =
-        ToKeyframeEffectModelBase(old_effect->Model());
-    EffectModel* new_model = nullptr;
+    KeyframeEffectModelBase* old_model = old_effect->Model();
+    KeyframeEffectModelBase* new_model = nullptr;
     // Clone EffectModel.
     // TODO(samli): Determine if this is an animations bug.
     if (old_model->IsStringKeyframeEffectModel()) {
@@ -383,7 +380,7 @@ Response InspectorAnimationAgent::setTiming(const String& animation_id,
   String type = id_to_animation_type_.at(animation_id);
   if (type == AnimationType::CSSTransition) {
     KeyframeEffect* effect = ToKeyframeEffect(animation->effect());
-    KeyframeEffectModelBase* model = ToKeyframeEffectModelBase(effect->Model());
+    KeyframeEffectModelBase* model = effect->Model();
     const TransitionKeyframeEffectModel* old_model =
         ToTransitionKeyframeEffectModel(model);
     // Refer to CSSAnimations::calculateTransitionUpdateForProperty() for the

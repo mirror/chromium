@@ -108,6 +108,7 @@ blink_core_sources("animation") {
     "DocumentTimeline.h",
     "EffectInput.cpp",
     "EffectInput.h",
+    "EffectModel.cpp",
     "EffectModel.h",
     "EffectStack.cpp",
     "EffectStack.h",
