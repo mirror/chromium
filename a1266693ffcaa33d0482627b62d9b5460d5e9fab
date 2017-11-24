@@ -33,6 +33,24 @@
       "revId": "a1266693ffcaa33d0482627b62d9b5460d5e9fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a371ae8_6727fc40",
+        "filename": "mojo/common/logfont_win.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-24T04:53:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e9953301_51bb1f45",
+      "revId": "a1266693ffcaa33d0482627b62d9b5460d5e9fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
