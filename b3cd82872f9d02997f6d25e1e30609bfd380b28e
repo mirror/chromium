@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f892347c_4c77ea94",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T16:26:01Z",
+      "side": 1,
+      "message": "It would almost be worth a private setter to wrap all these static casts.\n\nProbably not quite, but almost...",
+      "range": {
+        "startLine": 1176,
+        "startChar": 5,
+        "endLine": 1176,
+        "endChar": 31
+      },
+      "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abd68e20_44685807",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
         "patchSetId": 9
@@ -18,6 +41,76 @@
         "startChar": 2,
         "endLine": 335,
         "endChar": 10
+      },
+      "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af178475_b11f9307",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T16:26:01Z",
+      "side": 1,
+      "message": "Ouch.",
+      "parentUuid": "abd68e20_44685807",
+      "range": {
+        "startLine": 335,
+        "startChar": 2,
+        "endLine": 335,
+        "endChar": 10
+      },
+      "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c91a8a6_06de98e4",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T16:26:01Z",
+      "side": 1,
+      "message": "Link a bug for this.",
+      "range": {
+        "startLine": 168,
+        "startChar": 28,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43eec3c_38519c45",
+        "filename": "third_party/WebKit/Source/platform/text/TextRun.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T16:26:01Z",
+      "side": 1,
+      "message": "Should this link a bug? Or are you hoping for feedback from layout folks?",
+      "range": {
+        "startLine": 311,
+        "startChar": 47,
+        "endLine": 311,
+        "endChar": 48
       },
       "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
