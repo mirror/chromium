@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f88beebf_646c917e",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T12:44:45Z",
+      "side": 1,
+      "message": "I don\u0027t think these changes are needed.",
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f49ec05_1c262c6e",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T12:44:45Z",
+      "side": 1,
+      "message": "This line is not necessary.",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f711d1e4_2cfec0dd",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T12:44:45Z",
+      "side": 1,
+      "message": "This should be GetGaiaId()?",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 52
+      },
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ad3fea_84725497",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T12:44:45Z",
+      "side": 1,
+      "message": "This seems a bit brittle.\nCould we check refresh_token_.empty() instead?",
+      "range": {
+        "startLine": 176,
+        "startChar": 10,
+        "endLine": 176,
+        "endChar": 34
+      },
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a6ebf4_69d2f4a2",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-24T12:44:45Z",
+      "side": 1,
+      "message": "Could we remove this field and only use the others below? I think this is making the code more complicated than it should be.\n\nMaybe provide a helper function if you need, e.g.:\n\nunique_ptr\u003cDiceTurnSyncOnHelper\u003e Create(\n  Profile* profile,\n  Browser* browser,\n  signin_metrics::AccessPoint signin_access_point,\n  signin_metrics::Reason signin_reason,\n  const std::string\u0026 account_id) {\n    AccountInfo account_info \u003d GetAccountInfo(profile, account_id);\n    return make_unique\u003cDiceTurnSyncOnHelper\u003e(\n        profile, browser, signin_access_point, signin_reason,\n        account_info.account_id, account_info.email, std::string());\n}",
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
