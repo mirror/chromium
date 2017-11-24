@@ -16,6 +16,24 @@
       "revId": "6d7ced890e97cea74778ec1432e04ceff50851e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b3a38f_e189a4a8",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3547,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-24T02:10:09Z",
+      "side": 1,
+      "message": "Yes: my understanding is that the \"main frame\" is always in a tab, and (as the comment alludes to) this does nothing except on main frames.\n\nIf you\u0027re happy I\u0027ll proceed as-is.",
+      "parentUuid": "600113a4_56c670cf",
+      "revId": "6d7ced890e97cea74778ec1432e04ceff50851e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
