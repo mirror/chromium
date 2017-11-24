@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2acfe565_bb33bf71",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeWindow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-24T17:05:30Z",
+      "side": 1,
+      "message": "I hate the casting but we\u0027re already doing it below. Seems like we need to rework this class separately",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "0b2d74cd0d9c99fea0d787c6ab3ca7facce0a8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
