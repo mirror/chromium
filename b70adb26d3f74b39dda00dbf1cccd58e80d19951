@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e953e928_29f26ff4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-24T17:19:03Z",
+      "side": 1,
+      "message": "@DisableFeatures",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 25
+      },
+      "revId": "b70adb26d3f74b39dda00dbf1cccd58e80d19951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f57f21_585efdae",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-24T17:19:03Z",
+      "side": 1,
+      "message": "@EnableFeatures",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 25
+      },
+      "revId": "b70adb26d3f74b39dda00dbf1cccd58e80d19951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6c6590_0645eb2e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-24T17:19:03Z",
+      "side": 1,
+      "message": "oh, it doesnt suppport setVariantPrefix() :/",
+      "range": {
+        "startLine": 150,
+        "startChar": 67,
+        "endLine": 150,
+        "endChar": 74
+      },
+      "revId": "b70adb26d3f74b39dda00dbf1cccd58e80d19951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
