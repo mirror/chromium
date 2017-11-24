@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98ffa1b_6d5c6a7b",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-24T00:17:37Z",
+      "side": 1,
+      "message": "[optional] The 3 functions above are all one-liners, so I would declare them inline in the header.",
+      "revId": "cc8ff81c98e939c619faca9bf94e867eb8ecc072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
