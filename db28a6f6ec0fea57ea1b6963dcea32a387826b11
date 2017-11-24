@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ee5fcc9_163dd296",
+        "filename": "ash/frame/caption_buttons/frame_caption_button.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff3e4054_b772c789",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58d05d7d_fdb293ce",
         "filename": "ash/frame/default_frame_header.h",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4183cdff_8ad4c725",
+        "filename": "ash/frame/default_frame_header.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d05d7d_fdb293ce",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2e90967_b3022bbe",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-22T05:11:26Z",
       "side": 1,
       "message": "is there already a back button? (how is that updated?)\n\nThere\u0027s also BrowserWindow::UpdateTitleBar() to update the title on navigations -- what triggers that?",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18ef49b_55176228",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 1,
+      "message": "Via a TODO in BrowserNonClientFrameViewAsh::Init, unfortunately.\n\nBrowserWindow::UpdateTitleBar() is triggered via tab invalidation, window loading state, maybe other things. Doesn\u0027t look super suitable for our purposes. Using ResetWindowControls as discussed.",
+      "parentUuid": "e2e90967_b3022bbe",
       "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b20bcb0a_ef64a135",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8ffce2_0ea52972",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a09d872_9f97d602",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.h",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-22T05:11:26Z",
       "side": 1,
       "message": "Document |font_list|. Or.. can you use views::NativeWidgetPrivate::GetWindowTitleFontList() directly?",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a055e3af_f524aafe",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3a09d872_9f97d602",
       "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f32c0f4c_65aeeb38",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9deb2d6b_66b17fb2",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e05ec81f_a6d63fd4",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 11
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-22T05:11:26Z",
       "side": 1,
       "message": "call super::ResetWindowControls() ?",
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cd1c4f_4b6f8b9a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 1,
+      "message": "No need to do this now that hosted_app_button_container_ is back here. BrowserNonClientView doesn\u0027t implement this method.",
+      "parentUuid": "e05ec81f_a6d63fd4",
       "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +267,30 @@
       "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1841b5fc_63f74d10",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfdafcaf_3b0deafb",
+      "range": {
+        "startLine": 533,
+        "startChar": 23,
+        "endLine": 533,
+        "endChar": 29
+      },
+      "revId": "db28a6f6ec0fea57ea1b6963dcea32a387826b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

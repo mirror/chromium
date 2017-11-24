@@ -16,6 +16,24 @@
       "revId": "969f8f8310b6dec35a17c7dc5d3fb170219bc96f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d41e22_2da73e2c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-24T03:49:58Z",
+      "side": 0,
+      "message": "The mac logic is implicit (use the color directly). The views logic is pushed into ContentSettingImageView.",
+      "parentUuid": "4d67f875_dd681511",
+      "revId": "969f8f8310b6dec35a17c7dc5d3fb170219bc96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
