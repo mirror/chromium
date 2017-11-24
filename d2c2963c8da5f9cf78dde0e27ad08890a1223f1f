@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aef28c96_56edc66d",
+        "filename": "chrome/browser/vr/databinding/binding_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T12:46:05Z",
+      "side": 1,
+      "message": "Since the bindings were written, their intended ownership has changed. Given that the bindings for an element are owned by said element, we no longer need this test, nor do we need weak ptrs in the test binding. Can you please scrap this, too?",
+      "revId": "d2c2963c8da5f9cf78dde0e27ad08890a1223f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
