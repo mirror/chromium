@@ -67,6 +67,7 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
             client,
             cookie_manager_service,
             CreateAccountReconcilorDelegate(client,
+                                            token_service,
                                             signin_manager,
                                             account_consistency)) {
     Initialize(false /* start_reconcile_if_tokens_available */);
@@ -75,6 +76,7 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
   static std::unique_ptr<signin::AccountReconcilorDelegate>
   CreateAccountReconcilorDelegate(
       SigninClient* signin_client,
+      ProfileOAuth2TokenService* token_service,
       SigninManagerBase* signin_manager,
       signin::AccountConsistencyMethod account_consistency) {
     switch (account_consistency) {
@@ -89,7 +91,7 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
       case signin::AccountConsistencyMethod::kDice:
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
         return std::make_unique<signin::DiceAccountReconcilorDelegate>(
-            signin_client->GetPrefs(), false);
+            token_service, signin_client->GetPrefs(), false);
 #else
         NOTREACHED();
         return nullptr;
