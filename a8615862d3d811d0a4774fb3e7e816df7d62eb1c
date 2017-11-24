@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbf8f3db_27b97296",
+        "filename": "services/shape_detection/detection_utils_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "nit: get rid of this local and inline the check on line 24",
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d425b1_2213c65a",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "can you make this work with DIR_TEST_DATA?",
+      "range": {
+        "startLine": 103,
+        "startChar": 37,
+        "endLine": 103,
+        "endChar": 52
+      },
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e8bd66_84c28e51",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "i think the norm is to append each path component, using FILE_PATH_LITERAL.",
+      "range": {
+        "startLine": 104,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c103975_ea22c53e",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "i think you need to have some expectation after this to confirm that DetectCallback was even called, no? (same comment for CreateFaceDetector above.)",
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bf7fa4_5cc76815",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "nit: blank line before this and on line 42",
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8979038b_7e7fb30a",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "in CreateWinBitmapFromSkBitmap, you pass the interface pointers directly rather than refbumping. i think it\u0027s fine to do so, since it\u0027s consistent with our guidelines for scoped_refptr. in that case, please do the same for this function to avoid the refbumping.",
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00830514_fbfebb68",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "static constexpr BitmapPixelFormat kFormats[] \u003d ...",
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0173a4d_3b1d2994",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "for (const auto\u0026 format : kFormats) {",
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697320bd_43ae3e43",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "nit: period at end of sentence",
+      "range": {
+        "startLine": 83,
+        "startChar": 37,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "a8615862d3d811d0a4774fb3e7e816df7d62eb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

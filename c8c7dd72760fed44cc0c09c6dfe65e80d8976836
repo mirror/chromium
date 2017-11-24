@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99befbf4_0e0f510f",
+        "filename": "services/shape_detection/detection_utils_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "wouldn\u0027t it be wrong to call this with a null factory? how about replacing this with DCHECK(bitmap_factory)?",
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f25d33_57068319",
+        "filename": "services/shape_detection/detection_utils_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "nit: swap these for consistency with general Chromium style of preferring \"if (x \u003d\u003d kFoo)\" over \"if (kFoo \u003d\u003d x)\".",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bd5a68_9572ea58",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "it seems that |face_detector_| and |bitmap_factory_| should never be null. how about adding DCHECKs for them here?",
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841d867b_e44841d5",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "this fn has many exit points that need to run this callback and one that doesn\u0027t. how about restructuring it like so:\n\nvoid FaceDetectionImplWin::Detect(...) {\n  if (BeginDetect(...)) {\n    // Hold on to the callback until BLAHBLAH.\n    detected_face_callback_ \u003d std::move(callback);\n  } else {\n    // No detection taking place; run the callback now.\n    std::move(callback).Run({});\n  }\n}\n\nAnd move the meat of this function into private BeginDetect, which returns true/false depending on whether or not it\u0027s waiting on an async op.",
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ca20b8_2427798a",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "?  return;?",
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79397f16_a5dd3a7b",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "similar comment about many exit points -- a private helper could clean this up, too.",
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59f6735_dba780d6",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "constexpr all the things!",
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5670fd_cdeea5e7",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "provider_win",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 18
+      },
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85171b7a_eb71e3ce",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-24T08:44:13Z",
+      "side": 1,
+      "message": "this is weird. maybe document that a raw pointer is obtained because ownership is passed to MakeStrongBinding. or is this the norm?",
+      "revId": "c8c7dd72760fed44cc0c09c6dfe65e80d8976836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
