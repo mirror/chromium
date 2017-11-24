@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f9e0d73_33ff01da",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-24T15:59:22Z",
+      "side": 1,
+      "message": "This method would return nothing if called in a \nnon-Ozone, non-X11 environment. Shouldn\u0027t we have something\nlike \n#elif defined(USE_EGL)\n  return GL_TEXTURE_2D_KHR;\n#...\n\nor some such? It might be that USE_EGL and USE_X11 are not \nmutually exclusive, in that case we might just need a fall \nback in this method, or at least a comment.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 52
+      },
+      "revId": "600989dbbdf78bc5bd1e074c0333024c4dddd429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
