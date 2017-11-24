@@ -1,0 +1,329 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3361bb85_65849aa7",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "\"runs the callback with\"",
+      "range": {
+        "startLine": 308,
+        "startChar": 68,
+        "endLine": 308,
+        "endChar": 71
+      },
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ad24f4_299423d6",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "an callback -\u003e a callback\n\nCreates a callback which takes an |event_id|, which calls the given event\u0027s callback with ABORTED status and removes it from |map|.",
+      "range": {
+        "startLine": 326,
+        "startChar": 50,
+        "endLine": 326,
+        "endChar": 57
+      },
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cce3eba_a7c48644",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "maybe just: // Same as CreateAbortCallback() for InstallEvent only. DispatchInstallEventCallback has an additional parameter...",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7046943_5e31ef25",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "dcheng said: prefer emplace(x, y) over insert(std::make_pair(x, y))\n\nbut we can fix that in a followup patch",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0da0422_3a26f8e1",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "callbacks_",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414e7bb9_a86100a0",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "nit: use blank // line to separate paragraphs",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f95c28_2d430dc2",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "instead of the final sentence, maybe easier to read as:\n\n1) Event timeout: when an event starts...\n\n2) Idle timeout: when a certain time as passed...",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7562c7_a7849f66",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 27,
+        "startChar": 46,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3401e86b_4cbdeadb",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678c0e2b_1a49ea5e",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "\"all events have ended\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 57,
+        "endLine": 30,
+        "endChar": 70
+      },
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2953f9ed_21fe61d3",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "no \"is called\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 53,
+        "endLine": 31,
+        "endChar": 62
+      },
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6cb653_b4a81ebc",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "ditto for paragraph break",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e9eeb1_6fe5a325",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "lowercase all",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 17
+      },
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de09e79_a2f51f2f",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "I kind of think this is more aptly named ServiceWorkerTimeoutTimer since there is both an \"idle\" and \"event\" timeout... do you think?",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5684037f_e5d41265",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "not sure we need to say long standing event timeout all the time. could just say event timeout",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d570497_95bbae53",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "Don\u0027t need the line break, for conssitency with line 67 and 70",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06889523_516c404a",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T07:55:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a2bc983d3187e626b5ccbc8dc5d7f2d50dbb0ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
