@@ -22,6 +22,30 @@
       "revId": "be03d7ab63e2e3fb6a015e6685026d2b02f976e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de2c1f4_7a2e9175",
+        "filename": "ui/keyboard/container_full_width_behavior.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-11-24T02:05:00Z",
+      "side": 1,
+      "message": "both locked and normal mode make the layout change.",
+      "parentUuid": "412f6d14_18abb29b",
+      "range": {
+        "startLine": 120,
+        "startChar": 9,
+        "endLine": 120,
+        "endChar": 14
+      },
+      "revId": "be03d7ab63e2e3fb6a015e6685026d2b02f976e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
