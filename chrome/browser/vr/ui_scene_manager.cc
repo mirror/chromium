@@ -174,6 +174,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateBackground();
   CreateViewportAwareRoot();
   CreateContentQuad(content_input_delegate);
+  CreateUiDialog(model, content_input_delegate);
   CreateExitPrompt(model);
   CreateAudioPermissionPrompt(model);
   CreateWebVRExitWarning();
@@ -344,6 +345,48 @@ void UiSceneManager::CreateSystemIndicators(Model* model) {
             base::Unretained(element.get()))));
     scene_->AddUiElement(kIndicatorLayout, std::move(element));
   }
+}
+void UiSceneManager::CreateUiDialog(Model* model,
+                                    ContentInputDelegate* delegate) {
+  std::unique_ptr<ContentElement> ui_dialog =
+      base::MakeUnique<ContentElement>(delegate);
+  ui_dialog->set_name(k2dDialog);
+  ui_dialog->set_draw_phase(kPhaseForeground);
+  ui_dialog->SetSize(kContentWidth * kUiDialogWidthRatio,
+                     kContentHeight * kUiDialogHeightRatio);
+  ui_dialog->SetVisible(false);
+  ui_dialog->set_requires_layout(false);
+  ui_dialog->set_corner_radius(kContentCornerRadius);
+  ui_dialog->SetTransitionedProperties({BOUNDS});
+  ui_dialog->SetTranslate(0, 0, kTextureOffset);
+  ui_dialog->AddBinding(VR_BIND_FUNC(ContentInputDelegatePtr, Model, model,
+                                     native_ui.delegate, ContentElement,
+                                     ui_dialog.get(), SetDelegate));
+
+  ui_dialog->AddBinding(base::MakeUnique<Binding<bool>>(
+      base::Bind([](Model* m) { return m->native_ui.alert_dialog_enabled; },
+                 base::Unretained(model)),
+      base::Bind(
+          [](ContentElement* dialog, const bool& enabled) {
+            dialog->SetVisible(enabled);
+            dialog->set_requires_layout(enabled);
+            dialog->set_hit_testable(enabled);
+          },
+          base::Unretained(ui_dialog.get()))));
+
+  ui_dialog->AddBinding(base::MakeUnique<Binding<float>>(
+      base::Bind([](Model* m) { return m->native_ui.size_ratio; },
+                 base::Unretained(model)),
+      base::Bind(
+          [](ContentElement* dialog, const float& value) {
+            dialog->SetSize(kContentWidth * kUiDialogWidthRatio,
+                            kContentWidth * kUiDialogWidthRatio * value);
+          },
+          base::Unretained(ui_dialog.get()))));
+  ui_dialog_ = ui_dialog.get();
+  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(ui_dialog)
+
+                           );
 }
 
 void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
@@ -1344,8 +1387,10 @@ bool UiSceneManager::ShouldRenderWebVr() {
 void UiSceneManager::OnGlInitialized(
     unsigned int content_texture_id,
     UiElementRenderer::TextureLocation content_location,
+    unsigned int ui_texture_id,
     SkiaSurfaceProvider* provider) {
   main_content_->SetTexture(content_texture_id, content_location);
+  ui_dialog_->SetTexture(ui_texture_id, content_location);
   scene_->OnGlInitialized(provider);
 
   ConfigureScene();
