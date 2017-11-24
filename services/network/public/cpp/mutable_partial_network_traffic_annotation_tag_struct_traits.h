@@ -16,7 +16,8 @@ struct StructTraits<
     network::mojom::MutablePartialNetworkTrafficAnnotationTagDataView,
     net::MutablePartialNetworkTrafficAnnotationTag> {
   static int32_t unique_id_hash_code(
-      const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+      const net::MutablePartialNetworkTrafficAnnotationTag&
+          traffic_annotation) {
     return traffic_annotation.unique_id_hash_code;
   }
   static int32_t completing_id_hash_code(
@@ -33,7 +34,7 @@ struct StructTraits<
       net::MutablePartialNetworkTrafficAnnotationTag* out) {
     out->unique_id_hash_code = data.unique_id_hash_code();
 #if !defined(NDEBUG) || defined(DCHECK_ALWAYS_ON)
-    out->completing_id_hash_code = data.completing_id_hash_code;
+    out->completing_id_hash_code = data.completing_id_hash_code();
 #endif
     return true;
   }
