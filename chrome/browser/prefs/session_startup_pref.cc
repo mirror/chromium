@@ -151,6 +151,15 @@ bool SessionStartupPref::TypeIsDefault(PrefService* prefs) {
 }
 
 // static
+bool SessionStartupPref::TypeIsRecommended(PrefService* prefs) {
+  DCHECK(prefs);
+  const PrefService::Preference* pref_restore =
+      prefs->FindPreference(prefs::kRestoreOnStartup);
+  DCHECK(pref_restore);
+  return pref_restore->IsRecommended();
+}
+
+// static
 SessionStartupPref::Type SessionStartupPref::PrefValueToType(int pref_value) {
   switch (pref_value) {
     case kPrefValueLast:     return SessionStartupPref::LAST;
