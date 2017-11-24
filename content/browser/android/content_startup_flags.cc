@@ -36,7 +36,6 @@ void SetContentCommandLineFlags(bool single_process,
   }
 
   parsed_command_line->AppendSwitch(switches::kEnablePinch);
-  parsed_command_line->AppendSwitch(switches::kEnableViewport);
   parsed_command_line->AppendSwitch(switches::kValidateInputEventStream);
 
   if (base::android::BuildInfo::GetInstance()->sdk_int() >=
