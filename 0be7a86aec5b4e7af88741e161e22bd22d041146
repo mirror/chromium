@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4090e10a_29eed93f",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T12:41:31Z",
+      "side": 1,
+      "message": "I think we should change all these ideals or make them basic constraints instead of advanced, since ideal is ignored as advanced constraints.\nAlso, for the ones that only have ideal, they cannot cause rejection even if they are in the basic set.",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "0be7a86aec5b4e7af88741e161e22bd22d041146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
