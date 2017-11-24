@@ -5,6 +5,7 @@
 #ifndef Sensor_h
 #define Sensor_h
 
+#include "common/feature_policy/feature_policy.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMHighResTimeStamp.h"
 #include "core/dom/DOMTimeStamp.h"
@@ -65,7 +66,8 @@ class Sensor : public EventTargetWithInlineData,
   Sensor(ExecutionContext*,
          const SensorOptions&,
          ExceptionState&,
-         device::mojom::blink::SensorType);
+         device::mojom::blink::SensorType,
+         const Vector<FeaturePolicyFeature>&);
 
   using SensorConfigurationPtr = device::mojom::blink::SensorConfigurationPtr;
   using SensorConfiguration = device::mojom::blink::SensorConfiguration;
