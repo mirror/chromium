@@ -127,7 +127,7 @@
 }
 
 - (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible {
-  return;
+  [self.toolbarCoordinator setToolsMenuIsVisibleForToolsMenuButton:isVisible];
 }
 
 - (void)start {

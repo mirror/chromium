@@ -59,6 +59,8 @@ class WebState;
 // Resets the toolbar after taking a side swipe snapshot. After calling this
 // method the toolbar is adapted to the current webState.
 - (void)resetToolbarAfterSideSwipeSnapshot;
+// Sets the ToolsMenu visibility depending if the tools menu |isVisible|.
+- (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible;
 
 @end
 
