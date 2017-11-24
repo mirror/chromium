@@ -70,15 +70,18 @@ class TaskQueue::Impl : public RefCountInterface, public base::Thread {
  public:
   Impl(const char* queue_name, TaskQueue* queue);
   ~Impl() override;
+  bool StartImpl(const Options& options);
+  bool IsUsable() const { return is_started_; }
 
  private:
   virtual void Init() override;
 
   TaskQueue* const queue_;
+  bool is_started_;
 };
 
 TaskQueue::Impl::Impl(const char* queue_name, TaskQueue* queue)
-    : base::Thread(queue_name), queue_(queue) {}
+    : base::Thread(queue_name), queue_(queue), is_started_(false) {}
 
 void TaskQueue::Impl::Init() {
   lazy_tls_ptr.Pointer()->Set(queue_);
@@ -87,6 +90,14 @@ void TaskQueue::Impl::Init() {
 TaskQueue::Impl::~Impl() {
   DCHECK(!Thread::IsRunning());
 }
+
+bool TaskQueue::Impl::StartImpl(const Options& options) {
+  is_started_ = StartWithOptions(options);
+  return is_started_;
+}
+
+// DEBUG HACK - not to be checked in
+static int created_threads;
 
 TaskQueue::TaskQueue(const char* queue_name,
                      Priority priority /*= Priority::NORMAL*/)
@@ -105,7 +116,12 @@ TaskQueue::TaskQueue(const char* queue_name,
       options.priority = base::ThreadPriority::NORMAL;
       break;
   }
-  CHECK(impl_->StartWithOptions(options));
+  if (!impl_->StartImpl(options)) {
+    LOG(ERROR) << "Thread creation failed after creating " << created_threads
+               << " threads";
+  } else {
+    created_threads++;
+  }
 }
 
 TaskQueue::~TaskQueue() {
@@ -119,12 +135,14 @@ TaskQueue* TaskQueue::Current() {
 }
 
 void TaskQueue::PostTask(std::unique_ptr<QueuedTask> task) {
+  CHECK(impl_->IsUsable());
   impl_->task_runner()->PostTask(FROM_HERE,
                                  base::Bind(&RunTask, base::Passed(&task)));
 }
 
 void TaskQueue::PostDelayedTask(std::unique_ptr<QueuedTask> task,
                                 uint32_t milliseconds) {
+  CHECK(impl_->IsUsable());
   impl_->task_runner()->PostDelayedTask(
       FROM_HERE, base::Bind(&RunTask, base::Passed(&task)),
       base::TimeDelta::FromMilliseconds(milliseconds));
@@ -133,12 +151,14 @@ void TaskQueue::PostDelayedTask(std::unique_ptr<QueuedTask> task,
 void TaskQueue::PostTaskAndReply(std::unique_ptr<QueuedTask> task,
                                  std::unique_ptr<QueuedTask> reply,
                                  TaskQueue* reply_queue) {
+  CHECK(impl_->IsUsable());
   PostTask(std::unique_ptr<QueuedTask>(new PostAndReplyTask(
       std::move(task), std::move(reply), reply_queue->impl_->task_runner())));
 }
 
 void TaskQueue::PostTaskAndReply(std::unique_ptr<QueuedTask> task,
                                  std::unique_ptr<QueuedTask> reply) {
+  CHECK(impl_->IsUsable());
   impl_->task_runner()->PostTaskAndReply(
       FROM_HERE, base::Bind(&RunTask, base::Passed(&task)),
       base::Bind(&RunTask, base::Passed(&reply)));
