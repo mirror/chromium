@@ -4,6 +4,9 @@
 
 #include "content/test/test_render_frame_host.h"
 
+#include <memory>
+#include <utility>
+
 #include "base/guid.h"
 #include "base/run_loop.h"
 #include "content/browser/frame_host/frame_tree.h"
@@ -315,7 +318,7 @@ void TestRenderFrameHost::SimulateFeaturePolicyHeader(
   header[0].feature = feature;
   header[0].matches_all_origins = false;
   header[0].origins = whitelist;
-  OnDidSetFeaturePolicyHeader(header);
+  DidSetFeaturePolicyHeader(header);
 }
 
 const std::vector<std::string>& TestRenderFrameHost::GetConsoleMessages() {
@@ -489,7 +492,7 @@ void TestRenderFrameHost::DidChangeOpener(int opener_routing_id) {
 
 void TestRenderFrameHost::DidEnforceInsecureRequestPolicy(
     blink::WebInsecureRequestPolicy policy) {
-  OnEnforceInsecureRequestPolicy(policy);
+  EnforceInsecureRequestPolicy(policy);
 }
 
 void TestRenderFrameHost::PrepareForCommit() {
