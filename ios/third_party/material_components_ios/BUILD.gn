@@ -323,6 +323,7 @@ source_set("material_components_ios") {
     ":material_component_ic_arrow_back_bundle",
     "//ios/third_party/material_internationalization_ios",
     "//ios/third_party/material_text_accessibility_ios",
+    "//ios/third_party/motion_animator_objc",
   ]
 
   foreach(icon_name, _icon_names) {
