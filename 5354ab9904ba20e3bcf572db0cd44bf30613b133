@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "6c4308ca_f64e0524",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-24T00:17:02Z",
+      "side": 1,
+      "message": "There are actually two cases here:\n\n1. the extension installation failed.\n2. the user clicked \"cancel\" in the  confirmation dialog.\n\nI don\u0027t think it would be too much trouble to distinguish between these cases by passing more information to BookmarkAppHelper::callback_, but then we need to decide to do in each of these cases:\n\nfor #1: It looks like this only happened due to crbug.com/545541, which is fixed such that this should not happen any more anyway. So I don\u0027t think it makes much difference whether we reprompt or not.\n\nfor #2: I think we should reprompt to give the user another chance to install the app (they may have accidentally clicked cancel).\n\nAssuming that reprompting is correct for #2 and acceptable for #1, do you think it\u0027s worth distinguishing between these cases in the callback parameters?",
+      "parentUuid": "94a7a79d_4b07d608",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "5354ab9904ba20e3bcf572db0cd44bf30613b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a9028bc_684b6c1f",
         "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
         "patchSetId": 1
