@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2bc73cc_7e2ff112",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-24T00:35:09Z",
+      "side": 1,
+      "message": "Nit: s/is/is called/",
+      "range": {
+        "startLine": 7,
+        "startChar": 48,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "3a433d5318bfb254ca67100cc76d96573d20d17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
