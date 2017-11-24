@@ -101,7 +101,7 @@ void WebRtcEventLogHandler::DoStartWebRtcEventLogging(
 
   base::FilePath prefix_path =
       GetWebRtcEventLogPrefixPath(log_directory, ++current_rtc_event_log_id_);
-  if (!host->StartWebRTCEventLog(prefix_path)) {
+  if (!host->StartLocalWebRtcEventLogging(prefix_path)) {
     error_callback.Run("RTC event logging already in progress");
     return;
   }
@@ -150,7 +150,7 @@ void WebRtcEventLogHandler::DoStopWebRtcEventLogging(
     return;
   }
 
-  if (!host->StopWebRTCEventLog()) {
+  if (!host->StopLocalWebRtcEventLogging()) {
     error_callback.Run("No RTC event logging in progress");
     return;
   }
