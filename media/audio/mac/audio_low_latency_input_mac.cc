@@ -228,6 +228,7 @@ AUAudioInputStream::AUAudioInputStream(
       number_of_frames_provided_(0),
       io_buffer_frame_size_(0),
       sink_(nullptr),
+      input_params_(input_params),
       audio_unit_(0),
       input_device_id_(audio_device_id),
       number_of_channels_in_frame_(0),
@@ -245,6 +246,7 @@ AUAudioInputStream::AUAudioInputStream(
       total_lost_frames_(0),
       largest_glitch_frames_(0),
       glitches_detected_(0),
+      noise_reduction_suppressed_(false),
       log_callback_(log_callback),
       weak_factory_(this) {
   DCHECK(manager_);
@@ -523,6 +525,11 @@ void AUAudioInputStream::Start(AudioInputCallback* callback) {
   sink_ = callback;
   last_success_time_ = base::TimeTicks::Now();
   audio_unit_render_has_worked_ = false;
+  if (manager_->DeviceSupportsAmbientNoiseReduction(input_device_id_) &&
+      !(input_params_.effects() & AudioParameters::AMBIENT_NOISE_SUPPRESSION)) {
+    noise_reduction_suppressed_ =
+        manager_->SuppressNoiseReduction(input_device_id_);
+  }
   StartAgc();
   OSStatus result = AudioOutputUnitStart(audio_unit_);
   OSSTATUS_DLOG_IF(ERROR, result != noErr, result)
@@ -550,6 +557,10 @@ void AUAudioInputStream::Stop() {
   deferred_start_cb_.Cancel();
   DVLOG(1) << "Stop";
   StopAgc();
+  if (noise_reduction_suppressed_) {
+    manager_->UnsuppressNoiseReduction(input_device_id_);
+    noise_reduction_suppressed_ = false;
+  }
   if (input_callback_timer_ != nullptr) {
     input_callback_timer_->Stop();
     input_callback_timer_.reset();
@@ -586,7 +597,9 @@ void AUAudioInputStream::Close() {
 
   // It is valid to call Close() before calling open or Start().
   // It is also valid to call Close() after Start() has been called.
-  Stop();
+  if (IsRunning()) {
+    Stop();
+  }
 
   // Uninitialize and dispose the audio unit.
   CloseAudioUnit();
