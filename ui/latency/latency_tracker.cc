@@ -7,6 +7,7 @@
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
+#include "base/trace_event/trace_event.h"
 #include "services/metrics/public/cpp/ukm_entry_builder.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "ui/latency/latency_histogram_macros.h"
@@ -59,13 +60,43 @@ LatencyTracker::LatencyTracker(bool metric_sampling,
     metric_sampling_events_since_last_sample_ = rand() % kSamplingInterval;
 }
 
-void LatencyTracker::OnEventStart(LatencyInfo* latency) {
-  static uint64_t global_trace_id = 0;
+LatencyTracker::~LatencyTracker() {
+  for (const auto iter : event_orig_frame_) {
+    LOG(ERROR) << "Unacked event: " << iter.first;
+  }
+}
+
+void LatencyTracker::OnFrameSubmitted() {
+  ++frames_submitted_;
+}
+
+void LatencyTracker::OnEventStart(LatencyInfo* latency, bool will_be_acked) {
+  static int64_t global_trace_id = 0;
   latency->set_trace_id(++global_trace_id);
   latency->set_ukm_source_id(ukm_source_id_);
+  if (will_be_acked)
+    event_orig_frame_[global_trace_id] = frames_submitted_;
+  ;
+}
+
+void LatencyTracker::OnEventComplete(const LatencyInfo& latency) {
+  auto iter = event_orig_frame_.find(latency.trace_id());
+  if (iter == event_orig_frame_.end())
+    return;
+  DCHECK_GE(frames_submitted_, iter->second);
+  size_t frame_latency = frames_submitted_ - iter->second;
+  LOG(ERROR) << "Latency: " << frame_latency;
+  TRACE_EVENT1("benchmark,input", "EventEndToEndLatency", "frames",
+               frame_latency);
+  event_orig_frame_.erase(iter);
+}
+
+void LatencyTracker::OnEventCancel(const LatencyInfo& latency) {
+  event_orig_frame_.erase(latency.trace_id());
 }
 
 void LatencyTracker::OnGpuSwapBuffersCompleted(const LatencyInfo& latency) {
+  OnEventComplete(latency);
   LatencyInfo::LatencyComponent gpu_swap_end_component;
   if (!latency.FindLatency(
           ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0,
@@ -99,7 +130,6 @@ void LatencyTracker::OnGpuSwapBuffersCompleted(const LatencyInfo& latency) {
     ComputeEndToEndLatencyHistograms(gpu_swap_begin_component,
                                      gpu_swap_end_component, latency);
   }
-
 }
 
 void LatencyTracker::ReportRapporScrollLatency(

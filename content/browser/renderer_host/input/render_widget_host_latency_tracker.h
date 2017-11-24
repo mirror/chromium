@@ -71,6 +71,7 @@ class CONTENT_EXPORT RenderWidgetHostLatencyTracker
       const ui::LatencyInfo::LatencyComponent& end_component) override;
 
   int64_t last_event_id_;
+  // XXX(sad): This should be FrameSinkId, and move into LatencyInfo.
   int64_t latency_component_id_;
   bool has_seen_first_gesture_scroll_update_;
   bool set_url_for_ukm_ = false;

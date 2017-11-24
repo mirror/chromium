@@ -5,6 +5,8 @@
 #ifndef UI_LATENCY_LATENCY_TRACKER_H_
 #define UI_LATENCY_LATENCY_TRACKER_H_
 
+#include <map>
+
 #include "base/macros.h"
 #include "services/metrics/public/cpp/ukm_source_id.h"
 #include "ui/latency/latency_info.h"
@@ -17,9 +19,13 @@ class LatencyTracker {
  public:
   explicit LatencyTracker(bool metric_sampling,
                           ukm::SourceId ukm_source_id = ukm::kInvalidSourceId);
-  ~LatencyTracker() = default;
+  ~LatencyTracker();
 
-  void OnEventStart(LatencyInfo* latency);
+  void OnFrameSubmitted();
+
+  void OnEventStart(LatencyInfo* latency, bool will_be_acked);
+  void OnEventComplete(const LatencyInfo& latency);
+  void OnEventCancel(const LatencyInfo& latency);
 
   // Terminates latency tracking for events that triggered rendering, also
   // performing relevant UMA latency reporting.
@@ -53,6 +59,9 @@ class LatencyTracker {
   bool metric_sampling_;
   int metric_sampling_events_since_last_sample_ = -1;
   const ukm::SourceId ukm_source_id_;
+
+  std::map<int64_t, size_t> event_orig_frame_;
+  size_t frames_submitted_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(LatencyTracker);
 };
