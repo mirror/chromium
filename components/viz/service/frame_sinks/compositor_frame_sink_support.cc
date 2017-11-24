@@ -165,8 +165,10 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     const LocalSurfaceId& local_surface_id,
     CompositorFrame frame,
     mojom::HitTestRegionListPtr hit_test_region_list) {
-  TRACE_EVENT1("viz", "CompositorFrameSinkSupport::SubmitCompositorFrame",
-               "FrameSinkId", frame_sink_id_.ToString());
+  TRACE_EVENT2("viz", "CompositorFrameSinkSupport::SubmitCompositorFrame",
+               "FrameSinkId", frame_sink_id_.ToString(), "SequenceNumber",
+               frame.metadata.begin_frame_ack.sequence_number);
+
   DCHECK(local_surface_id.is_valid());
   DCHECK(!frame.render_pass_list.empty());
 
@@ -198,10 +200,10 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
   } else {
     SurfaceId surface_id(frame_sink_id_, local_surface_id);
     SurfaceInfo surface_info(surface_id, frame.device_scale_factor(),
-                             frame.size_in_pixels());
+                             frame.size_in_pixels(), frame.low_latency());
 
     if (!surface_info.is_valid()) {
-      TRACE_EVENT_INSTANT0("cc", "Invalid SurfaceInfo",
+      TRACE_EVENT_INSTANT0("viz", "Invalid SurfaceInfo",
                            TRACE_EVENT_SCOPE_THREAD);
       EvictCurrentSurface();
       std::vector<ReturnedResource> resources =

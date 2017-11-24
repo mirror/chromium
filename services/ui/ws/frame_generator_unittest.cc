@@ -23,12 +23,14 @@ constexpr float kDefaultScaleFactor = 1.0f;
 constexpr float kArbitraryScaleFactor = 0.5f;
 constexpr gfx::Size kArbitrarySize(3, 4);
 constexpr gfx::Size kAnotherArbitrarySize(5, 6);
+constexpr bool kArbitraryLowLatency = false;
 const viz::SurfaceId kArbitrarySurfaceId(
     viz::FrameSinkId(1, 1),
     viz::LocalSurfaceId(1, base::UnguessableToken::Create()));
 const viz::SurfaceInfo kArbitrarySurfaceInfo(kArbitrarySurfaceId,
                                              1.0f,
-                                             gfx::Size(100, 100));
+                                             gfx::Size(100, 100),
+                                             kArbitraryLowLatency);
 }
 
 // TestClientBinding Observes a BeginFrame and accepts CompositorFrame submitted
