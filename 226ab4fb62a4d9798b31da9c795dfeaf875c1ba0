@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8100650_a3c84601",
+        "filename": "third_party/WebKit/Source/core/animation/ElementAnimation.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-24T23:49:47Z",
+      "side": 1,
+      "message": "nit: This is a lot of code for a header file, maybe we should move these implementations to the cpp file?",
+      "revId": "226ab4fb62a4d9798b31da9c795dfeaf875c1ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e620adb_026742bd",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-24T23:49:47Z",
+      "side": 1,
+      "message": "DCHECK with default value?",
+      "revId": "226ab4fb62a4d9798b31da9c795dfeaf875c1ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803ee3b1_0d3f03f5",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-24T23:49:47Z",
+      "side": 1,
+      "message": "Add a unit test of the composite values?",
+      "revId": "226ab4fb62a4d9798b31da9c795dfeaf875c1ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
