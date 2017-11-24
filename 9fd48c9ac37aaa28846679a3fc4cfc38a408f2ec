@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f57ab802_f92f9512",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:11:47Z",
+      "side": 1,
+      "message": "can this be moved to a forward declaration in the private section, with the definition living in the .cc file? i didn\u0027t see this being used outside of this class.\n\nmaybe also rename this to RefCountedFd? the \u0027scoped\u0027 bit seems like an implementation detail.",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062828f3_a529e5fe",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:11:47Z",
+      "side": 1,
+      "message": "i think we usually omit \u0027inline\u0027, unless it\u0027s needed here for some reason.",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2630665c_c4f94e38",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:11:47Z",
+      "side": 1,
+      "message": "nit: HandleConnectionError (since this sounds like a typedef-ed callback type otherwise)",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3694a7_b04ff28b",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:11:47Z",
+      "side": 1,
+      "message": "return base::nullopt?",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf53ecfd_03a1413f",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:11:47Z",
+      "side": 1,
+      "message": "mind adding a bug link here as well?",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6e4b28_db1995be",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:11:47Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e, #include \u003cset\u003e",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9dbea2_bb89bbbf",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-24T16:11:47Z",
+      "side": 1,
+      "message": "update comment -- this looks like it actually returns base::nullopt on failure",
+      "revId": "9fd48c9ac37aaa28846679a3fc4cfc38a408f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
