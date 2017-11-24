@@ -1,7 +1,7 @@
 This is a testharness.js-based test.
-FAIL Default value assert_equals: The default value should be replace expected (string) "replace" but got (undefined) undefined
+PASS Default value
 PASS Change composite value
-FAIL Unspecified keyframe composite value when setting effect composite assert_equals: unspecified keyframe composite value should be absent even if effect composite is set expected (undefined) undefined but got (string) "replace"
-PASS Specified keyframe composite value when setting effect composite
+PASS Unspecified keyframe composite value when setting effect composite
+FAIL Specified keyframe composite value when setting effect composite assert_equals: specified keyframe composite value should not be overridden by setting effect composite expected (string) "replace" but got (undefined) undefined
 Harness: the test ran to completion.
 

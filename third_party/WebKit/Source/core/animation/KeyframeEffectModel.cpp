@@ -62,6 +62,13 @@ void KeyframeEffectModelBase::SetFrames(KeyframeVector& keyframes) {
   last_fraction_ = std::numeric_limits<double>::quiet_NaN();
 }
 
+void KeyframeEffectModelBase::SetComposite(String op) {
+  CompositeOperation composite;
+  if (StringToCompositeOperation(op, composite)) {
+    composite_ = composite;
+  }
+}
+
 bool KeyframeEffectModelBase::Sample(
     int iteration,
     double fraction,
@@ -229,8 +236,8 @@ void KeyframeEffectModelBase::EnsureKeyframeGroups() const {
         group = group_iter->value.get();
       }
 
-      group->AppendKeyframe(
-          keyframe->CreatePropertySpecificKeyframe(property, computed_offset));
+      group->AppendKeyframe(keyframe->CreatePropertySpecificKeyframe(
+          property, composite_, computed_offset));
     }
   }
 

@@ -60,8 +60,19 @@ class ElementAnimation {
       const DictionarySequenceOrDictionary& effect_input,
       UnrestrictedDoubleOrKeyframeAnimationOptions options,
       ExceptionState& exception_state) {
-    EffectModel* effect = EffectInput::Convert(
-        &element, effect_input, ExecutionContext::From(script_state),
+    EffectModel::CompositeOperation composite = EffectModel::kCompositeReplace;
+    if (options.IsKeyframeAnimationOptions()) {
+      // TODO(smcgruer): This conversion is repeated everywhere; refactor to
+      // avoid.
+      if (!EffectModel::StringToCompositeOperation(
+              options.GetAsKeyframeAnimationOptions().composite(), composite)) {
+        exception_state.ThrowTypeError("Invalid composite");
+        return nullptr;
+      }
+    }
+
+    KeyframeEffectModelBase* effect = EffectInput::Convert(
+        &element, effect_input, composite, ExecutionContext::From(script_state),
         exception_state);
     if (exception_state.HadException())
       return nullptr;
@@ -71,21 +82,19 @@ class ElementAnimation {
                               exception_state))
       return nullptr;
 
-    if (options.IsKeyframeAnimationOptions()) {
-      Animation* animation = animateInternal(element, effect, timing);
+    Animation* animation = animateInternal(element, effect, timing);
+    if (options.IsKeyframeAnimationOptions())
       animation->setId(options.GetAsKeyframeAnimationOptions().id());
-      return animation;
-    }
-    return animateInternal(element, effect, timing);
+    return animation;
   }
 
   static Animation* animate(ScriptState* script_state,
                             Element& element,
                             const DictionarySequenceOrDictionary& effect_input,
                             ExceptionState& exception_state) {
-    EffectModel* effect = EffectInput::Convert(
-        &element, effect_input, ExecutionContext::From(script_state),
-        exception_state);
+    KeyframeEffectModelBase* effect = EffectInput::Convert(
+        &element, effect_input, EffectModel::kCompositeReplace,
+        ExecutionContext::From(script_state), exception_state);
     if (exception_state.HadException())
       return nullptr;
     return animateInternal(element, effect, Timing());
@@ -112,7 +121,7 @@ class ElementAnimation {
   FRIEND_TEST_ALL_PREFIXES(AnimationSimTest, CustomPropertyBaseComputedStyle);
 
   static Animation* animateInternal(Element& element,
-                                    EffectModel* effect,
+                                    KeyframeEffectModelBase* effect,
                                     const Timing& timing) {
     KeyframeEffect* keyframe_effect =
         KeyframeEffect::Create(&element, effect, timing);

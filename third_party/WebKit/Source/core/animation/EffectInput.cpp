@@ -119,12 +119,18 @@ void SetKeyframeValue(Element& element,
     keyframe.SetSVGAttributeValue(*svg_attribute, value);
 }
 
-EffectModel* CreateEffectModelFromKeyframes(
+KeyframeEffectModelBase* CreateEmptyEffectModel(
+    EffectModel::CompositeOperation composite) {
+  return StringKeyframeEffectModel::Create(StringKeyframeVector(), composite);
+}
+
+KeyframeEffectModelBase* CreateEffectModel(
     Element& element,
     const StringKeyframeVector& keyframes,
+    EffectModel::CompositeOperation composite,
     ExceptionState& exception_state) {
   StringKeyframeEffectModel* keyframe_effect_model =
-      StringKeyframeEffectModel::Create(keyframes,
+      StringKeyframeEffectModel::Create(keyframes, composite,
                                         LinearTimingFunction::Shared());
   if (!RuntimeEnabledFeatures::CSSAdditiveAnimationsEnabled()) {
     for (const auto& keyframe_group :
@@ -137,12 +143,12 @@ EffectModel* CreateEffectModelFromKeyframes(
         if (keyframe->IsNeutral()) {
           exception_state.ThrowDOMException(
               kNotSupportedError, "Partial keyframes are not supported.");
-          return nullptr;
+          return CreateEmptyEffectModel(composite);
         }
         if (keyframe->Composite() != EffectModel::kCompositeReplace) {
           exception_state.ThrowDOMException(
               kNotSupportedError, "Additive animations are not supported.");
-          return nullptr;
+          return CreateEmptyEffectModel(composite);
         }
       }
     }
@@ -170,18 +176,19 @@ bool ExhaustDictionaryIterator(DictionaryIterator& iterator,
 }  // namespace
 
 // Spec: http://w3c.github.io/web-animations/#processing-a-keyframes-argument
-EffectModel* EffectInput::Convert(
+KeyframeEffectModelBase* EffectInput::Convert(
     Element* element,
     const DictionarySequenceOrDictionary& effect_input,
+    EffectModel::CompositeOperation composite,
     ExecutionContext* execution_context,
     ExceptionState& exception_state) {
   // TODO(crbug.com/772014): The element is allowed to be null; remove check.
   if (effect_input.IsNull() || !element)
-    return nullptr;
+    return CreateEmptyEffectModel(composite);
 
   if (effect_input.IsDictionarySequence()) {
     return ConvertArrayForm(*element, effect_input.GetAsDictionarySequence(),
-                            execution_context, exception_state);
+                            composite, execution_context, exception_state);
   }
 
   const Dictionary& dictionary = effect_input.GetAsDictionary();
@@ -192,19 +199,20 @@ EffectModel* EffectInput::Convert(
     Vector<Dictionary> keyframe_dictionaries;
     if (ExhaustDictionaryIterator(iterator, execution_context, exception_state,
                                   keyframe_dictionaries)) {
-      return ConvertArrayForm(*element, keyframe_dictionaries,
+      return ConvertArrayForm(*element, keyframe_dictionaries, composite,
                               execution_context, exception_state);
     }
-    return nullptr;
+    return CreateEmptyEffectModel(composite);
   }
 
-  return ConvertObjectForm(*element, dictionary, execution_context,
+  return ConvertObjectForm(*element, dictionary, composite, execution_context,
                            exception_state);
 }
 
-EffectModel* EffectInput::ConvertArrayForm(
+KeyframeEffectModelBase* EffectInput::ConvertArrayForm(
     Element& element,
     const Vector<Dictionary>& keyframe_dictionaries,
+    EffectModel::CompositeOperation composite,
     ExecutionContext* execution_context,
     ExceptionState& exception_state) {
   StringKeyframeVector keyframes;
@@ -217,7 +225,7 @@ EffectModel* EffectInput::ConvertArrayForm(
     if (DictionaryHelper::Get(keyframe_dictionary, "offset", offset) &&
         !offset.IsNull()) {
       if (!CheckOffset(offset.Get(), last_offset, exception_state))
-        return nullptr;
+        return CreateEmptyEffectModel(composite);
 
       last_offset = offset.Get();
       keyframe->SetOffset(offset.Get());
@@ -236,14 +244,14 @@ EffectModel* EffectInput::ConvertArrayForm(
           AnimationInputHelpers::ParseTimingFunction(
               timing_function_string, &element.GetDocument(), exception_state);
       if (!timing_function)
-        return nullptr;
+        return CreateEmptyEffectModel(composite);
       keyframe->SetEasing(timing_function);
     }
 
     const Vector<String>& keyframe_properties =
         keyframe_dictionary.GetPropertyNames(exception_state);
     if (exception_state.HadException())
-      return nullptr;
+      return CreateEmptyEffectModel(composite);
     for (const auto& property : keyframe_properties) {
       if (property == "offset" || property == "composite" ||
           property == "easing") {
@@ -254,7 +262,7 @@ EffectModel* EffectInput::ConvertArrayForm(
       if (DictionaryHelper::Get(keyframe_dictionary, property, values)) {
         exception_state.ThrowTypeError(
             "Lists of values not permitted in array-form list of keyframes");
-        return nullptr;
+        return CreateEmptyEffectModel(composite);
       }
 
       String value;
@@ -268,7 +276,7 @@ EffectModel* EffectInput::ConvertArrayForm(
 
   DCHECK(!exception_state.HadException());
 
-  return CreateEffectModelFromKeyframes(element, keyframes, exception_state);
+  return CreateEffectModel(element, keyframes, composite, exception_state);
 }
 
 static bool GetPropertyIndexedKeyframeValues(
@@ -316,9 +324,10 @@ static bool GetPropertyIndexedKeyframeValues(
   return !exception_state.HadException();
 }
 
-EffectModel* EffectInput::ConvertObjectForm(
+KeyframeEffectModelBase* EffectInput::ConvertObjectForm(
     Element& element,
     const Dictionary& keyframe_dictionary,
+    EffectModel::CompositeOperation composite,
     ExecutionContext* execution_context,
     ExceptionState& exception_state) {
   StringKeyframeVector keyframes;
@@ -330,14 +339,14 @@ EffectModel* EffectInput::ConvertObjectForm(
     timing_function = AnimationInputHelpers::ParseTimingFunction(
         timing_function_string, &element.GetDocument(), exception_state);
     if (!timing_function)
-      return nullptr;
+      return CreateEmptyEffectModel(composite);
   }
 
   Nullable<double> offset;
   if (DictionaryHelper::Get(keyframe_dictionary, "offset", offset) &&
       !offset.IsNull()) {
     if (!CheckOffset(offset.Get(), 0.0, exception_state))
-      return nullptr;
+      return CreateEmptyEffectModel(composite);
   }
 
   String composite_string;
@@ -346,7 +355,7 @@ EffectModel* EffectInput::ConvertObjectForm(
   const Vector<String>& keyframe_properties =
       keyframe_dictionary.GetPropertyNames(exception_state);
   if (exception_state.HadException())
-    return nullptr;
+    return CreateEmptyEffectModel(composite);
   for (const auto& property : keyframe_properties) {
     if (property == "offset" || property == "composite" ||
         property == "easing") {
@@ -357,7 +366,7 @@ EffectModel* EffectInput::ConvertObjectForm(
     if (!GetPropertyIndexedKeyframeValues(keyframe_dictionary, property,
                                           execution_context, exception_state,
                                           values))
-      return nullptr;
+      return CreateEmptyEffectModel(composite);
 
     size_t num_keyframes = values.size();
     for (size_t i = 0; i < num_keyframes; ++i) {
@@ -387,7 +396,7 @@ EffectModel* EffectInput::ConvertObjectForm(
 
   DCHECK(!exception_state.HadException());
 
-  return CreateEffectModelFromKeyframes(element, keyframes, exception_state);
+  return CreateEffectModel(element, keyframes, composite, exception_state);
 }
 
 }  // namespace blink
