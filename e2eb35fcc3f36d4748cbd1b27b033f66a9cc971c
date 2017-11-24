@@ -16,6 +16,24 @@
       "revId": "e2eb35fcc3f36d4748cbd1b27b033f66a9cc971c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2ed430_85d56892",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-24T12:23:20Z",
+      "side": 1,
+      "message": "I\u0027m currently not entirely sure whether this block is needed.\n\nIt seems to me that if a Document was ever associated with a browsing context (Frame), then it can only become disassociated if the Document is shut down. In which case |resolver| no longer requires resolution and will ignore attempts at doing so.\n\nBut I left it because I wasn\u0027t yet 100% sure that I\u0027m not missing any edge cases. (E.g. the case where the promise is passed between contexts, which I\u0027m writing a test for now.)",
+      "parentUuid": "e6afad72_acbe04c7",
+      "revId": "e2eb35fcc3f36d4748cbd1b27b033f66a9cc971c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
