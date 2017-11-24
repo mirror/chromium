@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f8113a2_fbd70414",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-24T14:44:52Z",
+      "side": 1,
+      "message": "Since \"it\" is always \u003d\u003d to sources_.end() here, it might be more readable to say index \u003d sources_.size().",
+      "revId": "76497d51fbb0bffe5c0a1db8d425cce957233661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
