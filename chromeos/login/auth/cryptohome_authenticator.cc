@@ -517,7 +517,8 @@ void CryptohomeAuthenticator::AuthenticateToLogin(
     const UserContext& user_context) {
   DCHECK(user_context.GetUserType() == user_manager::USER_TYPE_REGULAR ||
          user_context.GetUserType() ==
-             user_manager::USER_TYPE_ACTIVE_DIRECTORY);
+             user_manager::USER_TYPE_ACTIVE_DIRECTORY ||
+         user_context.GetUserType() == user_manager::USER_TYPE_CHILD);
   authentication_context_ = context;
   current_state_.reset(new AuthAttemptState(user_context,
                                             false,  // unlock
@@ -535,7 +536,8 @@ void CryptohomeAuthenticator::CompleteLogin(content::BrowserContext* context,
                                             const UserContext& user_context) {
   DCHECK(user_context.GetUserType() == user_manager::USER_TYPE_REGULAR ||
          user_context.GetUserType() ==
-             user_manager::USER_TYPE_ACTIVE_DIRECTORY);
+             user_manager::USER_TYPE_ACTIVE_DIRECTORY ||
+         user_context.GetUserType() == user_manager::USER_TYPE_CHILD);
   authentication_context_ = context;
   current_state_.reset(new AuthAttemptState(user_context,
                                             true,   // unlock
