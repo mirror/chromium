@@ -10,8 +10,10 @@
 #include "base/macros.h"
 #include "base/values.h"
 #include "components/omnibox/browser/autocomplete_controller_delegate.h"
+#include "url/gurl.h"
 
 class AutocompleteController;
+class ChromeAutocompleteProviderClient;
 class Profile;
 
 namespace vr {
@@ -27,10 +29,16 @@ class AutocompleteController : public AutocompleteControllerDelegate {
   void Start(const base::string16& text);
   void Stop();
 
+  // If |result| can be classified as URL, this function return a GURL
+  // representation of that URL. Otherwise, it returns a GURL will navigate to
+  // the default search engine with |result| as query.
+  GURL OnVoiceResults(const base::string16 result);
+
  private:
   void OnResultChanged(bool default_match_changed) override;
 
   Profile* profile_;
+  ChromeAutocompleteProviderClient* client_;
   std::unique_ptr<::AutocompleteController> autocomplete_controller_;
   BrowserUiInterface* ui_;
 

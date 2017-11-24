@@ -32,14 +32,11 @@
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/browser/vr/web_contents_event_forwarder.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
-#include "components/search_engines/template_url_service.h"
-#include "components/search_engines/util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
@@ -914,14 +911,11 @@ bool VrShell::ShouldDisplayURL() const {
 }
 
 void VrShell::OnVoiceResults(const base::string16& result) {
-  TemplateURLService* template_url_service =
-      TemplateURLServiceFactory::GetForProfile(
-          ProfileManager::GetActiveUserProfile());
-  GURL url(GetDefaultSearchURLForSearchTerms(template_url_service, result));
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_loadUrl(
       env, j_vr_shell_,
-      base::android::ConvertUTF8ToJavaString(env, url.spec()));
+      base::android::ConvertUTF8ToJavaString(
+          env, autocomplete_controller_->OnVoiceResults(result).spec()));
 }
 
 // ----------------------------------------------------------------------------
