@@ -76,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "92858a37_d716e081",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Conceptually, the only reason the UI should be told about GL initializing is that it can now make textures.  It feels like these delegates should be created when the UI is created, even if they themselves are initialized when GL is initialized (if needed).  Thoughts?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df3ec16c_6b4d59c2",
         "filename": "chrome/browser/vr/elements/keyboard.cc",
         "patchSetId": 6
@@ -161,6 +178,23 @@
     },
     {
       "key": {
+        "uuid": "6d59915a_d01e6df2",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "I think you need to be checking that the the target_property is opacity.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfbdfcf3_4d7c1bb3",
         "filename": "chrome/browser/vr/elements/keyboard.cc",
         "patchSetId": 6
@@ -172,6 +206,40 @@
       "writtenOn": "2017-11-24T16:27:18Z",
       "side": 1,
       "message": "nit: add brackets to be consistent with other places in the file?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdbc701_1db3edd7",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "OnBeginFrame now needs to report if a visible change will happen, so that the scene doesn\u0027t redraw if nothing happens.  Should delegate_-\u003eOnBeginFrame() return a boolean?  How is this managed?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991e3649_eb77f398",
+        "filename": "chrome/browser/vr/elements/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Possibly elaborate on how this element is a proxy to a platform-specific keyboard, managing the configuration of that keyboard?  Probably no need to mention the singleton nature - it\u0027s pretty obvious, and if it\u0027s really disastrous to create two, maybe programmatically block it instead.",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +280,91 @@
     },
     {
       "key": {
+        "uuid": "abeec56a_7db165c2",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "What if an element calls on its delegate_ without focus? Should the delegate_ DCHECK?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db6598a_1760a871",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Will info always equal the previous state passed to OnInputEdited?  Is that why this is a nop?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501e56e5_4fe18805",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Why are we calling back to the delegate here?  I thought that was only going to happen if the text field needs to change the value, such as on a future cursor-moving click.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2431cf63_7f11754b",
+        "filename": "chrome/browser/vr/elements/text_input.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Committed",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b769c813_d62f0763",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Now I\u0027m confrused about why TextInputDelegate comes in via Initialize (which seems bad to me), and TextInput\u0027s SetTextInputDelegate().",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eae3fa42_e116064f",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 6
@@ -223,6 +376,40 @@
       "writtenOn": "2017-11-24T13:33:07Z",
       "side": 1,
       "message": "nit: could you please reconcile the both the name of this accessor and its position in the class to be consistent with IsHitTestable? (If that means renaming the IsThingerThinger functions, that seems ok, too, but I think they should be named similarly and appear next to one another rather than amongst these event-y functions).",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20dfb5c8_f891f022",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Comments in these 3 are unnecessary - this is the case for many base class stubs and it\u0027s increasing clear why.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbb87f2_c6371127",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "s/this functions below/these functions/",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -246,6 +433,23 @@
     },
     {
       "key": {
+        "uuid": "f7c929e1_5c84fb9a",
+        "filename": "chrome/browser/vr/model/text_input_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "This also passes information around, and exists per-element, so it\u0027s not specific to the currently focused input field.  Should probably be a class-level comment saying this class represents editable text field state (in general).",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a58929e_c9d8f560",
         "filename": "chrome/browser/vr/model/text_input_info.h",
         "patchSetId": 6
@@ -257,6 +461,46 @@
       "writtenOn": "2017-11-24T13:33:07Z",
       "side": 1,
       "message": "Why have this function if you have operator\u003d\u003d below?\n\nChris had a neat suggestion for safeguarding against additions to model classes whose equality operators may go stale -- static asserting on the size of the struct with a comment about updating operator\u003d\u003d. Check out UrlBarColors, eg.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d692d78_15667020",
+        "filename": "chrome/browser/vr/model/text_input_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Why have Equals() rather than putting this logic directly in \u003d\u003d?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c758a4_6086a0a1",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "s/loose/lose/",
+      "range": {
+        "startLine": 326,
+        "startChar": 60,
+        "endLine": 326,
+        "endChar": 65
+      },
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -297,6 +541,74 @@
     },
     {
       "key": {
+        "uuid": "6f80ed10_6fc4be85",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Committed (please check for other instances)",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fff1534_19f4ab32",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Suggestion:  UnfocusFocusedElement()?  It sounds like it\u0027s clearing text in the focused element.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a929960_74c4daa0",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "0 is the standard invalid element id (same as line 90).",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198cdc19_9bec8d88",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Did autoformatting do this weird wrapping?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fd2f982_ccfa3770",
         "filename": "chrome/browser/vr/ui_renderer.cc",
         "patchSetId": 6
@@ -308,6 +620,23 @@
       "writtenOn": "2017-11-24T16:27:18Z",
       "side": 1,
       "message": "It probably makes more sense to divide this check to individual Draw calls? e.g\nif (!keyboard_elements.empty())\n  DrawUiView(render_info, keyboard_elements);\nif (!elements_overlay.empty()) {\n  glDisable(GL_CULL_FACE);\n  DrawUiView(render_info, elements_overlay);\n}\n...",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fad6855_902dbcb6",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "I\u0027m missing something - why does the keyboard not draw with other 2D browsing elements?",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -342,6 +671,23 @@
       "writtenOn": "2017-11-24T16:27:18Z",
       "side": 1,
       "message": "nit: use child is probably easier to read here given that the new element is also called element.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4dd6ff_56c66a5c",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:29:28Z",
+      "side": 1,
+      "message": "Objection.  The scene should not have element-specific hacks like this - we\u0027ve been trying to purge those.  It\u0027s SceneCreator\u0027s job to know and configure.",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
