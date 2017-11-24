@@ -1743,6 +1743,14 @@ void ResourceFetcher::StopFetchingIncludingKeepaliveLoaders() {
   StopFetchingInternal(StopFetchingTarget::kIncludingKeepaliveLoaders);
 }
 
+ResourceTimingInfo* ResourceFetcher::GetResourceTimingInfo(Resource* resource) {
+  auto iterator = resource_timing_info_map_.find(resource);
+  if (iterator != resource_timing_info_map_.end()) {
+    return iterator->value.get();
+  }
+  return nullptr;
+}
+
 void ResourceFetcher::Trace(blink::Visitor* visitor) {
   visitor->Trace(context_);
   visitor->Trace(scheduler_);
