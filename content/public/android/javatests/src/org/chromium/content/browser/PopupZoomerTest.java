@@ -236,7 +236,12 @@ public class PopupZoomerTest {
         Assert.assertTrue(mPopupZoomer.isShowing());
 
         // Simulate losing the focus.
-        mContentViewCore.onFocusChanged(false, true);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mContentViewCore.onFocusChanged(false, true);
+            }
+        });
 
         // Wait for the hide animation to finish.
         mPopupZoomer.finishPendingDraws();
