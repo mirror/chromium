@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "8830c1e5_0fb34396",
+        "filename": "chrome/renderer/autofill/autofill_renderer_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T18:53:12Z",
+      "side": 1,
+      "message": "nit: Is this comment correct? I understand the 1UL on line 298 as the form being sent.",
+      "range": {
+        "startLine": 295,
+        "startChar": 29,
+        "endLine": 295,
+        "endChar": 34
+      },
+      "revId": "fa2b1cf9c94311cf7fa11037588f0bd4c315db61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aadf132_46ef058d",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T18:53:12Z",
+      "side": 1,
+      "message": "nit: This change seems not to be mentioned in the CL description. It seems to influence behaviour independently of the new flag. It might be worth mentioning.",
+      "range": {
+        "startLine": 1548,
+        "startChar": 6,
+        "endLine": 1550,
+        "endChar": 21
+      },
+      "revId": "fa2b1cf9c94311cf7fa11037588f0bd4c315db61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc230095_021180f8",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T18:53:12Z",
+      "side": 1,
+      "message": "TIL that one can nest ScopedFeatureLists. :)",
+      "range": {
+        "startLine": 1828,
+        "startChar": 4,
+        "endLine": 1828,
+        "endChar": 42
+      },
+      "revId": "fa2b1cf9c94311cf7fa11037588f0bd4c315db61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd4dafe_54a3979b",
+        "filename": "components/autofill/core/browser/data_driven_test.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T18:53:12Z",
+      "side": 1,
+      "message": "Not requesting a change, just mentioning an alternative: If a custom enum with values like {PASS, FAIL} is used instead of the bool type, callsites do not need to define the Boolean constants to make the calls comprehensible.",
+      "range": {
+        "startLine": 36,
+        "startChar": 33,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "fa2b1cf9c94311cf7fa11037588f0bd4c315db61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94d2fb1_e333a0f1",
+        "filename": "components/autofill/core/common/form_field_data.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-24T18:53:12Z",
+      "side": 1,
+      "message": "optional: Introducing \"default\" prevents the compiler from flagging this code when someone changes the definition of CheckStatus. An alternative would be to remove it and to initialise check_status_str to point to \"\u003cinvalid\u003e\" instead of setting it to nullptr.",
+      "range": {
+        "startLine": 384,
+        "startChar": 4,
+        "endLine": 384,
+        "endChar": 11
+      },
+      "revId": "fa2b1cf9c94311cf7fa11037588f0bd4c315db61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7d126a1_c833591a",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 26
