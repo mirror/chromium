@@ -50,7 +50,7 @@ bool FakeCupsPrintJobManager::CreatePrintJob(const std::string& printer_name,
 
 void FakeCupsPrintJobManager::CancelPrintJob(CupsPrintJob* job) {
   job->set_state(CupsPrintJob::State::STATE_CANCELLED);
-  NotifyJobCanceled(job);
+  NotifyJobUpdated(job);
 
   // Note: |job| is deleted here.
   for (auto iter = print_jobs_.begin(); iter != print_jobs_.end(); ++iter) {
@@ -63,13 +63,13 @@ void FakeCupsPrintJobManager::CancelPrintJob(CupsPrintJob* job) {
 
 bool FakeCupsPrintJobManager::SuspendPrintJob(CupsPrintJob* job) {
   job->set_state(CupsPrintJob::State::STATE_SUSPENDED);
-  NotifyJobSuspended(job);
+  NotifyJobUpdated(job);
   return true;
 }
 
 bool FakeCupsPrintJobManager::ResumePrintJob(CupsPrintJob* job) {
   job->set_state(CupsPrintJob::State::STATE_RESUMED);
-  NotifyJobResumed(job);
+  NotifyJobUpdated(job);
 
   base::SequencedTaskRunnerHandle::Get()->PostNonNestableDelayedTask(
       FROM_HERE, base::Bind(&FakeCupsPrintJobManager::ChangePrintJobState,
@@ -96,23 +96,24 @@ void FakeCupsPrintJobManager::ChangePrintJobState(CupsPrintJob* job) {
 
   switch (job->state()) {
     case CupsPrintJob::State::STATE_NONE:
+      NotifyJobUpdated(job);
       job->set_state(CupsPrintJob::State::STATE_WAITING);
-      NotifyJobCreated(job);
+      NotifyJobUpdated(job);
       break;
     case CupsPrintJob::State::STATE_WAITING:
       job->set_state(CupsPrintJob::State::STATE_STARTED);
-      NotifyJobStarted(job);
+      NotifyJobUpdated(job);
       break;
     case CupsPrintJob::State::STATE_STARTED:
       job->set_printed_page_number(job->printed_page_number() + 1);
       job->set_state(CupsPrintJob::State::STATE_PAGE_DONE);
-      NotifyJobStarted(job);
+      NotifyJobUpdated(job);
       break;
     case CupsPrintJob::State::STATE_PAGE_DONE:
     case CupsPrintJob::State::STATE_RESUMED:
       if (job->printed_page_number() == job->total_page_number()) {
         job->set_state(CupsPrintJob::State::STATE_DOCUMENT_DONE);
-        NotifyJobDone(job);
+        NotifyJobUpdated(job);
       } else {
         job->set_printed_page_number(job->printed_page_number() + 1);
         job->set_state(CupsPrintJob::State::STATE_PAGE_DONE);

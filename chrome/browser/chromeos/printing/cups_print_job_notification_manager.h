@@ -29,21 +29,12 @@ class CupsPrintJobNotificationManager : public CupsPrintJobManager::Observer {
                                   CupsPrintJobManager* print_job_manager);
   ~CupsPrintJobNotificationManager() override;
 
-  // CupsPrintJobManager::Observer overrides:
-  void OnPrintJobCreated(CupsPrintJob* job) override;
-  void OnPrintJobStarted(CupsPrintJob* job) override;
+  // CupsPrintJobManager::Observer override:
   void OnPrintJobUpdated(CupsPrintJob* job) override;
-  void OnPrintJobSuspended(CupsPrintJob* job) override;
-  void OnPrintJobResumed(CupsPrintJob* job) override;
-  void OnPrintJobDone(CupsPrintJob* job) override;
-  void OnPrintJobError(CupsPrintJob* job) override;
-  void OnPrintJobCancelled(CupsPrintJob* job) override;
 
   void OnPrintJobNotificationRemoved(CupsPrintJobNotification* notification);
 
  private:
-  void UpdateNotification(CupsPrintJob* job);
-
   PrintJobNotificationMap notification_map_;
   CupsPrintJobManager* print_job_manager_;
   Profile* profile_;
