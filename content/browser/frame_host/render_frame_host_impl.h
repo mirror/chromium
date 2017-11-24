@@ -793,8 +793,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidAccessInitialDocument();
   void OnDidChangeOpener(int32_t opener_routing_id);
   void OnDidChangeName(const std::string& name, const std::string& unique_name);
-  void OnDidSetFramePolicyHeaders(
-      blink::WebSandboxFlags sandbox_flags,
+  void OnDidSetSandboxThroughCSPHeader(blink::WebSandboxFlags sandbox_flags);
+  void OnDidSetFeaturePolicyHeader(
       const blink::ParsedFeaturePolicy& parsed_header);
 
   // A new set of CSP |policies| has been added to the document.

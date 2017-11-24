@@ -895,8 +895,10 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidAccessInitialDocument)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeOpener, OnDidChangeOpener)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeName, OnDidChangeName)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetFramePolicyHeaders,
-                        OnDidSetFramePolicyHeaders)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetSandboxThroughCSPHeader,
+                        OnDidSetSandboxThroughCSPHeader)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetFeaturePolicyHeader,
+                        OnDidSetFeaturePolicyHeader)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidAddContentSecurityPolicies,
                         OnDidAddContentSecurityPolicies)
     IPC_MESSAGE_HANDLER(FrameHostMsg_EnforceInsecureRequestPolicy,
@@ -2226,17 +2228,22 @@ void RenderFrameHostImpl::OnDidChangeName(const std::string& name,
   delegate_->DidChangeName(this, name);
 }
 
-void RenderFrameHostImpl::OnDidSetFramePolicyHeaders(
-    blink::WebSandboxFlags sandbox_flags,
+void RenderFrameHostImpl::OnDidSetSandboxThroughCSPHeader(
+    blink::WebSandboxFlags sandbox_flags) {
+  if (!is_active())
+    return;
+  frame_tree_node()->UpdateActiveSandboxFlags(sandbox_flags);
+  // Save a copy of the now-active sandbox flags on this RFHI.
+  active_sandbox_flags_ = frame_tree_node()->active_sandbox_flags();
+}
+
+void RenderFrameHostImpl::OnDidSetFeaturePolicyHeader(
     const blink::ParsedFeaturePolicy& parsed_header) {
   if (!is_active())
     return;
   frame_tree_node()->SetFeaturePolicyHeader(parsed_header);
   ResetFeaturePolicy();
   feature_policy_->SetHeaderPolicy(parsed_header);
-  frame_tree_node()->UpdateActiveSandboxFlags(sandbox_flags);
-  // Save a copy of the now-active sandbox flags on this RFHI.
-  active_sandbox_flags_ = frame_tree_node()->active_sandbox_flags();
 }
 
 void RenderFrameHostImpl::OnDidAddContentSecurityPolicies(

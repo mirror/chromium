@@ -3595,14 +3595,21 @@ void RenderFrameImpl::DidChangeFramePolicy(
       {flags, container_policy}));
 }
 
-void RenderFrameImpl::DidSetFramePolicyHeaders(
-    blink::WebSandboxFlags flags,
+void RenderFrameImpl::DidSetSandboxThroughCSPHeader(
+    blink::WebSandboxFlags flags) {
+  // If either Feature Policy or Sandbox Flags are different from the default
+  // (empty) values, then send them to the browser.
+  if (flags != blink::WebSandboxFlags::kNone)
+    Send(new FrameHostMsg_DidSetSandboxThroughCSPHeader(routing_id_, flags));
+}
+
+void RenderFrameImpl::DidSetFeaturePolicyHeader(
     const blink::ParsedFeaturePolicy& parsed_header) {
   // If either Feature Policy or Sandbox Flags are different from the default
   // (empty) values, then send them to the browser.
-  if (!parsed_header.empty() || flags != blink::WebSandboxFlags::kNone) {
-    Send(new FrameHostMsg_DidSetFramePolicyHeaders(routing_id_, flags,
-                                                   parsed_header));
+  if (!parsed_header.empty()) {
+    Send(
+        new FrameHostMsg_DidSetFeaturePolicyHeader(routing_id_, parsed_header));
   }
 }
 

@@ -1182,8 +1182,14 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_DidChangeName,
 // polices were delivered with the document being lodaded into the frame. This
 // can be either or both of 'Feature-Policy' or 'Content-Security-Policy' (which
 // can set sandbox flags).
-IPC_MESSAGE_ROUTED2(FrameHostMsg_DidSetFramePolicyHeaders,
-                    blink::WebSandboxFlags,
+IPC_MESSAGE_ROUTED1(FrameHostMsg_DidSetSandboxThroughCSPHeader,
+                    blink::WebSandboxFlags)
+
+// Notifies the browser process that HTTP headers which affect the frame
+// polices were delivered with the document being lodaded into the frame. This
+// can be either or both of 'Feature-Policy' or 'Content-Security-Policy' (which
+// can set sandbox flags).
+IPC_MESSAGE_ROUTED1(FrameHostMsg_DidSetFeaturePolicyHeader,
                     blink::ParsedFeaturePolicy /* parsed_header */)
 
 // Notifies the browser process about a new Content Security Policy that needs

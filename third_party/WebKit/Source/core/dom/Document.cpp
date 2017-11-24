@@ -698,7 +698,7 @@ Document::Document(const DocumentInit& initializer,
 
   InitSecurityContext(initializer);
   if (frame_)
-    frame_->Client()->DidSetFramePolicyHeaders(GetSandboxFlags(), {});
+    frame_->Client()->DidSetSandboxThroughCSPHeader(GetSandboxFlags());
 
   InitDNSPrefetch();
 
@@ -5920,8 +5920,7 @@ void Document::ApplyFeaturePolicyFromHeader(
   }
   ApplyFeaturePolicy(declared_policy);
   if (frame_) {
-    frame_->Client()->DidSetFramePolicyHeaders(GetSandboxFlags(),
-                                               declared_policy);
+    frame_->Client()->DidSetFeaturePolicyHeader(declared_policy);
   }
 }
 
