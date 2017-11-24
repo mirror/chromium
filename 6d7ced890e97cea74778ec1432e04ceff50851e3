@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "600113a4_56c670cf",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3547,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T00:51:34Z",
+      "side": 1,
+      "message": "There might be concern that `TabHelper` doesn\u0027t belong here, since it deals with all WebContentses, not just those in browser tabs. But also maybe that\u0027s good! E.g. if this acts to say ~does nothing for webcontentses not in tabs.\n\nTabHelper is fine. I\u0027d say preferable to Service/Manager/Driver/Provider/Factory/DriverFactory",
+      "revId": "6d7ced890e97cea74778ec1432e04ceff50851e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
