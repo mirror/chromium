@@ -506,15 +506,6 @@ public class ContentViewCoreImpl
         return mSelectionPopupController.getSelectedText();
     }
 
-    @VisibleForTesting
-    @Override
-    public int getTopControlsShrinkBlinkHeightForTesting() {
-        // TODO(jinsukkim): Let callsites provide with its own top controls height to remove
-        //                  the test-only method in content layer.
-        if (mNativeContentViewCore == 0) return 0;
-        return nativeGetTopControlsShrinkBlinkHeightPixForTesting(mNativeContentViewCore);
-    }
-
     @Override
     public boolean isFocusedNodeEditable() {
         return mSelectionPopupController.isSelectionEditable();
@@ -1591,10 +1582,6 @@ public class ContentViewCoreImpl
 
     @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSetDIPScale(long nativeContentViewCore, float dipScale);
-
-    @NativeClassQualifiedName("ContentViewCore")
-    private native int nativeGetTopControlsShrinkBlinkHeightPixForTesting(
-            long nativeContentViewCore);
 
     @NativeClassQualifiedName("ContentViewCore")
     private native void nativeSendOrientationChangeEvent(

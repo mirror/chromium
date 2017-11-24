@@ -620,13 +620,6 @@ public interface ContentViewCore {
     @VisibleForTesting
     String getSelectedText();
 
-    /**
-     * @return The amount of the top controls height if controls are in the state
-     *    of shrinking Blink's view size, otherwise 0.
-     */
-    @VisibleForTesting
-    int getTopControlsShrinkBlinkHeightForTesting();
-
     @VisibleForTesting
     void sendDoubleTapForTest(long timeMs, int x, int y);
 

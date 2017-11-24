@@ -390,9 +390,4 @@ public class TestContentViewCore implements ContentViewCore {
     public TextClassifier getCustomTextClassifier() {
         return null;
     }
-
-    @Override
-    public int getTopControlsShrinkBlinkHeightForTesting() {
-        return 0;
-    }
 }
