@@ -25,7 +25,7 @@
 
 namespace content {
 
-namespace {
+namespace network_service_unittest {
 
 class NetworkServiceTest : public testing::Test {
  public:
@@ -459,6 +459,6 @@ TEST_F(NetworkServiceNetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
       network::mojom::ConnectionType::CONNECTION_3G);
 }
 
-}  // namespace
+}  // namespace network_service_unittest
 
 }  // namespace content

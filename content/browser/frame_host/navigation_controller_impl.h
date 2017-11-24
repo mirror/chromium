@@ -32,6 +32,14 @@ class NavigationEntryScreenshotManager;
 class SiteInstance;
 struct LoadCommittedDetails;
 
+namespace navigation_controller_impl_unittest {
+class TimeSmoother;
+FORWARD_DECLARE_TEST(TimeSmoother, Basic);
+FORWARD_DECLARE_TEST(TimeSmoother, SingleDuplicate);
+FORWARD_DECLARE_TEST(TimeSmoother, ManyDuplicates);
+FORWARD_DECLARE_TEST(TimeSmoother, ClockBackwardsJump);
+}  // namespace navigation_controller_impl_unittest
+
 class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
  public:
   NavigationControllerImpl(
@@ -210,10 +218,14 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
 
   FRIEND_TEST_ALL_PREFIXES(NavigationControllerTest,
                            PurgeScreenshot);
-  FRIEND_TEST_ALL_PREFIXES(TimeSmoother, Basic);
-  FRIEND_TEST_ALL_PREFIXES(TimeSmoother, SingleDuplicate);
-  FRIEND_TEST_ALL_PREFIXES(TimeSmoother, ManyDuplicates);
-  FRIEND_TEST_ALL_PREFIXES(TimeSmoother, ClockBackwardsJump);
+  FRIEND_TEST_ALL_PREFIXES(navigation_controller_impl_unittest::TimeSmoother,
+                           Basic);
+  FRIEND_TEST_ALL_PREFIXES(navigation_controller_impl_unittest::TimeSmoother,
+                           SingleDuplicate);
+  FRIEND_TEST_ALL_PREFIXES(navigation_controller_impl_unittest::TimeSmoother,
+                           ManyDuplicates);
+  FRIEND_TEST_ALL_PREFIXES(navigation_controller_impl_unittest::TimeSmoother,
+                           ClockBackwardsJump);
 
   // Used for identifying which frames need to navigate.
   using FrameLoadVector =
