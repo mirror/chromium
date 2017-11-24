@@ -22,6 +22,29 @@
       "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095f97a4_6a29daec",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-24T08:52:28Z",
+      "side": 1,
+      "message": "Looks much better now. However, note that the StartMonitoringStreamOnUIThread() only has one LOC now. I\u0027d suggest getting rid of that method and putting here:\n\n  monitor-\u003estreams_[sid] |\u003d false;\n\n...also, StopMonitoringStream() and UpdateStreamAudibleState() could be changed similarly; but my argument is weaker there (since they are more than a few LOC). So, it\u0027s really a matter of personal style. But, IMHO, would make the code easier to read/navigate.",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 60
+      },
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
