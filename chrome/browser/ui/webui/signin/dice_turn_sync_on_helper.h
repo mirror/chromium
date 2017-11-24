@@ -21,9 +21,24 @@ class DiceTurnSyncOnHelper {
                        signin_metrics::AccessPoint signin_access_point,
                        signin_metrics::Reason signin_reason,
                        const std::string& account_id);
+
+  DiceTurnSyncOnHelper(Profile* profile,
+                       Browser* browser,
+                       signin_metrics::AccessPoint signin_access_point,
+                       signin_metrics::Reason signin_reason,
+                       const std::string& gaia_id,
+                       const std::string& email,
+                       const std::string& refresh_token);
+
   virtual ~DiceTurnSyncOnHelper();
 
  private:
+  void Initialize();
+
+  bool IsTurningOnSyncForExistingAccount();
+  const std::string& GetEmail();
+  const std::string& GetGaiaId();
+
   // Handles can offer sign-in errors.  It returns true if there is an error,
   // and false otherwise.
   bool HandleCanOfferSigninError();
@@ -46,6 +61,10 @@ class DiceTurnSyncOnHelper {
   signin_metrics::AccessPoint signin_access_point_;
   signin_metrics::Reason signin_reason_;
   const AccountInfo account_info_;
+
+  const std::string gaia_id_;
+  const std::string email_;
+  const std::string refresh_token_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceTurnSyncOnHelper);
 };
