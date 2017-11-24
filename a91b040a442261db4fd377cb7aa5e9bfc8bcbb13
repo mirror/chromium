@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "eab57728_03e8bdce",
+        "filename": "chrome/browser/autofill/form_structure_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "Note: this results in changes in the expected output for the data driven tests (small forms are parsed, but no predictions are made).",
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1b24ae_5de72209",
         "filename": "chrome/test/data/devtools/dispatch_key_event_shows_auto_fill.html",
         "patchSetId": 25
@@ -13,6 +30,30 @@
       "writtenOn": "2017-11-24T14:14:46Z",
       "side": 1,
       "message": "What does this change do?",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3823738e_95d35ba1",
+        "filename": "chrome/test/data/devtools/dispatch_key_event_shows_auto_fill.html",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "crbug.com/788425\n\nTLDR; autofill changes (fixes?) the (incorrect?) behavior of autocomplete. This change simulates the user having entered the data into the field (vs it having been propuluated).\n\nThis test actually triggers autocomplete, not autofill.\n\nAutocomplete and autofill have slightly different behavior (at the moment) with regard to saving user entered vs prepopulated data.\n\nThe filter to exclude pre-populated data from being saved lives in autofill code. If autofill \ndoes not validate the data (which was the case before this CL), autocomplete will save it regardless of the whether it was originally populated in the filed or it was subsequently added to field. If autofill first validates the data (which is the case now) it filters out all prepopulated data to prevent it from being saved (by itself or by autocomplete).\n\nThis change allows autofill to see that the data was not origally there when it first parsed the form but that is has been populated later.",
+      "parentUuid": "6a1b24ae_5de72209",
       "range": {
         "startLine": 12,
         "startChar": 4,
@@ -48,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "a9493813_b9d3de83",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "This test is for AutofillManager::ShoudUploadForm(...); AutofillManager does not expose entrypints for the other two restrictions.\n\nThe other restrictions are tested in form_structure_unittest.cc",
+      "parentUuid": "f8290379_09c2a5b9",
+      "range": {
+        "startLine": 5722,
+        "startChar": 28,
+        "endLine": 5722,
+        "endChar": 44
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d58e7d1_1e6c7427",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 25
@@ -71,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "4ea773b8_55e7024e",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 6123,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d58e7d1_1e6c7427",
+      "range": {
+        "startLine": 6123,
+        "startChar": 70,
+        "endLine": 6123,
+        "endChar": 78
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3296cac_741a66ab",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 25
@@ -82,6 +171,30 @@
       "writtenOn": "2017-11-24T14:35:16Z",
       "side": 1,
       "message": "Why?",
+      "range": {
+        "startLine": 6124,
+        "startChar": 3,
+        "endLine": 6124,
+        "endChar": 42
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73988699_f9348f66",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 6124,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "Because we don\u0027t have anything on which to report quality.\n\nIf both heuristics and query are disabled, then we didn\u0027t make any predictions. It would not then make sense to report a prediction failure (which is the only possible outcome).",
+      "parentUuid": "e3296cac_741a66ab",
       "range": {
         "startLine": 6124,
         "startChar": 3,
@@ -117,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "9a0e345e_fa235996",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "Not really worth doing it separately, IMO.\n\nIt\u0027s a pedantic correctness issue I discovered while doing this CL. It initially caused some tests to fail when I first played with reducing the field count minimums. But in both the old and the new code, there are other checks that prevent this from being a problem in practice.",
+      "parentUuid": "78becdcd_3fa3be3d",
+      "range": {
+        "startLine": 322,
+        "startChar": 32,
+        "endLine": 322,
+        "endChar": 52
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86947ac9_1584342f",
         "filename": "components/autofill/core/browser/form_structure.h",
         "patchSetId": 25
@@ -140,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "cb9bd3ff_04d8ea4e",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86947ac9_1584342f",
+      "range": {
+        "startLine": 106,
+        "startChar": 55,
+        "endLine": 106,
+        "endChar": 61
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8c00243_1f9e6f04",
         "filename": "components/test/data/autofill/heuristics/output/017_checkout_advanceautoparts.com.out",
         "patchSetId": 25
@@ -157,6 +318,64 @@
         "endLine": 1,
         "endChar": 12
       },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63dfce86_23a5fb26",
+        "filename": "components/test/data/autofill/heuristics/output/017_checkout_advanceautoparts.com.out",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "I turned off enforcement of the minimum required fields for upload in form_structure_browsertest.{cc|mm} to validate what will happen if (on clients) for whom we do this via Finch.",
+      "parentUuid": "d8c00243_1f9e6f04",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c22a0e_c9a21222",
+        "filename": "ios/chrome/browser/autofill/form_structure_browsertest.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "Not sure why the /search forms in these tests (but not others) fails to be extracted. This only fails on iOS.",
+      "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a18938c_38a5f2b8",
+        "filename": "ios/chrome/browser/autofill/form_structure_browsertest.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-24T15:57:44Z",
+      "side": 1,
+      "message": "Note: this results in changes in the expected output for the data driven tests (small forms are parsed, but no predictions are made).",
       "revId": "a91b040a442261db4fd377cb7aa5e9bfc8bcbb13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
