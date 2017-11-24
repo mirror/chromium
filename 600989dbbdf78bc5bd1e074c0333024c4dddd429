@@ -22,6 +22,30 @@
       "revId": "600989dbbdf78bc5bd1e074c0333024c4dddd429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9901289_0a25410c",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-24T16:08:10Z",
+      "side": 1,
+      "message": "You are right this was overlapped too. Thx.",
+      "parentUuid": "3f9e0d73_33ff01da",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 52
+      },
+      "revId": "600989dbbdf78bc5bd1e074c0333024c4dddd429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
