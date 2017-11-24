@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "313c170f_2901e9c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T14:40:13Z",
+      "side": 1,
+      "message": "track -\u003e MediaStreamTrack\n\ntrack has many meanings in the code base",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a69ecd02_58018f60",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
         "patchSetId": 1
@@ -121,6 +144,24 @@
       "side": 1,
       "message": "I measured the process increased memory usage after allocating and stopping many tracks in a test program before the GC got executed.",
       "parentUuid": "b5ebd8ac_249abebd",
+      "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6de91b_81d81838",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T14:40:13Z",
+      "side": 1,
+      "message": "There are lots of ways to create MediaStreamTracks: device capture, screen capture, peer connections, capture from media elements, capture from canvas, capture from webaudio source. Consumption for each of these is highly variable, depending constrainable properties, which affect how  queues and buffers are used internally.\nIt is not practical to introduce an API in the MediaStreams framework in content so that each variant reports their exact consumption of memory.\n\nThe number reported in this CL is based on experimental observation of how memory is \"leaked\" after thousands of audio MediaStreamTracks are created, stopped and discarded without the GC kicking in. Our measurements indicate that memory consumption in the renderer process grows between 600K and 1MB for each audio track created with getUserMedia using default settings.\nIt is possible to produce audio tracks that consume less memory, but they are not the most common case.\nVideo tracks may consume more, depending on settings, but it takes longer to create them using getUserMedia().\n\nWhile just a rough ballpark estimate, reporting 1MB per track is closer to reality than the current number, which is zero and makes it easy to give the impression of memory leaks. For example, in http://crbug.com/788405, a user is reporting \"leaks\" of between 2MB/sec to 50MB/sec with screen capture.\n\nAlso, I would like to point out that not all uses of AdjustAmountOfExternalAllocatedMemory report exact values. For example, the comments for HTMLCanvasElement say they use a \"pessimistic but relevant estimate\". See https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1535\n\nPerhaps we can lower the value from 1MB to something like 250K to make GC less aggressive?",
+      "parentUuid": "1cd8f68f_54f9ee10",
       "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
