@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0a49189e_aa39e49e",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T20:36:30Z",
+      "side": 1,
+      "message": "I just looked at the map/project code, and I think that this is safe given that we\u0027re only dealing with scales and translations.",
+      "parentUuid": "117e75d9_19222072",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12a4ee18_8aaf7e71",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 3
