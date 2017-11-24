@@ -692,63 +692,16 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
                            SwReporterInvocationType::kPeriodicRun);
 }
 
-IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, UserInitiatedRunsNotInterrupted) {
+IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
+                       UserInitiatedRunsNotScheduledIfAlreadyRunning) {
   // No need to test for periodic runs, since the corresponding test cases are
   // already exercised by PeriodicRunsNotScheduledIfAlreadyRunning.
   if (!IsUserInitiated(invocation_type_))
     return;
 
   TestSequenceNotScheduled(
-      SwReporterInvocationType::kUserInitiatedWithLogsDisallowed,
-      invocation_type_);
-}
-
-IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
-                       UserInitiatedRunInterruptsPeriodicRun) {
-  // No need to test for periodic runs, since the corresponding test cases are
-  // already exercised by PeriodicRunsNotScheduledIfAlreadyRunning.
-  if (!IsUserInitiated(invocation_type_))
-    return;
-
-  const base::FilePath path1(L"path1");
-  const base::FilePath path2(L"path2");
-
-  ResetReporterRuns(chrome_cleaner::kSwReporterCleanupNeeded);
-
-  // Launch two sequences that will be run in the following order:
-  //  - The first sequence (periodic) starts and waits to proceed;
-  //  - The second sequence (user-initiated) is scheduled and this test is
-  //    blocked until all sequences complete;
-  //  - The second sequence interrupts the first sequence, runs to completion,
-  //    and unblocks the test;
-  //  - At the end, check that both sequences have been scheduled.
-  Waiter first_sequence_done;
-  SwReporterInvocationSequence::Queue invocations1({CreateInvocation(path1)});
-  SwReporterInvocationSequence first_sequence = CreateInvocationSequence(
-      base::BindOnce(
-          [](Waiter* first_sequence_done, SwReporterInvocationResult result) {
-            EXPECT_EQ(SwReporterInvocationResult::kInterrupted, result);
-            first_sequence_done->Signal();
-          },
-          &first_sequence_done),
-      invocations1);
-  RunSwReporters(SwReporterInvocationType::kPeriodicRun,
-                 std::move(first_sequence));
-
-  Waiter second_sequence_done;
-  SwReporterInvocationSequence::Queue invocations2({CreateInvocation(path2)});
-  SwReporterInvocationSequence second_sequence =
-      CreateInvocationSequence(ExpectResultOnSequenceDoneCallback(
-                                   SwReporterInvocationResult::kCleanupNeeded,
-                                   second_sequence_done.SignalClosure()),
-                               invocations2);
-  RunSwReporters(invocation_type_, std::move(second_sequence));
-
-  first_sequence_done.Wait();
-  second_sequence_done.Wait();
-
-  ExpectReporterLaunches({path1, path2},
-                         /*expect_prompt=*/SeedIndicatesPromptEnabled());
+      invocation_type_,
+      SwReporterInvocationType::kUserInitiatedWithLogsDisallowed);
 }
 
 // Make the invocation type test parameter printable.
