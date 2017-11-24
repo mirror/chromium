@@ -404,6 +404,10 @@ void AccountReconcilor::FinishReconcile(
     std::vector<gaia::ListedAccount>&& gaia_accounts) {
   VLOG(1) << "AccountReconcilor::FinishReconcile";
   DCHECK(add_to_cookie_.empty());
+
+  delegate_->OnReconcileStarted(chrome_accounts_, gaia_accounts,
+                                primary_account_);
+
   std::string first_account = delegate_->GetFirstGaiaAccountForReconcile(
       chrome_accounts_, gaia_accounts, primary_account_, first_execution_);
   // |first_account| must be in |chrome_accounts_|.

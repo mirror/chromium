@@ -15,13 +15,16 @@ class PrefRegistrySyncable;
 }
 
 class PrefService;
+class ProfileOAuth2TokenService;
 
 namespace signin {
 
 // AccountReconcilorDelegate specialized for Dice.
 class DiceAccountReconcilorDelegate : public AccountReconcilorDelegate {
  public:
-  DiceAccountReconcilorDelegate(PrefService* user_prefs, bool is_new_profile);
+  DiceAccountReconcilorDelegate(ProfileOAuth2TokenService* token_service,
+                                PrefService* user_prefs,
+                                bool is_new_profile);
   ~DiceAccountReconcilorDelegate() override {}
 
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
@@ -40,10 +43,14 @@ class DiceAccountReconcilorDelegate : public AccountReconcilorDelegate {
       const std::vector<gaia::ListedAccount>& gaia_accounts,
       const std::string& primary_account,
       bool first_execution) const override;
+  void OnReconcileStarted(const std::vector<std::string>& chrome_accounts,
+                          const std::vector<gaia::ListedAccount>& gaia_accounts,
+                          const std::string& primary_account) override;
   void OnReconcileFinished(const std::string& first_account,
                            bool reconcile_is_noop) override;
 
  private:
+  ProfileOAuth2TokenService* token_service_;
   PrefService* user_prefs_;
 
   // Last known "first account". Used when cookies are lost as a best guess.

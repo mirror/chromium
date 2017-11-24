@@ -125,6 +125,9 @@ class AccountReconcilor : public KeyedService,
                            DiceNoMigrationAfterReconcile);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
                            DiceReconcileReuseGaiaFirstAccount);
+  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
+                           MigrationClearSecondaryTokens);
+  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, MigrationClearAllTokens);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, TokensNotLoaded);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
                            StartReconcileCookiesDisabled);
