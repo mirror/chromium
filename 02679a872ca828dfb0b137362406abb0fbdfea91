@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adbb927e_30470df9",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "This feels kind of awkward. Enums don\u0027t really fit bitfields very well. Either make them constants:\n\ntypedef uint32_t ScrollOrientation;\nconst ScrollOrientation kNoScroll \u003d 0;\nconst ScrollOrientation kHorizontalScroll \u003d 1;\n...\n\nOr (my preference in this case) to not make this a bit field at all. i.e.:\n\nif (did_scroll_x_for_scroll_gesture_ \u0026\u0026 did_scroll_y_for_scroll_gesture)\n  scroll_orientation \u003d kBothScroll;\nelse if (did_scroll_x_for_scroll_gesture_)\n  scroll_orientation \u003d kHorizontalScroll;\nelse if (did_scroll_y_for_scroll_gesture_)\n  scroll_orientation \u003d kVerticalScroll;",
+      "range": {
+        "startLine": 479,
+        "startChar": 2,
+        "endLine": 486,
+        "endChar": 64
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed04caab_e8285d05",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Could we make this \"PerformSnapping\" and have the SnapCoordinator set the scroll offset? You could even pass the did_scroll_x|y bools and have it calculate the orientation too. That is, encapsulate as much of the snapping logic inside SnapCoordinator as possible.",
+      "range": {
+        "startLine": 489,
+        "startChar": 24,
+        "endLine": 489,
+        "endChar": 39
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc15b30f_d842d68d",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Should this always be smooth? Wouldn\u0027t it make sense to use Auto?",
+      "range": {
+        "startLine": 492,
+        "startChar": 42,
+        "endLine": 492,
+        "endChar": 63
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3a630b_88244c11",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "frame here means \"frame as in iframe\", rather than \"frame as in beginFrame\", right? It\u0027s unfortunate the term is overloaded. Maybe change this to \"in this Document\" remove ambiguity? Or just remove it altogether, each iframe has its own ScrollManager so \"in this frame\" is implied by that.",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 34
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c11e380_9711b647",
+        "filename": "third_party/WebKit/Source/core/input/ScrollSnapTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "This is hard to parse, please split out the style into a \u003cstyle\u003e tag like you did in SnapCoordinatorTest.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592b2a90_dd15116b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Pass by Ref?",
+      "range": {
+        "startLine": 78,
+        "startChar": 52,
+        "endLine": 78,
+        "endChar": 62
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c5d531_26461a93",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Please use snap_container-\u003eGetScrollableArea() to get scroll properties wherever you can (in this method and below) i.e. for scroll extents, offsets, etc. You may need to special case LayoutView to return the FrameView\u0027s LayoutViewportScrollableArea()",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194a0f5f_d89e132b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Should we maybe be skipping areas that have a kInvalidOffset?",
+      "range": {
+        "startLine": 356,
+        "startChar": 12,
+        "endLine": 356,
+        "endChar": 18
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4113854_27d5701c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Nit: move this down to where it\u0027s used.",
+      "range": {
+        "startLine": 380,
+        "startChar": 15,
+        "endLine": 380,
+        "endChar": 36
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f0438f_366e3859",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "I think for the LayoutView you\u0027ll need to use the FrameView::LayoutViewportScrollableArea.",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 38
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411abaa7_4a336992",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "It\u0027s not really calculating anything, right? I\u0027d call this EnsureSnapContainerData",
+      "range": {
+        "startLine": 426,
+        "startChar": 35,
+        "endLine": 426,
+        "endChar": 44
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9acc58f_52fa6e17",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Just a suggestion since this is debugging, but it\u0027d be more flexible to define std::ostream\u0026 operator\u003c\u003c(std::ostream\u0026 ostream, const ScrollContainerData\u0026 node), etc for all your different types. See the operator\u003c\u003c in Node.cpp for example.",
+      "range": {
+        "startLine": 451,
+        "startChar": 22,
+        "endLine": 451,
+        "endChar": 37
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6216fdef_382afab4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Are these double quotes ok unescaped? I\u0027d use single-quote just for clarity (and syntax coloring)",
+      "range": {
+        "startLine": 103,
+        "startChar": 14,
+        "endLine": 103,
+        "endChar": 15
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdfd30eb_6b631cfb",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Everything in Blink should be using the ScrollOffset typedef in ScrollTypes.h (FloatSize).",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbe1dcd_a2b03b48",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Add a file-level comment here pointing readers to the SnapCoordinator.h file for Scroll Snapping documentation..",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0072459e_5394a4f9",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Please add a comment explaining what this is and what each value means.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385cffaa_64056907",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Please add a comment explaining is_none or give it a more descriptive name",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b989efa7_fd81fcd6",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "Any reason to prefer this over the default copy constructor and assignment operator? Ditto for types above.",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 17
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23dd0976_39067705",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollTypes.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-24T19:08:55Z",
+      "side": 1,
+      "message": "In Element.cpp, ToPhysicalAlignment(), add a DCHECK to make sure the incoming ScrollOrientation is only kHorizontalScroll or kVerticalScroll",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 11
+      },
+      "revId": "02679a872ca828dfb0b137362406abb0fbdfea91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
