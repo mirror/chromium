@@ -34,6 +34,24 @@
       "revId": "6d7ced890e97cea74778ec1432e04ceff50851e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bb615bc_7974eb49",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3547,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T02:23:05Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s true that the mainframe is always in a tab. The Chromecast dialog, Extension browser action popups, Extension background pages, the user account manager, and packaged app windows are all examples of WebContentses that have a mainframe that is never attached to a browser tab, don\u0027t have an associated Browser*, and so are never passed to TabHeleprs::AttachTabHelpers(..). The code in BindContentTranslateDriver seems to handle this ok though, so I\u0027m happy to proceed :)",
+      "parentUuid": "40b3a38f_e189a4a8",
+      "revId": "6d7ced890e97cea74778ec1432e04ceff50851e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
