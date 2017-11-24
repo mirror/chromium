@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e08b84ea_2f57ed0b",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_external.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-24T20:06:41Z",
+      "side": 1,
+      "message": "Maybe we don\u0027t need a separate holder for the External interface? Assuming we already have a way to convert to/from WebContents/TabLifecycleUnits, this could piggyback on that instead?",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "15b8476df36cfff6805ebd858bd59ece2195ce77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
