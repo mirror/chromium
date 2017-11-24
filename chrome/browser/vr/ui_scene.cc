@@ -14,6 +14,7 @@
 #include "base/values.h"
 #include "chrome/browser/vr/databinding/binding_base.h"
 #include "chrome/browser/vr/elements/draw_phase.h"
+#include "chrome/browser/vr/elements/keyboard.h"
 #include "chrome/browser/vr/elements/reticle.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "ui/gfx/transform.h"
@@ -48,11 +49,8 @@ void UiScene::AddUiElement(UiElementName parent,
   CHECK_GE(element->id(), 0);
   CHECK_EQ(GetUiElementById(element->id()), nullptr);
   CHECK_GE(element->draw_phase(), 0);
-  if (gl_initialized_) {
-    for (auto& child : *element) {
-      child.Initialize(provider_);
-    }
-  }
+  if (gl_initialized_)
+    InitializeElement(element.get());
   GetUiElementByName(parent)->AddChild(std::move(element));
   is_dirty_ = true;
 }
@@ -235,6 +233,14 @@ UiScene::Elements UiScene::GetVisibleControllerElements() const {
       });
 }
 
+UiScene::Elements UiScene::GetVisibleKeyboardElements() const {
+  return GetVisibleElements(GetUiElementByName(kKeyboard),
+                            GetUiElementByName(kReticle),
+                            [](UiElement* element) {
+                              return element->draw_phase() == kPhaseForeground;
+                            });
+}
+
 UiScene::UiScene() {
   root_element_ = base::MakeUnique<UiElement>();
   root_element_->set_name(kRoot);
@@ -245,12 +251,24 @@ UiScene::UiScene() {
 
 UiScene::~UiScene() = default;
 
-void UiScene::OnGlInitialized(SkiaSurfaceProvider* provider) {
+void UiScene::OnGlInitialized(SkiaSurfaceProvider* provider,
+                              KeyboardDelegate* keyboard_delegate,
+                              TextInputDelegate* text_input_delegate) {
   gl_initialized_ = true;
   provider_ = provider;
+  keyboard_delegate_ = keyboard_delegate;
+  text_input_delegate_ = text_input_delegate;
+  InitializeElement(root_element_.get());
+}
 
-  for (auto& element : *root_element_)
-    element.Initialize(provider);
+void UiScene::InitializeElement(UiElement* element) {
+  for (auto& element : *element) {
+    element.Initialize(provider_, text_input_delegate_);
+    if (element.name() == kKeyboard) {
+      auto* kb_element = static_cast<Keyboard*>(&element);
+      kb_element->SetKeyboardDelegate(keyboard_delegate_);
+    }
+  }
 }
 
 }  // namespace vr
