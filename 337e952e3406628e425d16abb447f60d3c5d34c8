@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6dbd56b7_8a08045e",
+        "filename": "chrome/browser/ui/browser_focus_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T00:32:20Z",
+      "side": 1,
+      "message": "\u003e I found that it was failing on linux-chromeos-rel. Is OS_CHROMEOS by itself enough?\n\nYeah - I think OS_CHROMEOS by itself is more correct. adding linux as well suggests something like ~doesn\u0027t happen on Fuscia, or ~doesn\u0027t happen on ChromeOS hardware, just the cross-compiled version (except neither of those are distinct things AFAIK)",
+      "parentUuid": "f1b95cb4_bfbc4aa0",
+      "revId": "337e952e3406628e425d16abb447f60d3c5d34c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f665ac07_5ba4d4b3",
         "filename": "chrome/browser/ui/browser_focus_uitest.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I don\u0027t think so. This is the way the condition was structured in https://crrev.com/58059.",
       "parentUuid": "f665ac07_5ba4d4b3",
+      "revId": "337e952e3406628e425d16abb447f60d3c5d34c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd000211_fe50ac45",
+        "filename": "chrome/browser/ui/browser_focus_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-24T00:32:20Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think so. This is the way the condition was structured in https://crrev.com/58059.\n\nAh, looks like it started on ChromeOS and was then expanded to Linux as well, and the redundancy wasn\u0027t removed. But that was a long time ago.. I don\u0027t think the reasons for this test being disabled are related in any way to the recent interactive_ui_tests on Windows fixes (which are awesome btw :). IMO it would be fine to consider leaving this disabled for now..\n\nOtherwise, it\u0027s fine to have OS_CHROMEOS || OS_LINUX as you have. The redundancy at least makes it clear that it\u0027s intentional to disable on ChromeOS as well as desktop-linux.",
+      "parentUuid": "287e74b5_01b01cc5",
       "revId": "337e952e3406628e425d16abb447f60d3c5d34c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
