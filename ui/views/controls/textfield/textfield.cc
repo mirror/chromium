@@ -289,12 +289,20 @@ Textfield::Textfield()
   UpdateBorder();
   SetFocusBehavior(FocusBehavior::ALWAYS);
 
+#if !defined(OS_MACOSX)
+  // Do not map accelerators on Mac, since they might not reflect custom
+  // keybindings that a user has set. On Mac, these commands dispatch via the
+  // "responder chain" when the OS searches through menu items in the menu bar,
+  // and sends a, e.g., "cut:" command to NativeWidgetMac, which will pass it to
+  // Textfield via OnKeyEvent().
+
   // These allow BrowserView to pass edit commands from the Chrome menu to us
   // when we're focused by simply asking the FocusManager to
   // ProcessAccelerator() with the relevant accelerators.
   AddAccelerator(ui::Accelerator(ui::VKEY_X, ui::EF_CONTROL_DOWN));
   AddAccelerator(ui::Accelerator(ui::VKEY_C, ui::EF_CONTROL_DOWN));
   AddAccelerator(ui::Accelerator(ui::VKEY_V, ui::EF_CONTROL_DOWN));
+#endif
 }
 
 Textfield::~Textfield() {
