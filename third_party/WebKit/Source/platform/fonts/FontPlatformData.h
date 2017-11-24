@@ -131,7 +131,6 @@ class PLATFORM_EXPORT FontPlatformData {
   SkFontID UniqueID() const;
   unsigned GetHash() const;
 
-  FontOrientation Orientation() const { return orientation_; }
   bool IsVerticalAnyUpright() const {
     return blink::IsVerticalAnyUpright(orientation_);
   }
