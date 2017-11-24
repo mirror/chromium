@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7661b8c_eb8c310b",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T18:17:32Z",
+      "side": 1,
+      "message": "is this occlusion_in_quad_content_space?",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117e75d9_19222072",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T18:17:32Z",
+      "side": 1,
+      "message": "The Map functions are for use with normal transforms, Project is for use with inverted transforms. There\u0027s no special case fast path for project with 2dAxisAlignedTransform.\n\nSince this transform is very simple, I can see that maybe Map is okay to use here, but this is where linalg falls off. Could you confirm that this will give the correct results. Maybe you can lean on vollick@ for help if needed?",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a4ee18_8aaf7e71",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T18:17:32Z",
+      "side": 1,
+      "message": ".bounds() isn\u0027t right if the region has more than 1 rect. Need to grab each rect from the region and transform them (or verify the region has complexity\u003d\u003d1 i guess, maybe DCHECK so we notice if that changes)",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23dc0a5_deff5228",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T18:17:32Z",
+      "side": 1,
+      "message": "Do we need the IsEmpty? If it\u0027s empty and contains (they\u0027d have to both be empty) then skipping seems okay? Does IsEmpty help with perf?",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
