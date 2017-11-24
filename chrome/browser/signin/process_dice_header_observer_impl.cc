@@ -7,6 +7,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/dice_tab_helper.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -14,6 +15,7 @@
 #include "chrome/common/webui_url_constants.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "url/gurl.h"
@@ -30,11 +32,23 @@ void RedirectToNtp(content::WebContents* contents) {
   contents->OpenURL(params);
 }
 
+Profile* GetProfileForContents(content::WebContents* web_contents) {
+  DCHECK(web_contents);
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
+  DCHECK(browser);
+  Profile* profile = browser->profile();
+  DCHECK(profile);
+  return profile;
+}
+
 }  // namespace
 
 ProcessDiceHeaderObserverImpl::ProcessDiceHeaderObserverImpl(
     content::WebContents* web_contents)
-    : content::WebContentsObserver(web_contents), should_start_sync_(false) {}
+    : content::WebContentsObserver(web_contents),
+      profile_(GetProfileForContents(web_contents)) {
+  DCHECK(profile_);
+}
 
 void ProcessDiceHeaderObserverImpl::WillStartRefreshTokenFetch(
     const std::string& gaia_id,
@@ -46,45 +60,61 @@ void ProcessDiceHeaderObserverImpl::WillStartRefreshTokenFetch(
     return;
 
   DiceTabHelper* tab_helper = DiceTabHelper::FromWebContents(web_contents());
-  should_start_sync_ =
-      tab_helper && tab_helper->should_start_sync_after_web_signin();
+  if (tab_helper) {
+    should_start_sync_ = tab_helper->should_start_sync_after_web_signin();
+    signin_access_point_ = tab_helper->signin_access_point();
+    signin_reason_ = tab_helper->signin_reason();
+  }
 }
 
-void ProcessDiceHeaderObserverImpl::DidFinishRefreshTokenFetch(
-    const std::string& gaia_id,
-    const std::string& email) {
-  content::WebContents* web_contents = this->web_contents();
-  if (!web_contents || !should_start_sync_) {
-    VLOG(1) << "Do not start sync after web sign-in.";
-    return;
+bool ProcessDiceHeaderObserverImpl::ShouldEnableSync() {
+  if (!signin::IsDicePrepareMigrationEnabled()) {
+    VLOG(1) << "Do not start sync after web sign-in [DICE prepare migration "
+               "not enabled].";
+    return false;
   }
-  if (!signin::IsDicePrepareMigrationEnabled())
-    return;
 
-  Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
-  DCHECK(browser);
-  Profile* profile = browser->profile();
-  DCHECK(profile);
-  SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile);
+  SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile_);
   DCHECK(signin_manager);
   if (signin_manager->IsAuthenticated()) {
     VLOG(1) << "Do not start sync after web sign-in [already authenticated].";
-    return;
+    return false;
   }
 
-  DiceTabHelper* tab_helper = DiceTabHelper::FromWebContents(web_contents);
-  DCHECK(tab_helper);
+  if (!should_start_sync_) {
+    VLOG(1) << "Do not start sync after web sign-in [no a Chrome sign-in tab].";
+    return false;
+  }
 
-  // After signing in to Chrome, the user should be redirected to the NTP.
-  RedirectToNtp(web_contents);
+  return true;
+}
 
-  // Turn on sync for an existing account.
-  VLOG(1) << "Start sync after web sign-in.";
-  std::string account_id = AccountTrackerServiceFactory::GetForProfile(profile)
-                               ->PickAccountIdForAccount(gaia_id, email);
+bool ProcessDiceHeaderObserverImpl::ShouldUpdateCredentials(
+    const std::string& gaia_id,
+    const std::string& email,
+    const std::string& refresh_token) {
+  if (!ShouldEnableSync()) {
+    // No special treatment if needed if the user is not enabling sync.
+    return true;
+  }
+
+  content::WebContents* web_contents = this->web_contents();
+  Browser* browser = nullptr;
+  if (web_contents) {
+    browser = chrome::FindBrowserWithWebContents(web_contents);
+
+    // After signing in to Chrome, the user should be redirected to the NTP.
+    RedirectToNtp(web_contents);
+  }
 
   // DiceTurnSyncOnHelper is suicidal (it will kill itself once it finishes
   // enabling sync).
-  new DiceTurnSyncOnHelper(profile, browser, tab_helper->signin_access_point(),
-                           tab_helper->signin_reason(), account_id);
+  VLOG(1) << "Start sync after web sign-in.";
+  new DiceTurnSyncOnHelper(profile_, browser, signin_access_point_,
+                           signin_reason_, gaia_id, email, refresh_token);
+
+  // Avoid updating the credentials when the user is turning on sync as in
+  // some special cases the refresh token may actually need to be copied to
+  // a new profile.
+  return false;
 }

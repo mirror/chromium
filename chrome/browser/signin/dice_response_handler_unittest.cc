@@ -101,10 +101,12 @@ class DiceResponseHandlerTest : public testing::Test,
   }
 
   // Called after the refresh token was fetched and added in the token service.
-  void DidFinishRefreshTokenFetch(const std::string& gaia_id,
-                                  const std::string& email) {
+  bool ShouldUpdateCredentials(const std::string& gaia_id,
+                               const std::string& email,
+                               const std::string& refresh_token) {
     finish_token_fetch_gaia_id_ = gaia_id;
     finish_token_fetch_email_ = email;
+    return true;
   }
 
  protected:
@@ -199,9 +201,11 @@ class TestProcessDiceHeaderObserver : public ProcessDiceHeaderObserver {
   }
 
   // Called after the refresh token was fetched and added in the token service.
-  void DidFinishRefreshTokenFetch(const std::string& gaia_id,
-                                  const std::string& email) override {
-    owner_->DidFinishRefreshTokenFetch(gaia_id, email);
+  bool ShouldUpdateCredentials(const std::string& gaia_id,
+                               const std::string& email,
+                               const std::string& refresh_token) override {
+    owner_->ShouldUpdateCredentials(gaia_id, email, refresh_token);
+    return true;
   }
 
  private:

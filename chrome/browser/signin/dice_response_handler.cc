@@ -372,14 +372,13 @@ void DiceResponseHandler::OnTokenExchangeSuccess(
   if (!CanGetTokenForAccount(gaia_id, email))
     return;
 
-  std::string account_id =
-      account_tracker_service_->SeedAccountInfo(gaia_id, email);
-  VLOG(1) << "[Dice] OAuth success for account: " << account_id;
+  VLOG(1) << "[Dice] OAuth success for email " << email;
   DeleteTokenFetcher(token_fetcher);
-
-  // Store the new account and start sync if needed.
-  token_service_->UpdateCredentials(account_id, refresh_token);
-  observer->DidFinishRefreshTokenFetch(gaia_id, email);
+  if (observer->ShouldUpdateCredentials(gaia_id, email, refresh_token)) {
+    std::string account_id =
+        account_tracker_service_->SeedAccountInfo(gaia_id, email);
+    token_service_->UpdateCredentials(account_id, refresh_token);
+  }
 }
 
 void DiceResponseHandler::OnTokenExchangeFailure(

@@ -8,7 +8,10 @@
 #include "chrome/browser/signin/dice_response_handler.h"
 
 #include "base/macros.h"
+#include "components/signin/core/browser/signin_metrics.h"
 #include "content/public/browser/web_contents_observer.h"
+
+class Profile;
 
 class ProcessDiceHeaderObserverImpl : public ProcessDiceHeaderObserver,
                                       public content::WebContentsObserver {
@@ -19,11 +22,21 @@ class ProcessDiceHeaderObserverImpl : public ProcessDiceHeaderObserver,
   // ProcessDiceHeaderObserver:
   void WillStartRefreshTokenFetch(const std::string& gaia_id,
                                   const std::string& email) override;
-  void DidFinishRefreshTokenFetch(const std::string& gaia_id,
-                                  const std::string& email) override;
+  bool ShouldUpdateCredentials(const std::string& gaia_id,
+                               const std::string& email,
+                               const std::string& refresh_token) override;
 
  private:
-  bool should_start_sync_;
+  // Returns true if sync should be enabled after the user signs in.
+  bool ShouldEnableSync();
+
+  Profile* profile_;
+  bool should_start_sync_ = false;
+  signin_metrics::AccessPoint signin_access_point_ =
+      signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN;
+  signin_metrics::Reason signin_reason_ =
+      signin_metrics::Reason::REASON_UNKNOWN_REASON;
+
   DISALLOW_COPY_AND_ASSIGN(ProcessDiceHeaderObserverImpl);
 };
 

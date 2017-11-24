@@ -39,9 +39,12 @@ class ProcessDiceHeaderObserver {
   virtual void WillStartRefreshTokenFetch(const std::string& gaia_id,
                                           const std::string& email) = 0;
 
-  // Called after the refresh token was fetched and added in the token service.
-  virtual void DidFinishRefreshTokenFetch(const std::string& gaia_id,
-                                          const std::string& email) = 0;
+  // Called after the refresh token was fetched.
+  // If this returns true, then the credentials for the account will be updated
+  // in the token service.
+  virtual bool ShouldUpdateCredentials(const std::string& gaia_id,
+                                       const std::string& email,
+                                       const std::string& refresh_token) = 0;
 };
 
 // Processes the Dice responses from Gaia.
