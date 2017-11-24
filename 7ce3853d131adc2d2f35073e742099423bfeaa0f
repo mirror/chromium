@@ -106,6 +106,24 @@
       "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd8f68f_54f9ee10",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-24T10:19:49Z",
+      "side": 1,
+      "message": "I measured the process increased memory usage after allocating and stopping many tracks in a test program before the GC got executed.",
+      "parentUuid": "b5ebd8ac_249abebd",
+      "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
