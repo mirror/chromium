@@ -21,6 +21,10 @@ class VideoCapturerSource;
 
 namespace content {
 
+namespace canvas_capture_handler_unittest {
+class CanvasCaptureHandlerTest;
+}
+
 // Representation of a video stream coming from a camera, owned by Blink as
 // WebMediaStreamSource. Objects of this class are created and live on main
 // Render thread. Objects can be constructed either by indicating a |device| to
@@ -38,7 +42,7 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
   ~MediaStreamVideoCapturerSource() override;
 
  private:
-  friend class CanvasCaptureHandlerTest;
+  friend class canvas_capture_handler_unittest::CanvasCaptureHandlerTest;
   friend class MediaStreamVideoCapturerSourceTest;
   friend class MediaStreamVideoCapturerSourceOldConstraintsTest;
   FRIEND_TEST_ALL_PREFIXES(MediaStreamVideoCapturerSourceTest, StartAndStop);

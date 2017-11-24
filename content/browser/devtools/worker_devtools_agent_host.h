@@ -15,6 +15,10 @@ namespace content {
 
 class BrowserContext;
 
+namespace shared_worker_devtools_manager_unittest {
+class SharedWorkerDevToolsManagerTest;
+}
+
 class CONTENT_EXPORT WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
                                                public IPC::Listener {
  public:
@@ -60,7 +64,8 @@ class CONTENT_EXPORT WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
   const WorkerId& worker_id() const { return worker_id_; }
 
  private:
-  friend class SharedWorkerDevToolsManagerTest;
+  friend class shared_worker_devtools_manager_unittest::
+      SharedWorkerDevToolsManagerTest;
 
   void AttachToWorker();
   void DetachFromWorker();

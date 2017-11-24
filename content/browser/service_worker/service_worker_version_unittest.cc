@@ -48,8 +48,7 @@ IPC_MESSAGE_ROUTED2(TestMsg_TestEventResult, int, std::string)
 // ---------------------------------------------------------------------------
 
 namespace content {
-
-namespace {
+namespace service_worker_version_unittest {
 
 class MessageReceiver : public EmbeddedWorkerTestHelper {
  public:
@@ -200,8 +199,6 @@ void StartWorker(ServiceWorkerVersion* version,
   EXPECT_EQ(SERVICE_WORKER_OK, status);
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version->running_status());
 }
-
-}  // namespace
 
 class ServiceWorkerVersionTest : public testing::Test {
  protected:
@@ -1579,4 +1576,5 @@ TEST_F(ServiceWorkerNavigationHintUMATest, StartWhileStopping) {
   histogram_tester_.ExpectTotalCount(kStartHintPrecision, 2);
 }
 
+}  // namespace service_worker_version_unittest
 }  // namespace content
