@@ -40,10 +40,10 @@ const double kIdleTaskStartTimeoutDelay = 200.0;
 // switch from idle to main thread only happens to a minority of toBlob calls
 #if !defined(OS_ANDROID)
 // Png image encoding on 4k by 4k canvas on Mac HDD takes 5.7+ seconds
-const double kIdleTaskCompleteTimeoutDelay = 6700.0;
+const double kIdleTaskCompleteTimeoutDelay = 10000.0;
 #else
 // Png image encoding on 4k by 4k canvas on Android One takes 9.0+ seconds
-const double kIdleTaskCompleteTimeoutDelay = 10000.0;
+const double kIdleTaskCompleteTimeoutDelay = 20000.0;
 #endif
 
 bool IsDeadlineNearOrPassed(double deadline_seconds) {
@@ -94,7 +94,7 @@ void RecordIdleTaskStatusHistogram(
 // end of the list.
 enum ElapsedTimeHistogramType {
   kInitiateEncodingDelay,
-  kIdleEncodeDuration,
+  kCompleteEncodingDelay,
   kToBlobDuration,
   kNumberOfElapsedTimeHistogramTypes
 };
@@ -114,16 +114,16 @@ void RecordElapsedTimeHistogram(ElapsedTimeHistogramType type,
           ("Blink.Canvas.ToBlob.InitiateEncodingDelay.JPEG", 0, 10000000, 50));
       to_blob_jpeg_initiate_encoding_counter.Count(elapsed_time * 1000000.0);
     }
-  } else if (type == kIdleEncodeDuration) {
+  } else if (type == kCompleteEncodingDelay) {
     if (mime_type == CanvasAsyncBlobCreator::kMimeTypePng) {
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, to_blob_png_idle_encode_counter,
-          ("Blink.Canvas.ToBlob.IdleEncodeDuration.PNG", 0, 10000000, 50));
+          ("Blink.Canvas.ToBlob.CompleteEncodingDelay.PNG", 0, 10000000, 50));
       to_blob_png_idle_encode_counter.Count(elapsed_time * 1000000.0);
     } else if (mime_type == CanvasAsyncBlobCreator::kMimeTypeJpeg) {
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, to_blob_jpeg_idle_encode_counter,
-          ("Blink.Canvas.ToBlob.IdleEncodeDuration.JPEG", 0, 10000000, 50));
+          ("Blink.Canvas.ToBlob.CompleteEncodingDelay.JPEG", 0, 10000000, 50));
       to_blob_jpeg_idle_encode_counter.Count(elapsed_time * 1000000.0);
     }
   } else if (type == kToBlobDuration) {
@@ -262,7 +262,7 @@ void CanvasAsyncBlobCreator::ScheduleAsyncBlobCreation(const double& quality) {
 }
 
 void CanvasAsyncBlobCreator::ScheduleInitiateEncoding(double quality) {
-  schedule_initiate_start_time_ = WTF::MonotonicallyIncreasingTime();
+  schedule_idle_task_start_time_ = WTF::MonotonicallyIncreasingTime();
   Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
       BLINK_FROM_HERE, WTF::Bind(&CanvasAsyncBlobCreator::InitiateEncoding,
                                  WrapPersistent(this), quality));
@@ -270,12 +270,12 @@ void CanvasAsyncBlobCreator::ScheduleInitiateEncoding(double quality) {
 
 void CanvasAsyncBlobCreator::InitiateEncoding(double quality,
                                               double deadline_seconds) {
-  RecordElapsedTimeHistogram(
-      kInitiateEncodingDelay, mime_type_,
-      WTF::MonotonicallyIncreasingTime() - schedule_initiate_start_time_);
   if (idle_task_status_ == kIdleTaskSwitchedToImmediateTask) {
     return;
   }
+  RecordElapsedTimeHistogram(
+      kInitiateEncodingDelay, mime_type_,
+      WTF::MonotonicallyIncreasingTime() - schedule_idle_task_start_time_);
 
   DCHECK(idle_task_status_ == kIdleTaskNotStarted);
   idle_task_status_ = kIdleTaskStarted;
@@ -285,6 +285,8 @@ void CanvasAsyncBlobCreator::InitiateEncoding(double quality,
     return;
   }
 
+  // Re-use this time variable to collect data on complete encoding delay
+  schedule_idle_task_start_time_ = WTF::MonotonicallyIncreasingTime();
   this->IdleEncodeRows(deadline_seconds);
 }
 
@@ -293,11 +295,9 @@ void CanvasAsyncBlobCreator::IdleEncodeRows(double deadline_seconds) {
     return;
   }
 
-  double start_time = WTF::MonotonicallyIncreasingTime();
   for (int y = num_rows_completed_; y < src_data_.height(); ++y) {
     if (IsDeadlineNearOrPassed(deadline_seconds)) {
       num_rows_completed_ = y;
-      elapsed_time_ += (WTF::MonotonicallyIncreasingTime() - start_time);
       Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
           BLINK_FROM_HERE, WTF::Bind(&CanvasAsyncBlobCreator::IdleEncodeRows,
                                      WrapPersistent(this)));
@@ -313,8 +313,9 @@ void CanvasAsyncBlobCreator::IdleEncodeRows(double deadline_seconds) {
   num_rows_completed_ = src_data_.height();
 
   idle_task_status_ = kIdleTaskCompleted;
-  elapsed_time_ += (WTF::MonotonicallyIncreasingTime() - start_time);
-  RecordElapsedTimeHistogram(kIdleEncodeDuration, mime_type_, elapsed_time_);
+  elapsed_time_ +=
+      (WTF::MonotonicallyIncreasingTime() - schedule_idle_task_start_time_);
+  RecordElapsedTimeHistogram(kCompleteEncodingDelay, mime_type_, elapsed_time_);
   if (IsDeadlineNearOrPassed(deadline_seconds)) {
     context_->GetTaskRunner(TaskType::kCanvasBlobSerialization)
         ->PostTask(BLINK_FROM_HERE,
