@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abd68e20_44685807",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T16:09:38Z",
+      "side": 1,
+      "message": "Changed all types because MSVC won\u0027t pack together bool and unsigned.",
+      "range": {
+        "startLine": 335,
+        "startChar": 2,
+        "endLine": 335,
+        "endChar": 10
+      },
+      "revId": "b3cd82872f9d02997f6d25e1e30609bfd380b28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e25a7438_1c88e748",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T16:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6d41920_cdbbea8e",
+      "range": {
+        "startLine": 1550,
+        "startChar": 0,
+        "endLine": 1550,
+        "endChar": 8
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2668aca_8de4ed8f",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-24T13:57:29Z",
       "side": 1,
       "message": "Could this ever be unknown when we want to know it for paint timing? If it is, what should we do?",
+      "range": {
+        "startLine": 1551,
+        "startChar": 2,
+        "endLine": 1551,
+        "endChar": 3
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c251df_b5d61734",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T16:09:38Z",
+      "side": 1,
+      "message": "It can be. The fix in this CL is not wholesome; there\u0027s too many callers of GraphicsContext::DrawText. What we do is to consider unknown to be yes for now, to avoid disrupting the current behavior of PaintTiming for the untouched cases.",
+      "parentUuid": "c2668aca_8de4ed8f",
       "range": {
         "startLine": 1551,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f1eccf9e_25542897",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T16:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bdf6a28_efce0650",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 10
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f91ab28_ff3bd107",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24e983a_00e7c5eb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T16:09:38Z",
+      "side": 1,
+      "message": "Cannot use enum/enum class here because presubmit complains:\ncheck-webkit-style failed\n  third_party/WebKit/Source/core/layout/LayoutText.h:351:  Member contains_only_whitespace_ of class CORE_EXPORT defined as a bitfield of type OnlyWhitespace. Please declare all bitfields as unsigned.  [runtime/bitfields] [4]\nthird_party/WebKit/Source/platform/text/TextRun.h:309:  Member contains_only_whitespace_ of class PLATFORM_EXPORT defined as a bitfield of type OnlyWhitespace. Please declare all bitfields as unsigned.  [runtime/bitfields] [4]",
+      "parentUuid": "1f91ab28_ff3bd107",
+      "range": {
+        "startLine": 352,
+        "startChar": 2,
+        "endLine": 352,
+        "endChar": 10
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4a10957f_18da60ba",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T16:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d1d530_71f0b7d9",
+      "range": {
+        "startLine": 130,
+        "startChar": 37,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1aa0f5_5bdde3ed",
         "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
         "patchSetId": 8
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d298c8ea_ab43f7c8",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T16:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad1aa0f5_5bdde3ed",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 80
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34bc30d0_16ae2792",
         "filename": "third_party/WebKit/Source/platform/text/TextRun.h",
         "patchSetId": 8
@@ -160,6 +304,30 @@
       "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0897d05d_726d4150",
+        "filename": "third_party/WebKit/Source/platform/text/TextRun.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-24T16:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34bc30d0_16ae2792",
+      "range": {
+        "startLine": 48,
+        "startChar": 35,
+        "endLine": 48,
+        "endChar": 69
+      },
+      "revId": "d973d0002171e27b583ac4bac1ac42df797b98e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
