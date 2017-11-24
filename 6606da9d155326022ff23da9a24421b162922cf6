@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40db44cb_18fae60f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-24T16:23:28Z",
+      "side": 1,
+      "message": "Guess there\u0027s some logic flaw here: If it is3d and not premultiplied and no image_data is obtained, then the code does not return inside this if block.",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e240323c_e3a70cf6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-24T16:23:28Z",
+      "side": 1,
+      "message": "Is it possible to completely delete this special handling for webgl non-premultipliedAlpha and reconcile it with the rest of cases? Looks like this results in quite a lot of extra codes in CanvasAsyncBlobCreator just to handle this case.\n\nAlso, it is odd that you only differentiate it in html canvas toBlob and not in OffscreenCanvas.convertToBlob. It should be the same in canvas and OffscreenCanvas.",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2352e20_1ac58ac5",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-24T16:23:28Z",
+      "side": 1,
+      "message": "If there is no image, there is no point to create async blob. So the nullptr checking should be done earlier in canvas/OffscreenCanvas before this constructor; I think here we should put DCHECK(!image).",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9286e4_b6eaded9",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-24T16:23:28Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e8a752_ffc26205",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-24T16:23:28Z",
+      "side": 1,
+      "message": "Can you have just 1 protected constructor, shared by all the Create factory functions?",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c25a100_091f531e",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-24T16:23:28Z",
+      "side": 1,
+      "message": "Why \"Prefer No Acceleration\"?",
+      "revId": "6606da9d155326022ff23da9a24421b162922cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
