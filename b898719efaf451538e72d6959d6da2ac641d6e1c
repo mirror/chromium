@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d10b160b_ea4203c7",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T20:38:43Z",
+      "side": 1,
+      "message": "Thanks Ian!\n\nYi could you add a comment on the Map function you\u0027re using in MathUtil that it is safe to use with inverted matrices?",
+      "parentUuid": "0a49189e_aa39e49e",
+      "revId": "b898719efaf451538e72d6959d6da2ac641d6e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12a4ee18_8aaf7e71",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 3
