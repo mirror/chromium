@@ -29,6 +29,7 @@
 #include "chrome/browser/profiles/profile_window.h"
 #include "chrome/browser/signin/about_signin_internals_factory.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
+#include "chrome/browser/signin/chrome_signin_client.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/local_auth.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
@@ -207,7 +208,7 @@ void InlineSigninHelper::OnClientOAuthSuccessAndBrowserOpened(
     browser = handler_->GetDesktopBrowser();
   }
 
-  AboutSigninInternals* about_signin_internals =
+  signin::AboutSigninInternals* about_signin_internals =
       AboutSigninInternalsFactory::GetForProfile(profile_);
   about_signin_internals->OnRefreshTokenReceived("Successful");
 
@@ -370,8 +371,8 @@ void InlineSigninHelper::OnClientOAuthFailure(
   if (handler_)
     handler_->HandleLoginError(error.ToString(), base::string16());
 
-  AboutSigninInternals* about_signin_internals =
-    AboutSigninInternalsFactory::GetForProfile(profile_);
+  signin::AboutSigninInternals* about_signin_internals =
+      AboutSigninInternalsFactory::GetForProfile(profile_);
   about_signin_internals->OnRefreshTokenReceived("Failure");
 
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
@@ -677,7 +678,7 @@ void InlineLoginHandlerImpl::FinishCompleteLogin(
     return;
   }
 
-  AboutSigninInternals* about_signin_internals =
+  signin::AboutSigninInternals* about_signin_internals =
       AboutSigninInternalsFactory::GetForProfile(profile);
   about_signin_internals->OnAuthenticationResultReceived("Successful");
 

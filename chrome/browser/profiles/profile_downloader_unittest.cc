@@ -55,9 +55,6 @@ class ProfileDownloaderTest : public testing::Test,
         AccountTrackerServiceFactory::GetForProfile(profile_.get());
     account_fetcher_service_ = static_cast<FakeAccountFetcherService*>(
         AccountFetcherServiceFactory::GetForProfile(profile_.get()));
-    signin_client_ = static_cast<TestSigninClient*>(
-        ChromeSigninClientFactory::GetForProfile(profile_.get()));
-    signin_client_->SetURLRequestContext(profile_->GetRequestContext());
     profile_downloader_.reset(new ProfileDownloader(this));
   }
 
@@ -88,7 +85,6 @@ class ProfileDownloaderTest : public testing::Test,
   AccountTrackerService* account_tracker_service_;
   FakeAccountFetcherService* account_fetcher_service_;
   content::TestBrowserThreadBundle thread_bundle_;
-  TestSigninClient* signin_client_;
   std::unique_ptr<Profile> profile_;
   std::unique_ptr<ProfileDownloader> profile_downloader_;
 };

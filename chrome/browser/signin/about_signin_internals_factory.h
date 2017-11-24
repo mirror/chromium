@@ -8,7 +8,10 @@
 #include "base/memory/singleton.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
+namespace signin {
 class AboutSigninInternals;
+}
+
 class Profile;
 
 // Singleton that owns all AboutSigninInternals and associates them with
@@ -17,7 +20,7 @@ class AboutSigninInternalsFactory : public BrowserContextKeyedServiceFactory {
  public:
   // Returns the instance of AboutSigninInternals associated with this profile,
   // creating one if none exists.
-  static AboutSigninInternals* GetForProfile(Profile* profile);
+  static signin::AboutSigninInternals* GetForProfile(Profile* profile);
 
   // Returns an instance of the AboutSigninInternalsFactory singleton.
   static AboutSigninInternalsFactory* GetInstance();

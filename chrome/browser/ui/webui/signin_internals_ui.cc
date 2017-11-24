@@ -41,7 +41,7 @@ SignInInternalsUI::SignInInternalsUI(content::WebUI* web_ui)
   Profile* profile = Profile::FromWebUI(web_ui);
   content::WebUIDataSource::Add(profile, CreateSignInInternalsHTMLSource());
   if (profile) {
-    AboutSigninInternals* about_signin_internals =
+    signin::AboutSigninInternals* about_signin_internals =
         AboutSigninInternalsFactory::GetForProfile(profile);
     if (about_signin_internals)
       about_signin_internals->AddSigninObserver(this);
@@ -57,7 +57,7 @@ SignInInternalsUI::SignInInternalsUI(content::WebUI* web_ui)
 SignInInternalsUI::~SignInInternalsUI() {
   Profile* profile = Profile::FromWebUI(web_ui());
   if (profile) {
-    AboutSigninInternals* about_signin_internals =
+    signin::AboutSigninInternals* about_signin_internals =
         AboutSigninInternalsFactory::GetForProfile(profile);
     if (about_signin_internals) {
       about_signin_internals->RemoveSigninObserver(this);
@@ -74,7 +74,7 @@ bool SignInInternalsUI::OverrideHandleWebUIMessage(
     if (!profile)
       return false;
 
-    AboutSigninInternals* about_signin_internals =
+    signin::AboutSigninInternals* about_signin_internals =
         AboutSigninInternalsFactory::GetForProfile(profile);
     // TODO(vishwath): The UI would look better if we passed in a dict with some
     // reasonable defaults, so the about:signin-internals page doesn't look

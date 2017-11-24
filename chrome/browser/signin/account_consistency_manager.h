@@ -7,6 +7,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "components/prefs/pref_member.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 
 namespace user_prefs {
@@ -22,6 +23,11 @@ class AccountConsistencyManager {
   ~AccountConsistencyManager();
 
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+
+  signin::AccountConsistencyMethod GetAccountConsistencyMethod();
+
+  static signin::AccountConsistencyMethod GetAccountConsistencyMethodForProfile(
+      BooleanPrefMember* dice_pref_member);
 
   // Schedules migration to happen at next startup.
   void SetReadyForDiceMigration(bool is_ready);
