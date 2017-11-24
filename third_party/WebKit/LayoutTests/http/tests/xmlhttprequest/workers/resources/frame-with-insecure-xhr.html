@@ -2,6 +2,7 @@
 <script>
 var w = new Worker("/xmlhttprequest/resources/insecure-xhr.js");
 w.onmessage = function (e) {
+    w.terminate();
     if (window.opener)
         window.opener.postMessage(e.data, '*');
 };
