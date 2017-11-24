@@ -240,6 +240,24 @@
       "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe4c1677_0cb238fb",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-11-24T03:47:47Z",
+      "side": 1,
+      "message": "Keep the NOTREACHED statement.  It helps to ensure that both sets of enums stay in sync.  All other FromMojom implementations in the codebase have it.\n\nNOTREACHED();\nreturn false;",
+      "parentUuid": "62cc9e06_09f09e8d",
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
