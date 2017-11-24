@@ -319,10 +319,11 @@ TEST_P(WindowTreeClientWmTestSurfaceSync,
   // When a SurfaceInfo arrives from the window server, we use it as the
   // fallback SurfaceInfo. Here we issue the primary SurfaceId back to the
   // client lib. This should cause the gutter to go away, eliminating overdraw.
+  constexpr bool low_latency = false;
   window_tree_client()->OnWindowSurfaceChanged(
       server_id(&window),
       viz::SurfaceInfo(window_port_mus->PrimarySurfaceIdForTesting(), 1.0f,
-                       gfx::Size(100, 100)));
+                       gfx::Size(100, 100), low_latency));
   EXPECT_TRUE(delegate.last_surface_info().is_valid());
   EXPECT_EQ(delegate.last_surface_info().id(),
             window_port_mus->PrimarySurfaceIdForTesting());

@@ -640,8 +640,10 @@ TEST_F(CCParamTraitsTest, SurfaceInfo) {
       viz::LocalSurfaceId(3, base::UnguessableToken::Create()));
   constexpr float kArbitraryDeviceScaleFactor = 0.9f;
   const gfx::Size kArbitrarySize(65, 321);
-  const viz::SurfaceInfo surface_info_in(
-      kArbitrarySurfaceId, kArbitraryDeviceScaleFactor, kArbitrarySize);
+  const bool kArbitraryLowLatency = false;
+  const viz::SurfaceInfo surface_info_in(kArbitrarySurfaceId,
+                                         kArbitraryDeviceScaleFactor,
+                                         kArbitrarySize, kArbitraryLowLatency);
   IPC::ParamTraits<viz::SurfaceInfo>::Write(&msg, surface_info_in);
 
   viz::SurfaceInfo surface_info_out;

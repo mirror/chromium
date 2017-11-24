@@ -113,10 +113,12 @@ class VIZ_SERVICE_EXPORT DisplayScheduler : public BeginFrameObserverBase,
   bool needs_draw_;
   bool expecting_root_surface_damage_because_of_resize_;
   bool has_pending_surfaces_;
+  bool needs_low_latency_begin_frame_;
 
   struct SurfaceBeginFrameState {
     BeginFrameArgs last_args;
     BeginFrameAck last_ack;
+    bool low_latency = false;
   };
   base::flat_map<SurfaceId, SurfaceBeginFrameState> surface_states_;
 

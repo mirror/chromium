@@ -681,6 +681,7 @@ void ParamTraits<viz::SurfaceInfo>::Write(base::Pickle* m,
   WriteParam(m, p.id());
   WriteParam(m, p.device_scale_factor());
   WriteParam(m, p.size_in_pixels());
+  WriteParam(m, p.low_latency());
 }
 
 bool ParamTraits<viz::SurfaceInfo>::Read(const base::Pickle* m,
@@ -698,7 +699,12 @@ bool ParamTraits<viz::SurfaceInfo>::Read(const base::Pickle* m,
   if (!ReadParam(m, iter, &size_in_pixels))
     return false;
 
-  *p = viz::SurfaceInfo(surface_id, device_scale_factor, size_in_pixels);
+  bool low_latency;
+  if (!ReadParam(m, iter, &low_latency))
+    return false;
+
+  *p = viz::SurfaceInfo(surface_id, device_scale_factor, size_in_pixels,
+                        low_latency);
   return p->is_valid();
 }
 
@@ -709,6 +715,8 @@ void ParamTraits<viz::SurfaceInfo>::Log(const param_type& p, std::string* l) {
   LogParam(p.device_scale_factor(), l);
   l->append(", ");
   LogParam(p.size_in_pixels(), l);
+  l->append(", ");
+  LogParam(p.low_latency(), l);
   l->append(")");
 }
 

@@ -47,7 +47,8 @@ SurfaceId MakeSurfaceId(const FrameSinkId& frame_sink_id, uint32_t local_id) {
 
 // Makes a SurfaceInfo with a default device_scale_factor and size.
 SurfaceInfo MakeSurfaceInfo(const SurfaceId& surface_id) {
-  return SurfaceInfo(surface_id, 1.f, gfx::Size(1, 1));
+  constexpr bool low_latency = false;
+  return SurfaceInfo(surface_id, 1.f, gfx::Size(1, 1), low_latency);
 }
 
 // A mock implementation of mojom::FrameSinkManager.

@@ -598,8 +598,9 @@ void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
   // SurfaceLayer.
   if (!manager->using_surface_references())
     manager->RequireSequence(surface_id, sequence);
+  constexpr bool low_latency = false;
   viz::SurfaceInfo surface_info(surface_id, current_surface_scale_factor_,
-                                current_surface_size_);
+                                current_surface_size_, low_latency);
   SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
 }
 
