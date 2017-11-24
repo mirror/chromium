@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fda1a90b_8b48469a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-24T03:22:26Z",
+      "side": 1,
+      "message": "Thanks good feedback, when reading it again I agree that was too verbose. I adopted most of your suggested description.",
+      "parentUuid": "05ecf2b3_97abd1b5",
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b439975_6377e4d5",
         "filename": "content/common/frame.mojom",
         "patchSetId": 8
@@ -77,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d2e671c7_78cb9ad1",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-24T03:22:26Z",
+      "side": 1,
+      "message": "Nice suggestion, I used mostly of yours just sf/Field/Argument.",
+      "parentUuid": "fd6e8430_9f7b5dd4",
+      "range": {
+        "startLine": 183,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 51
+      },
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67870dad_2edc0ce4",
         "filename": "content/common/frame.mojom",
         "patchSetId": 8
@@ -112,6 +154,30 @@
       "side": 1,
       "message": "WebInsecureRequestPolicy is a bitmask, so IMO it seems more natural to just declare here as uint8 on the both ends is handled as WebInsecureRequestPolicy alias type.\n\nBased on your comment I amended the doc above it.",
       "parentUuid": "67870dad_2edc0ce4",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 7
+      },
+      "revId": "812f9ae697e159b4e0f069d158c7b69b0fa8e4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede1fe70_cf7def7e",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-24T03:22:26Z",
+      "side": 1,
+      "message": "FTR: I tried to convert WebInsecureRequestPolicy to enum class, however bit wise operator aren\u0027t available for enum and can\u0027t be defined either.\n\nThus we decided offline to leave as it is.\n\nExample error:\n../../third_party/WebKit/Source/core/loader/FormSubmission.cpp:201:43: error: invalid operands to binary expression (\u0027blink::WebInsecureRequestPolicy\u0027 and \u0027blink::WebInsecureRequestPolicy\u0027)\n  if (document.GetInsecureRequestPolicy() \u0026 WebInsecureRequestPolicy::kUpgradeInsecureRequests \u0026\u0026\n      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "parentUuid": "8abbedba_1cb338a3",
       "range": {
         "startLine": 186,
         "startChar": 6,
