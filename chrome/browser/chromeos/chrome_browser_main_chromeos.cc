@@ -85,6 +85,9 @@
 #include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/power/freezer_cgroup_process_manager.h"
 #include "chrome/browser/chromeos/power/idle_action_warning_observer.h"
+#include "chrome/browser/chromeos/power/ml/idle_event_notifier.h"
+#include "chrome/browser/chromeos/power/ml/ukm_logger.h"
+#include "chrome/browser/chromeos/power/ml/user_activity_logger.h"
 #include "chrome/browser/chromeos/power/power_data_collector.h"
 #include "chrome/browser/chromeos/power/power_metrics_reporter.h"
 #include "chrome/browser/chromeos/power/power_prefs.h"
@@ -1095,6 +1098,18 @@ void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
     night_light_client_->Start();
   }
 
+  // Start user activity event logging.
+  if (base::FeatureList::IsEnabled(features::kUserActivityEventLogging)) {
+    viz::mojom::VideoDetectorObserverPtr observer;
+    // TODO(jiameng): change the fixed 10 sec to a configurable flag.
+    idle_event_notifier_ = std::make_unique<power::ml::IdleEventNotifier>(
+        base::TimeDelta::FromSeconds(10), mojo::MakeRequest(&observer));
+    user_activity_logger_delegate_ = std::make_unique<power::ml::UKMLogger>();
+    // TODO(jiameng): pass notifier ptr to logger below.
+    user_activity_logger_ = std::make_unique<power::ml::UserActivityLogger>(
+        user_activity_logger_delegate_.get());
+  }
+
   ChromeBrowserMainPartsLinux::PostBrowserStart();
 }
 
@@ -1153,6 +1168,9 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   keyboard_event_rewriters_.reset();
   low_disk_notification_.reset();
   chrome_launcher_controller_initializer_.reset();
+  user_activity_logger_.reset();
+  user_activity_logger_delegate_.reset();
+  idle_event_notifier_.reset();
 
   // Detach D-Bus clients before DBusThreadManager is shut down.
   idle_action_warning_observer_.reset();
