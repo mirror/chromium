@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc37377e_da399593",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T13:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f88beebf_646c917e",
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f49ec05_1c262c6e",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b12ca1ce_f910cb80",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T13:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f49ec05_1c262c6e",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f711d1e4_2cfec0dd",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-24T12:44:45Z",
       "side": 1,
       "message": "This should be GetGaiaId()?",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 52
+      },
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5939404_81a83ff1",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T13:02:29Z",
+      "side": 1,
+      "message": "This is correct - see the DICE constructor for the OneClickSigninSyncStarter here https://cs.chromium.org/chromium/src/chrome/browser/ui/sync/one_click_signin_sync_starter.h?rcl\u003ddba06b6371e7f18147fe70d3fd051a5964b58456\u0026l\u003d116\n\nThe idea is the following: passing the account_id enforces the caller to get the account_id from the token service, meaning that the account should at least have been seeded before the call. That is why I prefer passing the account_info and account_id for the case when DICE is enabled and when the user is signing in with an existing account.",
+      "parentUuid": "f711d1e4_2cfec0dd",
       "range": {
         "startLine": 162,
         "startChar": 28,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "063ad156_22fac913",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T13:02:29Z",
+      "side": 1,
+      "message": "I prefer checking based on whether the account is already present in the token service.\n\nIf you look at GetAccountInfo (line 28 in this file), you\u0027ll see that the AccountInfo is extracted from the account tracker service and the DCHECKs on the constructors makes sure the account is actually present in the account tracker service.",
+      "parentUuid": "45ad3fea_84725497",
+      "range": {
+        "startLine": 176,
+        "startChar": 10,
+        "endLine": 176,
+        "endChar": 34
+      },
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82a6ebf4_69d2f4a2",
         "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
         "patchSetId": 4
@@ -99,6 +189,24 @@
       "writtenOn": "2017-11-24T12:44:45Z",
       "side": 1,
       "message": "Could we remove this field and only use the others below? I think this is making the code more complicated than it should be.\n\nMaybe provide a helper function if you need, e.g.:\n\nunique_ptr\u003cDiceTurnSyncOnHelper\u003e Create(\n  Profile* profile,\n  Browser* browser,\n  signin_metrics::AccessPoint signin_access_point,\n  signin_metrics::Reason signin_reason,\n  const std::string\u0026 account_id) {\n    AccountInfo account_info \u003d GetAccountInfo(profile, account_id);\n    return make_unique\u003cDiceTurnSyncOnHelper\u003e(\n        profile, browser, signin_access_point, signin_reason,\n        account_info.account_id, account_info.email, std::string());\n}",
+      "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d87a48_d0d09dac",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-24T13:02:29Z",
+      "side": 1,
+      "message": "I prefer making somehow making it clear when we\u0027re turning on sync for an account already present in the token service and when we\u0027re signing in with a new account. So I prefer specific APIs here and in the OneClickSigninSyncStarter.\n\nWould you prefer having 2 create functions instead of a constructor (internally we may use only the fields email, gaia_id and refresh_token)?\n\nCreateForExistingAccount(\n  Profile* profile,\n  Browser* browser,\n  signin_metrics::AccessPoint signin_access_point,\n  signin_metrics::Reason signin_reason,\n  const std::string\u0026 account_id);\n\nCreateForNewAccount(\n  Profile* profile,\n  Browser* browser,\n  signin_metrics::AccessPoint signin_access_point,\n  signin_metrics::Reason signin_reason,\n  const std::string\u0026 gaia_id,\n  const std::string\u0026 email,\n  const std::string\u0026 refresh_token);",
+      "parentUuid": "82a6ebf4_69d2f4a2",
       "revId": "9285f3ee3efa1b1a84684839af33003fe37fd095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
