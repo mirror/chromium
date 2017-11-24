@@ -27,6 +27,7 @@ import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
+import org.chromium.base.Log;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
@@ -40,6 +41,7 @@ import org.chromium.net.test.util.TestWebServer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -1035,6 +1037,71 @@ public class AwContentsClientShouldOverrideUrlLoadingTest {
     public void testWindowOpenHttpUrlInPopupAddsTrailingSlash() throws Throwable {
         final String popupPath = "http://example.com";
         verifyShouldOverrideUrlLoadingInPopup(popupPath, popupPath + "/");
+    }
+
+    private final static String BAD_SCHEME = "badscheme://";
+
+    // AwContentsClient handling an invalid network scheme
+    private static class BadSchemeClient extends TestAwContentsClient {
+        CountDownLatch mLatch = new CountDownLatch(1);
+
+        @Override
+        public boolean shouldOverrideUrlLoading(AwWebResourceRequest request) {
+            if (request.url.startsWith(BAD_SCHEME)) {
+                Log.e("gustav", "got a bad scheme url :D %s", request.url, new Throwable());
+                mLatch.countDown();
+                return true;
+            }
+            Log.e("gustav", "got a normal scheme url... " + request.url);
+            return false;
+        }
+
+        @Override
+        public void onPageFinished(String url) {
+            Log.e("gustav", "in onPageFinished " + url);
+            super.onPageFinished(url);
+        }
+
+        @Override
+        public void onReceivedError(int errorCode, String description, String failingUrl) {
+            super.onReceivedError(errorCode, description, failingUrl);
+            throw new RuntimeException("we should not receive an error code! " + failingUrl);
+        }
+
+
+        public void onReceivedError2(AwWebResourceRequest request, AwWebResourceError error) {
+            super.onReceivedError2(request, error);
+            throw new RuntimeException("we should not receive an error code! " + request.url);
+        }
+
+        public void waitForLatch() {
+            try {
+                Assert.assertTrue(mLatch.await(WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testCalledOnServerRedirectInvalidScheme() throws Throwable {
+        BadSchemeClient client = new BadSchemeClient();
+        setupWithProvidedContentsClient(client);
+
+        final String path1 = "/from.html";
+        final String path2 = BAD_SCHEME + "to.html";
+        final String fromUrl = mWebServer.setRedirect(path1, path2);
+        // TODO can probably remove toUrl here... or assert we never get there..
+        final String toUrl = mWebServer.setResponse(
+                path2, CommonResources.ABOUT_HTML, CommonResources.getTextHtmlHeaders(true));
+        mActivityTestRule.loadUrlAsync(mAwContents, fromUrl);
+        client.waitForLatch();
+        // TODO what do we wait for here? We shouldn't wait for two onPageFinished... we should wait
+        // for an arbitrary amount of time, and ensure exactly one onPageFinished was called, and no
+        // onReceivedError(2).
+        Thread.sleep(2000);
     }
 
     private void verifyShouldOverrideUrlLoadingInPopup(String popupPath) throws Throwable {
