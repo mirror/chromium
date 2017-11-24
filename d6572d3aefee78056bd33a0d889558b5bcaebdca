@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "364307ba_cf1087e8",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T01:28:23Z",
+      "side": 1,
+      "message": "+1 for extracting code to functions.\n\nAs for mixing \"if\" with \"switch\", not sure. The logic is no longer trivial as it was before. This switch does not handle all versions. Eg. if \"case 5\" is added in the future, it will never execute.\n\nHow about this:\n\ncase 6:\ncase 7:\ncase 8:\ncase 9:\ncase 10:\n  return UpgradeOldDBVersion6To10();\ncase 11:\n  ...\ndefault:\n\nWe add 6 lines, but we can remove 4. WDYT?",
+      "range": {
+        "startLine": 545,
+        "startChar": 2,
+        "endLine": 548,
+        "endChar": 12
+      },
+      "revId": "d6572d3aefee78056bd33a0d889558b5bcaebdca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
