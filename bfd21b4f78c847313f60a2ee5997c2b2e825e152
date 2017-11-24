@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6192850_7b44b2a6",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-24T02:42:47Z",
+      "side": 1,
+      "message": "My feeling is that De Morgan\u0027s is appropriate here; i.e.:\n\n    if (!PTCTI() \u0026\u0026 !PTCTI())\n\nwdyt?",
+      "range": {
+        "startLine": 110,
+        "startChar": 76,
+        "endLine": 110,
+        "endChar": 78
+      },
+      "revId": "bfd21b4f78c847313f60a2ee5997c2b2e825e152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e85dcae_8f4ed460",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-24T02:42:47Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 127,
+        "startChar": 64,
+        "endLine": 127,
+        "endChar": 65
+      },
+      "revId": "bfd21b4f78c847313f60a2ee5997c2b2e825e152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494c4aca_18a8e7b1",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-24T02:42:47Z",
+      "side": 1,
+      "message": "DCHECK\n\nAnd remove return / NOTREACHED.",
+      "range": {
+        "startLine": 804,
+        "startChar": 2,
+        "endLine": 804,
+        "endChar": 4
+      },
+      "revId": "bfd21b4f78c847313f60a2ee5997c2b2e825e152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
