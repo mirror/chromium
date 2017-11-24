@@ -541,6 +541,24 @@
     },
     {
       "key": {
+        "uuid": "c154c1e1_e3d71f02",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-24T16:32:21Z",
+      "side": 1,
+      "message": "We\u0027ve been using id 0 as invalid, so that we can say \u0027if (focused_element_id) {\u0027, like a pointer.",
+      "parentUuid": "e772b59c_98060685",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f80ed10_6fc4be85",
         "filename": "chrome/browser/vr/ui_input_manager.cc",
         "patchSetId": 6
