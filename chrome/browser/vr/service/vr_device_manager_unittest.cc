@@ -90,7 +90,7 @@ class VRDeviceManagerTest : public testing::Test {
 };
 
 TEST_F(VRDeviceManagerTest, InitializationTest) {
-  EXPECT_FALSE(Provider()->IsInitialized());
+  EXPECT_FALSE(Provider()->Initialized());
 
   // Calling GetDevices should initialize the service if it hasn't been
   // initialized yet or the providesr have been released.
@@ -98,15 +98,15 @@ TEST_F(VRDeviceManagerTest, InitializationTest) {
   // initialization. And SetClient method in VRService class will invoke
   // GetVRDevices too.
   auto service = BindService();
-  DeviceManager()->AddService(service.get(), base::BindOnce([]() {}));
-  EXPECT_TRUE(Provider()->IsInitialized());
+  DeviceManager()->AddService(service.get());
+  EXPECT_TRUE(Provider()->Initialized());
 }
 
 TEST_F(VRDeviceManagerTest, GetNoDevicesTest) {
   auto service = BindService();
-  DeviceManager()->AddService(service.get(), base::BindOnce([]() {}));
+  DeviceManager()->AddService(service.get());
   // Calling GetVRDevices should initialize the providers.
-  EXPECT_TRUE(Provider()->IsInitialized());
+  EXPECT_TRUE(Provider()->Initialized());
 
   // GetDeviceByIndex should return nullptr if an invalid index in queried.
   device::VRDevice* queried_device = DeviceManager()->GetDevice(1);
