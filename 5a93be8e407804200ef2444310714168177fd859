@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2562ff6f_12371786",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-24T16:42:23Z",
+      "side": 1,
+      "message": "note that GetHeaderTextFontList() returns a temporary, so it shouldn\u0027t have been a const\u0026",
+      "range": {
+        "startLine": 193,
+        "startChar": 28,
+        "endLine": 193,
+        "endChar": 49
+      },
+      "revId": "5a93be8e407804200ef2444310714168177fd859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
