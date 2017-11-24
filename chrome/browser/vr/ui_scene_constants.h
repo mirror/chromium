@@ -178,6 +178,9 @@ static constexpr float kTimeoutButtonTextHeight = kCloseButtonHeight * 0.25;
 static constexpr float kTimeoutButtonTextVerticalOffset =
     kTimeoutButtonTextHeight;
 
+static constexpr float kUiDialogHeightRatio = 0.6f;
+static constexpr float kUiDialogWidthRatio = 0.6f;
+
 // If the screen space bounds or the aspect ratio of the content quad change
 // beyond these thresholds we propagate the new content bounds so that the
 // content's resolution can be adjusted.
