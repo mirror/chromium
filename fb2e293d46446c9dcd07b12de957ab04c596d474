@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4488095e_a5568898",
+        "filename": "chrome/browser/vr/assets.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T00:02:11Z",
+      "side": 1,
+      "message": "This is a hack so that metrics_helper_ can be alive longer than the VR session. If you know a better workaround please let me know.",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e671477d_1e2dea16",
+        "filename": "chrome/browser/vr/metrics_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T00:02:11Z",
+      "side": 1,
+      "message": "This is very similar to VRMode (https://cs.chromium.org/chromium/src/chrome/browser/android/vr_shell/vr_usage_monitor.h?rcl\u003d80b1a063280d0f39d4d49ae51702dbbbf5509cd6\u0026l\u003d15). Do you think I should refactor it into one enum?",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bc97bf_946ddc9d",
+        "filename": "chrome/browser/vr/metrics_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-24T00:02:11Z",
+      "side": 1,
+      "message": "This class name may be a bit confusing with VrMetricsHelper (https://cs.chromium.org/chromium/src/chrome/browser/android/vr_shell/vr_usage_monitor.h?rcl\u003d80b1a063280d0f39d4d49ae51702dbbbf5509cd6\u0026l\u003d55). However, I plan on adding other metrics to this class that are not assets component specific. Thus, something like AssetsComponentMetricHelper doesn\u0027t seem appropriate. The main difference is that VrMetricsHelper is only alive as long as the user is in VR. This class, however, can be alive as long as the browser. Any suggestions on naming? Also, are there plans to move the VrMetricsHelper out of Android specific code?",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
