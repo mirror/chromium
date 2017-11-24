@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14de3657_d4133ec2",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "Adds",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e335bb34_289dc1f4",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "Clears",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 12
+      },
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e90ede_3a71618a",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "not sure if \"stored\" is the right word since Shared Workers aren\u0027t really stored anywhere...\n\n\"in the set\"?",
+      "range": {
+        "startLine": 86,
+        "startChar": 45,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b06b103_edf6656c",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "Shared Workers in the set?",
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5270df4d_d693e8f4",
+        "filename": "chrome/browser/browsing_data/browsing_data_shared_worker_helper_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "optionally can use `auto` with MakeRefCounted",
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbc9bab_c1a96a14",
+        "filename": "chrome/browser/browsing_data/cookies_tree_model_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "Haha, I have no idea how lines 179-205 add to 77... (nothing to do with this patch of course)",
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd4aecc_8daf8ea4",
+        "filename": "chrome/browser/browsing_data/cookies_tree_model_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "commas at the end of lines 200-204?",
+      "range": {
+        "startLine": 200,
+        "startChar": 32,
+        "endLine": 200,
+        "endChar": 33
+      },
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2494e1de_b898e705",
+        "filename": "chrome/browser/browsing_data/cookies_tree_model_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "maybe this 71 should be 77 too as above?",
+      "range": {
+        "startLine": 626,
+        "startChar": 59,
+        "endLine": 626,
+        "endChar": 61
+      },
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ece6a95_30f72671",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2039,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-24T08:31:35Z",
+      "side": 1,
+      "message": "By the way, I\u0027m not sure if this exception is needed. I think we added it to Service Workers when extensions grew the ability to register service workers. I\u0027m not sure if extensions can use shared workers or if they need a special exception.",
+      "revId": "6fde39fffef058d5485f6ec51ddc0585404d270d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
