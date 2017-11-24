@@ -25377,6 +25377,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="FileBrowser.ViewingRootType" enum="FileManagerRootType">
+  <owner>nya@chromium.org</owner>
+  <summary>
+    Chrome OS File Browser: The locations (root types) of files which are opened
+    (except for the file picker).
+  </summary>
+</histogram>
+
 <histogram name="FileBrowser.VolumeType" enum="FileManagerVolumeType">
   <owner>kinaba@chromium.org</owner>
   <summary>
