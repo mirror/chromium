@@ -17,6 +17,7 @@ dictionary MediaTrackSupportedConstraints {
     boolean sampleRate = true;
     boolean sampleSize = true;
     boolean echoCancellation = true;
+    [OriginTrialEnabled=HardwareNoiseSuppressionControl] boolean disableHwNoiseSuppression;
     boolean latency = true;
     boolean channelCount = true;
     boolean deviceId = true;
