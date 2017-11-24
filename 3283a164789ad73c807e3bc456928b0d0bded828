@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16a31ac4_df110241",
+        "filename": "third_party/WebKit/LayoutTests/svg/hittest/zero-stroke-width.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-24T14:11:48Z",
+      "side": 1,
+      "message": "I think I might change these to 200 (and adjust the viewport.)",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "3283a164789ad73c807e3bc456928b0d0bded828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
