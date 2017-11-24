@@ -5250,7 +5250,6 @@ crbug.com/591099 fast/multicol/dynamic/insert-float-before-content-in-spanner.ht
 crbug.com/591099 fast/multicol/dynamic/insert-spanner-after-abspos-subtree-crash.html [ Crash ]
 crbug.com/591099 fast/multicol/dynamic/insert-spanner-after-inner-multicol-crash.html [ Crash ]
 crbug.com/591099 fast/multicol/dynamic/insert-spanner-between-out-of-flow.html [ Pass ]
-crbug.com/591099 fast/multicol/dynamic/relayout-abspos-in-relpos-spanner.html [ Failure ]
 crbug.com/591099 fast/multicol/dynamic/remove-inline-and-spanner-after-spanner-foreignObject.html [ Crash ]
 crbug.com/591099 fast/multicol/dynamic/remove-spanner-in-empty-nested-block-crash.html [ Crash ]
 crbug.com/591099 fast/multicol/dynamic/spanner-becomes-abspos-crash.html [ Crash ]
