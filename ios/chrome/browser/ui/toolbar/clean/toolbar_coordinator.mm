@@ -17,6 +17,7 @@
 #include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
+#include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
@@ -34,6 +35,7 @@
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
+#import "ios/chrome/browser/ui/toolbar/tools_menu_button_observer_bridge.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/ui/voice/text_to_speech_player.h"
 #import "ios/chrome/browser/ui/voice/voice_search_notification_names.h"
@@ -65,6 +67,9 @@
     ToolbarAssistiveKeyboardDelegateImpl* keyboardDelegate;
 // Whether this coordinator has been started.
 @property(nonatomic, assign) BOOL started;
+// Button observer for the ToolsMenu button.
+@property(nonatomic, strong)
+    ToolsMenuButtonObserverBridge* toolsMenuButtonObserverBridge;
 
 @end
 
@@ -78,6 +83,7 @@
 @synthesize mediator = _mediator;
 @synthesize started = _started;
 @synthesize toolbarViewController = _toolbarViewController;
+@synthesize toolsMenuButtonObserverBridge = _toolsMenuButtonObserverBridge;
 @synthesize URLLoader = _URLLoader;
 @synthesize webStateList = _webStateList;
 
@@ -150,6 +156,12 @@
                                           buttonUpdater:self.buttonUpdater];
   self.toolbarViewController.locationBarView = self.locationBarView;
   self.toolbarViewController.dispatcher = self.dispatcher;
+
+  DCHECK(self.toolbarViewController.toolsMenuButton);
+  self.toolsMenuButtonObserverBridge = [[ToolsMenuButtonObserverBridge alloc]
+      initWithModel:ReadingListModelFactory::GetForBrowserState(
+                        self.browserState)
+      toolbarButton:self.toolbarViewController.toolsMenuButton];
 
   self.mediator.consumer = self.toolbarViewController;
   self.mediator.webStateList = self.webStateList;
