@@ -581,9 +581,8 @@ public class NotificationPlatformBridge {
                 profileId, incognito, tag, webApkPackage, -1 /* actionIndex */);
 
         boolean hasImage = image != null;
-        boolean forWebApk = !webApkPackage.isEmpty();
         NotificationBuilderBase notificationBuilder =
-                createNotificationBuilder(context, forWebApk, hasImage, origin)
+                createNotificationBuilder(context, hasImage, origin)
                         .setTitle(title)
                         .setBody(body)
                         .setImage(image)
@@ -626,9 +625,12 @@ public class NotificationPlatformBridge {
         notificationBuilder.setVibrate(makeVibrationPattern(vibrationPattern));
 
         String platformTag = makePlatformTag(notificationId, origin, tag);
-        if (forWebApk) {
+        if (!webApkPackage.isEmpty()) {
+            String channelName = (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+                    ? null
+                    : UrlFormatter.formatUrlForSecurityDisplay(origin, false /* showScheme */);
             WebApkServiceClient.getInstance().notifyNotification(
-                    webApkPackage, notificationBuilder, platformTag, PLATFORM_ID);
+                    webApkPackage, notificationBuilder, platformTag, PLATFORM_ID, channelName);
         } else {
             // Set up a pending intent for going to the settings screen for |origin|.
             Intent settingsIntent = PreferencesLauncher.createIntentForSettingsPage(
@@ -662,13 +664,10 @@ public class NotificationPlatformBridge {
     }
 
     private NotificationBuilderBase createNotificationBuilder(
-            Context context, boolean forWebApk, boolean hasImage, String origin) {
-        // Don't set a channelId for web apk notifications because the channel won't be
-        // initialized for the web apk and it will crash on notify - see crbug.com/727178.
-        // (It's okay to not set a channel on them because web apks don't target O yet.)
+            Context context, boolean hasImage, String origin) {
         // TODO(crbug.com/700377): Channel ID should be retrieved from cache in native and passed
         // through to here with other notification parameters.
-        String channelId = (forWebApk || Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+        String channelId = (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
                 ? null
                 : ChromeFeatureList.isEnabled(ChromeFeatureList.SITE_NOTIFICATION_CHANNELS)
                         ? SiteChannelsManager.getInstance().getChannelIdForOrigin(origin)
