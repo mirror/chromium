@@ -16,9 +16,11 @@ var importer = importer || {};
  * @param {!importer.HistoryLoader} historyLoader
  * @param {!importer.DispositionChecker.CheckerFunction} dispositionChecker
  * @param {!analytics.Tracker} tracker
+ * @param {!DriveSyncHandler} driveSyncHandler
  */
-importer.MediaImportHandler = function(progressCenter, historyLoader,
-                                       dispositionChecker, tracker) {
+importer.MediaImportHandler = function(
+    progressCenter, historyLoader, dispositionChecker, tracker,
+    driveSyncHandler) {
   /** @private {!ProgressCenter} */
   this.progressCenter_ = progressCenter;
 
@@ -44,6 +46,9 @@ importer.MediaImportHandler = function(progressCenter, historyLoader,
 
   /** @private {!importer.DispositionChecker.CheckerFunction} */
   this.getDisposition_ = dispositionChecker;
+
+  /** @private {!DriveSyncHandler} */
+  this.driveSyncHandler_ = driveSyncHandler;
 };
 
 // The name of the Drive property used to tag imported files.  Used to look up
@@ -56,17 +61,12 @@ importer.MediaImportHandler.IMPORTS_TAG_KEY = 'cloud-import';
 importer.MediaImportHandler.IMPORTS_TAG_VALUE = 'media';
 
 /** @override */
-importer.MediaImportHandler.prototype.importFromScanResult =
-    function(scanResult, destination, directoryPromise) {
+importer.MediaImportHandler.prototype.importFromScanResult = function(
+    scanResult, destination, directoryPromise) {
 
   var task = new importer.MediaImportHandler.ImportTask(
-      this.generateTaskId_(),
-      this.historyLoader_,
-      scanResult,
-      directoryPromise,
-      destination,
-      this.getDisposition_,
-      this.tracker_);
+      this.generateTaskId_(), this.historyLoader_, scanResult, directoryPromise,
+      destination, this.getDisposition_, this.tracker_, this.driveSyncHandler_);
 
   task.addObserver(this.onTaskProgress_.bind(this, task));
   task.addObserver(this.onFileImported_.bind(this, task));
@@ -182,15 +182,11 @@ importer.MediaImportHandler.prototype.onFileImported_ =
  * @param {!importer.Destination} destination The logical destination.
  * @param {!importer.DispositionChecker.CheckerFunction} dispositionChecker
  * @param {!analytics.Tracker} tracker
+ * @param {!DriveSyncHandler} driveSyncHandler
  */
 importer.MediaImportHandler.ImportTask = function(
-    taskId,
-    historyLoader,
-    scanResult,
-    directoryPromise,
-    destination,
-    dispositionChecker,
-    tracker) {
+    taskId, historyLoader, scanResult, directoryPromise, destination,
+    dispositionChecker, tracker, driveSyncHandler) {
 
   importer.TaskQueue.BaseTask.call(this, taskId);
   /** @private {string} */
@@ -236,6 +232,18 @@ importer.MediaImportHandler.ImportTask = function(
 
   /** @private {!importer.DispositionChecker.CheckerFunction} */
   this.getDisposition_ = dispositionChecker;
+
+  /** @private {Array<!Entry>} The entries to be imported on the next run. */
+  this.importEntries_ = [];
+
+  /** @private {!DriveSyncHandler} */
+  this.driveSyncHandler_ = driveSyncHandler;
+
+  /** @private {Entry} */
+  this.destinationDirectory_ = null;
+
+  /** @private {EventListenerType} We need to be able to remove it again. */
+  this.driveListener_ = null;
 };
 
 /** @struct */
@@ -320,15 +328,44 @@ importer.MediaImportHandler.ImportTask.prototype.initialize_ = function() {
 importer.MediaImportHandler.ImportTask.prototype.importScanEntries_ =
     function() {
   var resolver = new importer.Resolver();
-  this.directoryPromise_.then(
-      function(destinationDirectory) {
-        AsyncUtil.forEach(
-            this.scanResult_.getFileEntries(),
-            this.importOne_.bind(this, destinationDirectory),
-            resolver.resolve,
-            resolver);
-      }.bind(this));
+  this.directoryPromise_.then(function(resolver, destinationDirectory) {
+    this.importEntries_ = this.scanResult_.getFileEntries().slice();
+    this.destinationDirectory_ = destinationDirectory;
+    this.retryImportScanEntries_(resolver);
+  }.bind(this, resolver));
   return resolver.promise;
+};
+
+/**
+ * Execute one try of importing a given set of files.
+ *
+ * @private
+ */
+importer.MediaImportHandler.ImportTask.prototype.retryImportScanEntries_ =
+    function(resolver) {
+  // Remove eventual existing driveListeners.
+  this.driveSyncHandler_.removeEventListener(
+      DriveSyncHandler.COMPLETED_EVENT, this.driveListener_);
+  this.driveListener_ = null;
+  // Reset the record of the list of entries that still need to be imported.
+  sourceEntries = this.importEntries_.slice();
+  this.importEntries_ = [];
+  AsyncUtil.forEach(
+      sourceEntries, this.importOne_.bind(this), function(resolver) {
+        // If at least one error occured, but at least one file succeeded to
+        // copy, there is a chance that the next operation will be successfull.
+        if (this.importEntries_.length !== 0 &&
+            sourceEntries.length > this.importEntries_.length) {
+          // Wait for drive to signal finishing of uploads, then retry.
+          this.driveListener_ = function(resolver) {
+            this.retryImportScanEntries_(resolver);
+          }.bind(this, resolver);
+          this.driveSyncHandler_.addEventListener(
+              DriveSyncHandler.COMPLETED_EVENT, this.driveListener_);
+        } else {
+          resolver.resolve();
+        }
+      }.bind(this, resolver), resolver);
 };
 
 /**
@@ -359,14 +396,13 @@ importer.MediaImportHandler.ImportTask.prototype.markDuplicatesImported_ =
 /**
  * Imports one file. If the file already exist in Drive, marks as imported.
  *
- * @param {!DirectoryEntry} destinationDirectory
  * @param {function()} completionCallback Called after this operation is
  *     complete.
  * @param {!FileEntry} entry The entry to import.
  * @private
  */
-importer.MediaImportHandler.ImportTask.prototype.importOne_ =
-    function(destinationDirectory, completionCallback, entry) {
+importer.MediaImportHandler.ImportTask.prototype.importOne_ = function(
+    completionCallback, entry) {
   if (this.canceled_) {
     this.notify(importer.TaskQueue.UpdateType.CANCELED);
     this.tracker_.send(metrics.ImportEvents.IMPORT_CANCELLED);
@@ -374,29 +410,29 @@ importer.MediaImportHandler.ImportTask.prototype.importOne_ =
     return;
   }
 
-  this.getDisposition_(entry, importer.Destination.GOOGLE_DRIVE,
-                       importer.ScanMode.CONTENT)
-      .then(
-          (/**
-           * @param {!importer.Disposition} disposition The disposition
-           *     of the entry. Either some sort of dupe, or an original.
-           * @this {importer.MediaImportHandler.ImportTask}
-           */
-          function(disposition) {
-            if (disposition === importer.Disposition.ORIGINAL) {
-              return this.copy_(entry, destinationDirectory);
-            }
-            this.duplicateFilesCount_++;
-            this.markAsImported_(entry);
-          }).bind(this))
+  this.getDisposition_(
+          entry, importer.Destination.GOOGLE_DRIVE, importer.ScanMode.CONTENT)
+      .then((/**
+              * @param {!importer.Disposition} disposition The disposition
+              *     of the entry. Either some sort of dupe, or an original.
+              * @this {importer.MediaImportHandler.ImportTask}
+              */
+             function(disposition) {
+               // if (disposition === importer.Disposition.ORIGINAL) {
+               return this.copy_(entry, this.destinationDirectory_);
+               //}
+               this.duplicateFilesCount_++;
+               this.markAsImported_(entry);
+             }).bind(this))
       // Regardless of the result of this copy, push on to the next file.
       .then(completionCallback)
       .catch(
           /** @param {*} error */
           function(error) {
             importer.getLogger().catcher('import-task-import-one')(error);
+            this.importEntries_.push(entry);
             completionCallback();
-          });
+          }.bind(this));
 };
 
 /**
