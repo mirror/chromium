@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42e3e65b_179f70ab",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-24T23:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f80f8fb9_d08bec74",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506b291c_7902f746",
         "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61323d34_39e9297a",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-24T23:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506b291c_7902f746",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cb2dce81_56ebfbb0",
+        "filename": "chrome/browser/chromeos/power/ml/ukm_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-24T23:32:48Z",
+      "side": 1,
+      "message": "Done. I\u0027ve renamed the class to UserActivityLoggerUKM. Is this clearer now? Also, should I link the design doc in the code? The doc is not public, and is only visible to google.com users.",
+      "parentUuid": "c45de0c5_c424806a",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ae779ae_1bbb2d0c",
         "filename": "chrome/browser/chromeos/power/ml/ukm_logger.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921d862a_d9735f05",
+        "filename": "chrome/browser/chromeos/power/ml/ukm_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-24T23:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae779ae_1bbb2d0c",
+      "revId": "3a2ca2c7855482f9c9a6f7f6f027612a00953432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
