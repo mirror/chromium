@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c815f9e_a5724a20",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T19:03:00Z",
+      "side": 1,
+      "message": "has keeps -\u003e stores",
+      "range": {
+        "startLine": 78,
+        "startChar": 35,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "1ad16862f3630171f86b6a3dd95587d821812ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45030a3_31cb8df2",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T19:03:00Z",
+      "side": 1,
+      "message": "event -\u003e event type",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 23
+      },
+      "revId": "1ad16862f3630171f86b6a3dd95587d821812ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
