@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "93ec60c2_4a57aca0",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T02:05:30Z",
+      "side": 1,
+      "message": "The purpose of GetAll method is to get list of all file systems registered by the calling extension. And since extensions cannot register native file systems, we don\u0027t want to include them.",
+      "parentUuid": "999ae529_aa902e73",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 65
+      },
+      "revId": "09bdae6794ba7c94b81fd3d10c1f1f61c9a2b1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e9c8b07_6af1a65c",
         "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
         "patchSetId": 7
