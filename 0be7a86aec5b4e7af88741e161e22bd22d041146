@@ -22,6 +22,30 @@
       "revId": "0be7a86aec5b4e7af88741e161e22bd22d041146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3600dfd7_20a75399",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-11-24T12:48:01Z",
+      "side": 1,
+      "message": "That\u0027s the point of this part of the test. We\u0027re verifying that they\u0027re not stripped off by the applyConstraints/getConstraints cycle, even though they can\u0027t be satisfied or make no sense. It\u0027s testing the conversion machinery in Blink, not the application machinery in content.\n\nNote: I was a bit surprised to have to move aspectRatio and frameRate into this section; I expected frameRate to work with applyConstraints.",
+      "parentUuid": "4090e10a_29eed93f",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "0be7a86aec5b4e7af88741e161e22bd22d041146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
