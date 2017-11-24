@@ -97,6 +97,7 @@ jumbo_source_set("loader") {
   ]
 
   public_deps = [
+    "//services/network/public/cpp:cpp",
     "//services/network/public/interfaces",
     "//third_party/WebKit/Source/platform/blob:blob",
     "//third_party/WebKit/Source/platform/network:network",
@@ -166,8 +167,9 @@ jumbo_source_set("test_support") {
 
   public_deps = [
     "//net",
+    "//services/network/public/cpp:cpp",
+    "//services/network/public/interfaces",
     "//skia",
-    "//third_party/WebKit/Source/platform",
     "//third_party/WebKit/Source/platform/blob:generator",
     "//third_party/icu",
   ]
