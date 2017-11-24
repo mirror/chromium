@@ -9,6 +9,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/account_fetcher_service_factory.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
+#include "chrome/browser/signin/chrome_signin_client.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/signin/local_auth.h"
@@ -108,7 +109,7 @@ KeyedService* SigninManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   SigninManagerBase* service = NULL;
   Profile* profile = static_cast<Profile*>(context);
-  SigninClient* client =
+  ChromeSigninClient* client =
       ChromeSigninClientFactory::GetInstance()->GetForProfile(profile);
 #if defined(OS_CHROMEOS)
   service = new SigninManagerBase(
@@ -116,10 +117,11 @@ KeyedService* SigninManagerFactory::BuildServiceInstanceFor(
       AccountTrackerServiceFactory::GetForProfile(profile));
 #else
   service = new SigninManager(
-      client,
-      ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
+      client, ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       AccountTrackerServiceFactory::GetForProfile(profile),
-      GaiaCookieManagerServiceFactory::GetForProfile(profile));
+      GaiaCookieManagerServiceFactory::GetForProfile(profile),
+      client->account_consistency_manager()->GetAccountConsistencyMethod() ==
+          signin::AccountConsistencyMethod::kDice);
   AccountFetcherServiceFactory::GetForProfile(profile);
 #endif
   service->Initialize(g_browser_process->local_state());
