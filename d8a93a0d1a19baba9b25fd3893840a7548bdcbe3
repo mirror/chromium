@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99cf0619_88eac19c",
+        "filename": "google_apis/gaia/gaia_auth_consumer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-24T06:27:07Z",
+      "side": 1,
+      "message": "This is wrong, as we definitely need to distinguish between \"id_token not received\" and \"id_token suggests that is_child_account has given value\".\n\nWe cannot \"temporarily\" make child account regular acccount, and back.\n\nCound you add unique_ptr\u003cbool\u003e for is_child_account flag (for example)?",
+      "revId": "d8a93a0d1a19baba9b25fd3893840a7548bdcbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
