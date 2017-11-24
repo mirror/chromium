@@ -16,6 +16,24 @@
       "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d727dd_fe92ce82",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-24T09:20:12Z",
+      "side": 1,
+      "message": "(I first tried to make partial specialization of blink::Persistent and blink::WrapPersistent, and ... I gave it up.)\n\nNote that blink::Persistent\u003cT\u003e is expected to work without a complete definition of T (e.g. KeepSelfAlive\u003cT\u003e uses Persistent\u003cT\u003e while T is not yet defined).  However, if we\u0027d like to partially specialize Persistent\u003cT\u003e where T inherits from CallbackFunctionBase, we need a complete definition of T.  :(\n\nAnother note that blink::WrapPersistent\u003cT\u003e is a template function and C++ does NOT support partial specialization of template functions.  :(\n\nHaving said that, there is a way.\n\n1) Make WrapPersistent\u003cT\u003e uses a trait class.\n2) Partially specialize the trait class for T that inherits from CallbackFunctionBase.\n\nIt\u0027s possible to partially specialize WrapPersistent\u003cT\u003e using a trampoline trait, however, it\u0027s hard to partially specialize Persistent\u003cT\u003e because of KeepSelfAlive\u003cT\u003e, etc.  Unless T gets defined, we cannot tell if T inherits from CallbackFunctionBase.\n\nWhat approach do you like?",
+      "parentUuid": "e4f0d641_fa83db3a",
+      "revId": "ea2b53e66cd40e6dbf1504d4ca710320f2fcdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
