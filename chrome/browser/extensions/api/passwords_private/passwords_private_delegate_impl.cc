@@ -38,7 +38,8 @@ PasswordsPrivateDelegateImpl::PasswordsPrivateDelegateImpl(Profile* profile)
       password_manager_presenter_(
           std::make_unique<PasswordManagerPresenter>(this)),
       password_manager_porter_(std::make_unique<PasswordManagerPorter>(
-          password_manager_presenter_.get())),
+          std::make_unique<password_manager::PasswordManagerExporter>(
+              password_manager_presenter_.get()))),
       password_access_authenticator_(
           base::BindRepeating(&PasswordsPrivateDelegateImpl::OsReauthCall,
                               base::Unretained(this))),
