@@ -22,6 +22,30 @@
       "revId": "c3ac7f0de794b63ae2585744f3ff0f06f0fc6fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9bf5a6_9cae6e86",
+        "filename": "ui/latency/latency_histogram_macros.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-24T18:36:56Z",
+      "side": 1,
+      "message": "LL doesn\u0027t compile on linux and L doesn\u0027t compile on mac (see the past two patches)\nI will use the static_cast then.",
+      "parentUuid": "d1be30d9_4594998e",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "c3ac7f0de794b63ae2585744f3ff0f06f0fc6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
