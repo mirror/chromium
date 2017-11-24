@@ -1071,14 +1071,11 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
   host->AddFilter(new prerender::PrerenderMessageFilter(id, profile));
   host->AddFilter(new TtsMessageFilter(host->GetBrowserContext()));
 #if BUILDFLAG(ENABLE_WEBRTC)
-  WebRtcLoggingHandlerHost* webrtc_logging_handler_host =
-      new WebRtcLoggingHandlerHost(id, profile,
-                                   g_browser_process->webrtc_log_uploader());
-  host->AddFilter(webrtc_logging_handler_host);
-  host->SetUserData(
-      WebRtcLoggingHandlerHost::kWebRtcLoggingHandlerHostKey,
-      base::MakeUnique<base::UserDataAdapter<WebRtcLoggingHandlerHost>>(
-          webrtc_logging_handler_host));
+  // TODO: !!!
+//  host->SetUserData(
+//      WebRtcLoggingHandlerHost::kWebRtcLoggingHandlerHostKey,
+//      base::MakeUnique<base::UserDataAdapter<WebRtcLoggingHandlerHost>>(
+//          webrtc_logging_handler_host));
 
   // The audio manager outlives the host, so it's safe to hand a raw pointer to
   // it to the AudioDebugRecordingsHandler, which is owned by the host.
