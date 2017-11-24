@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b8c4ac6_1484063b",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2084,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:16:35Z",
+      "side": 1,
+      "message": "Actually we need both of them. Timestamp will be used to set in the DOM event and about the type I already put the comment why this is needed. For type I can rely on the default value but I wanted to be specific here.",
+      "parentUuid": "10471d76_f7b04979",
+      "revId": "ffbdded51ca5169b9229f66b3192db2b8fa5d6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4de80ee8_96903ef5",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-24T16:05:30Z",
       "side": 1,
       "message": "Add a dcheck that the event is not of the new type.\n\nSame for FlushEvents() and any other places where an event is going *out of PEM*.  We don\u0027t want to miss type inequality checks like this:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/TouchEventManager.cpp?rcl\u003dec2216ae09e309b874ec698a2beb427395f4073b\u0026l\u003d416",
+      "revId": "ffbdded51ca5169b9229f66b3192db2b8fa5d6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954b8e18_1ad66bbf",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:16:35Z",
+      "side": 1,
+      "message": "I just realized I need to remove these comments as they don\u0027t apply anymore.\n\nBut I didn\u0027t get your comment. What is the new type? Can you elaborate a little more? This function particularly can send any type of pointer event.",
+      "parentUuid": "4de80ee8_96903ef5",
       "revId": "ffbdded51ca5169b9229f66b3192db2b8fa5d6d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,30 @@
       "writtenOn": "2017-11-24T16:05:30Z",
       "side": 1,
       "message": "I got confused with the two very similar terms \"cancelled\" vs \"interrupted\".  Then after our discussion, I am convinced we need two types of events into Blink anyways (as we have TouchCancel and TouchScrollStarted today) to perform different sets of tasks.\n\nLet\u0027s make it clear through a completely different event name, plus a comment that it\u0027s an internal event to notify Blink etc.  Moreover, this event should never reach beyond PEM, may be it worth commenting about.\n\nRe possible alternate names, what about PointerTouchAction or PointerTouchActionStarted or PointerActionStarted?  I slightly prefer the second one but it\u0027s too long!",
+      "range": {
+        "startLine": 189,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 23
+      },
+      "revId": "ffbdded51ca5169b9229f66b3192db2b8fa5d6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707b0add_ea183dd8",
+        "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:16:35Z",
+      "side": 1,
+      "message": "Regarding the internal event thing, I\u0027m not sure what you call an internal event. Do you call an event internal if we didn\u0027t get from the platform and we created it ourselves in the browser? Then in that case both TouchCancel (or PointerCancel) and TouchScrollStarted (or PointerInterrupted) are internal. We get none of those from the platform.\n\nThis event has nothing to do with touch action specifically though. This is intended for the cases that browser takes over the pointer stream including the scrolling (which is not necessarily done as the result of touch). Other cases that fall into the same bucket is drag\u0026drop operation and possibly later context menu event. Having said that what do you think about the name now?",
+      "parentUuid": "1ff34eba_63e3b9dd",
       "range": {
         "startLine": 189,
         "startChar": 4,
