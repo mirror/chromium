@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0884ebc_192102e3",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-24T10:09:49Z",
+      "side": 0,
+      "message": "Is this an expected change? It is not in the description of the CL.",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 26
+      },
+      "revId": "b758bbb1f1adfb1c20525cb7e09af505d996ff05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
