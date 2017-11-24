@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bfa0976_db69c524",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageValue.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-24T05:47:33Z",
+      "side": 1,
+      "message": "Does this just create a copy of the image value? Maybe call just it Clone() or Copy()?",
+      "revId": "e3642eb3f09a0eed27debba3ac61937d1b753ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d47c991_1c915f3e",
+        "filename": "third_party/WebKit/Source/core/css/cssom/StylePropertyMap.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-24T05:47:33Z",
+      "side": 1,
+      "message": "I think passing in a parser context instead of execution context would be better. You should be able to retrieve the secure context mode from the parser context (might have to add a getter).",
+      "revId": "e3642eb3f09a0eed27debba3ac61937d1b753ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
