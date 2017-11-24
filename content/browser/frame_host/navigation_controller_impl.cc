@@ -72,6 +72,7 @@
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
+#include "content/public/browser/replaced_navigation_entry_data.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_constants.h"
@@ -158,6 +159,23 @@ bool ShouldTreatNavigationAsReload(const NavigationEntry* entry) {
     return true;
   }
   return false;
+}
+
+// See replaced_navigation_entry_data.h for details: this information is meant
+// to ensure |*output_entry| keeps track of its original URL (landing page in
+// case of server redirects) as it gets replaced (e.g. history.replaceState()),
+// without overwriting it later.
+void CopyReplacedNavigationEntryDataIfPreviouslyEmpty(
+    const NavigationEntryImpl& replaced_entry,
+    NavigationEntryImpl* output_entry) {
+  if (output_entry->GetReplacedEntryData().has_value())
+    return;
+
+  ReplacedNavigationEntryData data;
+  data.url = replaced_entry.GetURL();
+  data.timestamp = replaced_entry.GetTimestamp();
+  data.transition_type = replaced_entry.GetTransitionType();
+  output_entry->SetReplacedEntryData(data);
 }
 
 }  // namespace
@@ -868,6 +886,7 @@ bool NavigationControllerImpl::RendererDidNavigate(
     case NAVIGATION_TYPE_NEW_SUBFRAME:
       RendererDidNavigateNewSubframe(rfh, params, details->is_same_document,
                                      details->did_replace_entry);
+      CHECK(!details->did_replace_entry) << " for " << params.url;
       break;
     case NAVIGATION_TYPE_AUTO_SUBFRAME:
       if (!RendererDidNavigateAutoSubframe(rfh, params)) {
@@ -1326,6 +1345,13 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
     // which land us at the last committed entry.
     entry = GetLastCommittedEntry();
 
+    // TODO(crbug.com/751023): Set page transition type to PAGE_TRANSITION_LINK
+    // to avoid misleading interpretations (e.g. for PAGE_TRANSITION_TYPED) as
+    // well as to fixed the inconsistency with what we report to observers
+    // (PAGE_TRANSITION_LINK | PAGE_TRANSITION_CLIENT_REDIRECT).
+
+    CopyReplacedNavigationEntryDataIfPreviouslyEmpty(*entry, entry);
+
     // If this is a same document navigation, then there's no SSLStatus in the
     // NavigationHandle so don't overwrite the existing entry's SSLStatus.
     if (!is_same_document)
@@ -1474,7 +1500,7 @@ void NavigationControllerImpl::RendererDidNavigateNewSubframe(
   // to replace, which can happen due to a unique name change.  See
   // https://crbug.com/607205.  For now, frame_entry will be deleted when it
   // goes out of scope if it doesn't get used.
-
+  // TODO / DONOTSUBMIT: Avoid updating replaced state.
   InsertOrReplaceEntry(std::move(new_entry), replace_entry);
 }
 
@@ -1869,6 +1895,8 @@ void NavigationControllerImpl::InsertOrReplaceEntry(
 
   // When replacing, don't prune the forward history.
   if (replace && current_size > 0) {
+    CopyReplacedNavigationEntryDataIfPreviouslyEmpty(
+        *entries_[last_committed_entry_index_], entry.get());
     entries_[last_committed_entry_index_] = std::move(entry);
     return;
   }
