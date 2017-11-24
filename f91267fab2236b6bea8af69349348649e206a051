@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b285d935_28a57f1b",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-24T11:18:56Z",
+      "side": 1,
+      "message": "How about we just put all these function definitions in a single #if defined(V8_USE_EXTERNAL_STARTUP_DATA), and add an #if defined(V8_USE_EXTERNAL_STARTUP_DATA) in InitializeV8IfNeeded before they are called?",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 41
+      },
+      "revId": "f91267fab2236b6bea8af69349348649e206a051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6be9ba3_b599e89b",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-24T11:18:56Z",
+      "side": 1,
+      "message": "nit - could you add comments here !CHROME_MULTIPLE_DLL_BROWSER while you are here.",
+      "range": {
+        "startLine": 188,
+        "startChar": 1,
+        "endLine": 188,
+        "endChar": 6
+      },
+      "revId": "f91267fab2236b6bea8af69349348649e206a051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3c04c4_34e4322c",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-24T11:18:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 208,
+        "startChar": 1,
+        "endLine": 208,
+        "endChar": 6
+      },
+      "revId": "f91267fab2236b6bea8af69349348649e206a051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19bb321_10b2b95d",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-24T11:18:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 228,
+        "startChar": 1,
+        "endLine": 228,
+        "endChar": 6
+      },
+      "revId": "f91267fab2236b6bea8af69349348649e206a051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492732bf_586c84f4",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-24T11:18:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 228,
+        "startChar": 1,
+        "endLine": 228,
+        "endChar": 6
+      },
+      "revId": "f91267fab2236b6bea8af69349348649e206a051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
