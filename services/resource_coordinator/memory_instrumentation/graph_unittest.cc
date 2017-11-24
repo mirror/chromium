@@ -65,7 +65,7 @@ TEST(GlobalDumpGraphTest, VisitInDepthFirstPostOrder) {
 
   // This method should always call owners and then children before the node
   // itself.
-  auto iterator = process->VisitInDepthFirstPostOrder();
+  auto iterator = graph.VisitInDepthFirstPostOrder();
   ASSERT_EQ(iterator.next(), &c1);
   ASSERT_EQ(iterator.next(), &c2_c1);
   ASSERT_EQ(iterator.next(), &c3_c2);
