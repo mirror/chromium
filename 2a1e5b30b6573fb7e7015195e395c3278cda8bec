@@ -16,6 +16,24 @@
       "revId": "2a1e5b30b6573fb7e7015195e395c3278cda8bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16301c5_4c984fc3",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T01:15:32Z",
+      "side": 1,
+      "message": "Honestly I\u0027m not a big fan of it. We have now |request| and |file_request| and two callbacks |callback| and |authorize_callback| which do not IMHO improve readability here, as the code logic is simple. As for naming, |authorize_callback| is called even for a function which doesn\u0027t do authorization (FilesGetRequest). IMHO the original code was simple.\n\nIf you feel very strong about the refactoring, I won\u0027t block. But let\u0027s do some minor tweaks to make it simpler, eg. can we remove |file_request| and write directly to request? And a better name for |authorize_callback|?",
+      "parentUuid": "6a7a4b49_c0fd5a0d",
+      "revId": "2a1e5b30b6573fb7e7015195e395c3278cda8bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
