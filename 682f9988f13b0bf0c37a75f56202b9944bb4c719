@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ae4db94_9b328283",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-24T06:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4af39a3f_862b48bc",
+      "revId": "682f9988f13b0bf0c37a75f56202b9944bb4c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13a0c94d_975956ba",
         "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "682f9988f13b0bf0c37a75f56202b9944bb4c719",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb73b5c_03214d5b",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-24T06:16:05Z",
+      "side": 1,
+      "message": "You\u0027re right. We should not call this here in taking snapshot, because its context can be judged secure.\nall done.",
+      "parentUuid": "13a0c94d_975956ba",
+      "revId": "682f9988f13b0bf0c37a75f56202b9944bb4c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
