@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b79d5386_0b10130b",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-24T11:57:00Z",
+      "side": 1,
+      "message": "Since you\u0027re checking for the first result in a comma-separated string, I wonder if you couldn\u0027t instead check for starts-with \"nosniff\", followed by end-of-string or comma. No big deal, though...",
+      "range": {
+        "startLine": 492,
+        "startChar": 2,
+        "endLine": 493,
+        "endChar": 28
+      },
+      "revId": "b3f3a1c208141e9c3160b81803d13181f3997245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f072c669_e3e3c2ce",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-24T11:57:00Z",
+      "side": 1,
+      "message": "DeprecatedLower -\u003e LowerASCII, while we\u0027re in here?",
+      "range": {
+        "startLine": 494,
+        "startChar": 35,
+        "endLine": 494,
+        "endChar": 50
+      },
+      "revId": "b3f3a1c208141e9c3160b81803d13181f3997245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462c6b81_898f75aa",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-24T11:57:00Z",
+      "side": 1,
+      "message": "This misses cases with whitespace preceeding or successding the nosniff, e.g. anything covered by the \"StripWhiteSpace\" call. E.g.\n- \"   nosniff  \"\n- \"   nosniff  , something\"\n- \" nosniff [non-breaking whitespace] , ...\"",
+      "range": {
+        "startLine": 696,
+        "startChar": 16,
+        "endLine": 704,
+        "endChar": 59
+      },
+      "revId": "b3f3a1c208141e9c3160b81803d13181f3997245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303bf3bd_86d00455",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-11-24T11:57:00Z",
+      "side": 1,
+      "message": "pro-tip (optional here, but important elsewhere):\n\nIf you loop through a long list of test cases, add a SCOPED_TRACE(test.value); at the beginnig of the loop, so that gtest will give you nice output telling you which of the many cases didn\u0027t work.",
+      "range": {
+        "startLine": 706,
+        "startChar": 4,
+        "endLine": 706,
+        "endChar": 13
+      },
+      "revId": "b3f3a1c208141e9c3160b81803d13181f3997245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
