@@ -76,6 +76,13 @@ class PLATFORM_EXPORT V8ObjectConstructor {
 
   static void IsValidConstructorMode(
       const v8::FunctionCallbackInfo<v8::Value>&);
+
+  static v8::Local<v8::Function> CreateInterfaceObject(
+      const WrapperTypeInfo*,
+      v8::Local<v8::Context>,
+      const DOMWrapperWorld&,
+      v8::Isolate*,
+      v8::Local<v8::Object> prototype_template);
 };
 
 }  // namespace blink
