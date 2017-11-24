@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2aba5b10_5f80791d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T20:38:04Z",
+      "side": 1,
+      "message": "Right. while you are in VR, we only have three different mode Browsing, Fullscreen or WebVr. And I assuming that you combined browsing and fullscreen into one enum here since you don\u0027t need to distinguish them. So it is not obvious to me when kVr is needed.",
+      "parentUuid": "4b46110d_98d9960b",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4488095e_a5568898",
         "filename": "chrome/browser/vr/assets.h",
         "patchSetId": 5
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "The histogram macros expect to be used for a single histogram only. If I move it up the histogram macro in line 99 would be used for all three ready histograms. By using the template  I make the compiler generate three versions of this function so that each histogram macro is only used for a single histogram.",
       "parentUuid": "a668bcd6_908efc24",
+      "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5900662e_3e2e1a29",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T20:38:04Z",
+      "side": 1,
+      "message": "I see. That makes sense.\n\nI am mostly don\u0027t like the fact that we have a lot of repeated switch {} in this file. If we add a new enum, we need to update a lot of places. Would it make sense to replace function like GetReadyHistogramName to something like\nvoid LogReadyHistogram(Mode mode, bool sample) {\n switch (mode) {\n   case Mode::kVr:\n     UMA_HISTOGRAM_BOOLEAN(kReadyVr, sample);\n     break;\n   case Mode::kVrBrowsing\n     UMA_HISTOGRAM_BOOLEAN(kReadyVrBrowsing, sample);\n...\n}\nThis way we probably don\u0027t need this templated function and could at least remove the switch statement above?",
+      "parentUuid": "c58cd840_e739d216",
       "revId": "fb2e293d46446c9dcd07b12de957ab04c596d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

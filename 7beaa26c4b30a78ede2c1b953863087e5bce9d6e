@@ -34,6 +34,24 @@
       "revId": "7beaa26c4b30a78ede2c1b953863087e5bce9d6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c83d5a_fb8b34bd",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-24T20:38:04Z",
+      "side": 1,
+      "message": "If you replace GetLatencyHistogramName to something like\nLogLatenceyHistogramName(mode, latency), it is probably more maintainable.",
+      "parentUuid": "b389efc9_ae93f643",
+      "revId": "7beaa26c4b30a78ede2c1b953863087e5bce9d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
