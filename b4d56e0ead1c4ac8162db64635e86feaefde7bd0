@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92367ba7_bb43b75e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T19:50:42Z",
+      "side": 1,
+      "message": "Done.\n\nRenamed to last_notified_entry_index, as these aren\u0027t all delivered.",
+      "parentUuid": "fdf3f0a6_b127d118",
+      "range": {
+        "startLine": 533,
+        "startChar": 6,
+        "endLine": 533,
+        "endChar": 33
+      },
+      "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "406b7c12_6c947b15",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123795d7_d1057482",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T19:50:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406b7c12_6c947b15",
+      "range": {
+        "startLine": 555,
+        "startChar": 7,
+        "endLine": 555,
+        "endChar": 36
+      },
+      "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1fd1f3a8_2b61b5ef",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T19:50:42Z",
+      "side": 1,
+      "message": "Whoops, this is definitely wrong, as we sometimes insert |observer twice|.\n\nHowever, ActivateObserver is called within PerformanceObserver::EnqueuePerformanceEntry, after queueing the entry, so |observer| may have a PerformanceEntry, right?\n\nIf we have a non-paint-timing entry, and then queue a paint-timing entry, this needs to kick off a timer with a delay of 0.",
+      "parentUuid": "aec75f5e_c60e6553",
+      "range": {
+        "startLine": 578,
+        "startChar": 4,
+        "endLine": 578,
+        "endChar": 65
+      },
+      "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "815d3715_57161113",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBaseTest.cpp",
         "patchSetId": 2
@@ -82,6 +154,24 @@
       "writtenOn": "2017-11-22T17:10:30Z",
       "side": 1,
       "message": "Maybe also a test that advances the clock AND executes idle tasks?",
+      "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2e7ba6_a7d580b2",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBaseTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T19:50:42Z",
+      "side": 1,
+      "message": "We talked about this in person. \n\nDeliveryDelayedUntilIdle covers the case where the idle callback happens first.\nWe were previously missing coverage of the case where the timer fires, and then an idle callback fires.\n\nI\u0027ve added this to DeliveryDelayedUntilTimeout.\n\nNice catch!",
+      "parentUuid": "815d3715_57161113",
       "revId": "b4d56e0ead1c4ac8162db64635e86feaefde7bd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

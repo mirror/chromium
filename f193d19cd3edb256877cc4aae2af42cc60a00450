@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61e3f1d3_9f5acaa9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/single-entry-per-resource.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T19:50:42Z",
+      "side": 1,
+      "message": "We need to wait longer, to give the second entry time to be dispatched.",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "f193d19cd3edb256877cc4aae2af42cc60a00450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
