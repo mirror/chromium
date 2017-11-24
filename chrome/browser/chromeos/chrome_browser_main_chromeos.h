@@ -54,6 +54,14 @@ class DBusServices;
 class SystemTokenCertDBInitializer;
 }
 
+namespace power {
+namespace ml {
+class IdleEventNotifier;
+class UserActivityLogger;
+class UserActivityLoggerDelegate;
+}  // namespace ml
+}  // namespace power
+
 class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
  public:
   explicit ChromeBrowserMainPartsChromeos(
@@ -122,6 +130,12 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
   // default (as it will be instantiated elsewhere). For now it's necessary to
   // send notifier settings information to Ash.
   std::unique_ptr<NotificationPlatformBridge> notification_client_;
+
+  // Used for user activity logging.
+  std::unique_ptr<power::ml::IdleEventNotifier> idle_event_notifier_;
+  std::unique_ptr<power::ml::UserActivityLoggerDelegate>
+      user_activity_logger_delegate_;
+  std::unique_ptr<power::ml::UserActivityLogger> user_activity_logger_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainPartsChromeos);
 };
