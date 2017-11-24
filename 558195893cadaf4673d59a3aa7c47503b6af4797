@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94ad8261_290daec6",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-24T20:49:29Z",
+      "side": 1,
+      "message": "I *think* the constructor will take a PtrInfo.",
+      "revId": "558195893cadaf4673d59a3aa7c47503b6af4797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a490321_7766d7a6",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-24T20:49:29Z",
+      "side": 1,
+      "message": "Huh, both of these Ptr should be PtrInfo. I guess it wasn\u0027t checking the sequence for some reason, but the way I wrote it isn\u0027t right.",
+      "revId": "558195893cadaf4673d59a3aa7c47503b6af4797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
