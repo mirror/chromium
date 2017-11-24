@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c49f0de8_783537e9",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T16:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d142b186_f84b6325",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 3
+      },
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "095f97a4_6a29daec",
         "filename": "content/browser/media/audio_stream_monitor.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "76db383c_b2adc728",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T16:11:38Z",
+      "side": 1,
+      "message": "Will keep the private *OnUIThread methods on this CL in order to avoid rewriting the unit test, which does not have a frame and uses the OnUIThread methods directly.",
+      "parentUuid": "095f97a4_6a29daec",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 60
+      },
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceb1367d_6e44d255",
         "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
         "patchSetId": 12
@@ -62,6 +110,24 @@
       "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce536e51_c1357f87",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T16:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceb1367d_6e44d255",
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "a85e6f44_119dd1cb",
+        "filename": "media/mojo/interfaces/audio_output_stream.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T16:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "766f65c2_0cba24fc",
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "052ac520_a53f5b6b",
         "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
         "patchSetId": 12
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "90526249_76cf24c5",
+        "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T16:11:38Z",
+      "side": 1,
+      "message": "This is needed because it is possible that the MojoAudioOutputStreamProvider dies before it ever got a DidStopPlaying() notification.\nSeveral Android unit tests (which have monitoring disabled) fail without this.\nI updated the comments in the .mojom file to explicitly state that duplicate DidStopPlaying() notifications are possible, even for streams that never started playing.",
+      "parentUuid": "052ac520_a53f5b6b",
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b8f378b_c7d8f280",
         "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
         "patchSetId": 12
@@ -110,6 +212,24 @@
       "writtenOn": "2017-11-24T09:05:38Z",
       "side": 1,
       "message": "What happens with Audible state here?",
+      "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6336e700_c21654ab",
+        "filename": "media/mojo/services/mojo_audio_output_stream_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-24T16:11:38Z",
+      "side": 1,
+      "message": "Don\u0027t quite understand the question (where is \"here\" and what instance of the audible state are you referring to?).\nNevertheless, since this code path causes the MAOSP to be deleted, its destructor should issue a DidStopPlaying() notification.",
+      "parentUuid": "4b8f378b_c7d8f280",
       "revId": "3ef5c7afa7affad49232d1fdf67e6bbb987351a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
