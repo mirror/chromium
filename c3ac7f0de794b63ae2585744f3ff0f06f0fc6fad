@@ -46,6 +46,30 @@
       "revId": "c3ac7f0de794b63ae2585744f3ff0f06f0fc6fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d597c90a_b0e9fd70",
+        "filename": "ui/latency/latency_histogram_macros.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T18:38:19Z",
+      "side": 1,
+      "message": ":(\n\nThanks.",
+      "parentUuid": "db9bf5a6_9cae6e86",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "c3ac7f0de794b63ae2585744f3ff0f06f0fc6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
