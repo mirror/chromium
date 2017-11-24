@@ -22,6 +22,30 @@
       "revId": "a42166fa37482700a5ae15d7c874db6ab95de2a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a887222d_86f0274d",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-24T13:44:17Z",
+      "side": 1,
+      "message": "Ooops. Error was not clear to me and I didn\u0027t went back to check (and frankly, I forgot that JSON was so strict). Thanks for catching it!",
+      "parentUuid": "2d8b580a_1f20aae7",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 6
+      },
+      "revId": "a42166fa37482700a5ae15d7c874db6ab95de2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
