@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_positioner.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_ui_updater.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_consumer.h"
@@ -22,7 +23,8 @@
 // This view controller will fill its container; it is up to the containing
 // view controller or presentation controller to configure an appropriate
 // height for it.
-@interface ToolbarViewController : UIViewController<TabHistoryPositioner,
+@interface ToolbarViewController : UIViewController<ActivityServicePositioner,
+                                                    TabHistoryPositioner,
                                                     TabHistoryUIUpdater,
                                                     ToolbarConsumer>
 
