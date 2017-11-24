@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6aa91df_455800d9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T16:56:26Z",
+      "side": 1,
+      "message": "This is to make these non-const? Should we be copying them? Or can EndResourceLoad take a const char*?",
+      "range": {
+        "startLine": 633,
+        "startChar": 6,
+        "endLine": 633,
+        "endChar": 13
+      },
+      "revId": "8c01cde77dbe5532d136e2bffda808c988eb3474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb990b9_c73d2e6b",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkInstrumentation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T16:56:26Z",
+      "side": 1,
+      "message": "Do we need this cast?",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 15
+      },
+      "revId": "8c01cde77dbe5532d136e2bffda808c988eb3474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02711fe5_42acd74f",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkInstrumentation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-24T16:56:26Z",
+      "side": 1,
+      "message": "Might be easier to map this to a string here.",
+      "range": {
+        "startLine": 81,
+        "startChar": 21,
+        "endLine": 81,
+        "endChar": 43
+      },
+      "revId": "8c01cde77dbe5532d136e2bffda808c988eb3474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
