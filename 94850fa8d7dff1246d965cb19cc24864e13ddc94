@@ -116,6 +116,30 @@
       "revId": "94850fa8d7dff1246d965cb19cc24864e13ddc94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf509b93_a761baf0",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2578,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-11-24T03:22:21Z",
+      "side": 0,
+      "message": "Ahh right, we enabled this one in chrome_features.cc instead of via Finch. It\u0027s a bit unrelated so I\u0027ll make a separate change.",
+      "parentUuid": "a0a4c887_726c9997",
+      "range": {
+        "startLine": 2563,
+        "startChar": 0,
+        "endLine": 2578,
+        "endChar": 6
+      },
+      "revId": "94850fa8d7dff1246d965cb19cc24864e13ddc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

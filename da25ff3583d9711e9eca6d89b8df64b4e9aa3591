@@ -22,6 +22,30 @@
       "revId": "da25ff3583d9711e9eca6d89b8df64b4e9aa3591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91100d7_be8e8cdd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3745,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-11-24T03:22:21Z",
+      "side": 1,
+      "message": "Seems reasonable, removed \u003cobsolete\u003e.",
+      "parentUuid": "37f3a828_b3680827",
+      "range": {
+        "startLine": 3743,
+        "startChar": 0,
+        "endLine": 3745,
+        "endChar": 13
+      },
+      "revId": "da25ff3583d9711e9eca6d89b8df64b4e9aa3591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
