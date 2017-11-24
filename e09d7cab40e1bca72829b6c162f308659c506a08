@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bdfe797_26b09dd1",
+        "filename": "services/viz/privileged/interfaces/viz_main.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-24T22:26:51Z",
+      "side": 1,
+      "message": "The window_server.cc doesn\u0027t have a CompositingModeWatcher and doesn\u0027t need one since it\u0027s chromeos. So I made this field optional, and handled that in VizMainImpl, which now doesn\u0027t crash in services_unittests :)",
+      "revId": "e09d7cab40e1bca72829b6c162f308659c506a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
