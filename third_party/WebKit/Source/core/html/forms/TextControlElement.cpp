@@ -997,8 +997,10 @@ void TextControlElement::SetSuggestedValue(const String& value) {
     SetInnerEditorValue("");
   } else if (suggested_value_.IsEmpty() &&
              !value_before_set_suggested_value_.IsEmpty()) {
-    // Reset the value that was in the editor before showing the suggestion.
-    SetInnerEditorValue(value_before_set_suggested_value_);
+    // Reset the value that was in the editor before showing the suggestion plus
+    // whatever the user typed to remove the suggestion, if applicable.
+    SetInnerEditorValue(value_before_set_suggested_value_ + InnerEditorValue());
+    SetSelectionRange(InnerEditorValue().length(), InnerEditorValue().length());
     value_before_set_suggested_value_ = "";
   }
 
