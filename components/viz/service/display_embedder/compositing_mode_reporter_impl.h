@@ -21,8 +21,8 @@ class VIZ_SERVICE_EXPORT CompositingModeReporterImpl
   CompositingModeReporterImpl();
   ~CompositingModeReporterImpl() override;
 
-  // Called for each consumer of the CompositingModeReporter interface, to
-  // fulfill a mojo pointer for them.
+  // Called for the consumer of the CompositingModeReporter interface, to
+  // fulfill a mojo pointer for them. This may only be called once.
   void BindRequest(mojom::CompositingModeReporterRequest request);
 
   // Call to inform the reporter that software compositing is being used instead
@@ -36,7 +36,7 @@ class VIZ_SERVICE_EXPORT CompositingModeReporterImpl
 
  private:
   bool gpu_ = true;
-  mojo::BindingSet<mojom::CompositingModeReporter> bindings_;
+  mojo::Binding<mojom::CompositingModeReporter> binding_;
   mojo::InterfacePtrSet<mojom::CompositingModeWatcher> watchers_;
 };
 
