@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e91b7fa0_15f0ff5f",
+        "filename": "services/device/geolocation/public_ip_address_geolocation_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-24T08:35:20Z",
+      "side": 1,
+      "message": "Actually you don\u0027t even need this method at all I would think: You should be able to just bind (StrongBindingSet\u003cmojom::Geolocation\u003e::ReportBadMessage, base::Unretained(\u0026geolocation_binding_set_)) directly?",
+      "revId": "cfd113b90afd00123bc4574c63e41da53ad3e69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f2b0e1_fead52f1",
+        "filename": "services/device/geolocation/public_ip_address_geolocation_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-24T08:35:20Z",
+      "side": 1,
+      "message": "Add: After this call is made, this object must be used only on the sequence on which this call was made.",
+      "revId": "cfd113b90afd00123bc4574c63e41da53ad3e69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c4e8ce_10db298a",
+        "filename": "services/device/geolocation/public_ip_address_geolocation_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-24T08:35:20Z",
+      "side": 1,
+      "message": "nit: Callback that is invoked by PublicIpAddressGeolocator in the course of the latter processing Mojo messages.\n\nanother nit: I would rename this more specifically to something like OnBadGeolocationMessage().",
+      "revId": "cfd113b90afd00123bc4574c63e41da53ad3e69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48686f52_1da281da",
+        "filename": "services/device/geolocation/public_ip_address_geolocation_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-24T08:35:20Z",
+      "side": 1,
+      "message": "Note that this must be before the StrongBindingSet\u003cmojom::Geolocation\u003e as it must outlive the Geolocation implementations.",
+      "revId": "cfd113b90afd00123bc4574c63e41da53ad3e69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6e080b_c87867d0",
+        "filename": "services/device/public/interfaces/public_ip_address_geolocation_provider.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-24T08:35:20Z",
+      "side": 1,
+      "message": "nit: s/may be able operate/may be able to operate",
+      "revId": "cfd113b90afd00123bc4574c63e41da53ad3e69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
