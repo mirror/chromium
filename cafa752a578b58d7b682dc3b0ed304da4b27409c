@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef5446a_621336e1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/subresource-integrity-style-allowed-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-24T20:42:47Z",
+      "side": 0,
+      "message": "Ah, this explains why the diff of my change looked strange to me, although I didn\u0027t look into it. Thanks for paying attention!",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "cafa752a578b58d7b682dc3b0ed304da4b27409c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
