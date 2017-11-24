@@ -116,8 +116,6 @@ void MetricsServicesManager::UpdateRunningServices() {
     return;
   }
 
-  client_->UpdateRunningServices(may_record_, may_upload_);
-
   if (may_record_) {
     if (!metrics->recording_active())
       metrics->Start();
