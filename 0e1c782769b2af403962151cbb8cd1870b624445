@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55fe4f1a_88f447a4",
+        "filename": "net/tools/transport_security_state_generator/input_file_parsers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-24T00:29:58Z",
+      "side": 1,
+      "message": "Is this clang-format\u0027d? Just an interesting indentation style :)",
+      "range": {
+        "startLine": 317,
+        "startChar": 1,
+        "endLine": 319,
+        "endChar": 0
+      },
+      "revId": "0e1c782769b2af403962151cbb8cd1870b624445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
