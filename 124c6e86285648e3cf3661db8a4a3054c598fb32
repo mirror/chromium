@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0713565_3395b6cd",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "This creates circular dependency between ExtensionProvider and Service. Can we move GetProvidingExtensionInfo to this class instead?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe7ec16_95cc478b",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "nit: Not used in this file. Please remove.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6585a4_d3023857",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "Can be const?",
+      "range": {
+        "startLine": 34,
+        "startChar": 31,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2349ac_7fc32c3e",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "nit: Please add DISALLOW_COPY_AND_ASSIGN macro.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 2
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f341bf_0c40ef29",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "Can we use std::make_unique?",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d15bdc1_4b374741",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "nit: Order of arguments.",
+      "range": {
+        "startLine": 463,
+        "startChar": 12,
+        "endLine": 463,
+        "endChar": 53
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f3bf51_9006df3f",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "Return a raw pointer, as we don\u0027t pass ownership. It\u0027s still owned by Service. Also, please make ProviderInterface not copyable by DISABLE_COPY_AND_ASSIGN macro.",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 34
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bd1b96_55044a69",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "nit: Remove empty line? The DCHECK below refers exactly to the iterator, so no need to separate?",
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e12ba54_9fd71e33",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-24T08:43:47Z",
+      "side": 1,
+      "message": "nit: -\u003e provider",
+      "range": {
+        "startLine": 210,
+        "startChar": 15,
+        "endLine": 210,
+        "endChar": 34
+      },
+      "revId": "124c6e86285648e3cf3661db8a4a3054c598fb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
