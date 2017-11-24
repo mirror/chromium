@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "07f554f1_58bd99dc",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-24T01:30:00Z",
+      "side": 1,
+      "message": "Ah good idea about checking the version! I\u0027ve incorporated that into this change. Unfortunately we still need the compile-time check because there will be some instances that won\u0027t have an InitDeprecated() function (the Timer and Print ones, for the time being).",
+      "parentUuid": "af90fedc_b4de9e53",
+      "revId": "6f94288cf84a1ccd40f161c882420566a4f3797b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fb268e7_8bb6ee9e",
         "filename": "components/arc/connection_holder.h",
         "patchSetId": 1
