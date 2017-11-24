@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae4dc5aa_7beaf0a2",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-24T23:22:07Z",
+      "side": 1,
+      "message": "nit: modal_element",
+      "revId": "f9bcfc1475214fce928977a153b020448d68483a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
