@@ -350,6 +350,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void SetHasReceivedUserGesture(bool received_previously) {}
 
+  virtual void SetHasReceivedUserGestureBeforeNavigation() {}
+
   virtual void AbortClientNavigation() {}
 
   virtual WebSpellCheckPanelHostClient* SpellCheckPanelHostClient() const = 0;

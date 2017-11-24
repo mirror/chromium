@@ -157,7 +157,8 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
           unique_name,
           false /* should enforce strict mixed content checking */,
           false /* is a potentially trustworthy unique origin */,
-          false /* has received a user gesture */),
+          false /* has received a user gesture */,
+          false /* has received a user gesture before nav */),
       devtools_frame_token_(devtools_frame_token),
       frame_owner_properties_(frame_owner_properties),
       loading_progress_(kLoadingProgressNotStarted),
@@ -625,6 +626,11 @@ void FrameTreeNode::BeforeUnloadCanceled() {
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
   render_manager_.OnSetHasReceivedUserGesture();
   replication_state_.has_received_user_gesture = true;
+}
+
+void FrameTreeNode::OnSetHasReceivedUserGestureBeforeNavigation() {
+  render_manager_.OnSetHasReceivedUserGestureBeforeNavigation();
+  replication_state_.has_received_user_gesture_before_nav = true;
 }
 
 FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {

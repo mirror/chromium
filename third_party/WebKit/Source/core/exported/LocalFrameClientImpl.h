@@ -232,6 +232,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void SetHasReceivedUserGesture(bool received_previously) override;
 
+  void SetHasReceivedUserGestureBeforeNavigation() override;
+
   void AbortClientNavigation() override;
 
   WebSpellCheckPanelHostClient* SpellCheckPanelHostClient() const override;
