@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a8c9d4e_ec658f75",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "Thank you for moving these here. Could gvr_delegate.cc be updated to make use of this?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c87267_c2e9730a",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "Say the delegate gets set after the element has been animated to visible, would we need to call Show/HideKeyboard here? Perhaps the code at the end of NotifyClientFooAnimated could be moved to an UpdateDelegateFOO function that could also be called from here?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3955051d_95882cd8",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "Is this just because the local hit point is unused in the KB? Could you please add a comment?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3052c4c_cfb38c62",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "Does this not prevent fading-in the keyboard?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2747eb5_02efa390",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "Debugging code to be removed?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae3fa42_e116064f",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "nit: could you please reconcile the both the name of this accessor and its position in the class to be consistent with IsHitTestable? (If that means renaming the IsThingerThinger functions, that seems ok, too, but I think they should be named similarly and appear next to one another rather than amongst these event-y functions).",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdae526_de1b068d",
+        "filename": "chrome/browser/vr/keyboard_ui_interface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "IIRC, the point of this class is to restrict the Ui API to keyboard-specific callback functions so that the kb delegate didn\u0027t need access to all of Ui. Can you please mention that here so that if the situation changes, we know the rationale behind this interface and can determine if its existence still makes sense?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a58929e_c9d8f560",
+        "filename": "chrome/browser/vr/model/text_input_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "Why have this function if you have operator\u003d\u003d below?\n\nChris had a neat suggestion for safeguarding against additions to model classes whose equality operators may go stale -- static asserting on the size of the struct with a comment about updating operator\u003d\u003d. Check out UrlBarColors, eg.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f7e981_50791bb6",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-24T13:33:07Z",
+      "side": 1,
+      "message": "Please either inline these below, or make an AddTextInput function similar to AddTransientParent if you want to prepare for the addition of more text fields. This will keep the definition of these callbacks right next to the definition of the text fields.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
