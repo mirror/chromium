@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "658b0585_7c745d37",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36de9baa_c6975d1e",
+      "range": {
+        "startLine": 49,
+        "startChar": 51,
+        "endLine": 49,
+        "endChar": 65
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85449908_743f531d",
         "filename": "ui/latency/latency_tracker.cc",
         "patchSetId": 1
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5b50e46d_db307020",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:21:22Z",
+      "side": 1,
+      "message": "I wanted to avoid the need to change multiple places when I wanted to add/remove an event. I had a similar thing before in my local before sending but I had to change 3 places to add a new event. One in the constructor. One in the this UKM metric reporting and on in the header file. So I rewrote the change using this map idea. With the current change I managed to reduce this down to only one place (i.e. the constructor). But I really don\u0027t care as much about it. I went with your suggestion.",
+      "parentUuid": "8a4ed0b6_e7d6dc08",
+      "range": {
+        "startLine": 113,
+        "startChar": 23,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3aa0765_9d88ffc3",
         "filename": "ui/latency/latency_tracker.h",
         "patchSetId": 1
@@ -139,6 +187,30 @@
       "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4af060_925fbaec",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-24T17:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3aa0765_9d88ffc3",
+      "range": {
+        "startLine": 45,
+        "startChar": 34,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "7fde7fefd59847c94d23764c9373899c555c5e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
