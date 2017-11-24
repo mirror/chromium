@@ -16,6 +16,24 @@
       "revId": "d2c2963c8da5f9cf78dde0e27ad08890a1223f1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7a11fe_a570fc9e",
+        "filename": "chrome/browser/vr/databinding/binding_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-24T15:11:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aef28c96_56edc66d",
+      "revId": "d2c2963c8da5f9cf78dde0e27ad08890a1223f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
