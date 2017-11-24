@@ -776,8 +776,7 @@ double Histogram::GetPeakBucketSize(const SampleVectorBase& samples) const {
 void Histogram::WriteAsciiHeader(const SampleVectorBase& samples,
                                  Count sample_count,
                                  std::string* output) const {
-  StringAppendF(output, "Histogram: %s recorded %d samples", histogram_name(),
-                sample_count);
+  StringAppendF(output, "Recorded %d samples", sample_count);
   if (sample_count == 0) {
     DCHECK_EQ(samples.sum(), 0);
   } else {

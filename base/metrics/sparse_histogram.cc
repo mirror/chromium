@@ -274,8 +274,7 @@ void SparseHistogram::WriteAsciiImpl(bool graph_it,
 
 void SparseHistogram::WriteAsciiHeader(const Count total_count,
                                        std::string* output) const {
-  StringAppendF(output, "Histogram: %s recorded %d samples", histogram_name(),
-                total_count);
+  StringAppendF(output, "Recorded %d samples", total_count);
   if (flags())
     StringAppendF(output, " (flags = 0x%x)", flags());
 }

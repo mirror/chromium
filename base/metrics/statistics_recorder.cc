@@ -179,6 +179,11 @@ void StatisticsRecorder::WriteHTMLGraph(const std::string& query,
   GetSnapshot(query, &snapshot);
   std::sort(snapshot.begin(), snapshot.end(), &HistogramNameLesser);
   for (const HistogramBase* histogram : snapshot) {
+    output->append("Histogram: <a href=\"");
+    output->append(histogram->histogram_name());
+    output->append("\">");
+    output->append(histogram->histogram_name());
+    output->append("</a><br>");
     histogram->WriteHTMLGraph(output);
     output->append("<br><hr><br>");
   }
@@ -198,6 +203,9 @@ void StatisticsRecorder::WriteGraph(const std::string& query,
   GetSnapshot(query, &snapshot);
   std::sort(snapshot.begin(), snapshot.end(), &HistogramNameLesser);
   for (const HistogramBase* histogram : snapshot) {
+    output->append("Histogram: ");
+    output->append(histogram->histogram_name());
+    output->append(": ");
     histogram->WriteAscii(output);
     output->append("\n");
   }
